@@ -24,8 +24,8 @@
       "input":{"shape":"GetDataAutomationStatusRequest"},
       "output":{"shape":"GetDataAutomationStatusResponse"},
       "errors":[
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
@@ -41,12 +41,61 @@
       "output":{"shape":"InvokeDataAutomationAsyncResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
       ],
       "idempotent":true
+    },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListTagsForResourceRequest"},
+      "output":{"shape":"ListTagsForResourceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TagResourceRequest"},
+      "output":{"shape":"TagResourceResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UntagResourceRequest"},
+      "output":{"shape":"UntagResourceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
     }
   },
   "shapes":{
@@ -56,6 +105,12 @@
         "message":{"shape":"NonBlankString"}
       },
       "exception":true
+    },
+    "AssetProcessingConfiguration":{
+      "type":"structure",
+      "members":{
+        "video":{"shape":"VideoAssetProcessingConfiguration"}
+      }
     },
     "AutomationJobStatus":{
       "type":"string",
@@ -85,6 +140,7 @@
     "BlueprintList":{
       "type":"list",
       "member":{"shape":"Blueprint"},
+      "max":40,
       "min":1
     },
     "BlueprintStage":{
@@ -112,11 +168,17 @@
     },
     "DataAutomationConfiguration":{
       "type":"structure",
-      "required":["dataAutomationArn"],
+      "required":["dataAutomationProjectArn"],
       "members":{
-        "dataAutomationArn":{"shape":"DataAutomationArn"},
+        "dataAutomationProjectArn":{"shape":"DataAutomationArn"},
         "stage":{"shape":"DataAutomationStage"}
       }
+    },
+    "DataAutomationProfileArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"arn:aws(|-cn|-us-gov):bedrock:[a-zA-Z0-9-]*:(aws|[0-9]{12}):data-automation-profile/[a-zA-Z0-9-_.]+"
     },
     "DataAutomationStage":{
       "type":"string",
@@ -129,7 +191,7 @@
       "type":"structure",
       "required":["kmsKeyId"],
       "members":{
-        "kmsKeyId":{"shape":"NonEmptyString"},
+        "kmsKeyId":{"shape":"KMSKeyId"},
         "kmsEncryptionContext":{"shape":"EncryptionContextMap"}
       }
     },
@@ -185,7 +247,8 @@
       "type":"structure",
       "required":["s3Uri"],
       "members":{
-        "s3Uri":{"shape":"S3Uri"}
+        "s3Uri":{"shape":"S3Uri"},
+        "assetProcessingConfiguration":{"shape":"AssetProcessingConfiguration"}
       }
     },
     "InternalServerException":{
@@ -206,7 +269,8 @@
       "type":"structure",
       "required":[
         "inputConfiguration",
-        "outputConfiguration"
+        "outputConfiguration",
+        "dataAutomationProfileArn"
       ],
       "members":{
         "clientToken":{
@@ -218,7 +282,9 @@
         "dataAutomationConfiguration":{"shape":"DataAutomationConfiguration"},
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
         "notificationConfiguration":{"shape":"NotificationConfiguration"},
-        "blueprints":{"shape":"BlueprintList"}
+        "blueprints":{"shape":"BlueprintList"},
+        "dataAutomationProfileArn":{"shape":"DataAutomationProfileArn"},
+        "tags":{"shape":"TagList"}
       }
     },
     "InvokeDataAutomationAsyncResponse":{
@@ -228,13 +294,28 @@
         "invocationArn":{"shape":"InvocationArn"}
       }
     },
+    "KMSKeyId":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]+"
+    },
+    "ListTagsForResourceRequest":{
+      "type":"structure",
+      "required":["resourceARN"],
+      "members":{
+        "resourceARN":{"shape":"TaggableResourceArn"}
+      }
+    },
+    "ListTagsForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"TagList"}
+      }
+    },
     "NonBlankString":{
       "type":"string",
       "pattern":"[\\s\\S]*"
-    },
-    "NonEmptyString":{
-      "type":"string",
-      "pattern":".*\\S.*"
     },
     "NotificationConfiguration":{
       "type":"structure",
@@ -261,7 +342,7 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"s3://[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9]([^\\x00-\\x1F\\x7F\\{^}%`\\]\">\\[~<#|]*)?"
+      "pattern":"s3://[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9](/[^\\x00-\\x1F\\x7F\\{^}%`\\]\">\\[~<#|]*)?"
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -271,6 +352,63 @@
       "exception":true
     },
     "String":{"type":"string"},
+    "Tag":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"TagKey"},
+        "value":{"shape":"TagValue"}
+      }
+    },
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"(?!aws:)[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*"
+    },
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":200,
+      "min":0
+    },
+    "TagList":{
+      "type":"list",
+      "member":{"shape":"Tag"},
+      "max":200,
+      "min":0
+    },
+    "TagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceARN",
+        "tags"
+      ],
+      "members":{
+        "resourceARN":{"shape":"TaggableResourceArn"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "TagResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
+    },
+    "TaggableResourceArn":{
+      "type":"string",
+      "max":1011,
+      "min":20,
+      "pattern":"arn:aws(|-cn|-us-gov):bedrock:[a-zA-Z0-9-]*:[0-9]{12}:data-automation-invocation/[a-zA-Z0-9-_]+"
+    },
     "ThrottlingException":{
       "type":"structure",
       "members":{
@@ -278,12 +416,62 @@
       },
       "exception":true
     },
+    "TimestampSegment":{
+      "type":"structure",
+      "required":[
+        "startTimeMillis",
+        "endTimeMillis"
+      ],
+      "members":{
+        "startTimeMillis":{"shape":"TimestampSegmentStartTimeMillisLong"},
+        "endTimeMillis":{"shape":"TimestampSegmentEndTimeMillisLong"}
+      }
+    },
+    "TimestampSegmentEndTimeMillisLong":{
+      "type":"long",
+      "box":true,
+      "min":300000
+    },
+    "TimestampSegmentStartTimeMillisLong":{
+      "type":"long",
+      "box":true,
+      "min":0
+    },
+    "UntagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceARN",
+        "tagKeys"
+      ],
+      "members":{
+        "resourceARN":{"shape":"TaggableResourceArn"},
+        "tagKeys":{"shape":"TagKeyList"}
+      }
+    },
+    "UntagResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "ValidationException":{
       "type":"structure",
       "members":{
         "message":{"shape":"NonBlankString"}
       },
       "exception":true
+    },
+    "VideoAssetProcessingConfiguration":{
+      "type":"structure",
+      "members":{
+        "segmentConfiguration":{"shape":"VideoSegmentConfiguration"}
+      }
+    },
+    "VideoSegmentConfiguration":{
+      "type":"structure",
+      "members":{
+        "timestampSegment":{"shape":"TimestampSegment"}
+      },
+      "union":true
     }
   }
 }

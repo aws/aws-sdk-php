@@ -6,6 +6,7 @@
     "CreateInvoiceUnit": "<p>This creates a new invoice unit with the provided definition.</p>",
     "DeleteInvoiceUnit": "<p>This deletes an invoice unit with the provided invoice unit ARN. </p>",
     "GetInvoiceUnit": "<p>This retrieves the invoice unit definition.</p>",
+    "ListInvoiceSummaries": "<p>Retrieves your invoice details programmatically, without line item details.</p>",
     "ListInvoiceUnits": "<p>This fetches a list of all invoice unit definitions for a given account, as of the provided <code>AsOf</code> date.</p>",
     "ListTagsForResource": "<p>Lists the tags for a resource. </p>",
     "TagResource": "<p>Adds a tag to a resource. </p>",
@@ -34,7 +35,14 @@
         "CreateInvoiceUnitRequest$InvoiceReceiver": "<p> The Amazon Web Services account ID chosen to be the receiver of an invoice unit. All invoices generated for that invoice unit will be sent to this account ID. </p>",
         "GetInvoiceUnitResponse$InvoiceReceiver": "<p> The Amazon Web Services account ID chosen to be the receiver of an invoice unit. All invoices generated for that invoice unit will be sent to this account ID. </p>",
         "InvoiceProfile$AccountId": "<p> The account ID the invoice profile is generated for. </p>",
+        "InvoiceSummary$AccountId": "<p> The Amazon Web Services account ID. </p>",
         "InvoiceUnit$InvoiceReceiver": "<p>The account that receives invoices related to the invoice unit. </p>"
+      }
+    },
+    "AmountBreakdown": {
+      "base": "<p>Details about how the total amount was calculated and categorized. </p>",
+      "refs": {
+        "InvoiceCurrencyAmount$AmountBreakdown": "<p> Details about the invoice currency amount. </p>"
       }
     },
     "AsOfTimestamp": {
@@ -48,9 +56,26 @@
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
+        "AmountBreakdown$SubTotalAmount": "<p> The total of a set of the breakdown. </p>",
+        "CurrencyExchangeDetails$SourceCurrencyCode": "<p>The exchange source currency. </p>",
+        "CurrencyExchangeDetails$TargetCurrencyCode": "<p>The exchange target currency. </p>",
+        "CurrencyExchangeDetails$Rate": "<p>The currency exchange rate. </p>",
+        "DiscountsBreakdown$TotalAmount": "<p> The discount's total amount. </p>",
+        "DiscountsBreakdownAmount$Description": "<p> The list of discounts information. </p>",
+        "DiscountsBreakdownAmount$Amount": "<p>The discounted amount. </p>",
+        "DiscountsBreakdownAmount$Rate": "<p> The details for the discount rate.. </p>",
+        "Entity$InvoicingEntity": "<p>The name of the entity that issues the Amazon Web Services invoice.</p>",
+        "FeesBreakdown$TotalAmount": "<p> The total amount of fees. </p>",
+        "FeesBreakdownAmount$Description": "<p> The list of fees information. </p>",
+        "FeesBreakdownAmount$Amount": "<p> The fee amount. </p>",
+        "FeesBreakdownAmount$Rate": "<p> Details about the rate amount. </p>",
         "InternalServerException$message": null,
-        "InvoiceProfile$ReceiverName": "<p> The name of the person receiving the invoice profile. </p>",
-        "InvoiceProfile$Issuer": "<p> This specifies the issuing entity of the invoice. </p>",
+        "InvoiceCurrencyAmount$TotalAmount": "<p> The invoice currency amount. </p>",
+        "InvoiceCurrencyAmount$TotalAmountBeforeTax": "<p> Details about the invoice total amount before tax. </p>",
+        "InvoiceSummariesFilter$InvoicingEntity": "<p>The name of the entity that issues the Amazon Web Services invoice.</p>",
+        "InvoiceSummary$InvoiceId": "<p> The invoice ID. </p>",
+        "InvoiceSummary$OriginalInvoiceId": "<p>The initial or original invoice ID. </p>",
+        "InvoiceSummary$PurchaseOrderNumber": "<p> The purchase order number associated to the invoice.</p>",
         "ReceiverAddress$AddressLine1": "<p> The first line of the address. </p>",
         "ReceiverAddress$AddressLine2": "<p> The second line of the address, if applicable. </p>",
         "ReceiverAddress$AddressLine3": "<p> The third line of the address, if applicable. </p>",
@@ -62,10 +87,21 @@
         "ReceiverAddress$PostalCode": "<p> The postal code associated with the address. </p>",
         "ResourceNotFoundException$message": null,
         "ServiceQuotaExceededException$message": null,
+        "TaxesBreakdown$TotalAmount": "<p> The total amount for your taxes. </p>",
+        "TaxesBreakdownAmount$Description": "<p> The details of the taxes. </p>",
+        "TaxesBreakdownAmount$Amount": "<p> The tax amount. </p>",
+        "TaxesBreakdownAmount$Rate": "<p> The details of the tax rate. </p>",
         "ThrottlingException$message": null,
         "ValidationException$message": null,
         "ValidationExceptionField$name": "<p> The input fails to satisfy the constraints specified by an Amazon Web Services service. </p>",
         "ValidationExceptionField$message": "<p> The input fails to satisfy the constraints specified by an Amazon Web Services service. </p>"
+      }
+    },
+    "BasicStringWithoutSpace": {
+      "base": null,
+      "refs": {
+        "InvoiceProfile$ReceiverName": "<p> The name of the person receiving the invoice profile. </p>",
+        "InvoiceProfile$Issuer": "<p> This specifies the issuing entity of the invoice. </p>"
       }
     },
     "BatchGetInvoiceProfileRequest": {
@@ -78,6 +114,13 @@
       "refs": {
       }
     },
+    "BillingPeriod": {
+      "base": "<p> The billing period for which you want to retrieve invoice-related documents. </p>",
+      "refs": {
+        "InvoiceSummariesFilter$BillingPeriod": "<p>The billing period associated with the invoice documents. </p>",
+        "InvoiceSummary$BillingPeriod": "<p> The billing period of the invoice-related document. </p>"
+      }
+    },
     "CreateInvoiceUnitRequest": {
       "base": null,
       "refs": {
@@ -86,6 +129,24 @@
     "CreateInvoiceUnitResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "CurrencyCode": {
+      "base": null,
+      "refs": {
+        "InvoiceCurrencyAmount$CurrencyCode": "<p>The currency dominion of the invoice document.</p>"
+      }
+    },
+    "CurrencyExchangeDetails": {
+      "base": "<p>The details of currency exchange. </p>",
+      "refs": {
+        "InvoiceCurrencyAmount$CurrencyExchangeDetails": "<p> The details of currency exchange. </p>"
+      }
+    },
+    "DateInterval": {
+      "base": "<p> The time period that you want invoice-related documents for. </p>",
+      "refs": {
+        "InvoiceSummariesFilter$TimeInterval": "<p>The date range for invoice summary retrieval. </p>"
       }
     },
     "DeleteInvoiceUnitRequest": {
@@ -105,6 +166,48 @@
         "GetInvoiceUnitResponse$Description": "<p> The assigned description for an invoice unit. </p>",
         "InvoiceUnit$Description": "<p>The assigned description for an invoice unit. This information can't be modified or deleted. </p>",
         "UpdateInvoiceUnitRequest$Description": "<p>The assigned description for an invoice unit. This information can't be modified or deleted. </p>"
+      }
+    },
+    "DiscountsBreakdown": {
+      "base": "<p>The discounts details. </p>",
+      "refs": {
+        "AmountBreakdown$Discounts": "<p> The discounted amount. </p>"
+      }
+    },
+    "DiscountsBreakdownAmount": {
+      "base": "<p> The discounted amount. </p>",
+      "refs": {
+        "DiscountsBreakdownAmountList$member": null
+      }
+    },
+    "DiscountsBreakdownAmountList": {
+      "base": null,
+      "refs": {
+        "DiscountsBreakdown$Breakdown": "<p>The list of discounts information. </p>"
+      }
+    },
+    "Entity": {
+      "base": "<p>The organization name providing Amazon Web Services services.</p>",
+      "refs": {
+        "InvoiceSummary$Entity": "<p>The organization name providing Amazon Web Services services.</p>"
+      }
+    },
+    "FeesBreakdown": {
+      "base": "<p> The details of fees. </p>",
+      "refs": {
+        "AmountBreakdown$Fees": "<p> The fee amount. </p>"
+      }
+    },
+    "FeesBreakdownAmount": {
+      "base": "<p> The fee amount. </p>",
+      "refs": {
+        "FeesBreakdownAmountList$member": null
+      }
+    },
+    "FeesBreakdownAmountList": {
+      "base": null,
+      "refs": {
+        "FeesBreakdown$Breakdown": "<p>The list of fees information. </p>"
       }
     },
     "Filters": {
@@ -134,10 +237,54 @@
       "refs": {
       }
     },
+    "InvoiceCurrencyAmount": {
+      "base": "<p> The amount charged after taxes, in the preferred currency. </p>",
+      "refs": {
+        "InvoiceSummary$BaseCurrencyAmount": "<p> The summary with the product and service currency. </p>",
+        "InvoiceSummary$TaxCurrencyAmount": "<p> The summary with the tax currency. </p>",
+        "InvoiceSummary$PaymentCurrencyAmount": "<p> The summary with the customer configured currency. </p>"
+      }
+    },
     "InvoiceProfile": {
       "base": "<p> Contains high-level information about the invoice receiver. </p>",
       "refs": {
         "ProfileList$member": null
+      }
+    },
+    "InvoiceSummaries": {
+      "base": null,
+      "refs": {
+        "ListInvoiceSummariesResponse$InvoiceSummaries": "<p>List of key (summary level) invoice details without line item details.</p>"
+      }
+    },
+    "InvoiceSummariesFilter": {
+      "base": "<p> Filters for your invoice summaries. </p>",
+      "refs": {
+        "ListInvoiceSummariesRequest$Filter": "<p>Filters you can use to customize your invoice summary.</p>"
+      }
+    },
+    "InvoiceSummariesMaxResults": {
+      "base": null,
+      "refs": {
+        "ListInvoiceSummariesRequest$MaxResults": "<p>The maximum number of invoice summaries a paginated response can contain.</p>"
+      }
+    },
+    "InvoiceSummariesSelector": {
+      "base": "<p>Specifies the invoice summary.</p>",
+      "refs": {
+        "ListInvoiceSummariesRequest$Selector": "<p>The option to retrieve details for a specific invoice by providing its unique ID. Alternatively, access information for all invoices linked to the account by providing an account ID.</p>"
+      }
+    },
+    "InvoiceSummary": {
+      "base": "<p> The invoice that the API retrieved. </p>",
+      "refs": {
+        "InvoiceSummaries$member": null
+      }
+    },
+    "InvoiceType": {
+      "base": null,
+      "refs": {
+        "InvoiceSummary$InvoiceType": "<p> The type of invoice. </p>"
       }
     },
     "InvoiceUnit": {
@@ -199,6 +346,22 @@
         "InvoiceUnit$LastModified": "<p> The last time the invoice unit was updated. This is important to determine the version of invoice unit configuration used to create the invoices. Any invoice created after this modified time will use this invoice unit configuration. </p>"
       }
     },
+    "ListInvoiceSummariesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListInvoiceSummariesResourceType": {
+      "base": null,
+      "refs": {
+        "InvoiceSummariesSelector$ResourceType": "<p>The query identifier type (<code>INVOICE_ID</code> or <code>ACCOUNT_ID</code>).</p>"
+      }
+    },
+    "ListInvoiceSummariesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListInvoiceUnitsRequest": {
       "base": null,
       "refs": {
@@ -225,9 +388,17 @@
         "ListInvoiceUnitsRequest$MaxResults": "<p>The maximum number of invoice units that can be returned. </p>"
       }
     },
+    "Month": {
+      "base": null,
+      "refs": {
+        "BillingPeriod$Month": "<p> The billing period month. </p>"
+      }
+    },
     "NextTokenString": {
       "base": null,
       "refs": {
+        "ListInvoiceSummariesRequest$NextToken": "<p>The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size.</p>",
+        "ListInvoiceSummariesResponse$NextToken": "<p>The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size.</p>",
         "ListInvoiceUnitsRequest$NextToken": "<p>The next token used to indicate where the returned list should start from. </p>",
         "ListInvoiceUnitsResponse$NextToken": "<p>The next token used to indicate where the returned list should start from. </p>"
       }
@@ -282,7 +453,7 @@
         "ResourceTag$Value": "<p> The specific value of the resource tag. </p>"
       }
     },
-    "SensitiveBasicString": {
+    "SensitiveBasicStringWithoutSpace": {
       "base": null,
       "refs": {
         "InvoiceProfile$ReceiverEmail": "<p>The email address for the invoice profile receiver. </p>",
@@ -292,6 +463,12 @@
     "ServiceQuotaExceededException": {
       "base": "<p>The request was rejected because it attempted to create resources beyond the current Amazon Web Services account limits. The error message describes the limit exceeded. </p>",
       "refs": {
+      }
+    },
+    "StringWithoutNewLine": {
+      "base": null,
+      "refs": {
+        "InvoiceSummariesSelector$Value": "<p>The value of the query identifier.</p>"
       }
     },
     "TagResourceRequest": {
@@ -321,9 +498,36 @@
         "UpdateInvoiceUnitRequest$TaxInheritanceDisabled": "<p>Whether the invoice unit based tax inheritance is/ should be enabled or disabled. </p>"
       }
     },
+    "TaxesBreakdown": {
+      "base": "<p> The details of the taxes. </p>",
+      "refs": {
+        "AmountBreakdown$Taxes": "<p> The tax amount. </p>"
+      }
+    },
+    "TaxesBreakdownAmount": {
+      "base": "<p> The tax amount. </p>",
+      "refs": {
+        "TaxesBreakdownAmountList$member": null
+      }
+    },
+    "TaxesBreakdownAmountList": {
+      "base": null,
+      "refs": {
+        "TaxesBreakdown$Breakdown": "<p> A list of tax information. </p>"
+      }
+    },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
       "refs": {
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "DateInterval$StartDate": "<p> The beginning of the time period that you want invoice-related documents for. The start date is inclusive. For example, if <code>start</code> is <code>2019-01-01</code>, AWS retrieves invoices starting at <code>2019-01-01</code> up to the end date. </p>",
+        "DateInterval$EndDate": "<p> The end of the time period that you want invoice-related documents for. The end date is exclusive. For example, if <code>end</code> is <code>2019-01-10</code>, Amazon Web Services retrieves invoice-related documents from the start date up to, but not including, <code>2018-01-10</code>. </p>",
+        "InvoiceSummary$IssuedDate": "<p> The issued date of the invoice. </p>",
+        "InvoiceSummary$DueDate": "<p> The invoice due date. </p>"
       }
     },
     "UntagResourceRequest": {
@@ -367,6 +571,12 @@
       "base": null,
       "refs": {
         "ValidationException$reason": "<p>You don't have sufficient access to perform this action. </p>"
+      }
+    },
+    "Year": {
+      "base": null,
+      "refs": {
+        "BillingPeriod$Year": "<p> The billing period year. </p>"
       }
     }
   }

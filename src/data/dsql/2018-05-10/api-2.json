@@ -25,26 +25,8 @@
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"ConflictException"}
-      ]
-    },
-    "CreateMultiRegionClusters":{
-      "name":"CreateMultiRegionClusters",
-      "http":{
-        "method":"POST",
-        "requestUri":"/multi-region-clusters",
-        "responseCode":200
-      },
-      "input":{"shape":"CreateMultiRegionClustersInput"},
-      "output":{"shape":"CreateMultiRegionClustersOutput"},
-      "errors":[
-        {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"}
       ]
@@ -68,24 +50,6 @@
       ],
       "idempotent":true
     },
-    "DeleteMultiRegionClusters":{
-      "name":"DeleteMultiRegionClusters",
-      "http":{
-        "method":"DELETE",
-        "requestUri":"/multi-region-clusters",
-        "responseCode":200
-      },
-      "input":{"shape":"DeleteMultiRegionClustersInput"},
-      "errors":[
-        {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"},
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ConflictException"}
-      ],
-      "idempotent":true
-    },
     "GetCluster":{
       "name":"GetCluster",
       "http":{
@@ -99,6 +63,23 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetVpcEndpointServiceName":{
+      "name":"GetVpcEndpointServiceName",
+      "http":{
+        "method":"GET",
+        "requestUri":"/clusters/{identifier}/vpc-endpoint-service-name",
+        "responseCode":200
+      },
+      "input":{"shape":"GetVpcEndpointServiceNameInput"},
+      "output":{"shape":"GetVpcEndpointServiceNameOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
       ]
@@ -183,8 +164,8 @@
       "output":{"shape":"UpdateClusterOutput"},
       "errors":[
         {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"}
@@ -216,31 +197,36 @@
       "min":1,
       "pattern":"[!-~]+"
     },
-    "ClusterArn":{"type":"string"},
+    "ClusterArn":{
+      "type":"string",
+      "pattern":"arn:aws(-[^:]+)?:dsql:[a-z0-9-]{1,20}:[0-9]{12}:cluster/[a-z0-9]{26}"
+    },
     "ClusterArnList":{
       "type":"list",
       "member":{"shape":"ClusterArn"}
     },
     "ClusterCreationTime":{"type":"timestamp"},
-    "ClusterId":{"type":"string"},
+    "ClusterId":{
+      "type":"string",
+      "pattern":"[a-z0-9]{26}"
+    },
     "ClusterList":{
       "type":"list",
       "member":{"shape":"ClusterSummary"}
-    },
-    "ClusterPropertyMap":{
-      "type":"map",
-      "key":{"shape":"Region"},
-      "value":{"shape":"LinkedClusterProperties"}
     },
     "ClusterStatus":{
       "type":"string",
       "enum":[
         "CREATING",
         "ACTIVE",
+        "IDLE",
+        "INACTIVE",
         "UPDATING",
         "DELETING",
         "DELETED",
-        "FAILED"
+        "FAILED",
+        "PENDING_SETUP",
+        "PENDING_DELETE"
       ]
     },
     "ClusterSummary":{
@@ -272,11 +258,13 @@
       "type":"structure",
       "members":{
         "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
+        "kmsEncryptionKey":{"shape":"KmsEncryptionKey"},
         "tags":{"shape":"TagMap"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "multiRegionProperties":{"shape":"MultiRegionProperties"}
       }
     },
     "CreateClusterOutput":{
@@ -293,30 +281,9 @@
         "arn":{"shape":"ClusterArn"},
         "status":{"shape":"ClusterStatus"},
         "creationTime":{"shape":"ClusterCreationTime"},
+        "multiRegionProperties":{"shape":"MultiRegionProperties"},
+        "encryptionDetails":{"shape":"EncryptionDetails"},
         "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"}
-      }
-    },
-    "CreateMultiRegionClustersInput":{
-      "type":"structure",
-      "required":[
-        "linkedRegionList",
-        "witnessRegion"
-      ],
-      "members":{
-        "linkedRegionList":{"shape":"RegionList"},
-        "clusterProperties":{"shape":"ClusterPropertyMap"},
-        "witnessRegion":{"shape":"Region"},
-        "clientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true
-        }
-      }
-    },
-    "CreateMultiRegionClustersOutput":{
-      "type":"structure",
-      "required":["linkedClusterArns"],
-      "members":{
-        "linkedClusterArns":{"shape":"ClusterArnList"}
       }
     },
     "DeleteClusterInput":{
@@ -342,37 +309,46 @@
         "identifier",
         "arn",
         "status",
-        "creationTime",
-        "deletionProtectionEnabled"
+        "creationTime"
       ],
       "members":{
         "identifier":{"shape":"ClusterId"},
         "arn":{"shape":"ClusterArn"},
         "status":{"shape":"ClusterStatus"},
-        "creationTime":{"shape":"ClusterCreationTime"},
-        "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"}
-      }
-    },
-    "DeleteMultiRegionClustersInput":{
-      "type":"structure",
-      "required":["linkedClusterArns"],
-      "members":{
-        "linkedClusterArns":{
-          "shape":"ClusterArnList",
-          "location":"querystring",
-          "locationName":"linked-cluster-arns"
-        },
-        "clientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true,
-          "location":"querystring",
-          "locationName":"client-token"
-        }
+        "creationTime":{"shape":"ClusterCreationTime"}
       }
     },
     "DeletionProtectionEnabled":{
       "type":"boolean",
       "box":true
+    },
+    "EncryptionDetails":{
+      "type":"structure",
+      "required":[
+        "encryptionType",
+        "encryptionStatus"
+      ],
+      "members":{
+        "encryptionType":{"shape":"EncryptionType"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "encryptionStatus":{"shape":"EncryptionStatus"}
+      }
+    },
+    "EncryptionStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "UPDATING",
+        "KMS_KEY_INACCESSIBLE",
+        "ENABLING"
+      ]
+    },
+    "EncryptionType":{
+      "type":"string",
+      "enum":[
+        "AWS_OWNED_KMS_KEY",
+        "CUSTOMER_MANAGED_KMS_KEY"
+      ]
     },
     "GetClusterInput":{
       "type":"structure",
@@ -400,8 +376,27 @@
         "status":{"shape":"ClusterStatus"},
         "creationTime":{"shape":"ClusterCreationTime"},
         "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
-        "witnessRegion":{"shape":"Region"},
-        "linkedClusterArns":{"shape":"ClusterArnList"}
+        "multiRegionProperties":{"shape":"MultiRegionProperties"},
+        "tags":{"shape":"TagMap"},
+        "encryptionDetails":{"shape":"EncryptionDetails"}
+      }
+    },
+    "GetVpcEndpointServiceNameInput":{
+      "type":"structure",
+      "required":["identifier"],
+      "members":{
+        "identifier":{
+          "shape":"ClusterId",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "GetVpcEndpointServiceNameOutput":{
+      "type":"structure",
+      "required":["serviceName"],
+      "members":{
+        "serviceName":{"shape":"ServiceName"}
       }
     },
     "Integer":{
@@ -424,13 +419,13 @@
       "fault":true,
       "retryable":{"throttling":false}
     },
-    "LinkedClusterProperties":{
-      "type":"structure",
-      "members":{
-        "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
-        "tags":{"shape":"TagMap"}
-      }
+    "KmsEncryptionKey":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[a-zA-Z0-9:/_-]+"
     },
+    "KmsKeyArn":{"type":"string"},
     "ListClustersInput":{
       "type":"structure",
       "members":{
@@ -477,15 +472,18 @@
       "max":100,
       "min":1
     },
+    "MultiRegionProperties":{
+      "type":"structure",
+      "members":{
+        "witnessRegion":{"shape":"Region"},
+        "clusters":{"shape":"ClusterArnList"}
+      }
+    },
     "NextToken":{"type":"string"},
     "Region":{
       "type":"string",
-      "max":20,
+      "max":50,
       "min":0
-    },
-    "RegionList":{
-      "type":"list",
-      "member":{"shape":"Region"}
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -504,6 +502,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ServiceName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"com\\.amazonaws\\.[a-z0-9-]+\\.dsql-[a-f0-9]{6}"
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -617,10 +621,12 @@
           "locationName":"identifier"
         },
         "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
+        "kmsEncryptionKey":{"shape":"KmsEncryptionKey"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "multiRegionProperties":{"shape":"MultiRegionProperties"}
       }
     },
     "UpdateClusterOutput":{
@@ -629,17 +635,13 @@
         "identifier",
         "arn",
         "status",
-        "creationTime",
-        "deletionProtectionEnabled"
+        "creationTime"
       ],
       "members":{
         "identifier":{"shape":"ClusterId"},
         "arn":{"shape":"ClusterArn"},
         "status":{"shape":"ClusterStatus"},
-        "creationTime":{"shape":"ClusterCreationTime"},
-        "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
-        "witnessRegion":{"shape":"Region"},
-        "linkedClusterArns":{"shape":"ClusterArnList"}
+        "creationTime":{"shape":"ClusterCreationTime"}
       }
     },
     "ValidationException":{

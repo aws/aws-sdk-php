@@ -29,8 +29,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ApplicationApprovedOrigins": {
       "base": null,
@@ -48,6 +47,14 @@
       "base": null,
       "refs": {
         "ListApplicationAssociationsResponse$ApplicationAssociations": "<p>List of Application Associations for the Application.</p>"
+      }
+    },
+    "ApplicationConfig": {
+      "base": "<p>The configuration settings for the application.</p>",
+      "refs": {
+        "CreateApplicationRequest$ApplicationConfig": "<p>The configuration settings for the application.</p>",
+        "GetApplicationResponse$ApplicationConfig": "<p>The configuration settings for the application.</p>",
+        "UpdateApplicationRequest$ApplicationConfig": "<p>The configuration settings for the application.</p>"
       }
     },
     "ApplicationName": {
@@ -125,6 +132,15 @@
         "UpdateApplicationRequest$Arn": "<p>The Amazon Resource Name (ARN) of the Application.</p>"
       }
     },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "ApplicationSummary$IsService": "<p>Indicates whether the application is a service.</p>",
+        "CreateApplicationRequest$IsService": "<p>Indicates whether the application is a service.</p>",
+        "GetApplicationResponse$IsService": "<p>Indicates whether the application is a service.</p>",
+        "UpdateApplicationRequest$IsService": "<p>Indicates whether the application is a service.</p>"
+      }
+    },
     "ClientAssociationMetadata": {
       "base": null,
       "refs": {
@@ -141,45 +157,49 @@
         "EventIntegrationAssociation$ClientId": "<p>The identifier for the client that is associated with the event integration.</p>"
       }
     },
-    "CreateApplicationRequest": {
+    "ContactHandling": {
+      "base": "<p>The contact handling configuration for the application.</p>",
+      "refs": {
+        "ApplicationConfig$ContactHandling": "<p>The contact handling configuration for the application.</p>"
+      }
+    },
+    "ContactHandlingScope": {
       "base": null,
       "refs": {
+        "ContactHandling$Scope": "<p>Indicates whether the application refreshes for each contact or refreshes only with each new browser session.</p>"
       }
+    },
+    "CreateApplicationRequest": {
+      "base": null,
+      "refs": {}
     },
     "CreateApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDataIntegrationAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDataIntegrationAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDataIntegrationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDataIntegrationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEventIntegrationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEventIntegrationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DataIntegrationAssociationSummary": {
       "base": "<p>Summary information about the DataIntegration association.</p>",
@@ -207,33 +227,27 @@
     },
     "DeleteApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDataIntegrationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDataIntegrationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEventIntegrationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEventIntegrationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -262,8 +276,7 @@
     },
     "DuplicateResourceException": {
       "base": "<p>A resource with the specified name already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EventBridgeBus": {
       "base": null,
@@ -385,33 +398,27 @@
     },
     "GetApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataIntegrationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataIntegrationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEventIntegrationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEventIntegrationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IdempotencyToken": {
       "base": null,
@@ -435,15 +442,42 @@
         "UpdateDataIntegrationRequest$Identifier": "<p>A unique identifier for the DataIntegration.</p>"
       }
     },
+    "IframeConfig": {
+      "base": "<p>The iframe configuration for the application.</p>",
+      "refs": {
+        "CreateApplicationRequest$IframeConfig": "<p>The iframe configuration for the application.</p>",
+        "GetApplicationResponse$IframeConfig": "<p>The iframe configuration for the application.</p>",
+        "UpdateApplicationRequest$IframeConfig": "<p>The iframe configuration for the application.</p>"
+      }
+    },
+    "IframePermission": {
+      "base": "<p>A permission for the iframe.</p>",
+      "refs": {
+        "IframePermissionList$member": null
+      }
+    },
+    "IframePermissionList": {
+      "base": "<p>A list of permissions for the iframe.</p>",
+      "refs": {
+        "IframeConfig$Allow": "<p>The list of features that are allowed in the iframe.</p>",
+        "IframeConfig$Sandbox": "<p>The list of sandbox attributes for the iframe.</p>"
+      }
+    },
+    "InitializationTimeout": {
+      "base": null,
+      "refs": {
+        "CreateApplicationRequest$InitializationTimeout": "<p>The maximum time in milliseconds allowed to establish a connection with the workspace.</p>",
+        "GetApplicationResponse$InitializationTimeout": "<p>The maximum time in milliseconds allowed to establish a connection with the workspace.</p>",
+        "UpdateApplicationRequest$InitializationTimeout": "<p>The maximum time in milliseconds allowed to establish a connection with the workspace.</p>"
+      }
+    },
     "InternalServiceError": {
       "base": "<p>Request processing failed due to an error or failure with the service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRequestException": {
       "base": "<p>The request is not valid. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LastExecutionStatus": {
       "base": "<p>The execution status of the last job.</p>",
@@ -453,73 +487,59 @@
     },
     "ListApplicationAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataIntegrationAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataIntegrationAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataIntegrationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataIntegrationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventIntegrationAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventIntegrationAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventIntegrationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventIntegrationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxResults": {
       "base": null,
@@ -654,13 +674,11 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource was not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceQuotaExceededException": {
       "base": "<p>The allowed quota for the resource has been exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ScheduleConfiguration": {
       "base": "<p>The name of the data and how often it should be pulled from the source.</p>",
@@ -730,13 +748,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -746,8 +762,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The throttling limit has been exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -778,58 +793,47 @@
     },
     "UnsupportedOperationException": {
       "base": "<p>The operation is not supported.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDataIntegrationAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDataIntegrationAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDataIntegrationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDataIntegrationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEventIntegrationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEventIntegrationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     }
   }
 }

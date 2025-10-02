@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>Catalog API actions allow you to manage your entities through list, describe, and update capabilities. An entity can be a product or an offer on AWS Marketplace. </p> <p>You can automate your entity update process by integrating the AWS Marketplace Catalog API with your AWS Marketplace product build or deployment pipelines. You can also create your own applications on top of the Catalog API to manage your products on AWS Marketplace.</p>",
+  "service": "<p>Catalog API actions allow you to manage your entities through list, describe, and update capabilities. An <i>entity</i> can be a product or an offer on AWS Marketplace. </p> <p>You can automate your entity update process by integrating the AWS Marketplace Catalog API with your AWS Marketplace product build or deployment pipelines. You can also create your own applications on top of the Catalog API to manage your products on AWS Marketplace.</p>",
   "operations": {
     "BatchDescribeEntities": "<p>Returns metadata and content for multiple entities. This is the Batch version of the <code>DescribeEntity</code> API and uses the same IAM permission action as <code>DescribeEntity</code> API.</p>",
     "CancelChangeSet": "<p>Used to cancel an open change request. Must be sent before the status of the request changes to <code>APPLYING</code>, the final stage of completing your change request. You can describe a change during the 60-day request history retention period for API calls.</p>",
@@ -12,7 +12,7 @@
     "ListEntities": "<p>Provides the list of entities of a given type.</p>",
     "ListTagsForResource": "<p>Lists all tags that have been added to a resource (either an <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#catalog-api-entities\">entity</a> or <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#working-with-change-sets\">change set</a>).</p>",
     "PutResourcePolicy": "<p>Attaches a resource-based policy to an entity. Examples of an entity include: <code>AmiProduct</code> and <code>ContainerProduct</code>.</p>",
-    "StartChangeSet": "<p>Allows you to request changes for your entities. Within a single <code>ChangeSet</code>, you can't start the same change type against the same entity multiple times. Additionally, when a <code>ChangeSet</code> is running, all the entities targeted by the different changes are locked until the change set has completed (either succeeded, cancelled, or failed). If you try to start a change set containing a change against an entity that is already locked, you will receive a <code>ResourceInUseException</code> error.</p> <p>For example, you can't start the <code>ChangeSet</code> described in the <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/API_StartChangeSet.html#API_StartChangeSet_Examples\">example</a> later in this topic because it contains two changes to run the same change type (<code>AddRevisions</code>) against the same entity (<code>entity-id@1</code>).</p> <p>For more information about working with change sets, see <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#working-with-change-sets\"> Working with change sets</a>. For information about change types for single-AMI products, see <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/ami-products.html#working-with-single-AMI-products\">Working with single-AMI products</a>. Also, for more information about change types available for container-based products, see <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/container-products.html#working-with-container-products\">Working with container products</a>.</p>",
+    "StartChangeSet": "<p>Allows you to request changes for your entities. Within a single <code>ChangeSet</code>, you can't start the same change type against the same entity multiple times. Additionally, when a <code>ChangeSet</code> is running, all the entities targeted by the different changes are locked until the change set has completed (either succeeded, cancelled, or failed). If you try to start a change set containing a change against an entity that is already locked, you will receive a <code>ResourceInUseException</code> error.</p> <p>For example, you can't start the <code>ChangeSet</code> described in the <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/API_StartChangeSet.html#API_StartChangeSet_Examples\">example</a> later in this topic because it contains two changes to run the same change type (<code>AddRevisions</code>) against the same entity (<code>entity-id@1</code>).</p> <p>For more information about working with change sets, see <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#working-with-change-sets\"> Working with change sets</a>. For information about change types for single-AMI products, see <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/ami-products.html#working-with-single-AMI-products\">Working with single-AMI products</a>. Also, for more information about change types available for container-based products, see <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/container-products.html#working-with-container-products\">Working with container products</a>.</p> <p>To download \"DetailsDocument\" shapes, see <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-python\">Python</a> and <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-java/tree/main\">Java</a> shapes on GitHub.</p>",
     "TagResource": "<p>Tags a resource (either an <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#catalog-api-entities\">entity</a> or <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#working-with-change-sets\">change set</a>).</p>",
     "UntagResource": "<p>Removes a tag or list of tags from a resource (either an <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#catalog-api-entities\">entity</a> or <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#working-with-change-sets\">change set</a>).</p>"
   },
@@ -31,8 +31,7 @@
     },
     "AccessDeniedException": {
       "base": "<p>Access is denied.</p> <p>HTTP status code: 403</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AmiProductEntityIdFilter": {
       "base": "<p>Object that allows filtering on entity id of an AMI product.</p>",
@@ -129,13 +128,11 @@
     },
     "BatchDescribeEntitiesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDescribeEntitiesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDescribeErrorCodeString": {
       "base": null,
@@ -157,13 +154,11 @@
     },
     "CancelChangeSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelChangeSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Catalog": {
       "base": null,
@@ -444,6 +439,8 @@
         "DescribeEntityResponse$LastModifiedDate": "<p>The last modified date of the entity, in ISO 8601 format (2018-02-27T13:45:22Z).</p>",
         "EntityDetail$LastModifiedDate": "<p>The last time the entity was modified.</p>",
         "EntitySummary$LastModifiedDate": "<p>The last time the entity was published, using ISO 8601 format (2018-02-27T13:45:22Z).</p>",
+        "MachineLearningProductLastModifiedDateFilterDateRange$AfterValue": "<p>The start date (inclusive) of the date range. The operation returns machine learning products with last modified dates on or after this date.</p>",
+        "MachineLearningProductLastModifiedDateFilterDateRange$BeforeValue": "<p>The end date (inclusive) of the date range. The operation returns machine learning products with last modified dates on or before this date.</p>",
         "OfferAvailabilityEndDateFilterDateRange$AfterValue": "<p>Allows filtering on the <code>AvailabilityEndDate</code> of an offer after a date.</p>",
         "OfferAvailabilityEndDateFilterDateRange$BeforeValue": "<p>Allows filtering on the <code>AvailabilityEndDate</code> of an offer before a date.</p>",
         "OfferLastModifiedDateFilterDateRange$AfterValue": "<p>Allows filtering on the <code>LastModifiedDate</code> of an offer after a date.</p>",
@@ -468,33 +465,27 @@
     },
     "DeleteResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeChangeSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeChangeSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEntityRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEntityResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Entity": {
       "base": "<p>An entity contains data that describes your product, its supported features, and how it can be used or launched by your customer. </p>",
@@ -648,13 +639,11 @@
     },
     "GetResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Identifier": {
       "base": null,
@@ -673,8 +662,7 @@
     },
     "InternalServiceException": {
       "base": "<p>There was an internal service exception.</p> <p>HTTP status code: 500</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Json": {
       "base": null,
@@ -687,9 +675,9 @@
     "JsonDocumentType": {
       "base": null,
       "refs": {
-        "Change$DetailsDocument": "<p>Alternative field that accepts a JSON value instead of a string for <code>ChangeType</code> details. You can use either <code>Details</code> or <code>DetailsDocument</code>, but not both.</p>",
-        "ChangeSummary$DetailsDocument": "<p>The JSON value of the details specific to the change type of the requested change.</p>",
-        "DescribeEntityResponse$DetailsDocument": "<p>The JSON value of the details specific to the entity.</p>",
+        "Change$DetailsDocument": "<p>Alternative field that accepts a JSON value instead of a string for <code>ChangeType</code> details. You can use either <code>Details</code> or <code>DetailsDocument</code>, but not both.</p> <p>To download the \"DetailsDocument\" shapes, see the <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-python\">Python</a> and <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-java/tree/main\">Java</a> shapes on GitHub.</p>",
+        "ChangeSummary$DetailsDocument": "<p>The JSON value of the details specific to the change type of the requested change.</p> <p>To download the \"DetailsDocument\" shapes, see the <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-python\">Python</a> and <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-java/tree/main\">Java</a> shapes on GitHub.</p>",
+        "DescribeEntityResponse$DetailsDocument": "<p>The JSON value of the details specific to the entity.</p> <p>To download \"DetailsDocument\" shapes, see the <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-python\">Python</a> and <a href=\"https://github.com/awslabs/aws-marketplace-catalog-api-shapes-for-java/tree/main\">Java</a> shapes on GitHub.</p>",
         "EntityDetail$DetailsDocument": "<p>An object that contains all the details of the entity.</p>"
       }
     },
@@ -701,13 +689,11 @@
     },
     "ListChangeSetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListChangeSetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEntitiesMaxResultInteger": {
       "base": null,
@@ -717,22 +703,111 @@
     },
     "ListEntitiesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEntitiesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
+      "refs": {}
+    },
+    "MachineLearningProductEntityIdFilter": {
+      "base": "<p>The filter for machine learning product entity IDs.</p>",
       "refs": {
+        "MachineLearningProductFilters$EntityId": "<p>Filter machine learning products by their entity IDs.</p>"
+      }
+    },
+    "MachineLearningProductEntityIdFilterValueList": {
+      "base": "<p>A list of entity ID values to filter by. You can include up to 10 entity IDs in this list.</p>",
+      "refs": {
+        "MachineLearningProductEntityIdFilter$ValueList": "<p>A list of entity IDs to filter by. The operation returns machine learning products with entity IDs that match the values in this list.</p>"
+      }
+    },
+    "MachineLearningProductEntityIdString": {
+      "base": "<p>The entity ID of a machine learning product. This string uniquely identifies the product.</p>",
+      "refs": {
+        "MachineLearningProductEntityIdFilterValueList$member": null
+      }
+    },
+    "MachineLearningProductFilters": {
+      "base": "<p>The filters that you can use with the ListEntities operation to filter machine learning products. You can filter by EntityId, LastModifiedDate, ProductTitle, and Visibility.</p>",
+      "refs": {
+        "EntityTypeFilters$MachineLearningProductFilters": null
+      }
+    },
+    "MachineLearningProductLastModifiedDateFilter": {
+      "base": "<p>The filter for machine learning product last modified date.</p>",
+      "refs": {
+        "MachineLearningProductFilters$LastModifiedDate": "<p>Filter machine learning products by their last modified date.</p>"
+      }
+    },
+    "MachineLearningProductLastModifiedDateFilterDateRange": {
+      "base": "<p>A date range for filtering machine learning products by their last modified date.</p>",
+      "refs": {
+        "MachineLearningProductLastModifiedDateFilter$DateRange": "<p>A date range to filter by. The operation returns machine learning products with last modified dates that fall within this range.</p>"
+      }
+    },
+    "MachineLearningProductSort": {
+      "base": "<p>The sort options for machine learning products.</p>",
+      "refs": {
+        "EntityTypeSort$MachineLearningProductSort": null
+      }
+    },
+    "MachineLearningProductSortBy": {
+      "base": "<p>The fields that you can sort machine learning products by.</p>",
+      "refs": {
+        "MachineLearningProductSort$SortBy": "<p>The field to sort by. Valid values: <code>EntityId</code>, <code>LastModifiedDate</code>, <code>ProductTitle</code>, and <code>Visibility</code>.</p>"
+      }
+    },
+    "MachineLearningProductSummary": {
+      "base": "<p>A summary of a machine learning product.</p>",
+      "refs": {
+        "EntitySummary$MachineLearningProductSummary": null
+      }
+    },
+    "MachineLearningProductTitleFilter": {
+      "base": "<p>The filter for machine learning product titles.</p>",
+      "refs": {
+        "MachineLearningProductFilters$ProductTitle": "<p>Filter machine learning products by their product titles.</p>"
+      }
+    },
+    "MachineLearningProductTitleFilterValueList": {
+      "base": "<p>A list of product title values to filter by. You can include up to 10 product titles in this list.</p>",
+      "refs": {
+        "MachineLearningProductTitleFilter$ValueList": "<p>A list of product titles to filter by. The operation returns machine learning products with titles that exactly match the values in this list.</p>"
+      }
+    },
+    "MachineLearningProductTitleString": {
+      "base": "<p>The title of a machine learning product.</p>",
+      "refs": {
+        "MachineLearningProductSummary$ProductTitle": "<p>The title of the machine learning product.</p>",
+        "MachineLearningProductTitleFilter$WildCardValue": "<p>A wildcard value to filter product titles. The operation returns machine learning products with titles that match this wildcard pattern.</p>",
+        "MachineLearningProductTitleFilterValueList$member": null
+      }
+    },
+    "MachineLearningProductVisibilityFilter": {
+      "base": "<p>The filter for machine learning product visibility status.</p>",
+      "refs": {
+        "MachineLearningProductFilters$Visibility": "<p>Filter machine learning products by their visibility status.</p>"
+      }
+    },
+    "MachineLearningProductVisibilityFilterValueList": {
+      "base": "<p>A list of visibility status values to filter by. You can include up to 10 visibility status values in this list.</p>",
+      "refs": {
+        "MachineLearningProductVisibilityFilter$ValueList": "<p>A list of visibility values to filter by. The operation returns machine learning products with visibility status that match the values in this list.</p>"
+      }
+    },
+    "MachineLearningProductVisibilityString": {
+      "base": "<p>The visibility status of a machine learning product. Valid values are:</p> <ul> <li> <p> <code>Limited</code> - The product is available to a limited set of buyers.</p> </li> <li> <p> <code>Public</code> - The product is publicly available to all buyers.</p> </li> <li> <p> <code>Restricted</code> - The product has restricted availability.</p> </li> <li> <p> <code>Draft</code> - The product is in draft state and not yet available to buyers.</p> </li> </ul>",
+      "refs": {
+        "MachineLearningProductSummary$Visibility": "<p>The visibility status of the machine learning product. Valid values are <code>Limited</code>, <code>Public</code>, <code>Restricted</code>, and <code>Draft</code>.</p>",
+        "MachineLearningProductVisibilityFilterValueList$member": null
       }
     },
     "NextToken": {
@@ -956,13 +1031,11 @@
     },
     "PutResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RequestedChangeList": {
       "base": null,
@@ -1307,18 +1380,15 @@
     },
     "ResourceInUseException": {
       "base": "<p>The resource is currently in use.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource wasn't found.</p> <p>HTTP status code: 404</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotSupportedException": {
       "base": "<p>Currently, the specified resource is not supported.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourcePolicyJson": {
       "base": null,
@@ -1422,8 +1492,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The maximum number of open requests per account has been exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Sort": {
       "base": "<p>An object that contains two attributes, <code>SortBy</code> and <code>SortOrder</code>.</p>",
@@ -1444,6 +1513,7 @@
         "AmiProductSort$SortOrder": "<p>The sorting order. Can be <code>ASCENDING</code> or <code>DESCENDING</code>. The default value is <code>DESCENDING</code>.</p>",
         "ContainerProductSort$SortOrder": "<p>The sorting order. Can be <code>ASCENDING</code> or <code>DESCENDING</code>. The default value is <code>DESCENDING</code>.</p>",
         "DataProductSort$SortOrder": "<p>The sorting order. Can be <code>ASCENDING</code> or <code>DESCENDING</code>. The default value is <code>DESCENDING</code>.</p>",
+        "MachineLearningProductSort$SortOrder": "<p>The sort order. Valid values are <code>ASC</code> (ascending) and <code>DESC</code> (descending).</p>",
         "OfferSort$SortOrder": "<p>Allows to sort offers.</p>",
         "ResaleAuthorizationSort$SortOrder": "<p>Allows to sort ResaleAuthorization.</p>",
         "SaaSProductSort$SortOrder": "<p>The sorting order. Can be <code>ASCENDING</code> or <code>DESCENDING</code>. The default value is <code>DESCENDING</code>.</p>",
@@ -1452,13 +1522,11 @@
     },
     "StartChangeSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartChangeSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Tag": {
       "base": "<p>A list of objects specifying each key name and value.</p>",
@@ -1490,13 +1558,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1506,23 +1572,19 @@
     },
     "ThrottlingException": {
       "base": "<p>Too many requests.</p> <p>HTTP status code: 429</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>An error occurred during validation.</p> <p>HTTP status code: 422</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValueList": {
       "base": null,

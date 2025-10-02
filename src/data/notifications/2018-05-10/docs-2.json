@@ -1,19 +1,21 @@
 {
   "version": "2.0",
-  "service": "<p>The <i>Amazon Web Services User Notifications API Reference</i> provides descriptions, API request parameters, and the JSON response for each of the User Notification API actions.</p> <p>User Notification control plane APIs are currently available in US East (Virginia) - <code>us-east-1</code>.</p> <p> <a href=\"https://docs.aws.amazon.com/notifications/latest/APIReference/API_GetNotificationEvent.html\">GetNotificationEvent</a> and <a href=\"https://docs.aws.amazon.com/notifications/latest/APIReference/API_ListNotificationEvents.html\">ListNotificationEvents</a> APIs are currently available in <a href=\"https://docs.aws.amazon.com/notifications/latest/userguide/supported-regions.html\">commercial partition Regions</a> and only return notifications stored in the same Region in which they're called.</p> <p>The User Notifications console can only be used in US East (Virginia). Your data however, is stored in each Region chosen as a <a href=\"https://docs.aws.amazon.com/notifications/latest/userguide/notification-hubs.html\">notification hub</a> in addition to US East (Virginia).</p>",
+  "service": "<p>The <i>User Notifications API Reference</i> provides descriptions, API request parameters, and the JSON response for each of the User Notifications API actions.</p> <p>User Notification control plane APIs are currently available in US East (Virginia) - <code>us-east-1</code>.</p> <p> <a href=\"https://docs.aws.amazon.com/notifications/latest/APIReference/API_GetNotificationEvent.html\">GetNotificationEvent</a> and <a href=\"https://docs.aws.amazon.com/notifications/latest/APIReference/API_ListNotificationEvents.html\">ListNotificationEvents</a> APIs are currently available in <a href=\"https://docs.aws.amazon.com/notifications/latest/userguide/supported-regions.html\">commercial partition Regions</a> and only return notifications stored in the same Region in which they're called.</p> <p>The User Notifications console can only be used in US East (Virginia). Your data however, is stored in each Region chosen as a <a href=\"https://docs.aws.amazon.com/notifications/latest/userguide/notification-hubs.html\">notification hub</a> in addition to US East (Virginia).</p> <note> <p>For information about descriptions, API request parameters, and the JSON response for email contact related API actions, see the <a href=\"https://docs.aws.amazon.com/notificationscontacts/latest/APIReference/Welcome.html\">User Notifications Contacts API Reference Guide</a>.</p> </note>",
   "operations": {
-    "AssociateChannel": "<p>Associates a delivery <a href=\"https://docs.aws.amazon.com/notifications/latest/userguide/managing-delivery-channels.html\">Channel</a> with a particular <code>NotificationConfiguration</code>. Supported Channels include Chatbot, the Console Mobile Application, and emails (notifications-contacts).</p>",
+    "AssociateChannel": "<p>Associates a delivery <a href=\"https://docs.aws.amazon.com/notifications/latest/userguide/managing-delivery-channels.html\">Channel</a> with a particular <code>NotificationConfiguration</code>. Supported Channels include Amazon Q Developer in chat applications, the Console Mobile Application, and emails (notifications-contacts).</p>",
     "AssociateManagedNotificationAccountContact": "<p>Associates an Account Contact with a particular <code>ManagedNotificationConfiguration</code>.</p>",
-    "AssociateManagedNotificationAdditionalChannel": "<p>Associates an additional Channel with a particular <code>ManagedNotificationConfiguration</code>.</p> <p>Supported Channels include Chatbot, the Console Mobile Application, and emails (notifications-contacts).</p>",
+    "AssociateManagedNotificationAdditionalChannel": "<p>Associates an additional Channel with a particular <code>ManagedNotificationConfiguration</code>.</p> <p>Supported Channels include Amazon Q Developer in chat applications, the Console Mobile Application, and emails (notifications-contacts).</p>",
+    "AssociateOrganizationalUnit": "<p>Associates an organizational unit with a notification configuration.</p>",
     "CreateEventRule": "<p>Creates an <a href=\"https://docs.aws.amazon.com/notifications/latest/userguide/glossary.html\"> <code>EventRule</code> </a> that is associated with a specified <code>NotificationConfiguration</code>.</p>",
     "CreateNotificationConfiguration": "<p>Creates a new <code>NotificationConfiguration</code>.</p>",
     "DeleteEventRule": "<p>Deletes an <code>EventRule</code>.</p>",
     "DeleteNotificationConfiguration": "<p>Deletes a <code>NotificationConfiguration</code>.</p>",
     "DeregisterNotificationHub": "<p>Deregisters a <code>NotificationConfiguration</code> in the specified Region.</p> <note> <p>You can't deregister the last <code>NotificationHub</code> in the account. <code>NotificationEvents</code> stored in the deregistered <code>NotificationConfiguration</code> are no longer be visible. Recreating a new <code>NotificationConfiguration</code> in the same Region restores access to those <code>NotificationEvents</code>.</p> </note>",
     "DisableNotificationsAccessForOrganization": "<p>Disables service trust between User Notifications and Amazon Web Services Organizations.</p>",
-    "DisassociateChannel": "<p>Disassociates a Channel from a specified <code>NotificationConfiguration</code>. Supported Channels include Chatbot, the Console Mobile Application, and emails (notifications-contacts).</p>",
+    "DisassociateChannel": "<p>Disassociates a Channel from a specified <code>NotificationConfiguration</code>. Supported Channels include Amazon Q Developer in chat applications, the Console Mobile Application, and emails (notifications-contacts).</p>",
     "DisassociateManagedNotificationAccountContact": "<p>Disassociates an Account Contact with a particular <code>ManagedNotificationConfiguration</code>.</p>",
-    "DisassociateManagedNotificationAdditionalChannel": "<p>Disassociates an additional Channel from a particular <code>ManagedNotificationConfiguration</code>.</p> <p>Supported Channels include Chatbot, the Console Mobile Application, and emails (notifications-contacts).</p>",
+    "DisassociateManagedNotificationAdditionalChannel": "<p>Disassociates an additional Channel from a particular <code>ManagedNotificationConfiguration</code>.</p> <p>Supported Channels include Amazon Q Developer in chat applications, the Console Mobile Application, and emails (notifications-contacts).</p>",
+    "DisassociateOrganizationalUnit": "<p>Removes the association between an organizational unit and a notification configuration.</p>",
     "EnableNotificationsAccessForOrganization": "<p>Enables service trust between User Notifications and Amazon Web Services Organizations.</p>",
     "GetEventRule": "<p>Returns a specified <code>EventRule</code>.</p>",
     "GetManagedNotificationChildEvent": "<p>Returns the child event of a specific given <code>ManagedNotificationEvent</code>.</p>",
@@ -28,9 +30,11 @@
     "ListManagedNotificationChildEvents": "<p>Returns a list of <code>ManagedNotificationChildEvents</code> for a specified aggregate <code>ManagedNotificationEvent</code>, ordered by creation time in reverse chronological order (newest first).</p>",
     "ListManagedNotificationConfigurations": "<p>Returns a list of Managed Notification Configurations according to specified filters, ordered by creation time in reverse chronological order (newest first).</p>",
     "ListManagedNotificationEvents": "<p>Returns a list of Managed Notification Events according to specified filters, ordered by creation time in reverse chronological order (newest first).</p>",
+    "ListMemberAccounts": "<p>Returns a list of member accounts associated with a notification configuration.</p>",
     "ListNotificationConfigurations": "<p>Returns a list of abbreviated <code>NotificationConfigurations</code> according to specified filters, in reverse chronological order (newest first).</p>",
     "ListNotificationEvents": "<p>Returns a list of <code>NotificationEvents</code> according to specified filters, in reverse chronological order (newest first).</p> <important> <p>User Notifications stores notifications in the individual Regions you register as notification hubs and the Region of the source event rule. ListNotificationEvents only returns notifications stored in the same Region in which the action is called. User Notifications doesn't backfill notifications to new Regions selected as notification hubs. For this reason, we recommend that you make calls in your oldest registered notification hub. For more information, see <a href=\"https://docs.aws.amazon.com/notifications/latest/userguide/notification-hubs.html\">Notification hubs</a> in the <i>Amazon Web Services User Notifications User Guide</i>.</p> </important>",
     "ListNotificationHubs": "<p>Returns a list of <code>NotificationHubs</code>.</p>",
+    "ListOrganizationalUnits": "<p>Returns a list of organizational units associated with a notification configuration.</p>",
     "ListTagsForResource": "<p>Returns a list of tags for a specified Amazon Resource Name (ARN).</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html\">Tagging your Amazon Web Services resources</a> in the <i>Tagging Amazon Web Services Resources User Guide</i>.</p> <note> <p>This is only supported for <code>NotificationConfigurations</code>.</p> </note>",
     "RegisterNotificationHub": "<p>Registers a <code>NotificationConfiguration</code> in the specified Region.</p> <p>There is a maximum of one <code>NotificationConfiguration</code> per Region. You can have a maximum of 3 <code>NotificationHub</code> resources at a time.</p>",
     "TagResource": "<p>Tags the resource with a tag key and value.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html\">Tagging your Amazon Web Services resources</a> in the <i>Tagging Amazon Web Services Resources User Guide</i>.</p> <note> <p>This is only supported for <code>NotificationConfigurations</code>.</p> </note>",
@@ -41,8 +45,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>User does not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessStatus": {
       "base": null,
@@ -62,8 +65,10 @@
       "refs": {
         "ListManagedNotificationChildEventsRequest$relatedAccount": "<p>The Amazon Web Services account ID associated with the Managed Notification Child Events.</p>",
         "ListManagedNotificationEventsRequest$relatedAccount": "<p>The Amazon Web Services account ID associated with the Managed Notification Events.</p>",
+        "ListMemberAccountsRequest$memberAccount": "<p>The member account identifier used to filter the results.</p>",
         "ManagedNotificationChildEventOverview$relatedAccount": "<p>The account that related to the <code>ManagedNotificationChildEvent</code>.</p>",
         "ManagedNotificationEventOverview$relatedAccount": "<p>The account that related to the <code>ManagedNotificationEvent</code>.</p>",
+        "MemberAccount$accountId": "<p>The AWS account ID of the member account.</p>",
         "NotificationEventOverview$relatedAccount": "<p>The account name containing the <code>NotificationHub</code>.</p>"
       }
     },
@@ -127,33 +132,35 @@
     },
     "AssociateChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateManagedNotificationAccountContactRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateManagedNotificationAccountContactResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateManagedNotificationAdditionalChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateManagedNotificationAdditionalChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "AssociateOrganizationalUnitRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateOrganizationalUnitResponse": {
+      "base": null,
+      "refs": {}
     },
     "Boolean": {
       "base": null,
@@ -164,8 +171,8 @@
     "ChannelArn": {
       "base": null,
       "refs": {
-        "AssociateChannelRequest$arn": "<p>The Amazon Resource Name (ARN) of the Channel to associate with the <code>NotificationConfiguration</code>.</p> <p>Supported ARNs include Chatbot, the Console Mobile Application, and notifications-contacts.</p>",
-        "AssociateManagedNotificationAdditionalChannelRequest$channelArn": "<p>The Amazon Resource Name (ARN) of the Channel to associate with the <code>ManagedNotificationConfiguration</code>.</p> <p>Supported ARNs include Chatbot, the Console Mobile Application, and email (notifications-contacts).</p>",
+        "AssociateChannelRequest$arn": "<p>The Amazon Resource Name (ARN) of the Channel to associate with the <code>NotificationConfiguration</code>.</p> <p>Supported ARNs include Amazon Q Developer in chat applications, the Console Mobile Application, and notifications-contacts.</p>",
+        "AssociateManagedNotificationAdditionalChannelRequest$channelArn": "<p>The Amazon Resource Name (ARN) of the Channel to associate with the <code>ManagedNotificationConfiguration</code>.</p> <p>Supported ARNs include Amazon Q Developer in chat applications, the Console Mobile Application, and email (notifications-contacts).</p>",
         "Channels$member": null,
         "DisassociateChannelRequest$arn": "<p>The Amazon Resource Name (ARN) of the Channel to disassociate.</p>",
         "DisassociateManagedNotificationAdditionalChannelRequest$channelArn": "<p>The Amazon Resource Name (ARN) of the Channel to associate with the <code>ManagedNotificationConfiguration</code>.</p>",
@@ -187,7 +194,7 @@
     "ChannelType": {
       "base": null,
       "refs": {
-        "ManagedNotificationChannelAssociationSummary$channelType": "<p>The type of notification channel used for message delivery.</p> <ul> <li> <p>Values:</p> <ul> <li> <p> <code>ACCOUNT_CONTACT</code> </p> <ul> <li> <p>Delivers notifications to Account Managed contacts through the User Notification Service.</p> </li> </ul> </li> <li> <p> <code>MOBILE</code> </p> <ul> <li> <p>Delivers notifications through the Amazon Web Services Console Mobile Application to mobile devices.</p> </li> </ul> </li> <li> <p> <code>CHATBOT</code> </p> <ul> <li> <p>Delivers notifications through Chatbot to collaboration platforms (Slack, Chime).</p> </li> </ul> </li> <li> <p> <code>EMAIL</code> </p> <ul> <li> <p>Delivers notifications to email addresses.</p> </li> </ul> </li> </ul> </li> </ul>"
+        "ManagedNotificationChannelAssociationSummary$channelType": "<p>The type of notification channel used for message delivery.</p> <ul> <li> <p>Values:</p> <ul> <li> <p> <code>ACCOUNT_CONTACT</code> </p> <ul> <li> <p>Delivers notifications to Account Managed contacts through the User Notification Service.</p> </li> </ul> </li> <li> <p> <code>MOBILE</code> </p> <ul> <li> <p>Delivers notifications through the Amazon Web Services Console Mobile Application to mobile devices.</p> </li> </ul> </li> <li> <p> <code>CHATBOT</code> </p> <ul> <li> <p>Delivers notifications through Amazon Q Developer in chat applications to collaboration platforms (Slack, Chime).</p> </li> </ul> </li> <li> <p> <code>EMAIL</code> </p> <ul> <li> <p>Delivers notifications to email addresses.</p> </li> </ul> </li> </ul> </li> </ul>"
       }
     },
     "Channels": {
@@ -198,28 +205,23 @@
     },
     "ConflictException": {
       "base": "<p>Updating or deleting a resource can cause an inconsistent state.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEventRuleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEventRuleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateNotificationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateNotificationConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreationTime": {
       "base": null,
@@ -240,33 +242,27 @@
     },
     "DeleteEventRuleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEventRuleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteNotificationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteNotificationConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterNotificationHubRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterNotificationHubResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Dimension": {
       "base": "<p>The key-value pair of properties for an event.</p>",
@@ -282,53 +278,51 @@
     },
     "DisableNotificationsAccessForOrganizationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisableNotificationsAccessForOrganizationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateManagedNotificationAccountContactRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateManagedNotificationAccountContactResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateManagedNotificationAdditionalChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateManagedNotificationAdditionalChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DisassociateOrganizationalUnitRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateOrganizationalUnitResponse": {
+      "base": null,
+      "refs": {}
     },
     "EnableNotificationsAccessForOrganizationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EnableNotificationsAccessForOrganizationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ErrorMessage": {
       "base": null,
@@ -414,73 +408,59 @@
     },
     "GetEventRuleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEventRuleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedNotificationChildEventRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedNotificationChildEventResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedNotificationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedNotificationConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedNotificationEventRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedNotificationEventResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNotificationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNotificationConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNotificationEventRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNotificationEventResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNotificationsAccessForOrganizationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNotificationsAccessForOrganizationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Integer": {
       "base": null,
@@ -492,8 +472,7 @@
     },
     "InternalServerException": {
       "base": "<p>Unexpected error during processing of request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LastActivationTime": {
       "base": null,
@@ -504,8 +483,7 @@
     },
     "ListChannelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListChannelsRequestMaxResultsInteger": {
       "base": null,
@@ -515,13 +493,11 @@
     },
     "ListChannelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventRulesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventRulesRequestMaxResultsInteger": {
       "base": null,
@@ -531,13 +507,11 @@
     },
     "ListEventRulesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedNotificationChannelAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedNotificationChannelAssociationsRequestMaxResultsInteger": {
       "base": null,
@@ -547,13 +521,11 @@
     },
     "ListManagedNotificationChannelAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedNotificationChildEventsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedNotificationChildEventsRequestMaxResultsInteger": {
       "base": null,
@@ -563,13 +535,11 @@
     },
     "ListManagedNotificationChildEventsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedNotificationConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedNotificationConfigurationsRequestMaxResultsInteger": {
       "base": null,
@@ -579,13 +549,11 @@
     },
     "ListManagedNotificationConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedNotificationEventsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedNotificationEventsRequestMaxResultsInteger": {
       "base": null,
@@ -595,13 +563,25 @@
     },
     "ListManagedNotificationEventsResponse": {
       "base": null,
+      "refs": {}
+    },
+    "ListMemberAccountsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListMemberAccountsRequestMaxResultsInteger": {
+      "base": null,
       "refs": {
+        "ListMemberAccountsRequest$maxResults": "<p>The maximum number of results to return in a single call. Valid values are 1-100.</p>"
       }
+    },
+    "ListMemberAccountsResponse": {
+      "base": null,
+      "refs": {}
     },
     "ListNotificationConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNotificationConfigurationsRequestMaxResultsInteger": {
       "base": null,
@@ -611,13 +591,11 @@
     },
     "ListNotificationConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNotificationEventsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNotificationEventsRequestMaxResultsInteger": {
       "base": null,
@@ -627,13 +605,11 @@
     },
     "ListNotificationEventsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNotificationHubsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNotificationHubsRequestMaxResultsInteger": {
       "base": null,
@@ -643,18 +619,29 @@
     },
     "ListNotificationHubsResponse": {
       "base": null,
+      "refs": {}
+    },
+    "ListOrganizationalUnitsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListOrganizationalUnitsRequestMaxResultsInteger": {
+      "base": null,
       "refs": {
+        "ListOrganizationalUnitsRequest$maxResults": "<p>The maximum number of organizational units to return in a single call. Valid values are 1-100.</p>"
       }
+    },
+    "ListOrganizationalUnitsResponse": {
+      "base": null,
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LocaleCode": {
       "base": null,
@@ -781,7 +768,7 @@
     "ManagedNotificationEventSummary": {
       "base": "<p>A short summary of a <code>ManagedNotificationEvent</code>. This is only used when listing managed notification events.</p>",
       "refs": {
-        "ManagedNotificationEventOverview$notificationEvent": null
+        "ManagedNotificationEventOverview$notificationEvent": "<p/>"
       }
     },
     "ManagedNotificationEvents": {
@@ -846,6 +833,25 @@
         "MediaElement$mediaId": "<p>The unique ID for the media.</p>"
       }
     },
+    "MemberAccount": {
+      "base": "<p>Contains information about a member account.</p>",
+      "refs": {
+        "MemberAccounts$member": null
+      }
+    },
+    "MemberAccountNotificationConfigurationStatus": {
+      "base": null,
+      "refs": {
+        "ListMemberAccountsRequest$status": "<p>The status used to filter the member accounts.</p>",
+        "MemberAccount$status": "<p>The current status of the member account.</p>"
+      }
+    },
+    "MemberAccounts": {
+      "base": null,
+      "refs": {
+        "ListMemberAccountsResponse$memberAccounts": "<p>The list of member accounts that match the specified criteria.</p>"
+      }
+    },
     "MessageComponents": {
       "base": "<p>Describes the components of a notification message.</p>",
       "refs": {
@@ -883,23 +889,29 @@
         "ListManagedNotificationConfigurationsResponse$nextToken": "<p>A pagination token. If a non-null pagination token is returned in a result, pass its value in another request to retrieve more entries.</p>",
         "ListManagedNotificationEventsRequest$nextToken": "<p>The start token for paginated calls. Retrieved from the response of a previous <code>ListManagedNotificationChannelAssociations</code> call. Next token uses Base64 encoding.</p>",
         "ListManagedNotificationEventsResponse$nextToken": "<p>A pagination token. If a non-null pagination token is returned in a result, pass its value in another request to retrieve more entries.</p>",
+        "ListMemberAccountsRequest$nextToken": "<p>The token for the next page of results. Use the value returned in the previous response.</p>",
+        "ListMemberAccountsResponse$nextToken": "<p>The token to use for the next page of results.</p>",
         "ListNotificationConfigurationsRequest$nextToken": "<p>The start token for paginated calls. Retrieved from the response of a previous <code>ListEventRules</code> call. Next token uses Base64 encoding.</p>",
         "ListNotificationConfigurationsResponse$nextToken": "<p>A pagination token. If a non-null pagination token is returned in a result, pass its value in another request to retrieve more entries.</p>",
         "ListNotificationEventsRequest$nextToken": "<p>The start token for paginated calls. Retrieved from the response of a previous <code>ListEventRules</code> call. Next token uses Base64 encoding.</p>",
         "ListNotificationEventsResponse$nextToken": "<p>A pagination token. If a non-null pagination token is returned in a result, pass its value in another request to retrieve more entries.</p>",
         "ListNotificationHubsRequest$nextToken": "<p>A pagination token. Set to null to start listing notification hubs from the start.</p>",
-        "ListNotificationHubsResponse$nextToken": "<p>A pagination token. If a non-null pagination token is returned in a result, pass its value in another request to retrieve more entries.</p>"
+        "ListNotificationHubsResponse$nextToken": "<p>A pagination token. If a non-null pagination token is returned in a result, pass its value in another request to retrieve more entries.</p>",
+        "ListOrganizationalUnitsRequest$nextToken": "<p>The token for the next page of results. Use the value returned in the previous response.</p>",
+        "ListOrganizationalUnitsResponse$nextToken": "<p>The token to use for the next page of results. If there are no additional results, this value is null.</p>"
       }
     },
     "NotificationConfigurationArn": {
       "base": null,
       "refs": {
         "AssociateChannelRequest$notificationConfigurationArn": "<p>The ARN of the <code>NotificationConfiguration</code> to associate with the Channel.</p>",
+        "AssociateOrganizationalUnitRequest$notificationConfigurationArn": "<p>The Amazon Resource Name (ARN) of the notification configuration to associate with the organizational unit.</p>",
         "CreateEventRuleRequest$notificationConfigurationArn": "<p>The Amazon Resource Name (ARN) of the <code>NotificationConfiguration</code> associated with this <code>EventRule</code>.</p>",
         "CreateEventRuleResponse$notificationConfigurationArn": "<p>The ARN of a <code>NotificationConfiguration</code>.</p>",
         "CreateNotificationConfigurationResponse$arn": "<p>The Amazon Resource Name (ARN) of the <code>NotificationConfiguration</code>.</p>",
         "DeleteNotificationConfigurationRequest$arn": "<p>The Amazon Resource Name (ARN) of the <code>NotificationConfiguration</code> to delete.</p>",
         "DisassociateChannelRequest$notificationConfigurationArn": "<p>The ARN of the <code>NotificationConfiguration</code> to disassociate.</p>",
+        "DisassociateOrganizationalUnitRequest$notificationConfigurationArn": "<p>The Amazon Resource Name (ARN) of the notification configuration to disassociate from the organizational unit.</p>",
         "EventRuleStructure$notificationConfigurationArn": "<p>The ARN for the <code>NotificationConfiguration</code> associated with this <code>EventRule</code>.</p>",
         "GetEventRuleResponse$notificationConfigurationArn": "<p>The ARN of a <code>NotificationConfiguration</code>.</p>",
         "GetNotificationConfigurationRequest$arn": "<p>The Amazon Resource Name (ARN) of the <code>NotificationConfiguration</code> to return.</p>",
@@ -907,7 +919,10 @@
         "GetNotificationEventResponse$notificationConfigurationArn": "<p>The ARN of the <code>NotificationConfiguration</code>.</p>",
         "ListChannelsRequest$notificationConfigurationArn": "<p>The Amazon Resource Name (ARN) of the <code>NotificationConfiguration</code>.</p>",
         "ListEventRulesRequest$notificationConfigurationArn": "<p>The Amazon Resource Name (ARN) of the <code>NotificationConfiguration</code>.</p>",
+        "ListMemberAccountsRequest$notificationConfigurationArn": "<p>The Amazon Resource Name (ARN) of the notification configuration used to filter the member accounts.</p>",
+        "ListOrganizationalUnitsRequest$notificationConfigurationArn": "<p>The Amazon Resource Name (ARN) of the notification configuration used to filter the organizational units.</p>",
         "ListTagsForResourceRequest$arn": "<p>The Amazon Resource Name (ARN) to use to list tags.</p>",
+        "MemberAccount$notificationConfigurationArn": "<p>The Amazon Resource Name (ARN) of the notification configuration associated with the member account.</p>",
         "NotificationConfigurationStructure$arn": "<p>The Amazon Resource Name (ARN) of the <code>NotificationConfiguration</code> resource.</p>",
         "NotificationEventOverview$notificationConfigurationArn": "<p>The ARN of the <code>NotificationConfiguration</code>.</p>",
         "TagResourceRequest$arn": "<p>The Amazon Resource Name (ARN) to use to tag a resource.</p>",
@@ -948,6 +963,14 @@
       "base": "<p>Contains the complete list of fields for a NotificationConfiguration.</p>",
       "refs": {
         "NotificationConfigurations$member": null
+      }
+    },
+    "NotificationConfigurationSubtype": {
+      "base": null,
+      "refs": {
+        "GetNotificationConfigurationResponse$subtype": "<p>The subtype of the notification configuration returned in the response.</p>",
+        "ListNotificationConfigurationsRequest$subtype": "<p>The subtype used to filter the notification configurations in the request.</p>",
+        "NotificationConfigurationStructure$subtype": "<p>The subtype of the notification configuration.</p>"
       }
     },
     "NotificationConfigurations": {
@@ -1051,12 +1074,26 @@
     "OrganizationalUnitId": {
       "base": null,
       "refs": {
+        "AssociateOrganizationalUnitRequest$organizationalUnitId": "<p>The unique identifier of the organizational unit to associate.</p>",
+        "DisassociateOrganizationalUnitRequest$organizationalUnitId": "<p>The unique identifier of the organizational unit to disassociate.</p>",
         "ListManagedNotificationChildEventsRequest$organizationalUnitId": "<p>The identifier of the Amazon Web Services Organizations organizational unit (OU) associated with the Managed Notification Child Events.</p>",
         "ListManagedNotificationEventsRequest$organizationalUnitId": "<p>The Organizational Unit Id that an Amazon Web Services account belongs to.</p>",
+        "ListMemberAccountsRequest$organizationalUnitId": "<p>The organizational unit ID used to filter the member accounts.</p>",
+        "ListNotificationEventsRequest$organizationalUnitId": "<p>The unique identifier of the organizational unit used to filter notification events.</p>",
         "ManagedNotificationChildEvent$organizationalUnitId": "<p>The Organizational Unit Id that an Amazon Web Services account belongs to.</p>",
         "ManagedNotificationChildEventOverview$organizationalUnitId": "<p>The Organizational Unit Id that an AWS account belongs to.</p>",
         "ManagedNotificationEvent$organizationalUnitId": "<p>The Organizational Unit Id that an Amazon Web Services account belongs to.</p>",
-        "ManagedNotificationEventOverview$organizationalUnitId": "<p>The Organizational Unit Id that an Amazon Web Services account belongs to.</p>"
+        "ManagedNotificationEventOverview$organizationalUnitId": "<p>The Organizational Unit Id that an Amazon Web Services account belongs to.</p>",
+        "MemberAccount$organizationalUnitId": "<p>The unique identifier of the organizational unit containing the member account.</p>",
+        "NotificationEvent$organizationalUnitId": "<p>The unique identifier of the organizational unit associated with the notification event.</p>",
+        "NotificationEventOverview$organizationalUnitId": "<p>The unique identifier of the organizational unit in the notification event overview.</p>",
+        "OrganizationalUnits$member": null
+      }
+    },
+    "OrganizationalUnits": {
+      "base": null,
+      "refs": {
+        "ListOrganizationalUnitsResponse$organizationalUnits": "<p>The list of organizational units that match the specified criteria.</p>"
       }
     },
     "QuotaCode": {
@@ -1090,13 +1127,11 @@
     },
     "RegisterNotificationHubRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterNotificationHubResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Resource": {
       "base": "<p>A resource affected by or closely linked to an event.</p>",
@@ -1114,8 +1149,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>Request references a resource which does not exist. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceType": {
       "base": null,
@@ -1161,8 +1195,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>Request would cause a service quota to be exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Source": {
       "base": null,
@@ -1244,6 +1277,7 @@
         "ManagedNotificationChannelAssociationSummary$channelIdentifier": "<p>The unique identifier for the notification channel.</p>",
         "ManagedNotificationChildEvent$sourceEventDetailUrlDisplayText": "<p>The detailed URL for the source event.</p>",
         "ManagedNotificationEvent$sourceEventDetailUrlDisplayText": "<p>Text that needs to be hyperlinked with the sourceEventDetailUrl. For example, the description of the sourceEventDetailUrl.</p>",
+        "MemberAccount$statusReason": "<p>The reason for the current status of the member account.</p>",
         "NotificationEvent$sourceEventDetailUrlDisplayText": "<p>The detailed URL for the source event.</p>",
         "Resource$id": "<p>The unique identifier for the resource.</p> <p>At least one id or ARN is required.</p>",
         "SourceEventMetadata$sourceEventId": "<p>The source event id.</p>",
@@ -1324,13 +1358,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1369,7 +1401,7 @@
         "Dimension$value": "<p>The value of the dimension.</p>",
         "MediaElement$caption": "<p>The caption of the media.</p>",
         "MessageComponents$headline": "<p>A sentence long summary. For example, titles or an email subject line.</p>",
-        "MessageComponents$paragraphSummary": "<p>A paragraph long or multiple sentence summary. For example, Chatbot notifications.</p>",
+        "MessageComponents$paragraphSummary": "<p>A paragraph long or multiple sentence summary. For example, Amazon Q Developer in chat applications notifications.</p>",
         "MessageComponents$completeDescription": "<p>A complete summary with all possible relevant information.</p>"
       }
     },
@@ -1401,38 +1433,31 @@
     },
     "ThrottlingException": {
       "base": "<p>Request was denied due to request throttling. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEventRuleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEventRuleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNotificationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNotificationConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Url": {
       "base": null,
@@ -1447,8 +1472,7 @@
     },
     "ValidationException": {
       "base": "<p>This exception is thrown when the notification event fails validation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>Stores information about a field passed inside a request that resulted in an exception.</p>",

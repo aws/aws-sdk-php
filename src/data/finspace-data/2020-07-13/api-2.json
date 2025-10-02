@@ -5,12 +5,14 @@
     "endpointPrefix":"finspace-api",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"FinSpace Data",
     "serviceFullName":"FinSpace Public API",
     "serviceId":"finspace data",
     "signatureVersion":"v4",
     "signingName":"finspace-api",
-    "uid":"finspace-2020-07-13"
+    "uid":"finspace-2020-07-13",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateUserToPermissionGroup":{
@@ -1894,8 +1896,7 @@
     },
     "ThrottlingException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":429},
       "exception":true
     },

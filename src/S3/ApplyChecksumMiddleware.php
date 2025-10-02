@@ -80,6 +80,11 @@ class ApplyChecksumMiddleware
             ?? $this->config['request_checksum_calculation']
             ?? self::DEFAULT_CALCULATION_MODE;
 
+        $command->getMetricsBuilder()->identifyMetricByValueAndAppend(
+            'request_checksum_calculation',
+            $mode
+        );
+
         // Trigger warning if AddContentMD5 is specified for PutObject or UploadPart
         $this->handleDeprecatedAddContentMD5($command);
 

@@ -391,6 +391,40 @@
       "box":true,
       "min":1
     },
+    "CdcPropagateTags":{
+      "type":"string",
+      "enum":[
+        "TABLE",
+        "NONE"
+      ]
+    },
+    "CdcSpecification":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"CdcStatus"},
+        "viewType":{"shape":"ViewType"},
+        "tags":{"shape":"TagList"},
+        "propagateTags":{"shape":"CdcPropagateTags"}
+      }
+    },
+    "CdcSpecificationSummary":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"CdcStatus"},
+        "viewType":{"shape":"ViewType"}
+      }
+    },
+    "CdcStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "ENABLING",
+        "DISABLED",
+        "DISABLING"
+      ]
+    },
     "ClientSideTimestamps":{
       "type":"structure",
       "required":["status"],
@@ -483,7 +517,8 @@
         "tags":{"shape":"TagList"},
         "clientSideTimestamps":{"shape":"ClientSideTimestamps"},
         "autoScalingSpecification":{"shape":"AutoScalingSpecification"},
-        "replicaSpecifications":{"shape":"ReplicaSpecificationList"}
+        "replicaSpecifications":{"shape":"ReplicaSpecificationList"},
+        "cdcSpecification":{"shape":"CdcSpecification"}
       }
     },
     "CreateTableResponse":{
@@ -692,7 +727,9 @@
         "defaultTimeToLive":{"shape":"DefaultTimeToLive"},
         "comment":{"shape":"Comment"},
         "clientSideTimestamps":{"shape":"ClientSideTimestamps"},
-        "replicaSpecifications":{"shape":"ReplicaSpecificationSummaryList"}
+        "replicaSpecifications":{"shape":"ReplicaSpecificationSummaryList"},
+        "latestStreamArn":{"shape":"StreamArn"},
+        "cdcSpecification":{"shape":"CdcSpecificationSummary"}
       }
     },
     "GetTypeRequest":{
@@ -879,7 +916,6 @@
     "RegionList":{
       "type":"list",
       "member":{"shape":"region"},
-      "max":6,
       "min":2
     },
     "ReplicaAutoScalingSpecification":{
@@ -936,7 +972,6 @@
     "ReplicationGroupStatusList":{
       "type":"list",
       "member":{"shape":"ReplicationGroupStatus"},
-      "max":6,
       "min":2
     },
     "ReplicationSpecification":{
@@ -1021,6 +1056,12 @@
     "StaticColumnList":{
       "type":"list",
       "member":{"shape":"StaticColumn"}
+    },
+    "StreamArn":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"arn:(aws[a-zA-Z0-9-]*):cassandra:.+.*"
     },
     "String":{"type":"string"},
     "TableName":{
@@ -1210,7 +1251,8 @@
         "defaultTimeToLive":{"shape":"DefaultTimeToLive"},
         "clientSideTimestamps":{"shape":"ClientSideTimestamps"},
         "autoScalingSpecification":{"shape":"AutoScalingSpecification"},
-        "replicaSpecifications":{"shape":"ReplicaSpecificationList"}
+        "replicaSpecifications":{"shape":"ReplicaSpecificationList"},
+        "cdcSpecification":{"shape":"CdcSpecification"}
       }
     },
     "UpdateTableResponse":{
@@ -1226,6 +1268,15 @@
         "message":{"shape":"String"}
       },
       "exception":true
+    },
+    "ViewType":{
+      "type":"string",
+      "enum":[
+        "NEW_IMAGE",
+        "OLD_IMAGE",
+        "KEYS_ONLY",
+        "NEW_AND_OLD_IMAGES"
+      ]
     },
     "kmsKeyARN":{
       "type":"string",

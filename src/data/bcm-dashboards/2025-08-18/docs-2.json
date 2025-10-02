@@ -1,0 +1,501 @@
+{
+  "version": "2.0",
+  "service": "<p>Amazon Web Services Billing and Cost Management Dashboards is a service that enables you to create, manage, and share dashboards that combine multiple visualizations of your Amazon Web Services cost and usage data. You can combine multiple data sources including Cost Explorer, Savings Plans, and Reserved Instance metrics into unified dashboards, helping you analyze spending patterns and share cost insights across your organization.</p> <p>You can use the Amazon Web Services Billing and Cost Management Dashboards API to programmatically create, manage, and share dashboards. This includes creating custom dashboards, configuring widgets, managing dashboard permissions, and sharing dashboards across accounts in your organization.</p>",
+  "operations": {
+    "CreateDashboard": "<p>Creates a new dashboard that can contain multiple widgets displaying cost and usage data. You can add custom widgets or use predefined widgets, arranging them in your preferred layout.</p>",
+    "DeleteDashboard": "<p>Deletes a specified dashboard. This action cannot be undone.</p>",
+    "GetDashboard": "<p>Retrieves the configuration and metadata of a specified dashboard, including its widgets and layout settings.</p>",
+    "GetResourcePolicy": "<p>Retrieves the resource-based policy attached to a dashboard, showing sharing configurations and permissions.</p>",
+    "ListDashboards": "<p>Returns a list of all dashboards in your account.</p>",
+    "ListTagsForResource": "<p>Returns a list of all tags associated with a specified dashboard resource.</p>",
+    "TagResource": "<p>Adds or updates tags for a specified dashboard resource.</p>",
+    "UntagResource": "<p>Removes specified tags from a dashboard resource.</p>",
+    "UpdateDashboard": "<p>Updates an existing dashboard's properties, including its name, description, and widget configurations.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You do not have sufficient permissions to perform this action. Verify your IAM permissions and any resource policies.</p>",
+      "refs": {}
+    },
+    "CostAndUsageQuery": {
+      "base": "<p>Defines the parameters for retrieving Amazon Web Services cost and usage data. Includes specifications for metrics, time periods, granularity, grouping dimensions, and filtering conditions.</p>",
+      "refs": {
+        "QueryParameters$costAndUsage": "<p>The parameters for querying cost and usage data, including metrics, time range, granularity, grouping dimensions, and filters.</p>"
+      }
+    },
+    "CostCategoryValues": {
+      "base": "<p>Specifies the values and match options for cost category-based filtering in cost and usage queries.</p>",
+      "refs": {
+        "Expression$costCategories": "<p>The cost category values to include in the filter expression.</p>"
+      }
+    },
+    "CreateDashboardRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDashboardResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DashboardArn": {
+      "base": null,
+      "refs": {
+        "CreateDashboardResponse$arn": "<p>The ARN of the newly created dashboard.</p>",
+        "DashboardReference$arn": "<p>The ARN of the referenced dashboard.</p>",
+        "DeleteDashboardRequest$arn": "<p>The ARN of the dashboard to be deleted.</p>",
+        "DeleteDashboardResponse$arn": "<p>The ARN of the dashboard that was deleted.</p>",
+        "GetDashboardRequest$arn": "<p>The ARN of the dashboard to retrieve. This is required to uniquely identify the dashboard.</p>",
+        "GetDashboardResponse$arn": "<p>The ARN of the retrieved dashboard.</p>",
+        "GetResourcePolicyRequest$resourceArn": "<p>The ARN of the dashboard whose resource-based policy you want to retrieve.</p>",
+        "GetResourcePolicyResponse$resourceArn": "<p>The ARN of the dashboard for which the resource-based policy was retrieved.</p>",
+        "ListTagsForResourceRequest$resourceArn": "<p>The unique identifier for the resource.</p>",
+        "TagResourceRequest$resourceArn": "<p>The unique identifier for the resource.</p>",
+        "UntagResourceRequest$resourceArn": "<p>The unique identifier for the resource.</p>",
+        "UpdateDashboardRequest$arn": "<p>The ARN of the dashboard to update.</p>",
+        "UpdateDashboardResponse$arn": "<p>The ARN of the updated dashboard.</p>"
+      }
+    },
+    "DashboardName": {
+      "base": null,
+      "refs": {
+        "CreateDashboardRequest$name": "<p>The name of the dashboard. The name must be unique within your account.</p>",
+        "DashboardReference$name": "<p>The name of the referenced dashboard.</p>",
+        "GetDashboardResponse$name": "<p>The name of the retrieved dashboard.</p>",
+        "UpdateDashboardRequest$name": "<p>The new name for the dashboard. If not specified, the existing name is retained.</p>"
+      }
+    },
+    "DashboardReference": {
+      "base": "<p>Contains basic information about a dashboard, including its ARN, name, type, and timestamps.</p>",
+      "refs": {
+        "DashboardReferenceList$member": null
+      }
+    },
+    "DashboardReferenceList": {
+      "base": null,
+      "refs": {
+        "ListDashboardsResponse$dashboards": "<p>An array of dashboard references, containing basic information about each dashboard.</p>"
+      }
+    },
+    "DashboardType": {
+      "base": null,
+      "refs": {
+        "DashboardReference$type": "<p>The dashboard type.</p>",
+        "GetDashboardResponse$type": "<p>Indicates the dashboard type.</p>"
+      }
+    },
+    "DateTimeRange": {
+      "base": "<p>Defines a time period with explicit start and end times for data queries.</p>",
+      "refs": {
+        "CostAndUsageQuery$timeRange": "<p>The time period for which to retrieve data. Can be specified as absolute dates or relative time periods.</p>",
+        "ReservationCoverageQuery$timeRange": null,
+        "ReservationUtilizationQuery$timeRange": null,
+        "SavingsPlansCoverageQuery$timeRange": null,
+        "SavingsPlansUtilizationQuery$timeRange": null
+      }
+    },
+    "DateTimeType": {
+      "base": null,
+      "refs": {
+        "DateTimeValue$type": "<p>The type of date/time value: <code>ABSOLUTE</code> for specific dates or <code>RELATIVE</code> for dynamic time periods.</p>"
+      }
+    },
+    "DateTimeValue": {
+      "base": "<p>Represents a point in time that can be specified as either an absolute date (for example, \"2025-07-01\") or a relative time period using ISO 8601 duration format (for example, \"-P3M\" for three months ago).</p>",
+      "refs": {
+        "DateTimeRange$startTime": "<p>The start time of the date range for querying data.</p>",
+        "DateTimeRange$endTime": "<p>The end time of the date range for querying data.</p>"
+      }
+    },
+    "DeleteDashboardRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDashboardResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Description": {
+      "base": null,
+      "refs": {
+        "CreateDashboardRequest$description": "<p>A description of the dashboard's purpose or contents.</p>",
+        "DashboardReference$description": "<p>The description of the referenced dashboard.</p>",
+        "GetDashboardResponse$description": "<p>The description of the retrieved dashboard.</p>",
+        "UpdateDashboardRequest$description": "<p>The new description for the dashboard. If not specified, the existing description is retained.</p>",
+        "Widget$description": "<p>A description of the widget's purpose or the data it displays.</p>"
+      }
+    },
+    "Dimension": {
+      "base": null,
+      "refs": {
+        "DimensionValues$key": "<p>The key of the dimension to filter on (for example, <code>SERVICE</code>, <code>USAGE_TYPE</code>, or <code>OPERATION</code>).</p>"
+      }
+    },
+    "DimensionValues": {
+      "base": "<p>Specifies the values and match options for dimension-based filtering in cost and usage queries.</p>",
+      "refs": {
+        "Expression$dimensions": "<p>The dimension values to include in the filter expression.</p>"
+      }
+    },
+    "DisplayConfig": {
+      "base": "<p>Defines how the widget's data should be visualized, including chart type, color schemes, axis configurations, and other display preferences.</p>",
+      "refs": {
+        "WidgetConfig$displayConfig": "<p>The configuration that determines how the retrieved data should be visualized in the widget.</p>"
+      }
+    },
+    "Expression": {
+      "base": "<p>Defines complex filtering conditions using logical operators (<code>AND</code>, <code>OR</code>, <code>NOT</code>) and various filter types.</p>",
+      "refs": {
+        "CostAndUsageQuery$filter": "<p>The filter expression to be applied to the cost and usage data.</p>",
+        "Expression$not": "<p>An expression to negate with NOT logic.</p>",
+        "Expressions$member": null,
+        "ReservationCoverageQuery$filter": null,
+        "ReservationUtilizationQuery$filter": null,
+        "SavingsPlansCoverageQuery$filter": null,
+        "SavingsPlansUtilizationQuery$filter": null
+      }
+    },
+    "Expressions": {
+      "base": null,
+      "refs": {
+        "Expression$or": "<p>A list of expressions to combine with OR logic.</p>",
+        "Expression$and": "<p>A list of expressions to combine with AND logic.</p>"
+      }
+    },
+    "GenericString": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "DateTimeValue$value": "<p>The actual date/time value.</p>",
+        "GetResourcePolicyResponse$policyDocument": "<p>The JSON policy document that represents the dashboard's resource-based policy.</p>",
+        "GraphDisplayConfigMap$key": null,
+        "InternalServerException$message": null,
+        "ResourceNotFoundException$message": null,
+        "ServiceQuotaExceededException$message": null,
+        "ThrottlingException$message": null,
+        "ValidationException$message": null
+      }
+    },
+    "GenericTimeStamp": {
+      "base": null,
+      "refs": {
+        "DashboardReference$createdAt": "<p>The timestamp when the dashboard was created.</p>",
+        "DashboardReference$updatedAt": "<p>The timestamp when the dashboard was last modified.</p>",
+        "GetDashboardResponse$createdAt": "<p>The timestamp when the dashboard was created.</p>",
+        "GetDashboardResponse$updatedAt": "<p>The timestamp when the dashboard was last modified.</p>"
+      }
+    },
+    "GetDashboardRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDashboardResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetResourcePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetResourcePolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Granularity": {
+      "base": null,
+      "refs": {
+        "CostAndUsageQuery$granularity": "<p>The granularity of the retrieved data: <code>HOURLY</code>, <code>DAILY</code>, or <code>MONTHLY</code>.</p>",
+        "ReservationCoverageQuery$granularity": "<p>The time granularity of the retrieved data: <code>HOURLY</code>, <code>DAILY</code>, or <code>MONTHLY</code>.</p>",
+        "ReservationUtilizationQuery$granularity": "<p>The time granularity of the retrieved data: <code>HOURLY</code>, <code>DAILY</code>, or <code>MONTHLY</code>.</p>",
+        "SavingsPlansCoverageQuery$granularity": "<p>The time granularity of the retrieved data: <code>HOURLY</code>, <code>DAILY</code>, or <code>MONTHLY</code>.</p>",
+        "SavingsPlansUtilizationQuery$granularity": "<p>The time granularity of the retrieved data: HOURLY, DAILY, or MONTHLY.</p>"
+      }
+    },
+    "GraphDisplayConfig": {
+      "base": "<p>Defines the visual representation settings for widget data, including the visualization type, styling options, and display preferences for different metric types.</p>",
+      "refs": {
+        "GraphDisplayConfigMap$value": null
+      }
+    },
+    "GraphDisplayConfigMap": {
+      "base": null,
+      "refs": {
+        "DisplayConfig$graph": "<p>The configuration for graphical display of the widget data, including chart type and visual options.</p>"
+      }
+    },
+    "GroupDefinition": {
+      "base": "<p>Specifies how to group cost and usage data.</p>",
+      "refs": {
+        "GroupDefinitions$member": null
+      }
+    },
+    "GroupDefinitionKeyString": {
+      "base": null,
+      "refs": {
+        "GroupDefinition$key": "<p>The key to use for grouping cost and usage data.</p>"
+      }
+    },
+    "GroupDefinitionType": {
+      "base": null,
+      "refs": {
+        "GroupDefinition$type": "<p>The type of grouping to apply.</p>"
+      }
+    },
+    "GroupDefinitions": {
+      "base": null,
+      "refs": {
+        "CostAndUsageQuery$groupBy": "<p>Specifies how to group the retrieved data, such as by <code>SERVICE</code>, <code>ACCOUNT</code>, or <code>TAG</code>.</p>",
+        "ReservationCoverageQuery$groupBy": "<p>Specifies how to group the Reserved Instance coverage data, such as by service, Region, or instance type.</p>",
+        "ReservationUtilizationQuery$groupBy": "<p>Specifies how to group the Reserved Instance utilization data, such as by service, Region, or instance type.</p>",
+        "SavingsPlansCoverageQuery$groupBy": "<p>Specifies how to group the Savings Plans coverage data, such as by service or instance family.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "Widget$horizontalOffset": "<p>Specifies the starting column position of the widget in the dashboard's grid layout. Used to control widget placement.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>An internal error occurred while processing the request. Retry your request. If the problem persists, contact Amazon Web Services Support.</p>",
+      "refs": {}
+    },
+    "ListDashboardsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDashboardsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "MatchOption": {
+      "base": null,
+      "refs": {
+        "MatchOptions$member": null
+      }
+    },
+    "MatchOptions": {
+      "base": null,
+      "refs": {
+        "CostCategoryValues$matchOptions": "<p>The match options for cost category values, such as <code>EQUALS</code>, <code>CONTAINS</code>, <code>STARTS_WITH</code>, or <code>ENDS_WITH</code>.</p>",
+        "DimensionValues$matchOptions": "<p>The match options for dimension values, such as <code>EQUALS</code>, <code>CONTAINS</code>, <code>STARTS_WITH</code>, or <code>ENDS_WITH</code>.</p>",
+        "TagValues$matchOptions": "<p>The match options for tag values, such as <code>EQUALS</code>, <code>CONTAINS</code>, <code>STARTS_WITH</code>, or <code>ENDS_WITH</code>.</p>"
+      }
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListDashboardsRequest$maxResults": "<p>The maximum number of results to return in a single call. The default value is 20.</p>"
+      }
+    },
+    "MetricName": {
+      "base": null,
+      "refs": {
+        "MetricNames$member": null
+      }
+    },
+    "MetricNames": {
+      "base": null,
+      "refs": {
+        "CostAndUsageQuery$metrics": "<p>The specific cost and usage metrics to retrieve.</p> <note> <p>Valid values for CostAndUsageQuery metrics are <code>AmortizedCost</code>, <code>BlendedCost</code>, <code>NetAmortizedCost</code>, <code>NetUnblendedCost</code>, <code>NormalizedUsageAmount</code>, <code>UnblendedCost</code>, and <code>UsageQuantity</code>.</p> </note>",
+        "ReservationCoverageQuery$metrics": "<p>The coverage metrics to include in the results.</p> <note> <p>Valid values for ReservationCoverageQuery metrics are <code>Hour</code>, <code>Unit</code>, and <code>Cost</code>.</p> </note>",
+        "SavingsPlansCoverageQuery$metrics": "<p>The coverage metrics to include in the results.</p> <note> <p>Valid value for SavingsPlansCoverageQuery metrics is <code>SpendCoveredBySavingsPlans</code>.</p> </note>"
+      }
+    },
+    "NextPageToken": {
+      "base": null,
+      "refs": {
+        "ListDashboardsRequest$nextToken": "<p>The token for the next page of results. Use the value returned in the previous response.</p>",
+        "ListDashboardsResponse$nextToken": "<p>The token to use to retrieve the next page of results. Not returned if there are no more results to retrieve.</p>"
+      }
+    },
+    "QueryParameters": {
+      "base": "<p>Defines the data retrieval parameters for a widget.</p>",
+      "refs": {
+        "WidgetConfig$queryParameters": "<p>The parameters that define what data the widget should retrieve and how it should be filtered or grouped.</p>"
+      }
+    },
+    "ReservationCoverageQuery": {
+      "base": "<p>Defines the parameters for querying Reserved Instance coverage data, including grouping options, metrics, and sorting preferences.</p>",
+      "refs": {
+        "QueryParameters$reservationCoverage": "<p>The parameters for querying Reserved Instance coverage data, showing how much of your eligible instance usage is covered by Reserved Instances.</p>"
+      }
+    },
+    "ReservationUtilizationQuery": {
+      "base": "<p>Defines the parameters for querying Reserved Instance utilization data, including grouping options and time granularity.</p>",
+      "refs": {
+        "QueryParameters$reservationUtilization": "<p>The parameters for querying Reserved Instance utilization data, showing how effectively your Reserved Instances are being used.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The specified resource (dashboard, policy, or widget) was not found. Verify the ARN and try again.</p>",
+      "refs": {}
+    },
+    "ResourceTag": {
+      "base": "<p>A key-value pair that can be attached to a dashboard for organization and management purposes.</p>",
+      "refs": {
+        "ResourceTagList$member": null
+      }
+    },
+    "ResourceTagKey": {
+      "base": null,
+      "refs": {
+        "ResourceTag$key": "<p>The key of the tag to be attached to the dashboard resource.</p>",
+        "ResourceTagKeyList$member": null
+      }
+    },
+    "ResourceTagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$resourceTagKeys": "<p>The keys of the tags to remove from the dashboard resource.</p>"
+      }
+    },
+    "ResourceTagList": {
+      "base": null,
+      "refs": {
+        "CreateDashboardRequest$resourceTags": "<p>The tags to apply to the dashboard resource for organization and management.</p>",
+        "ListTagsForResourceResponse$resourceTags": "<p>The list of tags associated with the specified dashboard resource.</p>",
+        "TagResourceRequest$resourceTags": "<p>The tags to add to the dashboard resource.</p>"
+      }
+    },
+    "ResourceTagValue": {
+      "base": null,
+      "refs": {
+        "ResourceTag$value": "<p>The value of the tag to be attached to the dashboard resource.</p>"
+      }
+    },
+    "SavingsPlansCoverageQuery": {
+      "base": "<p>Defines the parameters for querying Savings Plans coverage data, including metrics, grouping options, and time granularity.</p>",
+      "refs": {
+        "QueryParameters$savingsPlansCoverage": "<p>The parameters for querying Savings Plans coverage data, showing how much of your eligible compute usage is covered by Savings Plans.</p>"
+      }
+    },
+    "SavingsPlansUtilizationQuery": {
+      "base": "<p>Defines the parameters for querying Savings Plans utilization data, including time granularity and sorting preferences.</p>",
+      "refs": {
+        "QueryParameters$savingsPlansUtilization": "<p>The parameters for querying Savings Plans utilization data, showing how effectively your Savings Plans are being used.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request would exceed service quotas. For example, attempting to create more than 20 widgets in a dashboard or exceeding the maximum number of dashboards per account.</p>",
+      "refs": {}
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "CostCategoryValues$key": "<p>The key of the cost category to filter on.</p>",
+        "StringList$member": null,
+        "TagValues$key": "<p>The key of the tag to filter on.</p>"
+      }
+    },
+    "StringList": {
+      "base": null,
+      "refs": {
+        "CostCategoryValues$values": "<p>The values to match for the specified cost category key.</p>",
+        "DimensionValues$values": "<p>The values to match for the specified dimension key.</p>",
+        "TagValues$values": "<p>The values to match for the specified tag key.</p>"
+      }
+    },
+    "TableDisplayConfigStruct": {
+      "base": "<p>Configuration structure for customizing the tabular display of widget data.</p>",
+      "refs": {
+        "DisplayConfig$table": "<p>The configuration for tabular display of the widget data.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValues": {
+      "base": "<p>Specifies tag-based filtering options for cost and usage queries.</p>",
+      "refs": {
+        "Expression$tags": "<p>The tag values to include in the filter expression.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling. Reduce the frequency of requests and use exponential backoff.</p>",
+      "refs": {}
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDashboardRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDashboardResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ValidationException": {
+      "base": "<p>The input parameters do not satisfy the requirements. Check the error message for specific validation details.</p>",
+      "refs": {}
+    },
+    "VisualType": {
+      "base": null,
+      "refs": {
+        "GraphDisplayConfig$visualType": "<p>The type of visualization to use for the data.</p>"
+      }
+    },
+    "Widget": {
+      "base": "<p>A configurable visualization component within a dashboard that displays specific cost and usage metrics. Each widget can show data as charts or tables and includes settings for data querying, filtering, and visual presentation.</p>",
+      "refs": {
+        "WidgetList$member": null
+      }
+    },
+    "WidgetConfig": {
+      "base": "<p>Defines the complete configuration for a widget, including data retrieval settings and visualization preferences.</p>",
+      "refs": {
+        "WidgetConfigList$member": null
+      }
+    },
+    "WidgetConfigList": {
+      "base": null,
+      "refs": {
+        "Widget$configs": "<p>An array of configurations that define the data queries and display settings for the widget.</p>"
+      }
+    },
+    "WidgetHeight": {
+      "base": null,
+      "refs": {
+        "Widget$height": "<p>The height of the widget in row spans. The dashboard layout consists of a grid system.</p>"
+      }
+    },
+    "WidgetList": {
+      "base": null,
+      "refs": {
+        "CreateDashboardRequest$widgets": "<p>An array of widget configurations that define the visualizations to be displayed in the dashboard. Each dashboard can contain up to 20 widgets.</p>",
+        "GetDashboardResponse$widgets": "<p>An array of widget configurations that make up the dashboard.</p>",
+        "UpdateDashboardRequest$widgets": "<p>The updated array of widget configurations for the dashboard. Replaces all existing widgets.</p>"
+      }
+    },
+    "WidgetTitle": {
+      "base": null,
+      "refs": {
+        "Widget$title": "<p>The title of the widget.</p>"
+      }
+    },
+    "WidgetWidth": {
+      "base": null,
+      "refs": {
+        "Widget$width": "<p>The width of the widget in column spans. The dashboard layout consists of a grid system.</p>"
+      }
+    }
+  }
+}

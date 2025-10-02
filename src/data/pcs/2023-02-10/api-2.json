@@ -140,7 +140,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetComputeNodeGroup":{
       "name":"GetComputeNodeGroup",
@@ -157,7 +158,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetQueue":{
       "name":"GetQueue",
@@ -174,7 +176,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListClusters":{
       "name":"ListClusters",
@@ -191,7 +194,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListComputeNodeGroups":{
       "name":"ListComputeNodeGroups",
@@ -208,7 +212,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListQueues":{
       "name":"ListQueues",
@@ -225,7 +230,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -237,7 +243,8 @@
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "RegisterComputeNodeGroupInstance":{
       "name":"RegisterComputeNodeGroupInstance",
@@ -260,6 +267,7 @@
       },
       "input":{"shape":"TagResourceRequest"},
       "errors":[
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
@@ -273,6 +281,24 @@
       "input":{"shape":"UntagResourceRequest"},
       "errors":[
         {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateCluster":{
+      "name":"UpdateCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateClusterRequest"},
+      "output":{"shape":"UpdateClusterResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"}
       ],
       "idempotent":true
     },
@@ -324,6 +350,41 @@
       },
       "exception":true
     },
+    "Accounting":{
+      "type":"structure",
+      "required":["mode"],
+      "members":{
+        "defaultPurgeTimeInDays":{"shape":"AccountingDefaultPurgeTimeInDaysInteger"},
+        "mode":{"shape":"AccountingMode"}
+      }
+    },
+    "AccountingDefaultPurgeTimeInDaysInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":-1
+    },
+    "AccountingMode":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "NONE"
+      ]
+    },
+    "AccountingRequest":{
+      "type":"structure",
+      "required":["mode"],
+      "members":{
+        "defaultPurgeTimeInDays":{"shape":"AccountingRequestDefaultPurgeTimeInDaysInteger"},
+        "mode":{"shape":"AccountingMode"}
+      }
+    },
+    "AccountingRequestDefaultPurgeTimeInDaysInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":-1
+    },
     "AmiId":{
       "type":"string",
       "pattern":"ami-[a-z0-9]+"
@@ -332,7 +393,7 @@
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"arn:aws*:pcs:.*:[0-9]{12}:.*/[a-z0-9_\\-]+"
+      "pattern":"arn:aws.*:pcs:.*:[0-9]{12}:.*/[a-z0-9_\\-]+"
     },
     "BootstrapId":{
       "type":"string",
@@ -370,7 +431,7 @@
     },
     "ClusterIdentifier":{
       "type":"string",
-      "pattern":"(pcs_[a-zA-Z0-9]+|[A-Za-z][A-Za-z0-9-]{1,40})"
+      "pattern":"(pcs_[a-zA-Z0-9]+|[A-Za-z][A-Za-z0-9-]{2,40})"
     },
     "ClusterList":{
       "type":"list",
@@ -379,22 +440,24 @@
     "ClusterName":{
       "type":"string",
       "max":40,
-      "min":1,
-      "pattern":"(?!pcs_)^(?![A-Za-z0-9]{10}$)[A-Za-z][A-Za-z0-9-]+"
+      "min":3,
+      "pattern":"(?!pcs_)^[A-Za-z][A-Za-z0-9-]+"
     },
     "ClusterSlurmConfiguration":{
       "type":"structure",
       "members":{
         "scaleDownIdleTimeInSeconds":{"shape":"ClusterSlurmConfigurationScaleDownIdleTimeInSecondsInteger"},
         "slurmCustomSettings":{"shape":"SlurmCustomSettings"},
-        "authKey":{"shape":"SlurmAuthKey"}
+        "authKey":{"shape":"SlurmAuthKey"},
+        "accounting":{"shape":"Accounting"}
       }
     },
     "ClusterSlurmConfigurationRequest":{
       "type":"structure",
       "members":{
         "scaleDownIdleTimeInSeconds":{"shape":"ClusterSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger"},
-        "slurmCustomSettings":{"shape":"SlurmCustomSettings"}
+        "slurmCustomSettings":{"shape":"SlurmCustomSettings"},
+        "accounting":{"shape":"AccountingRequest"}
       }
     },
     "ClusterSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger":{
@@ -416,7 +479,9 @@
         "DELETING",
         "CREATE_FAILED",
         "DELETE_FAILED",
-        "UPDATE_FAILED"
+        "UPDATE_FAILED",
+        "SUSPENDING",
+        "SUSPENDED"
       ]
     },
     "ClusterSummary":{
@@ -486,7 +551,7 @@
     },
     "ComputeNodeGroupIdentifier":{
       "type":"string",
-      "pattern":"(pcs_[a-zA-Z0-9]+|[A-Za-z][A-Za-z0-9-]{1,25})"
+      "pattern":"(pcs_[a-zA-Z0-9]+|[A-Za-z][A-Za-z0-9-]{2,25})"
     },
     "ComputeNodeGroupList":{
       "type":"list",
@@ -495,8 +560,8 @@
     "ComputeNodeGroupName":{
       "type":"string",
       "max":25,
-      "min":1,
-      "pattern":"(?!pcs_)^(?![A-Za-z0-9]{10}$)[A-Za-z][A-Za-z0-9-]+"
+      "min":3,
+      "pattern":"(?!pcs_)^[A-Za-z][A-Za-z0-9-]+"
     },
     "ComputeNodeGroupSlurmConfiguration":{
       "type":"structure",
@@ -520,7 +585,9 @@
         "CREATE_FAILED",
         "DELETE_FAILED",
         "UPDATE_FAILED",
-        "DELETED"
+        "DELETED",
+        "SUSPENDING",
+        "SUSPENDED"
       ]
     },
     "ComputeNodeGroupSummary":{
@@ -631,6 +698,7 @@
         "clusterIdentifier":{"shape":"ClusterIdentifier"},
         "queueName":{"shape":"QueueName"},
         "computeNodeGroupConfigurations":{"shape":"ComputeNodeGroupConfigurationList"},
+        "slurmConfiguration":{"shape":"QueueSlurmConfigurationRequest"},
         "clientToken":{
           "shape":"SBClientToken",
           "idempotencyToken":true
@@ -668,8 +736,7 @@
     },
     "DeleteClusterResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteComputeNodeGroupRequest":{
       "type":"structure",
@@ -688,8 +755,7 @@
     },
     "DeleteComputeNodeGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteQueueRequest":{
       "type":"structure",
@@ -708,8 +774,7 @@
     },
     "DeleteQueueResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Endpoint":{
       "type":"structure",
@@ -722,6 +787,7 @@
         "type":{"shape":"EndpointType"},
         "privateIpAddress":{"shape":"String"},
         "publicIpAddress":{"shape":"String"},
+        "ipv6Address":{"shape":"String"},
         "port":{"shape":"String"}
       }
     },
@@ -806,7 +872,7 @@
     },
     "InstanceProfileArn":{
       "type":"string",
-      "pattern":"arn:aws([a-zA-Z-]{0,10})?:iam::[0-9]{12}:instance-profile/.{1,128}"
+      "pattern":"arn:aws([a-zA-Z-]{0,10})?:iam::[0-9]{12}:instance-profile/([!-~]{1,510}/)?([\\w+=,.@-]{1,128})"
     },
     "Integer":{
       "type":"integer",
@@ -890,25 +956,35 @@
       "max":100,
       "min":1
     },
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "IPV6"
+      ]
+    },
     "Networking":{
       "type":"structure",
       "members":{
         "subnetIds":{"shape":"SubnetIdList"},
-        "securityGroupIds":{"shape":"SecurityGroupIdList"}
+        "securityGroupIds":{"shape":"SecurityGroupIdList"},
+        "networkType":{"shape":"NetworkType"}
       }
     },
     "NetworkingRequest":{
       "type":"structure",
       "members":{
         "subnetIds":{"shape":"SubnetIdList"},
-        "securityGroupIds":{"shape":"SecurityGroupIdList"}
+        "securityGroupIds":{"shape":"SecurityGroupIdList"},
+        "networkType":{"shape":"NetworkType"}
       }
     },
     "PurchaseOption":{
       "type":"string",
       "enum":[
         "ONDEMAND",
-        "SPOT"
+        "SPOT",
+        "CAPACITY_BLOCK"
       ]
     },
     "Queue":{
@@ -932,12 +1008,13 @@
         "modifiedAt":{"shape":"SyntheticTimestamp_date_time"},
         "status":{"shape":"QueueStatus"},
         "computeNodeGroupConfigurations":{"shape":"ComputeNodeGroupConfigurationList"},
+        "slurmConfiguration":{"shape":"QueueSlurmConfiguration"},
         "errorInfo":{"shape":"ErrorInfoList"}
       }
     },
     "QueueIdentifier":{
       "type":"string",
-      "pattern":"(pcs_[a-zA-Z0-9]+|[A-Za-z][A-Za-z0-9-]{1,25})"
+      "pattern":"(pcs_[a-zA-Z0-9]+|[A-Za-z][A-Za-z0-9-]{2,25})"
     },
     "QueueList":{
       "type":"list",
@@ -946,8 +1023,20 @@
     "QueueName":{
       "type":"string",
       "max":25,
-      "min":1,
-      "pattern":"(?!pcs_)^(?![A-Za-z0-9]{10}$)[A-Za-z][A-Za-z0-9-]+"
+      "min":3,
+      "pattern":"(?!pcs_)^[A-Za-z][A-Za-z0-9-]+"
+    },
+    "QueueSlurmConfiguration":{
+      "type":"structure",
+      "members":{
+        "slurmCustomSettings":{"shape":"SlurmCustomSettings"}
+      }
+    },
+    "QueueSlurmConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "slurmCustomSettings":{"shape":"SlurmCustomSettings"}
+      }
     },
     "QueueStatus":{
       "type":"string",
@@ -958,7 +1047,9 @@
         "DELETING",
         "CREATE_FAILED",
         "DELETE_FAILED",
-        "UPDATE_FAILED"
+        "UPDATE_FAILED",
+        "SUSPENDING",
+        "SUSPENDED"
       ]
     },
     "QueueSummary":{
@@ -1246,6 +1337,50 @@
         "tagKeys":{"shape":"TagKeys"}
       }
     },
+    "UpdateAccountingRequest":{
+      "type":"structure",
+      "members":{
+        "defaultPurgeTimeInDays":{"shape":"UpdateAccountingRequestDefaultPurgeTimeInDaysInteger"},
+        "mode":{"shape":"AccountingMode"}
+      }
+    },
+    "UpdateAccountingRequestDefaultPurgeTimeInDaysInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":-1
+    },
+    "UpdateClusterRequest":{
+      "type":"structure",
+      "required":["clusterIdentifier"],
+      "members":{
+        "clusterIdentifier":{"shape":"ClusterIdentifier"},
+        "clientToken":{
+          "shape":"SBClientToken",
+          "idempotencyToken":true
+        },
+        "slurmConfiguration":{"shape":"UpdateClusterSlurmConfigurationRequest"}
+      }
+    },
+    "UpdateClusterResponse":{
+      "type":"structure",
+      "members":{
+        "cluster":{"shape":"Cluster"}
+      }
+    },
+    "UpdateClusterSlurmConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "scaleDownIdleTimeInSeconds":{"shape":"UpdateClusterSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger"},
+        "slurmCustomSettings":{"shape":"SlurmCustomSettings"},
+        "accounting":{"shape":"UpdateAccountingRequest"}
+      }
+    },
+    "UpdateClusterSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
     "UpdateComputeNodeGroupRequest":{
       "type":"structure",
       "required":[
@@ -1291,6 +1426,7 @@
         "clusterIdentifier":{"shape":"ClusterIdentifier"},
         "queueIdentifier":{"shape":"QueueIdentifier"},
         "computeNodeGroupConfigurations":{"shape":"ComputeNodeGroupConfigurationList"},
+        "slurmConfiguration":{"shape":"UpdateQueueSlurmConfigurationRequest"},
         "clientToken":{
           "shape":"SBClientToken",
           "idempotencyToken":true
@@ -1301,6 +1437,12 @@
       "type":"structure",
       "members":{
         "queue":{"shape":"Queue"}
+      }
+    },
+    "UpdateQueueSlurmConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "slurmCustomSettings":{"shape":"SlurmCustomSettings"}
       }
     },
     "ValidationException":{

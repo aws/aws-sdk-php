@@ -19,7 +19,7 @@
     "GetService": "<p>Gets the settings for a specified service.</p>",
     "GetServiceAttributes": "<p>Returns the attributes associated with a specified service.</p>",
     "ListInstances": "<p>Lists summary information about the instances that you registered by using a specified service.</p>",
-    "ListNamespaces": "<p>Lists summary information about the namespaces that were created by the current Amazon Web Services account.</p>",
+    "ListNamespaces": "<p>Lists summary information about the namespaces that were created by the current Amazon Web Services account and shared with the current Amazon Web Services account.</p>",
     "ListOperations": "<p>Lists operations that match the criteria that you specify.</p>",
     "ListServices": "<p>Lists summary information for all the services that are associated with one or more namespaces.</p>",
     "ListTagsForResource": "<p>Lists tags for the specified resource.</p>",
@@ -30,10 +30,30 @@
     "UpdateInstanceCustomHealthStatus": "<p>Submits a request to change the health status of a custom health check to healthy or unhealthy.</p> <p>You can use <code>UpdateInstanceCustomHealthStatus</code> to change the status only for custom health checks, which you define using <code>HealthCheckCustomConfig</code> when you create a service. You can't use it to change the status for Route 53 health checks, which you define using <code>HealthCheckConfig</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/api/API_HealthCheckCustomConfig.html\">HealthCheckCustomConfig</a>.</p>",
     "UpdatePrivateDnsNamespace": "<p>Updates a private DNS namespace.</p>",
     "UpdatePublicDnsNamespace": "<p>Updates a public DNS namespace.</p>",
-    "UpdateService": "<p>Submits a request to perform the following operations:</p> <ul> <li> <p>Update the TTL setting for existing <code>DnsRecords</code> configurations</p> </li> <li> <p>Add, update, or delete <code>HealthCheckConfig</code> for a specified service</p> <note> <p>You can't add, update, or delete a <code>HealthCheckCustomConfig</code> configuration.</p> </note> </li> </ul> <p>For public and private DNS namespaces, note the following:</p> <ul> <li> <p>If you omit any existing <code>DnsRecords</code> or <code>HealthCheckConfig</code> configurations from an <code>UpdateService</code> request, the configurations are deleted from the service.</p> </li> <li> <p>If you omit an existing <code>HealthCheckCustomConfig</code> configuration from an <code>UpdateService</code> request, the configuration isn't deleted from the service.</p> </li> </ul> <p>When you update settings for a service, Cloud Map also updates the corresponding settings in all the records and health checks that were created by using the specified service.</p>",
+    "UpdateService": "<p>Submits a request to perform the following operations:</p> <ul> <li> <p>Update the TTL setting for existing <code>DnsRecords</code> configurations</p> </li> <li> <p>Add, update, or delete <code>HealthCheckConfig</code> for a specified service</p> <note> <p>You can't add, update, or delete a <code>HealthCheckCustomConfig</code> configuration.</p> </note> </li> </ul> <p>For public and private DNS namespaces, note the following:</p> <ul> <li> <p>If you omit any existing <code>DnsRecords</code> or <code>HealthCheckConfig</code> configurations from an <code>UpdateService</code> request, the configurations are deleted from the service.</p> </li> <li> <p>If you omit an existing <code>HealthCheckCustomConfig</code> configuration from an <code>UpdateService</code> request, the configuration isn't deleted from the service.</p> </li> </ul> <note> <p>You can't call <code>UpdateService</code> and update settings in the following scenarios:</p> <ul> <li> <p>When the service is associated with an HTTP namespace</p> </li> <li> <p>When the service is associated with a shared namespace and contains instances that were registered by Amazon Web Services accounts other than the account making the <code>UpdateService</code> call</p> </li> </ul> </note> <p>When you update settings for a service, Cloud Map also updates the corresponding settings in all the records and health checks that were created by using the specified service.</p>",
     "UpdateServiceAttributes": "<p>Submits a request to update a specified service to add service-level attributes.</p>"
   },
   "shapes": {
+    "AWSAccountId": {
+      "base": null,
+      "refs": {
+        "DiscoverInstancesRequest$OwnerAccount": "<p>The ID of the Amazon Web Services account that owns the namespace associated with the instance, as specified in the namespace <code>ResourceOwner</code> field. For instances associated with namespaces that are shared with your account, you must specify an <code>OwnerAccount</code>.</p>",
+        "DiscoverInstancesRevisionRequest$OwnerAccount": "<p>The ID of the Amazon Web Services account that owns the namespace associated with the instance, as specified in the namespace <code>ResourceOwner</code> field. For instances associated with namespaces that are shared with your account, you must specify an <code>OwnerAccount</code>. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "GetInstanceResponse$ResourceOwner": "<p>The ID of the Amazon Web Services account that created the namespace that contains the service that the instance is associated with. If this isn't your account ID, it's the ID of the account that shared the namespace with your account.</p>",
+        "GetOperationRequest$OwnerAccount": "<p>The ID of the Amazon Web Services account that owns the namespace associated with the operation, as specified in the namespace <code>ResourceOwner</code> field. For operations associated with namespaces that are shared with your account, you must specify an <code>OwnerAccount</code>.</p>",
+        "Instance$CreatedByAccount": "<p>The ID of the Amazon Web Services account that registered the instance. If this isn't your account ID, it's the ID of the account that shared the namespace with your account or the ID of another account with which the namespace has been shared. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "InstanceSummary$CreatedByAccount": "<p>The ID of the Amazon Web Services account that registered the instance. If this isn't your account ID, it's the ID of the account that shared the namespace with your account or the ID of another account with which the namespace has been shared. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "ListInstancesResponse$ResourceOwner": "<p>The ID of the Amazon Web Services account that created the namespace that contains the specified service. If this isn't your account ID, it's the ID of the account that shared the namespace with your account.</p>",
+        "Namespace$ResourceOwner": "<p>The ID of the Amazon Web Services account that created the namespace. If this isn't your account ID, it's the ID of the account that shared the namespace with your account. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "NamespaceSummary$ResourceOwner": "<p>The ID of the Amazon Web Services account that created the namespace. If this isn't your account ID, it's the ID of the account that shared the namespace with your account. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "Operation$OwnerAccount": "<p>The ID of the Amazon Web Services account that owns the namespace associated with the operation.</p>",
+        "Service$ResourceOwner": "<p>The ID of the Amazon Web Services account that created the namespace with which the service is associated. If this isn't your account ID, it is the ID of the account that shared the namespace with your account. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "Service$CreatedByAccount": "<p>The ID of the Amazon Web Services account that created the service. If this isn't your account ID, it is the ID of account of the namespace owner or of another account with which the namespace has been shared. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "ServiceAttributes$ResourceOwner": "<p>The ID of the Amazon Web Services account that created the namespace with which the service is associated. If this isn't your account ID, it is the ID of the account that shared the namespace with your account. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "ServiceSummary$ResourceOwner": "<p>The ID of the Amazon Web Services account that created the namespace with which the service is associated. If this isn't your account ID, it is the ID of the account that shared the namespace with your account. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "ServiceSummary$CreatedByAccount": "<p>The ID of the Amazon Web Services account that created the service. If this isn't your account ID, it is the account ID of the namespace owner or of another account with which the namespace has been shared. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>"
+      }
+    },
     "AmazonResourceName": {
       "base": null,
       "refs": {
@@ -46,11 +66,30 @@
     "Arn": {
       "base": null,
       "refs": {
+        "CreateServiceRequest$NamespaceId": "<p>The ID or Amazon Resource Name (ARN) of the namespace that you want to use to create the service. For namespaces shared with your Amazon Web Services account, specify the namespace ARN. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "DeleteNamespaceRequest$Id": "<p>The ID or Amazon Resource Name (ARN) of the namespace that you want to delete.</p>",
+        "DeleteServiceAttributesRequest$ServiceId": "<p>The ID or Amazon Resource Name (ARN) of the service from which the attributes will be deleted. For services created in a namespace shared with your Amazon Web Services account, specify the service ARN. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "DeleteServiceRequest$Id": "<p>The ID or Amazon Resource Name (ARN) of the service that you want to delete. If the namespace associated with the service is shared with your Amazon Web Services account, specify the service ARN. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a>.</p>",
+        "DeregisterInstanceRequest$ServiceId": "<p>The ID or Amazon Resource Name (ARN) of the service that the instance is associated with. If the namespace associated with the service is shared with your account, specify the service ARN. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "GetInstanceRequest$ServiceId": "<p>The ID or Amazon Resource Name (ARN) of the service that the instance is associated with. For services created in a shared namespace, specify the service ARN. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "GetInstancesHealthStatusRequest$ServiceId": "<p>The ID or Amazon Resource Name (ARN) of the service that the instance is associated with. For services created in a shared namespace, specify the service ARN. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "GetNamespaceRequest$Id": "<p>The ID or Amazon Resource Name (ARN) of the namespace that you want to get information about. For namespaces shared with your Amazon Web Services account, specify the namespace ARN. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i> </p>",
+        "GetServiceAttributesRequest$ServiceId": "<p>The ID or Amazon Resource Name (ARN) of the service that you want to get attributes for. For services created in a namespace shared with your Amazon Web Services account, specify the service ARN. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "GetServiceRequest$Id": "<p>The ID or Amazon Resource Name (ARN) of the service that you want to get settings for. For services created by consumers in a shared namespace, specify the service ARN. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "ListInstancesRequest$ServiceId": "<p>The ID or Amazon Resource Name (ARN) of the service that you want to list instances for. For services created in a shared namespace, specify the service ARN. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
         "Namespace$Arn": "<p>The Amazon Resource Name (ARN) that Cloud Map assigns to the namespace when you create it.</p>",
         "NamespaceSummary$Arn": "<p>The Amazon Resource Name (ARN) that Cloud Map assigns to the namespace when you create it.</p>",
+        "RegisterInstanceRequest$ServiceId": "<p>The ID or Amazon Resource Name (ARN) of the service that you want to use for settings for the instance. For services created in a shared namespace, specify the service ARN. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
         "Service$Arn": "<p>The Amazon Resource Name (ARN) that Cloud Map assigns to the service when you create it.</p>",
+        "ServiceAlreadyExists$ServiceArn": "<p>The ARN of the existing service.</p>",
         "ServiceAttributes$ServiceArn": "<p>The ARN of the service that the attributes are associated with.</p>",
-        "ServiceSummary$Arn": "<p>The Amazon Resource Name (ARN) that Cloud Map assigns to the service when you create it.</p>"
+        "ServiceSummary$Arn": "<p>The Amazon Resource Name (ARN) that Cloud Map assigns to the service when you create it.</p>",
+        "UpdateHttpNamespaceRequest$Id": "<p>The ID or Amazon Resource Name (ARN) of the namespace that you want to update.</p>",
+        "UpdateInstanceCustomHealthStatusRequest$ServiceId": "<p>The ID or Amazon Resource Name (ARN) of the service that includes the configuration for the custom health check that you want to change the status for. For services created in a shared namespace, specify the service ARN. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>",
+        "UpdatePrivateDnsNamespaceRequest$Id": "<p>The ID or Amazon Resource Name (ARN) of the namespace that you want to update.</p>",
+        "UpdatePublicDnsNamespaceRequest$Id": "<p>The ID or Amazon Resource Name (ARN) of the namespace being updated.</p>",
+        "UpdateServiceAttributesRequest$ServiceId": "<p>The ID or Amazon Resource Name (ARN) of the service that you want to update. For services created in a namespace shared with your Amazon Web Services account, specify the service ARN.</p>",
+        "UpdateServiceRequest$Id": "<p>The ID or Amazon Resource Name (ARN) of the service that you want to update. If the namespace associated with the service is shared with your Amazon Web Services account, specify the service ARN. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i> </p>"
       }
     },
     "AttrKey": {
@@ -84,48 +123,39 @@
     },
     "CreateHttpNamespaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateHttpNamespaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePrivateDnsNamespaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePrivateDnsNamespaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePublicDnsNamespaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePublicDnsNamespaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServiceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServiceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomHealthNotFound": {
       "base": "<p>The health check for the instance that's specified by <code>ServiceId</code> and <code>InstanceId</code> isn't a custom health check. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomHealthStatus": {
       "base": null,
@@ -135,63 +165,51 @@
     },
     "DeleteNamespaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteNamespaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceAttributesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceAttributesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterInstanceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterInstanceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DiscoverInstancesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DiscoverInstancesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DiscoverInstancesRevisionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DiscoverInstancesRevisionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DiscoverMaxResults": {
       "base": null,
@@ -234,8 +252,7 @@
     },
     "DuplicateRequest": {
       "base": "<p>The operation is already in progress.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ErrorMessage": {
       "base": null,
@@ -267,9 +284,9 @@
     "FilterCondition": {
       "base": null,
       "refs": {
-        "NamespaceFilter$Condition": "<p>Specify the operator that you want to use to determine whether a namespace matches the specified value. Valid values for <code>Condition</code> are one of the following.</p> <ul> <li> <p> <code>EQ</code>: When you specify <code>EQ</code> for <code>Condition</code>, you can specify only one value. <code>EQ</code> is supported for <code>TYPE</code>, <code>NAME</code>, and <code>HTTP_NAME</code>. <code>EQ</code> is the default condition and can be omitted.</p> </li> <li> <p> <code>BEGINS_WITH</code>: When you specify <code>BEGINS_WITH</code> for <code>Condition</code>, you can specify only one value. <code>BEGINS_WITH</code> is supported for <code>TYPE</code>, <code>NAME</code>, and <code>HTTP_NAME</code>.</p> </li> </ul>",
+        "NamespaceFilter$Condition": "<p>Specify the operator that you want to use to determine whether a namespace matches the specified value. Valid values for <code>Condition</code> are one of the following.</p> <ul> <li> <p> <code>EQ</code>: When you specify <code>EQ</code> for <code>Condition</code>, you can specify only one value. <code>EQ</code> is supported for <code>TYPE</code>, <code>NAME</code>, <code>RESOURCE_OWNER</code> and <code>HTTP_NAME</code>. <code>EQ</code> is the default condition and can be omitted.</p> </li> <li> <p> <code>BEGINS_WITH</code>: When you specify <code>BEGINS_WITH</code> for <code>Condition</code>, you can specify only one value. <code>BEGINS_WITH</code> is supported for <code>TYPE</code>, <code>NAME</code>, and <code>HTTP_NAME</code>.</p> </li> </ul>",
         "OperationFilter$Condition": "<p>The operator that you want to use to determine whether an operation matches the specified value. Valid values for condition include:</p> <ul> <li> <p> <code>EQ</code>: When you specify <code>EQ</code> for the condition, you can specify only one value. <code>EQ</code> is supported for <code>NAMESPACE_ID</code>, <code>SERVICE_ID</code>, <code>STATUS</code>, and <code>TYPE</code>. <code>EQ</code> is the default condition and can be omitted.</p> </li> <li> <p> <code>IN</code>: When you specify <code>IN</code> for the condition, you can specify a list of one or more values. <code>IN</code> is supported for <code>STATUS</code> and <code>TYPE</code>. An operation must match one of the specified values to be returned in the response.</p> </li> <li> <p> <code>BETWEEN</code>: Specify a start date and an end date in Unix date/time format and Coordinated Universal Time (UTC). The start date must be the first value. <code>BETWEEN</code> is supported for <code>UPDATE_DATE</code>. </p> </li> </ul>",
-        "ServiceFilter$Condition": "<p>The operator that you want to use to determine whether a service is returned by <code>ListServices</code>. Valid values for <code>Condition</code> include the following:</p> <ul> <li> <p> <code>EQ</code>: When you specify <code>EQ</code>, specify one namespace ID for <code>Values</code>. <code>EQ</code> is the default condition and can be omitted.</p> </li> </ul>"
+        "ServiceFilter$Condition": "<p>The operator that you want to use to determine whether a service is returned by <code>ListServices</code>. Valid values for <code>Condition</code> include the following:</p> <ul> <li> <p> <code>EQ</code>: When you specify <code>EQ</code>, specify one value. <code>EQ</code> is the default condition and can be omitted.</p> </li> </ul>"
       }
     },
     "FilterValue": {
@@ -281,70 +298,58 @@
     "FilterValues": {
       "base": null,
       "refs": {
-        "NamespaceFilter$Values": "<p>Specify the values that are applicable to the value that you specify for <code>Name</code>.</p> <ul> <li> <p> <code>TYPE</code>: Specify <code>HTTP</code>, <code>DNS_PUBLIC</code>, or <code>DNS_PRIVATE</code>.</p> </li> <li> <p> <code>NAME</code>: Specify the name of the namespace, which is found in <code>Namespace.Name</code>.</p> </li> <li> <p> <code>HTTP_NAME</code>: Specify the HTTP name of the namespace, which is found in <code>Namespace.Properties.HttpProperties.HttpName</code>.</p> </li> </ul>",
+        "NamespaceFilter$Values": "<p>Specify the values that are applicable to the value that you specify for <code>Name</code>.</p> <ul> <li> <p> <code>TYPE</code>: Specify <code>HTTP</code>, <code>DNS_PUBLIC</code>, or <code>DNS_PRIVATE</code>.</p> </li> <li> <p> <code>NAME</code>: Specify the name of the namespace, which is found in <code>Namespace.Name</code>.</p> </li> <li> <p> <code>HTTP_NAME</code>: Specify the HTTP name of the namespace, which is found in <code>Namespace.Properties.HttpProperties.HttpName</code>.</p> </li> <li> <p> <code>RESOURCE_OWNER</code>: Specify one of <code>SELF</code> or <code>OTHER_ACCOUNTS</code>. <code>SELF</code> can be used to filter namespaces created by you and <code>OTHER_ACCOUNTS</code> can be used to filter namespaces shared with you that were created by other accounts.</p> </li> </ul>",
         "OperationFilter$Values": "<p>Specify values that are applicable to the value that you specify for <code>Name</code>: </p> <ul> <li> <p> <b>NAMESPACE_ID</b>: Specify one namespace ID.</p> </li> <li> <p> <b>SERVICE_ID</b>: Specify one service ID.</p> </li> <li> <p> <b>STATUS</b>: Specify one or more statuses: <code>SUBMITTED</code>, <code>PENDING</code>, <code>SUCCEED</code>, or <code>FAIL</code>.</p> </li> <li> <p> <b>TYPE</b>: Specify one or more of the following types: <code>CREATE_NAMESPACE</code>, <code>DELETE_NAMESPACE</code>, <code>UPDATE_SERVICE</code>, <code>REGISTER_INSTANCE</code>, or <code>DEREGISTER_INSTANCE</code>.</p> </li> <li> <p> <b>UPDATE_DATE</b>: Specify a start date and an end date in Unix date/time format and Coordinated Universal Time (UTC). The start date must be the first value.</p> </li> </ul>",
-        "ServiceFilter$Values": "<p>The values that are applicable to the value that you specify for <code>Condition</code> to filter the list of services.</p>"
+        "ServiceFilter$Values": "<p>The values that are applicable to the value that you specify for <code>Condition</code> to filter the list of services.</p> <ul> <li> <p> <b>NAMESPACE_ID</b>: Specify one namespace ID or ARN. Specify the namespace ARN for namespaces that are shared with your Amazon Web Services account.</p> </li> <li> <p> <b>RESOURCE_OWNER</b>: Specify one of <code>SELF</code> or <code>OTHER_ACCOUNTS</code>. <code>SELF</code> can be used to filter services associated with namespaces created by you and <code>OTHER_ACCOUNTS</code> can be used to filter services associated with namespaces that were shared with you.</p> </li> </ul>"
       }
     },
     "GetInstanceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstanceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstancesHealthStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstancesHealthStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNamespaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNamespaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOperationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOperationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceAttributesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceAttributesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HealthCheckConfig": {
       "base": "<p> <i>Public DNS and HTTP namespaces only.</i> A complex type that contains settings for an optional health check. If you specify settings for a health check, Cloud Map associates the health check with the records that you specify in <code>DnsConfig</code>.</p> <important> <p>If you specify a health check configuration, you can specify either <code>HealthCheckCustomConfig</code> or <code>HealthCheckConfig</code> but not both.</p> </important> <p>Health checks are basic Route 53 health checks that monitor an Amazon Web Services endpoint. For information about pricing for health checks, see <a href=\"http://aws.amazon.com/route53/pricing/\">Amazon Route 53 Pricing</a>.</p> <p>Note the following about configuring health checks.</p> <dl> <dt>A and AAAA records</dt> <dd> <p>If <code>DnsConfig</code> includes configurations for both <code>A</code> and <code>AAAA</code> records, Cloud Map creates a health check that uses the IPv4 address to check the health of the resource. If the endpoint tthat's specified by the IPv4 address is unhealthy, Route 53 considers both the <code>A</code> and <code>AAAA</code> records to be unhealthy. </p> </dd> <dt>CNAME records</dt> <dd> <p>You can't specify settings for <code>HealthCheckConfig</code> when the <code>DNSConfig</code> includes <code>CNAME</code> for the value of <code>Type</code>. If you do, the <code>CreateService</code> request will fail with an <code>InvalidInput</code> error.</p> </dd> <dt>Request interval</dt> <dd> <p>A Route 53 health checker in each health-checking Amazon Web Services Region sends a health check request to an endpoint every 30 seconds. On average, your endpoint receives a health check request about every two seconds. However, health checkers don't coordinate with one another. Therefore, you might sometimes see several requests in one second that's followed by a few seconds with no health checks at all.</p> </dd> <dt>Health checking regions</dt> <dd> <p>Health checkers perform checks from all Route 53 health-checking Regions. For a list of the current Regions, see <a href=\"https://docs.aws.amazon.com/Route53/latest/APIReference/API_HealthCheckConfig.html#Route53-Type-HealthCheckConfig-Regions\">Regions</a>.</p> </dd> <dt>Alias records</dt> <dd> <p>When you register an instance, if you include the <code>AWS_ALIAS_DNS_NAME</code> attribute, Cloud Map creates a Route 53 alias record. Note the following:</p> <ul> <li> <p>Route 53 automatically sets <code>EvaluateTargetHealth</code> to true for alias records. When <code>EvaluateTargetHealth</code> is true, the alias record inherits the health of the referenced Amazon Web Services resource. such as an ELB load balancer. For more information, see <a href=\"https://docs.aws.amazon.com/Route53/latest/APIReference/API_AliasTarget.html#Route53-Type-AliasTarget-EvaluateTargetHealth\">EvaluateTargetHealth</a>.</p> </li> <li> <p>If you include <code>HealthCheckConfig</code> and then use the service to register an instance that creates an alias record, Route 53 doesn't create the health check.</p> </li> </ul> </dd> <dt>Charges for health checks</dt> <dd> <p>Health checks are basic Route 53 health checks that monitor an Amazon Web Services endpoint. For information about pricing for health checks, see <a href=\"http://aws.amazon.com/route53/pricing/\">Amazon Route 53 Pricing</a>.</p> </dd> </dl>",
@@ -432,8 +437,7 @@
     },
     "InstanceNotFound": {
       "base": "<p>No instance exists with the specified ID, or the instance was recently registered, and information about the instance hasn't propagated yet.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InstanceSummary": {
       "base": "<p>A complex type that contains information about the instances that you registered by using a specified service.</p>",
@@ -449,58 +453,47 @@
     },
     "InvalidInput": {
       "base": "<p>One or more specified values aren't valid. For example, a required value might be missing, a numeric value might be outside the allowed range, or a string value might exceed length constraints.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInstancesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInstancesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNamespacesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNamespacesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOperationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOperationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServicesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServicesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxResults": {
       "base": null,
@@ -526,8 +519,7 @@
     },
     "NamespaceAlreadyExists": {
       "base": "<p>The namespace that you're trying to create already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "NamespaceFilter": {
       "base": "<p>A complex type that identifies the namespaces that you want to list. You can choose to list public or private namespaces.</p>",
@@ -538,7 +530,7 @@
     "NamespaceFilterName": {
       "base": null,
       "refs": {
-        "NamespaceFilter$Name": "<p>Specify the namespaces that you want to get using one of the following.</p> <ul> <li> <p> <code>TYPE</code>: Gets the namespaces of the specified type.</p> </li> <li> <p> <code>NAME</code>: Gets the namespaces with the specified name.</p> </li> <li> <p> <code>HTTP_NAME</code>: Gets the namespaces with the specified HTTP name.</p> </li> </ul>"
+        "NamespaceFilter$Name": "<p>Specify the namespaces that you want to get using one of the following.</p> <ul> <li> <p> <code>TYPE</code>: Gets the namespaces of the specified type.</p> </li> <li> <p> <code>NAME</code>: Gets the namespaces with the specified name.</p> </li> <li> <p> <code>HTTP_NAME</code>: Gets the namespaces with the specified HTTP name.</p> </li> <li> <p> <code>RESOURCE_OWNER</code>: Gets the namespaces created by your Amazon Web Services account or by other accounts. This can be used to filter for shared namespaces. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p> </li> </ul>"
       }
     },
     "NamespaceFilters": {
@@ -550,8 +542,8 @@
     "NamespaceName": {
       "base": null,
       "refs": {
-        "DiscoverInstancesRequest$NamespaceName": "<p>The <code>HttpName</code> name of the namespace. It's found in the <code>HttpProperties</code> member of the <code>Properties</code> member of the namespace. In most cases, <code>Name</code> and <code>HttpName</code> match. However, if you reuse <code>Name</code> for namespace creation, a generated hash is added to <code>HttpName</code> to distinguish the two.</p>",
-        "DiscoverInstancesRevisionRequest$NamespaceName": "<p>The <code>HttpName</code> name of the namespace. It's found in the <code>HttpProperties</code> member of the <code>Properties</code> member of the namespace.</p>",
+        "DiscoverInstancesRequest$NamespaceName": "<p>The <code>HttpName</code> name of the namespace. The <code>HttpName</code> is found in the <code>HttpProperties</code> member of the <code>Properties</code> member of the namespace. In most cases, <code>Name</code> and <code>HttpName</code> match. However, if you reuse <code>Name</code> for namespace creation, a generated hash is added to <code>HttpName</code> to distinguish the two.</p>",
+        "DiscoverInstancesRevisionRequest$NamespaceName": "<p>The <code>HttpName</code> name of the namespace. The <code>HttpName</code> is found in the <code>HttpProperties</code> member of the <code>Properties</code> member of the namespace.</p>",
         "HttpProperties$HttpName": "<p>The name of an HTTP namespace.</p>",
         "Namespace$Name": "<p>The name of the namespace, such as <code>example.com</code>.</p>",
         "NamespaceSummary$Name": "<p>The name of the namespace. When you create a namespace, Cloud Map automatically creates a Route 53 hosted zone that has the same name as the namespace.</p>"
@@ -561,7 +553,7 @@
       "base": null,
       "refs": {
         "CreateHttpNamespaceRequest$Name": "<p>The name that you want to assign to this namespace.</p>",
-        "HttpInstanceSummary$NamespaceName": "<p> <code/> <code/> <code/> </p> <p>The <code>HttpName</code> name of the namespace. It's found in the <code>HttpProperties</code> member of the <code>Properties</code> member of the namespace.</p>"
+        "HttpInstanceSummary$NamespaceName": "<p>The <code>HttpName</code> name of the namespace. It's found in the <code>HttpProperties</code> member of the <code>Properties</code> member of the namespace.</p>"
       }
     },
     "NamespaceNamePrivate": {
@@ -578,8 +570,7 @@
     },
     "NamespaceNotFound": {
       "base": "<p>No namespace exists with the specified ID.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "NamespaceProperties": {
       "base": "<p>A complex type that contains information that's specific to the namespace type.</p>",
@@ -654,6 +645,8 @@
         "CreatePublicDnsNamespaceResponse$OperationId": "<p>A value that you can use to determine whether the request completed successfully. To get the status of the operation, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/api/API_GetOperation.html\">GetOperation</a>.</p>",
         "DeleteNamespaceResponse$OperationId": "<p>A value that you can use to determine whether the request completed successfully. To get the status of the operation, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/api/API_GetOperation.html\">GetOperation</a>.</p>",
         "DeregisterInstanceResponse$OperationId": "<p>A value that you can use to determine whether the request completed successfully. To get the status of the operation, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/api/API_GetOperation.html\">GetOperation</a>.</p>",
+        "DuplicateRequest$DuplicateOperationId": "<p>The ID of the operation that's already in progress.</p>",
+        "GetOperationRequest$OperationId": "<p>The ID of the operation that you want to get more information about.</p>",
         "Operation$Id": "<p>The ID of the operation that you want to get information about.</p>",
         "OperationSummary$Id": "<p>The ID for an operation.</p>",
         "RegisterInstanceResponse$OperationId": "<p>A value that you can use to determine whether the request completed successfully. To get the status of the operation, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/api/API_GetOperation.html\">GetOperation</a>.</p>",
@@ -665,8 +658,7 @@
     },
     "OperationNotFound": {
       "base": "<p>No operation exists with the specified ID.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OperationStatus": {
       "base": null,
@@ -781,18 +773,15 @@
     },
     "RegisterInstanceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterInstanceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RequestLimitExceeded": {
       "base": "<p>The operation can't be completed because you've reached the quota for the number of requests. For more information, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/throttling.html\">Cloud Map API request throttling quota</a> in the <i>Cloud Map Developer Guide</i>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceCount": {
       "base": null,
@@ -827,37 +816,23 @@
         "CreatePrivateDnsNamespaceRequest$CreatorRequestId": "<p>A unique string that identifies the request and that allows failed <code>CreatePrivateDnsNamespace</code> requests to be retried without the risk of running the operation twice. <code>CreatorRequestId</code> can be any unique string (for example, a date/timestamp).</p>",
         "CreatePrivateDnsNamespaceRequest$Vpc": "<p>The ID of the Amazon VPC that you want to associate the namespace with.</p>",
         "CreatePublicDnsNamespaceRequest$CreatorRequestId": "<p>A unique string that identifies the request and that allows failed <code>CreatePublicDnsNamespace</code> requests to be retried without the risk of running the operation twice. <code>CreatorRequestId</code> can be any unique string (for example, a date/timestamp).</p>",
-        "CreateServiceRequest$NamespaceId": "<p>The ID of the namespace that you want to use to create the service. The namespace ID must be specified, but it can be specified either here or in the <code>DnsConfig</code> object.</p>",
         "CreateServiceRequest$CreatorRequestId": "<p>A unique string that identifies the request and that allows failed <code>CreateService</code> requests to be retried without the risk of running the operation twice. <code>CreatorRequestId</code> can be any unique string (for example, a date/timestamp).</p>",
-        "DeleteNamespaceRequest$Id": "<p>The ID of the namespace that you want to delete.</p>",
-        "DeleteServiceAttributesRequest$ServiceId": "<p>The ID of the service from which the attributes will be deleted.</p>",
-        "DeleteServiceRequest$Id": "<p>The ID of the service that you want to delete.</p>",
-        "DeregisterInstanceRequest$ServiceId": "<p>The ID of the service that the instance is associated with.</p>",
         "DeregisterInstanceRequest$InstanceId": "<p>The value that you specified for <code>Id</code> in the <a href=\"https://docs.aws.amazon.com/cloud-map/latest/api/API_RegisterInstance.html\">RegisterInstance</a> request.</p>",
         "DnsConfig$NamespaceId": "<p> <i>Use NamespaceId in <a href=\"https://docs.aws.amazon.com/cloud-map/latest/api/API_Service.html\">Service</a> instead.</i> </p> <p>The ID of the namespace to use for DNS configuration.</p>",
         "DnsProperties$HostedZoneId": "<p>The ID for the Route 53 hosted zone that Cloud Map creates when you create a namespace.</p>",
-        "DuplicateRequest$DuplicateOperationId": "<p>The ID of the operation that's already in progress.</p>",
-        "GetInstanceRequest$ServiceId": "<p>The ID of the service that the instance is associated with.</p>",
         "GetInstanceRequest$InstanceId": "<p>The ID of the instance that you want to get information about.</p>",
-        "GetInstancesHealthStatusRequest$ServiceId": "<p>The ID of the service that the instance is associated with.</p>",
-        "GetNamespaceRequest$Id": "<p>The ID of the namespace that you want to get information about.</p>",
-        "GetOperationRequest$OperationId": "<p>The ID of the operation that you want to get more information about.</p>",
-        "GetServiceAttributesRequest$ServiceId": "<p>The ID of the service that you want to get attributes for.</p>",
-        "GetServiceRequest$Id": "<p>The ID of the service that you want to get settings for.</p>",
         "HttpInstanceSummary$InstanceId": "<p>The ID of an instance that matches the values that you specified in the request.</p>",
         "Instance$Id": "<p>An identifier that you want to associate with the instance. Note the following:</p> <ul> <li> <p>If the service that's specified by <code>ServiceId</code> includes settings for an <code>SRV</code> record, the value of <code>InstanceId</code> is automatically included as part of the value for the <code>SRV</code> record. For more information, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/api/API_DnsRecord.html#cloudmap-Type-DnsRecord-Type\">DnsRecord &gt; Type</a>.</p> </li> <li> <p>You can use this value to update an existing instance.</p> </li> <li> <p>To register a new instance, you must specify a value that's unique among instances that you register by using the same service. </p> </li> <li> <p>If you specify an existing <code>InstanceId</code> and <code>ServiceId</code>, Cloud Map updates the existing DNS records. If there's also an existing health check, Cloud Map deletes the old health check and creates a new one. </p> <note> <p>The health check isn't deleted immediately, so it will still appear for a while if you submit a <code>ListHealthChecks</code> request, for example.</p> </note> </li> </ul>",
         "Instance$CreatorRequestId": "<p>A unique string that identifies the request and that allows failed <code>RegisterInstance</code> requests to be retried without the risk of executing the operation twice. You must use a unique <code>CreatorRequestId</code> string every time you submit a <code>RegisterInstance</code> request if you're registering additional instances for the same namespace and service. <code>CreatorRequestId</code> can be any unique string (for example, a date/time stamp).</p>",
         "InstanceHealthStatusMap$key": null,
         "InstanceIdList$member": null,
         "InstanceSummary$Id": "<p>The ID for an instance that you created by using a specified service.</p>",
-        "ListInstancesRequest$ServiceId": "<p>The ID of the service that you want to list instances for.</p>",
         "Namespace$Id": "<p>The ID of a namespace.</p>",
         "Namespace$CreatorRequestId": "<p>A unique string that identifies the request and that allows failed requests to be retried without the risk of running an operation twice. </p>",
         "NamespaceAlreadyExists$CreatorRequestId": "<p>The <code>CreatorRequestId</code> that was used to create the namespace.</p>",
         "NamespaceAlreadyExists$NamespaceId": "<p>The ID of the existing namespace.</p>",
         "NamespaceSummary$Id": "<p>The ID of the namespace.</p>",
         "OperationTargetsMap$value": null,
-        "RegisterInstanceRequest$ServiceId": "<p>The ID of the service that you want to use for settings for the instance.</p>",
         "RegisterInstanceRequest$CreatorRequestId": "<p>A unique string that identifies the request and that allows failed <code>RegisterInstance</code> requests to be retried without the risk of executing the operation twice. You must use a unique <code>CreatorRequestId</code> string every time you submit a <code>RegisterInstance</code> request if you're registering additional instances for the same namespace and service. <code>CreatorRequestId</code> can be any unique string (for example, a date/time stamp).</p>",
         "Service$Id": "<p>The ID that Cloud Map assigned to the service when you created it.</p>",
         "Service$NamespaceId": "<p>The ID of the namespace that was used to create the service.</p>",
@@ -865,32 +840,23 @@
         "ServiceAlreadyExists$CreatorRequestId": "<p>The <code>CreatorRequestId</code> that was used to create the service.</p>",
         "ServiceAlreadyExists$ServiceId": "<p>The ID of the existing service.</p>",
         "ServiceSummary$Id": "<p>The ID that Cloud Map assigned to the service when you created it.</p>",
-        "UpdateHttpNamespaceRequest$Id": "<p>The ID of the namespace that you want to update.</p>",
         "UpdateHttpNamespaceRequest$UpdaterRequestId": "<p>A unique string that identifies the request and that allows failed <code>UpdateHttpNamespace</code> requests to be retried without the risk of running the operation twice. <code>UpdaterRequestId</code> can be any unique string (for example, a date/timestamp).</p>",
-        "UpdateInstanceCustomHealthStatusRequest$ServiceId": "<p>The ID of the service that includes the configuration for the custom health check that you want to change the status for.</p>",
         "UpdateInstanceCustomHealthStatusRequest$InstanceId": "<p>The ID of the instance that you want to change the health status for.</p>",
-        "UpdatePrivateDnsNamespaceRequest$Id": "<p>The ID of the namespace that you want to update.</p>",
         "UpdatePrivateDnsNamespaceRequest$UpdaterRequestId": "<p>A unique string that identifies the request and that allows failed <code>UpdatePrivateDnsNamespace</code> requests to be retried without the risk of running the operation twice. <code>UpdaterRequestId</code> can be any unique string (for example, a date/timestamp).</p>",
-        "UpdatePublicDnsNamespaceRequest$Id": "<p>The ID of the namespace being updated.</p>",
-        "UpdatePublicDnsNamespaceRequest$UpdaterRequestId": "<p>A unique string that identifies the request and that allows failed <code>UpdatePublicDnsNamespace</code> requests to be retried without the risk of running the operation twice. <code>UpdaterRequestId</code> can be any unique string (for example, a date/timestamp).</p>",
-        "UpdateServiceAttributesRequest$ServiceId": "<p>The ID of the service that you want to update.</p>",
-        "UpdateServiceRequest$Id": "<p>The ID of the service that you want to update.</p>"
+        "UpdatePublicDnsNamespaceRequest$UpdaterRequestId": "<p>A unique string that identifies the request and that allows failed <code>UpdatePublicDnsNamespace</code> requests to be retried without the risk of running the operation twice. <code>UpdaterRequestId</code> can be any unique string (for example, a date/timestamp).</p>"
       }
     },
     "ResourceInUse": {
       "base": "<p>The specified resource can't be deleted because it contains other resources. For example, you can't delete a service that contains any instances.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceLimitExceeded": {
       "base": "<p>The resource can't be created because you've reached the quota on the number of resources.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The operation can't be completed because the resource was not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourcePath": {
       "base": null,
@@ -935,8 +901,7 @@
     },
     "ServiceAlreadyExists": {
       "base": "<p>The service can't be created because a service with the same name already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceAttributeKey": {
       "base": null,
@@ -965,8 +930,7 @@
     },
     "ServiceAttributesLimitExceededException": {
       "base": "<p>The attribute can't be added to the service because you've exceeded the quota for the number of attributes you can add to a service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceAttributesMap": {
       "base": null,
@@ -990,7 +954,7 @@
     "ServiceFilterName": {
       "base": null,
       "refs": {
-        "ServiceFilter$Name": "<p>Specify <code>NAMESPACE_ID</code>.</p>"
+        "ServiceFilter$Name": "<p>Specify the services that you want to get using one of the following.</p> <ul> <li> <p> <code>NAMESPACE_ID</code>: Gets the services associated with the specified namespace.</p> </li> <li> <p> <code>RESOURCE_OWNER</code>: Gets the services associated with the namespaces created by your Amazon Web Services account or by other accounts. This can be used to filter for services created in a shared namespace. For more information about shared namespaces, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html\">Cross-account Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p> </li> </ul>"
       }
     },
     "ServiceFilters": {
@@ -1012,8 +976,7 @@
     },
     "ServiceNotFound": {
       "base": "<p>No service exists with the specified ID.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceSummariesList": {
       "base": null,
@@ -1072,13 +1035,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1099,73 +1060,59 @@
     },
     "TooManyTagsException": {
       "base": "<p>The list of tags on the resource is over the quota. The maximum number of tags that can be applied to a resource is 50.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateHttpNamespaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateHttpNamespaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateInstanceCustomHealthStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePrivateDnsNamespaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePrivateDnsNamespaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePublicDnsNamespaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePublicDnsNamespaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServiceAttributesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServiceAttributesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServiceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServiceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     }
   }
 }

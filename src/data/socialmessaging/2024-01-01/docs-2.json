@@ -3,18 +3,26 @@
   "service": "<p> <i>Amazon Web Services End User Messaging Social</i>, also referred to as Social messaging, is a messaging service that enables application developers to incorporate WhatsApp into their existing workflows. The <i>Amazon Web Services End User Messaging Social API</i> provides information about the <i>Amazon Web Services End User Messaging Social API</i> resources, including supported HTTP methods, parameters, and schemas.</p> <p>The <i>Amazon Web Services End User Messaging Social API</i> provides programmatic access to options that are unique to the WhatsApp Business Platform.</p> <p>If you're new to the <i>Amazon Web Services End User Messaging Social API</i>, it's also helpful to review <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/what-is-service.html\">What is Amazon Web Services End User Messaging Social</a> in the <i>Amazon Web Services End User Messaging Social User Guide</i>. The <i>Amazon Web Services End User Messaging Social User Guide</i> provides tutorials, code samples, and procedures that demonstrate how to use <i>Amazon Web Services End User Messaging Social API</i> features programmatically and how to integrate functionality into applications. The guide also provides key information, such as integration with other Amazon Web Services services, and the quotas that apply to use of the service.</p> <p> <b>Regional availability</b> </p> <p>The <i>Amazon Web Services End User Messaging Social API</i> is available across several Amazon Web Services Regions and it provides a dedicated endpoint for each of these Regions. For a list of all the Regions and endpoints where the API is currently available, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#pinpoint_region\">Amazon Web Services Service Endpoints</a> and <a href=\"https://docs.aws.amazon.com/general/latest/gr/end-user-messaging.html\">Amazon Web Services End User Messaging endpoints and quotas</a> in the Amazon Web Services General Reference. To learn more about Amazon Web Services Regions, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande-manage.html\">Managing Amazon Web Services Regions</a> in the Amazon Web Services General Reference.</p> <p>In each Region, Amazon Web Services maintains multiple Availability Zones. These Availability Zones are physically isolated from each other, but are united by private, low-latency, high-throughput, and highly redundant network connections. These Availability Zones enable us to provide very high levels of availability and redundancy, while also minimizing latency. To learn more about the number of Availability Zones that are available in each Region, see <a href=\"https://aws.amazon.com/about-aws/global-infrastructure/\">Amazon Web Services Global Infrastructure.</a> </p>",
   "operations": {
     "AssociateWhatsAppBusinessAccount": "<p>This is only used through the Amazon Web Services console during sign-up to associate your WhatsApp Business Account to your Amazon Web Services account.</p>",
+    "CreateWhatsAppMessageTemplate": "<p>Creates a new WhatsApp message template from a custom definition.</p>",
+    "CreateWhatsAppMessageTemplateFromLibrary": "<p>Creates a new WhatsApp message template using a template from Meta's template library.</p>",
+    "CreateWhatsAppMessageTemplateMedia": "<p>Uploads media for use in a WhatsApp message template.</p>",
     "DeleteWhatsAppMessageMedia": "<p>Delete a media object from the WhatsApp service. If the object is still in an Amazon S3 bucket you should delete it from there too.</p>",
+    "DeleteWhatsAppMessageTemplate": "<p>Deletes a WhatsApp message template.</p>",
     "DisassociateWhatsAppBusinessAccount": "<p>Disassociate a WhatsApp Business Account (WABA) from your Amazon Web Services account.</p>",
     "GetLinkedWhatsAppBusinessAccount": "<p>Get the details of your linked WhatsApp Business Account.</p>",
     "GetLinkedWhatsAppBusinessAccountPhoneNumber": "<p>Use your WhatsApp phone number id to get the WABA account id and phone number details.</p>",
     "GetWhatsAppMessageMedia": "<p>Get a media file from the WhatsApp service. On successful completion the media file is retrieved from Meta and stored in the specified Amazon S3 bucket. Use either <code>destinationS3File</code> or <code>destinationS3PresignedUrl</code> for the destination. If both are used then an <code>InvalidParameterException</code> is returned.</p>",
+    "GetWhatsAppMessageTemplate": "<p>Retrieves a specific WhatsApp message template.</p>",
     "ListLinkedWhatsAppBusinessAccounts": "<p>List all WhatsApp Business Accounts linked to your Amazon Web Services account.</p>",
     "ListTagsForResource": "<p>List all tags associated with a resource, such as a phone number or WABA.</p>",
+    "ListWhatsAppMessageTemplates": "<p>Lists WhatsApp message templates for a specific WhatsApp Business Account.</p>",
+    "ListWhatsAppTemplateLibrary": "<p>Lists templates available in Meta's template library for WhatsApp messaging.</p>",
     "PostWhatsAppMessageMedia": "<p>Upload a media file to the WhatsApp service. Only the specified <code>originationPhoneNumberId</code> has the permissions to send the media file when using <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_SendWhatsAppMessage.html\">SendWhatsAppMessage</a>. You must use either <code>sourceS3File</code> or <code>sourceS3PresignedUrl</code> for the source. If both or neither are specified then an <code>InvalidParameterException</code> is returned.</p>",
     "PutWhatsAppBusinessAccountEventDestinations": "<p>Add an event destination to log event data from WhatsApp for a WhatsApp Business Account (WABA). A WABA can only have one event destination at a time. All resources associated with the WABA use the same event destination.</p>",
     "SendWhatsAppMessage": "<p>Send a WhatsApp message. For examples of sending a message using the Amazon Web Services CLI, see <a href=\"https://docs.aws.amazon.com/social-messaging/latest/userguide/send-message.html\">Sending messages</a> in the <i> <i>Amazon Web Services End User Messaging Social User Guide</i> </i>.</p>",
     "TagResource": "<p>Adds or overwrites only the specified tags for the specified resource. When you specify an existing tag key, the value is overwritten with the new value.</p>",
-    "UntagResource": "<p>Removes the specified tags from a resource. </p>"
+    "UntagResource": "<p>Removes the specified tags from a resource. </p>",
+    "UpdateWhatsAppMessageTemplate": "<p>Updates an existing WhatsApp message template.</p>"
   },
   "shapes": {
     "AccessDeniedByMetaException": {
@@ -25,6 +33,30 @@
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
       "refs": {
+      }
+    },
+    "AddContactNumber": {
+      "base": null,
+      "refs": {
+        "LibraryTemplateBodyInputs$addContactNumber": "<p>When true, includes a contact number in the template body.</p>"
+      }
+    },
+    "AddLearnMoreLink": {
+      "base": null,
+      "refs": {
+        "LibraryTemplateBodyInputs$addLearnMoreLink": "<p>When true, includes a \"learn more\" link in the template body.</p>"
+      }
+    },
+    "AddSecurityRecommendation": {
+      "base": null,
+      "refs": {
+        "LibraryTemplateBodyInputs$addSecurityRecommendation": "<p>When true, includes security recommendations in the template body.</p>"
+      }
+    },
+    "AddTrackPackageLink": {
+      "base": null,
+      "refs": {
+        "LibraryTemplateBodyInputs$addTrackPackageLink": "<p>When true, includes a package tracking link in the template body.</p>"
       }
     },
     "Arn": {
@@ -59,12 +91,71 @@
         "GetWhatsAppMessageMediaInput$metadataOnly": "<p>Set to <code>True</code> to get only the metadata for the file.</p>"
       }
     },
+    "ButtonType": {
+      "base": null,
+      "refs": {
+        "LibraryTemplateButtonInput$type": "<p>The type of button (for example, QUICK_REPLY, CALL, or URL).</p>",
+        "LibraryTemplateButtonList$type": "<p>The type of button (for example, QUICK_REPLY, CALL, or URL).</p>"
+      }
+    },
+    "CodeExpirationMinutes": {
+      "base": null,
+      "refs": {
+        "LibraryTemplateBodyInputs$codeExpirationMinutes": "<p>The number of minutes until a verification code or OTP expires.</p>"
+      }
+    },
+    "CreateWhatsAppMessageTemplateFromLibraryInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateWhatsAppMessageTemplateFromLibraryOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateWhatsAppMessageTemplateInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateWhatsAppMessageTemplateMediaInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateWhatsAppMessageTemplateMediaOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateWhatsAppMessageTemplateOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteAllLanguages": {
+      "base": null,
+      "refs": {
+        "DeleteWhatsAppMessageTemplateInput$deleteAllLanguages": "<p>If true, deletes all language versions of the template.</p>"
+      }
+    },
     "DeleteWhatsAppMessageMediaInput": {
       "base": null,
       "refs": {
       }
     },
     "DeleteWhatsAppMessageMediaOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteWhatsAppMessageTemplateInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteWhatsAppMessageTemplateOutput": {
       "base": null,
       "refs": {
       }
@@ -92,6 +183,7 @@
         "DependencyException$message": null,
         "InternalServiceException$message": null,
         "InvalidParametersException$message": null,
+        "LimitExceededException$message": null,
         "ResourceNotFoundException$message": null,
         "ThrottledRequestException$message": null,
         "ValidationException$message": null
@@ -101,6 +193,24 @@
       "base": null,
       "refs": {
         "WhatsAppBusinessAccountEventDestination$eventDestinationArn": "<p>The ARN of the event destination.</p>"
+      }
+    },
+    "Filter": {
+      "base": null,
+      "refs": {
+        "ListWhatsAppTemplateLibraryInput$filters": "<p>Map of filters to apply (searchKey, topic, usecase, industry, language).</p>"
+      }
+    },
+    "FilterKeyString": {
+      "base": null,
+      "refs": {
+        "Filter$key": null
+      }
+    },
+    "FilterValueString": {
+      "base": null,
+      "refs": {
+        "Filter$value": null
       }
     },
     "GetLinkedWhatsAppBusinessAccountInput": {
@@ -133,6 +243,16 @@
       "refs": {
       }
     },
+    "GetWhatsAppMessageTemplateInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetWhatsAppMessageTemplateOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "Headers": {
       "base": null,
       "refs": {
@@ -161,7 +281,32 @@
     "IsoCountryCode": {
       "base": null,
       "refs": {
-        "WabaPhoneNumberSetupFinalization$dataLocalizationRegion": "<p>The two letter ISO region for the location of where Meta will store data.</p> <p class=\"title\"> <b>Asia–Pacific (APAC)</b> </p> <ul> <li> <p>Australia <b>AU</b> </p> </li> <li> <p>Indonesia <b>ID</b> </p> </li> <li> <p>India <b>IN</b> </p> </li> <li> <p>Japan <b>JP</b> </p> </li> <li> <p>Singapore <b>SG</b> </p> </li> <li> <p>South Korea <b>KR</b> </p> </li> </ul> <p class=\"title\"> <b>Europe</b> </p> <ul> <li> <p>Germany <b>DE</b> </p> </li> <li> <p>Switzerland <b>CH</b> </p> </li> <li> <p>United Kingdom <b>GB</b> </p> </li> </ul> <p class=\"title\"> <b>Latin America (LATAM)</b> </p> <ul> <li> <p>Brazil <b>BR</b> </p> </li> </ul> <p class=\"title\"> <b>Middle East and Africa (MEA)</b> </p> <ul> <li> <p>Bahrain <b>BH</b> </p> </li> <li> <p>South Africa <b>ZA</b> </p> </li> <li> <p>United Arab Emirates <b>AE</b> </p> </li> </ul> <p class=\"title\"> <b>North America (NORAM)</b> </p> <ul> <li> <p>Canada <b>CA</b> </p> </li> </ul>"
+        "WabaPhoneNumberSetupFinalization$dataLocalizationRegion": "<p>The two letter ISO region for the location of where Meta will store data.</p> <p class=\"title\"> <b>Asia–Pacific (APAC)</b> </p> <ul> <li> <p>Australia <b>AU</b> </p> </li> <li> <p>Indonesia <b>ID</b> </p> </li> <li> <p>India <b>IN</b> </p> </li> <li> <p>Japan <b>JP</b> </p> </li> <li> <p>Singapore <b>SG</b> </p> </li> <li> <p>South Korea <b>KR</b> </p> </li> </ul> <p class=\"title\"> <b>Europe</b> </p> <ul> <li> <p>Germany <b>DE</b> </p> </li> <li> <p>Switzerland <b>CH</b> </p> </li> <li> <p>United Kingdom <b>GB</b> </p> </li> </ul> <p class=\"title\"> <b>Latin America (LATAM)</b> </p> <ul> <li> <p>Brazil <b>BR</b> </p> </li> </ul> <p class=\"title\"> <b>Middle East and Africa (MEA)</b> </p> <ul> <li> <p>Bahrain <b>BH</b> </p> </li> <li> <p>South Africa <b>ZA</b> </p> </li> <li> <p>United Arab Emirates <b>AE</b> </p> </li> </ul> <p class=\"title\"> <b>North America (NORAM)</b> </p> <ul> <li> <p>Canada <b>CA</b> </p> </li> </ul>",
+        "WhatsAppPhoneNumberDetail$dataLocalizationRegion": "<p>The geographic region where the WhatsApp phone number's data is stored and processed.</p>",
+        "WhatsAppPhoneNumberSummary$dataLocalizationRegion": "<p>The geographic region where the WhatsApp phone number's data is stored and processed.</p>"
+      }
+    },
+    "LibraryTemplateBodyInputs": {
+      "base": "<p>Configuration options for customizing the body content of a template from Meta's library.</p>",
+      "refs": {
+        "MetaLibraryTemplate$libraryTemplateBodyInputs": "<p>Body text customizations for the template.</p>"
+      }
+    },
+    "LibraryTemplateButtonInput": {
+      "base": "<p>Configuration options for customizing buttons in a template from Meta's library.</p>",
+      "refs": {
+        "MetaLibraryTemplateButtonInputs$member": null
+      }
+    },
+    "LibraryTemplateButtonList": {
+      "base": "<p>Defines a button in a template from Meta's library.</p>",
+      "refs": {
+        "MetaLibraryTemplateButtonList$member": null
+      }
+    },
+    "LimitExceededException": {
+      "base": "<p>The request was denied because it would exceed one or more service quotas or limits.</p>",
+      "refs": {
       }
     },
     "LinkedAccountWithIncompleteSetup": {
@@ -186,13 +331,21 @@
     "LinkedWhatsAppBusinessAccountId": {
       "base": null,
       "refs": {
+        "CreateWhatsAppMessageTemplateFromLibraryInput$id": "<p>The ID of the WhatsApp Business Account to associate with this template.</p>",
+        "CreateWhatsAppMessageTemplateInput$id": "<p>The ID of the WhatsApp Business Account to associate with this template.</p>",
+        "CreateWhatsAppMessageTemplateMediaInput$id": "<p>The ID of the WhatsApp Business Account associated with this media upload.</p>",
+        "DeleteWhatsAppMessageTemplateInput$id": "<p>The ID of the WhatsApp Business Account associated with this template.</p>",
         "DisassociateWhatsAppBusinessAccountInput$id": "<p>The unique identifier of your WhatsApp Business Account. WABA identifiers are formatted as <code>waba-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_ListLinkedWhatsAppBusinessAccounts.html\">ListLinkedWhatsAppBusinessAccounts</a> to list all WABAs and their details.</p>",
         "GetLinkedWhatsAppBusinessAccountInput$id": "<p>The unique identifier, from Amazon Web Services, of the linked WhatsApp Business Account. WABA identifiers are formatted as <code>waba-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_ListLinkedWhatsAppBusinessAccounts.html\">ListLinkedWhatsAppBusinessAccounts</a> to list all WABAs and their details.</p>",
         "GetLinkedWhatsAppBusinessAccountPhoneNumberOutput$linkedWhatsAppBusinessAccountId": "<p>The WABA identifier linked to the phone number, formatted as <code>waba-01234567890123456789012345678901</code>.</p>",
+        "GetWhatsAppMessageTemplateInput$id": "<p>The ID of the WhatsApp Business Account associated with this template.</p>",
         "LinkedWhatsAppBusinessAccount$id": "<p>The ID of the linked WhatsApp Business Account, formatted as <code>waba-01234567890123456789012345678901</code>.</p>",
         "LinkedWhatsAppBusinessAccountIdMetaData$wabaId": "<p>The Amazon Resource Name (ARN) of the WhatsApp Business Account ID.</p>",
         "LinkedWhatsAppBusinessAccountSummary$id": "<p>The ID of the linked WhatsApp Business Account, formatted as <code>waba-01234567890123456789012345678901</code>.</p>",
+        "ListWhatsAppMessageTemplatesInput$id": "<p>The ID of the WhatsApp Business Account to list templates for.</p>",
+        "ListWhatsAppTemplateLibraryInput$id": "<p>The ID of the WhatsApp Business Account to list library templates for.</p>",
         "PutWhatsAppBusinessAccountEventDestinationsInput$id": "<p>The unique identifier of your WhatsApp Business Account. WABA identifiers are formatted as <code>waba-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_ListLinkedWhatsAppBusinessAccounts.html\">ListLinkedWhatsAppBusinessAccounts</a> to list all WABAs and their details.</p>",
+        "UpdateWhatsAppMessageTemplateInput$id": "<p>The ID of the WhatsApp Business Account associated with this template.</p>",
         "WhatsAppSetupFinalization$phoneNumberParent": "<p>Used to add a new phone number to an existing WhatsApp Business Account. This field can't be used when the <code>waba</code> field is present.</p>"
       }
     },
@@ -241,6 +394,26 @@
       "refs": {
       }
     },
+    "ListWhatsAppMessageTemplatesInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListWhatsAppMessageTemplatesOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListWhatsAppTemplateLibraryInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListWhatsAppTemplateLibraryOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "Long": {
       "base": null,
       "refs": {
@@ -250,19 +423,201 @@
     "MaxResults": {
       "base": null,
       "refs": {
-        "ListLinkedWhatsAppBusinessAccountsInput$maxResults": "<p>The maximum number of results to return.</p>"
+        "ListLinkedWhatsAppBusinessAccountsInput$maxResults": "<p>The maximum number of results to return.</p>",
+        "ListWhatsAppMessageTemplatesInput$maxResults": "<p>The maximum number of results to return per page (1-100).</p>",
+        "ListWhatsAppTemplateLibraryInput$maxResults": "<p>The maximum number of results to return per page (1-100).</p>"
+      }
+    },
+    "MetaIndustries": {
+      "base": null,
+      "refs": {
+        "MetaLibraryTemplateDefinition$templateIndustry": "<p>The industries the template is designed for.</p>"
+      }
+    },
+    "MetaIndustry": {
+      "base": null,
+      "refs": {
+        "MetaIndustries$member": null
+      }
+    },
+    "MetaLibraryTemplate": {
+      "base": "<p>Represents a template from Meta's library with customization options.</p>",
+      "refs": {
+        "CreateWhatsAppMessageTemplateFromLibraryInput$metaLibraryTemplate": "<p>The template configuration from Meta's library, including customizations for buttons and body text.</p>"
+      }
+    },
+    "MetaLibraryTemplateButtonInputs": {
+      "base": null,
+      "refs": {
+        "MetaLibraryTemplate$libraryTemplateButtonInputs": "<p>Button customizations for the template.</p>"
+      }
+    },
+    "MetaLibraryTemplateButtonList": {
+      "base": null,
+      "refs": {
+        "MetaLibraryTemplateDefinition$templateButtons": "<p>The buttons included in the template.</p>"
+      }
+    },
+    "MetaLibraryTemplateDefinition": {
+      "base": "<p>Defines the complete structure and content of a template in Meta's library.</p>",
+      "refs": {
+        "MetaLibraryTemplatesList$member": null
+      }
+    },
+    "MetaLibraryTemplatesList": {
+      "base": null,
+      "refs": {
+        "ListWhatsAppTemplateLibraryOutput$metaLibraryTemplates": "<p>A list of templates from Meta's library.</p>"
+      }
+    },
+    "MetaTemplate": {
+      "base": null,
+      "refs": {
+        "GetWhatsAppMessageTemplateOutput$template": "<p>The complete template definition as a JSON string (maximum 6000 characters).</p>"
+      }
+    },
+    "MetaTemplateBody": {
+      "base": null,
+      "refs": {
+        "MetaLibraryTemplateDefinition$templateBody": "<p>The body text of the template.</p>"
+      }
+    },
+    "MetaTemplateCategory": {
+      "base": null,
+      "refs": {
+        "CreateWhatsAppMessageTemplateFromLibraryOutput$category": "<p>The category of the template (for example, UTILITY or MARKETING).</p>",
+        "CreateWhatsAppMessageTemplateOutput$category": "<p>The category of the template, such as UTILITY or MARKETING.</p>",
+        "MetaLibraryTemplate$templateCategory": "<p>The category of the template (for example, UTILITY or MARKETING).</p>",
+        "MetaLibraryTemplateDefinition$templateCategory": "<p>The category of the template (for example, UTILITY or MARKETING).</p>",
+        "TemplateSummary$templateCategory": "<p>The category of the template (for example, UTILITY or MARKETING).</p>",
+        "UpdateWhatsAppMessageTemplateInput$templateCategory": "<p>The new category for the template (for example, UTILITY or MARKETING).</p>"
+      }
+    },
+    "MetaTemplateComponents": {
+      "base": null,
+      "refs": {
+        "UpdateWhatsAppMessageTemplateInput$templateComponents": "<p>The updated components of the template as a JSON blob (maximum 3000 characters).</p>"
+      }
+    },
+    "MetaTemplateDefinition": {
+      "base": null,
+      "refs": {
+        "CreateWhatsAppMessageTemplateInput$templateDefinition": "<p>The complete template definition as a JSON blob.</p>"
+      }
+    },
+    "MetaTemplateHeader": {
+      "base": null,
+      "refs": {
+        "MetaLibraryTemplateDefinition$templateHeader": "<p>The header text of the template.</p>"
+      }
+    },
+    "MetaTemplateId": {
+      "base": null,
+      "refs": {
+        "CreateWhatsAppMessageTemplateFromLibraryOutput$metaTemplateId": "<p>The numeric ID assigned to the template by Meta.</p>",
+        "CreateWhatsAppMessageTemplateOutput$metaTemplateId": "<p>The numeric ID assigned to the template by Meta.</p>",
+        "DeleteWhatsAppMessageTemplateInput$metaTemplateId": "<p>The numeric ID of the template assigned by Meta.</p>",
+        "GetWhatsAppMessageTemplateInput$metaTemplateId": "<p>The numeric ID of the template assigned by Meta.</p>",
+        "MetaLibraryTemplateDefinition$templateId": "<p>The ID of the template in Meta's library.</p>",
+        "TemplateSummary$metaTemplateId": "<p>The numeric ID assigned to the template by Meta.</p>",
+        "UpdateWhatsAppMessageTemplateInput$metaTemplateId": "<p>The numeric ID of the template assigned by Meta.</p>"
+      }
+    },
+    "MetaTemplateLanguage": {
+      "base": null,
+      "refs": {
+        "MetaLibraryTemplate$templateLanguage": "<p>The language code for the template (for example, en_US).</p>",
+        "MetaLibraryTemplateDefinition$templateLanguage": "<p>The language code for the template (for example, en_US).</p>",
+        "TemplateSummary$templateLanguage": "<p>The language code of the template (for example, en_US).</p>"
+      }
+    },
+    "MetaTemplateName": {
+      "base": null,
+      "refs": {
+        "DeleteWhatsAppMessageTemplateInput$templateName": "<p>The name of the template to delete.</p>",
+        "MetaLibraryTemplate$templateName": "<p>The name to assign to the template.</p>",
+        "MetaLibraryTemplate$libraryTemplateName": "<p>The name of the template in Meta's library.</p>",
+        "MetaLibraryTemplateDefinition$templateName": "<p>The name of the template.</p>",
+        "TemplateSummary$templateName": "<p>The name of the template.</p>"
+      }
+    },
+    "MetaTemplateQualityScore": {
+      "base": null,
+      "refs": {
+        "TemplateSummary$templateQualityScore": "<p>The quality score assigned to the template by Meta.</p>"
+      }
+    },
+    "MetaTemplateStatus": {
+      "base": null,
+      "refs": {
+        "TemplateSummary$templateStatus": "<p>The current status of the template (for example, APPROVED, PENDING, or REJECTED).</p>"
+      }
+    },
+    "MetaTemplateTopic": {
+      "base": null,
+      "refs": {
+        "MetaLibraryTemplateDefinition$templateTopic": "<p>The topic or subject matter of the template.</p>"
+      }
+    },
+    "MetaTemplateUseCase": {
+      "base": null,
+      "refs": {
+        "MetaLibraryTemplateDefinition$templateUseCase": "<p>The intended use case for the template.</p>"
+      }
+    },
+    "MetaText": {
+      "base": null,
+      "refs": {
+        "LibraryTemplateButtonList$text": "<p>The text displayed on the button (maximum 40 characters).</p>"
+      }
+    },
+    "MetaUrl": {
+      "base": null,
+      "refs": {
+        "LibraryTemplateButtonList$url": "<p>The URL for URL-type buttons.</p>"
+      }
+    },
+    "MetaUrlWithSuffixExample": {
+      "base": null,
+      "refs": {
+        "LibraryTemplateButtonInput$url": "<p>The URL with dynamic parameters for URL-type buttons.</p>"
+      }
+    },
+    "MetaUrlWithSuffixExampleKeyString": {
+      "base": null,
+      "refs": {
+        "MetaUrlWithSuffixExample$key": null
+      }
+    },
+    "MetaUrlWithSuffixExampleValueString": {
+      "base": null,
+      "refs": {
+        "MetaUrlWithSuffixExample$value": null
       }
     },
     "NextToken": {
       "base": null,
       "refs": {
         "ListLinkedWhatsAppBusinessAccountsInput$nextToken": "<p>The next token for pagination.</p>",
-        "ListLinkedWhatsAppBusinessAccountsOutput$nextToken": "<p>The next token for pagination.</p>"
+        "ListLinkedWhatsAppBusinessAccountsOutput$nextToken": "<p>The next token for pagination.</p>",
+        "ListWhatsAppMessageTemplatesInput$nextToken": "<p>The token for the next page of results.</p>",
+        "ListWhatsAppMessageTemplatesOutput$nextToken": "<p>The token to retrieve the next page of results, if any.</p>",
+        "ListWhatsAppTemplateLibraryInput$nextToken": "<p>The token for the next page of results.</p>",
+        "ListWhatsAppTemplateLibraryOutput$nextToken": "<p>The token to retrieve the next page of results, if any.</p>"
+      }
+    },
+    "OtpType": {
+      "base": null,
+      "refs": {
+        "LibraryTemplateButtonInput$otpType": "<p>The type of one-time password for OTP buttons.</p>",
+        "LibraryTemplateButtonList$otpType": "<p>The type of one-time password for OTP buttons.</p>"
       }
     },
     "PhoneNumber": {
       "base": null,
       "refs": {
+        "LibraryTemplateButtonInput$phoneNumber": "<p>The phone number in E.164 format for CALL-type buttons.</p>",
+        "LibraryTemplateButtonList$phoneNumber": "<p>The phone number in E.164 format for CALL-type buttons.</p>",
         "WhatsAppPhoneNumberDetail$phoneNumber": "<p>The phone number for sending WhatsApp.</p>",
         "WhatsAppPhoneNumberSummary$phoneNumber": "<p>The phone number associated with the Linked WhatsApp Business Account.</p>"
       }
@@ -309,6 +664,7 @@
     "S3File": {
       "base": "<p>Contains information for the S3 bucket that contains media files.</p>",
       "refs": {
+        "CreateWhatsAppMessageTemplateMediaInput$sourceS3File": null,
         "GetWhatsAppMessageMediaInput$destinationS3File": "<p>The <code>bucketName</code> and <code>key</code> of the S3 media file.</p>",
         "PostWhatsAppMessageMediaInput$sourceS3File": "<p>The source S3 url for the media file.</p>"
       }
@@ -351,6 +707,9 @@
     "String": {
       "base": null,
       "refs": {
+        "CreateWhatsAppMessageTemplateFromLibraryOutput$templateStatus": "<p>The status of the created template (for example, PENDING or APPROVED).</p>",
+        "CreateWhatsAppMessageTemplateMediaOutput$metaHeaderHandle": "<p>The handle assigned to the uploaded media by Meta, used to reference the media in templates.</p>",
+        "CreateWhatsAppMessageTemplateOutput$templateStatus": "<p>The status of the created template, such as PENDING or APPROVED..</p>",
         "GetWhatsAppMessageMediaOutput$mimeType": "<p>The MIME type of the media.</p>",
         "Headers$key": null,
         "Headers$value": null,
@@ -363,6 +722,31 @@
       "base": null,
       "refs": {
         "UntagResourceInput$tagKeys": "<p>The keys of the tags to remove from the resource.</p>"
+      }
+    },
+    "SupportedApp": {
+      "base": null,
+      "refs": {
+        "SupportedApps$member": null
+      }
+    },
+    "SupportedAppKeyString": {
+      "base": null,
+      "refs": {
+        "SupportedApp$key": null
+      }
+    },
+    "SupportedAppValueString": {
+      "base": null,
+      "refs": {
+        "SupportedApp$value": null
+      }
+    },
+    "SupportedApps": {
+      "base": null,
+      "refs": {
+        "LibraryTemplateButtonInput$supportedApps": "<p>List of supported applications for this button type.</p>",
+        "LibraryTemplateButtonList$supportedApps": "<p>List of supported applications for this button type.</p>"
       }
     },
     "Tag": {
@@ -402,6 +786,18 @@
         "Tag$value": "<p>The tag value.</p>"
       }
     },
+    "TemplateSummary": {
+      "base": "<p>Provides a summary of a WhatsApp message template's key attributes.</p>",
+      "refs": {
+        "TemplateSummaryList$member": null
+      }
+    },
+    "TemplateSummaryList": {
+      "base": null,
+      "refs": {
+        "ListWhatsAppMessageTemplatesOutput$templates": "<p>A list of template summaries.</p>"
+      }
+    },
     "ThrottledRequestException": {
       "base": "<p>The request was denied due to request throttling.</p>",
       "refs": {
@@ -419,6 +815,16 @@
       }
     },
     "UntagResourceOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateWhatsAppMessageTemplateInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateWhatsAppMessageTemplateOutput": {
       "base": null,
       "refs": {
       }
@@ -583,10 +989,23 @@
         "WhatsAppSignupCallback$accessToken": "<p>The access token for your WhatsApp Business Account. The <code>accessToken</code> value is provided by Meta.</p>"
       }
     },
+    "WhatsAppSignupCallbackCallbackUrlString": {
+      "base": null,
+      "refs": {
+        "WhatsAppSignupCallback$callbackUrl": "<p>The URL where WhatsApp will send callback notifications for this account.</p>"
+      }
+    },
     "WhatsAppSignupCallbackResult": {
       "base": "<p>Contains the results of WhatsAppSignupCallback.</p>",
       "refs": {
         "AssociateWhatsAppBusinessAccountOutput$signupCallbackResult": "<p>Contains your WhatsApp registration status.</p>"
+      }
+    },
+    "ZeroTapTermsAccepted": {
+      "base": null,
+      "refs": {
+        "LibraryTemplateButtonInput$zeroTapTermsAccepted": "<p>When true, indicates acceptance of zero-tap terms for the button.</p>",
+        "LibraryTemplateButtonList$zeroTapTermsAccepted": "<p>When true, indicates acceptance of zero-tap terms for the button.</p>"
       }
     }
   }

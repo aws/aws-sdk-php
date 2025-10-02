@@ -83,6 +83,25 @@
       ],
       "idempotent":true
     },
+    "CreateReservation":{
+      "name":"CreateReservation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateReservationRequest"},
+      "output":{"shape":"CreateReservationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyTagsException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "CreateScheduledAction":{
       "name":"CreateScheduledAction",
       "http":{
@@ -389,6 +408,36 @@
         {"shape":"ValidationException"}
       ]
     },
+    "GetReservation":{
+      "name":"GetReservation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetReservationRequest"},
+      "output":{"shape":"GetReservationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetReservationOffering":{
+      "name":"GetReservationOffering",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetReservationOfferingRequest"},
+      "output":{"shape":"GetReservationOfferingResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetResourcePolicy":{
       "name":"GetResourcePolicy",
       "http":{
@@ -442,6 +491,23 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "GetTrack":{
+      "name":"GetTrack",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetTrackRequest"},
+      "output":{"shape":"GetTrackResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetUsageLimit":{
@@ -543,6 +609,34 @@
         {"shape":"ValidationException"}
       ]
     },
+    "ListReservationOfferings":{
+      "name":"ListReservationOfferings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListReservationOfferingsRequest"},
+      "output":{"shape":"ListReservationOfferingsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListReservations":{
+      "name":"ListReservations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListReservationsRequest"},
+      "output":{"shape":"ListReservationsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListScheduledActions":{
       "name":"ListScheduledActions",
       "http":{
@@ -614,6 +708,22 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListTracks":{
+      "name":"ListTracks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListTracksRequest"},
+      "output":{"shape":"ListTracksResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidPaginationException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -918,6 +1028,8 @@
       "type":"boolean",
       "box":true
     },
+    "Capacity":{"type":"integer"},
+    "Charge":{"type":"double"},
     "ConfigParameter":{
       "type":"structure",
       "members":{
@@ -1021,6 +1133,32 @@
       "type":"structure",
       "members":{
         "namespace":{"shape":"Namespace"}
+      }
+    },
+    "CreateReservationRequest":{
+      "type":"structure",
+      "required":[
+        "capacity",
+        "offeringId"
+      ],
+      "members":{
+        "capacity":{"shape":"Capacity"},
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "offeringId":{"shape":"CreateReservationRequestOfferingIdString"}
+      }
+    },
+    "CreateReservationRequestOfferingIdString":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "CreateReservationResponse":{
+      "type":"structure",
+      "members":{
+        "reservation":{"shape":"Reservation"}
       }
     },
     "CreateScheduledActionRequest":{
@@ -1142,6 +1280,7 @@
         "securityGroupIds":{"shape":"SecurityGroupIdList"},
         "subnetIds":{"shape":"SubnetIdList"},
         "tags":{"shape":"TagList"},
+        "trackName":{"shape":"TrackName"},
         "workgroupName":{"shape":"WorkgroupName"}
       }
     },
@@ -1151,6 +1290,7 @@
         "workgroup":{"shape":"Workgroup"}
       }
     },
+    "CurrencyCode":{"type":"string"},
     "CustomDomainCertificateArnString":{
       "type":"string",
       "max":2048,
@@ -1300,6 +1440,7 @@
       "type":"double",
       "box":true
     },
+    "Duration":{"type":"integer"},
     "Endpoint":{
       "type":"structure",
       "members":{
@@ -1405,6 +1546,44 @@
         "recoveryPoint":{"shape":"RecoveryPoint"}
       }
     },
+    "GetReservationOfferingRequest":{
+      "type":"structure",
+      "required":["offeringId"],
+      "members":{
+        "offeringId":{"shape":"GetReservationOfferingRequestOfferingIdString"}
+      }
+    },
+    "GetReservationOfferingRequestOfferingIdString":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "GetReservationOfferingResponse":{
+      "type":"structure",
+      "required":["reservationOffering"],
+      "members":{
+        "reservationOffering":{"shape":"ReservationOffering"}
+      }
+    },
+    "GetReservationRequest":{
+      "type":"structure",
+      "required":["reservationId"],
+      "members":{
+        "reservationId":{"shape":"GetReservationRequestReservationIdString"}
+      }
+    },
+    "GetReservationRequestReservationIdString":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "GetReservationResponse":{
+      "type":"structure",
+      "required":["reservation"],
+      "members":{
+        "reservation":{"shape":"Reservation"}
+      }
+    },
     "GetResourcePolicyRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -1456,6 +1635,19 @@
       "type":"structure",
       "members":{
         "tableRestoreStatus":{"shape":"TableRestoreStatus"}
+      }
+    },
+    "GetTrackRequest":{
+      "type":"structure",
+      "required":["trackName"],
+      "members":{
+        "trackName":{"shape":"TrackName"}
+      }
+    },
+    "GetTrackResponse":{
+      "type":"structure",
+      "members":{
+        "track":{"shape":"ServerlessTrack"}
       }
     },
     "GetUsageLimitRequest":{
@@ -1646,6 +1838,48 @@
         "recoveryPoints":{"shape":"RecoveryPointList"}
       }
     },
+    "ListReservationOfferingsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"ListReservationOfferingsRequestMaxResultsInteger"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListReservationOfferingsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListReservationOfferingsResponse":{
+      "type":"structure",
+      "required":["reservationOfferingsList"],
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "reservationOfferingsList":{"shape":"ReservationOfferingsList"}
+      }
+    },
+    "ListReservationsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"ListReservationsRequestMaxResultsInteger"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListReservationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListReservationsResponse":{
+      "type":"structure",
+      "required":["reservationsList"],
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "reservationsList":{"shape":"ReservationsList"}
+      }
+    },
     "ListScheduledActionsRequest":{
       "type":"structure",
       "members":{
@@ -1747,6 +1981,26 @@
       "type":"structure",
       "members":{
         "tags":{"shape":"TagList"}
+      }
+    },
+    "ListTracksRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"ListTracksRequestMaxResultsInteger"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListTracksRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListTracksResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "tracks":{"shape":"TrackList"}
       }
     },
     "ListUsageLimitsRequest":{
@@ -1895,6 +2149,18 @@
       "type":"list",
       "member":{"shape":"Timestamp"}
     },
+    "OfferingId":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "OfferingType":{
+      "type":"string",
+      "enum":[
+        "ALL_UPFRONT",
+        "NO_UPFRONT"
+      ]
+    },
     "OwnerAccount":{
       "type":"string",
       "max":12,
@@ -1964,6 +2230,47 @@
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "Reservation":{
+      "type":"structure",
+      "members":{
+        "capacity":{"shape":"Capacity"},
+        "endDate":{"shape":"SyntheticTimestamp_date_time"},
+        "offering":{"shape":"ReservationOffering"},
+        "reservationArn":{"shape":"ReservationArn"},
+        "reservationId":{"shape":"ReservationId"},
+        "startDate":{"shape":"SyntheticTimestamp_date_time"},
+        "status":{"shape":"Status"}
+      }
+    },
+    "ReservationArn":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "ReservationId":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "ReservationOffering":{
+      "type":"structure",
+      "members":{
+        "currencyCode":{"shape":"CurrencyCode"},
+        "duration":{"shape":"Duration"},
+        "hourlyCharge":{"shape":"Charge"},
+        "offeringId":{"shape":"OfferingId"},
+        "offeringType":{"shape":"OfferingType"},
+        "upfrontCharge":{"shape":"Charge"}
+      }
+    },
+    "ReservationOfferingsList":{
+      "type":"list",
+      "member":{"shape":"ReservationOffering"}
+    },
+    "ReservationsList":{
+      "type":"list",
+      "member":{"shape":"Reservation"}
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -2129,6 +2436,14 @@
       "type":"list",
       "member":{"shape":"SecurityGroupId"}
     },
+    "ServerlessTrack":{
+      "type":"structure",
+      "members":{
+        "trackName":{"shape":"TrackName"},
+        "updateTargets":{"shape":"UpdateTargetsList"},
+        "workgroupVersion":{"shape":"String"}
+      }
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":["message"],
@@ -2211,6 +2526,11 @@
         "ACTIVE",
         "DISABLED"
       ]
+    },
+    "Status":{
+      "type":"string",
+      "max":16,
+      "min":1
     },
     "String":{"type":"string"},
     "SubnetId":{"type":"string"},
@@ -2320,6 +2640,16 @@
         "resourceName":{"shape":"AmazonResourceName"}
       },
       "exception":true
+    },
+    "TrackList":{
+      "type":"list",
+      "member":{"shape":"ServerlessTrack"}
+    },
+    "TrackName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_]+$"
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -2444,6 +2774,17 @@
         "snapshot":{"shape":"Snapshot"}
       }
     },
+    "UpdateTarget":{
+      "type":"structure",
+      "members":{
+        "trackName":{"shape":"TrackName"},
+        "workgroupVersion":{"shape":"String"}
+      }
+    },
+    "UpdateTargetsList":{
+      "type":"list",
+      "member":{"shape":"UpdateTarget"}
+    },
     "UpdateUsageLimitRequest":{
       "type":"structure",
       "required":["usageLimitId"],
@@ -2473,6 +2814,7 @@
         "publiclyAccessible":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"SecurityGroupIdList"},
         "subnetIds":{"shape":"SubnetIdList"},
+        "trackName":{"shape":"TrackName"},
         "workgroupName":{"shape":"WorkgroupName"}
       }
     },
@@ -2580,12 +2922,14 @@
         "maxCapacity":{"shape":"Integer"},
         "namespaceName":{"shape":"String"},
         "patchVersion":{"shape":"String"},
+        "pendingTrackName":{"shape":"TrackName"},
         "port":{"shape":"Integer"},
         "pricePerformanceTarget":{"shape":"PerformanceTarget"},
         "publiclyAccessible":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"SecurityGroupIdList"},
         "status":{"shape":"WorkgroupStatus"},
         "subnetIds":{"shape":"SubnetIdList"},
+        "trackName":{"shape":"TrackName"},
         "workgroupArn":{"shape":"String"},
         "workgroupId":{"shape":"String"},
         "workgroupName":{"shape":"WorkgroupName"},

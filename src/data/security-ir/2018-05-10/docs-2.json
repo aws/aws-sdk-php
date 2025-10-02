@@ -1,29 +1,29 @@
 {
   "version": "2.0",
-  "service": "<p>This guide provides documents the action and response elements for customer use of the service.</p>",
+  "service": "<p>This guide documents the action and response elements for use of the service.</p>",
   "operations": {
-    "BatchGetMemberAccountDetails": "<p>Grants permission to view an existing membership.</p>",
-    "CancelMembership": "<p>Grants permissions to cancel an existing membership.</p>",
-    "CloseCase": "<p>Grants permission to close an existing case.</p>",
-    "CreateCase": "<p>Grants permission to create a new case.</p>",
-    "CreateCaseComment": "<p>Grants permission to add a comment to an existing case.</p>",
-    "CreateMembership": "<p>Grants permissions to create a new membership.</p>",
-    "GetCase": "<p>Grant permission to view a designated case.</p>",
-    "GetCaseAttachmentDownloadUrl": "<p>Grants permission to obtain an Amazon S3 presigned URL to download an attachment.</p>",
-    "GetCaseAttachmentUploadUrl": "<p>Grants permission to upload an attachment to a case.</p>",
-    "GetMembership": "<p>Grants permission to get details of a designated service membership.</p>",
-    "ListCaseEdits": "<p>Grants permissions to view the aidt log for edits made to a designated case.</p>",
-    "ListCases": "<p>Grants permission to list all cases the requester has access to.</p>",
-    "ListComments": "<p>Grants permissions to list and view comments for a designated case.</p>",
-    "ListMemberships": "<p>Grants permission to query the memberships a principal has access to.</p>",
-    "ListTagsForResource": "<p>Grants permission to view currently configured tags on a resource.</p>",
-    "TagResource": "<p>Grants permission to add a tag(s) to a designated resource.</p>",
-    "UntagResource": "<p>Grants permission to remove a tag(s) from a designate resource.</p>",
-    "UpdateCase": "<p>Grants permission to update an existing case.</p>",
-    "UpdateCaseComment": "<p>Grants permission to update an existing case comment.</p>",
-    "UpdateCaseStatus": "<p>Grants permission to update the status for a designated cases. Options include <code>Submitted | Detection and Analysis | Eradication, Containment and Recovery | Post-Incident Activities | Closed</code>. </p>",
-    "UpdateMembership": "<p>Grants access to UpdateMembership to change membership configuration.</p>",
-    "UpdateResolverType": "<p>Grants permission to update the resolver type for a case.</p> <important> <p>This is a one-way action and cannot be reversed.</p> </important> <p>Options include self-supported &gt; AWS-supported.</p>"
+    "BatchGetMemberAccountDetails": "<p>Provides information on whether the supplied account IDs are associated with a membership.</p> <note> <p> AWS account ID's may appear less than 12 characters and need to be zero-prepended. An example would be <code>123123123</code> which is nine digits, and with zero-prepend would be <code>000123123123</code>. Not zero-prepending to 12 digits could result in errors. </p> </note>",
+    "CancelMembership": "<p>Cancels an existing membership.</p>",
+    "CloseCase": "<p>Closes an existing case.</p>",
+    "CreateCase": "<p>Creates a new case.</p>",
+    "CreateCaseComment": "<p>Adds a comment to an existing case.</p>",
+    "CreateMembership": "<p>Creates a new membership.</p>",
+    "GetCase": "<p>Returns the attributes of a case.</p>",
+    "GetCaseAttachmentDownloadUrl": "<p>Returns a Pre-Signed URL for uploading attachments into a case.</p>",
+    "GetCaseAttachmentUploadUrl": "<p>Uploads an attachment to a case.</p>",
+    "GetMembership": "<p>Returns the attributes of a membership.</p>",
+    "ListCaseEdits": "<p>Views the case history for edits made to a designated case.</p>",
+    "ListCases": "<p>Lists all cases the requester has access to.</p>",
+    "ListComments": "<p>Returns comments for a designated case.</p>",
+    "ListMemberships": "<p>Returns the memberships that the calling principal can access.</p>",
+    "ListTagsForResource": "<p>Returns currently configured tags on a resource.</p>",
+    "TagResource": "<p>Adds a tag(s) to a designated resource.</p>",
+    "UntagResource": "<p>Removes a tag(s) from a designate resource.</p>",
+    "UpdateCase": "<p>Updates an existing case.</p>",
+    "UpdateCaseComment": "<p>Updates an existing case comment.</p>",
+    "UpdateCaseStatus": "<p>Updates the state transitions for a designated cases.</p> <p> <b>Self-managed</b>: the following states are available for self-managed cases. </p> <ul> <li> <p>Submitted → Detection and Analysis</p> </li> <li> <p>Detection and Analysis → Containment, Eradication, and Recovery</p> </li> <li> <p>Detection and Analysis → Post-incident Activities</p> </li> <li> <p>Containment, Eradication, and Recovery → Detection and Analysis</p> </li> <li> <p>Containment, Eradication, and Recovery → Post-incident Activities</p> </li> <li> <p>Post-incident Activities → Containment, Eradication, and Recovery</p> </li> <li> <p>Post-incident Activities → Detection and Analysis</p> </li> <li> <p>Any → Closed</p> </li> </ul> <p> <b>AWS supported</b>: You must use the <code>CloseCase</code> API to close. </p>",
+    "UpdateMembership": "<p>Updates membership configuration.</p>",
+    "UpdateResolverType": "<p>Updates the resolver type for a case.</p> <important> <p>This is a one-way action and cannot be reversed.</p> </important>"
   },
   "shapes": {
     "AWSAccountId": {
@@ -32,7 +32,7 @@
         "AWSAccountIds$member": null,
         "GetMembershipAccountDetailError$accountId": "<p/>",
         "GetMembershipAccountDetailItem$accountId": "<p/>",
-        "GetMembershipResponse$accountId": "<p>Response element for GetMembership that provides the configured account for managing the membership. </p>",
+        "GetMembershipResponse$accountId": "<p>Response element for GetMembership that provides the account configured to manage the membership.</p>",
         "ImpactedAccounts$member": null,
         "ListMembershipItem$accountId": "<p/>"
       }
@@ -40,13 +40,12 @@
     "AWSAccountIds": {
       "base": null,
       "refs": {
-        "BatchGetMemberAccountDetailsRequest$accountIds": "<p>Optional element to query the membership relationship status to a provided list of account IDs.</p>"
+        "BatchGetMemberAccountDetailsRequest$accountIds": "<p>Optional element to query the membership relationship status to a provided list of account IDs.</p> <note> <p> AWS account ID's may appear less than 12 characters and need to be zero-prepended. An example would be <code>123123123</code> which is nine digits, and with zero-prepend would be <code>000123123123</code>. Not zero-prepending to 12 digits could result in errors. </p> </note>"
       }
     },
     "AccessDeniedException": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Arn": {
       "base": null,
@@ -66,7 +65,7 @@
     "AwsRegion": {
       "base": null,
       "refs": {
-        "GetMembershipResponse$region": "<p>Response element for GetMembership that provides the configured region for managing the membership.</p>",
+        "GetMembershipResponse$region": "<p>Response element for GetMembership that provides the region configured to manage the membership.</p>",
         "ImpactedAwsRegion$region": "<p/>",
         "ListMembershipItem$region": "<p/>"
       }
@@ -79,29 +78,29 @@
     },
     "BatchGetMemberAccountDetailsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetMemberAccountDetailsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Boolean": {
       "base": null,
       "refs": {
-        "OptInFeature$isEnabled": "<p/>"
+        "CreateMembershipRequest$coverEntireOrganization": "<p>The <code>coverEntireOrganization</code> parameter is a boolean flag that determines whether the membership should be applied to the entire Amazon Web Services Organization. When set to true, the membership will be created for all accounts within the organization. When set to false, the membership will only be created for specified accounts. </p> <p>This parameter is optional. If not specified, the default value is false.</p> <ul> <li> <p>If set to <i>true</i>: The membership will automatically include all existing and future accounts in the Amazon Web Services Organization. </p> </li> <li> <p>If set to <i>false</i>: The membership will only apply to explicitly specified accounts. </p> </li> </ul>",
+        "MembershipAccountsConfigurations$coverEntireOrganization": "<p>The <code>coverEntireOrganization</code> field is a boolean value that determines whether the membership configuration applies to all accounts within an Amazon Web Services Organization. </p> <p>When set to <code>true</code>, the configuration will be applied across all accounts in the organization. When set to <code>false</code>, the configuration will only apply to specifically designated accounts under the AWS Organizational Units specificied. </p>",
+        "MembershipAccountsConfigurationsUpdate$coverEntireOrganization": "<p>The <code>coverEntireOrganization</code> field is a boolean value that determines whether the membership configuration should be applied across the entire Amazon Web Services Organization. </p> <p>When set to <code>true</code>, the configuration will be applied to all accounts within the organization. When set to <code>false</code>, the configuration will only apply to specifically designated accounts. </p>",
+        "OptInFeature$isEnabled": "<p/>",
+        "UpdateMembershipRequest$undoMembershipCancellation": "<p>The <code>undoMembershipCancellation</code> parameter is a boolean flag that indicates whether to reverse a previously requested membership cancellation. When set to true, this will revoke the cancellation request and maintain the membership status. </p> <p>This parameter is optional and can be used in scenarios where you need to restore a membership that was marked for cancellation but hasn't been fully terminated yet. </p> <ul> <li> <p>If set to <code>true</code>, the cancellation request will be revoked </p> </li> <li> <p>If set to <code>false</code> the service will throw a ValidationException. </p> </li> </ul>"
       }
     },
     "CancelMembershipRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelMembershipResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CaseArn": {
       "base": null,
@@ -131,7 +130,7 @@
     "CaseDescription": {
       "base": null,
       "refs": {
-        "CreateCaseRequest$description": "<p>Required element used in combination with CreateCase to provide a description for the new case.</p>",
+        "CreateCaseRequest$description": "<p>Required element used in combination with CreateCase</p> <p>to provide a description for the new case.</p>",
         "GetCaseResponse$description": "<p>Response element for GetCase that provides contents of the case description.</p>",
         "UpdateCaseRequest$description": "<p>Optional element for UpdateCase to provide content for the description field.</p>"
       }
@@ -151,7 +150,7 @@
     "CaseEditItems": {
       "base": null,
       "refs": {
-        "ListCaseEditsResponse$items": "<p>Response element for ListCaseEdits that includes the action, eventtimestamp, message, and principal for the response. </p>"
+        "ListCaseEditsResponse$items": "<p>Response element for ListCaseEdits that includes the action, event timestamp, message, and principal for the response. </p>"
       }
     },
     "CaseEditMessage": {
@@ -167,7 +166,7 @@
         "CreateCaseCommentRequest$caseId": "<p>Required element used in combination with CreateCaseComment to specify a case ID.</p>",
         "CreateCaseResponse$caseId": "<p>A response element providing responses for requests to CreateCase. This element responds with the case ID. </p>",
         "GetCaseAttachmentDownloadUrlRequest$caseId": "<p>Required element for GetCaseAttachmentDownloadUrl to identify the case ID for downloading an attachment from. </p>",
-        "GetCaseAttachmentUploadUrlRequest$caseId": "<p>Required element for GetCaseAttachmentUploadUrl to identify the case ID for uploading an attachment to. </p>",
+        "GetCaseAttachmentUploadUrlRequest$caseId": "<p>Required element for GetCaseAttachmentUploadUrl to identify the case ID for uploading an attachment. </p>",
         "GetCaseRequest$caseId": "<p>Required element for GetCase to identify the requested case ID.</p>",
         "ListCaseEditsRequest$caseId": "<p>Required element used with ListCaseEdits to identify the case to query.</p>",
         "ListCasesItem$caseId": "<p/>",
@@ -182,7 +181,7 @@
     "CaseStatus": {
       "base": null,
       "refs": {
-        "CloseCaseResponse$caseStatus": "<p>A response element providing responses for requests to CloseCase. This element responds with the case status following the action. </p>",
+        "CloseCaseResponse$caseStatus": "<p>A response element providing responses for requests to CloseCase. This element responds <code>Closed </code> if successful. </p>",
         "GetCaseResponse$caseStatus": "<p>Response element for GetCase that provides the case status. Options for statuses include <code>Submitted | Detection and Analysis | Eradication, Containment and Recovery | Post-Incident Activities | Closed </code> </p>",
         "ListCasesItem$caseStatus": "<p/>",
         "UpdateResolverTypeResponse$caseStatus": "<p>Response element for UpdateResolver identifying the current status of the case.</p>"
@@ -199,13 +198,11 @@
     },
     "CloseCaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CloseCaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ClosureCode": {
       "base": null,
@@ -233,62 +230,55 @@
     },
     "ConflictException": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ContentLength": {
       "base": null,
       "refs": {
-        "GetCaseAttachmentUploadUrlRequest$contentLength": "<p>Required element for GetCaseAttachmentUploadUrl to identify the size od the file attachment.</p>"
+        "GetCaseAttachmentUploadUrlRequest$contentLength": "<p>Required element for GetCaseAttachmentUploadUrl to identify the size of the file attachment.</p>"
       }
     },
     "CreateCaseCommentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCaseCommentRequestClientTokenString": {
       "base": null,
       "refs": {
-        "CreateCaseCommentRequest$clientToken": "<p>An optional element used in combination with CreateCaseComment.</p>"
+        "CreateCaseCommentRequest$clientToken": "<p><note> <p>The <code>clientToken</code> field is an idempotency key used to ensure that repeated attempts for a single action will be ignored by the server during retries. A caller supplied unique ID (typically a UUID) should be provided. </p> </note></p>"
       }
     },
     "CreateCaseCommentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCaseRequestClientTokenString": {
       "base": null,
       "refs": {
-        "CreateCaseRequest$clientToken": "<p>Required element used in combination with CreateCase.</p>"
+        "CreateCaseRequest$clientToken": "<p><note> <p>The <code>clientToken</code> field is an idempotency key used to ensure that repeated attempts for a single action will be ignored by the server during retries. A caller supplied unique ID (typically a UUID) should be provided. </p> </note></p>"
       }
     },
     "CreateCaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMembershipRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMembershipRequestClientTokenString": {
       "base": null,
       "refs": {
-        "CreateMembershipRequest$clientToken": "<p>An optional element used in combination with CreateMembership.</p>"
+        "CreateMembershipRequest$clientToken": "<p><note> <p>The <code>clientToken</code> field is an idempotency key used to ensure that repeated attempts for a single action will be ignored by the server during retries. A caller supplied unique ID (typically a UUID) should be provided. </p> </note></p>"
       }
     },
     "CreateMembershipResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomerType": {
       "base": null,
@@ -321,39 +311,33 @@
     },
     "GetCaseAttachmentDownloadUrlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCaseAttachmentDownloadUrlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCaseAttachmentUploadUrlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCaseAttachmentUploadUrlRequestClientTokenString": {
       "base": null,
       "refs": {
-        "GetCaseAttachmentUploadUrlRequest$clientToken": "<p>Optional element for customer provided token.</p>"
+        "GetCaseAttachmentUploadUrlRequest$clientToken": "<p><note> <p>The <code>clientToken</code> field is an idempotency key used to ensure that repeated attempts for a single action will be ignored by the server during retries. A caller supplied unique ID (typically a UUID) should be provided. </p> </note></p>"
       }
     },
     "GetCaseAttachmentUploadUrlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMembershipAccountDetailError": {
       "base": "<p/>",
@@ -364,7 +348,7 @@
     "GetMembershipAccountDetailErrors": {
       "base": null,
       "refs": {
-        "BatchGetMemberAccountDetailsResponse$errors": "<p>The response element providing errors messages for requests to GetMembershipAccountDetails.</p>"
+        "BatchGetMemberAccountDetailsResponse$errors": "<p>The response element providing error messages for requests to GetMembershipAccountDetails.</p>"
       }
     },
     "GetMembershipAccountDetailItem": {
@@ -381,13 +365,11 @@
     },
     "GetMembershipRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMembershipResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IPAddress": {
       "base": null,
@@ -398,10 +380,10 @@
     "ImpactedAccounts": {
       "base": null,
       "refs": {
-        "CreateCaseRequest$impactedAccounts": "<p>Required element used in combination with CreateCase to provide a list of impacted accounts.</p>",
+        "CreateCaseRequest$impactedAccounts": "<p>Required element used in combination with CreateCase to provide a list of impacted accounts.</p> <note> <p> AWS account ID's may appear less than 12 characters and need to be zero-prepended. An example would be <code>123123123</code> which is nine digits, and with zero-prepend would be <code>000123123123</code>. Not zero-prepending to 12 digits could result in errors. </p> </note>",
         "GetCaseResponse$impactedAccounts": "<p>Response element for GetCase that provides a list of impacted accounts.</p>",
-        "UpdateCaseRequest$impactedAccountsToAdd": "<p>Optional element for UpdateCase to provide content to add accounts impacted.</p>",
-        "UpdateCaseRequest$impactedAccountsToDelete": "<p>Optional element for UpdateCase to provide content to add accounts impacted.</p>"
+        "UpdateCaseRequest$impactedAccountsToAdd": "<p>Optional element for UpdateCase to provide content to add accounts impacted.</p> <note> <p> AWS account ID's may appear less than 12 characters and need to be zero-prepended. An example would be <code>123123123</code> which is nine digits, and with zero-prepend would be <code>000123123123</code>. Not zero-prepending to 12 digits could result in errors. </p> </note>",
+        "UpdateCaseRequest$impactedAccountsToDelete": "<p>Optional element for UpdateCase to provide content to add accounts impacted.</p> <note> <p> AWS account ID's may appear less than 12 characters and need to be zero-prepended. An example would be <code>123123123</code> which is nine digits, and with zero-prepend would be <code>000123123123</code>. Not zero-prepending to 12 digits could result in errors. </p> </note>"
       }
     },
     "ImpactedAwsRegion": {
@@ -443,7 +425,7 @@
     "IncidentResponseTeam": {
       "base": null,
       "refs": {
-        "CreateMembershipRequest$incidentResponseTeam": "<p>Required element use in combination with CreateMembership to add customer incident response team members and trusted partners to the membership. </p>",
+        "CreateMembershipRequest$incidentResponseTeam": "<p>Required element used in combination with CreateMembership to add customer incident response team members and trusted partners to the membership. </p>",
         "GetMembershipResponse$incidentResponseTeam": "<p>Response element for GetMembership that provides the configured membership incident response team members. </p>",
         "UpdateMembershipRequest$incidentResponseTeam": "<p>Optional element for UpdateMembership to update the membership name.</p>"
       }
@@ -451,21 +433,19 @@
     "Integer": {
       "base": null,
       "refs": {
-        "InternalServerException$retryAfterSeconds": "<p>Element providing advice to clients on when the call can be safely retried.</p>",
+        "InternalServerException$retryAfterSeconds": "<p>The number of seconds after which to retry the request.</p>",
         "ListCaseEditsResponse$total": "<p>Response element for ListCaseEdits that identifies the total number of edits.</p>",
         "ListCommentsResponse$total": "<p>Response element for ListComments identifying the number of responses.</p>",
-        "ThrottlingException$retryAfterSeconds": "<p>Element providing advice to clients on when the call can be safely retried.</p>"
+        "ThrottlingException$retryAfterSeconds": "<p>The number of seconds after which to retry the request.</p>"
       }
     },
     "InternalServerException": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidTokenException": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "JobTitle": {
       "base": null,
@@ -476,8 +456,7 @@
     },
     "ListCaseEditsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCaseEditsRequestMaxResultsInteger": {
       "base": null,
@@ -488,13 +467,12 @@
     "ListCaseEditsRequestNextTokenString": {
       "base": null,
       "refs": {
-        "ListCaseEditsRequest$nextToken": "<p>Optional element for a customer provided token.</p>"
+        "ListCaseEditsRequest$nextToken": "<p>An optional string that, if supplied, must be copied from the output of a previous call to ListCaseEdits. When provided in this manner, the API fetches the next page of results. </p>"
       }
     },
     "ListCaseEditsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCasesItem": {
       "base": "<p/>",
@@ -510,8 +488,7 @@
     },
     "ListCasesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCasesRequestMaxResultsInteger": {
       "base": null,
@@ -522,13 +499,12 @@
     "ListCasesRequestNextTokenString": {
       "base": null,
       "refs": {
-        "ListCasesRequest$nextToken": "<p>Optional element.</p>"
+        "ListCasesRequest$nextToken": "<p>An optional string that, if supplied, must be copied from the output of a previous call to ListCases. When provided in this manner, the API fetches the next page of results. </p>"
       }
     },
     "ListCasesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCommentsItem": {
       "base": "<p/>",
@@ -544,8 +520,7 @@
     },
     "ListCommentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCommentsRequestMaxResultsInteger": {
       "base": null,
@@ -556,13 +531,12 @@
     "ListCommentsRequestNextTokenString": {
       "base": null,
       "refs": {
-        "ListCommentsRequest$nextToken": "<p>Optional element.</p>"
+        "ListCommentsRequest$nextToken": "<p>An optional string that, if supplied, must be copied from the output of a previous call to ListComments. When provided in this manner, the API fetches the next page of results. </p>"
       }
     },
     "ListCommentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMembershipItem": {
       "base": "<p/>",
@@ -578,8 +552,7 @@
     },
     "ListMembershipsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMembershipsRequestMaxResultsInteger": {
       "base": null,
@@ -590,23 +563,20 @@
     "ListMembershipsRequestNextTokenString": {
       "base": null,
       "refs": {
-        "ListMembershipsRequest$nextToken": "<p>Optional element.</p>"
+        "ListMembershipsRequest$nextToken": "<p>An optional string that, if supplied, must be copied from the output of a previous call to ListMemberships. When provided in this manner, the API fetches the next page of results. </p>"
       }
     },
     "ListMembershipsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
@@ -625,6 +595,30 @@
       "base": null,
       "refs": {
         "GetMembershipAccountDetailItem$relationshipType": "<p/>"
+      }
+    },
+    "MembershipAccountsConfigurations": {
+      "base": "<p>The <code>MembershipAccountsConfigurations</code> structure defines the configuration settings for managing membership accounts withinAmazon Web Services. </p> <p>This structure contains settings that determine how member accounts are configured and managed within your organization, including: </p> <ul> <li> <p>Account configuration preferences</p> </li> <li> <p>Membership validation rules</p> </li> <li> <p>Account access settings</p> </li> </ul> <p>You can use this structure to define and maintain standardized configurations across multiple member accounts in your organization. </p>",
+      "refs": {
+        "GetMembershipResponse$membershipAccountsConfigurations": "<p>The <code>membershipAccountsConfigurations</code> field contains the configuration details for member accounts within the Amazon Web Services Organizations membership structure. </p> <p>This field returns a structure containing information about:</p> <ul> <li> <p>Account configurations for member accounts</p> </li> <li> <p>Membership settings and preferences</p> </li> <li> <p>Account-level permissions and roles</p> </li> </ul>"
+      }
+    },
+    "MembershipAccountsConfigurationsUpdate": {
+      "base": "<p>The <code>MembershipAccountsConfigurationsUpdate</code>structure represents the configuration updates for member accounts within an Amazon Web Services organization. </p> <p>This structure is used to modify existing account configurations and settings for members in the organization. When applying updates, ensure all required fields are properly specified to maintain account consistency. </p> <p>Key considerations when using this structure:</p> <ul> <li> <p>All configuration changes are validated before being applied</p> </li> <li> <p>Updates are processed asynchronously in the background</p> </li> <li> <p>Configuration changes may take several minutes to propagate across all affected accounts</p> </li> </ul>",
+      "refs": {
+        "UpdateMembershipRequest$membershipAccountsConfigurationsUpdate": "<p>The <code>membershipAccountsConfigurationsUpdate</code> field in the <code>UpdateMembershipRequest</code> structure allows you to update the configuration settings for accounts within a membership. </p> <p>This field is optional and contains a structure of type <code>MembershipAccountsConfigurationsUpdate </code> that specifies the updated account configurations for the membership. </p>"
+      }
+    },
+    "MembershipAccountsConfigurationsUpdateOrganizationalUnitsToAddList": {
+      "base": null,
+      "refs": {
+        "MembershipAccountsConfigurationsUpdate$organizationalUnitsToAdd": "<p>A list of organizational unit IDs to add to the membership configuration. Each organizational unit ID must match the pattern <code>ou-[0-9a-z]{4,32}-[a-z0-9]{8,32}</code>. </p> <p>The list must contain between 1 and 5 organizational unit IDs.</p>"
+      }
+    },
+    "MembershipAccountsConfigurationsUpdateOrganizationalUnitsToRemoveList": {
+      "base": null,
+      "refs": {
+        "MembershipAccountsConfigurationsUpdate$organizationalUnitsToRemove": "<p>A list of organizational unit IDs to remove from the membership configuration. Each organizational unit ID must match the pattern <code>ou-[0-9a-z]{4,32}-[a-z0-9]{8,32}</code>. </p> <p>The list must contain between 1 and 5 organizational unit IDs per invocation of the API request.</p>"
       }
     },
     "MembershipArn": {
@@ -650,7 +644,7 @@
     "MembershipName": {
       "base": null,
       "refs": {
-        "CreateMembershipRequest$membershipName": "<p>Required element use in combination with CreateMembership to create a name for the membership.</p>",
+        "CreateMembershipRequest$membershipName": "<p>Required element used in combination with CreateMembership to create a name for the membership.</p>",
         "GetMembershipResponse$membershipName": "<p>Response element for GetMembership that provides the configured membership name.</p>",
         "UpdateMembershipRequest$membershipName": "<p>Optional element for UpdateMembership to update the membership name.</p>"
       }
@@ -682,10 +676,24 @@
         "UpdateMembershipRequest$optInFeatures": "<p>Optional element for UpdateMembership to enable or disable opt-in features for the service.</p>"
       }
     },
+    "OrganizationalUnitId": {
+      "base": null,
+      "refs": {
+        "MembershipAccountsConfigurationsUpdateOrganizationalUnitsToAddList$member": null,
+        "MembershipAccountsConfigurationsUpdateOrganizationalUnitsToRemoveList$member": null,
+        "OrganizationalUnits$member": null
+      }
+    },
+    "OrganizationalUnits": {
+      "base": null,
+      "refs": {
+        "MembershipAccountsConfigurations$organizationalUnits": "<p>A list of organizational unit IDs that follow the pattern <code>ou-[0-9a-z]{4,32}-[a-z0-9]{8,32}</code>. These IDs represent the organizational units within an Amazon Web Services Organizations structure that are covered by the membership. </p> <p>Each organizational unit ID in the list must:</p> <ul> <li> <p>Begin with the prefix 'ou-'</p> </li> <li> <p>Contain between 4 and 32 alphanumeric characters in the first segment</p> </li> <li> <p>Contain between 8 and 32 alphanumeric characters in the second segment</p> </li> </ul>"
+      }
+    },
     "PendingAction": {
       "base": null,
       "refs": {
-        "GetCaseResponse$pendingAction": "<p>Response element for GetCase that provides identifies the case is waiting on customer input.</p>",
+        "GetCaseResponse$pendingAction": "<p>Response element for GetCase that identifies the case is waiting on customer input.</p>",
         "ListCasesItem$pendingAction": "<p/>"
       }
     },
@@ -706,8 +714,8 @@
     "ResolverType": {
       "base": null,
       "refs": {
-        "CreateCaseRequest$resolverType": "<p>Required element used in combination with CreateCase to identify the resolver type. Available resolvers include self-supported | aws-supported. </p>",
-        "GetCaseResponse$resolverType": "<p>Response element for GetCase that provides the current resolver types. Options include <code> self-supported | AWS-supported</code>. </p>",
+        "CreateCaseRequest$resolverType": "<p>Required element used in combination with CreateCase to identify the resolver type.</p>",
+        "GetCaseResponse$resolverType": "<p>Response element for GetCase that provides the current resolver types.</p>",
         "ListCasesItem$resolverType": "<p/>",
         "UpdateResolverTypeRequest$resolverType": "<p>Required element for UpdateResolverType to identify the new resolver.</p>",
         "UpdateResolverTypeResponse$resolverType": "<p>Response element for UpdateResolver identifying the current resolver of the case.</p>"
@@ -715,13 +723,11 @@
     },
     "ResourceNotFoundException": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SecurityIncidentResponseNotActiveException": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SelfManagedCaseStatus": {
       "base": null,
@@ -732,36 +738,35 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
       "refs": {
-        "AccessDeniedException$message": null,
+        "AccessDeniedException$message": "<p>The ID of the resource which lead to the access denial.</p>",
         "CaseEditItem$principal": "<p/>",
-        "ConflictException$message": null,
-        "ConflictException$resourceId": "<p>Element providing the ID of the resource affected.</p>",
-        "ConflictException$resourceType": "<p>Element providing the type of the resource affected.</p>",
+        "ConflictException$message": "<p>The exception message.</p>",
+        "ConflictException$resourceId": "<p>The ID of the conflicting resource.</p>",
+        "ConflictException$resourceType": "<p>The type of the conflicting resource.</p>",
         "GetMembershipAccountDetailError$error": "<p/>",
         "GetMembershipAccountDetailError$message": "<p/>",
-        "InternalServerException$message": null,
-        "InvalidTokenException$message": null,
-        "ListCaseEditsResponse$nextToken": "<p>Optional element.</p>",
-        "ListCasesResponse$nextToken": "<p>Optional element.</p>",
-        "ListCommentsResponse$nextToken": "<p>Optional request elements.</p>",
-        "ListMembershipsResponse$nextToken": "<p>Optional element.</p>",
-        "ResourceNotFoundException$message": null,
-        "SecurityIncidentResponseNotActiveException$message": null,
-        "ServiceQuotaExceededException$message": null,
-        "ServiceQuotaExceededException$resourceId": "<p>Element that provides the ID of the resource affected.</p>",
-        "ServiceQuotaExceededException$resourceType": "<p>Element that provides the type of the resource affected.</p>",
-        "ServiceQuotaExceededException$serviceCode": "<p>Element that provides the originating service who made the call.</p>",
-        "ServiceQuotaExceededException$quotaCode": "<p>Element that provides the quota that was exceeded.</p>",
-        "ThrottlingException$message": null,
-        "ThrottlingException$serviceCode": "<p>Element providing the service code of the originating service.</p>",
-        "ThrottlingException$quotaCode": "<p>Element providing the quota of the originating service.</p>",
-        "ValidationException$message": null,
+        "InternalServerException$message": "<p>The exception message.</p>",
+        "InvalidTokenException$message": "<p>The exception message.</p>",
+        "ListCaseEditsResponse$nextToken": "<p>An optional string that, if supplied on subsequent calls to ListCaseEdits, allows the API to fetch the next page of results. </p>",
+        "ListCasesResponse$nextToken": "<p>An optional string that, if supplied on subsequent calls to ListCases, allows the API to fetch the next page of results. </p>",
+        "ListCommentsResponse$nextToken": "<p>An optional string that, if supplied on subsequent calls to ListComments, allows the API to fetch the next page of results. </p>",
+        "ListMembershipsResponse$nextToken": "<p>An optional string that, if supplied on subsequent calls to ListMemberships, allows the API to fetch the next page of results. </p>",
+        "ResourceNotFoundException$message": "<p>The exception message.</p>",
+        "SecurityIncidentResponseNotActiveException$message": "<p>The exception message.</p>",
+        "ServiceQuotaExceededException$message": "<p>The exception message.</p>",
+        "ServiceQuotaExceededException$resourceId": "<p>The ID of the requested resource which lead to the service quota exception.</p>",
+        "ServiceQuotaExceededException$resourceType": "<p>The type of the requested resource which lead to the service quota exception.</p>",
+        "ServiceQuotaExceededException$serviceCode": "<p>The service code of the quota.</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>The code of the quota.</p>",
+        "ThrottlingException$message": "<p>The exception message.</p>",
+        "ThrottlingException$serviceCode": "<p>The service code of the exception.</p>",
+        "ThrottlingException$quotaCode": "<p>The quota code of the exception.</p>",
+        "ValidationException$message": "<p>The exception message.</p>",
         "ValidationExceptionField$name": "<p/>",
         "ValidationExceptionField$message": "<p/>"
       }
@@ -790,13 +795,11 @@
     },
     "TagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -821,15 +824,14 @@
     },
     "ThrottlingException": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
       "refs": {
         "CaseAttachmentAttributes$createdDate": "<p/>",
         "CaseEditItem$eventTimestamp": "<p/>",
-        "CloseCaseResponse$closedDate": "<p>A response element providing responses for requests to CloseCase. This element responds with the case closure date following the action. </p>",
+        "CloseCaseResponse$closedDate": "<p>A response element providing responses for requests to CloseCase. This element responds with the ISO-8601 formatted timestamp of the moment when the case was closed. </p>",
         "CreateCaseRequest$reportedIncidentStartDate": "<p>Required element used in combination with CreateCase to provide an initial start date for the unauthorized activity. </p>",
         "GetCaseResponse$reportedIncidentStartDate": "<p>Response element for GetCase that provides the customer provided incident start date.</p>",
         "GetCaseResponse$actualIncidentStartDate": "<p>Response element for GetCase that provides the actual incident start date as identified by data analysis during the investigation. </p>",
@@ -849,69 +851,57 @@
     },
     "UntagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCaseCommentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCaseCommentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCaseStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCaseStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMembershipRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMembershipResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResolverTypeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResolverTypeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Url": {
       "base": null,
       "refs": {
         "GetCaseAttachmentDownloadUrlResponse$attachmentPresignedUrl": "<p>Response element providing the Amazon S3 presigned URL to download an attachment.</p>",
-        "GetCaseAttachmentUploadUrlResponse$attachmentPresignedUrl": "<p>Response element providing the Amazon S3 presigned UTL to upload the attachment.</p>"
+        "GetCaseAttachmentUploadUrlResponse$attachmentPresignedUrl": "<p>Response element providing the Amazon S3 presigned URL to upload the attachment.</p>"
       }
     },
     "UserAgent": {
@@ -922,8 +912,7 @@
     },
     "ValidationException": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p/>",
@@ -934,13 +923,13 @@
     "ValidationExceptionFieldList": {
       "base": null,
       "refs": {
-        "ValidationException$fieldList": "<p>Element that provides the list of field(s) that caused the error, if applicable.</p>"
+        "ValidationException$fieldList": "<p>The fields which lead to the exception.</p>"
       }
     },
     "ValidationExceptionReason": {
       "base": null,
       "refs": {
-        "ValidationException$reason": "<p>Element that provides the reason the request failed validation.</p>"
+        "ValidationException$reason": "<p>The reason for the exception.</p>"
       }
     },
     "Watcher": {

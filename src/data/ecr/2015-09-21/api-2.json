@@ -834,6 +834,8 @@
         "imageTags":{"shape":"ImageTagsList"},
         "platform":{"shape":"Platform"},
         "pushedAt":{"shape":"Date"},
+        "lastInUseAt":{"shape":"Date"},
+        "inUseCount":{"shape":"InUseCount"},
         "registry":{"shape":"RegistryId"},
         "repositoryName":{"shape":"RepositoryName"}
       }
@@ -960,7 +962,9 @@
         "upstreamRegistryUrl":{"shape":"Url"},
         "registryId":{"shape":"RegistryId"},
         "upstreamRegistry":{"shape":"UpstreamRegistry"},
-        "credentialArn":{"shape":"CredentialArn"}
+        "credentialArn":{"shape":"CredentialArn"},
+        "customRoleArn":{"shape":"CustomRoleArn"},
+        "upstreamRepositoryPrefix":{"shape":"PullThroughCacheRuleRepositoryPrefix"}
       }
     },
     "CreatePullThroughCacheRuleResponse":{
@@ -971,7 +975,9 @@
         "createdAt":{"shape":"CreationTimestamp"},
         "registryId":{"shape":"RegistryId"},
         "upstreamRegistry":{"shape":"UpstreamRegistry"},
-        "credentialArn":{"shape":"CredentialArn"}
+        "credentialArn":{"shape":"CredentialArn"},
+        "customRoleArn":{"shape":"CustomRoleArn"},
+        "upstreamRepositoryPrefix":{"shape":"PullThroughCacheRuleRepositoryPrefix"}
       }
     },
     "CreateRepositoryCreationTemplateRequest":{
@@ -986,6 +992,7 @@
         "encryptionConfiguration":{"shape":"EncryptionConfigurationForRepositoryCreationTemplate"},
         "resourceTags":{"shape":"TagList"},
         "imageTagMutability":{"shape":"ImageTagMutability"},
+        "imageTagMutabilityExclusionFilters":{"shape":"ImageTagMutabilityExclusionFilters"},
         "repositoryPolicy":{"shape":"RepositoryPolicyText"},
         "lifecyclePolicy":{"shape":"LifecyclePolicyTextForRepositoryCreationTemplate"},
         "appliedFor":{"shape":"RCTAppliedForList"},
@@ -1007,6 +1014,7 @@
         "repositoryName":{"shape":"RepositoryName"},
         "tags":{"shape":"TagList"},
         "imageTagMutability":{"shape":"ImageTagMutability"},
+        "imageTagMutabilityExclusionFilters":{"shape":"ImageTagMutabilityExclusionFilters"},
         "imageScanningConfiguration":{"shape":"ImageScanningConfiguration"},
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
@@ -1095,13 +1103,14 @@
         "upstreamRegistryUrl":{"shape":"Url"},
         "createdAt":{"shape":"CreationTimestamp"},
         "registryId":{"shape":"RegistryId"},
-        "credentialArn":{"shape":"CredentialArn"}
+        "credentialArn":{"shape":"CredentialArn"},
+        "customRoleArn":{"shape":"CustomRoleArn"},
+        "upstreamRepositoryPrefix":{"shape":"PullThroughCacheRuleRepositoryPrefix"}
       }
     },
     "DeleteRegistryPolicyRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRegistryPolicyResponse":{
       "type":"structure",
@@ -1243,8 +1252,7 @@
     },
     "DescribeRegistryRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeRegistryResponse":{
       "type":"structure",
@@ -1468,8 +1476,7 @@
     },
     "GetRegistryPolicyRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetRegistryPolicyResponse":{
       "type":"structure",
@@ -1480,8 +1487,7 @@
     },
     "GetRegistryScanningConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetRegistryScanningConfigurationResponse":{
       "type":"structure",
@@ -1695,12 +1701,45 @@
       "type":"string",
       "enum":[
         "MUTABLE",
-        "IMMUTABLE"
+        "IMMUTABLE",
+        "IMMUTABLE_WITH_EXCLUSION",
+        "MUTABLE_WITH_EXCLUSION"
       ]
+    },
+    "ImageTagMutabilityExclusionFilter":{
+      "type":"structure",
+      "required":[
+        "filterType",
+        "filter"
+      ],
+      "members":{
+        "filterType":{"shape":"ImageTagMutabilityExclusionFilterType"},
+        "filter":{"shape":"ImageTagMutabilityExclusionFilterValue"}
+      }
+    },
+    "ImageTagMutabilityExclusionFilterType":{
+      "type":"string",
+      "enum":["WILDCARD"]
+    },
+    "ImageTagMutabilityExclusionFilterValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z._*-]{1,128}$"
+    },
+    "ImageTagMutabilityExclusionFilters":{
+      "type":"list",
+      "member":{"shape":"ImageTagMutabilityExclusionFilter"},
+      "max":5,
+      "min":1
     },
     "ImageTagsList":{
       "type":"list",
       "member":{"shape":"ImageTag"}
+    },
+    "InUseCount":{
+      "type":"long",
+      "min":0
     },
     "InitiateLayerUploadRequest":{
       "type":"structure",
@@ -2034,6 +2073,8 @@
         "createdAt":{"shape":"CreationTimestamp"},
         "registryId":{"shape":"RegistryId"},
         "credentialArn":{"shape":"CredentialArn"},
+        "customRoleArn":{"shape":"CustomRoleArn"},
+        "upstreamRepositoryPrefix":{"shape":"PullThroughCacheRuleRepositoryPrefix"},
         "upstreamRegistry":{"shape":"UpstreamRegistry"},
         "updatedAt":{"shape":"UpdatedTimestamp"}
       }
@@ -2060,7 +2101,7 @@
       "type":"string",
       "max":30,
       "min":2,
-      "pattern":"(?:[a-z0-9]+(?:[._-][a-z0-9]+)*/)*[a-z0-9]+(?:[._-][a-z0-9]+)*"
+      "pattern":"^((?:[a-z0-9]+(?:[._-][a-z0-9]+)*/)*[a-z0-9]+(?:[._-][a-z0-9]+)*/?|ROOT)$"
     },
     "PullThroughCacheRuleRepositoryPrefixList":{
       "type":"list",
@@ -2137,7 +2178,8 @@
       "members":{
         "registryId":{"shape":"RegistryId"},
         "repositoryName":{"shape":"RepositoryName"},
-        "imageTagMutability":{"shape":"ImageTagMutability"}
+        "imageTagMutability":{"shape":"ImageTagMutability"},
+        "imageTagMutabilityExclusionFilters":{"shape":"ImageTagMutabilityExclusionFilters"}
       }
     },
     "PutImageTagMutabilityResponse":{
@@ -2145,7 +2187,8 @@
       "members":{
         "registryId":{"shape":"RegistryId"},
         "repositoryName":{"shape":"RepositoryName"},
-        "imageTagMutability":{"shape":"ImageTagMutability"}
+        "imageTagMutability":{"shape":"ImageTagMutability"},
+        "imageTagMutabilityExclusionFilters":{"shape":"ImageTagMutabilityExclusionFilters"}
       }
     },
     "PutLifecyclePolicyRequest":{
@@ -2354,6 +2397,7 @@
         "repositoryUri":{"shape":"Url"},
         "createdAt":{"shape":"CreationTimestamp"},
         "imageTagMutability":{"shape":"ImageTagMutability"},
+        "imageTagMutabilityExclusionFilters":{"shape":"ImageTagMutabilityExclusionFilters"},
         "imageScanningConfiguration":{"shape":"ImageScanningConfiguration"},
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
@@ -2373,6 +2417,7 @@
         "encryptionConfiguration":{"shape":"EncryptionConfigurationForRepositoryCreationTemplate"},
         "resourceTags":{"shape":"TagList"},
         "imageTagMutability":{"shape":"ImageTagMutability"},
+        "imageTagMutabilityExclusionFilters":{"shape":"ImageTagMutabilityExclusionFilters"},
         "repositoryPolicy":{"shape":"RepositoryPolicyText"},
         "lifecyclePolicy":{"shape":"LifecyclePolicyTextForRepositoryCreationTemplate"},
         "appliedFor":{"shape":"RCTAppliedForList"},
@@ -2530,7 +2575,8 @@
         "ACTIVE",
         "PENDING",
         "SCAN_ELIGIBILITY_EXPIRED",
-        "FINDINGS_UNAVAILABLE"
+        "FINDINGS_UNAVAILABLE",
+        "LIMIT_EXCEEDED"
       ]
     },
     "ScanStatusDescription":{"type":"string"},
@@ -2704,8 +2750,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagStatus":{
       "type":"string",
@@ -2799,19 +2844,16 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdatePullThroughCacheRuleRequest":{
       "type":"structure",
-      "required":[
-        "ecrRepositoryPrefix",
-        "credentialArn"
-      ],
+      "required":["ecrRepositoryPrefix"],
       "members":{
         "registryId":{"shape":"RegistryId"},
         "ecrRepositoryPrefix":{"shape":"PullThroughCacheRuleRepositoryPrefix"},
-        "credentialArn":{"shape":"CredentialArn"}
+        "credentialArn":{"shape":"CredentialArn"},
+        "customRoleArn":{"shape":"CustomRoleArn"}
       }
     },
     "UpdatePullThroughCacheRuleResponse":{
@@ -2820,7 +2862,9 @@
         "ecrRepositoryPrefix":{"shape":"PullThroughCacheRuleRepositoryPrefix"},
         "registryId":{"shape":"RegistryId"},
         "updatedAt":{"shape":"UpdatedTimestamp"},
-        "credentialArn":{"shape":"CredentialArn"}
+        "credentialArn":{"shape":"CredentialArn"},
+        "customRoleArn":{"shape":"CustomRoleArn"},
+        "upstreamRepositoryPrefix":{"shape":"PullThroughCacheRuleRepositoryPrefix"}
       }
     },
     "UpdateRepositoryCreationTemplateRequest":{
@@ -2832,6 +2876,7 @@
         "encryptionConfiguration":{"shape":"EncryptionConfigurationForRepositoryCreationTemplate"},
         "resourceTags":{"shape":"TagList"},
         "imageTagMutability":{"shape":"ImageTagMutability"},
+        "imageTagMutabilityExclusionFilters":{"shape":"ImageTagMutabilityExclusionFilters"},
         "repositoryPolicy":{"shape":"RepositoryPolicyText"},
         "lifecyclePolicy":{"shape":"LifecyclePolicyTextForRepositoryCreationTemplate"},
         "appliedFor":{"shape":"RCTAppliedForList"},
@@ -2887,6 +2932,7 @@
     "UpstreamRegistry":{
       "type":"string",
       "enum":[
+        "ecr",
         "ecr-public",
         "quay",
         "k8s",
@@ -2912,6 +2958,8 @@
         "registryId":{"shape":"RegistryId"},
         "upstreamRegistryUrl":{"shape":"Url"},
         "credentialArn":{"shape":"CredentialArn"},
+        "customRoleArn":{"shape":"CustomRoleArn"},
+        "upstreamRepositoryPrefix":{"shape":"PullThroughCacheRuleRepositoryPrefix"},
         "isValid":{"shape":"IsPTCRuleValid"},
         "failure":{"shape":"PTCValidateFailure"}
       }

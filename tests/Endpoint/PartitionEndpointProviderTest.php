@@ -557,7 +557,6 @@ class PartitionEndpointProviderTest extends TestCase
             [$partitions, 'us-east-1', 'machinelearning', 'machinelearning.us-east-1.amazonaws.com'],
             [$partitions, 'us-east-1', 'mobileanalytics', 'mobileanalytics.us-east-1.amazonaws.com'],
             [$partitions, 'us-east-1', 'monitoring', 'monitoring.us-east-1.amazonaws.com'],
-            [$partitions, 'us-east-1', 'opsworks', 'opsworks.us-east-1.amazonaws.com'],
             [$partitions, 'us-east-1', 'rds', 'rds.us-east-1.amazonaws.com'],
             [$partitions, 'us-east-1', 'redshift', 'redshift.us-east-1.amazonaws.com'],
             [$partitions, 'us-east-1', 'route53', 'route53.amazonaws.com'],

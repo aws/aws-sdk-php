@@ -259,6 +259,22 @@
         {"shape":"ConflictException"}
       ]
     },
+    "StartCanaryDryRun":{
+      "name":"StartCanaryDryRun",
+      "http":{
+        "method":"POST",
+        "requestUri":"/canary/{name}/dry-run/start"
+      },
+      "input":{"shape":"StartCanaryDryRunRequest"},
+      "output":{"shape":"StartCanaryDryRunResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "StopCanary":{
       "name":"StopCanary",
       "http":{
@@ -319,11 +335,20 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
-        {"shape":"RequestEntityTooLargeException"}
+        {"shape":"RequestEntityTooLargeException"},
+        {"shape":"AccessDeniedException"}
       ]
     }
   },
   "shapes":{
+    "AccessDeniedException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "error":{"httpStatusCode":403},
+      "exception":true
+    },
     "ArtifactConfigInput":{
       "type":"structure",
       "members":{
@@ -353,8 +378,7 @@
     },
     "AssociateResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "BadRequestException":{
       "type":"structure",
@@ -391,6 +415,25 @@
       "max":10000000,
       "min":1
     },
+    "BrowserConfig":{
+      "type":"structure",
+      "members":{
+        "BrowserType":{"shape":"BrowserType"}
+      }
+    },
+    "BrowserConfigs":{
+      "type":"list",
+      "member":{"shape":"BrowserConfig"},
+      "max":2,
+      "min":1
+    },
+    "BrowserType":{
+      "type":"string",
+      "enum":[
+        "CHROME",
+        "FIREFOX"
+      ]
+    },
     "Canaries":{
       "type":"list",
       "member":{"shape":"Canary"}
@@ -418,8 +461,12 @@
         "VpcConfig":{"shape":"VpcConfigOutput"},
         "VisualReference":{"shape":"VisualReferenceOutput"},
         "ProvisionedResourceCleanup":{"shape":"ProvisionedResourceCleanupSetting"},
+        "BrowserConfigs":{"shape":"BrowserConfigs"},
+        "EngineConfigs":{"shape":"EngineConfigs"},
+        "VisualReferences":{"shape":"VisualReferencesOutput"},
         "Tags":{"shape":"TagMap"},
-        "ArtifactConfig":{"shape":"ArtifactConfigOutput"}
+        "ArtifactConfig":{"shape":"ArtifactConfigOutput"},
+        "DryRunConfig":{"shape":"DryRunConfigOutput"}
       }
     },
     "CanaryArn":{
@@ -436,14 +483,22 @@
         "S3Key":{"shape":"String"},
         "S3Version":{"shape":"String"},
         "ZipFile":{"shape":"Blob"},
-        "Handler":{"shape":"CodeHandler"}
+        "Handler":{"shape":"CodeHandler"},
+        "Dependencies":{"shape":"Dependencies"}
       }
     },
     "CanaryCodeOutput":{
       "type":"structure",
       "members":{
         "SourceLocationArn":{"shape":"String"},
-        "Handler":{"shape":"String"}
+        "Handler":{"shape":"String"},
+        "Dependencies":{"shape":"Dependencies"}
+      }
+    },
+    "CanaryDryRunConfigOutput":{
+      "type":"structure",
+      "members":{
+        "DryRunId":{"shape":"UUID"}
       }
     },
     "CanaryLastRun":{
@@ -463,10 +518,14 @@
       "type":"structure",
       "members":{
         "Id":{"shape":"UUID"},
+        "ScheduledRunId":{"shape":"UUID"},
+        "RetryAttempt":{"shape":"RetryAttempt"},
         "Name":{"shape":"CanaryName"},
         "Status":{"shape":"CanaryRunStatus"},
         "Timeline":{"shape":"CanaryRunTimeline"},
-        "ArtifactS3Location":{"shape":"String"}
+        "ArtifactS3Location":{"shape":"String"},
+        "DryRunConfig":{"shape":"CanaryDryRunConfigOutput"},
+        "BrowserType":{"shape":"BrowserType"}
       }
     },
     "CanaryRunConfigInput":{
@@ -475,7 +534,8 @@
         "TimeoutInSeconds":{"shape":"MaxFifteenMinutesInSeconds"},
         "MemoryInMB":{"shape":"MaxSize3008"},
         "ActiveTracing":{"shape":"NullableBoolean"},
-        "EnvironmentVariables":{"shape":"EnvironmentVariablesMap"}
+        "EnvironmentVariables":{"shape":"EnvironmentVariablesMap"},
+        "EphemeralStorage":{"shape":"EphemeralStorageSize"}
       }
     },
     "CanaryRunConfigOutput":{
@@ -483,7 +543,8 @@
       "members":{
         "TimeoutInSeconds":{"shape":"MaxFifteenMinutesInSeconds"},
         "MemoryInMB":{"shape":"MaxSize3008"},
-        "ActiveTracing":{"shape":"NullableBoolean"}
+        "ActiveTracing":{"shape":"NullableBoolean"},
+        "EphemeralStorage":{"shape":"EphemeralStorageSize"}
       }
     },
     "CanaryRunState":{
@@ -506,14 +567,24 @@
       "members":{
         "State":{"shape":"CanaryRunState"},
         "StateReason":{"shape":"String"},
-        "StateReasonCode":{"shape":"CanaryRunStateReasonCode"}
+        "StateReasonCode":{"shape":"CanaryRunStateReasonCode"},
+        "TestResult":{"shape":"CanaryRunTestResult"}
       }
+    },
+    "CanaryRunTestResult":{
+      "type":"string",
+      "enum":[
+        "PASSED",
+        "FAILED",
+        "UNKNOWN"
+      ]
     },
     "CanaryRunTimeline":{
       "type":"structure",
       "members":{
         "Started":{"shape":"Timestamp"},
-        "Completed":{"shape":"Timestamp"}
+        "Completed":{"shape":"Timestamp"},
+        "MetricTimestampForRunAndRetries":{"shape":"Timestamp"}
       }
     },
     "CanaryRuns":{
@@ -525,14 +596,16 @@
       "required":["Expression"],
       "members":{
         "Expression":{"shape":"String"},
-        "DurationInSeconds":{"shape":"MaxOneYearInSeconds"}
+        "DurationInSeconds":{"shape":"MaxOneYearInSeconds"},
+        "RetryConfig":{"shape":"RetryConfigInput"}
       }
     },
     "CanaryScheduleOutput":{
       "type":"structure",
       "members":{
         "Expression":{"shape":"String"},
-        "DurationInSeconds":{"shape":"MaxOneYearInSeconds"}
+        "DurationInSeconds":{"shape":"MaxOneYearInSeconds"},
+        "RetryConfig":{"shape":"RetryConfigOutput"}
       }
     },
     "CanaryState":{
@@ -587,7 +660,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^([0-9a-zA-Z_-]+\\/)*[0-9A-Za-z_\\\\-]+\\.[A-Za-z_][A-Za-z0-9_]*$"
+      "pattern":"^([0-9a-zA-Z_-]+(\\/|\\.))*[0-9A-Za-z_\\\\-]+(\\.|::)[A-Za-z_][A-Za-z0-9_]*$"
     },
     "ConflictException":{
       "type":"structure",
@@ -620,6 +693,7 @@
         "VpcConfig":{"shape":"VpcConfigInput"},
         "ResourcesToReplicateTags":{"shape":"ResourceList"},
         "ProvisionedResourceCleanup":{"shape":"ProvisionedResourceCleanupSetting"},
+        "BrowserConfigs":{"shape":"BrowserConfigs"},
         "Tags":{"shape":"TagMap"},
         "ArtifactConfig":{"shape":"ArtifactConfigInput"}
       }
@@ -662,8 +736,7 @@
     },
     "DeleteCanaryResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteGroupRequest":{
       "type":"structure",
@@ -678,8 +751,25 @@
     },
     "DeleteGroupResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "Dependencies":{
+      "type":"list",
+      "member":{"shape":"Dependency"},
+      "max":1,
+      "min":0
+    },
+    "Dependency":{
+      "type":"structure",
+      "required":["Reference"],
       "members":{
+        "Type":{"shape":"DependencyType"},
+        "Reference":{"shape":"String"}
       }
+    },
+    "DependencyType":{
+      "type":"string",
+      "enum":["LambdaLayer"]
     },
     "DescribeCanariesLastRunNameFilter":{
       "type":"list",
@@ -692,7 +782,8 @@
       "members":{
         "NextToken":{"shape":"Token"},
         "MaxResults":{"shape":"MaxSize100"},
-        "Names":{"shape":"DescribeCanariesLastRunNameFilter"}
+        "Names":{"shape":"DescribeCanariesLastRunNameFilter"},
+        "BrowserType":{"shape":"BrowserType"}
       }
     },
     "DescribeCanariesLastRunResponse":{
@@ -754,7 +845,13 @@
     },
     "DisassociateResourceResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "DryRunConfigOutput":{
+      "type":"structure",
       "members":{
+        "DryRunId":{"shape":"UUID"},
+        "LastDryRunExecutionStatus":{"shape":"String"}
       }
     },
     "EncryptionMode":{
@@ -763,6 +860,17 @@
         "SSE_S3",
         "SSE_KMS"
       ]
+    },
+    "EngineConfig":{
+      "type":"structure",
+      "members":{
+        "EngineArn":{"shape":"FunctionArn"},
+        "BrowserType":{"shape":"BrowserType"}
+      }
+    },
+    "EngineConfigs":{
+      "type":"list",
+      "member":{"shape":"EngineConfig"}
     },
     "EnvironmentVariableName":{
       "type":"string",
@@ -773,6 +881,11 @@
       "type":"map",
       "key":{"shape":"EnvironmentVariableName"},
       "value":{"shape":"EnvironmentVariableValue"}
+    },
+    "EphemeralStorageSize":{
+      "type":"integer",
+      "max":10240,
+      "min":1024
     },
     "ErrorMessage":{"type":"string"},
     "FunctionArn":{
@@ -789,6 +902,11 @@
           "shape":"CanaryName",
           "location":"uri",
           "locationName":"name"
+        },
+        "DryRunId":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"dryRunId"
         }
       }
     },
@@ -808,7 +926,9 @@
           "locationName":"name"
         },
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"MaxSize100"}
+        "MaxResults":{"shape":"MaxSize100"},
+        "DryRunId":{"shape":"UUID"},
+        "RunType":{"shape":"RunType"}
       }
     },
     "GetCanaryRunsResponse":{
@@ -987,6 +1107,11 @@
       "max":31622400,
       "min":0
     },
+    "MaxRetries":{
+      "type":"integer",
+      "max":2,
+      "min":0
+    },
     "MaxSize100":{
       "type":"integer",
       "max":100,
@@ -1056,11 +1181,36 @@
       "type":"string",
       "enum":["lambda-function"]
     },
+    "RetryAttempt":{
+      "type":"integer",
+      "max":2,
+      "min":1
+    },
+    "RetryConfigInput":{
+      "type":"structure",
+      "required":["MaxRetries"],
+      "members":{
+        "MaxRetries":{"shape":"MaxRetries"}
+      }
+    },
+    "RetryConfigOutput":{
+      "type":"structure",
+      "members":{
+        "MaxRetries":{"shape":"MaxRetries"}
+      }
+    },
     "RoleArn":{
       "type":"string",
       "max":2048,
       "min":1,
       "pattern":"arn:(aws[a-zA-Z-]*)?:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+"
+    },
+    "RunType":{
+      "type":"string",
+      "enum":[
+        "CANARY_RUN",
+        "DRY_RUN"
+      ]
     },
     "RuntimeVersion":{
       "type":"structure",
@@ -1097,6 +1247,36 @@
       "error":{"httpStatusCode":402},
       "exception":true
     },
+    "StartCanaryDryRunRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{
+          "shape":"CanaryName",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "Code":{"shape":"CanaryCodeInput"},
+        "RuntimeVersion":{"shape":"String"},
+        "RunConfig":{"shape":"CanaryRunConfigInput"},
+        "VpcConfig":{"shape":"VpcConfigInput"},
+        "ExecutionRoleArn":{"shape":"RoleArn"},
+        "SuccessRetentionPeriodInDays":{"shape":"MaxSize1024"},
+        "FailureRetentionPeriodInDays":{"shape":"MaxSize1024"},
+        "VisualReference":{"shape":"VisualReferenceInput"},
+        "ArtifactS3Location":{"shape":"String"},
+        "ArtifactConfig":{"shape":"ArtifactConfigInput"},
+        "ProvisionedResourceCleanup":{"shape":"ProvisionedResourceCleanupSetting"},
+        "BrowserConfigs":{"shape":"BrowserConfigs"},
+        "VisualReferences":{"shape":"VisualReferences"}
+      }
+    },
+    "StartCanaryDryRunResponse":{
+      "type":"structure",
+      "members":{
+        "DryRunConfig":{"shape":"DryRunConfigOutput"}
+      }
+    },
     "StartCanaryRequest":{
       "type":"structure",
       "required":["Name"],
@@ -1110,8 +1290,7 @@
     },
     "StartCanaryResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopCanaryRequest":{
       "type":"structure",
@@ -1126,8 +1305,7 @@
     },
     "StopCanaryResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "String":{
       "type":"string",
@@ -1181,8 +1359,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1227,8 +1404,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateCanaryRequest":{
       "type":"structure",
@@ -1250,13 +1426,15 @@
         "VisualReference":{"shape":"VisualReferenceInput"},
         "ArtifactS3Location":{"shape":"String"},
         "ArtifactConfig":{"shape":"ArtifactConfigInput"},
-        "ProvisionedResourceCleanup":{"shape":"ProvisionedResourceCleanupSetting"}
+        "ProvisionedResourceCleanup":{"shape":"ProvisionedResourceCleanupSetting"},
+        "DryRunId":{"shape":"UUID"},
+        "VisualReferences":{"shape":"VisualReferences"},
+        "BrowserConfigs":{"shape":"BrowserConfigs"}
       }
     },
     "UpdateCanaryResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ValidationException":{
       "type":"structure",
@@ -1271,15 +1449,29 @@
       "required":["BaseCanaryRunId"],
       "members":{
         "BaseScreenshots":{"shape":"BaseScreenshots"},
-        "BaseCanaryRunId":{"shape":"String"}
+        "BaseCanaryRunId":{"shape":"String"},
+        "BrowserType":{"shape":"BrowserType"}
       }
     },
     "VisualReferenceOutput":{
       "type":"structure",
       "members":{
         "BaseScreenshots":{"shape":"BaseScreenshots"},
-        "BaseCanaryRunId":{"shape":"String"}
+        "BaseCanaryRunId":{"shape":"String"},
+        "BrowserType":{"shape":"BrowserType"}
       }
+    },
+    "VisualReferences":{
+      "type":"list",
+      "member":{"shape":"VisualReferenceInput"},
+      "max":2,
+      "min":1
+    },
+    "VisualReferencesOutput":{
+      "type":"list",
+      "member":{"shape":"VisualReferenceOutput"},
+      "max":2,
+      "min":1
     },
     "VpcConfigInput":{
       "type":"structure",

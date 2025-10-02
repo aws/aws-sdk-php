@@ -40,8 +40,8 @@
       "input":{"shape":"CancelPolicyGenerationRequest"},
       "output":{"shape":"CancelPolicyGenerationResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ],
@@ -57,8 +57,8 @@
       "input":{"shape":"CheckAccessNotGrantedRequest"},
       "output":{"shape":"CheckAccessNotGrantedResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"InvalidParameterException"},
         {"shape":"UnprocessableEntityException"},
         {"shape":"ThrottlingException"},
@@ -75,8 +75,8 @@
       "input":{"shape":"CheckNoNewAccessRequest"},
       "output":{"shape":"CheckNoNewAccessResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"InvalidParameterException"},
         {"shape":"UnprocessableEntityException"},
         {"shape":"ThrottlingException"},
@@ -93,8 +93,8 @@
       "input":{"shape":"CheckNoPublicAccessRequest"},
       "output":{"shape":"CheckNoPublicAccessResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"InvalidParameterException"},
         {"shape":"UnprocessableEntityException"},
         {"shape":"ThrottlingException"},
@@ -111,10 +111,10 @@
       "input":{"shape":"CreateAccessPreviewRequest"},
       "output":{"shape":"CreateAccessPreviewResponse"},
       "errors":[
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
@@ -149,8 +149,8 @@
       },
       "input":{"shape":"CreateArchiveRuleRequest"},
       "errors":[
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -202,8 +202,8 @@
       },
       "input":{"shape":"GenerateFindingRecommendationRequest"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -219,8 +219,8 @@
       "output":{"shape":"GetAccessPreviewResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -327,6 +327,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "GetFindingsStatistics":{
+      "name":"GetFindingsStatistics",
+      "http":{
+        "method":"POST",
+        "requestUri":"/analyzer/findings/statistics",
+        "responseCode":200
+      },
+      "input":{"shape":"GetFindingsStatisticsRequest"},
+      "output":{"shape":"GetFindingsStatisticsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "GetGeneratedPolicy":{
       "name":"GetGeneratedPolicy",
       "http":{
@@ -337,8 +354,8 @@
       "input":{"shape":"GetGeneratedPolicyRequest"},
       "output":{"shape":"GetGeneratedPolicyResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -353,10 +370,10 @@
       "input":{"shape":"ListAccessPreviewFindingsRequest"},
       "output":{"shape":"ListAccessPreviewFindingsResponse"},
       "errors":[
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -372,8 +389,8 @@
       "output":{"shape":"ListAccessPreviewsResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -471,8 +488,8 @@
       "input":{"shape":"ListPolicyGenerationsRequest"},
       "output":{"shape":"ListPolicyGenerationsResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -488,8 +505,8 @@
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -505,8 +522,8 @@
       "output":{"shape":"StartPolicyGenerationResponse"},
       "errors":[
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
@@ -540,8 +557,8 @@
       "output":{"shape":"TagResourceResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ],
@@ -558,8 +575,8 @@
       "output":{"shape":"UntagResourceResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ],
@@ -628,8 +645,8 @@
       "input":{"shape":"ValidatePolicyRequest"},
       "output":{"shape":"ValidatePolicyResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -680,7 +697,15 @@
         "AWS::SecretsManager::Secret",
         "AWS::SNS::Topic",
         "AWS::SQS::Queue",
-        "AWS::IAM::AssumeRolePolicyDocument"
+        "AWS::IAM::AssumeRolePolicyDocument",
+        "AWS::S3Tables::TableBucket",
+        "AWS::ApiGateway::RestApi",
+        "AWS::CodeArtifact::Domain",
+        "AWS::Backup::BackupVault",
+        "AWS::CloudTrail::Dashboard",
+        "AWS::CloudTrail::EventDataStore",
+        "AWS::S3Tables::Table",
+        "AWS::S3Express::AccessPoint"
       ]
     },
     "AccessDeniedException":{
@@ -804,6 +829,12 @@
       "max":100,
       "min":0
     },
+    "AccountAggregations":{
+      "type":"list",
+      "member":{"shape":"FindingAggregationAccountDetails"},
+      "max":10,
+      "min":1
+    },
     "AccountIdsList":{
       "type":"list",
       "member":{"shape":"String"}
@@ -899,7 +930,8 @@
     "AnalyzerConfiguration":{
       "type":"structure",
       "members":{
-        "unusedAccess":{"shape":"UnusedAccessConfiguration"}
+        "unusedAccess":{"shape":"UnusedAccessConfiguration"},
+        "internalAccess":{"shape":"InternalAccessConfiguration"}
       },
       "union":true
     },
@@ -1337,6 +1369,15 @@
         "resourceControlPolicyRestriction":{"shape":"ResourceControlPolicyRestriction"}
       }
     },
+    "ExternalAccessFindingsStatistics":{
+      "type":"structure",
+      "members":{
+        "resourceTypeStatistics":{"shape":"ResourceTypeStatisticsMap"},
+        "totalActiveFindings":{"shape":"Integer"},
+        "totalArchivedFindings":{"shape":"Integer"},
+        "totalResolvedFindings":{"shape":"Integer"}
+      }
+    },
     "FilterCriteriaMap":{
       "type":"map",
       "key":{"shape":"String"},
@@ -1372,6 +1413,19 @@
         "resourceControlPolicyRestriction":{"shape":"ResourceControlPolicyRestriction"}
       }
     },
+    "FindingAggregationAccountDetails":{
+      "type":"structure",
+      "members":{
+        "account":{"shape":"String"},
+        "numberOfActiveFindings":{"shape":"Integer"},
+        "details":{"shape":"FindingAggregationAccountDetailsMap"}
+      }
+    },
+    "FindingAggregationAccountDetailsMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"Integer"}
+    },
     "FindingChangeType":{
       "type":"string",
       "enum":[
@@ -1383,6 +1437,7 @@
     "FindingDetails":{
       "type":"structure",
       "members":{
+        "internalAccessDetails":{"shape":"InternalAccessDetails"},
         "externalAccessDetails":{"shape":"ExternalAccessDetails"},
         "unusedPermissionDetails":{"shape":"UnusedPermissionDetails"},
         "unusedIamUserAccessKeyDetails":{"shape":"UnusedIamUserAccessKeyDetails"},
@@ -1504,7 +1559,8 @@
         "UnusedIAMRole",
         "UnusedIAMUserAccessKey",
         "UnusedIAMUserPassword",
-        "UnusedPermission"
+        "UnusedPermission",
+        "InternalAccess"
       ]
     },
     "FindingsList":{
@@ -1514,6 +1570,19 @@
     "FindingsListV2":{
       "type":"list",
       "member":{"shape":"FindingSummaryV2"}
+    },
+    "FindingsStatistics":{
+      "type":"structure",
+      "members":{
+        "externalAccessFindingsStatistics":{"shape":"ExternalAccessFindingsStatistics"},
+        "internalAccessFindingsStatistics":{"shape":"InternalAccessFindingsStatistics"},
+        "unusedAccessFindingsStatistics":{"shape":"UnusedAccessFindingsStatistics"}
+      },
+      "union":true
+    },
+    "FindingsStatisticsList":{
+      "type":"list",
+      "member":{"shape":"FindingsStatistics"}
     },
     "GenerateFindingRecommendationRequest":{
       "type":"structure",
@@ -1802,6 +1871,20 @@
         "findingType":{"shape":"FindingType"}
       }
     },
+    "GetFindingsStatisticsRequest":{
+      "type":"structure",
+      "required":["analyzerArn"],
+      "members":{
+        "analyzerArn":{"shape":"AnalyzerArn"}
+      }
+    },
+    "GetFindingsStatisticsResponse":{
+      "type":"structure",
+      "members":{
+        "findingsStatistics":{"shape":"FindingsStatisticsList"},
+        "lastUpdatedAt":{"shape":"Timestamp"}
+      }
+    },
     "GetGeneratedPolicyRequest":{
       "type":"structure",
       "required":["jobId"],
@@ -1860,6 +1943,73 @@
     "Integer":{
       "type":"integer",
       "box":true
+    },
+    "InternalAccessAnalysisRule":{
+      "type":"structure",
+      "members":{
+        "inclusions":{"shape":"InternalAccessAnalysisRuleCriteriaList"}
+      }
+    },
+    "InternalAccessAnalysisRuleCriteria":{
+      "type":"structure",
+      "members":{
+        "accountIds":{"shape":"AccountIdsList"},
+        "resourceTypes":{"shape":"ResourceTypeList"},
+        "resourceArns":{"shape":"ResourceArnsList"}
+      }
+    },
+    "InternalAccessAnalysisRuleCriteriaList":{
+      "type":"list",
+      "member":{"shape":"InternalAccessAnalysisRuleCriteria"}
+    },
+    "InternalAccessConfiguration":{
+      "type":"structure",
+      "members":{
+        "analysisRule":{"shape":"InternalAccessAnalysisRule"}
+      }
+    },
+    "InternalAccessDetails":{
+      "type":"structure",
+      "members":{
+        "action":{"shape":"ActionList"},
+        "condition":{"shape":"ConditionKeyMap"},
+        "principal":{"shape":"PrincipalMap"},
+        "principalOwnerAccount":{"shape":"String"},
+        "accessType":{"shape":"InternalAccessType"},
+        "principalType":{"shape":"PrincipalType"},
+        "sources":{"shape":"FindingSourceList"},
+        "resourceControlPolicyRestriction":{"shape":"ResourceControlPolicyRestriction"},
+        "serviceControlPolicyRestriction":{"shape":"ServiceControlPolicyRestriction"}
+      }
+    },
+    "InternalAccessFindingsStatistics":{
+      "type":"structure",
+      "members":{
+        "resourceTypeStatistics":{"shape":"InternalAccessResourceTypeStatisticsMap"},
+        "totalActiveFindings":{"shape":"Integer"},
+        "totalArchivedFindings":{"shape":"Integer"},
+        "totalResolvedFindings":{"shape":"Integer"}
+      }
+    },
+    "InternalAccessResourceTypeDetails":{
+      "type":"structure",
+      "members":{
+        "totalActiveFindings":{"shape":"Integer"},
+        "totalResolvedFindings":{"shape":"Integer"},
+        "totalArchivedFindings":{"shape":"Integer"}
+      }
+    },
+    "InternalAccessResourceTypeStatisticsMap":{
+      "type":"map",
+      "key":{"shape":"ResourceType"},
+      "value":{"shape":"InternalAccessResourceTypeDetails"}
+    },
+    "InternalAccessType":{
+      "type":"string",
+      "enum":[
+        "INTRA_ACCOUNT",
+        "INTRA_ORG"
+      ]
     },
     "InternalServerException":{
       "type":"structure",
@@ -2354,6 +2504,13 @@
       "key":{"shape":"String"},
       "value":{"shape":"String"}
     },
+    "PrincipalType":{
+      "type":"string",
+      "enum":[
+        "IAM_ROLE",
+        "IAM_USER"
+      ]
+    },
     "RdsDbClusterSnapshotAccountId":{"type":"string"},
     "RdsDbClusterSnapshotAccountIdsList":{
       "type":"list",
@@ -2473,12 +2630,17 @@
       "type":"string",
       "pattern":"arn:[^:]*:[^:]*:[^:]*:[^:]*:.*"
     },
+    "ResourceArnsList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "ResourceControlPolicyRestriction":{
       "type":"string",
       "enum":[
         "APPLICABLE",
         "FAILED_TO_EVALUATE_RCP",
-        "NOT_APPLICABLE"
+        "NOT_APPLICABLE",
+        "APPLIED"
       ]
     },
     "ResourceNotFoundException":{
@@ -2520,6 +2682,22 @@
         "AWS::DynamoDB::Stream",
         "AWS::IAM::User"
       ]
+    },
+    "ResourceTypeDetails":{
+      "type":"structure",
+      "members":{
+        "totalActivePublic":{"shape":"Integer"},
+        "totalActiveCrossAccount":{"shape":"Integer"}
+      }
+    },
+    "ResourceTypeList":{
+      "type":"list",
+      "member":{"shape":"ResourceType"}
+    },
+    "ResourceTypeStatisticsMap":{
+      "type":"map",
+      "key":{"shape":"ResourceType"},
+      "value":{"shape":"ResourceTypeDetails"}
     },
     "RetiringPrincipal":{"type":"string"},
     "RoleArn":{
@@ -2564,10 +2742,27 @@
       }
     },
     "S3BucketPolicy":{"type":"string"},
+    "S3ExpressDirectoryAccessPointArn":{
+      "type":"string",
+      "pattern":"arn:[^:]*:s3express:[^:]*:[^:]*:accesspoint/.*"
+    },
+    "S3ExpressDirectoryAccessPointConfiguration":{
+      "type":"structure",
+      "members":{
+        "accessPointPolicy":{"shape":"AccessPointPolicy"},
+        "networkOrigin":{"shape":"NetworkOriginConfiguration"}
+      }
+    },
+    "S3ExpressDirectoryAccessPointConfigurationsMap":{
+      "type":"map",
+      "key":{"shape":"S3ExpressDirectoryAccessPointArn"},
+      "value":{"shape":"S3ExpressDirectoryAccessPointConfiguration"}
+    },
     "S3ExpressDirectoryBucketConfiguration":{
       "type":"structure",
       "members":{
-        "bucketPolicy":{"shape":"S3ExpressDirectoryBucketPolicy"}
+        "bucketPolicy":{"shape":"S3ExpressDirectoryBucketPolicy"},
+        "accessPoints":{"shape":"S3ExpressDirectoryAccessPointConfigurationsMap"}
       }
     },
     "S3ExpressDirectoryBucketPolicy":{"type":"string"},
@@ -2591,6 +2786,15 @@
     },
     "SecretsManagerSecretKmsId":{"type":"string"},
     "SecretsManagerSecretPolicy":{"type":"string"},
+    "ServiceControlPolicyRestriction":{
+      "type":"string",
+      "enum":[
+        "APPLICABLE",
+        "FAILED_TO_EVALUATE_SCP",
+        "NOT_APPLICABLE",
+        "APPLIED"
+      ]
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":[
@@ -2795,7 +2999,9 @@
         "ACCOUNT",
         "ORGANIZATION",
         "ACCOUNT_UNUSED_ACCESS",
-        "ORGANIZATION_UNUSED_ACCESS"
+        "ORGANIZATION_UNUSED_ACCESS",
+        "ACCOUNT_INTERNAL_ACCESS",
+        "ORGANIZATION_INTERNAL_ACCESS"
       ]
     },
     "UnprocessableEntityException":{
@@ -2841,6 +3047,27 @@
         "unusedAccessAge":{"shape":"Integer"},
         "analysisRule":{"shape":"AnalysisRule"}
       }
+    },
+    "UnusedAccessFindingsStatistics":{
+      "type":"structure",
+      "members":{
+        "unusedAccessTypeStatistics":{"shape":"UnusedAccessTypeStatisticsList"},
+        "topAccounts":{"shape":"AccountAggregations"},
+        "totalActiveFindings":{"shape":"Integer"},
+        "totalArchivedFindings":{"shape":"Integer"},
+        "totalResolvedFindings":{"shape":"Integer"}
+      }
+    },
+    "UnusedAccessTypeStatistics":{
+      "type":"structure",
+      "members":{
+        "unusedAccessType":{"shape":"String"},
+        "total":{"shape":"Integer"}
+      }
+    },
+    "UnusedAccessTypeStatisticsList":{
+      "type":"list",
+      "member":{"shape":"UnusedAccessTypeStatistics"}
     },
     "UnusedAction":{
       "type":"structure",

@@ -371,4 +371,66 @@ EOF;
 
         $this->assertEquals(['initial-response' => []], $iterator->current());
     }
+
+    /**
+     * @param array $eventStreams
+     * @param string $expectedExceptionMessage
+     *
+     * @return void
+     *
+     * @dataProvider handleEventWithExceptionsProvider
+     *
+     */
+    public function testHandleEventWithExceptions(
+        array $eventStreams,
+        string $expectedExceptionMessage,
+    ) {
+        $this->expectException(EventStreamDataException::class);
+        $this->expectExceptionMessage($expectedExceptionMessage);
+
+        $stream = Psr7\Utils::streamFor(base64_decode(join("\n", $eventStreams)));
+        $structureShape = new StructureShape([
+            'type' => 'structure',
+            'members' => [
+                'message' => [
+                    'type' => 'structure',
+                    'members' => [
+                        'foo' => [
+                            'type' => 'string'
+                        ]
+                    ]
+                ]
+            ]
+        ], new ShapeMap([]));
+        $iterator = new EventParsingIterator(
+            $stream,
+            $structureShape,
+            $this->createRestParser(self::PROTOCOL_JSON)
+        );
+        foreach ($iterator as $_) {}
+    }
+
+    /**
+     * @return array[]
+     */
+    public function handleEventWithExceptionsProvider(): array {
+        return [
+            'handle_event_with_exceptions_1' => [
+                'event_streams' =>
+                    [<<<EOF
+AAAAogAAAFuTfJvjDzpleGNlcHRpb24tdHlwZQcADXRlc3RFeGNlcHRpb24NOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcACWV4Y2VwdGlvbnsibWVzc2FnZSI6IlRoZXJlIGlzIGFuIGlzc3VlIHByb2Nlc3NpbmcgdGhpcyByZXF1ZXN0In1r/iVF
+EOF],
+                'expected_exception_message' => 'There is an issue processing this request',
+            ],
+            'handle_event_with_exceptions_2' => [
+                'event_streams' =>
+                    [<<<EOF
+AAAAfgAAAE0rrbzqDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudAs6ZXZlbnQtdHlwZQcAB21lc3NhZ2VbeyJtZXNzYWdlIjp7ImZvbyI6IkZvbyBWYWx1ZSJ9fV0IT4Zv
+EOF, <<<EOF
+AAAAlAAAAFwjeUNmDzpleGNlcHRpb24tdHlwZQcADnRlc3RFeGNlcHRpb24yDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAlleGNlcHRpb257Im1lc3NhZ2UiOiJJbnZhbGlkIHJlcXVlc3QgZXhjZXB0aW9uISJ9UqcL8g==
+EOF],
+                'expected_exception_message' => 'Invalid request exception!',
+            ]
+        ];
+    }
 }

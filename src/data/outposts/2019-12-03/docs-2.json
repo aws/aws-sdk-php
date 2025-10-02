@@ -14,6 +14,7 @@
     "GetConnection": "<note> <p> Amazon Web Services uses this action to install Outpost servers.</p> </note> <p> Gets information about the specified connection. </p> <p> Use CloudTrail to monitor this action or Amazon Web Services managed policy for Amazon Web Services Outposts to secure it. For more information, see <a href=\"https://docs.aws.amazon.com/outposts/latest/userguide/security-iam-awsmanpol.html\"> Amazon Web Services managed policies for Amazon Web Services Outposts</a> and <a href=\"https://docs.aws.amazon.com/outposts/latest/userguide/logging-using-cloudtrail.html\"> Logging Amazon Web Services Outposts API calls with Amazon Web Services CloudTrail</a> in the <i>Amazon Web Services Outposts User Guide</i>. </p>",
     "GetOrder": "<p>Gets information about the specified order.</p>",
     "GetOutpost": "<p>Gets information about the specified Outpost.</p>",
+    "GetOutpostBillingInformation": "<p>Gets current and historical billing information about the specified Outpost.</p>",
     "GetOutpostInstanceTypes": "<p>Gets the instance types for the specified Outpost.</p>",
     "GetOutpostSupportedInstanceTypes": "<p>Gets the instance types that an Outpost can support in <code>InstanceTypeCapacity</code>. This will generally include instance types that are not currently configured and therefore cannot be launched with the current Outpost capacity configuration.</p>",
     "GetSite": "<p>Gets information about the specified Outpost site.</p>",
@@ -54,8 +55,7 @@
     },
     "AccessDeniedException": {
       "base": "<p>You do not have permission to perform this operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountId": {
       "base": "<p>The ID of the Amazon Web Services account.</p>",
@@ -122,10 +122,20 @@
       "base": null,
       "refs": {
         "AssetIdList$member": null,
-        "AssetInfo$AssetId": "<p> The ID of the asset. </p>",
-        "AssetInstance$AssetId": "<p>The ID of the asset.</p>",
-        "LineItemAssetInformation$AssetId": "<p> The ID of the asset. </p>",
-        "StartConnectionRequest$AssetId": "<p> The ID of the Outpost server. </p>"
+        "AssetInfo$AssetId": "<p> The ID of the asset. An Outpost asset can be a single server within an Outposts rack or an Outposts server configuration.</p>",
+        "AssetInstance$AssetId": "<p>The ID of the asset. An Outpost asset can be a single server within an Outposts rack or an Outposts server configuration.</p>",
+        "CapacityTaskSummary$AssetId": "<p>The ID of the asset. An Outpost asset can be a single server within an Outposts rack or an Outposts server configuration.</p>",
+        "GetCapacityTaskOutput$AssetId": "<p>The ID of the Outpost asset. An Outpost asset can be a single server within an Outposts rack or an Outposts server configuration.</p>",
+        "LineItemAssetInformation$AssetId": "<p> The ID of the asset. An Outpost asset can be a single server within an Outposts rack or an Outposts server configuration.</p>",
+        "StartCapacityTaskOutput$AssetId": "<p>The ID of the asset. An Outpost asset can be a single server within an Outposts rack or an Outposts server configuration.</p>",
+        "StartConnectionRequest$AssetId": "<p> The ID of the Outpost server.</p>"
+      }
+    },
+    "AssetIdInput": {
+      "base": null,
+      "refs": {
+        "GetOutpostSupportedInstanceTypesInput$AssetId": "<p>The ID of the Outpost asset. An Outpost asset can be a single server within an Outposts rack or an Outposts server configuration.</p>",
+        "StartCapacityTaskInput$AssetId": "<p>The ID of the Outpost asset. An Outpost asset can be a single server within an Outposts rack or an Outposts server configuration.</p>"
       }
     },
     "AssetIdList": {
@@ -244,23 +254,19 @@
     },
     "CancelCapacityTaskInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelCapacityTaskOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelOrderInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelOrderOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CapacityTaskFailure": {
       "base": "<p>The capacity tasks that failed.</p>",
@@ -297,7 +303,7 @@
       "refs": {
         "CapacityTaskStatusList$member": null,
         "CapacityTaskSummary$CapacityTaskStatus": "<p>The status of the capacity task.</p>",
-        "GetCapacityTaskOutput$CapacityTaskStatus": "<p>Status of the capacity task.</p> <p>A capacity task can have one of the following statuses:</p> <ul> <li> <p> <code>REQUESTED</code> - The capacity task was created and is awaiting the next step by Amazon Web Services Outposts.</p> </li> <li> <p> <code>IN_PROGRESS</code> - The capacity task is running and cannot be cancelled.</p> </li> <li> <p> <code>WAITING_FOR_EVACUATION</code> - The capacity task requires capacity to run. You must stop the recommended EC2 running instances to free up capacity for the task to run.</p> </li> </ul>",
+        "GetCapacityTaskOutput$CapacityTaskStatus": "<p>Status of the capacity task.</p> <p>A capacity task can have one of the following statuses:</p> <ul> <li> <p> <code>REQUESTED</code> - The capacity task was created and is awaiting the next step by Amazon Web Services Outposts.</p> </li> <li> <p> <code>IN_PROGRESS</code> - The capacity task is running and cannot be cancelled.</p> </li> <li> <p> <code>FAILED</code> - The capacity task could not be completed.</p> </li> <li> <p> <code>COMPLETED</code> - The capacity task has completed successfully.</p> </li> <li> <p> <code>WAITING_FOR_EVACUATION</code> - The capacity task requires capacity to run. You must stop the recommended EC2 running instances to free up capacity for the task to run.</p> </li> <li> <p> <code>CANCELLATION_IN_PROGRESS</code> - The capacity task has been cancelled and is in the process of cleaning up resources.</p> </li> <li> <p> <code>CANCELLED</code> - The capacity task is cancelled.</p> </li> </ul>",
         "StartCapacityTaskOutput$CapacityTaskStatus": "<p>Status of the specified capacity task.</p>"
       }
     },
@@ -390,8 +396,7 @@
     },
     "ConflictException": {
       "base": "<p>Updating or deleting this resource can cause an inconsistent state.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConnectionDetails": {
       "base": "<p> Information about a connection. </p>",
@@ -435,53 +440,43 @@
     },
     "CreateOrderInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateOrderOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateOutpostInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateOutpostOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSiteInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSiteOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteOutpostInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteOutpostOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSiteInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSiteOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeviceSerialNumber": {
       "base": null,
@@ -548,93 +543,83 @@
     },
     "GetCapacityTaskInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCapacityTaskOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCatalogItemInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCatalogItemOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOrderInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOrderOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "GetOutpostBillingInformationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOutpostBillingInformationOutput": {
+      "base": null,
+      "refs": {}
     },
     "GetOutpostInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOutpostInstanceTypesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOutpostInstanceTypesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOutpostOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOutpostSupportedInstanceTypesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOutpostSupportedInstanceTypesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSiteAddressInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSiteAddressOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSiteInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSiteOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HostId": {
       "base": null,
@@ -664,7 +649,9 @@
         "OrderSummary$OrderFulfilledDate": "<p> The fulfilment date for the order. </p>",
         "StartCapacityTaskOutput$CreationDate": "<p>Date that the specified capacity task was created.</p>",
         "StartCapacityTaskOutput$CompletionDate": "<p>Date that the specified capacity task ran successfully.</p>",
-        "StartCapacityTaskOutput$LastModifiedDate": "<p>Date that the specified capacity task was last modified.</p>"
+        "StartCapacityTaskOutput$LastModifiedDate": "<p>Date that the specified capacity task was last modified.</p>",
+        "Subscription$BeginDate": "<p>The date your subscription starts.</p>",
+        "Subscription$EndDate": "<p>The date your subscription ends.</p>"
       }
     },
     "InstanceFamilies": {
@@ -742,8 +729,7 @@
     },
     "InternalServerException": {
       "base": "<p>An internal error has occurred.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LifeCycleStatus": {
       "base": "<p>The life cycle status.</p>",
@@ -824,93 +810,75 @@
     },
     "ListAssetInstancesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssetInstancesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssetsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssetsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBlockingInstancesForCapacityTaskInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBlockingInstancesForCapacityTaskOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCapacityTasksInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCapacityTasksOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCatalogItemsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCatalogItemsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOrdersInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOrdersOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOutpostsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOutpostsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSitesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSitesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MacAddress": {
       "base": null,
@@ -927,6 +895,7 @@
     "MaxResults1000": {
       "base": "<p>The maximum page size.</p>",
       "refs": {
+        "GetOutpostBillingInformationInput$MaxResults": null,
         "GetOutpostInstanceTypesInput$MaxResults": null,
         "GetOutpostSupportedInstanceTypesInput$MaxResults": null,
         "ListAssetInstancesInput$MaxResults": null,
@@ -966,7 +935,13 @@
     },
     "NotFoundException": {
       "base": "<p>The specified request is not valid.</p>",
+      "refs": {}
+    },
+    "NullableDouble": {
+      "base": null,
       "refs": {
+        "Subscription$MonthlyRecurringPrice": "<p>The amount you are billed each month in the subscription period.</p>",
+        "Subscription$UpfrontPrice": "<p>The amount billed when the subscription is created. This is a one-time charge.</p>"
       }
     },
     "OpticalStandard": {
@@ -996,6 +971,12 @@
         "OrderSummary$OrderId": "<p> The ID of the order. </p>",
         "StartCapacityTaskInput$OrderId": "<p>The ID of the Amazon Web Services Outposts order associated with the specified capacity task.</p>",
         "StartCapacityTaskOutput$OrderId": "<p>ID of the Amazon Web Services Outposts order of the host associated with the capacity task.</p>"
+      }
+    },
+    "OrderIdList": {
+      "base": null,
+      "refs": {
+        "Subscription$OrderIds": "<p>The order ID for your subscription.</p>"
       }
     },
     "OrderStatus": {
@@ -1054,7 +1035,7 @@
         "CapacityTaskSummary$OutpostId": "<p>The ID of the Outpost associated with the specified capacity task.</p>",
         "DeleteOutpostInput$OutpostId": "<p> The ID or ARN of the Outpost. </p>",
         "GetCapacityTaskOutput$OutpostId": "<p>ID of the Outpost associated with the specified capacity task.</p>",
-        "GetOutpostInput$OutpostId": "<p> The ID or ARN of the Outpost. </p>",
+        "GetOutpostInput$OutpostId": "<p>The ID or ARN of the Outpost.</p>",
         "GetOutpostInstanceTypesInput$OutpostId": "<p> The ID or ARN of the Outpost. </p>",
         "GetOutpostInstanceTypesOutput$OutpostId": "<p> The ID of the Outpost. </p>",
         "Outpost$OutpostId": "<p> The ID of the Outpost. </p>",
@@ -1075,6 +1056,7 @@
         "CancelCapacityTaskInput$OutpostIdentifier": "<p>ID or ARN of the Outpost associated with the capacity task that you want to cancel.</p>",
         "CreateOrderInput$OutpostIdentifier": "<p> The ID or the Amazon Resource Name (ARN) of the Outpost. </p>",
         "GetCapacityTaskInput$OutpostIdentifier": "<p>ID or ARN of the Outpost associated with the specified capacity task.</p>",
+        "GetOutpostBillingInformationInput$OutpostIdentifier": "<p>The ID or ARN of the Outpost.</p>",
         "GetOutpostSupportedInstanceTypesInput$OutpostIdentifier": "<p>The ID or ARN of the Outpost.</p>",
         "ListAssetInstancesInput$OutpostIdentifier": "<p>The ID of the Outpost.</p>",
         "ListAssetsInput$OutpostIdentifier": "<p> The ID or the Amazon Resource Name (ARN) of the Outpost. </p>",
@@ -1206,8 +1188,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>You have exceeded a service quota.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ShipmentCarrier": {
       "base": null,
@@ -1288,23 +1269,19 @@
     },
     "StartCapacityTaskInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartCapacityTaskOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartConnectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StateOrRegion": {
       "base": null,
@@ -1329,7 +1306,34 @@
     "String": {
       "base": null,
       "refs": {
-        "ConflictException$ResourceId": "<p>The ID of the resource causing the conflict.</p>"
+        "ConflictException$ResourceId": "<p>The ID of the resource causing the conflict.</p>",
+        "GetOutpostBillingInformationOutput$ContractEndDate": "<p>The date the current contract term ends for the specified Outpost. You must start the renewal or decommission process at least 5 business days before the current term for your Amazon Web Services Outposts ends. Failing to complete these steps at least 5 business days before the current term ends might result in unanticipated charges.</p>",
+        "OrderIdList$member": null,
+        "Subscription$SubscriptionId": "<p>The ID of the subscription that appears on the Amazon Web Services Billing Center console.</p>"
+      }
+    },
+    "Subscription": {
+      "base": "<p>Provides information about your Amazon Web Services Outposts subscriptions.</p>",
+      "refs": {
+        "SubscriptionList$member": null
+      }
+    },
+    "SubscriptionList": {
+      "base": null,
+      "refs": {
+        "GetOutpostBillingInformationOutput$Subscriptions": "<p>The subscription details for the specified Outpost.</p>"
+      }
+    },
+    "SubscriptionStatus": {
+      "base": null,
+      "refs": {
+        "Subscription$SubscriptionStatus": "<p>The status of subscription which can be one of the following:</p> <ul> <li> <p> <b>INACTIVE</b> - Subscription requests that are inactive.</p> </li> <li> <p> <b>ACTIVE</b> - Subscription requests that are in progress and have an end date in the future.</p> </li> <li> <p> <b>CANCELLED</b> - Subscription requests that are cancelled.</p> </li> </ul>"
+      }
+    },
+    "SubscriptionType": {
+      "base": null,
+      "refs": {
+        "Subscription$SubscriptionType": "<p>The type of subscription which can be one of the following:</p> <ul> <li> <p> <b>ORIGINAL</b> - The first order on the Amazon Web Services Outposts.</p> </li> <li> <p> <b>RENEWAL</b> - Renewal requests, both month to month and longer term.</p> </li> <li> <p> <b>CAPACITY_INCREASE</b> - Capacity scaling orders.</p> </li> </ul>"
       }
     },
     "SupportedHardwareType": {
@@ -1391,13 +1395,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1416,6 +1418,8 @@
     "Token": {
       "base": "<p>The pagination token.</p>",
       "refs": {
+        "GetOutpostBillingInformationInput$NextToken": null,
+        "GetOutpostBillingInformationOutput$NextToken": null,
         "GetOutpostInstanceTypesInput$NextToken": null,
         "GetOutpostInstanceTypesOutput$NextToken": null,
         "GetOutpostSupportedInstanceTypesInput$NextToken": null,
@@ -1452,53 +1456,43 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateOutpostInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateOutpostOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSiteAddressInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSiteAddressOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSiteInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSiteOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSiteRackPhysicalPropertiesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSiteRackPhysicalPropertiesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UplinkCount": {
       "base": null,
@@ -1523,8 +1517,7 @@
     },
     "ValidationException": {
       "base": "<p>A parameter is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WireGuardPublicKey": {
       "base": null,

@@ -8,7 +8,7 @@
     "BatchDeleteCategory": "<p>Deletes Categories for the Amazon Q Business application environment instance. Web experience users use Categories to tag and filter library items. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/qapps-custom-labels.html\">Custom labels for Amazon Q Apps</a>.</p>",
     "BatchUpdateCategory": "<p>Updates Categories for the Amazon Q Business application environment instance. Web experience users use Categories to tag and filter library items. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/qapps-custom-labels.html\">Custom labels for Amazon Q Apps</a>.</p>",
     "CreateLibraryItem": "<p>Creates a new library item for an Amazon Q App, allowing it to be discovered and used by other allowed users. </p>",
-    "CreatePresignedUrl": "<p>Creates a presigned URL for an S3 POST operation to upload a file. You can use this URL to set a default file for a <code>FileUploadCard</code> in a Q App definition or to provide a file for a single Q App run. The <code>scope</code> parameter determines how the file will be used, either at the app definition level or the app session level.</p>",
+    "CreatePresignedUrl": "<p>Creates a presigned URL for an S3 POST operation to upload a file. You can use this URL to set a default file for a <code>FileUploadCard</code> in a Q App definition or to provide a file for a single Q App run. The <code>scope</code> parameter determines how the file will be used, either at the app definition level or the app session level.</p> <note> <p>The IAM permissions are derived from the <code>qapps:ImportDocument</code> action. For more information on the IAM policy for Amazon Q Apps, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/deploy-q-apps-iam-permissions.html\">IAM permissions for using Amazon Q Apps</a>.</p> </note>",
     "CreateQApp": "<p>Creates a new Amazon Q App based on the provided definition. The Q App definition specifies the cards and flow of the Q App. This operation also calculates the dependencies between the cards by inspecting the references in the prompts. </p>",
     "DeleteLibraryItem": "<p>Deletes a library item for an Amazon Q App, removing it from the library so it can no longer be discovered or used by other users.</p>",
     "DeleteQApp": "<p>Deletes an Amazon Q App owned by the user. If the Q App was previously published to the library, it is also removed from the library.</p>",
@@ -41,8 +41,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>The client is not authorized to perform the requested operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActionIdentifier": {
       "base": null,
@@ -122,13 +121,11 @@
     },
     "AssociateLibraryItemReviewInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateQAppWithUserInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttributeFilter": {
       "base": "<p>The filter criteria used on responses based on document attributes or metadata fields.</p>",
@@ -148,8 +145,7 @@
     },
     "BatchCreateCategoryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchCreateCategoryInputCategory": {
       "base": "<p>The category object to be created.</p>",
@@ -177,13 +173,11 @@
     },
     "BatchDeleteCategoryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchUpdateCategoryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Boolean": {
       "base": null,
@@ -336,13 +330,11 @@
     },
     "ConflictException": {
       "base": "<p>The requested operation could not be completed due to a conflict with the current state of the resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ContentTooLargeException": {
       "base": "<p>The requested operation could not be completed because the content exceeds the maximum allowed size.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConversationMessage": {
       "base": "<p>A message in a conversation, used as input for generating an Amazon Q App definition.</p>",
@@ -358,18 +350,15 @@
     },
     "CreateLibraryItemInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLibraryItemOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePresignedUrlInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePresignedUrlInputFileContentsSha256String": {
       "base": null,
@@ -379,18 +368,15 @@
     },
     "CreatePresignedUrlOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQAppInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQAppOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Default": {
       "base": null,
@@ -407,13 +393,11 @@
     },
     "DeleteLibraryItemInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQAppInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DependencyList": {
       "base": null,
@@ -427,13 +411,11 @@
     },
     "DescribeQAppPermissionsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeQAppPermissionsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -449,13 +431,11 @@
     },
     "DisassociateLibraryItemReviewInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateQAppFromUserInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Document": {
       "base": null,
@@ -516,13 +496,11 @@
     },
     "ExportQAppSessionDataInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExportQAppSessionDataOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "FileUploadCard": {
       "base": "<p>A card in an Amazon Q App that allows the user to upload a file.</p>",
@@ -571,53 +549,43 @@
     },
     "GetLibraryItemInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLibraryItemOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQAppInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQAppOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQAppSessionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQAppSessionMetadataInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQAppSessionMetadataOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQAppSessionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportDocumentInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportDocumentOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InitialPrompt": {
       "base": null,
@@ -689,8 +657,7 @@
     },
     "InternalServerException": {
       "base": "<p>An internal service error occurred while processing the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LibraryItemList": {
       "base": null,
@@ -712,53 +679,43 @@
     },
     "ListCategoriesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCategoriesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLibraryItemsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLibraryItemsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQAppSessionDataInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQAppSessionDataOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQAppsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQAppsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
@@ -857,8 +814,7 @@
     },
     "PredictQAppInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PredictQAppInputOptions": {
       "base": "<p>The input options for generating an Q App definition.</p>",
@@ -880,8 +836,7 @@
     },
     "PredictQAppOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PresignedUrlFields": {
       "base": null,
@@ -984,8 +939,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The requested resource could not be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Sender": {
       "base": null,
@@ -995,8 +949,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The requested operation could not be completed because it would exceed the service's quota or limit.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SessionName": {
       "base": null,
@@ -1035,18 +988,15 @@
     },
     "StartQAppSessionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartQAppSessionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopQAppSessionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -1176,13 +1126,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1211,8 +1159,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The requested operation could not be completed because too many requests were sent at once. Wait a bit and try again later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -1315,48 +1262,39 @@
     },
     "UnauthorizedException": {
       "base": "<p>The client is not authenticated or authorized to perform the requested operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLibraryItemInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLibraryItemMetadataInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLibraryItemOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQAppInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQAppOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQAppPermissionsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQAppPermissionsInputGrantPermissionsList": {
       "base": "<p>A list of permissions to grant or revoke for a Amazon Q App.</p>",
@@ -1372,28 +1310,23 @@
     },
     "UpdateQAppPermissionsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQAppSessionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQAppSessionMetadataInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQAppSessionMetadataOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQAppSessionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "User": {
       "base": "<p>A user of an Amazon Q App.</p>",
@@ -1421,8 +1354,7 @@
     },
     "ValidationException": {
       "base": "<p>The input failed to satisfy the constraints specified by the service.</p>",
-      "refs": {
-      }
+      "refs": {}
     }
   }
 }

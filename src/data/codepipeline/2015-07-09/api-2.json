@@ -267,6 +267,21 @@
         {"shape":"InvalidNextTokenException"}
       ]
     },
+    "ListDeployActionExecutionTargets":{
+      "name":"ListDeployActionExecutionTargets",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDeployActionExecutionTargetsInput"},
+      "output":{"shape":"ListDeployActionExecutionTargetsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"PipelineNotFoundException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"ActionExecutionNotFoundException"}
+      ]
+    },
     "ListPipelineExecutions":{
       "name":"ListPipelineExecutions",
       "http":{
@@ -803,7 +818,8 @@
         "roleArn":{"shape":"RoleArn"},
         "region":{"shape":"AWSRegionName"},
         "namespace":{"shape":"ActionNamespace"},
-        "timeoutInMinutes":{"shape":"ActionTimeout"}
+        "timeoutInMinutes":{"shape":"ActionTimeout"},
+        "environmentVariables":{"shape":"EnvironmentVariableList"}
       }
     },
     "ActionExecution":{
@@ -862,6 +878,13 @@
         "namespace":{"shape":"ActionNamespace"}
       }
     },
+    "ActionExecutionNotFoundException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"Message"}
+      },
+      "exception":true
+    },
     "ActionExecutionOutput":{
       "type":"structure",
       "members":{
@@ -904,8 +927,7 @@
     },
     "ActionNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ActionOwner":{
@@ -977,8 +999,7 @@
     },
     "ActionTypeAlreadyExistsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ActionTypeArtifactDetails":{
@@ -1065,8 +1086,7 @@
     },
     "ActionTypeNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ActionTypeOwner":{
@@ -1132,8 +1152,7 @@
     },
     "ApprovalAlreadyCompletedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ApprovalResult":{
@@ -1480,8 +1499,43 @@
     },
     "DeleteWebhookOutput":{
       "type":"structure",
+      "members":{}
+    },
+    "DeployActionExecutionTarget":{
+      "type":"structure",
       "members":{
+        "targetId":{"shape":"String"},
+        "targetType":{"shape":"String"},
+        "status":{"shape":"String"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "events":{"shape":"DeployTargetEventList"}
       }
+    },
+    "DeployActionExecutionTargetList":{
+      "type":"list",
+      "member":{"shape":"DeployActionExecutionTarget"}
+    },
+    "DeployTargetEvent":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"String"},
+        "status":{"shape":"String"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "context":{"shape":"DeployTargetEventContext"}
+      }
+    },
+    "DeployTargetEventContext":{
+      "type":"structure",
+      "members":{
+        "ssmCommandId":{"shape":"String"},
+        "message":{"shape":"String"}
+      }
+    },
+    "DeployTargetEventList":{
+      "type":"list",
+      "member":{"shape":"DeployTargetEvent"}
     },
     "DeregisterWebhookWithThirdPartyInput":{
       "type":"structure",
@@ -1491,8 +1545,7 @@
     },
     "DeregisterWebhookWithThirdPartyOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Description":{
       "type":"string",
@@ -1560,6 +1613,43 @@
     "EncryptionKeyType":{
       "type":"string",
       "enum":["KMS"]
+    },
+    "EnvironmentVariable":{
+      "type":"structure",
+      "required":[
+        "name",
+        "value"
+      ],
+      "members":{
+        "name":{"shape":"EnvironmentVariableName"},
+        "value":{"shape":"EnvironmentVariableValue"},
+        "type":{"shape":"EnvironmentVariableType"}
+      }
+    },
+    "EnvironmentVariableList":{
+      "type":"list",
+      "member":{"shape":"EnvironmentVariable"},
+      "max":10,
+      "min":1
+    },
+    "EnvironmentVariableName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[A-Za-z0-9_]+"
+    },
+    "EnvironmentVariableType":{
+      "type":"string",
+      "enum":[
+        "PLAINTEXT",
+        "SECRETS_MANAGER"
+      ]
+    },
+    "EnvironmentVariableValue":{
+      "type":"string",
+      "max":2000,
+      "min":1,
+      "pattern":".*"
     },
     "ErrorDetails":{
       "type":"structure",
@@ -1886,14 +1976,12 @@
     },
     "InvalidActionDeclarationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidApprovalTokenException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidArnException":{
@@ -1905,50 +1993,42 @@
     },
     "InvalidBlockerDeclarationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidClientTokenException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidJobException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidJobStateException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidNextTokenException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidNonceException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidStageDeclarationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidStructureException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidTagsException":{
@@ -1960,14 +2040,12 @@
     },
     "InvalidWebhookAuthenticationParametersException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidWebhookFilterPatternException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Job":{
@@ -2010,8 +2088,7 @@
     },
     "JobNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "JobStatus":{
@@ -2072,8 +2149,7 @@
     },
     "LimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ListActionExecutionsInput":{
@@ -2106,6 +2182,24 @@
       "required":["actionTypes"],
       "members":{
         "actionTypes":{"shape":"ActionTypeList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListDeployActionExecutionTargetsInput":{
+      "type":"structure",
+      "required":["actionExecutionId"],
+      "members":{
+        "pipelineName":{"shape":"PipelineName"},
+        "actionExecutionId":{"shape":"ActionExecutionId"},
+        "filters":{"shape":"TargetFilterList"},
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListDeployActionExecutionTargetsOutput":{
+      "type":"structure",
+      "members":{
+        "targets":{"shape":"DeployActionExecutionTargetList"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -2278,8 +2372,7 @@
     },
     "NotLatestPipelineExecutionException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "OutputArtifact":{
@@ -2404,8 +2497,7 @@
     },
     "PipelineExecutionNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "PipelineExecutionNotStoppableException":{
@@ -2476,14 +2568,12 @@
     },
     "PipelineNameInUseException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "PipelineNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "PipelineRollbackMetadata":{
@@ -2589,8 +2679,7 @@
     },
     "PipelineVersionNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "PolicyStatementsTemplate":{
@@ -2767,8 +2856,7 @@
     },
     "RegisterWebhookWithThirdPartyOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RequestFailedException":{
       "type":"structure",
@@ -2804,8 +2892,7 @@
     },
     "ResourceNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Result":{
@@ -3317,14 +3404,12 @@
     },
     "StageNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "StageNotRetryableException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "StageRetryMode":{
@@ -3466,13 +3551,35 @@
     },
     "TagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
       "max":256,
       "min":0
+    },
+    "TargetFilter":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"TargetFilterName"},
+        "values":{"shape":"TargetFilterValueList"}
+      }
+    },
+    "TargetFilterList":{
+      "type":"list",
+      "member":{"shape":"TargetFilter"}
+    },
+    "TargetFilterName":{
+      "type":"string",
+      "enum":["TARGET_STATUS"]
+    },
+    "TargetFilterValue":{
+      "type":"string",
+      "min":1
+    },
+    "TargetFilterValueList":{
+      "type":"list",
+      "member":{"shape":"TargetFilterValue"}
     },
     "ThirdPartyJob":{
       "type":"structure",
@@ -3568,8 +3675,7 @@
     },
     "UntagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateActionTypeInput":{
       "type":"structure",
@@ -3603,8 +3709,7 @@
     },
     "ValidationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Version":{
@@ -3686,8 +3791,7 @@
     },
     "WebhookNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "WebhookUrl":{

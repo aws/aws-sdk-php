@@ -51,8 +51,28 @@ final class Middleware
                 if ($source !== null
                     && $operation->getInput()->hasMember($bodyParameter)
                 ) {
-                    $command[$bodyParameter] = new LazyOpenStream($source, 'r');
+                    $lazyOpenStream = new LazyOpenStream($source, 'r');
+                    $command[$bodyParameter] = $lazyOpenStream;
                     unset($command[$sourceParameter]);
+
+                    $next = $handler($command, $request);
+                    // To avoid failures in some tests cases
+                    if ($next !== null && method_exists($next, 'then')) {
+                        return $next->then(
+                            function ($result) use ($lazyOpenStream) {
+                                // To make sure the resource is closed.
+                                $lazyOpenStream->close();
+
+                                return $result;
+                            }
+                        )->otherwise(function (\Throwable $e) use ($lazyOpenStream) {
+                            $lazyOpenStream->close();
+
+                            throw $e;
+                        });
+                    }
+
+                    return $next;
                 }
 
                 return $handler($command, $request);
@@ -122,8 +142,12 @@ final class Middleware
      *
      * @return callable
      */
-    public static function signer(callable $credProvider, callable $signatureFunction, $tokenProvider = null, $config = [])
-    {
+    public static function signer(
+        callable $credProvider,
+        callable $signatureFunction,
+        $tokenProvider = null,
+        $config = []
+    ) {
         return function (callable $handler) use ($signatureFunction, $credProvider, $tokenProvider, $config) {
             return function (
                 CommandInterface $command,
@@ -134,6 +158,11 @@ final class Middleware
                     return $tokenProvider()->then(
                         function (TokenInterface $token)
                         use ($handler, $command, $signer, $request) {
+                            $command->getMetricsBuilder()->identifyMetricByValueAndAppend(
+                                'token',
+                                $token
+                            );
+
                             return $handler(
                                 $command,
                                 $signer->authorizeRequest($request, $token)

@@ -166,7 +166,7 @@
       }
     },
     "DatabaseResumingException": {
-      "base": "<p>A request was canceled because the Aurora Serverless v2 DB instance was in a paused state. The Data API request automatically causes the DB instance to begin resuming. Wait a few seconds and try again.</p>",
+      "base": "<p>A request was cancelled because the Aurora Serverless v2 DB instance was paused. The Data API request automatically resumes the DB instance. Wait a few seconds and try again.</p>",
       "refs": {
       }
     },
@@ -210,6 +210,7 @@
         "DatabaseResumingException$message": null,
         "ForbiddenException$message": "<p>The error message returned by this <code>ForbiddenException</code> error.</p>",
         "HttpEndpointNotEnabledException$message": null,
+        "InvalidResourceStateException$message": null,
         "InvalidSecretException$message": null,
         "NotFoundException$message": "<p>The error message returned by this <code>NotFoundException</code> error.</p>",
         "SecretsErrorException$message": null,
@@ -291,6 +292,11 @@
     },
     "InternalServerErrorException": {
       "base": "<p>An internal error occurred.</p>",
+      "refs": {
+      }
+    },
+    "InvalidResourceStateException": {
+      "base": "<p>The resource is in an invalid state.</p>",
       "refs": {
       }
     },

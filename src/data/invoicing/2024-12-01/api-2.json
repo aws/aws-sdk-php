@@ -24,11 +24,11 @@
       "input":{"shape":"BatchGetInvoiceProfileRequest"},
       "output":{"shape":"BatchGetInvoiceProfileResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "CreateInvoiceUnit":{
@@ -40,10 +40,10 @@
       "input":{"shape":"CreateInvoiceUnitRequest"},
       "output":{"shape":"CreateInvoiceUnitResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
-        {"shape":"ValidationException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "DeleteInvoiceUnit":{
@@ -55,11 +55,11 @@
       "input":{"shape":"DeleteInvoiceUnitRequest"},
       "output":{"shape":"DeleteInvoiceUnitResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "GetInvoiceUnit":{
@@ -71,11 +71,27 @@
       "input":{"shape":"GetInvoiceUnitRequest"},
       "output":{"shape":"GetInvoiceUnitResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListInvoiceSummaries":{
+      "name":"ListInvoiceSummaries",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListInvoiceSummariesRequest"},
+      "output":{"shape":"ListInvoiceSummariesResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "ListInvoiceUnits":{
@@ -87,10 +103,10 @@
       "input":{"shape":"ListInvoiceUnitsRequest"},
       "output":{"shape":"ListInvoiceUnitsResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
-        {"shape":"ValidationException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "ListTagsForResource":{
@@ -102,11 +118,11 @@
       "input":{"shape":"ListTagsForResourceRequest"},
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "TagResource":{
@@ -118,12 +134,12 @@
       "input":{"shape":"TagResourceRequest"},
       "output":{"shape":"TagResourceResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "UntagResource":{
@@ -135,11 +151,11 @@
       "input":{"shape":"UntagResourceRequest"},
       "output":{"shape":"UntagResourceResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "UpdateInvoiceUnit":{
@@ -151,11 +167,11 @@
       "input":{"shape":"UpdateInvoiceUnitRequest"},
       "output":{"shape":"UpdateInvoiceUnitResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
-        {"shape":"InternalServerException"},
-        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     }
   },
@@ -178,8 +194,23 @@
       "type":"string",
       "pattern":"\\d{12}"
     },
+    "AmountBreakdown":{
+      "type":"structure",
+      "members":{
+        "SubTotalAmount":{"shape":"BasicString"},
+        "Discounts":{"shape":"DiscountsBreakdown"},
+        "Taxes":{"shape":"TaxesBreakdown"},
+        "Fees":{"shape":"FeesBreakdown"}
+      }
+    },
     "AsOfTimestamp":{"type":"timestamp"},
     "BasicString":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"[\\s\\S]*"
+    },
+    "BasicStringWithoutSpace":{
       "type":"string",
       "max":1024,
       "min":0,
@@ -196,6 +227,17 @@
       "type":"structure",
       "members":{
         "Profiles":{"shape":"ProfileList"}
+      }
+    },
+    "BillingPeriod":{
+      "type":"structure",
+      "required":[
+        "Month",
+        "Year"
+      ],
+      "members":{
+        "Month":{"shape":"Month"},
+        "Year":{"shape":"Year"}
       }
     },
     "CreateInvoiceUnitRequest":{
@@ -220,6 +262,30 @@
         "InvoiceUnitArn":{"shape":"InvoiceUnitArnString"}
       }
     },
+    "CurrencyCode":{
+      "type":"string",
+      "max":3,
+      "min":3
+    },
+    "CurrencyExchangeDetails":{
+      "type":"structure",
+      "members":{
+        "SourceCurrencyCode":{"shape":"BasicString"},
+        "TargetCurrencyCode":{"shape":"BasicString"},
+        "Rate":{"shape":"BasicString"}
+      }
+    },
+    "DateInterval":{
+      "type":"structure",
+      "required":[
+        "StartDate",
+        "EndDate"
+      ],
+      "members":{
+        "StartDate":{"shape":"Timestamp"},
+        "EndDate":{"shape":"Timestamp"}
+      }
+    },
     "DeleteInvoiceUnitRequest":{
       "type":"structure",
       "required":["InvoiceUnitArn"],
@@ -238,6 +304,50 @@
       "max":500,
       "min":0,
       "pattern":"[\\S\\s]*"
+    },
+    "DiscountsBreakdown":{
+      "type":"structure",
+      "members":{
+        "Breakdown":{"shape":"DiscountsBreakdownAmountList"},
+        "TotalAmount":{"shape":"BasicString"}
+      }
+    },
+    "DiscountsBreakdownAmount":{
+      "type":"structure",
+      "members":{
+        "Description":{"shape":"BasicString"},
+        "Amount":{"shape":"BasicString"},
+        "Rate":{"shape":"BasicString"}
+      }
+    },
+    "DiscountsBreakdownAmountList":{
+      "type":"list",
+      "member":{"shape":"DiscountsBreakdownAmount"}
+    },
+    "Entity":{
+      "type":"structure",
+      "members":{
+        "InvoicingEntity":{"shape":"BasicString"}
+      }
+    },
+    "FeesBreakdown":{
+      "type":"structure",
+      "members":{
+        "Breakdown":{"shape":"FeesBreakdownAmountList"},
+        "TotalAmount":{"shape":"BasicString"}
+      }
+    },
+    "FeesBreakdownAmount":{
+      "type":"structure",
+      "members":{
+        "Description":{"shape":"BasicString"},
+        "Amount":{"shape":"BasicString"},
+        "Rate":{"shape":"BasicString"}
+      }
+    },
+    "FeesBreakdownAmountList":{
+      "type":"list",
+      "member":{"shape":"FeesBreakdownAmount"}
     },
     "Filters":{
       "type":"structure",
@@ -283,16 +393,79 @@
       "exception":true,
       "fault":true
     },
+    "InvoiceCurrencyAmount":{
+      "type":"structure",
+      "members":{
+        "TotalAmount":{"shape":"BasicString"},
+        "TotalAmountBeforeTax":{"shape":"BasicString"},
+        "CurrencyCode":{"shape":"CurrencyCode"},
+        "AmountBreakdown":{"shape":"AmountBreakdown"},
+        "CurrencyExchangeDetails":{"shape":"CurrencyExchangeDetails"}
+      }
+    },
     "InvoiceProfile":{
       "type":"structure",
       "members":{
         "AccountId":{"shape":"AccountIdString"},
-        "ReceiverName":{"shape":"BasicString"},
+        "ReceiverName":{"shape":"BasicStringWithoutSpace"},
         "ReceiverAddress":{"shape":"ReceiverAddress"},
-        "ReceiverEmail":{"shape":"SensitiveBasicString"},
-        "Issuer":{"shape":"BasicString"},
-        "TaxRegistrationNumber":{"shape":"SensitiveBasicString"}
+        "ReceiverEmail":{"shape":"SensitiveBasicStringWithoutSpace"},
+        "Issuer":{"shape":"BasicStringWithoutSpace"},
+        "TaxRegistrationNumber":{"shape":"SensitiveBasicStringWithoutSpace"}
       }
+    },
+    "InvoiceSummaries":{
+      "type":"list",
+      "member":{"shape":"InvoiceSummary"}
+    },
+    "InvoiceSummariesFilter":{
+      "type":"structure",
+      "members":{
+        "TimeInterval":{"shape":"DateInterval"},
+        "BillingPeriod":{"shape":"BillingPeriod"},
+        "InvoicingEntity":{"shape":"BasicString"}
+      }
+    },
+    "InvoiceSummariesMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "InvoiceSummariesSelector":{
+      "type":"structure",
+      "required":[
+        "ResourceType",
+        "Value"
+      ],
+      "members":{
+        "ResourceType":{"shape":"ListInvoiceSummariesResourceType"},
+        "Value":{"shape":"StringWithoutNewLine"}
+      }
+    },
+    "InvoiceSummary":{
+      "type":"structure",
+      "members":{
+        "AccountId":{"shape":"AccountIdString"},
+        "InvoiceId":{"shape":"BasicString"},
+        "IssuedDate":{"shape":"Timestamp"},
+        "DueDate":{"shape":"Timestamp"},
+        "Entity":{"shape":"Entity"},
+        "BillingPeriod":{"shape":"BillingPeriod"},
+        "InvoiceType":{"shape":"InvoiceType"},
+        "OriginalInvoiceId":{"shape":"BasicString"},
+        "PurchaseOrderNumber":{"shape":"BasicString"},
+        "BaseCurrencyAmount":{"shape":"InvoiceCurrencyAmount"},
+        "TaxCurrencyAmount":{"shape":"InvoiceCurrencyAmount"},
+        "PaymentCurrencyAmount":{"shape":"InvoiceCurrencyAmount"}
+      }
+    },
+    "InvoiceType":{
+      "type":"string",
+      "enum":[
+        "INVOICE",
+        "CREDIT_MEMO"
+      ]
     },
     "InvoiceUnit":{
       "type":"structure",
@@ -336,6 +509,31 @@
       "member":{"shape":"InvoiceUnit"}
     },
     "LastModifiedTimestamp":{"type":"timestamp"},
+    "ListInvoiceSummariesRequest":{
+      "type":"structure",
+      "required":["Selector"],
+      "members":{
+        "Selector":{"shape":"InvoiceSummariesSelector"},
+        "Filter":{"shape":"InvoiceSummariesFilter"},
+        "NextToken":{"shape":"NextTokenString"},
+        "MaxResults":{"shape":"InvoiceSummariesMaxResults"}
+      }
+    },
+    "ListInvoiceSummariesResourceType":{
+      "type":"string",
+      "enum":[
+        "ACCOUNT_ID",
+        "INVOICE_ID"
+      ]
+    },
+    "ListInvoiceSummariesResponse":{
+      "type":"structure",
+      "required":["InvoiceSummaries"],
+      "members":{
+        "InvoiceSummaries":{"shape":"InvoiceSummaries"},
+        "NextToken":{"shape":"NextTokenString"}
+      }
+    },
     "ListInvoiceUnitsRequest":{
       "type":"structure",
       "members":{
@@ -371,9 +569,14 @@
       "max":500,
       "min":1
     },
+    "Month":{
+      "type":"integer",
+      "box":true,
+      "max":12,
+      "min":1
+    },
     "NextTokenString":{
       "type":"string",
-      "max":2048,
       "min":1,
       "pattern":"[\\S\\s]*"
     },
@@ -437,7 +640,7 @@
       "max":256,
       "min":0
     },
-    "SensitiveBasicString":{
+    "SensitiveBasicStringWithoutSpace":{
       "type":"string",
       "max":1024,
       "min":0,
@@ -451,6 +654,12 @@
         "message":{"shape":"BasicString"}
       },
       "exception":true
+    },
+    "StringWithoutNewLine":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":".*"
     },
     "TagResourceRequest":{
       "type":"structure",
@@ -472,9 +681,28 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:aws[-a-z0-9]*:[a-z0-9]+:[-a-z0-9]*:[0-9]{12}:[-a-zA-Z0-9/:_]+"
+      "pattern":"arn:aws[-a-z0-9]*:(invoicing)::[0-9]{12}:[-a-zA-Z0-9/:_]+"
     },
     "TaxInheritanceDisabledFlag":{"type":"boolean"},
+    "TaxesBreakdown":{
+      "type":"structure",
+      "members":{
+        "Breakdown":{"shape":"TaxesBreakdownAmountList"},
+        "TotalAmount":{"shape":"BasicString"}
+      }
+    },
+    "TaxesBreakdownAmount":{
+      "type":"structure",
+      "members":{
+        "Description":{"shape":"BasicString"},
+        "Amount":{"shape":"BasicString"},
+        "Rate":{"shape":"BasicString"}
+      }
+    },
+    "TaxesBreakdownAmountList":{
+      "type":"list",
+      "member":{"shape":"TaxesBreakdownAmount"}
+    },
     "ThrottlingException":{
       "type":"structure",
       "members":{
@@ -482,6 +710,7 @@
       },
       "exception":true
     },
+    "Timestamp":{"type":"timestamp"},
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -560,6 +789,12 @@
         "unknownOperation",
         "other"
       ]
+    },
+    "Year":{
+      "type":"integer",
+      "box":true,
+      "max":2050,
+      "min":2005
     }
   }
 }

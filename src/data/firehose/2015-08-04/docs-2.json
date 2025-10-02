@@ -2,7 +2,7 @@
   "version": "2.0",
   "service": "<fullname>Amazon Data Firehose</fullname> <note> <p>Amazon Data Firehose was previously known as Amazon Kinesis Data Firehose.</p> </note> <p>Amazon Data Firehose is a fully managed service that delivers real-time streaming data to destinations such as Amazon Simple Storage Service (Amazon S3), Amazon OpenSearch Service, Amazon Redshift, Splunk, and various other supported destinations.</p>",
   "operations": {
-    "CreateDeliveryStream": "<p>Creates a Firehose stream.</p> <p>By default, you can create up to 50 Firehose streams per Amazon Web Services Region.</p> <p>This is an asynchronous operation that immediately returns. The initial status of the Firehose stream is <code>CREATING</code>. After the Firehose stream is created, its status is <code>ACTIVE</code> and it now accepts data. If the Firehose stream creation fails, the status transitions to <code>CREATING_FAILED</code>. Attempts to send data to a delivery stream that is not in the <code>ACTIVE</code> state cause an exception. To check the state of a Firehose stream, use <a>DescribeDeliveryStream</a>.</p> <p>If the status of a Firehose stream is <code>CREATING_FAILED</code>, this status doesn't change, and you can't invoke <code>CreateDeliveryStream</code> again on it. However, you can invoke the <a>DeleteDeliveryStream</a> operation to delete it.</p> <p>A Firehose stream can be configured to receive records directly from providers using <a>PutRecord</a> or <a>PutRecordBatch</a>, or it can be configured to use an existing Kinesis stream as its source. To specify a Kinesis data stream as input, set the <code>DeliveryStreamType</code> parameter to <code>KinesisStreamAsSource</code>, and provide the Kinesis stream Amazon Resource Name (ARN) and role ARN in the <code>KinesisStreamSourceConfiguration</code> parameter.</p> <p>To create a Firehose stream with server-side encryption (SSE) enabled, include <a>DeliveryStreamEncryptionConfigurationInput</a> in your request. This is optional. You can also invoke <a>StartDeliveryStreamEncryption</a> to turn on SSE for an existing Firehose stream that doesn't have SSE enabled.</p> <p>A Firehose stream is configured with a single destination, such as Amazon Simple Storage Service (Amazon S3), Amazon Redshift, Amazon OpenSearch Service, Amazon OpenSearch Serverless, Splunk, and any custom HTTP endpoint or HTTP endpoints owned by or supported by third-party service providers, including Datadog, Dynatrace, LogicMonitor, MongoDB, New Relic, and Sumo Logic. You must specify only one of the following destination configuration parameters: <code>ExtendedS3DestinationConfiguration</code>, <code>S3DestinationConfiguration</code>, <code>ElasticsearchDestinationConfiguration</code>, <code>RedshiftDestinationConfiguration</code>, or <code>SplunkDestinationConfiguration</code>.</p> <p>When you specify <code>S3DestinationConfiguration</code>, you can also provide the following optional values: BufferingHints, <code>EncryptionConfiguration</code>, and <code>CompressionFormat</code>. By default, if no <code>BufferingHints</code> value is provided, Firehose buffers data up to 5 MB or for 5 minutes, whichever condition is satisfied first. <code>BufferingHints</code> is a hint, so there are some cases where the service cannot adhere to these conditions strictly. For example, record boundaries might be such that the size is a little over or under the configured buffering size. By default, no encryption is performed. We strongly recommend that you enable encryption to ensure secure data storage in Amazon S3.</p> <p>A few notes about Amazon Redshift as a destination:</p> <ul> <li> <p>An Amazon Redshift destination requires an S3 bucket as intermediate location. Firehose first delivers data to Amazon S3 and then uses <code>COPY</code> syntax to load data into an Amazon Redshift table. This is specified in the <code>RedshiftDestinationConfiguration.S3Configuration</code> parameter.</p> </li> <li> <p>The compression formats <code>SNAPPY</code> or <code>ZIP</code> cannot be specified in <code>RedshiftDestinationConfiguration.S3Configuration</code> because the Amazon Redshift <code>COPY</code> operation that reads from the S3 bucket doesn't support these compression formats.</p> </li> <li> <p>We strongly recommend that you use the user name and password you provide exclusively with Firehose, and that the permissions for the account are restricted for Amazon Redshift <code>INSERT</code> permissions.</p> </li> </ul> <p>Firehose assumes the IAM role that is configured as part of the destination. The role should allow the Firehose principal to assume the role, and the role should have permissions that allow the service to deliver the data. For more information, see <a href=\"https://docs.aws.amazon.com/firehose/latest/dev/controlling-access.html#using-iam-s3\">Grant Firehose Access to an Amazon S3 Destination</a> in the <i>Amazon Firehose Developer Guide</i>.</p>",
+    "CreateDeliveryStream": "<p>Creates a Firehose stream.</p> <p>By default, you can create up to 5,000 Firehose streams per Amazon Web Services Region.</p> <p>This is an asynchronous operation that immediately returns. The initial status of the Firehose stream is <code>CREATING</code>. After the Firehose stream is created, its status is <code>ACTIVE</code> and it now accepts data. If the Firehose stream creation fails, the status transitions to <code>CREATING_FAILED</code>. Attempts to send data to a delivery stream that is not in the <code>ACTIVE</code> state cause an exception. To check the state of a Firehose stream, use <a>DescribeDeliveryStream</a>.</p> <p>If the status of a Firehose stream is <code>CREATING_FAILED</code>, this status doesn't change, and you can't invoke <code>CreateDeliveryStream</code> again on it. However, you can invoke the <a>DeleteDeliveryStream</a> operation to delete it.</p> <p>A Firehose stream can be configured to receive records directly from providers using <a>PutRecord</a> or <a>PutRecordBatch</a>, or it can be configured to use an existing Kinesis stream as its source. To specify a Kinesis data stream as input, set the <code>DeliveryStreamType</code> parameter to <code>KinesisStreamAsSource</code>, and provide the Kinesis stream Amazon Resource Name (ARN) and role ARN in the <code>KinesisStreamSourceConfiguration</code> parameter.</p> <p>To create a Firehose stream with server-side encryption (SSE) enabled, include <a>DeliveryStreamEncryptionConfigurationInput</a> in your request. This is optional. You can also invoke <a>StartDeliveryStreamEncryption</a> to turn on SSE for an existing Firehose stream that doesn't have SSE enabled.</p> <p>A Firehose stream is configured with a single destination, such as Amazon Simple Storage Service (Amazon S3), Amazon Redshift, Amazon OpenSearch Service, Amazon OpenSearch Serverless, Splunk, and any custom HTTP endpoint or HTTP endpoints owned by or supported by third-party service providers, including Datadog, Dynatrace, LogicMonitor, MongoDB, New Relic, and Sumo Logic. You must specify only one of the following destination configuration parameters: <code>ExtendedS3DestinationConfiguration</code>, <code>S3DestinationConfiguration</code>, <code>ElasticsearchDestinationConfiguration</code>, <code>RedshiftDestinationConfiguration</code>, or <code>SplunkDestinationConfiguration</code>.</p> <p>When you specify <code>S3DestinationConfiguration</code>, you can also provide the following optional values: BufferingHints, <code>EncryptionConfiguration</code>, and <code>CompressionFormat</code>. By default, if no <code>BufferingHints</code> value is provided, Firehose buffers data up to 5 MB or for 5 minutes, whichever condition is satisfied first. <code>BufferingHints</code> is a hint, so there are some cases where the service cannot adhere to these conditions strictly. For example, record boundaries might be such that the size is a little over or under the configured buffering size. By default, no encryption is performed. We strongly recommend that you enable encryption to ensure secure data storage in Amazon S3.</p> <p>A few notes about Amazon Redshift as a destination:</p> <ul> <li> <p>An Amazon Redshift destination requires an S3 bucket as intermediate location. Firehose first delivers data to Amazon S3 and then uses <code>COPY</code> syntax to load data into an Amazon Redshift table. This is specified in the <code>RedshiftDestinationConfiguration.S3Configuration</code> parameter.</p> </li> <li> <p>The compression formats <code>SNAPPY</code> or <code>ZIP</code> cannot be specified in <code>RedshiftDestinationConfiguration.S3Configuration</code> because the Amazon Redshift <code>COPY</code> operation that reads from the S3 bucket doesn't support these compression formats.</p> </li> <li> <p>We strongly recommend that you use the user name and password you provide exclusively with Firehose, and that the permissions for the account are restricted for Amazon Redshift <code>INSERT</code> permissions.</p> </li> </ul> <p>Firehose assumes the IAM role that is configured as part of the destination. The role should allow the Firehose principal to assume the role, and the role should have permissions that allow the service to deliver the data. For more information, see <a href=\"https://docs.aws.amazon.com/firehose/latest/dev/controlling-access.html#using-iam-s3\">Grant Firehose Access to an Amazon S3 Destination</a> in the <i>Amazon Firehose Developer Guide</i>.</p>",
     "DeleteDeliveryStream": "<p>Deletes a Firehose stream and its data.</p> <p>You can delete a Firehose stream only if it is in one of the following states: <code>ACTIVE</code>, <code>DELETING</code>, <code>CREATING_FAILED</code>, or <code>DELETING_FAILED</code>. You can't delete a Firehose stream that is in the <code>CREATING</code> state. To check the state of a Firehose stream, use <a>DescribeDeliveryStream</a>. </p> <p>DeleteDeliveryStream is an asynchronous API. When an API request to DeleteDeliveryStream succeeds, the Firehose stream is marked for deletion, and it goes into the <code>DELETING</code> state.While the Firehose stream is in the <code>DELETING</code> state, the service might continue to accept records, but it doesn't make any guarantees with respect to delivering the data. Therefore, as a best practice, first stop any applications that are sending records before you delete a Firehose stream.</p> <p>Removal of a Firehose stream that is in the <code>DELETING</code> state is a low priority operation for the service. A stream may remain in the <code>DELETING</code> state for several minutes. Therefore, as a best practice, applications should not wait for streams in the <code>DELETING</code> state to be removed. </p>",
     "DescribeDeliveryStream": "<p>Describes the specified Firehose stream and its status. For example, after your Firehose stream is created, call <code>DescribeDeliveryStream</code> to see whether the Firehose stream is <code>ACTIVE</code> and therefore ready for data to be sent to it. </p> <p>If the status of a Firehose stream is <code>CREATING_FAILED</code>, this status doesn't change, and you can't invoke <a>CreateDeliveryStream</a> again on it. However, you can invoke the <a>DeleteDeliveryStream</a> operation to delete it. If the status is <code>DELETING_FAILED</code>, you can force deletion by invoking <a>DeleteDeliveryStream</a> again but with <a>DeleteDeliveryStreamInput$AllowForceDelete</a> set to true.</p>",
     "ListDeliveryStreams": "<p>Lists your Firehose streams in alphabetical order of their names.</p> <p>The number of Firehose streams might be too large to return using a single call to <code>ListDeliveryStreams</code>. You can limit the number of Firehose streams returned, using the <code>Limit</code> parameter. To determine whether there are more delivery streams to list, check the value of <code>HasMoreDeliveryStreams</code> in the output. If there are more Firehose streams to list, you can request them by calling this operation again and setting the <code>ExclusiveStartDeliveryStreamName</code> parameter to the name of the last Firehose stream returned in the last call.</p>",
@@ -219,7 +219,10 @@
         "DataFormatConversionConfiguration$Enabled": "<p>Defaults to <code>true</code>. Set it to <code>false</code> if you want to disable format conversion while preserving the configuration details.</p>",
         "DeleteDeliveryStreamInput$AllowForceDelete": "<p>Set this to true if you want to delete the Firehose stream even if Firehose is unable to retire the grant for the CMK. Firehose might be unable to retire the grant due to a customer error, such as when the CMK or the grant are in an invalid state. If you force deletion, you can then use the <a href=\"https://docs.aws.amazon.com/kms/latest/APIReference/API_RevokeGrant.html\">RevokeGrant</a> operation to revoke the grant you gave to Firehose. If a failure to retire the grant happens due to an Amazon Web Services KMS issue, Firehose keeps retrying the delete operation.</p> <p>The default value is false.</p>",
         "DeliveryStreamDescription$HasMoreDestinations": "<p>Indicates whether there are more destinations available to list.</p>",
-        "DynamicPartitioningConfiguration$Enabled": "<p>Specifies that the dynamic partitioning is enabled for this Firehose Firehose stream.</p>",
+        "DynamicPartitioningConfiguration$Enabled": "<p>Specifies that the dynamic partitioning is enabled for this Firehose stream.</p>",
+        "IcebergDestinationConfiguration$AppendOnly": "<p> Describes whether all incoming data for this delivery stream will be append only (inserts only and not for updates and deletes) for Iceberg delivery. This feature is only applicable for Apache Iceberg Tables.</p> <p>The default value is false. If you set this value to true, Firehose automatically increases the throughput limit of a stream based on the throttling levels of the stream. If you set this parameter to true for a stream with updates and deletes, you will see out of order delivery. </p>",
+        "IcebergDestinationDescription$AppendOnly": "<p> Describes whether all incoming data for this delivery stream will be append only (inserts only and not for updates and deletes) for Iceberg delivery. This feature is only applicable for Apache Iceberg Tables.</p> <p>The default value is false. If you set this value to true, Firehose automatically increases the throughput limit of a stream based on the throttling levels of the stream. If you set this parameter to true for a stream with updates and deletes, you will see out of order delivery.</p> <p> </p>",
+        "IcebergDestinationUpdate$AppendOnly": "<p> Describes whether all incoming data for this delivery stream will be append only (inserts only and not for updates and deletes) for Iceberg delivery. This feature is only applicable for Apache Iceberg Tables. </p> <p>The default value is false. If you set this value to true, Firehose automatically increases the throughput limit of a stream based on the throttling levels of the stream. If you set this parameter to true for a stream with updates and deletes, you will see out of order delivery. </p>",
         "ListDeliveryStreamsOutput$HasMoreDeliveryStreams": "<p>Indicates whether there are more Firehose streams available to list.</p>",
         "ListTagsForDeliveryStreamOutput$HasMoreTags": "<p>If this is <code>true</code> in the response, more tags are available. To list the remaining tags, set <code>ExclusiveStartTagKey</code> to the key of the last tag returned and call <code>ListTagsForDeliveryStream</code> again.</p>",
         "OpenXJsonSerDe$ConvertDotsInJsonKeysToUnderscores": "<p>When set to <code>true</code>, specifies that the names of the keys include dots and that you want Firehose to replace them with underscores. This is useful because Apache Hive does not allow dots in column names. For example, if the JSON contains a key whose name is \"a.b\", you can define the column name to be \"a_b\" when using this option.</p> <p>The default is <code>false</code>.</p>",
@@ -229,10 +232,10 @@
         "ProcessingConfiguration$Enabled": "<p>Enables or disables data processing.</p>",
         "PutRecordBatchOutput$Encrypted": "<p>Indicates whether server-side encryption (SSE) was enabled during this operation.</p>",
         "PutRecordOutput$Encrypted": "<p>Indicates whether server-side encryption (SSE) was enabled during this operation.</p>",
-        "SchemaEvolutionConfiguration$Enabled": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "SchemaEvolutionConfiguration$Enabled": "<p> Specify whether you want to enable schema evolution. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
         "SecretsManagerConfiguration$Enabled": "<p>Specifies whether you want to use the secrets manager feature. When set as <code>True</code> the secrets manager configuration overwrites the existing secrets in the destination configuration. When it's set to <code>False</code> Firehose falls back to the credentials in the destination configuration.</p>",
         "SnowflakeRoleConfiguration$Enabled": "<p>Enable Snowflake role</p>",
-        "TableCreationConfiguration$Enabled": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "TableCreationConfiguration$Enabled": "<p> Specify whether you want to enable automatic table creation. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "BucketARN": {
@@ -330,8 +333,7 @@
     },
     "ConcurrentModificationException": {
       "base": "<p>Another modification has already happened. Fetch <code>VersionId</code> again and use it to update the destination.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Connectivity": {
       "base": null,
@@ -361,13 +363,11 @@
     },
     "CreateDeliveryStreamInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDeliveryStreamOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomTimeZone": {
       "base": null,
@@ -406,16 +406,16 @@
     "DatabaseColumnIncludeOrExcludeList": {
       "base": null,
       "refs": {
-        "DatabaseColumnList$Include": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "DatabaseColumnList$Exclude": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "DatabaseSourceDescription$SurrogateKeys": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseColumnList$Include": "<p> The list of column patterns in source database to be included for Firehose to read from. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseColumnList$Exclude": "<p> The list of column patterns in source database to be excluded for Firehose to read from. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseSourceDescription$SurrogateKeys": "<p> The optional list of table and column names used as unique key columns when taking snapshot if the tables don’t have primary keys configured. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "DatabaseColumnList": {
-      "base": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+      "base": "<p>The structure used to configure the list of column patterns in source database endpoint for Firehose to read from. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
       "refs": {
-        "DatabaseSourceConfiguration$Columns": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "DatabaseSourceDescription$Columns": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseSourceConfiguration$Columns": "<p> The list of column patterns in source database endpoint for Firehose to read from. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseSourceDescription$Columns": "<p> The list of column patterns in source database endpoint for Firehose to read from. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "DatabaseColumnName": {
@@ -427,22 +427,22 @@
     "DatabaseEndpoint": {
       "base": null,
       "refs": {
-        "DatabaseSourceConfiguration$Endpoint": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "DatabaseSourceDescription$Endpoint": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseSourceConfiguration$Endpoint": "<p> The endpoint of the database server. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseSourceDescription$Endpoint": "<p> The endpoint of the database server. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "DatabaseIncludeOrExcludeList": {
       "base": null,
       "refs": {
-        "DatabaseList$Include": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "DatabaseList$Exclude": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseList$Include": "<p>The list of database patterns in source database endpoint to be included for Firehose to read from. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseList$Exclude": "<p>The list of database patterns in source database endpoint to be excluded for Firehose to read from. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "DatabaseList": {
-      "base": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+      "base": "<p>The structure used to configure the list of database patterns in source database endpoint for Firehose to read from. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
       "refs": {
-        "DatabaseSourceConfiguration$Databases": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "DatabaseSourceDescription$Databases": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseSourceConfiguration$Databases": "<p> The list of database patterns in source database endpoint for Firehose to read from. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseSourceDescription$Databases": "<p> The list of database patterns in source database endpoint for Firehose to read from. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "DatabaseName": {
@@ -454,12 +454,12 @@
     "DatabasePort": {
       "base": null,
       "refs": {
-        "DatabaseSourceConfiguration$Port": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "DatabaseSourceDescription$Port": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseSourceConfiguration$Port": "<p>The port of the database. This can be one of the following values.</p> <ul> <li> <p>3306 for MySQL database type</p> </li> <li> <p>5432 for PostgreSQL database type</p> </li> </ul> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseSourceDescription$Port": "<p>The port of the database. This can be one of the following values.</p> <ul> <li> <p>3306 for MySQL database type</p> </li> <li> <p>5432 for PostgreSQL database type</p> </li> </ul> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "DatabaseSnapshotInfo": {
-      "base": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+      "base": "<p> The structure that describes the snapshot information of a table in source database endpoint that Firehose reads. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
       "refs": {
         "DatabaseSnapshotInfoList$member": null
       }
@@ -467,69 +467,69 @@
     "DatabaseSnapshotInfoList": {
       "base": null,
       "refs": {
-        "DatabaseSourceDescription$SnapshotInfo": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseSourceDescription$SnapshotInfo": "<p> The structure that describes the snapshot information of a table in source database endpoint that Firehose reads. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "DatabaseSourceAuthenticationConfiguration": {
-      "base": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+      "base": "<p> The structure to configure the authentication methods for Firehose to connect to source database endpoint. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
       "refs": {
-        "DatabaseSourceConfiguration$DatabaseSourceAuthenticationConfiguration": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "DatabaseSourceDescription$DatabaseSourceAuthenticationConfiguration": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseSourceConfiguration$DatabaseSourceAuthenticationConfiguration": "<p> The structure to configure the authentication methods for Firehose to connect to source database endpoint. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseSourceDescription$DatabaseSourceAuthenticationConfiguration": "<p> The structure to configure the authentication methods for Firehose to connect to source database endpoint. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "DatabaseSourceConfiguration": {
-      "base": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+      "base": "<p> The top level object for configuring streams with database as a source. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
       "refs": {
-        "CreateDeliveryStreamInput$DatabaseSourceConfiguration": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "CreateDeliveryStreamInput$DatabaseSourceConfiguration": "<p> The top level object for configuring streams with database as a source. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "DatabaseSourceDescription": {
-      "base": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+      "base": "<p> The top level object for database source description. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
       "refs": {
-        "SourceDescription$DatabaseSourceDescription": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "SourceDescription$DatabaseSourceDescription": "<p>Details about a database used as the source for a Firehose stream.</p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "DatabaseSourceVPCConfiguration": {
-      "base": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+      "base": "<p> The structure for details of the VPC Endpoint Service which Firehose uses to create a PrivateLink to the database. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
       "refs": {
-        "DatabaseSourceConfiguration$DatabaseSourceVPCConfiguration": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "DatabaseSourceDescription$DatabaseSourceVPCConfiguration": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseSourceConfiguration$DatabaseSourceVPCConfiguration": "<p> The details of the VPC Endpoint Service which Firehose uses to create a PrivateLink to the database. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseSourceDescription$DatabaseSourceVPCConfiguration": "<p> The details of the VPC Endpoint Service which Firehose uses to create a PrivateLink to the database. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "DatabaseSurrogateKeyList": {
       "base": null,
       "refs": {
-        "DatabaseSourceConfiguration$SurrogateKeys": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseSourceConfiguration$SurrogateKeys": "<p> The optional list of table and column names used as unique key columns when taking snapshot if the tables don’t have primary keys configured. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "DatabaseTableIncludeOrExcludeList": {
       "base": null,
       "refs": {
-        "DatabaseTableList$Include": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "DatabaseTableList$Exclude": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseTableList$Include": "<p>The list of table patterns in source database endpoint to be included for Firehose to read from. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseTableList$Exclude": "<p>The list of table patterns in source database endpoint to be excluded for Firehose to read from. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "DatabaseTableList": {
-      "base": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+      "base": "<p>The structure used to configure the list of table patterns in source database endpoint for Firehose to read from. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
       "refs": {
-        "DatabaseSourceConfiguration$Tables": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "DatabaseSourceDescription$Tables": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseSourceConfiguration$Tables": "<p> The list of table patterns in source database endpoint for Firehose to read from. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseSourceDescription$Tables": "<p> The list of table patterns in source database endpoint for Firehose to read from. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "DatabaseTableName": {
       "base": null,
       "refs": {
-        "DatabaseSnapshotInfo$Table": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "DatabaseSourceConfiguration$SnapshotWatermarkTable": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "DatabaseSourceDescription$SnapshotWatermarkTable": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseSnapshotInfo$Table": "<p> The fully qualified name of the table in source database endpoint that Firehose reads. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseSourceConfiguration$SnapshotWatermarkTable": "<p> The fully qualified name of the table in source database endpoint that Firehose uses to track snapshot progress. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseSourceDescription$SnapshotWatermarkTable": "<p> The fully qualified name of the table in source database endpoint that Firehose uses to track snapshot progress. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
         "DatabaseTableIncludeOrExcludeList$member": null
       }
     },
     "DatabaseType": {
       "base": null,
       "refs": {
-        "DatabaseSourceConfiguration$Type": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "DatabaseSourceDescription$Type": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseSourceConfiguration$Type": "<p>The type of database engine. This can be one of the following values. </p> <ul> <li> <p>MySQL</p> </li> <li> <p>PostgreSQL</p> </li> </ul> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseSourceDescription$Type": "<p>The type of database engine. This can be one of the following values. </p> <ul> <li> <p>MySQL</p> </li> <li> <p>PostgreSQL</p> </li> </ul> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "DefaultDocumentIdFormat": {
@@ -540,13 +540,11 @@
     },
     "DeleteDeliveryStreamInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDeliveryStreamOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeliveryStartTimestamp": {
       "base": null,
@@ -641,8 +639,7 @@
     },
     "DescribeDeliveryStreamInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDeliveryStreamInputLimit": {
       "base": null,
@@ -652,8 +649,7 @@
     },
     "DescribeDeliveryStreamOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Deserializer": {
       "base": "<p>The deserializer you want Firehose to use for converting the input data from JSON. Firehose then serializes the data to its final format using the <a>Serializer</a>. Firehose supports two types of deserializers: the <a href=\"https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL#LanguageManualDDL-JSON\">Apache Hive JSON SerDe</a> and the <a href=\"https://github.com/rcongiu/Hive-JSON-Serde\">OpenX JSON SerDe</a>.</p>",
@@ -695,6 +691,18 @@
         "IcebergDestinationUpdate$DestinationTableConfigurationList": "<p> Provides a list of <code>DestinationTableConfigurations</code> which Firehose uses to deliver data to Apache Iceberg Tables. Firehose will write data with insert if table specific configuration is not provided here.</p>"
       }
     },
+    "DirectPutSourceConfiguration": {
+      "base": "<p>The structure that configures parameters such as <code>ThroughputHintInMBs</code> for a stream configured with Direct PUT as a source. </p>",
+      "refs": {
+        "CreateDeliveryStreamInput$DirectPutSourceConfiguration": "<p>The structure that configures parameters such as <code>ThroughputHintInMBs</code> for a stream configured with Direct PUT as a source. </p>"
+      }
+    },
+    "DirectPutSourceDescription": {
+      "base": "<p>The structure that configures parameters such as <code>ThroughputHintInMBs</code> for a stream configured with Direct PUT as a source. </p>",
+      "refs": {
+        "SourceDescription$DirectPutSourceDescription": "<p>Details about Direct PUT used as the source for a Firehose stream. </p>"
+      }
+    },
     "DocumentIdOptions": {
       "base": "<p>Indicates the method for setting up document ID. The supported methods are Firehose generated document ID and OpenSearch Service generated document ID.</p> <p/>",
       "refs": {
@@ -715,7 +723,7 @@
       }
     },
     "ElasticsearchBufferingHints": {
-      "base": "<p>Describes the buffering to perform before delivering data to the Amazon ES destination.</p>",
+      "base": "<p>Describes the buffering to perform before delivering data to the Amazon OpenSearch Service destination.</p>",
       "refs": {
         "ElasticsearchDestinationConfiguration$BufferingHints": "<p>The buffering options. If no value is specified, the default values for <code>ElasticsearchBufferingHints</code> are used.</p>",
         "ElasticsearchDestinationDescription$BufferingHints": "<p>The buffering options.</p>",
@@ -738,34 +746,34 @@
       "base": null,
       "refs": {
         "ElasticsearchDestinationConfiguration$ClusterEndpoint": "<p>The endpoint to use when communicating with the cluster. Specify either this <code>ClusterEndpoint</code> or the <code>DomainARN</code> field.</p>",
-        "ElasticsearchDestinationDescription$ClusterEndpoint": "<p>The endpoint to use when communicating with the cluster. Firehose uses either this <code>ClusterEndpoint</code> or the <code>DomainARN</code> field to send data to Amazon ES.</p>",
+        "ElasticsearchDestinationDescription$ClusterEndpoint": "<p>The endpoint to use when communicating with the cluster. Firehose uses either this <code>ClusterEndpoint</code> or the <code>DomainARN</code> field to send data to Amazon OpenSearch Service.</p>",
         "ElasticsearchDestinationUpdate$ClusterEndpoint": "<p>The endpoint to use when communicating with the cluster. Specify either this <code>ClusterEndpoint</code> or the <code>DomainARN</code> field.</p>"
       }
     },
     "ElasticsearchDestinationConfiguration": {
-      "base": "<p>Describes the configuration of a destination in Amazon ES.</p>",
+      "base": "<p>Describes the configuration of a destination in Amazon OpenSearch Service.</p>",
       "refs": {
-        "CreateDeliveryStreamInput$ElasticsearchDestinationConfiguration": "<p>The destination in Amazon ES. You can specify only one destination.</p>"
+        "CreateDeliveryStreamInput$ElasticsearchDestinationConfiguration": "<p>The destination in Amazon OpenSearch Service. You can specify only one destination.</p>"
       }
     },
     "ElasticsearchDestinationDescription": {
-      "base": "<p>The destination description in Amazon ES.</p>",
+      "base": "<p>The destination description in Amazon OpenSearch Service.</p>",
       "refs": {
-        "DestinationDescription$ElasticsearchDestinationDescription": "<p>The destination in Amazon ES.</p>"
+        "DestinationDescription$ElasticsearchDestinationDescription": "<p>The destination in Amazon OpenSearch Service.</p>"
       }
     },
     "ElasticsearchDestinationUpdate": {
-      "base": "<p>Describes an update for a destination in Amazon ES.</p>",
+      "base": "<p>Describes an update for a destination in Amazon OpenSearch Service.</p>",
       "refs": {
-        "UpdateDestinationInput$ElasticsearchDestinationUpdate": "<p>Describes an update for a destination in Amazon ES.</p>"
+        "UpdateDestinationInput$ElasticsearchDestinationUpdate": "<p>Describes an update for a destination in Amazon OpenSearch Service.</p>"
       }
     },
     "ElasticsearchDomainARN": {
       "base": null,
       "refs": {
-        "ElasticsearchDestinationConfiguration$DomainARN": "<p>The ARN of the Amazon ES domain. The IAM role must have permissions for <code>DescribeDomain</code>, <code>DescribeDomains</code>, and <code>DescribeDomainConfig</code> after assuming the role specified in <b>RoleARN</b>. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a>.</p> <p>Specify either <code>ClusterEndpoint</code> or <code>DomainARN</code>.</p>",
-        "ElasticsearchDestinationDescription$DomainARN": "<p>The ARN of the Amazon ES domain. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a>.</p> <p>Firehose uses either <code>ClusterEndpoint</code> or <code>DomainARN</code> to send data to Amazon ES.</p>",
-        "ElasticsearchDestinationUpdate$DomainARN": "<p>The ARN of the Amazon ES domain. The IAM role must have permissions for <code>DescribeDomain</code>, <code>DescribeDomains</code>, and <code>DescribeDomainConfig</code> after assuming the IAM role specified in <code>RoleARN</code>. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a>.</p> <p>Specify either <code>ClusterEndpoint</code> or <code>DomainARN</code>.</p>"
+        "ElasticsearchDestinationConfiguration$DomainARN": "<p>The ARN of the Amazon OpenSearch Service domain. The IAM role must have permissions for <code>DescribeDomain</code>, <code>DescribeDomains</code>, and <code>DescribeDomainConfig</code> after assuming the role specified in <b>RoleARN</b>. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a>.</p> <p>Specify either <code>ClusterEndpoint</code> or <code>DomainARN</code>.</p>",
+        "ElasticsearchDestinationDescription$DomainARN": "<p>The ARN of the Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a>.</p> <p>Firehose uses either <code>ClusterEndpoint</code> or <code>DomainARN</code> to send data to Amazon OpenSearch Service.</p>",
+        "ElasticsearchDestinationUpdate$DomainARN": "<p>The ARN of the Amazon OpenSearch Service domain. The IAM role must have permissions for <code>DescribeDomain</code>, <code>DescribeDomains</code>, and <code>DescribeDomainConfig</code> after assuming the IAM role specified in <code>RoleARN</code>. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a>.</p> <p>Specify either <code>ClusterEndpoint</code> or <code>DomainARN</code>.</p>"
       }
     },
     "ElasticsearchIndexName": {
@@ -779,29 +787,29 @@
     "ElasticsearchIndexRotationPeriod": {
       "base": null,
       "refs": {
-        "ElasticsearchDestinationConfiguration$IndexRotationPeriod": "<p>The Elasticsearch index rotation period. Index rotation appends a timestamp to the <code>IndexName</code> to facilitate the expiration of old data. For more information, see <a href=\"https://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html#es-index-rotation\">Index Rotation for the Amazon ES Destination</a>. The default value is <code>OneDay</code>.</p>",
+        "ElasticsearchDestinationConfiguration$IndexRotationPeriod": "<p>The Elasticsearch index rotation period. Index rotation appends a timestamp to the <code>IndexName</code> to facilitate the expiration of old data. For more information, see <a href=\"https://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html#es-index-rotation\">Index Rotation for the Amazon OpenSearch Service Destination</a>. The default value is <code>OneDay</code>.</p>",
         "ElasticsearchDestinationDescription$IndexRotationPeriod": "<p>The Elasticsearch index rotation period</p>",
-        "ElasticsearchDestinationUpdate$IndexRotationPeriod": "<p>The Elasticsearch index rotation period. Index rotation appends a timestamp to <code>IndexName</code> to facilitate the expiration of old data. For more information, see <a href=\"https://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html#es-index-rotation\">Index Rotation for the Amazon ES Destination</a>. Default value is <code>OneDay</code>.</p>"
+        "ElasticsearchDestinationUpdate$IndexRotationPeriod": "<p>The Elasticsearch index rotation period. Index rotation appends a timestamp to <code>IndexName</code> to facilitate the expiration of old data. For more information, see <a href=\"https://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html#es-index-rotation\">Index Rotation for the Amazon OpenSearch Service Destination</a>. Default value is <code>OneDay</code>.</p>"
       }
     },
     "ElasticsearchRetryDurationInSeconds": {
       "base": null,
       "refs": {
-        "ElasticsearchRetryOptions$DurationInSeconds": "<p>After an initial failure to deliver to Amazon ES, the total amount of time during which Firehose retries delivery (including the first attempt). After this time has elapsed, the failed documents are written to Amazon S3. Default value is 300 seconds (5 minutes). A value of 0 (zero) results in no retries.</p>"
+        "ElasticsearchRetryOptions$DurationInSeconds": "<p>After an initial failure to deliver to Amazon OpenSearch Service, the total amount of time during which Firehose retries delivery (including the first attempt). After this time has elapsed, the failed documents are written to Amazon S3. Default value is 300 seconds (5 minutes). A value of 0 (zero) results in no retries.</p>"
       }
     },
     "ElasticsearchRetryOptions": {
-      "base": "<p>Configures retry behavior in case Firehose is unable to deliver documents to Amazon ES.</p>",
+      "base": "<p>Configures retry behavior in case Firehose is unable to deliver documents to Amazon OpenSearch Service.</p>",
       "refs": {
-        "ElasticsearchDestinationConfiguration$RetryOptions": "<p>The retry behavior in case Firehose is unable to deliver documents to Amazon ES. The default value is 300 (5 minutes).</p>",
-        "ElasticsearchDestinationDescription$RetryOptions": "<p>The Amazon ES retry options.</p>",
-        "ElasticsearchDestinationUpdate$RetryOptions": "<p>The retry behavior in case Firehose is unable to deliver documents to Amazon ES. The default value is 300 (5 minutes).</p>"
+        "ElasticsearchDestinationConfiguration$RetryOptions": "<p>The retry behavior in case Firehose is unable to deliver documents to Amazon OpenSearch Service. The default value is 300 (5 minutes).</p>",
+        "ElasticsearchDestinationDescription$RetryOptions": "<p>The Amazon OpenSearch Service retry options.</p>",
+        "ElasticsearchDestinationUpdate$RetryOptions": "<p>The retry behavior in case Firehose is unable to deliver documents to Amazon OpenSearch Service. The default value is 300 (5 minutes).</p>"
       }
     },
     "ElasticsearchS3BackupMode": {
       "base": null,
       "refs": {
-        "ElasticsearchDestinationConfiguration$S3BackupMode": "<p>Defines how documents should be delivered to Amazon S3. When it is set to <code>FailedDocumentsOnly</code>, Firehose writes any documents that could not be indexed to the configured Amazon S3 destination, with <code>AmazonOpenSearchService-failed/</code> appended to the key prefix. When set to <code>AllDocuments</code>, Firehose delivers all incoming records to Amazon S3, and also writes failed documents with <code>AmazonOpenSearchService-failed/</code> appended to the prefix. For more information, see <a href=\"https://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html#es-s3-backup\">Amazon S3 Backup for the Amazon ES Destination</a>. Default value is <code>FailedDocumentsOnly</code>.</p> <p>You can't change this backup mode after you create the Firehose stream. </p>",
+        "ElasticsearchDestinationConfiguration$S3BackupMode": "<p>Defines how documents should be delivered to Amazon S3. When it is set to <code>FailedDocumentsOnly</code>, Firehose writes any documents that could not be indexed to the configured Amazon S3 destination, with <code>AmazonOpenSearchService-failed/</code> appended to the key prefix. When set to <code>AllDocuments</code>, Firehose delivers all incoming records to Amazon S3, and also writes failed documents with <code>AmazonOpenSearchService-failed/</code> appended to the prefix. For more information, see <a href=\"https://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html#es-s3-backup\">Amazon S3 Backup for the Amazon OpenSearch Service Destination</a>. Default value is <code>FailedDocumentsOnly</code>.</p> <p>You can't change this backup mode after you create the Firehose stream. </p>",
         "ElasticsearchDestinationDescription$S3BackupMode": "<p>The Amazon S3 backup mode.</p>"
       }
     },
@@ -1101,18 +1109,15 @@
     },
     "InvalidArgumentException": {
       "base": "<p>The specified input parameter has a value that is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidKMSResourceException": {
       "base": "<p>Firehose throws this exception when an attempt to put records or to start or stop Firehose stream encryption fails. This happens when the KMS service throws one of the following exception types: <code>AccessDeniedException</code>, <code>InvalidStateException</code>, <code>DisabledException</code>, or <code>NotFoundException</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidSourceException": {
       "base": "<p>Only requests from CloudWatch Logs are supported when CloudWatch Logs decompression is enabled.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KMSEncryptionConfig": {
       "base": "<p>Describes an encryption key for a destination in Amazon S3.</p>",
@@ -1141,20 +1146,18 @@
       }
     },
     "KinesisStreamSourceDescription": {
-      "base": "<p>Details about a Kinesis data stream used as the source for a Firehose Firehose stream.</p>",
+      "base": "<p>Details about a Kinesis data stream used as the source for a Firehose stream.</p>",
       "refs": {
         "SourceDescription$KinesisStreamSourceDescription": "<p>The <a>KinesisStreamSourceDescription</a> value for the source Kinesis data stream.</p>"
       }
     },
     "LimitExceededException": {
       "base": "<p>You have already reached the limit for a requested resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDeliveryStreamsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDeliveryStreamsInputLimit": {
       "base": null,
@@ -1164,8 +1167,7 @@
     },
     "ListDeliveryStreamsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOfNonEmptyStrings": {
       "base": null,
@@ -1182,8 +1184,7 @@
     },
     "ListTagsForDeliveryStreamInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForDeliveryStreamInputLimit": {
       "base": null,
@@ -1193,8 +1194,7 @@
     },
     "ListTagsForDeliveryStreamOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForDeliveryStreamOutputTagList": {
       "base": null,
@@ -1228,7 +1228,7 @@
       }
     },
     "MSKSourceDescription": {
-      "base": "<p>Details about the Amazon MSK cluster used as the source for a Firehose Firehose stream.</p>",
+      "base": "<p>Details about the Amazon MSK cluster used as the source for a Firehose stream.</p>",
       "refs": {
         "SourceDescription$MSKSourceDescription": "<p>The configuration description for the Amazon MSK cluster to be used as the source for a delivery stream.</p>"
       }
@@ -1251,10 +1251,10 @@
       "base": null,
       "refs": {
         "ColumnToJsonKeyMappings$key": null,
-        "DatabaseSnapshotInfo$Id": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseSnapshotInfo$Id": "<p> The identifier of the current snapshot of the table in source database endpoint. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
         "DatabaseSurrogateKeyList$member": null,
         "ListOfNonEmptyStringsWithoutWhitespace$member": null,
-        "PartitionField$SourceName": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "PartitionField$SourceName": "<p> The column name to be configured in partition spec. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
         "SchemaConfiguration$RoleARN": "<p>The role that Firehose can use to access Amazon Web Services Glue. This role must be in the same account you use for Firehose. Cross-account roles aren't allowed.</p> <important> <p>If the <code>SchemaConfiguration</code> request parameter is used as part of invoking the <code>CreateDeliveryStream</code> API, then the <code>RoleARN</code> property is required and its value must be specified.</p> </important>",
         "SchemaConfiguration$CatalogId": "<p>The ID of the Amazon Web Services Glue Data Catalog. If you don't supply this, the Amazon Web Services account ID is used by default.</p>",
         "SchemaConfiguration$DatabaseName": "<p>Specifies the name of the Amazon Web Services Glue database that contains the schema for the output data.</p> <important> <p>If the <code>SchemaConfiguration</code> request parameter is used as part of invoking the <code>CreateDeliveryStream</code> API, then the <code>DatabaseName</code> property is required and its value must be specified.</p> </important>",
@@ -1263,7 +1263,7 @@
         "SchemaConfiguration$VersionId": "<p>Specifies the table version for the output data schema. If you don't specify this version ID, or if you set it to <code>LATEST</code>, Firehose uses the most recent version. This means that any updates to the table are automatically picked up.</p>",
         "SecurityGroupIdList$member": null,
         "SubnetIdList$member": null,
-        "VpcConfigurationDescription$VpcId": "<p>The ID of the Amazon ES destination's VPC.</p>"
+        "VpcConfigurationDescription$VpcId": "<p>The ID of the Amazon OpenSearch Service destination's VPC.</p>"
       }
     },
     "NonNegativeIntegerObject": {
@@ -1330,7 +1330,7 @@
     "ParquetSerDe": {
       "base": "<p>A serializer to use for converting data to the Parquet format before storing it in Amazon S3. For more information, see <a href=\"https://parquet.apache.org/docs/\">Apache Parquet</a>.</p>",
       "refs": {
-        "Serializer$ParquetSerDe": "<p>A serializer to use for converting data to the Parquet format before storing it in Amazon S3. For more information, see <a href=\"https://parquet.apache.org/documentation/latest/\">Apache Parquet</a>.</p>"
+        "Serializer$ParquetSerDe": "<p>A serializer to use for converting data to the Parquet format before storing it in Amazon S3. For more information, see <a href=\"https://parquet.apache.org/docs/contribution-guidelines/\">Apache Parquet</a>.</p>"
       }
     },
     "ParquetWriterVersion": {
@@ -1340,7 +1340,7 @@
       }
     },
     "PartitionField": {
-      "base": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+      "base": "<p>Represents a single field in a <code>PartitionSpec</code>. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
       "refs": {
         "PartitionFields$member": null
       }
@@ -1348,13 +1348,13 @@
     "PartitionFields": {
       "base": null,
       "refs": {
-        "PartitionSpec$Identity": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "PartitionSpec$Identity": "<p> List of identity <a href=\"https://iceberg.apache.org/spec/#partition-transforms\">transforms</a> that performs an identity transformation. The transform takes the source value, and does not modify it. Result type is the source type.</p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "PartitionSpec": {
-      "base": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+      "base": "<p>Represents how to produce partition data for a table. Partition data is produced by transforming columns in a table. Each column transform is represented by a named <code>PartitionField</code>. </p> <p>Here is an example of the schema in JSON. </p> <p> <code>\"partitionSpec\": { \"identity\": [ {\"sourceName\": \"column1\"}, {\"sourceName\": \"column2\"}, {\"sourceName\": \"column3\"} ] }</code> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
       "refs": {
-        "DestinationTableConfiguration$PartitionSpec": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DestinationTableConfiguration$PartitionSpec": "<p>The partition spec configuration for a table that is used by automatic table creation.</p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "Password": {
@@ -1459,13 +1459,11 @@
     },
     "PutRecordBatchInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRecordBatchOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRecordBatchRequestEntryList": {
       "base": null,
@@ -1487,13 +1485,11 @@
     },
     "PutRecordInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRecordOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResponseRecordId": {
       "base": null,
@@ -1558,13 +1554,11 @@
     },
     "ResourceInUseException": {
       "base": "<p>The resource is already in use and not available for this operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource could not be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RetryDurationInSeconds": {
       "base": null,
@@ -1591,9 +1585,9 @@
         "AmazonopensearchserviceDestinationDescription$RoleARN": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services credentials. </p>",
         "AmazonopensearchserviceDestinationUpdate$RoleARN": "<p>The Amazon Resource Name (ARN) of the IAM role to be assumed by Firehose for calling the Amazon OpenSearch Service Configuration API and for indexing documents. </p>",
         "AuthenticationConfiguration$RoleARN": "<p>The ARN of the role used to access the Amazon MSK cluster.</p>",
-        "ElasticsearchDestinationConfiguration$RoleARN": "<p>The Amazon Resource Name (ARN) of the IAM role to be assumed by Firehose for calling the Amazon ES Configuration API and for indexing documents. For more information, see <a href=\"https://docs.aws.amazon.com/firehose/latest/dev/controlling-access.html#using-iam-s3\">Grant Firehose Access to an Amazon S3 Destination</a> and <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a>.</p>",
+        "ElasticsearchDestinationConfiguration$RoleARN": "<p>The Amazon Resource Name (ARN) of the IAM role to be assumed by Firehose for calling the Amazon OpenSearch Service Configuration API and for indexing documents. For more information, see <a href=\"https://docs.aws.amazon.com/firehose/latest/dev/controlling-access.html#using-iam-s3\">Grant Firehose Access to an Amazon S3 Destination</a> and <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a>.</p>",
         "ElasticsearchDestinationDescription$RoleARN": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services credentials. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a>.</p>",
-        "ElasticsearchDestinationUpdate$RoleARN": "<p>The Amazon Resource Name (ARN) of the IAM role to be assumed by Firehose for calling the Amazon ES Configuration API and for indexing documents. For more information, see <a href=\"https://docs.aws.amazon.com/firehose/latest/dev/controlling-access.html#using-iam-s3\">Grant Firehose Access to an Amazon S3 Destination</a> and <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a>.</p>",
+        "ElasticsearchDestinationUpdate$RoleARN": "<p>The Amazon Resource Name (ARN) of the IAM role to be assumed by Firehose for calling the Amazon OpenSearch Service Configuration API and for indexing documents. For more information, see <a href=\"https://docs.aws.amazon.com/firehose/latest/dev/controlling-access.html#using-iam-s3\">Grant Firehose Access to an Amazon S3 Destination</a> and <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a>.</p>",
         "ExtendedS3DestinationConfiguration$RoleARN": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services credentials. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a>.</p>",
         "ExtendedS3DestinationDescription$RoleARN": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services credentials. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a>.</p>",
         "ExtendedS3DestinationUpdate$RoleARN": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services credentials. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a>.</p>",
@@ -1678,8 +1672,8 @@
     "SSLMode": {
       "base": null,
       "refs": {
-        "DatabaseSourceConfiguration$SSLMode": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "DatabaseSourceDescription$SSLMode": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseSourceConfiguration$SSLMode": "<p> The mode to enable or disable SSL when Firehose connects to the database endpoint. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseSourceDescription$SSLMode": "<p> The mode to enable or disable SSL when Firehose connects to the database endpoint. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "SchemaConfiguration": {
@@ -1689,11 +1683,11 @@
       }
     },
     "SchemaEvolutionConfiguration": {
-      "base": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+      "base": "<p>The configuration to enable schema evolution.</p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
       "refs": {
-        "IcebergDestinationConfiguration$SchemaEvolutionConfiguration": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "IcebergDestinationDescription$SchemaEvolutionConfiguration": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "IcebergDestinationUpdate$SchemaEvolutionConfiguration": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "IcebergDestinationConfiguration$SchemaEvolutionConfiguration": "<p>The configuration to enable automatic schema evolution.</p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "IcebergDestinationDescription$SchemaEvolutionConfiguration": "<p>The description of automatic schema evolution configuration.</p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "IcebergDestinationUpdate$SchemaEvolutionConfiguration": "<p> The configuration to enable automatic schema evolution. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "SecretARN": {
@@ -1723,20 +1717,19 @@
     "SecurityGroupIdList": {
       "base": null,
       "refs": {
-        "VpcConfiguration$SecurityGroupIds": "<p>The IDs of the security groups that you want Firehose to use when it creates ENIs in the VPC of the Amazon ES destination. You can use the same security group that the Amazon ES domain uses or different ones. If you specify different security groups here, ensure that they allow outbound HTTPS traffic to the Amazon ES domain's security group. Also ensure that the Amazon ES domain's security group allows HTTPS traffic from the security groups specified here. If you use the same security group for both your delivery stream and the Amazon ES domain, make sure the security group inbound rule allows HTTPS traffic. For more information about security group rules, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html#SecurityGroupRules\">Security group rules</a> in the Amazon VPC documentation.</p>",
-        "VpcConfigurationDescription$SecurityGroupIds": "<p>The IDs of the security groups that Firehose uses when it creates ENIs in the VPC of the Amazon ES destination. You can use the same security group that the Amazon ES domain uses or different ones. If you specify different security groups, ensure that they allow outbound HTTPS traffic to the Amazon ES domain's security group. Also ensure that the Amazon ES domain's security group allows HTTPS traffic from the security groups specified here. If you use the same security group for both your Firehose stream and the Amazon ES domain, make sure the security group inbound rule allows HTTPS traffic. For more information about security group rules, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html#SecurityGroupRules\">Security group rules</a> in the Amazon VPC documentation.</p>"
+        "VpcConfiguration$SecurityGroupIds": "<p>The IDs of the security groups that you want Firehose to use when it creates ENIs in the VPC of the Amazon OpenSearch Service destination. You can use the same security group that the Amazon OpenSearch Service domain uses or different ones. If you specify different security groups here, ensure that they allow outbound HTTPS traffic to the Amazon OpenSearch Service domain's security group. Also ensure that the Amazon OpenSearch Service domain's security group allows HTTPS traffic from the security groups specified here. If you use the same security group for both your delivery stream and the Amazon OpenSearch Service domain, make sure the security group inbound rule allows HTTPS traffic. For more information about security group rules, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html#SecurityGroupRules\">Security group rules</a> in the Amazon VPC documentation.</p>",
+        "VpcConfigurationDescription$SecurityGroupIds": "<p>The IDs of the security groups that Firehose uses when it creates ENIs in the VPC of the Amazon OpenSearch Service destination. You can use the same security group that the Amazon ES domain uses or different ones. If you specify different security groups, ensure that they allow outbound HTTPS traffic to the Amazon OpenSearch Service domain's security group. Also ensure that the Amazon OpenSearch Service domain's security group allows HTTPS traffic from the security groups specified here. If you use the same security group for both your Firehose stream and the Amazon OpenSearch Service domain, make sure the security group inbound rule allows HTTPS traffic. For more information about security group rules, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html#SecurityGroupRules\">Security group rules</a> in the Amazon VPC documentation.</p>"
       }
     },
     "Serializer": {
-      "base": "<p>The serializer that you want Firehose to use to convert data to the target format before writing it to Amazon S3. Firehose supports two types of serializers: the <a href=\"https://hive.apache.org/javadocs/r1.2.2/api/org/apache/hadoop/hive/ql/io/orc/OrcSerde.html\">ORC SerDe</a> and the <a href=\"https://hive.apache.org/javadocs/r1.2.2/api/org/apache/hadoop/hive/ql/io/parquet/serde/ParquetHiveSerDe.html\">Parquet SerDe</a>.</p>",
+      "base": "<p>The serializer that you want Firehose to use to convert data to the target format before writing it to Amazon S3. Firehose supports two types of serializers: the ORC SerDe and the Parquet SerDe.</p>",
       "refs": {
         "OutputFormatConfiguration$Serializer": "<p>Specifies which serializer to use. You can choose either the ORC SerDe or the Parquet SerDe. If both are non-null, the server rejects the request.</p>"
       }
     },
     "ServiceUnavailableException": {
       "base": "<p>The service is unavailable. Back off and retry the operation. If you continue to see the exception, throughput limits for the Firehose stream may have been exceeded. For more information about limits and how to request an increase, see <a href=\"https://docs.aws.amazon.com/firehose/latest/dev/limits.html\">Amazon Firehose Limits</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SizeInMBs": {
       "base": null,
@@ -1747,13 +1740,13 @@
     "SnapshotRequestedBy": {
       "base": null,
       "refs": {
-        "DatabaseSnapshotInfo$RequestedBy": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseSnapshotInfo$RequestedBy": "<p> The principal that sent the request to take the current snapshot on the table. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "SnapshotStatus": {
       "base": null,
       "refs": {
-        "DatabaseSnapshotInfo$Status": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseSnapshotInfo$Status": "<p> The status of the current snapshot of the table. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "SnowflakeAccountUrl": {
@@ -1787,7 +1780,7 @@
     "SnowflakeContentColumnName": {
       "base": null,
       "refs": {
-        "SnowflakeDestinationConfiguration$ContentColumnName": "<p>The name of the record content column</p>",
+        "SnowflakeDestinationConfiguration$ContentColumnName": "<p>The name of the record content column.</p>",
         "SnowflakeDestinationDescription$ContentColumnName": "<p>The name of the record content column</p>",
         "SnowflakeDestinationUpdate$ContentColumnName": "<p>The name of the content metadata column</p>"
       }
@@ -1836,7 +1829,7 @@
     "SnowflakeMetaDataColumnName": {
       "base": null,
       "refs": {
-        "SnowflakeDestinationConfiguration$MetaDataColumnName": "<p>The name of the record metadata column</p>",
+        "SnowflakeDestinationConfiguration$MetaDataColumnName": "<p>Specify a column name in the table, where the metadata information has to be loaded. When you enable this field, you will see the following column in the snowflake table, which differs based on the source type.</p> <p>For Direct PUT as source </p> <p> <code>{ \"firehoseDeliveryStreamName\" : \"streamname\", \"IngestionTime\" : \"timestamp\" }</code> </p> <p>For Kinesis Data Stream as source </p> <p> <code> \"kinesisStreamName\" : \"streamname\", \"kinesisShardId\" : \"Id\", \"kinesisPartitionKey\" : \"key\", \"kinesisSequenceNumber\" : \"1234\", \"subsequenceNumber\" : \"2334\", \"IngestionTime\" : \"timestamp\" }</code> </p>",
         "SnowflakeDestinationDescription$MetaDataColumnName": "<p>The name of the record metadata column</p>",
         "SnowflakeDestinationUpdate$MetaDataColumnName": "<p>The name of the record metadata column</p>"
       }
@@ -1922,7 +1915,7 @@
       }
     },
     "SourceDescription": {
-      "base": "<p>Details about a Kinesis data stream used as the source for a Firehose Firehose stream.</p>",
+      "base": "<p>Details about a Kinesis data stream used as the source for a Firehose stream.</p>",
       "refs": {
         "DeliveryStreamDescription$Source": "<p>If the <code>DeliveryStreamType</code> parameter is <code>KinesisStreamAsSource</code>, a <a>SourceDescription</a> object describing the source Kinesis data stream.</p>"
       }
@@ -1989,23 +1982,19 @@
     },
     "StartDeliveryStreamEncryptionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartDeliveryStreamEncryptionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopDeliveryStreamEncryptionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopDeliveryStreamEncryptionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StringWithLettersDigitsUnderscoresDots": {
       "base": null,
@@ -2017,16 +2006,16 @@
     "SubnetIdList": {
       "base": null,
       "refs": {
-        "VpcConfiguration$SubnetIds": "<p>The IDs of the subnets that you want Firehose to use to create ENIs in the VPC of the Amazon ES destination. Make sure that the routing tables and inbound and outbound rules allow traffic to flow from the subnets whose IDs are specified here to the subnets that have the destination Amazon ES endpoints. Firehose creates at least one ENI in each of the subnets that are specified here. Do not delete or modify these ENIs.</p> <p>The number of ENIs that Firehose creates in the subnets specified here scales up and down automatically based on throughput. To enable Firehose to scale up the number of ENIs to match throughput, ensure that you have sufficient quota. To help you calculate the quota you need, assume that Firehose can create up to three ENIs for this Firehose stream for each of the subnets specified here. For more information about ENI quota, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-enis\">Network Interfaces </a> in the Amazon VPC Quotas topic.</p>",
-        "VpcConfigurationDescription$SubnetIds": "<p>The IDs of the subnets that Firehose uses to create ENIs in the VPC of the Amazon ES destination. Make sure that the routing tables and inbound and outbound rules allow traffic to flow from the subnets whose IDs are specified here to the subnets that have the destination Amazon ES endpoints. Firehose creates at least one ENI in each of the subnets that are specified here. Do not delete or modify these ENIs.</p> <p>The number of ENIs that Firehose creates in the subnets specified here scales up and down automatically based on throughput. To enable Firehose to scale up the number of ENIs to match throughput, ensure that you have sufficient quota. To help you calculate the quota you need, assume that Firehose can create up to three ENIs for this Firehose stream for each of the subnets specified here. For more information about ENI quota, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-enis\">Network Interfaces </a> in the Amazon VPC Quotas topic.</p>"
+        "VpcConfiguration$SubnetIds": "<p>The IDs of the subnets that you want Firehose to use to create ENIs in the VPC of the Amazon OpenSearch Service destination. Make sure that the routing tables and inbound and outbound rules allow traffic to flow from the subnets whose IDs are specified here to the subnets that have the destination Amazon OpenSearch Service endpoints. Firehose creates at least one ENI in each of the subnets that are specified here. Do not delete or modify these ENIs.</p> <p>The number of ENIs that Firehose creates in the subnets specified here scales up and down automatically based on throughput. To enable Firehose to scale up the number of ENIs to match throughput, ensure that you have sufficient quota. To help you calculate the quota you need, assume that Firehose can create up to three ENIs for this Firehose stream for each of the subnets specified here. For more information about ENI quota, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-enis\">Network Interfaces </a> in the Amazon VPC Quotas topic.</p>",
+        "VpcConfigurationDescription$SubnetIds": "<p>The IDs of the subnets that Firehose uses to create ENIs in the VPC of the Amazon OpenSearch Service destination. Make sure that the routing tables and inbound and outbound rules allow traffic to flow from the subnets whose IDs are specified here to the subnets that have the destination Amazon OpenSearch Service endpoints. Firehose creates at least one ENI in each of the subnets that are specified here. Do not delete or modify these ENIs.</p> <p>The number of ENIs that Firehose creates in the subnets specified here scales up and down automatically based on throughput. To enable Firehose to scale up the number of ENIs to match throughput, ensure that you have sufficient quota. To help you calculate the quota you need, assume that Firehose can create up to three ENIs for this Firehose stream for each of the subnets specified here. For more information about ENI quota, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-enis\">Network Interfaces </a> in the Amazon VPC Quotas topic.</p>"
       }
     },
     "TableCreationConfiguration": {
-      "base": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+      "base": "<p>The configuration to enable automatic table creation.</p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
       "refs": {
-        "IcebergDestinationConfiguration$TableCreationConfiguration": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "IcebergDestinationDescription$TableCreationConfiguration": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
-        "IcebergDestinationUpdate$TableCreationConfiguration": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "IcebergDestinationConfiguration$TableCreationConfiguration": "<p>The configuration to enable automatic table creation.</p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "IcebergDestinationDescription$TableCreationConfiguration": "<p> The description of table creation configuration. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "IcebergDestinationUpdate$TableCreationConfiguration": "<p> The configuration to enable automatic table creation. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "Tag": {
@@ -2038,20 +2027,18 @@
     },
     "TagDeliveryStreamInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagDeliveryStreamInputTagList": {
       "base": null,
       "refs": {
-        "CreateDeliveryStreamInput$Tags": "<p>A set of tags to assign to the Firehose stream. A tag is a key-value pair that you can define and assign to Amazon Web Services resources. Tags are metadata. For example, you can add friendly names and descriptions or other types of information that can help you distinguish the Firehose stream. For more information about tags, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html\">Using Cost Allocation Tags</a> in the Amazon Web Services Billing and Cost Management User Guide.</p> <p>You can specify up to 50 tags when creating a Firehose stream.</p> <p>If you specify tags in the <code>CreateDeliveryStream</code> action, Amazon Data Firehose performs an additional authorization on the <code>firehose:TagDeliveryStream</code> action to verify if users have permissions to create tags. If you do not provide this permission, requests to create new Firehose Firehose streams with IAM resource tags will fail with an <code>AccessDeniedException</code> such as following.</p> <p> <b>AccessDeniedException</b> </p> <p>User: arn:aws:sts::x:assumed-role/x/x is not authorized to perform: firehose:TagDeliveryStream on resource: arn:aws:firehose:us-east-1:x:deliverystream/x with an explicit deny in an identity-based policy.</p> <p>For an example IAM policy, see <a href=\"https://docs.aws.amazon.com/firehose/latest/APIReference/API_CreateDeliveryStream.html#API_CreateDeliveryStream_Examples\">Tag example.</a> </p>",
+        "CreateDeliveryStreamInput$Tags": "<p>A set of tags to assign to the Firehose stream. A tag is a key-value pair that you can define and assign to Amazon Web Services resources. Tags are metadata. For example, you can add friendly names and descriptions or other types of information that can help you distinguish the Firehose stream. For more information about tags, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html\">Using Cost Allocation Tags</a> in the Amazon Web Services Billing and Cost Management User Guide.</p> <p>You can specify up to 50 tags when creating a Firehose stream.</p> <p>If you specify tags in the <code>CreateDeliveryStream</code> action, Amazon Data Firehose performs an additional authorization on the <code>firehose:TagDeliveryStream</code> action to verify if users have permissions to create tags. If you do not provide this permission, requests to create new Firehose streams with IAM resource tags will fail with an <code>AccessDeniedException</code> such as following.</p> <p> <b>AccessDeniedException</b> </p> <p>User: arn:aws:sts::x:assumed-role/x/x is not authorized to perform: firehose:TagDeliveryStream on resource: arn:aws:firehose:us-east-1:x:deliverystream/x with an explicit deny in an identity-based policy.</p> <p>For an example IAM policy, see <a href=\"https://docs.aws.amazon.com/firehose/latest/APIReference/API_CreateDeliveryStream.html#API_CreateDeliveryStream_Examples\">Tag example.</a> </p>",
         "TagDeliveryStreamInput$Tags": "<p>A set of key-value pairs to use to create the tags.</p>"
       }
     },
     "TagDeliveryStreamOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagKey": {
       "base": null,
@@ -2073,10 +2060,17 @@
         "Tag$Value": "<p>An optional string, which you can use to describe or define the tag. Maximum length: 256 characters. Valid characters: Unicode letters, digits, white space, _ . / = + - % @</p>"
       }
     },
+    "ThroughputHintInMBs": {
+      "base": null,
+      "refs": {
+        "DirectPutSourceConfiguration$ThroughputHintInMBs": "<p> The value that you configure for this parameter is for information purpose only and does not affect Firehose delivery throughput limit. You can use the <a href=\"https://support.console.aws.amazon.com/support/home#/case/create%3FissueType=service-limit-increase%26limitType=kinesis-firehose-limits\">Firehose Limits form</a> to request a throughput limit increase. </p>",
+        "DirectPutSourceDescription$ThroughputHintInMBs": "<p> The value that you configure for this parameter is for information purpose only and does not affect Firehose delivery throughput limit. You can use the <a href=\"https://support.console.aws.amazon.com/support/home#/case/create%3FissueType=service-limit-increase%26limitType=kinesis-firehose-limits\">Firehose Limits form</a> to request a throughput limit increase. </p>"
+      }
+    },
     "Timestamp": {
       "base": null,
       "refs": {
-        "DatabaseSnapshotInfo$RequestTimestamp": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
+        "DatabaseSnapshotInfo$RequestTimestamp": "<p> The timestamp when the current snapshot is taken on the table. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>",
         "DeliveryStreamDescription$CreateTimestamp": "<p>The date and time that the Firehose stream was created.</p>",
         "DeliveryStreamDescription$LastUpdateTimestamp": "<p>The date and time that the Firehose stream was last updated.</p>"
       }
@@ -2090,23 +2084,19 @@
     },
     "UntagDeliveryStreamInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagDeliveryStreamOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDestinationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDestinationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Username": {
       "base": null,
@@ -2125,7 +2115,7 @@
       }
     },
     "VpcConfigurationDescription": {
-      "base": "<p>The details of the VPC of the Amazon ES destination.</p>",
+      "base": "<p>The details of the VPC of the Amazon OpenSearch Service destination.</p>",
       "refs": {
         "AmazonOpenSearchServerlessDestinationDescription$VpcConfigurationDescription": null,
         "AmazonopensearchserviceDestinationDescription$VpcConfigurationDescription": null,
@@ -2135,13 +2125,13 @@
     "VpcEndpointServiceName": {
       "base": null,
       "refs": {
-        "DatabaseSourceVPCConfiguration$VpcEndpointServiceName": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "DatabaseSourceVPCConfiguration$VpcEndpointServiceName": "<p> The VPC endpoint service name which Firehose uses to create a PrivateLink to the database. The endpoint service must have the Firehose service principle <code>firehose.amazonaws.com</code> as an allowed principal on the VPC endpoint service. The VPC endpoint service name is a string that looks like <code>com.amazonaws.vpce.&lt;region&gt;.&lt;vpc-endpoint-service-id&gt;</code>. </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     },
     "WarehouseLocation": {
       "base": null,
       "refs": {
-        "CatalogConfiguration$WarehouseLocation": "<p> </p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
+        "CatalogConfiguration$WarehouseLocation": "<p>The warehouse location for Apache Iceberg tables. You must configure this when schema evolution and table creation is enabled.</p> <p>Amazon Data Firehose is in preview release and is subject to change.</p>"
       }
     }
   }

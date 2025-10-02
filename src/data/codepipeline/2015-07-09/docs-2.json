@@ -20,13 +20,14 @@
     "GetThirdPartyJobDetails": "<p>Requests the details of a job for a third party action. Used for partner actions only.</p> <important> <p>When this API is called, CodePipeline returns temporary credentials for the S3 bucket used to store artifacts for the pipeline, if the action requires access to that S3 bucket for input or output artifacts. This API also returns any secret values defined for the action.</p> </important>",
     "ListActionExecutions": "<p>Lists the action executions that have occurred in a pipeline.</p>",
     "ListActionTypes": "<p>Gets a summary of all CodePipeline action types associated with your account.</p>",
+    "ListDeployActionExecutionTargets": "<p>Lists the targets for the deploy action.</p>",
     "ListPipelineExecutions": "<p>Gets a summary of the most recent executions for a pipeline.</p> <note> <p>When applying the filter for pipeline executions that have succeeded in the stage, the operation returns all executions in the current pipeline version beginning on February 1, 2024.</p> </note>",
     "ListPipelines": "<p>Gets a summary of all of the pipelines associated with your account.</p>",
     "ListRuleExecutions": "<p>Lists the rule executions that have occurred in a pipeline configured for conditions with rules.</p>",
-    "ListRuleTypes": "<p>Lists the rules for the condition. For more information about conditions, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html\">Stage conditions</a>. For more information about rules, see the <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html\">CodePipeline rule reference</a>.</p>",
+    "ListRuleTypes": "<p>Lists the rules for the condition. For more information about conditions, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html\">Stage conditions</a> and <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html\">How do stage conditions work?</a>.For more information about rules, see the <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html\">CodePipeline rule reference</a>.</p>",
     "ListTagsForResource": "<p>Gets the set of key-value pairs (metadata) that are used to manage the resource.</p>",
     "ListWebhooks": "<p>Gets a listing of all the webhooks in this Amazon Web Services Region for this account. The output lists all webhooks and includes the webhook URL and ARN and the configuration for each webhook.</p> <note> <p>If a secret token was provided, it will be redacted in the response.</p> </note>",
-    "OverrideStageCondition": "<p>Used to override a stage condition.</p>",
+    "OverrideStageCondition": "<p>Used to override a stage condition. For more information about conditions, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html\">Stage conditions</a> and <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html\">How do stage conditions work?</a>.</p>",
     "PollForJobs": "<p>Returns information about any jobs for CodePipeline to act on. <code>PollForJobs</code> is valid only for action types with \"Custom\" in the owner field. If the action type contains <code>AWS</code> or <code>ThirdParty</code> in the owner field, the <code>PollForJobs</code> action returns an error.</p> <important> <p>When this API is called, CodePipeline returns temporary credentials for the S3 bucket used to store artifacts for the pipeline, if the action requires access to that S3 bucket for input or output artifacts. This API also returns any secret values defined for the action.</p> </important>",
     "PollForThirdPartyJobs": "<p>Determines whether there are any third party jobs for a job worker to act on. Used for partner actions only.</p> <important> <p>When this API is called, CodePipeline returns temporary credentials for the S3 bucket used to store artifacts for the pipeline, if the action requires access to that S3 bucket for input or output artifacts.</p> </important>",
     "PutActionRevision": "<p>Provides information to CodePipeline about new revisions to a source.</p>",
@@ -82,23 +83,19 @@
     },
     "AcknowledgeJobInput": {
       "base": "<p>Represents the input of an AcknowledgeJob action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AcknowledgeJobOutput": {
       "base": "<p>Represents the output of an AcknowledgeJob action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AcknowledgeThirdPartyJobInput": {
       "base": "<p>Represents the input of an AcknowledgeThirdPartyJob action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AcknowledgeThirdPartyJobOutput": {
       "base": "<p>Represents the output of an AcknowledgeThirdPartyJob action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActionCategory": {
       "base": null,
@@ -206,7 +203,8 @@
       "refs": {
         "ActionContext$actionExecutionId": "<p>The system-generated unique ID that corresponds to an action's execution.</p>",
         "ActionExecution$actionExecutionId": "<p>ID of the workflow action execution in the current stage. Use the <a>GetPipelineState</a> action to retrieve the current action execution details of the current stage.</p> <note> <p>For older executions, this field might be empty. The action execution ID is available for executions run on or after March 2020.</p> </note>",
-        "ActionExecutionDetail$actionExecutionId": "<p>The action execution ID.</p>"
+        "ActionExecutionDetail$actionExecutionId": "<p>The action execution ID.</p>",
+        "ListDeployActionExecutionTargetsInput$actionExecutionId": "<p>The execution ID for the deploy action.</p>"
       }
     },
     "ActionExecutionInput": {
@@ -214,6 +212,10 @@
       "refs": {
         "ActionExecutionDetail$input": "<p>Input details for the action execution, such as role ARN, Region, and input artifacts.</p>"
       }
+    },
+    "ActionExecutionNotFoundException": {
+      "base": "<p>The action execution was not found.</p>",
+      "refs": {}
     },
     "ActionExecutionOutput": {
       "base": "<p>Output details listed for an action execution, such as the action execution result.</p>",
@@ -264,8 +266,7 @@
     },
     "ActionNotFoundException": {
       "base": "<p>The specified action cannot be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActionOwner": {
       "base": null,
@@ -324,8 +325,7 @@
     },
     "ActionTypeAlreadyExistsException": {
       "base": "<p>The specified action type already exists with a different definition.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActionTypeArtifactDetails": {
       "base": "<p>Information about parameters for artifacts associated with the action type, such as the minimum and maximum artifacts allowed.</p>",
@@ -379,8 +379,7 @@
     },
     "ActionTypeNotFoundException": {
       "base": "<p>The specified action type cannot be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActionTypeOwner": {
       "base": null,
@@ -434,8 +433,7 @@
     },
     "ApprovalAlreadyCompletedException": {
       "base": "<p>The approval action has already been approved or rejected.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ApprovalResult": {
       "base": "<p>Represents information about the result of an approval request.</p>",
@@ -458,7 +456,7 @@
     "ApprovalToken": {
       "base": null,
       "refs": {
-        "PutApprovalResultInput$token": "<p>The system-generated token used to identify a unique approval request. The token for each open approval request can be obtained using the <a>GetPipelineState</a> action. It is used to validate that the approval request corresponding to this token is still valid.</p> <important> <p>For a pipeline where the execution mode is set to PARALLEL, the token required to approve/reject approval request as detailed above is not available. Instead, use the <code>externalExecutionId</code> from the <code>GetPipelineState</code> action as the token in the approval request.</p> </important>"
+        "PutApprovalResultInput$token": "<p>The system-generated token used to identify a unique approval request. The token for each open approval request can be obtained using the <a>GetPipelineState</a> action. It is used to validate that the approval request corresponding to this token is still valid.</p> <important> <p>For a pipeline where the execution mode is set to PARALLEL, the token required to approve/reject an approval request as detailed above is not available. Instead, use the <code>externalExecutionId</code> in the response output from the <a>ListActionExecutions</a> action as the token in the approval request.</p> </important>"
       }
     },
     "Artifact": {
@@ -560,7 +558,7 @@
       }
     },
     "BeforeEntryConditions": {
-      "base": "<p>The conditions for making checks for entry to a stage. </p>",
+      "base": "<p>The conditions for making checks for entry to a stage. For more information about conditions, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html\">Stage conditions</a> and <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html\">How do stage conditions work?</a>. </p>",
       "refs": {
         "StageDeclaration$beforeEntry": "<p>The method to use when a stage allows entry. For example, configuring this field for conditions will allow entry to the stage when the conditions are met.</p>"
       }
@@ -644,16 +642,14 @@
     },
     "ConcurrentModificationException": {
       "base": "<p>Unable to modify the tag due to a simultaneous update request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConcurrentPipelineExecutionsLimitExceededException": {
       "base": "<p>The pipeline has reached the limit for concurrent pipeline executions.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Condition": {
-      "base": "<p>The condition for the stage. A condition is made up of the rules and the result for the condition. For more information about conditions, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html\">Stage conditions</a>. For more information about rules, see the <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html\">CodePipeline rule reference</a>.</p>",
+      "base": "<p>The condition for the stage. A condition is made up of the rules and the result for the condition. For more information about conditions, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html\">Stage conditions</a> and <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html\">How do stage conditions work?</a>.. For more information about rules, see the <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html\">CodePipeline rule reference</a>.</p>",
       "refs": {
         "ConditionList$member": null
       }
@@ -675,14 +671,13 @@
       "base": null,
       "refs": {
         "BeforeEntryConditions$conditions": "<p>The conditions that are configured as entry conditions.</p>",
-        "FailureConditions$conditions": "<p>The conditions that are configured as failure conditions.</p>",
+        "FailureConditions$conditions": "<p>The conditions that are configured as failure conditions. For more information about conditions, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html\">Stage conditions</a> and <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html\">How do stage conditions work?</a>.</p>",
         "SuccessConditions$conditions": "<p>The conditions that are success conditions.</p>"
       }
     },
     "ConditionNotOverridableException": {
       "base": "<p>Unable to override because the condition does not allow overrides.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConditionState": {
       "base": "<p>Information about the state of the condition.</p>",
@@ -704,8 +699,7 @@
     },
     "ConflictException": {
       "base": "<p>Your request cannot be handled because the pipeline is busy handling ongoing activities. Try again later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ContinuationToken": {
       "base": null,
@@ -718,23 +712,19 @@
     },
     "CreateCustomActionTypeInput": {
       "base": "<p>Represents the input of a CreateCustomActionType operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCustomActionTypeOutput": {
       "base": "<p>Represents the output of a <code>CreateCustomActionType</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePipelineInput": {
       "base": "<p>Represents the input of a <code>CreatePipeline</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePipelineOutput": {
       "base": "<p>Represents the output of a <code>CreatePipeline</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CurrentRevision": {
       "base": "<p>Represents information about a current revision.</p>",
@@ -745,33 +735,57 @@
     },
     "DeleteCustomActionTypeInput": {
       "base": "<p>Represents the input of a <code>DeleteCustomActionType</code> operation. The custom action will be marked as deleted.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePipelineInput": {
       "base": "<p>Represents the input of a <code>DeletePipeline</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWebhookInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWebhookOutput": {
       "base": null,
+      "refs": {}
+    },
+    "DeployActionExecutionTarget": {
+      "base": "<p>The target for the deploy action.</p>",
       "refs": {
+        "DeployActionExecutionTargetList$member": null
+      }
+    },
+    "DeployActionExecutionTargetList": {
+      "base": null,
+      "refs": {
+        "ListDeployActionExecutionTargetsOutput$targets": "<p>The targets for the deploy action.</p>"
+      }
+    },
+    "DeployTargetEvent": {
+      "base": "<p>A lifecycle event for the deploy action.</p>",
+      "refs": {
+        "DeployTargetEventList$member": null
+      }
+    },
+    "DeployTargetEventContext": {
+      "base": "<p>The context for the event for the deploy action.</p>",
+      "refs": {
+        "DeployTargetEvent$context": "<p>The context for the event for the deploy action.</p>"
+      }
+    },
+    "DeployTargetEventList": {
+      "base": null,
+      "refs": {
+        "DeployActionExecutionTarget$events": "<p>The lifecycle events for the deploy action.</p>"
       }
     },
     "DeregisterWebhookWithThirdPartyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterWebhookWithThirdPartyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -782,8 +796,7 @@
     },
     "DisableStageTransitionInput": {
       "base": "<p>Represents the input of a <code>DisableStageTransition</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DisabledReason": {
       "base": null,
@@ -794,13 +807,11 @@
     },
     "DuplicatedStopRequestException": {
       "base": "<p>The pipeline execution is already in a <code>Stopping</code> state. If you already chose to stop and wait, you cannot make that request again. You can choose to stop and abandon now, but be aware that this option can lead to failed tasks or out of sequence tasks. If you already chose to stop and abandon, you cannot make that request again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EnableStageTransitionInput": {
       "base": "<p>Represents the input of an <code>EnableStageTransition</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Enabled": {
       "base": null,
@@ -826,6 +837,36 @@
       "base": null,
       "refs": {
         "EncryptionKey$type": "<p>The type of encryption key, such as an Amazon Web Services KMS key. When creating or updating a pipeline, the value must be set to 'KMS'.</p>"
+      }
+    },
+    "EnvironmentVariable": {
+      "base": "<p>The environment variables for the action.</p>",
+      "refs": {
+        "EnvironmentVariableList$member": null
+      }
+    },
+    "EnvironmentVariableList": {
+      "base": null,
+      "refs": {
+        "ActionDeclaration$environmentVariables": "<p>The environment variables for the action.</p>"
+      }
+    },
+    "EnvironmentVariableName": {
+      "base": null,
+      "refs": {
+        "EnvironmentVariable$name": "<p>The environment variable name in the key-value pair.</p>"
+      }
+    },
+    "EnvironmentVariableType": {
+      "base": null,
+      "refs": {
+        "EnvironmentVariable$type": "<p>Specifies the type of use for the environment variable value. The value can be either <code>PLAINTEXT</code> or <code>SECRETS_MANAGER</code>. If the value is <code>SECRETS_MANAGER</code>, provide the Secrets reference in the EnvironmentVariable value.</p>"
+      }
+    },
+    "EnvironmentVariableValue": {
+      "base": null,
+      "refs": {
+        "EnvironmentVariable$value": "<p>The environment variable value in the key-value pair.</p>"
       }
     },
     "ErrorDetails": {
@@ -914,7 +955,7 @@
       }
     },
     "FailureConditions": {
-      "base": "<p>The configuration that specifies the result, such as rollback, to occur upon stage failure. </p>",
+      "base": "<p>The configuration that specifies the result, such as rollback, to occur upon stage failure. For more information about conditions, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html\">Stage conditions</a> and <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html\">How do stage conditions work?</a>. </p>",
       "refs": {
         "StageDeclaration$onFailure": "<p>The method to use when a stage has not completed successfully. For example, configuring this field for rollback will roll back a failed stage automatically to the last successful pipeline execution in the stage.</p>"
       }
@@ -946,63 +987,51 @@
     },
     "GetActionTypeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetActionTypeOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobDetailsInput": {
       "base": "<p>Represents the input of a <code>GetJobDetails</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobDetailsOutput": {
       "base": "<p>Represents the output of a <code>GetJobDetails</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPipelineExecutionInput": {
       "base": "<p>Represents the input of a <code>GetPipelineExecution</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPipelineExecutionOutput": {
       "base": "<p>Represents the output of a <code>GetPipelineExecution</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPipelineInput": {
       "base": "<p>Represents the input of a <code>GetPipeline</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPipelineOutput": {
       "base": "<p>Represents the output of a <code>GetPipeline</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPipelineStateInput": {
       "base": "<p>Represents the input of a <code>GetPipelineState</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPipelineStateOutput": {
       "base": "<p>Represents the output of a <code>GetPipelineState</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetThirdPartyJobDetailsInput": {
       "base": "<p>Represents the input of a <code>GetThirdPartyJobDetails</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetThirdPartyJobDetailsOutput": {
       "base": "<p>Represents the output of a <code>GetThirdPartyJobDetails</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GitBranchFilterCriteria": {
       "base": "<p>The Git repository branches specified as filter criteria to start the pipeline.</p>",
@@ -1059,11 +1088,11 @@
     "GitPullRequestEventTypeList": {
       "base": null,
       "refs": {
-        "GitPullRequestFilter$events": "<p>The field that specifies which pull request events to filter on (opened, updated, closed) for the trigger configuration.</p>"
+        "GitPullRequestFilter$events": "<p>The field that specifies which pull request events to filter on (OPEN, UPDATED, CLOSED) for the trigger configuration.</p>"
       }
     },
     "GitPullRequestFilter": {
-      "base": "<p>The event criteria for the pull request trigger configuration, such as the lists of branches or file paths to include and exclude.</p>",
+      "base": "<p>The event criteria for the pull request trigger configuration, such as the lists of branches or file paths to include and exclude.</p> <p>The following are valid values for the events for this filter:</p> <ul> <li> <p>CLOSED</p> </li> <li> <p>OPEN</p> </li> <li> <p>UPDATED</p> </li> </ul>",
       "refs": {
         "GitPullRequestFilterList$member": null
       }
@@ -1120,73 +1149,59 @@
     },
     "InvalidActionDeclarationException": {
       "base": "<p>The action declaration was specified in an invalid format.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidApprovalTokenException": {
       "base": "<p>The approval request already received a response or has expired.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidArnException": {
       "base": "<p>The specified resource ARN is invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidBlockerDeclarationException": {
       "base": "<p>Reserved for future use.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidClientTokenException": {
       "base": "<p>The client token was specified in an invalid format</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidJobException": {
       "base": "<p>The job was specified in an invalid format or cannot be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidJobStateException": {
       "base": "<p>The job state was specified in an invalid format.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidNextTokenException": {
       "base": "<p>The next token was specified in an invalid format. Make sure that the next token you provide is the token returned by a previous call.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidNonceException": {
       "base": "<p>The nonce was specified in an invalid format.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidStageDeclarationException": {
       "base": "<p>The stage declaration was specified in an invalid format.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidStructureException": {
       "base": "<p>The structure was specified in an invalid format.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidTagsException": {
       "base": "<p>The specified resource tags are invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidWebhookAuthenticationParametersException": {
       "base": "<p>The specified authentication type is in an invalid format.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidWebhookFilterPatternException": {
       "base": "<p>The specified event filter rule is in an invalid format.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Job": {
       "base": "<p>Represents information about a job.</p>",
@@ -1227,8 +1242,7 @@
     },
     "JobNotFoundException": {
       "base": "<p>The job was specified in an invalid format or cannot be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "JobStatus": {
       "base": null,
@@ -1297,78 +1311,71 @@
     },
     "LimitExceededException": {
       "base": "<p>The number of pipelines associated with the Amazon Web Services account has exceeded the limit allowed for the account.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListActionExecutionsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListActionExecutionsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListActionTypesInput": {
       "base": "<p>Represents the input of a <code>ListActionTypes</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListActionTypesOutput": {
       "base": "<p>Represents the output of a <code>ListActionTypes</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ListDeployActionExecutionTargetsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDeployActionExecutionTargetsOutput": {
+      "base": null,
+      "refs": {}
     },
     "ListPipelineExecutionsInput": {
       "base": "<p>Represents the input of a <code>ListPipelineExecutions</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPipelineExecutionsOutput": {
       "base": "<p>Represents the output of a <code>ListPipelineExecutions</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPipelinesInput": {
       "base": "<p>Represents the input of a <code>ListPipelines</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPipelinesOutput": {
       "base": "<p>Represents the output of a <code>ListPipelines</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRuleExecutionsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRuleExecutionsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRuleTypesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRuleTypesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWebhookItem": {
       "base": "<p>The detail returned for each webhook after listing webhooks, such as the webhook URL, the webhook name, and the webhook ARN.</p>",
@@ -1379,13 +1386,11 @@
     },
     "ListWebhooksInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWebhooksOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LogStreamARN": {
       "base": null,
@@ -1417,6 +1422,7 @@
       "base": null,
       "refs": {
         "ListActionExecutionsInput$maxResults": "<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned nextToken value. Action execution history is retained for up to 12 months, based on action execution start times. Default value is 100. </p>",
+        "ListDeployActionExecutionTargetsInput$maxResults": "<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned nextToken value.</p>",
         "ListPipelineExecutionsInput$maxResults": "<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned nextToken value. Pipeline history is limited to the most recent 12 months, based on pipeline execution start times. Default value is 100.</p>",
         "ListRuleExecutionsInput$maxResults": "<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned nextToken value. Pipeline history is limited to the most recent 12 months, based on pipeline execution start times. Default value is 100.</p>",
         "ListTagsForResourceInput$maxResults": "<p>The maximum number of results to return in a single call.</p>",
@@ -1438,6 +1444,7 @@
     "Message": {
       "base": null,
       "refs": {
+        "ActionExecutionNotFoundException$message": null,
         "ConcurrentModificationException$message": null,
         "ConcurrentPipelineExecutionsLimitExceededException$message": null,
         "ConflictException$message": null,
@@ -1472,6 +1479,8 @@
         "ListActionExecutionsOutput$nextToken": "<p>If the amount of returned information is significantly large, an identifier is also returned and can be used in a subsequent <code>ListActionExecutions</code> call to return the next set of action executions in the list.</p>",
         "ListActionTypesInput$nextToken": "<p>An identifier that was returned from the previous list action types call, which can be used to return the next set of action types in the list.</p>",
         "ListActionTypesOutput$nextToken": "<p>If the amount of returned information is significantly large, an identifier is also returned. It can be used in a subsequent list action types call to return the next set of action types in the list.</p>",
+        "ListDeployActionExecutionTargetsInput$nextToken": "<p>An identifier that was returned from the previous list action types call, which can be used to return the next set of action types in the list.</p>",
+        "ListDeployActionExecutionTargetsOutput$nextToken": "<p>An identifier that was returned from the previous list action types call, which can be used to return the next set of action types in the list.</p>",
         "ListPipelineExecutionsInput$nextToken": "<p>The token that was returned from the previous <code>ListPipelineExecutions</code> call, which can be used to return the next set of pipeline executions in the list.</p>",
         "ListPipelineExecutionsOutput$nextToken": "<p>A token that can be used in the next <code>ListPipelineExecutions</code> call. To view all items in the list, continue to call this operation with each subsequent token until no more nextToken values are returned.</p>",
         "ListPipelinesInput$nextToken": "<p>An identifier that was returned from the previous list pipelines call. It can be used to return the next set of pipelines in the list.</p>",
@@ -1495,8 +1504,7 @@
     },
     "NotLatestPipelineExecutionException": {
       "base": "<p>The stage has failed in a later run of the pipeline and the <code>pipelineExecutionId</code> associated with the request is out of date.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OutputArtifact": {
       "base": "<p>Represents information about the output of an action.</p>",
@@ -1537,8 +1545,7 @@
     },
     "OutputVariablesSizeExceededException": {
       "base": "<p>Exceeded the total size limit for all variables in the pipeline.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OutputVariablesValue": {
       "base": null,
@@ -1548,8 +1555,7 @@
     },
     "OverrideStageConditionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Percentage": {
       "base": null,
@@ -1621,18 +1627,15 @@
     },
     "PipelineExecutionNotFoundException": {
       "base": "<p>The pipeline execution was specified in an invalid format or cannot be found, or an execution ID does not belong to the specified pipeline. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PipelineExecutionNotStoppableException": {
       "base": "<p>Unable to stop the pipeline execution. The execution might already be in a <code>Stopped</code> state, or it might no longer be in progress.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PipelineExecutionOutdatedException": {
       "base": "<p>The specified pipeline execution is outdated and cannot be used as a target pipeline execution for rollback.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PipelineExecutionStatus": {
       "base": null,
@@ -1683,6 +1686,7 @@
         "GetPipelineStateInput$name": "<p>The name of the pipeline about which you want to get information.</p>",
         "GetPipelineStateOutput$pipelineName": "<p>The name of the pipeline for which you want to get the state.</p>",
         "ListActionExecutionsInput$pipelineName": "<p> The name of the pipeline for which you want to list action execution history.</p>",
+        "ListDeployActionExecutionTargetsInput$pipelineName": "<p>The name of the pipeline with the deploy action.</p>",
         "ListPipelineExecutionsInput$pipelineName": "<p>The name of the pipeline for which you want to get execution summary information.</p>",
         "ListRuleExecutionsInput$pipelineName": "<p>The name of the pipeline for which you want to get execution summary information.</p>",
         "OverrideStageConditionInput$pipelineName": "<p>The name of the pipeline with the stage that will override the condition.</p>",
@@ -1701,13 +1705,11 @@
     },
     "PipelineNameInUseException": {
       "base": "<p>The specified pipeline name is already in use.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PipelineNotFoundException": {
       "base": "<p>The pipeline was specified in an invalid format or cannot be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PipelineRollbackMetadata": {
       "base": "<p>The metadata for the stage execution to be rolled back.</p>",
@@ -1811,8 +1813,7 @@
     },
     "PipelineVersionNotFoundException": {
       "base": "<p>The pipeline version was specified in an invalid format or cannot be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PolicyStatementsTemplate": {
       "base": null,
@@ -1822,23 +1823,19 @@
     },
     "PollForJobsInput": {
       "base": "<p>Represents the input of a <code>PollForJobs</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PollForJobsOutput": {
       "base": "<p>Represents the output of a <code>PollForJobs</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PollForThirdPartyJobsInput": {
       "base": "<p>Represents the input of a <code>PollForThirdPartyJobs</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PollForThirdPartyJobsOutput": {
       "base": "<p>Represents the output of a <code>PollForThirdPartyJobs</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PollingAccountList": {
       "base": null,
@@ -1860,53 +1857,43 @@
     },
     "PutActionRevisionInput": {
       "base": "<p>Represents the input of a <code>PutActionRevision</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutActionRevisionOutput": {
       "base": "<p>Represents the output of a <code>PutActionRevision</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutApprovalResultInput": {
       "base": "<p>Represents the input of a <code>PutApprovalResult</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutApprovalResultOutput": {
       "base": "<p>Represents the output of a <code>PutApprovalResult</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutJobFailureResultInput": {
       "base": "<p>Represents the input of a <code>PutJobFailureResult</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutJobSuccessResultInput": {
       "base": "<p>Represents the input of a <code>PutJobSuccessResult</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutThirdPartyJobFailureResultInput": {
       "base": "<p>Represents the input of a <code>PutThirdPartyJobFailureResult</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutThirdPartyJobSuccessResultInput": {
       "base": "<p>Represents the input of a <code>PutThirdPartyJobSuccessResult</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutWebhookInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutWebhookOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryParamMap": {
       "base": null,
@@ -1916,18 +1903,15 @@
     },
     "RegisterWebhookWithThirdPartyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterWebhookWithThirdPartyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RequestFailedException": {
       "base": "<p>The request failed because of an unknown error, exception, or failure.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResolvedActionConfigurationMap": {
       "base": null,
@@ -1963,8 +1947,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The resource was specified in an invalid format.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Result": {
       "base": null,
@@ -1988,13 +1971,11 @@
     },
     "RetryStageExecutionInput": {
       "base": "<p>Represents the input of a <code>RetryStageExecution</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RetryStageExecutionOutput": {
       "base": "<p>Represents the output of a <code>RetryStageExecution</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RetryStageMetadata": {
       "base": "<p>The details of a specific automatic retry on stage failure, including the attempt number and trigger.</p>",
@@ -2049,13 +2030,11 @@
     },
     "RollbackStageInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RollbackStageOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RuleCategory": {
       "base": null,
@@ -2102,7 +2081,7 @@
       }
     },
     "RuleDeclaration": {
-      "base": "<p>Represents information about the rule to be created for an associated condition. An example would be creating a new rule for an entry condition, such as a rule that checks for a test result before allowing the run to enter the deployment stage. For more information about conditions, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html\">Stage conditions</a>. For more information about rules, see the <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html\">CodePipeline rule reference</a>.</p>",
+      "base": "<p>Represents information about the rule to be created for an associated condition. An example would be creating a new rule for an entry condition, such as a rule that checks for a test result before allowing the run to enter the deployment stage. For more information about conditions, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html\">Stage conditions</a> and <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html\">How do stage conditions work?</a>. For more information about rules, see the <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html\">CodePipeline rule reference</a>.</p>",
       "refs": {
         "RuleDeclarationList$member": null
       }
@@ -2193,7 +2172,7 @@
     "RuleProvider": {
       "base": null,
       "refs": {
-        "RuleTypeId$provider": "<p>The rule provider, such as the <code>DeploymentWindow</code> rule.</p>"
+        "RuleTypeId$provider": "<p>The rule provider, such as the <code>DeploymentWindow</code> rule. For a list of rule provider names, see the rules listed in the <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html\">CodePipeline rule reference</a>.</p>"
       }
     },
     "RuleRevision": {
@@ -2227,10 +2206,10 @@
       }
     },
     "RuleTypeId": {
-      "base": "<p>The ID for the rule type, which is made up of the combined values for category, owner, provider, and version.</p>",
+      "base": "<p>The ID for the rule type, which is made up of the combined values for category, owner, provider, and version. For more information about conditions, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html\">Stage conditions</a>. For more information about rules, see the <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html\">CodePipeline rule reference</a>.</p>",
       "refs": {
         "RuleDeclaration$ruleTypeId": "<p>The ID for the rule type, which is made up of the combined values for category, owner, provider, and version.</p>",
-        "RuleExecutionInput$ruleTypeId": "<p>The ID for the rule type, which is made up of the combined values for category, owner, provider, and version.</p>",
+        "RuleExecutionInput$ruleTypeId": "<p>The ID for the rule type, which is made up of the combined values for category, owner, provider, and version. For more information about conditions, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html\">Stage conditions</a>. For more information about rules, see the <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html\">CodePipeline rule reference</a>.</p>",
         "RuleType$id": "<p>Represents information about a rule type.</p>"
       }
     },
@@ -2408,13 +2387,11 @@
     },
     "StageNotFoundException": {
       "base": "<p>The stage was specified in an invalid format or cannot be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StageNotRetryableException": {
       "base": "<p>Unable to retry. The pipeline structure or stage state might have changed while actions awaited retry, or the stage contains no failed actions.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StageRetryMode": {
       "base": null,
@@ -2444,13 +2421,11 @@
     },
     "StartPipelineExecutionInput": {
       "base": "<p>Represents the input of a <code>StartPipelineExecution</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StartPipelineExecutionOutput": {
       "base": "<p>Represents the output of a <code>StartPipelineExecution</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTimeRange": {
       "base": null,
@@ -2466,13 +2441,11 @@
     },
     "StopPipelineExecutionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopPipelineExecutionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopPipelineExecutionReason": {
       "base": null,
@@ -2485,6 +2458,13 @@
       "base": null,
       "refs": {
         "ConditionNotOverridableException$message": null,
+        "DeployActionExecutionTarget$targetId": "<p>The ID of the target for the deploy action.</p>",
+        "DeployActionExecutionTarget$targetType": "<p>The type of target for the deploy action.</p>",
+        "DeployActionExecutionTarget$status": "<p>The status of the deploy action.</p>",
+        "DeployTargetEvent$name": "<p>The name of the event for the deploy action.</p>",
+        "DeployTargetEvent$status": "<p>The status of the event for the deploy action.</p>",
+        "DeployTargetEventContext$ssmCommandId": "<p>The command ID for the event for the deploy action.</p>",
+        "DeployTargetEventContext$message": "<p>The context message for the event for the deploy action.</p>",
         "ResolvedActionConfigurationMap$key": null,
         "ResolvedActionConfigurationMap$value": null,
         "ResolvedPipelineVariable$name": "<p>The name of a pipeline-level variable.</p>",
@@ -2501,7 +2481,7 @@
       }
     },
     "SuccessConditions": {
-      "base": "<p>The conditions for making checks that, if met, succeed a stage.</p>",
+      "base": "<p>The conditions for making checks that, if met, succeed a stage. For more information about conditions, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/stage-conditions.html\">Stage conditions</a> and <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html\">How do stage conditions work?</a>.</p>",
       "refs": {
         "StageDeclaration$onSuccess": "<p>The method to use when a stage has succeeded. For example, configuring this field for conditions will allow the stage to succeed when the conditions are met.</p>"
       }
@@ -2540,18 +2520,46 @@
     },
     "TagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
       "refs": {
         "Tag$value": "<p>The tag's value.</p>"
+      }
+    },
+    "TargetFilter": {
+      "base": "<p>Filters the list of targets.</p>",
+      "refs": {
+        "TargetFilterList$member": null
+      }
+    },
+    "TargetFilterList": {
+      "base": null,
+      "refs": {
+        "ListDeployActionExecutionTargetsInput$filters": "<p>Filters the targets for a specified deploy action.</p>"
+      }
+    },
+    "TargetFilterName": {
+      "base": null,
+      "refs": {
+        "TargetFilter$name": "<p>The name on which to filter.</p>"
+      }
+    },
+    "TargetFilterValue": {
+      "base": null,
+      "refs": {
+        "TargetFilterValueList$member": null
+      }
+    },
+    "TargetFilterValueList": {
+      "base": null,
+      "refs": {
+        "TargetFilter$values": "<p>The values on which to filter.</p>"
       }
     },
     "ThirdPartyJob": {
@@ -2603,13 +2611,17 @@
         "ActionRevision$created": "<p>The date and time when the most recent version of the action was created, in timestamp format.</p>",
         "ArtifactRevision$created": "<p>The date and time when the most recent revision of the artifact was created, in timestamp format.</p>",
         "ConditionExecution$lastStatusChange": "<p>The last status change of the condition.</p>",
+        "DeployActionExecutionTarget$startTime": "<p>The start time for the deploy action.</p>",
+        "DeployActionExecutionTarget$endTime": "<p>The end time for the deploy action.</p>",
+        "DeployTargetEvent$startTime": "<p>The start time for the event for the deploy action.</p>",
+        "DeployTargetEvent$endTime": "<p>The end time for the event for the deploy action.</p>",
         "GetPipelineStateOutput$created": "<p>The date and time the pipeline was created, in timestamp format.</p>",
         "GetPipelineStateOutput$updated": "<p>The date and time the pipeline was last updated, in timestamp format.</p>",
         "PipelineExecutionSummary$startTime": "<p>The date and time when the pipeline execution began, in timestamp format.</p>",
         "PipelineExecutionSummary$lastUpdateTime": "<p>The date and time of the last change to the pipeline execution, in timestamp format.</p>",
         "PipelineMetadata$created": "<p>The date and time the pipeline was created, in timestamp format.</p>",
         "PipelineMetadata$updated": "<p>The date and time the pipeline was last updated, in timestamp format.</p>",
-        "PipelineMetadata$pollingDisabledAt": "<p>The date and time that polling for source changes (periodic checks) was stopped for the pipeline, in timestamp format. You can migrate (update) a polling pipeline to use event-based change detection. For example, for a pipeline with a CodeCommit source, we recommend you migrate (update) your pipeline to use CloudWatch Events. To learn more, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/update-change-detection.html\">Migrate polling pipelines to use event-based change detection</a> in the CodePipeline User Guide.</p>",
+        "PipelineMetadata$pollingDisabledAt": "<p>The date and time that polling for source changes (periodic checks) was stopped for the pipeline, in timestamp format. </p> <important> <p>Pipelines that are inactive for longer than 30 days will have polling disabled for the pipeline. For more information, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/reference-pipeline-structure.html#metadata.pollingDisabledAt\">pollingDisabledAt</a> in the pipeline structure reference. For the steps to migrate your pipeline from polling to event-based change detection, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/update-change-detection.html\">Migrate polling pipelines to use event-based change detection</a>.</p> </important> <p>You can migrate (update) a polling pipeline to use event-based change detection. For example, for a pipeline with a CodeCommit source, we recommend you migrate (update) your pipeline to use CloudWatch Events. To learn more, see <a href=\"https://docs.aws.amazon.com/codepipeline/latest/userguide/update-change-detection.html\">Migrate polling pipelines to use event-based change detection</a> in the <i>CodePipeline User Guide</i>.</p>",
         "PipelineSummary$created": "<p>The date and time the pipeline was created, in timestamp format.</p>",
         "PipelineSummary$updated": "<p>The date and time of the last update to the pipeline, in timestamp format.</p>",
         "PutApprovalResultOutput$approvedAt": "<p>The timestamp showing when the approval or rejection was submitted.</p>",
@@ -2621,8 +2633,7 @@
     },
     "TooManyTagsException": {
       "base": "<p>The tags limit for a resource has been exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TransitionState": {
       "base": "<p>Represents information about the state of transitions between one stage and another stage.</p>",
@@ -2644,33 +2655,27 @@
     },
     "UnableToRollbackStageException": {
       "base": "<p>Unable to roll back the stage. The cause might be if the pipeline version has changed since the target pipeline execution was deployed, the stage is currently running, or an incorrect target pipeline execution ID was provided.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateActionTypeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePipelineInput": {
       "base": "<p>Represents the input of an <code>UpdatePipeline</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePipelineOutput": {
       "base": "<p>Represents the output of an <code>UpdatePipeline</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Url": {
       "base": null,
@@ -2706,8 +2711,7 @@
     },
     "ValidationException": {
       "base": "<p>The validation was specified in an invalid format.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Version": {
       "base": null,
@@ -2804,8 +2808,7 @@
     },
     "WebhookNotFoundException": {
       "base": "<p>The specified webhook was entered in an invalid format or cannot be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WebhookUrl": {
       "base": null,

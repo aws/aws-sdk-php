@@ -12,7 +12,9 @@
     "CreateMembers": "<p>Creates member accounts of the current Amazon Web Services account by specifying a list of Amazon Web Services account IDs. This step is a prerequisite for managing the associated member accounts either by invitation or through an organization.</p> <p>As a delegated administrator, using <code>CreateMembers</code> will enable GuardDuty in the added member accounts, with the exception of the organization delegated administrator account. A delegated administrator must enable GuardDuty prior to being added as a member.</p> <p>When you use CreateMembers as an Organizations delegated administrator, GuardDuty applies your organization's auto-enable settings to the member accounts in this request, irrespective of the accounts being new or existing members. For more information about the existing auto-enable settings for your organization, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DescribeOrganizationConfiguration.html\">DescribeOrganizationConfiguration</a>.</p> <p>If you disassociate a member account that was added by invitation, the member account details obtained from this API, including the associated email addresses, will be retained. This is done so that the delegated administrator can invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html\">InviteMembers</a> API without the need to invoke the CreateMembers API again. To remove the details associated with a member account, the delegated administrator must invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html\">DeleteMembers</a> API. </p> <p>When the member accounts added through Organizations are later disassociated, you (administrator) can't invite them by calling the InviteMembers API. You can create an association with these member accounts again only by calling the CreateMembers API.</p>",
     "CreatePublishingDestination": "<p>Creates a publishing destination where you can export your GuardDuty findings. Before you start exporting the findings, the destination resource must exist.</p>",
     "CreateSampleFindings": "<p>Generates sample findings of types specified by the list of finding types. If 'NULL' is specified for <code>findingTypes</code>, the API generates sample findings of all supported finding types.</p>",
+    "CreateThreatEntitySet": "<p>Creates a new threat entity set. In a threat entity set, you can provide known malicious IP addresses and domains for your Amazon Web Services environment. GuardDuty generates findings based on the entries in the threat entity sets. Only users of the administrator account can manage entity sets, which automatically apply to member accounts.</p>",
     "CreateThreatIntelSet": "<p>Creates a new ThreatIntelSet. ThreatIntelSets consist of known malicious IP addresses. GuardDuty generates findings based on ThreatIntelSets. Only users of the administrator account can use this operation.</p>",
+    "CreateTrustedEntitySet": "<p>Creates a new trusted entity set. In the trusted entity set, you can provide IP addresses and domains that you believe are secure for communication in your Amazon Web Services environment. GuardDuty will not generate findings for the entries that are specified in a trusted entity set. At any given time, you can have only one trusted entity set. </p> <p>Only users of the administrator account can manage the entity sets, which automatically apply to member accounts.</p>",
     "DeclineInvitations": "<p>Declines invitations sent to the current member account by Amazon Web Services accounts specified by their account IDs.</p>",
     "DeleteDetector": "<p>Deletes an Amazon GuardDuty detector that is specified by the detector ID.</p>",
     "DeleteFilter": "<p>Deletes the filter specified by the filter name.</p>",
@@ -21,7 +23,9 @@
     "DeleteMalwareProtectionPlan": "<p>Deletes the Malware Protection plan ID associated with the Malware Protection plan resource. Use this API only when you no longer want to protect the resource associated with this Malware Protection plan ID.</p>",
     "DeleteMembers": "<p>Deletes GuardDuty member accounts (to the current GuardDuty administrator account) specified by the account IDs.</p> <p>With <code>autoEnableOrganizationMembers</code> configuration for your organization set to <code>ALL</code>, you'll receive an error if you attempt to disable GuardDuty for a member account in your organization.</p>",
     "DeletePublishingDestination": "<p>Deletes the publishing definition with the specified <code>destinationId</code>.</p>",
+    "DeleteThreatEntitySet": "<p>Deletes the threat entity set that is associated with the specified <code>threatEntitySetId</code>.</p>",
     "DeleteThreatIntelSet": "<p>Deletes the ThreatIntelSet specified by the ThreatIntelSet ID.</p>",
+    "DeleteTrustedEntitySet": "<p>Deletes the trusted entity set that is associated with the specified <code>trustedEntitySetId</code>.</p>",
     "DescribeMalwareScans": "<p>Returns a list of malware scans. Each member account can view the malware scans for their own accounts. An administrator can view the malware scans for all the member accounts.</p> <p>There might be regional differences because some data sources might not be available in all the Amazon Web Services Regions where GuardDuty is presently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
     "DescribeOrganizationConfiguration": "<p>Returns information about the account selected as the delegated administrator for GuardDuty.</p> <p>There might be regional differences because some data sources might not be available in all the Amazon Web Services Regions where GuardDuty is presently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
     "DescribePublishingDestination": "<p>Returns information about the publishing destination specified by the provided <code>destinationId</code>.</p>",
@@ -30,7 +34,7 @@
     "DisassociateFromMasterAccount": "<p>Disassociates the current GuardDuty member account from its administrator account.</p> <p>When you disassociate an invited member from a GuardDuty delegated administrator, the member account details obtained from the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_CreateMembers.html\">CreateMembers</a> API, including the associated email addresses, are retained. This is done so that the delegated administrator can invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html\">InviteMembers</a> API without the need to invoke the CreateMembers API again. To remove the details associated with a member account, the delegated administrator must invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html\">DeleteMembers</a> API.</p>",
     "DisassociateMembers": "<p>Disassociates GuardDuty member accounts (from the current administrator account) specified by the account IDs.</p> <p>When you disassociate an invited member from a GuardDuty delegated administrator, the member account details obtained from the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_CreateMembers.html\">CreateMembers</a> API, including the associated email addresses, are retained. This is done so that the delegated administrator can invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html\">InviteMembers</a> API without the need to invoke the CreateMembers API again. To remove the details associated with a member account, the delegated administrator must invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html\">DeleteMembers</a> API. </p> <p>With <code>autoEnableOrganizationMembers</code> configuration for your organization set to <code>ALL</code>, you'll receive an error if you attempt to disassociate a member account before removing them from your organization.</p> <p>If you disassociate a member account that was added by invitation, the member account details obtained from this API, including the associated email addresses, will be retained. This is done so that the delegated administrator can invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html\">InviteMembers</a> API without the need to invoke the CreateMembers API again. To remove the details associated with a member account, the delegated administrator must invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html\">DeleteMembers</a> API. </p> <p>When the member accounts added through Organizations are later disassociated, you (administrator) can't invite them by calling the InviteMembers API. You can create an association with these member accounts again only by calling the CreateMembers API.</p>",
     "EnableOrganizationAdminAccount": "<p>Designates an Amazon Web Services account within the organization as your GuardDuty delegated administrator. Only the organization's management account can run this API operation.</p>",
-    "GetAdministratorAccount": "<p>Provides the details of the GuardDuty administrator account associated with the current GuardDuty member account.</p> <note> <p>If the organization's management account or a delegated administrator runs this API, it will return success (<code>HTTP 200</code>) but no content.</p> </note>",
+    "GetAdministratorAccount": "<p>Provides the details of the GuardDuty administrator account associated with the current GuardDuty member account.</p> <p>Based on the type of account that runs this API, the following list shows how the API behavior varies:</p> <ul> <li> <p>When the GuardDuty administrator account runs this API, it will return success (<code>HTTP 200</code>) but no content.</p> </li> <li> <p>When a member account runs this API, it will return the details of the GuardDuty administrator account that is associated with this calling member account.</p> </li> <li> <p>When an individual account (not associated with an organization) runs this API, it will return success (<code>HTTP 200</code>) but no content.</p> </li> </ul>",
     "GetCoverageStatistics": "<p>Retrieves aggregated statistics for your account. If you are a GuardDuty administrator, you can retrieve the statistics for all the resources associated with the active member accounts in your organization who have enabled Runtime Monitoring and have the GuardDuty security agent running on their resources.</p>",
     "GetDetector": "<p>Retrieves a GuardDuty detector specified by the detectorId.</p> <p>There might be regional differences because some data sources might not be available in all the Amazon Web Services Regions where GuardDuty is presently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
     "GetFilter": "<p>Returns the details of the filter specified by the filter name.</p>",
@@ -45,7 +49,9 @@
     "GetMembers": "<p>Retrieves GuardDuty member accounts (of the current GuardDuty administrator account) specified by the account IDs.</p>",
     "GetOrganizationStatistics": "<p>Retrieves how many active member accounts have each feature enabled within GuardDuty. Only a delegated GuardDuty administrator of an organization can run this API.</p> <p>When you create a new organization, it might take up to 24 hours to generate the statistics for the entire organization.</p>",
     "GetRemainingFreeTrialDays": "<p>Provides the number of days left for each data source used in the free trial period.</p>",
+    "GetThreatEntitySet": "<p>Retrieves the threat entity set associated with the specified <code>threatEntitySetId</code>.</p>",
     "GetThreatIntelSet": "<p>Retrieves the ThreatIntelSet that is specified by the ThreatIntelSet ID.</p>",
+    "GetTrustedEntitySet": "<p>Retrieves the trusted entity set associated with the specified <code>trustedEntitySetId</code>.</p>",
     "GetUsageStatistics": "<p>Lists Amazon GuardDuty usage statistics over the last 30 days for the specified detector ID. For newly enabled detectors or data sources, the cost returned will include only the usage so far under 30 days. This may differ from the cost metrics in the console, which project usage over 30 days to provide a monthly cost estimate. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/monitoring_costs.html#usage-calculations\">Understanding How Usage Costs are Calculated</a>.</p>",
     "InviteMembers": "<p>Invites Amazon Web Services accounts to become members of an organization administered by the Amazon Web Services account that invokes this API. If you are using Amazon Web Services Organizations to manage your GuardDuty environment, this step is not needed. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_organizations.html\">Managing accounts with organizations</a>.</p> <p>To invite Amazon Web Services accounts, the first step is to ensure that GuardDuty has been enabled in the potential member accounts. You can now invoke this API to add accounts by invitation. The invited accounts can either accept or decline the invitation from their GuardDuty accounts. Each invited Amazon Web Services account can choose to accept the invitation from only one Amazon Web Services account. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_invitations.html\">Managing GuardDuty accounts by invitation</a>.</p> <p>After the invite has been accepted and you choose to disassociate a member account (by using <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DisassociateMembers.html\">DisassociateMembers</a>) from your account, the details of the member account obtained by invoking <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_CreateMembers.html\">CreateMembers</a>, including the associated email addresses, will be retained. This is done so that you can invoke InviteMembers without the need to invoke <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_CreateMembers.html\">CreateMembers</a> again. To remove the details associated with a member account, you must also invoke <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html\">DeleteMembers</a>. </p> <p>If you disassociate a member account that was added by invitation, the member account details obtained from this API, including the associated email addresses, will be retained. This is done so that the delegated administrator can invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html\">InviteMembers</a> API without the need to invoke the CreateMembers API again. To remove the details associated with a member account, the delegated administrator must invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html\">DeleteMembers</a> API. </p> <p>When the member accounts added through Organizations are later disassociated, you (administrator) can't invite them by calling the InviteMembers API. You can create an association with these member accounts again only by calling the CreateMembers API.</p>",
     "ListCoverage": "<p>Lists coverage details for your GuardDuty account. If you're a GuardDuty administrator, you can retrieve all resources associated with the active member accounts in your organization.</p> <p>Make sure the accounts have Runtime Monitoring enabled and GuardDuty agent running on their resources.</p>",
@@ -59,7 +65,9 @@
     "ListOrganizationAdminAccounts": "<p>Lists the accounts designated as GuardDuty delegated administrators. Only the organization's management account can run this API operation.</p>",
     "ListPublishingDestinations": "<p>Returns a list of publishing destinations associated with the specified <code>detectorId</code>.</p>",
     "ListTagsForResource": "<p>Lists tags for a resource. Tagging is currently supported for detectors, finding filters, IP sets, threat intel sets, and publishing destination, with a limit of 50 tags per resource. When invoked, this operation returns all assigned tags for a given resource.</p>",
+    "ListThreatEntitySets": "<p>Lists the threat entity sets associated with the specified GuardDuty detector ID. If you use this operation from a member account, the threat entity sets that are returned as a response, belong to the administrator account.</p>",
     "ListThreatIntelSets": "<p>Lists the ThreatIntelSets of the GuardDuty service specified by the detector ID. If you use this operation from a member account, the ThreatIntelSets associated with the administrator account are returned.</p>",
+    "ListTrustedEntitySets": "<p>Lists the trusted entity sets associated with the specified GuardDuty detector ID. If you use this operation from a member account, the trusted entity sets that are returned as a response, belong to the administrator account.</p>",
     "StartMalwareScan": "<p>Initiates the malware scan. Invoking this API will automatically create the <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/slr-permissions-malware-protection.html\">Service-linked role</a> in the corresponding account.</p> <p>When the malware scan starts, you can use the associated scan ID to track the status of the scan. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DescribeMalwareScans.html\">DescribeMalwareScans</a>.</p>",
     "StartMonitoringMembers": "<p>Turns on GuardDuty monitoring of the specified member accounts. Use this operation to restart monitoring of accounts that you stopped monitoring with the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_StopMonitoringMembers.html\">StopMonitoringMembers</a> operation.</p>",
     "StopMonitoringMembers": "<p>Stops GuardDuty monitoring for the specified member accounts. Use the <code>StartMonitoringMembers</code> operation to restart monitoring for those accounts.</p> <p>With <code>autoEnableOrganizationMembers</code> configuration for your organization set to <code>ALL</code>, you'll receive an error if you attempt to stop monitoring the member accounts in your organization.</p>",
@@ -75,28 +83,26 @@
     "UpdateMemberDetectors": "<p>Contains information on member accounts to be updated.</p> <p>Specifying both EKS Runtime Monitoring (<code>EKS_RUNTIME_MONITORING</code>) and Runtime Monitoring (<code>RUNTIME_MONITORING</code>) will cause an error. You can add only one of these two features because Runtime Monitoring already includes the threat detection for Amazon EKS resources. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/runtime-monitoring.html\">Runtime Monitoring</a>.</p> <p>There might be regional differences because some data sources might not be available in all the Amazon Web Services Regions where GuardDuty is presently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
     "UpdateOrganizationConfiguration": "<p>Configures the delegated administrator account with the provided values. You must provide a value for either <code>autoEnableOrganizationMembers</code> or <code>autoEnable</code>, but not both. </p> <p>Specifying both EKS Runtime Monitoring (<code>EKS_RUNTIME_MONITORING</code>) and Runtime Monitoring (<code>RUNTIME_MONITORING</code>) will cause an error. You can add only one of these two features because Runtime Monitoring already includes the threat detection for Amazon EKS resources. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/runtime-monitoring.html\">Runtime Monitoring</a>.</p> <p>There might be regional differences because some data sources might not be available in all the Amazon Web Services Regions where GuardDuty is presently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
     "UpdatePublishingDestination": "<p>Updates information about the publishing destination specified by the <code>destinationId</code>.</p>",
-    "UpdateThreatIntelSet": "<p>Updates the ThreatIntelSet specified by the ThreatIntelSet ID.</p>"
+    "UpdateThreatEntitySet": "<p>Updates the threat entity set associated with the specified <code>threatEntitySetId</code>.</p>",
+    "UpdateThreatIntelSet": "<p>Updates the ThreatIntelSet specified by the ThreatIntelSet ID.</p>",
+    "UpdateTrustedEntitySet": "<p>Updates the trusted entity set associated with the specified <code>trustedEntitySetId</code>.</p>"
   },
   "shapes": {
     "AcceptAdministratorInvitationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AcceptAdministratorInvitationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AcceptInvitationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AcceptInvitationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessControlList": {
       "base": "<p>Contains information on the current access control policies for the bucket.</p>",
@@ -106,8 +112,7 @@
     },
     "AccessDeniedException": {
       "base": "<p>An access denied exception object.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessKey": {
       "base": "<p>Contains information about the access keys.</p>",
@@ -158,12 +163,19 @@
         "AccountIds$member": null,
         "Administrator$AccountId": "<p>The ID of the account used as the administrator account.</p>",
         "CoverageResource$AccountId": "<p>The unique ID of the Amazon Web Services account.</p>",
+        "CreateIPSetRequest$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter.</p>",
+        "CreateThreatIntelSetRequest$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter.</p>",
+        "DnsRequestAction$VpcOwnerAccountId": "<p>The Amazon Web Services account ID that owns the VPC through which the DNS request was made.</p>",
+        "GetIPSetResponse$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter. This field appears in the response only if it was provided during IPSet creation or update.</p>",
+        "GetThreatIntelSetResponse$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter. This field appears in the response only if it was provided during ThreatIntelSet creation or update.</p>",
         "Invitation$AccountId": "<p>The ID of the account that the invitation was sent from.</p>",
         "Master$AccountId": "<p>The ID of the account used as the administrator account.</p>",
         "Member$AccountId": "<p>The ID of the member account.</p>",
         "MemberDataSourceConfiguration$AccountId": "<p>The account ID for the member account.</p>",
         "Scan$AccountId": "<p>The ID for the account that belongs to the scan.</p>",
         "UnprocessedAccount$AccountId": "<p>The Amazon Web Services account ID.</p>",
+        "UpdateIPSetRequest$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter.</p>",
+        "UpdateThreatIntelSetRequest$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter.</p>",
         "UsageAccountResult$AccountId": "<p>The Account ID that generated usage.</p>",
         "UsageTopAccountResult$AccountId": "<p>The unique account ID.</p>"
       }
@@ -215,10 +227,22 @@
         "Signal$ActorIds": "<p>Information about the IDs of the threat actors involved in the signal.</p>"
       }
     },
+    "ActorProcess": {
+      "base": "<p>Contains information about a process involved in a GuardDuty finding, including process identification, execution details, and file information.</p>",
+      "refs": {
+        "Actor$Process": "<p>Contains information about the process associated with the threat actor. This includes details such as process name, path, execution time, and unique identifiers that help track the actor's activities within the system.</p>"
+      }
+    },
     "Actors": {
       "base": null,
       "refs": {
         "Sequence$Actors": "<p>Contains information about the actors involved in the attack sequence.</p>"
+      }
+    },
+    "AdditionalSequenceTypes": {
+      "base": null,
+      "refs": {
+        "Sequence$AdditionalSequenceTypes": "<p>Additional types of sequences that may be associated with the attack sequence finding, providing further context about the nature of the detected threat.</p>"
       }
     },
     "AddonDetails": {
@@ -308,13 +332,11 @@
     },
     "ArchiveFindingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ArchiveFindingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AutoEnableMembers": {
       "base": null,
@@ -337,8 +359,7 @@
     },
     "BadRequestException": {
       "base": "<p>A bad request exception object.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Behavior": {
       "base": null,
@@ -366,7 +387,9 @@
         "BucketPolicy$AllowsPublicWriteAccess": "<p>A value that indicates whether public write access for the bucket is enabled through a bucket policy.</p>",
         "CreateDetectorRequest$Enable": "<p>A Boolean value that specifies whether the detector is to be enabled.</p>",
         "CreateIPSetRequest$Activate": "<p>A Boolean value that indicates whether GuardDuty is to start using the uploaded IPSet.</p>",
+        "CreateThreatEntitySetRequest$Activate": "<p>A boolean value that indicates whether GuardDuty should start using the uploaded threat entity set to generate findings.</p>",
         "CreateThreatIntelSetRequest$Activate": "<p>A Boolean value that indicates whether GuardDuty is to start using the uploaded ThreatIntelSet.</p>",
+        "CreateTrustedEntitySetRequest$Activate": "<p>A boolean value that indicates whether GuardDuty is to start using the uploaded trusted entity set.</p>",
         "DescribeOrganizationConfigurationResponse$AutoEnable": "<p>Indicates whether GuardDuty is automatically enabled for accounts added to the organization.</p> <p>Even though this is still supported, we recommend using <code>AutoEnableOrganizationMembers</code> to achieve the similar results.</p>",
         "DescribeOrganizationConfigurationResponse$MemberAccountLimitReached": "<p>Indicates whether the maximum number of allowed member accounts are already associated with the delegated administrator account for your organization.</p>",
         "DnsRequestAction$Blocked": "<p>Indicates whether the targeted port is blocked.</p>",
@@ -394,7 +417,9 @@
         "UpdateDetectorRequest$Enable": "<p>Specifies whether the detector is enabled or not enabled.</p>",
         "UpdateIPSetRequest$Activate": "<p>The updated Boolean value that specifies whether the IPSet is active or not.</p>",
         "UpdateOrganizationConfigurationRequest$AutoEnable": "<p>Represents whether to automatically enable member accounts in the organization. This applies to only new member accounts, not the existing member accounts. When a new account joins the organization, the chosen features will be enabled for them by default.</p> <p>Even though this is still supported, we recommend using <code>AutoEnableOrganizationMembers</code> to achieve the similar results. You must provide a value for either <code>autoEnableOrganizationMembers</code> or <code>autoEnable</code>.</p>",
-        "UpdateThreatIntelSetRequest$Activate": "<p>The updated Boolean value that specifies whether the ThreateIntelSet is active or not.</p>"
+        "UpdateThreatEntitySetRequest$Activate": "<p>A boolean value that indicates whether GuardDuty is to start using this updated threat entity set. After you update an entity set, you will need to activate it again. It might take up to 15 minutes for the updated entity set to be effective.</p>",
+        "UpdateThreatIntelSetRequest$Activate": "<p>The updated Boolean value that specifies whether the ThreateIntelSet is active or not.</p>",
+        "UpdateTrustedEntitySetRequest$Activate": "<p>A boolean value that indicates whether GuardDuty is to start using this updated trusted entity set. After you update an entity set, you will need to activate it again. It might take up to 15 minutes for the updated entity set to be effective.</p>"
       }
     },
     "BucketLevelPermissions": {
@@ -423,13 +448,21 @@
         "CreateIPSetRequest$ClientToken": "<p>The idempotency token for the create request.</p>",
         "CreateMalwareProtectionPlanRequest$ClientToken": "<p>The idempotency token for the create request.</p>",
         "CreatePublishingDestinationRequest$ClientToken": "<p>The idempotency token for the request.</p>",
-        "CreateThreatIntelSetRequest$ClientToken": "<p>The idempotency token for the create request.</p>"
+        "CreateThreatEntitySetRequest$ClientToken": "<p>The idempotency token for the create request.</p>",
+        "CreateThreatIntelSetRequest$ClientToken": "<p>The idempotency token for the create request.</p>",
+        "CreateTrustedEntitySetRequest$ClientToken": "<p>The idempotency token for the create request.</p>"
       }
     },
     "CloudTrailConfigurationResult": {
       "base": "<p>Contains information on the status of CloudTrail as a data source for the detector.</p>",
       "refs": {
         "DataSourceConfigurationsResult$CloudTrail": "<p>An object that contains information on the status of CloudTrail as a data source.</p>"
+      }
+    },
+    "ClusterStatus": {
+      "base": null,
+      "refs": {
+        "EksCluster$Status": "<p>The current status of the Amazon EKS cluster.</p>"
       }
     },
     "Condition": {
@@ -440,8 +473,7 @@
     },
     "ConflictException": {
       "base": "<p>A request conflict exception object.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Container": {
       "base": "<p>Details of a container.</p>",
@@ -450,10 +482,34 @@
         "Resource$ContainerDetails": null
       }
     },
+    "ContainerFindingResource": {
+      "base": "<p>Contains information about container resources involved in a GuardDuty finding. This structure provides details about containers that were identified as part of suspicious or malicious activity.</p>",
+      "refs": {
+        "ResourceData$Container": "<p>Contains detailed information about the container associated with the activity that prompted GuardDuty to generate a finding.</p>"
+      }
+    },
+    "ContainerImageUid": {
+      "base": null,
+      "refs": {
+        "ContainerFindingResource$ImageUid": "<p>The unique ID associated with the container image.</p>"
+      }
+    },
     "ContainerInstanceDetails": {
       "base": "<p>Contains information about the Amazon EC2 instance that is running the Amazon ECS container.</p>",
       "refs": {
         "CoverageEcsClusterDetails$ContainerInstanceDetails": "<p>Information about the Amazon ECS container running on Amazon EC2 instance.</p>"
+      }
+    },
+    "ContainerUid": {
+      "base": null,
+      "refs": {
+        "ContainerUids$member": null
+      }
+    },
+    "ContainerUids": {
+      "base": null,
+      "refs": {
+        "KubernetesWorkload$ContainerUids": "<p>A list of unique identifiers for the containers that are part of the Kubernetes workload.</p>"
       }
     },
     "Containers": {
@@ -593,53 +649,43 @@
     },
     "CreateDetectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDetectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFilterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIPSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIPSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMalwareProtectionPlanRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMalwareProtectionPlanResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProtectedResource": {
       "base": "<p>Information about the protected resource that is associated with the created Malware Protection plan. Presently, <code>S3Bucket</code> is the only supported protected resource.</p>",
@@ -650,13 +696,11 @@
     },
     "CreatePublishingDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePublishingDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateS3BucketResource": {
       "base": "<p>Information about the protected S3 bucket resource.</p>",
@@ -666,23 +710,35 @@
     },
     "CreateSampleFindingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSampleFindingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "CreateThreatEntitySetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateThreatEntitySetResponse": {
+      "base": null,
+      "refs": {}
     },
     "CreateThreatIntelSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateThreatIntelSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "CreateTrustedEntitySetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateTrustedEntitySetResponse": {
+      "base": null,
+      "refs": {}
     },
     "Criterion": {
       "base": null,
@@ -693,7 +749,7 @@
     "CriterionKey": {
       "base": null,
       "refs": {
-        "FilterCriterion$CriterionKey": "<p>An enum value representing possible scan properties to match with given scan entries.</p> <note> <p>Replace the enum value <code>CLUSTER_NAME</code> with <code>EKS_CLUSTER_NAME</code>. <code>CLUSTER_NAME</code> has been deprecated.</p> </note>"
+        "FilterCriterion$CriterionKey": "<p>An enum value representing possible scan properties to match with given scan entries.</p>"
       }
     },
     "DNSLogsConfigurationResult": {
@@ -766,13 +822,11 @@
     },
     "DeclineInvitationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeclineInvitationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DefaultServerSideEncryption": {
       "base": "<p>Contains information on the server side encryption method used in the S3 bucket. See <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/serv-side-encryption.html\">S3 Server-Side Encryption</a> for more information.</p>",
@@ -782,108 +836,103 @@
     },
     "DeleteDetectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDetectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFilterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIPSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIPSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInvitationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInvitationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMalwareProtectionPlanRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePublishingDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePublishingDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DeleteThreatEntitySetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteThreatEntitySetResponse": {
+      "base": null,
+      "refs": {}
     },
     "DeleteThreatIntelSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteThreatIntelSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DeleteTrustedEntitySetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTrustedEntitySetResponse": {
+      "base": null,
+      "refs": {}
     },
     "DescribeMalwareScansRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMalwareScansResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeOrganizationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeOrganizationConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePublishingDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePublishingDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Destination": {
       "base": "<p>Contains information about the publishing destination, including the ID, type, and status.</p>",
@@ -993,13 +1042,17 @@
         "CreateMembersRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account for which you want to associate member accounts.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "CreatePublishingDestinationRequest$DetectorId": "<p>The ID of the GuardDuty detector associated with the publishing destination.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "CreateSampleFindingsRequest$DetectorId": "<p>The ID of the detector for which you need to create sample findings.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
-        "CreateThreatIntelSetRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account for which you want to create a <code>ThreatIntelSet</code>.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
+        "CreateThreatEntitySetRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account for which you want to create a threat entity set.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
+        "CreateThreatIntelSetRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account for which you want to create a <code>threatIntelSet</code>.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
+        "CreateTrustedEntitySetRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account for which you want to create a trusted entity set.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "DeleteDetectorRequest$DetectorId": "<p>The unique ID of the detector that you want to delete.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "DeleteFilterRequest$DetectorId": "<p>The unique ID of the detector that is associated with the filter.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "DeleteIPSetRequest$DetectorId": "<p>The unique ID of the detector associated with the IPSet.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "DeleteMembersRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account whose members you want to delete.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "DeletePublishingDestinationRequest$DetectorId": "<p>The unique ID of the detector associated with the publishing destination to delete.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
+        "DeleteThreatEntitySetRequest$DetectorId": "<p>The unique ID of the detector associated with the threat entity set resource.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "DeleteThreatIntelSetRequest$DetectorId": "<p>The unique ID of the detector that is associated with the threatIntelSet.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
+        "DeleteTrustedEntitySetRequest$DetectorId": "<p>The unique ID of the detector associated with the trusted entity set resource.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "DescribeMalwareScansRequest$DetectorId": "<p>The unique ID of the detector that the request is associated with.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "DescribeOrganizationConfigurationRequest$DetectorId": "<p>The detector ID of the delegated administrator for which you need to retrieve the information.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "DescribePublishingDestinationRequest$DetectorId": "<p>The unique ID of the detector associated with the publishing destination to retrieve.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
@@ -1019,7 +1072,9 @@
         "GetMemberDetectorsRequest$DetectorId": "<p>The detector ID for the administrator account.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "GetMembersRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account whose members you want to retrieve.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "GetRemainingFreeTrialDaysRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty member account.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
+        "GetThreatEntitySetRequest$DetectorId": "<p>The unique ID of the detector associated with the threat entity set resource.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "GetThreatIntelSetRequest$DetectorId": "<p>The unique ID of the detector that is associated with the threatIntelSet.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
+        "GetTrustedEntitySetRequest$DetectorId": "<p>The unique ID of the GuardDuty detector associated with this trusted entity set.</p>",
         "GetUsageStatisticsRequest$DetectorId": "<p>The ID of the detector that specifies the GuardDuty service whose usage statistics you want to retrieve.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "InviteMembersRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account with which you want to invite members.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "ListCoverageRequest$DetectorId": "<p>The unique ID of the detector whose coverage details you want to retrieve.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
@@ -1028,7 +1083,9 @@
         "ListIPSetsRequest$DetectorId": "<p>The unique ID of the detector that is associated with IPSet.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "ListMembersRequest$DetectorId": "<p>The unique ID of the detector that is associated with the member.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "ListPublishingDestinationsRequest$DetectorId": "<p>The detector ID for which you want to retrieve the publishing destination.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
+        "ListThreatEntitySetsRequest$DetectorId": "<p>The unique ID of the GuardDuty detector that is associated with this threat entity set.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "ListThreatIntelSetsRequest$DetectorId": "<p>The unique ID of the detector that is associated with the threatIntelSet.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
+        "ListTrustedEntitySetsRequest$DetectorId": "<p>The unique ID of the GuardDuty detector that is associated with this threat entity set.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "Member$DetectorId": "<p>The detector ID of the member account.</p>",
         "Scan$DetectorId": "<p>The unique ID of the detector that is associated with the request.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "Scan$AdminDetectorId": "<p>The unique detector ID of the administrator account that the request is associated with. If the account is an administrator, the <code>AdminDetectorId</code> will be the same as the one used for <code>DetectorId</code>.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
@@ -1044,7 +1101,9 @@
         "UpdateMemberDetectorsRequest$DetectorId": "<p>The detector ID of the administrator account.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "UpdateOrganizationConfigurationRequest$DetectorId": "<p>The ID of the detector that configures the delegated administrator.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
         "UpdatePublishingDestinationRequest$DetectorId": "<p>The ID of the detector associated with the publishing destinations to update.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
-        "UpdateThreatIntelSetRequest$DetectorId": "<p>The detectorID that specifies the GuardDuty service whose ThreatIntelSet you want to update.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>"
+        "UpdateThreatEntitySetRequest$DetectorId": "<p>The unique ID of the GuardDuty detector associated with the threat entity set that you want to update.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
+        "UpdateThreatIntelSetRequest$DetectorId": "<p>The detectorID that specifies the GuardDuty service whose ThreatIntelSet you want to update.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>",
+        "UpdateTrustedEntitySetRequest$DetectorId": "<p>The unique ID of the GuardDuty detector associated with the threat entity set that you want to update.</p> <p>To find the <code>detectorId</code> in the current Region, see the Settings page in the GuardDuty console, or run the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html\">ListDetectors</a> API.</p>"
       }
     },
     "DetectorIds": {
@@ -1061,43 +1120,35 @@
     },
     "DisableOrganizationAdminAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisableOrganizationAdminAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateFromAdministratorAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateFromAdministratorAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateFromMasterAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateFromMasterAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DnsRequestAction": {
       "base": "<p>Contains information about the DNS_REQUEST action described in this finding.</p>",
@@ -1122,7 +1173,7 @@
         "NetworkGeoLocation$Latitude": "<p>The latitude information of the endpoint location.</p>",
         "NetworkGeoLocation$Longitude": "<p>The longitude information of the endpoint location.</p>",
         "SeverityStatistics$Severity": "<p>The severity level associated with each finding type.</p>",
-        "Signal$Severity": "<p>The severity associated with the signal. For more information about severity, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings-severity.html\">Findings severity levels</a> in the <i>GuardDuty User Guide</i>.</p>"
+        "Signal$Severity": "<p>The severity associated with the signal. For more information about severity, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings-severity.html\">Findings severity levels</a> in the <i>Amazon GuardDuty User Guide</i>.</p>"
       }
     },
     "EbsSnapshotPreservation": {
@@ -1156,6 +1207,18 @@
         "ResourceData$Ec2Instance": "<p>Contains information about the Amazon EC2 instance.</p>"
       }
     },
+    "Ec2InstanceUid": {
+      "base": null,
+      "refs": {
+        "Ec2InstanceUids$member": null
+      }
+    },
+    "Ec2InstanceUids": {
+      "base": null,
+      "refs": {
+        "EksCluster$Ec2InstanceUids": "<p>A list of unique identifiers for the Amazon EC2 instances that serve as worker nodes in the Amazon EKS cluster.</p>"
+      }
+    },
     "Ec2NetworkInterface": {
       "base": "<p>Contains information about the elastic network interface of the Amazon EC2 instance.</p>",
       "refs": {
@@ -1180,6 +1243,12 @@
         "EcsClusterDetails$TaskDetails": "<p>Contains information about the details of the ECS Task.</p>"
       }
     },
+    "EksCluster": {
+      "base": "<p>Contains information about the Amazon EKS cluster involved in a GuardDuty finding, including cluster identification, status, and network configuration.</p>",
+      "refs": {
+        "ResourceData$EksCluster": "<p>Contains detailed information about the Amazon EKS cluster associated with the activity that prompted GuardDuty to generate a finding.</p>"
+      }
+    },
     "EksClusterDetails": {
       "base": "<p>Details about the EKS cluster involved in a Kubernetes finding.</p>",
       "refs": {
@@ -1189,19 +1258,17 @@
     "Email": {
       "base": null,
       "refs": {
-        "AccountDetail$Email": "<p>The email address of the member account.</p>",
+        "AccountDetail$Email": "<p>The email address of the member account. The following list includes the rules for a valid email address:</p> <ul> <li> <p>The email address must be a minimum of 6 and a maximum of 64 characters long.</p> </li> <li> <p>All characters must be 7-bit ASCII characters.</p> </li> <li> <p>There must be one and only one @ symbol, which separates the local name from the domain name.</p> </li> <li> <p>The local name can't contain any of the following characters:</p> <p>whitespace, \" ' ( ) &lt; &gt; [ ] : ' , \\ | % &amp;</p> </li> <li> <p>The local name can't begin with a dot (.).</p> </li> <li> <p>The domain name can consist of only the characters [a-z], [A-Z], [0-9], hyphen (-), or dot (.).</p> </li> <li> <p>The domain name can't begin or end with a dot (.) or hyphen (-).</p> </li> <li> <p>The domain name must contain at least one dot. </p> </li> </ul>",
         "Member$Email": "<p>The email address of the member account.</p>"
       }
     },
     "EnableOrganizationAdminAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EnableOrganizationAdminAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EndpointIds": {
       "base": null,
@@ -1226,6 +1293,17 @@
       "base": "<p>Contains information about the reason that the finding was generated.</p>",
       "refs": {
         "Service$Evidence": "<p>An evidence object associated with the service.</p>"
+      }
+    },
+    "ExpectedBucketOwner": {
+      "base": null,
+      "refs": {
+        "CreateThreatEntitySetRequest$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter.</p>",
+        "CreateTrustedEntitySetRequest$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter.</p>",
+        "GetThreatEntitySetResponse$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter.</p>",
+        "GetTrustedEntitySetResponse$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter.</p>",
+        "UpdateThreatEntitySetRequest$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter.</p>",
+        "UpdateTrustedEntitySetRequest$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that owns the Amazon S3 bucket specified in the <b>location</b> parameter.</p>"
       }
     },
     "FargateDetails": {
@@ -1339,7 +1417,7 @@
     "FindingCriteria": {
       "base": "<p>Contains information about the criteria used for querying findings.</p>",
       "refs": {
-        "CreateFilterRequest$FindingCriteria": "<p>Represents the criteria to be used in the filter for querying findings.</p> <p>You can only use the following attributes to query findings:</p> <ul> <li> <p>accountId</p> </li> <li> <p>id</p> </li> <li> <p>region</p> </li> <li> <p>severity</p> <p>To filter on the basis of severity, the API and CLI use the following input list for the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_FindingCriteria.html\">FindingCriteria</a> condition:</p> <ul> <li> <p> <b>Low</b>: <code>[\"1\", \"2\", \"3\"]</code> </p> </li> <li> <p> <b>Medium</b>: <code>[\"4\", \"5\", \"6\"]</code> </p> </li> <li> <p> <b>High</b>: <code>[\"7\", \"8\"]</code> </p> </li> <li> <p> <b>Critical</b>: <code>[\"9\", \"10\"]</code> </p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings-severity.html\">Findings severity levels</a> in the <i>Amazon GuardDuty User Guide</i>.</p> </li> <li> <p>type</p> </li> <li> <p>updatedAt</p> <p>Type: ISO 8601 string format: YYYY-MM-DDTHH:MM:SS.SSSZ or YYYY-MM-DDTHH:MM:SSZ depending on whether the value contains milliseconds.</p> </li> <li> <p>resource.accessKeyDetails.accessKeyId</p> </li> <li> <p>resource.accessKeyDetails.principalId</p> </li> <li> <p>resource.accessKeyDetails.userName</p> </li> <li> <p>resource.accessKeyDetails.userType</p> </li> <li> <p>resource.instanceDetails.iamInstanceProfile.id</p> </li> <li> <p>resource.instanceDetails.imageId</p> </li> <li> <p>resource.instanceDetails.instanceId</p> </li> <li> <p>resource.instanceDetails.tags.key</p> </li> <li> <p>resource.instanceDetails.tags.value</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.ipv6Addresses</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.privateIpAddresses.privateIpAddress</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.publicDnsName</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.publicIp</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.securityGroups.groupId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.securityGroups.groupName</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.subnetId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.vpcId</p> </li> <li> <p>resource.instanceDetails.outpostArn</p> </li> <li> <p>resource.resourceType</p> </li> <li> <p>resource.s3BucketDetails.publicAccess.effectivePermissions</p> </li> <li> <p>resource.s3BucketDetails.name</p> </li> <li> <p>resource.s3BucketDetails.tags.key</p> </li> <li> <p>resource.s3BucketDetails.tags.value</p> </li> <li> <p>resource.s3BucketDetails.type</p> </li> <li> <p>service.action.actionType</p> </li> <li> <p>service.action.awsApiCallAction.api</p> </li> <li> <p>service.action.awsApiCallAction.callerType</p> </li> <li> <p>service.action.awsApiCallAction.errorCode</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.city.cityName</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.ipAddressV6</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.awsApiCallAction.serviceName</p> </li> <li> <p>service.action.dnsRequestAction.domain</p> </li> <li> <p>service.action.dnsRequestAction.domainWithSuffix</p> </li> <li> <p>service.action.networkConnectionAction.blocked</p> </li> <li> <p>service.action.networkConnectionAction.connectionDirection</p> </li> <li> <p>service.action.networkConnectionAction.localPortDetails.port</p> </li> <li> <p>service.action.networkConnectionAction.protocol</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.city.cityName</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.ipAddressV6</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.networkConnectionAction.remotePortDetails.port</p> </li> <li> <p>service.action.awsApiCallAction.remoteAccountDetails.affiliated</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.ipAddressV6</p> </li> <li> <p>service.action.kubernetesApiCallAction.namespace</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.kubernetesApiCallAction.requestUri</p> </li> <li> <p>service.action.kubernetesApiCallAction.statusCode</p> </li> <li> <p>service.action.networkConnectionAction.localIpDetails.ipAddressV4</p> </li> <li> <p>service.action.networkConnectionAction.localIpDetails.ipAddressV6</p> </li> <li> <p>service.action.networkConnectionAction.protocol</p> </li> <li> <p>service.action.awsApiCallAction.serviceName</p> </li> <li> <p>service.action.awsApiCallAction.remoteAccountDetails.accountId</p> </li> <li> <p>service.additionalInfo.threatListName</p> </li> <li> <p>service.resourceRole</p> </li> <li> <p>resource.eksClusterDetails.name</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.name</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.namespace</p> </li> <li> <p>resource.kubernetesDetails.kubernetesUserDetails.username</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.containers.image</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.containers.imagePrefix</p> </li> <li> <p>service.ebsVolumeScanDetails.scanId</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.name</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.severity</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.filePaths.hash</p> </li> <li> <p>resource.ecsClusterDetails.name</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.containers.image</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.definitionArn</p> </li> <li> <p>resource.containerDetails.image</p> </li> <li> <p>resource.rdsDbInstanceDetails.dbInstanceIdentifier</p> </li> <li> <p>resource.rdsDbInstanceDetails.dbClusterIdentifier</p> </li> <li> <p>resource.rdsDbInstanceDetails.engine</p> </li> <li> <p>resource.rdsDbUserDetails.user</p> </li> <li> <p>resource.rdsDbInstanceDetails.tags.key</p> </li> <li> <p>resource.rdsDbInstanceDetails.tags.value</p> </li> <li> <p>service.runtimeDetails.process.executableSha256</p> </li> <li> <p>service.runtimeDetails.process.name</p> </li> <li> <p>service.runtimeDetails.process.name</p> </li> <li> <p>resource.lambdaDetails.functionName</p> </li> <li> <p>resource.lambdaDetails.functionArn</p> </li> <li> <p>resource.lambdaDetails.tags.key</p> </li> <li> <p>resource.lambdaDetails.tags.value</p> </li> </ul>",
+        "CreateFilterRequest$FindingCriteria": "<p>Represents the criteria to be used in the filter for querying findings.</p> <p>You can only use the following attributes to query findings:</p> <ul> <li> <p>accountId</p> </li> <li> <p>id</p> </li> <li> <p>region</p> </li> <li> <p>severity</p> <p>To filter on the basis of severity, the API and CLI use the following input list for the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_FindingCriteria.html\">FindingCriteria</a> condition:</p> <ul> <li> <p> <b>Low</b>: <code>[\"1\", \"2\", \"3\"]</code> </p> </li> <li> <p> <b>Medium</b>: <code>[\"4\", \"5\", \"6\"]</code> </p> </li> <li> <p> <b>High</b>: <code>[\"7\", \"8\"]</code> </p> </li> <li> <p> <b>Critical</b>: <code>[\"9\", \"10\"]</code> </p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings-severity.html\">Findings severity levels</a> in the <i>Amazon GuardDuty User Guide</i>.</p> </li> <li> <p>type</p> </li> <li> <p>updatedAt</p> <p>Type: ISO 8601 string format: YYYY-MM-DDTHH:MM:SS.SSSZ or YYYY-MM-DDTHH:MM:SSZ depending on whether the value contains milliseconds.</p> </li> <li> <p>resource.accessKeyDetails.accessKeyId</p> </li> <li> <p>resource.accessKeyDetails.principalId</p> </li> <li> <p>resource.accessKeyDetails.userName</p> </li> <li> <p>resource.accessKeyDetails.userType</p> </li> <li> <p>resource.instanceDetails.iamInstanceProfile.id</p> </li> <li> <p>resource.instanceDetails.imageId</p> </li> <li> <p>resource.instanceDetails.instanceId</p> </li> <li> <p>resource.instanceDetails.tags.key</p> </li> <li> <p>resource.instanceDetails.tags.value</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.ipv6Addresses</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.privateIpAddresses.privateIpAddress</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.publicDnsName</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.publicIp</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.securityGroups.groupId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.securityGroups.groupName</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.subnetId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.vpcId</p> </li> <li> <p>resource.instanceDetails.outpostArn</p> </li> <li> <p>resource.resourceType</p> </li> <li> <p>resource.s3BucketDetails.publicAccess.effectivePermissions</p> </li> <li> <p>resource.s3BucketDetails.name</p> </li> <li> <p>resource.s3BucketDetails.tags.key</p> </li> <li> <p>resource.s3BucketDetails.tags.value</p> </li> <li> <p>resource.s3BucketDetails.type</p> </li> <li> <p>service.action.actionType</p> </li> <li> <p>service.action.awsApiCallAction.api</p> </li> <li> <p>service.action.awsApiCallAction.callerType</p> </li> <li> <p>service.action.awsApiCallAction.errorCode</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.city.cityName</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.ipAddressV6</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.awsApiCallAction.serviceName</p> </li> <li> <p>service.action.dnsRequestAction.domain</p> </li> <li> <p>service.action.dnsRequestAction.domainWithSuffix</p> </li> <li> <p>service.action.dnsRequestAction.vpcOwnerAccountId</p> </li> <li> <p>service.action.networkConnectionAction.blocked</p> </li> <li> <p>service.action.networkConnectionAction.connectionDirection</p> </li> <li> <p>service.action.networkConnectionAction.localPortDetails.port</p> </li> <li> <p>service.action.networkConnectionAction.protocol</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.city.cityName</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.ipAddressV6</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.networkConnectionAction.remotePortDetails.port</p> </li> <li> <p>service.action.awsApiCallAction.remoteAccountDetails.affiliated</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.ipAddressV6</p> </li> <li> <p>service.action.kubernetesApiCallAction.namespace</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.kubernetesApiCallAction.requestUri</p> </li> <li> <p>service.action.kubernetesApiCallAction.statusCode</p> </li> <li> <p>service.action.networkConnectionAction.localIpDetails.ipAddressV4</p> </li> <li> <p>service.action.networkConnectionAction.localIpDetails.ipAddressV6</p> </li> <li> <p>service.action.networkConnectionAction.protocol</p> </li> <li> <p>service.action.awsApiCallAction.serviceName</p> </li> <li> <p>service.action.awsApiCallAction.remoteAccountDetails.accountId</p> </li> <li> <p>service.additionalInfo.threatListName</p> </li> <li> <p>service.resourceRole</p> </li> <li> <p>resource.eksClusterDetails.name</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.name</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.namespace</p> </li> <li> <p>resource.kubernetesDetails.kubernetesUserDetails.username</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.containers.image</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.containers.imagePrefix</p> </li> <li> <p>service.ebsVolumeScanDetails.scanId</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.name</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.severity</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.filePaths.hash</p> </li> <li> <p>resource.ecsClusterDetails.name</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.containers.image</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.definitionArn</p> </li> <li> <p>resource.containerDetails.image</p> </li> <li> <p>resource.rdsDbInstanceDetails.dbInstanceIdentifier</p> </li> <li> <p>resource.rdsDbInstanceDetails.dbClusterIdentifier</p> </li> <li> <p>resource.rdsDbInstanceDetails.engine</p> </li> <li> <p>resource.rdsDbUserDetails.user</p> </li> <li> <p>resource.rdsDbInstanceDetails.tags.key</p> </li> <li> <p>resource.rdsDbInstanceDetails.tags.value</p> </li> <li> <p>service.runtimeDetails.process.executableSha256</p> </li> <li> <p>service.runtimeDetails.process.name</p> </li> <li> <p>service.runtimeDetails.process.executablePath</p> </li> <li> <p>resource.lambdaDetails.functionName</p> </li> <li> <p>resource.lambdaDetails.functionArn</p> </li> <li> <p>resource.lambdaDetails.tags.key</p> </li> <li> <p>resource.lambdaDetails.tags.value</p> </li> </ul>",
         "GetFilterResponse$FindingCriteria": "<p>Represents the criteria to be used in the filter for querying findings.</p>",
         "GetFindingsStatisticsRequest$FindingCriteria": "<p>Represents the criteria that is used for querying findings.</p>",
         "ListFindingsRequest$FindingCriteria": "<p>Represents the criteria used for querying findings. Valid values include:</p> <ul> <li> <p>JSON field name</p> </li> <li> <p>accountId</p> </li> <li> <p>region</p> </li> <li> <p>confidence</p> </li> <li> <p>id</p> </li> <li> <p>resource.accessKeyDetails.accessKeyId</p> </li> <li> <p>resource.accessKeyDetails.principalId</p> </li> <li> <p>resource.accessKeyDetails.userName</p> </li> <li> <p>resource.accessKeyDetails.userType</p> </li> <li> <p>resource.instanceDetails.iamInstanceProfile.id</p> </li> <li> <p>resource.instanceDetails.imageId</p> </li> <li> <p>resource.instanceDetails.instanceId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.ipv6Addresses</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.privateIpAddresses.privateIpAddress</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.publicDnsName</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.publicIp</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.securityGroups.groupId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.securityGroups.groupName</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.subnetId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.vpcId</p> </li> <li> <p>resource.instanceDetails.tags.key</p> </li> <li> <p>resource.instanceDetails.tags.value</p> </li> <li> <p>resource.resourceType</p> </li> <li> <p>service.action.actionType</p> </li> <li> <p>service.action.awsApiCallAction.api</p> </li> <li> <p>service.action.awsApiCallAction.callerType</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.city.cityName</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.awsApiCallAction.serviceName</p> </li> <li> <p>service.action.dnsRequestAction.domain</p> </li> <li> <p>service.action.dnsRequestAction.domainWithSuffix</p> </li> <li> <p>service.action.networkConnectionAction.blocked</p> </li> <li> <p>service.action.networkConnectionAction.connectionDirection</p> </li> <li> <p>service.action.networkConnectionAction.localPortDetails.port</p> </li> <li> <p>service.action.networkConnectionAction.protocol</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.networkConnectionAction.remotePortDetails.port</p> </li> <li> <p>service.additionalInfo.threatListName</p> </li> <li> <p>service.archived</p> <p>When this attribute is set to 'true', only archived findings are listed. When it's set to 'false', only unarchived findings are listed. When this attribute is not set, all existing findings are listed.</p> </li> <li> <p>service.ebsVolumeScanDetails.scanId</p> </li> <li> <p>service.resourceRole</p> </li> <li> <p>severity</p> </li> <li> <p>type</p> </li> <li> <p>updatedAt</p> <p>Type: Timestamp in Unix Epoch millisecond format: 1486685375000</p> </li> </ul>",
@@ -1397,6 +1475,7 @@
     "FindingType": {
       "base": null,
       "refs": {
+        "AdditionalSequenceTypes$member": null,
         "Finding$Type": "<p>The type of finding.</p>",
         "FindingTypes$member": null
       }
@@ -1450,175 +1529,158 @@
       }
     },
     "GeoLocation": {
-      "base": "<p>Contains information about the location of the remote IP address.</p>",
+      "base": "<p>Contains information about the location of the remote IP address. By default, GuardDuty returns <code>Geolocation</code> with <code>Lat</code> and <code>Lon</code> as <code>0.0</code>.</p>",
       "refs": {
         "RemoteIpDetails$GeoLocation": "<p>The location information of the remote IP address.</p>"
       }
     },
     "GetAdministratorAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAdministratorAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCoverageStatisticsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCoverageStatisticsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDetectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDetectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFilterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFindingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFindingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFindingsStatisticsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFindingsStatisticsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIPSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIPSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInvitationsCountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInvitationsCountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMalwareProtectionPlanRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMalwareProtectionPlanResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMalwareScanSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMalwareScanSettingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMasterAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMasterAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMemberDetectorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMemberDetectorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOrganizationStatisticsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRemainingFreeTrialDaysRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRemainingFreeTrialDaysResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "GetThreatEntitySetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetThreatEntitySetResponse": {
+      "base": null,
+      "refs": {}
     },
     "GetThreatIntelSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetThreatIntelSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "GetTrustedEntitySetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTrustedEntitySetResponse": {
+      "base": null,
+      "refs": {}
     },
     "GetUsageStatisticsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetUsageStatisticsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GroupByType": {
       "base": null,
@@ -1711,7 +1773,7 @@
     "IndicatorType": {
       "base": null,
       "refs": {
-        "Indicator$Key": "<p>Specific indicator keys observed in the attack sequence.</p>"
+        "Indicator$Key": "<p>Specific indicator keys observed in the attack sequence. For description of the valid values for key, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings-summary.html#guardduty-extended-threat-detection-attack-sequence-finding-details\">Attack sequence finding details</a> in the <i>Amazon GuardDuty User Guide</i>.</p>"
       }
     },
     "IndicatorValueString": {
@@ -1723,7 +1785,7 @@
     "IndicatorValues": {
       "base": null,
       "refs": {
-        "Indicator$Values": "<p>Values associated with each indicator key. For example, if the indicator key is <code>SUSPICIOUS_NETWORK</code>, then the value will be the name of the network. If the indicator key is <code>ATTACK_TACTIC</code>, then the value will be one of the MITRE tactics. </p> <p>For more information about the values associated with the key, see GuardDuty Extended Threat Detection in the <i>GuardDuty User Guide.</i> </p>"
+        "Indicator$Values": "<p>Values associated with each indicator key. For example, if the indicator key is <code>SUSPICIOUS_NETWORK</code>, then the value will be the name of the network. If the indicator key is <code>ATTACK_TACTIC</code>, then the value will be one of the MITRE tactics. </p>"
       }
     },
     "Indicators": {
@@ -1807,8 +1869,7 @@
     },
     "InternalServerErrorException": {
       "base": "<p>An internal server error exception object.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Invitation": {
       "base": "<p>Contains information about the invitation to become a member account.</p>",
@@ -1824,13 +1885,11 @@
     },
     "InviteMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InviteMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IpSetFormat": {
       "base": null,
@@ -1924,6 +1983,12 @@
         "Action$KubernetesPermissionCheckedDetails": "<p>Information whether the user has the permission to use a specific Kubernetes API.</p>"
       }
     },
+    "KubernetesResourcesTypes": {
+      "base": null,
+      "refs": {
+        "KubernetesWorkload$KubernetesResourcesTypes": "<p>The types of Kubernetes resources involved in the workload.</p>"
+      }
+    },
     "KubernetesRoleBindingDetails": {
       "base": "<p>Contains information about the role binding that grants the permission defined in a Kubernetes role.</p>",
       "refs": {
@@ -1940,6 +2005,12 @@
       "base": "<p>Details about the Kubernetes user involved in a Kubernetes finding.</p>",
       "refs": {
         "KubernetesDetails$KubernetesUserDetails": "<p>Details about the Kubernetes user involved in a Kubernetes finding.</p>"
+      }
+    },
+    "KubernetesWorkload": {
+      "base": "<p>Contains information about Kubernetes workloads involved in a GuardDuty finding, including pods, deployments, and other Kubernetes resources.</p>",
+      "refs": {
+        "ResourceData$KubernetesWorkload": "<p>Contains detailed information about the Kubernetes workload associated with the activity that prompted GuardDuty to generate a finding.</p>"
       }
     },
     "KubernetesWorkloadDetails": {
@@ -1968,123 +2039,115 @@
     },
     "ListCoverageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCoverageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDetectorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDetectorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFiltersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFiltersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFindingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFindingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIPSetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIPSetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInvitationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInvitationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMalwareProtectionPlansRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMalwareProtectionPlansResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOrganizationAdminAccountsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOrganizationAdminAccountsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPublishingDestinationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPublishingDestinationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ListThreatEntitySetsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListThreatEntitySetsResponse": {
+      "base": null,
+      "refs": {}
     },
     "ListThreatIntelSetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThreatIntelSetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ListTrustedEntitySetsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTrustedEntitySetsResponse": {
+      "base": null,
+      "refs": {}
     },
     "LocalIpDetails": {
       "base": "<p>Contains information about the local IP address of the connection.</p>",
@@ -2104,11 +2167,17 @@
       "base": null,
       "refs": {
         "CreateIPSetRequest$Location": "<p>The URI of the file that contains the IPSet. </p>",
+        "CreateThreatEntitySetRequest$Location": "<p>The URI of the file that contains the threat entity set.</p>",
         "CreateThreatIntelSetRequest$Location": "<p>The URI of the file that contains the ThreatIntelSet. </p>",
+        "CreateTrustedEntitySetRequest$Location": "<p>The URI of the file that contains the trusted entity set.</p>",
         "GetIPSetResponse$Location": "<p>The URI of the file that contains the IPSet.</p>",
+        "GetThreatEntitySetResponse$Location": "<p>The URI of the file that contains the threat entity set.</p>",
         "GetThreatIntelSetResponse$Location": "<p>The URI of the file that contains the ThreatIntelSet. </p>",
+        "GetTrustedEntitySetResponse$Location": "<p>The URI of the file that contains the trusted entity set.</p>",
         "UpdateIPSetRequest$Location": "<p>The updated URI of the file that contains the IPSet. </p>",
-        "UpdateThreatIntelSetRequest$Location": "<p>The updated URI of the file that contains the ThreateIntelSet.</p>"
+        "UpdateThreatEntitySetRequest$Location": "<p>The URI of the file that contains the trusted entity set.</p>",
+        "UpdateThreatIntelSetRequest$Location": "<p>The updated URI of the file that contains the ThreateIntelSet.</p>",
+        "UpdateTrustedEntitySetRequest$Location": "<p>The URI of the file that contains the trusted entity set.</p>"
       }
     },
     "LoginAttribute": {
@@ -2262,7 +2331,9 @@
         "ListMembersRequest$MaxResults": "<p>You can use this parameter to indicate the maximum number of items you want in the response. The default value is 50. The maximum value is 50.</p>",
         "ListOrganizationAdminAccountsRequest$MaxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListPublishingDestinationsRequest$MaxResults": "<p>The maximum number of results to return in the response.</p>",
-        "ListThreatIntelSetsRequest$MaxResults": "<p>You can use this parameter to indicate the maximum number of items that you want in the response. The default value is 50. The maximum value is 50.</p>"
+        "ListThreatEntitySetsRequest$MaxResults": "<p>You can use this parameter to indicate the maximum number of items you want in the response. The default value is 50.</p>",
+        "ListThreatIntelSetsRequest$MaxResults": "<p>You can use this parameter to indicate the maximum number of items that you want in the response. The default value is 50. The maximum value is 50.</p>",
+        "ListTrustedEntitySetsRequest$MaxResults": "<p>You can use this parameter to indicate the maximum number of items you want in the response. The default value is 50.</p>"
       }
     },
     "MaxResults100": {
@@ -2360,11 +2431,17 @@
       "base": null,
       "refs": {
         "CreateIPSetRequest$Name": "<p>The user-friendly name to identify the IPSet.</p> <p> Allowed characters are alphanumeric, whitespace, dash (-), and underscores (_).</p>",
+        "CreateThreatEntitySetRequest$Name": "<p>A user-friendly name to identify the threat entity set.</p> <p>The name of your list can include lowercase letters, uppercase letters, numbers, dash (-), and underscore (_).</p>",
         "CreateThreatIntelSetRequest$Name": "<p>A user-friendly ThreatIntelSet name displayed in all findings that are generated by activity that involves IP addresses included in this ThreatIntelSet.</p>",
+        "CreateTrustedEntitySetRequest$Name": "<p>A user-friendly name to identify the trusted entity set.</p> <p>The name of your list can include lowercase letters, uppercase letters, numbers, dash (-), and underscore (_).</p>",
         "GetIPSetResponse$Name": "<p>The user-friendly name for the IPSet.</p>",
+        "GetThreatEntitySetResponse$Name": "<p>The name of the threat entity set associated with the specified <code>threatEntitySetId</code>.</p>",
         "GetThreatIntelSetResponse$Name": "<p>A user-friendly ThreatIntelSet name displayed in all findings that are generated by activity that involves IP addresses included in this ThreatIntelSet.</p>",
+        "GetTrustedEntitySetResponse$Name": "<p>The name of the threat entity set associated with the specified <code>trustedEntitySetId</code>.</p>",
         "UpdateIPSetRequest$Name": "<p>The unique ID that specifies the IPSet that you want to update.</p>",
-        "UpdateThreatIntelSetRequest$Name": "<p>The unique ID that specifies the ThreatIntelSet that you want to update.</p>"
+        "UpdateThreatEntitySetRequest$Name": "<p>A user-friendly name to identify the trusted entity set.</p> <p>The name of your list can include lowercase letters, uppercase letters, numbers, dash (-), and underscore (_).</p>",
+        "UpdateThreatIntelSetRequest$Name": "<p>The unique ID that specifies the ThreatIntelSet that you want to update.</p>",
+        "UpdateTrustedEntitySetRequest$Name": "<p>A user-friendly name to identify the trusted entity set.</p> <p>The name of your list can include lowercase letters, uppercase letters, numbers, dash (-), and underscore (_).</p>"
       }
     },
     "Neq": {
@@ -2720,6 +2797,24 @@
         "RuntimeDetails$Process": "<p>Information about the observed process.</p>"
       }
     },
+    "ProcessName": {
+      "base": null,
+      "refs": {
+        "ActorProcess$Name": "<p>The name of the process as it appears in the system.</p>"
+      }
+    },
+    "ProcessPath": {
+      "base": null,
+      "refs": {
+        "ActorProcess$Path": "<p>The full file path to the process executable on the system.</p>"
+      }
+    },
+    "ProcessSha256": {
+      "base": null,
+      "refs": {
+        "ActorProcess$Sha256": "<p>The SHA256 hash of the process executable file, which can be used for identification and verification purposes.</p>"
+      }
+    },
     "ProductCode": {
       "base": "<p>Contains information about the product code for the EC2 instance.</p>",
       "refs": {
@@ -2864,8 +2959,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The requested resource can't be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceStatistics": {
       "base": "<p>Information about each resource type associated with the <code>groupedByResource</code> statistics.</p>",
@@ -3163,7 +3257,7 @@
     "SignalType": {
       "base": null,
       "refs": {
-        "Signal$Type": "<p>The type of the signal used to identify an attack sequence.</p> <p>Signals can be GuardDuty findings or activities observed in data sources that GuardDuty monitors. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_data-sources.html\">Foundational data sources</a> in the <i>GuardDuty User Guide</i>.</p> <p>A signal type can be one of the valid values listed in this API. Here are the related descriptions:</p> <ul> <li> <p> <code>FINDING</code> - Individually generated GuardDuty finding.</p> </li> <li> <p> <code>CLOUD_TRAIL</code> - Activity observed from CloudTrail logs</p> </li> <li> <p> <code>S3_DATA_EVENTS</code> - Activity observed from CloudTrail data events for S3. Activities associated with this type will show up only when you have enabled GuardDuty S3 Protection feature in your account. For more information about S3 Protection and steps to enable it, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/s3-protection.html\">S3 Protection</a> in the <i>GuardDuty User Guide</i>.</p> </li> </ul>"
+        "Signal$Type": "<p>The type of the signal used to identify an attack sequence.</p> <p>Signals can be GuardDuty findings or activities observed in data sources that GuardDuty monitors. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_data-sources.html\">Foundational data sources</a> in the <i>Amazon GuardDuty User Guide</i>.</p> <p>A signal type can be one of the valid values listed in this API. Here are the related descriptions:</p> <ul> <li> <p> <code>FINDING</code> - Individually generated GuardDuty finding.</p> </li> <li> <p> <code>CLOUD_TRAIL</code> - Activity observed from CloudTrail logs</p> </li> <li> <p> <code>S3_DATA_EVENTS</code> - Activity observed from CloudTrail data events for S3. Activities associated with this type will show up only when you have enabled GuardDuty S3 Protection feature in your account. For more information about S3 Protection and steps to enable it, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/s3-protection.html\">S3 Protection</a> in the <i>Amazon GuardDuty User Guide</i>.</p> </li> </ul>"
       }
     },
     "Signals": {
@@ -3194,33 +3288,27 @@
     },
     "StartMalwareScanRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartMalwareScanResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartMonitoringMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartMonitoringMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopMonitoringMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopMonitoringMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -3274,6 +3362,7 @@
         "Container$Name": "<p>Container name.</p>",
         "Container$Image": "<p>Container image.</p>",
         "Container$ImagePrefix": "<p>Part of the image name before the last slash. For example, imagePrefix for public.ecr.aws/amazonlinux/amazonlinux:latest would be public.ecr.aws/amazonlinux. If the image name is relative and does not have a slash, this field is empty.</p>",
+        "ContainerFindingResource$Image": "<p>The container image information, including the image name and tag used to run the container that was involved in the finding.</p>",
         "CountBySeverity$key": null,
         "Country$CountryCode": "<p>The country code of the remote IP address.</p>",
         "Country$CountryName": "<p>The country name of the remote IP address.</p>",
@@ -3289,7 +3378,9 @@
         "CreateMalwareProtectionPlanResponse$MalwareProtectionPlanId": "<p>A unique identifier associated with the Malware Protection plan resource.</p>",
         "CreatePublishingDestinationResponse$DestinationId": "<p>The ID of the publishing destination that is created.</p>",
         "CreateS3BucketResource$BucketName": "<p>Name of the S3 bucket.</p>",
+        "CreateThreatEntitySetResponse$ThreatEntitySetId": "<p>The ID returned by GuardDuty after creation of the threat entity set resource.</p>",
         "CreateThreatIntelSetResponse$ThreatIntelSetId": "<p>The ID of the ThreatIntelSet resource.</p>",
+        "CreateTrustedEntitySetResponse$TrustedEntitySetId": "<p>The ID returned by GuardDuty after creation of the trusted entity set resource.</p>",
         "Criterion$key": null,
         "DefaultServerSideEncryption$EncryptionType": "<p>The type of encryption used for objects within the S3 bucket.</p>",
         "DefaultServerSideEncryption$KmsMasterKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS encryption key. Only available if the bucket <code>EncryptionType</code> is <code>aws:kms</code>.</p>",
@@ -3297,7 +3388,9 @@
         "DeleteIPSetRequest$IpSetId": "<p>The unique ID of the IPSet to delete.</p>",
         "DeleteMalwareProtectionPlanRequest$MalwareProtectionPlanId": "<p>A unique identifier associated with Malware Protection plan resource.</p>",
         "DeletePublishingDestinationRequest$DestinationId": "<p>The ID of the publishing destination to delete.</p>",
+        "DeleteThreatEntitySetRequest$ThreatEntitySetId": "<p>The unique ID that helps GuardDuty identify which threat entity set needs to be deleted.</p>",
         "DeleteThreatIntelSetRequest$ThreatIntelSetId": "<p>The unique ID of the threatIntelSet that you want to delete.</p>",
+        "DeleteTrustedEntitySetRequest$TrustedEntitySetId": "<p>The unique ID that helps GuardDuty identify which trusted entity set needs to be deleted.</p>",
         "DescribeMalwareScansRequest$NextToken": "<p>You can use this parameter when paginating results. Set the value of this parameter to null on your first call to the list action. For subsequent calls to the action, fill nextToken in the request with the value of NextToken from the previous response to continue listing data.</p>",
         "DescribeMalwareScansResponse$NextToken": "<p>The pagination parameter to be used on the next list operation to retrieve more items.</p>",
         "DescribeOrganizationConfigurationRequest$NextToken": "<p>You can use this parameter when paginating results. Set the value of this parameter to null on your first call to the list action. For subsequent calls to the action, fill <code>nextToken</code> in the request with the value of <code>NextToken</code> from the previous response to continue listing data.</p>",
@@ -3334,6 +3427,8 @@
         "EcsTaskDetails$StartedBy": "<p>Contains the tag specified when a task is started.</p>",
         "EcsTaskDetails$Group": "<p>The name of the task group that's associated with the task.</p>",
         "EcsTaskDetails$LaunchType": "<p>A capacity on which the task is running. For example, <code>Fargate</code> and <code>EC2</code>.</p>",
+        "EksCluster$Arn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the Amazon EKS cluster involved in the finding.</p>",
+        "EksCluster$VpcId": "<p>The ID of the Amazon Virtual Private Cloud (Amazon VPC) associated with the Amazon EKS cluster.</p>",
         "EksClusterDetails$Name": "<p>EKS cluster name.</p>",
         "EksClusterDetails$Arn": "<p>EKS cluster ARN.</p>",
         "EksClusterDetails$VpcId": "<p>The VPC ID to which the EKS cluster is attached.</p>",
@@ -3348,7 +3443,7 @@
         "Finding$Description": "<p>The description of the finding.</p>",
         "Finding$Id": "<p>The ID of the finding.</p>",
         "Finding$Partition": "<p>The partition associated with the finding.</p>",
-        "Finding$Region": "<p>The Region where the finding was generated.</p>",
+        "Finding$Region": "<p>The Region where the finding was generated. For findings generated from <a href=\"https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-concepts.html#cloudtrail-concepts-global-service-events\">Global Service Events</a>, the Region value in the finding might differ from the Region where GuardDuty identifies the potential threat. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_data-sources.html#cloudtrail_global\">How GuardDuty handles Amazon Web Services CloudTrail global events</a> in the <i>Amazon GuardDuty User Guide</i>.</p>",
         "Finding$SchemaVersion": "<p>The version of the schema used for the finding.</p>",
         "Finding$Title": "<p>The title of the finding.</p>",
         "Finding$UpdatedAt": "<p>The time and date when the finding was last updated.</p>",
@@ -3364,7 +3459,11 @@
         "GetMalwareProtectionPlanRequest$MalwareProtectionPlanId": "<p>A unique identifier associated with Malware Protection plan resource.</p>",
         "GetMalwareProtectionPlanResponse$Arn": "<p>Amazon Resource Name (ARN) of the protected resource.</p>",
         "GetMalwareProtectionPlanResponse$Role": "<p>Amazon Resource Name (ARN) of the IAM role that includes the permissions to scan and add tags to the associated protected resource.</p>",
+        "GetThreatEntitySetRequest$ThreatEntitySetId": "<p>The unique ID that helps GuardDuty identify the threat entity set.</p>",
+        "GetThreatEntitySetResponse$ErrorDetails": "<p>The error details when the status is shown as <code>ERROR</code>.</p>",
         "GetThreatIntelSetRequest$ThreatIntelSetId": "<p>The unique ID of the threatIntelSet that you want to get.</p>",
+        "GetTrustedEntitySetRequest$TrustedEntitySetId": "<p>The unique ID that helps GuardDuty identify the trusted entity set.</p>",
+        "GetTrustedEntitySetResponse$ErrorDetails": "<p>The error details when the status is shown as <code>ERROR</code>.</p>",
         "GetUsageStatisticsRequest$Unit": "<p>The currency unit you would like to view your usage statistics in. Current valid values are USD.</p>",
         "GetUsageStatisticsRequest$NextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request to a list action. For subsequent calls, use the NextToken value returned from the previous request to continue listing results after the first page.</p>",
         "GetUsageStatisticsResponse$NextToken": "<p>The pagination parameter to be used on the next list operation to retrieve more items.</p>",
@@ -3416,6 +3515,7 @@
         "KubernetesRoleDetails$Uid": "<p>The unique identifier of the Kubernetes role name.</p>",
         "KubernetesUserDetails$Username": "<p>The username of the user who called the Kubernetes API.</p>",
         "KubernetesUserDetails$Uid": "<p>The user ID of the user who called the Kubernetes API.</p>",
+        "KubernetesWorkload$Namespace": "<p>The Kubernetes namespace in which the workload is running, providing logical isolation within the cluster.</p>",
         "KubernetesWorkloadDetails$Name": "<p>Kubernetes workload name.</p>",
         "KubernetesWorkloadDetails$Type": "<p>Kubernetes workload type (e.g. Pod, Deployment, etc.).</p>",
         "KubernetesWorkloadDetails$Uid": "<p>Kubernetes workload ID.</p>",
@@ -3452,15 +3552,19 @@
         "ListOrganizationAdminAccountsResponse$NextToken": "<p>The pagination parameter to be used on the next list operation to retrieve more items.</p>",
         "ListPublishingDestinationsRequest$NextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request to a list action. For subsequent calls, use the <code>NextToken</code> value returned from the previous request to continue listing results after the first page.</p>",
         "ListPublishingDestinationsResponse$NextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request to a list action. For subsequent calls, use the <code>NextToken</code> value returned from the previous request to continue listing results after the first page.</p>",
+        "ListThreatEntitySetsRequest$NextToken": "<p>You can use this parameter when paginating results. Set the value of this parameter to null on your first call to the list action. For subsequent calls to the action, fill nextToken in the request with the value of NextToken from the previous response to continue listing data.</p>",
+        "ListThreatEntitySetsResponse$NextToken": "<p>The pagination parameter to be used on the next list operation to retrieve more items.</p>",
         "ListThreatIntelSetsRequest$NextToken": "<p>You can use this parameter to paginate results in the response. Set the value of this parameter to null on your first call to the list action. For subsequent calls to the action, fill nextToken in the request with the value of NextToken from the previous response to continue listing data.</p>",
         "ListThreatIntelSetsResponse$NextToken": "<p>The pagination parameter to be used on the next list operation to retrieve more items.</p>",
+        "ListTrustedEntitySetsRequest$NextToken": "<p>You can use this parameter when paginating results. Set the value of this parameter to null on your first call to the list action. For subsequent calls to the action, fill nextToken in the request with the value of NextToken from the previous response to continue listing data.</p>",
+        "ListTrustedEntitySetsResponse$NextToken": "<p>The pagination parameter to be used on the next list operation to retrieve more items.</p>",
         "LocalPortDetails$PortName": "<p>The port name of the local connection.</p>",
         "LoginAttribute$User": "<p>Indicates the user name which attempted to log in.</p>",
         "LoginAttribute$Application": "<p>Indicates the application name used to attempt log in.</p>",
         "MalwareProtectionConfigurationResult$ServiceRole": "<p>The GuardDuty Malware Protection service role.</p>",
         "MalwareProtectionPlanObjectPrefixesList$member": null,
         "MalwareProtectionPlanStatusReason$Code": "<p>Issue code.</p>",
-        "MalwareProtectionPlanStatusReason$Message": "<p>Issue message that specifies the reason. For information about potential troubleshooting steps, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/troubleshoot-s3-malware-protection-status-errors.html\">Troubleshooting Malware Protection for S3 status issues</a> in the <i>GuardDuty User Guide</i>.</p>",
+        "MalwareProtectionPlanStatusReason$Message": "<p>Issue message that specifies the reason. For information about potential troubleshooting steps, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/troubleshoot-s3-malware-protection-status-errors.html\">Troubleshooting Malware Protection for S3 status issues</a> in the <i>Amazon GuardDuty User Guide</i>.</p>",
         "MalwareProtectionPlanSummary$MalwareProtectionPlanId": "<p>A unique identifier associated with Malware Protection plan.</p>",
         "Master$InvitationId": "<p>The value used to validate the administrator account to the member account.</p>",
         "Master$RelationshipStatus": "<p>The status of the relationship between the administrator and member accounts.</p>",
@@ -3601,12 +3705,14 @@
         "Tag$Value": "<p>Describes the value associated with the tag key.</p>",
         "Threat$Name": "<p>Name of the detected threat that caused GuardDuty to generate this finding.</p>",
         "Threat$Source": "<p>Source of the threat that generated this finding.</p>",
+        "ThreatEntitySetIds$member": null,
         "ThreatIntelSetIds$member": null,
         "ThreatIntelligenceDetail$ThreatListName": "<p>The name of the threat intelligence list that triggered the finding.</p>",
         "ThreatIntelligenceDetail$ThreatFileSha256": "<p>SHA256 of the file that generated the finding.</p>",
         "ThreatNames$member": null,
         "Total$Amount": "<p>The total usage.</p>",
         "Total$Unit": "<p>The currency unit that the amount is given in.</p>",
+        "TrustedEntitySetIds$member": null,
         "UnprocessedAccount$Result": "<p>A reason why the account hasn't been processed.</p>",
         "UpdateFilterRequest$FilterName": "<p>The name of the filter.</p>",
         "UpdateFindingsFeedbackRequest$Comments": "<p>Additional feedback about the GuardDuty findings.</p>",
@@ -3614,7 +3720,9 @@
         "UpdateMalwareProtectionPlanRequest$MalwareProtectionPlanId": "<p>A unique identifier associated with the Malware Protection plan.</p>",
         "UpdateMalwareProtectionPlanRequest$Role": "<p>Amazon Resource Name (ARN) of the IAM role with permissions to scan and add tags to the associated protected resource.</p>",
         "UpdatePublishingDestinationRequest$DestinationId": "<p>The ID of the publishing destination to update.</p>",
+        "UpdateThreatEntitySetRequest$ThreatEntitySetId": "<p>The ID returned by GuardDuty after updating the threat entity set resource.</p>",
         "UpdateThreatIntelSetRequest$ThreatIntelSetId": "<p>The unique ID that specifies the ThreatIntelSet that you want to update.</p>",
+        "UpdateTrustedEntitySetRequest$TrustedEntitySetId": "<p>The ID returned by GuardDuty after updating the trusted entity set resource.</p>",
         "UsageResourceResult$Resource": "<p>The Amazon Web Services resource that generated usage.</p>",
         "User$Name": "<p>The name of the user.</p>",
         "User$Uid": "<p>The unique identifier of the user.</p>",
@@ -3665,25 +3773,27 @@
         "CreateFilterRequest$Tags": "<p>The tags to be added to a new filter resource.</p>",
         "CreateIPSetRequest$Tags": "<p>The tags to be added to a new IP set resource.</p>",
         "CreateMalwareProtectionPlanRequest$Tags": "<p>Tags added to the Malware Protection plan resource. </p>",
+        "CreateThreatEntitySetRequest$Tags": "<p>The tags to be added to a new threat entity set resource.</p>",
         "CreateThreatIntelSetRequest$Tags": "<p>The tags to be added to a new threat list resource.</p>",
+        "CreateTrustedEntitySetRequest$Tags": "<p>The tags to be added to a new trusted entity set resource.</p>",
         "GetDetectorResponse$Tags": "<p>The tags of the detector resource.</p>",
         "GetFilterResponse$Tags": "<p>The tags of the filter resource.</p>",
         "GetIPSetResponse$Tags": "<p>The tags of the IPSet resource.</p>",
         "GetMalwareProtectionPlanResponse$Tags": "<p>Tags added to the Malware Protection plan resource.</p>",
+        "GetThreatEntitySetResponse$Tags": "<p>The tags associated with the threat entity set resource.</p>",
         "GetThreatIntelSetResponse$Tags": "<p>The tags of the threat list resource.</p>",
+        "GetTrustedEntitySetResponse$Tags": "<p>The tags associated with trusted entity set resource.</p>",
         "ListTagsForResourceResponse$Tags": "<p>The tags associated with the resource.</p>",
         "TagResourceRequest$Tags": "<p>The tags to be added to a resource.</p>"
       }
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -3716,6 +3826,25 @@
       "base": "<p>Contains details about identified threats organized by threat name.</p>",
       "refs": {
         "ScanDetections$ThreatDetectedByName": "<p>Contains details about identified threats organized by threat name.</p>"
+      }
+    },
+    "ThreatEntitySetFormat": {
+      "base": null,
+      "refs": {
+        "CreateThreatEntitySetRequest$Format": "<p>The format of the file that contains the threat entity set.</p>",
+        "GetThreatEntitySetResponse$Format": "<p>The format of the file that contains the threat entity set.</p>"
+      }
+    },
+    "ThreatEntitySetIds": {
+      "base": null,
+      "refs": {
+        "ListThreatEntitySetsResponse$ThreatEntitySetIds": "<p>The IDs of the threat entity set resources.</p>"
+      }
+    },
+    "ThreatEntitySetStatus": {
+      "base": null,
+      "refs": {
+        "GetThreatEntitySetResponse$Status": "<p>The status of the associated threat entity set.</p>"
       }
     },
     "ThreatIntelSetFormat": {
@@ -3780,9 +3909,14 @@
         "EbsVolumeScanDetails$ScanCompletedAt": "<p>Returns the completion date and time of the malware scan.</p>",
         "EcsTaskDetails$TaskCreatedAt": "<p>The Unix timestamp for the time when the task was created.</p>",
         "EcsTaskDetails$StartedAt": "<p>The Unix timestamp for the time when the task started.</p>",
+        "EksCluster$CreatedAt": "<p>The timestamp indicating when the Amazon EKS cluster was created, in UTC format.</p>",
         "EksClusterDetails$CreatedAt": "<p>The timestamp when the EKS cluster was created.</p>",
         "FindingTypeStatistics$LastGeneratedAt": "<p>The timestamp at which this finding type was last generated in your environment.</p>",
         "GetMalwareProtectionPlanResponse$CreatedAt": "<p>The timestamp when the Malware Protection plan resource was created.</p>",
+        "GetThreatEntitySetResponse$CreatedAt": "<p>The timestamp when the associated threat entity set was created.</p>",
+        "GetThreatEntitySetResponse$UpdatedAt": "<p>The timestamp when the associated threat entity set was updated.</p>",
+        "GetTrustedEntitySetResponse$CreatedAt": "<p>The timestamp when the associated trusted entity set was created.</p>",
+        "GetTrustedEntitySetResponse$UpdatedAt": "<p>The timestamp when the associated trusted entity set was updated.</p>",
         "LambdaDetails$LastModifiedAt": "<p>The timestamp when the Lambda function was last modified. This field is in the UTC date string format <code>(2023-03-22T19:37:20.168Z)</code>.</p>",
         "LineageObject$StartTime": "<p>The time when the process started. This is in UTC format.</p>",
         "MemberAdditionalConfigurationResult$UpdatedAt": "<p>The timestamp at which the additional configuration was set for the member account. This is in UTC format.</p>",
@@ -3819,15 +3953,32 @@
         "Scan$TriggerDetails": "<p>Specifies the reason why the scan was initiated.</p>"
       }
     },
-    "UnarchiveFindingsRequest": {
+    "TrustedEntitySetFormat": {
       "base": null,
       "refs": {
+        "CreateTrustedEntitySetRequest$Format": "<p>The format of the file that contains the trusted entity set.</p>",
+        "GetTrustedEntitySetResponse$Format": "<p>The format of the file that contains the trusted entity set.</p>"
       }
+    },
+    "TrustedEntitySetIds": {
+      "base": null,
+      "refs": {
+        "ListTrustedEntitySetsResponse$TrustedEntitySetIds": "<p>The IDs of the trusted entity set resources.</p>"
+      }
+    },
+    "TrustedEntitySetStatus": {
+      "base": null,
+      "refs": {
+        "GetTrustedEntitySetResponse$Status": "<p>The status of the associated trusted entity set.</p>"
+      }
+    },
+    "UnarchiveFindingsRequest": {
+      "base": null,
+      "refs": {}
     },
     "UnarchiveFindingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UnprocessedAccount": {
       "base": "<p>Contains information about the accounts that weren't processed.</p>",
@@ -3860,88 +4011,71 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDetectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDetectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFilterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFindingsFeedbackRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFindingsFeedbackResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIPSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIPSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMalwareProtectionPlanRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMalwareScanSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMalwareScanSettingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMemberDetectorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMemberDetectorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateOrganizationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateOrganizationConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProtectedResource": {
       "base": "<p>Information about the protected resource that is associated with the created Malware Protection plan. Presently, <code>S3Bucket</code> is the only supported protected resource.</p>",
@@ -3951,13 +4085,11 @@
     },
     "UpdatePublishingDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePublishingDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateS3BucketResource": {
       "base": "<p>Information about the protected S3 bucket resource.</p>",
@@ -3965,15 +4097,29 @@
         "UpdateProtectedResource$S3Bucket": "<p>Information about the protected S3 bucket resource.</p>"
       }
     },
+    "UpdateThreatEntitySetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateThreatEntitySetResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateThreatIntelSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateThreatIntelSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "UpdateTrustedEntitySetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTrustedEntitySetResponse": {
+      "base": null,
+      "refs": {}
     },
     "UsageAccountResult": {
       "base": "<p>Contains information on the total of usage based on account IDs.</p>",

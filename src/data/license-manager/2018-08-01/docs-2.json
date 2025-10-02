@@ -42,12 +42,12 @@
     "ListReceivedLicenses": "<p>Lists received licenses.</p>",
     "ListReceivedLicensesForOrganization": "<p>Lists the licenses received for all accounts in the organization.</p>",
     "ListResourceInventory": "<p>Lists resources managed using Systems Manager inventory.</p>",
-    "ListTagsForResource": "<p>Lists the tags for the specified license configuration.</p>",
+    "ListTagsForResource": "<p>Lists the tags for the specified resource. For more information about tagging support in License Manager, see the <a href=\"https://docs.aws.amazon.com/license-manager/latest/APIReference/API_TagResource.html\">TagResource</a> operation.</p>",
     "ListTokens": "<p>Lists your tokens.</p>",
     "ListUsageForLicenseConfiguration": "<p>Lists all license usage records for a license configuration, displaying license consumption details by resource at a selected point in time. Use this action to audit the current license consumption for any license inventory and configuration.</p>",
     "RejectGrant": "<p>Rejects the specified grant.</p>",
-    "TagResource": "<p>Adds the specified tags to the specified license configuration.</p>",
-    "UntagResource": "<p>Removes the specified tags from the specified license configuration.</p>",
+    "TagResource": "<p>Adds the specified tags to the specified resource. The following resources support tagging in License Manager:</p> <ul> <li> <p>Licenses</p> </li> <li> <p>Grants</p> </li> <li> <p>License configurations</p> </li> <li> <p>Report generators</p> </li> </ul>",
+    "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
     "UpdateLicenseConfiguration": "<p>Modifies the attributes of an existing license configuration.</p>",
     "UpdateLicenseManagerReportGenerator": "<p>Updates a report generator.</p> <p>After you make changes to a report generator, it starts generating new reports within 60 minutes of being updated.</p>",
     "UpdateLicenseSpecificationsForResource": "<p>Adds or removes the specified license configurations for the specified Amazon Web Services resource.</p> <p>You can update the license specifications of AMIs, instances, and hosts. You cannot update the license specifications for launch templates and CloudFormation templates, as they send license configurations to the operation that creates the resource.</p>",
@@ -56,18 +56,15 @@
   "shapes": {
     "AcceptGrantRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AcceptGrantResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessDeniedException": {
       "base": "<p>Access to resource denied.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActivationOverrideBehavior": {
       "base": null,
@@ -140,8 +137,7 @@
     },
     "AuthorizationException": {
       "base": "<p>The Amazon Web Services user account does not have permission to perform the action. Check the IAM policy associated with this account.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AutomatedDiscoveryInformation": {
       "base": "<p>Describes automated discovery.</p>",
@@ -211,33 +207,27 @@
     },
     "CheckInLicenseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CheckInLicenseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CheckoutBorrowLicenseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CheckoutBorrowLicenseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CheckoutLicenseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CheckoutLicenseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CheckoutType": {
       "base": null,
@@ -267,8 +257,7 @@
     },
     "ConflictException": {
       "base": "<p>There was a conflict processing the request. Try your request again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConsumedLicenseSummary": {
       "base": "<p>Details about license consumption.</p>",
@@ -294,83 +283,67 @@
     },
     "CreateGrantRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGrantResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGrantVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGrantVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLicenseConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLicenseConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLicenseConversionTaskForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLicenseConversionTaskForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLicenseManagerReportGeneratorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLicenseManagerReportGeneratorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLicenseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLicenseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLicenseVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLicenseVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTokenRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTokenResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DateTime": {
       "base": null,
@@ -398,53 +371,43 @@
     },
     "DeleteGrantRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteGrantResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLicenseConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLicenseConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLicenseManagerReportGeneratorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLicenseManagerReportGeneratorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLicenseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLicenseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTokenRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTokenResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DigitalSignatureMethod": {
       "base": null,
@@ -491,8 +454,7 @@
     },
     "EntitlementNotAllowedException": {
       "base": "<p>The entitlement is not allowed.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EntitlementUnit": {
       "base": null,
@@ -514,18 +476,15 @@
     },
     "ExtendLicenseConsumptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExtendLicenseConsumptionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "FailedDependencyException": {
       "base": "<p>A dependency required to run the API is missing.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Filter": {
       "base": "<p>A filter name and value pair that is used to return more specific results from a describe operation. Filters can be used to match a set of resources by specific criteria, such as tags, attributes, or IDs.</p>",
@@ -536,8 +495,7 @@
     },
     "FilterLimitExceededException": {
       "base": "<p>The request uses too many filters or too many filter values.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "FilterList": {
       "base": null,
@@ -573,90 +531,74 @@
     "Filters": {
       "base": null,
       "refs": {
-        "ListLicenseConfigurationsRequest$Filters": "<p>Filters to scope the results. The following filters and logical operators are supported:</p> <ul> <li> <p> <code>licenseCountingType</code> - The dimension for which licenses are counted. Possible values are <code>vCPU</code> | <code>Instance</code> | <code>Core</code> | <code>Socket</code>. Logical operators are <code>EQUALS</code> | <code>NOT_EQUALS</code>.</p> </li> <li> <p> <code>enforceLicenseCount</code> - A Boolean value that indicates whether hard license enforcement is used. Logical operators are <code>EQUALS</code> | <code>NOT_EQUALS</code>.</p> </li> <li> <p> <code>usagelimitExceeded</code> - A Boolean value that indicates whether the available licenses have been exceeded. Logical operators are <code>EQUALS</code> | <code>NOT_EQUALS</code>.</p> </li> </ul>",
+        "ListLicenseConfigurationsRequest$Filters": "<p>Filters to scope the results. The following filters and logical operators are supported:</p> <ul> <li> <p> <code>licenseCountingType</code> - The dimension for which licenses are counted. Possible values are <code>vCPU</code> | <code>Instance</code> | <code>Core</code> | <code>Socket</code>.</p> </li> <li> <p> <code>enforceLicenseCount</code> - A Boolean value that indicates whether hard license enforcement is used.</p> </li> <li> <p> <code>usagelimitExceeded</code> - A Boolean value that indicates whether the available licenses have been exceeded.</p> </li> </ul>",
         "ListLicenseConversionTasksRequest$Filters": "<p> Filters to scope the results. Valid filters are <code>ResourceArns</code> and <code>Status</code>. </p>",
-        "ListUsageForLicenseConfigurationRequest$Filters": "<p>Filters to scope the results. The following filters and logical operators are supported:</p> <ul> <li> <p> <code>resourceArn</code> - The ARN of the license configuration resource. Logical operators are <code>EQUALS</code> | <code>NOT_EQUALS</code>.</p> </li> <li> <p> <code>resourceType</code> - The resource type (<code>EC2_INSTANCE</code> | <code>EC2_HOST</code> | <code>EC2_AMI</code> | <code>SYSTEMS_MANAGER_MANAGED_INSTANCE</code>). Logical operators are <code>EQUALS</code> | <code>NOT_EQUALS</code>.</p> </li> <li> <p> <code>resourceAccount</code> - The ID of the account that owns the resource. Logical operators are <code>EQUALS</code> | <code>NOT_EQUALS</code>.</p> </li> </ul>"
+        "ListUsageForLicenseConfigurationRequest$Filters": "<p>Filters to scope the results. The following filters and logical operators are supported:</p> <ul> <li> <p> <code>resourceArn</code> - The ARN of the license configuration resource.</p> </li> <li> <p> <code>resourceType</code> - The resource type (<code>EC2_INSTANCE</code> | <code>EC2_HOST</code> | <code>EC2_AMI</code> | <code>SYSTEMS_MANAGER_MANAGED_INSTANCE</code>).</p> </li> <li> <p> <code>resourceAccount</code> - The ID of the account that owns the resource.</p> </li> </ul>"
       }
     },
     "GetAccessTokenRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAccessTokenResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetGrantRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetGrantResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLicenseConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLicenseConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLicenseConversionTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLicenseConversionTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLicenseManagerReportGeneratorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLicenseManagerReportGeneratorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLicenseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLicenseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLicenseUsageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLicenseUsageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceSettingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Grant": {
       "base": "<p>Describes a grant.</p>",
@@ -723,13 +665,11 @@
     },
     "InvalidParameterValueException": {
       "base": "<p>One or more parameter values are not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidResourceStateException": {
       "base": "<p>License Manager cannot allocate a license to a resource because of its state. </p> <p>For example, you cannot allocate a license to an instance in the process of shutting down.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InventoryFilter": {
       "base": "<p>An inventory filter.</p>",
@@ -916,178 +856,143 @@
     },
     "LicenseUsageException": {
       "base": "<p>You do not have enough licenses available to support a new resource launch.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssociationsForLicenseConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssociationsForLicenseConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDistributedGrantsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDistributedGrantsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFailuresForLicenseConfigurationOperationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFailuresForLicenseConfigurationOperationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLicenseConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLicenseConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLicenseConversionTasksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLicenseConversionTasksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLicenseManagerReportGeneratorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLicenseManagerReportGeneratorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLicenseSpecificationsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLicenseSpecificationsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLicenseVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLicenseVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLicensesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLicensesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReceivedGrantsForOrganizationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReceivedGrantsForOrganizationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReceivedGrantsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReceivedGrantsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReceivedLicensesForOrganizationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReceivedLicensesForOrganizationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReceivedLicensesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReceivedLicensesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceInventoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceInventoryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTokensRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTokensResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListUsageForLicenseConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListUsageForLicenseConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Location": {
       "base": null,
@@ -1178,8 +1083,7 @@
     },
     "NoEntitlementsAllowedException": {
       "base": "<p>There are no entitlements found for this license, or the entitlement maximum count is reached.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Options": {
       "base": "<p>The options you can specify when you create a new version of a grant, such as activation override behavior. For more information, see <a href=\"https://docs.aws.amazon.com/license-manager/latest/userguide/granted-licenses.html\">Granted licenses in License Manager</a> in the <i>License Manager User Guide</i>.</p>",
@@ -1201,6 +1105,30 @@
         "CreateGrantRequest$Principals": "<p>The grant principals. You can specify one of the following as an Amazon Resource Name (ARN):</p> <ul> <li> <p>An Amazon Web Services account, which includes only the account specified.</p> </li> </ul> <ul> <li> <p>An organizational unit (OU), which includes all accounts in the OU.</p> </li> </ul> <ul> <li> <p>An organization, which will include all accounts across your organization.</p> </li> </ul>"
       }
     },
+    "ProductCodeId": {
+      "base": null,
+      "refs": {
+        "ProductCodeListItem$ProductCodeId": "<p>The product code ID</p>"
+      }
+    },
+    "ProductCodeList": {
+      "base": null,
+      "refs": {
+        "LicenseConversionContext$ProductCodes": "<p>Product codes referred to in the license conversion process.</p>"
+      }
+    },
+    "ProductCodeListItem": {
+      "base": "<p>A list item that contains a product code.</p>",
+      "refs": {
+        "ProductCodeList$member": null
+      }
+    },
+    "ProductCodeType": {
+      "base": null,
+      "refs": {
+        "ProductCodeListItem$ProductCodeType": "<p>The product code type</p>"
+      }
+    },
     "ProductInformation": {
       "base": "<p>Describes product information for a license configuration.</p>",
       "refs": {
@@ -1216,7 +1144,7 @@
     "ProductInformationFilterList": {
       "base": null,
       "refs": {
-        "ProductInformation$ProductInformationFilterList": "<p>A Product information filter consists of a <code>ProductInformationFilterComparator</code> which is a logical operator, a <code>ProductInformationFilterName</code> which specifies the type of filter being declared, and a <code>ProductInformationFilterValue</code> that specifies the value to filter on. </p> <p>Accepted values for <code>ProductInformationFilterName</code> are listed here along with descriptions and valid options for <code>ProductInformationFilterComparator</code>. </p> <p>The following filters and are supported when the resource type is <code>SSM_MANAGED</code>:</p> <ul> <li> <p> <code>Application Name</code> - The name of the application. Logical operator is <code>EQUALS</code>.</p> </li> <li> <p> <code>Application Publisher</code> - The publisher of the application. Logical operator is <code>EQUALS</code>.</p> </li> <li> <p> <code>Application Version</code> - The version of the application. Logical operator is <code>EQUALS</code>.</p> </li> <li> <p> <code>Platform Name</code> - The name of the platform. Logical operator is <code>EQUALS</code>.</p> </li> <li> <p> <code>Platform Type</code> - The platform type. Logical operator is <code>EQUALS</code>.</p> </li> <li> <p> <code>Tag:key</code> - The key of a tag attached to an Amazon Web Services resource you wish to exclude from automated discovery. Logical operator is <code>NOT_EQUALS</code>. The key for your tag must be appended to <code>Tag:</code> following the example: <code>Tag:name-of-your-key</code>. <code>ProductInformationFilterValue</code> is optional if you are not using values for the key. </p> </li> <li> <p> <code>AccountId</code> - The 12-digit ID of an Amazon Web Services account you wish to exclude from automated discovery. Logical operator is <code>NOT_EQUALS</code>.</p> </li> <li> <p> <code>License Included</code> - The type of license included. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. Possible values are: <code>sql-server-enterprise</code> | <code>sql-server-standard</code> | <code>sql-server-web</code> | <code>windows-server-datacenter</code>.</p> </li> </ul> <p>The following filters and logical operators are supported when the resource type is <code>RDS</code>:</p> <ul> <li> <p> <code>Engine Edition</code> - The edition of the database engine. Logical operator is <code>EQUALS</code>. Possible values are: <code>oracle-ee</code> | <code>oracle-se</code> | <code>oracle-se1</code> | <code>oracle-se2</code>.</p> </li> <li> <p> <code>License Pack</code> - The license pack. Logical operator is <code>EQUALS</code>. Possible values are: <code>data guard</code> | <code>diagnostic pack sqlt</code> | <code>tuning pack sqlt</code> | <code>ols</code> | <code>olap</code>.</p> </li> </ul>"
+        "ProductInformation$ProductInformationFilterList": "<p>A Product information filter consists of a <code>ProductInformationFilterComparator</code> which is a logical operator, a <code>ProductInformationFilterName</code> which specifies the type of filter being declared, and a <code>ProductInformationFilterValue</code> that specifies the value to filter on. </p> <p>Accepted values for <code>ProductInformationFilterName</code> are listed here along with descriptions and valid options for <code>ProductInformationFilterComparator</code>. </p> <p>The following filters and are supported when the resource type is <code>SSM_MANAGED</code>:</p> <ul> <li> <p> <code>Application Name</code> - The name of the application. Logical operator is <code>EQUALS</code>.</p> </li> <li> <p> <code>Application Publisher</code> - The publisher of the application. Logical operator is <code>EQUALS</code>.</p> </li> <li> <p> <code>Application Version</code> - The version of the application. Logical operator is <code>EQUALS</code>.</p> </li> <li> <p> <code>Platform Name</code> - The name of the platform. Logical operator is <code>EQUALS</code>.</p> </li> <li> <p> <code>Platform Type</code> - The platform type. Logical operator is <code>EQUALS</code>.</p> </li> <li> <p> <code>Tag:key</code> - The key of a tag attached to an Amazon Web Services resource you wish to exclude from automated discovery. Logical operator is <code>NOT_EQUALS</code>. The key for your tag must be appended to <code>Tag:</code> following the example: <code>Tag:name-of-your-key</code>. <code>ProductInformationFilterValue</code> is optional if you are not using values for the key. </p> </li> <li> <p> <code>AccountId</code> - The 12-digit ID of an Amazon Web Services account you wish to exclude from automated discovery. Logical operator is <code>NOT_EQUALS</code>.</p> </li> <li> <p> <code>License Included</code> - The type of license included. Logical operators are <code>EQUALS</code> and <code>NOT_EQUALS</code>. Possible values are: <code>sql-server-enterprise</code> | <code>sql-server-standard</code> | <code>sql-server-web</code> | <code>windows-server-datacenter</code>.</p> </li> </ul> <p>The following filters and logical operators are supported when the resource type is <code>RDS</code>:</p> <ul> <li> <p> <code>Engine Edition</code> - The edition of the database engine. Logical operator is <code>EQUALS</code>. Possible values are: <code>oracle-ee</code> | <code>oracle-se</code> | <code>oracle-se1</code> | <code>oracle-se2</code> | <code>db2-se</code> | <code>db2-ae</code>.</p> </li> <li> <p> <code>License Pack</code> - The license pack. Logical operator is <code>EQUALS</code>. Possible values are: <code>data guard</code> | <code>diagnostic pack sqlt</code> | <code>tuning pack sqlt</code> | <code>ols</code> | <code>olap</code>.</p> </li> </ul>"
       }
     },
     "ProductInformationList": {
@@ -1236,8 +1164,7 @@
     },
     "RateLimitExceededException": {
       "base": "<p>Too many requests have been submitted. Try again after a brief wait.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ReceivedMetadata": {
       "base": "<p>Metadata associated with received licenses and grants.</p>",
@@ -1253,18 +1180,15 @@
     },
     "RedirectException": {
       "base": "<p>This is not the correct Region for the resource. Try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RejectGrantRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RejectGrantResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RenewType": {
       "base": null,
@@ -1342,13 +1266,11 @@
     },
     "ResourceLimitExceededException": {
       "base": "<p>Your resource limits have been exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The resource cannot be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceType": {
       "base": null,
@@ -1369,8 +1291,7 @@
     },
     "ServerInternalException": {
       "base": "<p>The server experienced an internal error. Try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SignedToken": {
       "base": null,
@@ -1532,7 +1453,7 @@
         "ListReceivedLicensesResponse$NextToken": "<p>Token for the next set of results.</p>",
         "ListResourceInventoryRequest$NextToken": "<p>Token for the next set of results.</p>",
         "ListResourceInventoryResponse$NextToken": "<p>Token for the next set of results.</p>",
-        "ListTagsForResourceRequest$ResourceArn": "<p>Amazon Resource Name (ARN) of the license configuration.</p>",
+        "ListTagsForResourceRequest$ResourceArn": "<p>Amazon Resource Name (ARN) of the resource.</p>",
         "ListTokensRequest$NextToken": "<p>Token for the next set of results.</p>",
         "ListTokensResponse$NextToken": "<p>Token for the next set of results.</p>",
         "ListUsageForLicenseConfigurationRequest$LicenseConfigurationArn": "<p>Amazon Resource Name (ARN) of the license configuration.</p>",
@@ -1561,15 +1482,15 @@
         "S3Location$bucket": "<p>Name of the S3 bucket reports are published to.</p>",
         "S3Location$keyPrefix": "<p>Prefix of the S3 bucket reports are published to.</p>",
         "StringList$member": null,
-        "Tag$Key": "<p>Tag key.</p>",
-        "Tag$Value": "<p>Tag value.</p>",
+        "Tag$Key": "<p>The tag key.</p>",
+        "Tag$Value": "<p>The tag value.</p>",
         "TagKeyList$member": null,
-        "TagResourceRequest$ResourceArn": "<p>Amazon Resource Name (ARN) of the license configuration.</p>",
+        "TagResourceRequest$ResourceArn": "<p>Amazon Resource Name (ARN) of the resource. The following examples provide an example ARN for each supported resource in License Manager:</p> <ul> <li> <p>Licenses - <code>arn:aws:license-manager::111122223333:license:l-EXAMPLE2da7646d6861033667f20e895</code> </p> </li> <li> <p>Grants - <code>arn:aws:license-manager::111122223333:grant:g-EXAMPLE7b19f4a0ab73679b0beb52707</code> </p> </li> <li> <p>License configurations - <code>arn:aws:license-manager:us-east-1:111122223333:license-configuration:lic-EXAMPLE6a788d4c8acd4264ff0ecf2ed2d</code> </p> </li> <li> <p>Report generators - <code>arn:aws:license-manager:us-east-1:111122223333:report-generator:r-EXAMPLE825b4a4f8fe5a3e0c88824e5fc6</code> </p> </li> </ul>",
         "TokenData$TokenId": "<p>Token ID.</p>",
         "TokenData$TokenType": "<p>Type of token generated. The supported value is <code>REFRESH_TOKEN</code>.</p>",
         "TokenData$LicenseArn": "<p>Amazon Resource Name (ARN) of the license.</p>",
         "TokenData$Status": "<p>Token status. The possible values are <code>AVAILABLE</code> and <code>DELETED</code>.</p>",
-        "UntagResourceRequest$ResourceArn": "<p>Amazon Resource Name (ARN) of the license configuration.</p>",
+        "UntagResourceRequest$ResourceArn": "<p>Amazon Resource Name (ARN) of the resource.</p>",
         "UpdateLicenseConfigurationRequest$LicenseConfigurationArn": "<p>Amazon Resource Name (ARN) of the license configuration.</p>",
         "UpdateLicenseConfigurationRequest$Name": "<p>New name of the license configuration.</p>",
         "UpdateLicenseConfigurationRequest$Description": "<p>New description of the license configuration.</p>",
@@ -1583,7 +1504,7 @@
     "StringList": {
       "base": null,
       "refs": {
-        "CreateLicenseConfigurationRequest$LicenseRules": "<p>License rules. The syntax is #name=value (for example, #allowedTenancy=EC2-DedicatedHost). The available rules vary by dimension, as follows.</p> <ul> <li> <p> <code>Cores</code> dimension: <code>allowedTenancy</code> | <code>licenseAffinityToHost</code> | <code>maximumCores</code> | <code>minimumCores</code> </p> </li> <li> <p> <code>Instances</code> dimension: <code>allowedTenancy</code> | <code>maximumCores</code> | <code>minimumCores</code> | <code>maximumSockets</code> | <code>minimumSockets</code> | <code>maximumVcpus</code> | <code>minimumVcpus</code> </p> </li> <li> <p> <code>Sockets</code> dimension: <code>allowedTenancy</code> | <code>licenseAffinityToHost</code> | <code>maximumSockets</code> | <code>minimumSockets</code> </p> </li> <li> <p> <code>vCPUs</code> dimension: <code>allowedTenancy</code> | <code>honorVcpuOptimization</code> | <code>maximumVcpus</code> | <code>minimumVcpus</code> </p> </li> </ul> <p>The unit for <code>licenseAffinityToHost</code> is days and the range is 1 to 180. The possible values for <code>allowedTenancy</code> are <code>EC2-Default</code>, <code>EC2-DedicatedHost</code>, and <code>EC2-DedicatedInstance</code>. The possible values for <code>honorVcpuOptimization</code> are <code>True</code> and <code>False</code>.</p>",
+        "CreateLicenseConfigurationRequest$LicenseRules": "<p>License rules. The syntax is #name=value (for example, #allowedTenancy=EC2-DedicatedHost). The available rules vary by dimension, as follows.</p> <ul> <li> <p> <code>Cores</code> dimension: <code>allowedTenancy</code> | <code>licenseAffinityToHost</code> | <code>maximumCores</code> | <code>minimumCores</code> </p> </li> <li> <p> <code>Instances</code> dimension: <code>allowedTenancy</code> | <code>maximumVcpus</code> | <code>minimumVcpus</code> </p> </li> <li> <p> <code>Sockets</code> dimension: <code>allowedTenancy</code> | <code>licenseAffinityToHost</code> | <code>maximumSockets</code> | <code>minimumSockets</code> </p> </li> <li> <p> <code>vCPUs</code> dimension: <code>allowedTenancy</code> | <code>honorVcpuOptimization</code> | <code>maximumVcpus</code> | <code>minimumVcpus</code> </p> </li> </ul> <p>The unit for <code>licenseAffinityToHost</code> is days and the range is 1 to 180. The possible values for <code>allowedTenancy</code> are <code>EC2-Default</code>, <code>EC2-DedicatedHost</code>, and <code>EC2-DedicatedInstance</code>. The possible values for <code>honorVcpuOptimization</code> are <code>True</code> and <code>False</code>.</p>",
         "GetLicenseConfigurationResponse$LicenseRules": "<p>License rules.</p>",
         "LicenseConfiguration$LicenseRules": "<p>License rules.</p>",
         "ListLicenseConfigurationsRequest$LicenseConfigurationArns": "<p>Amazon Resource Names (ARN) of the license configurations.</p>",
@@ -1593,7 +1514,7 @@
       }
     },
     "Tag": {
-      "base": "<p>Details about a tag for a license configuration.</p>",
+      "base": "<p>Details about the tags for a resource. For more information about tagging support in License Manager, see the <a href=\"https://docs.aws.amazon.com/license-manager/latest/APIReference/API_TagResource.html\">TagResource</a> operation.</p>",
       "refs": {
         "TagList$member": null
       }
@@ -1607,8 +1528,10 @@
     "TagList": {
       "base": null,
       "refs": {
+        "CreateGrantRequest$Tags": "<p>Tags to add to the grant. For more information about tagging support in License Manager, see the <a href=\"https://docs.aws.amazon.com/license-manager/latest/APIReference/API_TagResource.html\">TagResource</a> operation.</p>",
         "CreateLicenseConfigurationRequest$Tags": "<p>Tags to add to the license configuration.</p>",
         "CreateLicenseManagerReportGeneratorRequest$Tags": "<p>Tags to add to the report generator.</p>",
+        "CreateLicenseRequest$Tags": "<p>Tags to add to the license. For more information about tagging support in License Manager, see the <a href=\"https://docs.aws.amazon.com/license-manager/latest/APIReference/API_TagResource.html\">TagResource</a> operation.</p>",
         "GetLicenseConfigurationResponse$Tags": "<p>Tags for the license configuration.</p>",
         "ListTagsForResourceResponse$Tags": "<p>Information about the tags.</p>",
         "ReportGenerator$Tags": "<p>Tags associated with the report generator.</p>",
@@ -1617,13 +1540,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TokenData": {
       "base": "<p>Describes a token.</p>",
@@ -1653,58 +1574,47 @@
     },
     "UnsupportedDigitalSignatureMethodException": {
       "base": "<p>The digital signature method is unsupported. Try your request again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLicenseConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLicenseConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLicenseManagerReportGeneratorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLicenseManagerReportGeneratorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLicenseSpecificationsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLicenseSpecificationsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServiceSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServiceSettingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UsageOperation": {
       "base": null,
@@ -1714,8 +1624,7 @@
     },
     "ValidationException": {
       "base": "<p>The provided input is not valid. Try your request again.</p>",
-      "refs": {
-      }
+      "refs": {}
     }
   }
 }

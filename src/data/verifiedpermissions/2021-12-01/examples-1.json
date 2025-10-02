@@ -20,9 +20,7 @@
           ]
         },
         "output": {
-          "errors": [
-
-          ],
+          "errors": [],
           "results": [
             {
               "createdDate": "2024-10-18T18:53:39.258153Z",
@@ -91,9 +89,7 @@
                   "entityId": "Alice",
                   "entityType": "PhotoFlash::User"
                 },
-                "parents": [
-
-                ]
+                "parents": []
               },
               {
                 "attributes": {
@@ -111,9 +107,7 @@
                   "entityId": "Annalisa",
                   "entityType": "PhotoFlash::User"
                 },
-                "parents": [
-
-                ]
+                "parents": []
               },
               {
                 "attributes": {
@@ -145,9 +139,7 @@
                   "entityId": "1234",
                   "entityType": "PhotoFlash::Account"
                 },
-                "parents": [
-
-                ]
+                "parents": []
               }
             ]
           },
@@ -186,9 +178,7 @@
         "output": {
           "results": [
             {
-              "errors": [
-
-              ],
+              "errors": [],
               "decision": "ALLOW",
               "determiningPolicies": [
                 {
@@ -211,13 +201,9 @@
               }
             },
             {
-              "errors": [
-
-              ],
+              "errors": [],
               "decision": "DENY",
-              "determiningPolicies": [
-
-              ],
+              "determiningPolicies": [],
               "request": {
                 "action": {
                   "actionId": "DeletePhoto",
@@ -313,9 +299,7 @@
           },
           "results": [
             {
-              "errors": [
-
-              ],
+              "errors": [],
               "decision": "ALLOW",
               "determiningPolicies": [
                 {
@@ -334,9 +318,7 @@
               }
             },
             {
-              "errors": [
-
-              ],
+              "errors": [],
               "decision": "ALLOW",
               "determiningPolicies": [
                 {
@@ -355,13 +337,9 @@
               }
             },
             {
-              "errors": [
-
-              ],
+              "errors": [],
               "decision": "DENY",
-              "determiningPolicies": [
-
-              ],
+              "determiningPolicies": [],
               "request": {
                 "action": {
                   "actionId": "ViewPhoto",
@@ -545,8 +523,7 @@
           "identitySourceId": "ISEXAMPLEabcdefg111111",
           "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
         },
-        "output": {
-        },
+        "output": {},
         "description": "The following example request deletes the specified identity source.",
         "id": "example-1",
         "title": "To delete an identity source"
@@ -558,8 +535,7 @@
           "policyId": "9wYxMpljbbZQb5fcZHyJhY",
           "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
         },
-        "output": {
-        },
+        "output": {},
         "description": "The following example deletes the specified policy from its policy store.",
         "id": "example-1",
         "title": "To delete a policy"
@@ -570,8 +546,7 @@
         "input": {
           "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
         },
-        "output": {
-        },
+        "output": {},
         "description": "The following example deletes the specified policy store.",
         "id": "example-1",
         "title": "To delete a policy store"
@@ -583,8 +558,7 @@
           "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
           "policyTemplateId": "PTEXAMPLEabcdefg111111"
         },
-        "output": {
-        },
+        "output": {},
         "description": "The following example deletes a policy template. Before you can perform this operation, you must first delete any template-linked policies that were instantiated from this policy template. To delete them, use DeletePolicy.",
         "id": "example-1",
         "title": "To delete a policy template"
@@ -716,9 +690,7 @@
           }
         },
         "output": {
-          "errors": [
-
-          ],
+          "errors": [],
           "decision": "ALLOW",
           "determiningPolicies": [
             {
@@ -747,13 +719,9 @@
           }
         },
         "output": {
-          "errors": [
-
-          ],
+          "errors": [],
           "decision": "DENY",
-          "determiningPolicies": [
-
-          ]
+          "determiningPolicies": []
         },
         "description": "The following example is the same as the previous example, except that the principal is User::\"bob\", and the policy store doesn't contain any policy that allows that user access to Album::\"alice_folder\". The output infers that the Deny was implicit because the list of DeterminingPolicies is empty.",
         "id": "example-2",
@@ -775,9 +743,7 @@
           }
         },
         "output": {
-          "errors": [
-
-          ],
+          "errors": [],
           "decision": "ALLOW",
           "determiningPolicies": [
             {
@@ -905,8 +871,7 @@
             {
               "createdDate": "2022-12-09T23:00:24.66266Z",
               "definition": {
-                "static": {
-                }
+                "static": {}
               },
               "lastUpdatedDate": "2022-12-09T23:00:24.66266Z",
               "policyId": "9wYxMpljbbZQb5fcZHyJhY",
@@ -973,8 +938,7 @@
     ],
     "ListPolicyStores": [
       {
-        "input": {
-        },
+        "input": {},
         "output": {
           "policyStores": [
             {
@@ -1022,6 +986,22 @@
         "title": "ListPolicyTemplates"
       }
     ],
+    "ListTagsForResource": [
+      {
+        "input": {
+          "resourceArn": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        },
+        "description": "The following example lists all the tags for the resource named in the API call.",
+        "id": "example-1",
+        "title": "ListTagsForResource"
+      }
+    ],
     "PutSchema": [
       {
         "input": {
@@ -1041,6 +1021,36 @@
         "description": "The following example creates a new schema, or updates an existing schema, in the specified policy store. Note that the schema text is shown line wrapped for readability. You should submit the entire schema text as a single line of text.\n\nNote\nThe JSON in the parameters of this operation are strings that can contain embedded quotation marks (\") within the outermost quotation mark pair. This requires that you stringify the JSON object by preceding all embedded quotation marks with a backslash character ( \\\" ) and combining all lines into a single text line with no line breaks.\n\nExample strings might be displayed wrapped across multiple lines here for readability, but the operation requires the parameters be submitted as single line strings.",
         "id": "example-1",
         "title": "PutSchema"
+      }
+    ],
+    "TagResource": [
+      {
+        "input": {
+          "resourceArn": "C7v5xMplfFH3i3e4Jrzb1a",
+          "tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        },
+        "output": {},
+        "description": "The following example tags the resource.",
+        "id": "example-1",
+        "title": "TagResource"
+      }
+    ],
+    "UntagResource": [
+      {
+        "input": {
+          "resourceArn": "C7v5xMplfFH3i3e4Jrzb1a",
+          "tagKeys": [
+            "key1",
+            "key2"
+          ]
+        },
+        "output": {},
+        "description": "The following example removes the listed tags from the resource.",
+        "id": "example-1",
+        "title": "UntagResource"
       }
     ],
     "UpdateIdentitySource": [

@@ -5,12 +5,14 @@
     "endpointPrefix":"metering.marketplace",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"AWSMarketplace Metering",
     "serviceId":"Marketplace Metering",
     "signatureVersion":"v4",
     "signingName":"aws-marketplace",
     "targetPrefix":"AWSMPMeteringService",
-    "uid":"meteringmarketplace-2016-01-14"
+    "uid":"meteringmarketplace-2016-01-14",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "BatchMeterUsage":{
@@ -124,8 +126,8 @@
     "CustomerIdentifier":{
       "type":"string",
       "max":255,
-      "min":1,
-      "pattern":"[\\s\\S]+"
+      "min":0,
+      "pattern":"[\\s\\S]*"
     },
     "CustomerNotEntitledException":{
       "type":"structure",
@@ -378,7 +380,6 @@
       "type":"structure",
       "required":[
         "Timestamp",
-        "CustomerIdentifier",
         "Dimension"
       ],
       "members":{
@@ -386,7 +387,8 @@
         "CustomerIdentifier":{"shape":"CustomerIdentifier"},
         "Dimension":{"shape":"UsageDimension"},
         "Quantity":{"shape":"UsageQuantity"},
-        "UsageAllocations":{"shape":"UsageAllocations"}
+        "UsageAllocations":{"shape":"UsageAllocations"},
+        "CustomerAWSAccountId":{"shape":"CustomerAWSAccountId"}
       }
     },
     "UsageRecordList":{

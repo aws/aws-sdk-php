@@ -2,17 +2,37 @@
   "version": "2.0",
   "service": "<p>Contains APIs related to model invocation and querying of knowledge bases.</p>",
   "operations": {
+    "CreateInvocation": "<p>Creates a new invocation within a session. An invocation groups the related invocation steps that store the content from a conversation. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p> <p>Related APIs</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListInvocations.html\">ListInvocations</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListSessions.html\">ListSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_GetSession.html\">GetSession</a> </p> </li> </ul>",
+    "CreateSession": "<p>Creates a session to temporarily store conversations for generative AI (GenAI) applications built with open-source frameworks such as LangGraph and LlamaIndex. Sessions enable you to save the state of conversations at checkpoints, with the added security and infrastructure of Amazon Web Services. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p> <p>By default, Amazon Bedrock uses Amazon Web Services-managed keys for session encryption, including session metadata, or you can use your own KMS key. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/session-encryption.html\">Amazon Bedrock session encryption</a>.</p> <note> <p> You use a session to store state and conversation history for generative AI applications built with open-source frameworks. For Amazon Bedrock Agents, the service automatically manages conversation context and associates them with the agent-specific sessionId you specify in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html\">InvokeAgent</a> API operation. </p> </note> <p>Related APIs:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListSessions.html\">ListSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_GetSession.html\">GetSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_EndSession.html\">EndSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_DeleteSession.html\">DeleteSession</a> </p> </li> </ul>",
     "DeleteAgentMemory": "<p>Deletes memory from the specified memory identifier.</p>",
+    "DeleteSession": "<p>Deletes a session that you ended. You can't delete a session with an <code>ACTIVE</code> status. To delete an active session, you must first end it with the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_EndSession.html\">EndSession</a> API operation. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+    "EndSession": "<p>Ends the session. After you end a session, you can still access its content but you can’t add to it. To delete the session and it's content, you use the DeleteSession API operation. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
     "GenerateQuery": "<p>Generates an SQL query from a natural language query. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-generate-query.html\">Generate a query for structured data</a> in the Amazon Bedrock User Guide.</p>",
     "GetAgentMemory": "<p>Gets the sessions stored in the memory of the agent.</p>",
-    "InvokeAgent": "<note> </note> <p>Sends a prompt for the agent to process and respond to. Note the following fields for the request:</p> <ul> <li> <p>To continue the same conversation with an agent, use the same <code>sessionId</code> value in the request.</p> </li> <li> <p>To activate trace enablement, turn <code>enableTrace</code> to <code>true</code>. Trace enablement helps you follow the agent's reasoning process that led it to the information it processed, the actions it took, and the final result it yielded. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p> </li> <li> <p>To stream agent responses, make sure that only orchestration prompt is enabled. Agent streaming is not supported for the following steps: </p> <ul> <li> <p> <code>Pre-processing</code> </p> </li> <li> <p> <code>Post-processing</code> </p> </li> <li> <p>Agent with 1 Knowledge base and <code>User Input</code> not enabled</p> </li> </ul> </li> <li> <p>End a conversation by setting <code>endSession</code> to <code>true</code>.</p> </li> <li> <p>In the <code>sessionState</code> object, you can include attributes for the session or prompt or, if you configured an action group to return control, results from invocation of the action group.</p> </li> </ul> <p>The response contains both <b>chunk</b> and <b>trace</b> attributes.</p> <p>The final response is returned in the <code>bytes</code> field of the <code>chunk</code> object. The <code>InvokeAgent</code> returns one chunk for the entire interaction.</p> <ul> <li> <p>The <code>attribution</code> object contains citations for parts of the response.</p> </li> <li> <p>If you set <code>enableTrace</code> to <code>true</code> in the request, you can trace the agent's steps and reasoning process that led it to the response.</p> </li> <li> <p>If the action predicted was configured to return control, the response returns parameters for the action, elicited from the user, in the <code>returnControl</code> field.</p> </li> <li> <p>Errors are also surfaced in the response.</p> </li> </ul>",
+    "GetExecutionFlowSnapshot": "<p>Retrieves the flow definition snapshot used for a flow execution. The snapshot represents the flow metadata and definition as it existed at the time the execution was started. Note that even if the flow is edited after an execution starts, the snapshot connected to the execution remains unchanged.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+    "GetFlowExecution": "<p>Retrieves details about a specific flow execution, including its status, start and end times, and any errors that occurred during execution.</p>",
+    "GetInvocationStep": "<p>Retrieves the details of a specific invocation step within an invocation in a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+    "GetSession": "<p>Retrieves details about a specific session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+    "InvokeAgent": "<p><note> </note> <p>Sends a prompt for the agent to process and respond to. Note the following fields for the request:</p> <ul> <li> <p>To continue the same conversation with an agent, use the same <code>sessionId</code> value in the request.</p> </li> <li> <p>To activate trace enablement, turn <code>enableTrace</code> to <code>true</code>. Trace enablement helps you follow the agent's reasoning process that led it to the information it processed, the actions it took, and the final result it yielded. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p> </li> <li> <p>End a conversation by setting <code>endSession</code> to <code>true</code>.</p> </li> <li> <p>In the <code>sessionState</code> object, you can include attributes for the session or prompt or, if you configured an action group to return control, results from invocation of the action group.</p> </li> </ul> <p>The response contains both <b>chunk</b> and <b>trace</b> attributes.</p> <p>The final response is returned in the <code>bytes</code> field of the <code>chunk</code> object. The <code>InvokeAgent</code> returns one chunk for the entire interaction.</p> <ul> <li> <p>The <code>attribution</code> object contains citations for parts of the response.</p> </li> <li> <p>If you set <code>enableTrace</code> to <code>true</code> in the request, you can trace the agent's steps and reasoning process that led it to the response.</p> </li> <li> <p>If the action predicted was configured to return control, the response returns parameters for the action, elicited from the user, in the <code>returnControl</code> field.</p> </li> <li> <p>Errors are also surfaced in the response.</p> </li> </ul></p>",
     "InvokeFlow": "<p>Invokes an alias of a flow to run the inputs that you specify and return the output of each node as a stream. If there's an error, the error is returned. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html\">Test a flow in Amazon Bedrock</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeFlow</code>.</p> </note>",
     "InvokeInlineAgent": "<p> Invokes an inline Amazon Bedrock agent using the configurations you provide with the request. </p> <ul> <li> <p>Specify the following fields for security purposes.</p> <ul> <li> <p>(Optional) <code>customerEncryptionKeyArn</code> – The Amazon Resource Name (ARN) of a KMS key to encrypt the creation of the agent.</p> </li> <li> <p>(Optional) <code>idleSessionTTLinSeconds</code> – Specify the number of seconds for which the agent should maintain session information. After this time expires, the subsequent <code>InvokeInlineAgent</code> request begins a new session.</p> </li> </ul> </li> <li> <p>To override the default prompt behavior for agent orchestration and to use advanced prompts, include a <code>promptOverrideConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html\">Advanced prompts</a>.</p> </li> <li> <p>The agent instructions will not be honored if your agent has only one knowledge base, uses default prompts, has no action group, and user input is disabled.</p> </li> </ul> <note> </note>",
+    "ListFlowExecutionEvents": "<p>Lists events that occurred during a flow execution. Events provide detailed information about the execution progress, including node inputs and outputs, flow inputs and outputs, condition results, and failure events.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+    "ListFlowExecutions": "<p>Lists all executions of a flow. Results can be paginated and include summary information about each execution, such as status, start and end times, and the execution's Amazon Resource Name (ARN).</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+    "ListInvocationSteps": "<p>Lists all invocation steps associated with a session and optionally, an invocation within the session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+    "ListInvocations": "<p>Lists all invocations associated with a specific session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+    "ListSessions": "<p>Lists all sessions in your Amazon Web Services account. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+    "ListTagsForResource": "<p>List all the tags for the resource you specify.</p>",
     "OptimizePrompt": "<p>Optimizes a prompt for the task that you specify. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-optimize.html\">Optimize a prompt</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "PutInvocationStep": "<p>Add an invocation step to an invocation in a session. An invocation step stores fine-grained state checkpoints, including text and images, for each interaction. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p> <p>Related APIs:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_GetInvocationStep.html\">GetInvocationStep</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListInvocationSteps.html\">ListInvocationSteps</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListInvocations.html\">ListInvocations</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListInvocations.html\">ListSessions</a> </p> </li> </ul>",
     "Rerank": "<p>Reranks the relevance of sources based on queries. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/rerank.html\">Improve the relevance of query responses with a reranker model</a>.</p>",
     "Retrieve": "<p>Queries a knowledge base and retrieves information from it.</p>",
     "RetrieveAndGenerate": "<p>Queries a knowledge base and generates responses based on the retrieved results and using the specified foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a>. The response only cites sources that are relevant to the query.</p>",
-    "RetrieveAndGenerateStream": "<p>Queries a knowledge base and generates responses based on the retrieved results, with output in streaming format.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeModelWithResponseStream</code>.</p> </note>"
+    "RetrieveAndGenerateStream": "<p>Queries a knowledge base and generates responses based on the retrieved results, with output in streaming format.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeModelWithResponseStream</code>.</p> </note> <p>This operation requires permission for the <code> bedrock:RetrieveAndGenerate</code> action.</p>",
+    "StartFlowExecution": "<p>Starts an execution of an Amazon Bedrock flow. Unlike flows that run until completion or time out after five minutes, flow executions let you run flows asynchronously for longer durations. Flow executions also yield control so that your application can perform other tasks.</p> <p>This operation returns an Amazon Resource Name (ARN) that you can use to track and manage your flow execution.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+    "StopFlowExecution": "<p>Stops an Amazon Bedrock flow's execution. This operation prevents further processing of the flow and changes the execution status to <code>Aborted</code>.</p>",
+    "TagResource": "<p>Associate tags with a resource. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the Amazon Bedrock User Guide.</p>",
+    "UntagResource": "<p>Remove tags from a resource.</p>",
+    "UpdateSession": "<p>Updates the metadata or encryption settings of a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>"
   },
   "shapes": {
     "APISchema": {
@@ -70,7 +90,25 @@
     "ActionGroupSignature": {
       "base": null,
       "refs": {
-        "AgentActionGroup$parentActionGroupSignature": "<p> To allow your agent to request the user for additional information when trying to complete a task, set this field to <code>AMAZON.UserInput</code>. You must leave the <code>description</code>, <code>apiSchema</code>, and <code>actionGroupExecutor</code> fields blank for this action group. </p> <p>To allow your agent to generate, run, and troubleshoot code when trying to complete a task, set this field to <code>AMAZON.CodeInterpreter</code>. You must leave the <code>description</code>, <code>apiSchema</code>, and <code>actionGroupExecutor</code> fields blank for this action group.</p> <p>During orchestration, if your agent determines that it needs to invoke an API in an action group, but doesn't have enough information to complete the API request, it will invoke this action group instead and return an <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Observation.html\">Observation</a> reprompting the user for more information.</p>"
+        "AgentActionGroup$parentActionGroupSignature": "<p>Specify a built-in or computer use action for this action group. If you specify a value, you must leave the <code>description</code>, <code>apiSchema</code>, and <code>actionGroupExecutor</code> fields empty for this action group. </p> <ul> <li> <p>To allow your agent to request the user for additional information when trying to complete a task, set this field to <code>AMAZON.UserInput</code>. </p> </li> <li> <p>To allow your agent to generate, run, and troubleshoot code when trying to complete a task, set this field to <code>AMAZON.CodeInterpreter</code>.</p> </li> <li> <p>To allow your agent to use an Anthropic computer use tool, specify one of the following values. </p> <important> <p> Computer use is a new Anthropic Claude model capability (in beta) available with Anthropic Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. When operating computer use functionality, we recommend taking additional security precautions, such as executing computer actions in virtual environments with restricted data access and limited internet connectivity. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>. </p> </important> <ul> <li> <p> <code>ANTHROPIC.Computer</code> - Gives the agent permission to use the mouse and keyboard and take screenshots.</p> </li> <li> <p> <code>ANTHROPIC.TextEditor</code> - Gives the agent permission to view, create and edit files.</p> </li> <li> <p> <code>ANTHROPIC.Bash</code> - Gives the agent permission to run commands in a bash shell.</p> </li> </ul> </li> </ul>"
+      }
+    },
+    "ActionGroupSignatureParams": {
+      "base": null,
+      "refs": {
+        "AgentActionGroup$parentActionGroupSignatureParams": "<p> The configuration settings for a computer use action. </p> <important> <p>Computer use is a new Anthropic Claude model capability (in beta) available with Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>.</p> </important>"
+      }
+    },
+    "ActionGroupSignatureParamsKeyString": {
+      "base": null,
+      "refs": {
+        "ActionGroupSignatureParams$key": null
+      }
+    },
+    "ActionGroupSignatureParamsValueString": {
+      "base": null,
+      "refs": {
+        "ActionGroupSignatureParams$value": null
       }
     },
     "ActionInvocationType": {
@@ -111,6 +149,7 @@
     "AgentActionGroups": {
       "base": null,
       "refs": {
+        "Collaborator$actionGroups": "<p> List of action groups with each action group defining tasks the inline collaborator agent needs to carry out. </p>",
         "InvokeInlineAgentRequest$actionGroups": "<p> A list of action groups with each action group defining the action the inline agent needs to carry out. </p>"
       }
     },
@@ -119,7 +158,8 @@
       "refs": {
         "AgentCollaboratorInvocationInput$agentCollaboratorAliasArn": "<p>The collaborator's alias ARN.</p>",
         "AgentCollaboratorInvocationOutput$agentCollaboratorAliasArn": "<p>The output's agent collaborator alias ARN.</p>",
-        "Caller$agentAliasArn": "<p>The caller's agent alias ARN.</p>"
+        "Caller$agentAliasArn": "<p>The caller's agent alias ARN.</p>",
+        "CollaboratorConfiguration$agentAliasArn": "<p> The Amazon Resource Name (ARN) of the inline collaborator agent. </p>"
       }
     },
     "AgentAliasId": {
@@ -129,6 +169,13 @@
         "GetAgentMemoryRequest$agentAliasId": "<p>The unique identifier of an alias of an agent.</p>",
         "InvokeAgentRequest$agentAliasId": "<p>The alias of the agent to use.</p>",
         "TracePart$agentAliasId": "<p>The unique identifier of the alias of the agent.</p>"
+      }
+    },
+    "AgentCollaboration": {
+      "base": null,
+      "refs": {
+        "Collaborator$agentCollaboration": "<p> Defines how the inline supervisor agent handles information across multiple collaborator agents to coordinate a final response. </p>",
+        "InvokeInlineAgentRequest$agentCollaboration": "<p> Defines how the inline collaborator agent handles information across multiple collaborator agents to coordinate a final response. The inline collaborator agent can also be the supervisor. </p>"
       }
     },
     "AgentCollaboratorInputPayload": {
@@ -169,6 +216,13 @@
         "GetAgentMemoryRequest$agentId": "<p>The unique identifier of the agent to which the alias belongs.</p>",
         "InvokeAgentRequest$agentId": "<p>The unique identifier of the agent to use.</p>",
         "TracePart$agentId": "<p>The unique identifier of the agent.</p>"
+      }
+    },
+    "AgentTraces": {
+      "base": null,
+      "refs": {
+        "NodeTraceElements$agentTraces": "<p>Agent trace information for the node execution.</p>",
+        "TraceElements$agentTraces": "<p>Agent trace information for the flow execution.</p>"
       }
     },
     "AgentVersion": {
@@ -295,17 +349,42 @@
         "BedrockRerankingConfiguration$modelConfiguration": "<p>Contains configurations for a reranker model.</p>"
       }
     },
+    "BedrockSessionContentBlock": {
+      "base": "<p>A block of content that you pass to, or receive from, a Amazon Bedrock session in an invocation step. You pass the content to a session in the <code>payLoad</code> of the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_PutInvocationStep.html\">PutInvocationStep</a> API operation. You retrieve the content with the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_GetInvocationStep.html\">GetInvocationStep</a> API operation.</p> <p>For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+      "refs": {
+        "BedrockSessionContentBlocks$member": null
+      }
+    },
+    "BedrockSessionContentBlockTextString": {
+      "base": null,
+      "refs": {
+        "BedrockSessionContentBlock$text": "<p>The text in the invocation step.</p>"
+      }
+    },
+    "BedrockSessionContentBlocks": {
+      "base": null,
+      "refs": {
+        "InvocationStepPayload$contentBlocks": "<p>The content for the invocation step.</p>"
+      }
+    },
+    "Blob": {
+      "base": null,
+      "refs": {
+        "ReasoningContentBlock$redactedContent": "<p>The content in the reasoning that was encrypted by the model provider for trust and safety reasons.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
         "CodeInterpreterInvocationOutput$executionTimeout": "<p>Indicates if the execution of the code timed out.</p>",
-        "InvokeAgentRequest$enableTrace": "<p>Specifies whether to turn on the trace or not to track the agent's reasoning process. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p>",
         "InvokeAgentRequest$endSession": "<p>Specifies whether to end the session with the agent or not.</p>",
+        "InvokeAgentRequest$enableTrace": "<p>Specifies whether to turn on the trace or not to track the agent's reasoning process. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p>",
         "InvokeFlowRequest$enableTrace": "<p>Specifies whether to return the trace for the flow or not. Traces track inputs and outputs for nodes in the flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-trace.html\">Track each step in your prompt flow by viewing its trace in Amazon Bedrock</a>.</p>",
-        "InvokeInlineAgentRequest$enableTrace": "<p> Specifies whether to turn on the trace or not to track the agent's reasoning process. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/trace-events.html\">Using trace</a>. <pre><code> &lt;/p&gt; </code></pre>",
         "InvokeInlineAgentRequest$endSession": "<p> Specifies whether to end the session with the inline agent or not. </p>",
+        "InvokeInlineAgentRequest$enableTrace": "<p> Specifies whether to turn on the trace or not to track the agent's reasoning process. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/trace-events.html\">Using trace</a>. </p>",
         "ParameterDetail$required": "<p> Whether the parameter is required for the agent to complete the function for action group invocation. </p>",
         "PreProcessingParsedResponse$isValid": "<p>Whether the user input is valid or not. If <code>false</code>, the agent doesn't proceed to orchestration.</p>",
+        "PromptCreationConfigurations$excludePreviousThinkingSteps": "<p>If <code>true</code>, the service removes any content between <code>&lt;thinking&gt;</code> tags from previous conversations in an agent session. The service will only remove content from already processed turns. This helps you remove content which might not be useful for current and subsequent invocations. This can reduce the input token count and potentially save costs. The default value is <code>false</code>.</p>",
         "StreamingConfigurations$streamFinalResponse": "<p> Specifies whether to enable streaming for the final response. This is set to <code>false</code> by default. </p>"
       }
     },
@@ -337,6 +416,7 @@
     "CallerChain": {
       "base": null,
       "refs": {
+        "InlineAgentTracePart$callerChain": "<p>The caller chain for the trace part.</p>",
         "TracePart$callerChain": "<p>The part's caller chain.</p>"
       }
     },
@@ -370,6 +450,43 @@
       "base": "<p>Contains the JSON-formatted string returned by the API invoked by the code interpreter.</p>",
       "refs": {
         "Observation$codeInterpreterInvocationOutput": "<p>Contains the JSON-formatted string returned by the API invoked by the code interpreter.</p>"
+      }
+    },
+    "CollaborationInstruction": {
+      "base": null,
+      "refs": {
+        "CollaboratorConfiguration$collaboratorInstruction": "<p> Instructions that tell the inline collaborator agent what it should do and how it should interact with users. </p>"
+      }
+    },
+    "Collaborator": {
+      "base": "<p> List of inline collaborators. </p>",
+      "refs": {
+        "Collaborators$member": null
+      }
+    },
+    "CollaboratorConfiguration": {
+      "base": "<p> Settings of an inline collaborator agent. </p>",
+      "refs": {
+        "CollaboratorConfigurations$member": null
+      }
+    },
+    "CollaboratorConfigurations": {
+      "base": null,
+      "refs": {
+        "Collaborator$collaboratorConfigurations": "<p> Settings of the collaborator agent. </p>",
+        "InvokeInlineAgentRequest$collaboratorConfigurations": "<p> Settings for an inline agent collaborator called with <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeInlineAgent.html\">InvokeInlineAgent</a>. </p>"
+      }
+    },
+    "Collaborators": {
+      "base": null,
+      "refs": {
+        "InvokeInlineAgentRequest$collaborators": "<p> List of collaborator inline agents. </p>"
+      }
+    },
+    "ConditionResultEvent": {
+      "base": "<p>Contains information about a condition evaluation result during a flow execution. This event is generated when a condition node in the flow evaluates its conditions.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionEvent$conditionResultEvent": "<p>Contains information about a condition evaluation result during the flow execution. This event is generated when a condition node in the flow evaluates its conditions.</p>"
       }
     },
     "ConfirmationState": {
@@ -421,6 +538,7 @@
     "ConversationHistory": {
       "base": "<p>A conversation history.</p>",
       "refs": {
+        "InlineSessionState$conversationHistory": "<p> Contains the conversation history that persist across sessions. </p>",
         "SessionState$conversationHistory": "<p>The state's conversation history.</p>"
       }
     },
@@ -430,19 +548,41 @@
         "Message$role": "<p>The message's role.</p>"
       }
     },
+    "CreateInvocationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateInvocationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSessionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreationMode": {
       "base": null,
       "refs": {
-        "ModelInvocationInput$parserMode": "<p>Specifies whether to override the default parser Lambda function when parsing the raw foundation model output in the part of the agent sequence defined by the <code>promptType</code>.</p>",
         "ModelInvocationInput$promptCreationMode": "<p>Specifies whether the default prompt template was <code>OVERRIDDEN</code>. If it was, the <code>basePromptTemplate</code> that was set in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html\">PromptOverrideConfiguration</a> object when the agent was created or updated is used instead.</p>",
-        "PromptConfiguration$parserMode": "<p>Specifies whether to override the default parser Lambda function when parsing the raw foundation model output in the part of the agent sequence defined by the <code>promptType</code>. If you set the field as <code>OVERRIDEN</code>, the <code>overrideLambda</code> field in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html\">PromptOverrideConfiguration</a> must be specified with the ARN of a Lambda function.</p>",
-        "PromptConfiguration$promptCreationMode": "<p>Specifies whether to override the default prompt template for this <code>promptType</code>. Set this value to <code>OVERRIDDEN</code> to use the prompt that you provide in the <code>basePromptTemplate</code>. If you leave it as <code>DEFAULT</code>, the agent uses a default prompt template.</p>"
+        "ModelInvocationInput$parserMode": "<p>Specifies whether to override the default parser Lambda function when parsing the raw foundation model output in the part of the agent sequence defined by the <code>promptType</code>.</p>",
+        "PromptConfiguration$promptCreationMode": "<p>Specifies whether to override the default prompt template for this <code>promptType</code>. Set this value to <code>OVERRIDDEN</code> to use the prompt that you provide in the <code>basePromptTemplate</code>. If you leave it as <code>DEFAULT</code>, the agent uses a default prompt template.</p>",
+        "PromptConfiguration$parserMode": "<p>Specifies whether to override the default parser Lambda function when parsing the raw foundation model output in the part of the agent sequence defined by the <code>promptType</code>. If you set the field as <code>OVERRIDDEN</code>, the <code>overrideLambda</code> field in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html\">PromptOverrideConfiguration</a> must be specified with the ARN of a Lambda function.</p>"
       }
     },
     "CustomControlMethod": {
       "base": null,
       "refs": {
         "ActionGroupExecutor$customControl": "<p> To return the action group invocation results directly in the <code>InvokeInlineAgent</code> response, specify <code>RETURN_CONTROL</code>. </p>"
+      }
+    },
+    "CustomOrchestration": {
+      "base": "<p>Contains details of the custom orchestration configured for the agent. </p>",
+      "refs": {
+        "InvokeInlineAgentRequest$customOrchestration": "<p>Contains details of the custom orchestration configured for the agent. </p>"
       }
     },
     "CustomOrchestrationTrace": {
@@ -460,22 +600,55 @@
     "DateTimestamp": {
       "base": "<p>Time Stamp.</p>",
       "refs": {
+        "ConditionResultEvent$timestamp": "<p>The timestamp when the condition evaluation occurred.</p>",
+        "CreateInvocationResponse$createdAt": "<p>The timestamp for when the invocation was created.</p>",
+        "CreateSessionResponse$createdAt": "<p>The timestamp for when the session was created.</p>",
+        "FlowExecutionInputEvent$timestamp": "<p>The timestamp when the inputs are provided.</p>",
+        "FlowExecutionOutputEvent$timestamp": "<p>The timestamp when the outputs are produced.</p>",
+        "FlowExecutionSummary$createdAt": "<p>The timestamp when the flow execution was created.</p>",
+        "FlowExecutionSummary$endedAt": "<p>The timestamp when the flow execution ended. This field is only populated when the execution has completed, failed, timed out, or been aborted.</p>",
+        "FlowFailureEvent$timestamp": "<p>The timestamp when the failure occurred.</p>",
         "FlowTraceConditionNodeResultEvent$timestamp": "<p>The date and time that the trace was returned.</p>",
+        "FlowTraceDependencyEvent$timestamp": "<p>The date and time that the dependency trace was generated.</p>",
+        "FlowTraceNodeActionEvent$timestamp": "<p>The date and time that the operation was called.</p>",
         "FlowTraceNodeInputEvent$timestamp": "<p>The date and time that the trace was returned.</p>",
         "FlowTraceNodeOutputEvent$timestamp": "<p>The date and time that the trace was returned.</p>",
+        "GetFlowExecutionResponse$startedAt": "<p>The timestamp when the flow execution started.</p>",
+        "GetFlowExecutionResponse$endedAt": "<p>The timestamp when the flow execution ended. This field is only populated when the execution has completed, failed, timed out, or been aborted.</p>",
+        "GetSessionResponse$createdAt": "<p>The timestamp for when the session was created.</p>",
+        "GetSessionResponse$lastUpdatedAt": "<p>The timestamp for when the session was last modified.</p>",
+        "InvocationStep$invocationStepTime": "<p>The timestamp for when the invocation step was created.</p>",
+        "InvocationStepSummary$invocationStepTime": "<p>The timestamp for when the invocation step was created.</p>",
+        "InvocationSummary$createdAt": "<p>The timestamp for when the invocation was created.</p>",
+        "MemorySessionSummary$sessionStartTime": "<p>The start time for this session.</p>",
         "MemorySessionSummary$sessionExpiryTime": "<p>The time when the memory duration for the session is set to end.</p>",
-        "MemorySessionSummary$sessionStartTime": "<p>The start time for this session.</p>"
+        "NodeActionEvent$timestamp": "<p>The date and time that the operation was called.</p>",
+        "NodeDependencyEvent$timestamp": "<p>The date and time that the dependency trace was generated.</p>",
+        "NodeFailureEvent$timestamp": "<p>The timestamp when the node failure occurred.</p>",
+        "NodeInputEvent$timestamp": "<p>The timestamp when the inputs were provided to the node.</p>",
+        "NodeOutputEvent$timestamp": "<p>The timestamp when the outputs were produced by the node.</p>",
+        "PutInvocationStepRequest$invocationStepTime": "<p>The timestamp for when the invocation step occurred.</p>",
+        "SessionSummary$createdAt": "<p>The timestamp for when the session was created.</p>",
+        "SessionSummary$lastUpdatedAt": "<p>The timestamp for when the session was last modified.</p>",
+        "UpdateSessionResponse$createdAt": "<p>The timestamp for when the session was created.</p>",
+        "UpdateSessionResponse$lastUpdatedAt": "<p>The timestamp for when the session was last modified.</p>"
       }
     },
     "DeleteAgentMemoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAgentMemoryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DeleteSessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSessionResponse": {
+      "base": null,
+      "refs": {}
     },
     "DependencyFailedException": {
       "base": "<p>There was an issue with a dependency. Check the resource configurations and retry the request.</p>",
@@ -490,11 +663,18 @@
     "Document": {
       "base": null,
       "refs": {
+        "FlowExecutionContent$document": "<p>The document content of the field, which can contain text or structured data.</p>",
         "FlowInputContent$document": "<p>The input to send to the prompt flow input node.</p>",
         "FlowMultiTurnInputContent$document": "<p>The requested additional input to send back to the multi-turn flow node.</p>",
         "FlowOutputContent$document": "<p>The content in the output.</p>",
+        "FlowTraceNodeActionEvent$operationRequest": "<p>The request payload sent to the downstream service.</p>",
+        "FlowTraceNodeActionEvent$operationResponse": "<p>The response payload received from the downstream service.</p>",
         "FlowTraceNodeInputContent$document": "<p>The content of the node input.</p>",
         "FlowTraceNodeOutputContent$document": "<p>The content of the node output.</p>",
+        "NodeActionEvent$operationRequest": "<p>The request payload sent to the downstream service.</p>",
+        "NodeActionEvent$operationResponse": "<p>The response payload received from the downstream service.</p>",
+        "NodeExecutionContent$document": "<p>The document content of the field, which can contain text or structured data.</p>",
+        "PromptConfiguration$additionalModelRequestFields": "<p>If the Converse or ConverseStream operations support the model, <code>additionalModelRequestFields</code> contains additional inference parameters, beyond the base set of inference parameters in the <code>inferenceConfiguration</code> field. </p> <p>For more information, see <i>Inference request parameters and response fields for foundation models</i> in the Amazon Bedrock user guide.</p>",
         "RerankDocument$jsonDocument": "<p>Contains a JSON document to rerank.</p>"
       }
     },
@@ -503,6 +683,14 @@
       "refs": {
         "KnowledgeBaseRetrievalResult$score": "<p>The level of relevance of the result to the query.</p>"
       }
+    },
+    "EndSessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "EndSessionResponse": {
+      "base": null,
+      "refs": {}
     },
     "ExecutionType": {
       "base": null,
@@ -567,8 +755,8 @@
     "FieldsForReranking": {
       "base": null,
       "refs": {
-        "RerankingMetadataSelectiveModeConfiguration$fieldsToExclude": "<p>An array of objects, each of which specifies a metadata field to exclude from consideration when reranking.</p>",
-        "RerankingMetadataSelectiveModeConfiguration$fieldsToInclude": "<p>An array of objects, each of which specifies a metadata field to include in consideration when reranking. The remaining metadata fields are ignored.</p>"
+        "RerankingMetadataSelectiveModeConfiguration$fieldsToInclude": "<p>An array of objects, each of which specifies a metadata field to include in consideration when reranking. The remaining metadata fields are ignored.</p>",
+        "RerankingMetadataSelectiveModeConfiguration$fieldsToExclude": "<p>An array of objects, each of which specifies a metadata field to exclude from consideration when reranking.</p>"
       }
     },
     "FileBody": {
@@ -612,15 +800,15 @@
       "base": "<p>Specifies the name that the metadata attribute must match and the value to which to compare the value of the metadata attribute. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html\">Query configurations</a>.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax\">RetrieveAndGenerate request</a> </p> </li> </ul>",
       "refs": {
         "RetrievalFilter$equals": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value matches the <code>value</code> in this object.</p> <p>The following example would return data sources with an <code>animal</code> attribute whose value is <code>cat</code>:</p> <p> <code>\"equals\": { \"key\": \"animal\", \"value\": \"cat\" }</code> </p>",
+        "RetrievalFilter$notEquals": "<p>Knowledge base data sources are returned when:</p> <ul> <li> <p>It contains a metadata attribute whose name matches the <code>key</code> and whose value doesn't match the <code>value</code> in this object.</p> </li> <li> <p>The key is not present in the document.</p> </li> </ul> <p>The following example would return data sources that don't contain an <code>animal</code> attribute whose value is <code>cat</code>.</p> <p> <code>\"notEquals\": { \"key\": \"animal\", \"value\": \"cat\" }</code> </p>",
         "RetrievalFilter$greaterThan": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is greater than the <code>value</code> in this object.</p> <p>The following example would return data sources with an <code>year</code> attribute whose value is greater than <code>1989</code>:</p> <p> <code>\"greaterThan\": { \"key\": \"year\", \"value\": 1989 }</code> </p>",
         "RetrievalFilter$greaterThanOrEquals": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is greater than or equal to the <code>value</code> in this object.</p> <p>The following example would return data sources with an <code>year</code> attribute whose value is greater than or equal to <code>1989</code>:</p> <p> <code>\"greaterThanOrEquals\": { \"key\": \"year\", \"value\": 1989 }</code> </p>",
-        "RetrievalFilter$in": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is in the list specified in the <code>value</code> in this object.</p> <p>The following example would return data sources with an <code>animal</code> attribute that is either <code>cat</code> or <code>dog</code>:</p> <p> <code>\"in\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] }</code> </p>",
         "RetrievalFilter$lessThan": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is less than the <code>value</code> in this object.</p> <p>The following example would return data sources with an <code>year</code> attribute whose value is less than to <code>1989</code>.</p> <p> <code>\"lessThan\": { \"key\": \"year\", \"value\": 1989 }</code> </p>",
         "RetrievalFilter$lessThanOrEquals": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is less than or equal to the <code>value</code> in this object.</p> <p>The following example would return data sources with an <code>year</code> attribute whose value is less than or equal to <code>1989</code>.</p> <p> <code>\"lessThanOrEquals\": { \"key\": \"year\", \"value\": 1989 }</code> </p>",
-        "RetrievalFilter$listContains": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is a list that contains the <code>value</code> as one of its members.</p> <p>The following example would return data sources with an <code>animals</code> attribute that is a list containing a <code>cat</code> member (for example <code>[\"dog\", \"cat\"]</code>).</p> <p> <code>\"listContains\": { \"key\": \"animals\", \"value\": \"cat\" }</code> </p>",
-        "RetrievalFilter$notEquals": "<p>Knowledge base data sources that contain a metadata attribute whose name matches the <code>key</code> and whose value doesn't match the <code>value</code> in this object are returned.</p> <p>The following example would return data sources that don't contain an <code>animal</code> attribute whose value is <code>cat</code>.</p> <p> <code>\"notEquals\": { \"key\": \"animal\", \"value\": \"cat\" }</code> </p>",
+        "RetrievalFilter$in": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is in the list specified in the <code>value</code> in this object.</p> <p>The following example would return data sources with an <code>animal</code> attribute that is either <code>cat</code> or <code>dog</code>:</p> <p> <code>\"in\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] }</code> </p>",
         "RetrievalFilter$notIn": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value isn't in the list specified in the <code>value</code> in this object.</p> <p>The following example would return data sources whose <code>animal</code> attribute is neither <code>cat</code> nor <code>dog</code>.</p> <p> <code>\"notIn\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] }</code> </p>",
         "RetrievalFilter$startsWith": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value starts with the <code>value</code> in this object. This filter is currently only supported for Amazon OpenSearch Serverless vector stores.</p> <p>The following example would return data sources with an <code>animal</code> attribute starts with <code>ca</code> (for example, <code>cat</code> or <code>camel</code>).</p> <p> <code>\"startsWith\": { \"key\": \"animal\", \"value\": \"ca\" }</code> </p>",
+        "RetrievalFilter$listContains": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is a list that contains the <code>value</code> as one of its members.</p> <p>The following example would return data sources with an <code>animals</code> attribute that is a list containing a <code>cat</code> member (for example <code>[\"dog\", \"cat\"]</code>).</p> <p> <code>\"listContains\": { \"key\": \"animals\", \"value\": \"cat\" }</code> </p>",
         "RetrievalFilter$stringContains": "<p>Knowledge base data sources are returned if they contain a metadata attribute whose name matches the <code>key</code> and whose value is one of the following:</p> <ul> <li> <p>A string that contains the <code>value</code> as a substring. The following example would return data sources with an <code>animal</code> attribute that contains the substring <code>at</code> (for example <code>cat</code>).</p> <p> <code>\"stringContains\": { \"key\": \"animal\", \"value\": \"at\" }</code> </p> </li> <li> <p>A list with a member that contains the <code>value</code> as a substring. The following example would return data sources with an <code>animals</code> attribute that is a list containing a member that contains the substring <code>at</code> (for example <code>[\"dog\", \"cat\"]</code>).</p> <p> <code>\"stringContains\": { \"key\": \"animals\", \"value\": \"at\" }</code> </p> </li> </ul>"
       }
     },
@@ -657,7 +845,16 @@
     "FlowAliasIdentifier": {
       "base": null,
       "refs": {
-        "InvokeFlowRequest$flowAliasIdentifier": "<p>The unique identifier of the flow alias.</p>"
+        "FlowExecutionSummary$flowAliasIdentifier": "<p>The unique identifier of the flow alias used for the execution.</p>",
+        "GetExecutionFlowSnapshotRequest$flowAliasIdentifier": "<p>The unique identifier of the flow alias used for the flow execution.</p>",
+        "GetExecutionFlowSnapshotResponse$flowAliasIdentifier": "<p>The unique identifier of the flow alias used for the flow execution.</p>",
+        "GetFlowExecutionRequest$flowAliasIdentifier": "<p>The unique identifier of the flow alias used for the execution.</p>",
+        "GetFlowExecutionResponse$flowAliasIdentifier": "<p>The unique identifier of the flow alias used for the execution.</p>",
+        "InvokeFlowRequest$flowAliasIdentifier": "<p>The unique identifier of the flow alias.</p>",
+        "ListFlowExecutionEventsRequest$flowAliasIdentifier": "<p>The unique identifier of the flow alias used for the execution.</p>",
+        "ListFlowExecutionsRequest$flowAliasIdentifier": "<p>The unique identifier of the flow alias to list executions for.</p>",
+        "StartFlowExecutionRequest$flowAliasIdentifier": "<p>The unique identifier of the flow alias to use for the flow execution.</p>",
+        "StopFlowExecutionRequest$flowAliasIdentifier": "<p>The unique identifier of the flow alias used for the execution.</p>"
       }
     },
     "FlowCompletionEvent": {
@@ -672,6 +869,62 @@
         "FlowCompletionEvent$completionReason": "<p>The reason that the flow completed.</p>"
       }
     },
+    "FlowControlNodeType": {
+      "base": null,
+      "refs": {
+        "FlowTraceNodeInputExecutionChainItem$type": "<p>The type of execution chain item. Supported values are Iterator and Loop.</p>",
+        "NodeInputExecutionChainItem$type": "<p>The type of execution chain item. Supported values are Iterator and Loop.</p>"
+      }
+    },
+    "FlowErrorCode": {
+      "base": null,
+      "refs": {
+        "FlowFailureEvent$errorCode": "<p>The error code that identifies the type of failure that occurred.</p>"
+      }
+    },
+    "FlowExecutionContent": {
+      "base": "<p>Contains the content of an flow execution input or output field.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowInputField$content": "<p>The content of the input field, which can contain text or structured data.</p>",
+        "FlowOutputField$content": "<p>The content of the output field, which can contain text or structured data.</p>"
+      }
+    },
+    "FlowExecutionError": {
+      "base": "<p>Contains information about an error that occurred during an flow execution.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionErrors$member": null
+      }
+    },
+    "FlowExecutionErrorType": {
+      "base": null,
+      "refs": {
+        "FlowExecutionError$error": "<p>The error code for the type of error that occurred.</p>"
+      }
+    },
+    "FlowExecutionErrors": {
+      "base": null,
+      "refs": {
+        "GetFlowExecutionResponse$errors": "<p>A list of errors that occurred during the flow execution. Each error includes an error code, message, and the node where the error occurred, if applicable.</p>"
+      }
+    },
+    "FlowExecutionEvent": {
+      "base": "<p>Represents an event that occurred during an flow execution. This is a union type that can contain one of several event types, such as node input and output events; flow input and output events; condition node result events, or failure events.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionEvents$member": null
+      }
+    },
+    "FlowExecutionEventType": {
+      "base": null,
+      "refs": {
+        "ListFlowExecutionEventsRequest$eventType": "<p>The type of events to retrieve. Specify <code>Node</code> for node-level events or <code>Flow</code> for flow-level events.</p>"
+      }
+    },
+    "FlowExecutionEvents": {
+      "base": null,
+      "refs": {
+        "ListFlowExecutionEventsResponse$flowExecutionEvents": "<p>A list of events that occurred during the flow execution. Events can include node inputs and outputs, flow inputs and outputs, condition results, and failure events.</p>"
+      }
+    },
     "FlowExecutionId": {
       "base": null,
       "refs": {
@@ -679,10 +932,82 @@
         "InvokeFlowResponse$executionId": "<p>The unique identifier for the current flow execution.</p>"
       }
     },
+    "FlowExecutionIdentifier": {
+      "base": null,
+      "refs": {
+        "FlowExecutionSummary$executionArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the flow execution.</p>",
+        "GetExecutionFlowSnapshotRequest$executionIdentifier": "<p>The unique identifier of the flow execution.</p>",
+        "GetFlowExecutionRequest$executionIdentifier": "<p>The unique identifier of the flow execution to retrieve.</p>",
+        "GetFlowExecutionResponse$executionArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the flow execution.</p>",
+        "ListFlowExecutionEventsRequest$executionIdentifier": "<p>The unique identifier of the flow execution.</p>",
+        "StartFlowExecutionResponse$executionArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the flow execution.</p>",
+        "StopFlowExecutionRequest$executionIdentifier": "<p>The unique identifier of the flow execution to stop.</p>",
+        "StopFlowExecutionResponse$executionArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the flow execution that was stopped.</p>"
+      }
+    },
+    "FlowExecutionInputEvent": {
+      "base": "<p>Contains information about the inputs provided to the flow at the start of a flow execution.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionEvent$flowInputEvent": "<p>Contains information about the inputs provided to the flow at the start of execution.</p>"
+      }
+    },
+    "FlowExecutionName": {
+      "base": null,
+      "refs": {
+        "StartFlowExecutionRequest$flowExecutionName": "<p>The unique name for the flow execution. If you don't provide one, a system-generated name is used.</p>"
+      }
+    },
+    "FlowExecutionOutputEvent": {
+      "base": "<p>Contains information about the outputs produced by the flow during a flow execution.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionEvent$flowOutputEvent": "<p>Contains information about the outputs produced by the flow at the end of execution.</p>"
+      }
+    },
+    "FlowExecutionRoleArn": {
+      "base": null,
+      "refs": {
+        "GetExecutionFlowSnapshotResponse$executionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM service role that's used by the flow execution.</p>"
+      }
+    },
+    "FlowExecutionStatus": {
+      "base": null,
+      "refs": {
+        "FlowExecutionSummary$status": "<p>The current status of the flow execution.</p> <p>Flow executions time out after 24 hours.</p>",
+        "GetFlowExecutionResponse$status": "<p>The current status of the flow execution.</p> <p>Flow executions time out after 24 hours.</p>",
+        "StopFlowExecutionResponse$status": "<p>The updated status of the flow execution after the stop request. This will typically be ABORTED if the execution was successfully stopped.</p>"
+      }
+    },
+    "FlowExecutionSummaries": {
+      "base": null,
+      "refs": {
+        "ListFlowExecutionsResponse$flowExecutionSummaries": "<p>A list of flow execution summaries. Each summary includes the execution ARN, flow identifier, flow alias identifier, flow version, status, and timestamps.</p>"
+      }
+    },
+    "FlowExecutionSummary": {
+      "base": "<p>Contains summary information about a flow execution, including its status, timestamps, and identifiers.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionSummaries$member": null
+      }
+    },
+    "FlowFailureEvent": {
+      "base": "<p>Contains information about a failure that occurred at the flow level during a flow execution.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionEvent$flowFailureEvent": "<p>Contains information about a failure that occurred at the flow level during execution.</p>"
+      }
+    },
     "FlowIdentifier": {
       "base": null,
       "refs": {
-        "InvokeFlowRequest$flowIdentifier": "<p>The unique identifier of the flow.</p>"
+        "FlowExecutionSummary$flowIdentifier": "<p>The unique identifier of the flow.</p>",
+        "GetExecutionFlowSnapshotRequest$flowIdentifier": "<p>The unique identifier of the flow.</p>",
+        "GetExecutionFlowSnapshotResponse$flowIdentifier": "<p>The unique identifier of the flow.</p>",
+        "GetFlowExecutionRequest$flowIdentifier": "<p>The unique identifier of the flow.</p>",
+        "GetFlowExecutionResponse$flowIdentifier": "<p>The unique identifier of the flow.</p>",
+        "InvokeFlowRequest$flowIdentifier": "<p>The unique identifier of the flow.</p>",
+        "ListFlowExecutionEventsRequest$flowIdentifier": "<p>The unique identifier of the flow.</p>",
+        "ListFlowExecutionsRequest$flowIdentifier": "<p>The unique identifier of the flow to list executions for.</p>",
+        "StartFlowExecutionRequest$flowIdentifier": "<p>The unique identifier of the flow to execute.</p>",
+        "StopFlowExecutionRequest$flowIdentifier": "<p>The unique identifier of the flow.</p>"
       }
     },
     "FlowInput": {
@@ -697,10 +1022,23 @@
         "FlowInput$content": "<p>Contains information about an input into the prompt flow.</p>"
       }
     },
+    "FlowInputField": {
+      "base": "<p>Represents an input field provided to a flow during a flow execution.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowInputFields$member": null
+      }
+    },
+    "FlowInputFields": {
+      "base": null,
+      "refs": {
+        "FlowExecutionInputEvent$fields": "<p>A list of input fields provided to the flow.</p>"
+      }
+    },
     "FlowInputs": {
       "base": null,
       "refs": {
-        "InvokeFlowRequest$inputs": "<p>A list of objects, each containing information about an input into the flow.</p>"
+        "InvokeFlowRequest$inputs": "<p>A list of objects, each containing information about an input into the flow.</p>",
+        "StartFlowExecutionRequest$inputs": "<p>The input data required for the flow execution. This must match the input schema defined in the flow.</p>"
       }
     },
     "FlowMultiTurnInputContent": {
@@ -715,6 +1053,43 @@
         "FlowResponseStream$flowMultiTurnInputRequestEvent": "<p>The event stream containing the multi-turn input request information from the flow.</p>"
       }
     },
+    "FlowNodeIODataType": {
+      "base": null,
+      "refs": {
+        "FlowTraceNodeInputField$type": "<p>The data type of the input field for compatibility validation.</p>",
+        "FlowTraceNodeOutputField$type": "<p>The data type of the output field for compatibility validation.</p>",
+        "NodeInputField$type": "<p>The data type of the input field for compatibility validation.</p>",
+        "NodeOutputField$type": "<p>The data type of the output field for compatibility validation.</p>"
+      }
+    },
+    "FlowNodeInputCategory": {
+      "base": null,
+      "refs": {
+        "FlowTraceNodeInputField$category": "<p>The category of the input field.</p>",
+        "NodeInputField$category": "<p>The category of the input field.</p>"
+      }
+    },
+    "FlowNodeInputExpression": {
+      "base": null,
+      "refs": {
+        "FlowTraceNodeInputSource$expression": "<p>The expression used to extract data from the source.</p>",
+        "NodeInputSource$expression": "<p>The expression used to extract data from the source.</p>"
+      }
+    },
+    "FlowNodeInputName": {
+      "base": null,
+      "refs": {
+        "FlowTraceNodeOutputNext$inputFieldName": "<p>The name of the input field in the next node that receives the data.</p>",
+        "NodeOutputNext$inputFieldName": "<p>The name of the input field in the next node that receives the data.</p>"
+      }
+    },
+    "FlowNodeOutputName": {
+      "base": null,
+      "refs": {
+        "FlowTraceNodeInputSource$outputFieldName": "<p>The name of the output field from the source node.</p>",
+        "NodeInputSource$outputFieldName": "<p>The name of the output field from the source node.</p>"
+      }
+    },
     "FlowOutputContent": {
       "base": "<p>Contains information about the content in an output from prompt flow invocation.</p>",
       "refs": {
@@ -725,6 +1100,18 @@
       "base": "<p>Contains information about an output from prompt flow invoction.</p>",
       "refs": {
         "FlowResponseStream$flowOutputEvent": "<p>Contains information about an output from flow invocation.</p>"
+      }
+    },
+    "FlowOutputField": {
+      "base": "<p>Represents an output field produced by a flow during a flow execution.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowOutputFields$member": null
+      }
+    },
+    "FlowOutputFields": {
+      "base": null,
+      "refs": {
+        "FlowExecutionOutputEvent$fields": "<p>A list of output fields produced by the flow.</p>"
       }
     },
     "FlowResponseStream": {
@@ -757,10 +1144,22 @@
         "FlowTraceConditionNodeResultEvent$satisfiedConditions": "<p>An array of objects containing information about the conditions that were satisfied.</p>"
       }
     },
+    "FlowTraceDependencyEvent": {
+      "base": "<p>Contains information about a dependency trace event in the flow.</p>",
+      "refs": {
+        "FlowTrace$nodeDependencyTrace": "<p>Contains information about an internal trace of a node.</p>"
+      }
+    },
     "FlowTraceEvent": {
       "base": "<p>Contains information about a trace, which tracks an input or output for a node in the flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-trace.html\">Track each step in your prompt flow by viewing its trace in Amazon Bedrock</a>.</p>",
       "refs": {
         "FlowResponseStream$flowTraceEvent": "<p>Contains information about a trace, which tracks an input or output for a node in the flow.</p>"
+      }
+    },
+    "FlowTraceNodeActionEvent": {
+      "base": "<p>Contains information about an action (operation) called by a node in an Amazon Bedrock flow. The service generates action events for calls made by prompt nodes, agent nodes, and Amazon Web Services Lambda nodes. </p>",
+      "refs": {
+        "FlowTrace$nodeActionTrace": "<p>Contains information about an action (operation) called by a node.</p>"
       }
     },
     "FlowTraceNodeInputContent": {
@@ -775,6 +1174,18 @@
         "FlowTrace$nodeInputTrace": "<p>Contains information about the input into a node.</p>"
       }
     },
+    "FlowTraceNodeInputExecutionChain": {
+      "base": null,
+      "refs": {
+        "FlowTraceNodeInputField$executionChain": "<p>The execution path through nested nodes like iterators and loops.</p>"
+      }
+    },
+    "FlowTraceNodeInputExecutionChainItem": {
+      "base": "<p>Represents an item in the execution chain for flow trace node input tracking.</p>",
+      "refs": {
+        "FlowTraceNodeInputExecutionChain$member": null
+      }
+    },
     "FlowTraceNodeInputField": {
       "base": "<p>Contains information about a field in the input into a node. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-trace.html\">Track each step in your prompt flow by viewing its trace in Amazon Bedrock</a>.</p>",
       "refs": {
@@ -785,6 +1196,12 @@
       "base": null,
       "refs": {
         "FlowTraceNodeInputEvent$fields": "<p>An array of objects containing information about each field in the input.</p>"
+      }
+    },
+    "FlowTraceNodeInputSource": {
+      "base": "<p>Represents the source of input data for a flow trace node field.</p>",
+      "refs": {
+        "FlowTraceNodeInputField$source": "<p>The source node that provides input data to this field.</p>"
       }
     },
     "FlowTraceNodeOutputContent": {
@@ -809,6 +1226,18 @@
       "base": null,
       "refs": {
         "FlowTraceNodeOutputEvent$fields": "<p>An array of objects containing information about each field in the output.</p>"
+      }
+    },
+    "FlowTraceNodeOutputNext": {
+      "base": "<p>Represents the next node that receives output data from a flow trace.</p>",
+      "refs": {
+        "FlowTraceNodeOutputNextList$member": null
+      }
+    },
+    "FlowTraceNodeOutputNextList": {
+      "base": null,
+      "refs": {
+        "FlowTraceNodeOutputField$next": "<p>The next node that receives output data from this field.</p>"
       }
     },
     "Function": {
@@ -867,13 +1296,11 @@
     },
     "GenerateQueryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GenerateQueryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GeneratedQueries": {
       "base": null,
@@ -896,7 +1323,8 @@
     "GeneratedResponsePart": {
       "base": "<p>Contains metadata about a part of the generated response that is accompanied by a citation.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax\">InvokeAgent response</a> – in the <code>generatedResponsePart</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax\">RetrieveAndGenerate response</a> – in the <code>generatedResponsePart</code> field</p> </li> </ul>",
       "refs": {
-        "Citation$generatedResponsePart": "<p>Contains the generated response and metadata </p>"
+        "Citation$generatedResponsePart": "<p>Contains the generated response and metadata </p>",
+        "CitationEvent$generatedResponsePart": "<p>The generated response to the citation event.</p>"
       }
     },
     "GenerationConfiguration": {
@@ -907,13 +1335,43 @@
     },
     "GetAgentMemoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAgentMemoryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "GetExecutionFlowSnapshotRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetExecutionFlowSnapshotResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetFlowExecutionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetFlowExecutionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetInvocationStepRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetInvocationStepResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSessionResponse": {
+      "base": null,
+      "refs": {}
     },
     "GuadrailAction": {
       "base": null,
@@ -965,6 +1423,7 @@
     "GuardrailConfigurationWithArn": {
       "base": "<p> The configuration details for the guardrail. </p>",
       "refs": {
+        "Collaborator$guardrailConfiguration": "<p> Details of the guardwrail associated with the inline collaborator. </p>",
         "InvokeInlineAgentRequest$guardrailConfiguration": "<p> The <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html\">guardrails</a> to assign to the inline agent. </p>"
       }
     },
@@ -1150,6 +1609,60 @@
         "ByteContentDoc$identifier": "<p>The file name of the document contained in the wrapper object.</p>"
       }
     },
+    "ImageBlock": {
+      "base": "<p>Image content for an invocation step.</p>",
+      "refs": {
+        "BedrockSessionContentBlock$image": "<p>The image in the invocation step.</p>"
+      }
+    },
+    "ImageFormat": {
+      "base": null,
+      "refs": {
+        "ImageBlock$format": "<p>The format of the image.</p>"
+      }
+    },
+    "ImageInput": {
+      "base": "<p>Details about an image in the result from a function in the action group invocation. You can specify images only when the function is a computer use action. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>.</p>",
+      "refs": {
+        "ImageInputs$member": null
+      }
+    },
+    "ImageInputFormat": {
+      "base": null,
+      "refs": {
+        "ImageInput$format": "<p>The type of image in the result.</p>"
+      }
+    },
+    "ImageInputSource": {
+      "base": "<p>Details about the source of an input image in the result from a function in the action group invocation.</p>",
+      "refs": {
+        "ImageInput$source": "<p>The source of the image in the result.</p>"
+      }
+    },
+    "ImageInputSourceBytesBlob": {
+      "base": null,
+      "refs": {
+        "ImageInputSource$bytes": "<p> The raw image bytes for the image. If you use an Amazon Web Services SDK, you don't need to encode the image bytes in base64.</p>"
+      }
+    },
+    "ImageInputs": {
+      "base": null,
+      "refs": {
+        "ContentBody$images": "<p>Lists details, including format and source, for the image in the response from the function call. You can specify only one image and the function in the <code>returnControlInvocationResults</code> must be a computer use action. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>. </p>"
+      }
+    },
+    "ImageSource": {
+      "base": "<p>The source for an image.</p>",
+      "refs": {
+        "ImageBlock$source": "<p>The source for the image.</p>"
+      }
+    },
+    "ImageSourceBytesBlob": {
+      "base": null,
+      "refs": {
+        "ImageSource$bytes": "<p> The raw image bytes for the image. If you use an Amazon Web Services SDK, you don't need to encode the image bytes in base64.</p>"
+      }
+    },
     "ImplicitFilterConfiguration": {
       "base": "<p>Settings for implicit filtering, where a model generates a metadata filter based on the prompt.</p>",
       "refs": {
@@ -1186,7 +1699,7 @@
     "InlineAgentResponseStream": {
       "base": "<p>The response from invoking the agent and associated citations and trace information.</p>",
       "refs": {
-        "InvokeInlineAgentResponse$completion": "<p> <pre><code> &lt;/p&gt; </code></pre>"
+        "InvokeInlineAgentResponse$completion": "<p>The inline agent's response to the user prompt. </p>"
       }
     },
     "InlineAgentReturnControlPayload": {
@@ -1248,6 +1761,7 @@
     "Instruction": {
       "base": null,
       "refs": {
+        "Collaborator$instruction": "<p> Instruction that tell the inline collaborator agent what it should do and how it should interact with users. </p>",
         "InvokeInlineAgentRequest$instruction": "<p> The instructions that tell the inline agent what it should do and how it should interact with users. </p>"
       }
     },
@@ -1255,6 +1769,9 @@
       "base": null,
       "refs": {
         "ApiResult$httpStatusCode": "<p>http status code from API execution response (for example: 200, 400, 500).</p>",
+        "FailureTrace$failureCode": "<p>The failure code for the trace.</p>",
+        "FlowTraceNodeInputExecutionChainItem$index": "<p>The index position of this item in the execution chain.</p>",
+        "NodeInputExecutionChainItem$index": "<p>The index position of this item in the execution chain.</p>",
         "Usage$inputTokens": "<p>Contains information about the input tokens from the foundation model usage.</p>",
         "Usage$outputTokens": "<p>Contains information about the output tokens from the foundation model usage.</p>"
       }
@@ -1267,6 +1784,20 @@
         "OptimizedPromptStream$internalServerException": "<p>An internal server error occurred. Retry your request.</p>",
         "ResponseStream$internalServerException": "<p>An internal server error occurred. Retry your request.</p>",
         "RetrieveAndGenerateStreamResponseOutput$internalServerException": "<p>An internal server error occurred. Retry your request.</p>"
+      }
+    },
+    "InvocationDescription": {
+      "base": null,
+      "refs": {
+        "CreateInvocationRequest$description": "<p>A description for the interactions in the invocation. For example, \"User asking about weather in Seattle\".</p>"
+      }
+    },
+    "InvocationIdentifier": {
+      "base": null,
+      "refs": {
+        "GetInvocationStepRequest$invocationIdentifier": "<p>The unique identifier for the invocation in UUID format.</p>",
+        "ListInvocationStepsRequest$invocationIdentifier": "<p>The unique identifier (in UUID format) for the invocation to list invocation steps for.</p>",
+        "PutInvocationStepRequest$invocationIdentifier": "<p>The unique identifier (in UUID format) of the invocation to add the invocation step to.</p>"
       }
     },
     "InvocationInput": {
@@ -1295,6 +1826,43 @@
         "ReturnControlInvocationResults$member": null
       }
     },
+    "InvocationStep": {
+      "base": "<p>Stores fine-grained state checkpoints, including text and images, for each interaction in an invocation in a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>. </p>",
+      "refs": {
+        "GetInvocationStepResponse$invocationStep": "<p>The complete details of the requested invocation step.</p>"
+      }
+    },
+    "InvocationStepPayload": {
+      "base": "<p>Payload content, such as text and images, for the invocation step.</p>",
+      "refs": {
+        "InvocationStep$payload": "<p>Payload content, such as text and images, for the invocation step.</p>",
+        "PutInvocationStepRequest$payload": "<p>The payload for the invocation step, including text and images for the interaction.</p>"
+      }
+    },
+    "InvocationStepSummaries": {
+      "base": null,
+      "refs": {
+        "ListInvocationStepsResponse$invocationStepSummaries": "<p>A list of summaries for each invocation step associated with a session and if you specified it, an invocation within the session.</p>"
+      }
+    },
+    "InvocationStepSummary": {
+      "base": "<p>Contains details about an invocation step within an invocation in a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+      "refs": {
+        "InvocationStepSummaries$member": null
+      }
+    },
+    "InvocationSummaries": {
+      "base": null,
+      "refs": {
+        "ListInvocationsResponse$invocationSummaries": "<p>A list of invocation summaries associated with the session.</p>"
+      }
+    },
+    "InvocationSummary": {
+      "base": "<p>Contains details about an invocation in a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+      "refs": {
+        "InvocationSummaries$member": null
+      }
+    },
     "InvocationType": {
       "base": null,
       "refs": {
@@ -1303,37 +1871,35 @@
     },
     "InvokeAgentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InvokeAgentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InvokeFlowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InvokeFlowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InvokeInlineAgentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InvokeInlineAgentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "KmsKeyArn": {
       "base": null,
       "refs": {
+        "Collaborator$customerEncryptionKeyArn": "<p> The Amazon Resource Name (ARN) of the AWS KMS key that encrypts the inline collaborator. </p>",
+        "CreateSessionRequest$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key to use to encrypt the session data. The user or role creating the session must have permission to use the key. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/session-encryption.html\">Amazon Bedrock session encryption</a>. </p>",
+        "GetExecutionFlowSnapshotResponse$customerEncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the customer managed KMS key that's used to encrypt the flow snapshot.</p>",
+        "GetSessionResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the Key Management Service key used to encrypt the session data. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/session-encryption.html\">Amazon Bedrock session encryption</a>.</p>",
         "InvokeInlineAgentRequest$customerEncryptionKeyArn": "<p> The Amazon Resource Name (ARN) of the Amazon Web Services KMS key to use to encrypt your inline agent. </p>",
         "RetrieveAndGenerateSessionConfiguration$kmsKeyArn": "<p>The ARN of the KMS key encrypting the session.</p>"
       }
@@ -1443,13 +2009,15 @@
     "KnowledgeBases": {
       "base": null,
       "refs": {
+        "Collaborator$knowledgeBases": "<p> Knowledge base associated with the inline collaborator agent. </p>",
         "InvokeInlineAgentRequest$knowledgeBases": "<p> Contains information of the knowledge bases to associate with. </p>"
       }
     },
     "LambdaArn": {
       "base": null,
       "refs": {
-        "ModelInvocationInput$overrideLambda": "<p>The ARN of the Lambda function to use when parsing the raw foundation model output in parts of the agent sequence.</p>"
+        "ModelInvocationInput$overrideLambda": "<p>The ARN of the Lambda function to use when parsing the raw foundation model output in parts of the agent sequence.</p>",
+        "OrchestrationExecutor$lambda": "<p>The Amazon Resource Name (ARN) of the Lambda function containing the business logic that is carried out upon invoking the action. </p>"
       }
     },
     "LambdaResourceArn": {
@@ -1459,10 +2027,70 @@
         "PromptOverrideConfiguration$overrideLambda": "<p>The ARN of the Lambda function to use when parsing the raw foundation model output in parts of the agent sequence. If you specify this field, at least one of the <code>promptConfigurations</code> must contain a <code>parserMode</code> value that is set to <code>OVERRIDDEN</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/lambda-parser.html\">Parser Lambda function in Amazon Bedrock Agents</a>. </p>"
       }
     },
+    "ListFlowExecutionEventsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFlowExecutionEventsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFlowExecutionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListFlowExecutionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListInvocationStepsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListInvocationStepsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListInvocationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListInvocationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSessionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSessionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Long": {
+      "base": null,
+      "refs": {
+        "Metadata$totalTimeMs": "<p> The total execution time for the specific invocation being processed (model, knowledge base, guardrail, agent collaborator, or code interpreter). It represents how long the individual invocation took.</p>",
+        "Metadata$operationTotalTimeMs": "<p>The total time it took for the agent to complete execution. This field is only set for the final response.</p>"
+      }
+    },
     "MaxResults": {
       "base": "<p>Max Results.</p>",
       "refs": {
-        "GetAgentMemoryRequest$maxItems": "<p>The maximum number of items to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
+        "GetAgentMemoryRequest$maxItems": "<p>The maximum number of items to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
+        "ListFlowExecutionEventsRequest$maxResults": "<p>The maximum number of events to return in a single response. If more events exist than the specified maxResults value, a token is included in the response so that the remaining results can be retrieved.</p>",
+        "ListFlowExecutionsRequest$maxResults": "<p>The maximum number of flow executions to return in a single response. If more executions exist than the specified <code>maxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>",
+        "ListInvocationStepsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
+        "ListInvocationsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
+        "ListSessionsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
       }
     },
     "MaxTokens": {
@@ -1524,8 +2152,15 @@
       }
     },
     "Metadata": {
-      "base": "<p>Provides details of the foundation model.</p>",
+      "base": "<p>Provides information about the execution process for different types of invocations, such as model invocation, knowledge base invocation, agent collaborator invocation, guardrail invocation, and code interpreter Invocation.</p>",
       "refs": {
+        "ActionGroupInvocationOutput$metadata": "<p>Contains information about the action group output.</p>",
+        "AgentCollaboratorInvocationOutput$metadata": "<p>Contains information about the output from the agent collaborator.</p>",
+        "CodeInterpreterInvocationOutput$metadata": "<p>Contains information about the output from the code interpreter.</p>",
+        "FailureTrace$metadata": "<p>Information about the failure that occurred.</p>",
+        "FinalResponse$metadata": "<p>Contains information about the invoke agent operation.</p>",
+        "GuardrailTrace$metadata": "<p>Contains information about the Guardrail output.</p>",
+        "KnowledgeBaseLookupOutput$metadata": "<p>Contains information about the knowledge base output.</p>",
         "OrchestrationModelInvocationOutput$metadata": "<p>Contains information about the foundation model output from the orchestration step.</p>",
         "PostProcessingModelInvocationOutput$metadata": "<p> Contains information about the foundation model output from the post-processing step. </p>",
         "PreProcessingModelInvocationOutput$metadata": "<p> Contains information about the foundation model output from the pre-processing step. </p>",
@@ -1574,8 +2209,10 @@
     "ModelIdentifier": {
       "base": null,
       "refs": {
+        "Collaborator$foundationModel": "<p> The foundation model used by the inline collaborator agent. </p>",
         "InvokeInlineAgentRequest$foundationModel": "<p> The <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">model identifier (ID)</a> of the model to use for orchestration by the inline agent. For example, <code>meta.llama3-1-70b-instruct-v1:0</code>. </p>",
-        "ModelInvocationInput$foundationModel": "<p>The identifier of a foundation model.</p>"
+        "ModelInvocationInput$foundationModel": "<p>The identifier of a foundation model.</p>",
+        "PromptConfiguration$foundationModel": "<p> The foundation model to use. </p>"
       }
     },
     "ModelInvocationInput": {
@@ -1596,14 +2233,19 @@
     "ModelPerformanceConfiguration": {
       "base": "<p>The performance configuration for a model called with <a>InvokeFlow</a>.</p>",
       "refs": {
-        "InvokeFlowRequest$modelPerformanceConfiguration": "<p>Model performance settings for the request.</p>"
+        "InvokeFlowRequest$modelPerformanceConfiguration": "<p>Model performance settings for the request.</p>",
+        "StartFlowExecutionRequest$modelPerformanceConfiguration": "<p>The performance settings for the foundation model used in the flow execution.</p>"
       }
     },
     "Name": {
       "base": null,
       "refs": {
         "ApiInvocationInput$collaboratorName": "<p>The agent collaborator's name.</p>",
+        "Collaborator$agentName": "<p> Name of the inline collaborator agent which must be the same name as specified for <code>collaboratorName</code>. </p>",
+        "CollaboratorConfiguration$collaboratorName": "<p> Name of the inline collaborator agent which must be the same name as specified for <code>agentName</code>. </p>",
         "FunctionInvocationInput$collaboratorName": "<p>The collaborator's name.</p>",
+        "InlineAgentTracePart$collaboratorName": "<p>The collaborator name for the trace part.</p>",
+        "InvokeInlineAgentRequest$agentName": "<p>The name for the agent.</p>",
         "TracePart$collaboratorName": "<p>The part's collaborator name.</p>"
       }
     },
@@ -1612,35 +2254,169 @@
       "refs": {
         "GetAgentMemoryRequest$nextToken": "<p>If the total number of results is greater than the maxItems value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "GetAgentMemoryResponse$nextToken": "<p>If the total number of results is greater than the maxItems value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "ListFlowExecutionEventsRequest$nextToken": "<p>A token to retrieve the next set of results. This value is returned in the response if more results are available.</p>",
+        "ListFlowExecutionEventsResponse$nextToken": "<p>A token to retrieve the next set of results. This value is returned if more results are available.</p>",
+        "ListFlowExecutionsRequest$nextToken": "<p>A token to retrieve the next set of results. This value is returned in the response if more results are available.</p>",
+        "ListFlowExecutionsResponse$nextToken": "<p>A token to retrieve the next set of results. This value is returned if more results are available.</p>",
+        "ListInvocationStepsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results. </p>",
+        "ListInvocationStepsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "ListInvocationsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results. </p>",
+        "ListInvocationsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "ListSessionsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results. </p>",
+        "ListSessionsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "RerankRequest$nextToken": "<p>If the total number of results was greater than could fit in a response, a token is returned in the <code>nextToken</code> field. You can enter that token in this field to return the next batch of results.</p>",
         "RerankResponse$nextToken": "<p>If the total number of results is greater than can fit in the response, use this token in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "RetrieveRequest$nextToken": "<p>If there are more results than can fit in the response, the response returns a <code>nextToken</code>. Use this token in the <code>nextToken</code> field of another request to retrieve the next batch of results.</p>",
         "RetrieveResponse$nextToken": "<p>If there are more results than can fit in the response, the response returns a <code>nextToken</code>. Use this token in the <code>nextToken</code> field of another request to retrieve the next batch of results.</p>"
       }
     },
+    "NodeActionEvent": {
+      "base": "<p>Contains information about an action (operation) called by a node during execution.</p>",
+      "refs": {
+        "FlowExecutionEvent$nodeActionEvent": "<p>Contains information about an action (operation) called by a node during execution.</p>"
+      }
+    },
+    "NodeDependencyEvent": {
+      "base": "<p>Contains information about an internal trace of a specific node during execution.</p>",
+      "refs": {
+        "FlowExecutionEvent$nodeDependencyEvent": "<p>Contains information about an internal trace of a specific node during execution.</p>"
+      }
+    },
+    "NodeErrorCode": {
+      "base": null,
+      "refs": {
+        "NodeFailureEvent$errorCode": "<p>The error code that identifies the type of failure that occurred at the node.</p>"
+      }
+    },
+    "NodeExecutionContent": {
+      "base": "<p>Contains the content of a flow node's input or output field for a flow execution.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "NodeInputField$content": "<p>The content of the input field, which can contain text or structured data.</p>",
+        "NodeOutputField$content": "<p>The content of the output field, which can contain text or structured data.</p>"
+      }
+    },
+    "NodeFailureEvent": {
+      "base": "<p>Contains information about a failure that occurred at a specific node during a flow execution.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionEvent$nodeFailureEvent": "<p>Contains information about a failure that occurred at a specific node during execution.</p>"
+      }
+    },
+    "NodeInputEvent": {
+      "base": "<p>Contains information about the inputs provided to a specific node during a flow execution.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionEvent$nodeInputEvent": "<p>Contains information about the inputs provided to a specific node during execution.</p>"
+      }
+    },
+    "NodeInputExecutionChain": {
+      "base": null,
+      "refs": {
+        "NodeInputField$executionChain": "<p>The execution path through nested nodes like iterators and loops.</p>"
+      }
+    },
+    "NodeInputExecutionChainItem": {
+      "base": "<p>Represents an item in the execution chain for node input tracking.</p>",
+      "refs": {
+        "NodeInputExecutionChain$member": null
+      }
+    },
+    "NodeInputField": {
+      "base": "<p>Represents an input field provided to a node during a flow execution.</p>",
+      "refs": {
+        "NodeInputFields$member": null
+      }
+    },
+    "NodeInputFields": {
+      "base": null,
+      "refs": {
+        "NodeInputEvent$fields": "<p>A list of input fields provided to the node.</p>"
+      }
+    },
     "NodeInputName": {
       "base": null,
       "refs": {
         "FlowInput$nodeInputName": "<p>The name of the input from the flow input node.</p>",
-        "FlowTraceNodeInputField$nodeInputName": "<p>The name of the node input.</p>"
+        "FlowInputField$name": "<p>The name of the input field as defined in the flow's input schema.</p>",
+        "FlowTraceNodeInputField$nodeInputName": "<p>The name of the node input.</p>",
+        "NodeInputField$name": "<p>The name of the input field as defined in the node's input schema.</p>"
+      }
+    },
+    "NodeInputSource": {
+      "base": "<p>Represents the source of input data for a node field.</p>",
+      "refs": {
+        "NodeInputField$source": "<p>The source node that provides input data to this field.</p>"
       }
     },
     "NodeName": {
       "base": null,
       "refs": {
+        "ConditionResultEvent$nodeName": "<p>The name of the condition node that evaluated the conditions.</p>",
+        "FlowExecutionError$nodeName": "<p>The name of the node in the flow where the error occurred (if applicable).</p>",
+        "FlowExecutionInputEvent$nodeName": "<p>The name of the node that receives the inputs.</p>",
+        "FlowExecutionOutputEvent$nodeName": "<p>The name of the node that produces the outputs.</p>",
         "FlowInput$nodeName": "<p>The name of the flow input node that begins the prompt flow.</p>",
         "FlowMultiTurnInputRequestEvent$nodeName": "<p>The name of the node in the flow that is requesting the input.</p>",
         "FlowOutputEvent$nodeName": "<p>The name of the flow output node that the output is from.</p>",
         "FlowTraceConditionNodeResultEvent$nodeName": "<p>The name of the condition node.</p>",
+        "FlowTraceDependencyEvent$nodeName": "<p>The name of the node that generated the dependency trace.</p>",
+        "FlowTraceNodeActionEvent$nodeName": "<p>The name of the node that called the operation.</p>",
         "FlowTraceNodeInputEvent$nodeName": "<p>The name of the node that received the input.</p>",
-        "FlowTraceNodeOutputEvent$nodeName": "<p>The name of the node that yielded the output.</p>"
+        "FlowTraceNodeInputExecutionChainItem$nodeName": "<p>The name of the node in the execution chain.</p>",
+        "FlowTraceNodeInputSource$nodeName": "<p>The name of the source node that provides the input data.</p>",
+        "FlowTraceNodeOutputEvent$nodeName": "<p>The name of the node that yielded the output.</p>",
+        "FlowTraceNodeOutputNext$nodeName": "<p>The name of the next node that receives the output data.</p>",
+        "NodeActionEvent$nodeName": "<p>The name of the node that called the operation.</p>",
+        "NodeDependencyEvent$nodeName": "<p>The name of the node that generated the dependency trace.</p>",
+        "NodeFailureEvent$nodeName": "<p>The name of the node where the failure occurred.</p>",
+        "NodeInputEvent$nodeName": "<p>The name of the node that received the inputs.</p>",
+        "NodeInputExecutionChainItem$nodeName": "<p>The name of the node in the execution chain.</p>",
+        "NodeInputSource$nodeName": "<p>The name of the source node that provides the input data.</p>",
+        "NodeOutputEvent$nodeName": "<p>The name of the node that produced the outputs.</p>",
+        "NodeOutputNext$nodeName": "<p>The name of the next node that receives the output data.</p>"
+      }
+    },
+    "NodeOutputEvent": {
+      "base": "<p>Contains information about the outputs produced by a specific node during a flow execution.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionEvent$nodeOutputEvent": "<p>Contains information about the outputs produced by a specific node during execution.</p>"
+      }
+    },
+    "NodeOutputField": {
+      "base": "<p>Represents an output field produced by a node during a flow execution.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "NodeOutputFields$member": null
+      }
+    },
+    "NodeOutputFields": {
+      "base": null,
+      "refs": {
+        "NodeOutputEvent$fields": "<p>A list of output fields produced by the node.</p>"
       }
     },
     "NodeOutputName": {
       "base": null,
       "refs": {
         "FlowInput$nodeOutputName": "<p>The name of the output from the flow input node that begins the prompt flow.</p>",
-        "FlowTraceNodeOutputField$nodeOutputName": "<p>The name of the node output.</p>"
+        "FlowOutputField$name": "<p>The name of the output field as defined in the flow's output schema.</p>",
+        "FlowTraceNodeOutputField$nodeOutputName": "<p>The name of the node output.</p>",
+        "NodeOutputField$name": "<p>The name of the output field as defined in the node's output schema.</p>"
+      }
+    },
+    "NodeOutputNext": {
+      "base": "<p>Represents the next node that receives output data.</p>",
+      "refs": {
+        "NodeOutputNextList$member": null
+      }
+    },
+    "NodeOutputNextList": {
+      "base": null,
+      "refs": {
+        "NodeOutputField$next": "<p>The next node that receives output data from this field.</p>"
+      }
+    },
+    "NodeTraceElements": {
+      "base": "<p>Contains trace elements for node execution tracking.</p>",
+      "refs": {
+        "NodeDependencyEvent$traceElements": "<p>The trace elements containing detailed information about the node execution.</p>"
       }
     },
     "NodeType": {
@@ -1676,8 +2452,7 @@
     },
     "OptimizePromptRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "OptimizePromptRequestTargetModelIdString": {
       "base": null,
@@ -1687,8 +2462,7 @@
     },
     "OptimizePromptResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "OptimizedPrompt": {
       "base": "<p>Contains information about the optimized prompt.</p>",
@@ -1714,6 +2488,12 @@
         "KnowledgeBaseRetrieveAndGenerateConfiguration$orchestrationConfiguration": "<p>Settings for how the model processes the prompt prior to retrieval and generation.</p>"
       }
     },
+    "OrchestrationExecutor": {
+      "base": "<p>The structure of the executor invoking the actions in custom orchestration.</p>",
+      "refs": {
+        "CustomOrchestration$executor": "<p>The structure of the executor invoking the actions in custom orchestration. </p>"
+      }
+    },
     "OrchestrationModelInvocationOutput": {
       "base": "<p>The foundation model output from the orchestration step.</p>",
       "refs": {
@@ -1724,6 +2504,12 @@
       "base": "<p>Details about the orchestration step, in which the agent determines the order in which actions are executed and which knowledge bases are retrieved.</p>",
       "refs": {
         "Trace$orchestrationTrace": "<p>Details about the orchestration step, in which the agent determines the order in which actions are executed and which knowledge bases are retrieved.</p>"
+      }
+    },
+    "OrchestrationType": {
+      "base": null,
+      "refs": {
+        "InvokeInlineAgentRequest$orchestrationType": "<p>Specifies the type of orchestration strategy for the agent. This is set to DEFAULT orchestration type, by default. </p>"
       }
     },
     "OutputFile": {
@@ -1886,9 +2672,23 @@
         "PromptOverrideConfiguration$promptConfigurations": "<p>Contains configurations to override a prompt template in one part of an agent sequence. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html\">Advanced prompts</a>. </p>"
       }
     },
+    "PromptCreationConfigurations": {
+      "base": "<p>Specifies parameters that control how the service populates the agent prompt for an <code>InvokeAgent</code> or <code>InvokeInlineAgent</code> request. You can control which aspects of previous invocations in the same agent session the service uses to populate the agent prompt. This gives you more granular control over the contextual history that is used to process the current request.</p>",
+      "refs": {
+        "InvokeAgentRequest$promptCreationConfigurations": "<p>Specifies parameters that control how the service populates the agent prompt for an <code>InvokeAgent</code> request. You can control which aspects of previous invocations in the same agent session the service uses to populate the agent prompt. This gives you more granular control over the contextual history that is used to process the current request.</p>",
+        "InvokeInlineAgentRequest$promptCreationConfigurations": "<p>Specifies parameters that control how the service populates the agent prompt for an <code>InvokeInlineAgent</code> request. You can control which aspects of previous invocations in the same agent session the service uses to populate the agent prompt. This gives you more granular control over the contextual history that is used to process the current request.</p>"
+      }
+    },
+    "PromptCreationConfigurationsPreviousConversationTurnsToIncludeInteger": {
+      "base": null,
+      "refs": {
+        "PromptCreationConfigurations$previousConversationTurnsToInclude": "<p>The number of previous conversations from the ongoing agent session to include in the conversation history of the agent prompt, during the current invocation. This gives you more granular control over the context that the model is made aware of, and helps the model remove older context which is no longer useful during the ongoing agent session.</p>"
+      }
+    },
     "PromptOverrideConfiguration": {
       "base": "<p>Contains configurations to override prompts in different parts of an agent sequence. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html\">Advanced prompts</a>. </p>",
       "refs": {
+        "Collaborator$promptOverrideConfiguration": "<p> Contains configurations to override prompt templates in different parts of an inline collaborator sequence. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html\">Advanced prompts</a>. </p>",
         "InvokeInlineAgentRequest$promptOverrideConfiguration": "<p> Configurations for advanced prompts used to override the default prompts to enhance the accuracy of the inline agent. </p>"
       }
     },
@@ -1896,7 +2696,7 @@
       "base": null,
       "refs": {
         "InlineSessionState$promptSessionAttributes": "<p> Contains attributes that persist across a session and the values of those attributes. </p>",
-        "SessionState$promptSessionAttributes": "<p>Contains attributes that persist across a prompt and the values of those attributes. These attributes replace the $prompt_session_attributes$ placeholder variable in the orchestration prompt template. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-placeholders.html\">Prompt template placeholder variables</a>.</p>"
+        "SessionState$promptSessionAttributes": "<p>Contains attributes that persist across a prompt and the values of those attributes. </p> <ul> <li> <p>In orchestration prompt template, these attributes replace the $prompt_session_attributes$ placeholder variable. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-placeholders.html\">Prompt template placeholder variables</a>.</p> </li> <li> <p>In <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-multi-agent-collaboration.html\">multi-agent collaboration</a>, the <code>promptSessionAttributes</code> will only be used by supervisor agent when $prompt_session_attributes$ is present in prompt template. </p> </li> </ul>"
       }
     },
     "PromptState": {
@@ -1931,6 +2731,14 @@
       "refs": {
         "ApiContentMap$value": null
       }
+    },
+    "PutInvocationStepRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutInvocationStepResponse": {
+      "base": null,
+      "refs": {}
     },
     "QueryGenerationInput": {
       "base": "<p>Contains information about a natural language query to transform into SQL.</p>",
@@ -1996,6 +2804,26 @@
         "RoutingClassifierModelInvocationOutput$rawResponse": "<p>The invocation's raw response.</p>"
       }
     },
+    "ReasoningContentBlock": {
+      "base": "<p>Contains content regarding the reasoning that the foundation model made with respect to the content in the content block. Reasoning refers to a Chain of Thought (CoT) that the model generates to enhance the accuracy of its final response.</p>",
+      "refs": {
+        "OrchestrationModelInvocationOutput$reasoningContent": "<p>Contains content about the reasoning that the model made during the orchestration step. </p>",
+        "PostProcessingModelInvocationOutput$reasoningContent": "<p>Contains content about the reasoning that the model made during the post-processing step.</p>",
+        "PreProcessingModelInvocationOutput$reasoningContent": "<p>Contains content about the reasoning that the model made during the pre-processing step. </p>"
+      }
+    },
+    "ReasoningTextBlock": {
+      "base": "<p>Contains information about the reasoning that the model used to return the content in the content block.</p>",
+      "refs": {
+        "ReasoningContentBlock$reasoningText": "<p>Contains information about the reasoning that the model used to return the content in the content block.</p>"
+      }
+    },
+    "RelayConversationHistory": {
+      "base": null,
+      "refs": {
+        "CollaboratorConfiguration$relayConversationHistory": "<p> A relay conversation history for the inline collaborator agent. </p>"
+      }
+    },
     "RepromptResponse": {
       "base": "<p>Contains details about the agent's response to reprompt the input.</p>",
       "refs": {
@@ -2047,13 +2875,11 @@
     },
     "RerankRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RerankResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RerankResult": {
       "base": "<p>Contains information about a document that was reranked.</p>",
@@ -2155,7 +2981,7 @@
       "base": null,
       "refs": {
         "ApiResult$responseBody": "<p>The response body from the API operation. The key of the object is the content type (currently, only <code>TEXT</code> is supported). The response may be returned directly or from the Lambda function.</p>",
-        "FunctionResult$responseBody": "<p>The response from the function call using the parameters. The key of the object is the content type (currently, only <code>TEXT</code> is supported). The response may be returned directly or from the Lambda function.</p>"
+        "FunctionResult$responseBody": "<p>The response from the function call using the parameters. The response might be returned directly or from the Lambda function. Specify <code>TEXT</code> or <code>IMAGES</code>. The key of the object is the content type. You can only specify one type. If you specify <code>IMAGES</code>, you can specify only one image. You can specify images only when the function in the <code>returnControlInvocationResults</code> is a computer use action. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>.</p>"
       }
     },
     "ResponseState": {
@@ -2330,13 +3156,11 @@
     },
     "RetrieveAndGenerateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RetrieveAndGenerateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RetrieveAndGenerateSessionConfiguration": {
       "base": "<p>Contains configuration about the session with the knowledge base.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax\">RetrieveAndGenerate request</a> – in the <code>sessionConfiguration</code> field</p> </li> </ul>",
@@ -2347,13 +3171,11 @@
     },
     "RetrieveAndGenerateStreamRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RetrieveAndGenerateStreamResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RetrieveAndGenerateStreamResponseOutput": {
       "base": "<p>A retrieve and generate stream response output.</p>",
@@ -2364,18 +3186,16 @@
     "RetrieveAndGenerateType": {
       "base": null,
       "refs": {
-        "RetrieveAndGenerateConfiguration$type": "<p>The type of resource that contains your data for retrieving information and generating responses.</p> <p>If you choose ot use <code>EXTERNAL_SOURCES</code>, then currently only Claude 3 Sonnet models for knowledge bases are supported.</p>"
+        "RetrieveAndGenerateConfiguration$type": "<p>The type of resource that contains your data for retrieving information and generating responses.</p> <note> <p>If you choose to use <code>EXTERNAL_SOURCES</code>, then currently only Anthropic Claude 3 Sonnet models for knowledge bases are supported.</p> </note>"
       }
     },
     "RetrieveRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RetrieveResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RetrievedReference": {
       "base": "<p>Contains metadata about a source cited for the generated response.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax\">RetrieveAndGenerate response</a> – in the <code>retrievedReferences</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax\">InvokeAgent response</a> – in the <code>retrievedReferences</code> field</p> </li> </ul>",
@@ -2387,6 +3207,7 @@
       "base": null,
       "refs": {
         "Citation$retrievedReferences": "<p>Contains metadata about the sources cited for the generated response.</p>",
+        "CitationEvent$retrievedReferences": "<p>The retrieved references of the citation event.</p>",
         "KnowledgeBaseLookupOutput$retrievedReferences": "<p>Contains metadata about the sources cited for the generated response.</p>"
       }
     },
@@ -2435,6 +3256,12 @@
         "APISchema$s3": "<p> Contains details about the S3 object containing the OpenAPI schema for the action group. </p>"
       }
     },
+    "S3Location": {
+      "base": "<p>Information about the Amazon S3 bucket where the image is stored.</p>",
+      "refs": {
+        "ImageSource$s3Location": "<p>The path to the Amazon S3 bucket where the image is stored.</p>"
+      }
+    },
     "S3ObjectDoc": {
       "base": "<p>The unique wrapper object of the document from the S3 location.</p>",
       "refs": {
@@ -2456,8 +3283,21 @@
     "S3Uri": {
       "base": null,
       "refs": {
+        "S3Location$uri": "<p>The path to the Amazon S3 bucket where the image is stored.</p>",
         "S3ObjectDoc$uri": "<p>The file location of the S3 wrapper object.</p>",
         "S3ObjectFile$uri": "<p>The uri of the s3 object.</p>"
+      }
+    },
+    "SatisfiedCondition": {
+      "base": "<p>Represents a condition that was satisfied during a condition node evaluation in a flow execution.</p> <note> <p>Flow executions is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "SatisfiedConditions$member": null
+      }
+    },
+    "SatisfiedConditions": {
+      "base": null,
+      "refs": {
+        "ConditionResultEvent$satisfiedConditions": "<p>A list of conditions that were satisfied during the evaluation.</p>"
       }
     },
     "SearchType": {
@@ -2475,11 +3315,21 @@
         "RetrieveAndGenerateStreamResponseOutput$serviceQuotaExceededException": "<p>Your request exceeds the service quota for your account. You can view your quotas at <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/gs-request-quota.html\">Viewing service quotas</a>. You can resubmit your request later.</p>"
       }
     },
+    "SessionArn": {
+      "base": null,
+      "refs": {
+        "CreateSessionResponse$sessionArn": "<p>The Amazon Resource Name (ARN) of the created session.</p>",
+        "EndSessionResponse$sessionArn": "<p>The Amazon Resource Name (ARN) of the session you ended.</p>",
+        "GetSessionResponse$sessionArn": "<p>The Amazon Resource Name (ARN) of the session.</p>",
+        "SessionSummary$sessionArn": "<p>The Amazon Resource Name (ARN) of the session.</p>",
+        "UpdateSessionResponse$sessionArn": "<p>The Amazon Resource Name (ARN) of the session that was updated.</p>"
+      }
+    },
     "SessionAttributesMap": {
       "base": null,
       "refs": {
         "InlineSessionState$sessionAttributes": "<p> Contains attributes that persist across a session and the values of those attributes. </p>",
-        "SessionState$sessionAttributes": "<p>Contains attributes that persist across a session and the values of those attributes.</p>"
+        "SessionState$sessionAttributes": "<p>Contains attributes that persist across a session and the values of those attributes. If <code>sessionAttributes</code> are passed to a supervisor agent in <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-multi-agent-collaboration.html\">multi-agent collaboration</a>, it will be forwarded to all agent collaborators.</p>"
       }
     },
     "SessionId": {
@@ -2499,15 +3349,72 @@
         "TracePart$sessionId": "<p>The unique identifier of the session with the agent.</p>"
       }
     },
+    "SessionIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateInvocationRequest$sessionIdentifier": "<p>The unique identifier for the associated session for the invocation. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN). </p>",
+        "DeleteSessionRequest$sessionIdentifier": "<p>The unique identifier for the session to be deleted. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN).</p>",
+        "EndSessionRequest$sessionIdentifier": "<p>The unique identifier for the session to end. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN).</p>",
+        "GetInvocationStepRequest$sessionIdentifier": "<p>The unique identifier for the invocation step's associated session. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN).</p>",
+        "GetSessionRequest$sessionIdentifier": "<p>A unique identifier for the session to retrieve. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN).</p>",
+        "ListInvocationStepsRequest$sessionIdentifier": "<p>The unique identifier for the session associated with the invocation steps. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN).</p>",
+        "ListInvocationsRequest$sessionIdentifier": "<p>The unique identifier for the session to list invocations for. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN).</p>",
+        "PutInvocationStepRequest$sessionIdentifier": "<p>The unique identifier for the session to add the invocation step to. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN).</p>",
+        "UpdateSessionRequest$sessionIdentifier": "<p>The unique identifier of the session to modify. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN).</p>"
+      }
+    },
+    "SessionMetadataKey": {
+      "base": null,
+      "refs": {
+        "SessionMetadataMap$key": null
+      }
+    },
+    "SessionMetadataMap": {
+      "base": null,
+      "refs": {
+        "CreateSessionRequest$sessionMetadata": "<p>A map of key-value pairs containing attributes to be persisted across the session. For example, the user's ID, their language preference, and the type of device they are using.</p>",
+        "GetSessionResponse$sessionMetadata": "<p>A map of key-value pairs containing attributes persisted across the session.</p>",
+        "UpdateSessionRequest$sessionMetadata": "<p>A map of key-value pairs containing attributes to be persisted across the session. For example the user's ID, their language preference, and the type of device they are using.</p>"
+      }
+    },
+    "SessionMetadataValue": {
+      "base": null,
+      "refs": {
+        "SessionMetadataMap$value": null
+      }
+    },
     "SessionState": {
       "base": "<p>Contains parameters that specify various attributes that persist across a session or prompt. You can define session state attributes as key-value pairs when writing a <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-lambda.html\">Lambda function</a> for an action group or pass them when making an <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html\">InvokeAgent</a> request. Use session state attributes to control and provide conversational context for your agent and to help customize your agent's behavior. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html\">Control session context</a>.</p>",
       "refs": {
         "InvokeAgentRequest$sessionState": "<p>Contains parameters that specify various attributes of the session. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html\">Control session context</a>.</p> <note> <p>If you include <code>returnControlInvocationResults</code> in the <code>sessionState</code> field, the <code>inputText</code> field will be ignored.</p> </note>"
       }
     },
+    "SessionStatus": {
+      "base": null,
+      "refs": {
+        "CreateSessionResponse$sessionStatus": "<p>The current status of the session.</p>",
+        "EndSessionResponse$sessionStatus": "<p>The current status of the session you ended.</p>",
+        "GetSessionResponse$sessionStatus": "<p>The current status of the session.</p>",
+        "SessionSummary$sessionStatus": "<p>The current status of the session.</p>",
+        "UpdateSessionResponse$sessionStatus": "<p>The status of the session you updated.</p>"
+      }
+    },
+    "SessionSummaries": {
+      "base": null,
+      "refs": {
+        "ListSessionsResponse$sessionSummaries": "<p>A list of summaries for each session in your Amazon Web Services account.</p>"
+      }
+    },
+    "SessionSummary": {
+      "base": "<p>Contains details about a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+      "refs": {
+        "SessionSummaries$member": null
+      }
+    },
     "SessionTTL": {
       "base": null,
       "refs": {
+        "Collaborator$idleSessionTTLInSeconds": "<p> The number of seconds for which the Amazon Bedrock keeps information about the user's conversation with the inline collaborator agent.</p> <p>A user interaction remains active for the amount of time specified. If no conversation occurs during this time, the session expires and Amazon Bedrock deletes any data provided before the timeout. </p>",
         "InvokeInlineAgentRequest$idleSessionTTLInSeconds": "<p> The number of seconds for which the inline agent should maintain session information. After this time expires, the subsequent <code>InvokeInlineAgent</code> request begins a new session. </p> <p>A user interaction remains active for the amount of time specified. If no conversation occurs during this time, the session expires and the data provided before the timeout is deleted.</p>"
       }
     },
@@ -2535,6 +3442,22 @@
         "Span$start": "<p>Where the text with a citation starts in the generated output.</p>"
       }
     },
+    "StartFlowExecutionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartFlowExecutionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StopFlowExecutionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopFlowExecutionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StopSequences": {
       "base": null,
       "refs": {
@@ -2542,7 +3465,7 @@
       }
     },
     "StreamingConfigurations": {
-      "base": "<p> Configurations for streaming.</p>",
+      "base": "<p>Configurations for streaming.</p>",
       "refs": {
         "InvokeAgentRequest$streamingConfigurations": "<p> Specifies the configurations for streaming. </p> <note> <p>To use agent streaming, you need permissions to perform the <code>bedrock:InvokeModelWithResponseStream</code> action.</p> </note>",
         "InvokeInlineAgentRequest$streamingConfigurations": "<p> Specifies the configurations for streaming. </p> <note> <p>To use agent streaming, you need permissions to perform the <code>bedrock:InvokeModelWithResponseStream</code> action.</p> </note>"
@@ -2551,7 +3474,7 @@
     "StreamingConfigurationsApplyGuardrailIntervalInteger": {
       "base": null,
       "refs": {
-        "StreamingConfigurations$applyGuardrailInterval": "<p> The guardrail interval to apply as response is generated. </p>"
+        "StreamingConfigurations$applyGuardrailInterval": "<p> The guardrail interval to apply as response is generated. By default, the guardrail interval is set to 50 characters. If a larger interval is specified, the response will be generated in larger chunks with fewer <code>ApplyGuardrail</code> calls. The following examples show the response generated for <i>Hello, I am an agent</i> input string.</p> <p> <b>Example response in chunks: Interval set to 3 characters</b> </p> <p> <code>'Hel', 'lo, ','I am', ' an', ' Age', 'nt'</code> </p> <p>Each chunk has at least 3 characters except for the last chunk</p> <p> <b>Example response in chunks: Interval set to 20 or more characters</b> </p> <p> <code>Hello, I am an Agent</code> </p>"
       }
     },
     "String": {
@@ -2563,43 +3486,55 @@
         "AnalyzePromptEvent$message": "<p>A message describing the analysis of the prompt.</p>",
         "ApiContentMap$key": null,
         "ApiInvocationInput$actionGroup": "<p>The action group that the API operation belongs to.</p>",
-        "ApiInvocationInput$agentId": "<p>The agent's ID.</p>",
         "ApiInvocationInput$httpMethod": "<p>The HTTP method of the API operation.</p>",
+        "ApiInvocationInput$agentId": "<p>The agent's ID.</p>",
         "ApiParameter$name": "<p>The name of the parameter.</p>",
         "ApiParameter$type": "<p>The data type for the parameter.</p>",
         "ApiParameter$value": "<p>The value of the parameter.</p>",
         "ApiResult$actionGroup": "<p>The action group that the API operation belongs to.</p>",
-        "ApiResult$agentId": "<p>The agent's ID.</p>",
         "ApiResult$httpMethod": "<p>The HTTP method for the API operation.</p>",
+        "ApiResult$agentId": "<p>The agent's ID.</p>",
         "CodeInterpreterInvocationInput$code": "<p>The code for the code interpreter to use.</p>",
-        "CodeInterpreterInvocationOutput$executionError": "<p>Contains the error returned from code execution.</p>",
         "CodeInterpreterInvocationOutput$executionOutput": "<p>Contains the successful output returned from code execution</p>",
+        "CodeInterpreterInvocationOutput$executionError": "<p>Contains the error returned from code execution.</p>",
         "ContentBlock$text": "<p>The block's text.</p>",
         "ContentBody$body": "<p>The body of the API response.</p>",
         "ContentMap$key": null,
         "CustomOrchestrationTraceEvent$text": "<p> The text that prompted the event at this step. </p>",
         "Files$member": null,
+        "FlowExecutionError$message": "<p>A descriptive message that provides details about the error.</p>",
+        "FlowFailureEvent$errorMessage": "<p>A descriptive message that provides details about the failure.</p>",
         "FlowTraceCondition$conditionName": "<p>The name of the condition.</p>",
+        "FlowTraceNodeActionEvent$requestId": "<p>The ID of the request that the node made to the operation.</p>",
+        "FlowTraceNodeActionEvent$serviceName": "<p>The name of the service that the node called.</p>",
+        "FlowTraceNodeActionEvent$operationName": "<p>The name of the operation that the node called.</p>",
         "FunctionInvocationInput$actionGroup": "<p>The action group that the function belongs to.</p>",
-        "FunctionInvocationInput$agentId": "<p>The agent's ID.</p>",
         "FunctionInvocationInput$function": "<p>The name of the function.</p>",
+        "FunctionInvocationInput$agentId": "<p>The agent's ID.</p>",
         "FunctionParameter$name": "<p>The name of the parameter.</p>",
         "FunctionParameter$type": "<p>The data type of the parameter.</p>",
         "FunctionParameter$value": "<p>The value of the parameter.</p>",
         "FunctionResult$actionGroup": "<p>The action group that the function belongs to.</p>",
-        "FunctionResult$agentId": "<p>The agent's ID.</p>",
         "FunctionResult$function": "<p>The name of the function that was called.</p>",
+        "FunctionResult$agentId": "<p>The agent's ID.</p>",
         "GeneratedQuery$sql": "<p>An SQL query that corresponds to the natural language query.</p>",
+        "GetExecutionFlowSnapshotResponse$definition": "<p>The flow definition used for the flow execution, including the nodes, connections, and configuration at the time when the execution started.</p> <p>The definition returns as a string that follows the structure of a <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_FlowDefinition.html\">FlowDefinition</a> object.</p>",
         "GuardrailCustomWord$match": "<p>The match details for the custom word filter in the Guardrail.</p>",
         "GuardrailManagedWord$match": "<p>The match details for the managed word filter in the Guardrail.</p>",
         "GuardrailPiiEntityFilter$match": "<p>The match to settings in the Guardrail filter to identify and remove PII.</p>",
-        "GuardrailRegexFilter$match": "<p>The match details for the regex filter used in the Guardrail.</p>",
         "GuardrailRegexFilter$name": "<p>The name details for the regex filter used in the Guardrail.</p>",
         "GuardrailRegexFilter$regex": "<p>The regex details for the regex filter used in the Guardrail.</p>",
+        "GuardrailRegexFilter$match": "<p>The match details for the regex filter used in the Guardrail.</p>",
         "GuardrailTopic$name": "<p>The name details on a specific topic in the Guardrail.</p>",
         "InlineAgentReturnControlPayload$invocationId": "<p>The identifier of the action group invocation. </p>",
         "InlineSessionState$invocationId": "<p> The identifier of the invocation of an action. This value must match the <code>invocationId</code> returned in the <code>InvokeInlineAgent</code> response for the action whose results are provided in the <code>returnControlInvocationResults</code> field. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-returncontrol.html\">Return control to the agent developer</a>. </p>",
         "InputFile$name": "<p>The name of the source file.</p>",
+        "InternalServerException$reason": "<p>The reason for the exception. If the reason is <code>BEDROCK_MODEL_INVOCATION_SERVICE_UNAVAILABLE</code>, the model invocation service is unavailable. Retry your request.</p>",
+        "Metadata$clientRequestId": "<p>A unique identifier associated with the downstream invocation. This ID can be used for tracing, debugging, and identifying specific invocations in customer logs or systems.</p>",
+        "NodeActionEvent$requestId": "<p>The ID of the request that the node made to the operation.</p>",
+        "NodeActionEvent$serviceName": "<p>The name of the service that the node called.</p>",
+        "NodeActionEvent$operationName": "<p>The name of the operation that the node called.</p>",
+        "NodeFailureEvent$errorMessage": "<p>A descriptive message that provides details about the node failure.</p>",
         "OutputFile$name": "<p>The name of the file containing response from code interpreter.</p>",
         "Parameter$name": "<p>The name of the parameter.</p>",
         "Parameter$type": "<p>The type of the parameter.</p>",
@@ -2607,11 +3542,13 @@
         "PromptSessionAttributesMap$key": null,
         "PromptSessionAttributesMap$value": null,
         "RawResponse$content": "<p>The foundation model's raw output content.</p>",
+        "ReasoningTextBlock$text": "<p>Text describing the reasoning that the model used to return the content in the content block.</p>",
+        "ReasoningTextBlock$signature": "<p>A hash of all the messages in the conversation to ensure that the content in the reasoning text block isn't tampered with. You must submit the signature in subsequent <code>Converse</code> requests, in addition to the previous messages. If the previous messages are tampered with, the response throws an error.</p>",
         "RepromptResponse$text": "<p>The text reprompting the input.</p>",
         "ResponseBody$key": null,
         "RetrievalResultConfluenceLocation$url": "<p>The Confluence host URL for the data source location.</p>",
-        "RetrievalResultContent$byteContent": "<p>A data URI with base64-encoded content from the data source. The URI is in the following format: returned in the following format: <code>data:image/jpeg;base64,${base64-encoded string}</code>.</p>",
         "RetrievalResultContent$text": "<p>The cited text from the data source.</p>",
+        "RetrievalResultContent$byteContent": "<p>A data URI with base64-encoded content from the data source. The URI is in the following format: returned in the following format: <code>data:image/jpeg;base64,${base64-encoded string}</code>.</p>",
         "RetrievalResultContentColumn$columnName": "<p>The name of the column.</p>",
         "RetrievalResultContentColumn$columnValue": "<p>The value in the column.</p>",
         "RetrievalResultCustomDocumentLocation$id": "<p>The ID of the document.</p>",
@@ -2625,6 +3562,7 @@
         "RetrieveAndGenerateOutputEvent$text": "<p>A text response.</p>",
         "ReturnControlPayload$invocationId": "<p>The identifier of the action group invocation.</p>",
         "ReturnControlResults$invocationId": "<p>The action's invocation ID.</p>",
+        "SatisfiedCondition$conditionName": "<p>The name of the condition that was satisfied.</p>",
         "SessionAttributesMap$key": null,
         "SessionAttributesMap$value": null,
         "SessionState$invocationId": "<p>The identifier of the invocation of an action. This value must match the <code>invocationId</code> returned in the <code>InvokeAgent</code> response for the action whose results are provided in the <code>returnControlInvocationResults</code> field. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-returncontrol.html\">Return control to the agent developer</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html\">Control session context</a>.</p>",
@@ -2636,6 +3574,58 @@
       "base": null,
       "refs": {
         "MemorySessionSummary$summaryText": "<p>The summarized text for this session.</p>"
+      }
+    },
+    "SyntheticTimestamp_date_time": {
+      "base": null,
+      "refs": {
+        "InlineAgentTracePart$eventTime": "<p>The time that trace occurred. </p>",
+        "Metadata$startTime": "<p>In the final response, <code>startTime</code> is the start time of the agent invocation operation.</p>",
+        "Metadata$endTime": "<p>In the final response, <code>endTime</code> is the end time of the agent invocation operation.</p>",
+        "TracePart$eventTime": "<p> The time of the trace. </p>"
+      }
+    },
+    "TagKey": {
+      "base": "<p>Key of a tag</p>",
+      "refs": {
+        "TagKeyList$member": null,
+        "TagsMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": "<p>List of Tag Keys</p>",
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p>A list of keys of the tags to remove from the resource.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": "<p>Value of a tag</p>",
+      "refs": {
+        "TagsMap$value": null
+      }
+    },
+    "TaggableResourcesArn": {
+      "base": "<p>ARN of Taggable resources: [session]</p>",
+      "refs": {
+        "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which to list tags.</p>",
+        "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to tag.</p>",
+        "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource from which to remove tags.</p>"
+      }
+    },
+    "TagsMap": {
+      "base": "<p>A map of tag keys and values</p>",
+      "refs": {
+        "CreateSessionRequest$tags": "<p>Specify the key-value pairs for the tags that you want to attach to the session.</p>",
+        "ListTagsForResourceResponse$tags": "<p>The key-value pairs for the tags associated with the resource.</p>",
+        "TagResourceRequest$tags": "<p>An object containing key-value pairs that define the tags to attach to the resource.</p>"
       }
     },
     "Temperature": {
@@ -2724,6 +3714,12 @@
         "TracePart$trace": "<p>Contains one part of the agent's reasoning process and results from calling API actions and querying knowledge bases. You can use the trace to understand how the agent arrived at the response it provided the customer. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-enablement\">Trace enablement</a>.</p>"
       }
     },
+    "TraceElements": {
+      "base": "<p>Contains trace elements for flow execution tracking.</p>",
+      "refs": {
+        "FlowTraceDependencyEvent$traceElements": "<p>The trace elements containing detailed information about the dependency.</p>"
+      }
+    },
     "TraceId": {
       "base": null,
       "refs": {
@@ -2749,6 +3745,7 @@
     "TracePart": {
       "base": "<p>Contains information about the agent and session, alongside the agent's reasoning process and results from calling API actions and querying knowledge bases and metadata about the trace. You can use the trace to understand how the agent arrived at the response it provided the customer. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-enablement\">Trace enablement</a>.</p>",
       "refs": {
+        "AgentTraces$member": null,
         "ResponseStream$trace": "<p>Contains information about the agent and session, alongside the agent's reasoning process and results from calling actions and querying knowledge bases and metadata about the trace. You can use the trace to understand how the agent arrived at the response it provided the customer. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/trace-events.html\">Trace events</a>.</p>"
       }
     },
@@ -2764,10 +3761,50 @@
         "Observation$type": "<p>Specifies what kind of information the agent returns in the observation. The following values are possible.</p> <ul> <li> <p> <code>ACTION_GROUP</code> – The agent returns the result of an action group.</p> </li> <li> <p> <code>KNOWLEDGE_BASE</code> – The agent returns information from a knowledge base.</p> </li> <li> <p> <code>FINISH</code> – The agent returns a final response to the user with no follow-up.</p> </li> <li> <p> <code>ASK_USER</code> – The agent asks the user a question.</p> </li> <li> <p> <code>REPROMPT</code> – The agent prompts the user again for the same information.</p> </li> </ul>"
       }
     },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSessionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "Usage": {
       "base": "<p>Contains information of the usage of the foundation model.</p>",
       "refs": {
-        "Metadata$usage": "<p>Contains details of the foundation model usage.</p>"
+        "Metadata$usage": "<p>Specific to model invocation and contains details about the usage of a foundation model.</p>"
+      }
+    },
+    "Uuid": {
+      "base": null,
+      "refs": {
+        "CreateInvocationRequest$invocationId": "<p>A unique identifier for the invocation in UUID format.</p>",
+        "CreateInvocationResponse$sessionId": "<p>The unique identifier for the session associated with the invocation.</p>",
+        "CreateInvocationResponse$invocationId": "<p>The unique identifier for the invocation.</p>",
+        "CreateSessionResponse$sessionId": "<p>The unique identifier for the session.</p>",
+        "EndSessionResponse$sessionId": "<p>The unique identifier of the session you ended.</p>",
+        "GetInvocationStepRequest$invocationStepId": "<p>The unique identifier (in UUID format) for the specific invocation step to retrieve.</p>",
+        "GetSessionResponse$sessionId": "<p>The unique identifier for the session in UUID format.</p>",
+        "InvocationStep$sessionId": "<p>The unique identifier of the session containing the invocation step.</p>",
+        "InvocationStep$invocationId": "<p>The unique identifier (in UUID format) for the invocation that includes the invocation step.</p>",
+        "InvocationStep$invocationStepId": "<p>The unique identifier (in UUID format) for the invocation step.</p>",
+        "InvocationStepSummary$sessionId": "<p>The unique identifier for the session associated with the invocation step.</p>",
+        "InvocationStepSummary$invocationId": "<p>A unique identifier for the invocation in UUID format.</p>",
+        "InvocationStepSummary$invocationStepId": "<p>The unique identifier (in UUID format) for the invocation step.</p>",
+        "InvocationSummary$sessionId": "<p>The unique identifier for the session associated with the invocation.</p>",
+        "InvocationSummary$invocationId": "<p>A unique identifier for the invocation in UUID format.</p>",
+        "PutInvocationStepRequest$invocationStepId": "<p>The unique identifier of the invocation step in UUID format.</p>",
+        "PutInvocationStepResponse$invocationStepId": "<p>The unique identifier of the invocation step in UUID format.</p>",
+        "SessionSummary$sessionId": "<p>The unique identifier for the session.</p>",
+        "UpdateSessionResponse$sessionId": "<p>The unique identifier of the session you updated.</p>"
       }
     },
     "ValidationException": {
@@ -2814,6 +3851,14 @@
       "base": null,
       "refs": {
         "ActionGroupInvocationInput$verb": "<p>The API method being used, based off the action group.</p>"
+      }
+    },
+    "Version": {
+      "base": null,
+      "refs": {
+        "FlowExecutionSummary$flowVersion": "<p>The version of the flow used for the execution.</p>",
+        "GetExecutionFlowSnapshotResponse$flowVersion": "<p>The version of the flow used for the flow execution.</p>",
+        "GetFlowExecutionResponse$flowVersion": "<p>The version of the flow used for the execution.</p>"
       }
     }
   }

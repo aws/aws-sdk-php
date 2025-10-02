@@ -13,6 +13,7 @@ use Aws\Crypto\MaterialsProvider;
 use Aws\Crypto\MaterialsProviderV2;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\EndpointV2\EndpointDefinitionProvider;
+use Aws\EndpointV2\EndpointProviderV2;
 use Aws\MetricsBuilder;
 use Aws\Result;
 use Aws\S3\Crypto\S3EncryptionClient;
@@ -92,7 +93,7 @@ class UserAgentMiddlewareTest extends TestCase
                 putenv("$key=$envValue");
             }
         }
-
+      
         TestsUtility::cleanUpDir($this->tempDir);
     }
 
@@ -209,27 +210,6 @@ class UserAgentMiddlewareTest extends TestCase
                 ];
 
                 return [$args, 'm/' . MetricsBuilder::ENDPOINT_OVERRIDE];
-            },
-            'metricsWithAccountIdModePreferred' => function (): array {
-                $args = [
-                    'account_id_endpoint_mode' => 'preferred'
-                ];
-
-                return [$args, 'm/' . MetricsBuilder::ACCOUNT_ID_MODE_PREFERRED];
-            },
-            'metricsWithAccountIdModeRequired' => function (): array {
-                $args = [
-                    'account_id_endpoint_mode' => 'required'
-                ];
-
-                return [$args, 'm/' . MetricsBuilder::ACCOUNT_ID_MODE_REQUIRED];
-            },
-            'metricsWithAccountIdModeDisabled' => function (): array {
-                $args = [
-                    'account_id_endpoint_mode' => 'disabled'
-                ];
-
-                return [$args, 'm/' . MetricsBuilder::ACCOUNT_ID_MODE_DISABLED];
             },
             'metricsWithRetryConfigArrayStandardMode' => function (): array {
                 $args = [
@@ -658,45 +638,142 @@ class UserAgentMiddlewareTest extends TestCase
      */
     public function testUserAgentCaptureResolvedAccountIdMetric()
     {
+        $dynamoDbClient = $this->getTestDynamoDBClient(
+            [
+                'credentials' => new Credentials(
+                    'foo',
+                    'foo',
+                    'foo',
+                    null,
+                    '123456789012'
+                ),
+                'http_handler' => function (
+                    RequestInterface $request
+                ) {
+                    $metrics = $this->getMetricsAsArray($request);
+
+                    $this->assertTrue(
+                        in_array(MetricsBuilder::RESOLVED_ACCOUNT_ID, $metrics)
+                    );
+
+                    return new Response(
+                        200,
+                        [],
+                        '{}'
+                    );
+                }
+            ]
+        );
+        $dynamoDbClient->listTables();
+    }
+
+    /**
+     * Tests user agent captures the accountIdEndpointMode metric.
+     *
+     * @return void
+     */
+    public function testUserAgentCaptureResolvedAccountIdEndpointMode() {
+        $accountIdModesMetrics = [
+            'preferred' => MetricsBuilder::ACCOUNT_ID_MODE_PREFERRED,
+            'required' => MetricsBuilder::ACCOUNT_ID_MODE_REQUIRED,
+            'disabled' => MetricsBuilder::ACCOUNT_ID_MODE_DISABLED,
+        ];
+        foreach ($accountIdModesMetrics as $config => $metric) {
+            $dynamoDbClient = $this->getTestDynamoDBClient(
+                [
+                    'account_id_endpoint_mode' => $config,
+                    'credentials' => new Credentials(
+                        'foo',
+                        'foo',
+                        'foo',
+                        null,
+                        '123456789012'
+                    ),
+                    'http_handler' => function (
+                        RequestInterface $request
+                    ) use ($metric) {
+                        $metrics = $this->getMetricsAsArray($request);
+
+                        $this->assertTrue(
+                            in_array($metric, $metrics)
+                        );
+
+                        return new Response(
+                            200,
+                            [],
+                            '{}'
+                        );
+                    }
+                ]
+            );
+            $dynamoDbClient->listTables();
+        }
+    }
+
+    /**
+     * Tests user agent captures a resolved account id metric.
+     *
+     * @return void
+     */
+    public function testUserAgentCaptureAccountIdEndpointMetric()
+    {
+        $dynamoDbClient = $this->getTestDynamoDBClient(
+            [
+                'credentials' => new Credentials(
+                    'foo',
+                    'foo',
+                    'foo',
+                    null,
+                    '123456789012'
+                ),
+                'http_handler' => function (
+                    RequestInterface $request
+                ) {
+                    $metrics = $this->getMetricsAsArray($request);
+
+                    $this->assertTrue(
+                        in_array(MetricsBuilder::ACCOUNT_ID_ENDPOINT, $metrics)
+                    );
+
+                    return new Response(
+                        200,
+                        [],
+                        '{}'
+                    );
+                }
+            ]
+        );
+        $dynamoDbClient->listTables();
+    }
+
+    /**
+     * Returns a test dynamodb client,
+     * where rules for resolving account endpoints
+     * are present.
+     *
+     * @param array $args
+     *
+     * @return DynamoDbClient
+     */
+    private function getTestDynamoDBClient(
+        array $args
+    ): DynamoDbClient
+    {
         try {
             $ruleSet = $this->getDynamoDBTestRuleSet();
         } catch (\Exception $e) {
             $this->fail($e->getMessage());
         }
-
-        $dynamoDbClient = new DynamoDbClient([
+        return new DynamoDbClient([
             'api_provider' => ApiProvider::filesystem(
                 __DIR__ . '/fixtures/aws_client_test'
             ),
-            'endpoint_provider' => new \Aws\EndpointV2\EndpointProviderV2(
+            'endpoint_provider' => new EndpointProviderV2(
                 $ruleSet,
                 EndpointDefinitionProvider::getPartitions()
             ),
             'region' => 'us-east-2',
-            'credentials' => new Credentials(
-                'foo',
-                'foo',
-                'foo',
-                null,
-                '123456789012'
-            ),
-            'http_handler' => function (
-                RequestInterface $request
-            ) {
-                $metrics = $this->getMetricsAsArray($request);
-
-                $this->assertTrue(
-                    in_array(MetricsBuilder::RESOLVED_ACCOUNT_ID, $metrics)
-                );
-
-                return new Response(
-                    200,
-                    [],
-                    '{}'
-                );
-            }
-        ]);
-        $dynamoDbClient->listTables();
+        ] + $args);
     }
 
     /**
@@ -1170,8 +1247,10 @@ EOF;
             } elseif ($request->getMethod() === 'GET') {
                 switch ($request->getUri()->getPath()) {
                     case '/latest/meta-data/iam/security-credentials/':
+                    case '/latest/meta-data/iam/security-credentials-extended/':
                         return Create::promiseFor(new Response(200, [], Utils::streamFor('MockProfile')));
                     case '/latest/meta-data/iam/security-credentials/MockProfile':
+                    case '/latest/meta-data/iam/security-credentials-extended/MockProfile':
                         $jsonResponse = <<<EOF
 {
     "Code": "Success",
@@ -1449,5 +1528,85 @@ EOF;
             }
         ]);
         $s3Client->listBuckets();
+    }
+
+    /**
+     * Tests user agent captures the flexible checksum calculation metric.
+     *
+     * @return void
+     */
+    public function testUserAgentCaptureFlexibleChecksumCalculationMetric()
+    {
+        $checksumCalculationMetrics = [
+            'when_supported' => MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_WHEN_SUPPORTED,
+            'when_required' => MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_WHEN_REQUIRED
+        ];
+        foreach ($checksumCalculationMetrics as $config => $checksumCalculationMetric) {
+            $s3Client = new S3Client([
+                'region' => 'us-west-2',
+                'api_provider' => ApiProvider::filesystem(__DIR__ . '/S3/fixtures'),
+                'request_checksum_calculation' => $config,
+                'http_handler' => function (RequestInterface $request)
+                use ($checksumCalculationMetric) {
+                    $metrics = $this->getMetricsAsArray($request);
+
+                    $this->assertTrue(
+                        in_array($checksumCalculationMetric, $metrics)
+                    );
+
+                    return new Response(
+                        200,
+                        [],
+                        '<?xml version="1.0" encoding="UTF-8"?><Node></Node>'
+                    );
+                }
+            ]);
+            $s3Client->putObject([
+                'Bucket' => 'foo',
+                'Key' => 'foo',
+                'Body' => 'Test body',
+                'ChecksumAlgorithm' => 'crc32'
+            ]);
+        }
+    }
+
+    /**
+     * Tests user agent captures the flexible checksum validation metric.
+     *
+     * @return void
+     */
+    public function testUserAgentCaptureFlexibleChecksumValidationMetric()
+    {
+        $checksumCalculationMetrics = [
+            'when_supported' => MetricsBuilder::FLEXIBLE_CHECKSUMS_RES_WHEN_SUPPORTED,
+            'when_required' => MetricsBuilder::FLEXIBLE_CHECKSUMS_RES_WHEN_REQUIRED
+        ];
+        foreach ($checksumCalculationMetrics as $config => $checksumCalculationMetric) {
+            $s3Client = new S3Client([
+                'region' => 'us-west-2',
+                'api_provider' => ApiProvider::filesystem(__DIR__ . '/S3/fixtures'),
+                'response_checksum_validation' => $config,
+                'http_handler' => function (RequestInterface $request)
+                use ($checksumCalculationMetric) {
+                    $metrics = $this->getMetricsAsArray($request);
+
+                    $this->assertTrue(
+                        in_array($checksumCalculationMetric, $metrics)
+                    );
+
+                    return new Response(
+                        200,
+                        [],
+                        '<?xml version="1.0" encoding="UTF-8"?><Node></Node>'
+                    );
+                }
+            ]);
+            $s3Client->putObject([
+                'Bucket' => 'foo',
+                'Key' => 'foo',
+                'Body' => 'Test body',
+                'ChecksumAlgorithm' => 'crc32'
+            ]);
+        }
     }
 }

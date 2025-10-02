@@ -372,4 +372,97 @@ class MultipartUploaderTest extends TestCase
         $uploader = new MultipartUploader($client, $source, $options);
         $result = $uploader->upload();
     }
+  
+    public function testUploadPrintsProgress()
+    {
+        $progressBar = [
+            "Transfer initiated...\n|                    | 0.0%\n",
+            "|==                  | 12.5%\n",
+            "|=====               | 25.0%\n",
+            "|=======             | 37.5%\n",
+            "|==========          | 50.0%\n",
+            "|============        | 62.5%\n",
+            "|===============     | 75.0%\n",
+            "|=================   | 87.5%\n",
+            "|====================| 100.0%\nTransfer complete!\n"
+        ];
+        $client = $this->getTestClient('s3');
+        $uploadOptions = [
+            'bucket'          => 'foo',
+            'key'             => 'bar',
+            'display_progress' => true
+        ];
+        $this->expectOutputString(implode("", $progressBar));
+        $url = 'http://foo.s3.amazonaws.com/bar';
+
+        $size = 12 * self::MB;
+        $data = str_repeat('.', $size);
+        $filename = sys_get_temp_dir() . '/' . self::FILENAME;
+        file_put_contents($filename, $data);
+        $stream = Psr7\Utils::streamFor(fopen($filename, 'r'));
+
+        $this->addMockResults($client, [
+            new Result(['UploadId' => 'baz']),
+            new Result(['ETag' => 'A']),
+            new Result(['ETag' => 'B']),
+            new Result(['ETag' => 'C']),
+            new Result(['Location' => $url])
+        ]);
+
+        $uploader = new MultipartUploader($client, $stream, $uploadOptions);
+        $result = $uploader->upload();
+
+        $this->assertTrue($uploader->getState()->isCompleted());
+        $this->assertSame($url, $result['ObjectURL']);
+    }
+
+    public function testFailedUploadPrintsPartialProgress()
+    {
+        $partialBar = [
+            "Transfer initiated...\n|                    | 0.0%\n",
+            "|==                  | 12.5%\n",
+            "|=====               | 25.0%\n"
+        ];
+        $this->expectOutputString(implode("", $partialBar));
+
+        $this->expectExceptionMessage(
+            "An exception occurred while uploading parts to a multipart upload"
+        );
+        $this->expectException(\Aws\S3\Exception\S3MultipartUploadException::class);
+        $counter = 0;
+
+        $httpHandler = function ($request, array $options) use (&$counter) {
+            if ($counter < 4) {
+                $body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" .
+                     "<OperationNameResponse><UploadId>baz</UploadId></OperationNameResponse>";
+            } else {
+                $body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n\n";
+            }
+            $counter++;
+
+            return Promise\Create::promiseFor(
+                new Psr7\Response(200, [], $body)
+            );
+        };
+
+        $s3 = new S3Client([
+            'version'     => 'latest',
+            'region'      => 'us-east-1',
+            'http_handler' => $httpHandler
+        ]);
+
+        $data = str_repeat('.', 50 * self::MB);
+        $source = Psr7\Utils::streamFor($data);
+
+        $uploader = new MultipartUploader(
+            $s3,
+            $source,
+            [
+                'bucket' => 'test-bucket',
+                'key' => 'test-key',
+                'display_progress' => true
+            ]
+        );
+        $uploader->upload();
+    }
 }

@@ -5,12 +5,14 @@
     "endpointPrefix":"dax",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"Amazon DAX",
     "serviceFullName":"Amazon DynamoDB Accelerator (DAX)",
     "serviceId":"DAX",
     "signatureVersion":"v4",
     "targetPrefix":"AmazonDAXV3",
-    "uid":"dax-2017-04-19"
+    "uid":"dax-2017-04-19",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateCluster":{
@@ -69,7 +71,8 @@
         {"shape":"SubnetGroupQuotaExceededFault"},
         {"shape":"SubnetQuotaExceededFault"},
         {"shape":"InvalidSubnet"},
-        {"shape":"ServiceLinkedRoleNotFoundFault"}
+        {"shape":"ServiceLinkedRoleNotFoundFault"},
+        {"shape":"SubnetNotAllowedFault"}
       ]
     },
     "DecreaseReplicationFactor":{
@@ -358,7 +361,8 @@
         {"shape":"SubnetQuotaExceededFault"},
         {"shape":"SubnetInUse"},
         {"shape":"InvalidSubnet"},
-        {"shape":"ServiceLinkedRoleNotFoundFault"}
+        {"shape":"ServiceLinkedRoleNotFoundFault"},
+        {"shape":"SubnetNotAllowedFault"}
       ]
     }
   },
@@ -395,13 +399,13 @@
         "IamRoleArn":{"shape":"String"},
         "ParameterGroup":{"shape":"ParameterGroupStatus"},
         "SSEDescription":{"shape":"SSEDescription"},
-        "ClusterEndpointEncryptionType":{"shape":"ClusterEndpointEncryptionType"}
+        "ClusterEndpointEncryptionType":{"shape":"ClusterEndpointEncryptionType"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "ClusterAlreadyExistsFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ClusterEndpointEncryptionType":{
@@ -421,14 +425,12 @@
     },
     "ClusterNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ClusterQuotaForCustomerExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "CreateClusterRequest":{
@@ -453,7 +455,8 @@
         "ParameterGroupName":{"shape":"String"},
         "Tags":{"shape":"TagList"},
         "SSESpecification":{"shape":"SSESpecification"},
-        "ClusterEndpointEncryptionType":{"shape":"ClusterEndpointEncryptionType"}
+        "ClusterEndpointEncryptionType":{"shape":"ClusterEndpointEncryptionType"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "CreateClusterResponse":{
@@ -688,22 +691,19 @@
     },
     "InsufficientClusterCapacityFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Integer":{"type":"integer"},
     "IntegerOptional":{"type":"integer"},
     "InvalidARNFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidClusterStateFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidParameterCombinationException":{
@@ -716,8 +716,7 @@
     },
     "InvalidParameterGroupStateFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidParameterValueException":{
@@ -730,14 +729,12 @@
     },
     "InvalidSubnet":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidVPCNetworkStateFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "IsModifiable":{
@@ -767,6 +764,18 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6",
+        "dual_stack"
+      ]
+    },
+    "NetworkTypeList":{
+      "type":"list",
+      "member":{"shape":"NetworkType"}
+    },
     "Node":{
       "type":"structure",
       "members":{
@@ -788,20 +797,17 @@
     },
     "NodeNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "NodeQuotaForClusterExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "NodeQuotaForCustomerExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "NodeTypeSpecificValue":{
@@ -846,8 +852,7 @@
     },
     "ParameterGroupAlreadyExistsFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ParameterGroupList":{
@@ -860,14 +865,12 @@
     },
     "ParameterGroupNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ParameterGroupQuotaExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ParameterGroupStatus":{
@@ -957,14 +960,12 @@
     },
     "ServiceLinkedRoleNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SourceType":{
@@ -980,7 +981,8 @@
       "type":"structure",
       "members":{
         "SubnetIdentifier":{"shape":"String"},
-        "SubnetAvailabilityZone":{"shape":"String"}
+        "SubnetAvailabilityZone":{"shape":"String"},
+        "SupportedNetworkTypes":{"shape":"NetworkTypeList"}
       }
     },
     "SubnetGroup":{
@@ -989,19 +991,18 @@
         "SubnetGroupName":{"shape":"String"},
         "Description":{"shape":"String"},
         "VpcId":{"shape":"String"},
-        "Subnets":{"shape":"SubnetList"}
+        "Subnets":{"shape":"SubnetList"},
+        "SupportedNetworkTypes":{"shape":"NetworkTypeList"}
       }
     },
     "SubnetGroupAlreadyExistsFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SubnetGroupInUseFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SubnetGroupList":{
@@ -1014,14 +1015,12 @@
     },
     "SubnetGroupNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SubnetGroupQuotaExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SubnetIdentifierList":{
@@ -1030,18 +1029,21 @@
     },
     "SubnetInUse":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SubnetList":{
       "type":"list",
       "member":{"shape":"Subnet"}
     },
+    "SubnetNotAllowedFault":{
+      "type":"structure",
+      "members":{},
+      "exception":true
+    },
     "SubnetQuotaExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "TStamp":{"type":"timestamp"},
@@ -1058,14 +1060,12 @@
     },
     "TagNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "TagQuotaPerResourceExceeded":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "TagResourceRequest":{

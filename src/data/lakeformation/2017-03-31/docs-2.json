@@ -48,7 +48,7 @@
     "ListTableStorageOptimizers": "<p>Returns the configuration of all storage optimizers associated with a specified table.</p>",
     "ListTransactions": "<p>Returns metadata about transactions and their status. To prevent the response from growing indefinitely, only uncommitted transactions and those available for time-travel queries are returned.</p> <p>This operation can help you identify uncommitted transactions or to get information about transactions.</p>",
     "PutDataLakeSettings": "<p>Sets the list of data lake administrators who have admin privileges on all resources managed by Lake Formation. For more information on admin privileges, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/lake-formation-permissions.html\">Granting Lake Formation Permissions</a>.</p> <p>This API replaces the current list of data lake admins with the new list being passed. To add an admin, fetch the current list and add the new admin to that list and pass that list in this API.</p>",
-    "RegisterResource": "<p>Registers the resource as managed by the Data Catalog.</p> <p>To add or update data, Lake Formation needs read/write access to the chosen Amazon S3 path. Choose a role that you know has permission to do this, or choose the AWSServiceRoleForLakeFormationDataAccess service-linked role. When you register the first Amazon S3 path, the service-linked role and a new inline policy are created on your behalf. Lake Formation adds the first path to the inline policy and attaches it to the service-linked role. When you register subsequent paths, Lake Formation adds the path to the existing policy.</p> <p>The following request registers a new location and gives Lake Formation permission to use the service-linked role to access that location.</p> <p> <code>ResourceArn = arn:aws:s3:::my-bucket/ UseServiceLinkedRole = true</code> </p> <p>If <code>UseServiceLinkedRole</code> is not set to true, you must provide or set the <code>RoleArn</code>:</p> <p> <code>arn:aws:iam::12345:role/my-data-access-role</code> </p>",
+    "RegisterResource": "<p>Registers the resource as managed by the Data Catalog.</p> <p>To add or update data, Lake Formation needs read/write access to the chosen data location. Choose a role that you know has permission to do this, or choose the AWSServiceRoleForLakeFormationDataAccess service-linked role. When you register the first Amazon S3 path, the service-linked role and a new inline policy are created on your behalf. Lake Formation adds the first path to the inline policy and attaches it to the service-linked role. When you register subsequent paths, Lake Formation adds the path to the existing policy.</p> <p>The following request registers a new location and gives Lake Formation permission to use the service-linked role to access that location.</p> <p> <code>ResourceArn = arn:aws:s3:::my-bucket/ UseServiceLinkedRole = true</code> </p> <p>If <code>UseServiceLinkedRole</code> is not set to true, you must provide or set the <code>RoleArn</code>:</p> <p> <code>arn:aws:iam::12345:role/my-data-access-role</code> </p>",
     "RemoveLFTagsFromResource": "<p>Removes an LF-tag from the resource. Only database, table, or tableWithColumns resource are allowed. To tag columns, use the column inclusion list in <code>tableWithColumns</code> to specify column input.</p>",
     "RevokePermissions": "<p>Revokes permissions to the principal to access metadata in the Data Catalog and data organized in underlying data storage such as Amazon S3.</p>",
     "SearchDatabasesByLFTags": "<p>This operation allows a search on <code>DATABASE</code> resources by <code>TagCondition</code>. This operation is used by admins who want to grant user permissions on certain <code>TagConditions</code>. Before making a grant, the admin can use <code>SearchDatabasesByTags</code> to find all resources where the given <code>TagConditions</code> are valid to verify whether the returned resources can be shared.</p>",
@@ -66,8 +66,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>Access to a resource was denied.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessKeyIdString": {
       "base": null,
@@ -79,13 +78,11 @@
     },
     "AddLFTagsToResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddLFTagsToResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddObjectInput": {
       "base": "<p>A new object to add to the governed table.</p>",
@@ -107,8 +104,7 @@
     },
     "AlreadyExistsException": {
       "base": "<p>A resource to be created or added already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ApplicationArn": {
       "base": null,
@@ -125,13 +121,11 @@
     },
     "AssumeDecoratedRoleWithSAMLRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssumeDecoratedRoleWithSAMLResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AuditContext": {
       "base": "<p>A structure used to include auditing information on the privileged API. </p>",
@@ -154,13 +148,11 @@
     },
     "BatchGrantPermissionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGrantPermissionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchPermissionsFailureEntry": {
       "base": "<p>A list of failures when performing a batch grant or batch revoke operation.</p>",
@@ -191,12 +183,16 @@
     },
     "BatchRevokePermissionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchRevokePermissionsResponse": {
       "base": null,
+      "refs": {}
+    },
+    "Boolean": {
+      "base": null,
       "refs": {
+        "RegisterResourceRequest$WithPrivilegedAccess": "<p>Grants the calling principal the permissions to perform all supported Lake Formation operations on the registered data location. </p>"
       }
     },
     "BooleanNullable": {
@@ -207,13 +203,11 @@
     },
     "CancelTransactionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelTransactionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CatalogIdString": {
       "base": null,
@@ -308,13 +302,11 @@
     },
     "CommitTransactionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CommitTransactionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ComparisonOperator": {
       "base": null,
@@ -324,14 +316,18 @@
     },
     "ConcurrentModificationException": {
       "base": "<p>Two processes are trying to modify a resource simultaneously.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Condition": {
       "base": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>",
       "refs": {
+        "BatchPermissionsRequestEntry$Condition": null,
+        "CreateLakeFormationOptInRequest$Condition": null,
+        "DeleteLakeFormationOptInRequest$Condition": null,
+        "GrantPermissionsRequest$Condition": null,
         "LakeFormationOptInsInfo$Condition": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>",
-        "PrincipalResourcePermissions$Condition": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>"
+        "PrincipalResourcePermissions$Condition": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>",
+        "RevokePermissionsRequest$Condition": null
       }
     },
     "ContextKey": {
@@ -348,53 +344,43 @@
     },
     "CreateDataCellsFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDataCellsFilterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLFTagExpressionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLFTagExpressionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLFTagRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLFTagResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLakeFormationIdentityCenterConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLakeFormationIdentityCenterConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLakeFormationOptInRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLakeFormationOptInResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CredentialTimeoutDurationSecondInteger": {
       "base": null,
@@ -498,53 +484,43 @@
     },
     "DeleteDataCellsFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDataCellsFilterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLFTagExpressionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLFTagExpressionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLFTagRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLFTagResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLakeFormationIdentityCenterConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLakeFormationIdentityCenterConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLakeFormationOptInRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLakeFormationOptInResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteObjectInput": {
       "base": "<p>An object to delete from the governed table.</p>",
@@ -554,53 +530,43 @@
     },
     "DeleteObjectsOnCancelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteObjectsOnCancelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLakeFormationIdentityCenterConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLakeFormationIdentityCenterConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTransactionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTransactionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescriptionString": {
       "base": null,
@@ -635,8 +601,7 @@
     },
     "EntityNotFoundException": {
       "base": "<p>A specified entity does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ErrorDetail": {
       "base": "<p>Contains details about an error.</p>",
@@ -667,8 +632,7 @@
     },
     "ExpiredException": {
       "base": "<p>Contains details about an error where the query request expired.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Expression": {
       "base": null,
@@ -690,13 +654,11 @@
     },
     "ExtendTransactionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExtendTransactionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExternalFilteringConfiguration": {
       "base": "<p>Configuration for enabling external data filtering for third-party applications to access data managed by Lake Formation .</p>",
@@ -726,68 +688,55 @@
     },
     "GetDataCellsFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataCellsFilterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataLakePrincipalRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataLakePrincipalResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataLakeSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataLakeSettingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEffectivePermissionsForPathRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEffectivePermissionsForPathResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLFTagExpressionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLFTagExpressionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLFTagRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLFTagResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueryStateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueryStateRequestQueryIdString": {
       "base": null,
@@ -797,13 +746,11 @@
     },
     "GetQueryStateResponse": {
       "base": "<p>A structure for the output.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueryStatisticsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueryStatisticsRequestQueryIdString": {
       "base": null,
@@ -813,53 +760,43 @@
     },
     "GetQueryStatisticsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourceLFTagsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourceLFTagsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTableObjectsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTableObjectsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTemporaryGluePartitionCredentialsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTemporaryGluePartitionCredentialsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTemporaryGlueTableCredentialsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTemporaryGlueTableCredentialsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkUnitResultsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkUnitResultsRequestQueryIdString": {
       "base": null,
@@ -875,13 +812,11 @@
     },
     "GetWorkUnitResultsResponse": {
       "base": "<p>A structure for the output.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkUnitsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkUnitsRequestQueryIdString": {
       "base": null,
@@ -891,23 +826,19 @@
     },
     "GetWorkUnitsResponse": {
       "base": "<p>A structure for the output.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GlueEncryptionException": {
       "base": "<p>An encryption operation failed.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GrantPermissionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GrantPermissionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HashString": {
       "base": null,
@@ -958,13 +889,11 @@
     },
     "InternalServiceException": {
       "base": "<p>An internal service error occurred.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidInputException": {
       "base": "<p>The input provided was not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KeyString": {
       "base": null,
@@ -1082,83 +1011,67 @@
     },
     "ListDataCellsFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataCellsFilterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLFTagExpressionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLFTagExpressionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLFTagsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLFTagsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLakeFormationOptInsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLakeFormationOptInsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPermissionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPermissionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTableStorageOptimizersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTableStorageOptimizersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTransactionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTransactionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MessageString": {
       "base": null,
@@ -1243,6 +1156,7 @@
         "RegisterResourceRequest$HybridAccessEnabled": "<p> Specifies whether the data access of tables pointing to the location can be managed by both Lake Formation permissions as well as Amazon S3 bucket policies. </p>",
         "ResourceInfo$WithFederation": "<p>Whether or not the resource is a federated resource.</p>",
         "ResourceInfo$HybridAccessEnabled": "<p> Indicates whether the data access of tables pointing to the location can be managed by both Lake Formation permissions as well as Amazon S3 bucket policies. </p>",
+        "ResourceInfo$WithPrivilegedAccess": "<p>Grants the calling principal the permissions to perform all supported Lake Formation operations on the registered data location. </p>",
         "UpdateResourceRequest$WithFederation": "<p>Whether or not the resource is a federated resource.</p>",
         "UpdateResourceRequest$HybridAccessEnabled": "<p> Specifies whether the data access of tables pointing to the location can be managed by both Lake Formation permissions as well as Amazon S3 bucket policies. </p>"
       }
@@ -1284,8 +1198,7 @@
     },
     "OperationTimeoutException": {
       "base": "<p>The operation timed out.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OptimizerType": {
       "base": null,
@@ -1404,8 +1317,7 @@
     },
     "PermissionTypeMismatchException": {
       "base": "<p>The engine does not support filtering data based on the enforced permissions. For example, if you call the <code>GetTemporaryGlueTableCredentials</code> operation with <code>SupportedPermissionType</code> equal to <code>ColumnPermission</code>, but cell-level permissions exist on the table, this exception is thrown.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PlanningStatistics": {
       "base": "<p>Statistics related to the processing of a query statement.</p>",
@@ -1448,13 +1360,11 @@
     },
     "PutDataLakeSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutDataLakeSettingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryIdString": {
       "base": null,
@@ -1502,23 +1412,19 @@
     },
     "RegisterResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveLFTagsFromResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveLFTagsFromResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Resource": {
       "base": "<p>A structure for the resource.</p>",
@@ -1566,13 +1472,11 @@
     },
     "ResourceNotReadyException": {
       "base": "<p>Contains details about an error related to a resource which is not ready for a transaction.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNumberLimitExceededException": {
       "base": "<p>A resource numerical limit was exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceShareList": {
       "base": null,
@@ -1606,13 +1510,11 @@
     },
     "RevokePermissionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RevokePermissionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RowFilter": {
       "base": "<p>A PartiQL predicate.</p>",
@@ -1640,13 +1542,11 @@
     },
     "SearchDatabasesByLFTagsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchDatabasesByLFTagsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchPageSize": {
       "base": null,
@@ -1657,13 +1557,11 @@
     },
     "SearchTablesByLFTagsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchTablesByLFTagsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SecretAccessKeyString": {
       "base": null,
@@ -1683,28 +1581,23 @@
     },
     "StartQueryPlanningRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartQueryPlanningResponse": {
       "base": "<p>A structure for the output.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTransactionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTransactionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StatisticsNotReadyYetException": {
       "base": "<p>Contains details about an error related to statistics not being ready.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StorageOptimizer": {
       "base": "<p>A structure describing the configuration and details of a storage optimizer.</p>",
@@ -1838,8 +1731,7 @@
     },
     "ThrottledException": {
       "base": "<p>Contains details about an error where the query request was throttled.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -1889,18 +1781,15 @@
     },
     "TransactionCanceledException": {
       "base": "<p>Contains details about an error related to a transaction that was cancelled.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TransactionCommitInProgressException": {
       "base": "<p>Contains details about an error related to a transaction commit that was in progress.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TransactionCommittedException": {
       "base": "<p>Contains details about an error where the specified transaction has already been committed and cannot be used for <code>UpdateTableObjects</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TransactionDescription": {
       "base": "<p>A structure that contains information about a transaction.</p>",
@@ -1972,73 +1861,59 @@
     },
     "UpdateDataCellsFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDataCellsFilterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLFTagExpressionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLFTagExpressionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLFTagRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLFTagResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLakeFormationIdentityCenterConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLakeFormationIdentityCenterConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTableObjectsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTableObjectsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTableStorageOptimizerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTableStorageOptimizerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValueString": {
       "base": null,
@@ -2097,8 +1972,7 @@
     },
     "WorkUnitsNotReadyYetException": {
       "base": "<p>Contains details about an error related to work units not being ready.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WriteOperation": {
       "base": "<p>Defines an object to add to or delete from a governed table.</p>",

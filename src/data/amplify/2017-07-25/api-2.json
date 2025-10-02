@@ -625,6 +625,7 @@
         "platform":{"shape":"Platform"},
         "createTime":{"shape":"CreateTime"},
         "updateTime":{"shape":"UpdateTime"},
+        "computeRoleArn":{"shape":"ComputeRoleArn"},
         "iamServiceRoleArn":{"shape":"ServiceRoleArn"},
         "environmentVariables":{"shape":"EnvironmentVariables"},
         "defaultDomain":{"shape":"DefaultDomain"},
@@ -642,7 +643,8 @@
         "repositoryCloneMethod":{"shape":"RepositoryCloneMethod"},
         "cacheConfig":{"shape":"CacheConfig"},
         "webhookCreateTime":{"shape":"webhookCreateTime"},
-        "wafConfiguration":{"shape":"WafConfiguration"}
+        "wafConfiguration":{"shape":"WafConfiguration"},
+        "jobConfig":{"shape":"JobConfig"}
       }
     },
     "AppArn":{
@@ -820,6 +822,7 @@
         "updateTime":{"shape":"UpdateTime"},
         "environmentVariables":{"shape":"EnvironmentVariables"},
         "enableAutoBuild":{"shape":"EnableAutoBuild"},
+        "enableSkewProtection":{"shape":"EnableSkewProtection"},
         "customDomains":{"shape":"CustomDomains"},
         "framework":{"shape":"Framework"},
         "activeJobId":{"shape":"ActiveJobId"},
@@ -836,7 +839,8 @@
         "destinationBranch":{"shape":"BranchName"},
         "sourceBranch":{"shape":"BranchName"},
         "backendEnvironmentArn":{"shape":"BackendEnvironmentArn"},
-        "backend":{"shape":"Backend"}
+        "backend":{"shape":"Backend"},
+        "computeRoleArn":{"shape":"ComputeRoleArn"}
       }
     },
     "BranchArn":{
@@ -854,6 +858,14 @@
       "type":"list",
       "member":{"shape":"Branch"},
       "max":255
+    },
+    "BuildComputeType":{
+      "type":"string",
+      "enum":[
+        "STANDARD_8GB",
+        "LARGE_16GB",
+        "XLARGE_72GB"
+      ]
     },
     "BuildSpec":{
       "type":"string",
@@ -922,6 +934,12 @@
       "pattern":"(?s).*"
     },
     "CommitTime":{"type":"timestamp"},
+    "ComputeRoleArn":{
+      "type":"string",
+      "max":1000,
+      "min":0,
+      "pattern":"(?s).*"
+    },
     "Condition":{
       "type":"string",
       "max":2048,
@@ -937,6 +955,7 @@
         "description":{"shape":"Description"},
         "repository":{"shape":"Repository"},
         "platform":{"shape":"Platform"},
+        "computeRoleArn":{"shape":"ComputeRoleArn"},
         "iamServiceRoleArn":{"shape":"ServiceRoleArn"},
         "oauthToken":{"shape":"OauthToken"},
         "accessToken":{"shape":"AccessToken"},
@@ -952,6 +971,7 @@
         "enableAutoBranchCreation":{"shape":"EnableAutoBranchCreation"},
         "autoBranchCreationPatterns":{"shape":"AutoBranchCreationPatterns"},
         "autoBranchCreationConfig":{"shape":"AutoBranchCreationConfig"},
+        "jobConfig":{"shape":"JobConfig"},
         "cacheConfig":{"shape":"CacheConfig"}
       }
     },
@@ -1004,6 +1024,7 @@
         "framework":{"shape":"Framework"},
         "enableNotification":{"shape":"EnableNotification"},
         "enableAutoBuild":{"shape":"EnableAutoBuild"},
+        "enableSkewProtection":{"shape":"EnableSkewProtection"},
         "environmentVariables":{"shape":"EnvironmentVariables"},
         "basicAuthCredentials":{"shape":"BasicAuthCredentials"},
         "enableBasicAuth":{"shape":"EnableBasicAuth"},
@@ -1015,7 +1036,8 @@
         "enablePullRequestPreview":{"shape":"EnablePullRequestPreview"},
         "pullRequestEnvironmentName":{"shape":"PullRequestEnvironmentName"},
         "backendEnvironmentArn":{"shape":"BackendEnvironmentArn"},
-        "backend":{"shape":"Backend"}
+        "backend":{"shape":"Backend"},
+        "computeRoleArn":{"shape":"ComputeRoleArn"}
       }
     },
     "CreateBranchResult":{
@@ -1387,6 +1409,7 @@
     "EnableNotification":{"type":"boolean"},
     "EnablePerformanceMode":{"type":"boolean"},
     "EnablePullRequestPreview":{"type":"boolean"},
+    "EnableSkewProtection":{"type":"boolean"},
     "EndTime":{"type":"timestamp"},
     "EnvKey":{
       "type":"string",
@@ -1647,6 +1670,13 @@
     "JobArn":{
       "type":"string",
       "max":1000
+    },
+    "JobConfig":{
+      "type":"structure",
+      "required":["buildComputeType"],
+      "members":{
+        "buildComputeType":{"shape":"BuildComputeType"}
+      }
     },
     "JobId":{
       "type":"string",
@@ -2321,8 +2351,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2385,8 +2414,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAppRequest":{
       "type":"structure",
@@ -2400,6 +2428,7 @@
         "name":{"shape":"Name"},
         "description":{"shape":"Description"},
         "platform":{"shape":"Platform"},
+        "computeRoleArn":{"shape":"ComputeRoleArn"},
         "iamServiceRoleArn":{"shape":"ServiceRoleArn"},
         "environmentVariables":{"shape":"EnvironmentVariables"},
         "enableBranchAutoBuild":{"shape":"EnableAutoBuild"},
@@ -2415,6 +2444,7 @@
         "repository":{"shape":"Repository"},
         "oauthToken":{"shape":"OauthToken"},
         "accessToken":{"shape":"AccessToken"},
+        "jobConfig":{"shape":"JobConfig"},
         "cacheConfig":{"shape":"CacheConfig"}
       }
     },
@@ -2447,6 +2477,7 @@
         "stage":{"shape":"Stage"},
         "enableNotification":{"shape":"EnableNotification"},
         "enableAutoBuild":{"shape":"EnableAutoBuild"},
+        "enableSkewProtection":{"shape":"EnableSkewProtection"},
         "environmentVariables":{"shape":"EnvironmentVariables"},
         "basicAuthCredentials":{"shape":"BasicAuthCredentials"},
         "enableBasicAuth":{"shape":"EnableBasicAuth"},
@@ -2457,7 +2488,8 @@
         "enablePullRequestPreview":{"shape":"EnablePullRequestPreview"},
         "pullRequestEnvironmentName":{"shape":"PullRequestEnvironmentName"},
         "backendEnvironmentArn":{"shape":"BackendEnvironmentArn"},
-        "backend":{"shape":"Backend"}
+        "backend":{"shape":"Backend"},
+        "computeRoleArn":{"shape":"ComputeRoleArn"}
       }
     },
     "UpdateBranchResult":{
@@ -2575,6 +2607,7 @@
         "webhookArn":{"shape":"WebhookArn"},
         "webhookId":{"shape":"WebhookId"},
         "webhookUrl":{"shape":"WebhookUrl"},
+        "appId":{"shape":"AppId"},
         "branchName":{"shape":"BranchName"},
         "description":{"shape":"Description"},
         "createTime":{"shape":"CreateTime"},

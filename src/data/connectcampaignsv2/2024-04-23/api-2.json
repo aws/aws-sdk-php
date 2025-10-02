@@ -219,6 +219,22 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "GetInstanceCommunicationLimits":{
+      "name":"GetInstanceCommunicationLimits",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/connect-instance/{connectInstanceId}/communication-limits",
+        "responseCode":200
+      },
+      "input":{"shape":"GetInstanceCommunicationLimitsRequest"},
+      "output":{"shape":"GetInstanceCommunicationLimitsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "GetInstanceOnboardingJobStatus":{
       "name":"GetInstanceOnboardingJobStatus",
       "http":{
@@ -317,6 +333,23 @@
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "PutInstanceCommunicationLimits":{
+      "name":"PutInstanceCommunicationLimits",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v2/connect-instance/{connectInstanceId}/communication-limits",
+        "responseCode":200
+      },
+      "input":{"shape":"PutInstanceCommunicationLimitsRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"}
       ],
       "idempotent":true
     },
@@ -828,7 +861,8 @@
     "CommunicationLimitsConfig":{
       "type":"structure",
       "members":{
-        "allChannelSubtypes":{"shape":"CommunicationLimits"}
+        "allChannelSubtypes":{"shape":"CommunicationLimits"},
+        "instanceLimitsHandling":{"shape":"InstanceLimitsHandling"}
       }
     },
     "CommunicationLimitsConfigType":{
@@ -1290,6 +1324,23 @@
         "connectInstanceConfig":{"shape":"InstanceConfig"}
       }
     },
+    "GetInstanceCommunicationLimitsRequest":{
+      "type":"structure",
+      "required":["connectInstanceId"],
+      "members":{
+        "connectInstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"connectInstanceId"
+        }
+      }
+    },
+    "GetInstanceCommunicationLimitsResponse":{
+      "type":"structure",
+      "members":{
+        "communicationLimitsConfig":{"shape":"InstanceCommunicationLimitsConfig"}
+      }
+    },
     "GetInstanceOnboardingJobStatusRequest":{
       "type":"structure",
       "required":["connectInstanceId"],
@@ -1305,6 +1356,12 @@
       "type":"structure",
       "members":{
         "connectInstanceOnboardingJobStatus":{"shape":"InstanceOnboardingJobStatus"}
+      }
+    },
+    "InstanceCommunicationLimitsConfig":{
+      "type":"structure",
+      "members":{
+        "allChannelSubtypes":{"shape":"CommunicationLimits"}
       }
     },
     "InstanceConfig":{
@@ -1340,6 +1397,13 @@
     "InstanceIdFilterOperator":{
       "type":"string",
       "enum":["Eq"]
+    },
+    "InstanceLimitsHandling":{
+      "type":"string",
+      "enum":[
+        "OPT_IN",
+        "OPT_OUT"
+      ]
     },
     "InstanceOnboardingJobFailureCode":{
       "type":"string",
@@ -1669,6 +1733,21 @@
           "locationName":"connectInstanceId"
         },
         "integrationConfig":{"shape":"IntegrationConfig"}
+      }
+    },
+    "PutInstanceCommunicationLimitsRequest":{
+      "type":"structure",
+      "required":[
+        "connectInstanceId",
+        "communicationLimitsConfig"
+      ],
+      "members":{
+        "connectInstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"connectInstanceId"
+        },
+        "communicationLimitsConfig":{"shape":"InstanceCommunicationLimitsConfig"}
       }
     },
     "PutOutboundRequestBatchRequest":{

@@ -2,19 +2,18 @@
   "version": "2.0",
   "service": "<p> The Places API enables powerful location search and geocoding capabilities for your applications, offering global coverage with rich, detailed information. Key features include: </p> <ul> <li> <p>Forward and reverse geocoding for addresses and coordinates</p> </li> <li> <p>Comprehensive place searches with detailed information, including:</p> <ul> <li> <p>Business names and addresses</p> </li> <li> <p>Contact information</p> </li> <li> <p>Hours of operation</p> </li> <li> <p>POI (Points of Interest) categories</p> </li> <li> <p>Food types for restaurants</p> </li> <li> <p>Chain affiliation for relevant businesses</p> </li> </ul> </li> <li> <p>Global data coverage with a wide range of POI categories</p> </li> <li> <p>Regular data updates to ensure accuracy and relevance</p> </li> </ul>",
   "operations": {
-    "Autocomplete": "<p>The autocomplete operation speeds up and increases the accuracy of entering addresses by providing a list of address candidates matching a partially entered address. Results are sorted from most to least matching. Filtering and biasing can be used to increase the relevance of the results if additional search context is known</p>",
-    "Geocode": "<p>The <code>Geocode</code> action allows you to obtain coordinates, addresses, and other information about places.</p>",
-    "GetPlace": "<p>Finds a place by its unique ID. A <code>PlaceId</code> is returned by other place operations.</p>",
-    "ReverseGeocode": "<p> The <code>ReverseGeocode</code> operation allows you to retrieve addresses and place information from coordinates.</p>",
-    "SearchNearby": "<p>Search nearby a specified location.</p>",
-    "SearchText": "<p>Use the <code>SearchText</code> operation to search for geocode and place information. You can then complete a follow-up query suggested from the <code>Suggest</code> API via a query id.</p>",
-    "Suggest": "<p>The <code>Suggest</code> operation finds addresses or place candidates based on incomplete or misspelled queries. You then select the best query to submit based on the returned results.</p>"
+    "Autocomplete": "<p> <code>Autocomplete</code> completes potential places and addresses as the user types, based on the partial input. The API enhances the efficiency and accuracy of address by completing query based on a few entered keystrokes. It helps you by completing partial queries with valid address completion. Also, the API supports the filtering of results based on geographic location, country, or specific place types, and can be tailored using optional parameters like language and political views.</p>",
+    "Geocode": "<p> <code>Geocode</code> converts a textual address or place into geographic coordinates. You can obtain geographic coordinates, address component, and other related information. It supports flexible queries, including free-form text or structured queries with components like street names, postal codes, and regions. The Geocode API can also provide additional features such as time zone information and the inclusion of political views.</p>",
+    "GetPlace": "<p> <code>GetPlace</code> finds a place by its unique ID. A <code>PlaceId</code> is returned by other place operations.</p>",
+    "ReverseGeocode": "<p> <code>ReverseGeocode</code> converts geographic coordinates into a human-readable address or place. You can obtain address component, and other related information such as place type, category, street information. The Reverse Geocode API supports filtering to on place type so that you can refine result based on your need. Also, The Reverse Geocode API can also provide additional features such as time zone information and the inclusion of political views.</p>",
+    "SearchNearby": "<p> <code>SearchNearby</code> queries for points of interest within a radius from a central coordinates, returning place results with optional filters such as categories, business chains, food types and more. The API returns details such as a place name, address, phone, category, food type, contact, opening hours. Also, the API can return phonemes, time zones and more based on requested parameters.</p>",
+    "SearchText": "<p> <code>SearchText</code> searches for geocode and place information. You can then complete a follow-up query suggested from the <code>Suggest</code> API via a query id.</p>",
+    "Suggest": "<p> <code>Suggest</code> provides intelligent predictions or recommendations based on the user's input or context, such as relevant places, points of interest, query terms or search category. It is designed to help users find places or point of interests candidates or identify a follow on query based on incomplete or misspelled queries. It returns a list of possible matches or refinements that can be used to formulate a more accurate query. Users can select the most appropriate suggestion and use it for further searching. The API provides options for filtering results by location and other attributes, and allows for additional features like phonemes and timezones. The response includes refined query terms and detailed place information.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You don't have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessPoint": {
       "base": "<p>Position of the access point represented by longitude and latitude for a vehicle.</p>",
@@ -25,9 +24,11 @@
     "AccessPointList": {
       "base": null,
       "refs": {
-        "GeocodeResultItem$AccessPoints": "<p>Position of the access point represent by longitude and latitude.</p>",
+        "GeocodeResultItem$AccessPoints": "<p>Position of the access point represented by longitude and latitude.</p>",
         "GetPlaceResponse$AccessPoints": "<p>Position of the access point in <code>(lng,lat)</code>.</p>",
-        "ReverseGeocodeResultItem$AccessPoints": "<p>Position of the access point represent by longitude and latitude.</p>",
+        "Intersection$AccessPoints": "<p>Position of the access point represented by longitude and latitude.</p>",
+        "RelatedPlace$AccessPoints": "<p>Position of the access point represented by longitude and latitude.</p>",
+        "ReverseGeocodeResultItem$AccessPoints": "<p>Position of the access point represented by longitude and latitude.</p>",
         "SearchNearbyResultItem$AccessPoints": "<p>Position of the access point represent by longitude and latitude.</p>",
         "SearchTextResultItem$AccessPoints": "<p>Position of the access point represent by longitude and latitude.</p>",
         "SuggestPlaceResult$AccessPoints": "<p>Position of the access point represent by longitude and latitude.</p>"
@@ -54,6 +55,8 @@
         "AutocompleteResultItem$Address": "<p>The address associated with this result.</p>",
         "GeocodeResultItem$Address": "<p>The place's address.</p>",
         "GetPlaceResponse$Address": "<p>The place's address.</p>",
+        "Intersection$Address": null,
+        "RelatedPlace$Address": null,
         "ReverseGeocodeResultItem$Address": "<p>The place's address.</p>",
         "SearchNearbyResultItem$Address": "<p>The place's address.</p>",
         "SearchTextResultItem$Address": "<p>The place's address.</p>",
@@ -111,13 +114,13 @@
     "AddressLocalityString": {
       "base": null,
       "refs": {
-        "Address$Locality": "<p>The locality or city of the address.</p> <p>Example: <code>Vancouver</code>.</p>"
+        "Address$Locality": "<p>The city or locality of the address.</p> <p>Example: <code>Vancouver</code>.</p>"
       }
     },
     "AddressPostalCodeString": {
       "base": null,
       "refs": {
-        "Address$PostalCode": "<p>An alphanumeric string included in a postal address to facilitate mail sorting, such as post code, postcode, or ZIP code, for which the result should posses. </p>"
+        "Address$PostalCode": "<p>An alphanumeric string included in a postal address to facilitate mail sorting, such as post code, postcode, or ZIP code, for which the result should possess. </p>"
       }
     },
     "AddressStreetString": {
@@ -169,9 +172,9 @@
       }
     },
     "AutocompleteFilter": {
-      "base": "<p>Autocomplete structure which contains a set of inclusion/exclusion properties that results must posses in order to be returned as a result.</p>",
+      "base": "<p>Autocomplete structure which contains a set of inclusion/exclusion properties that results must possess in order to be returned as a result.</p>",
       "refs": {
-        "AutocompleteRequest$Filter": "<p>A structure which contains a set of inclusion/exclusion properties that results must posses in order to be returned as a result.</p>"
+        "AutocompleteRequest$Filter": "<p>A structure which contains a set of inclusion/exclusion properties that results must possess in order to be returned as a result.</p>"
       }
     },
     "AutocompleteFilterPlaceType": {
@@ -200,8 +203,7 @@
     },
     "AutocompleteRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AutocompleteRequestMaxResultsInteger": {
       "base": null,
@@ -212,13 +214,12 @@
     "AutocompleteRequestQueryTextString": {
       "base": null,
       "refs": {
-        "AutocompleteRequest$QueryText": "<p>The free-form text query to match addresses against. This is usually a partially typed address from an end user in an address box or form.</p>"
+        "AutocompleteRequest$QueryText": "<p>The free-form text query to match addresses against. This is usually a partially typed address from an end user in an address box or form.</p> <note> <p>The fields <code>QueryText</code>, and <code>QueryID</code> are mutually exclusive.</p> </note>"
       }
     },
     "AutocompleteResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AutocompleteResultItem": {
       "base": "<p>A result matching the input query text.</p>",
@@ -244,27 +245,13 @@
         "AutocompleteResultItem$Title": "<p>A formatted string for display when presenting this result to an end user.</p>"
       }
     },
-    "Boolean": {
-      "base": null,
-      "refs": {
-        "AccessRestriction$Restricted": "<p>The restriction.</p>",
-        "Category$Primary": "<p>Boolean which indicates if this category is the primary offered by the place.</p>",
-        "FoodType$Primary": "<p>Boolean which indicates if this food type is the primary offered by the place. For example, if a location serves fast food, but also dessert, he primary would likely be fast food.</p>",
-        "GeocodeResultItem$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>",
-        "GetPlaceResponse$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>",
-        "OpeningHours$OpenNow": "<p>Boolean which indicates if the result/place is currently open. </p>",
-        "PhonemeTranscription$Preferred": "<p>Boolean which indicates if it the preferred pronunciation.</p>",
-        "ReverseGeocodeResultItem$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>",
-        "SearchNearbyResultItem$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>",
-        "SearchTextResultItem$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>"
-      }
-    },
     "BoundingBox": {
       "base": null,
       "refs": {
         "AutocompleteFilter$BoundingBox": "<p>The bounding box enclosing the geometric shape (area or line) that an individual result covers.</p> <p>The bounding box formed is defined as a set 4 coordinates: <code>[{westward lng}, {southern lat}, {eastward lng}, {northern lat}]</code> </p>",
         "GeocodeResultItem$MapView": "<p>The bounding box enclosing the geometric shape (area or line) that an individual result covers.</p> <p>The bounding box formed is defined as a set 4 coordinates: <code>[{westward lng}, {southern lat}, {eastward lng}, {northern lat}]</code> </p>",
         "GetPlaceResponse$MapView": "<p>The bounding box enclosing the geometric shape (area or line) that an individual result covers.</p> <p>The bounding box formed is defined as a set of four coordinates: <code>[{westward lng}, {southern lat}, {eastward lng}, {northern lat}]</code> </p>",
+        "Intersection$MapView": "<p>The bounding box enclosing the geometric shape (area or line) that an individual result covers.</p> <p>The bounding box formed is defined as a set of four coordinates: <code>[{westward lng}, {southern lat}, {eastward lng}, {northern lat}]</code> </p>",
         "ReverseGeocodeResultItem$MapView": "<p>The bounding box enclosing the geometric shape (area or line) that an individual result covers.</p> <p>The bounding box formed is defined as a set 4 coordinates: <code>[{westward lng}, {southern lat}, {eastward lng}, {northern lat}]</code> </p>",
         "SearchNearbyFilter$BoundingBox": "<p>The bounding box enclosing the geometric shape (area or line) that an individual result covers.</p> <p>The bounding box formed is defined as a set 4 coordinates: <code>[{westward lng}, {southern lat}, {eastward lng}, {northern lat}]</code> </p>",
         "SearchNearbyResultItem$MapView": "<p>The bounding box enclosing the geometric shape (area or line) that an individual result covers.</p> <p>The bounding box formed is defined as a set 4 coordinates: <code>[{westward lng}, {southern lat}, {eastward lng}, {northern lat}]</code> </p>",
@@ -340,7 +327,7 @@
       }
     },
     "ComponentMatchScores": {
-      "base": "<p>Indicates how well the input matches the returned element. It is equal to 1 if all input tokens are recognized and matched to the title in the result.</p>",
+      "base": "<p>Indicates how well the returned title and address components matches the input TextQuery. For each component a score is provied with 1 indicating all tokens were matched and 0 indicating no tokens were matched.</p>",
       "refs": {
         "MatchScoreDetails$Components": "<p>Indicates how well the component input matches the returned. It is equal to 1 if all input tokens are recognized and matched.</p>"
       }
@@ -389,7 +376,7 @@
     "CountryCode": {
       "base": null,
       "refs": {
-        "AutocompleteRequest$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p>",
+        "AutocompleteRequest$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p> <p>The following political views are currently supported:</p> <ul> <li> <p> <code>ARG</code>: Argentina's view on the Southern Patagonian Ice Field and Tierra Del Fuego, including the Falkland Islands, South Georgia, and South Sandwich Islands</p> </li> <li> <p> <code>EGY</code>: Egypt's view on Bir Tawil</p> </li> <li> <p> <code>IND</code>: India's view on Gilgit-Baltistan</p> </li> <li> <p> <code>KEN</code>: Kenya's view on the Ilemi Triangle</p> </li> <li> <p> <code>MAR</code>: Morocco's view on Western Sahara</p> </li> <li> <p> <code>RUS</code>: Russia's view on Crimea</p> </li> <li> <p> <code>SDN</code>: Sudan's view on the Halaib Triangle</p> </li> <li> <p> <code>SRB</code>: Serbia's view on Kosovo, Vukovar, and Sarengrad Islands</p> </li> <li> <p> <code>SUR</code>: Suriname's view on the Courantyne Headwaters and Lawa Headwaters</p> </li> <li> <p> <code>SYR</code>: Syria's view on the Golan Heights</p> </li> <li> <p> <code>TUR</code>: Turkey's view on Cyprus and Northern Cyprus</p> </li> <li> <p> <code>TZA</code>: Tanzania's view on Lake Malawi</p> </li> <li> <p> <code>URY</code>: Uruguay's view on Rincon de Artigas</p> </li> <li> <p> <code>VNM</code>: Vietnam's view on the Paracel Islands and Spratly Islands</p> </li> </ul>",
         "CountryCodeList$member": null,
         "GeocodeRequest$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p>",
         "GetPlaceRequest$PoliticalView": "<p>The alpha-2 or alpha-3 character code for the political view of a country. The political view applies to the results of the request to represent unresolved territorial claims through the point of view of the specified country.</p>",
@@ -445,6 +432,8 @@
       "refs": {
         "AutocompleteResultItem$Distance": "<p>The distance in meters between the center of the search area and this result. Useful to evaluate how far away from the original bias position the result is.</p>",
         "GeocodeResultItem$Distance": "<p>The distance in meters from the QueryPosition.</p>",
+        "Intersection$Distance": "<p>The distance in meters from the QueryPosition.</p>",
+        "Intersection$RouteDistance": "<p>The distance from the routing position of the nearby address to the street result.</p>",
         "ReverseGeocodeResultItem$Distance": "<p>The distance in meters from the QueryPosition.</p>",
         "SearchNearbyResultItem$Distance": "<p>The distance in meters from the QueryPosition.</p>",
         "SearchTextResultItem$Distance": "<p>The distance in meters from the QueryPosition.</p>",
@@ -553,9 +542,9 @@
       }
     },
     "GeocodeFilter": {
-      "base": "<p>Geocode structure which contains a set of inclusion/exclusion properties that results must posses in order to be returned as a result.</p>",
+      "base": "<p>Geocode structure which contains a set of inclusion/exclusion properties that results must possess in order to be returned as a result.</p>",
       "refs": {
-        "GeocodeRequest$Filter": "<p>A structure which contains a set of inclusion/exclusion properties that results must posses in order to be returned as a result.</p>"
+        "GeocodeRequest$Filter": "<p>A structure which contains a set of inclusion/exclusion properties that results must possess in order to be returned as a result.</p>"
       }
     },
     "GeocodeFilterPlaceType": {
@@ -573,7 +562,19 @@
     "GeocodeIntendedUse": {
       "base": null,
       "refs": {
-        "GeocodeRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p>"
+        "GeocodeRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p> <note> <p>Storing the response of an Geocode query is required to comply with service terms, but charged at a higher cost per request. Please review the <a href=\"https://aws.amazon.com/location/sla/\">user agreement</a> and <a href=\"https://aws.amazon.com/location/pricing/\">service pricing structure</a> to determine the correct setting for your use case.</p> </note>"
+      }
+    },
+    "GeocodeParsedQuery": {
+      "base": "<p>Parsed components in the provided QueryText.</p>",
+      "refs": {
+        "GeocodeResultItem$ParsedQuery": "<p>Free-form text query.</p>"
+      }
+    },
+    "GeocodeParsedQueryAddressComponents": {
+      "base": "<p>Parsed address components in the provided QueryText.</p>",
+      "refs": {
+        "GeocodeParsedQuery$Address": "<p>The place address.</p>"
       }
     },
     "GeocodeQueryComponents": {
@@ -603,13 +604,13 @@
     "GeocodeQueryComponentsLocalityString": {
       "base": null,
       "refs": {
-        "GeocodeQueryComponents$Locality": "<p>City or locality results should be present in. </p> <p>Example: <code>Vancouver</code>.</p>"
+        "GeocodeQueryComponents$Locality": "<p>The city or locality results should be present in. </p> <p>Example: <code>Vancouver</code>.</p>"
       }
     },
     "GeocodeQueryComponentsPostalCodeString": {
       "base": null,
       "refs": {
-        "GeocodeQueryComponents$PostalCode": "<p>An alphanumeric string included in a postal address to facilitate mail sorting, such as post code, postcode, or ZIP code for which the result should posses. </p>"
+        "GeocodeQueryComponents$PostalCode": "<p>An alphanumeric string included in a postal address to facilitate mail sorting, such as post code, postcode, or ZIP code for which the result should possess. </p>"
       }
     },
     "GeocodeQueryComponentsRegionString": {
@@ -632,8 +633,7 @@
     },
     "GeocodeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GeocodeRequestMaxResultsInteger": {
       "base": null,
@@ -644,13 +644,12 @@
     "GeocodeRequestQueryTextString": {
       "base": null,
       "refs": {
-        "GeocodeRequest$QueryText": "<p>The free-form text query to match addresses against. This is usually a partially typed address from an end user in an address box or form.</p>"
+        "GeocodeRequest$QueryText": "<p>The free-form text query to match addresses against. This is usually a partially typed address from an end user in an address box or form.</p> <note> <p>The fields <code>QueryText</code>, and <code>QueryID</code> are mutually exclusive.</p> </note>"
       }
     },
     "GeocodeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GeocodeResultItem": {
       "base": "<p>The Geocoded result.</p>",
@@ -667,7 +666,7 @@
     "GeocodeResultItemPlaceIdString": {
       "base": null,
       "refs": {
-        "GeocodeResultItem$PlaceId": "<p>The <code>PlaceId</code> of the place you wish to receive the information for.</p>"
+        "GeocodeResultItem$PlaceId": "<p>The <code>PlaceId</code> of the place result.</p>"
       }
     },
     "GeocodeResultItemTitleString": {
@@ -691,13 +690,12 @@
     "GetPlaceIntendedUse": {
       "base": null,
       "refs": {
-        "GetPlaceRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p>"
+        "GetPlaceRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p> <note> <p>Storing the response of an GetPlace query is required to comply with service terms, but charged at a higher cost per request. Please review the <a href=\"https://aws.amazon.com/location/sla/\">user agreement</a> and <a href=\"https://aws.amazon.com/location/pricing/\">service pricing structure</a> to determine the correct setting for your use case.</p> </note>"
       }
     },
     "GetPlaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPlaceRequestPlaceIdString": {
       "base": null,
@@ -707,8 +705,7 @@
     },
     "GetPlaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPlaceResponsePlaceIdString": {
       "base": null,
@@ -719,11 +716,11 @@
     "GetPlaceResponseTitleString": {
       "base": null,
       "refs": {
-        "GetPlaceResponse$Title": "<p>The localized display name of this result item based on request parameter <code>language</code>. </p>"
+        "GetPlaceResponse$Title": "<p>The localized display name of this result item based on request parameter <code>language</code>.</p>"
       }
     },
     "Highlight": {
-      "base": "<p>Describes how parts of the result response match the input query.</p>",
+      "base": "<p>Indicates the starting and ending index of the text query that match the found title.</p>",
       "refs": {
         "HighlightList$member": null
       }
@@ -742,9 +739,9 @@
         "AutocompleteAddressHighlights$District": "<p>The district or division of a city the results should be present in.</p>",
         "AutocompleteAddressHighlights$SubDistrict": "<p>Indicates the starting and ending index of the title in the text query that match the found title. </p>",
         "AutocompleteAddressHighlights$Street": "<p>The name of the street results should be present in.</p>",
-        "AutocompleteAddressHighlights$Block": "<p>Name of the block. Example: Sunny Mansion 203 block: 2 Chome</p>",
-        "AutocompleteAddressHighlights$SubBlock": "<p>Name of sub-block. Example Sunny Mansion 203 sub-block: 4</p>",
-        "AutocompleteAddressHighlights$PostalCode": "<p>An alphanumeric string included in a postal address to facilitate mail sorting, such as post code, postcode, or ZIP code for which the result should posses. </p>",
+        "AutocompleteAddressHighlights$Block": "<p>Name of the block. </p> <p>Example: <code>Sunny Mansion 203 block: 2 Chome</code> </p>",
+        "AutocompleteAddressHighlights$SubBlock": "<p>Name of sub-block. </p> <p>Example: <code>Sunny Mansion 203 sub-block: 4</code> </p>",
+        "AutocompleteAddressHighlights$PostalCode": "<p>An alphanumeric string included in a postal address to facilitate mail sorting, such as post code, postcode, or ZIP code for which the result should possess. </p>",
         "AutocompleteAddressHighlights$AddressNumber": "<p>The house number or address results should have. </p>",
         "AutocompleteAddressHighlights$Building": "<p>The name of the building at the address.</p>",
         "AutocompleteHighlights$Title": "<p>Indicates where the title field in the result matches the input query.</p>",
@@ -773,7 +770,12 @@
     },
     "InternalServerException": {
       "base": "<p>The request processing has failed because of an unknown error, exception or failure.</p>",
+      "refs": {}
+    },
+    "Intersection": {
+      "base": "<p>All Intersections that are near the provided address.</p>",
       "refs": {
+        "IntersectionList$member": null
       }
     },
     "IntersectionHighlightsList": {
@@ -785,13 +787,32 @@
     "IntersectionList": {
       "base": null,
       "refs": {
-        "Address$Intersection": "<p>Name of the streets in the intersection. </p> <p>Example: <code>[\"Friedrichstraße\",\"Unter den Linden\"]</code> </p>"
+        "GeocodeResultItem$Intersections": "<p>All Intersections that are near the provided address.</p>",
+        "ReverseGeocodeResultItem$Intersections": "<p>All Intersections that are near the provided address.</p>"
+      }
+    },
+    "IntersectionPlaceIdString": {
+      "base": null,
+      "refs": {
+        "Intersection$PlaceId": "<p>The <code>PlaceId</code> of the place result.</p>"
       }
     },
     "IntersectionStreet": {
       "base": null,
       "refs": {
-        "IntersectionList$member": null
+        "IntersectionStreetList$member": null
+      }
+    },
+    "IntersectionStreetList": {
+      "base": null,
+      "refs": {
+        "Address$Intersection": "<p>Name of the streets in the intersection. </p> <p>Example: <code>[\"Friedrichstraße\",\"Unter den Linden\"]</code> </p>"
+      }
+    },
+    "IntersectionTitleString": {
+      "base": null,
+      "refs": {
+        "Intersection$Title": "<p>The localized display name of this result item based on request parameter <code>language</code>.</p>"
       }
     },
     "LanguageTag": {
@@ -818,14 +839,15 @@
         "AddressComponentMatchScores$Locality": "<p>The city or locality results should be present in. </p> <p>Example: <code>Vancouver</code>.</p>",
         "AddressComponentMatchScores$District": "<p>The district or division of a city the results should be present in.</p>",
         "AddressComponentMatchScores$SubDistrict": "<p>A subdivision of a district. </p> <p>Example: <code>Minden-Lübbecke</code> </p>",
-        "AddressComponentMatchScores$PostalCode": "<p>An alphanumeric string included in a postal address to facilitate mail sorting, such as post code, postcode, or ZIP code, for which the result should posses. </p>",
+        "AddressComponentMatchScores$PostalCode": "<p>An alphanumeric string included in a postal address to facilitate mail sorting, such as post code, postcode, or ZIP code, for which the result should possess. </p>",
         "AddressComponentMatchScores$Block": "<p>Name of the block. </p> <p>Example: <code>Sunny Mansion 203 block: 2 Chome</code> </p>",
         "AddressComponentMatchScores$SubBlock": "<p>Name of sub-block. </p> <p>Example: <code>Sunny Mansion 203 sub-block: 4</code> </p>",
         "AddressComponentMatchScores$AddressNumber": "<p>The house number or address results should have. </p>",
         "AddressComponentMatchScores$Building": "<p>The name of the building at the address.</p>",
         "AddressComponentMatchScoresIntersectionList$member": null,
-        "ComponentMatchScores$Title": "<p>Indicates the starting and ending index of the title in the text query that match the found title. </p>",
-        "MatchScoreDetails$Overall": "<p>Indicates how well the entire input matches the returned. It is equal to 1 if all input tokens are recognized and matched.</p>"
+        "ComponentMatchScores$Title": "<p>Indicates the match score of the title in the text query that match the found title. </p>",
+        "MatchScoreDetails$Overall": "<p>Indicates how well the entire input matches the returned. It is equal to 1 if all input tokens are recognized and matched.</p>",
+        "SecondaryAddressComponentMatchScore$Number": "<p>Match score for the secondary address number.</p>"
       }
     },
     "MatchScoreDetails": {
@@ -890,6 +912,96 @@
         "SearchTextResultItem$OpeningHours": "<p>List of opening hours objects.</p>"
       }
     },
+    "ParsedQueryComponent": {
+      "base": "<p>Parsed components in the provided QueryText.</p>",
+      "refs": {
+        "ParsedQueryComponentList$member": null
+      }
+    },
+    "ParsedQueryComponentEndIndexInteger": {
+      "base": null,
+      "refs": {
+        "ParsedQueryComponent$EndIndex": "<p>End index of the parsed query component.</p>"
+      }
+    },
+    "ParsedQueryComponentList": {
+      "base": null,
+      "refs": {
+        "GeocodeParsedQuery$Title": "<p>The localized display name of this result item based on request parameter <code>language</code>.</p>",
+        "GeocodeParsedQueryAddressComponents$Country": "<p>The alpha-2 or alpha-3 character code for the country that the results will be present in.</p>",
+        "GeocodeParsedQueryAddressComponents$Region": "<p>The region or state results should be present in. </p> <p>Example: <code>North Rhine-Westphalia</code>.</p>",
+        "GeocodeParsedQueryAddressComponents$SubRegion": "<p>The sub-region or county for which results should be present in. </p>",
+        "GeocodeParsedQueryAddressComponents$Locality": "<p>The city or locality of the address.</p> <p>Example: <code>Vancouver</code>.</p>",
+        "GeocodeParsedQueryAddressComponents$District": "<p>The district or division of a city the results should be present in.</p>",
+        "GeocodeParsedQueryAddressComponents$SubDistrict": "<p>A subdivision of a district. </p> <p>Example: <code>Minden-Lübbecke</code>.</p>",
+        "GeocodeParsedQueryAddressComponents$PostalCode": "<p>An alphanumeric string included in a postal address to facilitate mail sorting, such as post code, postcode, or ZIP code, for which the result should possess. </p>",
+        "GeocodeParsedQueryAddressComponents$Block": "<p>Name of the block. </p> <p>Example: <code>Sunny Mansion 203 block: 2 Chome</code> </p>",
+        "GeocodeParsedQueryAddressComponents$SubBlock": "<p>Name of sub-block. </p> <p>Example: <code>Sunny Mansion 203 sub-block: 4</code> </p>",
+        "GeocodeParsedQueryAddressComponents$Street": "<p>The name of the street results should be present in.</p>",
+        "GeocodeParsedQueryAddressComponents$AddressNumber": "<p>The number that identifies an address within a street.</p>",
+        "GeocodeParsedQueryAddressComponents$Building": "<p>The name of the building at the address.</p>"
+      }
+    },
+    "ParsedQueryComponentQueryComponentString": {
+      "base": null,
+      "refs": {
+        "ParsedQueryComponent$QueryComponent": "<p>The address component that the parsed query component corresponds to.</p>"
+      }
+    },
+    "ParsedQueryComponentStartIndexInteger": {
+      "base": null,
+      "refs": {
+        "ParsedQueryComponent$StartIndex": "<p>Start index of the parsed query component.</p>"
+      }
+    },
+    "ParsedQueryComponentValueString": {
+      "base": null,
+      "refs": {
+        "ParsedQueryComponent$Value": "<p>Value of the parsed query component.</p>"
+      }
+    },
+    "ParsedQuerySecondaryAddressComponent": {
+      "base": "<p>Information about a secondary address component parsed from the query text.</p>",
+      "refs": {
+        "ParsedQuerySecondaryAddressComponentList$member": null
+      }
+    },
+    "ParsedQuerySecondaryAddressComponentDesignatorString": {
+      "base": null,
+      "refs": {
+        "ParsedQuerySecondaryAddressComponent$Designator": "<p>Secondary address designator provided in the query.</p>"
+      }
+    },
+    "ParsedQuerySecondaryAddressComponentEndIndexInteger": {
+      "base": null,
+      "refs": {
+        "ParsedQuerySecondaryAddressComponent$EndIndex": "<p>End index of the parsed secondary address component in the query text.</p>"
+      }
+    },
+    "ParsedQuerySecondaryAddressComponentList": {
+      "base": null,
+      "refs": {
+        "GeocodeParsedQueryAddressComponents$SecondaryAddressComponents": "<p>Parsed secondary address components from the provided query text.</p>"
+      }
+    },
+    "ParsedQuerySecondaryAddressComponentNumberString": {
+      "base": null,
+      "refs": {
+        "ParsedQuerySecondaryAddressComponent$Number": "<p>Secondary address number provided in the query.</p>"
+      }
+    },
+    "ParsedQuerySecondaryAddressComponentStartIndexInteger": {
+      "base": null,
+      "refs": {
+        "ParsedQuerySecondaryAddressComponent$StartIndex": "<p>Start index of the parsed secondary address component in the query text.</p>"
+      }
+    },
+    "ParsedQuerySecondaryAddressComponentValueString": {
+      "base": null,
+      "refs": {
+        "ParsedQuerySecondaryAddressComponent$Value": "<p>Value of the parsed secondary address component.</p>"
+      }
+    },
     "PhonemeDetails": {
       "base": "<p>The phoneme details.</p>",
       "refs": {
@@ -932,6 +1044,7 @@
         "AutocompleteResultItem$PlaceType": "<p>PlaceType describes the type of result entry returned.</p>",
         "GeocodeResultItem$PlaceType": "<p>A <code>PlaceType</code> is a category that the result place must belong to.</p>",
         "GetPlaceResponse$PlaceType": "<p>A <code>PlaceType</code> is a category that the result place must belong to.</p>",
+        "RelatedPlace$PlaceType": "<p>A <code>PlaceType</code> is a category that the result place must belong to.</p>",
         "ReverseGeocodeResultItem$PlaceType": "<p>A <code>PlaceType</code> is a category that the result place must belong to.</p>",
         "SearchNearbyResultItem$PlaceType": "<p>A <code>PlaceType</code> is a category that the result place must belong to.</p>",
         "SearchTextResultItem$PlaceType": "<p>A <code>PlaceType</code> is a category that the result place must belong to.</p>",
@@ -947,9 +1060,11 @@
         "GeocodeRequest$BiasPosition": "<p>The position, in longitude and latitude, that the results should be close to. Typically, place results returned are ranked higher the closer they are to this position. Stored in <code>[lng, lat]</code> and in the WSG84 format.</p> <note> <p>The fields <code>BiasPosition</code>, <code>FilterBoundingBox</code>, and <code>FilterCircle</code> are mutually exclusive.</p> </note>",
         "GeocodeResultItem$Position": "<p>The position in longitude and latitude.</p>",
         "GetPlaceResponse$Position": "<p>The position, in longitude and latitude.</p>",
-        "ReverseGeocodeRequest$QueryPosition": "<p>The position, in <code>[lng, lat]</code> for which you are querying nearby resultsfor. Results closer to the position will be ranked higher then results further away from the position</p>",
+        "Intersection$Position": "<p>The position, in longitude and latitude.</p>",
+        "RelatedPlace$Position": "<p>The position, in longitude and latitude.</p>",
+        "ReverseGeocodeRequest$QueryPosition": "<p>The position, in <code>[lng, lat]</code> for which you are querying nearby results for. Results closer to the position will be ranked higher then results further away from the position</p>",
         "ReverseGeocodeResultItem$Position": "<p>The position in longitude and latitude.</p>",
-        "SearchNearbyRequest$QueryPosition": "<p>The position, in <code>[lng, lat]</code> for which you are querying nearby resultsfor. Results closer to the position will be ranked higher then results further away from the position</p>",
+        "SearchNearbyRequest$QueryPosition": "<p>The position, in <code>[lng, lat]</code> for which you are querying nearby results for. Results closer to the position will be ranked higher then results further away from the position</p>",
         "SearchNearbyResultItem$Position": "<p>The position in longitude and latitude.</p>",
         "SearchTextRequest$BiasPosition": "<p>The position, in longitude and latitude, that the results should be close to. Typically, place results returned are ranked higher the closer they are to this position. Stored in <code>[lng, lat]</code> and in the WSG84 format.</p> <note> <p>The fields <code>BiasPosition</code>, <code>FilterBoundingBox</code>, and <code>FilterCircle</code> are mutually exclusive.</p> </note>",
         "SearchTextResultItem$Position": "<p>The position, in longitude and latitude.</p>",
@@ -980,13 +1095,13 @@
     "PostalCodeDetailsPostalCodeString": {
       "base": null,
       "refs": {
-        "PostalCodeDetails$PostalCode": "<p>An alphanumeric string included in a postal address to facilitate mail sorting, such as post code, postcode, or ZIP code for which the result should posses. </p>"
+        "PostalCodeDetails$PostalCode": "<p>An alphanumeric string included in a postal address to facilitate mail sorting, such as post code, postcode, or ZIP code for which the result should possess. </p>"
       }
     },
     "PostalCodeMode": {
       "base": null,
       "refs": {
-        "AutocompleteRequest$PostalCodeMode": "<p>The <code>PostalCodeMode</code> affects how postal code results are returned. If a postal code spans multiple localities and this value is empty, partial district or locality information may be returned under a single postal code result entry. If it's populated with the value <code>cityLookup</code>, all cities in that postal code are returned.</p>"
+        "AutocompleteRequest$PostalCodeMode": "<p>The <code>PostalCodeMode</code> affects how postal code results are returned. If a postal code spans multiple localities and this value is empty, partial district or locality information may be returned under a single postal code result entry. If it's populated with the value <code>EnumerateSpannedLocalities</code>, all cities in that postal code are returned.</p>"
       }
     },
     "PostalCodeType": {
@@ -1034,7 +1149,7 @@
     "QueryType": {
       "base": null,
       "refs": {
-        "SuggestQueryResult$QueryType": "<p>The query type. Category qeuries will search for places which have an entry matching the given category, for example \"doctor office\". BusinessChain queries will search for instances of a given business.</p>"
+        "SuggestQueryResult$QueryType": "<p>The query type. Category queries will search for places which have an entry matching the given category, for example \"doctor office\". BusinessChain queries will search for instances of a given business.</p>"
       }
     },
     "RecordTypeCode": {
@@ -1067,6 +1182,33 @@
         "Region$Name": "<p>Name for a the state, province, or region of the country. </p> <p>Example: <code>British Columbia</code>. </p>"
       }
     },
+    "RelatedPlace": {
+      "base": "<p>Place that is related to the result item.</p>",
+      "refs": {
+        "GeocodeResultItem$MainAddress": "<p>The main address corresponding to a place of type Secondary Address.</p>",
+        "GetPlaceResponse$MainAddress": "<p>The main address corresponding to a place of type Secondary Address.</p>",
+        "RelatedPlaceList$member": null
+      }
+    },
+    "RelatedPlaceList": {
+      "base": null,
+      "refs": {
+        "GeocodeResultItem$SecondaryAddresses": "<p>All secondary addresses that are associated with a main address. A secondary address is one that includes secondary designators, such as a Suite or Unit Number, Building, or Floor information.</p>",
+        "GetPlaceResponse$SecondaryAddresses": "<p>All secondary addresses that are associated with a main address. A secondary address is one that includes secondary designators, such as a Suite or Unit Number, Building, or Floor information.</p>"
+      }
+    },
+    "RelatedPlacePlaceIdString": {
+      "base": null,
+      "refs": {
+        "RelatedPlace$PlaceId": "<p>The <code>PlaceId</code> of the place result.</p>"
+      }
+    },
+    "RelatedPlaceTitleString": {
+      "base": null,
+      "refs": {
+        "RelatedPlace$Title": "<p>The localized display name of this result item based on request parameter <code>language</code>.</p>"
+      }
+    },
     "ReverseGeocodeAdditionalFeature": {
       "base": null,
       "refs": {
@@ -1082,7 +1224,7 @@
     "ReverseGeocodeFilter": {
       "base": "<p>The included place types.</p>",
       "refs": {
-        "ReverseGeocodeRequest$Filter": "<p>A structure which contains a set of inclusion/exclusion properties that results must posses in order to be returned as a result.</p>"
+        "ReverseGeocodeRequest$Filter": "<p>A structure which contains a set of inclusion/exclusion properties that results must possess in order to be returned as a result.</p>"
       }
     },
     "ReverseGeocodeFilterPlaceType": {
@@ -1100,13 +1242,12 @@
     "ReverseGeocodeIntendedUse": {
       "base": null,
       "refs": {
-        "ReverseGeocodeRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p>"
+        "ReverseGeocodeRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p> <note> <p>Storing the response of an ReverseGeocode query is required to comply with service terms, but charged at a higher cost per request. Please review the <a href=\"https://aws.amazon.com/location/sla/\">user agreement</a> and <a href=\"https://aws.amazon.com/location/pricing/\">service pricing structure</a> to determine the correct setting for your use case.</p> </note>"
       }
     },
     "ReverseGeocodeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ReverseGeocodeRequestMaxResultsInteger": {
       "base": null,
@@ -1122,8 +1263,7 @@
     },
     "ReverseGeocodeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ReverseGeocodeResultItem": {
       "base": "<p>The returned location from the <code>Reverse Geocode</code> action.</p>",
@@ -1162,21 +1302,20 @@
       }
     },
     "SearchNearbyFilter": {
-      "base": "<p>SearchNearby structure which contains a set of inclusion/exclusion properties that results must posses in order to be returned as a result.</p>",
+      "base": "<p>SearchNearby structure which contains a set of inclusion/exclusion properties that results must possess in order to be returned as a result.</p>",
       "refs": {
-        "SearchNearbyRequest$Filter": "<p>A structure which contains a set of inclusion/exclusion properties that results must posses in order to be returned as a result.</p>"
+        "SearchNearbyRequest$Filter": "<p>A structure which contains a set of inclusion/exclusion properties that results must possess in order to be returned as a result.</p>"
       }
     },
     "SearchNearbyIntendedUse": {
       "base": null,
       "refs": {
-        "SearchNearbyRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p>"
+        "SearchNearbyRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p> <note> <p>Storing the response of an SearchNearby query is required to comply with service terms, but charged at a higher cost per request. Please review the <a href=\"https://aws.amazon.com/location/sla/\">user agreement</a> and <a href=\"https://aws.amazon.com/location/pricing/\">service pricing structure</a> to determine the correct setting for your use case.</p> </note>"
       }
     },
     "SearchNearbyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchNearbyRequestMaxResultsInteger": {
       "base": null,
@@ -1187,13 +1326,12 @@
     "SearchNearbyRequestQueryRadiusLong": {
       "base": null,
       "refs": {
-        "SearchNearbyRequest$QueryRadius": "<p>The maximum distance in meters from the QueryPosition from which a result will be returned.</p>"
+        "SearchNearbyRequest$QueryRadius": "<p>The maximum distance in meters from the QueryPosition from which a result will be returned.</p> <note> <p>The fields <code>QueryText</code>, and <code>QueryID</code> are mutually exclusive.</p> </note>"
       }
     },
     "SearchNearbyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchNearbyResultItem": {
       "base": "<p>The search results of nearby places.</p>",
@@ -1232,21 +1370,20 @@
       }
     },
     "SearchTextFilter": {
-      "base": "<p>SearchText structure which contains a set of inclusion/exclusion properties that results must posses in order to be returned as a result.</p>",
+      "base": "<p>SearchText structure which contains a set of inclusion/exclusion properties that results must possess in order to be returned as a result.</p>",
       "refs": {
-        "SearchTextRequest$Filter": "<p>A structure which contains a set of inclusion/exclusion properties that results must posses in order to be returned as a result.</p>"
+        "SearchTextRequest$Filter": "<p>A structure which contains a set of inclusion/exclusion properties that results must possess in order to be returned as a result.</p>"
       }
     },
     "SearchTextIntendedUse": {
       "base": null,
       "refs": {
-        "SearchTextRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p>"
+        "SearchTextRequest$IntendedUse": "<p>Indicates if the results will be stored. Defaults to <code>SingleUse</code>, if left empty.</p> <note> <p>Storing the response of an SearchText query is required to comply with service terms, but charged at a higher cost per request. Please review the <a href=\"https://aws.amazon.com/location/sla/\">user agreement</a> and <a href=\"https://aws.amazon.com/location/pricing/\">service pricing structure</a> to determine the correct setting for your use case.</p> </note>"
       }
     },
     "SearchTextRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchTextRequestMaxResultsInteger": {
       "base": null,
@@ -1257,19 +1394,18 @@
     "SearchTextRequestQueryIdString": {
       "base": null,
       "refs": {
-        "SearchTextRequest$QueryId": "<p>The query Id.</p>"
+        "SearchTextRequest$QueryId": "<p>The query Id returned by the suggest API. If passed in the request, the SearchText API will preform a SearchText query with the improved query terms for the original query made to the suggest API.</p> <note> <p>The fields <code>QueryText</code>, and <code>QueryID</code> are mutually exclusive.</p> </note>"
       }
     },
     "SearchTextRequestQueryTextString": {
       "base": null,
       "refs": {
-        "SearchTextRequest$QueryText": "<p>The free-form text query to match addresses against. This is usually a partially typed address from an end user in an address box or form.</p>"
+        "SearchTextRequest$QueryText": "<p>The free-form text query to match addresses against. This is usually a partially typed address from an end user in an address box or form.</p> <note> <p>The fields <code>QueryText</code>, and <code>QueryID</code> are mutually exclusive.</p> </note>"
       }
     },
     "SearchTextResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchTextResultItem": {
       "base": "<p>The text search result.</p>",
@@ -1295,6 +1431,51 @@
         "SearchTextResultItem$Title": "<p>The item's title.</p>"
       }
     },
+    "SecondaryAddressComponent": {
+      "base": "<p>Components that correspond to secondary identifiers on an address. The only component type supported currently is Unit.</p>",
+      "refs": {
+        "SecondaryAddressComponentList$member": null
+      }
+    },
+    "SecondaryAddressComponentList": {
+      "base": null,
+      "refs": {
+        "Address$SecondaryAddressComponents": "<p>Components that correspond to secondary identifiers on an Address. Secondary address components include information such as Suite or Unit Number, Building, or Floor.</p>"
+      }
+    },
+    "SecondaryAddressComponentMatchScore": {
+      "base": "<p>Match score for a secondary address component in the result.</p>",
+      "refs": {
+        "SecondaryAddressComponentMatchScoreList$member": null
+      }
+    },
+    "SecondaryAddressComponentMatchScoreList": {
+      "base": null,
+      "refs": {
+        "AddressComponentMatchScores$SecondaryAddressComponents": "<p>Match scores for the secondary address components in the result.</p>"
+      }
+    },
+    "SecondaryAddressComponentNumberString": {
+      "base": null,
+      "refs": {
+        "SecondaryAddressComponent$Number": "<p>Number that uniquely identifies a secondary address.</p>"
+      }
+    },
+    "SensitiveBoolean": {
+      "base": null,
+      "refs": {
+        "AccessRestriction$Restricted": "<p>The restriction.</p>",
+        "Category$Primary": "<p>Boolean which indicates if this category is the primary offered by the place.</p>",
+        "FoodType$Primary": "<p>Boolean which indicates if this food type is the primary offered by the place. For example, if a location serves fast food, but also dessert, he primary would likely be fast food.</p>",
+        "GeocodeResultItem$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>",
+        "GetPlaceResponse$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>",
+        "OpeningHours$OpenNow": "<p>Boolean which indicates if the result/place is currently open. </p>",
+        "PhonemeTranscription$Preferred": "<p>Boolean which indicates if it the preferred pronunciation.</p>",
+        "ReverseGeocodeResultItem$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>",
+        "SearchNearbyResultItem$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>",
+        "SearchTextResultItem$AddressNumberCorrected": "<p>Boolean indicating if the address provided has been corrected.</p>"
+      }
+    },
     "StreetComponents": {
       "base": "<p>Components of a street.</p>",
       "refs": {
@@ -1304,7 +1485,7 @@
     "StreetComponentsBaseNameString": {
       "base": null,
       "refs": {
-        "StreetComponents$BaseName": "<p>Base name part of the street name. </p> <p>Example: Younge from the “Younge street\".</p>"
+        "StreetComponents$BaseName": "<p>Base name part of the street name. </p> <p>Example: Younge from the \"Younge street\".</p>"
       }
     },
     "StreetComponentsDirectionString": {
@@ -1334,21 +1515,21 @@
     "StreetComponentsTypeString": {
       "base": null,
       "refs": {
-        "StreetComponents$Type": "<p>Street type part of the street name. </p> <p>Example: <code>“avenue\"</code>.</p>"
+        "StreetComponents$Type": "<p>Street type part of the street name. </p> <p>Example: <code>\"avenue\"</code>.</p>"
       }
     },
     "String": {
       "base": null,
       "refs": {
         "AccessDeniedException$Message": null,
-        "AutocompleteResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p> <p>For more inforamtion on pricing, please visit <a href=\"https://aws.amazon.com/location/pricing/\">Amazon Location Service Pricing</a>.</p>",
-        "GeocodeResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p> <p>For more inforamtion on pricing, please visit <a href=\"https://aws.amazon.com/location/pricing/\">Amazon Location Service Pricing</a>.</p>",
-        "GetPlaceResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p> <p>For more inforamtion on pricing, please visit <a href=\"https://aws.amazon.com/location/pricing/\">Amazon Location Service Pricing</a>.</p>",
+        "AutocompleteResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p> <p>For more information on pricing, please visit <a href=\"https://aws.amazon.com/location/pricing/\">Amazon Location Service Pricing</a>.</p>",
+        "GeocodeResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p> <p>For more information on pricing, please visit <a href=\"https://aws.amazon.com/location/pricing/\">Amazon Location Service Pricing</a>.</p>",
+        "GetPlaceResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p> <p>For more information on pricing, please visit <a href=\"https://aws.amazon.com/location/pricing/\">Amazon Location Service Pricing</a>.</p>",
         "InternalServerException$Message": null,
-        "ReverseGeocodeResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p> <p>For more inforamtion on pricing, please visit <a href=\"https://aws.amazon.com/location/pricing/\">Amazon Location Service Pricing</a>.</p>",
-        "SearchNearbyResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p> <p>For more inforamtion on pricing, please visit <a href=\"https://aws.amazon.com/location/pricing/\">Amazon Location Service Pricing</a>.</p>",
-        "SearchTextResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p> <p>For more inforamtion on pricing, please visit <a href=\"https://aws.amazon.com/location/pricing/\">Amazon Location Service Pricing</a>.</p>",
-        "SuggestResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p> <p>For more inforamtion on pricing, please visit <a href=\"https://aws.amazon.com/location/pricing/\">Amazon Location Service Pricing</a>.</p>",
+        "ReverseGeocodeResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p> <p>For more information on pricing, please visit <a href=\"https://aws.amazon.com/location/pricing/\">Amazon Location Service Pricing</a>.</p>",
+        "SearchNearbyResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p> <p>For more information on pricing, please visit <a href=\"https://aws.amazon.com/location/pricing/\">Amazon Location Service Pricing</a>.</p>",
+        "SearchTextResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p> <p>For more information on pricing, please visit <a href=\"https://aws.amazon.com/location/pricing/\">Amazon Location Service Pricing</a>.</p>",
+        "SuggestResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p> <p>For more information on pricing, please visit <a href=\"https://aws.amazon.com/location/pricing/\">Amazon Location Service Pricing</a>.</p>",
         "ThrottlingException$Message": null,
         "ValidationException$Message": null,
         "ValidationExceptionField$Name": "<p>The name of the resource.</p>",
@@ -1398,9 +1579,9 @@
       }
     },
     "SuggestFilter": {
-      "base": "<p>SuggestFilter structure which contains a set of inclusion/exclusion properties that results must posses in order to be returned as a result.</p>",
+      "base": "<p>SuggestFilter structure which contains a set of inclusion/exclusion properties that results must possess in order to be returned as a result.</p>",
       "refs": {
-        "SuggestRequest$Filter": "<p>A structure which contains a set of inclusion/exclusion properties that results must posses in order to be returned as a result.</p>"
+        "SuggestRequest$Filter": "<p>A structure which contains a set of inclusion/exclusion properties that results must possess in order to be returned as a result.</p>"
       }
     },
     "SuggestHighlights": {
@@ -1436,13 +1617,12 @@
     "SuggestQueryResultQueryIdString": {
       "base": null,
       "refs": {
-        "SuggestQueryResult$QueryId": "<p>QueryId can be used to complete a follow up query through the SearchText API. The QueryId retains context from the original Suggest request such as filters, political view and language. See the SearchText API documentation for more details <a href=\"https://docs.aws.amazon.com/latest/APIReference/API_geoplaces_SearchText.html\">SearchText API docs</a>.</p>"
+        "SuggestQueryResult$QueryId": "<p>QueryId can be used to complete a follow up query through the SearchText API. The QueryId retains context from the original Suggest request such as filters, political view and language. See the SearchText API documentation for more details <a href=\"https://docs.aws.amazon.com/latest/APIReference/API_geoplaces_SearchText.html\">SearchText API docs</a>.</p> <note> <p>The fields <code>QueryText</code>, and <code>QueryID</code> are mutually exclusive.</p> </note>"
       }
     },
     "SuggestRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SuggestRequestMaxQueryRefinementsInteger": {
       "base": null,
@@ -1459,13 +1639,12 @@
     "SuggestRequestQueryTextString": {
       "base": null,
       "refs": {
-        "SuggestRequest$QueryText": "<p>The free-form text query to match addresses against. This is usually a partially typed address from an end user in an address box or form.</p>"
+        "SuggestRequest$QueryText": "<p>The free-form text query to match addresses against. This is usually a partially typed address from an end user in an address box or form.</p> <note> <p>The fields <code>QueryText</code>, and <code>QueryID</code> are mutually exclusive.</p> </note>"
       }
     },
     "SuggestResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SuggestResultItem": {
       "base": "<p>The resulting item from the suggested query.</p>",
@@ -1493,8 +1672,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TimeZone": {
       "base": "<p>The time zone in which the place is located.</p>",
@@ -1543,7 +1721,7 @@
     "TypeSeparator": {
       "base": null,
       "refs": {
-        "StreetComponents$TypeSeparator": "<p>What character(s) separates the string from its type. </p>"
+        "StreetComponents$TypeSeparator": "<p>Defines a separator character such as <code>\"\"</code> or <code>\" \"</code> between the base name and type.</p>"
       }
     },
     "UspsZip": {
@@ -1560,8 +1738,7 @@
     },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by an AWS service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>The input fails to satisfy the constraints specified by the Amazon Location service.</p>",

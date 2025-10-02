@@ -6,19 +6,25 @@
     "DeregisterApplication": "<p>Deregister an SAP application with AWS Systems Manager for SAP. This action does not aﬀect the existing setup of your SAP workloads on Amazon EC2.</p>",
     "GetApplication": "<p>Gets an application registered with AWS Systems Manager for SAP. It also returns the components of the application.</p>",
     "GetComponent": "<p>Gets the component of an application registered with AWS Systems Manager for SAP.</p>",
+    "GetConfigurationCheckOperation": "<p>Gets the details of a configuration check operation by specifying the operation ID.</p>",
     "GetDatabase": "<p>Gets the SAP HANA database of an application registered with AWS Systems Manager for SAP.</p>",
     "GetOperation": "<p>Gets the details of an operation by specifying the operation ID.</p>",
     "GetResourcePermission": "<p>Gets permissions associated with the target database.</p>",
     "ListApplications": "<p>Lists all the applications registered with AWS Systems Manager for SAP.</p>",
     "ListComponents": "<p>Lists all the components registered with AWS Systems Manager for SAP.</p>",
+    "ListConfigurationCheckDefinitions": "<p>Lists all configuration check types supported by AWS Systems Manager for SAP.</p>",
+    "ListConfigurationCheckOperations": "<p>Lists the configuration check operations performed by AWS Systems Manager for SAP.</p>",
     "ListDatabases": "<p>Lists the SAP HANA databases of an application registered with AWS Systems Manager for SAP.</p>",
     "ListOperationEvents": "<p>Returns a list of operations events.</p> <p>Available parameters include <code>OperationID</code>, as well as optional parameters <code>MaxResults</code>, <code>NextToken</code>, and <code>Filters</code>.</p>",
     "ListOperations": "<p>Lists the operations performed by AWS Systems Manager for SAP.</p>",
+    "ListSubCheckResults": "<p>Lists the sub-check results of a specified configuration check operation.</p>",
+    "ListSubCheckRuleResults": "<p>Lists the rules of a specified sub-check belonging to a configuration check operation.</p>",
     "ListTagsForResource": "<p>Lists all tags on an SAP HANA application and/or database registered with AWS Systems Manager for SAP.</p>",
     "PutResourcePermission": "<p>Adds permissions to the target database.</p>",
     "RegisterApplication": "<p>Register an SAP application with AWS Systems Manager for SAP. You must meet the following requirements before registering. </p> <p>The SAP application you want to register with AWS Systems Manager for SAP is running on Amazon EC2.</p> <p>AWS Systems Manager Agent must be setup on an Amazon EC2 instance along with the required IAM permissions.</p> <p>Amazon EC2 instance(s) must have access to the secrets created in AWS Secrets Manager to manage SAP applications and components.</p>",
     "StartApplication": "<p>Request is an operation which starts an application.</p> <p>Parameter <code>ApplicationId</code> is required.</p>",
     "StartApplicationRefresh": "<p>Refreshes a registered application.</p>",
+    "StartConfigurationChecks": "<p>Initiates configuration check operations against a specified application.</p>",
     "StopApplication": "<p>Request is an operation to stop an application.</p> <p>Parameter <code>ApplicationId</code> is required. Parameters <code>StopConnectedEntity</code> and <code>IncludeEc2InstanceShutdown</code> are optional.</p>",
     "TagResource": "<p>Creates tag for a resource by specifying the ARN.</p>",
     "UntagResource": "<p>Delete the tags for a resource.</p>",
@@ -80,6 +86,7 @@
         "ApplicationSummary$Id": "<p>The ID of the application.</p>",
         "Component$ApplicationId": "<p>The ID of the application.</p>",
         "ComponentSummary$ApplicationId": "<p>The ID of the application.</p>",
+        "ConfigurationCheckOperation$ApplicationId": "<p>The ID of the application against which the configuration check was performed.</p>",
         "Database$ApplicationId": "<p>The ID of the application.</p>",
         "DatabaseSummary$ApplicationId": "<p>The ID of the application.</p>",
         "DeregisterApplicationInput$ApplicationId": "<p>The ID of the application.</p>",
@@ -87,11 +94,13 @@
         "GetComponentInput$ApplicationId": "<p>The ID of the application.</p>",
         "GetDatabaseInput$ApplicationId": "<p>The ID of the application.</p>",
         "ListComponentsInput$ApplicationId": "<p>The ID of the application.</p>",
+        "ListConfigurationCheckOperationsInput$ApplicationId": "<p>The ID of the application.</p>",
         "ListDatabasesInput$ApplicationId": "<p>The ID of the application.</p>",
         "ListOperationsInput$ApplicationId": "<p>The ID of the application.</p>",
         "RegisterApplicationInput$ApplicationId": "<p>The ID of the application.</p>",
         "StartApplicationInput$ApplicationId": "<p>The ID of the application.</p>",
         "StartApplicationRefreshInput$ApplicationId": "<p>The ID of the application.</p>",
+        "StartConfigurationChecksInput$ApplicationId": "<p>The ID of the application.</p>",
         "StopApplicationInput$ApplicationId": "<p>The ID of the application.</p>",
         "UpdateApplicationSettingsInput$ApplicationId": "<p>The ID of the application.</p>"
       }
@@ -119,7 +128,14 @@
       "refs": {
         "Application$Type": "<p>The type of the application.</p>",
         "ApplicationSummary$Type": "<p>The type of the application.</p>",
+        "ApplicationTypeList$member": null,
         "RegisterApplicationInput$ApplicationType": "<p>The type of the application.</p>"
+      }
+    },
+    "ApplicationTypeList": {
+      "base": null,
+      "refs": {
+        "ConfigurationCheckDefinition$ApplicableApplicationTypes": "<p>The list of SSMSAP application types that this configuration check can be evaluated against.</p>"
       }
     },
     "Arn": {
@@ -238,10 +254,55 @@
         "ComponentSummary$ComponentType": "<p>The type of the component.</p>"
       }
     },
+    "ConfigurationCheckDefinition": {
+      "base": "<p>Represents a configuration check definition supported by AWS Systems Manager for SAP.</p>",
+      "refs": {
+        "ConfigurationCheckDefinitionList$member": null
+      }
+    },
+    "ConfigurationCheckDefinitionList": {
+      "base": null,
+      "refs": {
+        "ListConfigurationCheckDefinitionsOutput$ConfigurationChecks": "<p>The configuration check types supported by AWS Systems Manager for SAP.</p>"
+      }
+    },
+    "ConfigurationCheckOperation": {
+      "base": "<p>Represents a configuration check operation that has been executed against an application.</p>",
+      "refs": {
+        "ConfigurationCheckOperationList$member": null,
+        "GetConfigurationCheckOperationOutput$ConfigurationCheckOperation": "<p>Returns the details of a configuration check operation.</p>"
+      }
+    },
+    "ConfigurationCheckOperationList": {
+      "base": null,
+      "refs": {
+        "ListConfigurationCheckOperationsOutput$ConfigurationCheckOperations": "<p>The configuration check operations performed by AWS Systems Manager for SAP.</p>",
+        "StartConfigurationChecksOutput$ConfigurationCheckOperations": "<p>The configuration check operations that were started.</p>"
+      }
+    },
+    "ConfigurationCheckOperationListingMode": {
+      "base": null,
+      "refs": {
+        "ListConfigurationCheckOperationsInput$ListMode": "<p>The mode for listing configuration check operations. Defaults to \"LATEST_PER_CHECK\".</p> <ul> <li> <p>LATEST_PER_CHECK - Will list the latest configuration check operation per check type.</p> </li> <li> <p>ALL_OPERATIONS - Will list all configuration check operations performed on the application.</p> </li> </ul>"
+      }
+    },
+    "ConfigurationCheckType": {
+      "base": null,
+      "refs": {
+        "ConfigurationCheckDefinition$Id": "<p>The unique identifier of the configuration check.</p>",
+        "ConfigurationCheckOperation$ConfigurationCheckId": "<p>The unique identifier of the configuration check that was performed.</p>",
+        "ConfigurationCheckTypeList$member": null
+      }
+    },
+    "ConfigurationCheckTypeList": {
+      "base": null,
+      "refs": {
+        "StartConfigurationChecksInput$ConfigurationCheckIds": "<p>The list of configuration checks to perform.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>A conflict has occurred.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConnectedEntityType": {
       "base": null,
@@ -321,23 +382,19 @@
     },
     "DeleteResourcePermissionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePermissionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterApplicationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterApplicationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Filter": {
       "base": "<p>A specific result obtained by specifying the name, value, and operator. </p>",
@@ -349,6 +406,7 @@
       "base": null,
       "refs": {
         "ListApplicationsInput$Filters": "<p>The filter of name, value, and operator.</p>",
+        "ListConfigurationCheckOperationsInput$Filters": "<p>The filters of an operation.</p>",
         "ListOperationEventsInput$Filters": "<p>Optionally specify filters to narrow the returned operation event items.</p> <p>Valid filter names include <code>status</code>, <code>resourceID</code>, and <code>resourceType</code>. The valid operator for all three filters is <code>Equals</code>.</p>",
         "ListOperationsInput$Filters": "<p>The filters of an operation.</p>"
       }
@@ -373,53 +431,51 @@
     },
     "GetApplicationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetApplicationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetComponentInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetComponentOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "GetConfigurationCheckOperationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConfigurationCheckOperationOutput": {
+      "base": null,
+      "refs": {}
     },
     "GetDatabaseInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDatabaseOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOperationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOperationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePermissionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePermissionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Host": {
       "base": "<p>Describes the properties of the Dedicated Host. </p>",
@@ -455,13 +511,17 @@
     "Integer": {
       "base": null,
       "refs": {
-        "Database$SQLPort": "<p>The SQL port of the database.</p>"
+        "Database$SQLPort": "<p>The SQL port of the database.</p>",
+        "RuleStatusCounts$Failed": "<p>The number of rules that failed.</p>",
+        "RuleStatusCounts$Warning": "<p>The number of rules that returned warnings.</p>",
+        "RuleStatusCounts$Info": "<p>The number of rules that returned informational results.</p>",
+        "RuleStatusCounts$Passed": "<p>The number of rules that passed.</p>",
+        "RuleStatusCounts$Unknown": "<p>The number of rules with unknown status.</p>"
       }
     },
     "InternalServerException": {
       "base": "<p>An internal error has occurred.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IpAddressList": {
       "base": null,
@@ -477,72 +537,96 @@
     },
     "ListApplicationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListComponentsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListComponentsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ListConfigurationCheckDefinitionsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListConfigurationCheckDefinitionsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListConfigurationCheckOperationsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListConfigurationCheckOperationsOutput": {
+      "base": null,
+      "refs": {}
     },
     "ListDatabasesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDatabasesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOperationEventsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOperationEventsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOperationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOperationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ListSubCheckResultsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSubCheckResultsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSubCheckRuleResultsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSubCheckRuleResultsOutput": {
+      "base": null,
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxResults": {
       "base": null,
       "refs": {
         "ListApplicationsInput$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned nextToken value.</p>",
         "ListComponentsInput$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned nextToken value.</p> <p>If you do not specify a value for MaxResults, the request returns 50 items per page by default.</p>",
+        "ListConfigurationCheckDefinitionsInput$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned nextToken value.</p>",
+        "ListConfigurationCheckOperationsInput$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned nextToken value.</p>",
         "ListDatabasesInput$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned nextToken value. If you do not specify a value for MaxResults, the request returns 50 items per page by default.</p>",
         "ListOperationEventsInput$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned nextToken value.</p> <p>If you do not specify a value for <code>MaxResults</code>, the request returns 50 items per page by default.</p>",
-        "ListOperationsInput$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned nextToken value. If you do not specify a value for MaxResults, the request returns 50 items per page by default.</p>"
+        "ListOperationsInput$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned nextToken value. If you do not specify a value for MaxResults, the request returns 50 items per page by default.</p>",
+        "ListSubCheckResultsInput$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned nextToken value.</p>",
+        "ListSubCheckRuleResultsInput$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned nextToken value.</p>"
       }
     },
     "NextToken": {
@@ -552,12 +636,20 @@
         "ListApplicationsOutput$NextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
         "ListComponentsInput$NextToken": "<p>The token for the next page of results.</p>",
         "ListComponentsOutput$NextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListConfigurationCheckDefinitionsInput$NextToken": "<p>The token for the next page of results.</p>",
+        "ListConfigurationCheckDefinitionsOutput$NextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListConfigurationCheckOperationsInput$NextToken": "<p>The token for the next page of results.</p>",
+        "ListConfigurationCheckOperationsOutput$NextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
         "ListDatabasesInput$NextToken": "<p>The token for the next page of results. </p>",
         "ListDatabasesOutput$NextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
         "ListOperationEventsInput$NextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
         "ListOperationEventsOutput$NextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
         "ListOperationsInput$NextToken": "<p>The token for the next page of results. </p>",
-        "ListOperationsOutput$NextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>"
+        "ListOperationsOutput$NextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListSubCheckResultsInput$NextToken": "<p>The token for the next page of results.</p>",
+        "ListSubCheckResultsOutput$NextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>",
+        "ListSubCheckRuleResultsInput$NextToken": "<p>The token for the next page of results.</p>",
+        "ListSubCheckRuleResultsOutput$NextToken": "<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>"
       }
     },
     "Operation": {
@@ -594,8 +686,11 @@
     "OperationId": {
       "base": null,
       "refs": {
+        "ConfigurationCheckOperation$Id": "<p>The unique identifier of the configuration check operation.</p>",
+        "GetConfigurationCheckOperationInput$OperationId": "<p>The ID of the configuration check operation.</p>",
         "GetOperationInput$OperationId": "<p>The ID of the operation.</p>",
         "ListOperationEventsInput$OperationId": "<p>The ID of the operation.</p>",
+        "ListSubCheckResultsInput$OperationId": "<p>The ID of the configuration check operation.</p>",
         "Operation$Id": "<p>The ID of the operation.</p>",
         "OperationIdList$member": null,
         "RegisterApplicationOutput$OperationId": "<p>The ID of the operation.</p>",
@@ -631,6 +726,7 @@
     "OperationStatus": {
       "base": null,
       "refs": {
+        "ConfigurationCheckOperation$Status": "<p>The current status of the configuration check operation.</p>",
         "Operation$Status": "<p>The status of the operation.</p>"
       }
     },
@@ -650,23 +746,19 @@
     },
     "PutResourcePermissionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourcePermissionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterApplicationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterApplicationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ReplicationMode": {
       "base": null,
@@ -694,13 +786,60 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The resource is not available.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceType": {
       "base": null,
       "refs": {
         "Operation$ResourceType": "<p>The resource type of the operation.</p>"
+      }
+    },
+    "RuleResult": {
+      "base": "<p>Represents the result of a single rule within a configuration check.</p>",
+      "refs": {
+        "RuleResultList$member": null
+      }
+    },
+    "RuleResultId": {
+      "base": null,
+      "refs": {
+        "RuleResult$Id": "<p>The unique identifier of the rule result.</p>"
+      }
+    },
+    "RuleResultList": {
+      "base": null,
+      "refs": {
+        "ListSubCheckRuleResultsOutput$RuleResults": "<p>The rule results of a sub-check belonging to a configuration check operation.</p>"
+      }
+    },
+    "RuleResultMetadata": {
+      "base": null,
+      "refs": {
+        "RuleResult$Metadata": "<p>Additional metadata associated with the rule result.</p>"
+      }
+    },
+    "RuleResultMetadataKey": {
+      "base": null,
+      "refs": {
+        "RuleResultMetadata$key": null
+      }
+    },
+    "RuleResultMetadataValue": {
+      "base": null,
+      "refs": {
+        "RuleResultMetadata$value": null
+      }
+    },
+    "RuleResultStatus": {
+      "base": null,
+      "refs": {
+        "RuleResult$Status": "<p>The status of the rule result.</p>"
+      }
+    },
+    "RuleStatusCounts": {
+      "base": "<p>A summary of rule results, providing counts for each status type.</p>",
+      "refs": {
+        "ConfigurationCheckOperation$RuleStatusCounts": "<p>A summary of all the rule results, showing counts for each status type.</p>"
       }
     },
     "SAPInstanceNumber": {
@@ -747,33 +886,35 @@
     },
     "StartApplicationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartApplicationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartApplicationRefreshInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartApplicationRefreshOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "StartConfigurationChecksInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartConfigurationChecksOutput": {
+      "base": null,
+      "refs": {}
     },
     "StopApplicationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopApplicationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -787,6 +928,11 @@
         "Component$SapKernelVersion": "<p>The kernel version of the component.</p>",
         "Component$HdbVersion": "<p>The SAP HANA version of the component.</p>",
         "Component$PrimaryHost": "<p>The primary host of the component.</p>",
+        "ConfigurationCheckDefinition$Name": "<p>The name of the configuration check.</p>",
+        "ConfigurationCheckDefinition$Description": "<p>A description of what the configuration check validates.</p>",
+        "ConfigurationCheckOperation$StatusMessage": "<p>A message providing additional details about the status of the configuration check operation.</p>",
+        "ConfigurationCheckOperation$ConfigurationCheckName": "<p>The name of the configuration check that was performed.</p>",
+        "ConfigurationCheckOperation$ConfigurationCheckDescription": "<p>A description of the configuration check that was performed.</p>",
         "ConflictException$Message": null,
         "Database$DatabaseName": "<p>The name of the database.</p>",
         "Database$PrimaryHost": "<p>The primary host of the database.</p>",
@@ -808,9 +954,39 @@
         "PutResourcePermissionOutput$Policy": "<p/>",
         "Resilience$HsrTier": "<p>The tier of the component.</p>",
         "ResourceNotFoundException$Message": null,
+        "RuleResult$Description": "<p>A description of what the rule validates.</p>",
+        "RuleResult$Message": "<p>A message providing details about the rule result.</p>",
+        "SubCheckReferencesList$member": null,
+        "SubCheckResult$Name": "<p>The name of the sub-check.</p>",
+        "SubCheckResult$Description": "<p>A description of what the sub-check validates.</p>",
         "UnauthorizedException$Message": null,
         "UpdateApplicationSettingsOutput$Message": "<p>The update message.</p>",
         "ValidationException$Message": null
+      }
+    },
+    "SubCheckReferencesList": {
+      "base": null,
+      "refs": {
+        "SubCheckResult$References": "<p>A list of references or documentation links related to the sub-check.</p>"
+      }
+    },
+    "SubCheckResult": {
+      "base": "<p>Represents the result of a sub-check within a configuration check operation.</p>",
+      "refs": {
+        "SubCheckResultList$member": null
+      }
+    },
+    "SubCheckResultId": {
+      "base": null,
+      "refs": {
+        "ListSubCheckRuleResultsInput$SubCheckResultId": "<p>The ID of the sub check result.</p>",
+        "SubCheckResult$Id": "<p>The unique identifier of the sub-check result.</p>"
+      }
+    },
+    "SubCheckResultList": {
+      "base": null,
+      "refs": {
+        "ListSubCheckResultsOutput$SubCheckResults": "<p>The sub-check results of a configuration check operation.</p>"
       }
     },
     "TagKey": {
@@ -842,13 +1018,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -861,6 +1035,8 @@
       "refs": {
         "Application$LastUpdated": "<p>The time at which the application was last updated.</p>",
         "Component$LastUpdated": "<p>The time at which the component was last updated.</p>",
+        "ConfigurationCheckOperation$StartTime": "<p>The time at which the configuration check operation started.</p>",
+        "ConfigurationCheckOperation$EndTime": "<p>The time at which the configuration check operation completed.</p>",
         "Database$LastUpdated": "<p>The time at which the database was last updated.</p>",
         "Operation$StartTime": "<p>The start time of the operation.</p>",
         "Operation$EndTime": "<p>The end time of the operation.</p>",
@@ -870,33 +1046,27 @@
     },
     "UnauthorizedException": {
       "base": "<p>The request is not authorized.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateApplicationSettingsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateApplicationSettingsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by an AWS service. </p>",
-      "refs": {
-      }
+      "refs": {}
     }
   }
 }

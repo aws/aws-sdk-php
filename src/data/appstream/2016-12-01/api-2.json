@@ -1081,7 +1081,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConcurrentModificationException"},
         {"shape":"OperationNotPermittedException"},
-        {"shape":"InvalidRoleException"}
+        {"shape":"InvalidRoleException"},
+        {"shape":"IncompatibleImageException"}
       ]
     },
     "UpdateEntitlement":{
@@ -1469,8 +1470,7 @@
     },
     "AssociateApplicationToEntitlementResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociateFleetRequest":{
       "type":"structure",
@@ -1485,8 +1485,7 @@
     },
     "AssociateFleetResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AuthenticationType":{
       "type":"string",
@@ -1909,8 +1908,7 @@
     },
     "CreateUsageReportSubscriptionRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateUsageReportSubscriptionResult":{
       "type":"structure",
@@ -1935,8 +1933,7 @@
     },
     "CreateUserResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAppBlockBuilderRequest":{
       "type":"structure",
@@ -1947,8 +1944,7 @@
     },
     "DeleteAppBlockBuilderResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAppBlockRequest":{
       "type":"structure",
@@ -1959,8 +1955,7 @@
     },
     "DeleteAppBlockResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteApplicationRequest":{
       "type":"structure",
@@ -1971,8 +1966,7 @@
     },
     "DeleteApplicationResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDirectoryConfigRequest":{
       "type":"structure",
@@ -1983,8 +1977,7 @@
     },
     "DeleteDirectoryConfigResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteEntitlementRequest":{
       "type":"structure",
@@ -1999,8 +1992,7 @@
     },
     "DeleteEntitlementResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteFleetRequest":{
       "type":"structure",
@@ -2011,8 +2003,7 @@
     },
     "DeleteFleetResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteImageBuilderRequest":{
       "type":"structure",
@@ -2040,8 +2031,7 @@
     },
     "DeleteImagePermissionsResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteImageRequest":{
       "type":"structure",
@@ -2065,8 +2055,7 @@
     },
     "DeleteStackResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteThemeForStackRequest":{
       "type":"structure",
@@ -2077,18 +2066,15 @@
     },
     "DeleteThemeForStackResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteUsageReportSubscriptionRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteUsageReportSubscriptionResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteUserRequest":{
       "type":"structure",
@@ -2103,8 +2089,7 @@
     },
     "DeleteUserResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeAppBlockBuilderAppBlockAssociationsRequest":{
       "type":"structure",
@@ -2419,8 +2404,7 @@
     },
     "DisableUserResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateAppBlockBuilderAppBlockRequest":{
       "type":"structure",
@@ -2435,8 +2419,7 @@
     },
     "DisassociateAppBlockBuilderAppBlockResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateApplicationFleetRequest":{
       "type":"structure",
@@ -2451,8 +2434,7 @@
     },
     "DisassociateApplicationFleetResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateApplicationFromEntitlementRequest":{
       "type":"structure",
@@ -2469,8 +2451,7 @@
     },
     "DisassociateApplicationFromEntitlementResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateFleetRequest":{
       "type":"structure",
@@ -2485,8 +2466,7 @@
     },
     "DisassociateFleetResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisplayName":{
       "type":"string",
@@ -2540,8 +2520,7 @@
     },
     "EnableUserResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EntitledApplication":{
       "type":"structure",
@@ -2627,8 +2606,7 @@
     },
     "ExpireSessionResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "FeedbackURL":{
       "type":"string",
@@ -3341,8 +3319,7 @@
     },
     "StartFleetResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StartImageBuilderRequest":{
       "type":"structure",
@@ -3380,8 +3357,7 @@
     },
     "StopFleetResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopImageBuilderRequest":{
       "type":"structure",
@@ -3402,7 +3378,8 @@
       "members":{
         "ConnectorType":{"shape":"StorageConnectorType"},
         "ResourceIdentifier":{"shape":"ResourceIdentifier"},
-        "Domains":{"shape":"DomainList"}
+        "Domains":{"shape":"DomainList"},
+        "DomainsRequireAdminConsent":{"shape":"DomainList"}
       }
     },
     "StorageConnectorList":{
@@ -3473,8 +3450,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -3568,8 +3544,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAppBlockBuilderRequest":{
       "type":"structure",
@@ -3701,8 +3676,7 @@
     },
     "UpdateImagePermissionsResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateStackRequest":{
       "type":"structure",

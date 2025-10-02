@@ -1,5 +1,381 @@
 {
   "version": "1.0",
   "examples": {
+    "BatchGetFindingDetails": [
+      {
+        "input": {
+          "findingArns": [
+            "arn:aws:inspector2:eu-west-1:123456789012:finding/78b88cc9aa1d78b6e14fde90d774dde7",
+            "arn:aws:inspector2:eu-west-1:111111111111:finding/78b88cc9aa1d78b6e14fde90d874dde7"
+          ]
+        },
+        "output": {
+          "errors": [
+            {
+              "errorCode": "ACCESS_DENIED",
+              "errorMessage": "You don't have permission to access this finding",
+              "findingArn": "arn:aws:inspector2:eu-west-1:111111111111:finding/78b88cc9aa1d78b6e14fde90d874dde7"
+            }
+          ],
+          "findingDetails": [
+            {
+              "cisaData": {
+                "action": "For all affected software assets for which updates exist, the only acceptable remediation actions are: 1) Apply updates; OR 2) remove affected assets from agency networks.",
+                "dateAdded": 1688580990,
+                "dateDue": 1688580999
+              },
+              "cwes": [
+                "cwe-1234"
+              ],
+              "epssScore": 0.85,
+              "evidences": [
+                {
+                  "evidenceDetail": "2 sightings on 1 source",
+                  "evidenceRule": "Historically Linked to Penetration Testing Tools",
+                  "severity": "Low"
+                }
+              ],
+              "exploitObserved": {
+                "firstSeen": 1688580800,
+                "lastSeen": 1688580990
+              },
+              "findingArn": "arn:aws:inspector2:eu-west-1:123456789012:finding/78b88cc9aa1d78b6e14fde90d774dde7",
+              "referenceUrls": [
+                "https://nvd.nist.gov/vuln/detail/CVE-2019-20367"
+              ],
+              "riskScore": 66,
+              "tools": [
+                "Metasploit"
+              ],
+              "ttps": [
+                "TA0001",
+                "TA0002"
+              ]
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Sample BatchGetFindingDetails Call"
+      }
+    ],
+    "CreateCisScanConfiguration": [
+      {
+        "input": {
+          "scanName": "sample",
+          "schedule": {
+            "daily": {
+              "startTime": {
+                "timeOfDay": "12:34",
+                "timezone": "UTC"
+              }
+            }
+          },
+          "securityLevel": "LEVEL_1",
+          "targets": {
+            "accountIds": [
+              "SELF"
+            ],
+            "targetResourceTags": {
+              "key": [
+                "value"
+              ]
+            }
+          }
+        },
+        "output": {
+          "scanConfigurationArn": "arn:aws:inspector2:us-east-1:123412341234:owner/123412341234/cis-configuration/624b746d-e080-44ae-8c1d-48e653365a38"
+        },
+        "id": "example-1",
+        "title": "Sample CreateCisScanConfiguration Call"
+      }
+    ],
+    "DeleteCisScanConfiguration": [
+      {
+        "input": {
+          "scanConfigurationArn": "arn:aws:inspector2:us-east-1:123412341234:owner/123412341234/cis-configuration/624b746d-e080-44ae-8c1d-48e653365a38"
+        },
+        "output": {
+          "scanConfigurationArn": "arn:aws:inspector2:us-east-1:123412341234:owner/123412341234/cis-configuration/624b746d-e080-44ae-8c1d-48e653365a38"
+        },
+        "id": "example-1",
+        "title": "Sample DeleteCisScanConfiguration Call"
+      }
+    ],
+    "GetCisScanReport": [
+      {
+        "input": {
+          "reportFormat": "PDF",
+          "scanArn": "arn:aws:inspector2:us-east-1:123412341234:owner/123412341234/cis-scan/624b746d-e080-44ae-8c1d-48e653365a38"
+        },
+        "output": {
+          "status": "SUCCEEDED",
+          "url": "www.s3.amazon.com/abcdef"
+        },
+        "id": "example-1",
+        "title": "Sample GetCisScanReport Call"
+      }
+    ],
+    "GetCisScanResultDetails": [
+      {
+        "input": {
+          "accountId": "123412341234",
+          "scanArn": "arn:aws:inspector2:us-east-1:123412341234:owner/123412341234/cis-scan/624b746d-e080-44ae-8c1d-48e653365a38",
+          "targetResourceId": "i-12341234"
+        },
+        "output": {
+          "scanResultDetails": [
+            {
+              "accountId": "123412341234",
+              "checkDescription": "description",
+              "checkId": "1.1.1.1",
+              "level": "LEVEL_1",
+              "platform": "AMAZON_LINUX_2",
+              "remediation": "fix",
+              "scanArn": "arn:aws:inspector2:us-east-1:123412341234:owner/123412341234/cis-scan/624b746d-e080-44ae-8c1d-48e653365a38",
+              "status": "PASSED",
+              "targetResourceId": "i-12341234",
+              "title": "title1"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Sample GetCisScanResultDetails Call"
+      }
+    ],
+    "ListCisScanConfigurations": [
+      {
+        "input": {},
+        "output": {
+          "scanConfigurations": [
+            {
+              "ownerId": "123412341234",
+              "scanConfigurationArn": "arn:aws:inspector2:us-east-1:123412341234:owner/123412341234/cis-configuration/624b746d-e080-44ae-8c1d-48e653365a38",
+              "scanName": "sample",
+              "schedule": {
+                "daily": {
+                  "startTime": {
+                    "timeOfDay": "12:34",
+                    "timezone": "UTC"
+                  }
+                }
+              },
+              "securityLevel": "LEVEL_1",
+              "targets": {
+                "accountIds": [
+                  "123412341234"
+                ],
+                "targetResourceTags": {
+                  "key": [
+                    "value"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Sample ListCisScanConfigurations Call"
+      }
+    ],
+    "ListCisScanResultsAggregatedByChecks": [
+      {
+        "input": {
+          "scanArn": "arn:aws:inspector2:us-east-1:123412341234:owner/123412341234/cis-scan/624b746d-e080-44ae-8c1d-48e653365a38"
+        },
+        "output": {
+          "checkAggregations": [
+            {
+              "accountId": "123412341234",
+              "checkDescription": "description",
+              "checkId": "1.1.1.1",
+              "level": "LEVEL_1",
+              "platform": "AMAZON_LINUX_2",
+              "scanArn": "arn:aws:inspector2:us-east-1:123412341234:owner/123412341234/cis-scan/624b746d-e080-44ae-8c1d-48e653365a38",
+              "statusCounts": {
+                "failed": 0,
+                "passed": 2,
+                "skipped": 1
+              },
+              "title": "title1"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Sample ListCisScanResultsAggregatedByChecks Call"
+      }
+    ],
+    "ListCisScanResultsAggregatedByTargetResource": [
+      {
+        "input": {
+          "scanArn": "arn:aws:inspector2:us-east-1:123412341234:owner/123412341234/cis-scan/624b746d-e080-44ae-8c1d-48e653365a38"
+        },
+        "output": {
+          "targetResourceAggregations": [
+            {
+              "accountId": "123412341234",
+              "platform": "AMAZON_LINUX_2",
+              "scanArn": "arn:aws:inspector2:us-east-1:123412341234:owner/123412341234/cis-scan/624b746d-e080-44ae-8c1d-48e653365a38",
+              "statusCounts": {
+                "failed": 0,
+                "passed": 2,
+                "skipped": 1
+              },
+              "targetResourceId": "i-12341234",
+              "targetResourceTags": {
+                "key": [
+                  "value"
+                ]
+              },
+              "targetStatus": "COMPLETED"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Sample ListCisScanResultsAggregatedByTargetResource Call"
+      }
+    ],
+    "ListCisScans": [
+      {
+        "input": {},
+        "output": {
+          "scans": [
+            {
+              "failedChecks": 2,
+              "scanArn": "arn:aws:inspector2:us-east-1:123412341234:owner/123412341234/cis-scan/624b746d-e080-44ae-8c1d-48e653365a38",
+              "scanConfigurationArn": "arn:aws:inspector2:us-east-1:123412341234:owner/123412341234/cis-configuration/624b746d-e080-44ae-8c1d-48e653365a38",
+              "scanDate": "2023-04-12T23:20:50.52Z",
+              "scanName": "sample",
+              "scheduledBy": "Delegated Admin",
+              "securityLevel": "LEVEL_1",
+              "status": "COMPLETED",
+              "targets": {
+                "accountIds": [
+                  "123412341234"
+                ],
+                "targetResourceTags": {
+                  "key": [
+                    "value"
+                  ]
+                }
+              },
+              "totalChecks": 150
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Sample ListCisScans Call"
+      }
+    ],
+    "SendCisSessionHealth": [
+      {
+        "input": {
+          "scanJobId": "624b746d-e080-44ae-8c1d-48e653365a38",
+          "sessionToken": "624b746d-e080-44ae-8c1d-48e653365a31"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Sample SendCisSessionHealth Call"
+      }
+    ],
+    "SendCisSessionTelemetry": [
+      {
+        "input": {
+          "messages": [
+            {
+              "cisRuleDetails": "dGVzdCBleGFtcGxlCg==",
+              "ruleId": "1.12.1",
+              "status": "FAILED"
+            },
+            {
+              "cisRuleDetails": "dGVzdCBleGFtcGxlCg==dGVzdCBleGFtcGxlCg",
+              "ruleId": "1.2.1",
+              "status": "PASSED"
+            }
+          ],
+          "scanJobId": "624b746d-e080-44ae-8c1d-48e653365a38",
+          "sessionToken": "624b746d-e080-44ae-8c1d-48e653365a31"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Sample SendCisSessionTelemetry Call"
+      }
+    ],
+    "StartCisSession": [
+      {
+        "input": {
+          "message": {
+            "sessionToken": "624b746d-e080-44ae-8c1d-48e653365a31"
+          },
+          "scanJobId": "624b746d-e080-44ae-8c1d-48e653365a38"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Sample SendCisSessionHealth Call"
+      }
+    ],
+    "StopCisSession": [
+      {
+        "input": {
+          "message": {
+            "benchmarkProfile": "xccdf_org.cisecurity.benchmarks_profile_Level_1",
+            "benchmarkVersion": "2.0.0",
+            "computePlatform": {
+              "version": "20.04",
+              "product": "ubuntu",
+              "vendor": "canonical"
+            },
+            "progress": {
+              "errorChecks": 1,
+              "failedChecks": 0,
+              "informationalChecks": 1,
+              "notApplicableChecks": 0,
+              "notEvaluatedChecks": 2,
+              "successfulChecks": 5,
+              "totalChecks": 10,
+              "unknownChecks": 0
+            },
+            "reason": "Failure Reason",
+            "status": "FAILED"
+          },
+          "scanJobId": "624b746d-e080-44ae-8c1d-48e653365a38",
+          "sessionToken": "624b746d-e080-44ae-8c1d-48e653365a31"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Sample StopCisSession Call"
+      }
+    ],
+    "UpdateCisScanConfiguration": [
+      {
+        "input": {
+          "scanConfigurationArn": "arn:aws:inspector2:us-east-1:123412341234:owner/123412341234/cis-configuration/624b746d-e080-44ae-8c1d-48e653365a38",
+          "scanName": "sample_new",
+          "schedule": {
+            "daily": {
+              "startTime": {
+                "timeOfDay": "12:56",
+                "timezone": "UTC"
+              }
+            }
+          },
+          "securityLevel": "LEVEL_2",
+          "targets": {
+            "accountIds": [
+              "SELF"
+            ],
+            "targetResourceTags": {
+              "key2": [
+                "value2"
+              ]
+            }
+          }
+        },
+        "output": {
+          "scanConfigurationArn": "arn:aws:inspector2:us-east-1:123412341234:owner/123412341234/cis-configuration/624b746d-e080-44ae-8c1d-48e653365a38"
+        },
+        "id": "example-1",
+        "title": "Sample UpdateCisScanConfiguration Call"
+      }
+    ]
   }
 }

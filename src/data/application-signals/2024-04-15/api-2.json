@@ -27,6 +27,21 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "BatchUpdateExclusionWindows":{
+      "name":"BatchUpdateExclusionWindows",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/exclusion-windows",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchUpdateExclusionWindowsInput"},
+      "output":{"shape":"BatchUpdateExclusionWindowsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateServiceLevelObjective":{
       "name":"CreateServiceLevelObjective",
       "http":{
@@ -43,6 +58,21 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"}
       ]
+    },
+    "DeleteGroupingConfiguration":{
+      "name":"DeleteGroupingConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/grouping-configuration",
+        "responseCode":200
+      },
+      "output":{"shape":"DeleteGroupingConfigurationOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
     },
     "DeleteServiceLevelObjective":{
       "name":"DeleteServiceLevelObjective",
@@ -89,6 +119,35 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListAuditFindings":{
+      "name":"ListAuditFindings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/auditFindings",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAuditFindingsInput"},
+      "output":{"shape":"ListAuditFindingsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListGroupingAttributeDefinitions":{
+      "name":"ListGroupingAttributeDefinitions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/grouping-attribute-definitions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListGroupingAttributeDefinitionsInput"},
+      "output":{"shape":"ListGroupingAttributeDefinitionsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListServiceDependencies":{
       "name":"ListServiceDependencies",
       "http":{
@@ -117,6 +176,21 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListServiceLevelObjectiveExclusionWindows":{
+      "name":"ListServiceLevelObjectiveExclusionWindows",
+      "http":{
+        "method":"GET",
+        "requestUri":"/slo/{Id}/exclusion-windows",
+        "responseCode":200
+      },
+      "input":{"shape":"ListServiceLevelObjectiveExclusionWindowsInput"},
+      "output":{"shape":"ListServiceLevelObjectiveExclusionWindowsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListServiceLevelObjectives":{
       "name":"ListServiceLevelObjectives",
       "http":{
@@ -140,6 +214,20 @@
       },
       "input":{"shape":"ListServiceOperationsInput"},
       "output":{"shape":"ListServiceOperationsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListServiceStates":{
+      "name":"ListServiceStates",
+      "http":{
+        "method":"POST",
+        "requestUri":"/service/states",
+        "responseCode":200
+      },
+      "input":{"shape":"ListServiceStatesInput"},
+      "output":{"shape":"ListServiceStatesOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
@@ -172,6 +260,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
       ]
+    },
+    "PutGroupingConfiguration":{
+      "name":"PutGroupingConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/grouping-configuration",
+        "responseCode":200
+      },
+      "input":{"shape":"PutGroupingConfigurationInput"},
+      "output":{"shape":"PutGroupingConfigurationOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
     },
     "StartDiscovery":{
       "name":"StartDiscovery",
@@ -263,6 +367,37 @@
       "type":"double",
       "box":true
     },
+    "AttributeFilter":{
+      "type":"structure",
+      "required":[
+        "AttributeFilterName",
+        "AttributeFilterValues"
+      ],
+      "members":{
+        "AttributeFilterName":{"shape":"AttributeFilterName"},
+        "AttributeFilterValues":{"shape":"AttributeFilterValues"}
+      }
+    },
+    "AttributeFilterName":{
+      "type":"string",
+      "pattern":"[A-Za-z0-9 :/-]+"
+    },
+    "AttributeFilterValue":{
+      "type":"string",
+      "pattern":"[A-Za-z0-9 :/-]+"
+    },
+    "AttributeFilterValues":{
+      "type":"list",
+      "member":{"shape":"AttributeFilterValue"},
+      "max":20,
+      "min":0
+    },
+    "AttributeFilters":{
+      "type":"list",
+      "member":{"shape":"AttributeFilter"},
+      "max":20,
+      "min":0
+    },
     "AttributeMap":{
       "type":"map",
       "key":{"shape":"String"},
@@ -276,8 +411,79 @@
       "type":"map",
       "key":{"shape":"KeyAttributeName"},
       "value":{"shape":"KeyAttributeValue"},
-      "max":3,
+      "max":4,
       "min":1
+    },
+    "AuditFinding":{
+      "type":"structure",
+      "required":["KeyAttributes"],
+      "members":{
+        "KeyAttributes":{"shape":"Attributes"},
+        "AuditorResults":{"shape":"AuditorResults"},
+        "Operation":{"shape":"String"},
+        "MetricGraph":{"shape":"MetricGraph"},
+        "DependencyGraph":{"shape":"DependencyGraph"},
+        "Type":{"shape":"String"}
+      }
+    },
+    "AuditFindings":{
+      "type":"list",
+      "member":{"shape":"AuditFinding"},
+      "max":10,
+      "min":0
+    },
+    "AuditTarget":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "Data"
+      ],
+      "members":{
+        "Type":{"shape":"String"},
+        "Data":{"shape":"AuditTargetEntity"}
+      }
+    },
+    "AuditTargetEntity":{
+      "type":"structure",
+      "members":{
+        "Service":{"shape":"ServiceEntity"},
+        "Slo":{"shape":"ServiceLevelObjectiveEntity"},
+        "ServiceOperation":{"shape":"ServiceOperationEntity"}
+      },
+      "union":true
+    },
+    "AuditTargets":{
+      "type":"list",
+      "member":{"shape":"AuditTarget"},
+      "max":10,
+      "min":1
+    },
+    "AuditorResult":{
+      "type":"structure",
+      "members":{
+        "Auditor":{"shape":"String"},
+        "Description":{"shape":"AuditorResultDescriptionString"},
+        "Severity":{"shape":"Severity"}
+      }
+    },
+    "AuditorResultDescriptionString":{
+      "type":"string",
+      "max":10240,
+      "min":0
+    },
+    "AuditorResults":{
+      "type":"list",
+      "member":{"shape":"AuditorResult"},
+      "max":5,
+      "min":0
+    },
+    "Auditors":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "AwsAccountId":{
+      "type":"string",
+      "pattern":"[0-9]{12}"
     },
     "BatchGetServiceLevelObjectiveBudgetReportInput":{
       "type":"structure",
@@ -302,6 +508,49 @@
         "Reports":{"shape":"ServiceLevelObjectiveBudgetReports"},
         "Errors":{"shape":"ServiceLevelObjectiveBudgetReportErrors"}
       }
+    },
+    "BatchUpdateExclusionWindowsError":{
+      "type":"structure",
+      "required":[
+        "SloId",
+        "ErrorCode",
+        "ErrorMessage"
+      ],
+      "members":{
+        "SloId":{"shape":"ServiceLevelObjectiveId"},
+        "ErrorCode":{"shape":"ExclusionWindowErrorCode"},
+        "ErrorMessage":{"shape":"ExclusionWindowErrorMessage"}
+      }
+    },
+    "BatchUpdateExclusionWindowsErrors":{
+      "type":"list",
+      "member":{"shape":"BatchUpdateExclusionWindowsError"},
+      "max":10,
+      "min":0
+    },
+    "BatchUpdateExclusionWindowsInput":{
+      "type":"structure",
+      "required":["SloIds"],
+      "members":{
+        "SloIds":{"shape":"ServiceLevelObjectiveIds"},
+        "AddExclusionWindows":{"shape":"ExclusionWindows"},
+        "RemoveExclusionWindows":{"shape":"ExclusionWindows"}
+      }
+    },
+    "BatchUpdateExclusionWindowsOutput":{
+      "type":"structure",
+      "required":[
+        "SloIds",
+        "Errors"
+      ],
+      "members":{
+        "SloIds":{"shape":"ServiceLevelObjectiveIds"},
+        "Errors":{"shape":"BatchUpdateExclusionWindowsErrors"}
+      }
+    },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
     },
     "BudgetRequestsRemaining":{
       "type":"integer",
@@ -348,6 +597,31 @@
       "box":true,
       "min":1
     },
+    "ChangeEvent":{
+      "type":"structure",
+      "required":[
+        "Timestamp",
+        "AccountId",
+        "Region",
+        "Entity",
+        "ChangeEventType",
+        "EventId"
+      ],
+      "members":{
+        "Timestamp":{"shape":"Timestamp"},
+        "AccountId":{"shape":"AwsAccountId"},
+        "Region":{"shape":"String"},
+        "Entity":{"shape":"Attributes"},
+        "ChangeEventType":{"shape":"ChangeEventType"},
+        "EventId":{"shape":"String"},
+        "UserName":{"shape":"String"},
+        "EventName":{"shape":"String"}
+      }
+    },
+    "ChangeEventType":{
+      "type":"string",
+      "enum":["DEPLOYMENT"]
+    },
     "ConflictException":{
       "type":"structure",
       "required":["Message"],
@@ -359,6 +633,13 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ConnectionType":{
+      "type":"string",
+      "enum":[
+        "INDIRECT",
+        "DIRECT"
+      ]
     },
     "CreateServiceLevelObjectiveInput":{
       "type":"structure",
@@ -380,6 +661,10 @@
         "Slo":{"shape":"ServiceLevelObjective"}
       }
     },
+    "DeleteGroupingConfigurationOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteServiceLevelObjectiveInput":{
       "type":"structure",
       "required":["Id"],
@@ -393,7 +678,24 @@
     },
     "DeleteServiceLevelObjectiveOutput":{
       "type":"structure",
+      "members":{}
+    },
+    "DependencyConfig":{
+      "type":"structure",
+      "required":[
+        "DependencyKeyAttributes",
+        "DependencyOperationName"
+      ],
       "members":{
+        "DependencyKeyAttributes":{"shape":"Attributes"},
+        "DependencyOperationName":{"shape":"OperationName"}
+      }
+    },
+    "DependencyGraph":{
+      "type":"structure",
+      "members":{
+        "Nodes":{"shape":"Nodes"},
+        "Edges":{"shape":"Edges"}
       }
     },
     "Dimension":{
@@ -423,6 +725,10 @@
       "max":30,
       "min":0
     },
+    "Double":{
+      "type":"double",
+      "box":true
+    },
     "DurationUnit":{
       "type":"string",
       "enum":[
@@ -432,12 +738,58 @@
         "MONTH"
       ]
     },
+    "Edge":{
+      "type":"structure",
+      "members":{
+        "SourceNodeId":{"shape":"String"},
+        "DestinationNodeId":{"shape":"String"},
+        "Duration":{"shape":"Double"},
+        "ConnectionType":{"shape":"ConnectionType"}
+      }
+    },
+    "Edges":{
+      "type":"list",
+      "member":{"shape":"Edge"}
+    },
     "EvaluationType":{
       "type":"string",
       "enum":[
         "PeriodBased",
         "RequestBased"
       ]
+    },
+    "ExclusionDuration":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "ExclusionReason":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "ExclusionWindow":{
+      "type":"structure",
+      "required":["Window"],
+      "members":{
+        "Window":{"shape":"Window"},
+        "StartTime":{"shape":"Timestamp"},
+        "RecurrenceRule":{"shape":"RecurrenceRule"},
+        "Reason":{"shape":"ExclusionReason"}
+      }
+    },
+    "ExclusionWindowErrorCode":{"type":"string"},
+    "ExclusionWindowErrorMessage":{"type":"string"},
+    "ExclusionWindows":{
+      "type":"list",
+      "member":{"shape":"ExclusionWindow"},
+      "max":10,
+      "min":0
+    },
+    "Expression":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "FaultDescription":{"type":"string"},
     "GetServiceInput":{
@@ -501,6 +853,60 @@
         "WarningThreshold":{"shape":"WarningThreshold"}
       }
     },
+    "GroupIdentifier":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "GroupName":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "GroupSource":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "GroupValue":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "GroupingAttributeDefinition":{
+      "type":"structure",
+      "required":["GroupingName"],
+      "members":{
+        "GroupingName":{"shape":"GroupingString"},
+        "GroupingSourceKeys":{"shape":"GroupingSourceKeyStringList"},
+        "DefaultGroupingValue":{"shape":"GroupingString"}
+      }
+    },
+    "GroupingAttributeDefinitions":{
+      "type":"list",
+      "member":{"shape":"GroupingAttributeDefinition"}
+    },
+    "GroupingConfiguration":{
+      "type":"structure",
+      "required":[
+        "GroupingAttributeDefinitions",
+        "UpdatedAt"
+      ],
+      "members":{
+        "GroupingAttributeDefinitions":{"shape":"GroupingAttributeDefinitions"},
+        "UpdatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "GroupingSourceKeyStringList":{
+      "type":"list",
+      "member":{"shape":"GroupingString"}
+    },
+    "GroupingString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\s+\\-=\\._:/@]*"
+    },
     "Interval":{
       "type":"structure",
       "members":{
@@ -518,6 +924,69 @@
       "max":1024,
       "min":1,
       "pattern":"[ -~]*[!-~]+[ -~]*"
+    },
+    "LatestChangeEvents":{
+      "type":"list",
+      "member":{"shape":"ChangeEvent"},
+      "max":1,
+      "min":1
+    },
+    "ListAuditFindingMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":1
+    },
+    "ListAuditFindingsInput":{
+      "type":"structure",
+      "required":[
+        "StartTime",
+        "EndTime",
+        "AuditTargets"
+      ],
+      "members":{
+        "StartTime":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"StartTime"
+        },
+        "EndTime":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"EndTime"
+        },
+        "Auditors":{"shape":"Auditors"},
+        "AuditTargets":{"shape":"AuditTargets"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"ListAuditFindingMaxResults"}
+      }
+    },
+    "ListAuditFindingsOutput":{
+      "type":"structure",
+      "required":["AuditFindings"],
+      "members":{
+        "AuditFindings":{"shape":"AuditFindings"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListGroupingAttributeDefinitionsInput":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        }
+      }
+    },
+    "ListGroupingAttributeDefinitionsOutput":{
+      "type":"structure",
+      "required":["GroupingAttributeDefinitions"],
+      "members":{
+        "GroupingAttributeDefinitions":{"shape":"GroupingAttributeDefinitions"},
+        "UpdatedAt":{"shape":"Timestamp"},
+        "NextToken":{"shape":"NextToken"}
+      }
     },
     "ListServiceDependenciesInput":{
       "type":"structure",
@@ -621,6 +1090,41 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListServiceLevelObjectiveExclusionWindowsInput":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"ServiceLevelObjectiveId",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "MaxResults":{
+          "shape":"ListServiceLevelObjectiveExclusionWindowsMaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        }
+      }
+    },
+    "ListServiceLevelObjectiveExclusionWindowsMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":1
+    },
+    "ListServiceLevelObjectiveExclusionWindowsOutput":{
+      "type":"structure",
+      "required":["ExclusionWindows"],
+      "members":{
+        "ExclusionWindows":{"shape":"ExclusionWindows"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListServiceLevelObjectivesInput":{
       "type":"structure",
       "members":{
@@ -630,6 +1134,7 @@
           "location":"querystring",
           "locationName":"OperationName"
         },
+        "DependencyConfig":{"shape":"DependencyConfig"},
         "MaxResults":{
           "shape":"ListServiceLevelObjectivesMaxResults",
           "location":"querystring",
@@ -639,7 +1144,18 @@
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"NextToken"
-        }
+        },
+        "IncludeLinkedAccounts":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"IncludeLinkedAccounts"
+        },
+        "SloOwnerAwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"querystring",
+          "locationName":"SloOwnerAwsAccountId"
+        },
+        "MetricSourceTypes":{"shape":"MetricSourceTypes"}
       }
     },
     "ListServiceLevelObjectivesMaxResults":{
@@ -706,6 +1222,41 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListServiceStatesInput":{
+      "type":"structure",
+      "required":[
+        "StartTime",
+        "EndTime"
+      ],
+      "members":{
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "MaxResults":{"shape":"ListServiceStatesMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "IncludeLinkedAccounts":{"shape":"Boolean"},
+        "AwsAccountId":{"shape":"AwsAccountId"},
+        "AttributeFilters":{"shape":"AttributeFilters"}
+      }
+    },
+    "ListServiceStatesMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":250
+    },
+    "ListServiceStatesOutput":{
+      "type":"structure",
+      "required":[
+        "StartTime",
+        "EndTime",
+        "ServiceStates"
+      ],
+      "members":{
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "ServiceStates":{"shape":"ServiceStates"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListServicesInput":{
       "type":"structure",
       "required":[
@@ -732,6 +1283,16 @@
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"NextToken"
+        },
+        "IncludeLinkedAccounts":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"IncludeLinkedAccounts"
+        },
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"querystring",
+          "locationName":"AwsAccountId"
         }
       }
     },
@@ -806,6 +1367,14 @@
       "max":2048,
       "min":1
     },
+    "MetricGraph":{
+      "type":"structure",
+      "members":{
+        "MetricDataQueries":{"shape":"MetricDataQueries"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"}
+      }
+    },
     "MetricId":{
       "type":"string",
       "max":255,
@@ -828,12 +1397,27 @@
         "Namespace":{"shape":"Namespace"},
         "MetricType":{"shape":"MetricType"},
         "Dimensions":{"shape":"Dimensions"},
-        "MetricName":{"shape":"MetricName"}
+        "MetricName":{"shape":"MetricName"},
+        "AccountId":{"shape":"AwsAccountId"}
       }
     },
     "MetricReferences":{
       "type":"list",
       "member":{"shape":"MetricReference"}
+    },
+    "MetricSourceType":{
+      "type":"string",
+      "enum":[
+        "ServiceOperation",
+        "CloudWatchMetric",
+        "ServiceDependency"
+      ]
+    },
+    "MetricSourceTypes":{
+      "type":"list",
+      "member":{"shape":"MetricSourceType"},
+      "max":3,
+      "min":1
     },
     "MetricStat":{
       "type":"structure",
@@ -868,6 +1452,29 @@
       "pattern":".*[^:].*"
     },
     "NextToken":{"type":"string"},
+    "Node":{
+      "type":"structure",
+      "required":[
+        "KeyAttributes",
+        "Name",
+        "NodeId"
+      ],
+      "members":{
+        "KeyAttributes":{"shape":"Attributes"},
+        "Name":{"shape":"String"},
+        "NodeId":{"shape":"String"},
+        "Operation":{"shape":"String"},
+        "Type":{"shape":"String"},
+        "Duration":{"shape":"Double"},
+        "Status":{"shape":"String"}
+      }
+    },
+    "Nodes":{
+      "type":"list",
+      "member":{"shape":"Node"},
+      "max":4,
+      "min":0
+    },
     "OperationName":{
       "type":"string",
       "max":255,
@@ -877,6 +1484,27 @@
       "type":"integer",
       "box":true,
       "min":1
+    },
+    "PutGroupingConfigurationInput":{
+      "type":"structure",
+      "required":["GroupingAttributeDefinitions"],
+      "members":{
+        "GroupingAttributeDefinitions":{"shape":"GroupingAttributeDefinitions"}
+      }
+    },
+    "PutGroupingConfigurationOutput":{
+      "type":"structure",
+      "required":["GroupingConfiguration"],
+      "members":{
+        "GroupingConfiguration":{"shape":"GroupingConfiguration"}
+      }
+    },
+    "RecurrenceRule":{
+      "type":"structure",
+      "required":["Expression"],
+      "members":{
+        "Expression":{"shape":"Expression"}
+      }
     },
     "RequestBasedServiceLevelIndicator":{
       "type":"structure",
@@ -907,7 +1535,8 @@
         "OperationName":{"shape":"OperationName"},
         "MetricType":{"shape":"ServiceLevelIndicatorMetricType"},
         "TotalRequestCountMetric":{"shape":"MetricDataQueries"},
-        "MonitoredRequestCountMetric":{"shape":"MonitoredRequestCountMetricDataQueries"}
+        "MonitoredRequestCountMetric":{"shape":"MonitoredRequestCountMetricDataQueries"},
+        "DependencyConfig":{"shape":"DependencyConfig"}
       }
     },
     "RequestBasedServiceLevelIndicatorMetricConfig":{
@@ -917,7 +1546,8 @@
         "OperationName":{"shape":"OperationName"},
         "MetricType":{"shape":"ServiceLevelIndicatorMetricType"},
         "TotalRequestCountMetric":{"shape":"MetricDataQueries"},
-        "MonitoredRequestCountMetric":{"shape":"MonitoredRequestCountMetricDataQueries"}
+        "MonitoredRequestCountMetric":{"shape":"MonitoredRequestCountMetricDataQueries"},
+        "DependencyConfig":{"shape":"DependencyConfig"}
       }
     },
     "ResourceId":{"type":"string"},
@@ -975,6 +1605,7 @@
       "members":{
         "KeyAttributes":{"shape":"Attributes"},
         "AttributeMaps":{"shape":"AttributeMaps"},
+        "ServiceGroups":{"shape":"ServiceGroups"},
         "MetricReferences":{"shape":"MetricReferences"},
         "LogGroupReferences":{"shape":"LogGroupReferences"}
       }
@@ -1019,7 +1650,35 @@
       "max":100,
       "min":0
     },
+    "ServiceEntity":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"String"},
+        "Name":{"shape":"String"},
+        "Environment":{"shape":"String"},
+        "AwsAccountId":{"shape":"String"}
+      }
+    },
     "ServiceErrorMessage":{"type":"string"},
+    "ServiceGroup":{
+      "type":"structure",
+      "required":[
+        "GroupName",
+        "GroupValue",
+        "GroupSource",
+        "GroupIdentifier"
+      ],
+      "members":{
+        "GroupName":{"shape":"GroupName"},
+        "GroupValue":{"shape":"GroupValue"},
+        "GroupSource":{"shape":"GroupSource"},
+        "GroupIdentifier":{"shape":"GroupIdentifier"}
+      }
+    },
+    "ServiceGroups":{
+      "type":"list",
+      "member":{"shape":"ServiceGroup"}
+    },
     "ServiceLevelIndicator":{
       "type":"structure",
       "required":[
@@ -1062,7 +1721,8 @@
         "KeyAttributes":{"shape":"Attributes"},
         "OperationName":{"shape":"OperationName"},
         "MetricType":{"shape":"ServiceLevelIndicatorMetricType"},
-        "MetricDataQueries":{"shape":"MetricDataQueries"}
+        "MetricDataQueries":{"shape":"MetricDataQueries"},
+        "DependencyConfig":{"shape":"DependencyConfig"}
       }
     },
     "ServiceLevelIndicatorMetricConfig":{
@@ -1071,9 +1731,11 @@
         "KeyAttributes":{"shape":"Attributes"},
         "OperationName":{"shape":"OperationName"},
         "MetricType":{"shape":"ServiceLevelIndicatorMetricType"},
+        "MetricName":{"shape":"MetricName"},
         "Statistic":{"shape":"ServiceLevelIndicatorStatistic"},
         "PeriodSeconds":{"shape":"SLIPeriodSeconds"},
-        "MetricDataQueries":{"shape":"MetricDataQueries"}
+        "MetricDataQueries":{"shape":"MetricDataQueries"},
+        "DependencyConfig":{"shape":"DependencyConfig"}
       }
     },
     "ServiceLevelIndicatorMetricThreshold":{
@@ -1112,7 +1774,8 @@
         "RequestBasedSli":{"shape":"RequestBasedServiceLevelIndicator"},
         "EvaluationType":{"shape":"EvaluationType"},
         "Goal":{"shape":"Goal"},
-        "BurnRateConfigurations":{"shape":"BurnRateConfigurations"}
+        "BurnRateConfigurations":{"shape":"BurnRateConfigurations"},
+        "MetricSourceType":{"shape":"MetricSourceType"}
       }
     },
     "ServiceLevelObjectiveArn":{
@@ -1186,6 +1849,13 @@
       "max":1024,
       "min":1
     },
+    "ServiceLevelObjectiveEntity":{
+      "type":"structure",
+      "members":{
+        "SloName":{"shape":"String"},
+        "SloArn":{"shape":"String"}
+      }
+    },
     "ServiceLevelObjectiveId":{
       "type":"string",
       "pattern":"[0-9A-Za-z][-._0-9A-Za-z ]{0,126}[0-9A-Za-z]$|^arn:aws:application-signals:[^:]*:[^:]*:slo/[0-9A-Za-z][-._0-9A-Za-z ]{0,126}[0-9A-Za-z]"
@@ -1215,7 +1885,10 @@
         "Name":{"shape":"ServiceLevelObjectiveName"},
         "KeyAttributes":{"shape":"Attributes"},
         "OperationName":{"shape":"OperationName"},
-        "CreatedTime":{"shape":"Timestamp"}
+        "DependencyConfig":{"shape":"DependencyConfig"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "EvaluationType":{"shape":"EvaluationType"},
+        "MetricSourceType":{"shape":"MetricSourceType"}
       }
     },
     "ServiceOperation":{
@@ -1227,6 +1900,14 @@
       "members":{
         "Name":{"shape":"OperationName"},
         "MetricReferences":{"shape":"MetricReferences"}
+      }
+    },
+    "ServiceOperationEntity":{
+      "type":"structure",
+      "members":{
+        "Service":{"shape":"ServiceEntity"},
+        "Operation":{"shape":"String"},
+        "MetricType":{"shape":"String"}
       }
     },
     "ServiceOperations":{
@@ -1247,6 +1928,24 @@
       },
       "exception":true
     },
+    "ServiceState":{
+      "type":"structure",
+      "required":[
+        "Service",
+        "LatestChangeEvents"
+      ],
+      "members":{
+        "AttributeFilters":{"shape":"AttributeFilters"},
+        "Service":{"shape":"Attributes"},
+        "LatestChangeEvents":{"shape":"LatestChangeEvents"}
+      }
+    },
+    "ServiceStates":{
+      "type":"list",
+      "member":{"shape":"ServiceState"},
+      "max":250,
+      "min":0
+    },
     "ServiceSummaries":{
       "type":"list",
       "member":{"shape":"ServiceSummary"}
@@ -1260,8 +1959,19 @@
       "members":{
         "KeyAttributes":{"shape":"Attributes"},
         "AttributeMaps":{"shape":"AttributeMaps"},
-        "MetricReferences":{"shape":"MetricReferences"}
+        "MetricReferences":{"shape":"MetricReferences"},
+        "ServiceGroups":{"shape":"ServiceGroups"}
       }
+    },
+    "Severity":{
+      "type":"string",
+      "enum":[
+        "CRITICAL",
+        "HIGH",
+        "MEDIUM",
+        "LOW",
+        "NONE"
+      ]
     },
     "StandardUnit":{
       "type":"string",
@@ -1297,13 +2007,11 @@
     },
     "StartDiscoveryInput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StartDiscoveryOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Stat":{"type":"string"},
     "String":{"type":"string"},
@@ -1348,8 +2056,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1390,8 +2097,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateServiceLevelObjectiveInput":{
       "type":"structure",
@@ -1431,6 +2137,17 @@
     "WarningThreshold":{
       "type":"double",
       "box":true
+    },
+    "Window":{
+      "type":"structure",
+      "required":[
+        "DurationUnit",
+        "Duration"
+      ],
+      "members":{
+        "DurationUnit":{"shape":"DurationUnit"},
+        "Duration":{"shape":"ExclusionDuration"}
+      }
     }
   }
 }

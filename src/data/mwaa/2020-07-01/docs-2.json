@@ -692,6 +692,13 @@
         "Environment$WeeklyMaintenanceWindowStart": "<p>The day and time of the week in Coordinated Universal Time (UTC) 24-hour standard time that weekly maintenance updates are scheduled. For example: <code>TUE:03:30</code>.</p>",
         "UpdateEnvironmentInput$WeeklyMaintenanceWindowStart": "<p>The day and time of the week in Coordinated Universal Time (UTC) 24-hour standard time to start weekly maintenance updates of your environment in the following format: <code>DAY:HH:MM</code>. For example: <code>TUE:03:30</code>. You can specify a start time in 30 minute increments only.</p>"
       }
+    },
+    "WorkerReplacementStrategy": {
+      "base": null,
+      "refs": {
+        "LastUpdate$WorkerReplacementStrategy": "<p>The worker replacement strategy used in the last update of the environment.</p>",
+        "UpdateEnvironmentInput$WorkerReplacementStrategy": "<p>The worker replacement strategy to use when updating the environment.</p> <p>You can select one of the following strategies:</p> <ul> <li> <p> <b>Forced -</b> Stops and replaces Apache Airflow workers without waiting for tasks to complete before an update.</p> </li> <li> <p> <b>Graceful -</b> Allows Apache Airflow workers to complete running tasks for up to 12 hours during an update before they're stopped and replaced.</p> </li> </ul>"
+      }
     }
   }
 }

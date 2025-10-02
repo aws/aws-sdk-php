@@ -3,16 +3,15 @@
   "service": "<p>With the Amazon Location Routes API you can calculate routes and estimate travel time based on up-to-date road network and live traffic information.</p> <p>Calculate optimal travel routes and estimate travel times using up-to-date road network and traffic data. Key features include:</p> <ul> <li> <p>Point-to-point routing with estimated travel time, distance, and turn-by-turn directions</p> </li> <li> <p>Multi-point route optimization to minimize travel time or distance</p> </li> <li> <p>Route matrices for efficient multi-destination planning</p> </li> <li> <p>Isoline calculations to determine reachable areas within specified time or distance thresholds</p> </li> <li> <p>Map-matching to align GPS traces with the road network</p> </li> </ul>",
   "operations": {
     "CalculateIsolines": "<p>Use the <code>CalculateIsolines</code> action to find service areas that can be reached in a given threshold of time, distance.</p>",
-    "CalculateRouteMatrix": "<p>Calculates route matrix containing the results for all pairs of Origins to Destinations. Each row corresponds to one entry in Origins. Each entry in the row corresponds to the route from that entry in Origins to an entry in Destinations positions.</p>",
-    "CalculateRoutes": "<p>Calculates a route given the following required parameters: <code>Origin</code> and <code>Destination</code>.</p>",
-    "OptimizeWaypoints": "<p>Calculates the optimal order to travel between a set of waypoints to minimize either the travel time or the distance travelled during the journey, based on road network restrictions and the traffic pattern data.</p>",
-    "SnapToRoads": "<p>The SnapToRoads action matches GPS trace to roads most likely traveled on.</p>"
+    "CalculateRouteMatrix": "<p> Use <code>CalculateRouteMatrix</code> to compute results for all pairs of Origins to Destinations. Each row corresponds to one entry in Origins. Each entry in the row corresponds to the route from that entry in Origins to an entry in Destinations positions.</p>",
+    "CalculateRoutes": "<p> <code>CalculateRoutes</code> computes routes given the following required parameters: <code>Origin</code> and <code>Destination</code>.</p>",
+    "OptimizeWaypoints": "<p> <code>OptimizeWaypoints</code> calculates the optimal order to travel between a set of waypoints to minimize either the travel time or the distance travelled during the journey, based on road network restrictions and the traffic pattern data.</p>",
+    "SnapToRoads": "<p> <code>SnapToRoads</code> matches GPS trace to roads most likely traveled on.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You don't have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ApiKey": {
       "base": null,
@@ -30,70 +29,6 @@
         "WaypointOptimizationWaypoint$Before": "<p>Constraint defining what waypoints are to be visited after this waypoint.</p>"
       }
     },
-    "Boolean": {
-      "base": null,
-      "refs": {
-        "CalculateIsolinesRequest$DepartNow": "<p>Uses the current time as the time of departure.</p>",
-        "CalculateRouteMatrixRequest$DepartNow": "<p>Uses the current time as the time of departure.</p>",
-        "CalculateRoutesRequest$DepartNow": "<p>Uses the current time as the time of departure.</p>",
-        "IsolineAllowOptions$Hot": "<p>Allow Hot (High Occupancy Toll) lanes while calculating the route.</p>",
-        "IsolineAllowOptions$Hov": "<p>Allow Hov (High Occupancy vehicle) lanes while calculating the route.</p>",
-        "IsolineAvoidanceOptions$CarShuttleTrains": "<p>Avoid car-shuttle-trains while calculating the route.</p>",
-        "IsolineAvoidanceOptions$ControlledAccessHighways": "<p>Avoid controlled access highways while calculating the route.</p>",
-        "IsolineAvoidanceOptions$DirtRoads": "<p>Avoid dirt roads while calculating the route.</p>",
-        "IsolineAvoidanceOptions$Ferries": "<p>Avoid ferries while calculating the route.</p>",
-        "IsolineAvoidanceOptions$SeasonalClosure": "<p>Avoid roads that have seasonal closure while calculating the route.</p>",
-        "IsolineAvoidanceOptions$TollRoads": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
-        "IsolineAvoidanceOptions$TollTransponders": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
-        "IsolineAvoidanceOptions$Tunnels": "<p>Avoid tunnels while calculating the route.</p>",
-        "IsolineAvoidanceOptions$UTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
-        "RouteAllowOptions$Hot": "<p>Allow Hot (High Occupancy Toll) lanes while calculating the route.</p>",
-        "RouteAllowOptions$Hov": "<p>Allow Hov (High Occupancy vehicle) lanes while calculating the route.</p>",
-        "RouteAvoidanceOptions$CarShuttleTrains": "<p>Avoid car-shuttle-trains while calculating the route.</p>",
-        "RouteAvoidanceOptions$ControlledAccessHighways": "<p>Avoid controlled access highways while calculating the route.</p>",
-        "RouteAvoidanceOptions$DirtRoads": "<p>Avoid dirt roads while calculating the route.</p>",
-        "RouteAvoidanceOptions$Ferries": "<p>Avoid ferries while calculating the route.</p>",
-        "RouteAvoidanceOptions$SeasonalClosure": "<p>Avoid roads that have seasonal closure while calculating the route.</p>",
-        "RouteAvoidanceOptions$TollRoads": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
-        "RouteAvoidanceOptions$TollTransponders": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
-        "RouteAvoidanceOptions$Tunnels": "<p>Avoid tunnels while calculating the route.</p>",
-        "RouteAvoidanceOptions$UTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
-        "RouteDestinationOptions$AvoidUTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
-        "RouteMatrixAllowOptions$Hot": "<p>Allow Hot (High Occupancy Toll) lanes while calculating the route.</p>",
-        "RouteMatrixAllowOptions$Hov": "<p>Allow Hov (High Occupancy vehicle) lanes while calculating the route.</p>",
-        "RouteMatrixAvoidanceOptions$CarShuttleTrains": "<p>Avoid car-shuttle-trains while calculating the route.</p>",
-        "RouteMatrixAvoidanceOptions$ControlledAccessHighways": "<p>Avoid controlled access highways while calculating the route.</p>",
-        "RouteMatrixAvoidanceOptions$DirtRoads": "<p>Avoid dirt roads while calculating the route.</p>",
-        "RouteMatrixAvoidanceOptions$Ferries": "<p>Avoid ferries while calculating the route.</p>",
-        "RouteMatrixAvoidanceOptions$TollRoads": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
-        "RouteMatrixAvoidanceOptions$TollTransponders": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
-        "RouteMatrixAvoidanceOptions$Tunnels": "<p>Avoid tunnels while calculating the route.</p>",
-        "RouteMatrixAvoidanceOptions$UTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
-        "RouteMatrixBoundary$Unbounded": "<p>No restrictions in terms of a routing boundary, and is typically used for longer routes.</p>",
-        "RouteOriginOptions$AvoidUTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
-        "RouteSpanSpeedLimitDetails$Unlimited": "<p>If the span doesn't have a speed limit like the Autobahn.</p>",
-        "RouteTollOptions$AllTransponders": "<p>Specifies if the user has valid transponder with access to all toll systems. This impacts toll calculation, and if true the price with transponders is used.</p>",
-        "RouteTollOptions$AllVignettes": "<p>Specifies if the user has valid vignettes with access for all toll roads. If a user has a vignette for a toll road, then toll cost for that road is omitted since no further payment is necessary.</p>",
-        "RouteTollPass$IncludesReturnTrip": "<p>If the pass includes the rate for the return leg of the trip.</p>",
-        "RouteTollPass$SeniorPass": "<p>If the pass is only valid for senior persons.</p>",
-        "RouteTollPrice$Estimate": "<p>If the price is an estimate or an exact value. </p>",
-        "RouteTollPrice$Range": "<p>If the price is a range or an exact value. If any of the toll fares making up the route is a range, the overall price is also a range.</p>",
-        "RouteTollPriceSummary$Estimate": "<p>If the price is an estimate or an exact value. </p>",
-        "RouteTollPriceSummary$Range": "<p>If the price is a range or an exact value. If any of the toll fares making up the route is a range, the overall price is also a range.</p>",
-        "RouteViolatedConstraints$AllHazardsRestricted": "<p>This restriction applies to truck cargo, where the resulting route excludes roads on which hazardous materials are prohibited from being transported.</p>",
-        "RouteViolatedConstraints$TimeDependent": "<p>The time dependent constraint.</p>",
-        "RouteViolatedConstraints$TravelMode": "<p>Travel mode corresponding to the leg.</p>",
-        "RouteWaypoint$AvoidUTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
-        "RouteWaypoint$PassThrough": "<p>If the waypoint should not be treated as a stop. If yes, the waypoint is passed through and doesn't split the route into different legs.</p>",
-        "WaypointOptimizationAvoidanceOptions$CarShuttleTrains": "<p>Avoidance options for cars-shuttles-trains.</p>",
-        "WaypointOptimizationAvoidanceOptions$ControlledAccessHighways": "<p>Avoid controlled access highways while calculating the route.</p>",
-        "WaypointOptimizationAvoidanceOptions$DirtRoads": "<p>Avoid dirt roads while calculating the route.</p>",
-        "WaypointOptimizationAvoidanceOptions$Ferries": "<p>Avoidance options for ferries.</p>",
-        "WaypointOptimizationAvoidanceOptions$TollRoads": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
-        "WaypointOptimizationAvoidanceOptions$Tunnels": "<p>Avoid tunnels while calculating the route.</p>",
-        "WaypointOptimizationAvoidanceOptions$UTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>"
-      }
-    },
     "BoundingBox": {
       "base": null,
       "refs": {
@@ -106,35 +41,31 @@
     },
     "CalculateIsolinesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CalculateIsolinesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CalculateRouteMatrixRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CalculateRouteMatrixRequestDestinationsList": {
       "base": null,
       "refs": {
-        "CalculateRouteMatrixRequest$Destinations": "<p>List of destinations for the route.</p>"
+        "CalculateRouteMatrixRequest$Destinations": "<p>List of destinations for the route.</p> <note> <p>Route calculations are billed for each origin and destination pair. If you use a large matrix of origins and destinations, your costs will increase accordingly. See <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/routes-pricing.html`\"> Amazon Location's pricing page</a> for more information.</p> </note>"
       }
     },
     "CalculateRouteMatrixRequestOriginsList": {
       "base": null,
       "refs": {
-        "CalculateRouteMatrixRequest$Origins": "<p>The position in longitude and latitude for the origin.</p>"
+        "CalculateRouteMatrixRequest$Origins": "<p>The position in longitude and latitude for the origin.</p> <note> <p>Route calculations are billed for each origin and destination pair. Using a large amount of Origins in a request can lead you to incur unexpected charges. See <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/routes-pricing.html`\"> Amazon Location's pricing page</a> for more information.</p> </note>"
       }
     },
     "CalculateRouteMatrixResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CalculateRouteMatrixResponseErrorCountInteger": {
       "base": null,
@@ -144,8 +75,7 @@
     },
     "CalculateRoutesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CalculateRoutesRequestLanguagesList": {
       "base": null,
@@ -161,13 +91,18 @@
     },
     "CalculateRoutesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Circle": {
       "base": "<p>Geometry defined as a circle. When request routing boundary was set as <code>AutoCircle</code>, the response routing boundary will return <code>Circle</code> derived from the <code>AutoCircle</code> settings.</p>",
       "refs": {
         "RouteMatrixBoundaryGeometry$Circle": "<p>Geometry defined as a circle. When request routing boundary was set as <code>AutoCircle</code>, the response routing boundary will return <code>Circle</code> derived from the <code>AutoCircle</code> settings.</p>"
+      }
+    },
+    "ClusterIndex": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationOptimizedWaypoint$ClusterIndex": "<p>Index of the cluster the waypoint is associated with. The index is included in the response only if clustering was performed while processing the request.</p>"
       }
     },
     "Corridor": {
@@ -231,13 +166,13 @@
       "refs": {
         "Isoline$DistanceThreshold": "<p>Distance threshold corresponding to the calculated Isoline.</p>",
         "IsolineDestinationOptions$AvoidActionsForDistance": "<p>Avoids actions for the provided distance. This is typically to consider for users in moving vehicles who may not have sufficient time to make an action at an origin or a destination.</p>",
-        "IsolineGranularityOptions$MaxResolution": "<p>Maximum resolution of the returned isoline.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>",
+        "IsolineGranularityOptions$MaxResolution": "<p>Maximum resolution of the returned isoline.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
         "IsolineMatchingOptions$OnRoadThreshold": "<p>If the distance to a highway/bridge/tunnel/sliproad is within threshold, the waypoint will be snapped to the highway/bridge/tunnel/sliproad.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
         "IsolineMatchingOptions$Radius": "<p>Considers all roads within the provided radius to match the provided destination to. The roads that are considered are determined by the provided Strategy.</p> <p> <b>Unit</b>: <code>Meters</code> </p>",
         "IsolineOriginOptions$AvoidActionsForDistance": "<p>Avoids actions for the provided distance. This is typically to consider for users in moving vehicles who may not have sufficient time to make an action at an origin or a destination.</p>",
         "OptimizeWaypointsResponse$Distance": "<p>Overall distance to travel the whole sequence.</p>",
         "RouteFerryOverviewSummary$Distance": "<p>Distance of the step.</p>",
-        "RouteFerrySpan$Distance": "<p>Distance of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p>",
+        "RouteFerrySpan$Distance": "<p>Distance of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
         "RouteFerryTravelStep$Distance": "<p>Distance of the step.</p>",
         "RouteMatchingOptions$OnRoadThreshold": "<p>If the distance to a highway/bridge/tunnel/sliproad is within threshold, the waypoint will be snapped to the highway/bridge/tunnel/sliproad.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
         "RouteMatchingOptions$Radius": "<p>Considers all roads within the provided radius to match the provided destination to. The roads that are considered are determined by the provided Strategy.</p> <p> <b>Unit</b>: <code>Meters</code> </p>",
@@ -250,7 +185,8 @@
         "RouteVehicleOverviewSummary$Distance": "<p>Distance of the step.</p>",
         "RouteVehicleSpan$Distance": "<p>Distance of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p>",
         "RouteVehicleTravelStep$Distance": "<p>Distance of the step.</p>",
-        "WaypointOptimizationConnection$Distance": "<p>Distance of the step.</p>"
+        "WaypointOptimizationConnection$Distance": "<p>Distance of the step.</p>",
+        "WaypointOptimizationDrivingDistanceOptions$DrivingDistance": "<p>DrivingDistance assigns all the waypoints that are within driving distance of each other into a single cluster.</p>"
       }
     },
     "DistanceThresholdList": {
@@ -269,7 +205,6 @@
       "base": null,
       "refs": {
         "BoundingBox$member": null,
-        "Circle$Radius": "<p>Radius of the Circle.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
         "Position$member": null,
         "Position23$member": null
       }
@@ -374,8 +309,7 @@
     },
     "InternalServerException": {
       "base": "<p>The request processing has failed because of an unknown error, exception or failure.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Isoline": {
       "base": "<p>Calculated isolines and associated properties.</p>",
@@ -384,9 +318,9 @@
       }
     },
     "IsolineAllowOptions": {
-      "base": "<p>Features that are allowed while calculating. a route</p>",
+      "base": "<p>Features that are allowed while calculating an isoline.</p>",
       "refs": {
-        "CalculateIsolinesRequest$Allow": "<p>Features that are allowed while calculating. a route</p>"
+        "CalculateIsolinesRequest$Allow": "<p>Features that are allowed while calculating an isoline.</p>"
       }
     },
     "IsolineAvoidanceArea": {
@@ -396,7 +330,7 @@
       }
     },
     "IsolineAvoidanceAreaGeometry": {
-      "base": "<p>The avoidance geometry, to be included while calculating the route.</p>",
+      "base": "<p>The avoidance geometry, to be included while calculating an isoline.</p>",
       "refs": {
         "IsolineAvoidanceArea$Geometry": "<p>Geometry of the area to be avoided.</p>",
         "IsolineAvoidanceAreaGeometryList$member": null
@@ -405,7 +339,7 @@
     "IsolineAvoidanceAreaGeometryList": {
       "base": null,
       "refs": {
-        "IsolineAvoidanceArea$Except": "<p>Exceptions to the provided avoidance geometry, to be included while calculating the route.</p>"
+        "IsolineAvoidanceArea$Except": "<p>Exceptions to the provided avoidance geometry, to be included while calculating an isoline.</p>"
       }
     },
     "IsolineAvoidanceAreaGeometryPolygonList": {
@@ -427,7 +361,7 @@
       }
     },
     "IsolineAvoidanceOptions": {
-      "base": "<p>Features that are avoided while calculating a route. Avoidance is on a best-case basis. If an avoidance can't be satisfied for a particular case, it violates the avoidance and the returned response produces a notice for the violation.</p>",
+      "base": "<p>Features that are avoided while calculating isolines. Avoidance is on a best-case basis. If an avoidance can't be satisfied for a particular case, it violates the avoidance and the returned response produces a notice for the violation.</p>",
       "refs": {
         "CalculateIsolinesRequest$Avoid": "<p>Features that are avoided while calculating a route. Avoidance is on a best-case basis. If an avoidance can't be satisfied for a particular case, it violates the avoidance and the returned response produces a notice for the violation.</p>"
       }
@@ -445,7 +379,7 @@
       }
     },
     "IsolineCarOptions": {
-      "base": "<p>Options for vehicles.</p>",
+      "base": "<p>Travel mode options when the provided travel mode is <code>Car</code>.</p>",
       "refs": {
         "IsolineTravelModeOptions$Car": "<p>Travel mode options when the provided travel mode is \"Car\"</p>"
       }
@@ -475,7 +409,7 @@
       }
     },
     "IsolineConnectionGeometry": {
-      "base": "<p>Geometry of the connection between different Isoline components.</p>",
+      "base": "<p>Geometry of the connection between different isoline components.</p>",
       "refs": {
         "IsolineConnection$Geometry": "<p>The isoline geometry.</p>"
       }
@@ -509,7 +443,7 @@
     "IsolineGranularityOptions": {
       "base": "<p>Isoline granularity related options.</p>",
       "refs": {
-        "CalculateIsolinesRequest$IsolineGranularity": "<p>Defines the granularity of the returned Isoline</p>"
+        "CalculateIsolinesRequest$IsolineGranularity": "<p>Defines the granularity of the returned Isoline.</p>"
       }
     },
     "IsolineGranularityOptionsMaxPointsInteger": {
@@ -550,15 +484,15 @@
       }
     },
     "IsolineOriginOptions": {
-      "base": "<p>Options for the property.</p>",
+      "base": "<p>Origin related options.</p>",
       "refs": {
         "CalculateIsolinesRequest$OriginOptions": "<p>Origin related options.</p>"
       }
     },
     "IsolineScooterOptions": {
-      "base": "<p>Options for the property.</p>",
+      "base": "<p>Travel mode options when the provided travel mode is <code>Scooter</code> </p>",
       "refs": {
-        "IsolineTravelModeOptions$Scooter": "<p>Travel mode options when the provided travel mode is \"Scooter\"</p>"
+        "IsolineTravelModeOptions$Scooter": "<p>Travel mode options when the provided travel mode is <code>Scooter</code> </p> <note> <p>When travel mode is set to <code>Scooter</code>, then the avoidance option <code>ControlledAccessHighways</code> defaults to <code>true</code>.</p> </note>"
       }
     },
     "IsolineScooterOptionsMaxSpeedDouble": {
@@ -593,9 +527,9 @@
       }
     },
     "IsolineThresholds": {
-      "base": "<p>Threshold to be used for the isoline calculation. Up to 3 thresholds per provided type can be requested.</p>",
+      "base": "<p>Threshold to be used for the isoline calculation. Up to 5 thresholds per provided type can be requested.</p>",
       "refs": {
-        "CalculateIsolinesRequest$Thresholds": "<p>Threshold to be used for the isoline calculation. Up to 3 thresholds per provided type can be requested.</p>"
+        "CalculateIsolinesRequest$Thresholds": "<p>Threshold to be used for the isoline calculation. Up to 3 thresholds per provided type can be requested.</p> <p> You incur a calculation charge for each threshold. Using a large amount of thresholds in a request can lead you to incur unexpected charges. See <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/routes-pricing.html`\"> Amazon Location's pricing page</a> for more information.</p>"
       }
     },
     "IsolineTrafficOptions": {
@@ -795,13 +729,11 @@
     },
     "OptimizeWaypointsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "OptimizeWaypointsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Polyline": {
       "base": null,
@@ -1004,9 +936,9 @@
       }
     },
     "RouteAllowOptions": {
-      "base": "<p>Features that are allowed while calculating. a route</p>",
+      "base": "<p>Features that are allowed while calculating a route.</p>",
       "refs": {
-        "CalculateRoutesRequest$Allow": "<p>Features that are allowed while calculating. a route</p>"
+        "CalculateRoutesRequest$Allow": "<p>Features that are allowed while calculating a route.</p>"
       }
     },
     "RouteAvoidanceArea": {
@@ -1047,7 +979,7 @@
       }
     },
     "RouteAvoidanceOptions": {
-      "base": "<p>Options related to areas to be avoided.</p>",
+      "base": "<p>Specifies options for areas to avoid when calculating the route. This is a best-effort avoidance setting, meaning the router will try to honor the avoidance preferences but may still include restricted areas if no feasible alternative route exists. If avoidance options are not followed, the response will indicate that the avoidance criteria were violated.</p>",
       "refs": {
         "CalculateRoutesRequest$Avoid": "<p>Features that are avoided while calculating a route. Avoidance is on a best-case basis. If an avoidance can't be satisfied for a particular case, it violates the avoidance and the returned response produces a notice for the violation.</p>"
       }
@@ -1065,7 +997,7 @@
       }
     },
     "RouteCarOptions": {
-      "base": "<p>Travel mode options when the provided travel mode is \"Car\"</p>",
+      "base": "<p>Travel mode options when the provided travel mode is <code>Car</code>.</p>",
       "refs": {
         "RouteTravelModeOptions$Car": "<p>Travel mode options when the provided travel mode is \"Car\"</p>"
       }
@@ -1152,7 +1084,7 @@
       }
     },
     "RouteExclusionOptions": {
-      "base": "<p>Exclusion options for the route.</p>",
+      "base": "<p>Specifies strict exclusion options for the route calculation. This setting mandates that the router will avoid any routes that include the specified options, rather than merely attempting to minimize them.</p>",
       "refs": {
         "CalculateRoutesRequest$Exclude": "<p>Features to be strictly excluded while calculating the route.</p>"
       }
@@ -1423,7 +1355,7 @@
     "RouteMatrixAllowOptions": {
       "base": "<p>Allow Options related to the route matrix.</p>",
       "refs": {
-        "CalculateRouteMatrixRequest$Allow": "<p>Features that are allowed while calculating. a route</p>"
+        "CalculateRouteMatrixRequest$Allow": "<p>Features that are allowed while calculating a route.</p>"
       }
     },
     "RouteMatrixAutoCircle": {
@@ -1469,7 +1401,7 @@
       }
     },
     "RouteMatrixAvoidanceOptions": {
-      "base": "<p>Options related to the route matrix.</p>",
+      "base": "<p>Specifies options for areas to avoid when calculating the route. This is a best-effort avoidance setting, meaning the router will try to honor the avoidance preferences but may still include restricted areas if no feasible alternative route exists. If avoidance options are not followed, the response will indicate that the avoidance criteria were violated.</p>",
       "refs": {
         "CalculateRouteMatrixRequest$Avoid": "<p>Features that are avoided while calculating a route. Avoidance is on a best-case basis. If an avoidance can't be satisfied for a particular case, it violates the avoidance and the returned response produces a notice for the violation.</p>"
       }
@@ -1512,7 +1444,7 @@
       }
     },
     "RouteMatrixCarOptions": {
-      "base": "<p>Options related to the car.</p>",
+      "base": "<p>Travel mode options when the provided travel mode is <code>Car</code>.</p>",
       "refs": {
         "RouteMatrixTravelModeOptions$Car": "<p>Travel mode options when the provided travel mode is \"Car\"</p>"
       }
@@ -1560,7 +1492,7 @@
       }
     },
     "RouteMatrixExclusionOptions": {
-      "base": "<p>Exclusion options.</p>",
+      "base": "<p>Specifies strict exclusion options for the route calculation. This setting mandates that the router will avoid any routes that include the specified options, rather than merely attempting to minimize them.</p>",
       "refs": {
         "CalculateRouteMatrixRequest$Exclude": "<p>Features to be strictly excluded while calculating the route.</p>"
       }
@@ -1615,9 +1547,9 @@
       }
     },
     "RouteMatrixScooterOptions": {
-      "base": "<p>Travel mode options when the provided travel mode is \"Scooter\"</p>",
+      "base": "<p>Travel mode options when the provided travel mode is <code>Scooter</code> </p>",
       "refs": {
-        "RouteMatrixTravelModeOptions$Scooter": "<p>Travel mode options when the provided travel mode is \"Scooter\"</p>"
+        "RouteMatrixTravelModeOptions$Scooter": "<p>Travel mode options when the provided travel mode is <code>Scooter</code> </p> <note> <p>When travel mode is set to <code>Scooter</code>, then the avoidance option <code>ControlledAccessHighways</code> defaults to <code>true</code>.</p> </note>"
       }
     },
     "RouteMatrixScooterOptionsMaxSpeedDouble": {
@@ -2026,9 +1958,9 @@
       }
     },
     "RouteScooterOptions": {
-      "base": "<p>Travel mode options when the provided travel mode is \"Scooter\"</p>",
+      "base": "<p>Travel mode options when the provided travel mode is <code>Scooter</code> </p>",
       "refs": {
-        "RouteTravelModeOptions$Scooter": "<p>Travel mode options when the provided travel mode is \"Scooter\"</p>"
+        "RouteTravelModeOptions$Scooter": "<p>Travel mode options when the provided travel mode is <code>Scooter</code> </p> <note> <p>When travel mode is set to <code>Scooter</code>, then the avoidance option <code>ControlledAccessHighways</code> defaults to <code>true</code>.</p> </note>"
       }
     },
     "RouteScooterOptionsMaxSpeedDouble": {
@@ -2406,7 +2338,7 @@
     "RouteTravelStepType": {
       "base": null,
       "refs": {
-        "CalculateRoutesRequest$TravelStepType": "<p>Type of step returned by the response. Default provides basic steps intended for web based applications. TurnByTurn provides detailed instructions with more granularity intended for a turn based naviagtion system.</p>"
+        "CalculateRoutesRequest$TravelStepType": "<p>Type of step returned by the response. Default provides basic steps intended for web based applications. TurnByTurn provides detailed instructions with more granularity intended for a turn based navigation system.</p>"
       }
     },
     "RouteTruckOptions": {
@@ -2737,11 +2669,104 @@
         "CalculateRoutesRequest$OptimizeRoutingFor": "<p>Specifies the optimization criteria for calculating a route.</p> <p>Default Value: <code>FastestRoute</code> </p>"
       }
     },
+    "SensitiveBoolean": {
+      "base": null,
+      "refs": {
+        "CalculateIsolinesRequest$DepartNow": "<p>Uses the current time as the time of departure.</p>",
+        "CalculateRouteMatrixRequest$DepartNow": "<p>Uses the current time as the time of departure.</p>",
+        "CalculateRoutesRequest$DepartNow": "<p>Uses the current time as the time of departure.</p>",
+        "IsolineAllowOptions$Hot": "<p>Allow Hot (High Occupancy Toll) lanes while calculating an isoline.</p> <p>Default value: <code>false</code> </p>",
+        "IsolineAllowOptions$Hov": "<p>Allow Hov (High Occupancy vehicle) lanes while calculating an isoline.</p> <p>Default value: <code>false</code> </p>",
+        "IsolineAvoidanceOptions$CarShuttleTrains": "<p>Avoid car-shuttle-trains while calculating an isoline.</p>",
+        "IsolineAvoidanceOptions$ControlledAccessHighways": "<p>Avoid controlled access highways while calculating an isoline.</p>",
+        "IsolineAvoidanceOptions$DirtRoads": "<p>Avoid dirt roads while calculating an isoline.</p>",
+        "IsolineAvoidanceOptions$Ferries": "<p>Avoid ferries while calculating an isoline.</p>",
+        "IsolineAvoidanceOptions$SeasonalClosure": "<p>Avoid roads that have seasonal closure while calculating an isoline.</p>",
+        "IsolineAvoidanceOptions$TollRoads": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
+        "IsolineAvoidanceOptions$TollTransponders": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
+        "IsolineAvoidanceOptions$Tunnels": "<p>Avoid tunnels while calculating an isoline.</p>",
+        "IsolineAvoidanceOptions$UTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
+        "RouteAllowOptions$Hot": "<p>Allow Hot (High Occupancy Toll) lanes while calculating the route.</p> <p>Default value: <code>false</code> </p>",
+        "RouteAllowOptions$Hov": "<p>Allow Hov (High Occupancy vehicle) lanes while calculating the route.</p> <p>Default value: <code>false</code> </p>",
+        "RouteAvoidanceOptions$CarShuttleTrains": "<p>Avoid car-shuttle-trains while calculating the route.</p>",
+        "RouteAvoidanceOptions$ControlledAccessHighways": "<p>Avoid controlled access highways while calculating the route.</p>",
+        "RouteAvoidanceOptions$DirtRoads": "<p>Avoid dirt roads while calculating the route.</p>",
+        "RouteAvoidanceOptions$Ferries": "<p>Avoid ferries while calculating the route.</p>",
+        "RouteAvoidanceOptions$SeasonalClosure": "<p>Avoid roads that have seasonal closure while calculating the route.</p>",
+        "RouteAvoidanceOptions$TollRoads": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
+        "RouteAvoidanceOptions$TollTransponders": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
+        "RouteAvoidanceOptions$Tunnels": "<p>Avoid tunnels while calculating the route.</p>",
+        "RouteAvoidanceOptions$UTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
+        "RouteDestinationOptions$AvoidUTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
+        "RouteMatrixAllowOptions$Hot": "<p>Allow Hot (High Occupancy Toll) lanes while calculating the route.</p> <p>Default value: <code>false</code> </p>",
+        "RouteMatrixAllowOptions$Hov": "<p>Allow Hov (High Occupancy vehicle) lanes while calculating the route.</p> <p>Default value: <code>false</code> </p>",
+        "RouteMatrixAvoidanceOptions$CarShuttleTrains": "<p>Avoid car-shuttle-trains while calculating the route.</p>",
+        "RouteMatrixAvoidanceOptions$ControlledAccessHighways": "<p>Avoid controlled access highways while calculating the route.</p>",
+        "RouteMatrixAvoidanceOptions$DirtRoads": "<p>Avoid dirt roads while calculating the route.</p>",
+        "RouteMatrixAvoidanceOptions$Ferries": "<p>Avoid ferries while calculating the route.</p>",
+        "RouteMatrixAvoidanceOptions$TollRoads": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
+        "RouteMatrixAvoidanceOptions$TollTransponders": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
+        "RouteMatrixAvoidanceOptions$Tunnels": "<p>Avoid tunnels while calculating the route.</p>",
+        "RouteMatrixAvoidanceOptions$UTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
+        "RouteMatrixBoundary$Unbounded": "<p>No restrictions in terms of a routing boundary, and is typically used for longer routes.</p>",
+        "RouteOriginOptions$AvoidUTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
+        "RouteSpanSpeedLimitDetails$Unlimited": "<p>If the span doesn't have a speed limit like the Autobahn.</p>",
+        "RouteTollOptions$AllTransponders": "<p>Specifies if the user has valid transponder with access to all toll systems. This impacts toll calculation, and if true the price with transponders is used.</p>",
+        "RouteTollOptions$AllVignettes": "<p>Specifies if the user has valid vignettes with access for all toll roads. If a user has a vignette for a toll road, then toll cost for that road is omitted since no further payment is necessary.</p>",
+        "RouteTollPass$IncludesReturnTrip": "<p>If the pass includes the rate for the return leg of the trip.</p>",
+        "RouteTollPass$SeniorPass": "<p>If the pass is only valid for senior persons.</p>",
+        "RouteTollPrice$Estimate": "<p>If the price is an estimate or an exact value. </p>",
+        "RouteTollPrice$Range": "<p>If the price is a range or an exact value. If any of the toll fares making up the route is a range, the overall price is also a range.</p>",
+        "RouteTollPriceSummary$Estimate": "<p>If the price is an estimate or an exact value. </p>",
+        "RouteTollPriceSummary$Range": "<p>If the price is a range or an exact value. If any of the toll fares making up the route is a range, the overall price is also a range.</p>",
+        "RouteViolatedConstraints$AllHazardsRestricted": "<p>This restriction applies to truck cargo, where the resulting route excludes roads on which hazardous materials are prohibited from being transported.</p>",
+        "RouteViolatedConstraints$TimeDependent": "<p>The time dependent constraint.</p>",
+        "RouteViolatedConstraints$TravelMode": "<p>Travel mode corresponding to the leg.</p>",
+        "RouteWaypoint$AvoidUTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
+        "RouteWaypoint$PassThrough": "<p>If the waypoint should not be treated as a stop. If yes, the waypoint is passed through and doesn't split the route into different legs.</p>",
+        "WaypointOptimizationAvoidanceOptions$CarShuttleTrains": "<p>Avoidance options for cars-shuttles-trains.</p>",
+        "WaypointOptimizationAvoidanceOptions$ControlledAccessHighways": "<p>Avoid controlled access highways while calculating the route.</p>",
+        "WaypointOptimizationAvoidanceOptions$DirtRoads": "<p>Avoid dirt roads while calculating the route.</p>",
+        "WaypointOptimizationAvoidanceOptions$Ferries": "<p>Avoidance options for ferries.</p>",
+        "WaypointOptimizationAvoidanceOptions$TollRoads": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
+        "WaypointOptimizationAvoidanceOptions$Tunnels": "<p>Avoid tunnels while calculating the route.</p>",
+        "WaypointOptimizationAvoidanceOptions$UTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>"
+      }
+    },
+    "SensitiveDouble": {
+      "base": null,
+      "refs": {
+        "Circle$Radius": "<p>Radius of the Circle.</p> <p> <b>Unit</b>: <code>meters</code> </p>"
+      }
+    },
     "SensitiveString": {
       "base": null,
       "refs": {
         "IsolineMatchingOptions$NameHint": "<p>Attempts to match the provided position to a road similar to the provided name.</p>",
-        "RouteMatrixMatchingOptions$NameHint": "<p>Attempts to match the provided position to a road similar to the provided name.</p>"
+        "LocalizedString$Value": "<p>The value of the localized string.</p>",
+        "RoadSnapNotice$Title": "<p>The notice title.</p>",
+        "RouteEmissionType$Co2EmissionClass": "<p>The CO 2 emission classes.</p>",
+        "RouteEmissionType$Type": "<p>Type of the emission.</p> <p> <b>Valid values</b>: <code>Euro1, Euro2, Euro3, Euro4, Euro5, Euro6, EuroEev</code> </p>",
+        "RouteFerryAfterTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
+        "RouteFerryBeforeTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
+        "RouteFerryLegDetails$RouteName": "<p>Route name of the ferry line.</p>",
+        "RouteFerryPlace$Name": "<p>The name of the place.</p>",
+        "RouteFerryTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
+        "RouteMatrixMatchingOptions$NameHint": "<p>Attempts to match the provided position to a road similar to the provided name.</p>",
+        "RouteNumber$Value": "<p>The route number.</p>",
+        "RoutePedestrianPlace$Name": "<p>The name of the place.</p>",
+        "RoutePedestrianTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
+        "RouteTollRate$ApplicableTimes": "<p>Time when the rate is valid.</p>",
+        "RouteTollRate$Id": "<p>The Toll rate Id.</p>",
+        "RouteTollRate$Name": "<p>The name of the toll.</p>",
+        "RouteTollSystem$Name": "<p>The toll system name.</p>",
+        "RouteTransponder$SystemName": "<p>Names of the toll system collecting the toll.</p>",
+        "RouteVehicleIncident$Description": "<p>Brief readable description of the incident.</p>",
+        "RouteVehicleNoticeDetail$Title": "<p>The notice title.</p>",
+        "RouteVehiclePlace$Name": "<p>The name of the place.</p>",
+        "RouteVehicleTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
+        "RouteZone$Name": "<p>The name of the zone.</p>",
+        "WaypointOptimizationFailedConstraint$Reason": "<p>Reason for the failed constraint.</p>"
       }
     },
     "SideOfStreetMatchingStrategy": {
@@ -2755,8 +2780,7 @@
     },
     "SnapToRoadsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SnapToRoadsRequestSnapRadiusLong": {
       "base": null,
@@ -2772,8 +2796,7 @@
     },
     "SnapToRoadsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SpeedKilometersPerHour": {
       "base": null,
@@ -2792,44 +2815,20 @@
         "CalculateRouteMatrixResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p>",
         "CalculateRoutesResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p>",
         "InternalServerException$Message": null,
-        "LocalizedString$Value": "<p>The value of the localized string.</p>",
         "OptimizeWaypointsResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p>",
-        "RoadSnapNotice$Title": "<p>The notice title.</p>",
-        "RouteEmissionType$Co2EmissionClass": "<p>The CO 2 emission classes.</p>",
-        "RouteEmissionType$Type": "<p>Type of the emission.</p> <p> <b>Valid values</b>: <code>Euro1, Euro2, Euro3, Euro4, Euro5, Euro6, EuroEev</code> </p>",
-        "RouteFerryAfterTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
-        "RouteFerryBeforeTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
-        "RouteFerryLegDetails$RouteName": "<p>Route name of the ferry line.</p>",
-        "RouteFerryPlace$Name": "<p>The name of the place.</p>",
-        "RouteFerryTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
-        "RouteNumber$Value": "<p>The route number.</p>",
-        "RoutePedestrianPlace$Name": "<p>The name of the place.</p>",
-        "RoutePedestrianTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
         "RouteTollPaymentSite$Name": "<p>Name of the payment site.</p>",
-        "RouteTollRate$ApplicableTimes": "<p>Time when the rate is valid.</p>",
-        "RouteTollRate$Id": "<p>The Toll rate Id.</p>",
-        "RouteTollRate$Name": "<p>The name of the toll.</p>",
-        "RouteTollSystem$Name": "<p>The toll system name.</p>",
-        "RouteTransponder$SystemName": "<p>Names of the toll system collecting the toll.</p>",
-        "RouteVehicleIncident$Description": "<p>Brief readable description of the incident.</p>",
-        "RouteVehicleNoticeDetail$Title": "<p>The notice title.</p>",
-        "RouteVehiclePlace$Name": "<p>The name of the place.</p>",
-        "RouteVehicleTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
         "RouteViolatedConstraints$RestrictedTimes": "<p>Access radius restrictions based on time.</p>",
         "RouteViolatedConstraints$TruckRoadType": "<p>Truck road type identifiers. <code>BK1</code> through <code>BK4</code> apply only to Sweden. <code>A2,A4,B2,B4,C,D,ET2,ET4</code> apply only to Mexico.</p> <note> <p>There are currently no other supported values as of 26th April 2024.</p> </note>",
-        "RouteZone$Name": "<p>The name of the zone.</p>",
         "SnapToRoadsResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p>",
         "ThrottlingException$Message": null,
         "ValidationException$Message": null,
         "ValidationExceptionField$Name": "<p>The name of the Validation Exception Field.</p>",
-        "ValidationExceptionField$Message": "<p>The error message.</p>",
-        "WaypointOptimizationFailedConstraint$Reason": "<p>Reason for the failed constraint.</p>"
+        "ValidationExceptionField$Message": "<p>The error message.</p>"
       }
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TimeOfDay": {
       "base": null,
@@ -2925,8 +2924,7 @@
     },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by an AWS service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>The input fails to satisfy the constraints specified by the Amazon Location service.</p>",
@@ -2991,15 +2989,27 @@
       }
     },
     "WaypointOptimizationAvoidanceOptions": {
-      "base": "<p>Options for WaypointOptimizationAvoidance.</p>",
+      "base": "<p>Specifies options for areas to avoid. This is a best-effort avoidance setting, meaning the router will try to honor the avoidance preferences but may still include restricted areas if no feasible alternative route exists. If avoidance options are not followed, the response will indicate that the avoidance criteria were violated.</p>",
       "refs": {
-        "OptimizeWaypointsRequest$Avoid": "<p>Features that are avoided while calculating a route. Avoidance is on a best-case basis. If an avoidance can't be satisfied for a particular case, this setting is ignored.</p>"
+        "OptimizeWaypointsRequest$Avoid": "<p>Features that are avoided. Avoidance is on a best-case basis. If an avoidance can't be satisfied for a particular case, this setting is ignored.</p>"
       }
     },
     "WaypointOptimizationAvoidanceOptionsAreasList": {
       "base": null,
       "refs": {
         "WaypointOptimizationAvoidanceOptions$Areas": "<p>Areas to be avoided.</p>"
+      }
+    },
+    "WaypointOptimizationClusteringAlgorithm": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationClusteringOptions$Algorithm": "<p>The algorithm to be used. <code>DrivingDistance</code> assigns all the waypoints that are within driving distance of each other into a single cluster. <code>TopologySegment</code> assigns all the waypoints that are within the same topology segment into a single cluster. A Topology segment is a linear stretch of road between two junctions.</p>"
+      }
+    },
+    "WaypointOptimizationClusteringOptions": {
+      "base": "<p>Options for WaypointOptimizationClustering.</p>",
+      "refs": {
+        "OptimizeWaypointsRequest$Clustering": "<p>Clustering allows you to specify how nearby waypoints can be clustered to improve the optimized sequence.</p>"
       }
     },
     "WaypointOptimizationConnection": {
@@ -3032,8 +3042,14 @@
         "OptimizeWaypointsRequest$Driver": "<p>Driver related options.</p>"
       }
     },
+    "WaypointOptimizationDrivingDistanceOptions": {
+      "base": "<p>Driving distance related options.</p>",
+      "refs": {
+        "WaypointOptimizationClusteringOptions$DrivingDistanceOptions": "<p>Driving distance options to be used when the clustering algorithm is DrivingDistance.</p>"
+      }
+    },
     "WaypointOptimizationExclusionOptions": {
-      "base": "<p>Exclusion options.</p>",
+      "base": "<p>Specifies strict exclusion options for the route calculation. This setting mandates that the router will avoid any routes that include the specified options, rather than merely attempting to minimize them.</p>",
       "refs": {
         "OptimizeWaypointsRequest$Exclude": "<p>Features to be strictly excluded while calculating the route.</p>"
       }
@@ -3087,7 +3103,7 @@
       }
     },
     "WaypointOptimizationOriginOptions": {
-      "base": "<p>Options related to the origin.</p>",
+      "base": "<p>Origin related options.</p>",
       "refs": {
         "OptimizeWaypointsRequest$OriginOptions": "<p>Origin related options.</p>"
       }

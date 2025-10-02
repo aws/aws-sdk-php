@@ -64,6 +64,26 @@
       "output":{"shape":"CreateDataLakeDatasetResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "CreateDataLakeNamespace":{
+      "name":"CreateDataLakeNamespace",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/api/datalake/instance/{instanceId}/namespaces/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateDataLakeNamespaceRequest"},
+      "output":{"shape":"CreateDataLakeNamespaceResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
@@ -133,6 +153,26 @@
       ],
       "idempotent":true
     },
+    "DeleteDataLakeNamespace":{
+      "name":"DeleteDataLakeNamespace",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/api/datalake/instance/{instanceId}/namespaces/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteDataLakeNamespaceRequest"},
+      "output":{"shape":"DeleteDataLakeNamespaceResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "DeleteInstance":{
       "name":"DeleteInstance",
       "http":{
@@ -172,6 +212,25 @@
         {"shape":"ConflictException"}
       ]
     },
+    "GetDataIntegrationEvent":{
+      "name":"GetDataIntegrationEvent",
+      "http":{
+        "method":"GET",
+        "requestUri":"/api-data/data-integration/instance/{instanceId}/data-integration-events/{eventId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDataIntegrationEventRequest"},
+      "output":{"shape":"GetDataIntegrationEventResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "GetDataIntegrationFlow":{
       "name":"GetDataIntegrationFlow",
       "http":{
@@ -181,6 +240,25 @@
       },
       "input":{"shape":"GetDataIntegrationFlowRequest"},
       "output":{"shape":"GetDataIntegrationFlowResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "GetDataIntegrationFlowExecution":{
+      "name":"GetDataIntegrationFlowExecution",
+      "http":{
+        "method":"GET",
+        "requestUri":"/api-data/data-integration/instance/{instanceId}/data-integration-flows/{flowName}/executions/{executionId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDataIntegrationFlowExecutionRequest"},
+      "output":{"shape":"GetDataIntegrationFlowExecutionResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"},
@@ -210,6 +288,25 @@
         {"shape":"ConflictException"}
       ]
     },
+    "GetDataLakeNamespace":{
+      "name":"GetDataLakeNamespace",
+      "http":{
+        "method":"GET",
+        "requestUri":"/api/datalake/instance/{instanceId}/namespaces/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDataLakeNamespaceRequest"},
+      "output":{"shape":"GetDataLakeNamespaceResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "GetInstance":{
       "name":"GetInstance",
       "http":{
@@ -219,6 +316,44 @@
       },
       "input":{"shape":"GetInstanceRequest"},
       "output":{"shape":"GetInstanceResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "ListDataIntegrationEvents":{
+      "name":"ListDataIntegrationEvents",
+      "http":{
+        "method":"GET",
+        "requestUri":"/api-data/data-integration/instance/{instanceId}/data-integration-events",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDataIntegrationEventsRequest"},
+      "output":{"shape":"ListDataIntegrationEventsResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "ListDataIntegrationFlowExecutions":{
+      "name":"ListDataIntegrationFlowExecutions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/api-data/data-integration/instance/{instanceId}/data-integration-flows/{flowName}/executions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDataIntegrationFlowExecutionsRequest"},
+      "output":{"shape":"ListDataIntegrationFlowExecutionsResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"},
@@ -261,6 +396,25 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "ListDataLakeNamespaces":{
+      "name":"ListDataLakeNamespaces",
+      "http":{
+        "method":"GET",
+        "requestUri":"/api/datalake/instance/{instanceId}/namespaces",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDataLakeNamespacesRequest"},
+      "output":{"shape":"ListDataLakeNamespacesResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
@@ -392,6 +546,25 @@
       },
       "input":{"shape":"UpdateDataLakeDatasetRequest"},
       "output":{"shape":"UpdateDataLakeDatasetResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "UpdateDataLakeNamespace":{
+      "name":"UpdateDataLakeNamespace",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/api/datalake/instance/{instanceId}/namespaces/{name}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateDataLakeNamespaceRequest"},
+      "output":{"shape":"UpdateDataLakeNamespaceResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"},
@@ -572,7 +745,7 @@
           "locationName":"instanceId"
         },
         "namespace":{
-          "shape":"DataLakeDatasetNamespace",
+          "shape":"DataLakeNamespaceName",
           "location":"uri",
           "locationName":"namespace"
         },
@@ -583,6 +756,7 @@
         },
         "schema":{"shape":"DataLakeDatasetSchema"},
         "description":{"shape":"DataLakeDatasetDescription"},
+        "partitionSpec":{"shape":"DataLakeDatasetPartitionSpec"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -591,6 +765,34 @@
       "required":["dataset"],
       "members":{
         "dataset":{"shape":"DataLakeDataset"}
+      }
+    },
+    "CreateDataLakeNamespaceRequest":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "name"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"instanceId"
+        },
+        "name":{
+          "shape":"DataLakeNamespaceName",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "description":{"shape":"DataLakeNamespaceDescription"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateDataLakeNamespaceResponse":{
+      "type":"structure",
+      "required":["namespace"],
+      "members":{
+        "namespace":{"shape":"DataLakeNamespace"}
       }
     },
     "CreateInstanceRequest":{
@@ -614,15 +816,102 @@
         "instance":{"shape":"Instance"}
       }
     },
+    "DataIntegrationDatasetArn":{
+      "type":"string",
+      "max":1011,
+      "min":20,
+      "pattern":"arn:aws:scn:([a-z0-9-]+):([0-9]+):instance/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})/namespaces/[^/]+/datasets/[^/]+"
+    },
+    "DataIntegrationEvent":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "eventId",
+        "eventType",
+        "eventGroupId",
+        "eventTimestamp"
+      ],
+      "members":{
+        "instanceId":{"shape":"UUID"},
+        "eventId":{"shape":"UUID"},
+        "eventType":{"shape":"DataIntegrationEventType"},
+        "eventGroupId":{"shape":"DataIntegrationEventGroupId"},
+        "eventTimestamp":{"shape":"Timestamp"},
+        "datasetTargetDetails":{"shape":"DataIntegrationEventDatasetTargetDetails"}
+      }
+    },
     "DataIntegrationEventData":{
       "type":"string",
       "max":1048576,
       "min":1,
       "sensitive":true
     },
+    "DataIntegrationEventDatasetLoadExecutionDetails":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"DataIntegrationEventDatasetLoadStatus"},
+        "message":{"shape":"String"}
+      }
+    },
+    "DataIntegrationEventDatasetLoadStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCEEDED",
+        "IN_PROGRESS",
+        "FAILED"
+      ]
+    },
+    "DataIntegrationEventDatasetOperationType":{
+      "type":"string",
+      "enum":[
+        "APPEND",
+        "UPSERT",
+        "DELETE"
+      ]
+    },
+    "DataIntegrationEventDatasetTargetConfiguration":{
+      "type":"structure",
+      "required":[
+        "datasetIdentifier",
+        "operationType"
+      ],
+      "members":{
+        "datasetIdentifier":{"shape":"DataIntegrationDatasetArn"},
+        "operationType":{"shape":"DataIntegrationEventDatasetOperationType"}
+      }
+    },
+    "DataIntegrationEventDatasetTargetDetails":{
+      "type":"structure",
+      "required":[
+        "datasetIdentifier",
+        "operationType",
+        "datasetLoadExecution"
+      ],
+      "members":{
+        "datasetIdentifier":{"shape":"DataIntegrationDatasetArn"},
+        "operationType":{"shape":"DataIntegrationEventDatasetOperationType"},
+        "datasetLoadExecution":{"shape":"DataIntegrationEventDatasetLoadExecutionDetails"}
+      }
+    },
     "DataIntegrationEventGroupId":{
       "type":"string",
       "max":255,
+      "min":1
+    },
+    "DataIntegrationEventList":{
+      "type":"list",
+      "member":{"shape":"DataIntegrationEvent"}
+    },
+    "DataIntegrationEventMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":20,
+      "min":1
+    },
+    "DataIntegrationEventNextToken":{
+      "type":"string",
+      "max":65535,
       "min":1
     },
     "DataIntegrationEventType":{
@@ -642,7 +931,8 @@
         "scn.data.shipment",
         "scn.data.shipmentstop",
         "scn.data.shipmentstoporder",
-        "scn.data.supplyplan"
+        "scn.data.supplyplan",
+        "scn.data.dataset"
       ]
     },
     "DataIntegrationFlow":{
@@ -670,7 +960,15 @@
       "type":"structure",
       "members":{
         "loadType":{"shape":"DataIntegrationFlowLoadType"},
-        "dedupeRecords":{"shape":"Boolean"}
+        "dedupeRecords":{"shape":"Boolean"},
+        "dedupeStrategy":{"shape":"DataIntegrationFlowDedupeStrategy"}
+      }
+    },
+    "DataIntegrationFlowDatasetSource":{
+      "type":"structure",
+      "required":["datasetIdentifier"],
+      "members":{
+        "datasetIdentifier":{"shape":"DataIntegrationDatasetArn"}
       }
     },
     "DataIntegrationFlowDatasetSourceConfiguration":{
@@ -687,6 +985,116 @@
       "members":{
         "datasetIdentifier":{"shape":"DatasetIdentifier"},
         "options":{"shape":"DataIntegrationFlowDatasetOptions"}
+      }
+    },
+    "DataIntegrationFlowDedupeStrategy":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"DataIntegrationFlowDedupeStrategyType"},
+        "fieldPriority":{"shape":"DataIntegrationFlowFieldPriorityDedupeStrategyConfiguration"}
+      }
+    },
+    "DataIntegrationFlowDedupeStrategyType":{
+      "type":"string",
+      "enum":["FIELD_PRIORITY"]
+    },
+    "DataIntegrationFlowExecution":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "flowName",
+        "executionId"
+      ],
+      "members":{
+        "instanceId":{"shape":"UUID"},
+        "flowName":{"shape":"DataIntegrationFlowName"},
+        "executionId":{"shape":"UUID"},
+        "status":{"shape":"DataIntegrationFlowExecutionStatus"},
+        "sourceInfo":{"shape":"DataIntegrationFlowExecutionSourceInfo"},
+        "message":{"shape":"String"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "outputMetadata":{"shape":"DataIntegrationFlowExecutionOutputMetadata"}
+      }
+    },
+    "DataIntegrationFlowExecutionDiagnosticReportsRootS3URI":{
+      "type":"string",
+      "pattern":"s3://[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]/.{1,1024}"
+    },
+    "DataIntegrationFlowExecutionList":{
+      "type":"list",
+      "member":{"shape":"DataIntegrationFlowExecution"}
+    },
+    "DataIntegrationFlowExecutionMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":20,
+      "min":1
+    },
+    "DataIntegrationFlowExecutionNextToken":{
+      "type":"string",
+      "max":65535,
+      "min":1
+    },
+    "DataIntegrationFlowExecutionOutputMetadata":{
+      "type":"structure",
+      "members":{
+        "diagnosticReportsRootS3URI":{"shape":"DataIntegrationFlowExecutionDiagnosticReportsRootS3URI"}
+      }
+    },
+    "DataIntegrationFlowExecutionSourceInfo":{
+      "type":"structure",
+      "required":["sourceType"],
+      "members":{
+        "sourceType":{"shape":"DataIntegrationFlowSourceType"},
+        "s3Source":{"shape":"DataIntegrationFlowS3Source"},
+        "datasetSource":{"shape":"DataIntegrationFlowDatasetSource"}
+      }
+    },
+    "DataIntegrationFlowExecutionStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCEEDED",
+        "IN_PROGRESS",
+        "FAILED"
+      ]
+    },
+    "DataIntegrationFlowFieldPriorityDedupeField":{
+      "type":"structure",
+      "required":[
+        "name",
+        "sortOrder"
+      ],
+      "members":{
+        "name":{"shape":"DataIntegrationFlowFieldPriorityDedupeFieldName"},
+        "sortOrder":{"shape":"DataIntegrationFlowFieldPriorityDedupeSortOrder"}
+      }
+    },
+    "DataIntegrationFlowFieldPriorityDedupeFieldList":{
+      "type":"list",
+      "member":{"shape":"DataIntegrationFlowFieldPriorityDedupeField"},
+      "max":10,
+      "min":1
+    },
+    "DataIntegrationFlowFieldPriorityDedupeFieldName":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[a-z0-9_]+"
+    },
+    "DataIntegrationFlowFieldPriorityDedupeSortOrder":{
+      "type":"string",
+      "enum":[
+        "ASC",
+        "DESC"
+      ]
+    },
+    "DataIntegrationFlowFieldPriorityDedupeStrategyConfiguration":{
+      "type":"structure",
+      "required":["fields"],
+      "members":{
+        "fields":{"shape":"DataIntegrationFlowFieldPriorityDedupeFieldList"}
       }
     },
     "DataIntegrationFlowFileType":{
@@ -737,6 +1145,17 @@
       "min":0,
       "pattern":"[/A-Za-z0-9._-]+"
     },
+    "DataIntegrationFlowS3Source":{
+      "type":"structure",
+      "required":[
+        "bucketName",
+        "key"
+      ],
+      "members":{
+        "bucketName":{"shape":"S3BucketName"},
+        "key":{"shape":"DataIntegrationS3ObjectKey"}
+      }
+    },
     "DataIntegrationFlowS3SourceConfiguration":{
       "type":"structure",
       "required":[
@@ -764,7 +1183,8 @@
     "DataIntegrationFlowSQLQuery":{
       "type":"string",
       "max":65535,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "DataIntegrationFlowSQLTransformationConfiguration":{
       "type":"structure",
@@ -836,6 +1256,12 @@
         "NONE"
       ]
     },
+    "DataIntegrationS3ObjectKey":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[/A-Za-z0-9._:*()'!=?&+;@-]+"
+    },
     "DataLakeDataset":{
       "type":"structure",
       "required":[
@@ -849,11 +1275,12 @@
       ],
       "members":{
         "instanceId":{"shape":"UUID"},
-        "namespace":{"shape":"DataLakeDatasetNamespace"},
+        "namespace":{"shape":"DataLakeNamespaceName"},
         "name":{"shape":"DataLakeDatasetName"},
         "arn":{"shape":"AscResourceArn"},
         "schema":{"shape":"DataLakeDatasetSchema"},
         "description":{"shape":"DataLakeDatasetDescription"},
+        "partitionSpec":{"shape":"DataLakeDatasetPartitionSpec"},
         "createdTime":{"shape":"Timestamp"},
         "lastModifiedTime":{"shape":"Timestamp"}
       }
@@ -867,7 +1294,7 @@
       "type":"list",
       "member":{"shape":"DataLakeDataset"},
       "max":20,
-      "min":1
+      "min":0
     },
     "DataLakeDatasetMaxResults":{
       "type":"integer",
@@ -881,15 +1308,63 @@
       "min":1,
       "pattern":"[a-z0-9_]+"
     },
-    "DataLakeDatasetNamespace":{
-      "type":"string",
-      "max":50,
-      "min":1,
-      "pattern":"[a-z]+"
-    },
     "DataLakeDatasetNextToken":{
       "type":"string",
       "max":65535,
+      "min":1
+    },
+    "DataLakeDatasetPartitionField":{
+      "type":"structure",
+      "required":[
+        "name",
+        "transform"
+      ],
+      "members":{
+        "name":{"shape":"DataLakeDatasetSchemaFieldName"},
+        "transform":{"shape":"DataLakeDatasetPartitionFieldTransform"}
+      }
+    },
+    "DataLakeDatasetPartitionFieldList":{
+      "type":"list",
+      "member":{"shape":"DataLakeDatasetPartitionField"},
+      "max":10,
+      "min":1
+    },
+    "DataLakeDatasetPartitionFieldTransform":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"DataLakeDatasetPartitionTransformType"}
+      }
+    },
+    "DataLakeDatasetPartitionSpec":{
+      "type":"structure",
+      "required":["fields"],
+      "members":{
+        "fields":{"shape":"DataLakeDatasetPartitionFieldList"}
+      }
+    },
+    "DataLakeDatasetPartitionTransformType":{
+      "type":"string",
+      "enum":[
+        "YEAR",
+        "MONTH",
+        "DAY",
+        "HOUR",
+        "IDENTITY"
+      ]
+    },
+    "DataLakeDatasetPrimaryKeyField":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"DataLakeDatasetSchemaFieldName"}
+      }
+    },
+    "DataLakeDatasetPrimaryKeyFieldList":{
+      "type":"list",
+      "member":{"shape":"DataLakeDatasetPrimaryKeyField"},
+      "max":20,
       "min":1
     },
     "DataLakeDatasetSchema":{
@@ -900,7 +1375,8 @@
       ],
       "members":{
         "name":{"shape":"DataLakeDatasetSchemaName"},
-        "fields":{"shape":"DataLakeDatasetSchemaFieldList"}
+        "fields":{"shape":"DataLakeDatasetSchemaFieldList"},
+        "primaryKeys":{"shape":"DataLakeDatasetPrimaryKeyFieldList"}
       }
     },
     "DataLakeDatasetSchemaField":{
@@ -934,7 +1410,8 @@
         "INT",
         "DOUBLE",
         "STRING",
-        "TIMESTAMP"
+        "TIMESTAMP",
+        "LONG"
       ]
     },
     "DataLakeDatasetSchemaName":{
@@ -942,6 +1419,52 @@
       "max":100,
       "min":1,
       "pattern":"[A-Za-z0-9]+"
+    },
+    "DataLakeNamespace":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "name",
+        "arn",
+        "createdTime",
+        "lastModifiedTime"
+      ],
+      "members":{
+        "instanceId":{"shape":"UUID"},
+        "name":{"shape":"DataLakeNamespaceName"},
+        "arn":{"shape":"AscResourceArn"},
+        "description":{"shape":"DataLakeNamespaceDescription"},
+        "createdTime":{"shape":"Timestamp"},
+        "lastModifiedTime":{"shape":"Timestamp"}
+      }
+    },
+    "DataLakeNamespaceDescription":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "DataLakeNamespaceList":{
+      "type":"list",
+      "member":{"shape":"DataLakeNamespace"},
+      "max":20,
+      "min":1
+    },
+    "DataLakeNamespaceMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":20,
+      "min":1
+    },
+    "DataLakeNamespaceName":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"[a-z0-9_]+"
+    },
+    "DataLakeNamespaceNextToken":{
+      "type":"string",
+      "max":65535,
+      "min":1
     },
     "DatasetIdentifier":{
       "type":"string",
@@ -993,7 +1516,7 @@
           "locationName":"instanceId"
         },
         "namespace":{
-          "shape":"DataLakeDatasetNamespace",
+          "shape":"DataLakeNamespaceName",
           "location":"uri",
           "locationName":"namespace"
         },
@@ -1013,8 +1536,38 @@
       ],
       "members":{
         "instanceId":{"shape":"UUID"},
-        "namespace":{"shape":"DataLakeDatasetNamespace"},
+        "namespace":{"shape":"DataLakeNamespaceName"},
         "name":{"shape":"DataLakeDatasetName"}
+      }
+    },
+    "DeleteDataLakeNamespaceRequest":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "name"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"instanceId"
+        },
+        "name":{
+          "shape":"DataLakeNamespaceName",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "DeleteDataLakeNamespaceResponse":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "name"
+      ],
+      "members":{
+        "instanceId":{"shape":"UUID"},
+        "name":{"shape":"DataLakeNamespaceName"}
       }
     },
     "DeleteInstanceRequest":{
@@ -1065,6 +1618,64 @@
         "job":{"shape":"BillOfMaterialsImportJob"}
       }
     },
+    "GetDataIntegrationEventRequest":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "eventId"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"instanceId"
+        },
+        "eventId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"eventId"
+        }
+      }
+    },
+    "GetDataIntegrationEventResponse":{
+      "type":"structure",
+      "required":["event"],
+      "members":{
+        "event":{"shape":"DataIntegrationEvent"}
+      }
+    },
+    "GetDataIntegrationFlowExecutionRequest":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "flowName",
+        "executionId"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"instanceId"
+        },
+        "flowName":{
+          "shape":"DataIntegrationFlowName",
+          "location":"uri",
+          "locationName":"flowName"
+        },
+        "executionId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"executionId"
+        }
+      }
+    },
+    "GetDataIntegrationFlowExecutionResponse":{
+      "type":"structure",
+      "required":["flowExecution"],
+      "members":{
+        "flowExecution":{"shape":"DataIntegrationFlowExecution"}
+      }
+    },
     "GetDataIntegrationFlowRequest":{
       "type":"structure",
       "required":[
@@ -1105,7 +1716,7 @@
           "locationName":"instanceId"
         },
         "namespace":{
-          "shape":"DataLakeDatasetNamespace",
+          "shape":"DataLakeNamespaceName",
           "location":"uri",
           "locationName":"namespace"
         },
@@ -1121,6 +1732,32 @@
       "required":["dataset"],
       "members":{
         "dataset":{"shape":"DataLakeDataset"}
+      }
+    },
+    "GetDataLakeNamespaceRequest":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "name"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"instanceId"
+        },
+        "name":{
+          "shape":"DataLakeNamespaceName",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "GetDataLakeNamespaceResponse":{
+      "type":"structure",
+      "required":["namespace"],
+      "members":{
+        "namespace":{"shape":"DataLakeNamespace"}
       }
     },
     "GetInstanceRequest":{
@@ -1232,6 +1869,77 @@
       "min":0,
       "pattern":"arn:[a-z0-9][-.a-z0-9]{0,62}:kms:([a-z0-9][-.a-z0-9]{0,62})?:([a-z0-9][-.a-z0-9]{0,62})?:key/.{0,1019}"
     },
+    "ListDataIntegrationEventsRequest":{
+      "type":"structure",
+      "required":["instanceId"],
+      "members":{
+        "instanceId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"instanceId"
+        },
+        "eventType":{
+          "shape":"DataIntegrationEventType",
+          "location":"querystring",
+          "locationName":"eventType"
+        },
+        "nextToken":{
+          "shape":"DataIntegrationEventNextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"DataIntegrationEventMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListDataIntegrationEventsResponse":{
+      "type":"structure",
+      "required":["events"],
+      "members":{
+        "events":{"shape":"DataIntegrationEventList"},
+        "nextToken":{"shape":"DataIntegrationEventNextToken"}
+      }
+    },
+    "ListDataIntegrationFlowExecutionsRequest":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "flowName"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"instanceId"
+        },
+        "flowName":{
+          "shape":"DataIntegrationFlowName",
+          "location":"uri",
+          "locationName":"flowName"
+        },
+        "nextToken":{
+          "shape":"DataIntegrationFlowExecutionNextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"DataIntegrationFlowExecutionMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListDataIntegrationFlowExecutionsResponse":{
+      "type":"structure",
+      "required":["flowExecutions"],
+      "members":{
+        "flowExecutions":{"shape":"DataIntegrationFlowExecutionList"},
+        "nextToken":{"shape":"DataIntegrationFlowExecutionNextToken"}
+      }
+    },
     "ListDataIntegrationFlowsRequest":{
       "type":"structure",
       "required":["instanceId"],
@@ -1274,7 +1982,7 @@
           "locationName":"instanceId"
         },
         "namespace":{
-          "shape":"DataLakeDatasetNamespace",
+          "shape":"DataLakeNamespaceName",
           "location":"uri",
           "locationName":"namespace"
         },
@@ -1296,6 +2004,35 @@
       "members":{
         "datasets":{"shape":"DataLakeDatasetList"},
         "nextToken":{"shape":"DataLakeDatasetNextToken"}
+      }
+    },
+    "ListDataLakeNamespacesRequest":{
+      "type":"structure",
+      "required":["instanceId"],
+      "members":{
+        "instanceId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"instanceId"
+        },
+        "nextToken":{
+          "shape":"DataLakeNamespaceNextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"DataLakeNamespaceMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListDataLakeNamespacesResponse":{
+      "type":"structure",
+      "required":["namespaces"],
+      "members":{
+        "namespaces":{"shape":"DataLakeNamespaceList"},
+        "nextToken":{"shape":"DataLakeNamespaceNextToken"}
       }
     },
     "ListInstancesRequest":{
@@ -1387,7 +2124,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "datasetTarget":{"shape":"DataIntegrationEventDatasetTargetConfiguration"}
       }
     },
     "SendDataIntegrationEventResponse":{
@@ -1542,7 +2280,7 @@
           "locationName":"instanceId"
         },
         "namespace":{
-          "shape":"DataLakeDatasetNamespace",
+          "shape":"DataLakeNamespaceName",
           "location":"uri",
           "locationName":"namespace"
         },
@@ -1559,6 +2297,33 @@
       "required":["dataset"],
       "members":{
         "dataset":{"shape":"DataLakeDataset"}
+      }
+    },
+    "UpdateDataLakeNamespaceRequest":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "name"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"instanceId"
+        },
+        "name":{
+          "shape":"DataLakeNamespaceName",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "description":{"shape":"DataLakeNamespaceDescription"}
+      }
+    },
+    "UpdateDataLakeNamespaceResponse":{
+      "type":"structure",
+      "required":["namespace"],
+      "members":{
+        "namespace":{"shape":"DataLakeNamespace"}
       }
     },
     "UpdateInstanceRequest":{

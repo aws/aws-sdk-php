@@ -51,7 +51,9 @@
         {"shape":"InvalidIdentityTokenException"},
         {"shape":"ExpiredTokenException"},
         {"shape":"RegionDisabledException"}
-      ]
+      ],
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "AssumeRoleWithWebIdentity":{
       "name":"AssumeRoleWithWebIdentity",
@@ -72,7 +74,9 @@
         {"shape":"InvalidIdentityTokenException"},
         {"shape":"ExpiredTokenException"},
         {"shape":"RegionDisabledException"}
-      ]
+      ],
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "AssumeRoot":{
       "name":"AssumeRoot",
@@ -349,8 +353,7 @@
     },
     "GetCallerIdentityRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetCallerIdentityResponse":{
       "type":"structure",

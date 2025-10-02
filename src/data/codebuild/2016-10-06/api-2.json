@@ -50,6 +50,18 @@
         {"shape":"InvalidInputException"}
       ]
     },
+    "BatchGetCommandExecutions":{
+      "name":"BatchGetCommandExecutions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchGetCommandExecutionsInput"},
+      "output":{"shape":"BatchGetCommandExecutionsOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"}
+      ]
+    },
     "BatchGetFleets":{
       "name":"BatchGetFleets",
       "http":{
@@ -94,6 +106,18 @@
       },
       "input":{"shape":"BatchGetReportsInput"},
       "output":{"shape":"BatchGetReportsOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"}
+      ]
+    },
+    "BatchGetSandboxes":{
+      "name":"BatchGetSandboxes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchGetSandboxesInput"},
+      "output":{"shape":"BatchGetSandboxesOutput"},
       "errors":[
         {"shape":"InvalidInputException"}
       ]
@@ -382,6 +406,19 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ListCommandExecutionsForSandbox":{
+      "name":"ListCommandExecutionsForSandbox",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListCommandExecutionsForSandboxInput"},
+      "output":{"shape":"ListCommandExecutionsForSandboxOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListCuratedEnvironmentImages":{
       "name":"ListCuratedEnvironmentImages",
       "http":{
@@ -447,6 +484,31 @@
       },
       "input":{"shape":"ListReportsForReportGroupInput"},
       "output":{"shape":"ListReportsForReportGroupOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "ListSandboxes":{
+      "name":"ListSandboxes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListSandboxesInput"},
+      "output":{"shape":"ListSandboxesOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"}
+      ]
+    },
+    "ListSandboxesForProject":{
+      "name":"ListSandboxesForProject",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListSandboxesForProjectInput"},
+      "output":{"shape":"ListSandboxesForProjectOutput"},
       "errors":[
         {"shape":"InvalidInputException"},
         {"shape":"ResourceNotFoundException"}
@@ -555,6 +617,46 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "StartCommandExecution":{
+      "name":"StartCommandExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartCommandExecutionInput"},
+      "output":{"shape":"StartCommandExecutionOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "StartSandbox":{
+      "name":"StartSandbox",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartSandboxInput"},
+      "output":{"shape":"StartSandboxOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccountSuspendedException"}
+      ]
+    },
+    "StartSandboxConnection":{
+      "name":"StartSandboxConnection",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartSandboxConnectionInput"},
+      "output":{"shape":"StartSandboxConnectionOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "StopBuild":{
       "name":"StopBuild",
       "http":{
@@ -576,6 +678,19 @@
       },
       "input":{"shape":"StopBuildBatchInput"},
       "output":{"shape":"StopBuildBatchOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "StopSandbox":{
+      "name":"StopSandbox",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopSandboxInput"},
+      "output":{"shape":"StopSandboxOutput"},
       "errors":[
         {"shape":"InvalidInputException"},
         {"shape":"ResourceNotFoundException"}
@@ -652,8 +767,12 @@
   "shapes":{
     "AccountLimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
+      "exception":true
+    },
+    "AccountSuspendedException":{
+      "type":"structure",
+      "members":{},
       "exception":true
     },
     "ArtifactNamespace":{
@@ -739,6 +858,24 @@
         "buildsNotFound":{"shape":"BuildIds"}
       }
     },
+    "BatchGetCommandExecutionsInput":{
+      "type":"structure",
+      "required":[
+        "sandboxId",
+        "commandExecutionIds"
+      ],
+      "members":{
+        "sandboxId":{"shape":"NonEmptyString"},
+        "commandExecutionIds":{"shape":"CommandExecutionIds"}
+      }
+    },
+    "BatchGetCommandExecutionsOutput":{
+      "type":"structure",
+      "members":{
+        "commandExecutions":{"shape":"CommandExecutions"},
+        "commandExecutionsNotFound":{"shape":"CommandExecutionIds"}
+      }
+    },
     "BatchGetFleetsInput":{
       "type":"structure",
       "required":["names"],
@@ -793,6 +930,20 @@
       "members":{
         "reports":{"shape":"Reports"},
         "reportsNotFound":{"shape":"ReportArns"}
+      }
+    },
+    "BatchGetSandboxesInput":{
+      "type":"structure",
+      "required":["ids"],
+      "members":{
+        "ids":{"shape":"SandboxIds"}
+      }
+    },
+    "BatchGetSandboxesOutput":{
+      "type":"structure",
+      "members":{
+        "sandboxes":{"shape":"Sandboxes"},
+        "sandboxesNotFound":{"shape":"SandboxIds"}
       }
     },
     "BatchReportModeType":{
@@ -907,7 +1058,8 @@
         "fileSystemLocations":{"shape":"ProjectFileSystemLocations"},
         "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"},
         "buildGroups":{"shape":"BuildGroups"},
-        "debugSessionEnabled":{"shape":"WrapperBoolean"}
+        "debugSessionEnabled":{"shape":"WrapperBoolean"},
+        "reportArns":{"shape":"BuildReportArns"}
       }
     },
     "BuildBatchFilter":{
@@ -1106,13 +1258,46 @@
       "type":"list",
       "member":{"shape":"CodeCoverage"}
     },
+    "CommandExecution":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"NonEmptyString"},
+        "sandboxId":{"shape":"NonEmptyString"},
+        "submitTime":{"shape":"Timestamp"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "status":{"shape":"NonEmptyString"},
+        "command":{"shape":"SensitiveNonEmptyString"},
+        "type":{"shape":"CommandType"},
+        "exitCode":{"shape":"NonEmptyString"},
+        "standardOutputContent":{"shape":"SensitiveNonEmptyString"},
+        "standardErrContent":{"shape":"SensitiveNonEmptyString"},
+        "logs":{"shape":"LogsLocation"},
+        "sandboxArn":{"shape":"NonEmptyString"}
+      }
+    },
+    "CommandExecutionIds":{
+      "type":"list",
+      "member":{"shape":"NonEmptyString"},
+      "max":100,
+      "min":1
+    },
+    "CommandExecutions":{
+      "type":"list",
+      "member":{"shape":"CommandExecution"}
+    },
+    "CommandType":{
+      "type":"string",
+      "enum":["SHELL"]
+    },
     "ComputeConfiguration":{
       "type":"structure",
       "members":{
         "vCpu":{"shape":"WrapperLong"},
         "memory":{"shape":"WrapperLong"},
         "disk":{"shape":"WrapperLong"},
-        "machineType":{"shape":"MachineType"}
+        "machineType":{"shape":"MachineType"},
+        "instanceType":{"shape":"NonEmptyString"}
       }
     },
     "ComputeType":{
@@ -1128,7 +1313,8 @@
         "BUILD_LAMBDA_4GB",
         "BUILD_LAMBDA_8GB",
         "BUILD_LAMBDA_10GB",
-        "ATTRIBUTE_BASED_COMPUTE"
+        "ATTRIBUTE_BASED_COMPUTE",
+        "CUSTOM_INSTANCE_TYPE"
       ]
     },
     "ComputeTypesAllowed":{
@@ -1233,7 +1419,8 @@
         "filterGroups":{"shape":"FilterGroups"},
         "buildType":{"shape":"WebhookBuildType"},
         "manualCreation":{"shape":"WrapperBoolean"},
-        "scopeConfiguration":{"shape":"ScopeConfiguration"}
+        "scopeConfiguration":{"shape":"ScopeConfiguration"},
+        "pullRequestBuildPolicy":{"shape":"PullRequestBuildPolicy"}
       }
     },
     "CreateWebhookOutput":{
@@ -1277,8 +1464,7 @@
     },
     "DeleteFleetOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteProjectInput":{
       "type":"structure",
@@ -1289,8 +1475,7 @@
     },
     "DeleteProjectOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteReportGroupInput":{
       "type":"structure",
@@ -1302,8 +1487,7 @@
     },
     "DeleteReportGroupOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteReportInput":{
       "type":"structure",
@@ -1314,8 +1498,7 @@
     },
     "DeleteReportOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteResourcePolicyInput":{
       "type":"structure",
@@ -1326,8 +1509,7 @@
     },
     "DeleteResourcePolicyOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteSourceCredentialsInput":{
       "type":"structure",
@@ -1351,8 +1533,7 @@
     },
     "DeleteWebhookOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeCodeCoveragesInput":{
       "type":"structure",
@@ -1389,6 +1570,22 @@
       "members":{
         "nextToken":{"shape":"String"},
         "testCases":{"shape":"TestCases"}
+      }
+    },
+    "DockerServer":{
+      "type":"structure",
+      "required":["computeType"],
+      "members":{
+        "computeType":{"shape":"ComputeType"},
+        "securityGroupIds":{"shape":"SecurityGroupIds"},
+        "status":{"shape":"DockerServerStatus"}
+      }
+    },
+    "DockerServerStatus":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"String"},
+        "message":{"shape":"String"}
       }
     },
     "EnvironmentImage":{
@@ -1433,6 +1630,7 @@
         "LINUX_GPU_CONTAINER",
         "ARM_CONTAINER",
         "WINDOWS_SERVER_2019_CONTAINER",
+        "WINDOWS_SERVER_2022_CONTAINER",
         "LINUX_LAMBDA_CONTAINER",
         "ARM_LAMBDA_CONTAINER",
         "LINUX_EC2",
@@ -1516,10 +1714,7 @@
       "max":100,
       "min":1
     },
-    "FleetCapacity":{
-      "type":"integer",
-      "min":1
-    },
+    "FleetCapacity":{"type":"integer"},
     "FleetContextCode":{
       "type":"string",
       "enum":[
@@ -1722,8 +1917,7 @@
     },
     "InvalidInputException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidateProjectCacheInput":{
@@ -1735,8 +1929,7 @@
     },
     "InvalidateProjectCacheOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "KeyInput":{
       "type":"string",
@@ -1822,10 +2015,26 @@
         "nextToken":{"shape":"String"}
       }
     },
-    "ListCuratedEnvironmentImagesInput":{
+    "ListCommandExecutionsForSandboxInput":{
+      "type":"structure",
+      "required":["sandboxId"],
+      "members":{
+        "sandboxId":{"shape":"NonEmptyString"},
+        "maxResults":{"shape":"PageSize"},
+        "sortOrder":{"shape":"SortOrderType"},
+        "nextToken":{"shape":"SensitiveString"}
+      }
+    },
+    "ListCommandExecutionsForSandboxOutput":{
       "type":"structure",
       "members":{
+        "commandExecutions":{"shape":"CommandExecutions"},
+        "nextToken":{"shape":"String"}
       }
+    },
+    "ListCuratedEnvironmentImagesInput":{
+      "type":"structure",
+      "members":{}
     },
     "ListCuratedEnvironmentImagesOutput":{
       "type":"structure",
@@ -1914,6 +2123,38 @@
         "reports":{"shape":"ReportArns"}
       }
     },
+    "ListSandboxesForProjectInput":{
+      "type":"structure",
+      "required":["projectName"],
+      "members":{
+        "projectName":{"shape":"NonEmptyString"},
+        "maxResults":{"shape":"PageSize"},
+        "sortOrder":{"shape":"SortOrderType"},
+        "nextToken":{"shape":"SensitiveString"}
+      }
+    },
+    "ListSandboxesForProjectOutput":{
+      "type":"structure",
+      "members":{
+        "ids":{"shape":"SandboxIds"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListSandboxesInput":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"PageSize"},
+        "sortOrder":{"shape":"SortOrderType"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListSandboxesOutput":{
+      "type":"structure",
+      "members":{
+        "ids":{"shape":"SandboxIds"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListSharedProjectsInput":{
       "type":"structure",
       "members":{
@@ -1948,8 +2189,7 @@
     },
     "ListSourceCredentialsInput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ListSourceCredentialsOutput":{
       "type":"structure",
@@ -2008,8 +2248,7 @@
     },
     "OAuthProviderException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "PageSize":{
@@ -2127,7 +2366,8 @@
       "members":{
         "type":{"shape":"CacheType"},
         "location":{"shape":"String"},
-        "modes":{"shape":"ProjectCacheModes"}
+        "modes":{"shape":"ProjectCacheModes"},
+        "cacheNamespace":{"shape":"String"}
       }
     },
     "ProjectCacheModes":{
@@ -2156,7 +2396,8 @@
         "privilegedMode":{"shape":"WrapperBoolean"},
         "certificate":{"shape":"String"},
         "registryCredential":{"shape":"RegistryCredential"},
-        "imagePullCredentialsType":{"shape":"ImagePullCredentialsType"}
+        "imagePullCredentialsType":{"shape":"ImagePullCredentialsType"},
+        "dockerServer":{"shape":"DockerServer"}
       }
     },
     "ProjectFileSystemLocation":{
@@ -2254,6 +2495,45 @@
       "members":{
         "defaultBehavior":{"shape":"FleetProxyRuleBehavior"},
         "orderedProxyRules":{"shape":"FleetProxyRules"}
+      }
+    },
+    "PullRequestBuildApproverRole":{
+      "type":"string",
+      "enum":[
+        "GITHUB_READ",
+        "GITHUB_TRIAGE",
+        "GITHUB_WRITE",
+        "GITHUB_MAINTAIN",
+        "GITHUB_ADMIN",
+        "GITLAB_GUEST",
+        "GITLAB_PLANNER",
+        "GITLAB_REPORTER",
+        "GITLAB_DEVELOPER",
+        "GITLAB_MAINTAINER",
+        "GITLAB_OWNER",
+        "BITBUCKET_READ",
+        "BITBUCKET_WRITE",
+        "BITBUCKET_ADMIN"
+      ]
+    },
+    "PullRequestBuildApproverRoles":{
+      "type":"list",
+      "member":{"shape":"PullRequestBuildApproverRole"}
+    },
+    "PullRequestBuildCommentApproval":{
+      "type":"string",
+      "enum":[
+        "DISABLED",
+        "ALL_PULL_REQUESTS",
+        "FORK_PULL_REQUESTS"
+      ]
+    },
+    "PullRequestBuildPolicy":{
+      "type":"structure",
+      "required":["requiresCommentApproval"],
+      "members":{
+        "requiresCommentApproval":{"shape":"PullRequestBuildCommentApproval"},
+        "approverRoles":{"shape":"PullRequestBuildApproverRoles"}
       }
     },
     "PutResourcePolicyInput":{
@@ -2461,14 +2741,12 @@
     },
     "ResourceAlreadyExistsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ResourceNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "RetryBuildBatchInput":{
@@ -2525,6 +2803,76 @@
         "encryptionKey":{"shape":"NonEmptyString"},
         "encryptionDisabled":{"shape":"WrapperBoolean"}
       }
+    },
+    "SSMSession":{
+      "type":"structure",
+      "members":{
+        "sessionId":{"shape":"String"},
+        "tokenValue":{"shape":"String"},
+        "streamUrl":{"shape":"String"}
+      }
+    },
+    "Sandbox":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"NonEmptyString"},
+        "arn":{"shape":"NonEmptyString"},
+        "projectName":{"shape":"NonEmptyString"},
+        "requestTime":{"shape":"Timestamp"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "status":{"shape":"String"},
+        "source":{"shape":"ProjectSource"},
+        "sourceVersion":{"shape":"NonEmptyString"},
+        "secondarySources":{"shape":"ProjectSources"},
+        "secondarySourceVersions":{"shape":"ProjectSecondarySourceVersions"},
+        "environment":{"shape":"ProjectEnvironment"},
+        "fileSystemLocations":{"shape":"ProjectFileSystemLocations"},
+        "timeoutInMinutes":{"shape":"WrapperInt"},
+        "queuedTimeoutInMinutes":{"shape":"WrapperInt"},
+        "vpcConfig":{"shape":"VpcConfig"},
+        "logConfig":{"shape":"LogsConfig"},
+        "encryptionKey":{"shape":"NonEmptyString"},
+        "serviceRole":{"shape":"NonEmptyString"},
+        "currentSession":{"shape":"SandboxSession"}
+      }
+    },
+    "SandboxIds":{
+      "type":"list",
+      "member":{"shape":"NonEmptyString"}
+    },
+    "SandboxSession":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"NonEmptyString"},
+        "status":{"shape":"String"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "currentPhase":{"shape":"String"},
+        "phases":{"shape":"SandboxSessionPhases"},
+        "resolvedSourceVersion":{"shape":"NonEmptyString"},
+        "logs":{"shape":"LogsLocation"},
+        "networkInterface":{"shape":"NetworkInterface"}
+      }
+    },
+    "SandboxSessionPhase":{
+      "type":"structure",
+      "members":{
+        "phaseType":{"shape":"String"},
+        "phaseStatus":{"shape":"StatusType"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "durationInSeconds":{"shape":"WrapperLong"},
+        "contexts":{"shape":"PhaseContexts"}
+      }
+    },
+    "SandboxSessionPhases":{
+      "type":"list",
+      "member":{"shape":"SandboxSessionPhase"}
+    },
+    "Sandboxes":{
+      "type":"list",
+      "member":{"shape":"Sandbox"}
     },
     "ScalingConfigurationInput":{
       "type":"structure",
@@ -2724,6 +3072,50 @@
         "build":{"shape":"Build"}
       }
     },
+    "StartCommandExecutionInput":{
+      "type":"structure",
+      "required":[
+        "sandboxId",
+        "command"
+      ],
+      "members":{
+        "sandboxId":{"shape":"NonEmptyString"},
+        "command":{"shape":"SensitiveNonEmptyString"},
+        "type":{"shape":"CommandType"}
+      }
+    },
+    "StartCommandExecutionOutput":{
+      "type":"structure",
+      "members":{
+        "commandExecution":{"shape":"CommandExecution"}
+      }
+    },
+    "StartSandboxConnectionInput":{
+      "type":"structure",
+      "required":["sandboxId"],
+      "members":{
+        "sandboxId":{"shape":"NonEmptyString"}
+      }
+    },
+    "StartSandboxConnectionOutput":{
+      "type":"structure",
+      "members":{
+        "ssmSession":{"shape":"SSMSession"}
+      }
+    },
+    "StartSandboxInput":{
+      "type":"structure",
+      "members":{
+        "projectName":{"shape":"NonEmptyString"},
+        "idempotencyToken":{"shape":"SensitiveString"}
+      }
+    },
+    "StartSandboxOutput":{
+      "type":"structure",
+      "members":{
+        "sandbox":{"shape":"Sandbox"}
+      }
+    },
     "StatusType":{
       "type":"string",
       "enum":[
@@ -2759,6 +3151,19 @@
       "type":"structure",
       "members":{
         "build":{"shape":"Build"}
+      }
+    },
+    "StopSandboxInput":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{"shape":"NonEmptyString"}
+      }
+    },
+    "StopSandboxOutput":{
+      "type":"structure",
+      "members":{
+        "sandbox":{"shape":"Sandbox"}
       }
     },
     "String":{"type":"string"},
@@ -2801,7 +3206,8 @@
         "status":{"shape":"String"},
         "durationInNanoSeconds":{"shape":"WrapperLong"},
         "message":{"shape":"String"},
-        "expired":{"shape":"Timestamp"}
+        "expired":{"shape":"Timestamp"},
+        "testSuiteName":{"shape":"String"}
       }
     },
     "TestCaseFilter":{
@@ -2935,7 +3341,8 @@
         "branchFilter":{"shape":"String"},
         "rotateSecret":{"shape":"Boolean"},
         "filterGroups":{"shape":"FilterGroups"},
-        "buildType":{"shape":"WebhookBuildType"}
+        "buildType":{"shape":"WebhookBuildType"},
+        "pullRequestBuildPolicy":{"shape":"PullRequestBuildPolicy"}
       }
     },
     "UpdateWebhookOutput":{
@@ -2969,14 +3376,18 @@
         "buildType":{"shape":"WebhookBuildType"},
         "manualCreation":{"shape":"WrapperBoolean"},
         "lastModifiedSecret":{"shape":"Timestamp"},
-        "scopeConfiguration":{"shape":"ScopeConfiguration"}
+        "scopeConfiguration":{"shape":"ScopeConfiguration"},
+        "status":{"shape":"WebhookStatus"},
+        "statusMessage":{"shape":"String"},
+        "pullRequestBuildPolicy":{"shape":"PullRequestBuildPolicy"}
       }
     },
     "WebhookBuildType":{
       "type":"string",
       "enum":[
         "BUILD",
-        "BUILD_BATCH"
+        "BUILD_BATCH",
+        "RUNNER_BUILDKITE_BUILD"
       ]
     },
     "WebhookFilter":{
@@ -3003,7 +3414,8 @@
         "WORKFLOW_NAME",
         "TAG_NAME",
         "RELEASE_NAME",
-        "REPOSITORY_NAME"
+        "REPOSITORY_NAME",
+        "ORGANIZATION_NAME"
       ]
     },
     "WebhookScopeType":{
@@ -3012,6 +3424,15 @@
         "GITHUB_ORGANIZATION",
         "GITHUB_GLOBAL",
         "GITLAB_GROUP"
+      ]
+    },
+    "WebhookStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATE_FAILED",
+        "ACTIVE",
+        "DELETING"
       ]
     },
     "WrapperBoolean":{"type":"boolean"},

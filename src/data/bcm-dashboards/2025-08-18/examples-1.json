@@ -1,0 +1,264 @@
+{
+  "version": "1.0",
+  "examples": {
+    "CreateDashboard": [
+      {
+        "input": {
+          "name": "cost-dashboards",
+          "description": "Dashboard for tracking costs",
+          "widgets": [
+            {
+              "configs": [
+                {
+                  "displayConfig": {
+                    "graph": {
+                      "costTrend": {
+                        "visualType": "LINE"
+                      }
+                    }
+                  },
+                  "queryParameters": {
+                    "costAndUsage": {
+                      "granularity": "MONTHLY",
+                      "groupBy": [
+                        {
+                          "type": "DIMENSION",
+                          "key": "SERVICE"
+                        }
+                      ],
+                      "metrics": [
+                        "UnblendedCost"
+                      ],
+                      "timeRange": {
+                        "endTime": {
+                          "type": "RELATIVE",
+                          "value": "now"
+                        },
+                        "startTime": {
+                          "type": "RELATIVE",
+                          "value": "-9M"
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "height": 7,
+              "horizontalOffset": 0,
+              "title": "Monthly Cost Trend",
+              "width": 4
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Creating a dashboard"
+      }
+    ],
+    "DeleteDashboard": [
+      {
+        "input": {
+          "arn": "arn:aws:bcm-dashboards::123456789012:dashboard/abcd1234-ab12-12ab-1ab2-abcd1234efgh"
+        },
+        "output": {
+          "arn": "arn:aws:bcm-dashboards::123456789012:dashboard/abcd1234-ab12-12ab-1ab2-abcd1234efgh"
+        },
+        "id": "example-1",
+        "title": "Deleting a dashboard"
+      }
+    ],
+    "GetDashboard": [
+      {
+        "input": {
+          "arn": "arn:aws:bcm-dashboards::123456789012:dashboard/abcd1234-ab12-12ab-1ab2-abcd1234efgh"
+        },
+        "output": {
+          "name": "cost-dashboards",
+          "type": "CUSTOM",
+          "arn": "arn:aws:bcm-dashboards::123456789012:dashboard/abcd1234-ab12-12ab-1ab2-abcd1234efgh",
+          "createdAt": 1753741462.721,
+          "description": "Dashboard for tracking costs",
+          "updatedAt": 1753741462.721,
+          "widgets": [
+            {
+              "configs": [
+                {
+                  "displayConfig": {
+                    "graph": {
+                      "costTrend": {
+                        "visualType": "LINE"
+                      }
+                    }
+                  },
+                  "queryParameters": {
+                    "costAndUsage": {
+                      "granularity": "MONTHLY",
+                      "groupBy": [
+                        {
+                          "type": "DIMENSION",
+                          "key": "SERVICE"
+                        }
+                      ],
+                      "metrics": [
+                        "UnblendedCost"
+                      ],
+                      "timeRange": {
+                        "endTime": {
+                          "type": "RELATIVE",
+                          "value": "now"
+                        },
+                        "startTime": {
+                          "type": "RELATIVE",
+                          "value": "-6M"
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "height": 7,
+              "horizontalOffset": 0,
+              "title": "Monthly Cost Trend",
+              "width": 4
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Getting information about a dashboard"
+      }
+    ],
+    "GetResourcePolicy": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:bcm-dashboards::123456789012:dashboard/abcd1234-ab12-12ab-1ab2-abcd1234efgh"
+        },
+        "output": {
+          "policyDocument": "{}",
+          "resourceArn": "arn:aws:bcm-dashboards::123456789012:dashboard/abcd1234-ab12-12ab-1ab2-abcd1234efgh"
+        },
+        "id": "example-1",
+        "title": "Getting resource policy for a resource"
+      }
+    ],
+    "ListDashboards": [
+      {
+        "input": {},
+        "output": {
+          "dashboards": [
+            {
+              "name": "monthly-cost-dashboard",
+              "type": "CUSTOM",
+              "arn": "arn:aws:bcm-dashboards::123456789012:dashboard/abcd1234-ab12-12ab-1ab2-abcd1234efgh",
+              "createdAt": 1753741462.721,
+              "description": "Dashboard for tracking monthly cost",
+              "updatedAt": 1753741462.721
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Listing dashboards for a user"
+      }
+    ],
+    "ListTagsForResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:bcm-dashboards::123456789012:dashboard/abcd1234-ab12-12ab-1ab2-abcd1234efgh"
+        },
+        "output": {
+          "resourceTags": [
+            {
+              "key": "keyOne",
+              "value": "valueOne"
+            },
+            {
+              "key": "keyTwo",
+              "value": "valueTwo"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Listing tags for a resource"
+      }
+    ],
+    "TagResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:bcm-dashboards::123456789012:dashboard/abcd1234-ab12-12ab-1ab2-abcd1234efgh",
+          "resourceTags": [
+            {
+              "key": "keyOne",
+              "value": "valueOne"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Adding tag(s) to a resource"
+      }
+    ],
+    "UntagResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:bcm-dashboards::123456789012:dashboard/abcd1234-ab12-12ab-1ab2-abcd1234efgh",
+          "resourceTagKeys": [
+            "keyOne"
+          ]
+        },
+        "id": "example-1",
+        "title": "Removing tag(s) from a resource"
+      }
+    ],
+    "UpdateDashboard": [
+      {
+        "input": {
+          "name": "cost-dashboards-updated",
+          "arn": "arn:aws:bcm-dashboards::123456789012:dashboard/abcd1234-ab12-12ab-1ab2-abcd1234efgh",
+          "description": "Dashboard for tracking costs version 2",
+          "widgets": [
+            {
+              "configs": [
+                {
+                  "displayConfig": {
+                    "graph": {
+                      "costTrend": {
+                        "visualType": "LINE"
+                      }
+                    }
+                  },
+                  "queryParameters": {
+                    "costAndUsage": {
+                      "granularity": "MONTHLY",
+                      "groupBy": [
+                        {
+                          "type": "DIMENSION",
+                          "key": "SERVICE"
+                        }
+                      ],
+                      "metrics": [
+                        "UnblendedCost"
+                      ],
+                      "timeRange": {
+                        "endTime": {
+                          "type": "RELATIVE",
+                          "value": "now"
+                        },
+                        "startTime": {
+                          "type": "RELATIVE",
+                          "value": "-3M"
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "height": 7,
+              "horizontalOffset": 2,
+              "title": "Monthly Cost Trend",
+              "width": 4
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Updating a dashboard"
+      }
+    ]
+  }
+}

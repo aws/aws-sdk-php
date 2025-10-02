@@ -54,18 +54,16 @@
       "base": null,
       "refs": {
         "StreamDescription$CreationRequestDateTime": "<p>The date and time when the request to create this stream was issued.</p>",
-        "StreamRecord$ApproximateCreationDateTime": "<p>The approximate date and time when the stream record was created, in <a href=\"http://www.epochconverter.com/\">UNIX epoch time</a> format and rounded down to the closest second.</p>"
+        "StreamRecord$ApproximateCreationDateTime": "<p>The approximate date and time when the stream record was created, in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\">ISO 8601</a> format and rounded down to the closest second.</p>"
       }
     },
     "DescribeStreamInput": {
       "base": "<p>Represents the input of a <code>DescribeStream</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeStreamOutput": {
       "base": "<p>Represents the output of a <code>DescribeStream</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ErrorMessage": {
       "base": null,
@@ -79,28 +77,23 @@
     },
     "ExpiredIteratorException": {
       "base": "<p>The shard iterator has expired and can no longer be used to retrieve stream records. A shard iterator expires 15 minutes after it is retrieved using the <code>GetShardIterator</code> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecordsInput": {
       "base": "<p>Represents the input of a <code>GetRecords</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecordsOutput": {
       "base": "<p>Represents the output of a <code>GetRecords</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetShardIteratorInput": {
       "base": "<p>Represents the input of a <code>GetShardIterator</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetShardIteratorOutput": {
       "base": "<p>Represents the output of a <code>GetShardIterator</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Identity": {
       "base": "<p>Contains details about the type of identity that made the request.</p>",
@@ -110,8 +103,7 @@
     },
     "InternalServerError": {
       "base": "<p>An error occurred on the server side.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KeySchema": {
       "base": null,
@@ -139,8 +131,7 @@
     },
     "LimitExceededException": {
       "base": "<p>There is no limit to the number of daily on-demand backups that can be taken. </p> <p>For most purposes, up to 500 simultaneous table operations are allowed per account. These operations include <code>CreateTable</code>, <code>UpdateTable</code>, <code>DeleteTable</code>,<code>UpdateTimeToLive</code>, <code>RestoreTableFromBackup</code>, and <code>RestoreTableToPointInTime</code>. </p> <p>When you are creating a table with one or more secondary indexes, you can have up to 250 such requests running at a time. However, if the table or index specifications are complex, then DynamoDB might temporarily reduce the number of concurrent operations.</p> <p>When importing into DynamoDB, up to 50 simultaneous import table operations are allowed per account.</p> <p>There is a soft account quota of 2,500 tables.</p> <p>GetRecords was called with a value of more than 1000 for the limit request parameter.</p> <p>More than 2 processes are reading from the same streams shard at the same time. Exceeding this limit may result in request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAttributeValue": {
       "base": null,
@@ -150,13 +141,11 @@
     },
     "ListStreamsInput": {
       "base": "<p>Represents the input of a <code>ListStreams</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStreamsOutput": {
       "base": "<p>Represents the output of a <code>ListStreams</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "MapAttributeValue": {
       "base": null,
@@ -217,8 +206,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The operation tried to access a nonexistent table or index. The resource might not be specified correctly, or its status might not be <code>ACTIVE</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SequenceNumber": {
       "base": null,
@@ -247,6 +235,18 @@
         "StreamDescription$Shards": "<p>The shards that comprise the stream.</p>"
       }
     },
+    "ShardFilter": {
+      "base": "<p>This optional field contains the filter definition for the <code>DescribeStream</code> API.</p>",
+      "refs": {
+        "DescribeStreamInput$ShardFilter": "<p>This optional field contains the filter definition for the <code>DescribeStream</code> API.</p>"
+      }
+    },
+    "ShardFilterType": {
+      "base": null,
+      "refs": {
+        "ShardFilter$Type": "<p>Contains the type of filter to be applied on the <code>DescribeStream</code> API. Currently, the only value this parameter accepts is <code>CHILD_SHARDS</code>.</p>"
+      }
+    },
     "ShardId": {
       "base": null,
       "refs": {
@@ -254,6 +254,7 @@
         "GetShardIteratorInput$ShardId": "<p>The identifier of the shard. The iterator will be returned for this shard ID.</p>",
         "Shard$ShardId": "<p>The system-generated identifier for this shard.</p>",
         "Shard$ParentShardId": "<p>The shard ID of the current shard's parent.</p>",
+        "ShardFilter$ShardId": "<p>Contains the <code>shardId</code> of the parent shard for which you are requesting child shards.</p> <p> <i>Sample request:</i> </p>",
         "StreamDescription$LastEvaluatedShardId": "<p>The shard ID of the item where the operation stopped, inclusive of the previous result set. Use this value to start a new operation, excluding this value in the new request.</p> <p>If <code>LastEvaluatedShardId</code> is empty, then the \"last page\" of results has been processed and there is currently no more data to be retrieved.</p> <p>If <code>LastEvaluatedShardId</code> is not empty, it does not necessarily mean that there is more data in the result set. The only way to know when you have reached the end of the result set is when <code>LastEvaluatedShardId</code> is empty.</p>"
       }
     },
@@ -355,8 +356,7 @@
     },
     "TrimmedDataAccessException": {
       "base": "<p>The operation attempted to read past the oldest stream record in a shard.</p> <p>In DynamoDB Streams, there is a 24 hour limit on data retention. Stream records whose age exceeds this limit are subject to removal (trimming) from the stream. You might receive a TrimmedDataAccessException if:</p> <ul> <li> <p>You request a shard iterator with a sequence number older than the trim point (24 hours).</p> </li> <li> <p>You obtain a shard iterator, but before you use the iterator in a <code>GetRecords</code> request, a stream record in the shard exceeds the 24 hour period and is trimmed. This causes the iterator to access a record that no longer exists.</p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     }
   }
 }

@@ -440,6 +440,28 @@
       ],
       "idempotent":true
     },
+    "GetEventConfiguration":{
+      "name":"GetEventConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetEventConfigurationRequest"},
+      "output":{"shape":"GetEventConfigurationResponse"},
+      "errors":[
+        {"shape":"CloudTrailARNInvalidException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"EventDataStoreARNInvalidException"},
+        {"shape":"EventDataStoreNotFoundException"},
+        {"shape":"InvalidEventDataStoreStatusException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidEventDataStoreCategoryException"},
+        {"shape":"NoManagementAccountSLRExistsException"},
+        {"shape":"InvalidParameterCombinationException"}
+      ],
+      "idempotent":true
+    },
     "GetEventDataStore":{
       "name":"GetEventDataStore",
       "http":{
@@ -776,6 +798,34 @@
       ],
       "idempotent":true
     },
+    "PutEventConfiguration":{
+      "name":"PutEventConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutEventConfigurationRequest"},
+      "output":{"shape":"PutEventConfigurationResponse"},
+      "errors":[
+        {"shape":"EventDataStoreARNInvalidException"},
+        {"shape":"EventDataStoreNotFoundException"},
+        {"shape":"InvalidEventDataStoreStatusException"},
+        {"shape":"InvalidEventDataStoreCategoryException"},
+        {"shape":"InactiveEventDataStoreException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"CloudTrailARNInvalidException"},
+        {"shape":"ConflictException"},
+        {"shape":"NotOrganizationMasterAccountException"},
+        {"shape":"NoManagementAccountSLRExistsException"},
+        {"shape":"InsufficientDependencyServiceAccessPermissionException"},
+        {"shape":"InsufficientIAMAccessPermissionException"}
+      ],
+      "idempotent":true
+    },
     "PutEventSelectors":{
       "name":"PutEventSelectors",
       "http":{
@@ -868,7 +918,8 @@
         {"shape":"OrganizationNotInAllFeaturesModeException"},
         {"shape":"OrganizationsNotInUseException"},
         {"shape":"UnsupportedOperationException"},
-        {"shape":"OperationNotPermittedException"}
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"InsufficientIAMAccessPermissionException"}
       ],
       "idempotent":true
     },
@@ -923,6 +974,21 @@
         {"shape":"OrganizationNotInAllFeaturesModeException"}
       ]
     },
+    "SearchSampleQueries":{
+      "name":"SearchSampleQueries",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SearchSampleQueriesRequest"},
+      "output":{"shape":"SearchSampleQueriesResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"OperationNotPermittedException"}
+      ],
+      "idempotent":true
+    },
     "StartDashboardRefresh":{
       "name":"StartDashboardRefresh",
       "http":{
@@ -958,7 +1024,8 @@
         {"shape":"UnsupportedOperationException"},
         {"shape":"NotOrganizationMasterAccountException"},
         {"shape":"NoManagementAccountSLRExistsException"},
-        {"shape":"InsufficientDependencyServiceAccessPermissionException"}
+        {"shape":"InsufficientDependencyServiceAccessPermissionException"},
+        {"shape":"ConflictException"}
       ]
     },
     "StartImport":{
@@ -1053,7 +1120,8 @@
         {"shape":"UnsupportedOperationException"},
         {"shape":"NotOrganizationMasterAccountException"},
         {"shape":"NoManagementAccountSLRExistsException"},
-        {"shape":"InsufficientDependencyServiceAccessPermissionException"}
+        {"shape":"InsufficientDependencyServiceAccessPermissionException"},
+        {"shape":"ConflictException"}
       ]
     },
     "StopImport":{
@@ -1217,14 +1285,12 @@
   "shapes":{
     "AccessDeniedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "AccountHasOngoingImportException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "AccountId":{
@@ -1235,20 +1301,17 @@
     },
     "AccountNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "AccountNotRegisteredException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "AccountRegisteredException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "AddTagsRequest":{
@@ -1264,8 +1327,7 @@
     },
     "AddTagsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdvancedEventSelector":{
       "type":"structure",
@@ -1333,8 +1395,7 @@
     },
     "CannotDelegateManagementAccountException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Channel":{
@@ -1346,14 +1407,12 @@
     },
     "ChannelARNInvalidException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ChannelAlreadyExistsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ChannelArn":{
@@ -1364,14 +1423,12 @@
     },
     "ChannelExistsForEDSException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ChannelMaxLimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ChannelName":{
@@ -1382,8 +1439,7 @@
     },
     "ChannelNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Channels":{
@@ -1392,39 +1448,49 @@
     },
     "CloudTrailARNInvalidException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "CloudTrailAccessNotEnabledException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "CloudTrailInvalidClientTokenIdException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "CloudWatchLogsDeliveryUnavailableException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ConcurrentModificationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ConflictException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
+    },
+    "ContextKeySelector":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "Equals"
+      ],
+      "members":{
+        "Type":{"shape":"Type"},
+        "Equals":{"shape":"OperatorTargetList"}
+      }
+    },
+    "ContextKeySelectors":{
+      "type":"list",
+      "member":{"shape":"ContextKeySelector"},
+      "max":2
     },
     "CreateChannelRequest":{
       "type":"structure",
@@ -1605,8 +1671,7 @@
     "Date":{"type":"timestamp"},
     "DelegatedAdminAccountLimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "DeleteChannelRequest":{
@@ -1618,8 +1683,7 @@
     },
     "DeleteChannelResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDashboardRequest":{
       "type":"structure",
@@ -1630,8 +1694,7 @@
     },
     "DeleteDashboardResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteEventDataStoreRequest":{
       "type":"structure",
@@ -1642,8 +1705,7 @@
     },
     "DeleteEventDataStoreResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteResourcePolicyRequest":{
       "type":"structure",
@@ -1654,8 +1716,7 @@
     },
     "DeleteResourcePolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTrailRequest":{
       "type":"structure",
@@ -1666,8 +1727,7 @@
     },
     "DeleteTrailResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeliveryS3Uri":{
       "type":"string",
@@ -1697,8 +1757,7 @@
     },
     "DeregisterOrganizationDelegatedAdminResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeQueryRequest":{
       "type":"structure",
@@ -1877,14 +1936,12 @@
     },
     "EventDataStoreARNInvalidException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "EventDataStoreAlreadyExistsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "EventDataStoreArn":{
@@ -1895,14 +1952,12 @@
     },
     "EventDataStoreFederationEnabledException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "EventDataStoreHasOngoingImportException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "EventDataStoreKmsKeyId":{
@@ -1919,8 +1974,7 @@
     },
     "EventDataStoreMaxLimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "EventDataStoreName":{
@@ -1931,8 +1985,7 @@
     },
     "EventDataStoreNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "EventDataStoreStatus":{
@@ -1948,8 +2001,7 @@
     },
     "EventDataStoreTerminationProtectedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "EventDataStores":{
@@ -2023,8 +2075,7 @@
     },
     "GenerateResponseException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "GetChannelRequest":{
@@ -2065,6 +2116,20 @@
         "LastRefreshId":{"shape":"RefreshId"},
         "LastRefreshFailureReason":{"shape":"ErrorMessage"},
         "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"}
+      }
+    },
+    "GetEventConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "EventDataStore":{"shape":"String"}
+      }
+    },
+    "GetEventConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "EventDataStoreArn":{"shape":"EventDataStoreArn"},
+        "MaxEventSize":{"shape":"MaxEventSize"},
+        "ContextKeySelectors":{"shape":"ContextKeySelectors"}
       }
     },
     "GetEventDataStoreRequest":{
@@ -2258,8 +2323,7 @@
     },
     "ImportNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ImportSource":{
@@ -2305,14 +2369,12 @@
     },
     "InactiveEventDataStoreException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InactiveQueryException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "IngestionStatus":{
@@ -2327,8 +2389,7 @@
     },
     "InsightNotEnabledException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InsightSelector":{
@@ -2376,202 +2437,174 @@
     },
     "InsufficientDependencyServiceAccessPermissionException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InsufficientEncryptionPolicyException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
+      "exception":true
+    },
+    "InsufficientIAMAccessPermissionException":{
+      "type":"structure",
+      "members":{},
       "exception":true
     },
     "InsufficientS3BucketPolicyException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InsufficientSnsTopicPolicyException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Integer":{"type":"integer"},
     "InvalidCloudWatchLogsLogGroupArnException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidCloudWatchLogsRoleArnException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidDateRangeException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidEventCategoryException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidEventDataStoreCategoryException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidEventDataStoreStatusException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidEventSelectorsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidHomeRegionException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidImportSourceException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidInsightSelectorsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidKmsKeyIdException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidLookupAttributesException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidMaxResultsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidNextTokenException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidParameterCombinationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidParameterException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidQueryStatementException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidQueryStatusException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidS3BucketNameException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidS3PrefixException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidSnsTopicNameException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidSourceException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidTagParameterException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidTimeRangeException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidTokenException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidTrailNameException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "KmsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "KmsKeyDisabledException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "deprecated":true,
       "exception":true
     },
     "KmsKeyNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ListChannelsMaxResultsCount":{
@@ -2778,7 +2811,7 @@
       "type":"string",
       "max":1024,
       "min":3,
-      "pattern":"^[a-zA-Z0-9._/\\-:]+$"
+      "pattern":"^[a-zA-Z0-9._/\\-:*]+$"
     },
     "Long":{"type":"long"},
     "LookupAttribute":{
@@ -2834,9 +2867,15 @@
     },
     "MaxConcurrentQueriesException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
+    },
+    "MaxEventSize":{
+      "type":"string",
+      "enum":[
+        "Standard",
+        "Large"
+      ]
     },
     "MaxQueryResults":{
       "type":"integer",
@@ -2850,38 +2889,44 @@
     },
     "MaximumNumberOfTrailsExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "NextToken":{"type":"string"},
     "NoManagementAccountSLRExistsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "NotOrganizationManagementAccountException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "NotOrganizationMasterAccountException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "OperationNotPermittedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Operator":{
       "type":"list",
       "member":{"shape":"OperatorValue"},
+      "min":1
+    },
+    "OperatorTargetList":{
+      "type":"list",
+      "member":{"shape":"OperatorTargetListMember"},
+      "max":50,
+      "min":1
+    },
+    "OperatorTargetListMember":{
+      "type":"string",
+      "max":128,
       "min":1
     },
     "OperatorValue":{
@@ -2892,14 +2937,12 @@
     },
     "OrganizationNotInAllFeaturesModeException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "OrganizationsNotInUseException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "PaginationToken":{
@@ -2954,6 +2997,26 @@
     "PublicKeyList":{
       "type":"list",
       "member":{"shape":"PublicKey"}
+    },
+    "PutEventConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "MaxEventSize",
+        "ContextKeySelectors"
+      ],
+      "members":{
+        "EventDataStore":{"shape":"String"},
+        "MaxEventSize":{"shape":"MaxEventSize"},
+        "ContextKeySelectors":{"shape":"ContextKeySelectors"}
+      }
+    },
+    "PutEventConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "EventDataStoreArn":{"shape":"EventDataStoreArn"},
+        "MaxEventSize":{"shape":"MaxEventSize"},
+        "ContextKeySelectors":{"shape":"ContextKeySelectors"}
+      }
     },
     "PutEventSelectorsRequest":{
       "type":"structure",
@@ -3030,8 +3093,7 @@
     },
     "QueryIdNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "QueryParameter":{
@@ -3166,8 +3228,7 @@
     },
     "RegisterOrganizationDelegatedAdminResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RemoveTagsRequest":{
       "type":"structure",
@@ -3182,8 +3243,7 @@
     },
     "RemoveTagsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RequestWidget":{
       "type":"structure",
@@ -3210,8 +3270,7 @@
     },
     "ResourceARNNotValidException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ResourceArn":{
@@ -3230,8 +3289,7 @@
     },
     "ResourceNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ResourcePolicy":{
@@ -3241,14 +3299,12 @@
     },
     "ResourcePolicyNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ResourcePolicyNotValidException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ResourceTag":{
@@ -3264,8 +3320,7 @@
     },
     "ResourceTypeNotSupportedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "RestoreEventDataStoreRequest":{
@@ -3299,8 +3354,7 @@
     },
     "S3BucketDoesNotExistException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "S3ImportSource":{
@@ -3316,6 +3370,50 @@
         "S3BucketAccessRoleArn":{"shape":"String"}
       }
     },
+    "SampleQueryDescription":{"type":"string"},
+    "SampleQueryName":{"type":"string"},
+    "SampleQueryRelevance":{"type":"float"},
+    "SampleQuerySQL":{"type":"string"},
+    "SearchSampleQueriesMaxResults":{
+      "type":"integer",
+      "max":50,
+      "min":1
+    },
+    "SearchSampleQueriesRequest":{
+      "type":"structure",
+      "required":["SearchPhrase"],
+      "members":{
+        "SearchPhrase":{"shape":"SearchSampleQueriesSearchPhrase"},
+        "MaxResults":{"shape":"SearchSampleQueriesMaxResults"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "SearchSampleQueriesResponse":{
+      "type":"structure",
+      "members":{
+        "SearchResults":{"shape":"SearchSampleQueriesSearchResults"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "SearchSampleQueriesSearchPhrase":{
+      "type":"string",
+      "max":1000,
+      "min":2,
+      "pattern":"^[ -~\\n]*$"
+    },
+    "SearchSampleQueriesSearchResult":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"SampleQueryName"},
+        "Description":{"shape":"SampleQueryDescription"},
+        "SQL":{"shape":"SampleQuerySQL"},
+        "Relevance":{"shape":"SampleQueryRelevance"}
+      }
+    },
+    "SearchSampleQueriesSearchResults":{
+      "type":"list",
+      "member":{"shape":"SearchSampleQueriesSearchResult"}
+    },
     "SelectorField":{
       "type":"string",
       "max":1000,
@@ -3330,8 +3428,7 @@
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Source":{
@@ -3370,8 +3467,7 @@
     },
     "StartEventDataStoreIngestionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StartImportRequest":{
       "type":"structure",
@@ -3405,8 +3501,7 @@
     },
     "StartLoggingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StartQueryRequest":{
       "type":"structure",
@@ -3434,8 +3529,7 @@
     },
     "StopEventDataStoreIngestionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopImportRequest":{
       "type":"structure",
@@ -3467,8 +3561,7 @@
     },
     "StopLoggingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "String":{"type":"string"},
     "Tag":{
@@ -3491,8 +3584,7 @@
     },
     "TagsLimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "TagsList":{
@@ -3503,8 +3595,7 @@
     "TerminationProtectionEnabled":{"type":"boolean"},
     "ThrottlingException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "TimeOfDay":{
@@ -3541,8 +3632,7 @@
     },
     "TrailAlreadyExistsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "TrailInfo":{
@@ -3563,19 +3653,24 @@
     },
     "TrailNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "TrailNotProvidedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Trails":{
       "type":"list",
       "member":{"shape":"TrailInfo"}
+    },
+    "Type":{
+      "type":"string",
+      "enum":[
+        "TagContext",
+        "RequestContext"
+      ]
     },
     "UUID":{
       "type":"string",
@@ -3585,8 +3680,7 @@
     },
     "UnsupportedOperationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "UpdateChannelRequest":{

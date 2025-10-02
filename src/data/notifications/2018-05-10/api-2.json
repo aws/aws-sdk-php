@@ -27,9 +27,9 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -47,9 +47,9 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -67,9 +67,29 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "AssociateOrganizationalUnit":{
+      "name":"AssociateOrganizationalUnit",
+      "http":{
+        "method":"POST",
+        "requestUri":"/organizational-units/associate/{organizationalUnitId}",
+        "responseCode":201
+      },
+      "input":{"shape":"AssociateOrganizationalUnitRequest"},
+      "output":{"shape":"AssociateOrganizationalUnitResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -87,9 +107,9 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -107,8 +127,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -125,9 +145,9 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -144,9 +164,9 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -163,9 +183,9 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -183,9 +203,9 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -202,8 +222,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -220,9 +240,9 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -239,8 +259,26 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "DisassociateOrganizationalUnit":{
+      "name":"DisassociateOrganizationalUnit",
+      "http":{
+        "method":"POST",
+        "requestUri":"/organizational-units/disassociate/{organizationalUnitId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DisassociateOrganizationalUnitRequest"},
+      "output":{"shape":"DisassociateOrganizationalUnitResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -258,9 +296,9 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -277,8 +315,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetManagedNotificationChildEvent":{
@@ -294,8 +332,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetManagedNotificationConfiguration":{
@@ -311,8 +349,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetManagedNotificationEvent":{
@@ -328,8 +366,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetNotificationConfiguration":{
@@ -345,8 +383,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetNotificationEvent":{
@@ -362,8 +400,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetNotificationsAccessForOrganization":{
@@ -395,8 +433,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListEventRules":{
@@ -412,8 +450,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListManagedNotificationChannelAssociations":{
@@ -429,8 +467,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListManagedNotificationChildEvents":{
@@ -481,6 +519,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListMemberAccounts":{
+      "name":"ListMemberAccounts",
+      "http":{
+        "method":"GET",
+        "requestUri":"/list-member-accounts",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMemberAccountsRequest"},
+      "output":{"shape":"ListMemberAccountsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListNotificationConfigurations":{
       "name":"ListNotificationConfigurations",
       "http":{
@@ -529,6 +584,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListOrganizationalUnits":{
+      "name":"ListOrganizationalUnits",
+      "http":{
+        "method":"GET",
+        "requestUri":"/organizational-units",
+        "responseCode":200
+      },
+      "input":{"shape":"ListOrganizationalUnitsRequest"},
+      "output":{"shape":"ListOrganizationalUnitsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -542,8 +614,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "RegisterNotificationHub":{
@@ -560,8 +632,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -578,8 +650,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -596,8 +668,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -614,9 +686,9 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -633,9 +705,9 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     }
@@ -658,7 +730,8 @@
       "enum":[
         "ENABLED",
         "DISABLED",
-        "PENDING"
+        "PENDING",
+        "FAILED"
       ]
     },
     "AccountContactType":{
@@ -753,8 +826,7 @@
     },
     "AssociateChannelResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociateManagedNotificationAccountContactRequest":{
       "type":"structure",
@@ -773,8 +845,7 @@
     },
     "AssociateManagedNotificationAccountContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociateManagedNotificationAdditionalChannelRequest":{
       "type":"structure",
@@ -793,8 +864,26 @@
     },
     "AssociateManagedNotificationAdditionalChannelResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "AssociateOrganizationalUnitRequest":{
+      "type":"structure",
+      "required":[
+        "organizationalUnitId",
+        "notificationConfigurationArn"
+      ],
       "members":{
+        "organizationalUnitId":{
+          "shape":"OrganizationalUnitId",
+          "location":"uri",
+          "locationName":"organizationalUnitId"
+        },
+        "notificationConfigurationArn":{"shape":"NotificationConfigurationArn"}
       }
+    },
+    "AssociateOrganizationalUnitResponse":{
+      "type":"structure",
+      "members":{}
     },
     "Boolean":{
       "type":"boolean",
@@ -914,8 +1003,7 @@
     },
     "DeleteEventRuleResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteNotificationConfigurationRequest":{
       "type":"structure",
@@ -930,8 +1018,7 @@
     },
     "DeleteNotificationConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeregisterNotificationHubRequest":{
       "type":"structure",
@@ -974,13 +1061,11 @@
     },
     "DisableNotificationsAccessForOrganizationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisableNotificationsAccessForOrganizationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateChannelRequest":{
       "type":"structure",
@@ -999,8 +1084,7 @@
     },
     "DisassociateChannelResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateManagedNotificationAccountContactRequest":{
       "type":"structure",
@@ -1019,8 +1103,7 @@
     },
     "DisassociateManagedNotificationAccountContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateManagedNotificationAdditionalChannelRequest":{
       "type":"structure",
@@ -1039,18 +1122,34 @@
     },
     "DisassociateManagedNotificationAdditionalChannelResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "DisassociateOrganizationalUnitRequest":{
+      "type":"structure",
+      "required":[
+        "organizationalUnitId",
+        "notificationConfigurationArn"
+      ],
       "members":{
+        "organizationalUnitId":{
+          "shape":"OrganizationalUnitId",
+          "location":"uri",
+          "locationName":"organizationalUnitId"
+        },
+        "notificationConfigurationArn":{"shape":"NotificationConfigurationArn"}
       }
+    },
+    "DisassociateOrganizationalUnitResponse":{
+      "type":"structure",
+      "members":{}
     },
     "EnableNotificationsAccessForOrganizationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EnableNotificationsAccessForOrganizationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ErrorMessage":{"type":"string"},
     "EventRuleArn":{
@@ -1278,7 +1377,8 @@
         "description":{"shape":"NotificationConfigurationDescription"},
         "status":{"shape":"NotificationConfigurationStatus"},
         "creationTime":{"shape":"CreationTime"},
-        "aggregationDuration":{"shape":"AggregationDuration"}
+        "aggregationDuration":{"shape":"AggregationDuration"},
+        "subtype":{"shape":"NotificationConfigurationSubtype"}
       }
     },
     "GetNotificationEventRequest":{
@@ -1314,8 +1414,7 @@
     },
     "GetNotificationsAccessForOrganizationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetNotificationsAccessForOrganizationResponse":{
       "type":"structure",
@@ -1601,6 +1700,56 @@
         "managedNotificationEvents":{"shape":"ManagedNotificationEvents"}
       }
     },
+    "ListMemberAccountsRequest":{
+      "type":"structure",
+      "required":["notificationConfigurationArn"],
+      "members":{
+        "notificationConfigurationArn":{
+          "shape":"NotificationConfigurationArn",
+          "location":"querystring",
+          "locationName":"notificationConfigurationArn"
+        },
+        "maxResults":{
+          "shape":"ListMemberAccountsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "memberAccount":{
+          "shape":"AccountId",
+          "location":"querystring",
+          "locationName":"memberAccount"
+        },
+        "status":{
+          "shape":"MemberAccountNotificationConfigurationStatus",
+          "location":"querystring",
+          "locationName":"status"
+        },
+        "organizationalUnitId":{
+          "shape":"OrganizationalUnitId",
+          "location":"querystring",
+          "locationName":"organizationalUnitId"
+        }
+      }
+    },
+    "ListMemberAccountsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListMemberAccountsResponse":{
+      "type":"structure",
+      "required":["memberAccounts"],
+      "members":{
+        "memberAccounts":{"shape":"MemberAccounts"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListNotificationConfigurationsRequest":{
       "type":"structure",
       "members":{
@@ -1618,6 +1767,11 @@
           "shape":"NotificationConfigurationStatus",
           "location":"querystring",
           "locationName":"status"
+        },
+        "subtype":{
+          "shape":"NotificationConfigurationSubtype",
+          "location":"querystring",
+          "locationName":"subtype"
         },
         "maxResults":{
           "shape":"ListNotificationConfigurationsRequestMaxResultsInteger",
@@ -1687,6 +1841,11 @@
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "organizationalUnitId":{
+          "shape":"OrganizationalUnitId",
+          "location":"querystring",
+          "locationName":"organizationalUnitId"
         }
       }
     },
@@ -1730,6 +1889,41 @@
       "required":["notificationHubs"],
       "members":{
         "notificationHubs":{"shape":"NotificationHubs"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListOrganizationalUnitsRequest":{
+      "type":"structure",
+      "required":["notificationConfigurationArn"],
+      "members":{
+        "notificationConfigurationArn":{
+          "shape":"NotificationConfigurationArn",
+          "location":"querystring",
+          "locationName":"notificationConfigurationArn"
+        },
+        "maxResults":{
+          "shape":"ListOrganizationalUnitsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListOrganizationalUnitsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListOrganizationalUnitsResponse":{
+      "type":"structure",
+      "required":["organizationalUnits"],
+      "members":{
+        "organizationalUnits":{"shape":"OrganizationalUnits"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -2023,6 +2217,36 @@
       "max":256,
       "min":1
     },
+    "MemberAccount":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "status",
+        "statusReason",
+        "organizationalUnitId"
+      ],
+      "members":{
+        "notificationConfigurationArn":{"shape":"NotificationConfigurationArn"},
+        "accountId":{"shape":"AccountId"},
+        "status":{"shape":"MemberAccountNotificationConfigurationStatus"},
+        "statusReason":{"shape":"String"},
+        "organizationalUnitId":{"shape":"OrganizationalUnitId"}
+      }
+    },
+    "MemberAccountNotificationConfigurationStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "PENDING",
+        "INACTIVE",
+        "CREATING",
+        "DELETING"
+      ]
+    },
+    "MemberAccounts":{
+      "type":"list",
+      "member":{"shape":"MemberAccount"}
+    },
     "MessageComponents":{
       "type":"structure",
       "members":{
@@ -2090,8 +2314,16 @@
         "description":{"shape":"NotificationConfigurationDescription"},
         "status":{"shape":"NotificationConfigurationStatus"},
         "creationTime":{"shape":"CreationTime"},
-        "aggregationDuration":{"shape":"AggregationDuration"}
+        "aggregationDuration":{"shape":"AggregationDuration"},
+        "subtype":{"shape":"NotificationConfigurationSubtype"}
       }
+    },
+    "NotificationConfigurationSubtype":{
+      "type":"string",
+      "enum":[
+        "ACCOUNT",
+        "ADMIN_MANAGED"
+      ]
     },
     "NotificationConfigurations":{
       "type":"list",
@@ -2123,7 +2355,8 @@
         "startTime":{"shape":"SyntheticTimestamp_date_time"},
         "endTime":{"shape":"SyntheticTimestamp_date_time"},
         "textParts":{"shape":"TextParts"},
-        "media":{"shape":"Media"}
+        "media":{"shape":"Media"},
+        "organizationalUnitId":{"shape":"OrganizationalUnitId"}
       }
     },
     "NotificationEventArn":{
@@ -2151,7 +2384,8 @@
         "notificationEvent":{"shape":"NotificationEventSummary"},
         "aggregationEventType":{"shape":"AggregationEventType"},
         "aggregateNotificationEventArn":{"shape":"NotificationEventArn"},
-        "aggregationSummary":{"shape":"AggregationSummary"}
+        "aggregationSummary":{"shape":"AggregationSummary"},
+        "organizationalUnitId":{"shape":"OrganizationalUnitId"}
       }
     },
     "NotificationEventSummary":{
@@ -2232,7 +2466,11 @@
     },
     "OrganizationalUnitId":{
       "type":"string",
-      "pattern":"Root|ou-[0-9a-z]{4,32}-[a-z0-9]{8,32}"
+      "pattern":"(Root|r-[0-9a-z]{4,32}|ou-[0-9a-z]{4,32}-[a-z0-9]{8,32})"
+    },
+    "OrganizationalUnits":{
+      "type":"list",
+      "member":{"shape":"OrganizationalUnitId"}
     },
     "QuotaCode":{"type":"string"},
     "Region":{
@@ -2479,8 +2717,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2579,8 +2816,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateEventRuleRequest":{
       "type":"structure",

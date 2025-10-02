@@ -5,7 +5,7 @@
     "ActivateEventSource": "<p>Activates a partner event source that has been deactivated. Once activated, your matching event bus will start receiving events from the event source.</p>",
     "CancelReplay": "<p>Cancels the specified replay.</p>",
     "CreateApiDestination": "<p>Creates an API destination, which is an HTTP invocation endpoint configured as a target for events.</p> <p>API destinations do not support private destinations, such as interface VPC endpoints.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-api-destinations.html\">API destinations</a> in the <i>EventBridge User Guide</i>.</p>",
-    "CreateArchive": "<p>Creates an archive of events with the specified settings. When you create an archive, incoming events might not immediately start being sent to the archive. Allow a short period of time for changes to take effect. If you do not specify a pattern to filter events sent to the archive, all events are sent to the archive except replayed events. Replayed events are not sent to an archive.</p> <note> <p>Archives and schema discovery are not supported for event buses encrypted using a customer managed key. EventBridge returns an error if:</p> <ul> <li> <p>You call <code> <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateArchive.html\">CreateArchive</a> </code> on an event bus set to use a customer managed key for encryption.</p> </li> <li> <p>You call <code> <a href=\"https://docs.aws.amazon.com/eventbridge/latest/schema-reference/v1-discoverers.html#CreateDiscoverer\">CreateDiscoverer</a> </code> on an event bus set to use a customer managed key for encryption.</p> </li> <li> <p>You call <code> <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UpdatedEventBus.html\">UpdatedEventBus</a> </code> to set a customer managed key on an event bus with an archives or schema discovery enabled.</p> </li> </ul> <p>To enable archives or schema discovery on an event bus, choose to use an Amazon Web Services owned key. For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html\">Data encryption in EventBridge</a> in the <i>Amazon EventBridge User Guide</i>.</p> </note>",
+    "CreateArchive": "<p>Creates an archive of events with the specified settings. When you create an archive, incoming events might not immediately start being sent to the archive. Allow a short period of time for changes to take effect. If you do not specify a pattern to filter events sent to the archive, all events are sent to the archive except replayed events. Replayed events are not sent to an archive.</p> <important> <p>If you have specified that EventBridge use a customer managed key for encrypting the source event bus, we strongly recommend you also specify a customer managed key for any archives for the event bus as well. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html\">Encrypting archives</a> in the <i>Amazon EventBridge User Guide</i>.</p> </important>",
     "CreateConnection": "<p>Creates a connection. A connection defines the authorization type and credentials to use for authorization with an API destination HTTP endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection.html\">Connections for endpoint targets</a> in the <i>Amazon EventBridge User Guide</i>.</p>",
     "CreateEndpoint": "<p>Creates a global endpoint. Global endpoints improve your application's availability by making it regional-fault tolerant. To do this, you define a primary and secondary Region with event buses in each Region. You also create a Amazon Route 53 health check that will tell EventBridge to route events to the secondary Region when an \"unhealthy\" state is encountered and events will be routed back to the primary Region when the health check reports a \"healthy\" state.</p>",
     "CreateEventBus": "<p>Creates a new event bus within your account. This can be a custom event bus which you can use to receive events from your custom applications and services, or it can be a partner event bus which can be matched to a partner event source.</p>",
@@ -43,7 +43,7 @@
     "ListRules": "<p>Lists your Amazon EventBridge rules. You can either list all the rules or you can provide a prefix to match to the rule names.</p> <p>The maximum number of results per page for requests is 100.</p> <p>ListRules does not list the targets of a rule. To see the targets associated with a rule, use <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_ListTargetsByRule.html\">ListTargetsByRule</a>.</p>",
     "ListTagsForResource": "<p>Displays the tags associated with an EventBridge resource. In EventBridge, rules and event buses can be tagged.</p>",
     "ListTargetsByRule": "<p>Lists the targets assigned to the specified rule.</p> <p>The maximum number of results per page for requests is 100.</p>",
-    "PutEvents": "<p>Sends custom events to Amazon EventBridge so that they can be matched to rules.</p> <p>The maximum size for a PutEvents event entry is 256 KB. Entry size is calculated including the event and any necessary characters and keys of the JSON representation of the event. To learn more, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-putevent-size.html\">Calculating PutEvents event entry size</a> in the <i> <i>Amazon EventBridge User Guide</i> </i> </p> <p>PutEvents accepts the data in JSON format. For the JSON number (integer) data type, the constraints are: a minimum value of -9,223,372,036,854,775,808 and a maximum value of 9,223,372,036,854,775,807.</p> <note> <p>PutEvents will only process nested JSON up to 1000 levels deep.</p> </note>",
+    "PutEvents": "<p>Sends custom events to Amazon EventBridge so that they can be matched to rules.</p> <p>You can batch multiple event entries into one request for efficiency. However, the total entry size must be less than 256KB. You can calculate the entry size before you send the events. For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-putevents.html#eb-putevent-size\">Calculating PutEvents event entry size</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p> <p>PutEvents accepts the data in JSON format. For the JSON number (integer) data type, the constraints are: a minimum value of -9,223,372,036,854,775,808 and a maximum value of 9,223,372,036,854,775,807.</p> <note> <p>PutEvents will only process nested JSON up to 1000 levels deep.</p> </note>",
     "PutPartnerEvents": "<p>This is used by SaaS partners to write events to a customer's partner event bus. Amazon Web Services customers do not use this operation.</p> <p>For information on calculating event batch size, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-putevent-size.html\">Calculating EventBridge PutEvents event entry size</a> in the <i>EventBridge User Guide</i>.</p>",
     "PutPermission": "<p>Running <code>PutPermission</code> permits the specified Amazon Web Services account or Amazon Web Services organization to put events to the specified <i>event bus</i>. Amazon EventBridge rules in your account are triggered by these events arriving to an event bus in your account. </p> <p>For another account to send events to your account, that external account must have an EventBridge rule with your account's event bus as a target.</p> <p>To enable multiple Amazon Web Services accounts to put events to your event bus, run <code>PutPermission</code> once for each of these accounts. Or, if all the accounts are members of the same Amazon Web Services organization, you can run <code>PutPermission</code> once specifying <code>Principal</code> as \"*\" and specifying the Amazon Web Services organization ID in <code>Condition</code>, to grant permissions to all accounts in that organization.</p> <p>If you grant permissions using an organization, then accounts in that organization must specify a <code>RoleArn</code> with proper permissions when they use <code>PutTarget</code> to add your account's event bus as a target. For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-cross-account-event-delivery.html\">Sending and Receiving Events Between Amazon Web Services Accounts</a> in the <i>Amazon EventBridge User Guide</i>.</p> <p>The permission policy on the event bus cannot exceed 10 KB in size.</p>",
     "PutRule": "<p>Creates or updates the specified rule. Rules are enabled by default, or based on value of the state. You can disable a rule using <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_DisableRule.html\">DisableRule</a>.</p> <p>A single rule watches for events from a single event bus. Events generated by Amazon Web Services services go to your account's default event bus. Events generated by SaaS partner services or applications go to the matching partner event bus. If you have custom applications or services, you can specify whether their events go to your default event bus or a custom event bus that you have created. For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateEventBus.html\">CreateEventBus</a>.</p> <p>If you are updating an existing rule, the rule is replaced with what you specify in this <code>PutRule</code> command. If you omit arguments in <code>PutRule</code>, the old values for those arguments are not kept. Instead, they are replaced with null values.</p> <p>When you create or update a rule, incoming events might not immediately start matching to new or updated rules. Allow a short period of time for changes to take effect.</p> <p>A rule must contain at least an EventPattern or ScheduleExpression. Rules with EventPatterns are triggered when a matching event is observed. Rules with ScheduleExpressions self-trigger based on the given schedule. A rule can have both an EventPattern and a ScheduleExpression, in which case the rule triggers on matching events as well as on a schedule.</p> <p>When you initially create a rule, you can optionally assign one or more tags to the rule. Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only rules with certain tag values. To use the <code>PutRule</code> operation and assign tags, you must have both the <code>events:PutRule</code> and <code>events:TagResource</code> permissions.</p> <p>If you are updating an existing rule, any tags you specify in the <code>PutRule</code> operation are ignored. To update the tags of an existing rule, use <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_TagResource.html\">TagResource</a> and <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UntagResource.html\">UntagResource</a>.</p> <p>Most services in Amazon Web Services treat : or / as the same character in Amazon Resource Names (ARNs). However, EventBridge uses an exact match in event patterns and rules. Be sure to use the correct ARN characters when creating event patterns so that they match the ARN syntax in the event you want to match.</p> <p>In EventBridge, it is possible to create rules that lead to infinite loops, where a rule is fired repeatedly. For example, a rule might detect that ACLs have changed on an S3 bucket, and trigger software to change them to the desired state. If the rule is not written carefully, the subsequent change to the ACLs fires the rule again, creating an infinite loop.</p> <p>To prevent this, write the rules so that the triggered actions do not re-fire the same rule. For example, your rule could fire only if ACLs are found to be in a bad state, instead of after any change. </p> <p>An infinite loop can quickly cause higher than expected charges. We recommend that you use budgeting, which alerts you when charges exceed your specified limit. For more information, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/budgets-managing-costs.html\">Managing Your Costs with Budgets</a>.</p> <p>To create a rule that filters for management events from Amazon Web Services services, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-event-cloudtrail.html#eb-service-event-cloudtrail-management\">Receiving read-only management events from Amazon Web Services services</a> in the <i>EventBridge User Guide</i>.</p>",
@@ -62,9 +62,8 @@
   },
   "shapes": {
     "AccessDeniedException": {
-      "base": "<p>You do not have the necessary permissons for this action.</p>",
-      "refs": {
-      }
+      "base": "<p>You do not have the necessary permissions for this action.</p>",
+      "refs": {}
     },
     "AccountId": {
       "base": null,
@@ -82,8 +81,7 @@
     },
     "ActivateEventSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ApiDestination": {
       "base": "<p>Contains details about an API destination.</p>",
@@ -170,6 +168,10 @@
       "refs": {
         "CreateArchiveResponse$ArchiveArn": "<p>The ARN of the archive that was created.</p>",
         "DescribeArchiveResponse$ArchiveArn": "<p>The ARN of the archive.</p>",
+        "DescribeReplayResponse$EventSourceArn": "<p>The ARN of the archive events were replayed from.</p>",
+        "ListReplaysRequest$EventSourceArn": "<p>The ARN of the archive from which the events are replayed.</p>",
+        "Replay$EventSourceArn": "<p>The ARN of the archive to replay event from.</p>",
+        "StartReplayRequest$EventSourceArn": "<p>The ARN of the archive to replay events from.</p>",
         "UpdateArchiveResponse$ArchiveArn": "<p>The ARN of the archive.</p>"
       }
     },
@@ -221,18 +223,10 @@
     "Arn": {
       "base": null,
       "refs": {
-        "Archive$EventSourceArn": "<p>The ARN of the event bus associated with the archive. Only events from this event bus are sent to the archive.</p>",
-        "CreateArchiveRequest$EventSourceArn": "<p>The ARN of the event bus that sends events to the archive.</p>",
-        "DescribeArchiveResponse$EventSourceArn": "<p>The ARN of the event source associated with the archive.</p>",
-        "DescribeReplayResponse$EventSourceArn": "<p>The ARN of the archive events were replayed from.</p>",
         "EcsParameters$TaskDefinitionArn": "<p>The ARN of the task definition to use if the event target is an Amazon ECS task. </p>",
-        "ListArchivesRequest$EventSourceArn": "<p>The ARN of the event source associated with the archive.</p>",
-        "ListReplaysRequest$EventSourceArn": "<p>The ARN of the archive from which the events are replayed.</p>",
         "ListTagsForResourceRequest$ResourceARN": "<p>The ARN of the EventBridge resource for which you want to view tags.</p>",
-        "Replay$EventSourceArn": "<p>The ARN of the archive to replay event from.</p>",
         "ReplayDestination$Arn": "<p>The ARN of the event bus to replay event to. You can replay events only to the event bus specified to create the archive.</p>",
         "ReplayDestinationFilters$member": null,
-        "StartReplayRequest$EventSourceArn": "<p>The ARN of the archive to replay events from.</p>",
         "TagResourceRequest$ResourceARN": "<p>The ARN of the EventBridge resource that you're adding tags to.</p>",
         "UntagResourceRequest$ResourceARN": "<p>The ARN of the EventBridge resource from which you are removing tags.</p>"
       }
@@ -309,13 +303,11 @@
     },
     "CancelReplayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelReplayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CapacityProvider": {
       "base": null,
@@ -349,8 +341,7 @@
     },
     "ConcurrentModificationException": {
       "base": "<p>There is concurrent modification on a rule, target, archive, or replay.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Condition": {
       "base": "<p>A JSON string which you can use to limit the event bus permissions you are granting to only accounts that fulfill the condition. Currently, the only supported condition is membership in a certain Amazon Web Services organization. The string must contain <code>Type</code>, <code>Key</code>, and <code>Value</code> fields. The <code>Value</code> field specifies the ID of the Amazon Web Services organization. Following is an example value for <code>Condition</code>:</p> <p> <code>'{\"Type\" : \"StringEquals\", \"Key\": \"aws:PrincipalOrgID\", \"Value\": \"o-1234567890\"}'</code> </p>",
@@ -521,7 +512,7 @@
       }
     },
     "ConnectivityResourceConfigurationArn": {
-      "base": "<p>The Amazon Resource Name (ARN) of the resource configuration for the resource endpoint.</p>",
+      "base": "<p>The Amazon Resource Name (ARN) of the Amazon VPC Lattice resource configuration for the resource endpoint.</p>",
       "refs": {
         "ConnectivityResourceParameters$ResourceParameters": "<p>The parameters for EventBridge to use when invoking the resource endpoint.</p>"
       }
@@ -530,30 +521,26 @@
       "base": "<p>The parameters for EventBridge to use when invoking the resource endpoint.</p>",
       "refs": {
         "CreateConnectionAuthRequestParameters$ConnectivityParameters": "<p>If you specify a private OAuth endpoint, the parameters for EventBridge to use when authenticating against the endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html\">Authorization methods for connections</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>",
-        "CreateConnectionRequest$InvocationConnectivityParameters": "<p>For connections to private resource endpoints, the parameters to use for invoking the resource endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-private.html\">Connecting to private resources</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>",
+        "CreateConnectionRequest$InvocationConnectivityParameters": "<p>For connections to private APIs, the parameters to use for invoking the API.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html\">Connecting to private APIs</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>",
         "UpdateConnectionAuthRequestParameters$ConnectivityParameters": "<p>If you specify a private OAuth endpoint, the parameters for EventBridge to use when authenticating against the endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html\">Authorization methods for connections</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>",
-        "UpdateConnectionRequest$InvocationConnectivityParameters": "<p>For connections to private resource endpoints, the parameters to use for invoking the resource endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-private.html\">Connecting to private resources</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>"
+        "UpdateConnectionRequest$InvocationConnectivityParameters": "<p>For connections to private APIs, the parameters to use for invoking the API.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html\">Connecting to private APIs</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>"
       }
     },
     "CreateApiDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateApiDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateArchiveRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateArchiveResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConnectionApiKeyAuthRequestParameters": {
       "base": "<p>The API key authorization parameters for the connection.</p>",
@@ -587,43 +574,35 @@
     },
     "CreateConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConnectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEventBusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEventBusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePartnerEventSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePartnerEventSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatedBy": {
       "base": null,
@@ -645,8 +624,7 @@
     },
     "DeactivateEventSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeadLetterConfig": {
       "base": "<p>Configuration details of the Amazon SQS queue for EventBridge to use as a dead-letter queue (DLQ).</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rule-event-delivery.html#eb-rule-dlq\">Using dead-letter queues to process undelivered events</a> in the <i>EventBridge User Guide</i>.</p>",
@@ -661,100 +639,82 @@
     },
     "DeauthorizeConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeauthorizeConnectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteApiDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteApiDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteArchiveRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteArchiveResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConnectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEventBusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePartnerEventSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRuleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeApiDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeApiDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeArchiveRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeArchiveResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConnectionConnectivityParameters": {
       "base": "<p>If the connection uses a private OAuth endpoint, the parameters for EventBridge to use when authenticating against the endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html\">Authorization methods for connections</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>",
       "refs": {
         "ConnectionAuthResponseParameters$ConnectivityParameters": "<p>For private OAuth authentication endpoints. The parameters EventBridge uses to authenticate against the endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html\">Authorization methods for connections</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>",
-        "DescribeConnectionResponse$InvocationConnectivityParameters": "<p>For connections to private resource endpoints. The parameters EventBridge uses to invoke the resource endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-private.html\">Connecting to private resources</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>"
+        "DescribeConnectionResponse$InvocationConnectivityParameters": "<p>For connections to private APIs The parameters EventBridge uses to invoke the resource endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html\">Connecting to private APIs</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>"
       }
     },
     "DescribeConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConnectionResourceParameters": {
       "base": "<p>The parameters for EventBridge to use when invoking the resource endpoint.</p>",
@@ -764,73 +724,59 @@
     },
     "DescribeConnectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEventBusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEventBusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEventSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEventSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePartnerEventSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePartnerEventSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeReplayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeReplayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRuleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRuleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisableRuleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EcsParameters": {
       "base": "<p>The custom parameters to be used when the target is an Amazon ECS task.</p>",
@@ -840,8 +786,7 @@
     },
     "EnableRuleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Endpoint": {
       "base": "<p>A global endpoint used to improve your application's availability by making it regional-fault tolerant. For more information about global endpoints, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-global-endpoints.html\">Making applications Regional-fault tolerant with global endpoints and event replication</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>",
@@ -959,6 +904,15 @@
       "base": "<p>An event bus receives events from a source, uses rules to evaluate them, applies any configured input transformation, and routes them to the appropriate target(s). Your account's default event bus receives events from Amazon Web Services services. A custom event bus can receive events from your custom applications and services. A partner event bus receives events from an event source created by an SaaS partner. These events come from the partners services or applications.</p>",
       "refs": {
         "EventBusList$member": null
+      }
+    },
+    "EventBusArn": {
+      "base": null,
+      "refs": {
+        "Archive$EventSourceArn": "<p>The ARN of the event bus associated with the archive. Only events from this event bus are sent to the archive.</p>",
+        "CreateArchiveRequest$EventSourceArn": "<p>The ARN of the event bus that sends events to the archive.</p>",
+        "DescribeArchiveResponse$EventSourceArn": "<p>The ARN of the event source associated with the archive.</p>",
+        "ListArchivesRequest$EventSourceArn": "<p>The ARN of the event source associated with the archive.</p>"
       }
     },
     "EventBusDescription": {
@@ -1166,7 +1120,12 @@
     },
     "IllegalStatusException": {
       "base": "<p>An error occurred because a replay can be canceled only when the state is Running or Starting.</p>",
+      "refs": {}
+    },
+    "IncludeDetail": {
+      "base": null,
       "refs": {
+        "LogConfig$IncludeDetail": "<p>Whether EventBridge include detailed event information in the records it generates. Detailed data can be useful for troubleshooting and debugging. This information includes details of the event itself, as well as target details.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus-logs.html#eb-event-logs-data\">Including detail data in event bus logs</a> in the <i>EventBridge User Guide</i>.</p>"
       }
     },
     "InputTransformer": {
@@ -1194,18 +1153,15 @@
     },
     "InternalException": {
       "base": "<p>This exception occurs due to unexpected causes.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidEventPatternException": {
       "base": "<p>The event pattern is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidStateException": {
       "base": "<p>The specified state is not a valid state for an event source.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KinesisParameters": {
       "base": "<p>This object enables you to specify a JSON path to extract from the event and use as the partition key for the Amazon Kinesis data stream, so that you can control the shard to which the event goes. If you do not include this parameter, the default is to use the <code>eventId</code> as the partition key.</p>",
@@ -1216,10 +1172,16 @@
     "KmsKeyIdentifier": {
       "base": null,
       "refs": {
-        "CreateEventBusRequest$KmsKeyIdentifier": "<p>The identifier of the KMS customer managed key for EventBridge to use, if you choose to use a customer managed key to encrypt events on this event bus. The identifier can be the key Amazon Resource Name (ARN), KeyId, key alias, or key alias ARN.</p> <p>If you do not specify a customer managed key identifier, EventBridge uses an Amazon Web Services owned key to encrypt events on the event bus.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/getting-started.html\">Managing keys</a> in the <i>Key Management Service Developer Guide</i>. </p> <note> <p>Archives and schema discovery are not supported for event buses encrypted using a customer managed key. EventBridge returns an error if:</p> <ul> <li> <p>You call <code> <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateArchive.html\">CreateArchive</a> </code> on an event bus set to use a customer managed key for encryption.</p> </li> <li> <p>You call <code> <a href=\"https://docs.aws.amazon.com/eventbridge/latest/schema-reference/v1-discoverers.html#CreateDiscoverer\">CreateDiscoverer</a> </code> on an event bus set to use a customer managed key for encryption.</p> </li> <li> <p>You call <code> <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UpdatedEventBus.html\">UpdatedEventBus</a> </code> to set a customer managed key on an event bus with an archives or schema discovery enabled.</p> </li> </ul> <p>To enable archives or schema discovery on an event bus, choose to use an Amazon Web Services owned key. For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html\">Data encryption in EventBridge</a> in the <i>Amazon EventBridge User Guide</i>.</p> </note>",
+        "CreateArchiveRequest$KmsKeyIdentifier": "<p>The identifier of the KMS customer managed key for EventBridge to use, if you choose to use a customer managed key to encrypt this archive. The identifier can be the key Amazon Resource Name (ARN), KeyId, key alias, or key alias ARN.</p> <p>If you do not specify a customer managed key identifier, EventBridge uses an Amazon Web Services owned key to encrypt the archive.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html\">Identify and view keys</a> in the <i>Key Management Service Developer Guide</i>. </p> <important> <p>If you have specified that EventBridge use a customer managed key for encrypting the source event bus, we strongly recommend you also specify a customer managed key for any archives for the event bus as well. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html\">Encrypting archives</a> in the <i>Amazon EventBridge User Guide</i>.</p> </important>",
+        "CreateConnectionRequest$KmsKeyIdentifier": "<p>The identifier of the KMS customer managed key for EventBridge to use, if you choose to use a customer managed key to encrypt this connection. The identifier can be the key Amazon Resource Name (ARN), KeyId, key alias, or key alias ARN.</p> <p>If you do not specify a customer managed key identifier, EventBridge uses an Amazon Web Services owned key to encrypt the connection.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html\">Identify and view keys</a> in the <i>Key Management Service Developer Guide</i>. </p>",
+        "CreateEventBusRequest$KmsKeyIdentifier": "<p>The identifier of the KMS customer managed key for EventBridge to use, if you choose to use a customer managed key to encrypt events on this event bus. The identifier can be the key Amazon Resource Name (ARN), KeyId, key alias, or key alias ARN.</p> <p>If you do not specify a customer managed key identifier, EventBridge uses an Amazon Web Services owned key to encrypt events on the event bus.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html\">Identify and view keys</a> in the <i>Key Management Service Developer Guide</i>. </p> <note> <p>Schema discovery is not supported for event buses encrypted using a customer managed key. EventBridge returns an error if: </p> <ul> <li> <p>You call <code> <a href=\"https://docs.aws.amazon.com/eventbridge/latest/schema-reference/v1-discoverers.html#CreateDiscoverer\">CreateDiscoverer</a> </code> on an event bus set to use a customer managed key for encryption.</p> </li> <li> <p>You call <code> <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UpdatedEventBus.html\">UpdatedEventBus</a> </code> to set a customer managed key on an event bus with schema discovery enabled.</p> </li> </ul> <p>To enable schema discovery on an event bus, choose to use an Amazon Web Services owned key. For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption-event-bus-cmkey.html\">Encrypting events</a> in the <i>Amazon EventBridge User Guide</i>.</p> </note> <important> <p>If you have specified that EventBridge use a customer managed key for encrypting the source event bus, we strongly recommend you also specify a customer managed key for any archives for the event bus as well. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html\">Encrypting archives</a> in the <i>Amazon EventBridge User Guide</i>.</p> </important>",
         "CreateEventBusResponse$KmsKeyIdentifier": "<p>The identifier of the KMS customer managed key for EventBridge to use to encrypt events on this event bus, if one has been specified.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html\">Data encryption in EventBridge</a> in the <i>Amazon EventBridge User Guide</i>.</p>",
+        "DescribeArchiveResponse$KmsKeyIdentifier": "<p>The identifier of the KMS customer managed key for EventBridge to use to encrypt this archive, if one has been specified.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html\">Encrypting archives</a> in the <i>Amazon EventBridge User Guide</i>.</p>",
+        "DescribeConnectionResponse$KmsKeyIdentifier": "<p>The identifier of the KMS customer managed key for EventBridge to use to encrypt the connection, if one has been specified.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-connections.html\">Encrypting connections</a> in the <i>Amazon EventBridge User Guide</i>.</p>",
         "DescribeEventBusResponse$KmsKeyIdentifier": "<p>The identifier of the KMS customer managed key for EventBridge to use to encrypt events on this event bus, if one has been specified.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html\">Data encryption in EventBridge</a> in the <i>Amazon EventBridge User Guide</i>.</p>",
-        "UpdateEventBusRequest$KmsKeyIdentifier": "<p>The identifier of the KMS customer managed key for EventBridge to use, if you choose to use a customer managed key to encrypt events on this event bus. The identifier can be the key Amazon Resource Name (ARN), KeyId, key alias, or key alias ARN.</p> <p>If you do not specify a customer managed key identifier, EventBridge uses an Amazon Web Services owned key to encrypt events on the event bus.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/getting-started.html\">Managing keys</a> in the <i>Key Management Service Developer Guide</i>. </p> <note> <p>Archives and schema discovery are not supported for event buses encrypted using a customer managed key. EventBridge returns an error if:</p> <ul> <li> <p>You call <code> <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateArchive.html\">CreateArchive</a> </code> on an event bus set to use a customer managed key for encryption.</p> </li> <li> <p>You call <code> <a href=\"https://docs.aws.amazon.com/eventbridge/latest/schema-reference/v1-discoverers.html#CreateDiscoverer\">CreateDiscoverer</a> </code> on an event bus set to use a customer managed key for encryption.</p> </li> <li> <p>You call <code> <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UpdatedEventBus.html\">UpdatedEventBus</a> </code> to set a customer managed key on an event bus with an archives or schema discovery enabled.</p> </li> </ul> <p>To enable archives or schema discovery on an event bus, choose to use an Amazon Web Services owned key. For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html\">Data encryption in EventBridge</a> in the <i>Amazon EventBridge User Guide</i>.</p> </note>",
+        "UpdateArchiveRequest$KmsKeyIdentifier": "<p>The identifier of the KMS customer managed key for EventBridge to use, if you choose to use a customer managed key to encrypt this archive. The identifier can be the key Amazon Resource Name (ARN), KeyId, key alias, or key alias ARN.</p> <p>If you do not specify a customer managed key identifier, EventBridge uses an Amazon Web Services owned key to encrypt the archive.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html\">Identify and view keys</a> in the <i>Key Management Service Developer Guide</i>. </p> <important> <p>If you have specified that EventBridge use a customer managed key for encrypting the source event bus, we strongly recommend you also specify a customer managed key for any archives for the event bus as well. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html\">Encrypting archives</a> in the <i>Amazon EventBridge User Guide</i>.</p> </important>",
+        "UpdateConnectionRequest$KmsKeyIdentifier": "<p>The identifier of the KMS customer managed key for EventBridge to use, if you choose to use a customer managed key to encrypt this connection. The identifier can be the key Amazon Resource Name (ARN), KeyId, key alias, or key alias ARN.</p> <p>If you do not specify a customer managed key identifier, EventBridge uses an Amazon Web Services owned key to encrypt the connection.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html\">Identify and view keys</a> in the <i>Key Management Service Developer Guide</i>. </p>",
+        "UpdateEventBusRequest$KmsKeyIdentifier": "<p>The identifier of the KMS customer managed key for EventBridge to use, if you choose to use a customer managed key to encrypt events on this event bus. The identifier can be the key Amazon Resource Name (ARN), KeyId, key alias, or key alias ARN.</p> <p>If you do not specify a customer managed key identifier, EventBridge uses an Amazon Web Services owned key to encrypt events on the event bus.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html\">Identify and view keys</a> in the <i>Key Management Service Developer Guide</i>. </p> <note> <p>Schema discovery is not supported for event buses encrypted using a customer managed key. EventBridge returns an error if: </p> <ul> <li> <p>You call <code> <a href=\"https://docs.aws.amazon.com/eventbridge/latest/schema-reference/v1-discoverers.html#CreateDiscoverer\">CreateDiscoverer</a> </code> on an event bus set to use a customer managed key for encryption.</p> </li> <li> <p>You call <code> <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UpdatedEventBus.html\">UpdatedEventBus</a> </code> to set a customer managed key on an event bus with schema discovery enabled.</p> </li> </ul> <p>To enable schema discovery on an event bus, choose to use an Amazon Web Services owned key. For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption-event-bus-cmkey.html\">Encrypting events</a> in the <i>Amazon EventBridge User Guide</i>.</p> </note> <important> <p>If you have specified that EventBridge use a customer managed key for encrypting the source event bus, we strongly recommend you also specify a customer managed key for any archives for the event bus as well. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/encryption-archives.html\">Encrypting archives</a> in the <i>Amazon EventBridge User Guide</i>.</p> </important>",
         "UpdateEventBusResponse$KmsKeyIdentifier": "<p>The identifier of the KMS customer managed key for EventBridge to use to encrypt events on this event bus, if one has been specified.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html\">Data encryption in EventBridge</a> in the <i>Amazon EventBridge User Guide</i>.</p>"
       }
     },
@@ -1229,10 +1191,15 @@
         "EcsParameters$LaunchType": "<p>Specifies the launch type on which your task is running. The launch type that you specify here must match one of the launch type (compatibilities) of the target task. The <code>FARGATE</code> value is supported only in the Regions where Fargate with Amazon ECS is supported. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS-Fargate.html\">Fargate on Amazon ECS</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p>"
       }
     },
+    "Level": {
+      "base": null,
+      "refs": {
+        "LogConfig$Level": "<p>The level of logging detail to include. This applies to all log destinations for the event bus.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus-logs.html#eb-event-bus-logs-level\">Specifying event bus log level</a> in the <i>EventBridge User Guide</i>.</p>"
+      }
+    },
     "LimitExceededException": {
       "base": "<p>The request failed because it attempted to create resource beyond the allowed service quota.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LimitMax100": {
       "base": null,
@@ -1259,132 +1226,116 @@
     },
     "ListApiDestinationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApiDestinationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListArchivesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListArchivesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConnectionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConnectionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEndpointsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEndpointsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventBusesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventBusesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventSourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventSourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPartnerEventSourceAccountsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPartnerEventSourceAccountsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPartnerEventSourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPartnerEventSourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReplaysRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReplaysResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRuleNamesByTargetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRuleNamesByTargetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRulesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRulesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTargetsByRuleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTargetsByRuleResponse": {
       "base": null,
+      "refs": {}
+    },
+    "LogConfig": {
+      "base": "<p>The logging configuration settings for the event bus.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eb-event-bus-logs.html\">Configuring logs for event buses</a> in the <i>EventBridge User Guide</i>.</p>",
       "refs": {
+        "CreateEventBusRequest$LogConfig": "<p>The logging configuration settings for the event bus.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eb-event-bus-logs.html\">Configuring logs for event buses</a> in the <i>EventBridge User Guide</i>.</p>",
+        "CreateEventBusResponse$LogConfig": "<p>The logging configuration settings for the event bus.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eb-event-bus-logs.html\">Configuring logs for event buses</a> in the <i>EventBridge User Guide</i>.</p>",
+        "DescribeEventBusResponse$LogConfig": "<p>The logging configuration settings for the event bus.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eb-event-bus-logs.html\">Configuring logs for event buses</a> in the <i>EventBridge User Guide</i>.</p>",
+        "UpdateEventBusRequest$LogConfig": "<p>The logging configuration settings for the event bus.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eb-event-bus-logs.html\">Configuring logs for event buses</a> in the <i>EventBridge User Guide</i>.</p>",
+        "UpdateEventBusResponse$LogConfig": "<p>The logging configuration settings for the event bus.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eb-event-bus-logs.html\">Configuring logs for event buses</a> in the <i>EventBridge User Guide</i>.</p>"
       }
     },
     "Long": {
@@ -1405,8 +1356,7 @@
     },
     "ManagedRuleException": {
       "base": "<p>This rule was created by an Amazon Web Services service on behalf of your account. It is managed by that service. If you see this error in response to <code>DeleteRule</code> or <code>RemoveTargets</code>, you can use the <code>Force</code> parameter in those calls to delete the rule or remove targets from the rule. You cannot modify these managed rules by using <code>DisableRule</code>, <code>EnableRule</code>, <code>PutTargets</code>, <code>PutRule</code>, <code>TagResource</code>, or <code>UntagResource</code>. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "MaximumEventAgeInSeconds": {
       "base": null,
@@ -1482,8 +1432,7 @@
     },
     "OperationDisabledException": {
       "base": "<p>The operation you are attempting is not available in this region.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PartnerEventSource": {
       "base": "<p>A partner event source is created by an SaaS partner. If a customer creates a partner event bus that matches this event source, that Amazon Web Services account can receive events from the partner's applications or services.</p>",
@@ -1577,8 +1526,7 @@
     },
     "PolicyLengthExceededException": {
       "base": "<p>The event bus policy is too long. For more information, see the limits.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Primary": {
       "base": "<p>The primary Region of the endpoint.</p>",
@@ -1600,8 +1548,7 @@
     },
     "PutEventsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutEventsRequestEntry": {
       "base": "<p>Represents an event to be submitted.</p>",
@@ -1617,8 +1564,7 @@
     },
     "PutEventsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutEventsResultEntry": {
       "base": "<p>Represents the results of an event submitted to an event bus.</p> <p>If the submission was successful, the entry has the event ID in it. Otherwise, you can use the error code and error message to identify the problem with the entry.</p> <p>For information about the errors that are common to all actions, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/CommonErrors.html\">Common Errors</a>.</p>",
@@ -1634,8 +1580,7 @@
     },
     "PutPartnerEventsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutPartnerEventsRequestEntry": {
       "base": "<p>The details about an event generated by an SaaS partner.</p>",
@@ -1651,8 +1596,7 @@
     },
     "PutPartnerEventsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutPartnerEventsResultEntry": {
       "base": "<p>The result of an event entry the partner submitted in this request. If the event was successfully submitted, the entry has the event ID in it. Otherwise, you can use the error code and error message to identify the problem with the entry.</p>",
@@ -1668,28 +1612,23 @@
     },
     "PutPermissionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRuleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRuleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutTargetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutTargetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutTargetsResultEntry": {
       "base": "<p>Represents a target that failed to be added to a rule.</p>",
@@ -1748,18 +1687,15 @@
     },
     "RemovePermissionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveTargetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveTargetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveTargetsResultEntry": {
       "base": "<p>Represents a target that failed to be removed from a rule.</p>",
@@ -1862,8 +1798,7 @@
     },
     "ResourceAlreadyExistsException": {
       "base": "<p>The resource you are trying to create already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceArn": {
       "base": null,
@@ -1874,20 +1809,19 @@
     "ResourceAssociationArn": {
       "base": null,
       "refs": {
-        "DescribeConnectionResourceParameters$ResourceAssociationArn": "<p>For connections to private APIs, the Amazon Resource Name (ARN) of the resource association EventBridge created between the connection and the private API's resource configuration.</p>"
+        "DescribeConnectionResourceParameters$ResourceAssociationArn": "<p>For connections to private APIs, the Amazon Resource Name (ARN) of the resource association EventBridge created between the connection and the private API's resource configuration.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/connection-private.html#connection-private-snra\"> Managing service network resource associations for connections</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>"
       }
     },
     "ResourceConfigurationArn": {
       "base": null,
       "refs": {
-        "ConnectivityResourceConfigurationArn$ResourceConfigurationArn": "<p>The Amazon Resource Name (ARN) of the resource configuration for the resource endpoint.</p>",
+        "ConnectivityResourceConfigurationArn$ResourceConfigurationArn": "<p>The Amazon Resource Name (ARN) of the Amazon VPC Lattice resource configuration for the resource endpoint.</p>",
         "DescribeConnectionResourceParameters$ResourceConfigurationArn": "<p>The Amazon Resource Name (ARN) of the resource configuration for the private API.</p>"
       }
     },
     "ResourceNotFoundException": {
       "base": "<p>An entity that you specified does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RetentionDays": {
       "base": null,
@@ -2026,7 +1960,7 @@
       }
     },
     "SageMakerPipelineParameter": {
-      "base": "<p>Name/Value pair of a parameter to start execution of a SageMaker Model Building Pipeline.</p>",
+      "base": "<p>Name/Value pair of a parameter to start execution of a SageMaker AI Model Building Pipeline.</p>",
       "refs": {
         "SageMakerPipelineParameterList$member": null
       }
@@ -2034,25 +1968,25 @@
     "SageMakerPipelineParameterList": {
       "base": null,
       "refs": {
-        "SageMakerPipelineParameters$PipelineParameterList": "<p>List of Parameter names and values for SageMaker Model Building Pipeline execution.</p>"
+        "SageMakerPipelineParameters$PipelineParameterList": "<p>List of Parameter names and values for SageMaker AI Model Building Pipeline execution.</p>"
       }
     },
     "SageMakerPipelineParameterName": {
       "base": null,
       "refs": {
-        "SageMakerPipelineParameter$Name": "<p>Name of parameter to start execution of a SageMaker Model Building Pipeline.</p>"
+        "SageMakerPipelineParameter$Name": "<p>Name of parameter to start execution of a SageMaker AI Model Building Pipeline.</p>"
       }
     },
     "SageMakerPipelineParameterValue": {
       "base": null,
       "refs": {
-        "SageMakerPipelineParameter$Value": "<p>Value of parameter to start execution of a SageMaker Model Building Pipeline.</p>"
+        "SageMakerPipelineParameter$Value": "<p>Value of parameter to start execution of a SageMaker AI Model Building Pipeline.</p>"
       }
     },
     "SageMakerPipelineParameters": {
-      "base": "<p>These are custom parameters to use when the target is a SageMaker Model Building Pipeline that starts based on EventBridge events.</p>",
+      "base": "<p>These are custom parameters to use when the target is a SageMaker AI Model Building Pipeline that starts based on EventBridge events.</p>",
       "refs": {
-        "Target$SageMakerPipelineParameters": "<p>Contains the SageMaker Model Building Pipeline parameters to start execution of a SageMaker Model Building Pipeline.</p> <p>If you specify a SageMaker Model Building Pipeline as a target, you can use this to specify parameters to start a pipeline execution based on EventBridge events.</p>"
+        "Target$SageMakerPipelineParameters": "<p>Contains the SageMaker AI Model Building Pipeline parameters to start execution of a SageMaker AI Model Building Pipeline.</p> <p>If you specify a SageMaker AI Model Building Pipeline as a target, you can use this to specify parameters to start a pipeline execution based on EventBridge events.</p>"
       }
     },
     "ScheduleExpression": {
@@ -2102,13 +2036,11 @@
     },
     "StartReplayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartReplayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StatementId": {
       "base": null,
@@ -2201,13 +2133,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -2271,18 +2201,15 @@
     },
     "TestEventPatternRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TestEventPatternResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ThrottlingException": {
       "base": "<p>This request cannot be completed due to throttling issues.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -2365,33 +2292,27 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateApiDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateApiDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateArchiveRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateArchiveResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConnectionApiKeyAuthRequestParameters": {
       "base": "<p>Contains the API key authorization parameters to use to update the connection.</p>",
@@ -2425,33 +2346,27 @@
     },
     "UpdateConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConnectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEventBusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEventBusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     }
   }
 }

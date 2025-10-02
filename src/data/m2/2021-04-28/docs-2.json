@@ -4,6 +4,7 @@
   "operations": {
     "CancelBatchJobExecution": "<p>Cancels the running of a specific batch job execution.</p>",
     "CreateApplication": "<p>Creates a new application with given parameters. Requires an existing runtime environment and application definition file.</p>",
+    "CreateDataSetExportTask": "<p>Starts a data set export task for a specific application.</p>",
     "CreateDataSetImportTask": "<p>Starts a data set import task for a specific application.</p>",
     "CreateDeployment": "<p>Creates and starts a deployment to deploy an application into a runtime environment.</p>",
     "CreateEnvironment": "<p>Creates a runtime environment for a given runtime engine.</p>",
@@ -14,6 +15,7 @@
     "GetApplicationVersion": "<p>Returns details about a specific version of a specific application.</p>",
     "GetBatchJobExecution": "<p>Gets the details of a specific batch job execution for a specific application.</p>",
     "GetDataSetDetails": "<p>Gets the details of a specific data set.</p>",
+    "GetDataSetExportTask": "<p>Gets the status of a data set import task initiated with the <a>CreateDataSetExportTask</a> operation.</p>",
     "GetDataSetImportTask": "<p>Gets the status of a data set import task initiated with the <a>CreateDataSetImportTask</a> operation.</p>",
     "GetDeployment": "<p>Gets details of a specific deployment with a given deployment identifier.</p>",
     "GetEnvironment": "<p>Describes a specific runtime environment.</p>",
@@ -23,6 +25,7 @@
     "ListBatchJobDefinitions": "<p>Lists all the available batch job definitions based on the batch job resources uploaded during the application creation. You can use the batch job definitions in the list to start a batch job.</p>",
     "ListBatchJobExecutions": "<p>Lists historical, current, and scheduled batch job executions for a specific application.</p>",
     "ListBatchJobRestartPoints": "<p>Lists all the job steps for a JCL file to restart a batch job. This is only applicable for Micro Focus engine with versions 8.0.6 and above.</p>",
+    "ListDataSetExportHistory": "<p>Lists the data set exports for the specified application.</p>",
     "ListDataSetImportHistory": "<p>Lists the data set imports for the specified application.</p>",
     "ListDataSets": "<p>Lists the data sets imported for a specific application. In Amazon Web Services Mainframe Modernization, data sets are associated with applications deployed on runtime environments. This is known as importing data sets. Currently, Amazon Web Services Mainframe Modernization can import data sets into catalogs using <a href=\"https://docs.aws.amazon.com/m2/latest/APIReference/API_CreateDataSetImportTask.html\">CreateDataSetImportTask</a>.</p>",
     "ListDeployments": "<p>Returns a list of all deployments of a specific application. A deployment is a combination of a specific application and a specific version of that application. Each deployment is mapped to a particular application version.</p>",
@@ -212,6 +215,7 @@
         "CreateEnvironmentRequest$publiclyAccessible": "<p>Specifies whether the runtime environment is publicly accessible.</p>",
         "GetEnvironmentResponse$publiclyAccessible": "<p>Whether applications running in this runtime environment are publicly accessible. </p>",
         "JobStep$stepRestartable": "<p>Specifies if a step can be restarted or not.</p>",
+        "JobStepRestartMarker$skip": "<p>The step-level checkpoint timestamp (creation or last modification) for an Amazon Web Services Blu Age application batch job.</p>",
         "StopApplicationRequest$forceStop": "<p>Stopping an application process can take a long time. Setting this parameter to true lets you force stop the application so you don't need to wait until the process finishes to apply another action on the application. The default value is false.</p>",
         "UpdateEnvironmentRequest$applyDuringMaintenanceWindow": "<p>Indicates whether to update the runtime environment during the maintenance window. The default is false. Currently, Amazon Web Services Mainframe Modernization accepts the <code>engineVersion</code> parameter only if <code>applyDuringMaintenanceWindow</code> is true. If any parameter other than <code>engineVersion</code> is provided in <code>UpdateEnvironmentRequest</code>, it will fail if <code>applyDuringMaintenanceWindow</code> is set to true.</p>",
         "UpdateEnvironmentRequest$forceUpdate": "<p>Forces the updates on the environment. This option is needed if the applications in the environment are not stopped or if there are ongoing application-related activities in the environment.</p> <p>If you use this option, be aware that it could lead to data corruption in the applications, and that you might need to perform repair and recovery procedures for the applications.</p> <p>This option is not needed if the attribute being updated is <code>preferredMaintenanceWindow</code>.</p>",
@@ -242,6 +246,7 @@
       "base": "<p>A client token is a unique, case-sensitive string of up to 128 ASCII characters with ASCII values of 33-126 inclusive. It is generated by the client to ensure idempotent operations, allowing safe retries without unintended side effects.</p>",
       "refs": {
         "CreateApplicationRequest$clientToken": "<p>A client token is a unique, case-sensitive string of up to 128 ASCII characters with ASCII values of 33-126 inclusive. It's generated by the client to ensure idempotent operations, allowing for safe retries without unintended side effects.</p>",
+        "CreateDataSetExportTaskRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request to create a data set export. The service generates the clientToken when the API call is triggered. The token expires after one hour, so if you retry the API within this timeframe with the same clientToken, you will get the same response. The service also handles deleting the clientToken after it expires.</p>",
         "CreateDataSetImportTaskRequest$clientToken": "<p> Unique, case-sensitive identifier you provide to ensure the idempotency of the request to create a data set import. The service generates the clientToken when the API call is triggered. The token expires after one hour, so if you retry the API within this timeframe with the same clientToken, you will get the same response. The service also handles deleting the clientToken after it expires. </p>",
         "CreateDeploymentRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request to create a deployment. The service generates the clientToken when the API call is triggered. The token expires after one hour, so if you retry the API within this timeframe with the same clientToken, you will get the same response. The service also handles deleting the clientToken after it expires. </p>",
         "CreateEnvironmentRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request to create an environment. The service generates the clientToken when the API call is triggered. The token expires after one hour, so if you retry the API within this timeframe with the same clientToken, you will get the same response. The service also handles deleting the clientToken after it expires. </p>"
@@ -258,6 +263,16 @@
       }
     },
     "CreateApplicationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateDataSetExportTaskRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateDataSetExportTaskResponse": {
       "base": null,
       "refs": {
       }
@@ -296,6 +311,43 @@
       "base": "<p>Defines a data set.</p>",
       "refs": {
         "DataSetImportItem$dataSet": "<p>The data set.</p>"
+      }
+    },
+    "DataSetExportConfig": {
+      "base": "<p>Identifies one or more data sets you want to import with the <a>CreateDataSetExportTask</a> operation.</p>",
+      "refs": {
+        "CreateDataSetExportTaskRequest$exportConfig": "<p>The data set export task configuration.</p>"
+      }
+    },
+    "DataSetExportItem": {
+      "base": "<p>Identifies a specific data set to export from an external location.</p>",
+      "refs": {
+        "DataSetExportList$member": null
+      }
+    },
+    "DataSetExportList": {
+      "base": null,
+      "refs": {
+        "DataSetExportConfig$dataSets": "<p>The data sets.</p>"
+      }
+    },
+    "DataSetExportSummary": {
+      "base": "<p>Represents a summary of data set exports.</p>",
+      "refs": {
+        "DataSetExportTask$summary": "<p>A summary of the data set export task.</p>",
+        "GetDataSetExportTaskResponse$summary": "<p>A summary of the status of the task.</p>"
+      }
+    },
+    "DataSetExportTask": {
+      "base": "<p>Contains information about a data set export task.</p>",
+      "refs": {
+        "DataSetExportTaskList$member": null
+      }
+    },
+    "DataSetExportTaskList": {
+      "base": null,
+      "refs": {
+        "ListDataSetExportHistoryResponse$dataSetExportTasks": "<p>The data set export tasks.</p>"
       }
     },
     "DataSetImportConfig": {
@@ -344,7 +396,9 @@
     "DataSetTaskLifecycle": {
       "base": null,
       "refs": {
+        "DataSetExportTask$status": "<p>The status of the data set export task.</p>",
         "DataSetImportTask$status": "<p>The status of the data set import task.</p>",
+        "GetDataSetExportTaskResponse$status": "<p>The status of the task.</p>",
         "GetDataSetImportTaskResponse$status": "<p>The status of the task.</p>"
       }
     },
@@ -528,6 +582,7 @@
     "ExternalLocation": {
       "base": "<p>Defines an external storage location.</p>",
       "refs": {
+        "DataSetExportItem$externalLocation": "<p>The location of the data set.</p>",
         "DataSetImportItem$externalLocation": "<p>The location of the data set.</p>"
       }
     },
@@ -601,6 +656,16 @@
       "refs": {
       }
     },
+    "GetDataSetExportTaskRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetDataSetExportTaskResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetDataSetImportTaskRequest": {
       "base": null,
       "refs": {
@@ -653,12 +718,15 @@
         "CancelBatchJobExecutionRequest$applicationId": "<p>The unique identifier of the application.</p>",
         "CancelBatchJobExecutionRequest$executionId": "<p>The unique identifier of the batch job execution.</p>",
         "CreateApplicationResponse$applicationId": "<p>The unique application identifier.</p>",
+        "CreateDataSetExportTaskRequest$applicationId": "<p>The unique identifier of the application for which you want to export data sets.</p>",
+        "CreateDataSetExportTaskResponse$taskId": "<p>The task identifier. This operation is asynchronous. Use this identifier with the <a>GetDataSetExportTask</a> operation to obtain the status of this task.</p>",
         "CreateDataSetImportTaskRequest$applicationId": "<p>The unique identifier of the application for which you want to import data sets.</p>",
         "CreateDataSetImportTaskResponse$taskId": "<p>The task identifier. This operation is asynchronous. Use this identifier with the <a>GetDataSetImportTask</a> operation to obtain the status of this task.</p>",
         "CreateDeploymentRequest$applicationId": "<p>The application identifier.</p>",
         "CreateDeploymentRequest$environmentId": "<p>The identifier of the runtime environment where you want to deploy this application.</p>",
         "CreateDeploymentResponse$deploymentId": "<p>The unique identifier of the deployment.</p>",
         "CreateEnvironmentResponse$environmentId": "<p>The unique identifier of the runtime environment.</p>",
+        "DataSetExportTask$taskId": "<p>The identifier of the data set export task.</p>",
         "DataSetImportTask$taskId": "<p>The identifier of the data set import task.</p>",
         "DeleteApplicationFromEnvironmentRequest$applicationId": "<p>The unique identifier of the application you want to delete.</p>",
         "DeleteApplicationFromEnvironmentRequest$environmentId": "<p>The unique identifier of the runtime environment where the application was previously deployed.</p>",
@@ -677,6 +745,9 @@
         "GetBatchJobExecutionResponse$applicationId": "<p>The identifier of the application.</p>",
         "GetBatchJobExecutionResponse$executionId": "<p>The unique identifier for this batch job execution.</p>",
         "GetDataSetDetailsRequest$applicationId": "<p>The unique identifier of the application that this data set is associated with.</p>",
+        "GetDataSetExportTaskRequest$applicationId": "<p>The application identifier.</p>",
+        "GetDataSetExportTaskRequest$taskId": "<p>The task identifier returned by the <a>CreateDataSetExportTask</a> operation.</p>",
+        "GetDataSetExportTaskResponse$taskId": "<p>The task identifier.</p>",
         "GetDataSetImportTaskRequest$applicationId": "<p>The application identifier.</p>",
         "GetDataSetImportTaskRequest$taskId": "<p>The task identifier returned by the <a>CreateDataSetImportTask</a> operation. </p>",
         "GetDataSetImportTaskResponse$taskId": "<p>The task identifier.</p>",
@@ -694,6 +765,7 @@
         "ListBatchJobExecutionsRequest$applicationId": "<p>The unique identifier of the application.</p>",
         "ListBatchJobRestartPointsRequest$applicationId": "<p>The unique identifier of the application.</p>",
         "ListBatchJobRestartPointsRequest$executionId": "<p>The unique identifier of the batch job execution.</p>",
+        "ListDataSetExportHistoryRequest$applicationId": "<p>The unique identifier of the application.</p>",
         "ListDataSetImportHistoryRequest$applicationId": "<p>The unique identifier of the application.</p>",
         "ListDataSetsRequest$applicationId": "<p>The unique identifier of the application for which you want to list the associated data sets.</p>",
         "ListDeploymentsRequest$applicationId": "<p>The application identifier.</p>",
@@ -718,6 +790,11 @@
       "refs": {
         "AlternateKey$length": "<p>A strictly positive integer value representing the length of the alternate key.</p>",
         "AlternateKey$offset": "<p>A positive integer value representing the offset to mark the start of the alternate key part in the record byte array.</p>",
+        "DataSetExportSummary$failed": "<p>The number of data set exports that have failed.</p>",
+        "DataSetExportSummary$inProgress": "<p>The number of data set exports that are in progress.</p>",
+        "DataSetExportSummary$pending": "<p>The number of data set exports that are pending.</p>",
+        "DataSetExportSummary$succeeded": "<p>The number of data set exports that have succeeded.</p>",
+        "DataSetExportSummary$total": "<p>The total number of data set exports.</p>",
         "DataSetImportSummary$failed": "<p>The number of data set imports that have failed.</p>",
         "DataSetImportSummary$inProgress": "<p>The number of data set imports that are in progress.</p>",
         "DataSetImportSummary$pending": "<p>The number of data set imports that are pending.</p>",
@@ -729,7 +806,9 @@
         "GetDataSetDetailsResponse$recordLength": "<p>The length of records in the data set.</p>",
         "InternalServerException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request.</p>",
         "JobStep$procStepNumber": "<p>The number of a procedure step.</p>",
+        "JobStep$stepCheckpoint": "<p>A registered step-level checkpoint identifier that can be used for restarting an Amazon Web Services Blu Age application batch job.</p>",
         "JobStep$stepNumber": "<p>The number of a step.</p>",
+        "JobStepRestartMarker$stepCheckpoint": "<p>Skip selected step and issue a restart from immediate successor step for an Amazon Web Services Blu Age application batch job.</p>",
         "PortList$member": null,
         "PrimaryKey$length": "<p>A strictly positive integer value representing the length of the primary key. </p>",
         "PrimaryKey$offset": "<p>A positive integer value representing the offset to mark the start of the primary key in the record byte array.</p>",
@@ -760,6 +839,12 @@
       "refs": {
         "GetBatchJobExecutionResponse$jobStepRestartMarker": "<p>The step/procedure step information for the restart batch job operation.</p>",
         "RestartBatchJobIdentifier$jobStepRestartMarker": "<p>The step/procedure step information for a restart batch job operation.</p>"
+      }
+    },
+    "KMSKeyId": {
+      "base": null,
+      "refs": {
+        "CreateDataSetExportTaskRequest$kmsKeyId": "<p>The identifier of a customer managed key.</p>"
       }
     },
     "ListApplicationVersionsRequest": {
@@ -808,6 +893,16 @@
       }
     },
     "ListBatchJobRestartPointsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListDataSetExportHistoryRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListDataSetExportHistoryResponse": {
       "base": null,
       "refs": {
       }
@@ -909,6 +1004,7 @@
         "ListApplicationsRequest$maxResults": "<p>The maximum number of applications to return.</p>",
         "ListBatchJobDefinitionsRequest$maxResults": "<p>The maximum number of batch job definitions to return.</p>",
         "ListBatchJobExecutionsRequest$maxResults": "<p>The maximum number of batch job executions to return.</p>",
+        "ListDataSetExportHistoryRequest$maxResults": "<p>The maximum number of objects to return.</p>",
         "ListDataSetImportHistoryRequest$maxResults": "<p>The maximum number of objects to return.</p>",
         "ListDataSetsRequest$maxResults": "<p>The maximum number of objects to return.</p>",
         "ListDeploymentsRequest$maxResults": "<p>The maximum number of objects to return.</p>",
@@ -935,6 +1031,8 @@
         "ListBatchJobDefinitionsResponse$nextToken": "<p>If there are more items to return, this contains a token that is passed to a subsequent call to this operation to retrieve the next set of items.</p>",
         "ListBatchJobExecutionsRequest$nextToken": "<p>A pagination token to control the number of batch job executions displayed in the list.</p>",
         "ListBatchJobExecutionsResponse$nextToken": "<p>A pagination token that's returned when the response doesn't contain all batch job executions.</p>",
+        "ListDataSetExportHistoryRequest$nextToken": "<p>A pagination token returned from a previous call to this operation. This specifies the next item to return. To return to the beginning of the list, exclude this parameter.</p>",
+        "ListDataSetExportHistoryResponse$nextToken": "<p>If there are more items to return, this contains a token that is passed to a subsequent call to this operation to retrieve the next set of items.</p>",
         "ListDataSetImportHistoryRequest$nextToken": "<p>A pagination token returned from a previous call to this operation. This specifies the next item to return. To return to the beginning of the list, exclude this parameter.</p>",
         "ListDataSetImportHistoryResponse$nextToken": "<p>If there are more items to return, this contains a token that is passed to a subsequent call to this operation to retrieve the next set of items.</p>",
         "ListDataSetsRequest$nextToken": "<p>A pagination token returned from a previous call to this operation. This specifies the next item to return. To return to the beginning of the list, exclude this parameter.</p>",
@@ -1093,6 +1191,8 @@
         "DataSet$datasetName": "<p>The logical identifier for a specific data set (in mainframe format).</p>",
         "DataSet$relativePath": "<p>The relative location of the data set in the database or file system. </p>",
         "DataSet$storageType": "<p>The storage type of the data set: database or file system. For Micro Focus, database corresponds to datastore and file system corresponds to EFS/FSX. For Blu Age, there is no support of file system and database corresponds to Blusam. </p>",
+        "DataSetExportConfig$s3Location": "<p>The Amazon S3 location of the data sets.</p>",
+        "DataSetExportTask$statusReason": "<p>If dataset exports failed, the failure reason will show here.</p>",
         "DataSetImportTask$statusReason": "<p>If dataset import failed, the failure reason will show here.</p>",
         "DeployedVersionSummary$statusReason": "<p>The reason for the reported status.</p>",
         "DeploymentSummary$statusReason": "<p>The reason for the reported status.</p>",
@@ -1109,6 +1209,8 @@
         "GetApplicationVersionResponse$statusReason": "<p>The reason for the reported status.</p>",
         "GetBatchJobExecutionResponse$returnCode": "<p>The batch job return code from either the Blu Age or Micro Focus runtime engines. For more information, see <a href=\"https://www.ibm.com/docs/en/was/8.5.5?topic=model-batch-return-codes\">Batch return codes</a> in the <i>IBM WebSphere Application Server</i> documentation.</p>",
         "GetBatchJobExecutionResponse$statusReason": "<p>The reason for the reported status.</p>",
+        "GetDataSetExportTaskResponse$kmsKeyArn": "<p>The identifier of a customer managed key used for exported data set encryption.</p>",
+        "GetDataSetExportTaskResponse$statusReason": "<p>If dataset export failed, the failure reason will show here.</p>",
         "GetDeploymentResponse$statusReason": "<p>The reason for the reported status.</p>",
         "GetEnvironmentResponse$kmsKeyId": "<p>The identifier of a customer managed key.</p>",
         "GetEnvironmentResponse$loadBalancerArn": "<p>The Amazon Resource Name (ARN) for the load balancer used with the runtime environment.</p>",
@@ -1118,6 +1220,7 @@
         "JobIdentifier$fileName": "<p>The name of the file that contains the batch job definition.</p>",
         "JobIdentifier$scriptName": "<p>The name of the script that contains the batch job definition.</p>",
         "JobStep$procStepName": "<p>The name of a procedure step.</p>",
+        "JobStep$stepCheckpointStatus": "<p>The step-level checkpoint status for an Amazon Web Services Blu Age application batch job.</p>",
         "JobStep$stepCondCode": "<p>The condition code of a step.</p>",
         "JobStep$stepName": "<p>The name of a step.</p>",
         "JobStepRestartMarker$fromProcStep": "<p>The procedure step name that a batch job was restarted from.</p>",
@@ -1189,6 +1292,7 @@
     "String200": {
       "base": null,
       "refs": {
+        "DataSetExportItem$datasetName": "<p>The data set.</p>",
         "DataSetSummary$dataSetName": "<p>The name of the data set.</p>",
         "EfsStorageConfiguration$fileSystemId": "<p>The file system identifier.</p>",
         "EfsStorageConfiguration$mountPoint": "<p>The mount point for the file system.</p>",
@@ -1309,6 +1413,7 @@
         "GetDataSetDetailsResponse$lastUpdatedTime": "<p>The last time the data set was updated.</p>",
         "GetDeploymentResponse$creationTime": "<p>The timestamp when the deployment was created.</p>",
         "GetEnvironmentResponse$creationTime": "<p>The timestamp when the runtime environment was created.</p>",
+        "JobStep$stepCheckpointTime": "<p>The step-level checkpoint status for an Amazon Web Services Blu Age application batch job.</p>",
         "ListBatchJobExecutionsRequest$startedAfter": "<p>The time after which the batch job executions started.</p>",
         "ListBatchJobExecutionsRequest$startedBefore": "<p>The time before the batch job executions started.</p>",
         "MaintenanceSchedule$endTime": "<p>The time the scheduled maintenance is to end.</p>",

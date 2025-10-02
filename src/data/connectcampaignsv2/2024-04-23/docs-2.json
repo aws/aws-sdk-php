@@ -14,12 +14,14 @@
     "GetCampaignState": "<p>Get state of a campaign for the specified Amazon Connect account.</p>",
     "GetCampaignStateBatch": "<p>Get state of campaigns for the specified Amazon Connect account.</p>",
     "GetConnectInstanceConfig": "<p>Get the specific Connect instance config.</p>",
+    "GetInstanceCommunicationLimits": "<p>Get the instance communication limits.</p>",
     "GetInstanceOnboardingJobStatus": "<p>Get the specific instance onboarding job status.</p>",
     "ListCampaigns": "<p>Provides summary information about the campaigns under the specified Amazon Connect account.</p>",
     "ListConnectInstanceIntegrations": "<p>Provides summary information about the integration under the specified Connect instance.</p>",
     "ListTagsForResource": "<p>List tags for a resource.</p>",
     "PauseCampaign": "<p>Pauses a campaign for the specified Amazon Connect account.</p>",
     "PutConnectInstanceIntegration": "<p>Put or update the integration for the specified Amazon Connect instance.</p>",
+    "PutInstanceCommunicationLimits": "<p>Put the instance communication limits. This API is idempotent.</p>",
     "PutOutboundRequestBatch": "<p>Creates outbound requests for the specified campaign Amazon Connect account. This API is idempotent.</p>",
     "PutProfileOutboundRequestBatch": "<p>Takes in a list of profile outbound requests to be placed as part of an outbound campaign. This API is idempotent.</p>",
     "ResumeCampaign": "<p>Stops a campaign for the specified Amazon Connect account.</p>",
@@ -281,7 +283,8 @@
     "CommunicationLimits": {
       "base": "<p>Communication limits</p>",
       "refs": {
-        "CommunicationLimitsConfig$allChannelSubtypes": null
+        "CommunicationLimitsConfig$allChannelSubtypes": null,
+        "InstanceCommunicationLimitsConfig$allChannelSubtypes": null
       }
     },
     "CommunicationLimitsConfig": {
@@ -581,6 +584,16 @@
       "refs": {
       }
     },
+    "GetInstanceCommunicationLimitsRequest": {
+      "base": "<p>The request for GetInstanceCommunicationLimits API.</p>",
+      "refs": {
+      }
+    },
+    "GetInstanceCommunicationLimitsResponse": {
+      "base": "<p>The response for GetInstanceCommunicationLimits API.</p>",
+      "refs": {
+      }
+    },
     "GetInstanceOnboardingJobStatusRequest": {
       "base": "<p>The request for GetInstanceOnboardingJobStatus API.</p>",
       "refs": {
@@ -589,6 +602,13 @@
     "GetInstanceOnboardingJobStatusResponse": {
       "base": "<p>The response for GetInstanceOnboardingJobStatus API.</p>",
       "refs": {
+      }
+    },
+    "InstanceCommunicationLimitsConfig": {
+      "base": "<p>Instance Communication limits config</p>",
+      "refs": {
+        "GetInstanceCommunicationLimitsResponse$communicationLimitsConfig": null,
+        "PutInstanceCommunicationLimitsRequest$communicationLimitsConfig": null
       }
     },
     "InstanceConfig": {
@@ -607,12 +627,14 @@
         "DeleteConnectInstanceIntegrationRequest$connectInstanceId": null,
         "DeleteInstanceOnboardingJobRequest$connectInstanceId": null,
         "GetConnectInstanceConfigRequest$connectInstanceId": null,
+        "GetInstanceCommunicationLimitsRequest$connectInstanceId": null,
         "GetInstanceOnboardingJobStatusRequest$connectInstanceId": null,
         "InstanceConfig$connectInstanceId": null,
         "InstanceIdFilter$value": null,
         "InstanceOnboardingJobStatus$connectInstanceId": null,
         "ListConnectInstanceIntegrationsRequest$connectInstanceId": null,
         "PutConnectInstanceIntegrationRequest$connectInstanceId": null,
+        "PutInstanceCommunicationLimitsRequest$connectInstanceId": null,
         "StartInstanceOnboardingJobRequest$connectInstanceId": null
       }
     },
@@ -626,6 +648,12 @@
       "base": "<p>Operators for Connect instance identifier filter</p>",
       "refs": {
         "InstanceIdFilter$operator": null
+      }
+    },
+    "InstanceLimitsHandling": {
+      "base": "<p>Instance limits handling</p>",
+      "refs": {
+        "CommunicationLimitsConfig$instanceLimitsHandling": null
       }
     },
     "InstanceOnboardingJobFailureCode": {
@@ -851,6 +879,11 @@
     },
     "PutConnectInstanceIntegrationRequest": {
       "base": "<p>The request for PutConnectInstanceIntegration API.</p>",
+      "refs": {
+      }
+    },
+    "PutInstanceCommunicationLimitsRequest": {
+      "base": "<p>The request for PutInstanceCommunicationLimits API.</p>",
       "refs": {
       }
     },

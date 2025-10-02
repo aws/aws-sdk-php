@@ -820,8 +820,7 @@
   "shapes":{
     "AccessDeniedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "AccountId":{
@@ -911,7 +910,7 @@
       "type":"structure",
       "members":{
         "ArchiveName":{"shape":"ArchiveName"},
-        "EventSourceArn":{"shape":"Arn"},
+        "EventSourceArn":{"shape":"EventBusArn"},
         "State":{"shape":"ArchiveState"},
         "StateReason":{"shape":"ArchiveStateReason"},
         "RetentionDays":{"shape":"RetentionDays"},
@@ -1063,8 +1062,7 @@
     },
     "ConcurrentModificationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Condition":{
@@ -1284,10 +1282,11 @@
       ],
       "members":{
         "ArchiveName":{"shape":"ArchiveName"},
-        "EventSourceArn":{"shape":"Arn"},
+        "EventSourceArn":{"shape":"EventBusArn"},
         "Description":{"shape":"ArchiveDescription"},
         "EventPattern":{"shape":"EventPattern"},
-        "RetentionDays":{"shape":"RetentionDays"}
+        "RetentionDays":{"shape":"RetentionDays"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"}
       }
     },
     "CreateArchiveResponse":{
@@ -1368,7 +1367,8 @@
         "Description":{"shape":"ConnectionDescription"},
         "AuthorizationType":{"shape":"ConnectionAuthorizationType"},
         "AuthParameters":{"shape":"CreateConnectionAuthRequestParameters"},
-        "InvocationConnectivityParameters":{"shape":"ConnectivityResourceParameters"}
+        "InvocationConnectivityParameters":{"shape":"ConnectivityResourceParameters"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"}
       }
     },
     "CreateConnectionResponse":{
@@ -1417,6 +1417,7 @@
         "Description":{"shape":"EventBusDescription"},
         "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "DeadLetterConfig":{"shape":"DeadLetterConfig"},
+        "LogConfig":{"shape":"LogConfig"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -1426,7 +1427,8 @@
         "EventBusArn":{"shape":"String"},
         "Description":{"shape":"EventBusDescription"},
         "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
-        "DeadLetterConfig":{"shape":"DeadLetterConfig"}
+        "DeadLetterConfig":{"shape":"DeadLetterConfig"},
+        "LogConfig":{"shape":"LogConfig"}
       }
     },
     "CreatePartnerEventSourceRequest":{
@@ -1500,8 +1502,7 @@
     },
     "DeleteApiDestinationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteArchiveRequest":{
       "type":"structure",
@@ -1512,8 +1513,7 @@
     },
     "DeleteArchiveResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteConnectionRequest":{
       "type":"structure",
@@ -1541,8 +1541,7 @@
     },
     "DeleteEndpointResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteEventBusRequest":{
       "type":"structure",
@@ -1605,11 +1604,12 @@
       "members":{
         "ArchiveArn":{"shape":"ArchiveArn"},
         "ArchiveName":{"shape":"ArchiveName"},
-        "EventSourceArn":{"shape":"Arn"},
+        "EventSourceArn":{"shape":"EventBusArn"},
         "Description":{"shape":"ArchiveDescription"},
         "EventPattern":{"shape":"EventPattern"},
         "State":{"shape":"ArchiveState"},
         "StateReason":{"shape":"ArchiveStateReason"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "RetentionDays":{"shape":"RetentionDays"},
         "SizeBytes":{"shape":"Long"},
         "EventCount":{"shape":"Long"},
@@ -1652,6 +1652,7 @@
         "StateReason":{"shape":"ConnectionStateReason"},
         "AuthorizationType":{"shape":"ConnectionAuthorizationType"},
         "SecretArn":{"shape":"SecretsManagerSecretArn"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "AuthParameters":{"shape":"ConnectionAuthResponseParameters"},
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
@@ -1699,6 +1700,7 @@
         "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "DeadLetterConfig":{"shape":"DeadLetterConfig"},
         "Policy":{"shape":"String"},
+        "LogConfig":{"shape":"LogConfig"},
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"}
       }
@@ -1750,7 +1752,7 @@
         "Description":{"shape":"ReplayDescription"},
         "State":{"shape":"ReplayState"},
         "StateReason":{"shape":"ReplayStateReason"},
-        "EventSourceArn":{"shape":"Arn"},
+        "EventSourceArn":{"shape":"ArchiveArn"},
         "Destination":{"shape":"ReplayDestination"},
         "EventStartTime":{"shape":"Timestamp"},
         "EventEndTime":{"shape":"Timestamp"},
@@ -1913,6 +1915,12 @@
         "LastModifiedTime":{"shape":"Timestamp"}
       }
     },
+    "EventBusArn":{
+      "type":"string",
+      "max":1600,
+      "min":1,
+      "pattern":"^arn:aws([a-z]|\\-)*:events:([a-z]|\\d|\\-)*:([0-9]{12})?:.+\\/.+$"
+    },
     "EventBusDescription":{
       "type":"string",
       "max":512
@@ -1931,7 +1939,7 @@
       "type":"string",
       "max":1600,
       "min":1,
-      "pattern":"(arn:aws[\\w-]*:events:[a-z]{2}-[a-z]+-[\\w-]+:[0-9]{12}:event-bus\\/)?[/\\.\\-_A-Za-z0-9]+"
+      "pattern":"(arn:aws[\\w-]*:events:[a-z]+-[a-z]+-[\\w-]+:[0-9]{12}:event-bus\\/)?[/\\.\\-_A-Za-z0-9]+"
     },
     "EventId":{
       "type":"string",
@@ -2057,9 +2065,15 @@
     },
     "IllegalStatusException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
+    },
+    "IncludeDetail":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "FULL"
+      ]
     },
     "InputTransformer":{
       "type":"structure",
@@ -2078,21 +2092,18 @@
     "Integer":{"type":"integer"},
     "InternalException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true,
       "fault":true
     },
     "InvalidEventPatternException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidStateException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "KinesisParameters":{
@@ -2104,7 +2115,8 @@
     },
     "KmsKeyIdentifier":{
       "type":"string",
-      "max":2048
+      "max":2048,
+      "pattern":"^[a-zA-Z0-9_\\-/:]*$"
     },
     "LaunchType":{
       "type":"string",
@@ -2114,10 +2126,18 @@
         "EXTERNAL"
       ]
     },
+    "Level":{
+      "type":"string",
+      "enum":[
+        "OFF",
+        "ERROR",
+        "INFO",
+        "TRACE"
+      ]
+    },
     "LimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "LimitMax100":{
@@ -2149,7 +2169,7 @@
       "type":"structure",
       "members":{
         "NamePrefix":{"shape":"ArchiveName"},
-        "EventSourceArn":{"shape":"Arn"},
+        "EventSourceArn":{"shape":"EventBusArn"},
         "State":{"shape":"ArchiveState"},
         "NextToken":{"shape":"NextToken"},
         "Limit":{"shape":"LimitMax100"}
@@ -2261,7 +2281,7 @@
       "members":{
         "NamePrefix":{"shape":"ReplayName"},
         "State":{"shape":"ReplayState"},
-        "EventSourceArn":{"shape":"Arn"},
+        "EventSourceArn":{"shape":"ArchiveArn"},
         "NextToken":{"shape":"NextToken"},
         "Limit":{"shape":"LimitMax100"}
       }
@@ -2336,6 +2356,13 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "LogConfig":{
+      "type":"structure",
+      "members":{
+        "IncludeDetail":{"shape":"IncludeDetail"},
+        "Level":{"shape":"Level"}
+      }
+    },
     "Long":{"type":"long"},
     "ManagedBy":{
       "type":"string",
@@ -2344,8 +2371,7 @@
     },
     "ManagedRuleException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "MaximumEventAgeInSeconds":{
@@ -2377,7 +2403,7 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"^arn:aws[a-z-]*:events:[a-z]{2}-[a-z-]+-\\d+:\\d{12}:event-bus/[\\w.-]+$"
+      "pattern":"^arn:aws[a-z-]*:events:[a-z]+-[a-z-]+-\\d+:\\d{12}:event-bus/[\\w.-]+$"
     },
     "NonPartnerEventBusName":{
       "type":"string",
@@ -2389,12 +2415,11 @@
       "type":"string",
       "max":1600,
       "min":1,
-      "pattern":"(arn:aws[\\w-]*:events:[a-z]{2}-[a-z]+-[\\w-]+:[0-9]{12}:event-bus\\/)?[\\.\\-_A-Za-z0-9]+"
+      "pattern":"(arn:aws[\\w-]*:events:[a-z]+-[a-z]+-[\\w-]+:[0-9]{12}:event-bus\\/)?[\\.\\-_A-Za-z0-9]+"
     },
     "OperationDisabledException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "PartnerEventSource":{
@@ -2484,8 +2509,7 @@
     },
     "PolicyLengthExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Primary":{
@@ -2745,7 +2769,7 @@
       "type":"structure",
       "members":{
         "ReplayName":{"shape":"ReplayName"},
-        "EventSourceArn":{"shape":"Arn"},
+        "EventSourceArn":{"shape":"ArchiveArn"},
         "State":{"shape":"ReplayState"},
         "StateReason":{"shape":"ReplayStateReason"},
         "EventStartTime":{"shape":"Timestamp"},
@@ -2819,8 +2843,7 @@
     },
     "ResourceAlreadyExistsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ResourceArn":{
@@ -2842,8 +2865,7 @@
     },
     "ResourceNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "RetentionDays":{
@@ -3046,7 +3068,7 @@
       "members":{
         "ReplayName":{"shape":"ReplayName"},
         "Description":{"shape":"ReplayDescription"},
-        "EventSourceArn":{"shape":"Arn"},
+        "EventSourceArn":{"shape":"ArchiveArn"},
         "EventStartTime":{"shape":"Timestamp"},
         "EventEndTime":{"shape":"Timestamp"},
         "Destination":{"shape":"ReplayDestination"}
@@ -3114,8 +3136,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -3202,8 +3223,7 @@
     },
     "ThrottlingException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Timestamp":{"type":"timestamp"},
@@ -3236,8 +3256,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateApiDestinationRequest":{
       "type":"structure",
@@ -3267,7 +3286,8 @@
         "ArchiveName":{"shape":"ArchiveName"},
         "Description":{"shape":"ArchiveDescription"},
         "EventPattern":{"shape":"EventPattern"},
-        "RetentionDays":{"shape":"RetentionDays"}
+        "RetentionDays":{"shape":"RetentionDays"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"}
       }
     },
     "UpdateArchiveResponse":{
@@ -3327,7 +3347,8 @@
         "Description":{"shape":"ConnectionDescription"},
         "AuthorizationType":{"shape":"ConnectionAuthorizationType"},
         "AuthParameters":{"shape":"UpdateConnectionAuthRequestParameters"},
-        "InvocationConnectivityParameters":{"shape":"ConnectivityResourceParameters"}
+        "InvocationConnectivityParameters":{"shape":"ConnectivityResourceParameters"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"}
       }
     },
     "UpdateConnectionResponse":{
@@ -3372,7 +3393,8 @@
         "Name":{"shape":"EventBusName"},
         "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "Description":{"shape":"EventBusDescription"},
-        "DeadLetterConfig":{"shape":"DeadLetterConfig"}
+        "DeadLetterConfig":{"shape":"DeadLetterConfig"},
+        "LogConfig":{"shape":"LogConfig"}
       }
     },
     "UpdateEventBusResponse":{
@@ -3382,7 +3404,8 @@
         "Name":{"shape":"EventBusName"},
         "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "Description":{"shape":"EventBusDescription"},
-        "DeadLetterConfig":{"shape":"DeadLetterConfig"}
+        "DeadLetterConfig":{"shape":"DeadLetterConfig"},
+        "LogConfig":{"shape":"LogConfig"}
       }
     }
   }

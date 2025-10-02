@@ -103,6 +103,12 @@
         "UpdateApplicationRequest$architecture": "<p>The CPU architecture of an application.</p>"
       }
     },
+    "Arn": {
+      "base": null,
+      "refs": {
+        "PolicyArnList$member": null
+      }
+    },
     "AttemptNumber": {
       "base": null,
       "refs": {
@@ -379,6 +385,32 @@
         "StartJobRunRequest$executionRoleArn": "<p>The execution role ARN for the job run.</p>"
       }
     },
+    "IdentityCenterApplicationArn": {
+      "base": null,
+      "refs": {
+        "IdentityCenterConfiguration$identityCenterApplicationArn": "<p>The ARN of the EMR Serverless created IAM Identity Center Application that provides trusted-identity propagation.</p>"
+      }
+    },
+    "IdentityCenterConfiguration": {
+      "base": "<p>The IAM Identity Center Configuration that includes the Identify Center instance and application ARNs that provide trusted-identity propagation.</p>",
+      "refs": {
+        "Application$identityCenterConfiguration": "<p>The IAM Identity Center configuration applied to enable trusted identity propagation. </p>"
+      }
+    },
+    "IdentityCenterConfigurationInput": {
+      "base": "<p>Specifies the IAM Identity Center configuration used to enable or disable trusted identity propagation. When provided, this configuration determines how the application interacts with IAM Identity Center for user authentication and access control.</p>",
+      "refs": {
+        "CreateApplicationRequest$identityCenterConfiguration": "<p>The IAM Identity Center Configuration accepts the Identity Center instance parameter required to enable trusted identity propagation. This configuration allows identity propagation between integrated services and the Identity Center instance.</p>",
+        "UpdateApplicationRequest$identityCenterConfiguration": "<p>Specifies the IAM Identity Center configuration used to enable or disable trusted identity propagation. When provided, this configuration determines how the application interacts with IAM Identity Center for user authentication and access control.</p>"
+      }
+    },
+    "IdentityCenterInstanceArn": {
+      "base": null,
+      "refs": {
+        "IdentityCenterConfiguration$identityCenterInstanceArn": "<p>The ARN of the IAM Identity Center instance.</p>",
+        "IdentityCenterConfigurationInput$identityCenterInstanceArn": "<p>The ARN of the IAM Identity Center instance.</p>"
+      }
+    },
     "ImageConfiguration": {
       "base": "<p>The applied image configuration.</p>",
       "refs": {
@@ -480,6 +512,13 @@
       "base": null,
       "refs": {
         "ListJobRunAttemptsResponse$jobRunAttempts": "<p>The array of the listed job run attempt objects.</p>"
+      }
+    },
+    "JobRunExecutionIamPolicy": {
+      "base": "<p>Optional IAM policy. The resulting job IAM role permissions will be an intersection of the policies passed and the policy associated with your job execution role.</p>",
+      "refs": {
+        "JobRun$executionIamPolicy": null,
+        "StartJobRunRequest$executionIamPolicy": "<p>You can pass an optional IAM policy. The resulting job IAM role permissions will be an intersection of this policy and the policy associated with your job execution role.</p>"
       }
     },
     "JobRunId": {
@@ -684,6 +723,18 @@
         "ListJobRunsResponse$nextToken": "<p>The output displays the token for the next set of job run results. This is required for pagination and is available as a response of the previous request.</p>"
       }
     },
+    "PolicyArnList": {
+      "base": null,
+      "refs": {
+        "JobRunExecutionIamPolicy$policyArns": "<p>A list of Amazon Resource Names (ARNs) to use as an execution IAM policy.</p>"
+      }
+    },
+    "PolicyDocument": {
+      "base": null,
+      "refs": {
+        "JobRunExecutionIamPolicy$policy": "<p>An IAM inline policy to use as an execution IAM policy.</p>"
+      }
+    },
     "PrometheusMonitoringConfiguration": {
       "base": "<p>The monitoring configuration object you can configure to send metrics to Amazon Managed Service for Prometheus for a job run.</p>",
       "refs": {
@@ -789,6 +840,12 @@
     "ServiceQuotaExceededException": {
       "base": "<p>The maximum number of resources per account has been reached.</p>",
       "refs": {
+      }
+    },
+    "ShutdownGracePeriodInSeconds": {
+      "base": null,
+      "refs": {
+        "CancelJobRunRequest$shutdownGracePeriodInSeconds": "<p>The duration in seconds to wait before forcefully terminating the job after cancellation is requested.</p>"
       }
     },
     "SparkSubmit": {

@@ -5,12 +5,14 @@
     "endpointPrefix":"email",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"Pinpoint Email",
     "serviceFullName":"Amazon Pinpoint Email Service",
     "serviceId":"Pinpoint Email",
     "signatureVersion":"v4",
     "signingName":"ses",
-    "uid":"pinpoint-email-2018-07-26"
+    "uid":"pinpoint-email-2018-07-26",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateConfigurationSet":{
@@ -625,23 +627,20 @@
   "shapes":{
     "AccountSuspendedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
     "AlreadyExistsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
     "AmazonResourceName":{"type":"string"},
     "BadRequestException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -710,8 +709,7 @@
     },
     "ConcurrentModificationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":500},
       "exception":true
     },
@@ -747,8 +745,7 @@
     },
     "CreateConfigurationSetEventDestinationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateConfigurationSetRequest":{
       "type":"structure",
@@ -764,8 +761,7 @@
     },
     "CreateConfigurationSetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateDedicatedIpPoolRequest":{
       "type":"structure",
@@ -777,8 +773,7 @@
     },
     "CreateDedicatedIpPoolResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateDeliverabilityTestReportRequest":{
       "type":"structure",
@@ -873,8 +868,7 @@
     },
     "DeleteConfigurationSetEventDestinationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteConfigurationSetRequest":{
       "type":"structure",
@@ -889,8 +883,7 @@
     },
     "DeleteConfigurationSetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDedicatedIpPoolRequest":{
       "type":"structure",
@@ -905,8 +898,7 @@
     },
     "DeleteDedicatedIpPoolResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteEmailIdentityRequest":{
       "type":"structure",
@@ -921,8 +913,7 @@
     },
     "DeleteEmailIdentityResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeliverabilityDashboardAccountStatus":{
       "type":"string",
@@ -1123,8 +1114,7 @@
     "GeneralEnforcementStatus":{"type":"string"},
     "GetAccountRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetAccountResponse":{
       "type":"structure",
@@ -1239,8 +1229,7 @@
     },
     "GetDeliverabilityDashboardOptionsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetDeliverabilityDashboardOptionsResponse":{
       "type":"structure",
@@ -1419,8 +1408,7 @@
     "LastFreshStart":{"type":"timestamp"},
     "LimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -1594,8 +1582,7 @@
     "MailFromDomainName":{"type":"string"},
     "MailFromDomainNotVerifiedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -1626,8 +1613,7 @@
     "MessageData":{"type":"string"},
     "MessageRejected":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -1651,8 +1637,7 @@
     "NextToken":{"type":"string"},
     "NotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":404},
       "exception":true
     },
@@ -1692,8 +1677,7 @@
     },
     "PutAccountDedicatedIpWarmupAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutAccountSendingAttributesRequest":{
       "type":"structure",
@@ -1703,8 +1687,7 @@
     },
     "PutAccountSendingAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutConfigurationSetDeliveryOptionsRequest":{
       "type":"structure",
@@ -1721,8 +1704,7 @@
     },
     "PutConfigurationSetDeliveryOptionsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutConfigurationSetReputationOptionsRequest":{
       "type":"structure",
@@ -1738,8 +1720,7 @@
     },
     "PutConfigurationSetReputationOptionsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutConfigurationSetSendingOptionsRequest":{
       "type":"structure",
@@ -1755,8 +1736,7 @@
     },
     "PutConfigurationSetSendingOptionsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutConfigurationSetTrackingOptionsRequest":{
       "type":"structure",
@@ -1772,8 +1752,7 @@
     },
     "PutConfigurationSetTrackingOptionsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutDedicatedIpInPoolRequest":{
       "type":"structure",
@@ -1792,8 +1771,7 @@
     },
     "PutDedicatedIpInPoolResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutDedicatedIpWarmupAttributesRequest":{
       "type":"structure",
@@ -1812,8 +1790,7 @@
     },
     "PutDedicatedIpWarmupAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutDeliverabilityDashboardOptionRequest":{
       "type":"structure",
@@ -1825,8 +1802,7 @@
     },
     "PutDeliverabilityDashboardOptionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutEmailIdentityDkimAttributesRequest":{
       "type":"structure",
@@ -1842,8 +1818,7 @@
     },
     "PutEmailIdentityDkimAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutEmailIdentityFeedbackAttributesRequest":{
       "type":"structure",
@@ -1859,8 +1834,7 @@
     },
     "PutEmailIdentityFeedbackAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutEmailIdentityMailFromAttributesRequest":{
       "type":"structure",
@@ -1877,8 +1851,7 @@
     },
     "PutEmailIdentityMailFromAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RawMessage":{
       "type":"structure",
@@ -1936,8 +1909,7 @@
     },
     "SendingPausedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -1984,8 +1956,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{"type":"string"},
     "Template":{
@@ -2010,8 +1981,7 @@
     },
     "TooManyRequestsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":429},
       "exception":true
     },
@@ -2043,8 +2013,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateConfigurationSetEventDestinationRequest":{
       "type":"structure",
@@ -2069,8 +2038,7 @@
     },
     "UpdateConfigurationSetEventDestinationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Volume":{"type":"long"},
     "VolumeStatistics":{

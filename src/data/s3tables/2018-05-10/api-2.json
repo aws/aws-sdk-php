@@ -121,6 +121,24 @@
       ],
       "idempotent":true
     },
+    "DeleteTableBucketEncryption":{
+      "name":"DeleteTableBucketEncryption",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/buckets/{tableBucketARN}/encryption",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteTableBucketEncryptionRequest"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
+    },
     "DeleteTableBucketPolicy":{
       "name":"DeleteTableBucketPolicy",
       "http":{
@@ -180,7 +198,7 @@
       "name":"GetTable",
       "http":{
         "method":"GET",
-        "requestUri":"/tables/{tableBucketARN}/{namespace}/{name}",
+        "requestUri":"/get-table",
         "responseCode":200
       },
       "input":{"shape":"GetTableRequest"},
@@ -211,6 +229,24 @@
         {"shape":"AccessDeniedException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "GetTableBucketEncryption":{
+      "name":"GetTableBucketEncryption",
+      "http":{
+        "method":"GET",
+        "requestUri":"/buckets/{tableBucketARN}/encryption",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTableBucketEncryptionRequest"},
+      "output":{"shape":"GetTableBucketEncryptionResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
         {"shape":"BadRequestException"}
       ]
     },
@@ -247,6 +283,24 @@
         {"shape":"NotFoundException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "GetTableEncryption":{
+      "name":"GetTableEncryption",
+      "http":{
+        "method":"GET",
+        "requestUri":"/tables/{tableBucketARN}/{namespace}/{name}/encryption",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTableEncryptionRequest"},
+      "output":{"shape":"GetTableEncryptionResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
         {"shape":"BadRequestException"}
       ]
     },
@@ -377,6 +431,24 @@
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
       ]
+    },
+    "PutTableBucketEncryption":{
+      "name":"PutTableBucketEncryption",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/buckets/{tableBucketARN}/encryption",
+        "responseCode":200
+      },
+      "input":{"shape":"PutTableBucketEncryptionRequest"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
     },
     "PutTableBucketMaintenanceConfiguration":{
       "name":"PutTableBucketMaintenanceConfiguration",
@@ -513,6 +585,10 @@
       },
       "exception":true
     },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -560,7 +636,8 @@
       "type":"structure",
       "required":["name"],
       "members":{
-        "name":{"shape":"TableBucketName"}
+        "name":{"shape":"TableBucketName"},
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "CreateTableBucketResponse":{
@@ -590,7 +667,9 @@
           "locationName":"namespace"
         },
         "name":{"shape":"TableName"},
-        "format":{"shape":"OpenTableFormat"}
+        "format":{"shape":"OpenTableFormat"},
+        "metadata":{"shape":"TableMetadata"},
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "CreateTableResponse":{
@@ -620,6 +699,17 @@
           "shape":"NamespaceName",
           "location":"uri",
           "locationName":"namespace"
+        }
+      }
+    },
+    "DeleteTableBucketEncryptionRequest":{
+      "type":"structure",
+      "required":["tableBucketARN"],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"uri",
+          "locationName":"tableBucketARN"
         }
       }
     },
@@ -700,6 +790,20 @@
         }
       }
     },
+    "EncryptionConfiguration":{
+      "type":"structure",
+      "required":["sseAlgorithm"],
+      "members":{
+        "sseAlgorithm":{"shape":"SSEAlgorithm"},
+        "kmsKeyArn":{"shape":"EncryptionConfigurationKmsKeyArnString"}
+      }
+    },
+    "EncryptionConfigurationKmsKeyArnString":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"(arn:aws[-a-z0-9]*:kms:[-a-z0-9]*:[0-9]{12}:key/.+)"
+    },
     "ErrorMessage":{"type":"string"},
     "ForbiddenException":{
       "type":"structure",
@@ -743,7 +847,27 @@
         "namespace":{"shape":"NamespaceList"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "createdBy":{"shape":"AccountId"},
-        "ownerAccountId":{"shape":"AccountId"}
+        "ownerAccountId":{"shape":"AccountId"},
+        "namespaceId":{"shape":"NamespaceId"},
+        "tableBucketId":{"shape":"TableBucketId"}
+      }
+    },
+    "GetTableBucketEncryptionRequest":{
+      "type":"structure",
+      "required":["tableBucketARN"],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"uri",
+          "locationName":"tableBucketARN"
+        }
+      }
+    },
+    "GetTableBucketEncryptionResponse":{
+      "type":"structure",
+      "required":["encryptionConfiguration"],
+      "members":{
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "GetTableBucketMaintenanceConfigurationRequest":{
@@ -809,7 +933,41 @@
         "arn":{"shape":"TableBucketARN"},
         "name":{"shape":"TableBucketName"},
         "ownerAccountId":{"shape":"AccountId"},
-        "createdAt":{"shape":"SyntheticTimestamp_date_time"}
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "tableBucketId":{"shape":"TableBucketId"},
+        "type":{"shape":"TableBucketType"}
+      }
+    },
+    "GetTableEncryptionRequest":{
+      "type":"structure",
+      "required":[
+        "tableBucketARN",
+        "namespace",
+        "name"
+      ],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"uri",
+          "locationName":"tableBucketARN"
+        },
+        "namespace":{
+          "shape":"NamespaceName",
+          "location":"uri",
+          "locationName":"namespace"
+        },
+        "name":{
+          "shape":"TableName",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "GetTableEncryptionResponse":{
+      "type":"structure",
+      "required":["encryptionConfiguration"],
+      "members":{
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "GetTableMaintenanceConfigurationRequest":{
@@ -955,26 +1113,26 @@
     },
     "GetTableRequest":{
       "type":"structure",
-      "required":[
-        "tableBucketARN",
-        "namespace",
-        "name"
-      ],
       "members":{
         "tableBucketARN":{
           "shape":"TableBucketARN",
-          "location":"uri",
+          "location":"querystring",
           "locationName":"tableBucketARN"
         },
         "namespace":{
           "shape":"NamespaceName",
-          "location":"uri",
+          "location":"querystring",
           "locationName":"namespace"
         },
         "name":{
           "shape":"TableName",
-          "location":"uri",
+          "location":"querystring",
           "locationName":"name"
+        },
+        "tableArn":{
+          "shape":"TableARN",
+          "location":"querystring",
+          "locationName":"tableArn"
         }
       }
     },
@@ -999,6 +1157,7 @@
         "type":{"shape":"TableType"},
         "tableARN":{"shape":"TableARN"},
         "namespace":{"shape":"NamespaceList"},
+        "namespaceId":{"shape":"NamespaceId"},
         "versionToken":{"shape":"VersionToken"},
         "metadataLocation":{"shape":"MetadataLocation"},
         "warehouseLocation":{"shape":"WarehouseLocation"},
@@ -1008,13 +1167,38 @@
         "modifiedAt":{"shape":"SyntheticTimestamp_date_time"},
         "modifiedBy":{"shape":"AccountId"},
         "ownerAccountId":{"shape":"AccountId"},
-        "format":{"shape":"OpenTableFormat"}
+        "format":{"shape":"OpenTableFormat"},
+        "tableBucketId":{"shape":"TableBucketId"}
       }
     },
     "IcebergCompactionSettings":{
       "type":"structure",
       "members":{
-        "targetFileSizeMB":{"shape":"PositiveInteger"}
+        "targetFileSizeMB":{"shape":"PositiveInteger"},
+        "strategy":{"shape":"IcebergCompactionStrategy"}
+      }
+    },
+    "IcebergCompactionStrategy":{
+      "type":"string",
+      "enum":[
+        "auto",
+        "binpack",
+        "sort",
+        "z-order"
+      ]
+    },
+    "IcebergMetadata":{
+      "type":"structure",
+      "required":["schema"],
+      "members":{
+        "schema":{"shape":"IcebergSchema"}
+      }
+    },
+    "IcebergSchema":{
+      "type":"structure",
+      "required":["fields"],
+      "members":{
+        "fields":{"shape":"SchemaFieldList"}
       }
     },
     "IcebergSnapshotManagementSettings":{
@@ -1117,6 +1301,11 @@
           "shape":"ListTableBucketsLimit",
           "location":"querystring",
           "locationName":"maxBuckets"
+        },
+        "type":{
+          "shape":"TableBucketType",
+          "location":"querystring",
+          "locationName":"type"
         }
       }
     },
@@ -1195,6 +1384,7 @@
       "max":2048,
       "min":1
     },
+    "NamespaceId":{"type":"string"},
     "NamespaceList":{
       "type":"list",
       "member":{"shape":"NamespaceName"}
@@ -1217,7 +1407,9 @@
         "namespace":{"shape":"NamespaceList"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "createdBy":{"shape":"AccountId"},
-        "ownerAccountId":{"shape":"AccountId"}
+        "ownerAccountId":{"shape":"AccountId"},
+        "namespaceId":{"shape":"NamespaceId"},
+        "tableBucketId":{"shape":"TableBucketId"}
       }
     },
     "NamespaceSummaryList":{
@@ -1249,6 +1441,21 @@
       "box":true,
       "max":2147483647,
       "min":1
+    },
+    "PutTableBucketEncryptionRequest":{
+      "type":"structure",
+      "required":[
+        "tableBucketARN",
+        "encryptionConfiguration"
+      ],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"uri",
+          "locationName":"tableBucketARN"
+        },
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
+      }
     },
     "PutTableBucketMaintenanceConfigurationRequest":{
       "type":"structure",
@@ -1379,6 +1586,29 @@
       "max":20480,
       "min":1
     },
+    "SSEAlgorithm":{
+      "type":"string",
+      "enum":[
+        "AES256",
+        "aws:kms"
+      ]
+    },
+    "SchemaField":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type"
+      ],
+      "members":{
+        "name":{"shape":"String"},
+        "type":{"shape":"String"},
+        "required":{"shape":"Boolean"}
+      }
+    },
+    "SchemaFieldList":{
+      "type":"list",
+      "member":{"shape":"SchemaField"}
+    },
     "String":{"type":"string"},
     "SyntheticTimestamp_date_time":{
       "type":"timestamp",
@@ -1394,6 +1624,7 @@
       "type":"string",
       "pattern":"(arn:aws[-a-z0-9]*:[a-z0-9]+:[-a-z0-9]*:[0-9]{12}:bucket/[a-z0-9_-]{3,63})"
     },
+    "TableBucketId":{"type":"string"},
     "TableBucketMaintenanceConfiguration":{
       "type":"map",
       "key":{"shape":"TableBucketMaintenanceType"},
@@ -1435,12 +1666,21 @@
         "arn":{"shape":"TableBucketARN"},
         "name":{"shape":"TableBucketName"},
         "ownerAccountId":{"shape":"AccountId"},
-        "createdAt":{"shape":"SyntheticTimestamp_date_time"}
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "tableBucketId":{"shape":"TableBucketId"},
+        "type":{"shape":"TableBucketType"}
       }
     },
     "TableBucketSummaryList":{
       "type":"list",
       "member":{"shape":"TableBucketSummary"}
+    },
+    "TableBucketType":{
+      "type":"string",
+      "enum":[
+        "customer",
+        "aws"
+      ]
     },
     "TableMaintenanceConfiguration":{
       "type":"map",
@@ -1491,6 +1731,13 @@
         "icebergSnapshotManagement"
       ]
     },
+    "TableMetadata":{
+      "type":"structure",
+      "members":{
+        "iceberg":{"shape":"IcebergMetadata"}
+      },
+      "union":true
+    },
     "TableName":{
       "type":"string",
       "max":255,
@@ -1513,7 +1760,9 @@
         "type":{"shape":"TableType"},
         "tableARN":{"shape":"TableARN"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "modifiedAt":{"shape":"SyntheticTimestamp_date_time"}
+        "modifiedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "namespaceId":{"shape":"NamespaceId"},
+        "tableBucketId":{"shape":"TableBucketId"}
       }
     },
     "TableSummaryList":{

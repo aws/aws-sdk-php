@@ -75,7 +75,7 @@
       "http":{
         "method":"DELETE",
         "requestUri":"/blueprints/{blueprintArn}/",
-        "responseCode":204
+        "responseCode":200
       },
       "input":{"shape":"DeleteBlueprintRequest"},
       "output":{"shape":"DeleteBlueprintResponse"},
@@ -93,7 +93,7 @@
       "http":{
         "method":"DELETE",
         "requestUri":"/data-automation-projects/{projectArn}/",
-        "responseCode":204
+        "responseCode":200
       },
       "input":{"shape":"DeleteDataAutomationProjectRequest"},
       "output":{"shape":"DeleteDataAutomationProjectResponse"},
@@ -174,6 +174,58 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/listTagsForResource",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTagsForResourceRequest"},
+      "output":{"shape":"ListTagsForResourceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/tagResource",
+        "responseCode":200
+      },
+      "input":{"shape":"TagResourceRequest"},
+      "output":{"shape":"TagResourceResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/untagResource",
+        "responseCode":200
+      },
+      "input":{"shape":"UntagResourceRequest"},
+      "output":{"shape":"UntagResourceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "UpdateBlueprint":{
       "name":"UpdateBlueprint",
       "http":{
@@ -203,6 +255,7 @@
       "input":{"shape":"UpdateDataAutomationProjectRequest"},
       "output":{"shape":"UpdateDataAutomationProjectResponse"},
       "errors":[
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
@@ -230,20 +283,33 @@
       "required":["state"],
       "members":{
         "state":{"shape":"State"},
-        "types":{"shape":"AudioExtractionCategoryTypes"}
+        "types":{"shape":"AudioExtractionCategoryTypes"},
+        "typeConfiguration":{"shape":"AudioExtractionCategoryTypeConfiguration"}
       }
     },
     "AudioExtractionCategoryType":{
       "type":"string",
       "enum":[
         "AUDIO_CONTENT_MODERATION",
-        "CHAPTER_CONTENT_MODERATION",
-        "TRANSCRIPT"
+        "TRANSCRIPT",
+        "TOPIC_CONTENT_MODERATION"
       ]
+    },
+    "AudioExtractionCategoryTypeConfiguration":{
+      "type":"structure",
+      "members":{
+        "transcript":{"shape":"TranscriptConfiguration"}
+      }
     },
     "AudioExtractionCategoryTypes":{
       "type":"list",
       "member":{"shape":"AudioExtractionCategoryType"}
+    },
+    "AudioOverrideConfiguration":{
+      "type":"structure",
+      "members":{
+        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"}
+      }
     },
     "AudioStandardExtraction":{
       "type":"structure",
@@ -264,8 +330,8 @@
       "type":"string",
       "enum":[
         "AUDIO_SUMMARY",
-        "CHAPTER_SUMMARY",
-        "IAB"
+        "IAB",
+        "TOPIC_SUMMARY"
       ]
     },
     "AudioStandardGenerativeFieldTypes":{
@@ -341,7 +407,6 @@
       "type":"string",
       "max":100000,
       "min":1,
-      "pattern":"[a-zA-Z0-9\\s!\"\\#\\$%'&\\(\\)\\*\\+\\,\\-\\./:;=\\?@\\[\\\\\\]\\^_`\\{\\|\\}~><]+",
       "sensitive":true
     },
     "BlueprintStage":{
@@ -384,6 +449,13 @@
       "type":"list",
       "member":{"shape":"BlueprintSummary"}
     },
+    "ChannelLabelingConfiguration":{
+      "type":"structure",
+      "required":["state"],
+      "members":{
+        "state":{"shape":"State"}
+      }
+    },
     "ClientToken":{
       "type":"string",
       "max":256,
@@ -417,7 +489,8 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "tags":{"shape":"TagList"}
       }
     },
     "CreateBlueprintResponse":{
@@ -466,7 +539,8 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "tags":{"shape":"TagList"}
       }
     },
     "CreateDataAutomationProjectResponse":{
@@ -516,6 +590,8 @@
     },
     "DataAutomationProjectDescription":{
       "type":"string",
+      "max":300,
+      "min":0,
       "sensitive":true
     },
     "DataAutomationProjectFilter":{
@@ -595,8 +671,7 @@
     },
     "DeleteBlueprintResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDataAutomationProjectRequest":{
       "type":"structure",
@@ -616,6 +691,15 @@
         "projectArn":{"shape":"DataAutomationProjectArn"},
         "status":{"shape":"DataAutomationProjectStatus"}
       }
+    },
+    "DesiredModality":{
+      "type":"string",
+      "enum":[
+        "IMAGE",
+        "DOCUMENT",
+        "AUDIO",
+        "VIDEO"
+      ]
     },
     "DocumentBoundingBox":{
       "type":"structure",
@@ -684,7 +768,8 @@
     "DocumentOverrideConfiguration":{
       "type":"structure",
       "members":{
-        "splitter":{"shape":"SplitterConfiguration"}
+        "splitter":{"shape":"SplitterConfiguration"},
+        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"}
       }
     },
     "DocumentStandardExtraction":{
@@ -720,6 +805,18 @@
         "kmsKeyId":{"shape":"KmsKeyId"},
         "kmsEncryptionContext":{"shape":"KmsEncryptionContext"}
       }
+    },
+    "EncryptionContextKey":{
+      "type":"string",
+      "max":2000,
+      "min":1,
+      "pattern":".*\\S.*"
+    },
+    "EncryptionContextValue":{
+      "type":"string",
+      "max":2000,
+      "min":1,
+      "pattern":".*\\S.*"
     },
     "GetBlueprintRequest":{
       "type":"structure",
@@ -779,12 +876,19 @@
       "type":"string",
       "enum":[
         "CONTENT_MODERATION",
-        "TEXT_DETECTION"
+        "TEXT_DETECTION",
+        "LOGOS"
       ]
     },
     "ImageExtractionCategoryTypes":{
       "type":"list",
       "member":{"shape":"ImageExtractionCategoryType"}
+    },
+    "ImageOverrideConfiguration":{
+      "type":"structure",
+      "members":{
+        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"}
+      }
     },
     "ImageStandardExtraction":{
       "type":"structure",
@@ -834,14 +938,15 @@
     },
     "KmsEncryptionContext":{
       "type":"map",
-      "key":{"shape":"String"},
-      "value":{"shape":"String"},
+      "key":{"shape":"EncryptionContextKey"},
+      "value":{"shape":"EncryptionContextValue"},
       "min":1
     },
     "KmsKeyId":{
       "type":"string",
       "max":2048,
-      "min":1
+      "min":1,
+      "pattern":"[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]+"
     },
     "ListBlueprintsRequest":{
       "type":"structure",
@@ -880,11 +985,39 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListTagsForResourceRequest":{
+      "type":"structure",
+      "required":["resourceARN"],
+      "members":{
+        "resourceARN":{"shape":"TaggableResourceArn"}
+      }
+    },
+    "ListTagsForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"TagList"}
+      }
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
       "max":1000,
       "min":1
+    },
+    "ModalityProcessingConfiguration":{
+      "type":"structure",
+      "members":{
+        "state":{"shape":"State"}
+      }
+    },
+    "ModalityRoutingConfiguration":{
+      "type":"structure",
+      "members":{
+        "jpeg":{"shape":"DesiredModality"},
+        "png":{"shape":"DesiredModality"},
+        "mp4":{"shape":"DesiredModality"},
+        "mov":{"shape":"DesiredModality"}
+      }
     },
     "NextToken":{
       "type":"string",
@@ -899,7 +1032,11 @@
     "OverrideConfiguration":{
       "type":"structure",
       "members":{
-        "document":{"shape":"DocumentOverrideConfiguration"}
+        "document":{"shape":"DocumentOverrideConfiguration"},
+        "image":{"shape":"ImageOverrideConfiguration"},
+        "video":{"shape":"VideoOverrideConfiguration"},
+        "audio":{"shape":"AudioOverrideConfiguration"},
+        "modalityRouting":{"shape":"ModalityRoutingConfiguration"}
       }
     },
     "ResourceNotFoundException":{
@@ -931,6 +1068,13 @@
       },
       "exception":true
     },
+    "SpeakerLabelingConfiguration":{
+      "type":"structure",
+      "required":["state"],
+      "members":{
+        "state":{"shape":"State"}
+      }
+    },
     "SplitterConfiguration":{
       "type":"structure",
       "members":{
@@ -953,7 +1097,60 @@
         "DISABLED"
       ]
     },
-    "String":{"type":"string"},
+    "Tag":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"TagKey"},
+        "value":{"shape":"TagValue"}
+      }
+    },
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":200,
+      "min":0
+    },
+    "TagList":{
+      "type":"list",
+      "member":{"shape":"Tag"},
+      "max":200,
+      "min":0
+    },
+    "TagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceARN",
+        "tags"
+      ],
+      "members":{
+        "resourceARN":{"shape":"TaggableResourceArn"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "TagResourceResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
+    "TaggableResourceArn":{
+      "type":"string",
+      "max":1011,
+      "min":20,
+      "pattern":"arn:aws(|-cn|-us-gov):bedrock:[a-z0-9-]*:[0-9]{12}:(blueprint|data-automation-project)/[a-zA-Z0-9-]{12,36}"
+    },
     "ThrottlingException":{
       "type":"structure",
       "members":{
@@ -965,12 +1162,36 @@
       },
       "exception":true
     },
+    "TranscriptConfiguration":{
+      "type":"structure",
+      "members":{
+        "speakerLabeling":{"shape":"SpeakerLabelingConfiguration"},
+        "channelLabeling":{"shape":"ChannelLabelingConfiguration"}
+      }
+    },
     "Type":{
       "type":"string",
       "enum":[
         "DOCUMENT",
-        "IMAGE"
+        "IMAGE",
+        "AUDIO",
+        "VIDEO"
       ]
+    },
+    "UntagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceARN",
+        "tagKeys"
+      ],
+      "members":{
+        "resourceARN":{"shape":"TaggableResourceArn"},
+        "tagKeys":{"shape":"TagKeyList"}
+      }
+    },
+    "UntagResourceResponse":{
+      "type":"structure",
+      "members":{}
     },
     "UpdateBlueprintRequest":{
       "type":"structure",
@@ -985,7 +1206,8 @@
           "locationName":"blueprintArn"
         },
         "schema":{"shape":"BlueprintSchema"},
-        "blueprintStage":{"shape":"BlueprintStage"}
+        "blueprintStage":{"shape":"BlueprintStage"},
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "UpdateBlueprintResponse":{
@@ -1011,7 +1233,8 @@
         "projectDescription":{"shape":"DataAutomationProjectDescription"},
         "standardOutputConfiguration":{"shape":"StandardOutputConfiguration"},
         "customOutputConfiguration":{"shape":"CustomOutputConfiguration"},
-        "overrideConfiguration":{"shape":"OverrideConfiguration"}
+        "overrideConfiguration":{"shape":"OverrideConfiguration"},
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "UpdateDataAutomationProjectResponse":{
@@ -1070,12 +1293,19 @@
       "enum":[
         "CONTENT_MODERATION",
         "TEXT_DETECTION",
-        "TRANSCRIPT"
+        "TRANSCRIPT",
+        "LOGOS"
       ]
     },
     "VideoExtractionCategoryTypes":{
       "type":"list",
       "member":{"shape":"VideoExtractionCategoryType"}
+    },
+    "VideoOverrideConfiguration":{
+      "type":"structure",
+      "members":{
+        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"}
+      }
     },
     "VideoStandardExtraction":{
       "type":"structure",
@@ -1100,8 +1330,8 @@
       "type":"string",
       "enum":[
         "VIDEO_SUMMARY",
-        "SCENE_SUMMARY",
-        "IAB"
+        "IAB",
+        "CHAPTER_SUMMARY"
       ]
     },
     "VideoStandardGenerativeFieldTypes":{

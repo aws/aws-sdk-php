@@ -1000,7 +1000,7 @@
         "dataType"
       ],
       "members":{
-        "fullyQualifiedName":{"shape":"string"},
+        "fullyQualifiedName":{"shape":"ActuatorFullyQualifiedNameString"},
         "dataType":{"shape":"NodeDataType"},
         "description":{"shape":"description"},
         "unit":{"shape":"string"},
@@ -1016,6 +1016,12 @@
         "comment":{"shape":"message"},
         "structFullyQualifiedName":{"shape":"NodePath"}
       }
+    },
+    "ActuatorFullyQualifiedNameString":{
+      "type":"string",
+      "max":150,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.]+"
     },
     "AmazonResourceName":{
       "type":"string",
@@ -1046,7 +1052,7 @@
         "dataType"
       ],
       "members":{
-        "fullyQualifiedName":{"shape":"string"},
+        "fullyQualifiedName":{"shape":"AttributeFullyQualifiedNameString"},
         "dataType":{"shape":"NodeDataType"},
         "description":{"shape":"description"},
         "unit":{"shape":"string"},
@@ -1062,6 +1068,12 @@
         "deprecationMessage":{"shape":"message"},
         "comment":{"shape":"message"}
       }
+    },
+    "AttributeFullyQualifiedNameString":{
+      "type":"string",
+      "max":150,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.]+"
     },
     "BatchCreateVehicleRequest":{
       "type":"structure",
@@ -1095,11 +1107,17 @@
       "type":"structure",
       "required":["fullyQualifiedName"],
       "members":{
-        "fullyQualifiedName":{"shape":"string"},
+        "fullyQualifiedName":{"shape":"BranchFullyQualifiedNameString"},
         "description":{"shape":"description"},
         "deprecationMessage":{"shape":"message"},
         "comment":{"shape":"message"}
       }
+    },
+    "BranchFullyQualifiedNameString":{
+      "type":"string",
+      "max":150,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.]+"
     },
     "CampaignStatus":{
       "type":"string",
@@ -1151,7 +1169,8 @@
     "CanInterfaceName":{
       "type":"string",
       "max":100,
-      "min":1
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.]+"
     },
     "CanSignal":{
       "type":"structure",
@@ -1172,13 +1191,15 @@
         "offset":{"shape":"double"},
         "factor":{"shape":"double"},
         "length":{"shape":"nonNegativeInteger"},
-        "name":{"shape":"CanSignalName"}
+        "name":{"shape":"CanSignalName"},
+        "signalValueType":{"shape":"SignalValueType"}
       }
     },
     "CanSignalName":{
       "type":"string",
       "max":100,
-      "min":1
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.]+"
     },
     "CloudWatchLogDeliveryOptions":{
       "type":"structure",
@@ -1293,12 +1314,16 @@
       "members":{
         "name":{"shape":"resourceName"},
         "description":{"shape":"description"},
-        "modelManifestArn":{"shape":"arn"},
+        "modelManifestArn":{"shape":"CreateDecoderManifestRequestModelManifestArnString"},
         "signalDecoders":{"shape":"SignalDecoders"},
         "networkInterfaces":{"shape":"NetworkInterfaces"},
         "defaultForUnmappedSignals":{"shape":"DefaultForUnmappedSignalsType"},
         "tags":{"shape":"TagList"}
       }
+    },
+    "CreateDecoderManifestRequestModelManifestArnString":{
+      "type":"string",
+      "pattern":"arn:aws:iotfleetwise:[a-z0-9-]+:[0-9]{12}:model-manifest/[a-zA-Z\\d\\-_:]{1,100}"
     },
     "CreateDecoderManifestResponse":{
       "type":"structure",
@@ -1345,10 +1370,16 @@
       "members":{
         "name":{"shape":"resourceName"},
         "description":{"shape":"description"},
-        "nodes":{"shape":"listOfStrings"},
+        "nodes":{"shape":"CreateModelManifestRequestNodesList"},
         "signalCatalogArn":{"shape":"arn"},
         "tags":{"shape":"TagList"}
       }
+    },
+    "CreateModelManifestRequestNodesList":{
+      "type":"list",
+      "member":{"shape":"string"},
+      "max":500,
+      "min":0
     },
     "CreateModelManifestResponse":{
       "type":"structure",
@@ -1498,7 +1529,7 @@
         "dataType"
       ],
       "members":{
-        "fullyQualifiedName":{"shape":"string"},
+        "fullyQualifiedName":{"shape":"CustomPropertyFullyQualifiedNameString"},
         "dataType":{"shape":"NodeDataType"},
         "dataEncoding":{"shape":"NodeDataEncoding"},
         "description":{"shape":"description"},
@@ -1507,15 +1538,27 @@
         "structFullyQualifiedName":{"shape":"NodePath"}
       }
     },
+    "CustomPropertyFullyQualifiedNameString":{
+      "type":"string",
+      "max":150,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.]+"
+    },
     "CustomStruct":{
       "type":"structure",
       "required":["fullyQualifiedName"],
       "members":{
-        "fullyQualifiedName":{"shape":"string"},
+        "fullyQualifiedName":{"shape":"CustomStructFullyQualifiedNameString"},
         "description":{"shape":"description"},
         "deprecationMessage":{"shape":"message"},
         "comment":{"shape":"message"}
       }
+    },
+    "CustomStructFullyQualifiedNameString":{
+      "type":"string",
+      "max":150,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.]+"
     },
     "DataDestinationConfig":{
       "type":"structure",
@@ -1529,7 +1572,7 @@
     "DataDestinationConfigs":{
       "type":"list",
       "member":{"shape":"DataDestinationConfig"},
-      "max":1,
+      "max":3,
       "min":1
     },
     "DataExtraDimensionNodePathList":{
@@ -1813,7 +1856,8 @@
     "FullyQualifiedName":{
       "type":"string",
       "max":150,
-      "min":1
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.]+"
     },
     "GetCampaignRequest":{
       "type":"structure",
@@ -2132,7 +2176,8 @@
     "InterfaceId":{
       "type":"string",
       "max":50,
-      "min":1
+      "min":1,
+      "pattern":"[-a-zA-Z0-9_.]+"
     },
     "InterfaceIds":{
       "type":"list",
@@ -2220,7 +2265,8 @@
       "members":{
         "nextToken":{"shape":"nextToken"},
         "maxResults":{"shape":"maxResults"},
-        "status":{"shape":"statusStr"}
+        "status":{"shape":"statusStr"},
+        "listResponseScope":{"shape":"ListResponseScope"}
       }
     },
     "ListCampaignsResponse":{
@@ -2267,7 +2313,8 @@
       "members":{
         "modelManifestArn":{"shape":"arn"},
         "nextToken":{"shape":"nextToken"},
-        "maxResults":{"shape":"maxResults"}
+        "maxResults":{"shape":"maxResults"},
+        "listResponseScope":{"shape":"ListResponseScope"}
       }
     },
     "ListDecoderManifestsResponse":{
@@ -2297,7 +2344,8 @@
       "type":"structure",
       "members":{
         "nextToken":{"shape":"nextToken"},
-        "maxResults":{"shape":"maxResults"}
+        "maxResults":{"shape":"maxResults"},
+        "listResponseScope":{"shape":"ListResponseScope"}
       }
     },
     "ListFleetsResponse":{
@@ -2328,7 +2376,8 @@
       "members":{
         "signalCatalogArn":{"shape":"arn"},
         "nextToken":{"shape":"nextToken"},
-        "maxResults":{"shape":"maxResults"}
+        "maxResults":{"shape":"maxResults"},
+        "listResponseScope":{"shape":"ListResponseScope"}
       }
     },
     "ListModelManifestsResponse":{
@@ -2337,6 +2386,10 @@
         "summaries":{"shape":"modelManifestSummaries"},
         "nextToken":{"shape":"nextToken"}
       }
+    },
+    "ListResponseScope":{
+      "type":"string",
+      "enum":["METADATA_ONLY"]
     },
     "ListSignalCatalogNodesRequest":{
       "type":"structure",
@@ -2373,7 +2426,8 @@
       "type":"structure",
       "members":{
         "nextToken":{"shape":"nextToken"},
-        "maxResults":{"shape":"maxResults"}
+        "maxResults":{"shape":"maxResults"},
+        "listResponseScope":{"shape":"ListResponseScope"}
       }
     },
     "ListStateTemplatesResponse":{
@@ -2419,7 +2473,8 @@
         "attributeNames":{"shape":"attributeNamesList"},
         "attributeValues":{"shape":"attributeValuesList"},
         "nextToken":{"shape":"nextToken"},
-        "maxResults":{"shape":"listVehiclesMaxResults"}
+        "maxResults":{"shape":"listVehiclesMaxResults"},
+        "listResponseScope":{"shape":"ListResponseScope"}
       }
     },
     "ListVehiclesResponse":{
@@ -2673,7 +2728,8 @@
     "ObdInterfaceName":{
       "type":"string",
       "max":100,
-      "min":1
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.]+"
     },
     "ObdSignal":{
       "type":"structure",
@@ -2695,7 +2751,12 @@
         "startByte":{"shape":"nonNegativeInteger"},
         "byteLength":{"shape":"ObdByteLength"},
         "bitRightShift":{"shape":"nonNegativeInteger"},
-        "bitMaskLength":{"shape":"ObdBitmaskLength"}
+        "bitMaskLength":{"shape":"ObdBitmaskLength"},
+        "isSigned":{
+          "shape":"PrimitiveBoolean",
+          "box":true
+        },
+        "signalValueType":{"shape":"SignalValueType"}
       }
     },
     "ObdStandard":{
@@ -2732,12 +2793,14 @@
     "ProtocolName":{
       "type":"string",
       "max":50,
-      "min":1
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.]+"
     },
     "ProtocolVersion":{
       "type":"string",
       "max":50,
-      "min":1
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.]+"
     },
     "PutEncryptionConfigurationRequest":{
       "type":"structure",
@@ -2901,7 +2964,7 @@
         "dataType"
       ],
       "members":{
-        "fullyQualifiedName":{"shape":"string"},
+        "fullyQualifiedName":{"shape":"SensorFullyQualifiedNameString"},
         "dataType":{"shape":"NodeDataType"},
         "description":{"shape":"description"},
         "unit":{"shape":"string"},
@@ -2912,6 +2975,12 @@
         "comment":{"shape":"message"},
         "structFullyQualifiedName":{"shape":"NodePath"}
       }
+    },
+    "SensorFullyQualifiedNameString":{
+      "type":"string",
+      "max":150,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_.]+"
     },
     "SignalCatalogSummary":{
       "type":"structure",
@@ -3001,7 +3070,8 @@
       "type":"list",
       "member":{"shape":"SignalFetchInformation"},
       "max":2,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "SignalInformation":{
       "type":"structure",
@@ -3029,6 +3099,13 @@
         "BRANCH",
         "CUSTOM_STRUCT",
         "CUSTOM_PROPERTY"
+      ]
+    },
+    "SignalValueType":{
+      "type":"string",
+      "enum":[
+        "INTEGER",
+        "FLOATING_POINT"
       ]
     },
     "SpoolingMode":{
@@ -3560,7 +3637,8 @@
         "attributes":{"shape":"attributesMap"},
         "attributeUpdateMode":{"shape":"UpdateMode"},
         "stateTemplatesToAdd":{"shape":"StateTemplateAssociations"},
-        "stateTemplatesToRemove":{"shape":"StateTemplateAssociationIdentifiers"}
+        "stateTemplatesToRemove":{"shape":"StateTemplateAssociationIdentifiers"},
+        "stateTemplatesToUpdate":{"shape":"StateTemplateAssociations"}
       }
     },
     "UpdateVehicleRequestItem":{
@@ -3573,7 +3651,8 @@
         "attributes":{"shape":"attributesMap"},
         "attributeUpdateMode":{"shape":"UpdateMode"},
         "stateTemplatesToAdd":{"shape":"StateTemplateAssociations"},
-        "stateTemplatesToRemove":{"shape":"StateTemplateAssociationIdentifiers"}
+        "stateTemplatesToRemove":{"shape":"StateTemplateAssociationIdentifiers"},
+        "stateTemplatesToUpdate":{"shape":"StateTemplateAssociations"}
       }
     },
     "UpdateVehicleResponse":{
@@ -3658,7 +3737,8 @@
         "READY",
         "HEALTHY",
         "SUSPENDED",
-        "DELETING"
+        "DELETING",
+        "READY_FOR_CHECKIN"
       ]
     },
     "VehicleStatus":{
@@ -3845,17 +3925,20 @@
     },
     "nonNegativeInteger":{
       "type":"integer",
+      "max":2147483647,
       "min":0
     },
     "number":{"type":"integer"},
     "positiveInteger":{
       "type":"integer",
       "box":true,
+      "max":2147483647,
       "min":1
     },
     "positiveLong":{
       "type":"long",
       "box":true,
+      "max":9223372036854775807,
       "min":1
     },
     "priority":{
@@ -3876,7 +3959,7 @@
     "statusStr":{
       "type":"string",
       "max":20,
-      "min":7,
+      "min":1,
       "pattern":"[A-Z_]*"
     },
     "string":{"type":"string"},

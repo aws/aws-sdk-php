@@ -2085,7 +2085,10 @@
         "DestinationIdentifier":{"shape":"ConstrainedString"},
         "InsideCidrBlocks":{"shape":"ConstrainedStringList"},
         "SharedSegments":{"shape":"ConstrainedStringList"},
-        "ServiceInsertionActions":{"shape":"ServiceInsertionActionList"}
+        "ServiceInsertionActions":{"shape":"ServiceInsertionActionList"},
+        "VpnEcmpSupport":{"shape":"Boolean"},
+        "DnsSupport":{"shape":"Boolean"},
+        "SecurityGroupReferencingSupport":{"shape":"Boolean"}
       }
     },
     "CoreNetworkEdge":{
@@ -2773,8 +2776,7 @@
     },
     "DeleteResourcePolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteSiteRequest":{
       "type":"structure",
@@ -3063,8 +3065,7 @@
     },
     "ExecuteCoreNetworkChangeSetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ExternalRegionCode":{
       "type":"string",
@@ -4576,8 +4577,7 @@
     },
     "PutResourcePolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ReasonContextKey":{
       "type":"string",
@@ -5011,8 +5011,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -5174,8 +5173,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateConnectionRequest":{
       "type":"structure",
@@ -5456,7 +5454,9 @@
       "type":"structure",
       "members":{
         "Ipv6Support":{"shape":"Boolean"},
-        "ApplianceModeSupport":{"shape":"Boolean"}
+        "ApplianceModeSupport":{"shape":"Boolean"},
+        "DnsSupport":{"shape":"Boolean"},
+        "SecurityGroupReferencingSupport":{"shape":"Boolean"}
       }
     },
     "VpnConnectionArn":{

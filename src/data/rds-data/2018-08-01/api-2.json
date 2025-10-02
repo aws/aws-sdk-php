@@ -30,6 +30,7 @@
         {"shape":"DatabaseUnavailableException"},
         {"shape":"TransactionNotFoundException"},
         {"shape":"InvalidSecretException"},
+        {"shape":"InvalidResourceStateException"},
         {"shape":"ServiceUnavailableError"},
         {"shape":"ForbiddenException"},
         {"shape":"DatabaseNotFoundException"},
@@ -56,6 +57,7 @@
         {"shape":"DatabaseUnavailableException"},
         {"shape":"TransactionNotFoundException"},
         {"shape":"InvalidSecretException"},
+        {"shape":"InvalidResourceStateException"},
         {"shape":"ServiceUnavailableError"},
         {"shape":"ForbiddenException"},
         {"shape":"DatabaseNotFoundException"},
@@ -81,6 +83,7 @@
         {"shape":"DatabaseUnavailableException"},
         {"shape":"TransactionNotFoundException"},
         {"shape":"InvalidSecretException"},
+        {"shape":"InvalidResourceStateException"},
         {"shape":"ServiceUnavailableError"},
         {"shape":"ForbiddenException"},
         {"shape":"DatabaseNotFoundException"},
@@ -128,6 +131,7 @@
         {"shape":"DatabaseUnavailableException"},
         {"shape":"TransactionNotFoundException"},
         {"shape":"InvalidSecretException"},
+        {"shape":"InvalidResourceStateException"},
         {"shape":"ServiceUnavailableError"},
         {"shape":"ForbiddenException"},
         {"shape":"DatabaseNotFoundException"},
@@ -154,6 +158,7 @@
         {"shape":"DatabaseUnavailableException"},
         {"shape":"TransactionNotFoundException"},
         {"shape":"InvalidSecretException"},
+        {"shape":"InvalidResourceStateException"},
         {"shape":"ServiceUnavailableError"},
         {"shape":"ForbiddenException"},
         {"shape":"DatabaseNotFoundException"},
@@ -481,6 +486,17 @@
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
+    },
+    "InvalidResourceStateException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
     },
     "InvalidSecretException":{
       "type":"structure",

@@ -2382,7 +2382,8 @@
         "securityPolicy":{"shape":"SecurityPolicy"},
         "mutualTlsAuthentication":{"shape":"MutualTlsAuthenticationInput"},
         "ownershipVerificationCertificateArn":{"shape":"String"},
-        "policy":{"shape":"String"}
+        "policy":{"shape":"String"},
+        "routingMode":{"shape":"RoutingMode"}
       }
     },
     "CreateModelRequest":{
@@ -3056,7 +3057,8 @@
         "mutualTlsAuthentication":{"shape":"MutualTlsAuthentication"},
         "ownershipVerificationCertificateArn":{"shape":"String"},
         "managementPolicy":{"shape":"String"},
-        "policy":{"shape":"String"}
+        "policy":{"shape":"String"},
+        "routingMode":{"shape":"RoutingMode"}
       }
     },
     "DomainNameAccessAssociation":{
@@ -3104,6 +3106,7 @@
       "type":"structure",
       "members":{
         "types":{"shape":"ListOfEndpointType"},
+        "ipAddressType":{"shape":"IpAddressType"},
         "vpcEndpointIds":{"shape":"ListOfString"}
       }
     },
@@ -3225,8 +3228,7 @@
     },
     "GetAccountRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetApiKeyRequest":{
       "type":"structure",
@@ -4315,6 +4317,13 @@
         "AWS_PROXY"
       ]
     },
+    "IpAddressType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "dualstack"
+      ]
+    },
     "LimitExceededException":{
       "type":"structure",
       "members":{
@@ -4928,6 +4937,14 @@
           "locationName":"item"
         }
       }
+    },
+    "RoutingMode":{
+      "type":"string",
+      "enum":[
+        "BASE_PATH_MAPPING_ONLY",
+        "ROUTING_RULE_ONLY",
+        "ROUTING_RULE_THEN_BASE_PATH_MAPPING"
+      ]
     },
     "SdkConfigurationProperty":{
       "type":"structure",

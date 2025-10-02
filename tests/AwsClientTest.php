@@ -10,7 +10,6 @@ use Aws\Ec2\Ec2Client;
 use Aws\Endpoint\UseFipsEndpoint\Configuration as FipsConfiguration;
 use Aws\Endpoint\UseDualStackEndpoint\Configuration as DualStackConfiguration;
 use Aws\EndpointV2\EndpointProviderV2;
-use Aws\MetricsBuilder;
 use Aws\Middleware;
 use Aws\ResultPaginator;
 use Aws\S3\Exception\S3Exception;
@@ -23,6 +22,7 @@ use Aws\Sts\StsClient;
 use Aws\Token\Token;
 use Aws\Waiter;
 use Aws\WrappedHttpHandler;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
@@ -99,7 +99,7 @@ class AwsClientTest extends TestCase
 
     public function testWrapsExceptions()
     {
-        $this->expectExceptionMessage("Error executing \"foo\" on \"http://us-east-1.foo.amazonaws.com\"; AWS HTTP error: Baz Bar!");
+        $this->expectExceptionMessage("Error executing \"foo\" on \"http://us-east-1.foo.amazonaws.com/\"; AWS HTTP error: Baz Bar!");
         $this->expectException(\Aws\S3\Exception\S3Exception::class);
         $parser = function () {};
         $errorParser = new JsonRpcErrorParser();
@@ -232,6 +232,13 @@ class AwsClientTest extends TestCase
         $this->assertInstanceOf(Waiter::class, $waiter);
         $promise = $waiter->promise();
         $promise->wait();
+    }
+
+    public function testGetToken(): void
+    {
+        $client = $this->createClient();
+        $tokenPromise = $client->getToken();
+        $this->assertInstanceOf(PromiseInterface::class, $tokenPromise);
     }
 
     public function testCreatesClientsFromConstructor()
@@ -516,7 +523,8 @@ class AwsClientTest extends TestCase
                 'use_dual_stack_endpoint' => new DualStackConfiguration(false, "foo"),
                 'disable_request_compression' => false,
                 'request_min_compression_size_bytes' => 10240,
-                'ignore_configured_endpoint_urls' => false
+                'ignore_configured_endpoint_urls' => false,
+                'auth_scheme_preference' => null
             ],
             $client->getConfig()
         );
@@ -546,7 +554,7 @@ class AwsClientTest extends TestCase
             'AWS::Region' => 'us-west-2',
             'AWS::UseFIPS' => false,
             'AWS::UseDualStack' => false,
-            'AWS::STS::UseGlobalEndpoint' => true,
+            'AWS::STS::UseGlobalEndpoint' => false,
             'AWS::Auth::AccountIdEndpointMode' => 'preferred',
         ];
         $builtIns = $client->getClientBuiltIns();
@@ -567,7 +575,7 @@ class AwsClientTest extends TestCase
             'Region' => 'us-west-2',
             'UseFIPS' => false,
             'UseDualStack' => false,
-            'UseGlobalEndpoint' => true,
+            'UseGlobalEndpoint' => false,
             'AccountIdEndpointMode' => 'preferred'
         ];
         $providerArgs = $client->getEndpointProviderArgs();
@@ -994,7 +1002,7 @@ EOT
         $list->setHandler(new MockHandler([new Result()]));
         $list->appendSign(Middleware::tap(function ($cmd, $req) {
             $this->assertTrue($req->hasHeader('x-amzn-query-mode'));
-            $this->assertEquals(true, $req->getHeaderLine('x-amzn-query-mode'));
+            $this->assertEquals("true", $req->getHeaderLine('x-amzn-query-mode'));
         }));
         $client->TestOperation();
     }

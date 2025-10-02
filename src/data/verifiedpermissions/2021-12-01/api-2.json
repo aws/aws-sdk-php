@@ -183,6 +183,7 @@
       "output":{"shape":"DeletePolicyStoreOutput"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"InvalidStateException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -382,6 +383,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListTagsForResourceInput"},
+      "output":{"shape":"ListTagsForResourceOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "PutSchema":{
       "name":"PutSchema",
       "http":{
@@ -400,6 +417,39 @@
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TagResourceInput"},
+      "output":{"shape":"TagResourceOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"TooManyTagsException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UntagResourceInput"},
+      "output":{"shape":"UntagResourceOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
     },
     "UpdateIdentitySource":{
       "name":"UpdateIdentitySource",
@@ -513,6 +563,11 @@
       "pattern":"Action$|^.+::Action",
       "sensitive":true
     },
+    "AmazonResourceName":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "AttributeValue":{
       "type":"structure",
       "members":{
@@ -523,7 +578,9 @@
         "set":{"shape":"SetAttribute"},
         "record":{"shape":"RecordAttribute"},
         "ipaddr":{"shape":"IpAddr"},
-        "decimal":{"shape":"Decimal"}
+        "decimal":{"shape":"Decimal"},
+        "datetime":{"shape":"DatetimeAttribute"},
+        "duration":{"shape":"Duration"}
       },
       "union":true
     },
@@ -737,6 +794,17 @@
       "box":true,
       "sensitive":true
     },
+    "CedarJson":{
+      "type":"string",
+      "sensitive":true
+    },
+    "CedarVersion":{
+      "type":"string",
+      "enum":[
+        "CEDAR_2",
+        "CEDAR_4"
+      ]
+    },
     "Claim":{
       "type":"string",
       "min":1,
@@ -850,7 +918,8 @@
     "ContextDefinition":{
       "type":"structure",
       "members":{
-        "contextMap":{"shape":"ContextMap"}
+        "contextMap":{"shape":"ContextMap"},
+        "cedarJson":{"shape":"CedarJson"}
       },
       "union":true
     },
@@ -936,7 +1005,9 @@
           "idempotencyToken":true
         },
         "validationSettings":{"shape":"ValidationSettings"},
-        "description":{"shape":"PolicyStoreDescription"}
+        "description":{"shape":"PolicyStoreDescription"},
+        "deletionProtection":{"shape":"DeletionProtection"},
+        "tags":{"shape":"TagMap"}
       }
     },
     "CreatePolicyStoreOutput":{
@@ -985,6 +1056,13 @@
         "lastUpdatedDate":{"shape":"TimestampFormat"}
       }
     },
+    "DatetimeAttribute":{
+      "type":"string",
+      "max":28,
+      "min":10,
+      "pattern":"\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?(Z|[+-]\\d{4}))?",
+      "sensitive":true
+    },
     "Decimal":{
       "type":"string",
       "max":23,
@@ -1012,8 +1090,7 @@
     },
     "DeleteIdentitySourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePolicyInput":{
       "type":"structure",
@@ -1028,8 +1105,7 @@
     },
     "DeletePolicyOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePolicyStoreInput":{
       "type":"structure",
@@ -1040,8 +1116,7 @@
     },
     "DeletePolicyStoreOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePolicyTemplateInput":{
       "type":"structure",
@@ -1056,8 +1131,14 @@
     },
     "DeletePolicyTemplateOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
+    },
+    "DeletionProtection":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "DeterminingPolicyItem":{
       "type":"structure",
@@ -1076,10 +1157,18 @@
       "min":1,
       "pattern":"https://.*"
     },
+    "Duration":{
+      "type":"string",
+      "max":100,
+      "min":2,
+      "pattern":"-?(\\d+d)?(\\d+h)?(\\d+m)?(\\d+s)?(\\d+ms)?",
+      "sensitive":true
+    },
     "EntitiesDefinition":{
       "type":"structure",
       "members":{
-        "entityList":{"shape":"EntityList"}
+        "entityList":{"shape":"EntityList"},
+        "cedarJson":{"shape":"CedarJson"}
       },
       "union":true
     },
@@ -1224,7 +1313,8 @@
       "type":"structure",
       "required":["policyStoreId"],
       "members":{
-        "policyStoreId":{"shape":"PolicyStoreId"}
+        "policyStoreId":{"shape":"PolicyStoreId"},
+        "tags":{"shape":"Boolean"}
       }
     },
     "GetPolicyStoreOutput":{
@@ -1242,7 +1332,10 @@
         "validationSettings":{"shape":"ValidationSettings"},
         "createdDate":{"shape":"TimestampFormat"},
         "lastUpdatedDate":{"shape":"TimestampFormat"},
-        "description":{"shape":"PolicyStoreDescription"}
+        "description":{"shape":"PolicyStoreDescription"},
+        "deletionProtection":{"shape":"DeletionProtection"},
+        "cedarVersion":{"shape":"CedarVersion"},
+        "tags":{"shape":"TagMap"}
       }
     },
     "GetPolicyTemplateInput":{
@@ -1419,6 +1512,14 @@
       "fault":true,
       "retryable":{"throttling":false}
     },
+    "InvalidStateException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
+    },
     "IpAddr":{
       "type":"string",
       "max":44,
@@ -1555,6 +1656,19 @@
       "members":{
         "nextToken":{"shape":"NextToken"},
         "policyTemplates":{"shape":"PolicyTemplatesList"}
+      }
+    },
+    "ListTagsForResourceInput":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{"shape":"AmazonResourceName"}
+      }
+    },
+    "ListTagsForResourceOutput":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"TagMap"}
       }
     },
     "LongAttribute":{
@@ -1819,7 +1933,7 @@
       "type":"string",
       "max":200,
       "min":1,
-      "pattern":"[a-zA-Z0-9-]*"
+      "pattern":"[a-zA-Z0-9-/_]*"
     },
     "PolicyStoreItem":{
       "type":"structure",
@@ -1850,7 +1964,7 @@
       "type":"string",
       "max":200,
       "min":1,
-      "pattern":"[a-zA-Z0-9-]*"
+      "pattern":"[a-zA-Z0-9-/_]*"
     },
     "PolicyTemplateItem":{
       "type":"structure",
@@ -2026,6 +2140,44 @@
       "type":"string",
       "sensitive":true
     },
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":200,
+      "min":1
+    },
+    "TagMap":{
+      "type":"map",
+      "key":{"shape":"TagKey"},
+      "value":{"shape":"TagValue"},
+      "max":200,
+      "min":0
+    },
+    "TagResourceInput":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tags"
+      ],
+      "members":{
+        "resourceArn":{"shape":"AmazonResourceName"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "TagResourceOutput":{
+      "type":"structure",
+      "members":{}
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
     "TemplateLinkedPolicyDefinition":{
       "type":"structure",
       "required":["policyTemplateId"],
@@ -2074,6 +2226,29 @@
       "min":1,
       "pattern":"[A-Za-z0-9-_=]+.[A-Za-z0-9-_=]+.[A-Za-z0-9-_=]+",
       "sensitive":true
+    },
+    "TooManyTagsException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"},
+        "resourceName":{"shape":"AmazonResourceName"}
+      },
+      "exception":true
+    },
+    "UntagResourceInput":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tagKeys"
+      ],
+      "members":{
+        "resourceArn":{"shape":"AmazonResourceName"},
+        "tagKeys":{"shape":"TagKeyList"}
+      }
+    },
+    "UntagResourceOutput":{
+      "type":"structure",
+      "members":{}
     },
     "UpdateCognitoGroupConfiguration":{
       "type":"structure",
@@ -2224,6 +2399,7 @@
       "members":{
         "policyStoreId":{"shape":"PolicyStoreId"},
         "validationSettings":{"shape":"ValidationSettings"},
+        "deletionProtection":{"shape":"DeletionProtection"},
         "description":{"shape":"PolicyStoreDescription"}
       }
     },

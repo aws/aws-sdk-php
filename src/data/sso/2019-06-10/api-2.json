@@ -5,12 +5,14 @@
     "endpointPrefix":"portal.sso",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"SSO",
     "serviceFullName":"AWS Single Sign-On",
     "serviceId":"SSO",
     "signatureVersion":"v4",
     "signingName":"awsssoportal",
-    "uid":"sso-2019-06-10"
+    "uid":"sso-2019-06-10",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "GetRoleCredentials":{
@@ -27,7 +29,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ResourceNotFoundException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "ListAccountRoles":{
       "name":"ListAccountRoles",
@@ -43,7 +46,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ResourceNotFoundException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "ListAccounts":{
       "name":"ListAccounts",
@@ -59,7 +63,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ResourceNotFoundException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "Logout":{
       "name":"Logout",
@@ -73,7 +78,8 @@
         {"shape":"UnauthorizedException"},
         {"shape":"TooManyRequestsException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     }
   },
   "shapes":{

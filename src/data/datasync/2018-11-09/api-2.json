@@ -16,20 +16,6 @@
     "auth":["aws.auth#sigv4"]
   },
   "operations":{
-    "AddStorageSystem":{
-      "name":"AddStorageSystem",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"AddStorageSystemRequest"},
-      "output":{"shape":"AddStorageSystemResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"InternalException"}
-      ],
-      "endpoint":{"hostPrefix":"discovery-"}
-    },
     "CancelTaskExecution":{
       "name":"CancelTaskExecution",
       "http":{
@@ -264,20 +250,6 @@
         {"shape":"InternalException"}
       ]
     },
-    "DescribeDiscoveryJob":{
-      "name":"DescribeDiscoveryJob",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"DescribeDiscoveryJobRequest"},
-      "output":{"shape":"DescribeDiscoveryJobResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"InternalException"}
-      ],
-      "endpoint":{"hostPrefix":"discovery-"}
-    },
     "DescribeLocationAzureBlob":{
       "name":"DescribeLocationAzureBlob",
       "http":{
@@ -421,48 +393,6 @@
         {"shape":"InternalException"}
       ]
     },
-    "DescribeStorageSystem":{
-      "name":"DescribeStorageSystem",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"DescribeStorageSystemRequest"},
-      "output":{"shape":"DescribeStorageSystemResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"InternalException"}
-      ],
-      "endpoint":{"hostPrefix":"discovery-"}
-    },
-    "DescribeStorageSystemResourceMetrics":{
-      "name":"DescribeStorageSystemResourceMetrics",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"DescribeStorageSystemResourceMetricsRequest"},
-      "output":{"shape":"DescribeStorageSystemResourceMetricsResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"InternalException"}
-      ],
-      "endpoint":{"hostPrefix":"discovery-"}
-    },
-    "DescribeStorageSystemResources":{
-      "name":"DescribeStorageSystemResources",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"DescribeStorageSystemResourcesRequest"},
-      "output":{"shape":"DescribeStorageSystemResourcesResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"InternalException"}
-      ],
-      "endpoint":{"hostPrefix":"discovery-"}
-    },
     "DescribeTask":{
       "name":"DescribeTask",
       "http":{
@@ -489,20 +419,6 @@
         {"shape":"InternalException"}
       ]
     },
-    "GenerateRecommendations":{
-      "name":"GenerateRecommendations",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"GenerateRecommendationsRequest"},
-      "output":{"shape":"GenerateRecommendationsResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"InternalException"}
-      ],
-      "endpoint":{"hostPrefix":"discovery-"}
-    },
     "ListAgents":{
       "name":"ListAgents",
       "http":{
@@ -516,20 +432,6 @@
         {"shape":"InternalException"}
       ]
     },
-    "ListDiscoveryJobs":{
-      "name":"ListDiscoveryJobs",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"ListDiscoveryJobsRequest"},
-      "output":{"shape":"ListDiscoveryJobsResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"InternalException"}
-      ],
-      "endpoint":{"hostPrefix":"discovery-"}
-    },
     "ListLocations":{
       "name":"ListLocations",
       "http":{
@@ -542,20 +444,6 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InternalException"}
       ]
-    },
-    "ListStorageSystems":{
-      "name":"ListStorageSystems",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"ListStorageSystemsRequest"},
-      "output":{"shape":"ListStorageSystemsResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"InternalException"}
-      ],
-      "endpoint":{"hostPrefix":"discovery-"}
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -596,34 +484,6 @@
         {"shape":"InternalException"}
       ]
     },
-    "RemoveStorageSystem":{
-      "name":"RemoveStorageSystem",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"RemoveStorageSystemRequest"},
-      "output":{"shape":"RemoveStorageSystemResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"InternalException"}
-      ],
-      "endpoint":{"hostPrefix":"discovery-"}
-    },
-    "StartDiscoveryJob":{
-      "name":"StartDiscoveryJob",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"StartDiscoveryJobRequest"},
-      "output":{"shape":"StartDiscoveryJobResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"InternalException"}
-      ],
-      "endpoint":{"hostPrefix":"discovery-"}
-    },
     "StartTaskExecution":{
       "name":"StartTaskExecution",
       "http":{
@@ -636,20 +496,6 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InternalException"}
       ]
-    },
-    "StopDiscoveryJob":{
-      "name":"StopDiscoveryJob",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"StopDiscoveryJobRequest"},
-      "output":{"shape":"StopDiscoveryJobResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"InternalException"}
-      ],
-      "endpoint":{"hostPrefix":"discovery-"}
     },
     "TagResource":{
       "name":"TagResource",
@@ -689,20 +535,6 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InternalException"}
       ]
-    },
-    "UpdateDiscoveryJob":{
-      "name":"UpdateDiscoveryJob",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"UpdateDiscoveryJobRequest"},
-      "output":{"shape":"UpdateDiscoveryJobResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"InternalException"}
-      ],
-      "endpoint":{"hostPrefix":"discovery-"}
     },
     "UpdateLocationAzureBlob":{
       "name":"UpdateLocationAzureBlob",
@@ -847,20 +679,6 @@
         {"shape":"InternalException"}
       ]
     },
-    "UpdateStorageSystem":{
-      "name":"UpdateStorageSystem",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"UpdateStorageSystemRequest"},
-      "output":{"shape":"UpdateStorageSystemResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"InternalException"}
-      ],
-      "endpoint":{"hostPrefix":"discovery-"}
-    },
     "UpdateTask":{
       "name":"UpdateTask",
       "http":{
@@ -893,36 +711,6 @@
       "type":"string",
       "max":29,
       "pattern":"[A-Z0-9]{5}(-[A-Z0-9]{5}){4}"
-    },
-    "AddStorageSystemRequest":{
-      "type":"structure",
-      "required":[
-        "ServerConfiguration",
-        "SystemType",
-        "AgentArns",
-        "ClientToken",
-        "Credentials"
-      ],
-      "members":{
-        "ServerConfiguration":{"shape":"DiscoveryServerConfiguration"},
-        "SystemType":{"shape":"DiscoverySystemType"},
-        "AgentArns":{"shape":"DiscoveryAgentArnList"},
-        "CloudWatchLogGroupArn":{"shape":"LogGroupArn"},
-        "Tags":{"shape":"InputTagList"},
-        "Name":{"shape":"Name"},
-        "ClientToken":{
-          "shape":"PtolemyUUID",
-          "idempotencyToken":true
-        },
-        "Credentials":{"shape":"Credentials"}
-      }
-    },
-    "AddStorageSystemResponse":{
-      "type":"structure",
-      "required":["StorageSystemArn"],
-      "members":{
-        "StorageSystemArn":{"shape":"StorageSystemArn"}
-      }
     },
     "AgentArn":{
       "type":"string",
@@ -978,7 +766,10 @@
     },
     "AzureBlobAuthenticationType":{
       "type":"string",
-      "enum":["SAS"]
+      "enum":[
+        "SAS",
+        "NONE"
+      ]
     },
     "AzureBlobContainerUrl":{
       "type":"string",
@@ -1021,22 +812,14 @@
     },
     "CancelTaskExecutionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
-    "Capacity":{
+    "CmkSecretConfig":{
       "type":"structure",
       "members":{
-        "Used":{"shape":"NonNegativeLong"},
-        "Provisioned":{"shape":"NonNegativeLong"},
-        "LogicalUsed":{"shape":"NonNegativeLong"},
-        "ClusterCloudStorageUsed":{"shape":"NonNegativeLong"}
+        "SecretArn":{"shape":"SecretArn"},
+        "KmsKeyArn":{"shape":"KmsKeyArn"}
       }
-    },
-    "CollectionDurationMinutes":{
-      "type":"integer",
-      "max":44640,
-      "min":60
     },
     "CreateAgentRequest":{
       "type":"structure",
@@ -1060,8 +843,7 @@
       "type":"structure",
       "required":[
         "ContainerUrl",
-        "AuthenticationType",
-        "AgentArns"
+        "AuthenticationType"
       ],
       "members":{
         "ContainerUrl":{"shape":"AzureBlobContainerUrl"},
@@ -1071,7 +853,9 @@
         "AccessTier":{"shape":"AzureAccessTier"},
         "Subdirectory":{"shape":"AzureBlobSubdirectory"},
         "AgentArns":{"shape":"AgentArnList"},
-        "Tags":{"shape":"InputTagList"}
+        "Tags":{"shape":"InputTagList"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "CreateLocationAzureBlobResponse":{
@@ -1241,8 +1025,7 @@
       "type":"structure",
       "required":[
         "ServerHostname",
-        "BucketName",
-        "AgentArns"
+        "BucketName"
       ],
       "members":{
         "ServerHostname":{"shape":"ServerHostname"},
@@ -1254,7 +1037,9 @@
         "SecretKey":{"shape":"ObjectStorageSecretKey"},
         "AgentArns":{"shape":"AgentArnList"},
         "Tags":{"shape":"InputTagList"},
-        "ServerCertificate":{"shape":"ObjectStorageCertificate"}
+        "ServerCertificate":{"shape":"ObjectStorageCertificate"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "CreateLocationObjectStorageResponse":{
@@ -1289,8 +1074,6 @@
       "required":[
         "Subdirectory",
         "ServerHostname",
-        "User",
-        "Password",
         "AgentArns"
       ],
       "members":{
@@ -1301,7 +1084,12 @@
         "Password":{"shape":"SmbPassword"},
         "AgentArns":{"shape":"AgentArnList"},
         "MountOptions":{"shape":"SmbMountOptions"},
-        "Tags":{"shape":"InputTagList"}
+        "Tags":{"shape":"InputTagList"},
+        "AuthenticationType":{"shape":"SmbAuthenticationType"},
+        "DnsIpAddresses":{"shape":"DnsIpList"},
+        "KerberosPrincipal":{"shape":"KerberosPrincipal"},
+        "KerberosKeytab":{"shape":"KerberosKeytabFile"},
+        "KerberosKrb5Conf":{"shape":"KerberosKrb5ConfFile"}
       }
     },
     "CreateLocationSmbResponse":{
@@ -1337,15 +1125,11 @@
         "TaskArn":{"shape":"TaskArn"}
       }
     },
-    "Credentials":{
+    "CustomSecretConfig":{
       "type":"structure",
-      "required":[
-        "Username",
-        "Password"
-      ],
       "members":{
-        "Username":{"shape":"PtolemyUsername"},
-        "Password":{"shape":"PtolemyPassword"}
+        "SecretArn":{"shape":"SecretArn"},
+        "SecretAccessRoleArn":{"shape":"IamRoleArnOrEmptyString"}
       }
     },
     "DeleteAgentRequest":{
@@ -1357,8 +1141,7 @@
     },
     "DeleteAgentResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteLocationRequest":{
       "type":"structure",
@@ -1369,8 +1152,7 @@
     },
     "DeleteLocationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTaskRequest":{
       "type":"structure",
@@ -1381,8 +1163,7 @@
     },
     "DeleteTaskResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeAgentRequest":{
       "type":"structure",
@@ -1404,24 +1185,6 @@
         "Platform":{"shape":"Platform"}
       }
     },
-    "DescribeDiscoveryJobRequest":{
-      "type":"structure",
-      "required":["DiscoveryJobArn"],
-      "members":{
-        "DiscoveryJobArn":{"shape":"DiscoveryJobArn"}
-      }
-    },
-    "DescribeDiscoveryJobResponse":{
-      "type":"structure",
-      "members":{
-        "StorageSystemArn":{"shape":"StorageSystemArn"},
-        "DiscoveryJobArn":{"shape":"DiscoveryJobArn"},
-        "CollectionDurationMinutes":{"shape":"CollectionDurationMinutes"},
-        "Status":{"shape":"DiscoveryJobStatus"},
-        "JobStartTime":{"shape":"DiscoveryTime"},
-        "JobEndTime":{"shape":"DiscoveryTime"}
-      }
-    },
     "DescribeLocationAzureBlobRequest":{
       "type":"structure",
       "required":["LocationArn"],
@@ -1438,7 +1201,10 @@
         "BlobType":{"shape":"AzureBlobType"},
         "AccessTier":{"shape":"AzureAccessTier"},
         "AgentArns":{"shape":"AgentArnList"},
-        "CreationTime":{"shape":"Time"}
+        "CreationTime":{"shape":"Time"},
+        "ManagedSecretConfig":{"shape":"ManagedSecretConfig"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "DescribeLocationEfsRequest":{
@@ -1588,7 +1354,10 @@
         "ServerProtocol":{"shape":"ObjectStorageServerProtocol"},
         "AgentArns":{"shape":"AgentArnList"},
         "CreationTime":{"shape":"Time"},
-        "ServerCertificate":{"shape":"ObjectStorageCertificate"}
+        "ServerCertificate":{"shape":"ObjectStorageCertificate"},
+        "ManagedSecretConfig":{"shape":"ManagedSecretConfig"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "DescribeLocationS3Request":{
@@ -1625,75 +1394,10 @@
         "User":{"shape":"SmbUser"},
         "Domain":{"shape":"SmbDomain"},
         "MountOptions":{"shape":"SmbMountOptions"},
-        "CreationTime":{"shape":"Time"}
-      }
-    },
-    "DescribeStorageSystemRequest":{
-      "type":"structure",
-      "required":["StorageSystemArn"],
-      "members":{
-        "StorageSystemArn":{"shape":"StorageSystemArn"}
-      }
-    },
-    "DescribeStorageSystemResourceMetricsRequest":{
-      "type":"structure",
-      "required":[
-        "DiscoveryJobArn",
-        "ResourceType",
-        "ResourceId"
-      ],
-      "members":{
-        "DiscoveryJobArn":{"shape":"DiscoveryJobArn"},
-        "ResourceType":{"shape":"DiscoveryResourceType"},
-        "ResourceId":{"shape":"ResourceId"},
-        "StartTime":{"shape":"DiscoveryTime"},
-        "EndTime":{"shape":"DiscoveryTime"},
-        "MaxResults":{"shape":"DiscoveryMaxResults"},
-        "NextToken":{"shape":"DiscoveryNextToken"}
-      }
-    },
-    "DescribeStorageSystemResourceMetricsResponse":{
-      "type":"structure",
-      "members":{
-        "Metrics":{"shape":"Metrics"},
-        "NextToken":{"shape":"DiscoveryNextToken"}
-      }
-    },
-    "DescribeStorageSystemResourcesRequest":{
-      "type":"structure",
-      "required":[
-        "DiscoveryJobArn",
-        "ResourceType"
-      ],
-      "members":{
-        "DiscoveryJobArn":{"shape":"DiscoveryJobArn"},
-        "ResourceType":{"shape":"DiscoveryResourceType"},
-        "ResourceIds":{"shape":"ResourceIds"},
-        "Filter":{"shape":"ResourceFilters"},
-        "MaxResults":{"shape":"DiscoveryMaxResults"},
-        "NextToken":{"shape":"DiscoveryNextToken"}
-      }
-    },
-    "DescribeStorageSystemResourcesResponse":{
-      "type":"structure",
-      "members":{
-        "ResourceDetails":{"shape":"ResourceDetails"},
-        "NextToken":{"shape":"DiscoveryNextToken"}
-      }
-    },
-    "DescribeStorageSystemResponse":{
-      "type":"structure",
-      "members":{
-        "StorageSystemArn":{"shape":"StorageSystemArn"},
-        "ServerConfiguration":{"shape":"DiscoveryServerConfiguration"},
-        "SystemType":{"shape":"DiscoverySystemType"},
-        "AgentArns":{"shape":"DiscoveryAgentArnList"},
-        "Name":{"shape":"Name"},
-        "ErrorMessage":{"shape":"ErrorMessage"},
-        "ConnectivityStatus":{"shape":"StorageSystemConnectivityStatus"},
-        "CloudWatchLogGroupArn":{"shape":"LogGroupArn"},
-        "CreationTime":{"shape":"Timestamp"},
-        "SecretsManagerArn":{"shape":"SecretsManagerArn"}
+        "CreationTime":{"shape":"Time"},
+        "DnsIpAddresses":{"shape":"DnsIpList"},
+        "KerberosPrincipal":{"shape":"KerberosPrincipal"},
+        "AuthenticationType":{"shape":"SmbAuthenticationType"}
       }
     },
     "DescribeTaskExecutionRequest":{
@@ -1729,7 +1433,9 @@
         "TaskMode":{"shape":"TaskMode"},
         "FilesPrepared":{"shape":"long"},
         "FilesListed":{"shape":"TaskExecutionFilesListedDetail"},
-        "FilesFailed":{"shape":"TaskExecutionFilesFailedDetail"}
+        "FilesFailed":{"shape":"TaskExecutionFilesFailedDetail"},
+        "LaunchTime":{"shape":"Time"},
+        "EndTime":{"shape":"Time"}
       }
     },
     "DescribeTaskRequest":{
@@ -1768,86 +1474,11 @@
       "type":"list",
       "member":{"shape":"NetworkInterfaceArn"}
     },
-    "DiscoveryAgentArnList":{
+    "DnsIpList":{
       "type":"list",
-      "member":{"shape":"AgentArn"},
-      "max":1,
-      "min":1
+      "member":{"shape":"ServerIpAddress"},
+      "max":2
     },
-    "DiscoveryJobArn":{
-      "type":"string",
-      "max":256,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):datasync:[a-z\\-0-9]+:[0-9]{12}:system/storage-system-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/job/discovery-job-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
-    },
-    "DiscoveryJobList":{
-      "type":"list",
-      "member":{"shape":"DiscoveryJobListEntry"}
-    },
-    "DiscoveryJobListEntry":{
-      "type":"structure",
-      "members":{
-        "DiscoveryJobArn":{"shape":"DiscoveryJobArn"},
-        "Status":{"shape":"DiscoveryJobStatus"}
-      }
-    },
-    "DiscoveryJobStatus":{
-      "type":"string",
-      "enum":[
-        "RUNNING",
-        "WARNING",
-        "TERMINATED",
-        "FAILED",
-        "STOPPED",
-        "COMPLETED",
-        "COMPLETED_WITH_ISSUES"
-      ]
-    },
-    "DiscoveryMaxResults":{
-      "type":"integer",
-      "max":100,
-      "min":1
-    },
-    "DiscoveryNextToken":{
-      "type":"string",
-      "max":65535,
-      "pattern":"[a-zA-Z0-9=_-]+"
-    },
-    "DiscoveryResourceFilter":{
-      "type":"string",
-      "enum":["SVM"]
-    },
-    "DiscoveryResourceType":{
-      "type":"string",
-      "enum":[
-        "SVM",
-        "VOLUME",
-        "CLUSTER"
-      ]
-    },
-    "DiscoveryServerConfiguration":{
-      "type":"structure",
-      "required":["ServerHostname"],
-      "members":{
-        "ServerHostname":{"shape":"DiscoveryServerHostname"},
-        "ServerPort":{"shape":"DiscoveryServerPort"}
-      }
-    },
-    "DiscoveryServerHostname":{
-      "type":"string",
-      "max":255,
-      "pattern":"^(([a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9\\-]*[A-Za-z0-9])$"
-    },
-    "DiscoveryServerPort":{
-      "type":"integer",
-      "box":true,
-      "max":65535,
-      "min":1
-    },
-    "DiscoverySystemType":{
-      "type":"string",
-      "enum":["NetAppONTAP"]
-    },
-    "DiscoveryTime":{"type":"timestamp"},
     "Duration":{
       "type":"long",
       "min":0
@@ -1901,10 +1532,6 @@
       "max":4096,
       "pattern":"^[a-zA-Z0-9_\\-\\+\\./\\(\\)\\p{Zs}]*$"
     },
-    "EnabledProtocols":{
-      "type":"list",
-      "member":{"shape":"PtolemyString"}
-    },
     "Endpoint":{
       "type":"string",
       "max":15,
@@ -1916,13 +1543,9 @@
       "enum":[
         "PUBLIC",
         "PRIVATE_LINK",
-        "FIPS"
+        "FIPS",
+        "FIPS_PRIVATE_LINK"
       ]
-    },
-    "ErrorMessage":{
-      "type":"string",
-      "max":128,
-      "pattern":".*"
     },
     "FilterAttributeValue":{
       "type":"string",
@@ -1935,10 +1558,6 @@
       "member":{"shape":"FilterRule"},
       "max":1,
       "min":0
-    },
-    "FilterMembers":{
-      "type":"list",
-      "member":{"shape":"PtolemyString"}
     },
     "FilterRule":{
       "type":"structure",
@@ -2018,39 +1637,16 @@
     "FsxUpdateProtocolSmb":{
       "type":"structure",
       "members":{
-        "Domain":{"shape":"FsxUpdateSmbDomain"},
+        "Domain":{"shape":"UpdateSmbDomain"},
         "MountOptions":{"shape":"SmbMountOptions"},
         "Password":{"shape":"SmbPassword"},
         "User":{"shape":"SmbUser"}
       }
     },
-    "FsxUpdateSmbDomain":{
-      "type":"string",
-      "max":253,
-      "pattern":"^([A-Za-z0-9]((\\.|-+)?[A-Za-z0-9]){0,252})?$"
-    },
     "FsxWindowsSubdirectory":{
       "type":"string",
       "max":4096,
       "pattern":"^[a-zA-Z0-9_\\-\\+\\./\\(\\)\\$\\p{Zs}]+$"
-    },
-    "GenerateRecommendationsRequest":{
-      "type":"structure",
-      "required":[
-        "DiscoveryJobArn",
-        "ResourceIds",
-        "ResourceType"
-      ],
-      "members":{
-        "DiscoveryJobArn":{"shape":"DiscoveryJobArn"},
-        "ResourceIds":{"shape":"ResourceIds"},
-        "ResourceType":{"shape":"DiscoveryResourceType"}
-      }
-    },
-    "GenerateRecommendationsResponse":{
-      "type":"structure",
-      "members":{
-      }
     },
     "Gid":{
       "type":"string",
@@ -2137,19 +1733,15 @@
       "min":1,
       "pattern":"^[_.A-Za-z0-9][-_.A-Za-z0-9]*$"
     },
-    "IOPS":{
-      "type":"structure",
-      "members":{
-        "Read":{"shape":"NonNegativeDouble"},
-        "Write":{"shape":"NonNegativeDouble"},
-        "Other":{"shape":"NonNegativeDouble"},
-        "Total":{"shape":"NonNegativeDouble"}
-      }
-    },
     "IamRoleArn":{
       "type":"string",
       "max":2048,
       "pattern":"^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):iam::[0-9]{12}:role/.*$"
+    },
+    "IamRoleArnOrEmptyString":{
+      "type":"string",
+      "max":2048,
+      "pattern":"^(arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):iam::[0-9]{12}:role/[a-zA-Z0-9+=,.@_-]+|)$"
     },
     "InputTagList":{
       "type":"list",
@@ -2189,19 +1781,16 @@
       "min":1,
       "pattern":"^.+$"
     },
+    "KmsKeyArn":{
+      "type":"string",
+      "max":2048,
+      "pattern":"^(arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):kms:[a-z\\-0-9]+:[0-9]{12}:key/.*|)$"
+    },
     "KmsKeyProviderUri":{
       "type":"string",
       "max":255,
       "min":1,
       "pattern":"^kms:\\/\\/http[s]?@(([a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9\\-]*[A-Za-z0-9])(;(([a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9\\-]*[A-Za-z0-9]))*:[0-9]{1,5}\\/kms$"
-    },
-    "Latency":{
-      "type":"structure",
-      "members":{
-        "Read":{"shape":"NonNegativeDouble"},
-        "Write":{"shape":"NonNegativeDouble"},
-        "Other":{"shape":"NonNegativeDouble"}
-      }
     },
     "ListAgentsRequest":{
       "type":"structure",
@@ -2217,21 +1806,6 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
-    "ListDiscoveryJobsRequest":{
-      "type":"structure",
-      "members":{
-        "StorageSystemArn":{"shape":"StorageSystemArn"},
-        "MaxResults":{"shape":"DiscoveryMaxResults"},
-        "NextToken":{"shape":"DiscoveryNextToken"}
-      }
-    },
-    "ListDiscoveryJobsResponse":{
-      "type":"structure",
-      "members":{
-        "DiscoveryJobs":{"shape":"DiscoveryJobList"},
-        "NextToken":{"shape":"DiscoveryNextToken"}
-      }
-    },
     "ListLocationsRequest":{
       "type":"structure",
       "members":{
@@ -2245,20 +1819,6 @@
       "members":{
         "Locations":{"shape":"LocationList"},
         "NextToken":{"shape":"NextToken"}
-      }
-    },
-    "ListStorageSystemsRequest":{
-      "type":"structure",
-      "members":{
-        "MaxResults":{"shape":"DiscoveryMaxResults"},
-        "NextToken":{"shape":"DiscoveryNextToken"}
-      }
-    },
-    "ListStorageSystemsResponse":{
-      "type":"structure",
-      "members":{
-        "StorageSystems":{"shape":"StorageSystemList"},
-        "NextToken":{"shape":"DiscoveryNextToken"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -2366,6 +1926,12 @@
         "TRANSFER"
       ]
     },
+    "ManagedSecretConfig":{
+      "type":"structure",
+      "members":{
+        "SecretArn":{"shape":"SecretArn"}
+      }
+    },
     "ManifestAction":{
       "type":"string",
       "enum":["TRANSFER"]
@@ -2382,30 +1948,10 @@
       "type":"string",
       "enum":["CSV"]
     },
-    "MaxP95Performance":{
-      "type":"structure",
-      "members":{
-        "IopsRead":{"shape":"NonNegativeDouble"},
-        "IopsWrite":{"shape":"NonNegativeDouble"},
-        "IopsOther":{"shape":"NonNegativeDouble"},
-        "IopsTotal":{"shape":"NonNegativeDouble"},
-        "ThroughputRead":{"shape":"NonNegativeDouble"},
-        "ThroughputWrite":{"shape":"NonNegativeDouble"},
-        "ThroughputOther":{"shape":"NonNegativeDouble"},
-        "ThroughputTotal":{"shape":"NonNegativeDouble"},
-        "LatencyRead":{"shape":"NonNegativeDouble"},
-        "LatencyWrite":{"shape":"NonNegativeDouble"},
-        "LatencyOther":{"shape":"NonNegativeDouble"}
-      }
-    },
     "MaxResults":{
       "type":"integer",
       "max":100,
       "min":0
-    },
-    "Metrics":{
-      "type":"list",
-      "member":{"shape":"ResourceMetrics"}
     },
     "Mtime":{
       "type":"string",
@@ -2413,80 +1959,6 @@
         "NONE",
         "PRESERVE"
       ]
-    },
-    "Name":{
-      "type":"string",
-      "max":256,
-      "min":1,
-      "pattern":"^[\\p{L}\\p{M}\\p{N}\\s+=._:@\\/-]+$"
-    },
-    "NetAppONTAPCluster":{
-      "type":"structure",
-      "members":{
-        "CifsShareCount":{"shape":"NonNegativeLong"},
-        "NfsExportedVolumes":{"shape":"NonNegativeLong"},
-        "ResourceId":{"shape":"PtolemyUUID"},
-        "ClusterName":{"shape":"PtolemyString"},
-        "MaxP95Performance":{"shape":"MaxP95Performance"},
-        "ClusterBlockStorageSize":{"shape":"NonNegativeLong"},
-        "ClusterBlockStorageUsed":{"shape":"NonNegativeLong"},
-        "ClusterBlockStorageLogicalUsed":{"shape":"NonNegativeLong"},
-        "Recommendations":{"shape":"Recommendations"},
-        "RecommendationStatus":{"shape":"RecommendationStatus"},
-        "LunCount":{"shape":"NonNegativeLong"},
-        "ClusterCloudStorageUsed":{"shape":"NonNegativeLong"}
-      }
-    },
-    "NetAppONTAPClusters":{
-      "type":"list",
-      "member":{"shape":"NetAppONTAPCluster"}
-    },
-    "NetAppONTAPSVM":{
-      "type":"structure",
-      "members":{
-        "ClusterUuid":{"shape":"PtolemyUUID"},
-        "ResourceId":{"shape":"PtolemyUUID"},
-        "SvmName":{"shape":"PtolemyString"},
-        "CifsShareCount":{"shape":"NonNegativeLong"},
-        "EnabledProtocols":{"shape":"EnabledProtocols"},
-        "TotalCapacityUsed":{"shape":"NonNegativeLong"},
-        "TotalCapacityProvisioned":{"shape":"NonNegativeLong"},
-        "TotalLogicalCapacityUsed":{"shape":"NonNegativeLong"},
-        "MaxP95Performance":{"shape":"MaxP95Performance"},
-        "Recommendations":{"shape":"Recommendations"},
-        "NfsExportedVolumes":{"shape":"NonNegativeLong"},
-        "RecommendationStatus":{"shape":"RecommendationStatus"},
-        "TotalSnapshotCapacityUsed":{"shape":"NonNegativeLong"},
-        "LunCount":{"shape":"NonNegativeLong"}
-      }
-    },
-    "NetAppONTAPSVMs":{
-      "type":"list",
-      "member":{"shape":"NetAppONTAPSVM"}
-    },
-    "NetAppONTAPVolume":{
-      "type":"structure",
-      "members":{
-        "VolumeName":{"shape":"PtolemyString"},
-        "ResourceId":{"shape":"PtolemyUUID"},
-        "CifsShareCount":{"shape":"NonNegativeLong"},
-        "SecurityStyle":{"shape":"PtolemyString"},
-        "SvmUuid":{"shape":"PtolemyUUID"},
-        "SvmName":{"shape":"PtolemyString"},
-        "CapacityUsed":{"shape":"NonNegativeLong"},
-        "CapacityProvisioned":{"shape":"NonNegativeLong"},
-        "LogicalCapacityUsed":{"shape":"NonNegativeLong"},
-        "NfsExported":{"shape":"PtolemyBoolean"},
-        "SnapshotCapacityUsed":{"shape":"NonNegativeLong"},
-        "MaxP95Performance":{"shape":"MaxP95Performance"},
-        "Recommendations":{"shape":"Recommendations"},
-        "RecommendationStatus":{"shape":"RecommendationStatus"},
-        "LunCount":{"shape":"NonNegativeLong"}
-      }
-    },
-    "NetAppONTAPVolumes":{
-      "type":"list",
-      "member":{"shape":"NetAppONTAPVolume"}
     },
     "NetworkInterfaceArn":{
       "type":"string",
@@ -2518,16 +1990,6 @@
         "NFS4_1"
       ]
     },
-    "NonNegativeDouble":{
-      "type":"double",
-      "box":true,
-      "min":0
-    },
-    "NonNegativeLong":{
-      "type":"long",
-      "box":true,
-      "min":0
-    },
     "ObjectStorageAccessKey":{
       "type":"string",
       "max":200,
@@ -2538,7 +2000,7 @@
       "type":"string",
       "max":63,
       "min":3,
-      "pattern":"^[a-zA-Z0-9_\\-\\+\\./\\(\\)\\$\\p{Zs}]+$"
+      "pattern":"^[a-zA-Z0-9_\\-\\+\\.\\(\\)\\$\\p{Zs}]+$"
     },
     "ObjectStorageCertificate":{
       "type":"blob",
@@ -2633,14 +2095,6 @@
         "NEVER"
       ]
     },
-    "P95Metrics":{
-      "type":"structure",
-      "members":{
-        "IOPS":{"shape":"IOPS"},
-        "Throughput":{"shape":"Throughput"},
-        "Latency":{"shape":"Latency"}
-      }
-    },
     "PLSecurityGroupArnList":{
       "type":"list",
       "member":{"shape":"Ec2SecurityGroupArn"},
@@ -2697,71 +2151,11 @@
         "SecurityGroupArns":{"shape":"PLSecurityGroupArnList"}
       }
     },
-    "PtolemyBoolean":{"type":"boolean"},
-    "PtolemyPassword":{
-      "type":"string",
-      "max":1024,
-      "pattern":"^(?!.*[:\\\"][^:\"]*$).+$",
-      "sensitive":true
-    },
-    "PtolemyString":{
-      "type":"string",
-      "max":1024,
-      "pattern":"^.{0,1024}$"
-    },
-    "PtolemyUUID":{
-      "type":"string",
-      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
-    },
-    "PtolemyUsername":{
-      "type":"string",
-      "max":1024,
-      "pattern":"^(?!.*[:\\\"][^:\"]*$).+$",
-      "sensitive":true
-    },
     "QopConfiguration":{
       "type":"structure",
       "members":{
         "RpcProtection":{"shape":"HdfsRpcProtection"},
         "DataTransferProtection":{"shape":"HdfsDataTransferProtection"}
-      }
-    },
-    "Recommendation":{
-      "type":"structure",
-      "members":{
-        "StorageType":{"shape":"PtolemyString"},
-        "StorageConfiguration":{"shape":"RecommendationsConfigMap"},
-        "EstimatedMonthlyStorageCost":{"shape":"PtolemyString"}
-      }
-    },
-    "RecommendationStatus":{
-      "type":"string",
-      "enum":[
-        "NONE",
-        "IN_PROGRESS",
-        "COMPLETED",
-        "FAILED"
-      ]
-    },
-    "Recommendations":{
-      "type":"list",
-      "member":{"shape":"Recommendation"}
-    },
-    "RecommendationsConfigMap":{
-      "type":"map",
-      "key":{"shape":"PtolemyString"},
-      "value":{"shape":"PtolemyString"}
-    },
-    "RemoveStorageSystemRequest":{
-      "type":"structure",
-      "required":["StorageSystemArn"],
-      "members":{
-        "StorageSystemArn":{"shape":"StorageSystemArn"}
-      }
-    },
-    "RemoveStorageSystemResponse":{
-      "type":"structure",
-      "members":{
       }
     },
     "ReportDestination":{
@@ -2817,39 +2211,6 @@
         "Status":{"shape":"PhaseStatus"},
         "ErrorCode":{"shape":"string"},
         "ErrorDetail":{"shape":"string"}
-      }
-    },
-    "ResourceDetails":{
-      "type":"structure",
-      "members":{
-        "NetAppONTAPSVMs":{"shape":"NetAppONTAPSVMs"},
-        "NetAppONTAPVolumes":{"shape":"NetAppONTAPVolumes"},
-        "NetAppONTAPClusters":{"shape":"NetAppONTAPClusters"}
-      }
-    },
-    "ResourceFilters":{
-      "type":"map",
-      "key":{"shape":"DiscoveryResourceFilter"},
-      "value":{"shape":"FilterMembers"}
-    },
-    "ResourceId":{
-      "type":"string",
-      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
-    },
-    "ResourceIds":{
-      "type":"list",
-      "member":{"shape":"ResourceId"},
-      "max":100,
-      "min":1
-    },
-    "ResourceMetrics":{
-      "type":"structure",
-      "members":{
-        "Timestamp":{"shape":"Timestamp"},
-        "P95Metrics":{"shape":"P95Metrics"},
-        "Capacity":{"shape":"Capacity"},
-        "ResourceId":{"shape":"ResourceId"},
-        "ResourceType":{"shape":"DiscoveryResourceType"}
       }
     },
     "S3BucketArn":{
@@ -2926,15 +2287,28 @@
         "DISABLED"
       ]
     },
-    "SecretsManagerArn":{
+    "SecretArn":{
       "type":"string",
       "max":2048,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):secretsmanager:[a-z\\-0-9]+:[0-9]{12}:secret:.*"
+      "pattern":"^(arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):secretsmanager:[a-z\\-0-9]+:[0-9]{12}:secret:.*|)$"
     },
     "ServerHostname":{
       "type":"string",
       "max":255,
-      "pattern":"^(([a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9\\-]*[A-Za-z0-9])$"
+      "pattern":"^(([a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9\\-:]*[A-Za-z0-9])$"
+    },
+    "ServerIpAddress":{
+      "type":"string",
+      "max":39,
+      "min":7,
+      "pattern":"\\A((25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3}|([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6}))\\z"
+    },
+    "SmbAuthenticationType":{
+      "type":"string",
+      "enum":[
+        "NTLM",
+        "KERBEROS"
+      ]
     },
     "SmbDomain":{
       "type":"string",
@@ -2969,7 +2343,7 @@
     "SmbUser":{
       "type":"string",
       "max":104,
-      "pattern":"^[^\\x5B\\x5D\\\\/:;|=,+*?]{1,104}$"
+      "pattern":"^[^\\x22\\x5B\\x5D/\\\\:;|=,+*?\\x3C\\x3E]{1,104}$"
     },
     "SmbVersion":{
       "type":"string",
@@ -2992,29 +2366,6 @@
       "type":"list",
       "member":{"shape":"NetworkInterfaceArn"}
     },
-    "StartDiscoveryJobRequest":{
-      "type":"structure",
-      "required":[
-        "StorageSystemArn",
-        "CollectionDurationMinutes",
-        "ClientToken"
-      ],
-      "members":{
-        "StorageSystemArn":{"shape":"StorageSystemArn"},
-        "CollectionDurationMinutes":{"shape":"CollectionDurationMinutes"},
-        "ClientToken":{
-          "shape":"PtolemyUUID",
-          "idempotencyToken":true
-        },
-        "Tags":{"shape":"InputTagList"}
-      }
-    },
-    "StartDiscoveryJobResponse":{
-      "type":"structure",
-      "members":{
-        "DiscoveryJobArn":{"shape":"DiscoveryJobArn"}
-      }
-    },
     "StartTaskExecutionRequest":{
       "type":"structure",
       "required":["TaskArn"],
@@ -3032,42 +2383,6 @@
       "type":"structure",
       "members":{
         "TaskExecutionArn":{"shape":"TaskExecutionArn"}
-      }
-    },
-    "StopDiscoveryJobRequest":{
-      "type":"structure",
-      "required":["DiscoveryJobArn"],
-      "members":{
-        "DiscoveryJobArn":{"shape":"DiscoveryJobArn"}
-      }
-    },
-    "StopDiscoveryJobResponse":{
-      "type":"structure",
-      "members":{
-      }
-    },
-    "StorageSystemArn":{
-      "type":"string",
-      "max":128,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):datasync:[a-z\\-0-9]+:[0-9]{12}:system/storage-system-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
-    },
-    "StorageSystemConnectivityStatus":{
-      "type":"string",
-      "enum":[
-        "PASS",
-        "FAIL",
-        "UNKNOWN"
-      ]
-    },
-    "StorageSystemList":{
-      "type":"list",
-      "member":{"shape":"StorageSystemListEntry"}
-    },
-    "StorageSystemListEntry":{
-      "type":"structure",
-      "members":{
-        "StorageSystemArn":{"shape":"StorageSystemArn"},
-        "Name":{"shape":"Name"}
       }
     },
     "StorageVirtualMachineArn":{
@@ -3108,8 +2423,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -3274,17 +2588,7 @@
         "UNAVAILABLE"
       ]
     },
-    "Throughput":{
-      "type":"structure",
-      "members":{
-        "Read":{"shape":"NonNegativeDouble"},
-        "Write":{"shape":"NonNegativeDouble"},
-        "Other":{"shape":"NonNegativeDouble"},
-        "Total":{"shape":"NonNegativeDouble"}
-      }
-    },
     "Time":{"type":"timestamp"},
-    "Timestamp":{"type":"timestamp"},
     "TransferMode":{
       "type":"string",
       "enum":[
@@ -3314,8 +2618,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAgentRequest":{
       "type":"structure",
@@ -3327,24 +2630,7 @@
     },
     "UpdateAgentResponse":{
       "type":"structure",
-      "members":{
-      }
-    },
-    "UpdateDiscoveryJobRequest":{
-      "type":"structure",
-      "required":[
-        "DiscoveryJobArn",
-        "CollectionDurationMinutes"
-      ],
-      "members":{
-        "DiscoveryJobArn":{"shape":"DiscoveryJobArn"},
-        "CollectionDurationMinutes":{"shape":"CollectionDurationMinutes"}
-      }
-    },
-    "UpdateDiscoveryJobResponse":{
-      "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLocationAzureBlobRequest":{
       "type":"structure",
@@ -3356,13 +2642,14 @@
         "SasConfiguration":{"shape":"AzureBlobSasConfiguration"},
         "BlobType":{"shape":"AzureBlobType"},
         "AccessTier":{"shape":"AzureAccessTier"},
-        "AgentArns":{"shape":"AgentArnList"}
+        "AgentArns":{"shape":"AgentArnList"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "UpdateLocationAzureBlobResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLocationEfsRequest":{
       "type":"structure",
@@ -3377,8 +2664,7 @@
     },
     "UpdateLocationEfsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLocationFsxLustreRequest":{
       "type":"structure",
@@ -3390,8 +2676,7 @@
     },
     "UpdateLocationFsxLustreResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLocationFsxOntapRequest":{
       "type":"structure",
@@ -3404,8 +2689,7 @@
     },
     "UpdateLocationFsxOntapResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLocationFsxOpenZfsRequest":{
       "type":"structure",
@@ -3418,8 +2702,7 @@
     },
     "UpdateLocationFsxOpenZfsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLocationFsxWindowsRequest":{
       "type":"structure",
@@ -3427,15 +2710,14 @@
       "members":{
         "LocationArn":{"shape":"LocationArn"},
         "Subdirectory":{"shape":"FsxWindowsSubdirectory"},
-        "Domain":{"shape":"FsxUpdateSmbDomain"},
+        "Domain":{"shape":"UpdateSmbDomain"},
         "User":{"shape":"SmbUser"},
         "Password":{"shape":"SmbPassword"}
       }
     },
     "UpdateLocationFsxWindowsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLocationHdfsRequest":{
       "type":"structure",
@@ -3458,8 +2740,7 @@
     },
     "UpdateLocationHdfsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLocationNfsRequest":{
       "type":"structure",
@@ -3467,14 +2748,14 @@
       "members":{
         "LocationArn":{"shape":"LocationArn"},
         "Subdirectory":{"shape":"NfsSubdirectory"},
+        "ServerHostname":{"shape":"ServerHostname"},
         "OnPremConfig":{"shape":"OnPremConfig"},
         "MountOptions":{"shape":"NfsMountOptions"}
       }
     },
     "UpdateLocationNfsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLocationObjectStorageRequest":{
       "type":"structure",
@@ -3484,16 +2765,18 @@
         "ServerPort":{"shape":"ObjectStorageServerPort"},
         "ServerProtocol":{"shape":"ObjectStorageServerProtocol"},
         "Subdirectory":{"shape":"S3Subdirectory"},
+        "ServerHostname":{"shape":"ServerHostname"},
         "AccessKey":{"shape":"ObjectStorageAccessKey"},
         "SecretKey":{"shape":"ObjectStorageSecretKey"},
         "AgentArns":{"shape":"AgentArnList"},
-        "ServerCertificate":{"shape":"ObjectStorageCertificate"}
+        "ServerCertificate":{"shape":"ObjectStorageCertificate"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "UpdateLocationObjectStorageResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLocationS3Request":{
       "type":"structure",
@@ -3507,8 +2790,7 @@
     },
     "UpdateLocationS3Response":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLocationSmbRequest":{
       "type":"structure",
@@ -3516,34 +2798,27 @@
       "members":{
         "LocationArn":{"shape":"LocationArn"},
         "Subdirectory":{"shape":"SmbSubdirectory"},
+        "ServerHostname":{"shape":"ServerHostname"},
         "User":{"shape":"SmbUser"},
         "Domain":{"shape":"SmbDomain"},
         "Password":{"shape":"SmbPassword"},
         "AgentArns":{"shape":"AgentArnList"},
-        "MountOptions":{"shape":"SmbMountOptions"}
+        "MountOptions":{"shape":"SmbMountOptions"},
+        "AuthenticationType":{"shape":"SmbAuthenticationType"},
+        "DnsIpAddresses":{"shape":"DnsIpList"},
+        "KerberosPrincipal":{"shape":"KerberosPrincipal"},
+        "KerberosKeytab":{"shape":"KerberosKeytabFile"},
+        "KerberosKrb5Conf":{"shape":"KerberosKrb5ConfFile"}
       }
     },
     "UpdateLocationSmbResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
-    "UpdateStorageSystemRequest":{
-      "type":"structure",
-      "required":["StorageSystemArn"],
-      "members":{
-        "StorageSystemArn":{"shape":"StorageSystemArn"},
-        "ServerConfiguration":{"shape":"DiscoveryServerConfiguration"},
-        "AgentArns":{"shape":"DiscoveryAgentArnList"},
-        "Name":{"shape":"Name"},
-        "CloudWatchLogGroupArn":{"shape":"LogGroupArn"},
-        "Credentials":{"shape":"Credentials"}
-      }
-    },
-    "UpdateStorageSystemResponse":{
-      "type":"structure",
-      "members":{
-      }
+    "UpdateSmbDomain":{
+      "type":"string",
+      "max":253,
+      "pattern":"^([A-Za-z0-9]((\\.|-+)?[A-Za-z0-9]){0,252})?$"
     },
     "UpdateTaskExecutionRequest":{
       "type":"structure",
@@ -3558,8 +2833,7 @@
     },
     "UpdateTaskExecutionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateTaskRequest":{
       "type":"structure",
@@ -3578,8 +2852,7 @@
     },
     "UpdateTaskResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdatedEfsAccessPointArn":{
       "type":"string",

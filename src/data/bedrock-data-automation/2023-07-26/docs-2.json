@@ -11,14 +11,16 @@
     "GetDataAutomationProject": "<p>Gets an existing Amazon Bedrock Data Automation Project</p>",
     "ListBlueprints": "<p>Lists all existing Amazon Bedrock Data Automation Blueprints</p>",
     "ListDataAutomationProjects": "<p>Lists all existing Amazon Bedrock Data Automation Projects</p>",
+    "ListTagsForResource": "<p>List tags for an Amazon Bedrock Data Automation resource</p>",
+    "TagResource": "<p>Tag an Amazon Bedrock Data Automation resource</p>",
+    "UntagResource": "<p>Untag an Amazon Bedrock Data Automation resource</p>",
     "UpdateBlueprint": "<p>Updates an existing Amazon Bedrock Data Automation Blueprint</p>",
     "UpdateDataAutomationProject": "<p>Updates an existing Amazon Bedrock Data Automation Project</p>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>This exception is thrown when a request is denied per access permissions</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AudioExtractionCategory": {
       "base": "<p>Category of Audio Extraction</p>",
@@ -32,10 +34,22 @@
         "AudioExtractionCategoryTypes$member": null
       }
     },
+    "AudioExtractionCategoryTypeConfiguration": {
+      "base": "<p>Configuration for different audio extraction category types</p>",
+      "refs": {
+        "AudioExtractionCategory$typeConfiguration": null
+      }
+    },
     "AudioExtractionCategoryTypes": {
       "base": "<p>List of Audio Extraction Category Type</p>",
       "refs": {
         "AudioExtractionCategory$types": null
+      }
+    },
+    "AudioOverrideConfiguration": {
+      "base": "<p>Override Configuration of Audio</p>",
+      "refs": {
+        "OverrideConfiguration$audio": null
       }
     },
     "AudioStandardExtraction": {
@@ -166,6 +180,12 @@
         "ListBlueprintsResponse$blueprints": null
       }
     },
+    "ChannelLabelingConfiguration": {
+      "base": "<p>Channel labeling configuration</p>",
+      "refs": {
+        "TranscriptConfiguration$channelLabeling": null
+      }
+    },
     "ClientToken": {
       "base": "<p>Client specified token used for idempotency checks</p>",
       "refs": {
@@ -176,38 +196,31 @@
     },
     "ConflictException": {
       "base": "<p>This exception is thrown when there is a conflict performing an operation</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBlueprintRequest": {
       "base": "<p>Create Blueprint Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBlueprintResponse": {
       "base": "<p>Create Blueprint Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBlueprintVersionRequest": {
       "base": "<p>Create Blueprint Version Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBlueprintVersionResponse": {
       "base": "<p>Create Blueprint Version Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDataAutomationProjectRequest": {
       "base": "<p>Create DataAutomationProject Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDataAutomationProjectResponse": {
       "base": "<p>Create DataAutomationProject Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomOutputConfiguration": {
       "base": "<p>Custom output configuration</p>",
@@ -313,22 +326,27 @@
     },
     "DeleteBlueprintRequest": {
       "base": "<p>Delete Blueprint Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBlueprintResponse": {
       "base": "<p>Delete Blueprint Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDataAutomationProjectRequest": {
       "base": "<p>Delete DataAutomationProject Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDataAutomationProjectResponse": {
       "base": "<p>Delete DataAutomationProject Response</p>",
+      "refs": {}
+    },
+    "DesiredModality": {
+      "base": "<p>Desired Modality types</p>",
       "refs": {
+        "ModalityRoutingConfiguration$jpeg": null,
+        "ModalityRoutingConfiguration$png": null,
+        "ModalityRoutingConfiguration$mp4": null,
+        "ModalityRoutingConfiguration$mov": null
       }
     },
     "DocumentBoundingBox": {
@@ -413,28 +431,38 @@
       "base": "<p>KMS Encryption Configuration</p>",
       "refs": {
         "CreateBlueprintRequest$encryptionConfiguration": null,
-        "CreateDataAutomationProjectRequest$encryptionConfiguration": null
+        "CreateDataAutomationProjectRequest$encryptionConfiguration": null,
+        "UpdateBlueprintRequest$encryptionConfiguration": null,
+        "UpdateDataAutomationProjectRequest$encryptionConfiguration": null
+      }
+    },
+    "EncryptionContextKey": {
+      "base": "<p>Encryption context key.</p>",
+      "refs": {
+        "KmsEncryptionContext$key": null
+      }
+    },
+    "EncryptionContextValue": {
+      "base": "<p>Encryption context value.</p>",
+      "refs": {
+        "KmsEncryptionContext$value": null
       }
     },
     "GetBlueprintRequest": {
       "base": "<p>Get Blueprint Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBlueprintResponse": {
       "base": "<p>Get Blueprint Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataAutomationProjectRequest": {
       "base": "<p>Get DataAutomationProject Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataAutomationProjectResponse": {
       "base": "<p>Get DataAutomationProject Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ImageBoundingBox": {
       "base": "<p>Bounding Box Configuration of Image Extraction</p>",
@@ -458,6 +486,12 @@
       "base": "<p>List of Image Extraction Category</p>",
       "refs": {
         "ImageExtractionCategory$types": null
+      }
+    },
+    "ImageOverrideConfiguration": {
+      "base": "<p>Override Configuration of Image</p>",
+      "refs": {
+        "OverrideConfiguration$image": null
       }
     },
     "ImageStandardExtraction": {
@@ -492,8 +526,7 @@
     },
     "InternalServerException": {
       "base": "<p>This exception is thrown if there was an unexpected error during processing of request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KmsEncryptionContext": {
       "base": "<p>KMS Encryption Context</p>",
@@ -513,29 +546,48 @@
     },
     "ListBlueprintsRequest": {
       "base": "<p>List Blueprint Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBlueprintsResponse": {
       "base": "<p>List Blueprint Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataAutomationProjectsRequest": {
       "base": "<p>List DataAutomationProject Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataAutomationProjectsResponse": {
       "base": "<p>List DataAutomationProject Response</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
     },
     "MaxResults": {
       "base": "<p>Max Results</p>",
       "refs": {
         "ListBlueprintsRequest$maxResults": null,
         "ListDataAutomationProjectsRequest$maxResults": null
+      }
+    },
+    "ModalityProcessingConfiguration": {
+      "base": "<p>Configuration to enable/disable processing of modality</p>",
+      "refs": {
+        "AudioOverrideConfiguration$modalityProcessing": null,
+        "DocumentOverrideConfiguration$modalityProcessing": null,
+        "ImageOverrideConfiguration$modalityProcessing": null,
+        "VideoOverrideConfiguration$modalityProcessing": null
+      }
+    },
+    "ModalityRoutingConfiguration": {
+      "base": "<p>Configuration for routing file type to desired modality</p>",
+      "refs": {
+        "OverrideConfiguration$modalityRouting": null
       }
     },
     "NextToken": {
@@ -571,8 +623,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>This exception is thrown when a resource referenced by the operation does not exist</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceOwner": {
       "base": "<p>Resource Owner</p>",
@@ -583,7 +634,12 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>This exception is thrown when a request is made beyond the service quota</p>",
+      "refs": {}
+    },
+    "SpeakerLabelingConfiguration": {
+      "base": "<p>Speaker labeling configuration</p>",
       "refs": {
+        "TranscriptConfiguration$speakerLabeling": null
       }
     },
     "SplitterConfiguration": {
@@ -605,28 +661,79 @@
       "refs": {
         "AudioExtractionCategory$state": null,
         "AudioStandardGenerativeField$state": null,
+        "ChannelLabelingConfiguration$state": null,
         "DocumentBoundingBox$state": null,
         "DocumentOutputAdditionalFileFormat$state": null,
         "DocumentStandardGenerativeField$state": null,
         "ImageBoundingBox$state": null,
         "ImageExtractionCategory$state": null,
         "ImageStandardGenerativeField$state": null,
+        "ModalityProcessingConfiguration$state": null,
+        "SpeakerLabelingConfiguration$state": null,
         "SplitterConfiguration$state": null,
         "VideoBoundingBox$state": null,
         "VideoExtractionCategory$state": null,
         "VideoStandardGenerativeField$state": null
       }
     },
-    "String": {
-      "base": null,
+    "Tag": {
+      "base": "<p>Key value pair of a tag</p>",
       "refs": {
-        "KmsEncryptionContext$key": null,
-        "KmsEncryptionContext$value": null
+        "TagList$member": null
+      }
+    },
+    "TagKey": {
+      "base": "<p>Defines the context of the tag.</p>",
+      "refs": {
+        "Tag$key": null,
+        "TagKeyList$member": null
+      }
+    },
+    "TagKeyList": {
+      "base": "<p>List of tag keys</p>",
+      "refs": {
+        "UntagResourceRequest$tagKeys": null
+      }
+    },
+    "TagList": {
+      "base": "<p>List of tags</p>",
+      "refs": {
+        "CreateBlueprintRequest$tags": null,
+        "CreateDataAutomationProjectRequest$tags": null,
+        "ListTagsForResourceResponse$tags": null,
+        "TagResourceRequest$tags": null
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": "<p>Defines the value within the context. e.g. &lt;key=reason, value=training&gt;.</p>",
+      "refs": {
+        "Tag$value": null
+      }
+    },
+    "TaggableResourceArn": {
+      "base": "<p>ARN of a taggable resource</p>",
+      "refs": {
+        "ListTagsForResourceRequest$resourceARN": null,
+        "TagResourceRequest$resourceARN": null,
+        "UntagResourceRequest$resourceARN": null
       }
     },
     "ThrottlingException": {
       "base": "<p>This exception is thrown when the number of requests exceeds the limit</p>",
+      "refs": {}
+    },
+    "TranscriptConfiguration": {
+      "base": "<p>Configuration for transcript related features</p>",
       "refs": {
+        "AudioExtractionCategoryTypeConfiguration$transcript": null
       }
     },
     "Type": {
@@ -636,30 +743,33 @@
         "CreateBlueprintRequest$type": null
       }
     },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateBlueprintRequest": {
       "base": "<p>Update Blueprint Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBlueprintResponse": {
       "base": "<p>Update Blueprint Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDataAutomationProjectRequest": {
       "base": "<p>Update DataAutomationProject Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDataAutomationProjectResponse": {
       "base": "<p>Update DataAutomationProject Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>This exception is thrown when the request's input validation fails</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>Stores information about a field passed inside a request that resulted in an exception</p>",
@@ -695,6 +805,12 @@
       "base": "<p>List of Video Extraction Category Type</p>",
       "refs": {
         "VideoExtractionCategory$types": null
+      }
+    },
+    "VideoOverrideConfiguration": {
+      "base": "<p>Override Configuration of Video</p>",
+      "refs": {
+        "OverrideConfiguration$video": null
       }
     },
     "VideoStandardExtraction": {

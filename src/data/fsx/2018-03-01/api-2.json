@@ -85,6 +85,26 @@
       ],
       "idempotent":true
     },
+    "CreateAndAttachS3AccessPoint":{
+      "name":"CreateAndAttachS3AccessPoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateAndAttachS3AccessPointRequest"},
+      "output":{"shape":"CreateAndAttachS3AccessPointResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"IncompatibleParameterError"},
+        {"shape":"InternalServerError"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"VolumeNotFound"},
+        {"shape":"InvalidAccessPoint"},
+        {"shape":"InvalidRequest"},
+        {"shape":"AccessPointAlreadyOwnedByYou"},
+        {"shape":"TooManyAccessPoints"}
+      ]
+    },
     "CreateBackup":{
       "name":"CreateBackup",
       "http":{
@@ -481,6 +501,21 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "DescribeS3AccessPointAttachments":{
+      "name":"DescribeS3AccessPointAttachments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeS3AccessPointAttachmentsRequest"},
+      "output":{"shape":"DescribeS3AccessPointAttachmentsResponse"},
+      "errors":[
+        {"shape":"S3AccessPointAttachmentNotFound"},
+        {"shape":"BadRequest"},
+        {"shape":"InternalServerError"},
+        {"shape":"UnsupportedOperation"}
+      ]
+    },
     "DescribeSharedVpcConfiguration":{
       "name":"DescribeSharedVpcConfiguration",
       "http":{
@@ -534,6 +569,22 @@
         {"shape":"BadRequest"},
         {"shape":"InternalServerError"},
         {"shape":"VolumeNotFound"}
+      ]
+    },
+    "DetachAndDeleteS3AccessPoint":{
+      "name":"DetachAndDeleteS3AccessPoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DetachAndDeleteS3AccessPointRequest"},
+      "output":{"shape":"DetachAndDeleteS3AccessPointResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"IncompatibleParameterError"},
+        {"shape":"InternalServerError"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"S3AccessPointAttachmentNotFound"}
       ]
     },
     "DisassociateFileSystemAliases":{
@@ -770,6 +821,19 @@
       "min":12,
       "pattern":"^\\d{12}$"
     },
+    "AccessPointAlreadyOwnedByYou":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"ErrorCode"},
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "AccessPointPolicy":{
+      "type":"string",
+      "max":200000,
+      "min":1
+    },
     "ActiveDirectoryBackupAttributes":{
       "type":"structure",
       "members":{
@@ -794,6 +858,7 @@
         "DOMAIN_NOT_FOUND",
         "INCOMPATIBLE_DOMAIN_MODE",
         "WRONG_VPC",
+        "INVALID_NETWORK_TYPE",
         "INVALID_DOMAIN_STAGE"
       ]
     },
@@ -822,7 +887,8 @@
         "TargetVolumeValues":{"shape":"Volume"},
         "TargetSnapshotValues":{"shape":"Snapshot"},
         "TotalTransferBytes":{"shape":"TotalTransferBytes"},
-        "RemainingTransferBytes":{"shape":"RemainingTransferBytes"}
+        "RemainingTransferBytes":{"shape":"RemainingTransferBytes"},
+        "Message":{"shape":"ErrorMessage"}
       }
     },
     "AdministrativeActionFailureDetails":{
@@ -1192,6 +1258,47 @@
         "ConstituentsPerAggregate":{"shape":"AggregateListMultiplier"}
       }
     },
+    "CreateAndAttachS3AccessPointOpenZFSConfiguration":{
+      "type":"structure",
+      "required":[
+        "VolumeId",
+        "FileSystemIdentity"
+      ],
+      "members":{
+        "VolumeId":{"shape":"VolumeId"},
+        "FileSystemIdentity":{"shape":"OpenZFSFileSystemIdentity"}
+      }
+    },
+    "CreateAndAttachS3AccessPointRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Type"
+      ],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "Name":{"shape":"S3AccessPointAttachmentName"},
+        "Type":{"shape":"S3AccessPointAttachmentType"},
+        "OpenZFSConfiguration":{"shape":"CreateAndAttachS3AccessPointOpenZFSConfiguration"},
+        "S3AccessPoint":{"shape":"CreateAndAttachS3AccessPointS3Configuration"}
+      }
+    },
+    "CreateAndAttachS3AccessPointResponse":{
+      "type":"structure",
+      "members":{
+        "S3AccessPointAttachment":{"shape":"S3AccessPointAttachment"}
+      }
+    },
+    "CreateAndAttachS3AccessPointS3Configuration":{
+      "type":"structure",
+      "members":{
+        "VpcConfiguration":{"shape":"S3AccessPointVpcConfiguration"},
+        "Policy":{"shape":"AccessPointPolicy"}
+      }
+    },
     "CreateBackupRequest":{
       "type":"structure",
       "members":{
@@ -1334,7 +1441,8 @@
         "KmsKeyId":{"shape":"KmsKeyId"},
         "FileSystemTypeVersion":{"shape":"FileSystemTypeVersion"},
         "OpenZFSConfiguration":{"shape":"CreateFileSystemOpenZFSConfiguration"},
-        "StorageCapacity":{"shape":"StorageCapacity"}
+        "StorageCapacity":{"shape":"StorageCapacity"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "CreateFileSystemFromBackupResponse":{
@@ -1361,7 +1469,9 @@
         "EfaEnabled":{"shape":"Flag"},
         "LogConfiguration":{"shape":"LustreLogCreateConfiguration"},
         "RootSquashConfiguration":{"shape":"LustreRootSquashConfiguration"},
-        "MetadataConfiguration":{"shape":"CreateFileSystemLustreMetadataConfiguration"}
+        "MetadataConfiguration":{"shape":"CreateFileSystemLustreMetadataConfiguration"},
+        "ThroughputCapacity":{"shape":"ThroughputCapacityMbps"},
+        "DataReadCacheConfiguration":{"shape":"LustreReadCacheConfiguration"}
       }
     },
     "CreateFileSystemLustreMetadataConfiguration":{
@@ -1387,7 +1497,8 @@
         "ThroughputCapacity":{"shape":"MegabytesPerSecond"},
         "WeeklyMaintenanceStartTime":{"shape":"WeeklyTime"},
         "HAPairs":{"shape":"HAPairs"},
-        "ThroughputCapacityPerHAPair":{"shape":"ThroughputCapacityPerHAPair"}
+        "ThroughputCapacityPerHAPair":{"shape":"ThroughputCapacityPerHAPair"},
+        "EndpointIpv6AddressRange":{"shape":"Ipv6AddressRange"}
       }
     },
     "CreateFileSystemOpenZFSConfiguration":{
@@ -1408,6 +1519,7 @@
         "RootVolumeConfiguration":{"shape":"OpenZFSCreateRootVolumeConfiguration"},
         "PreferredSubnetId":{"shape":"SubnetId"},
         "EndpointIpAddressRange":{"shape":"IpAddressRange"},
+        "EndpointIpv6AddressRange":{"shape":"Ipv6AddressRange"},
         "RouteTableIds":{"shape":"RouteTableIds"},
         "ReadCacheConfiguration":{"shape":"OpenZFSReadCacheConfiguration"}
       }
@@ -1434,7 +1546,8 @@
         "LustreConfiguration":{"shape":"CreateFileSystemLustreConfiguration"},
         "OntapConfiguration":{"shape":"CreateFileSystemOntapConfiguration"},
         "FileSystemTypeVersion":{"shape":"FileSystemTypeVersion"},
-        "OpenZFSConfiguration":{"shape":"CreateFileSystemOpenZFSConfiguration"}
+        "OpenZFSConfiguration":{"shape":"CreateFileSystemOpenZFSConfiguration"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "CreateFileSystemResponse":{
@@ -2167,10 +2280,25 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
-    "DescribeSharedVpcConfigurationRequest":{
+    "DescribeS3AccessPointAttachmentsRequest":{
       "type":"structure",
       "members":{
+        "Names":{"shape":"S3AccessPointAttachmentNames"},
+        "Filters":{"shape":"S3AccessPointAttachmentsFilters"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
       }
+    },
+    "DescribeS3AccessPointAttachmentsResponse":{
+      "type":"structure",
+      "members":{
+        "S3AccessPointAttachments":{"shape":"S3AccessPointAttachments"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeSharedVpcConfigurationRequest":{
+      "type":"structure",
+      "members":{}
     },
     "DescribeSharedVpcConfigurationResponse":{
       "type":"structure",
@@ -2225,6 +2353,24 @@
       "members":{
         "Volumes":{"shape":"Volumes"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DetachAndDeleteS3AccessPointRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "Name":{"shape":"S3AccessPointAttachmentName"}
+      }
+    },
+    "DetachAndDeleteS3AccessPointResponse":{
+      "type":"structure",
+      "members":{
+        "Lifecycle":{"shape":"S3AccessPointAttachmentLifecycle"},
+        "Name":{"shape":"S3AccessPointAttachmentName"}
       }
     },
     "DirectoryId":{
@@ -2302,6 +2448,11 @@
       }
     },
     "EndTime":{"type":"timestamp"},
+    "ErrorCode":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "ErrorMessage":{
       "type":"string",
       "max":256,
@@ -2474,7 +2625,8 @@
         "AdministrativeActions":{"shape":"AdministrativeActions"},
         "OntapConfiguration":{"shape":"OntapFileSystemConfiguration"},
         "FileSystemTypeVersion":{"shape":"FileSystemTypeVersion"},
-        "OpenZFSConfiguration":{"shape":"OpenZFSFileSystemConfiguration"}
+        "OpenZFSConfiguration":{"shape":"OpenZFSFileSystemConfiguration"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "FileSystemAdministratorsGroupName":{
@@ -2487,7 +2639,8 @@
       "type":"structure",
       "members":{
         "DNSName":{"shape":"DNSName"},
-        "IpAddresses":{"shape":"OntapEndpointIpAddresses"}
+        "IpAddresses":{"shape":"OntapEndpointIpAddresses"},
+        "Ipv6Addresses":{"shape":"OntapEndpointIpAddresses"}
       }
     },
     "FileSystemEndpoints":{
@@ -2502,6 +2655,11 @@
       "members":{
         "Message":{"shape":"ErrorMessage"}
       }
+    },
+    "FileSystemGID":{
+      "type":"long",
+      "max":4294967295,
+      "min":0
     },
     "FileSystemId":{
       "type":"string",
@@ -2553,6 +2711,11 @@
       },
       "exception":true
     },
+    "FileSystemSecondaryGIDs":{
+      "type":"list",
+      "member":{"shape":"FileSystemGID"},
+      "max":15
+    },
     "FileSystemType":{
       "type":"string",
       "enum":[
@@ -2567,6 +2730,11 @@
       "max":20,
       "min":1,
       "pattern":"^[0-9](.[0-9]*)*$"
+    },
+    "FileSystemUID":{
+      "type":"long",
+      "max":4294967295,
+      "min":0
     },
     "FileSystems":{
       "type":"list",
@@ -2675,6 +2843,14 @@
       "exception":true,
       "fault":true
     },
+    "InvalidAccessPoint":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"ErrorCode"},
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
     "InvalidDataRepositoryType":{
       "type":"structure",
       "members":{
@@ -2727,6 +2903,14 @@
       },
       "exception":true
     },
+    "InvalidRequest":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"ErrorCode"},
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
     "InvalidSourceKmsKey":{
       "type":"structure",
       "members":{
@@ -2741,15 +2925,21 @@
     },
     "IpAddress":{
       "type":"string",
-      "max":15,
-      "min":7,
-      "pattern":"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
+      "max":45,
+      "min":1,
+      "pattern":"(^((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))$|^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))$)"
     },
     "IpAddressRange":{
       "type":"string",
       "max":17,
       "min":9,
       "pattern":"^[^\\u0000\\u0085\\u2028\\u2029\\r\\n]{9,17}$"
+    },
+    "Ipv6AddressRange":{
+      "type":"string",
+      "max":43,
+      "min":4,
+      "pattern":"^[^\\u0000\\u0085\\u2028\\u2029\\r\\n]{4,43}$"
     },
     "JunctionPath":{
       "type":"string",
@@ -2825,7 +3015,9 @@
         "LogConfiguration":{"shape":"LustreLogConfiguration"},
         "RootSquashConfiguration":{"shape":"LustreRootSquashConfiguration"},
         "MetadataConfiguration":{"shape":"FileSystemLustreMetadataConfiguration"},
-        "EfaEnabled":{"shape":"Flag"}
+        "EfaEnabled":{"shape":"Flag"},
+        "ThroughputCapacity":{"shape":"ThroughputCapacityMbps"},
+        "DataReadCacheConfiguration":{"shape":"LustreReadCacheConfiguration"}
       }
     },
     "LustreFileSystemMountName":{
@@ -2860,6 +3052,21 @@
       "type":"list",
       "member":{"shape":"LustreNoSquashNid"},
       "max":64
+    },
+    "LustreReadCacheConfiguration":{
+      "type":"structure",
+      "members":{
+        "SizingMode":{"shape":"LustreReadCacheSizingMode"},
+        "SizeGiB":{"shape":"StorageCapacity"}
+      }
+    },
+    "LustreReadCacheSizingMode":{
+      "type":"string",
+      "enum":[
+        "NO_CACHE",
+        "USER_PROVISIONED",
+        "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+      ]
     },
     "LustreRootSquash":{
       "type":"string",
@@ -2959,6 +3166,13 @@
       "member":{"shape":"NetworkInterfaceId"},
       "max":50
     },
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "DUAL"
+      ]
+    },
     "NextToken":{
       "type":"string",
       "max":255,
@@ -3008,7 +3222,8 @@
         "WeeklyMaintenanceStartTime":{"shape":"WeeklyTime"},
         "FsxAdminPassword":{"shape":"AdminPassword"},
         "HAPairs":{"shape":"HAPairs"},
-        "ThroughputCapacityPerHAPair":{"shape":"ThroughputCapacityPerHAPair"}
+        "ThroughputCapacityPerHAPair":{"shape":"ThroughputCapacityPerHAPair"},
+        "EndpointIpv6AddressRange":{"shape":"Ipv6AddressRange"}
       }
     },
     "OntapVolumeConfiguration":{
@@ -3113,10 +3328,24 @@
         "RootVolumeId":{"shape":"VolumeId"},
         "PreferredSubnetId":{"shape":"SubnetId"},
         "EndpointIpAddressRange":{"shape":"IpAddressRange"},
+        "EndpointIpv6AddressRange":{"shape":"Ipv6AddressRange"},
         "RouteTableIds":{"shape":"RouteTableIds"},
         "EndpointIpAddress":{"shape":"IpAddress"},
+        "EndpointIpv6Address":{"shape":"IpAddress"},
         "ReadCacheConfiguration":{"shape":"OpenZFSReadCacheConfiguration"}
       }
+    },
+    "OpenZFSFileSystemIdentity":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"OpenZFSFileSystemUserType"},
+        "PosixUser":{"shape":"OpenZFSPosixFileSystemUser"}
+      }
+    },
+    "OpenZFSFileSystemUserType":{
+      "type":"string",
+      "enum":["POSIX"]
     },
     "OpenZFSNfsExport":{
       "type":"structure",
@@ -3147,6 +3376,18 @@
       "members":{
         "SnapshotARN":{"shape":"ResourceARN"},
         "CopyStrategy":{"shape":"OpenZFSCopyStrategy"}
+      }
+    },
+    "OpenZFSPosixFileSystemUser":{
+      "type":"structure",
+      "required":[
+        "Uid",
+        "Gid"
+      ],
+      "members":{
+        "Uid":{"shape":"FileSystemUID"},
+        "Gid":{"shape":"FileSystemGID"},
+        "SecondaryGids":{"shape":"FileSystemSecondaryGIDs"}
       }
     },
     "OpenZFSQuotaType":{
@@ -3392,6 +3633,113 @@
       "type":"list",
       "member":{"shape":"RouteTableId"},
       "max":50
+    },
+    "S3AccessPoint":{
+      "type":"structure",
+      "members":{
+        "ResourceARN":{"shape":"GeneralARN"},
+        "Alias":{"shape":"S3AccessPointAlias"},
+        "VpcConfiguration":{"shape":"S3AccessPointVpcConfiguration"}
+      }
+    },
+    "S3AccessPointAlias":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"^[0-9a-z\\\\-]{1,63}"
+    },
+    "S3AccessPointAttachment":{
+      "type":"structure",
+      "members":{
+        "Lifecycle":{"shape":"S3AccessPointAttachmentLifecycle"},
+        "LifecycleTransitionReason":{"shape":"LifecycleTransitionReason"},
+        "CreationTime":{"shape":"CreationTime"},
+        "Name":{"shape":"S3AccessPointAttachmentName"},
+        "Type":{"shape":"S3AccessPointAttachmentType"},
+        "OpenZFSConfiguration":{"shape":"S3AccessPointOpenZFSConfiguration"},
+        "S3AccessPoint":{"shape":"S3AccessPoint"}
+      }
+    },
+    "S3AccessPointAttachmentLifecycle":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "CREATING",
+        "DELETING",
+        "UPDATING",
+        "FAILED"
+      ]
+    },
+    "S3AccessPointAttachmentName":{
+      "type":"string",
+      "max":50,
+      "min":3,
+      "pattern":"^(?=[a-z0-9])[a-z0-9-]{1,48}[a-z0-9]$"
+    },
+    "S3AccessPointAttachmentNames":{
+      "type":"list",
+      "member":{"shape":"S3AccessPointAttachmentName"},
+      "max":50
+    },
+    "S3AccessPointAttachmentNotFound":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "S3AccessPointAttachmentType":{
+      "type":"string",
+      "enum":["OPENZFS"]
+    },
+    "S3AccessPointAttachments":{
+      "type":"list",
+      "member":{"shape":"S3AccessPointAttachment"},
+      "max":1000
+    },
+    "S3AccessPointAttachmentsFilter":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"S3AccessPointAttachmentsFilterName"},
+        "Values":{"shape":"S3AccessPointAttachmentsFilterValues"}
+      }
+    },
+    "S3AccessPointAttachmentsFilterName":{
+      "type":"string",
+      "enum":[
+        "file-system-id",
+        "volume-id",
+        "type"
+      ]
+    },
+    "S3AccessPointAttachmentsFilterValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z\\*\\.\\\\/\\?\\-\\_]*$"
+    },
+    "S3AccessPointAttachmentsFilterValues":{
+      "type":"list",
+      "member":{"shape":"S3AccessPointAttachmentsFilterValue"},
+      "max":20
+    },
+    "S3AccessPointAttachmentsFilters":{
+      "type":"list",
+      "member":{"shape":"S3AccessPointAttachmentsFilter"},
+      "max":2
+    },
+    "S3AccessPointOpenZFSConfiguration":{
+      "type":"structure",
+      "members":{
+        "VolumeId":{"shape":"VolumeId"},
+        "FileSystemIdentity":{"shape":"OpenZFSFileSystemIdentity"}
+      }
+    },
+    "S3AccessPointVpcConfiguration":{
+      "type":"structure",
+      "members":{
+        "VpcId":{"shape":"VpcId"}
+      }
     },
     "S3DataRepositoryConfiguration":{
       "type":"structure",
@@ -3643,7 +3991,9 @@
         "PENDING",
         "COMPLETED",
         "UPDATED_OPTIMIZING",
-        "OPTIMIZING"
+        "OPTIMIZING",
+        "PAUSED",
+        "CANCELLED"
       ]
     },
     "StorageCapacity":{
@@ -3789,7 +4139,8 @@
       "type":"structure",
       "members":{
         "DNSName":{"shape":"DNSName"},
-        "IpAddresses":{"shape":"OntapEndpointIpAddresses"}
+        "IpAddresses":{"shape":"OntapEndpointIpAddresses"},
+        "Ipv6Addresses":{"shape":"OntapEndpointIpAddresses"}
       }
     },
     "SvmEndpoints":{
@@ -3837,8 +4188,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -3863,6 +4213,11 @@
       "member":{"shape":"TaskId"},
       "max":50
     },
+    "ThroughputCapacityMbps":{
+      "type":"integer",
+      "max":2000000,
+      "min":4000
+    },
     "ThroughputCapacityPerHAPair":{
       "type":"integer",
       "max":6144,
@@ -3883,6 +4238,14 @@
         "ALL",
         "NONE"
       ]
+    },
+    "TooManyAccessPoints":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"ErrorCode"},
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
     },
     "TotalConstituents":{
       "type":"integer",
@@ -3923,8 +4286,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateDataRepositoryAssociationRequest":{
       "type":"structure",
@@ -3980,7 +4342,9 @@
         "LogConfiguration":{"shape":"LustreLogCreateConfiguration"},
         "RootSquashConfiguration":{"shape":"LustreRootSquashConfiguration"},
         "PerUnitStorageThroughput":{"shape":"PerUnitStorageThroughput"},
-        "MetadataConfiguration":{"shape":"UpdateFileSystemLustreMetadataConfiguration"}
+        "MetadataConfiguration":{"shape":"UpdateFileSystemLustreMetadataConfiguration"},
+        "ThroughputCapacity":{"shape":"ThroughputCapacityMbps"},
+        "DataReadCacheConfiguration":{"shape":"LustreReadCacheConfiguration"}
       }
     },
     "UpdateFileSystemLustreMetadataConfiguration":{
@@ -4002,7 +4366,8 @@
         "AddRouteTableIds":{"shape":"RouteTableIds"},
         "RemoveRouteTableIds":{"shape":"RouteTableIds"},
         "ThroughputCapacityPerHAPair":{"shape":"ThroughputCapacityPerHAPair"},
-        "HAPairs":{"shape":"HAPairs"}
+        "HAPairs":{"shape":"HAPairs"},
+        "EndpointIpv6AddressRange":{"shape":"Ipv6AddressRange"}
       }
     },
     "UpdateFileSystemOpenZFSConfiguration":{
@@ -4017,7 +4382,8 @@
         "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"},
         "AddRouteTableIds":{"shape":"RouteTableIds"},
         "RemoveRouteTableIds":{"shape":"RouteTableIds"},
-        "ReadCacheConfiguration":{"shape":"OpenZFSReadCacheConfiguration"}
+        "ReadCacheConfiguration":{"shape":"OpenZFSReadCacheConfiguration"},
+        "EndpointIpv6AddressRange":{"shape":"Ipv6AddressRange"}
       }
     },
     "UpdateFileSystemRequest":{
@@ -4034,7 +4400,9 @@
         "LustreConfiguration":{"shape":"UpdateFileSystemLustreConfiguration"},
         "OntapConfiguration":{"shape":"UpdateFileSystemOntapConfiguration"},
         "OpenZFSConfiguration":{"shape":"UpdateFileSystemOpenZFSConfiguration"},
-        "StorageType":{"shape":"StorageType"}
+        "StorageType":{"shape":"StorageType"},
+        "FileSystemTypeVersion":{"shape":"FileSystemTypeVersion"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "UpdateFileSystemResponse":{
@@ -4384,7 +4752,8 @@
         "CopyTagsToBackups":{"shape":"Flag"},
         "Aliases":{"shape":"Aliases"},
         "AuditLogConfiguration":{"shape":"WindowsAuditLogConfiguration"},
-        "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"}
+        "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"},
+        "PreferredFileServerIpv6":{"shape":"IpAddress"}
       }
     }
   }

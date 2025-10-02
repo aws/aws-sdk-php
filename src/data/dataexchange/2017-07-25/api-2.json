@@ -799,7 +799,7 @@
       "required":["JobId"],
       "members":{
         "JobId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"JobId"
         }
@@ -926,7 +926,8 @@
       ],
       "members":{
         "Action":{"shape":"Action"},
-        "Event":{"shape":"Event"}
+        "Event":{"shape":"Event"},
+        "Tags":{"shape":"MapOf__string"}
       }
     },
     "CreateEventActionResponse":{
@@ -937,6 +938,7 @@
         "CreatedAt":{"shape":"Timestamp"},
         "Event":{"shape":"Event"},
         "Id":{"shape":"Id"},
+        "Tags":{"shape":"MapOf__string"},
         "UpdatedAt":{"shape":"Timestamp"}
       }
     },
@@ -970,7 +972,7 @@
       "members":{
         "Comment":{"shape":"__stringMin0Max16384"},
         "DataSetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"DataSetId"
         },
@@ -1136,17 +1138,17 @@
       ],
       "members":{
         "AssetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"AssetId"
         },
         "DataSetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"DataSetId"
         },
         "RevisionId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"RevisionId"
         }
@@ -1168,7 +1170,7 @@
       "required":["DataSetId"],
       "members":{
         "DataSetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"DataSetId"
         }
@@ -1193,12 +1195,12 @@
       ],
       "members":{
         "DataSetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"DataSetId"
         },
         "RevisionId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"RevisionId"
         }
@@ -1349,17 +1351,17 @@
       ],
       "members":{
         "AssetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"AssetId"
         },
         "DataSetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"DataSetId"
         },
         "RevisionId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"RevisionId"
         }
@@ -1429,7 +1431,7 @@
       "required":["DataSetId"],
       "members":{
         "DataSetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"DataSetId"
         }
@@ -1470,6 +1472,7 @@
         "CreatedAt":{"shape":"Timestamp"},
         "Event":{"shape":"Event"},
         "Id":{"shape":"Id"},
+        "Tags":{"shape":"MapOf__string"},
         "UpdatedAt":{"shape":"Timestamp"}
       }
     },
@@ -1478,7 +1481,7 @@
       "required":["JobId"],
       "members":{
         "JobId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"JobId"
         }
@@ -1545,12 +1548,12 @@
       ],
       "members":{
         "DataSetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"DataSetId"
         },
         "RevisionId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"RevisionId"
         }
@@ -1580,7 +1583,10 @@
         "NONE"
       ]
     },
-    "Id":{"type":"string"},
+    "Id":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9]{30,40}"
+    },
     "ImportAssetFromApiGatewayApiRequestDetails":{
       "type":"structure",
       "required":[
@@ -1972,7 +1978,7 @@
       "required":["DataSetId"],
       "members":{
         "DataSetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"DataSetId"
         },
@@ -2211,7 +2217,7 @@
       ],
       "members":{
         "DataSetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"DataSetId"
         },
@@ -2226,7 +2232,7 @@
           "locationName":"nextToken"
         },
         "RevisionId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"RevisionId"
         }
@@ -2470,12 +2476,12 @@
       ],
       "members":{
         "DataSetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"DataSetId"
         },
         "RevisionId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"RevisionId"
         },
@@ -2646,7 +2652,7 @@
         },
         "Comment":{"shape":"__stringMin0Max4096"},
         "DataSetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"DataSetId"
         },
@@ -2689,7 +2695,7 @@
       "required":["JobId"],
       "members":{
         "JobId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"JobId"
         }
@@ -2814,18 +2820,18 @@
       ],
       "members":{
         "AssetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"AssetId"
         },
         "DataSetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"DataSetId"
         },
         "Name":{"shape":"AssetName"},
         "RevisionId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"RevisionId"
         }
@@ -2851,7 +2857,7 @@
       "required":["DataSetId"],
       "members":{
         "DataSetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"DataSetId"
         },
@@ -2906,13 +2912,13 @@
       "members":{
         "Comment":{"shape":"__stringMin0Max16384"},
         "DataSetId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"DataSetId"
         },
         "Finalized":{"shape":"__boolean"},
         "RevisionId":{
-          "shape":"__string",
+          "shape":"Id",
           "location":"uri",
           "locationName":"RevisionId"
         }

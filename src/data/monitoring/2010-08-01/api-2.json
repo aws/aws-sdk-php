@@ -58,7 +58,8 @@
       "errors":[
         {"shape":"InvalidParameterValueException"},
         {"shape":"DashboardNotFoundError"},
-        {"shape":"InternalServiceFault"}
+        {"shape":"InternalServiceFault"},
+        {"shape":"ConflictException"}
       ]
     },
     "DeleteInsightRules":{
@@ -92,6 +93,22 @@
         {"shape":"InternalServiceFault"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"MissingRequiredParameterException"}
+      ]
+    },
+    "DescribeAlarmContributors":{
+      "name":"DescribeAlarmContributors",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeAlarmContributorsInput"},
+      "output":{
+        "shape":"DescribeAlarmContributorsOutput",
+        "resultWrapper":"DescribeAlarmContributorsResult"
+      },
+      "errors":[
+        {"shape":"InvalidNextToken"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "DescribeAlarmHistory":{
@@ -443,7 +460,8 @@
       },
       "errors":[
         {"shape":"DashboardInvalidInputError"},
-        {"shape":"InternalServiceFault"}
+        {"shape":"InternalServiceFault"},
+        {"shape":"ConflictException"}
       ]
     },
     "PutInsightRule":{
@@ -585,7 +603,8 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConcurrentModificationException"},
-        {"shape":"InternalServiceFault"}
+        {"shape":"InternalServiceFault"},
+        {"shape":"ConflictException"}
       ]
     },
     "UntagResource":{
@@ -603,7 +622,8 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConcurrentModificationException"},
-        {"shape":"InternalServiceFault"}
+        {"shape":"InternalServiceFault"},
+        {"shape":"ConflictException"}
       ]
     }
   },
@@ -637,6 +657,30 @@
       "max":1600,
       "min":1
     },
+    "AlarmContributor":{
+      "type":"structure",
+      "required":[
+        "ContributorId",
+        "ContributorAttributes",
+        "StateReason"
+      ],
+      "members":{
+        "ContributorId":{"shape":"ContributorId"},
+        "ContributorAttributes":{"shape":"ContributorAttributes"},
+        "StateReason":{"shape":"StateReason"},
+        "StateTransitionedTimestamp":{"shape":"Timestamp"}
+      },
+      "xmlOrder":[
+        "ContributorId",
+        "ContributorAttributes",
+        "StateReason",
+        "StateTransitionedTimestamp"
+      ]
+    },
+    "AlarmContributors":{
+      "type":"list",
+      "member":{"shape":"AlarmContributor"}
+    },
     "AlarmDescription":{
       "type":"string",
       "max":1024,
@@ -646,11 +690,13 @@
       "type":"structure",
       "members":{
         "AlarmName":{"shape":"AlarmName"},
+        "AlarmContributorId":{"shape":"ContributorId"},
         "AlarmType":{"shape":"AlarmType"},
         "Timestamp":{"shape":"Timestamp"},
         "HistoryItemType":{"shape":"HistoryItemType"},
         "HistorySummary":{"shape":"HistorySummary"},
-        "HistoryData":{"shape":"HistoryData"}
+        "HistoryData":{"shape":"HistoryData"},
+        "AlarmContributorAttributes":{"shape":"ContributorAttributes"}
       }
     },
     "AlarmHistoryItems":{
@@ -768,6 +814,16 @@
       "type":"list",
       "member":{"shape":"AnomalyDetector"}
     },
+    "AttributeName":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "AttributeValue":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
     "AwsQueryErrorMessage":{"type":"string"},
     "BatchFailures":{
       "type":"list",
@@ -836,14 +892,31 @@
     },
     "ConcurrentModificationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{
         "code":"ConcurrentModificationException",
         "httpStatusCode":429,
         "senderFault":true
       },
       "exception":true
+    },
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "ContributorAttributes":{
+      "type":"map",
+      "key":{"shape":"AttributeName"},
+      "value":{"shape":"AttributeValue"},
+      "max":30
+    },
+    "ContributorId":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "Counts":{
       "type":"list",
@@ -985,8 +1058,7 @@
     },
     "DeleteAnomalyDetectorOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDashboardsInput":{
       "type":"structure",
@@ -997,8 +1069,7 @@
     },
     "DeleteDashboardsOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteInsightRulesInput":{
       "type":"structure",
@@ -1022,13 +1093,29 @@
     },
     "DeleteMetricStreamOutput":{
       "type":"structure",
+      "members":{}
+    },
+    "DescribeAlarmContributorsInput":{
+      "type":"structure",
+      "required":["AlarmName"],
       "members":{
+        "AlarmName":{"shape":"AlarmName"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeAlarmContributorsOutput":{
+      "type":"structure",
+      "required":["AlarmContributors"],
+      "members":{
+        "AlarmContributors":{"shape":"AlarmContributors"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "DescribeAlarmHistoryInput":{
       "type":"structure",
       "members":{
         "AlarmName":{"shape":"AlarmName"},
+        "AlarmContributorId":{"shape":"ContributorId"},
         "AlarmTypes":{"shape":"AlarmTypes"},
         "HistoryItemType":{"shape":"HistoryItemType"},
         "StartDate":{"shape":"Timestamp"},
@@ -1433,7 +1520,9 @@
       "enum":[
         "ConfigurationUpdate",
         "StateUpdate",
-        "Action"
+        "Action",
+        "AlarmContributorStateUpdate",
+        "AlarmContributorAction"
       ]
     },
     "HistorySummary":{
@@ -1456,7 +1545,8 @@
         "State":{"shape":"InsightRuleState"},
         "Schema":{"shape":"InsightRuleSchema"},
         "Definition":{"shape":"InsightRuleDefinition"},
-        "ManagedRule":{"shape":"InsightRuleIsManaged"}
+        "ManagedRule":{"shape":"InsightRuleIsManaged"},
+        "ApplyOnTransformedLogs":{"shape":"InsightRuleOnTransformedLogs"}
       }
     },
     "InsightRuleAggregationStatistic":{"type":"string"},
@@ -1552,6 +1642,7 @@
       "type":"list",
       "member":{"shape":"InsightRuleName"}
     },
+    "InsightRuleOnTransformedLogs":{"type":"boolean"},
     "InsightRuleOrderBy":{
       "type":"string",
       "max":32,
@@ -1643,8 +1734,7 @@
     "LastModified":{"type":"timestamp"},
     "LimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{
         "code":"LimitExceededException",
         "httpStatusCode":400,
@@ -2150,8 +2240,7 @@
     },
     "PutAnomalyDetectorOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutCompositeAlarmInput":{
       "type":"structure",
@@ -2200,13 +2289,13 @@
         "RuleName":{"shape":"InsightRuleName"},
         "RuleState":{"shape":"InsightRuleState"},
         "RuleDefinition":{"shape":"InsightRuleDefinition"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "ApplyOnTransformedLogs":{"shape":"InsightRuleOnTransformedLogs"}
       }
     },
     "PutInsightRuleOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutManagedInsightRulesInput":{
       "type":"structure",
@@ -2422,8 +2511,7 @@
     },
     "StartMetricStreamsOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Stat":{"type":"string"},
     "StateReason":{
@@ -2493,8 +2581,7 @@
     },
     "StopMetricStreamsOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StorageResolution":{
       "type":"integer",
@@ -2539,8 +2626,7 @@
     },
     "TagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2577,8 +2663,7 @@
     },
     "UntagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Values":{
       "type":"list",

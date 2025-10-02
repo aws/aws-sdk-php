@@ -1857,6 +1857,7 @@
         {"shape":"ForbiddenException"},
         {"shape":"BadRequestException"},
         {"shape":"ThrottledClientException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
       ]
@@ -1865,8 +1866,7 @@
   "shapes":{
     "AccessDeniedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":403},
       "exception":true
     },
@@ -1965,8 +1965,7 @@
     },
     "BadRequestException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -2069,8 +2068,7 @@
     },
     "ConflictException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":409},
       "exception":true
     },
@@ -2238,7 +2236,8 @@
         "AwsRegion":{"shape":"VoiceConnectorAwsRegion"},
         "RequireEncryption":{"shape":"Boolean"},
         "Tags":{"shape":"TagList"},
-        "IntegrationType":{"shape":"VoiceConnectorIntegrationType"}
+        "IntegrationType":{"shape":"VoiceConnectorIntegrationType"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "CreateVoiceConnectorResponse":{
@@ -2575,8 +2574,7 @@
     },
     "ForbiddenException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":403},
       "exception":true
     },
@@ -3006,8 +3004,7 @@
     },
     "GoneException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":410},
       "exception":true
     },
@@ -3335,6 +3332,13 @@
         "ConfigurationArn":{"shape":"Arn"}
       }
     },
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "IPV4_ONLY",
+        "DUAL_STACK"
+      ]
+    },
     "NextTokenString":{
       "type":"string",
       "max":65535
@@ -3362,8 +3366,7 @@
     },
     "NotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":404},
       "exception":true
     },
@@ -3556,7 +3559,8 @@
         "OrderType":{"shape":"PhoneNumberOrderType"},
         "OrderedPhoneNumbers":{"shape":"OrderedPhoneNumberList"},
         "CreatedTimestamp":{"shape":"Iso8601Timestamp"},
-        "UpdatedTimestamp":{"shape":"Iso8601Timestamp"}
+        "UpdatedTimestamp":{"shape":"Iso8601Timestamp"},
+        "FocDate":{"shape":"Iso8601Timestamp"}
       }
     },
     "PhoneNumberOrderList":{
@@ -3872,8 +3876,7 @@
     },
     "ResourceLimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -3987,16 +3990,14 @@
     },
     "ServiceFailureException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
     },
     "ServiceUnavailableException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":503},
       "exception":true,
       "fault":true
@@ -4344,8 +4345,7 @@
     },
     "ThrottledClientException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":429},
       "exception":true
     },
@@ -4357,15 +4357,13 @@
     },
     "UnauthorizedClientException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":401},
       "exception":true
     },
     "UnprocessableEntityException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":422},
       "exception":true
     },
@@ -4656,7 +4654,8 @@
         "CreatedTimestamp":{"shape":"Iso8601Timestamp"},
         "UpdatedTimestamp":{"shape":"Iso8601Timestamp"},
         "VoiceConnectorArn":{"shape":"NonEmptyString"},
-        "IntegrationType":{"shape":"VoiceConnectorIntegrationType"}
+        "IntegrationType":{"shape":"VoiceConnectorIntegrationType"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "VoiceConnectorAwsRegion":{

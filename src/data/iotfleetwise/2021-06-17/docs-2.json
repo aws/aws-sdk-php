@@ -58,7 +58,7 @@
     "UpdateModelManifest": "<p> Updates a vehicle model (model manifest). If created vehicles are associated with a vehicle model, it can't be updated.</p>",
     "UpdateSignalCatalog": "<p> Updates a signal catalog. </p>",
     "UpdateStateTemplate": "<p>Updates a state template.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
-    "UpdateVehicle": "<p> Updates a vehicle. </p>"
+    "UpdateVehicle": "<p> Updates a vehicle.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -70,6 +70,12 @@
       "base": "<p>A signal that represents a vehicle device such as the engine, heater, and door locks. Data from an actuator reports the state of a certain vehicle device.</p> <note> <p> Updating actuator data can change the state of a device. For example, you can turn on or off the heater by updating its actuator data.</p> </note>",
       "refs": {
         "Node$actuator": "<p>Information about a node specified as an actuator.</p> <note> <p>An actuator is a digital representation of a vehicle device.</p> </note>"
+      }
+    },
+    "ActuatorFullyQualifiedNameString": {
+      "base": null,
+      "refs": {
+        "Actuator$fullyQualifiedName": "<p>The fully qualified name of the actuator. For example, the fully qualified name of an actuator might be <code>Vehicle.Front.Left.Door.Lock</code>.</p>"
       }
     },
     "AmazonResourceName": {
@@ -94,6 +100,12 @@
       "base": "<p>A signal that represents static information about the vehicle, such as engine type or manufacturing date.</p>",
       "refs": {
         "Node$attribute": "<p>Information about a node specified as an attribute.</p> <note> <p>An attribute represents static information about a vehicle.</p> </note>"
+      }
+    },
+    "AttributeFullyQualifiedNameString": {
+      "base": null,
+      "refs": {
+        "Attribute$fullyQualifiedName": "<p>The fully qualified name of the attribute. For example, the fully qualified name of an attribute might be <code>Vehicle.Body.Engine.Type</code>.</p>"
       }
     },
     "BatchCreateVehicleRequest": {
@@ -122,12 +134,18 @@
         "Node$branch": "<p>Information about a node specified as a branch.</p> <note> <p>A group of signals that are defined in a hierarchical structure.</p> </note>"
       }
     },
+    "BranchFullyQualifiedNameString": {
+      "base": null,
+      "refs": {
+        "Branch$fullyQualifiedName": "<p>The fully qualified name of the branch. For example, the fully qualified name of a branch might be <code>Vehicle.Body.Engine</code>.</p>"
+      }
+    },
     "CampaignStatus": {
       "base": null,
       "refs": {
         "CampaignSummary$status": "<p>The state of a campaign. The status can be one of the following:</p> <ul> <li> <p> <code>CREATING</code> - Amazon Web Services IoT FleetWise is processing your request to create the campaign.</p> </li> <li> <p> <code>WAITING_FOR_APPROVAL</code> - After a campaign is created, it enters the <code>WAITING_FOR_APPROVAL</code> state. To allow Amazon Web Services IoT FleetWise to deploy the campaign to the target vehicle or fleet, use the API operation to approve the campaign. </p> </li> <li> <p> <code>RUNNING</code> - The campaign is active. </p> </li> <li> <p> <code>SUSPENDED</code> - The campaign is suspended. To resume the campaign, use the API operation. </p> </li> </ul>",
         "GetCampaignResponse$status": "<p>The state of the campaign. The status can be one of: <code>CREATING</code>, <code>WAITING_FOR_APPROVAL</code>, <code>RUNNING</code>, and <code>SUSPENDED</code>. </p>",
-        "UpdateCampaignResponse$status": "<p>The state of a campaign. The status can be one of:</p> <ul> <li> <p> <code>CREATING</code> - Amazon Web Services IoT FleetWise is processing your request to create the campaign. </p> </li> <li> <p> <code>WAITING_FOR_APPROVAL</code> - After a campaign is created, it enters the <code>WAITING_FOR_APPROVAL</code> state. To allow Amazon Web Services IoT FleetWise to deploy the campaign to the target vehicle or fleet, use the API operation to approve the campaign. </p> </li> <li> <p> <code>RUNNING</code> - The campaign is active. </p> </li> <li> <p> <code>SUSPENDED</code> - The campaign is suspended. To resume the campaign, use the API operation. </p> </li> </ul>"
+        "UpdateCampaignResponse$status": "<p>The state of a campaign. The status can be one of:</p> <ul> <li> <p> <code>CREATING</code> - Amazon Web Services IoT FleetWise is processing your request to create the campaign. </p> </li> <li> <p> <code>WAITING_FOR_APPROVAL</code> - After you create a campaign, it enters this state. Use the API operation to approve the campaign for deployment to the target vehicle or fleet. </p> </li> <li> <p> <code>RUNNING</code> - The campaign is active. </p> </li> <li> <p> <code>SUSPENDED</code> - The campaign is suspended. To resume the campaign, use the API operation. </p> </li> </ul>"
       }
     },
     "CampaignSummary": {
@@ -225,6 +243,12 @@
       "refs": {
       }
     },
+    "CreateDecoderManifestRequestModelManifestArnString": {
+      "base": null,
+      "refs": {
+        "CreateDecoderManifestRequest$modelManifestArn": "<p> The Amazon Resource Name (ARN) of the vehicle model (model manifest). </p>"
+      }
+    },
     "CreateDecoderManifestResponse": {
       "base": null,
       "refs": {
@@ -243,6 +267,12 @@
     "CreateModelManifestRequest": {
       "base": null,
       "refs": {
+      }
+    },
+    "CreateModelManifestRequestNodesList": {
+      "base": null,
+      "refs": {
+        "CreateModelManifestRequest$nodes": "<p> A list of nodes, which are a general abstraction of signals. </p>"
       }
     },
     "CreateModelManifestResponse": {
@@ -328,10 +358,22 @@
         "Node$property": "<p>Represents a member of the complex data structure. The <code>datatype</code> of the property can be either primitive or another <code>struct</code>.</p>"
       }
     },
+    "CustomPropertyFullyQualifiedNameString": {
+      "base": null,
+      "refs": {
+        "CustomProperty$fullyQualifiedName": "<p>The fully qualified name of the custom property. For example, the fully qualified name of a custom property might be <code>ComplexDataTypes.VehicleDataTypes.SVMCamera.FPS</code>.</p>"
+      }
+    },
     "CustomStruct": {
       "base": "<p>The custom structure represents a complex or higher-order data structure.</p>",
       "refs": {
         "Node$struct": "<p>Represents a complex or higher-order data structure.</p>"
+      }
+    },
+    "CustomStructFullyQualifiedNameString": {
+      "base": null,
+      "refs": {
+        "CustomStruct$fullyQualifiedName": "<p>The fully qualified name of the custom structure. For example, the fully qualified name of a custom structure might be <code>ComplexDataTypes.VehicleDataTypes.SVMCamera</code>.</p>"
       }
     },
     "DataDestinationConfig": {
@@ -849,6 +891,17 @@
       "refs": {
       }
     },
+    "ListResponseScope": {
+      "base": null,
+      "refs": {
+        "ListCampaignsRequest$listResponseScope": "<p>When you set the <code>listResponseScope</code> parameter to <code>METADATA_ONLY</code>, the list response includes: campaign name, Amazon Resource Name (ARN), creation time, and last modification time.</p>",
+        "ListDecoderManifestsRequest$listResponseScope": "<p>When you set the <code>listResponseScope</code> parameter to <code>METADATA_ONLY</code>, the list response includes: decoder manifest name, Amazon Resource Name (ARN), creation time, and last modification time.</p>",
+        "ListFleetsRequest$listResponseScope": "<p>When you set the <code>listResponseScope</code> parameter to <code>METADATA_ONLY</code>, the list response includes: fleet ID, Amazon Resource Name (ARN), creation time, and last modification time.</p>",
+        "ListModelManifestsRequest$listResponseScope": "<p>When you set the <code>listResponseScope</code> parameter to <code>METADATA_ONLY</code>, the list response includes: model manifest name, Amazon Resource Name (ARN), creation time, and last modification time.</p>",
+        "ListStateTemplatesRequest$listResponseScope": "<p>When you set the <code>listResponseScope</code> parameter to <code>METADATA_ONLY</code>, the list response includes: state template ID, Amazon Resource Name (ARN), creation time, and last modification time.</p>",
+        "ListVehiclesRequest$listResponseScope": "<p>When you set the <code>listResponseScope</code> parameter to <code>METADATA_ONLY</code>, the list response includes: vehicle name, Amazon Resource Name (ARN), creation time, and last modification time.</p>"
+      }
+    },
     "ListSignalCatalogNodesRequest": {
       "base": null,
       "refs": {
@@ -1125,9 +1178,10 @@
       "base": null,
       "refs": {
         "CanSignal$isBigEndian": "<p>Whether the byte ordering of a CAN message is big-endian.</p>",
-        "CanSignal$isSigned": "<p>Whether the message data is specified as a signed value.</p>",
+        "CanSignal$isSigned": "<p>Determines whether the message is signed (<code>true</code>) or not (<code>false</code>). If it's signed, the message can represent both positive and negative numbers. The <code>isSigned</code> parameter only applies to the <code>INTEGER</code> raw signal type, and it doesn't affect the <code>FLOATING_POINT</code> raw signal type.</p>",
         "ObdInterface$useExtendedIds": "<p>Whether to use extended IDs in the message.</p>",
-        "ObdInterface$hasTransmissionEcu": "<p>Whether the vehicle has a transmission control module (TCM).</p>"
+        "ObdInterface$hasTransmissionEcu": "<p>Whether the vehicle has a transmission control module (TCM).</p>",
+        "ObdSignal$isSigned": "<p>Determines whether the message is signed (<code>true</code>) or not (<code>false</code>). If it's signed, the message can represent both positive and negative numbers. The <code>isSigned</code> parameter only applies to the <code>INTEGER</code> raw signal type, and it doesn't affect the <code>FLOATING_POINT</code> raw signal type. The default value is <code>false</code>.</p>"
       }
     },
     "PrimitiveMessageDefinition": {
@@ -1214,11 +1268,11 @@
     "ResourceIdentifier": {
       "base": null,
       "refs": {
-        "DeleteStateTemplateRequest$identifier": "<p>A unique, service-generated identifier.</p>",
-        "GetStateTemplateRequest$identifier": "<p>A unique, service-generated identifier.</p>",
-        "StateTemplateAssociation$identifier": "<p>A unique, service-generated identifier.</p>",
+        "DeleteStateTemplateRequest$identifier": "<p>The unique ID of the state template.</p>",
+        "GetStateTemplateRequest$identifier": "<p>The unique ID of the state template.</p>",
+        "StateTemplateAssociation$identifier": "<p>The unique ID of the state template.</p>",
         "StateTemplateAssociationIdentifiers$member": null,
-        "UpdateStateTemplateRequest$identifier": "<p>A unique, service-generated identifier.</p>"
+        "UpdateStateTemplateRequest$identifier": "<p>The unique ID of the state template.</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -1259,6 +1313,12 @@
       "base": "<p>An input component that reports the environmental condition of a vehicle.</p> <note> <p>You can collect data about fluid levels, temperatures, vibrations, or battery voltage from sensors.</p> </note>",
       "refs": {
         "Node$sensor": null
+      }
+    },
+    "SensorFullyQualifiedNameString": {
+      "base": null,
+      "refs": {
+        "Sensor$fullyQualifiedName": "<p>The fully qualified name of the sensor. For example, the fully qualified name of a sensor might be <code>Vehicle.Body.Engine.Battery</code>.</p>"
       }
     },
     "SignalCatalogSummary": {
@@ -1332,6 +1392,13 @@
         "ListSignalCatalogNodesRequest$signalNodeType": "<p>The type of node in the signal catalog.</p>"
       }
     },
+    "SignalValueType": {
+      "base": null,
+      "refs": {
+        "CanSignal$signalValueType": "<p>The value type of the signal. The default value is <code>INTEGER</code>.</p>",
+        "ObdSignal$signalValueType": "<p>The value type of the signal. The default value is <code>INTEGER</code>.</p>"
+      }
+    },
     "SpoolingMode": {
       "base": null,
       "refs": {
@@ -1359,7 +1426,9 @@
         "CreateVehicleRequestItem$stateTemplates": "<p>Associate state templates to track the state of the vehicle. State templates determine which signal updates the vehicle sends to the cloud.</p>",
         "GetVehicleResponse$stateTemplates": "<p>State templates associated with the vehicle.</p>",
         "UpdateVehicleRequest$stateTemplatesToAdd": "<p>Associate state templates with the vehicle.</p>",
-        "UpdateVehicleRequestItem$stateTemplatesToAdd": "<p>Associate additional state templates to track the state of the vehicle. State templates determine which signal updates the vehicle sends to the cloud.</p>"
+        "UpdateVehicleRequest$stateTemplatesToUpdate": "<p>Change the <code>stateTemplateUpdateStrategy</code> of state templates already associated with the vehicle.</p>",
+        "UpdateVehicleRequestItem$stateTemplatesToAdd": "<p>Associate additional state templates to track the state of the vehicle. State templates determine which signal updates the vehicle sends to the cloud.</p>",
+        "UpdateVehicleRequestItem$stateTemplatesToUpdate": "<p>Change the <code>stateTemplateUpdateStrategy</code> of state templates already associated with the vehicle.</p>"
       }
     },
     "StateTemplateDataExtraDimensionNodePathList": {
@@ -1729,7 +1798,7 @@
       }
     },
     "UpdateVehicleRequestItem": {
-      "base": "<p>Information about the vehicle to update.</p>",
+      "base": "<p>Information about the vehicle to update.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
       "refs": {
         "updateVehicleRequestItems$member": null
       }
@@ -1796,7 +1865,7 @@
     "VehicleState": {
       "base": null,
       "refs": {
-        "VehicleStatus$status": "<p>The status of a campaign, which can be one of the following:</p> <ul> <li> <p> <code>CREATED</code> - The campaign has been created successfully but has not been approved. </p> </li> <li> <p> <code>READY</code> - The campaign has been approved but has not been deployed to the vehicle.</p> </li> <li> <p> <code>HEALTHY</code> - The campaign has been deployed to the vehicle. </p> </li> <li> <p> <code>SUSPENDED</code> - The campaign has been suspended and data collection is paused. </p> </li> <li> <p> <code>DELETING</code> - The campaign is being removed from the vehicle.</p> </li> </ul>"
+        "VehicleStatus$status": "<p>The status of a campaign, which can be one of the following:</p> <ul> <li> <p> <code>CREATED</code> - The campaign exists but is not yet approved.</p> </li> <li> <p> <code>READY</code> - The campaign is approved but has not been deployed to the vehicle. Data has not arrived at the vehicle yet.</p> </li> <li> <p> <code>HEALTHY</code> - The campaign is deployed to the vehicle.</p> </li> <li> <p> <code>SUSPENDED</code> - The campaign is suspended and data collection is paused.</p> </li> <li> <p> <code>DELETING</code> - The campaign is being removed from the vehicle.</p> </li> <li> <p> <code>READY_FOR_CHECKIN</code> - The campaign is approved and waiting for vehicle check-in before deployment.</p> </li> </ul>"
       }
     },
     "VehicleStatus": {
@@ -1830,7 +1899,6 @@
         "CampaignSummary$targetArn": "<p>The ARN of a vehicle or fleet to which the campaign is deployed.</p>",
         "CreateCampaignRequest$signalCatalogArn": "<p>The Amazon Resource Name (ARN) of the signal catalog to associate with the campaign. </p>",
         "CreateCampaignRequest$targetArn": "<p> The ARN of the vehicle or fleet to deploy a campaign to. </p>",
-        "CreateDecoderManifestRequest$modelManifestArn": "<p> The Amazon Resource Name (ARN) of the vehicle model (model manifest). </p>",
         "CreateDecoderManifestResponse$arn": "<p> The ARN of the created decoder manifest. </p>",
         "CreateFleetRequest$signalCatalogArn": "<p> The Amazon Resource Name (ARN) of a signal catalog. </p>",
         "CreateFleetResponse$arn": "<p> The ARN of the created fleet. </p>",
@@ -2120,7 +2188,6 @@
       "refs": {
         "Actuator$allowedValues": "<p>A list of possible values an actuator can take.</p>",
         "Attribute$allowedValues": "<p>A list of possible values an attribute can be assigned.</p>",
-        "CreateModelManifestRequest$nodes": "<p> A list of nodes, which are a general abstraction of signals. </p>",
         "Sensor$allowedValues": "<p>A list of possible values a sensor can take.</p>"
       }
     },
@@ -2320,21 +2387,17 @@
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
-        "Actuator$fullyQualifiedName": "<p>The fully qualified name of the actuator. For example, the fully qualified name of an actuator might be <code>Vehicle.Front.Left.Door.Lock</code>.</p>",
         "Actuator$unit": "<p>The scientific unit for the actuator.</p>",
         "Actuator$assignedValue": "<p>A specified value for the actuator.</p>",
-        "Attribute$fullyQualifiedName": "<p>The fully qualified name of the attribute. For example, the fully qualified name of an attribute might be <code>Vehicle.Body.Engine.Type</code>.</p>",
         "Attribute$unit": "<p>The scientific unit for the attribute.</p>",
         "Attribute$assignedValue": "<p>A specified value for the attribute.</p>",
         "Attribute$defaultValue": "<p>The default value of the attribute.</p>",
-        "Branch$fullyQualifiedName": "<p>The fully qualified name of the branch. For example, the fully qualified name of a branch might be <code>Vehicle.Body.Engine</code>.</p>",
         "ConflictException$message": null,
         "ConflictException$resource": "<p>The resource on which there are conflicting operations.</p>",
         "ConflictException$resourceType": "<p>The type of resource on which there are conflicting operations..</p>",
+        "CreateModelManifestRequestNodesList$member": null,
         "CreateVehicleError$code": "<p>An HTTP error code.</p>",
         "CreateVehicleError$message": "<p>A description of the HTTP error.</p>",
-        "CustomProperty$fullyQualifiedName": "<p>The fully qualified name of the custom property. For example, the fully qualified name of a custom property might be <code>ComplexDataTypes.VehicleDataTypes.SVMCamera.FPS</code>.</p>",
-        "CustomStruct$fullyQualifiedName": "<p>The fully qualified name of the custom structure. For example, the fully qualified name of a custom structure might be <code>ComplexDataTypes.VehicleDataTypes.SVMCamera</code>.</p>",
         "DecoderManifestSummary$name": "<p>The name of the decoder manifest.</p>",
         "DecoderManifestValidationException$message": null,
         "GetDecoderManifestResponse$name": "<p> The name of the decoder manifest. </p>",
@@ -2352,7 +2415,6 @@
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$resourceId": "<p>The identifier of the resource that wasn't found.</p>",
         "ResourceNotFoundException$resourceType": "<p>The type of resource that wasn't found.</p>",
-        "Sensor$fullyQualifiedName": "<p>The fully qualified name of the sensor. For example, the fully qualified name of a sensor might be <code>Vehicle.Body.Engine.Battery</code>.</p>",
         "Sensor$unit": "<p>The scientific unit of measurement for data collected by the sensor.</p>",
         "SignalCatalogSummary$name": "<p>The name of the signal catalog.</p>",
         "ThrottlingException$message": null,

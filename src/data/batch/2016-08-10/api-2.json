@@ -40,6 +40,19 @@
         {"shape":"ServerException"}
       ]
     },
+    "CreateConsumableResource":{
+      "name":"CreateConsumableResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/createconsumableresource"
+      },
+      "input":{"shape":"CreateConsumableResourceRequest"},
+      "output":{"shape":"CreateConsumableResourceResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
     "CreateJobQueue":{
       "name":"CreateJobQueue",
       "http":{
@@ -66,6 +79,19 @@
         {"shape":"ServerException"}
       ]
     },
+    "CreateServiceEnvironment":{
+      "name":"CreateServiceEnvironment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/createserviceenvironment"
+      },
+      "input":{"shape":"CreateServiceEnvironmentRequest"},
+      "output":{"shape":"CreateServiceEnvironmentResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
     "DeleteComputeEnvironment":{
       "name":"DeleteComputeEnvironment",
       "http":{
@@ -74,6 +100,19 @@
       },
       "input":{"shape":"DeleteComputeEnvironmentRequest"},
       "output":{"shape":"DeleteComputeEnvironmentResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "DeleteConsumableResource":{
+      "name":"DeleteConsumableResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/deleteconsumableresource"
+      },
+      "input":{"shape":"DeleteConsumableResourceRequest"},
+      "output":{"shape":"DeleteConsumableResourceResponse"},
       "errors":[
         {"shape":"ClientException"},
         {"shape":"ServerException"}
@@ -105,6 +144,19 @@
         {"shape":"ServerException"}
       ]
     },
+    "DeleteServiceEnvironment":{
+      "name":"DeleteServiceEnvironment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/deleteserviceenvironment"
+      },
+      "input":{"shape":"DeleteServiceEnvironmentRequest"},
+      "output":{"shape":"DeleteServiceEnvironmentResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
     "DeregisterJobDefinition":{
       "name":"DeregisterJobDefinition",
       "http":{
@@ -126,6 +178,19 @@
       },
       "input":{"shape":"DescribeComputeEnvironmentsRequest"},
       "output":{"shape":"DescribeComputeEnvironmentsResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "DescribeConsumableResource":{
+      "name":"DescribeConsumableResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/describeconsumableresource"
+      },
+      "input":{"shape":"DescribeConsumableResourceRequest"},
+      "output":{"shape":"DescribeConsumableResourceResponse"},
       "errors":[
         {"shape":"ClientException"},
         {"shape":"ServerException"}
@@ -183,6 +248,32 @@
         {"shape":"ServerException"}
       ]
     },
+    "DescribeServiceEnvironments":{
+      "name":"DescribeServiceEnvironments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/describeserviceenvironments"
+      },
+      "input":{"shape":"DescribeServiceEnvironmentsRequest"},
+      "output":{"shape":"DescribeServiceEnvironmentsResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "DescribeServiceJob":{
+      "name":"DescribeServiceJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/describeservicejob"
+      },
+      "input":{"shape":"DescribeServiceJobRequest"},
+      "output":{"shape":"DescribeServiceJobResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
     "GetJobQueueSnapshot":{
       "name":"GetJobQueueSnapshot",
       "http":{
@@ -191,6 +282,19 @@
       },
       "input":{"shape":"GetJobQueueSnapshotRequest"},
       "output":{"shape":"GetJobQueueSnapshotResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "ListConsumableResources":{
+      "name":"ListConsumableResources",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/listconsumableresources"
+      },
+      "input":{"shape":"ListConsumableResourcesRequest"},
+      "output":{"shape":"ListConsumableResourcesResponse"},
       "errors":[
         {"shape":"ClientException"},
         {"shape":"ServerException"}
@@ -209,6 +313,19 @@
         {"shape":"ServerException"}
       ]
     },
+    "ListJobsByConsumableResource":{
+      "name":"ListJobsByConsumableResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/listjobsbyconsumableresource"
+      },
+      "input":{"shape":"ListJobsByConsumableResourceRequest"},
+      "output":{"shape":"ListJobsByConsumableResourceResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
     "ListSchedulingPolicies":{
       "name":"ListSchedulingPolicies",
       "http":{
@@ -217,6 +334,19 @@
       },
       "input":{"shape":"ListSchedulingPoliciesRequest"},
       "output":{"shape":"ListSchedulingPoliciesResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "ListServiceJobs":{
+      "name":"ListServiceJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/listservicejobs"
+      },
+      "input":{"shape":"ListServiceJobsRequest"},
+      "output":{"shape":"ListServiceJobsResponse"},
       "errors":[
         {"shape":"ClientException"},
         {"shape":"ServerException"}
@@ -261,6 +391,19 @@
         {"shape":"ServerException"}
       ]
     },
+    "SubmitServiceJob":{
+      "name":"SubmitServiceJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/submitservicejob"
+      },
+      "input":{"shape":"SubmitServiceJobRequest"},
+      "output":{"shape":"SubmitServiceJobResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -282,6 +425,19 @@
       },
       "input":{"shape":"TerminateJobRequest"},
       "output":{"shape":"TerminateJobResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "TerminateServiceJob":{
+      "name":"TerminateServiceJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/terminateservicejob"
+      },
+      "input":{"shape":"TerminateServiceJobRequest"},
+      "output":{"shape":"TerminateServiceJobResponse"},
       "errors":[
         {"shape":"ClientException"},
         {"shape":"ServerException"}
@@ -313,6 +469,19 @@
         {"shape":"ServerException"}
       ]
     },
+    "UpdateConsumableResource":{
+      "name":"UpdateConsumableResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/updateconsumableresource"
+      },
+      "input":{"shape":"UpdateConsumableResourceRequest"},
+      "output":{"shape":"UpdateConsumableResourceResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
     "UpdateJobQueue":{
       "name":"UpdateJobQueue",
       "http":{
@@ -334,6 +503,19 @@
       },
       "input":{"shape":"UpdateSchedulingPolicyRequest"},
       "output":{"shape":"UpdateSchedulingPolicyResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "UpdateServiceEnvironment":{
+      "name":"UpdateServiceEnvironment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/updateserviceenvironment"
+      },
+      "input":{"shape":"UpdateServiceEnvironmentRequest"},
+      "output":{"shape":"UpdateServiceEnvironmentResponse"},
       "errors":[
         {"shape":"ClientException"},
         {"shape":"ServerException"}
@@ -489,8 +671,18 @@
     },
     "CancelJobResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "CapacityLimit":{
+      "type":"structure",
       "members":{
+        "maxCapacity":{"shape":"Integer"},
+        "capacityUnit":{"shape":"String"}
       }
+    },
+    "CapacityLimits":{
+      "type":"list",
+      "member":{"shape":"CapacityLimit"}
     },
     "ClientException":{
       "type":"structure",
@@ -499,6 +691,11 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "ClientRequestToken":{
+      "type":"string",
+      "max":64,
+      "min":1
     },
     "ComputeEnvironmentDetail":{
       "type":"structure",
@@ -597,6 +794,41 @@
         "imageId":{"shape":"String"}
       }
     },
+    "ConsumableResourceList":{
+      "type":"list",
+      "member":{"shape":"ConsumableResourceRequirement"}
+    },
+    "ConsumableResourceProperties":{
+      "type":"structure",
+      "members":{
+        "consumableResourceList":{"shape":"ConsumableResourceList"}
+      }
+    },
+    "ConsumableResourceRequirement":{
+      "type":"structure",
+      "members":{
+        "consumableResource":{"shape":"String"},
+        "quantity":{"shape":"Long"}
+      }
+    },
+    "ConsumableResourceSummary":{
+      "type":"structure",
+      "required":[
+        "consumableResourceArn",
+        "consumableResourceName"
+      ],
+      "members":{
+        "consumableResourceArn":{"shape":"String"},
+        "consumableResourceName":{"shape":"String"},
+        "totalQuantity":{"shape":"Long"},
+        "inUseQuantity":{"shape":"Long"},
+        "resourceType":{"shape":"String"}
+      }
+    },
+    "ConsumableResourceSummaryList":{
+      "type":"list",
+      "member":{"shape":"ConsumableResourceSummary"}
+    },
     "ContainerDetail":{
       "type":"structure",
       "members":{
@@ -628,7 +860,8 @@
         "fargatePlatformConfiguration":{"shape":"FargatePlatformConfiguration"},
         "ephemeralStorage":{"shape":"EphemeralStorage"},
         "runtimePlatform":{"shape":"RuntimePlatform"},
-        "repositoryCredentials":{"shape":"RepositoryCredentials"}
+        "repositoryCredentials":{"shape":"RepositoryCredentials"},
+        "enableExecuteCommand":{"shape":"Boolean"}
       }
     },
     "ContainerOverrides":{
@@ -681,6 +914,7 @@
         "secrets":{"shape":"SecretList"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "fargatePlatformConfiguration":{"shape":"FargatePlatformConfiguration"},
+        "enableExecuteCommand":{"shape":"Boolean"},
         "ephemeralStorage":{"shape":"EphemeralStorage"},
         "runtimePlatform":{"shape":"RuntimePlatform"},
         "repositoryCredentials":{"shape":"RepositoryCredentials"}
@@ -718,12 +952,32 @@
         "computeEnvironmentArn":{"shape":"String"}
       }
     },
+    "CreateConsumableResourceRequest":{
+      "type":"structure",
+      "required":["consumableResourceName"],
+      "members":{
+        "consumableResourceName":{"shape":"String"},
+        "totalQuantity":{"shape":"Long"},
+        "resourceType":{"shape":"String"},
+        "tags":{"shape":"TagrisTagsMap"}
+      }
+    },
+    "CreateConsumableResourceResponse":{
+      "type":"structure",
+      "required":[
+        "consumableResourceName",
+        "consumableResourceArn"
+      ],
+      "members":{
+        "consumableResourceName":{"shape":"String"},
+        "consumableResourceArn":{"shape":"String"}
+      }
+    },
     "CreateJobQueueRequest":{
       "type":"structure",
       "required":[
         "jobQueueName",
-        "priority",
-        "computeEnvironmentOrder"
+        "priority"
       ],
       "members":{
         "jobQueueName":{"shape":"String"},
@@ -731,6 +985,8 @@
         "schedulingPolicyArn":{"shape":"String"},
         "priority":{"shape":"Integer"},
         "computeEnvironmentOrder":{"shape":"ComputeEnvironmentOrders"},
+        "serviceEnvironmentOrder":{"shape":"ServiceEnvironmentOrders"},
+        "jobQueueType":{"shape":"JobQueueType"},
         "tags":{"shape":"TagrisTagsMap"},
         "jobStateTimeLimitActions":{"shape":"JobStateTimeLimitActions"}
       }
@@ -766,6 +1022,32 @@
         "arn":{"shape":"String"}
       }
     },
+    "CreateServiceEnvironmentRequest":{
+      "type":"structure",
+      "required":[
+        "serviceEnvironmentName",
+        "serviceEnvironmentType",
+        "capacityLimits"
+      ],
+      "members":{
+        "serviceEnvironmentName":{"shape":"String"},
+        "serviceEnvironmentType":{"shape":"ServiceEnvironmentType"},
+        "state":{"shape":"ServiceEnvironmentState"},
+        "capacityLimits":{"shape":"CapacityLimits"},
+        "tags":{"shape":"TagrisTagsMap"}
+      }
+    },
+    "CreateServiceEnvironmentResponse":{
+      "type":"structure",
+      "required":[
+        "serviceEnvironmentName",
+        "serviceEnvironmentArn"
+      ],
+      "members":{
+        "serviceEnvironmentName":{"shape":"String"},
+        "serviceEnvironmentArn":{"shape":"String"}
+      }
+    },
     "DeleteComputeEnvironmentRequest":{
       "type":"structure",
       "required":["computeEnvironment"],
@@ -775,8 +1057,18 @@
     },
     "DeleteComputeEnvironmentResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "DeleteConsumableResourceRequest":{
+      "type":"structure",
+      "required":["consumableResource"],
       "members":{
+        "consumableResource":{"shape":"String"}
       }
+    },
+    "DeleteConsumableResourceResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteJobQueueRequest":{
       "type":"structure",
@@ -787,8 +1079,7 @@
     },
     "DeleteJobQueueResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteSchedulingPolicyRequest":{
       "type":"structure",
@@ -799,8 +1090,18 @@
     },
     "DeleteSchedulingPolicyResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "DeleteServiceEnvironmentRequest":{
+      "type":"structure",
+      "required":["serviceEnvironment"],
       "members":{
+        "serviceEnvironment":{"shape":"String"}
       }
+    },
+    "DeleteServiceEnvironmentResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeregisterJobDefinitionRequest":{
       "type":"structure",
@@ -811,8 +1112,7 @@
     },
     "DeregisterJobDefinitionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeComputeEnvironmentsRequest":{
       "type":"structure",
@@ -827,6 +1127,30 @@
       "members":{
         "computeEnvironments":{"shape":"ComputeEnvironmentDetailList"},
         "nextToken":{"shape":"String"}
+      }
+    },
+    "DescribeConsumableResourceRequest":{
+      "type":"structure",
+      "required":["consumableResource"],
+      "members":{
+        "consumableResource":{"shape":"String"}
+      }
+    },
+    "DescribeConsumableResourceResponse":{
+      "type":"structure",
+      "required":[
+        "consumableResourceName",
+        "consumableResourceArn"
+      ],
+      "members":{
+        "consumableResourceName":{"shape":"String"},
+        "consumableResourceArn":{"shape":"String"},
+        "totalQuantity":{"shape":"Long"},
+        "inUseQuantity":{"shape":"Long"},
+        "availableQuantity":{"shape":"Long"},
+        "resourceType":{"shape":"String"},
+        "createdAt":{"shape":"Long"},
+        "tags":{"shape":"TagrisTagsMap"}
       }
     },
     "DescribeJobDefinitionsRequest":{
@@ -885,6 +1209,60 @@
       "type":"structure",
       "members":{
         "schedulingPolicies":{"shape":"SchedulingPolicyDetailList"}
+      }
+    },
+    "DescribeServiceEnvironmentsRequest":{
+      "type":"structure",
+      "members":{
+        "serviceEnvironments":{"shape":"StringList"},
+        "maxResults":{"shape":"Integer"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "DescribeServiceEnvironmentsResponse":{
+      "type":"structure",
+      "members":{
+        "serviceEnvironments":{"shape":"ServiceEnvironmentDetailList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "DescribeServiceJobRequest":{
+      "type":"structure",
+      "required":["jobId"],
+      "members":{
+        "jobId":{"shape":"String"}
+      }
+    },
+    "DescribeServiceJobResponse":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "jobName",
+        "jobQueue",
+        "serviceJobType",
+        "startedAt",
+        "status"
+      ],
+      "members":{
+        "attempts":{"shape":"ServiceJobAttemptDetails"},
+        "createdAt":{"shape":"Long"},
+        "isTerminated":{"shape":"Boolean"},
+        "jobArn":{"shape":"String"},
+        "jobId":{"shape":"String"},
+        "jobName":{"shape":"String"},
+        "jobQueue":{"shape":"String"},
+        "latestAttempt":{"shape":"LatestServiceJobAttempt"},
+        "retryStrategy":{"shape":"ServiceJobRetryStrategy"},
+        "schedulingPriority":{"shape":"Integer"},
+        "serviceRequestPayload":{"shape":"String"},
+        "serviceJobType":{"shape":"ServiceJobType"},
+        "shareIdentifier":{"shape":"String"},
+        "startedAt":{"shape":"Long"},
+        "status":{"shape":"ServiceJobStatus"},
+        "statusReason":{"shape":"String"},
+        "stoppedAt":{"shape":"Long"},
+        "tags":{"shape":"TagrisTagsMap"},
+        "timeoutConfig":{"shape":"ServiceJobTimeout"}
       }
     },
     "Device":{
@@ -990,7 +1368,8 @@
         "pidMode":{"shape":"String"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "runtimePlatform":{"shape":"RuntimePlatform"},
-        "volumes":{"shape":"Volumes"}
+        "volumes":{"shape":"Volumes"},
+        "enableExecuteCommand":{"shape":"Boolean"}
       }
     },
     "EcsTaskProperties":{
@@ -1006,7 +1385,8 @@
         "pidMode":{"shape":"String"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "runtimePlatform":{"shape":"RuntimePlatform"},
-        "volumes":{"shape":"Volumes"}
+        "volumes":{"shape":"Volumes"},
+        "enableExecuteCommand":{"shape":"Boolean"}
       }
     },
     "EksAnnotationsMap":{
@@ -1315,6 +1695,26 @@
         "platformVersion":{"shape":"String"}
       }
     },
+    "FirelensConfiguration":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"FirelensConfigurationType"},
+        "options":{"shape":"FirelensConfigurationOptionsMap"}
+      }
+    },
+    "FirelensConfigurationOptionsMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
+    "FirelensConfigurationType":{
+      "type":"string",
+      "enum":[
+        "fluentd",
+        "fluentbit"
+      ]
+    },
     "Float":{"type":"float"},
     "FrontOfQueueDetail":{
       "type":"structure",
@@ -1418,7 +1818,8 @@
         "platformCapabilities":{"shape":"PlatformCapabilityList"},
         "ecsProperties":{"shape":"EcsProperties"},
         "eksProperties":{"shape":"EksProperties"},
-        "containerOrchestrationType":{"shape":"OrchestrationType"}
+        "containerOrchestrationType":{"shape":"OrchestrationType"},
+        "consumableResourceProperties":{"shape":"ConsumableResourceProperties"}
       }
     },
     "JobDefinitionList":{
@@ -1482,7 +1883,8 @@
         "eksAttempts":{"shape":"EksAttemptDetails"},
         "ecsProperties":{"shape":"EcsPropertiesDetail"},
         "isCancelled":{"shape":"Boolean"},
-        "isTerminated":{"shape":"Boolean"}
+        "isTerminated":{"shape":"Boolean"},
+        "consumableResourceProperties":{"shape":"ConsumableResourceProperties"}
       }
     },
     "JobDetailList":{
@@ -1512,6 +1914,8 @@
         "statusReason":{"shape":"String"},
         "priority":{"shape":"Integer"},
         "computeEnvironmentOrder":{"shape":"ComputeEnvironmentOrders"},
+        "serviceEnvironmentOrder":{"shape":"ServiceEnvironmentOrders"},
+        "jobQueueType":{"shape":"JobQueueType"},
         "tags":{"shape":"TagrisTagsMap"},
         "jobStateTimeLimitActions":{"shape":"JobStateTimeLimitActions"}
       }
@@ -1519,6 +1923,15 @@
     "JobQueueDetailList":{
       "type":"list",
       "member":{"shape":"JobQueueDetail"}
+    },
+    "JobQueueType":{
+      "type":"string",
+      "enum":[
+        "EKS",
+        "ECS",
+        "ECS_FARGATE",
+        "SAGEMAKER_TRAINING"
+      ]
     },
     "JobStateTimeLimitAction":{
       "type":"structure",
@@ -1541,7 +1954,10 @@
     },
     "JobStateTimeLimitActionsAction":{
       "type":"string",
-      "enum":["CANCEL"]
+      "enum":[
+        "CANCEL",
+        "TERMINATE"
+      ]
     },
     "JobStateTimeLimitActionsState":{
       "type":"string",
@@ -1609,13 +2025,20 @@
       "max":256,
       "min":1
     },
+    "LatestServiceJobAttempt":{
+      "type":"structure",
+      "members":{
+        "serviceResourceId":{"shape":"ServiceResourceId"}
+      }
+    },
     "LaunchTemplateSpecification":{
       "type":"structure",
       "members":{
         "launchTemplateId":{"shape":"String"},
         "launchTemplateName":{"shape":"String"},
         "version":{"shape":"String"},
-        "overrides":{"shape":"LaunchTemplateSpecificationOverrideList"}
+        "overrides":{"shape":"LaunchTemplateSpecificationOverrideList"},
+        "userdataType":{"shape":"UserdataType"}
       }
     },
     "LaunchTemplateSpecificationOverride":{
@@ -1624,7 +2047,8 @@
         "launchTemplateId":{"shape":"String"},
         "launchTemplateName":{"shape":"String"},
         "version":{"shape":"String"},
-        "targetInstanceTypes":{"shape":"StringList"}
+        "targetInstanceTypes":{"shape":"StringList"},
+        "userdataType":{"shape":"UserdataType"}
       }
     },
     "LaunchTemplateSpecificationOverrideList":{
@@ -1650,6 +2074,26 @@
       "type":"list",
       "member":{"shape":"AttemptTaskContainerDetails"}
     },
+    "ListConsumableResourcesFilterList":{
+      "type":"list",
+      "member":{"shape":"KeyValuesPair"}
+    },
+    "ListConsumableResourcesRequest":{
+      "type":"structure",
+      "members":{
+        "filters":{"shape":"ListConsumableResourcesFilterList"},
+        "maxResults":{"shape":"Integer"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListConsumableResourcesResponse":{
+      "type":"structure",
+      "required":["consumableResources"],
+      "members":{
+        "consumableResources":{"shape":"ConsumableResourceSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListEcsTaskDetails":{
       "type":"list",
       "member":{"shape":"EcsTaskDetails"}
@@ -1657,6 +2101,57 @@
     "ListEcsTaskProperties":{
       "type":"list",
       "member":{"shape":"EcsTaskProperties"}
+    },
+    "ListJobsByConsumableResourceFilterList":{
+      "type":"list",
+      "member":{"shape":"KeyValuesPair"}
+    },
+    "ListJobsByConsumableResourceRequest":{
+      "type":"structure",
+      "required":["consumableResource"],
+      "members":{
+        "consumableResource":{"shape":"String"},
+        "filters":{"shape":"ListJobsByConsumableResourceFilterList"},
+        "maxResults":{"shape":"Integer"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListJobsByConsumableResourceResponse":{
+      "type":"structure",
+      "required":["jobs"],
+      "members":{
+        "jobs":{"shape":"ListJobsByConsumableResourceSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListJobsByConsumableResourceSummary":{
+      "type":"structure",
+      "required":[
+        "jobArn",
+        "jobQueueArn",
+        "jobName",
+        "jobStatus",
+        "quantity",
+        "createdAt",
+        "consumableResourceProperties"
+      ],
+      "members":{
+        "jobArn":{"shape":"String"},
+        "jobQueueArn":{"shape":"String"},
+        "jobName":{"shape":"String"},
+        "jobDefinitionArn":{"shape":"String"},
+        "shareIdentifier":{"shape":"String"},
+        "jobStatus":{"shape":"String"},
+        "quantity":{"shape":"Long"},
+        "statusReason":{"shape":"String"},
+        "startedAt":{"shape":"Long"},
+        "createdAt":{"shape":"Long"},
+        "consumableResourceProperties":{"shape":"ConsumableResourceProperties"}
+      }
+    },
+    "ListJobsByConsumableResourceSummaryList":{
+      "type":"list",
+      "member":{"shape":"ListJobsByConsumableResourceSummary"}
     },
     "ListJobsFilterList":{
       "type":"list",
@@ -1693,6 +2188,24 @@
       "type":"structure",
       "members":{
         "schedulingPolicies":{"shape":"SchedulingPolicyListingDetailList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListServiceJobsRequest":{
+      "type":"structure",
+      "members":{
+        "jobQueue":{"shape":"String"},
+        "jobStatus":{"shape":"ServiceJobStatus"},
+        "maxResults":{"shape":"Integer"},
+        "nextToken":{"shape":"String"},
+        "filters":{"shape":"ListJobsFilterList"}
+      }
+    },
+    "ListServiceJobsResponse":{
+      "type":"structure",
+      "required":["jobSummaryList"],
+      "members":{
+        "jobSummaryList":{"shape":"ServiceJobSummaryList"},
         "nextToken":{"shape":"String"}
       }
     },
@@ -1752,7 +2265,8 @@
         "gelf",
         "fluentd",
         "awslogs",
-        "splunk"
+        "splunk",
+        "awsfirelens"
       ]
     },
     "Long":{"type":"long"},
@@ -1829,7 +2343,8 @@
         "containerOverrides":{"shape":"ContainerOverrides"},
         "ecsPropertiesOverride":{"shape":"EcsPropertiesOverride"},
         "instanceTypes":{"shape":"StringList"},
-        "eksPropertiesOverride":{"shape":"EksPropertiesOverride"}
+        "eksPropertiesOverride":{"shape":"EksPropertiesOverride"},
+        "consumableResourcePropertiesOverride":{"shape":"ConsumableResourceProperties"}
       }
     },
     "NodePropertyOverrides":{
@@ -1848,7 +2363,8 @@
         "container":{"shape":"ContainerProperties"},
         "instanceTypes":{"shape":"StringList"},
         "ecsProperties":{"shape":"EcsProperties"},
-        "eksProperties":{"shape":"EksProperties"}
+        "eksProperties":{"shape":"EksProperties"},
+        "consumableResourceProperties":{"shape":"ConsumableResourceProperties"}
       }
     },
     "OrchestrationType":{
@@ -1898,7 +2414,8 @@
         "tags":{"shape":"TagrisTagsMap"},
         "platformCapabilities":{"shape":"PlatformCapabilityList"},
         "eksProperties":{"shape":"EksProperties"},
-        "ecsProperties":{"shape":"EcsProperties"}
+        "ecsProperties":{"shape":"EcsProperties"},
+        "consumableResourceProperties":{"shape":"ConsumableResourceProperties"}
       }
     },
     "RegisterJobDefinitionResponse":{
@@ -2017,6 +2534,167 @@
       "exception":true,
       "fault":true
     },
+    "ServiceEnvironmentDetail":{
+      "type":"structure",
+      "required":[
+        "serviceEnvironmentName",
+        "serviceEnvironmentArn",
+        "serviceEnvironmentType",
+        "capacityLimits"
+      ],
+      "members":{
+        "serviceEnvironmentName":{"shape":"String"},
+        "serviceEnvironmentArn":{"shape":"String"},
+        "serviceEnvironmentType":{"shape":"ServiceEnvironmentType"},
+        "state":{"shape":"ServiceEnvironmentState"},
+        "status":{"shape":"ServiceEnvironmentStatus"},
+        "capacityLimits":{"shape":"CapacityLimits"},
+        "tags":{"shape":"TagrisTagsMap"}
+      }
+    },
+    "ServiceEnvironmentDetailList":{
+      "type":"list",
+      "member":{"shape":"ServiceEnvironmentDetail"}
+    },
+    "ServiceEnvironmentOrder":{
+      "type":"structure",
+      "required":[
+        "order",
+        "serviceEnvironment"
+      ],
+      "members":{
+        "order":{"shape":"Integer"},
+        "serviceEnvironment":{"shape":"String"}
+      }
+    },
+    "ServiceEnvironmentOrders":{
+      "type":"list",
+      "member":{"shape":"ServiceEnvironmentOrder"}
+    },
+    "ServiceEnvironmentState":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "ServiceEnvironmentStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "UPDATING",
+        "DELETING",
+        "DELETED",
+        "VALID",
+        "INVALID"
+      ]
+    },
+    "ServiceEnvironmentType":{
+      "type":"string",
+      "enum":["SAGEMAKER_TRAINING"]
+    },
+    "ServiceJobAttemptDetail":{
+      "type":"structure",
+      "members":{
+        "serviceResourceId":{"shape":"ServiceResourceId"},
+        "startedAt":{"shape":"Long"},
+        "stoppedAt":{"shape":"Long"},
+        "statusReason":{"shape":"String"}
+      }
+    },
+    "ServiceJobAttemptDetails":{
+      "type":"list",
+      "member":{"shape":"ServiceJobAttemptDetail"}
+    },
+    "ServiceJobEvaluateOnExit":{
+      "type":"structure",
+      "members":{
+        "action":{"shape":"ServiceJobRetryAction"},
+        "onStatusReason":{"shape":"String"}
+      }
+    },
+    "ServiceJobEvaluateOnExitList":{
+      "type":"list",
+      "member":{"shape":"ServiceJobEvaluateOnExit"}
+    },
+    "ServiceJobRetryAction":{
+      "type":"string",
+      "enum":[
+        "RETRY",
+        "EXIT"
+      ]
+    },
+    "ServiceJobRetryStrategy":{
+      "type":"structure",
+      "required":["attempts"],
+      "members":{
+        "attempts":{"shape":"Integer"},
+        "evaluateOnExit":{"shape":"ServiceJobEvaluateOnExitList"}
+      }
+    },
+    "ServiceJobStatus":{
+      "type":"string",
+      "enum":[
+        "SUBMITTED",
+        "PENDING",
+        "RUNNABLE",
+        "SCHEDULED",
+        "STARTING",
+        "RUNNING",
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
+    "ServiceJobSummary":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "jobName",
+        "serviceJobType"
+      ],
+      "members":{
+        "latestAttempt":{"shape":"LatestServiceJobAttempt"},
+        "createdAt":{"shape":"Long"},
+        "jobArn":{"shape":"String"},
+        "jobId":{"shape":"String"},
+        "jobName":{"shape":"String"},
+        "serviceJobType":{"shape":"ServiceJobType"},
+        "shareIdentifier":{"shape":"String"},
+        "status":{"shape":"ServiceJobStatus"},
+        "statusReason":{"shape":"String"},
+        "startedAt":{"shape":"Long"},
+        "stoppedAt":{"shape":"Long"}
+      }
+    },
+    "ServiceJobSummaryList":{
+      "type":"list",
+      "member":{"shape":"ServiceJobSummary"}
+    },
+    "ServiceJobTimeout":{
+      "type":"structure",
+      "members":{
+        "attemptDurationSeconds":{"shape":"Integer"}
+      }
+    },
+    "ServiceJobType":{
+      "type":"string",
+      "enum":["SAGEMAKER_TRAINING"]
+    },
+    "ServiceResourceId":{
+      "type":"structure",
+      "required":[
+        "name",
+        "value"
+      ],
+      "members":{
+        "name":{"shape":"ServiceResourceIdName"},
+        "value":{"shape":"String"}
+      }
+    },
+    "ServiceResourceIdName":{
+      "type":"string",
+      "enum":["TrainingJobArn"]
+    },
     "ShareAttributes":{
       "type":"structure",
       "required":["shareIdentifier"],
@@ -2057,10 +2735,47 @@
         "timeout":{"shape":"JobTimeout"},
         "tags":{"shape":"TagrisTagsMap"},
         "eksPropertiesOverride":{"shape":"EksPropertiesOverride"},
-        "ecsPropertiesOverride":{"shape":"EcsPropertiesOverride"}
+        "ecsPropertiesOverride":{"shape":"EcsPropertiesOverride"},
+        "consumableResourcePropertiesOverride":{"shape":"ConsumableResourceProperties"}
       }
     },
     "SubmitJobResponse":{
+      "type":"structure",
+      "required":[
+        "jobName",
+        "jobId"
+      ],
+      "members":{
+        "jobArn":{"shape":"String"},
+        "jobName":{"shape":"String"},
+        "jobId":{"shape":"String"}
+      }
+    },
+    "SubmitServiceJobRequest":{
+      "type":"structure",
+      "required":[
+        "jobName",
+        "jobQueue",
+        "serviceRequestPayload",
+        "serviceJobType"
+      ],
+      "members":{
+        "jobName":{"shape":"String"},
+        "jobQueue":{"shape":"String"},
+        "retryStrategy":{"shape":"ServiceJobRetryStrategy"},
+        "schedulingPriority":{"shape":"Integer"},
+        "serviceRequestPayload":{"shape":"String"},
+        "serviceJobType":{"shape":"ServiceJobType"},
+        "shareIdentifier":{"shape":"String"},
+        "timeoutConfig":{"shape":"ServiceJobTimeout"},
+        "tags":{"shape":"TagrisTagsMap"},
+        "clientToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "SubmitServiceJobResponse":{
       "type":"structure",
       "required":[
         "jobName",
@@ -2100,8 +2815,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2137,6 +2851,7 @@
         "dependsOn":{"shape":"TaskContainerDependencyList"},
         "environment":{"shape":"EnvironmentVariables"},
         "essential":{"shape":"Boolean"},
+        "firelensConfiguration":{"shape":"FirelensConfiguration"},
         "image":{"shape":"String"},
         "linuxParameters":{"shape":"LinuxParameters"},
         "logConfiguration":{"shape":"LogConfiguration"},
@@ -2172,6 +2887,7 @@
         "dependsOn":{"shape":"TaskContainerDependencyList"},
         "environment":{"shape":"EnvironmentVariables"},
         "essential":{"shape":"Boolean"},
+        "firelensConfiguration":{"shape":"FirelensConfiguration"},
         "image":{"shape":"String"},
         "linuxParameters":{"shape":"LinuxParameters"},
         "logConfiguration":{"shape":"LogConfiguration"},
@@ -2205,8 +2921,22 @@
     },
     "TerminateJobResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "TerminateServiceJobRequest":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "reason"
+      ],
       "members":{
+        "jobId":{"shape":"String"},
+        "reason":{"shape":"String"}
       }
+    },
+    "TerminateServiceJobResponse":{
+      "type":"structure",
+      "members":{}
     },
     "Tmpfs":{
       "type":"structure",
@@ -2262,8 +2992,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateComputeEnvironmentRequest":{
       "type":"structure",
@@ -2285,6 +3014,31 @@
         "computeEnvironmentArn":{"shape":"String"}
       }
     },
+    "UpdateConsumableResourceRequest":{
+      "type":"structure",
+      "required":["consumableResource"],
+      "members":{
+        "consumableResource":{"shape":"String"},
+        "operation":{"shape":"String"},
+        "quantity":{"shape":"Long"},
+        "clientToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateConsumableResourceResponse":{
+      "type":"structure",
+      "required":[
+        "consumableResourceName",
+        "consumableResourceArn"
+      ],
+      "members":{
+        "consumableResourceName":{"shape":"String"},
+        "consumableResourceArn":{"shape":"String"},
+        "totalQuantity":{"shape":"Long"}
+      }
+    },
     "UpdateJobQueueRequest":{
       "type":"structure",
       "required":["jobQueue"],
@@ -2294,6 +3048,7 @@
         "schedulingPolicyArn":{"shape":"String"},
         "priority":{"shape":"Integer"},
         "computeEnvironmentOrder":{"shape":"ComputeEnvironmentOrders"},
+        "serviceEnvironmentOrder":{"shape":"ServiceEnvironmentOrders"},
         "jobStateTimeLimitActions":{"shape":"JobStateTimeLimitActions"}
       }
     },
@@ -2321,8 +3076,34 @@
     },
     "UpdateSchedulingPolicyResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "UpdateServiceEnvironmentRequest":{
+      "type":"structure",
+      "required":["serviceEnvironment"],
       "members":{
+        "serviceEnvironment":{"shape":"String"},
+        "state":{"shape":"ServiceEnvironmentState"},
+        "capacityLimits":{"shape":"CapacityLimits"}
       }
+    },
+    "UpdateServiceEnvironmentResponse":{
+      "type":"structure",
+      "required":[
+        "serviceEnvironmentName",
+        "serviceEnvironmentArn"
+      ],
+      "members":{
+        "serviceEnvironmentName":{"shape":"String"},
+        "serviceEnvironmentArn":{"shape":"String"}
+      }
+    },
+    "UserdataType":{
+      "type":"string",
+      "enum":[
+        "EKS_BOOTSTRAP_SH",
+        "EKS_NODEADM"
+      ]
     },
     "Volume":{
       "type":"structure",

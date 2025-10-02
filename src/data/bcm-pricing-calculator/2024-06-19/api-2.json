@@ -83,6 +83,7 @@
       "input":{"shape":"BatchDeleteBillScenarioCommitmentModificationRequest"},
       "output":{"shape":"BatchDeleteBillScenarioCommitmentModificationResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"DataUnavailableException"},
         {"shape":"InternalServerException"},
@@ -101,6 +102,7 @@
       "input":{"shape":"BatchDeleteBillScenarioUsageModificationRequest"},
       "output":{"shape":"BatchDeleteBillScenarioUsageModificationResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"DataUnavailableException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -139,6 +141,7 @@
       "input":{"shape":"BatchUpdateBillScenarioCommitmentModificationRequest"},
       "output":{"shape":"BatchUpdateBillScenarioCommitmentModificationResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"DataUnavailableException"},
         {"shape":"InternalServerException"},
@@ -157,6 +160,7 @@
       "input":{"shape":"BatchUpdateBillScenarioUsageModificationRequest"},
       "output":{"shape":"BatchUpdateBillScenarioUsageModificationResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"DataUnavailableException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -270,6 +274,7 @@
       "input":{"shape":"DeleteBillScenarioRequest"},
       "output":{"shape":"DeleteBillScenarioResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"DataUnavailableException"},
         {"shape":"InternalServerException"},
@@ -1398,7 +1403,8 @@
       "enum":[
         "READY",
         "LOCKED",
-        "FAILED"
+        "FAILED",
+        "STALE"
       ]
     },
     "BillScenarioSummaries":{
@@ -1692,7 +1698,8 @@
       "type":"structure",
       "members":{
         "managementAccountRateTypeSelections":{"shape":"RateTypes"},
-        "memberAccountRateTypeSelections":{"shape":"RateTypes"}
+        "memberAccountRateTypeSelections":{"shape":"RateTypes"},
+        "standaloneAccountRateTypeSelections":{"shape":"RateTypes"}
       }
     },
     "GetWorkloadEstimateRequest":{
@@ -2032,7 +2039,7 @@
         "workloadEstimateId":{"shape":"ResourceId"},
         "filters":{"shape":"ListUsageFilters"},
         "nextToken":{"shape":"NextPageToken"},
-        "maxResults":{"shape":"MaxResults"}
+        "maxResults":{"shape":"WorkloadEstimateUsageMaxResults"}
       }
     },
     "ListWorkloadEstimateUsageResponse":{
@@ -2097,7 +2104,8 @@
     "MaxResults":{
       "type":"integer",
       "box":true,
-      "max":25
+      "max":25,
+      "min":1
     },
     "NegateReservedInstanceAction":{
       "type":"structure",
@@ -2134,13 +2142,14 @@
       "type":"string",
       "enum":[
         "BEFORE_DISCOUNTS",
-        "AFTER_DISCOUNTS"
+        "AFTER_DISCOUNTS",
+        "AFTER_DISCOUNTS_AND_COMMITMENTS"
       ]
     },
     "RateTypes":{
       "type":"list",
       "member":{"shape":"RateType"},
-      "max":2,
+      "max":3,
       "min":1
     },
     "ReservedInstanceInstanceCount":{
@@ -2328,14 +2337,16 @@
       "type":"structure",
       "members":{
         "managementAccountRateTypeSelections":{"shape":"RateTypes"},
-        "memberAccountRateTypeSelections":{"shape":"RateTypes"}
+        "memberAccountRateTypeSelections":{"shape":"RateTypes"},
+        "standaloneAccountRateTypeSelections":{"shape":"RateTypes"}
       }
     },
     "UpdatePreferencesResponse":{
       "type":"structure",
       "members":{
         "managementAccountRateTypeSelections":{"shape":"RateTypes"},
-        "memberAccountRateTypeSelections":{"shape":"RateTypes"}
+        "memberAccountRateTypeSelections":{"shape":"RateTypes"},
+        "standaloneAccountRateTypeSelections":{"shape":"RateTypes"}
       }
     },
     "UpdateWorkloadEstimateRequest":{
@@ -2469,7 +2480,8 @@
       "type":"string",
       "enum":[
         "BEFORE_DISCOUNTS",
-        "AFTER_DISCOUNTS"
+        "AFTER_DISCOUNTS",
+        "AFTER_DISCOUNTS_AND_COMMITMENTS"
       ]
     },
     "WorkloadEstimateStatus":{
@@ -2535,6 +2547,12 @@
     "WorkloadEstimateUsageItems":{
       "type":"list",
       "member":{"shape":"WorkloadEstimateUsageItem"}
+    },
+    "WorkloadEstimateUsageMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":300,
+      "min":1
     },
     "WorkloadEstimateUsageQuantity":{
       "type":"structure",

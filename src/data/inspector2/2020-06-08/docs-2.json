@@ -2,7 +2,9 @@
   "version": "2.0",
   "service": "<p>Amazon Inspector is a vulnerability discovery service that automates continuous scanning for security vulnerabilities within your Amazon EC2, Amazon ECR, and Amazon Web Services Lambda environments.</p>",
   "operations": {
-    "AssociateMember": "<p> Associates an Amazon Web Services account with an Amazon Inspector delegated administrator. An HTTP 200 response indicates the association was started but doesn’t indicate whether it completed. You can check if the association completed using <a href=\"https://docs.aws.amazon.com/inspector/v2/APIReference/API_ListMembers.html\">ListMembers</a> for multiple accounts or <a href=\"https://docs.aws.amazon.com/inspector/v2/APIReference/API_GetMember.html\">GetMembers</a> for a single account. An HTTP 402 response indicates the association failed because the organization size exceeded its limit. For information on limits, see <a href=\"https://docs.aws.amazon.com/inspector/latest/user/quotas.html\">Amazon Inspector quotas</a>. </p>",
+    "AssociateMember": "<p>Associates an Amazon Web Services account with an Amazon Inspector delegated administrator. An HTTP 200 response indicates the association was successfully started, but doesn’t indicate whether it was completed. You can check if the association completed by using <a href=\"https://docs.aws.amazon.com/inspector/v2/APIReference/API_ListMembers.html\">ListMembers</a> for multiple accounts or <a href=\"https://docs.aws.amazon.com/inspector/v2/APIReference/API_GetMember.html\">GetMembers</a> for a single account.</p>",
+    "BatchAssociateCodeSecurityScanConfiguration": "<p>Associates multiple code repositories with an Amazon Inspector code security scan configuration.</p>",
+    "BatchDisassociateCodeSecurityScanConfiguration": "<p>Disassociates multiple code repositories from an Amazon Inspector code security scan configuration.</p>",
     "BatchGetAccountStatus": "<p>Retrieves the Amazon Inspector status of multiple Amazon Web Services accounts within your environment.</p>",
     "BatchGetCodeSnippet": "<p>Retrieves code snippets from findings that Amazon Inspector detected code vulnerabilities in.</p>",
     "BatchGetFindingDetails": "<p>Gets vulnerability details for findings.</p>",
@@ -12,10 +14,14 @@
     "CancelFindingsReport": "<p>Cancels the given findings report.</p>",
     "CancelSbomExport": "<p>Cancels a software bill of materials (SBOM) report.</p>",
     "CreateCisScanConfiguration": "<p>Creates a CIS scan configuration.</p>",
+    "CreateCodeSecurityIntegration": "<p>Creates a code security integration with a source code repository provider.</p> <p>After calling the <code>CreateCodeSecurityIntegration</code> operation, you complete authentication and authorization with your provider. Next you call the <code>UpdateCodeSecurityIntegration</code> operation to provide the <code>details</code> to complete the integration setup</p>",
+    "CreateCodeSecurityScanConfiguration": "<p>Creates a scan configuration for code security scanning.</p>",
     "CreateFilter": "<p>Creates a filter resource using specified filter criteria. When the filter action is set to <code>SUPPRESS</code> this action creates a suppression rule.</p>",
     "CreateFindingsReport": "<p>Creates a finding report. By default only <code>ACTIVE</code> findings are returned in the report. To see <code>SUPRESSED</code> or <code>CLOSED</code> findings you must specify a value for the <code>findingStatus</code> filter criteria. </p>",
     "CreateSbomExport": "<p>Creates a software bill of materials (SBOM) report.</p>",
     "DeleteCisScanConfiguration": "<p>Deletes a CIS scan configuration.</p>",
+    "DeleteCodeSecurityIntegration": "<p>Deletes a code security integration.</p>",
+    "DeleteCodeSecurityScanConfiguration": "<p>Deletes a code security scan configuration.</p>",
     "DeleteFilter": "<p>Deletes a filter resource.</p>",
     "DescribeOrganizationConfiguration": "<p>Describe Amazon Inspector configuration settings for an Amazon Web Services organization.</p>",
     "Disable": "<p>Disables Amazon Inspector scans for one or more Amazon Web Services accounts. Disabling all scan types in an account disables the Amazon Inspector service.</p>",
@@ -25,6 +31,10 @@
     "EnableDelegatedAdminAccount": "<p>Enables the Amazon Inspector delegated administrator for your Organizations organization.</p>",
     "GetCisScanReport": "<p>Retrieves a CIS scan report.</p>",
     "GetCisScanResultDetails": "<p>Retrieves CIS scan result details.</p>",
+    "GetClustersForImage": "<p>Returns a list of clusters and metadata associated with an image.</p>",
+    "GetCodeSecurityIntegration": "<p>Retrieves information about a code security integration.</p>",
+    "GetCodeSecurityScan": "<p>Retrieves information about a specific code security scan.</p>",
+    "GetCodeSecurityScanConfiguration": "<p>Retrieves information about a code security scan configuration.</p>",
     "GetConfiguration": "<p>Retrieves setting configurations for Inspector scans.</p>",
     "GetDelegatedAdminAccount": "<p>Retrieves information about the Amazon Inspector delegated administrator for your organization.</p>",
     "GetEc2DeepInspectionConfiguration": "<p>Retrieves the activation status of Amazon Inspector deep inspection and custom paths associated with your account. </p>",
@@ -37,6 +47,9 @@
     "ListCisScanResultsAggregatedByChecks": "<p>Lists scan results aggregated by checks.</p>",
     "ListCisScanResultsAggregatedByTargetResource": "<p>Lists scan results aggregated by a target resource.</p>",
     "ListCisScans": "<p>Returns a CIS scan list.</p>",
+    "ListCodeSecurityIntegrations": "<p>Lists all code security integrations in your account.</p>",
+    "ListCodeSecurityScanConfigurationAssociations": "<p>Lists the associations between code repositories and Amazon Inspector code security scan configurations.</p>",
+    "ListCodeSecurityScanConfigurations": "<p>Lists all code security scan configurations in your account.</p>",
     "ListCoverage": "<p>Lists coverage details for your environment.</p>",
     "ListCoverageStatistics": "<p>Lists Amazon Inspector coverage statistics for your environment.</p>",
     "ListDelegatedAdminAccounts": "<p>Lists information about the Amazon Inspector delegated administrator of your organization.</p>",
@@ -51,10 +64,13 @@
     "SendCisSessionHealth": "<p> Sends a CIS session health. This API is used by the Amazon Inspector SSM plugin to communicate with the Amazon Inspector service. The Amazon Inspector SSM plugin calls this API to start a CIS scan session for the scan ID supplied by the service. </p>",
     "SendCisSessionTelemetry": "<p> Sends a CIS session telemetry. This API is used by the Amazon Inspector SSM plugin to communicate with the Amazon Inspector service. The Amazon Inspector SSM plugin calls this API to start a CIS scan session for the scan ID supplied by the service. </p>",
     "StartCisSession": "<p> Starts a CIS session. This API is used by the Amazon Inspector SSM plugin to communicate with the Amazon Inspector service. The Amazon Inspector SSM plugin calls this API to start a CIS scan session for the scan ID supplied by the service. </p>",
+    "StartCodeSecurityScan": "<p>Initiates a code security scan on a specified repository.</p>",
     "StopCisSession": "<p> Stops a CIS session. This API is used by the Amazon Inspector SSM plugin to communicate with the Amazon Inspector service. The Amazon Inspector SSM plugin calls this API to stop a CIS scan session for the scan ID supplied by the service. </p>",
     "TagResource": "<p>Adds tags to a resource.</p>",
     "UntagResource": "<p>Removes tags from a resource.</p>",
     "UpdateCisScanConfiguration": "<p>Updates a CIS scan configuration.</p>",
+    "UpdateCodeSecurityIntegration": "<p>Updates an existing code security integration.</p> <p>After calling the <code>CreateCodeSecurityIntegration</code> operation, you complete authentication and authorization with your provider. Next you call the <code>UpdateCodeSecurityIntegration</code> operation to provide the <code>details</code> to complete the integration setup</p>",
+    "UpdateCodeSecurityScanConfiguration": "<p>Updates an existing code security scan configuration.</p>",
     "UpdateConfiguration": "<p>Updates setting configurations for your Amazon Inspector account. When you use this API as an Amazon Inspector delegated administrator this updates the setting for all accounts you manage. Member accounts in an organization cannot update this setting.</p>",
     "UpdateEc2DeepInspectionConfiguration": "<p>Activates, deactivates Amazon Inspector deep inspection, or updates custom paths for your account. </p>",
     "UpdateEncryptionKey": "<p>Updates an encryption key. A <code>ResourceNotFoundException</code> means that an Amazon Web Services owned key is being used for encryption.</p>",
@@ -64,9 +80,8 @@
   },
   "shapes": {
     "AccessDeniedException": {
-      "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "base": "<p>You do not have sufficient access to perform this action.</p> <p> For <code>Enable</code>, you receive this error if you attempt to use a feature in an unsupported Amazon Web Services Region. </p>",
+      "refs": {}
     },
     "Account": {
       "base": "<p>An Amazon Web Services account within your environment that Amazon Inspector has been enabled for.</p>",
@@ -140,7 +155,7 @@
       "base": null,
       "refs": {
         "BatchGetAccountStatusRequest$accountIds": "<p>The 12-digit Amazon Web Services account IDs of the accounts to retrieve Amazon Inspector status for.</p>",
-        "BatchGetMemberEc2DeepInspectionStatusRequest$accountIds": "<p>The unique identifiers for the Amazon Web Services accounts to retrieve Amazon Inspector deep inspection activation status for. <pre><code> &lt;/p&gt; </code></pre>",
+        "BatchGetMemberEc2DeepInspectionStatusRequest$accountIds": "<p>The unique identifiers for the Amazon Web Services accounts to retrieve Amazon Inspector deep inspection activation status for. </p>",
         "DisableRequest$accountIds": "<p>An array of account IDs you want to disable Amazon Inspector scans for.</p>",
         "EnableRequest$accountIds": "<p>A list of account IDs you want to enable Amazon Inspector scans for.</p>"
       }
@@ -263,20 +278,49 @@
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) for the resource to remove tags from.</p>"
       }
     },
-    "AssociateMemberRequest": {
+    "AssociateConfigurationRequest": {
+      "base": "<p>Contains details about a request to associate a code repository with a scan configuration.</p>",
+      "refs": {
+        "AssociateConfigurationRequestList$member": null
+      }
+    },
+    "AssociateConfigurationRequestList": {
       "base": null,
       "refs": {
+        "BatchAssociateCodeSecurityScanConfigurationRequest$associateConfigurationRequests": "<p>A list of code repositories to associate with the specified scan configuration.</p>"
       }
+    },
+    "AssociateMemberRequest": {
+      "base": null,
+      "refs": {}
     },
     "AssociateMemberResponse": {
       "base": null,
+      "refs": {}
+    },
+    "AssociationResultStatusCode": {
+      "base": null,
       "refs": {
+        "FailedAssociationResult$statusCode": "<p>The status code indicating why the association or disassociation failed.</p>"
+      }
+    },
+    "AssociationResultStatusMessage": {
+      "base": null,
+      "refs": {
+        "FailedAssociationResult$statusMessage": "<p>A message explaining why the association or disassociation failed.</p>"
       }
     },
     "AtigData": {
       "base": "<p>The Amazon Web Services Threat Intel Group (ATIG) details for a specific vulnerability.</p>",
       "refs": {
         "Vulnerability$atigData": "<p>An object that contains information about the Amazon Web Services Threat Intel Group (ATIG) details for the vulnerability.</p>"
+      }
+    },
+    "AuthorizationUrl": {
+      "base": null,
+      "refs": {
+        "CreateCodeSecurityIntegrationResponse$authorizationUrl": "<p>The URL used to authorize the integration with the repository provider.</p>",
+        "GetCodeSecurityIntegrationResponse$authorizationUrl": "<p>The URL used to authorize the integration with the repository provider. This is only returned if reauthorization is required to fix a connection issue. Otherwise, it is null.</p>"
       }
     },
     "AutoEnable": {
@@ -317,6 +361,60 @@
         "AwsEcrContainerAggregation$sortBy": "<p>The value to sort by.</p>"
       }
     },
+    "AwsEcsMetadataDetails": {
+      "base": "<p>Metadata about tasks where an image was in use.</p>",
+      "refs": {
+        "ClusterMetadata$awsEcsMetadataDetails": "<p>The details for an Amazon ECS cluster in the cluster metadata.</p>"
+      }
+    },
+    "AwsEcsMetadataDetailsDetailsGroupString": {
+      "base": null,
+      "refs": {
+        "AwsEcsMetadataDetails$detailsGroup": "<p>The details group information for a task in a cluster.</p>"
+      }
+    },
+    "AwsEcsMetadataDetailsTaskDefinitionArnString": {
+      "base": null,
+      "refs": {
+        "AwsEcsMetadataDetails$taskDefinitionArn": "<p>The task definition ARN.</p>"
+      }
+    },
+    "AwsEksMetadataDetails": {
+      "base": "<p>The metadata for an Amazon EKS pod where an Amazon ECR image is in use.</p>",
+      "refs": {
+        "ClusterMetadata$awsEksMetadataDetails": "<p>The details for an Amazon EKS cluster in the cluster metadata.</p>"
+      }
+    },
+    "AwsEksMetadataDetailsNamespaceString": {
+      "base": null,
+      "refs": {
+        "AwsEksMetadataDetails$namespace": "<p>The namespace for an Amazon EKS cluster.</p>"
+      }
+    },
+    "AwsEksWorkloadInfo": {
+      "base": "<p>Information about the workload.</p>",
+      "refs": {
+        "AwsEksWorkloadInfoList$member": null
+      }
+    },
+    "AwsEksWorkloadInfoList": {
+      "base": null,
+      "refs": {
+        "AwsEksMetadataDetails$workloadInfoList": "<p>The list of workloads.</p>"
+      }
+    },
+    "AwsEksWorkloadInfoNameString": {
+      "base": null,
+      "refs": {
+        "AwsEksWorkloadInfo$name": "<p>The name of the workload.</p>"
+      }
+    },
+    "AwsEksWorkloadInfoTypeString": {
+      "base": null,
+      "refs": {
+        "AwsEksWorkloadInfo$type": "<p>The workload type.</p>"
+      }
+    },
     "AwsLambdaFunctionDetails": {
       "base": "<p> A summary of information about the Amazon Web Services Lambda function.</p>",
       "refs": {
@@ -325,23 +423,35 @@
     },
     "BadRequestException": {
       "base": "<p>One or more tags submitted as part of the request is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "BatchAssociateCodeSecurityScanConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchAssociateCodeSecurityScanConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchDisassociateCodeSecurityScanConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchDisassociateCodeSecurityScanConfigurationResponse": {
+      "base": null,
+      "refs": {}
     },
     "BatchGetAccountStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetAccountStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetCodeSnippetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetCodeSnippetRequestFindingArnsList": {
       "base": null,
@@ -351,23 +461,19 @@
     },
     "BatchGetCodeSnippetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetFindingDetailsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetFindingDetailsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetFreeTrialInfoRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetFreeTrialInfoRequestAccountIdsList": {
       "base": null,
@@ -377,28 +483,23 @@
     },
     "BatchGetFreeTrialInfoResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetMemberEc2DeepInspectionStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetMemberEc2DeepInspectionStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchUpdateMemberEc2DeepInspectionStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchUpdateMemberEc2DeepInspectionStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BenchmarkProfile": {
       "base": null,
@@ -418,7 +519,8 @@
         "AutoEnable$ec2": "<p>Represents whether Amazon EC2 scans are automatically enabled for new members of your Amazon Inspector organization.</p>",
         "AutoEnable$ecr": "<p>Represents whether Amazon ECR scans are automatically enabled for new members of your Amazon Inspector organization.</p>",
         "AutoEnable$lambda": "<p>Represents whether Amazon Web Services Lambda standard scans are automatically enabled for new members of your Amazon Inspector organization. </p>",
-        "AutoEnable$lambdaCode": "<p>Represents whether Lambda code scans are automatically enabled for new members of your Amazon Inspector organization. <pre><code> &lt;/p&gt; </code></pre>",
+        "AutoEnable$lambdaCode": "<p>Represents whether Lambda code scans are automatically enabled for new members of your Amazon Inspector organization. </p>",
+        "AutoEnable$codeRepository": "<p>Represents whether code repository scans are automatically enabled for new members of your Amazon Inspector organization.</p>",
         "DescribeOrganizationConfigurationResponse$maxAccountLimitReached": "<p>Represents whether your organization has reached the maximum Amazon Web Services account limit for Amazon Inspector.</p>",
         "ListMembersRequest$onlyAssociated": "<p>Specifies whether to list only currently associated members if <code>True</code> or to list all members within the organization if <code>False</code>.</p>",
         "MemberAccountEc2DeepInspectionStatus$activateDeepInspection": "<p>Whether Amazon Inspector deep inspection is active in the account. If <code>TRUE</code> Amazon Inspector deep inspection is active, if <code>FALSE</code> it is not active.</p>",
@@ -427,35 +529,31 @@
     },
     "CancelFindingsReportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelFindingsReportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelSbomExportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelSbomExportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CheckCount": {
       "base": null,
       "refs": {
-        "StopCisMessageProgress$errorChecks": "<p>The progress' error checks.</p>",
-        "StopCisMessageProgress$failedChecks": "<p>The progress' failed checks.</p>",
-        "StopCisMessageProgress$informationalChecks": "<p>The progress' informational checks.</p>",
-        "StopCisMessageProgress$notApplicableChecks": "<p>The progress' not applicable checks.</p>",
-        "StopCisMessageProgress$notEvaluatedChecks": "<p>The progress' not evaluated checks.</p>",
-        "StopCisMessageProgress$successfulChecks": "<p>The progress' successful checks.</p>",
         "StopCisMessageProgress$totalChecks": "<p>The progress' total checks.</p>",
-        "StopCisMessageProgress$unknownChecks": "<p>The progress' unknown checks.</p>"
+        "StopCisMessageProgress$successfulChecks": "<p>The progress' successful checks.</p>",
+        "StopCisMessageProgress$failedChecks": "<p>The progress' failed checks.</p>",
+        "StopCisMessageProgress$notEvaluatedChecks": "<p>The progress' not evaluated checks.</p>",
+        "StopCisMessageProgress$unknownChecks": "<p>The progress' unknown checks.</p>",
+        "StopCisMessageProgress$notApplicableChecks": "<p>The progress' not applicable checks.</p>",
+        "StopCisMessageProgress$informationalChecks": "<p>The progress' informational checks.</p>",
+        "StopCisMessageProgress$errorChecks": "<p>The progress' error checks.</p>"
       }
     },
     "CheckIdFilterList": {
@@ -937,6 +1035,54 @@
         "EnableRequest$clientToken": "<p>The idempotency token for the request.</p>"
       }
     },
+    "ClusterDetails": {
+      "base": "<p>Details about the task or pod in the cluster.</p>",
+      "refs": {
+        "ClusterInformationClusterDetailsList$member": null
+      }
+    },
+    "ClusterForImageFilterCriteria": {
+      "base": "<p>The filter criteria to be used.</p>",
+      "refs": {
+        "GetClustersForImageRequest$filter": "<p>The resource Id for the Amazon ECR image.</p>"
+      }
+    },
+    "ClusterForImageFilterCriteriaResourceIdString": {
+      "base": null,
+      "refs": {
+        "ClusterForImageFilterCriteria$resourceId": "<p>The resource Id to be used in the filter criteria.</p>"
+      }
+    },
+    "ClusterInformation": {
+      "base": "<p>Information about the cluster.</p>",
+      "refs": {
+        "ClusterInformationList$member": null
+      }
+    },
+    "ClusterInformationClusterArnString": {
+      "base": null,
+      "refs": {
+        "ClusterInformation$clusterArn": "<p>The cluster ARN.</p>"
+      }
+    },
+    "ClusterInformationClusterDetailsList": {
+      "base": null,
+      "refs": {
+        "ClusterInformation$clusterDetails": "<p>Details about the cluster.</p>"
+      }
+    },
+    "ClusterInformationList": {
+      "base": null,
+      "refs": {
+        "GetClustersForImageResponse$cluster": "<p>A unit of work inside of a cluster, which can include metadata about the cluster.</p>"
+      }
+    },
+    "ClusterMetadata": {
+      "base": "<p>The metadata for a cluster.</p>",
+      "refs": {
+        "ClusterDetails$clusterMetadata": null
+      }
+    },
     "CodeFilePath": {
       "base": "<p>Contains information on where a code vulnerability is located in your Lambda function.</p>",
       "refs": {
@@ -959,6 +1105,164 @@
       "base": null,
       "refs": {
         "CodeSnippetResult$codeSnippet": "<p>Contains information on the retrieved code snippet.</p>"
+      }
+    },
+    "CodeRepositoryAggregation": {
+      "base": "<p>The details that define an aggregation based on code repositories.</p>",
+      "refs": {
+        "AggregationRequest$codeRepositoryAggregation": "<p>An object that contains details about an aggregation request based on code repositories.</p>"
+      }
+    },
+    "CodeRepositoryAggregationResponse": {
+      "base": "<p>A response that contains the results of a finding aggregation by code repository.</p>",
+      "refs": {
+        "AggregationResponse$codeRepositoryAggregation": "<p>An object that contains details about an aggregation response based on code repositories.</p>"
+      }
+    },
+    "CodeRepositoryDetails": {
+      "base": "<p>Contains details about a code repository associated with a finding.</p>",
+      "refs": {
+        "ResourceDetails$codeRepository": "<p>Contains details about a code repository resource associated with a finding.</p>"
+      }
+    },
+    "CodeRepositoryIntegrationArn": {
+      "base": null,
+      "refs": {
+        "CodeRepositoryDetails$integrationArn": "<p>The Amazon Resource Name (ARN) of the code security integration associated with the repository.</p>",
+        "CodeRepositoryMetadata$integrationArn": "<p>The Amazon Resource Name (ARN) of the code security integration associated with the repository.</p>"
+      }
+    },
+    "CodeRepositoryMetadata": {
+      "base": "<p>Contains metadata information about a code repository that is being scanned by Amazon Inspector.</p>",
+      "refs": {
+        "ResourceScanMetadata$codeRepository": "<p>Contains metadata about scan coverage for a code repository resource.</p>"
+      }
+    },
+    "CodeRepositoryMetadataProjectNameString": {
+      "base": null,
+      "refs": {
+        "CodeRepositoryMetadata$projectName": "<p>The name of the project in the code repository.</p>"
+      }
+    },
+    "CodeRepositoryMetadataProviderTypeString": {
+      "base": null,
+      "refs": {
+        "CodeRepositoryMetadata$providerType": "<p>The type of repository provider (such as GitHub, GitLab, etc.).</p>"
+      }
+    },
+    "CodeRepositoryMetadataProviderTypeVisibilityString": {
+      "base": null,
+      "refs": {
+        "CodeRepositoryMetadata$providerTypeVisibility": "<p>The visibility setting of the repository (public or private).</p>"
+      }
+    },
+    "CodeRepositoryOnDemandScan": {
+      "base": "<p>Contains information about on-demand scans performed on a code repository.</p>",
+      "refs": {
+        "CodeRepositoryMetadata$onDemandScan": "<p>Information about on-demand scans performed on the repository.</p>"
+      }
+    },
+    "CodeRepositoryProjectName": {
+      "base": null,
+      "refs": {
+        "CodeRepositoryDetails$projectName": "<p>The name of the project in the code repository.</p>"
+      }
+    },
+    "CodeRepositoryProviderType": {
+      "base": null,
+      "refs": {
+        "CodeRepositoryDetails$providerType": "<p>The type of repository provider (such as GitHub, GitLab, etc.).</p>"
+      }
+    },
+    "CodeRepositorySortBy": {
+      "base": null,
+      "refs": {
+        "CodeRepositoryAggregation$sortBy": "<p>The value to sort results by in the code repository aggregation.</p>"
+      }
+    },
+    "CodeScanStatus": {
+      "base": null,
+      "refs": {
+        "GetCodeSecurityScanResponse$status": "<p>The current status of the scan.</p>",
+        "StartCodeSecurityScanResponse$status": "<p>The current status of the initiated scan.</p>"
+      }
+    },
+    "CodeSecurityClientToken": {
+      "base": null,
+      "refs": {
+        "StartCodeSecurityScanRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
+      }
+    },
+    "CodeSecurityIntegrationArn": {
+      "base": "<p>arn:aws:inspector2:<region>:<account-id>:codesecurity-integration/<uuid></p>",
+      "refs": {
+        "CodeSecurityIntegrationSummary$integrationArn": "<p>The Amazon Resource Name (ARN) of the code security integration.</p>",
+        "CreateCodeSecurityIntegrationResponse$integrationArn": "<p>The Amazon Resource Name (ARN) of the created code security integration.</p>",
+        "DeleteCodeSecurityIntegrationRequest$integrationArn": "<p>The Amazon Resource Name (ARN) of the code security integration to delete.</p>",
+        "DeleteCodeSecurityIntegrationResponse$integrationArn": "<p>The Amazon Resource Name (ARN) of the deleted code security integration.</p>",
+        "GetCodeSecurityIntegrationRequest$integrationArn": "<p>The Amazon Resource Name (ARN) of the code security integration to retrieve.</p>",
+        "GetCodeSecurityIntegrationResponse$integrationArn": "<p>The Amazon Resource Name (ARN) of the code security integration.</p>",
+        "UpdateCodeSecurityIntegrationRequest$integrationArn": "<p>The Amazon Resource Name (ARN) of the code security integration to update.</p>",
+        "UpdateCodeSecurityIntegrationResponse$integrationArn": "<p>The Amazon Resource Name (ARN) of the updated code security integration.</p>"
+      }
+    },
+    "CodeSecurityIntegrationSummary": {
+      "base": "<p>A summary of information about a code security integration.</p>",
+      "refs": {
+        "IntegrationSummaries$member": null
+      }
+    },
+    "CodeSecurityResource": {
+      "base": "<p>Identifies a specific resource in a code repository that will be scanned.</p>",
+      "refs": {
+        "AssociateConfigurationRequest$resource": null,
+        "CodeSecurityScanConfigurationAssociationSummary$resource": null,
+        "DisassociateConfigurationRequest$resource": null,
+        "FailedAssociationResult$resource": null,
+        "GetCodeSecurityScanRequest$resource": "<p>The resource identifier for the code repository that was scanned.</p>",
+        "GetCodeSecurityScanResponse$resource": "<p>The resource identifier for the code repository that was scanned.</p>",
+        "StartCodeSecurityScanRequest$resource": "<p>The resource identifier for the code repository to scan.</p>",
+        "SuccessfulAssociationResult$resource": null
+      }
+    },
+    "CodeSecurityScanConfiguration": {
+      "base": "<p>Contains the configuration settings for code security scans.</p>",
+      "refs": {
+        "CreateCodeSecurityScanConfigurationRequest$configuration": "<p>The configuration settings for the code security scan.</p>",
+        "GetCodeSecurityScanConfigurationResponse$configuration": "<p>The configuration settings for the code security scan.</p>",
+        "UpdateCodeSecurityScanConfigurationRequest$configuration": "<p>The updated configuration settings for the code security scan.</p>"
+      }
+    },
+    "CodeSecurityScanConfigurationAssociationSummaries": {
+      "base": null,
+      "refs": {
+        "ListCodeSecurityScanConfigurationAssociationsResponse$associations": "<p>A list of associations between code repositories and scan configurations.</p>"
+      }
+    },
+    "CodeSecurityScanConfigurationAssociationSummary": {
+      "base": "<p>A summary of an association between a code repository and a scan configuration.</p>",
+      "refs": {
+        "CodeSecurityScanConfigurationAssociationSummaries$member": null
+      }
+    },
+    "CodeSecurityScanConfigurationSummaries": {
+      "base": null,
+      "refs": {
+        "ListCodeSecurityScanConfigurationsResponse$configurations": "<p>A list of code security scan configuration summaries.</p>"
+      }
+    },
+    "CodeSecurityScanConfigurationSummary": {
+      "base": "<p>A summary of information about a code security scan configuration.</p>",
+      "refs": {
+        "CodeSecurityScanConfigurationSummaries$member": null
+      }
+    },
+    "CodeSecurityUuid": {
+      "base": null,
+      "refs": {
+        "GetCodeSecurityScanRequest$scanId": "<p>The unique identifier of the scan to retrieve.</p>",
+        "GetCodeSecurityScanResponse$scanId": "<p>The unique identifier of the scan.</p>",
+        "StartCodeSecurityScanResponse$scanId": "<p>The unique identifier of the initiated scan.</p>"
       }
     },
     "CodeSnippetError": {
@@ -997,10 +1301,23 @@
         "Finding$codeVulnerabilityDetails": "<p>Details about the code vulnerability identified in a Lambda function used to filter findings.</p>"
       }
     },
+    "CommitId": {
+      "base": null,
+      "refs": {
+        "CodeRepositoryMetadata$lastScannedCommitId": "<p>The ID of the last commit that was scanned in the repository.</p>",
+        "CodeRepositoryOnDemandScan$lastScannedCommitId": "<p>The ID of the last commit that was scanned during an on-demand scan.</p>"
+      }
+    },
     "Component": {
       "base": null,
       "refs": {
         "Step$componentId": "<p>The component ID.</p>"
+      }
+    },
+    "ComponentArn": {
+      "base": null,
+      "refs": {
+        "Step$componentArn": "<p>The component ARN. The ARN can be null and is not displayed in the Amazon Web Services console.</p>"
       }
     },
     "ComponentType": {
@@ -1015,9 +1332,35 @@
         "StopCisSessionMessage$computePlatform": "<p>The message compute platform.</p>"
       }
     },
-    "ConflictException": {
-      "base": "<p>A conflict occurred.</p>",
+    "ConfigurationLevel": {
+      "base": null,
       "refs": {
+        "CreateCodeSecurityScanConfigurationRequest$level": "<p>The security level for the scan configuration.</p>",
+        "GetCodeSecurityScanConfigurationResponse$level": "<p>The security level for the scan configuration.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>A conflict occurred. This exception occurs when the same resource is being modified by concurrent requests.</p>",
+      "refs": {}
+    },
+    "ContinuousIntegrationScanConfiguration": {
+      "base": "<p>Configuration settings for continuous integration scans that run automatically when code changes are made.</p>",
+      "refs": {
+        "CodeSecurityScanConfiguration$continuousIntegrationScanConfiguration": "<p>Configuration settings for continuous integration scans that run automatically when code changes are made.</p>"
+      }
+    },
+    "ContinuousIntegrationScanEvent": {
+      "base": null,
+      "refs": {
+        "ContinuousIntegrationScanSupportedEvents$member": null,
+        "ProjectContinuousIntegrationScanConfiguration$supportedEvent": "<p>The repository event that triggers continuous integration scans for the project.</p>"
+      }
+    },
+    "ContinuousIntegrationScanSupportedEvents": {
+      "base": null,
+      "refs": {
+        "CodeSecurityScanConfigurationSummary$continuousIntegrationScanSupportedEvents": "<p>The repository events that trigger continuous integration scans.</p>",
+        "ContinuousIntegrationScanConfiguration$supportedEvents": "<p>The repository events that trigger continuous integration scans, such as pull requests or commits.</p>"
       }
     },
     "Counts": {
@@ -1041,8 +1384,9 @@
     "CoverageDateFilterList": {
       "base": null,
       "refs": {
+        "CoverageFilterCriteria$lastScannedAt": "<p>Filters Amazon Web Services resources based on whether Amazon Inspector has checked them for vulnerabilities within the specified time range.</p>",
         "CoverageFilterCriteria$imagePulledAt": "<p>The date an image was last pulled at.</p>",
-        "CoverageFilterCriteria$lastScannedAt": "<p>Filters Amazon Web Services resources based on whether Amazon Inspector has checked them for vulnerabilities within the specified time range.</p>"
+        "CoverageFilterCriteria$ecrImageLastInUseAt": "<p>The Amazon ECR image that was last in use.</p>"
       }
     },
     "CoverageFilterCriteria": {
@@ -1071,6 +1415,18 @@
         "CoverageFilterCriteria$lambdaFunctionTags": "<p>Returns coverage statistics for Amazon Web Services Lambda functions filtered by tag.</p>"
       }
     },
+    "CoverageNumberFilter": {
+      "base": "<p>The coverage number to be used in the filter.</p>",
+      "refs": {
+        "CoverageNumberFilterList$member": null
+      }
+    },
+    "CoverageNumberFilterList": {
+      "base": null,
+      "refs": {
+        "CoverageFilterCriteria$ecrImageInUseCount": "<p>The number of Amazon ECR images in use.</p>"
+      }
+    },
     "CoverageResourceType": {
       "base": null,
       "refs": {
@@ -1092,17 +1448,21 @@
     "CoverageStringFilterList": {
       "base": null,
       "refs": {
-        "CoverageFilterCriteria$accountId": "<p>An array of Amazon Web Services account IDs to return coverage statistics for.</p>",
-        "CoverageFilterCriteria$ecrImageTags": "<p>The Amazon ECR image tags to filter on.</p>",
-        "CoverageFilterCriteria$ecrRepositoryName": "<p>The Amazon ECR repository name to filter on.</p>",
-        "CoverageFilterCriteria$lambdaFunctionName": "<p>Returns coverage statistics for Amazon Web Services Lambda functions filtered by function names.</p>",
-        "CoverageFilterCriteria$lambdaFunctionRuntime": "<p>Returns coverage statistics for Amazon Web Services Lambda functions filtered by runtime.</p>",
-        "CoverageFilterCriteria$resourceId": "<p>An array of Amazon Web Services resource IDs to return coverage statistics for.</p>",
-        "CoverageFilterCriteria$resourceType": "<p>An array of Amazon Web Services resource types to return coverage statistics for. The values can be <code>AWS_EC2_INSTANCE</code>, <code>AWS_LAMBDA_FUNCTION</code>, <code>AWS_ECR_CONTAINER_IMAGE</code>, <code>AWS_ECR_REPOSITORY</code> or <code>AWS_ACCOUNT</code>.</p>",
-        "CoverageFilterCriteria$scanMode": "<p>The filter to search for Amazon EC2 instance coverage by scan mode. Valid values are <code>EC2_SSM_AGENT_BASED</code> and <code>EC2_AGENTLESS</code>.</p>",
         "CoverageFilterCriteria$scanStatusCode": "<p>The scan status code to filter on. Valid values are: <code>ValidationException</code>, <code>InternalServerException</code>, <code>ResourceNotFoundException</code>, <code>BadRequestException</code>, and <code>ThrottlingException</code>.</p>",
         "CoverageFilterCriteria$scanStatusReason": "<p>The scan status reason to filter on.</p>",
-        "CoverageFilterCriteria$scanType": "<p>An array of Amazon Inspector scan types to return coverage statistics for.</p>"
+        "CoverageFilterCriteria$accountId": "<p>An array of Amazon Web Services account IDs to return coverage statistics for.</p>",
+        "CoverageFilterCriteria$resourceId": "<p>An array of Amazon Web Services resource IDs to return coverage statistics for.</p>",
+        "CoverageFilterCriteria$resourceType": "<p>An array of Amazon Web Services resource types to return coverage statistics for. The values can be <code>AWS_EC2_INSTANCE</code>, <code>AWS_LAMBDA_FUNCTION</code>, <code>AWS_ECR_CONTAINER_IMAGE</code>, <code>AWS_ECR_REPOSITORY</code> or <code>AWS_ACCOUNT</code>.</p>",
+        "CoverageFilterCriteria$scanType": "<p>An array of Amazon Inspector scan types to return coverage statistics for.</p>",
+        "CoverageFilterCriteria$ecrRepositoryName": "<p>The Amazon ECR repository name to filter on.</p>",
+        "CoverageFilterCriteria$ecrImageTags": "<p>The Amazon ECR image tags to filter on.</p>",
+        "CoverageFilterCriteria$lambdaFunctionName": "<p>Returns coverage statistics for Amazon Web Services Lambda functions filtered by function names.</p>",
+        "CoverageFilterCriteria$lambdaFunctionRuntime": "<p>Returns coverage statistics for Amazon Web Services Lambda functions filtered by runtime.</p>",
+        "CoverageFilterCriteria$scanMode": "<p>The filter to search for Amazon EC2 instance coverage by scan mode. Valid values are <code>EC2_SSM_AGENT_BASED</code> and <code>EC2_AGENTLESS</code>.</p>",
+        "CoverageFilterCriteria$codeRepositoryProjectName": "<p>Filter criteria for code repositories based on project name.</p>",
+        "CoverageFilterCriteria$codeRepositoryProviderType": "<p>Filter criteria for code repositories based on provider type (such as GitHub, GitLab, etc.).</p>",
+        "CoverageFilterCriteria$codeRepositoryProviderTypeVisibility": "<p>Filter criteria for code repositories based on visibility setting (public or private).</p>",
+        "CoverageFilterCriteria$lastScannedCommitId": "<p>Filter criteria for code repositories based on the ID of the last scanned commit.</p>"
       }
     },
     "CoverageStringInput": {
@@ -1125,13 +1485,11 @@
     },
     "CreateCisScanConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCisScanConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCisTargets": {
       "base": "<p>Creates CIS targets.</p>",
@@ -1139,35 +1497,57 @@
         "CreateCisScanConfigurationRequest$targets": "<p>The targets for the CIS scan configuration.</p>"
       }
     },
+    "CreateCodeSecurityIntegrationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCodeSecurityIntegrationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCodeSecurityScanConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCodeSecurityScanConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFilterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFindingsReportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFindingsReportResponse": {
       "base": null,
+      "refs": {}
+    },
+    "CreateGitLabSelfManagedIntegrationDetail": {
+      "base": "<p>Contains details required to create an integration with a self-managed GitLab instance.</p>",
       "refs": {
+        "CreateIntegrationDetail$gitlabSelfManaged": "<p>Details specific to creating an integration with a self-managed GitLab instance.</p>"
+      }
+    },
+    "CreateIntegrationDetail": {
+      "base": "<p>Contains details required to create a code security integration with a specific repository provider.</p>",
+      "refs": {
+        "CreateCodeSecurityIntegrationRequest$details": "<p>The integration details specific to the repository provider type.</p>"
       }
     },
     "CreateSbomExportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSbomExportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Currency": {
       "base": null,
@@ -1181,34 +1561,24 @@
         "Vulnerability$cvss2": "<p>An object that contains the Common Vulnerability Scoring System (CVSS) Version 2 details for the vulnerability.</p>"
       }
     },
-    "Cvss2BaseScore": {
-      "base": null,
-      "refs": {
-        "Cvss2$baseScore": "<p>The CVSS v2 base score for the vulnerability.</p>"
-      }
-    },
-    "Cvss2ScoringVector": {
-      "base": null,
-      "refs": {
-        "Cvss2$scoringVector": "<p>The scoring vector associated with the CVSS v2 score.</p>"
-      }
-    },
     "Cvss3": {
       "base": "<p>The Common Vulnerability Scoring System (CVSS) version 3 details for the vulnerability.</p>",
       "refs": {
         "Vulnerability$cvss3": "<p>An object that contains the Common Vulnerability Scoring System (CVSS) Version 3 details for the vulnerability.</p>"
       }
     },
-    "Cvss3BaseScore": {
-      "base": null,
+    "Cvss4": {
+      "base": "<p>The Common Vulnerability Scoring System (CVSS) version 4 details for the vulnerability.</p>",
       "refs": {
-        "Cvss3$baseScore": "<p>The CVSS v3 base score for the vulnerability.</p>"
+        "Vulnerability$cvss4": "<p>An object that contains the Common Vulnerability Scoring System (CVSS) Version 4 details for the vulnerability.</p>"
       }
     },
-    "Cvss3ScoringVector": {
+    "CvssBaseScore": {
       "base": null,
       "refs": {
-        "Cvss3$scoringVector": "<p>The scoring vector associated with the CVSS v3 score.</p>"
+        "Cvss2$baseScore": "<p>The CVSS v2 base score for the vulnerability.</p>",
+        "Cvss3$baseScore": "<p>The CVSS v3 base score for the vulnerability.</p>",
+        "Cvss4$baseScore": "<p>The base CVSS v4 score for the vulnerability finding, which rates the severity of the vulnerability on a scale from 0 to 10.</p>"
       }
     },
     "CvssScore": {
@@ -1239,6 +1609,14 @@
       "base": null,
       "refs": {
         "PackageVulnerabilityDetails$cvss": "<p>An object that contains details about the CVSS score of a finding.</p>"
+      }
+    },
+    "CvssScoringVector": {
+      "base": null,
+      "refs": {
+        "Cvss2$scoringVector": "<p>The scoring vector associated with the CVSS v2 score.</p>",
+        "Cvss3$scoringVector": "<p>The scoring vector associated with the CVSS v3 score.</p>",
+        "Cvss4$scoringVector": "<p>The CVSS v4 scoring vector, which contains the metrics and measurements that were used to calculate the base score.</p>"
       }
     },
     "Cwe": {
@@ -1275,22 +1653,28 @@
     "DateFilterList": {
       "base": null,
       "refs": {
-        "FilterCriteria$ecrImagePushedAt": "<p>Details on the Amazon ECR image push date and time used to filter findings.</p>",
+        "AwsEcrContainerAggregation$lastInUseAt": "<p>The last time an Amazon ECR image was used in an Amazon ECS task or Amazon EKS pod.</p>",
         "FilterCriteria$firstObservedAt": "<p>Details on the date and time a finding was first seen used to filter findings.</p>",
-        "FilterCriteria$lambdaFunctionLastModifiedAt": "<p>Filters the list of Amazon Web Services Lambda functions by the date and time that a user last updated the configuration, in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\">ISO 8601 format</a> </p>",
         "FilterCriteria$lastObservedAt": "<p>Details on the date and time a finding was last seen used to filter findings.</p>",
-        "FilterCriteria$updatedAt": "<p>Details on the date and time a finding was last updated at used to filter findings.</p>"
+        "FilterCriteria$updatedAt": "<p>Details on the date and time a finding was last updated at used to filter findings.</p>",
+        "FilterCriteria$ecrImagePushedAt": "<p>Details on the Amazon ECR image push date and time used to filter findings.</p>",
+        "FilterCriteria$ecrImageLastInUseAt": "<p>Filter criteria indicating when an Amazon ECR image was last used in an Amazon ECS cluster task or Amazon EKS cluster pod.</p>",
+        "FilterCriteria$lambdaFunctionLastModifiedAt": "<p>Filters the list of Amazon Web Services Lambda functions by the date and time that a user last updated the configuration, in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\">ISO 8601 format</a> </p>"
       }
     },
     "DateTimeTimestamp": {
       "base": null,
       "refs": {
         "AwsEc2InstanceDetails$launchedAt": "<p>The date and time the Amazon EC2 instance was launched at.</p>",
+        "AwsEcrContainerAggregationResponse$lastInUseAt": "<p>The last time an Amazon ECR image was used in an Amazon ECS task or Amazon EKS pod.</p>",
         "AwsEcrContainerImageDetails$pushedAt": "<p>The date and time the Amazon ECR container image was pushed.</p>",
-        "CoverageDateFilter$endInclusive": "<p>A timestamp representing the end of the time period to filter results by.</p>",
+        "AwsEcrContainerImageDetails$lastInUseAt": "<p>The last time an Amazon ECR image was used in an Amazon ECS task or Amazon EKS pod.</p>",
+        "CodeRepositoryOnDemandScan$lastScanAt": "<p>The timestamp when the last on-demand scan was performed.</p>",
         "CoverageDateFilter$startInclusive": "<p>A timestamp representing the start of the time period to filter results by.</p>",
+        "CoverageDateFilter$endInclusive": "<p>A timestamp representing the end of the time period to filter results by.</p>",
         "CoveredResource$lastScannedAt": "<p>The date and time the resource was last checked for vulnerabilities.</p>",
         "EcrContainerImageMetadata$imagePulledAt": "<p>The date an image was last pulled at.</p>",
+        "EcrContainerImageMetadata$lastInUseAt": "<p>The last time an Amazon ECR image was used in an Amazon ECS task or Amazon EKS pod.</p>",
         "EcrRescanDurationState$updatedAt": "<p>A timestamp representing when the last time the ECR scan duration setting was changed.</p>",
         "ExploitabilityDetails$lastKnownExploitAt": "<p>The date and time of the last exploit associated with a finding discovered in your environment.</p>",
         "Filter$createdAt": "<p>The date and time this filter was created at.</p>",
@@ -1343,33 +1727,43 @@
     },
     "DeleteCisScanConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCisScanConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DeleteCodeSecurityIntegrationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCodeSecurityIntegrationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCodeSecurityScanConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCodeSecurityScanConfigurationResponse": {
+      "base": null,
+      "refs": {}
     },
     "DeleteFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFilterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeOrganizationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeOrganizationConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Destination": {
       "base": "<p>Contains details of the Amazon S3 bucket and KMS key used to export findings.</p>",
@@ -1394,18 +1788,15 @@
     },
     "DisableDelegatedAdminAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisableDelegatedAdminAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisableRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisableResourceTypeList": {
       "base": null,
@@ -1415,18 +1806,27 @@
     },
     "DisableResponse": {
       "base": null,
+      "refs": {}
+    },
+    "DisassociateConfigurationRequest": {
+      "base": "<p>Contains details about a request to disassociate a code repository from a scan configuration.</p>",
       "refs": {
+        "DisassociateConfigurationRequestList$member": null
+      }
+    },
+    "DisassociateConfigurationRequestList": {
+      "base": null,
+      "refs": {
+        "BatchDisassociateCodeSecurityScanConfigurationRequest$disassociateConfigurationRequests": "<p>A list of code repositories to disassociate from the specified scan configuration.</p>"
       }
     },
     "DisassociateMemberRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateMemberResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Double": {
       "base": null,
@@ -1435,8 +1835,8 @@
         "CvssScoreDetails$score": "<p>The CVSS score.</p>",
         "Finding$inspectorScore": "<p>The Amazon Inspector score given to the finding.</p>",
         "FindingDetail$epssScore": "<p>The Exploit Prediction Scoring System (EPSS) score of the vulnerability.</p>",
-        "NumberFilter$lowerInclusive": "<p>The lowest number to be included in the filter.</p>",
-        "NumberFilter$upperInclusive": "<p>The highest number to be included in the filter.</p>"
+        "NumberFilter$upperInclusive": "<p>The highest number to be included in the filter.</p>",
+        "NumberFilter$lowerInclusive": "<p>The lowest number to be included in the filter.</p>"
       }
     },
     "Ec2Configuration": {
@@ -1533,6 +1933,13 @@
         "EcrRescanDurationState$pullDateRescanDuration": "<p>The rescan duration configured for image pull date.</p>"
       }
     },
+    "EcrPullDateRescanMode": {
+      "base": null,
+      "refs": {
+        "EcrConfiguration$pullDateRescanMode": "<p>The pull date for the re-scan mode.</p>",
+        "EcrRescanDurationState$pullDateRescanMode": "<p>The pull date for the re-scan mode.</p>"
+      }
+    },
     "EcrRepositoryMetadata": {
       "base": "<p>Information on the Amazon ECR repository metadata associated with a finding.</p>",
       "refs": {
@@ -1543,7 +1950,7 @@
       "base": null,
       "refs": {
         "EcrConfiguration$rescanDuration": "<p>The rescan duration configured for image push date.</p>",
-        "EcrRescanDurationState$rescanDuration": "<p>The rescan duration configured for image push date. <pre><code> &lt;/p&gt; </code></pre>"
+        "EcrRescanDurationState$rescanDuration": "<p>The rescan duration configured for image push date. </p>"
       }
     },
     "EcrRescanDurationState": {
@@ -1566,18 +1973,15 @@
     },
     "EnableDelegatedAdminAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EnableDelegatedAdminAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EnableRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EnableResourceTypeList": {
       "base": null,
@@ -1587,8 +1991,7 @@
     },
     "EnableResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Epss": {
       "base": "<p>Details about the Exploit Prediction Scoring System (EPSS) score.</p>",
@@ -1703,6 +2106,19 @@
         "EnableResponse$failedAccounts": "<p>Information on any accounts for which Amazon Inspector scans could not be enabled. Details are provided for each account.</p>"
       }
     },
+    "FailedAssociationResult": {
+      "base": "<p>Details about a failed attempt to associate or disassociate a code repository with a scan configuration.</p>",
+      "refs": {
+        "FailedAssociationResultList$member": null
+      }
+    },
+    "FailedAssociationResultList": {
+      "base": null,
+      "refs": {
+        "BatchAssociateCodeSecurityScanConfigurationResponse$failedAssociations": "<p>Details of any code repositories that failed to be associated with the scan configuration.</p>",
+        "BatchDisassociateCodeSecurityScanConfigurationResponse$failedAssociations": "<p>Details of any code repositories that failed to be disassociated from the scan configuration.</p>"
+      }
+    },
     "FailedMemberAccountEc2DeepInspectionStatusState": {
       "base": "<p>An object that contains details about a member account in your organization that failed to activate Amazon Inspector deep inspection.</p>",
       "refs": {
@@ -1712,7 +2128,7 @@
     "FailedMemberAccountEc2DeepInspectionStatusStateList": {
       "base": null,
       "refs": {
-        "BatchGetMemberEc2DeepInspectionStatusResponse$failedAccountIds": "<p>An array of objects that provide details on any accounts that failed to activate Amazon Inspector deep inspection and why. <pre><code> &lt;/p&gt; </code></pre>",
+        "BatchGetMemberEc2DeepInspectionStatusResponse$failedAccountIds": "<p>An array of objects that provide details on any accounts that failed to activate Amazon Inspector deep inspection and why. </p>",
         "BatchUpdateMemberEc2DeepInspectionStatusResponse$failedAccountIds": "<p>An array of objects that provide details for each of the accounts that Amazon Inspector deep inspection status could not be successfully changed for. </p>"
       }
     },
@@ -1965,6 +2381,14 @@
         "FreeTrialInfo$type": "<p>The type of scan covered by the Amazon Inspector free trail.</p>"
       }
     },
+    "FrequencyExpression": {
+      "base": null,
+      "refs": {
+        "CodeSecurityScanConfigurationSummary$frequencyExpression": "<p>The schedule expression for periodic scans, in cron format.</p>",
+        "PeriodicScanConfiguration$frequencyExpression": "<p>The schedule expression for periodic scans, in cron format.</p>",
+        "ProjectPeriodicScanConfiguration$frequencyExpression": "<p>The schedule expression for periodic scans, in cron format, applied to the project.</p>"
+      }
+    },
     "FunctionName": {
       "base": null,
       "refs": {
@@ -1973,13 +2397,11 @@
     },
     "GetCisScanReportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCisScanReportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCisScanResultDetailsMaxResults": {
       "base": null,
@@ -1989,82 +2411,135 @@
     },
     "GetCisScanResultDetailsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCisScanResultDetailsResponse": {
       "base": null,
+      "refs": {}
+    },
+    "GetClustersForImageNextToken": {
+      "base": null,
       "refs": {
+        "GetClustersForImageRequest$nextToken": "<p>The pagination token from a previous request used to retrieve the next page of results.</p>",
+        "GetClustersForImageResponse$nextToken": "<p>The pagination token from a previous request used to retrieve the next page of results.</p>"
       }
+    },
+    "GetClustersForImageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetClustersForImageRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "GetClustersForImageRequest$maxResults": "<p>The maximum number of results to be returned in a single page of results.</p>"
+      }
+    },
+    "GetClustersForImageResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCodeSecurityIntegrationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCodeSecurityIntegrationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCodeSecurityScanConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCodeSecurityScanConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCodeSecurityScanRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCodeSecurityScanResponse": {
+      "base": null,
+      "refs": {}
     },
     "GetConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDelegatedAdminAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDelegatedAdminAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEc2DeepInspectionConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEc2DeepInspectionConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEncryptionKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEncryptionKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFindingsReportStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFindingsReportStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMemberRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMemberResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSbomExportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSbomExportResponse": {
       "base": null,
+      "refs": {}
+    },
+    "GitHubAuthCode": {
+      "base": null,
       "refs": {
+        "UpdateGitHubIntegrationDetail$code": "<p>The authorization code received from GitHub to update the integration.</p>"
+      }
+    },
+    "GitHubInstallationId": {
+      "base": null,
+      "refs": {
+        "UpdateGitHubIntegrationDetail$installationId": "<p>The installation ID of the GitHub App associated with the integration.</p>"
+      }
+    },
+    "GitLabAccessToken": {
+      "base": null,
+      "refs": {
+        "CreateGitLabSelfManagedIntegrationDetail$accessToken": "<p>The personal access token used to authenticate with the self-managed GitLab instance.</p>"
+      }
+    },
+    "GitLabAuthCode": {
+      "base": null,
+      "refs": {
+        "UpdateGitLabSelfManagedIntegrationDetail$authCode": "<p>The authorization code received from the self-managed GitLab instance to update the integration.</p>"
       }
     },
     "GroupKey": {
@@ -2110,29 +2585,65 @@
         "Finding$inspectorScoreDetails": "<p>An object that contains details of the Amazon Inspector score.</p>"
       }
     },
+    "InstanceUrl": {
+      "base": null,
+      "refs": {
+        "CreateGitLabSelfManagedIntegrationDetail$instanceUrl": "<p>The URL of the self-managed GitLab instance.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
-        "CisNumberFilter$lowerInclusive": "<p>The CIS number filter's lower inclusive.</p>",
         "CisNumberFilter$upperInclusive": "<p>The CIS number filter's upper inclusive.</p>",
+        "CisNumberFilter$lowerInclusive": "<p>The CIS number filter's lower inclusive.</p>",
         "CisScan$failedChecks": "<p>The CIS scan's failed checks.</p>",
         "CisScan$totalChecks": "<p>The CIS scan's total checks.</p>",
-        "CodeFilePath$endLine": "<p>The line number of the last line of code that a vulnerability was found in.</p>",
         "CodeFilePath$startLine": "<p>The line number of the first line of code that a vulnerability was found in.</p>",
+        "CodeFilePath$endLine": "<p>The line number of the last line of code that a vulnerability was found in.</p>",
         "CodeLine$lineNumber": "<p>The line number that a section of code is located at.</p>",
-        "CodeSnippetResult$endLine": "<p>The line number of the last line of a code snippet.</p>",
         "CodeSnippetResult$startLine": "<p>The line number of the first line of a code snippet.</p>",
+        "CodeSnippetResult$endLine": "<p>The line number of the last line of a code snippet.</p>",
         "InternalServerException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request.</p>",
         "StatusCounts$failed": "<p>The number of checks that failed.</p>",
-        "StatusCounts$passed": "<p>The number of checks that passed.</p>",
         "StatusCounts$skipped": "<p>The number of checks that were skipped.</p>",
+        "StatusCounts$passed": "<p>The number of checks that passed.</p>",
         "ThrottlingException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request.</p>"
+      }
+    },
+    "IntegrationName": {
+      "base": null,
+      "refs": {
+        "CodeSecurityIntegrationSummary$name": "<p>The name of the code security integration.</p>",
+        "CreateCodeSecurityIntegrationRequest$name": "<p>The name of the code security integration.</p>",
+        "GetCodeSecurityIntegrationResponse$name": "<p>The name of the code security integration.</p>"
+      }
+    },
+    "IntegrationStatus": {
+      "base": null,
+      "refs": {
+        "CodeSecurityIntegrationSummary$status": "<p>The current status of the code security integration.</p>",
+        "CreateCodeSecurityIntegrationResponse$status": "<p>The current status of the code security integration.</p>",
+        "GetCodeSecurityIntegrationResponse$status": "<p>The current status of the code security integration.</p>",
+        "UpdateCodeSecurityIntegrationResponse$status": "<p>The current status of the updated code security integration.</p>"
+      }
+    },
+    "IntegrationSummaries": {
+      "base": null,
+      "refs": {
+        "ListCodeSecurityIntegrationsResponse$integrations": "<p>A list of code security integration summaries.</p>"
+      }
+    },
+    "IntegrationType": {
+      "base": null,
+      "refs": {
+        "CodeSecurityIntegrationSummary$type": "<p>The type of repository provider for the integration.</p>",
+        "CreateCodeSecurityIntegrationRequest$type": "<p>The type of repository provider for the integration.</p>",
+        "GetCodeSecurityIntegrationResponse$type": "<p>The type of repository provider for the integration.</p>"
       }
     },
     "InternalServerException": {
       "base": "<p>The request has failed due to an internal failure of the Amazon Inspector service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IpV4Address": {
       "base": null,
@@ -2248,13 +2759,11 @@
     },
     "ListAccountPermissionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccountPermissionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCisScanConfigurationsFilterCriteria": {
       "base": "<p>A list of CIS scan configurations filter criteria.</p>",
@@ -2270,33 +2779,27 @@
     },
     "ListCisScanConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCisScanConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCisScanResultsAggregatedByChecksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCisScanResultsAggregatedByChecksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCisScanResultsAggregatedByTargetResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCisScanResultsAggregatedByTargetResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCisScansDetailLevel": {
       "base": null,
@@ -2318,19 +2821,59 @@
     },
     "ListCisScansRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCisScansResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCisScansSortBy": {
       "base": null,
       "refs": {
         "ListCisScansRequest$sortBy": "<p>The CIS scans sort by order.</p>"
       }
+    },
+    "ListCodeSecurityIntegrationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCodeSecurityIntegrationsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListCodeSecurityIntegrationsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>"
+      }
+    },
+    "ListCodeSecurityIntegrationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCodeSecurityScanConfigurationAssociationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCodeSecurityScanConfigurationAssociationsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListCodeSecurityScanConfigurationAssociationsRequest$maxResults": "<p>The maximum number of results to return in the response. If your request would return more than the maximum the response will return a <code>nextToken</code> value, use this value when you call the action again to get the remaining results.</p>"
+      }
+    },
+    "ListCodeSecurityScanConfigurationAssociationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCodeSecurityScanConfigurationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCodeSecurityScanConfigurationsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListCodeSecurityScanConfigurationsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>"
+      }
+    },
+    "ListCodeSecurityScanConfigurationsResponse": {
+      "base": null,
+      "refs": {}
     },
     "ListCoverageMaxResults": {
       "base": null,
@@ -2340,33 +2883,27 @@
     },
     "ListCoverageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCoverageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCoverageStatisticsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCoverageStatisticsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDelegatedAdminAccountsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDelegatedAdminAccountsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDelegatedAdminMaxResults": {
       "base": null,
@@ -2382,13 +2919,11 @@
     },
     "ListFiltersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFiltersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFindingAggregationsMaxResults": {
       "base": null,
@@ -2398,13 +2933,11 @@
     },
     "ListFindingAggregationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFindingAggregationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFindingsMaxResults": {
       "base": null,
@@ -2414,13 +2947,11 @@
     },
     "ListFindingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFindingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMembersMaxResults": {
       "base": null,
@@ -2430,23 +2961,19 @@
     },
     "ListMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListUsageTotalsMaxResults": {
       "base": null,
@@ -2463,13 +2990,11 @@
     },
     "ListUsageTotalsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListUsageTotalsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
@@ -2477,15 +3002,24 @@
         "AccountAggregationResponse$exploitAvailableCount": "<p> The number of findings that have an exploit available. </p>",
         "AccountAggregationResponse$fixAvailableCount": "<p> Details about the number of fixes. </p>",
         "AmiAggregationResponse$affectedInstances": "<p>The IDs of Amazon EC2 instances using this AMI.</p>",
+        "AwsEcrContainerAggregationResponse$inUseCount": "<p>The number of Amazon ECS tasks or Amazon EKS pods where the Amazon ECR container image is in use.</p>",
+        "AwsEcrContainerImageDetails$inUseCount": "<p>The number of Amazon ECS tasks or Amazon EKS pods where the Amazon ECR container image is in use.</p>",
+        "ClusterDetails$runningUnitCount": "<p>The number of tasks or pods where an image was running on the cluster.</p>",
+        "ClusterDetails$stoppedUnitCount": "<p>The number of tasks or pods where an image was stopped on the cluster in the last 24 hours.</p>",
+        "CodeRepositoryAggregationResponse$exploitAvailableActiveFindingsCount": "<p>The number of active findings that have an exploit available for the code repository.</p>",
+        "CodeRepositoryAggregationResponse$fixAvailableActiveFindingsCount": "<p>The number of active findings that have a fix available for the code repository.</p>",
+        "CoverageNumberFilter$upperInclusive": "<p>The upper inclusive for the coverage number.&gt;</p>",
+        "CoverageNumberFilter$lowerInclusive": "<p>The lower inclusive for the coverage number.</p>",
         "Ec2InstanceAggregationResponse$networkFindings": "<p>The number of network findings for the Amazon EC2 instance.</p>",
+        "EcrContainerImageMetadata$inUseCount": "<p>The number of Amazon ECS tasks or Amazon EKS pods where the Amazon ECR container image is in use.</p>",
         "FindingTypeAggregationResponse$exploitAvailableCount": "<p>The number of findings that have an exploit available.</p>",
         "FindingTypeAggregationResponse$fixAvailableCount": "<p> Details about the number of fixes. </p>",
         "ListCoverageStatisticsResponse$totalCounts": "<p>The total number for all groups.</p>",
         "RepositoryAggregationResponse$affectedImages": "<p>The number of container images impacted by the findings.</p>",
         "SeverityCounts$all": "<p>The total count of findings from all severities.</p>",
-        "SeverityCounts$critical": "<p>The total count of critical severity findings.</p>",
+        "SeverityCounts$medium": "<p>The total count of medium severity findings.</p>",
         "SeverityCounts$high": "<p>The total count of high severity findings.</p>",
-        "SeverityCounts$medium": "<p>The total count of medium severity findings.</p>"
+        "SeverityCounts$critical": "<p>The total count of critical severity findings.</p>"
       }
     },
     "MapComparison": {
@@ -2552,7 +3086,7 @@
     "MemberAccountEc2DeepInspectionStatusStateList": {
       "base": null,
       "refs": {
-        "BatchGetMemberEc2DeepInspectionStatusResponse$accountIds": "<p>An array of objects that provide details on the activation status of Amazon Inspector deep inspection for each of the requested accounts. <pre><code> &lt;/p&gt; </code></pre>",
+        "BatchGetMemberEc2DeepInspectionStatusResponse$accountIds": "<p>An array of objects that provide details on the activation status of Amazon Inspector deep inspection for each of the requested accounts. </p>",
         "BatchUpdateMemberEc2DeepInspectionStatusResponse$accountIds": "<p>An array of objects that provide details for each of the accounts that Amazon Inspector deep inspection status was successfully changed for. </p>"
       }
     },
@@ -2616,6 +3150,10 @@
         "ListCisScanResultsAggregatedByTargetResourceResponse$nextToken": "<p>The pagination token from a previous request that's used to retrieve the next page of results.</p>",
         "ListCisScansRequest$nextToken": "<p>The pagination token from a previous request that's used to retrieve the next page of results.</p>",
         "ListCisScansResponse$nextToken": "<p>The pagination token from a previous request that's used to retrieve the next page of results.</p>",
+        "ListCodeSecurityScanConfigurationAssociationsRequest$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request to a list action. For subsequent calls, use the <code>NextToken</code> value returned from the previous request to continue listing results after the first page.</p>",
+        "ListCodeSecurityScanConfigurationAssociationsResponse$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request to a list action. For subsequent calls, use the <code>NextToken</code> value returned from the previous request to continue listing results after the first page.</p>",
+        "ListCodeSecurityScanConfigurationsRequest$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the NextToken value returned from the previous request to continue listing results after the first page.</p>",
+        "ListCodeSecurityScanConfigurationsResponse$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the NextToken value returned from the previous request to continue listing results after the first page.</p>",
         "ListCoverageRequest$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request to a list action. If your response returns more than the <code>maxResults</code> maximum value it will also return a <code>nextToken</code> value. For subsequent calls, use the <code>nextToken</code> value returned from the previous request to continue listing results after the first page.</p>",
         "ListCoverageResponse$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request to a list action. For subsequent calls, use the <code>NextToken</code> value returned from the previous request to continue listing results after the first page.</p>",
         "ListCoverageStatisticsRequest$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request to a list action. For subsequent calls, use the <code>NextToken</code> value returned from the previous request to continue listing results after the first page.</p>",
@@ -2637,34 +3175,34 @@
     "NonEmptyString": {
       "base": null,
       "refs": {
-        "AwsEc2InstanceDetails$iamInstanceProfileArn": "<p>The IAM instance profile ARN of the Amazon EC2 instance.</p>",
+        "AwsEc2InstanceDetails$type": "<p>The type of the Amazon EC2 instance.</p>",
         "AwsEc2InstanceDetails$imageId": "<p>The image ID of the Amazon EC2 instance.</p>",
         "AwsEc2InstanceDetails$keyName": "<p>The name of the key pair used to launch the Amazon EC2 instance.</p>",
-        "AwsEc2InstanceDetails$subnetId": "<p>The subnet ID of the Amazon EC2 instance.</p>",
-        "AwsEc2InstanceDetails$type": "<p>The type of the Amazon EC2 instance.</p>",
+        "AwsEc2InstanceDetails$iamInstanceProfileArn": "<p>The IAM instance profile ARN of the Amazon EC2 instance.</p>",
         "AwsEc2InstanceDetails$vpcId": "<p>The VPC ID of the Amazon EC2 instance.</p>",
+        "AwsEc2InstanceDetails$subnetId": "<p>The subnet ID of the Amazon EC2 instance.</p>",
         "AwsEcrContainerAggregationResponse$resourceId": "<p>The resource ID of the container.</p>",
+        "AwsEcrContainerImageDetails$repositoryName": "<p>The name of the repository the Amazon ECR container image resides in.</p>",
         "AwsEcrContainerImageDetails$architecture": "<p>The architecture of the Amazon ECR container image.</p>",
         "AwsEcrContainerImageDetails$registry": "<p>The registry for the Amazon ECR container image.</p>",
-        "AwsEcrContainerImageDetails$repositoryName": "<p>The name of the repository the Amazon ECR container image resides in.</p>",
         "AwsLambdaFunctionDetails$codeSha256": "<p>The SHA256 hash of the Amazon Web Services Lambda function's deployment package.</p>",
         "CodeFilePath$fileName": "<p>The name of the file the code vulnerability was found in.</p>",
         "CodeFilePath$filePath": "<p>The file path to the code that a vulnerability was found in.</p>",
         "CodeSnippetError$errorMessage": "<p>The error message received when Amazon Inspector failed to retrieve a code snippet.</p>",
+        "CodeVulnerabilityDetails$ruleId": "<p>The identifier for a rule that was used to detect the code vulnerability.</p>",
         "CodeVulnerabilityDetails$detectorId": "<p>The ID for the Amazon CodeGuru detector associated with the finding. For more information on detectors see <a href=\"https://docs.aws.amazon.com/codeguru/detector-library\">Amazon CodeGuru Detector Library</a>.</p>",
         "CodeVulnerabilityDetails$detectorName": "<p>The name of the detector used to identify the code vulnerability. For more information on detectors see <a href=\"https://docs.aws.amazon.com/codeguru/detector-library\">CodeGuru Detector Library</a>.</p>",
-        "CodeVulnerabilityDetails$ruleId": "<p>The identifier for a rule that was used to detect the code vulnerability.</p>",
         "CoverageMapFilter$key": "<p>The tag key associated with the coverage map filter.</p>",
         "CoverageMapFilter$value": "<p>The tag value associated with the coverage map filter.</p>",
         "CvssScore$scoringVector": "<p>The vector string of the CVSS score.</p>",
-        "CvssScore$source": "<p>The source of the CVSS score.</p>",
         "CvssScore$version": "<p>The version of CVSS used for the score.</p>",
+        "CvssScore$source": "<p>The source of the CVSS score.</p>",
         "CvssScoreAdjustment$metric": "<p>The metric used to adjust the CVSS score.</p>",
         "CvssScoreAdjustment$reason": "<p>The reason the CVSS score has been adjustment.</p>",
-        "CvssScoreDetails$cvssSource": "<p>The source of the CVSS data.</p>",
         "CvssScoreDetails$scoreSource": "<p>The source for the CVSS score.</p>",
-        "CvssScoreDetails$scoringVector": "<p>The vector for the CVSS score.</p>",
+        "CvssScoreDetails$cvssSource": "<p>The source of the CVSS data.</p>",
         "CvssScoreDetails$version": "<p>The CVSS version used in scoring.</p>",
+        "CvssScoreDetails$scoringVector": "<p>The vector for the CVSS score.</p>",
         "CweList$member": null,
         "DetectionPlatforms$member": null,
         "DetectorTagList$member": null,
@@ -2674,22 +3212,22 @@
         "FindingDetailsError$errorMessage": "<p>The error message.</p>",
         "GetEc2DeepInspectionConfigurationResponse$errorMessage": "<p>An error message explaining why Amazon Inspector deep inspection configurations could not be retrieved for your account.</p>",
         "GetSbomExportResponse$errorMessage": "<p>An error message.</p>",
-        "ImageLayerAggregationResponse$layerHash": "<p>The layer hash.</p>",
         "ImageLayerAggregationResponse$repository": "<p>The repository the layer resides in.</p>",
         "ImageLayerAggregationResponse$resourceId": "<p>The resource ID of the container image layer.</p>",
+        "ImageLayerAggregationResponse$layerHash": "<p>The layer hash.</p>",
         "ImageTagList$member": null,
         "LambdaFunctionAggregationResponse$resourceId": "<p>The resource IDs included in the aggregation results.</p>",
         "LambdaLayerAggregationResponse$functionName": "<p>The names of the Amazon Web Services Lambda functions associated with the layers.</p>",
-        "LambdaLayerAggregationResponse$layerArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Lambda function layer.</p>",
         "LambdaLayerAggregationResponse$resourceId": "<p>The Resource ID of the Amazon Web Services Lambda function layer.</p>",
+        "LambdaLayerAggregationResponse$layerArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Lambda function layer.</p>",
         "MemberAccountEc2DeepInspectionStatusState$errorMessage": "<p>The error message explaining why the account failed to activate Amazon Inspector deep inspection.</p>",
         "NonEmptyStringList$member": null,
         "PackageAggregationResponse$packageName": "<p>The name of the operating system package.</p>",
         "PackageVulnerabilityDetails$source": "<p>The source of the vulnerability information.</p>",
         "PackageVulnerabilityDetails$sourceUrl": "<p>A URL to the source of the vulnerability information.</p>",
         "PackageVulnerabilityDetails$vendorSeverity": "<p>The severity the vendor has given to this vulnerability type.</p>",
-        "Recommendation$Url": "<p>The URL address to the CVE remediation recommendations.</p>",
         "Recommendation$text": "<p>The recommended course of action to remediate the finding.</p>",
+        "Recommendation$Url": "<p>The URL address to the CVE remediation recommendations.</p>",
         "ReferenceUrls$member": null,
         "RepositoryAggregationResponse$repository": "<p>The name of the repository associated with the findings.</p>",
         "Resource$id": "<p>The ID of the resource.</p>",
@@ -2722,8 +3260,10 @@
     "NumberFilterList": {
       "base": null,
       "refs": {
-        "FilterCriteria$epssScore": "<p>The EPSS score used to filter findings.</p>",
-        "FilterCriteria$inspectorScore": "<p>The Amazon Inspector score to filter on.</p>"
+        "AwsEcrContainerAggregation$inUseCount": "<p>The number of Amazon ECS tasks or Amazon EKS pods where the Amazon ECR container image is in use.</p>",
+        "FilterCriteria$inspectorScore": "<p>The Amazon Inspector score to filter on.</p>",
+        "FilterCriteria$ecrImageInUseCount": "<p>Filter criteria indicating when details for an Amazon ECR image include when an Amazon ECR image is in use.</p>",
+        "FilterCriteria$epssScore": "<p>The EPSS score used to filter findings.</p>"
       }
     },
     "OneAccountIdFilterList": {
@@ -2747,6 +3287,7 @@
     "OwnerId": {
       "base": null,
       "refs": {
+        "CodeSecurityScanConfigurationSummary$ownerAccountId": "<p>The Amazon Web Services account ID that owns the scan configuration.</p>",
         "Filter$ownerId": "<p>The Amazon Web Services account ID of the account that created the filter.</p>"
       }
     },
@@ -2819,8 +3360,8 @@
     "PackageVersion": {
       "base": null,
       "refs": {
-        "VulnerablePackage$fixedInVersion": "<p>The version of the package that contains the vulnerability fix.</p>",
-        "VulnerablePackage$version": "<p>The version of the vulnerable package.</p>"
+        "VulnerablePackage$version": "<p>The version of the vulnerable package.</p>",
+        "VulnerablePackage$fixedInVersion": "<p>The version of the package that contains the vulnerability fix.</p>"
       }
     },
     "PackageVulnerabilityDetails": {
@@ -2838,12 +3379,25 @@
     "PathList": {
       "base": null,
       "refs": {
-        "GetEc2DeepInspectionConfigurationResponse$orgPackagePaths": "<p>The Amazon Inspector deep inspection custom paths for your organization.</p>",
         "GetEc2DeepInspectionConfigurationResponse$packagePaths": "<p>The Amazon Inspector deep inspection custom paths for your account.</p>",
+        "GetEc2DeepInspectionConfigurationResponse$orgPackagePaths": "<p>The Amazon Inspector deep inspection custom paths for your organization.</p>",
         "UpdateEc2DeepInspectionConfigurationRequest$packagePaths": "<p>The Amazon Inspector deep inspection custom paths you are adding for your account.</p>",
-        "UpdateEc2DeepInspectionConfigurationResponse$orgPackagePaths": "<p>The current Amazon Inspector deep inspection custom paths for the organization.</p>",
         "UpdateEc2DeepInspectionConfigurationResponse$packagePaths": "<p>The current Amazon Inspector deep inspection custom paths for your account.</p>",
+        "UpdateEc2DeepInspectionConfigurationResponse$orgPackagePaths": "<p>The current Amazon Inspector deep inspection custom paths for the organization.</p>",
         "UpdateOrgEc2DeepInspectionConfigurationRequest$orgPackagePaths": "<p>The Amazon Inspector deep inspection custom paths you are adding for your organization.</p>"
+      }
+    },
+    "PeriodicScanConfiguration": {
+      "base": "<p>Configuration settings for periodic scans that run on a scheduled basis.</p>",
+      "refs": {
+        "CodeSecurityScanConfiguration$periodicScanConfiguration": "<p>Configuration settings for periodic scans that run on a scheduled basis.</p>"
+      }
+    },
+    "PeriodicScanFrequency": {
+      "base": null,
+      "refs": {
+        "CodeSecurityScanConfigurationSummary$periodicScanFrequency": "<p>The frequency at which periodic scans are performed.</p>",
+        "PeriodicScanConfiguration$frequency": "<p>The frequency at which periodic scans are performed (such as weekly or monthly).</p> <p>If you don't provide the <code>frequencyExpression</code> Amazon Inspector chooses day for the scan to run. If you provide the <code>frequencyExpression</code>, the schedule must match the specified <code>frequency</code>.</p>"
       }
     },
     "Permission": {
@@ -2909,6 +3463,48 @@
       "base": null,
       "refs": {
         "ComputePlatform$product": "<p>The compute platform product.</p>"
+      }
+    },
+    "ProjectCodeSecurityScanConfiguration": {
+      "base": "<p>Contains the scan configuration settings applied to a specific project in a code repository.</p>",
+      "refs": {
+        "CodeRepositoryMetadata$scanConfiguration": "<p>The scan configuration settings applied to the code repository.</p>"
+      }
+    },
+    "ProjectContinuousIntegrationScanConfiguration": {
+      "base": "<p>Contains the continuous integration scan configuration settings applied to a specific project.</p>",
+      "refs": {
+        "ProjectContinuousIntegrationScanConfigurationList$member": null
+      }
+    },
+    "ProjectContinuousIntegrationScanConfigurationList": {
+      "base": null,
+      "refs": {
+        "ProjectCodeSecurityScanConfiguration$continuousIntegrationScanConfigurations": "<p>The continuous integration scan configurations applied to the project.</p>"
+      }
+    },
+    "ProjectId": {
+      "base": null,
+      "refs": {
+        "CodeSecurityResource$projectId": "<p>The unique identifier of the project in the code repository.</p>"
+      }
+    },
+    "ProjectPeriodicScanConfiguration": {
+      "base": "<p>Contains the periodic scan configuration settings applied to a specific project.</p>",
+      "refs": {
+        "ProjectPeriodicScanConfigurationList$member": null
+      }
+    },
+    "ProjectPeriodicScanConfigurationList": {
+      "base": null,
+      "refs": {
+        "ProjectCodeSecurityScanConfiguration$periodicScanConfigurations": "<p>The periodic scan configurations applied to the project.</p>"
+      }
+    },
+    "ProjectSelectionScope": {
+      "base": null,
+      "refs": {
+        "ScopeSettings$projectSelectionScope": "<p>The scope of projects to be selected for scanning within the integrated repositories. Setting the value to <code>ALL</code> applies the scope settings to all existing and future projects imported into Amazon Inspector.</p>"
       }
     },
     "Reason": {
@@ -3008,13 +3604,11 @@
     },
     "ResetEncryptionKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResetEncryptionKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Resource": {
       "base": "<p>Details about the resource involved in a finding.</p>",
@@ -3078,8 +3672,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The operation tried to access an invalid resource. Make sure the resource is specified correctly.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceScanMetadata": {
       "base": "<p>An object that contains details about the metadata for an Amazon ECR resource.</p>",
@@ -3123,11 +3716,11 @@
       "base": null,
       "refs": {
         "ResourceFilterCriteria$accountId": "<p>The account IDs used as resource filter criteria.</p>",
-        "ResourceFilterCriteria$ecrImageTags": "<p>The ECR image tags used as resource filter criteria.</p>",
+        "ResourceFilterCriteria$resourceId": "<p>The resource IDs used as resource filter criteria.</p>",
+        "ResourceFilterCriteria$resourceType": "<p>The resource types used as resource filter criteria.</p>",
         "ResourceFilterCriteria$ecrRepositoryName": "<p>The ECR repository names used as resource filter criteria.</p>",
         "ResourceFilterCriteria$lambdaFunctionName": "<p>The Amazon Web Services Lambda function name used as resource filter criteria.</p>",
-        "ResourceFilterCriteria$resourceId": "<p>The resource IDs used as resource filter criteria.</p>",
-        "ResourceFilterCriteria$resourceType": "<p>The resource types used as resource filter criteria.</p>"
+        "ResourceFilterCriteria$ecrImageTags": "<p>The ECR image tags used as resource filter criteria.</p>"
       }
     },
     "ResourceStringInput": {
@@ -3165,6 +3758,21 @@
         "CisSessionMessage$ruleId": "<p>The rule ID for the CIS session message.</p>"
       }
     },
+    "RuleSetCategories": {
+      "base": null,
+      "refs": {
+        "CodeSecurityScanConfiguration$ruleSetCategories": "<p>The categories of security rules to be applied during the scan.</p>",
+        "CodeSecurityScanConfigurationSummary$ruleSetCategories": "<p>The categories of security rules applied during the scan.</p>",
+        "ProjectContinuousIntegrationScanConfiguration$ruleSetCategories": "<p>The categories of security rules applied during continuous integration scans for the project.</p>",
+        "ProjectPeriodicScanConfiguration$ruleSetCategories": "<p>The categories of security rules applied during periodic scans for the project.</p>"
+      }
+    },
+    "RuleSetCategory": {
+      "base": null,
+      "refs": {
+        "RuleSetCategories$member": null
+      }
+    },
     "Runtime": {
       "base": null,
       "refs": {
@@ -3179,6 +3787,32 @@
         "GetSbomExportResponse$format": "<p>The format of the software bill of materials (SBOM) report.</p>"
       }
     },
+    "ScanConfigurationArn": {
+      "base": "<p>arn:aws:inspector2:<region>:<account-id>:owner/<owner-id>/codesecurity-configuration/<uuid></p>",
+      "refs": {
+        "AssociateConfigurationRequest$scanConfigurationArn": "<p>The Amazon Resource Name (ARN) of the scan configuration.</p>",
+        "CodeSecurityScanConfigurationSummary$scanConfigurationArn": "<p>The Amazon Resource Name (ARN) of the scan configuration.</p>",
+        "CreateCodeSecurityScanConfigurationResponse$scanConfigurationArn": "<p>The Amazon Resource Name (ARN) of the created scan configuration.</p>",
+        "DeleteCodeSecurityScanConfigurationRequest$scanConfigurationArn": "<p>The Amazon Resource Name (ARN) of the scan configuration to delete.</p>",
+        "DeleteCodeSecurityScanConfigurationResponse$scanConfigurationArn": "<p>The Amazon Resource Name (ARN) of the deleted scan configuration.</p>",
+        "DisassociateConfigurationRequest$scanConfigurationArn": "<p>The Amazon Resource Name (ARN) of the scan configuration to disassociate from a code repository.</p>",
+        "FailedAssociationResult$scanConfigurationArn": "<p>The Amazon Resource Name (ARN) of the scan configuration that failed to be associated or disassociated.</p>",
+        "GetCodeSecurityScanConfigurationRequest$scanConfigurationArn": "<p>The Amazon Resource Name (ARN) of the scan configuration to retrieve.</p>",
+        "GetCodeSecurityScanConfigurationResponse$scanConfigurationArn": "<p>The Amazon Resource Name (ARN) of the scan configuration.</p>",
+        "ListCodeSecurityScanConfigurationAssociationsRequest$scanConfigurationArn": "<p>The Amazon Resource Name (ARN) of the scan configuration to list associations for.</p>",
+        "SuccessfulAssociationResult$scanConfigurationArn": "<p>The Amazon Resource Name (ARN) of the scan configuration that was successfully associated or disassociated.</p>",
+        "UpdateCodeSecurityScanConfigurationRequest$scanConfigurationArn": "<p>The Amazon Resource Name (ARN) of the scan configuration to update.</p>",
+        "UpdateCodeSecurityScanConfigurationResponse$scanConfigurationArn": "<p>The Amazon Resource Name (ARN) of the updated scan configuration.</p>"
+      }
+    },
+    "ScanConfigurationName": {
+      "base": null,
+      "refs": {
+        "CodeSecurityScanConfigurationSummary$name": "<p>The name of the scan configuration.</p>",
+        "CreateCodeSecurityScanConfigurationRequest$name": "<p>The name of the scan configuration.</p>",
+        "GetCodeSecurityScanConfigurationResponse$name": "<p>The name of the scan configuration.</p>"
+      }
+    },
     "ScanMode": {
       "base": null,
       "refs": {
@@ -3188,6 +3822,7 @@
     "ScanStatus": {
       "base": "<p>The status of the scan.</p>",
       "refs": {
+        "CodeRepositoryOnDemandScan$scanStatus": null,
         "CoveredResource$scanStatus": "<p>The status of the scan covering the resource.</p>"
       }
     },
@@ -3200,7 +3835,7 @@
     "ScanStatusReason": {
       "base": null,
       "refs": {
-        "ScanStatus$reason": "<p>The scan status. Possible return values and descriptions are: </p> <p> <code>PENDING_INITIAL_SCAN</code> - This resource has been identified for scanning, results will be available soon.</p> <p> <code>ACCESS_DENIED</code> - Resource access policy restricting Amazon Inspector access. Please update the IAM policy.</p> <p> <code>INTERNAL_ERROR</code> - Amazon Inspector has encountered an internal error for this resource. Amazon Inspector service will automatically resolve the issue and resume the scanning. No action required from the user.</p> <p> <code>UNMANAGED_EC2_INSTANCE</code> - The EC2 instance is not managed by SSM, please use the following SSM automation to remediate the issue: <a href=\"https://docs.aws.amazon.com/systems-manager-automation-runbooks/latest/userguide/automation-awssupport-troubleshoot-managed-instance.html\">https://docs.aws.amazon.com/systems-manager-automation-runbooks/latest/userguide/automation-awssupport-troubleshoot-managed-instance.html</a>. Once the instance becomes managed by SSM, Inspector will automatically begin scanning this instance. </p> <p> <code>UNSUPPORTED_OS</code> - Amazon Inspector does not support this OS, architecture, or image manifest type at this time. To see a complete list of supported operating systems see: <a href=\" https://docs.aws.amazon.com/inspector/latest/user/supported.html\">https://docs.aws.amazon.com/inspector/latest/user/supported.html</a>.</p> <p> <code>SCAN_ELIGIBILITY_EXPIRED</code> - The configured scan duration has lapsed for this image.</p> <p> <code>RESOURCE_TERMINATED</code> - This resource has been terminated. The findings and coverage associated with this resource are in the process of being cleaned up.</p> <p> <code>SUCCESSFUL</code> - The scan was successful.</p> <p> <code>NO_RESOURCES_FOUND</code> - Reserved for future use.</p> <p> <code>IMAGE_SIZE_EXCEEDED</code> - Reserved for future use.</p> <p> <code>SCAN_FREQUENCY_MANUAL</code> - This image will not be covered by Amazon Inspector due to the repository scan frequency configuration.</p> <p> <code>SCAN_FREQUENCY_SCAN_ON_PUSH </code>- This image will be scanned one time and will not new findings because of the scan frequency configuration.</p> <p> <code>EC2_INSTANCE_STOPPED</code> - This EC2 instance is in a stopped state, therefore, Amazon Inspector will pause scanning. The existing findings will continue to exist until the instance is terminated. Once the instance is re-started, Inspector will automatically start scanning the instance again. Please note that you will not be charged for this instance while it’s in a stopped state.</p> <p> <code>PENDING_DISABLE</code> - This resource is pending cleanup during disablement. The customer will not be billed while a resource is in the pending disable status.</p> <p> <code>NO INVENTORY</code> - Amazon Inspector couldn’t find software application inventory to scan for vulnerabilities. This might be caused due to required Amazon Inspector associations being deleted or failing to run on your resource. Please verify the status of <code>InspectorInventoryCollection-do-not-delete</code> association in the SSM console for the resource. Additionally, you can verify the instance’s inventory in the SSM Fleet Manager console.</p> <p> <code>STALE_INVENTORY</code> - Amazon Inspector wasn’t able to collect an updated software application inventory in the last 7 days. Please confirm the required Amazon Inspector associations still exist and you can still see an updated inventory in the SSM console.</p> <p> <code>EXCLUDED_BY_TAG</code> - This resource was not scanned because it has been excluded by a tag.</p> <p> <code>UNSUPPORTED_RUNTIME</code> - The function was not scanned because it has an unsupported runtime. To see a complete list of supported runtimes see: <a href=\" https://docs.aws.amazon.com/inspector/latest/user/supported.html\">https://docs.aws.amazon.com/inspector/latest/user/supported.html</a>.</p> <p> <code>UNSUPPORTED_MEDIA_TYPE </code>- The ECR image has an unsupported media type.</p> <p> <code>UNSUPPORTED_CONFIG_FILE</code> - Reserved for future use.</p> <p> <code>DEEP_INSPECTION_PACKAGE_COLLECTION_LIMIT_EXCEEDED</code> - The instance has exceeded the 5000 package limit for Amazon Inspector Deep inspection. To resume Deep inspection for this instance you can try to adjust the custom paths associated with the account.</p> <p> <code>DEEP_INSPECTION_DAILY_SSM_INVENTORY_LIMIT_EXCEEDED</code> - The SSM agent couldn't send inventory to Amazon Inspector because the SSM quota for Inventory data collected per instance per day has already been reached for this instance.</p> <p> <code>DEEP_INSPECTION_COLLECTION_TIME_LIMIT_EXCEEDED</code> - Amazon Inspector failed to extract the package inventory because the package collection time exceeding the maximum threshold of 15 minutes.</p> <p> <code>DEEP_INSPECTION_NO_INVENTORY</code> The Amazon Inspector plugin hasn't yet been able to collect an inventory of packages for this instance. This is usually the result of a pending scan, however, if this status persists after 6 hours, use SSM to ensure that the required Amazon Inspector associations exist and are running for the instance.</p> <p/>"
+        "ScanStatus$reason": "<p>The scan status. Possible return values and descriptions are: </p> <p> <code>ACCESS_DENIED</code> - Resource access policy restricting Amazon Inspector access. Please update the IAM policy.</p> <p> <code>ACCESS_DENIED_TO_ENCRYPTION_KEY</code> - The KMS key policy doesn't allow Amazon Inspector access. Update the key policy.</p> <p> <code>DEEP_INSPECTION_COLLECTION_TIME_LIMIT_EXCEEDED</code> - Amazon Inspector failed to extract the package inventory because the package collection time exceeding the maximum threshold of 15 minutes.</p> <p> <code>DEEP_INSPECTION_DAILY_SSM_INVENTORY_LIMIT_EXCEEDED</code> - The SSM agent couldn't send inventory to Amazon Inspector because the SSM quota for Inventory data collected per instance per day has already been reached for this instance.</p> <p> <code>DEEP_INSPECTION_NO_INVENTORY</code> - The Amazon Inspector plugin hasn't yet been able to collect an inventory of packages for this instance. This is usually the result of a pending scan, however, if this status persists after 6 hours, use SSM to ensure that the required Amazon Inspector associations exist and are running for the instance.</p> <p> <code>DEEP_INSPECTION_PACKAGE_COLLECTION_LIMIT_EXCEEDED</code> - The instance has exceeded the 5000 package limit for Amazon Inspector Deep inspection. To resume Deep inspection for this instance you can try to adjust the custom paths associated with the account.</p> <p> <code>EC2_INSTANCE_STOPPED</code> - This EC2 instance is in a stopped state, therefore, Amazon Inspector will pause scanning. The existing findings will continue to exist until the instance is terminated. Once the instance is re-started, Inspector will automatically start scanning the instance again. Please note that you will not be charged for this instance while it's in a stopped state.</p> <p> <code>EXCLUDED_BY_TAG</code> - This resource was not scanned because it has been excluded by a tag.</p> <p> <code>IMAGE_SIZE_EXCEEDED</code> - Reserved for future use.</p> <p> <code>INTEGRATION_CONNNECTION_LOST</code> - Amazon Inspector couldn't communicate with the source code management platform.</p> <p> <code>INTERNAL_ERROR</code> - Amazon Inspector has encountered an internal error for this resource. Amazon Inspector service will automatically resolve the issue and resume the scanning. No action required from the user.</p> <p> <code>NO_INVENTORY</code> - Amazon Inspector couldn't find software application inventory to scan for vulnerabilities. This might be caused due to required Amazon Inspector associations being deleted or failing to run on your resource. Please verify the status of <code>InspectorInventoryCollection-do-not-delete</code> association in the SSM console for the resource. Additionally, you can verify the instance's inventory in the SSM Fleet Manager console.</p> <p> <code>NO_RESOURCES_FOUND</code> - Reserved for future use.</p> <p> <code>NO_SCAN_CONFIGURATION_ASSOCIATED</code> - The code repository resource doesn't have an associated scan configuration.</p> <p> <code>PENDING_DISABLE</code> - This resource is pending cleanup during disablement. The customer will not be billed while a resource is in the pending disable status.</p> <p> <code>PENDING_INITIAL_SCAN</code> - This resource has been identified for scanning, results will be available soon.</p> <p> <code>RESOURCE_TERMINATED</code> - This resource has been terminated. The findings and coverage associated with this resource are in the process of being cleaned up.</p> <p> <code>SCAN_ELIGIBILITY_EXPIRED</code> - The configured scan duration has lapsed for this image.</p> <p> <code>SCAN_FREQUENCY_MANUAL</code> - This image will not be covered by Amazon Inspector due to the repository scan frequency configuration.</p> <p> <code>SCAN_FREQUENCY_SCAN_ON_PUSH</code> - This image will be scanned one time and will not new findings because of the scan frequency configuration.</p> <p> <code>SCAN_IN_PROGRESS</code> - The resource is currently being scanned.</p> <p> <code>STALE_INVENTORY</code> - Amazon Inspector wasn't able to collect an updated software application inventory in the last 7 days. Please confirm the required Amazon Inspector associations still exist and you can still see an updated inventory in the SSM console.</p> <p> <code>SUCCESSFUL</code> - The scan was successful.</p> <p> <code>UNMANAGED_EC2_INSTANCE</code> - The EC2 instance is not managed by SSM, please use the following SSM automation to remediate the issue: <a href=\"https://docs.aws.amazon.com/systems-manager-automation-runbooks/latest/userguide/automation-awssupport-troubleshoot-managed-instance.html\">https://docs.aws.amazon.com/systems-manager-automation-runbooks/latest/userguide/automation-awssupport-troubleshoot-managed-instance.html</a>. Once the instance becomes managed by SSM, Inspector will automatically begin scanning this instance. </p> <p> <code>UNSUPPORTED_CONFIG_FILE</code> - Reserved for future use.</p> <p> <code>UNSUPPORTED_LANGUAGE</code> - The scan was unsuccessful because the repository contains files in an unsupported programming language.</p> <p> <code>UNSUPPORTED_MEDIA_TYPE </code>- The ECR image has an unsupported media type.</p> <p> <code>UNSUPPORTED_OS</code> - Amazon Inspector does not support this OS, architecture, or image manifest type at this time. To see a complete list of supported operating systems see: <a href=\" https://docs.aws.amazon.com/inspector/latest/user/supported.html\">https://docs.aws.amazon.com/inspector/latest/user/supported.html</a>.</p> <p> <code>UNSUPPORTED_RUNTIME</code> - The function was not scanned because it has an unsupported runtime. To see a complete list of supported runtimes see: <a href=\" https://docs.aws.amazon.com/inspector/latest/user/supported.html\">https://docs.aws.amazon.com/inspector/latest/user/supported.html</a>.</p>"
       }
     },
     "ScanType": {
@@ -3220,6 +3855,14 @@
         "UpdateCisScanConfigurationRequest$schedule": "<p>The schedule for the CIS scan configuration.</p>"
       }
     },
+    "ScopeSettings": {
+      "base": "<p>Defines the scope of repositories to be included in code security scans.</p>",
+      "refs": {
+        "CodeSecurityScanConfigurationSummary$scopeSettings": "<p>The scope settings that define which repositories will be scanned. If the <code>ScopeSetting</code> parameter is <code>ALL</code> the scan configuration applies to all existing and future projects imported into Amazon Inspector.</p>",
+        "CreateCodeSecurityScanConfigurationRequest$scopeSettings": "<p>The scope settings that define which repositories will be scanned. Include this parameter to create a default scan configuration. Otherwise Amazon Inspector creates a general scan configuration. </p> <p>A default scan configuration automatically applies to all existing and future projects imported into Amazon Inspector. Use the <code>BatchAssociateCodeSecurityScanConfiguration</code> operation to associate a general scan configuration with projects.</p>",
+        "GetCodeSecurityScanConfigurationResponse$scopeSettings": "<p>The scope settings that define which repositories will be scanned. If the <code>ScopeSetting</code> parameter is <code>ALL</code> the scan configuration applies to all existing and future projects imported into Amazon Inspector.</p>"
+      }
+    },
     "SearchVulnerabilitiesFilterCriteria": {
       "base": "<p>Details on the criteria used to define the filter for a vulnerability search. </p>",
       "refs": {
@@ -3228,13 +3871,11 @@
     },
     "SearchVulnerabilitiesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchVulnerabilitiesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SecurityGroupId": {
       "base": null,
@@ -3250,23 +3891,19 @@
     },
     "SendCisSessionHealthRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendCisSessionHealthResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendCisSessionTelemetryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendCisSessionTelemetryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Service": {
       "base": null,
@@ -3277,8 +3914,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>You have exceeded your service quota. To perform the requested action, remove some of the relevant resources, or use Service Quotas to request a service quota increase.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Severity": {
       "base": null,
@@ -3292,6 +3928,7 @@
         "AccountAggregationResponse$severityCounts": "<p>The number of findings by severity.</p>",
         "AmiAggregationResponse$severityCounts": "<p>An object that contains the count of matched findings per severity.</p>",
         "AwsEcrContainerAggregationResponse$severityCounts": "<p>The number of finding by severity.</p>",
+        "CodeRepositoryAggregationResponse$severityCounts": null,
         "Ec2InstanceAggregationResponse$severityCounts": "<p>An object that contains the count of matched findings per severity.</p>",
         "FindingTypeAggregationResponse$severityCounts": "<p>The value to sort results by.</p>",
         "ImageLayerAggregationResponse$severityCounts": "<p>An object that represents the count of matched findings per severity.</p>",
@@ -3320,6 +3957,7 @@
         "AccountAggregation$sortOrder": "<p>The sort order (ascending or descending).</p>",
         "AmiAggregation$sortOrder": "<p>The order to sort results by.</p>",
         "AwsEcrContainerAggregation$sortOrder": "<p>The sort order (ascending or descending).</p>",
+        "CodeRepositoryAggregation$sortOrder": "<p>The order to sort results by (ascending or descending) in the code repository aggregation.</p>",
         "Ec2InstanceAggregation$sortOrder": "<p>The order to sort results by.</p>",
         "FindingTypeAggregation$sortOrder": "<p>The order to sort results by.</p>",
         "ImageLayerAggregation$sortOrder": "<p>The order to sort results by.</p>",
@@ -3345,13 +3983,19 @@
     },
     "StartCisSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartCisSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "StartCodeSecurityScanRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartCodeSecurityScanResponse": {
+      "base": null,
+      "refs": {}
     },
     "State": {
       "base": "<p>An object that described the state of Amazon Inspector scans for an account.</p>",
@@ -3360,7 +4004,8 @@
         "ResourceState$ec2": "<p>An object detailing the state of Amazon Inspector scanning for Amazon EC2 resources.</p>",
         "ResourceState$ecr": "<p>An object detailing the state of Amazon Inspector scanning for Amazon ECR resources.</p>",
         "ResourceState$lambda": "<p>An object that described the state of Amazon Inspector scans for an account.</p>",
-        "ResourceState$lambdaCode": "<p>An object that described the state of Amazon Inspector scans for an account.</p>"
+        "ResourceState$lambdaCode": "<p>An object that described the state of Amazon Inspector scans for an account.</p>",
+        "ResourceState$codeRepository": null
       }
     },
     "Status": {
@@ -3373,6 +4018,7 @@
         "ResourceStatus$ecr": "<p>The status of Amazon Inspector scanning for Amazon ECR resources.</p>",
         "ResourceStatus$lambda": "<p>The status of Amazon Inspector scanning for Amazon Web Services Lambda function.</p>",
         "ResourceStatus$lambdaCode": "<p>The status of Amazon Inspector scanning for custom application code for Amazon Web Services Lambda functions. </p>",
+        "ResourceStatus$codeRepository": "<p>The status of Amazon Inspector scanning for code repositories.</p>",
         "State$status": "<p>The status of Amazon Inspector for the account.</p>"
       }
     },
@@ -3409,13 +4055,11 @@
     },
     "StopCisSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopCisSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopCisSessionStatus": {
       "base": null,
@@ -3427,40 +4071,51 @@
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
-        "AwsEcrContainerAggregationResponse$architecture": "<p>The architecture of the container.</p>",
         "AwsEcrContainerAggregationResponse$imageSha": "<p>The SHA value of the container image.</p>",
         "AwsEcrContainerAggregationResponse$repository": "<p>The container repository.</p>",
+        "AwsEcrContainerAggregationResponse$architecture": "<p>The architecture of the container.</p>",
         "AwsEcrContainerImageDetails$author": "<p>The image author of the Amazon ECR container image.</p>",
         "BadRequestException$message": null,
-        "CisCheckAggregation$checkDescription": "<p>The description for the CIS check.</p>",
         "CisCheckAggregation$checkId": "<p>The check ID for the CIS check.</p>",
-        "CisCheckAggregation$platform": "<p>The CIS check platform.</p>",
         "CisCheckAggregation$title": "<p>The CIS check title.</p>",
+        "CisCheckAggregation$checkDescription": "<p>The description for the CIS check.</p>",
+        "CisCheckAggregation$platform": "<p>The CIS check platform.</p>",
         "CisScan$scheduledBy": "<p>The account or organization that schedules the CIS scan.</p>",
-        "CisScanResultDetails$checkDescription": "<p>The account ID that's associated with the CIS scan result details.</p>",
-        "CisScanResultDetails$checkId": "<p>The CIS scan result details' check ID.</p>",
         "CisScanResultDetails$platform": "<p>The CIS scan result details' platform.</p>",
-        "CisScanResultDetails$remediation": "<p>The CIS scan result details' remediation.</p>",
         "CisScanResultDetails$statusReason": "<p>The CIS scan result details' status reason.</p>",
+        "CisScanResultDetails$checkId": "<p>The CIS scan result details' check ID.</p>",
         "CisScanResultDetails$title": "<p>The CIS scan result details' title.</p>",
+        "CisScanResultDetails$checkDescription": "<p>The account ID that's associated with the CIS scan result details.</p>",
+        "CisScanResultDetails$remediation": "<p>The CIS scan result details' remediation.</p>",
         "CisStringFilter$value": "<p>The value of the CIS string filter.</p>",
         "CisTargetResourceAggregation$platform": "<p>The platform for the CIS target resource.</p>",
+        "CodeRepositoryAggregationResponse$projectNames": "<p>The names of the projects associated with the code repository.</p>",
+        "CodeRepositoryAggregationResponse$providerType": "<p>The type of repository provider for the code repository.</p>",
+        "CodeRepositoryAggregationResponse$accountId": "<p>The Amazon Web Services account ID associated with the code repository.</p>",
+        "CodeRepositoryAggregationResponse$resourceId": "<p>The resource ID of the code repository.</p>",
+        "CodeSecurityIntegrationSummary$statusReason": "<p>The reason for the current status of the code security integration.</p>",
         "ConflictException$message": null,
         "ConflictException$resourceId": "<p>The ID of the conflicting resource.</p>",
         "ConflictException$resourceType": "<p>The type of the conflicting resource.</p>",
         "Destination$bucketName": "<p>The name of the Amazon S3 bucket to export findings to.</p>",
         "Destination$keyPrefix": "<p>The prefix that the findings will be written under.</p>",
         "Destination$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt data when exporting findings.</p>",
-        "Ec2InstanceAggregationResponse$accountId": "<p>The Amazon Web Services account for the Amazon EC2 instance.</p>",
         "Ec2InstanceAggregationResponse$operatingSystem": "<p>The operating system of the Amazon EC2 instance.</p>",
+        "Ec2InstanceAggregationResponse$accountId": "<p>The Amazon Web Services account for the Amazon EC2 instance.</p>",
         "EcrRepositoryMetadata$name": "<p>The name of the Amazon ECR repository.</p>",
         "FreeTrialInfoError$message": "<p>The error message returned.</p>",
         "GetCisScanReportResponse$url": "<p> The URL where a PDF or CSV of the CIS scan report can be downloaded. </p>",
+        "GetCodeSecurityIntegrationResponse$statusReason": "<p>The reason for the current status of the code security integration.</p>",
+        "GetCodeSecurityScanResponse$accountId": "<p>The Amazon Web Services account ID associated with the scan.</p>",
+        "GetCodeSecurityScanResponse$statusReason": "<p>The reason for the current status of the scan.</p>",
+        "GetCodeSecurityScanResponse$lastCommitId": "<p>The identifier of the last commit that was scanned. This is only returned if the scan was successful or skipped.</p>",
         "InternalServerException$message": null,
         "LambdaFunctionAggregationResponse$functionName": "<p>The Amazon Web Services Lambda function names included in the aggregation results.</p>",
         "LambdaFunctionAggregationResponse$runtime": "<p>The runtimes included in the aggregation results.</p>",
         "LambdaFunctionMetadata$functionName": "<p>The name of a function.</p>",
         "LambdaLayerList$member": null,
+        "ListCodeSecurityIntegrationsRequest$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the NextToken value returned from the previous request to continue listing results after the first page.</p>",
+        "ListCodeSecurityIntegrationsResponse$nextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request. For subsequent calls, use the NextToken value returned from the previous request to continue listing results after the first page.</p>",
         "ResourceNotFoundException$message": null,
         "ServiceQuotaExceededException$message": null,
         "ServiceQuotaExceededException$resourceId": "<p>The ID of the resource that exceeds a service quota.</p>",
@@ -3468,8 +4123,8 @@
         "ThrottlingException$message": null,
         "TitleAggregationResponse$vulnerabilityId": "<p>The vulnerability ID of the finding.</p>",
         "ValidationException$message": null,
-        "ValidationExceptionField$message": "<p>The validation exception message.</p>",
-        "ValidationExceptionField$name": "<p>The name of the validation exception.</p>"
+        "ValidationExceptionField$name": "<p>The name of the validation exception.</p>",
+        "ValidationExceptionField$message": "<p>The validation exception message.</p>"
       }
     },
     "StringComparison": {
@@ -3481,13 +4136,13 @@
     "StringFilter": {
       "base": "<p>An object that describes the details of a string filter.</p>",
       "refs": {
-        "PackageFilter$architecture": "<p>An object that contains details on the package architecture type to filter on.</p>",
-        "PackageFilter$filePath": "<p>An object that contains details on the package file path to filter on.</p>",
         "PackageFilter$name": "<p>An object that contains details on the name of the package to filter on.</p>",
-        "PackageFilter$release": "<p>An object that contains details on the package release to filter on.</p>",
-        "PackageFilter$sourceLambdaLayerArn": "<p>An object that describes the details of a string filter.</p>",
-        "PackageFilter$sourceLayerHash": "<p>An object that contains details on the source layer hash to filter on.</p>",
         "PackageFilter$version": "<p>The package version to filter on.</p>",
+        "PackageFilter$release": "<p>An object that contains details on the package release to filter on.</p>",
+        "PackageFilter$architecture": "<p>An object that contains details on the package architecture type to filter on.</p>",
+        "PackageFilter$sourceLayerHash": "<p>An object that contains details on the source layer hash to filter on.</p>",
+        "PackageFilter$sourceLambdaLayerArn": "<p>An object that describes the details of a string filter.</p>",
+        "PackageFilter$filePath": "<p>An object that contains details on the package file path to filter on.</p>",
         "StringFilterList$member": null
       }
     },
@@ -3495,55 +4150,60 @@
       "base": null,
       "refs": {
         "AmiAggregation$amis": "<p>The IDs of AMIs to aggregate findings for.</p>",
-        "AwsEcrContainerAggregation$architectures": "<p>The architecture of the containers.</p>",
-        "AwsEcrContainerAggregation$imageShas": "<p>The image SHA values.</p>",
-        "AwsEcrContainerAggregation$imageTags": "<p>The image tags.</p>",
-        "AwsEcrContainerAggregation$repositories": "<p>The container repositories.</p>",
         "AwsEcrContainerAggregation$resourceIds": "<p>The container resource IDs.</p>",
+        "AwsEcrContainerAggregation$imageShas": "<p>The image SHA values.</p>",
+        "AwsEcrContainerAggregation$repositories": "<p>The container repositories.</p>",
+        "AwsEcrContainerAggregation$architectures": "<p>The architecture of the containers.</p>",
+        "AwsEcrContainerAggregation$imageTags": "<p>The image tags.</p>",
+        "CodeRepositoryAggregation$projectNames": "<p>The project names to include in the aggregation results.</p>",
+        "CodeRepositoryAggregation$providerTypes": "<p>The repository provider types to include in the aggregation results.</p>",
+        "CodeRepositoryAggregation$resourceIds": "<p>The resource IDs to include in the aggregation results.</p>",
         "Ec2InstanceAggregation$amis": "<p>The AMI IDs associated with the Amazon EC2 instances to aggregate findings for.</p>",
-        "Ec2InstanceAggregation$instanceIds": "<p>The Amazon EC2 instance IDs to aggregate findings for.</p>",
         "Ec2InstanceAggregation$operatingSystems": "<p>The operating system types to aggregate findings for. Valid values must be uppercase and underscore separated, examples are <code>ORACLE_LINUX_7</code> and <code>ALPINE_LINUX_3_8</code>.</p>",
+        "Ec2InstanceAggregation$instanceIds": "<p>The Amazon EC2 instance IDs to aggregate findings for.</p>",
+        "FilterCriteria$findingArn": "<p>Details on the finding ARNs used to filter findings.</p>",
         "FilterCriteria$awsAccountId": "<p>Details of the Amazon Web Services account IDs used to filter findings.</p>",
-        "FilterCriteria$codeVulnerabilityDetectorName": "<p>The name of the detector used to identify a code vulnerability in a Lambda function used to filter findings.</p>",
-        "FilterCriteria$codeVulnerabilityDetectorTags": "<p>The detector type tag associated with the vulnerability used to filter findings. Detector tags group related vulnerabilities by common themes or tactics. For a list of available tags by programming language, see <a href=\"https://docs.aws.amazon.com/codeguru/detector-library/java/tags/\">Java tags</a>, or <a href=\"https://docs.aws.amazon.com/codeguru/detector-library/python/tags/\">Python tags</a>. </p>",
-        "FilterCriteria$codeVulnerabilityFilePath": "<p>The file path to the file in a Lambda function that contains a code vulnerability used to filter findings.</p>",
-        "FilterCriteria$componentId": "<p>Details of the component IDs used to filter findings.</p>",
-        "FilterCriteria$componentType": "<p>Details of the component types used to filter findings.</p>",
+        "FilterCriteria$findingType": "<p>Details on the finding types used to filter findings.</p>",
+        "FilterCriteria$severity": "<p>Details on the severity used to filter findings.</p>",
+        "FilterCriteria$findingStatus": "<p>Details on the finding status types used to filter findings.</p>",
+        "FilterCriteria$title": "<p>Details on the finding title used to filter findings.</p>",
+        "FilterCriteria$resourceType": "<p>Details on the resource types used to filter findings.</p>",
+        "FilterCriteria$resourceId": "<p>Details on the resource IDs used to filter findings.</p>",
         "FilterCriteria$ec2InstanceImageId": "<p>Details of the Amazon EC2 instance image IDs used to filter findings.</p>",
-        "FilterCriteria$ec2InstanceSubnetId": "<p>Details of the Amazon EC2 instance subnet IDs used to filter findings.</p>",
         "FilterCriteria$ec2InstanceVpcId": "<p>Details of the Amazon EC2 instance VPC IDs used to filter findings.</p>",
+        "FilterCriteria$ec2InstanceSubnetId": "<p>Details of the Amazon EC2 instance subnet IDs used to filter findings.</p>",
         "FilterCriteria$ecrImageArchitecture": "<p>Details of the Amazon ECR image architecture types used to filter findings.</p>",
-        "FilterCriteria$ecrImageHash": "<p>Details of the Amazon ECR image hashes used to filter findings.</p>",
         "FilterCriteria$ecrImageRegistry": "<p>Details on the Amazon ECR registry used to filter findings.</p>",
         "FilterCriteria$ecrImageRepositoryName": "<p>Details on the name of the Amazon ECR repository used to filter findings.</p>",
         "FilterCriteria$ecrImageTags": "<p>The tags attached to the Amazon ECR container image.</p>",
-        "FilterCriteria$exploitAvailable": "<p>Filters the list of Amazon Web Services Lambda findings by the availability of exploits.</p>",
-        "FilterCriteria$findingArn": "<p>Details on the finding ARNs used to filter findings.</p>",
-        "FilterCriteria$findingStatus": "<p>Details on the finding status types used to filter findings.</p>",
-        "FilterCriteria$findingType": "<p>Details on the finding types used to filter findings.</p>",
-        "FilterCriteria$fixAvailable": "<p>Details on whether a fix is available through a version update. This value can be <code>YES</code>, <code>NO</code>, or <code>PARTIAL</code>. A <code>PARTIAL</code> fix means that some, but not all, of the packages identified in the finding have fixes available through updated versions.</p>",
-        "FilterCriteria$lambdaFunctionExecutionRoleArn": "<p>Filters the list of Amazon Web Services Lambda functions by execution role.</p>",
-        "FilterCriteria$lambdaFunctionLayers": "<p>Filters the list of Amazon Web Services Lambda functions by the function's <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html\"> layers</a>. A Lambda function can have up to five layers.</p>",
-        "FilterCriteria$lambdaFunctionName": "<p>Filters the list of Amazon Web Services Lambda functions by the name of the function.</p>",
-        "FilterCriteria$lambdaFunctionRuntime": "<p>Filters the list of Amazon Web Services Lambda functions by the runtime environment for the Lambda function.</p>",
+        "FilterCriteria$ecrImageHash": "<p>Details of the Amazon ECR image hashes used to filter findings.</p>",
         "FilterCriteria$networkProtocol": "<p>Details on network protocol used to filter findings.</p>",
-        "FilterCriteria$relatedVulnerabilities": "<p>Details on the related vulnerabilities used to filter findings.</p>",
-        "FilterCriteria$resourceId": "<p>Details on the resource IDs used to filter findings.</p>",
-        "FilterCriteria$resourceType": "<p>Details on the resource types used to filter findings.</p>",
-        "FilterCriteria$severity": "<p>Details on the severity used to filter findings.</p>",
-        "FilterCriteria$title": "<p>Details on the finding title used to filter findings.</p>",
-        "FilterCriteria$vendorSeverity": "<p>Details on the vendor severity used to filter findings.</p>",
+        "FilterCriteria$componentId": "<p>Details of the component IDs used to filter findings.</p>",
+        "FilterCriteria$componentType": "<p>Details of the component types used to filter findings.</p>",
         "FilterCriteria$vulnerabilityId": "<p>Details on the vulnerability ID used to filter findings.</p>",
         "FilterCriteria$vulnerabilitySource": "<p>Details on the vulnerability type used to filter findings.</p>",
-        "ImageLayerAggregation$layerHashes": "<p>The hashes associated with the layers.</p>",
+        "FilterCriteria$vendorSeverity": "<p>Details on the vendor severity used to filter findings.</p>",
+        "FilterCriteria$relatedVulnerabilities": "<p>Details on the related vulnerabilities used to filter findings.</p>",
+        "FilterCriteria$fixAvailable": "<p>Details on whether a fix is available through a version update. This value can be <code>YES</code>, <code>NO</code>, or <code>PARTIAL</code>. A <code>PARTIAL</code> fix means that some, but not all, of the packages identified in the finding have fixes available through updated versions.</p>",
+        "FilterCriteria$lambdaFunctionName": "<p>Filters the list of Amazon Web Services Lambda functions by the name of the function.</p>",
+        "FilterCriteria$lambdaFunctionLayers": "<p>Filters the list of Amazon Web Services Lambda functions by the function's <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html\"> layers</a>. A Lambda function can have up to five layers.</p>",
+        "FilterCriteria$lambdaFunctionRuntime": "<p>Filters the list of Amazon Web Services Lambda functions by the runtime environment for the Lambda function.</p>",
+        "FilterCriteria$lambdaFunctionExecutionRoleArn": "<p>Filters the list of Amazon Web Services Lambda functions by execution role.</p>",
+        "FilterCriteria$exploitAvailable": "<p>Filters the list of Amazon Web Services Lambda findings by the availability of exploits.</p>",
+        "FilterCriteria$codeVulnerabilityDetectorName": "<p>The name of the detector used to identify a code vulnerability in a Lambda function used to filter findings.</p>",
+        "FilterCriteria$codeVulnerabilityDetectorTags": "<p>The detector type tag associated with the vulnerability used to filter findings. Detector tags group related vulnerabilities by common themes or tactics. For a list of available tags by programming language, see <a href=\"https://docs.aws.amazon.com/codeguru/detector-library/java/tags/\">Java tags</a>, or <a href=\"https://docs.aws.amazon.com/codeguru/detector-library/python/tags/\">Python tags</a>. </p>",
+        "FilterCriteria$codeVulnerabilityFilePath": "<p>The file path to the file in a Lambda function that contains a code vulnerability used to filter findings.</p>",
+        "FilterCriteria$codeRepositoryProjectName": "<p>Filter criteria for findings based on the project name in a code repository.</p>",
+        "FilterCriteria$codeRepositoryProviderType": "<p>Filter criteria for findings based on the repository provider type (such as GitHub, GitLab, etc.).</p>",
         "ImageLayerAggregation$repositories": "<p>The repository associated with the container image hosting the layers.</p>",
         "ImageLayerAggregation$resourceIds": "<p>The ID of the container image layer.</p>",
-        "LambdaFunctionAggregation$functionNames": "<p>The Amazon Web Services Lambda function names to include in the aggregation results.</p>",
+        "ImageLayerAggregation$layerHashes": "<p>The hashes associated with the layers.</p>",
         "LambdaFunctionAggregation$resourceIds": "<p>The resource IDs to include in the aggregation results.</p>",
+        "LambdaFunctionAggregation$functionNames": "<p>The Amazon Web Services Lambda function names to include in the aggregation results.</p>",
         "LambdaFunctionAggregation$runtimes": "<p>Returns findings aggregated by Amazon Web Services Lambda function runtime environments.</p>",
         "LambdaLayerAggregation$functionNames": "<p>The names of the Amazon Web Services Lambda functions associated with the layers.</p>",
-        "LambdaLayerAggregation$layerArns": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Lambda function layer. </p>",
         "LambdaLayerAggregation$resourceIds": "<p>The resource IDs for the Amazon Web Services Lambda function layers.</p>",
+        "LambdaLayerAggregation$layerArns": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Lambda function layer. </p>",
         "ListFindingAggregationsRequest$accountIds": "<p>The Amazon Web Services account IDs to retrieve finding aggregation data for.</p>",
         "PackageAggregation$packageNames": "<p>The names of packages to aggregate findings on.</p>",
         "RepositoryAggregation$repositories": "<p>The names of repositories to aggregate findings on.</p>",
@@ -3573,6 +4233,19 @@
       "base": null,
       "refs": {
         "LambdaVpcConfig$subnetIds": "<p>A list of VPC subnet IDs.</p>"
+      }
+    },
+    "SuccessfulAssociationResult": {
+      "base": "<p>Details about a successful association or disassociation between a code repository and a scan configuration.</p>",
+      "refs": {
+        "SuccessfulAssociationResultList$member": null
+      }
+    },
+    "SuccessfulAssociationResultList": {
+      "base": null,
+      "refs": {
+        "BatchAssociateCodeSecurityScanConfigurationResponse$successfulAssociations": "<p>Details of code repositories that were successfully associated with the scan configuration.</p>",
+        "BatchDisassociateCodeSecurityScanConfigurationResponse$successfulAssociations": "<p>Details of code repositories that were successfully disassociated from the scan configuration.</p>"
       }
     },
     "SuggestedFix": {
@@ -3632,10 +4305,17 @@
     "TagMap": {
       "base": null,
       "refs": {
+        "CodeSecurityIntegrationSummary$tags": "<p>The tags associated with the code security integration.</p>",
+        "CodeSecurityScanConfigurationSummary$tags": "<p>The tags associated with the scan configuration.</p>",
+        "CreateCodeSecurityIntegrationRequest$tags": "<p>The tags to apply to the code security integration.</p>",
+        "CreateCodeSecurityScanConfigurationRequest$tags": "<p>The tags to apply to the scan configuration.</p>",
         "CreateFilterRequest$tags": "<p>A list of tags for the filter.</p>",
         "Ec2InstanceAggregationResponse$instanceTags": "<p>The tags attached to the instance.</p>",
         "Ec2Metadata$tags": "<p>The tags attached to the instance.</p>",
         "Filter$tags": "<p>The tags attached to the filter.</p>",
+        "GetCodeSecurityIntegrationRequest$tags": "<p>The tags associated with the code security integration.</p>",
+        "GetCodeSecurityIntegrationResponse$tags": "<p>The tags associated with the code security integration.</p>",
+        "GetCodeSecurityScanConfigurationResponse$tags": "<p>The tags associated with the scan configuration.</p>",
         "LambdaFunctionAggregationResponse$lambdaTags": "<p>The tags included in the aggregation results.</p>",
         "LambdaFunctionMetadata$functionTags": "<p>The resource tags on an Amazon Web Services Lambda function.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags associated with the resource.</p>",
@@ -3645,13 +4325,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValueList": {
       "base": null,
@@ -3719,8 +4397,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The limit on the number of requests per second was exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Time": {
       "base": "<p>The time.</p>",
@@ -3743,10 +4420,19 @@
         "CisDateFilter$earliestScanStartTime": "<p>The CIS date filter's earliest scan start time.</p>",
         "CisDateFilter$latestScanStartTime": "<p>The CIS date filter's latest scan start time.</p>",
         "CisScan$scanDate": "<p>The CIS scan's date.</p>",
-        "DateFilter$endInclusive": "<p>A timestamp representing the end of the time period filtered on.</p>",
+        "ClusterDetails$lastInUse": "<p>The last timestamp when Amazon Inspector recorded the image in use in the task or pod in the cluster.</p>",
+        "CodeSecurityIntegrationSummary$createdOn": "<p>The timestamp when the code security integration was created.</p>",
+        "CodeSecurityIntegrationSummary$lastUpdateOn": "<p>The timestamp when the code security integration was last updated.</p>",
         "DateFilter$startInclusive": "<p>A timestamp representing the start of the time period filtered on.</p>",
+        "DateFilter$endInclusive": "<p>A timestamp representing the end of the time period filtered on.</p>",
+        "FreeTrialInfo$start": "<p>The date and time that the Amazon Inspector free trail started for a given account.</p>",
         "FreeTrialInfo$end": "<p>The date and time that the Amazon Inspector free trail ends for a given account.</p>",
-        "FreeTrialInfo$start": "<p>The date and time that the Amazon Inspector free trail started for a given account.</p>"
+        "GetCodeSecurityIntegrationResponse$createdOn": "<p>The timestamp when the code security integration was created.</p>",
+        "GetCodeSecurityIntegrationResponse$lastUpdateOn": "<p>The timestamp when the code security integration was last updated.</p>",
+        "GetCodeSecurityScanConfigurationResponse$createdAt": "<p>The timestamp when the scan configuration was created.</p>",
+        "GetCodeSecurityScanConfigurationResponse$lastUpdatedAt": "<p>The timestamp when the scan configuration was last updated.</p>",
+        "GetCodeSecurityScanResponse$createdAt": "<p>The timestamp when the scan was created.</p>",
+        "GetCodeSecurityScanResponse$updatedAt": "<p>The timestamp when the scan was last updated.</p>"
       }
     },
     "Timezone": {
@@ -3820,23 +4506,19 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCisScanConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCisScanConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCisTargets": {
       "base": "<p>Updates CIS targets.</p>",
@@ -3844,65 +4526,87 @@
         "UpdateCisScanConfigurationRequest$targets": "<p>The targets for the CIS scan configuration.</p>"
       }
     },
+    "UpdateCodeSecurityIntegrationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCodeSecurityIntegrationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCodeSecurityScanConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCodeSecurityScanConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEc2DeepInspectionConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEc2DeepInspectionConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEncryptionKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEncryptionKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFilterResponse": {
       "base": null,
+      "refs": {}
+    },
+    "UpdateGitHubIntegrationDetail": {
+      "base": "<p>Contains details required to update an integration with GitHub.</p>",
       "refs": {
+        "UpdateIntegrationDetails$github": "<p>Details specific to updating an integration with GitHub.</p>"
+      }
+    },
+    "UpdateGitLabSelfManagedIntegrationDetail": {
+      "base": "<p>Contains details required to update an integration with a self-managed GitLab instance.</p>",
+      "refs": {
+        "UpdateIntegrationDetails$gitlabSelfManaged": "<p>Details specific to updating an integration with a self-managed GitLab instance.</p>"
+      }
+    },
+    "UpdateIntegrationDetails": {
+      "base": "<p>Contains details required to update a code security integration with a specific repository provider.</p>",
+      "refs": {
+        "UpdateCodeSecurityIntegrationRequest$details": "<p>The updated integration details specific to the repository provider type.</p>"
       }
     },
     "UpdateOrgEc2DeepInspectionConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateOrgEc2DeepInspectionConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateOrganizationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateOrganizationConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Usage": {
       "base": "<p>Contains usage information about the cost of Amazon Inspector operation.</p>",
@@ -3954,8 +4658,7 @@
     },
     "ValidationException": {
       "base": "<p>The request has failed validation due to missing required fields or having invalid inputs.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>An object that describes a validation exception.</p>",

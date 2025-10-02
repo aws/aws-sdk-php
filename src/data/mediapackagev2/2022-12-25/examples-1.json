@@ -9,8 +9,7 @@
           "HarvestJobName": "HarvestJobName",
           "OriginEndpointName": "exampleOriginEndpointName"
         },
-        "output": {
-        },
+        "output": {},
         "id": "example-1",
         "title": "Cancel a Harvest Job"
       }
@@ -368,7 +367,29 @@
           "ContainerType": "CMAF",
           "DashManifests": [
             {
+              "BaseUrls": [
+                {
+                  "DvbPriority": 1,
+                  "DvbWeight": 3,
+                  "ServiceLocation": "A",
+                  "Url": "http://example.com/"
+                }
+              ],
+              "Compactness": "STANDARD",
               "DrmSignaling": "INDIVIDUAL",
+              "DvbSettings": {
+                "ErrorMetrics": [
+                  {
+                    "Probability": 500,
+                    "ReportingUrl": "https://example.com/dvb-errors/errors"
+                  }
+                ],
+                "FontDownload": {
+                  "FontFamily": "SubtitleDisplay",
+                  "MimeType": "application/font",
+                  "Url": "https://example.com/fonts/SubtitleDisplay.woff"
+                }
+              },
               "ManifestName": "exampleDashManifest1",
               "ManifestWindowSeconds": 300,
               "MinBufferTimeSeconds": 30,
@@ -376,14 +397,50 @@
               "PeriodTriggers": [
                 "AVAILS"
               ],
+              "Profiles": [
+                "DVB_DASH"
+              ],
+              "ProgramInformation": {
+                "Copyright": "(c) Example. All rights reserved",
+                "LanguageCode": "en",
+                "MoreInformationUrl": "https://example.com/more-information",
+                "Source": "exampleSource",
+                "Title": "exampleTitle"
+              },
               "ScteDash": {
                 "AdMarkerDash": "XML"
               },
               "SegmentTemplateFormat": "NUMBER_WITH_TIMELINE",
-              "SuggestedPresentationDelaySeconds": 2
+              "SuggestedPresentationDelaySeconds": 2,
+              "UtcTiming": {
+                "TimingMode": "HTTP_HEAD",
+                "TimingSource": "example"
+              }
             },
             {
+              "BaseUrls": [
+                {
+                  "DvbPriority": 2,
+                  "DvbWeight": 2,
+                  "ServiceLocation": "B",
+                  "Url": "http://example2.com/"
+                }
+              ],
+              "Compactness": "STANDARD",
               "DrmSignaling": "INDIVIDUAL",
+              "DvbSettings": {
+                "ErrorMetrics": [
+                  {
+                    "Probability": 600,
+                    "ReportingUrl": "https://example2.com/dvb-errors/errors"
+                  }
+                ],
+                "FontDownload": {
+                  "FontFamily": "SubtitleDisplay",
+                  "MimeType": "application/font",
+                  "Url": "https://example.com/fonts/SubtitleDisplay.woff"
+                }
+              },
               "ManifestName": "exampleDashManifest2",
               "ManifestWindowSeconds": 60,
               "MinBufferTimeSeconds": 9,
@@ -394,11 +451,25 @@
                 "SOURCE_CHANGES",
                 "SOURCE_DISRUPTIONS"
               ],
+              "Profiles": [
+                "DVB_DASH"
+              ],
+              "ProgramInformation": {
+                "Copyright": "(c) Example. All rights reserved",
+                "LanguageCode": "en",
+                "MoreInformationUrl": "https://example2.com/more-information",
+                "Source": "exampleSource2",
+                "Title": "exampleTitle2"
+              },
               "ScteDash": {
                 "AdMarkerDash": "XML"
               },
               "SegmentTemplateFormat": "NUMBER_WITH_TIMELINE",
-              "SuggestedPresentationDelaySeconds": 12
+              "SuggestedPresentationDelaySeconds": 12,
+              "UtcTiming": {
+                "TimingMode": "HTTP_HEAD",
+                "TimingSource": "example"
+              }
             }
           ],
           "ForceEndpointErrorConfiguration": {
@@ -495,7 +566,29 @@
           "CreatedAt": "2022-10-18T09:36:00.00Z",
           "DashManifests": [
             {
+              "BaseUrls": [
+                {
+                  "DvbPriority": 1,
+                  "DvbWeight": 3,
+                  "ServiceLocation": "A",
+                  "Url": "http://example.com/"
+                }
+              ],
+              "Compactness": "STANDARD",
               "DrmSignaling": "INDIVIDUAL",
+              "DvbSettings": {
+                "ErrorMetrics": [
+                  {
+                    "Probability": 500,
+                    "ReportingUrl": "https://example.com/dvb-errors/errors"
+                  }
+                ],
+                "FontDownload": {
+                  "FontFamily": "SubtitleDisplay",
+                  "MimeType": "application/font",
+                  "Url": "https://example.com/fonts/SubtitleDisplay.woff"
+                }
+              },
               "ManifestName": "exampleDashManifest1",
               "ManifestWindowSeconds": 300,
               "MinBufferTimeSeconds": 30,
@@ -503,15 +596,51 @@
               "PeriodTriggers": [
                 "AVAILS"
               ],
+              "Profiles": [
+                "DVB_DASH"
+              ],
+              "ProgramInformation": {
+                "Copyright": "(c) Example. All rights reserved",
+                "LanguageCode": "en",
+                "MoreInformationUrl": "https://example.com/more-information",
+                "Source": "exampleSource",
+                "Title": "exampleTitle"
+              },
               "ScteDash": {
                 "AdMarkerDash": "XML"
               },
               "SegmentTemplateFormat": "NUMBER_WITH_TIMELINE",
               "SuggestedPresentationDelaySeconds": 2,
-              "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointCMAF/exampleDashManifest1.mpd"
+              "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointCMAF/exampleDashManifest1.mpd",
+              "UtcTiming": {
+                "TimingMode": "HTTP_HEAD",
+                "TimingSource": "example"
+              }
             },
             {
+              "BaseUrls": [
+                {
+                  "DvbPriority": 2,
+                  "DvbWeight": 2,
+                  "ServiceLocation": "B",
+                  "Url": "http://example2.com/"
+                }
+              ],
+              "Compactness": "STANDARD",
               "DrmSignaling": "INDIVIDUAL",
+              "DvbSettings": {
+                "ErrorMetrics": [
+                  {
+                    "Probability": 600,
+                    "ReportingUrl": "https://example2.com/dvb-errors/errors"
+                  }
+                ],
+                "FontDownload": {
+                  "FontFamily": "SubtitleDisplay",
+                  "MimeType": "application/font",
+                  "Url": "https://example.com/fonts/SubtitleDisplay.woff"
+                }
+              },
               "ManifestName": "exampleDashManifest2",
               "ManifestWindowSeconds": 60,
               "MinBufferTimeSeconds": 9,
@@ -522,12 +651,26 @@
                 "SOURCE_CHANGES",
                 "SOURCE_DISRUPTIONS"
               ],
+              "Profiles": [
+                "DVB_DASH"
+              ],
+              "ProgramInformation": {
+                "Copyright": "(c) Example. All rights reserved",
+                "LanguageCode": "en",
+                "MoreInformationUrl": "https://example2.com/more-information",
+                "Source": "exampleSource2",
+                "Title": "exampleTitle2"
+              },
               "ScteDash": {
                 "AdMarkerDash": "XML"
               },
               "SegmentTemplateFormat": "NUMBER_WITH_TIMELINE",
               "SuggestedPresentationDelaySeconds": 12,
-              "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointCMAF/exampleDashManifest2.mpd"
+              "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointCMAF/exampleDashManifest2.mpd",
+              "UtcTiming": {
+                "TimingMode": "HTTP_HEAD",
+                "TimingSource": "example"
+              }
             }
           ],
           "ETag": "GlfT+dwAyGIR4wuy8nKWl1RDPwSrjQej9qUutLZxoxk=",
@@ -624,6 +767,111 @@
         },
         "id": "example-2",
         "title": "Creating an OriginEndpoint with container type CMAF, and encryption enabled"
+      },
+      {
+        "input": {
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleChannel",
+          "ContainerType": "ISM",
+          "Description": "Description for exampleOriginEndpointISM",
+          "ForceEndpointErrorConfiguration": {
+            "EndpointErrorConditions": [
+              "STALE_MANIFEST",
+              "INCOMPLETE_MANIFEST",
+              "MISSING_DRM_KEY",
+              "SLATE_INPUT"
+            ]
+          },
+          "MssManifests": [
+            {
+              "ManifestLayout": "FULL",
+              "ManifestName": "exampleMssManifest1",
+              "ManifestWindowSeconds": 60
+            }
+          ],
+          "OriginEndpointName": "exampleOriginEndpointISM",
+          "Segment": {
+            "Encryption": {
+              "EncryptionMethod": {
+                "IsmEncryptionMethod": "CENC"
+              },
+              "SpekeKeyProvider": {
+                "DrmSystems": [
+                  "PLAYREADY"
+                ],
+                "EncryptionContractConfiguration": {
+                  "PresetSpeke20Audio": "SHARED",
+                  "PresetSpeke20Video": "SHARED"
+                },
+                "ResourceId": "ResourceId",
+                "RoleArn": "arn:aws:iam::123456789012:role/empRole",
+                "Url": "https://speke-key-provider.example.com"
+              }
+            },
+            "SegmentDurationSeconds": 2,
+            "SegmentName": "segmentName"
+          },
+          "StartoverWindowSeconds": 300,
+          "Tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        },
+        "output": {
+          "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleChannel/originEndpoint/exampleOriginEndpointISM",
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleChannel",
+          "ContainerType": "ISM",
+          "CreatedAt": "2022-10-18T09:36:00.00Z",
+          "Description": "Description for exampleOriginEndpointISM",
+          "ETag": "GlfT+dwAyGIR4wuy8nKWl1RDPwSrjQej9qUutLZxoxk=",
+          "ForceEndpointErrorConfiguration": {
+            "EndpointErrorConditions": [
+              "STALE_MANIFEST",
+              "INCOMPLETE_MANIFEST",
+              "MISSING_DRM_KEY",
+              "SLATE_INPUT"
+            ]
+          },
+          "ModifiedAt": "2022-10-18T09:36:00.00Z",
+          "MssManifests": [
+            {
+              "ManifestLayout": "FULL",
+              "ManifestName": "exampleMssManifest1",
+              "ManifestWindowSeconds": 60,
+              "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointISM/exampleMssManifest1.ism/Manifest"
+            }
+          ],
+          "OriginEndpointName": "exampleOriginEndpointISM",
+          "Segment": {
+            "Encryption": {
+              "EncryptionMethod": {
+                "IsmEncryptionMethod": "CENC"
+              },
+              "SpekeKeyProvider": {
+                "DrmSystems": [
+                  "PLAYREADY"
+                ],
+                "EncryptionContractConfiguration": {
+                  "PresetSpeke20Audio": "SHARED",
+                  "PresetSpeke20Video": "SHARED"
+                },
+                "ResourceId": "ResourceId",
+                "RoleArn": "arn:aws:iam::123456789012:role/empRole",
+                "Url": "https://speke-key-provider.example.com"
+              }
+            },
+            "SegmentDurationSeconds": 2,
+            "SegmentName": "segmentName"
+          },
+          "StartoverWindowSeconds": 300,
+          "Tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        },
+        "id": "example-3",
+        "title": "Creating an OriginEndpoint with container type ISM, and encryption enabled"
       }
     ],
     "DeleteChannel": [
@@ -632,8 +880,7 @@
           "ChannelGroupName": "exampleChannelGroup",
           "ChannelName": "exampleChannel"
         },
-        "output": {
-        },
+        "output": {},
         "id": "example-1",
         "title": "Deleting a Channel"
       }
@@ -643,8 +890,7 @@
         "input": {
           "ChannelGroupName": "exampleChannelGroup"
         },
-        "output": {
-        },
+        "output": {},
         "id": "example-1",
         "title": "Deleting a Channel Group"
       }
@@ -655,8 +901,7 @@
           "ChannelGroupName": "exampleChannelGroup",
           "ChannelName": "exampleChannel"
         },
-        "output": {
-        },
+        "output": {},
         "id": "example-1",
         "title": "Deleting a Channel Policy"
       }
@@ -668,8 +913,7 @@
           "ChannelName": "exampleChannel",
           "OriginEndpointName": "exampleOriginEndpointTS"
         },
-        "output": {
-        },
+        "output": {},
         "id": "example-1",
         "title": "Deleting an OriginEndpoint"
       }
@@ -681,8 +925,7 @@
           "ChannelName": "exampleChannel",
           "OriginEndpointName": "exampleOriginEndpoint"
         },
-        "output": {
-        },
+        "output": {},
         "id": "example-1",
         "title": "Deleting an Origin Endpoint Policy"
       }
@@ -922,6 +1165,74 @@
         },
         "id": "example-1",
         "title": "Getting an OriginEndpoint"
+      },
+      {
+        "input": {
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleChannel",
+          "OriginEndpointName": "exampleOriginEndpointISM"
+        },
+        "output": {
+          "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleChannel/originEndpoint/exampleOriginEndpointISM",
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleChannel",
+          "ContainerType": "ISM",
+          "CreatedAt": "2022-10-18T09:36:00.00Z",
+          "Description": "Description for exampleOriginEndpointISM",
+          "ETag": "HmgU+ewBzHJS5xvz9nLXm2SEQxTsjRfk0rVvuMayoyl=",
+          "ForceEndpointErrorConfiguration": {
+            "EndpointErrorConditions": [
+              "STALE_MANIFEST",
+              "INCOMPLETE_MANIFEST",
+              "MISSING_DRM_KEY",
+              "SLATE_INPUT"
+            ]
+          },
+          "ModifiedAt": "2022-10-18T09:36:00.00Z",
+          "MssManifests": [
+            {
+              "ManifestLayout": "FULL",
+              "ManifestName": "exampleMssManifest1",
+              "ManifestWindowSeconds": 60,
+              "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointISM/exampleMssManifest1.ism/Manifest"
+            },
+            {
+              "ManifestLayout": "COMPACT",
+              "ManifestName": "exampleMssManifest2",
+              "ManifestWindowSeconds": 30,
+              "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointISM/exampleMssManifest2.ism/Manifest"
+            }
+          ],
+          "OriginEndpointName": "exampleOriginEndpointISM",
+          "Segment": {
+            "Encryption": {
+              "EncryptionMethod": {
+                "IsmEncryptionMethod": "CENC"
+              },
+              "SpekeKeyProvider": {
+                "DrmSystems": [
+                  "PLAYREADY"
+                ],
+                "EncryptionContractConfiguration": {
+                  "PresetSpeke20Audio": "SHARED",
+                  "PresetSpeke20Video": "SHARED"
+                },
+                "ResourceId": "ResourceId",
+                "RoleArn": "arn:aws:iam::123456789012:role/empRole",
+                "Url": "https://speke-key-provider.example.com"
+              }
+            },
+            "SegmentDurationSeconds": 2,
+            "SegmentName": "segmentName"
+          },
+          "StartoverWindowSeconds": 300,
+          "Tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        },
+        "id": "example-2",
+        "title": "Getting an OriginEndpoint with ISM container"
       }
     ],
     "GetOriginEndpointPolicy": [
@@ -943,8 +1254,7 @@
     ],
     "ListChannelGroups": [
       {
-        "input": {
-        },
+        "input": {},
         "output": {
           "Items": [
             {
@@ -1038,11 +1348,7 @@
                 "EndTime": "2024-05-28T12:00:00.00Z",
                 "StartTime": "2024-05-28T06:00:00.00Z"
               },
-              "Status": "QUEUED",
-              "Tags": {
-                "key1": "value1",
-                "key2": "value2"
-              }
+              "Status": "QUEUED"
             },
             {
               "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleChannelName2/originEndpoint/exampleOriginEndpointName2/harvestJob/HarvestJobName2",
@@ -1081,11 +1387,7 @@
                 "EndTime": "2024-05-28T12:00:00.00Z",
                 "StartTime": "2024-05-28T02:00:00.00Z"
               },
-              "Status": "IN_PROGRESS",
-              "Tags": {
-                "key1": "value1",
-                "key2": "value2"
-              }
+              "Status": "IN_PROGRESS"
             }
           ],
           "NextToken": "someTokenValue"
@@ -1137,11 +1439,7 @@
                 "EndTime": "2024-05-28T12:00:00.00Z",
                 "StartTime": "2024-05-28T06:00:00.00Z"
               },
-              "Status": "QUEUED",
-              "Tags": {
-                "key1": "value1",
-                "key2": "value2"
-              }
+              "Status": "QUEUED"
             },
             {
               "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleChannelName/originEndpoint/exampleOriginEndpointName2/harvestJob/HarvestJobName2",
@@ -1179,11 +1477,7 @@
                 "EndTime": "2024-05-28T12:00:00.00Z",
                 "StartTime": "2024-05-28T02:00:00.00Z"
               },
-              "Status": "IN_PROGRESS",
-              "Tags": {
-                "key1": "value1",
-                "key2": "value2"
-              }
+              "Status": "IN_PROGRESS"
             }
           ],
           "NextToken": "someTokenValue"
@@ -1304,8 +1598,7 @@
           "ChannelName": "exampleChannelName",
           "OriginEndpointName": "exampleOriginEndpointName"
         },
-        "output": {
-        },
+        "output": {},
         "id": "example-5",
         "title": "ListHarvestJobs: Empty response"
       }
@@ -1410,6 +1703,34 @@
               ],
               "ModifiedAt": "2022-10-18T09:36:00.00Z",
               "OriginEndpointName": "exampleOriginEndpointCMAF"
+            },
+            {
+              "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleChannel/originEndpoint/exampleOriginEndpointISM",
+              "ChannelGroupName": "exampleChannelGroup",
+              "ChannelName": "exampleChannel",
+              "ContainerType": "ISM",
+              "CreatedAt": "2022-10-18T09:36:00.00Z",
+              "Description": "Description for exampleOriginEndpointISM",
+              "ForceEndpointErrorConfiguration": {
+                "EndpointErrorConditions": [
+                  "STALE_MANIFEST",
+                  "INCOMPLETE_MANIFEST",
+                  "MISSING_DRM_KEY",
+                  "SLATE_INPUT"
+                ]
+              },
+              "ModifiedAt": "2022-10-18T09:36:00.00Z",
+              "MssManifests": [
+                {
+                  "ManifestName": "exampleMssManifest1",
+                  "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointISM/exampleMssManifest1.ism/Manifest"
+                },
+                {
+                  "ManifestName": "exampleMssManifest2",
+                  "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointISM/exampleMssManifest2.ism/Manifest"
+                }
+              ],
+              "OriginEndpointName": "exampleOriginEndpointISM"
             }
           ]
         },
@@ -1439,8 +1760,7 @@
           "ChannelName": "exampleChannel",
           "Policy": "{...}"
         },
-        "output": {
-        },
+        "output": {},
         "id": "example-1",
         "title": "Creating a Channel Policy"
       }
@@ -1453,10 +1773,43 @@
           "OriginEndpointName": "exampleOriginEndpoint",
           "Policy": "{...}"
         },
-        "output": {
-        },
+        "output": {},
         "id": "example-1",
         "title": "Creating an Origin Endpoint Policy"
+      }
+    ],
+    "ResetChannelState": [
+      {
+        "input": {
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleChannel"
+        },
+        "output": {
+          "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleChannel",
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleChannel",
+          "ResetAt": "2024-10-09T09:36:00.00Z"
+        },
+        "id": "example-1",
+        "title": "Reset a Channel"
+      }
+    ],
+    "ResetOriginEndpointState": [
+      {
+        "input": {
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleChannel",
+          "OriginEndpointName": "exampleOriginEndpoint"
+        },
+        "output": {
+          "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleChannel/originEndpoint/exampleOriginEndpoint",
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleChannel",
+          "OriginEndpointName": "exampleOriginEndpoint",
+          "ResetAt": "2024-10-09T09:36:00.00Z"
+        },
+        "id": "example-1",
+        "title": "Reset an OriginEndpoint"
       }
     ],
     "TagResource": [
@@ -1468,8 +1821,7 @@
             "key4": "value4"
           }
         },
-        "output": {
-        },
+        "output": {},
         "id": "example-1",
         "title": "Add tags to a resource"
       }
@@ -1483,8 +1835,7 @@
             "key4"
           ]
         },
-        "output": {
-        },
+        "output": {},
         "id": "example-1",
         "title": "Remove tags from a resource"
       }
@@ -1737,6 +2088,118 @@
         },
         "id": "example-1",
         "title": "Updating an OriginEndpoint"
+      },
+      {
+        "input": {
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleChannel",
+          "ContainerType": "ISM",
+          "Description": "Updated description for exampleOriginEndpointISM",
+          "ForceEndpointErrorConfiguration": {
+            "EndpointErrorConditions": [
+              "STALE_MANIFEST",
+              "INCOMPLETE_MANIFEST",
+              "MISSING_DRM_KEY",
+              "SLATE_INPUT"
+            ]
+          },
+          "MssManifests": [
+            {
+              "ManifestLayout": "FULL",
+              "ManifestName": "exampleMssManifest1",
+              "ManifestWindowSeconds": 60
+            },
+            {
+              "ManifestLayout": "COMPACT",
+              "ManifestName": "exampleMssManifest2",
+              "ManifestWindowSeconds": 30
+            }
+          ],
+          "OriginEndpointName": "exampleOriginEndpointISM",
+          "Segment": {
+            "Encryption": {
+              "EncryptionMethod": {
+                "IsmEncryptionMethod": "CENC"
+              },
+              "SpekeKeyProvider": {
+                "DrmSystems": [
+                  "PLAYREADY"
+                ],
+                "EncryptionContractConfiguration": {
+                  "PresetSpeke20Audio": "SHARED",
+                  "PresetSpeke20Video": "SHARED"
+                },
+                "ResourceId": "ResourceId",
+                "RoleArn": "arn:aws:iam::123456789012:role/empRole",
+                "Url": "https://speke-key-provider.example.com"
+              }
+            },
+            "SegmentDurationSeconds": 2,
+            "SegmentName": "segmentName2"
+          },
+          "StartoverWindowSeconds": 600
+        },
+        "output": {
+          "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleChannel/originEndpoint/exampleOriginEndpointISM",
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleChannel",
+          "ContainerType": "ISM",
+          "CreatedAt": "2022-10-18T09:36:00.00Z",
+          "Description": "Updated description for exampleOriginEndpointISM",
+          "ETag": "HmgU+ewBzHJS5xvz9nLXm2SEQxTsjRfk0rVvuMayoyl=",
+          "ForceEndpointErrorConfiguration": {
+            "EndpointErrorConditions": [
+              "STALE_MANIFEST",
+              "INCOMPLETE_MANIFEST",
+              "MISSING_DRM_KEY",
+              "SLATE_INPUT"
+            ]
+          },
+          "ModifiedAt": "2022-10-18T09:37:00.00Z",
+          "MssManifests": [
+            {
+              "ManifestLayout": "FULL",
+              "ManifestName": "exampleMssManifest1",
+              "ManifestWindowSeconds": 60,
+              "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointISM/exampleMssManifest1.ism/Manifest"
+            },
+            {
+              "ManifestLayout": "COMPACT",
+              "ManifestName": "exampleMssManifest2",
+              "ManifestWindowSeconds": 30,
+              "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointISM/exampleMssManifest2.ism/Manifest"
+            }
+          ],
+          "OriginEndpointName": "exampleOriginEndpointISM",
+          "Segment": {
+            "Encryption": {
+              "EncryptionMethod": {
+                "IsmEncryptionMethod": "CENC"
+              },
+              "SpekeKeyProvider": {
+                "DrmSystems": [
+                  "PLAYREADY"
+                ],
+                "EncryptionContractConfiguration": {
+                  "PresetSpeke20Audio": "SHARED",
+                  "PresetSpeke20Video": "SHARED"
+                },
+                "ResourceId": "ResourceId",
+                "RoleArn": "arn:aws:iam::123456789012:role/empRole",
+                "Url": "https://speke-key-provider.example.com"
+              }
+            },
+            "SegmentDurationSeconds": 2,
+            "SegmentName": "segmentName2"
+          },
+          "StartoverWindowSeconds": 600,
+          "Tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        },
+        "id": "example-2",
+        "title": "Updating an OriginEndpoint with ISM container"
       }
     ]
   }

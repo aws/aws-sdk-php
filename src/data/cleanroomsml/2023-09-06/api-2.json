@@ -25,7 +25,8 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -41,7 +42,8 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -112,6 +114,7 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
@@ -130,6 +133,7 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
@@ -148,6 +152,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
@@ -259,7 +265,8 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -274,7 +281,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -290,7 +298,8 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -306,7 +315,8 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -339,7 +349,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetAudienceModel":{
       "name":"GetAudienceModel",
@@ -354,7 +365,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCollaborationConfiguredModelAlgorithmAssociation":{
       "name":"GetCollaborationConfiguredModelAlgorithmAssociation",
@@ -368,8 +380,10 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
-      ]
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "GetCollaborationMLInputChannel":{
       "name":"GetCollaborationMLInputChannel",
@@ -383,8 +397,10 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
-      ]
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "GetCollaborationTrainedModel":{
       "name":"GetCollaborationTrainedModel",
@@ -398,8 +414,10 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
-      ]
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "GetConfiguredAudienceModel":{
       "name":"GetConfiguredAudienceModel",
@@ -414,7 +432,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetConfiguredAudienceModelPolicy":{
       "name":"GetConfiguredAudienceModelPolicy",
@@ -429,7 +448,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetConfiguredModelAlgorithm":{
       "name":"GetConfiguredModelAlgorithm",
@@ -444,7 +464,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetConfiguredModelAlgorithmAssociation":{
       "name":"GetConfiguredModelAlgorithmAssociation",
@@ -458,8 +479,10 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
-      ]
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "GetMLConfiguration":{
       "name":"GetMLConfiguration",
@@ -473,8 +496,10 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
-      ]
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "GetMLInputChannel":{
       "name":"GetMLInputChannel",
@@ -488,8 +513,10 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
-      ]
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "GetTrainedModel":{
       "name":"GetTrainedModel",
@@ -503,8 +530,10 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
-      ]
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "GetTrainedModelInferenceJob":{
       "name":"GetTrainedModelInferenceJob",
@@ -518,8 +547,10 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
-      ]
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "GetTrainingDataset":{
       "name":"GetTrainingDataset",
@@ -534,7 +565,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAudienceExportJobs":{
       "name":"ListAudienceExportJobs",
@@ -548,7 +580,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAudienceGenerationJobs":{
       "name":"ListAudienceGenerationJobs",
@@ -562,7 +595,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAudienceModels":{
       "name":"ListAudienceModels",
@@ -576,7 +610,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCollaborationConfiguredModelAlgorithmAssociations":{
       "name":"ListCollaborationConfiguredModelAlgorithmAssociations",
@@ -589,8 +624,10 @@
       "output":{"shape":"ListCollaborationConfiguredModelAlgorithmAssociationsResponse"},
       "errors":[
         {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"}
-      ]
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "ListCollaborationMLInputChannels":{
       "name":"ListCollaborationMLInputChannels",
@@ -603,8 +640,10 @@
       "output":{"shape":"ListCollaborationMLInputChannelsResponse"},
       "errors":[
         {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"}
-      ]
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "ListCollaborationTrainedModelExportJobs":{
       "name":"ListCollaborationTrainedModelExportJobs",
@@ -617,8 +656,10 @@
       "output":{"shape":"ListCollaborationTrainedModelExportJobsResponse"},
       "errors":[
         {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"}
-      ]
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "ListCollaborationTrainedModelInferenceJobs":{
       "name":"ListCollaborationTrainedModelInferenceJobs",
@@ -631,8 +672,10 @@
       "output":{"shape":"ListCollaborationTrainedModelInferenceJobsResponse"},
       "errors":[
         {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"}
-      ]
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "ListCollaborationTrainedModels":{
       "name":"ListCollaborationTrainedModels",
@@ -645,8 +688,10 @@
       "output":{"shape":"ListCollaborationTrainedModelsResponse"},
       "errors":[
         {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"}
-      ]
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "ListConfiguredAudienceModels":{
       "name":"ListConfiguredAudienceModels",
@@ -660,7 +705,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListConfiguredModelAlgorithmAssociations":{
       "name":"ListConfiguredModelAlgorithmAssociations",
@@ -673,8 +719,10 @@
       "output":{"shape":"ListConfiguredModelAlgorithmAssociationsResponse"},
       "errors":[
         {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"}
-      ]
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "ListConfiguredModelAlgorithms":{
       "name":"ListConfiguredModelAlgorithms",
@@ -688,7 +736,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListMLInputChannels":{
       "name":"ListMLInputChannels",
@@ -701,8 +750,10 @@
       "output":{"shape":"ListMLInputChannelsResponse"},
       "errors":[
         {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"}
-      ]
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -717,7 +768,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTrainedModelInferenceJobs":{
       "name":"ListTrainedModelInferenceJobs",
@@ -730,8 +782,27 @@
       "output":{"shape":"ListTrainedModelInferenceJobsResponse"},
       "errors":[
         {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"}
-      ]
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
+    },
+    "ListTrainedModelVersions":{
+      "name":"ListTrainedModelVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/memberships/{membershipIdentifier}/trained-models/{trainedModelArn}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTrainedModelVersionsRequest"},
+      "output":{"shape":"ListTrainedModelVersionsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "ListTrainedModels":{
       "name":"ListTrainedModels",
@@ -744,8 +815,10 @@
       "output":{"shape":"ListTrainedModelsResponse"},
       "errors":[
         {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"}
-      ]
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "ListTrainingDatasets":{
       "name":"ListTrainingDatasets",
@@ -759,7 +832,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutConfiguredAudienceModelPolicy":{
       "name":"PutConfiguredAudienceModelPolicy",
@@ -787,7 +861,8 @@
       "input":{"shape":"PutMLConfigurationRequest"},
       "errors":[
         {"shape":"ValidationException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -822,6 +897,7 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
@@ -838,7 +914,8 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ],
       "idempotent":true
     },
@@ -856,6 +933,7 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
@@ -910,6 +988,57 @@
     }
   },
   "shapes":{
+    "AccessBudget":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "details",
+        "aggregateRemainingBudget"
+      ],
+      "members":{
+        "resourceArn":{"shape":"BudgetedResourceArn"},
+        "details":{"shape":"AccessBudgetDetailsList"},
+        "aggregateRemainingBudget":{"shape":"Budget"}
+      }
+    },
+    "AccessBudgetDetails":{
+      "type":"structure",
+      "required":[
+        "startTime",
+        "remainingBudget",
+        "budget",
+        "budgetType"
+      ],
+      "members":{
+        "startTime":{"shape":"SyntheticTimestamp_date_time"},
+        "endTime":{"shape":"SyntheticTimestamp_date_time"},
+        "remainingBudget":{"shape":"Budget"},
+        "budget":{"shape":"Budget"},
+        "budgetType":{"shape":"AccessBudgetType"},
+        "autoRefresh":{"shape":"AutoRefreshMode"}
+      }
+    },
+    "AccessBudgetDetailsList":{
+      "type":"list",
+      "member":{"shape":"AccessBudgetDetails"},
+      "max":2,
+      "min":1
+    },
+    "AccessBudgetType":{
+      "type":"string",
+      "enum":[
+        "CALENDAR_DAY",
+        "CALENDAR_MONTH",
+        "CALENDAR_WEEK",
+        "LIFETIME"
+      ]
+    },
+    "AccessBudgets":{
+      "type":"list",
+      "member":{"shape":"AccessBudget"},
+      "max":100,
+      "min":1
+    },
     "AccessDeniedException":{
       "type":"structure",
       "required":["message"],
@@ -1139,9 +1268,27 @@
       "max":20000000,
       "min":1
     },
+    "AutoRefreshMode":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
+    },
+    "Budget":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "BudgetedResourceArn":{
+      "type":"string",
+      "max":200,
+      "min":0,
+      "pattern":"arn:aws:[\\w]+:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:membership/[\\d\\w-]+/configuredtableassociation/[\\d\\w-]+"
     },
     "CancelTrainedModelInferenceJobRequest":{
       "type":"structure",
@@ -1178,6 +1325,11 @@
           "shape":"TrainedModelArn",
           "location":"uri",
           "locationName":"trainedModelArn"
+        },
+        "versionIdentifier":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"versionIdentifier"
         }
       }
     },
@@ -1272,6 +1424,7 @@
         "description":{"shape":"ResourceDescription"},
         "creatorAccountId":{"shape":"AccountId"},
         "trainedModelArn":{"shape":"TrainedModelArn"},
+        "trainedModelVersionIdentifier":{"shape":"UUID"},
         "membershipIdentifier":{"shape":"UUID"},
         "collaborationIdentifier":{"shape":"UUID"}
       }
@@ -1299,6 +1452,7 @@
         "configuredModelAlgorithmAssociationArn":{"shape":"ConfiguredModelAlgorithmAssociationArn"},
         "membershipIdentifier":{"shape":"UUID"},
         "trainedModelArn":{"shape":"TrainedModelArn"},
+        "trainedModelVersionIdentifier":{"shape":"UUID"},
         "collaborationIdentifier":{"shape":"UUID"},
         "status":{"shape":"TrainedModelInferenceJobStatus"},
         "outputConfiguration":{"shape":"InferenceOutputConfiguration"},
@@ -1335,6 +1489,8 @@
         "updateTime":{"shape":"SyntheticTimestamp_date_time"},
         "trainedModelArn":{"shape":"TrainedModelArn"},
         "name":{"shape":"NameString"},
+        "versionIdentifier":{"shape":"UUID"},
+        "incrementalTrainingDataChannels":{"shape":"IncrementalTrainingDataChannelsOutput"},
         "description":{"shape":"ResourceDescription"},
         "membershipIdentifier":{"shape":"UUID"},
         "collaborationIdentifier":{"shape":"UUID"},
@@ -1440,7 +1596,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:aws[-a-z]*:cleanrooms-ml:[-a-z0-9]+:[0-9]{12}:(membership/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)?configured-model-algorithm-association/[-a-zA-Z0-9_/.]+"
+      "pattern":"arn:aws[-a-z]*:cleanrooms-ml:[-a-z0-9]+:[0-9]{12}:membership/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/configured-model-algorithm-association/[-a-zA-Z0-9_/.]+"
     },
     "ConfiguredModelAlgorithmAssociationList":{
       "type":"list",
@@ -1698,7 +1854,9 @@
         "environment":{"shape":"Environment"},
         "resourceConfig":{"shape":"ResourceConfig"},
         "stoppingCondition":{"shape":"StoppingCondition"},
+        "incrementalTrainingDataChannels":{"shape":"IncrementalTrainingDataChannels"},
         "dataChannels":{"shape":"ModelTrainingDataChannels"},
+        "trainingInputMode":{"shape":"TrainingInputMode"},
         "description":{"shape":"ResourceDescription"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
         "tags":{"shape":"TagMap"}
@@ -1708,7 +1866,8 @@
       "type":"structure",
       "required":["trainedModelArn"],
       "members":{
-        "trainedModelArn":{"shape":"TrainedModelArn"}
+        "trainedModelArn":{"shape":"TrainedModelArn"},
+        "versionIdentifier":{"shape":"UUID"}
       }
     },
     "CreateTrainingDatasetRequest":{
@@ -1737,6 +1896,25 @@
       "required":["trainingDatasetArn"],
       "members":{
         "trainingDatasetArn":{"shape":"TrainingDatasetArn"}
+      }
+    },
+    "CustomDataIdentifier":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\_\\#\\=\\@/\\;\\,\\-\\ \\^\\$\\?\\[\\]\\{\\}\\|\\\\\\*\\+\\.\\(\\)]+"
+    },
+    "CustomDataIdentifierList":{
+      "type":"list",
+      "member":{"shape":"CustomDataIdentifier"},
+      "max":10,
+      "min":1
+    },
+    "CustomEntityConfig":{
+      "type":"structure",
+      "required":["customDataIdentifiers"],
+      "members":{
+        "customDataIdentifiers":{"shape":"CustomDataIdentifierList"}
       }
     },
     "DataSource":{
@@ -1902,6 +2080,11 @@
           "shape":"UUID",
           "location":"uri",
           "locationName":"membershipIdentifier"
+        },
+        "versionIdentifier":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"versionIdentifier"
         }
       }
     },
@@ -1922,6 +2105,19 @@
       "members":{
         "s3Destination":{"shape":"S3ConfigMap"}
       }
+    },
+    "EntityType":{
+      "type":"string",
+      "enum":[
+        "ALL_PERSONALLY_IDENTIFIABLE_INFORMATION",
+        "NUMBERS",
+        "CUSTOM"
+      ]
+    },
+    "EntityTypeList":{
+      "type":"list",
+      "member":{"shape":"EntityType"},
+      "min":1
     },
     "Environment":{
       "type":"map",
@@ -2083,21 +2279,18 @@
     "GetCollaborationMLInputChannelResponse":{
       "type":"structure",
       "required":[
-        "createTime",
-        "updateTime",
-        "creatorAccountId",
         "membershipIdentifier",
         "collaborationIdentifier",
         "mlInputChannelArn",
         "name",
         "configuredModelAlgorithmAssociations",
         "status",
-        "retentionInDays"
+        "retentionInDays",
+        "createTime",
+        "updateTime",
+        "creatorAccountId"
       ],
       "members":{
-        "createTime":{"shape":"SyntheticTimestamp_date_time"},
-        "updateTime":{"shape":"SyntheticTimestamp_date_time"},
-        "creatorAccountId":{"shape":"AccountId"},
         "membershipIdentifier":{"shape":"UUID"},
         "collaborationIdentifier":{"shape":"UUID"},
         "mlInputChannelArn":{"shape":"MLInputChannelArn"},
@@ -2107,7 +2300,11 @@
         "statusDetails":{"shape":"StatusDetails"},
         "retentionInDays":{"shape":"GetCollaborationMLInputChannelResponseRetentionInDaysInteger"},
         "numberOfRecords":{"shape":"GetCollaborationMLInputChannelResponseNumberOfRecordsLong"},
-        "description":{"shape":"ResourceDescription"}
+        "privacyBudgets":{"shape":"PrivacyBudgets"},
+        "description":{"shape":"ResourceDescription"},
+        "createTime":{"shape":"SyntheticTimestamp_date_time"},
+        "updateTime":{"shape":"SyntheticTimestamp_date_time"},
+        "creatorAccountId":{"shape":"AccountId"}
       }
     },
     "GetCollaborationMLInputChannelResponseConfiguredModelAlgorithmAssociationsList":{
@@ -2144,6 +2341,11 @@
           "shape":"UUID",
           "location":"uri",
           "locationName":"collaborationIdentifier"
+        },
+        "versionIdentifier":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"versionIdentifier"
         }
       }
     },
@@ -2164,12 +2366,15 @@
         "membershipIdentifier":{"shape":"UUID"},
         "collaborationIdentifier":{"shape":"UUID"},
         "trainedModelArn":{"shape":"TrainedModelArn"},
+        "versionIdentifier":{"shape":"UUID"},
+        "incrementalTrainingDataChannels":{"shape":"IncrementalTrainingDataChannelsOutput"},
         "name":{"shape":"NameString"},
         "description":{"shape":"ResourceDescription"},
         "status":{"shape":"TrainedModelStatus"},
         "statusDetails":{"shape":"StatusDetails"},
         "configuredModelAlgorithmAssociationArn":{"shape":"ConfiguredModelAlgorithmAssociationArn"},
         "resourceConfig":{"shape":"ResourceConfig"},
+        "trainingInputMode":{"shape":"TrainingInputMode"},
         "stoppingCondition":{"shape":"StoppingCondition"},
         "metricsStatus":{"shape":"MetricsStatus"},
         "metricsStatusDetails":{"shape":"String"},
@@ -2368,24 +2573,20 @@
     "GetMLInputChannelResponse":{
       "type":"structure",
       "required":[
-        "createTime",
-        "updateTime",
         "membershipIdentifier",
         "collaborationIdentifier",
-        "inputChannel",
         "mlInputChannelArn",
         "name",
         "configuredModelAlgorithmAssociations",
         "status",
-        "retentionInDays"
+        "retentionInDays",
+        "createTime",
+        "updateTime",
+        "inputChannel"
       ],
       "members":{
-        "createTime":{"shape":"SyntheticTimestamp_date_time"},
-        "updateTime":{"shape":"SyntheticTimestamp_date_time"},
         "membershipIdentifier":{"shape":"UUID"},
         "collaborationIdentifier":{"shape":"UUID"},
-        "inputChannel":{"shape":"InputChannel"},
-        "protectedQueryIdentifier":{"shape":"UUID"},
         "mlInputChannelArn":{"shape":"MLInputChannelArn"},
         "name":{"shape":"NameString"},
         "configuredModelAlgorithmAssociations":{"shape":"GetMLInputChannelResponseConfiguredModelAlgorithmAssociationsList"},
@@ -2393,9 +2594,14 @@
         "statusDetails":{"shape":"StatusDetails"},
         "retentionInDays":{"shape":"GetMLInputChannelResponseRetentionInDaysInteger"},
         "numberOfRecords":{"shape":"GetMLInputChannelResponseNumberOfRecordsLong"},
+        "privacyBudgets":{"shape":"PrivacyBudgets"},
+        "description":{"shape":"ResourceDescription"},
+        "createTime":{"shape":"SyntheticTimestamp_date_time"},
+        "updateTime":{"shape":"SyntheticTimestamp_date_time"},
+        "inputChannel":{"shape":"InputChannel"},
+        "protectedQueryIdentifier":{"shape":"UUID"},
         "numberOfFiles":{"shape":"GetMLInputChannelResponseNumberOfFilesDouble"},
         "sizeInGb":{"shape":"GetMLInputChannelResponseSizeInGbDouble"},
-        "description":{"shape":"ResourceDescription"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
         "tags":{"shape":"TagMap"}
       }
@@ -2471,6 +2677,7 @@
         "name":{"shape":"NameString"},
         "status":{"shape":"TrainedModelInferenceJobStatus"},
         "trainedModelArn":{"shape":"TrainedModelArn"},
+        "trainedModelVersionIdentifier":{"shape":"UUID"},
         "resourceConfig":{"shape":"InferenceResourceConfig"},
         "outputConfiguration":{"shape":"InferenceOutputConfiguration"},
         "membershipIdentifier":{"shape":"UUID"},
@@ -2504,6 +2711,11 @@
           "shape":"UUID",
           "location":"uri",
           "locationName":"membershipIdentifier"
+        },
+        "versionIdentifier":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"versionIdentifier"
         }
       }
     },
@@ -2524,12 +2736,15 @@
         "membershipIdentifier":{"shape":"UUID"},
         "collaborationIdentifier":{"shape":"UUID"},
         "trainedModelArn":{"shape":"TrainedModelArn"},
+        "versionIdentifier":{"shape":"UUID"},
+        "incrementalTrainingDataChannels":{"shape":"IncrementalTrainingDataChannelsOutput"},
         "name":{"shape":"NameString"},
         "description":{"shape":"ResourceDescription"},
         "status":{"shape":"TrainedModelStatus"},
         "statusDetails":{"shape":"StatusDetails"},
         "configuredModelAlgorithmAssociationArn":{"shape":"ConfiguredModelAlgorithmAssociationArn"},
         "resourceConfig":{"shape":"ResourceConfig"},
+        "trainingInputMode":{"shape":"TrainingInputMode"},
         "stoppingCondition":{"shape":"StoppingCondition"},
         "metricsStatus":{"shape":"MetricsStatus"},
         "metricsStatusDetails":{"shape":"String"},
@@ -2634,6 +2849,42 @@
       "min":20,
       "pattern":"arn:aws[-a-z]*:iam::[0-9]{12}:role/.+"
     },
+    "IncrementalTrainingDataChannel":{
+      "type":"structure",
+      "required":[
+        "trainedModelArn",
+        "channelName"
+      ],
+      "members":{
+        "trainedModelArn":{"shape":"TrainedModelArn"},
+        "versionIdentifier":{"shape":"UUID"},
+        "channelName":{"shape":"ModelTrainingDataChannelName"}
+      }
+    },
+    "IncrementalTrainingDataChannelOutput":{
+      "type":"structure",
+      "required":[
+        "channelName",
+        "modelName"
+      ],
+      "members":{
+        "channelName":{"shape":"ModelTrainingDataChannelName"},
+        "versionIdentifier":{"shape":"UUID"},
+        "modelName":{"shape":"NameString"}
+      }
+    },
+    "IncrementalTrainingDataChannels":{
+      "type":"list",
+      "member":{"shape":"IncrementalTrainingDataChannel"},
+      "max":1,
+      "min":1
+    },
+    "IncrementalTrainingDataChannelsOutput":{
+      "type":"list",
+      "member":{"shape":"IncrementalTrainingDataChannelOutput"},
+      "max":1,
+      "min":1
+    },
     "InferenceContainerConfig":{
       "type":"structure",
       "required":["imageUri"],
@@ -2693,7 +2944,6 @@
         "ml.r6i.large",
         "ml.g5.2xlarge",
         "ml.m5.large",
-        "ml.p3.16xlarge",
         "ml.m7i.48xlarge",
         "ml.m6i.16xlarge",
         "ml.p2.16xlarge",
@@ -2741,7 +2991,6 @@
         "ml.m6i.2xlarge",
         "ml.g5.16xlarge",
         "ml.m7i.4xlarge",
-        "ml.p3.2xlarge",
         "ml.r6i.32xlarge",
         "ml.m6i.4xlarge",
         "ml.m5.xlarge",
@@ -2767,8 +3016,10 @@
         "ml.p2.8xlarge",
         "ml.r6i.4xlarge",
         "ml.m6i.32xlarge",
-        "ml.p3.8xlarge",
-        "ml.m4.4xlarge"
+        "ml.m4.4xlarge",
+        "ml.p3.16xlarge",
+        "ml.p3.2xlarge",
+        "ml.p3.8xlarge"
       ]
     },
     "InferenceOutputConfiguration":{
@@ -2857,10 +3108,6 @@
         "ml.p2.xlarge",
         "ml.p2.8xlarge",
         "ml.p2.16xlarge",
-        "ml.p3.2xlarge",
-        "ml.p3.8xlarge",
-        "ml.p3.16xlarge",
-        "ml.p3dn.24xlarge",
         "ml.p4d.24xlarge",
         "ml.p4de.24xlarge",
         "ml.p5.48xlarge",
@@ -2921,8 +3168,66 @@
         "ml.r5.8xlarge",
         "ml.r5.12xlarge",
         "ml.r5.16xlarge",
-        "ml.r5.24xlarge"
+        "ml.r5.24xlarge",
+        "ml.c7i.large",
+        "ml.c7i.xlarge",
+        "ml.c7i.2xlarge",
+        "ml.c7i.4xlarge",
+        "ml.c7i.8xlarge",
+        "ml.c7i.12xlarge",
+        "ml.c7i.16xlarge",
+        "ml.c7i.24xlarge",
+        "ml.c7i.48xlarge",
+        "ml.m7i.large",
+        "ml.m7i.xlarge",
+        "ml.m7i.2xlarge",
+        "ml.m7i.4xlarge",
+        "ml.m7i.8xlarge",
+        "ml.m7i.12xlarge",
+        "ml.m7i.16xlarge",
+        "ml.m7i.24xlarge",
+        "ml.m7i.48xlarge",
+        "ml.r7i.large",
+        "ml.r7i.xlarge",
+        "ml.r7i.2xlarge",
+        "ml.r7i.4xlarge",
+        "ml.r7i.8xlarge",
+        "ml.r7i.12xlarge",
+        "ml.r7i.16xlarge",
+        "ml.r7i.24xlarge",
+        "ml.r7i.48xlarge",
+        "ml.g6.xlarge",
+        "ml.g6.2xlarge",
+        "ml.g6.4xlarge",
+        "ml.g6.8xlarge",
+        "ml.g6.12xlarge",
+        "ml.g6.16xlarge",
+        "ml.g6.24xlarge",
+        "ml.g6.48xlarge",
+        "ml.g6e.xlarge",
+        "ml.g6e.2xlarge",
+        "ml.g6e.4xlarge",
+        "ml.g6e.8xlarge",
+        "ml.g6e.12xlarge",
+        "ml.g6e.16xlarge",
+        "ml.g6e.24xlarge",
+        "ml.g6e.48xlarge",
+        "ml.p5en.48xlarge",
+        "ml.p3.2xlarge",
+        "ml.p3.8xlarge",
+        "ml.p3.16xlarge",
+        "ml.p3dn.24xlarge"
       ]
+    },
+    "InternalServiceException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":500},
+      "exception":true,
+      "fault":true
     },
     "KmsKeyArn":{
       "type":"string",
@@ -3098,6 +3403,11 @@
           "shape":"TrainedModelArn",
           "location":"uri",
           "locationName":"trainedModelArn"
+        },
+        "trainedModelVersionIdentifier":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"trainedModelVersionIdentifier"
         }
       }
     },
@@ -3132,6 +3442,11 @@
           "shape":"TrainedModelArn",
           "location":"querystring",
           "locationName":"trainedModelArn"
+        },
+        "trainedModelVersionIdentifier":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"trainedModelVersionIdentifier"
         }
       }
     },
@@ -3317,6 +3632,11 @@
           "shape":"TrainedModelArn",
           "location":"querystring",
           "locationName":"trainedModelArn"
+        },
+        "trainedModelVersionIdentifier":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"trainedModelVersionIdentifier"
         }
       }
     },
@@ -3326,6 +3646,48 @@
       "members":{
         "nextToken":{"shape":"NextToken"},
         "trainedModelInferenceJobs":{"shape":"TrainedModelInferenceJobList"}
+      }
+    },
+    "ListTrainedModelVersionsRequest":{
+      "type":"structure",
+      "required":[
+        "membershipIdentifier",
+        "trainedModelArn"
+      ],
+      "members":{
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "membershipIdentifier":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"membershipIdentifier"
+        },
+        "trainedModelArn":{
+          "shape":"TrainedModelArn",
+          "location":"uri",
+          "locationName":"trainedModelArn"
+        },
+        "status":{
+          "shape":"TrainedModelStatus",
+          "location":"querystring",
+          "locationName":"status"
+        }
+      }
+    },
+    "ListTrainedModelVersionsResponse":{
+      "type":"structure",
+      "required":["trainedModels"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "trainedModels":{"shape":"TrainedModelList"}
       }
     },
     "ListTrainedModelsRequest":{
@@ -3380,12 +3742,29 @@
         "trainingDatasets":{"shape":"TrainingDatasetList"}
       }
     },
+    "LogRedactionConfiguration":{
+      "type":"structure",
+      "required":["entitiesToRedact"],
+      "members":{
+        "entitiesToRedact":{"shape":"EntityTypeList"},
+        "customEntityConfig":{"shape":"CustomEntityConfig"}
+      }
+    },
+    "LogType":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "ERROR_SUMMARY"
+      ]
+    },
     "LogsConfigurationPolicy":{
       "type":"structure",
       "required":["allowedAccountIds"],
       "members":{
         "allowedAccountIds":{"shape":"AccountIdList"},
-        "filterPattern":{"shape":"LogsConfigurationPolicyFilterPatternString"}
+        "filterPattern":{"shape":"LogsConfigurationPolicyFilterPatternString"},
+        "logType":{"shape":"LogType"},
+        "logRedactionConfiguration":{"shape":"LogRedactionConfiguration"}
       }
     },
     "LogsConfigurationPolicyFilterPatternString":{
@@ -3544,7 +3923,8 @@
       ],
       "members":{
         "mlInputChannelArn":{"shape":"MLInputChannelArn"},
-        "channelName":{"shape":"ModelTrainingDataChannelName"}
+        "channelName":{"shape":"ModelTrainingDataChannelName"},
+        "s3DataDistributionType":{"shape":"S3DataDistributionType"}
       }
     },
     "ModelTrainingDataChannelName":{
@@ -3602,6 +3982,13 @@
         "POLICY_MUST_NOT_EXIST"
       ]
     },
+    "PrivacyBudgets":{
+      "type":"structure",
+      "members":{
+        "accessBudgets":{"shape":"AccessBudgets"}
+      },
+      "union":true
+    },
     "PrivacyConfiguration":{
       "type":"structure",
       "required":["policies"],
@@ -3622,7 +4009,8 @@
       "required":["sqlParameters"],
       "members":{
         "sqlParameters":{"shape":"ProtectedQuerySQLParameters"},
-        "computeConfiguration":{"shape":"ComputeConfiguration"}
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
+        "resultFormat":{"shape":"ResultFormat"}
       }
     },
     "ProtectedQuerySQLParameters":{
@@ -3715,7 +4103,7 @@
     "ResourceConfigInstanceCountInteger":{
       "type":"integer",
       "box":true,
-      "max":1,
+      "max":5,
       "min":1
     },
     "ResourceConfigVolumeSizeInGBInteger":{
@@ -3747,12 +4135,26 @@
       "max":20480,
       "min":1
     },
+    "ResultFormat":{
+      "type":"string",
+      "enum":[
+        "CSV",
+        "PARQUET"
+      ]
+    },
     "S3ConfigMap":{
       "type":"structure",
       "required":["s3Uri"],
       "members":{
         "s3Uri":{"shape":"S3Path"}
       }
+    },
+    "S3DataDistributionType":{
+      "type":"string",
+      "enum":[
+        "FullyReplicated",
+        "ShardedByS3Key"
+      ]
     },
     "S3Path":{
       "type":"string",
@@ -3764,13 +4166,21 @@
       "type":"structure",
       "required":["message"],
       "members":{
-        "message":{"shape":"String"}
+        "message":{"shape":"String"},
+        "quotaName":{"shape":"String"},
+        "quotaValue":{"shape":"ServiceQuotaExceededExceptionQuotaValueDouble"}
       },
       "error":{
         "httpStatusCode":402,
         "senderFault":true
       },
       "exception":true
+    },
+    "ServiceQuotaExceededExceptionQuotaValueDouble":{
+      "type":"double",
+      "box":true,
+      "max":100000,
+      "min":0
     },
     "SharedAudienceMetrics":{
       "type":"string",
@@ -3832,6 +4242,7 @@
           "location":"uri",
           "locationName":"trainedModelArn"
         },
+        "trainedModelVersionIdentifier":{"shape":"UUID"},
         "membershipIdentifier":{
           "shape":"UUID",
           "location":"uri",
@@ -3859,6 +4270,7 @@
         },
         "name":{"shape":"NameString"},
         "trainedModelArn":{"shape":"TrainedModelArn"},
+        "trainedModelVersionIdentifier":{"shape":"UUID"},
         "configuredModelAlgorithmAssociationArn":{"shape":"ConfiguredModelAlgorithmAssociationArn"},
         "resourceConfig":{"shape":"InferenceResourceConfig"},
         "outputConfiguration":{"shape":"InferenceOutputConfiguration"},
@@ -3943,8 +4355,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -3955,13 +4366,46 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:aws[-a-z]*:cleanrooms-ml:[-a-z0-9]+:[0-9]{12}:(membership/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/(configured-model-algorithm-association|trained-model|trained-model-inference-job|ml-input-channel)|training-dataset|audience-model|configured-audience-model|audience-generation-job|configured-model-algorithm|configured-model-algorithm-association|trained-model|trained-model-inference-job)/[-a-zA-Z0-9_/.]+"
+      "pattern":"arn:aws[-a-z]*:cleanrooms-ml:[-a-z0-9]+:[0-9]{12}:((membership/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/(configured-model-algorithm-association|trained-model|trained-model-inference-job|ml-input-channel))|training-dataset|audience-model|configured-audience-model|audience-generation-job|configured-model-algorithm)/[-a-zA-Z0-9_/.]+"
+    },
+    "ThrottlingException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":429,
+        "senderFault":true
+      },
+      "exception":true
     },
     "TrainedModelArn":{
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:aws[-a-z]*:cleanrooms-ml:[-a-z0-9]+:[0-9]{12}:(membership/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)?trained-model/[-a-zA-Z0-9_/.]+"
+      "pattern":"arn:aws[-a-z]*:cleanrooms-ml:[-a-z0-9]+:[0-9]{12}:membership/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/trained-model/[-a-zA-Z0-9_/.]+"
+    },
+    "TrainedModelArtifactMaxSize":{
+      "type":"structure",
+      "required":[
+        "unit",
+        "value"
+      ],
+      "members":{
+        "unit":{"shape":"TrainedModelArtifactMaxSizeUnitType"},
+        "value":{"shape":"TrainedModelArtifactMaxSizeValue"}
+      }
+    },
+    "TrainedModelArtifactMaxSizeUnitType":{
+      "type":"string",
+      "enum":["GB"]
+    },
+    "TrainedModelArtifactMaxSizeValue":{
+      "type":"double",
+      "box":true,
+      "max":10.0,
+      "min":0.01
     },
     "TrainedModelExportFileType":{
       "type":"string",
@@ -4041,7 +4485,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:aws[-a-z]*:cleanrooms-ml:[-a-z0-9]+:[0-9]{12}:(membership/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)?trained-model-inference-job/[-a-zA-Z0-9_/.]+"
+      "pattern":"arn:aws[-a-z]*:cleanrooms-ml:[-a-z0-9]+:[0-9]{12}:membership/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/trained-model-inference-job/[-a-zA-Z0-9_/.]+"
     },
     "TrainedModelInferenceJobList":{
       "type":"list",
@@ -4078,6 +4522,7 @@
         "configuredModelAlgorithmAssociationArn":{"shape":"ConfiguredModelAlgorithmAssociationArn"},
         "membershipIdentifier":{"shape":"UUID"},
         "trainedModelArn":{"shape":"TrainedModelArn"},
+        "trainedModelVersionIdentifier":{"shape":"UUID"},
         "collaborationIdentifier":{"shape":"UUID"},
         "status":{"shape":"TrainedModelInferenceJobStatus"},
         "outputConfiguration":{"shape":"InferenceOutputConfiguration"},
@@ -4116,7 +4561,7 @@
     "TrainedModelInferenceMaxOutputSizeValue":{
       "type":"double",
       "box":true,
-      "max":10.0,
+      "max":50.0,
       "min":0.01
     },
     "TrainedModelList":{
@@ -4155,6 +4600,8 @@
         "createTime":{"shape":"SyntheticTimestamp_date_time"},
         "updateTime":{"shape":"SyntheticTimestamp_date_time"},
         "trainedModelArn":{"shape":"TrainedModelArn"},
+        "versionIdentifier":{"shape":"UUID"},
+        "incrementalTrainingDataChannels":{"shape":"IncrementalTrainingDataChannelsOutput"},
         "name":{"shape":"NameString"},
         "description":{"shape":"ResourceDescription"},
         "membershipIdentifier":{"shape":"UUID"},
@@ -4167,7 +4614,8 @@
       "type":"structure",
       "members":{
         "containerLogs":{"shape":"LogsConfigurationPolicyList"},
-        "containerMetrics":{"shape":"MetricsConfigurationPolicy"}
+        "containerMetrics":{"shape":"MetricsConfigurationPolicy"},
+        "maxArtifactSize":{"shape":"TrainedModelArtifactMaxSize"}
       }
     },
     "TrainingDatasetArn":{
@@ -4202,6 +4650,14 @@
         "description":{"shape":"ResourceDescription"}
       }
     },
+    "TrainingInputMode":{
+      "type":"string",
+      "enum":[
+        "File",
+        "FastFile",
+        "Pipe"
+      ]
+    },
     "UUID":{
       "type":"string",
       "max":36,
@@ -4229,8 +4685,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateConfiguredAudienceModelRequest":{
       "type":"structure",

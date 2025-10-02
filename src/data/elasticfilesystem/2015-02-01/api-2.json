@@ -702,6 +702,8 @@
         "FileSystemId":{"shape":"FileSystemId"},
         "SubnetId":{"shape":"SubnetId"},
         "IpAddress":{"shape":"IpAddress"},
+        "Ipv6Address":{"shape":"Ipv6Address"},
+        "IpAddressType":{"shape":"IpAddressType"},
         "SecurityGroups":{"shape":"SecurityGroups"}
       }
     },
@@ -1302,6 +1304,19 @@
       "error":{"httpStatusCode":409},
       "exception":true
     },
+    "IpAddressType":{
+      "type":"string",
+      "enum":[
+        "IPV4_ONLY",
+        "IPV6_ONLY",
+        "DUAL_STACK"
+      ]
+    },
+    "Ipv6Address":{
+      "type":"string",
+      "max":39,
+      "min":3
+    },
     "KmsKeyId":{
       "type":"string",
       "max":2048,
@@ -1420,6 +1435,7 @@
         "SubnetId":{"shape":"SubnetId"},
         "LifeCycleState":{"shape":"LifeCycleState"},
         "IpAddress":{"shape":"IpAddress"},
+        "Ipv6Address":{"shape":"Ipv6Address"},
         "NetworkInterfaceId":{"shape":"NetworkInterfaceId"},
         "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "AvailabilityZoneName":{"shape":"AvailabilityZoneName"},

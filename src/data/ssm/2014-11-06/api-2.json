@@ -150,7 +150,8 @@
         {"shape":"InternalServerError"},
         {"shape":"InvalidDocumentContent"},
         {"shape":"DocumentLimitExceeded"},
-        {"shape":"InvalidDocumentSchemaVersion"}
+        {"shape":"InvalidDocumentSchemaVersion"},
+        {"shape":"TooManyUpdates"}
       ]
     },
     "CreateMaintenanceWindow":{
@@ -271,7 +272,8 @@
         {"shape":"InternalServerError"},
         {"shape":"InvalidDocument"},
         {"shape":"InvalidDocumentOperation"},
-        {"shape":"AssociatedInstances"}
+        {"shape":"AssociatedInstances"},
+        {"shape":"TooManyUpdates"}
       ]
     },
     "DeleteInventory":{
@@ -922,6 +924,22 @@
         {"shape":"OpsItemNotFoundException"},
         {"shape":"OpsItemInvalidParameterException"},
         {"shape":"OpsItemConflictException"}
+      ]
+    },
+    "GetAccessToken":{
+      "name":"GetAccessToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAccessTokenRequest"},
+      "output":{"shape":"GetAccessTokenResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
       ]
     },
     "GetAutomationExecution":{
@@ -1809,6 +1827,23 @@
         {"shape":"InvalidNotificationConfig"}
       ]
     },
+    "StartAccessRequest":{
+      "name":"StartAccessRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartAccessRequestRequest"},
+      "output":{"shape":"StartAccessRequestResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "StartAssociationsOnce":{
       "name":"StartAssociationsOnce",
       "http":{
@@ -2015,7 +2050,8 @@
         {"shape":"InternalServerError"},
         {"shape":"InvalidDocument"},
         {"shape":"InvalidDocumentOperation"},
-        {"shape":"InvalidDocumentVersion"}
+        {"shape":"InvalidDocumentVersion"},
+        {"shape":"TooManyUpdates"}
       ]
     },
     "UpdateMaintenanceWindow":{
@@ -2148,6 +2184,43 @@
     }
   },
   "shapes":{
+    "AccessDeniedException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "AccessKeyIdType":{
+      "type":"string",
+      "pattern":"\\w{16,128}"
+    },
+    "AccessKeySecretType":{
+      "type":"string",
+      "sensitive":true
+    },
+    "AccessRequestId":{
+      "type":"string",
+      "pattern":"^(oi)-[0-9a-f]{12}$"
+    },
+    "AccessRequestStatus":{
+      "type":"string",
+      "enum":[
+        "Approved",
+        "Rejected",
+        "Revoked",
+        "Expired",
+        "Pending"
+      ]
+    },
+    "AccessType":{
+      "type":"string",
+      "enum":[
+        "Standard",
+        "JustInTime"
+      ]
+    },
     "Account":{"type":"string"},
     "AccountId":{
       "type":"string",
@@ -2223,8 +2296,7 @@
     },
     "AddTagsToResourceResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AgentErrorCode":{
       "type":"string",
@@ -2329,8 +2401,7 @@
     },
     "AssociatedInstances":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Association":{
@@ -2362,8 +2433,7 @@
     },
     "AssociationAlreadyExists":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "AssociationComplianceSeverity":{
@@ -2589,8 +2659,7 @@
     },
     "AssociationLimitExceeded":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "AssociationList":{
@@ -3035,7 +3104,10 @@
     },
     "AutomationSubtype":{
       "type":"string",
-      "enum":["ChangeRequest"]
+      "enum":[
+        "ChangeRequest",
+        "AccessRequest"
+      ]
     },
     "AutomationTargetParameterName":{
       "type":"string",
@@ -3077,7 +3149,8 @@
         "RejectedPatches":{"shape":"PatchIdList"},
         "RejectedPatchesAction":{"shape":"PatchAction"},
         "ApprovedPatchesEnableNonSecurity":{"shape":"Boolean"},
-        "Sources":{"shape":"PatchSourceList"}
+        "Sources":{"shape":"PatchSourceList"},
+        "AvailableSecurityUpdatesComplianceStatus":{"shape":"PatchComplianceStatus"}
       }
     },
     "BatchErrorMessage":{"type":"string"},
@@ -3104,8 +3177,7 @@
     },
     "CancelCommandResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CancelMaintenanceWindowExecutionRequest":{
       "type":"structure",
@@ -3779,6 +3851,7 @@
         "RejectedPatchesAction":{"shape":"PatchAction"},
         "Description":{"shape":"BaselineDescription"},
         "Sources":{"shape":"PatchSourceList"},
+        "AvailableSecurityUpdatesComplianceStatus":{"shape":"PatchComplianceStatus"},
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -3804,10 +3877,24 @@
     },
     "CreateResourceDataSyncResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreatedDate":{"type":"timestamp"},
+    "Credentials":{
+      "type":"structure",
+      "required":[
+        "AccessKeyId",
+        "SecretAccessKey",
+        "SessionToken",
+        "ExpirationTime"
+      ],
+      "members":{
+        "AccessKeyId":{"shape":"AccessKeyIdType"},
+        "SecretAccessKey":{"shape":"AccessKeySecretType"},
+        "SessionToken":{"shape":"SessionTokenType"},
+        "ExpirationTime":{"shape":"DateTime"}
+      }
+    },
     "CustomSchemaCountLimitExceededException":{
       "type":"structure",
       "members":{
@@ -3832,8 +3919,7 @@
     },
     "DeleteActivationResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAssociationRequest":{
       "type":"structure",
@@ -3845,8 +3931,7 @@
     },
     "DeleteAssociationResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDocumentRequest":{
       "type":"structure",
@@ -3860,8 +3945,7 @@
     },
     "DeleteDocumentResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteInventoryRequest":{
       "type":"structure",
@@ -3906,8 +3990,7 @@
     },
     "DeleteOpsItemResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteOpsMetadataRequest":{
       "type":"structure",
@@ -3918,8 +4001,7 @@
     },
     "DeleteOpsMetadataResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteParameterRequest":{
       "type":"structure",
@@ -3930,8 +4012,7 @@
     },
     "DeleteParameterResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteParametersRequest":{
       "type":"structure",
@@ -3970,8 +4051,7 @@
     },
     "DeleteResourceDataSyncResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteResourcePolicyRequest":{
       "type":"structure",
@@ -3988,8 +4068,7 @@
     },
     "DeleteResourcePolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeliveryTimedOutCount":{"type":"integer"},
     "DeregisterManagedInstanceRequest":{
@@ -4001,8 +4080,7 @@
     },
     "DeregisterManagedInstanceResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeregisterPatchBaselineForPatchGroupRequest":{
       "type":"structure",
@@ -4696,6 +4774,10 @@
         "InstancesWithOtherNonCompliantPatches":{
           "shape":"InstancesCount",
           "box":true
+        },
+        "InstancesWithAvailableSecurityUpdates":{
+          "shape":"Integer",
+          "box":true
         }
       }
     },
@@ -4775,8 +4857,7 @@
     },
     "DisassociateOpsItemRelatedItemResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DocumentARN":{
       "type":"string",
@@ -5104,7 +5185,9 @@
         "ProblemAnalysisTemplate",
         "CloudFormation",
         "ConformancePackTemplate",
-        "QuickSetup"
+        "QuickSetup",
+        "ManualApprovalPolicy",
+        "AutoApprovalPolicy"
       ]
     },
     "DocumentVersion":{
@@ -5170,8 +5253,7 @@
     },
     "DuplicateInstanceId":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Duration":{
@@ -5294,6 +5376,20 @@
       },
       "exception":true
     },
+    "GetAccessTokenRequest":{
+      "type":"structure",
+      "required":["AccessRequestId"],
+      "members":{
+        "AccessRequestId":{"shape":"AccessRequestId"}
+      }
+    },
+    "GetAccessTokenResponse":{
+      "type":"structure",
+      "members":{
+        "Credentials":{"shape":"Credentials"},
+        "AccessRequestStatus":{"shape":"AccessRequestStatus"}
+      }
+    },
     "GetAutomationExecutionRequest":{
       "type":"structure",
       "required":["AutomationExecutionId"],
@@ -5393,7 +5489,8 @@
       "members":{
         "InstanceId":{"shape":"InstanceId"},
         "SnapshotId":{"shape":"SnapshotId"},
-        "BaselineOverride":{"shape":"BaselineOverride"}
+        "BaselineOverride":{"shape":"BaselineOverride"},
+        "UseS3DualStackEndpoint":{"shape":"Boolean"}
       }
     },
     "GetDeployablePatchSnapshotForInstanceResult":{
@@ -5836,7 +5933,8 @@
         "CreatedDate":{"shape":"DateTime"},
         "ModifiedDate":{"shape":"DateTime"},
         "Description":{"shape":"BaselineDescription"},
-        "Sources":{"shape":"PatchSourceList"}
+        "Sources":{"shape":"PatchSourceList"},
+        "AvailableSecurityUpdatesComplianceStatus":{"shape":"PatchComplianceStatus"}
       }
     },
     "GetResourcePoliciesRequest":{
@@ -6164,6 +6262,10 @@
           "box":true
         },
         "NotApplicableCount":{"shape":"PatchNotApplicableCount"},
+        "AvailableSecurityUpdateCount":{
+          "shape":"PatchAvailableSecurityUpdateCount",
+          "box":true
+        },
         "OperationStartTime":{"shape":"DateTime"},
         "OperationEndTime":{"shape":"DateTime"},
         "Operation":{"shape":"PatchOperationType"},
@@ -6441,8 +6543,7 @@
     },
     "InvalidCommandId":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidDeleteInventoryParametersException":{
@@ -6510,8 +6611,7 @@
     },
     "InvalidFilterKey":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidFilterOption":{
@@ -6608,14 +6708,12 @@
     },
     "InvalidOutputFolder":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidOutputLocation":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidParameters":{
@@ -6634,8 +6732,7 @@
     },
     "InvalidPluginName":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidPolicyAttributeException":{
@@ -6654,14 +6751,12 @@
     },
     "InvalidResourceId":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidResourceType":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidResultAttributeException":{
@@ -6998,8 +7093,7 @@
     "InventoryTypeDisplayName":{"type":"string"},
     "InvocationDoesNotExist":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvocationTraceOutput":{
@@ -7954,8 +8048,7 @@
     },
     "ModifyDocumentPermissionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "NextToken":{"type":"string"},
     "Node":{
@@ -8512,6 +8605,15 @@
         "Category",
         "Severity",
         "OpsItemType",
+        "AccessRequestByRequesterArn",
+        "AccessRequestByRequesterId",
+        "AccessRequestByApproverArn",
+        "AccessRequestByApproverId",
+        "AccessRequestBySourceAccountId",
+        "AccessRequestBySourceOpsItemId",
+        "AccessRequestBySourceRegion",
+        "AccessRequestByIsReplica",
+        "AccessRequestByTargetResourceId",
         "ChangeRequestByRequesterArn",
         "ChangeRequestByRequesterName",
         "ChangeRequestByApproverArn",
@@ -8717,6 +8819,7 @@
         "ChangeCalendarOverrideRejected",
         "PendingApproval",
         "Approved",
+        "Revoked",
         "Rejected",
         "Closed"
       ]
@@ -9215,6 +9318,7 @@
       "member":{"shape":"PatchAdvisoryId"}
     },
     "PatchArch":{"type":"string"},
+    "PatchAvailableSecurityUpdateCount":{"type":"integer"},
     "PatchBaselineIdentity":{
       "type":"structure",
       "members":{
@@ -9279,7 +9383,8 @@
         "INSTALLED_REJECTED",
         "MISSING",
         "NOT_APPLICABLE",
-        "FAILED"
+        "FAILED",
+        "AVAILABLE_SECURITY_UPDATE"
       ]
     },
     "PatchComplianceLevel":{
@@ -9297,6 +9402,13 @@
       "type":"integer",
       "max":100,
       "min":10
+    },
+    "PatchComplianceStatus":{
+      "type":"string",
+      "enum":[
+        "COMPLIANT",
+        "NON_COMPLIANT"
+      ]
     },
     "PatchContentUrl":{"type":"string"},
     "PatchCriticalNonCompliantCount":{"type":"integer"},
@@ -9652,8 +9764,7 @@
     },
     "PutComplianceItemsResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutInventoryMessage":{"type":"string"},
     "PutInventoryRequest":{
@@ -9914,8 +10025,7 @@
     },
     "RemoveTagsFromResourceResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RequireType":{
       "type":"string",
@@ -10393,8 +10503,7 @@
     },
     "SendAutomationSignalResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "SendCommandRequest":{
       "type":"structure",
@@ -10428,6 +10537,22 @@
       "members":{
         "Command":{"shape":"Command"}
       }
+    },
+    "ServiceQuotaExceededException":{
+      "type":"structure",
+      "required":[
+        "Message",
+        "QuotaCode",
+        "ServiceCode"
+      ],
+      "members":{
+        "Message":{"shape":"String"},
+        "ResourceId":{"shape":"String"},
+        "ResourceType":{"shape":"String"},
+        "QuotaCode":{"shape":"String"},
+        "ServiceCode":{"shape":"String"}
+      },
+      "exception":true
     },
     "ServiceRole":{"type":"string"},
     "ServiceSetting":{
@@ -10471,7 +10596,8 @@
         "Reason":{"shape":"SessionReason"},
         "Details":{"shape":"SessionDetails"},
         "OutputUrl":{"shape":"SessionManagerOutputUrl"},
-        "MaxSessionDuration":{"shape":"MaxSessionDuration"}
+        "MaxSessionDuration":{"shape":"MaxSessionDuration"},
+        "AccessType":{"shape":"AccessType"}
       }
     },
     "SessionDetails":{
@@ -10498,7 +10624,8 @@
         "Target",
         "Owner",
         "Status",
-        "SessionId"
+        "SessionId",
+        "AccessType"
       ]
     },
     "SessionFilterList":{
@@ -10596,6 +10723,10 @@
       "max":400,
       "min":1
     },
+    "SessionTokenType":{
+      "type":"string",
+      "sensitive":true
+    },
     "SeveritySummary":{
       "type":"structure",
       "members":{
@@ -10619,7 +10750,8 @@
         "Reject",
         "StartStep",
         "StopStep",
-        "Resume"
+        "Resume",
+        "Revoke"
       ]
     },
     "SnapshotDownloadUrl":{"type":"string"},
@@ -10651,6 +10783,24 @@
       "type":"string",
       "max":24000
     },
+    "StartAccessRequestRequest":{
+      "type":"structure",
+      "required":[
+        "Reason",
+        "Targets"
+      ],
+      "members":{
+        "Reason":{"shape":"String1to256"},
+        "Targets":{"shape":"Targets"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "StartAccessRequestResponse":{
+      "type":"structure",
+      "members":{
+        "AccessRequestId":{"shape":"AccessRequestId"}
+      }
+    },
     "StartAssociationsOnceRequest":{
       "type":"structure",
       "required":["AssociationIds"],
@@ -10660,8 +10810,7 @@
     },
     "StartAssociationsOnceResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StartAutomationExecutionRequest":{
       "type":"structure",
@@ -10774,8 +10923,7 @@
     "StatusName":{"type":"string"},
     "StatusUnchanged":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "StepExecution":{
@@ -10889,8 +11037,7 @@
     },
     "StopAutomationExecutionResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopType":{
       "type":"string",
@@ -10901,6 +11048,11 @@
     },
     "StreamUrl":{"type":"string"},
     "String":{"type":"string"},
+    "String1to256":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "StringDateTime":{
       "type":"string",
       "pattern":"^([\\-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d(?!:))?)?(\\17[0-5]\\d([\\.,]\\d)?)?([zZ]|([\\-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?$"
@@ -11087,6 +11239,16 @@
         "SessionId":{"shape":"SessionId"}
       }
     },
+    "ThrottlingException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"String"},
+        "QuotaCode":{"shape":"String"},
+        "ServiceCode":{"shape":"String"}
+      },
+      "exception":true
+    },
     "TimeoutSeconds":{
       "type":"integer",
       "max":2592000,
@@ -11099,8 +11261,7 @@
     },
     "TooManyTagsError":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "TooManyUpdates":{
@@ -11294,8 +11455,7 @@
     },
     "UpdateDocumentMetadataResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateDocumentRequest":{
       "type":"structure",
@@ -11477,8 +11637,7 @@
     },
     "UpdateManagedInstanceRoleResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateOpsItemRequest":{
       "type":"structure",
@@ -11504,8 +11663,7 @@
     },
     "UpdateOpsItemResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateOpsMetadataRequest":{
       "type":"structure",
@@ -11540,6 +11698,7 @@
         "RejectedPatchesAction":{"shape":"PatchAction"},
         "Description":{"shape":"BaselineDescription"},
         "Sources":{"shape":"PatchSourceList"},
+        "AvailableSecurityUpdatesComplianceStatus":{"shape":"PatchComplianceStatus"},
         "Replace":{
           "shape":"Boolean",
           "box":true
@@ -11565,7 +11724,8 @@
         "CreatedDate":{"shape":"DateTime"},
         "ModifiedDate":{"shape":"DateTime"},
         "Description":{"shape":"BaselineDescription"},
-        "Sources":{"shape":"PatchSourceList"}
+        "Sources":{"shape":"PatchSourceList"},
+        "AvailableSecurityUpdatesComplianceStatus":{"shape":"PatchComplianceStatus"}
       }
     },
     "UpdateResourceDataSyncRequest":{
@@ -11583,8 +11743,7 @@
     },
     "UpdateResourceDataSyncResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateServiceSettingRequest":{
       "type":"structure",
@@ -11599,8 +11758,7 @@
     },
     "UpdateServiceSettingResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Url":{"type":"string"},
     "ValidNextStep":{

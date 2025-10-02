@@ -1133,8 +1133,7 @@
     },
     "CancelCapacityReservationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CapacityAllocation":{
       "type":"structure",
@@ -1325,8 +1324,7 @@
     },
     "CreateCapacityReservationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateDataCatalogInput":{
       "type":"structure",
@@ -1407,8 +1405,7 @@
     },
     "CreatePreparedStatementOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreatePresignedNotebookUrlRequest":{
       "type":"structure",
@@ -1442,8 +1439,7 @@
     },
     "CreateWorkGroupOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CustomerContentEncryptionConfiguration":{
       "type":"structure",
@@ -1545,8 +1541,7 @@
     },
     "DeleteCapacityReservationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDataCatalogInput":{
       "type":"structure",
@@ -1574,8 +1569,7 @@
     },
     "DeleteNamedQueryOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteNotebookInput":{
       "type":"structure",
@@ -1586,8 +1580,7 @@
     },
     "DeleteNotebookOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePreparedStatementInput":{
       "type":"structure",
@@ -1602,8 +1595,7 @@
     },
     "DeletePreparedStatementOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteWorkGroupInput":{
       "type":"structure",
@@ -1615,8 +1607,7 @@
     },
     "DeleteWorkGroupOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescriptionString":{
       "type":"string",
@@ -1924,7 +1915,8 @@
       "members":{
         "QueryExecutionId":{"shape":"QueryExecutionId"},
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"MaxQueryResults"}
+        "MaxResults":{"shape":"MaxQueryResults"},
+        "QueryResultType":{"shape":"QueryResultType"}
       }
     },
     "GetQueryResultsOutput":{
@@ -2352,6 +2344,29 @@
       }
     },
     "Long":{"type":"long"},
+    "ManagedQueryResultsConfiguration":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "EncryptionConfiguration":{"shape":"ManagedQueryResultsEncryptionConfiguration"}
+      }
+    },
+    "ManagedQueryResultsConfigurationUpdates":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"BoxedBoolean"},
+        "EncryptionConfiguration":{"shape":"ManagedQueryResultsEncryptionConfiguration"},
+        "RemoveEncryptionConfiguration":{"shape":"BoxedBoolean"}
+      }
+    },
+    "ManagedQueryResultsEncryptionConfiguration":{
+      "type":"structure",
+      "required":["KmsKey"],
+      "members":{
+        "KmsKey":{"shape":"KmsKey"}
+      }
+    },
     "MaxApplicationDPUSizesCount":{
       "type":"integer",
       "max":100,
@@ -2602,8 +2617,7 @@
     },
     "PutCapacityAssignmentConfigurationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "QueryExecution":{
       "type":"structure",
@@ -2611,6 +2625,7 @@
         "QueryExecutionId":{"shape":"QueryExecutionId"},
         "Query":{"shape":"QueryString"},
         "StatementType":{"shape":"StatementType"},
+        "ManagedQueryResultsConfiguration":{"shape":"ManagedQueryResultsConfiguration"},
         "ResultConfiguration":{"shape":"ResultConfiguration"},
         "ResultReuseConfiguration":{"shape":"ResultReuseConfiguration"},
         "QueryExecutionContext":{"shape":"QueryExecutionContext"},
@@ -2679,6 +2694,13 @@
         "CompletionDateTime":{"shape":"Date"},
         "AthenaError":{"shape":"AthenaError"}
       }
+    },
+    "QueryResultType":{
+      "type":"string",
+      "enum":[
+        "DATA_MANIFEST",
+        "DATA_ROWS"
+      ]
     },
     "QueryResultsS3AccessGrantsConfiguration":{
       "type":"structure",
@@ -2932,7 +2954,7 @@
         "CalculationConfiguration":{
           "shape":"CalculationConfiguration",
           "deprecated":true,
-          "deprecatedMessage":"Kepler Post GA Tasks : https://sim.amazon.com/issues/ATHENA-39828"
+          "deprecatedMessage":"Structure is deprecated."
         },
         "CodeBlock":{"shape":"CodeBlock"},
         "ClientRequestToken":{"shape":"IdempotencyToken"}
@@ -3028,8 +3050,7 @@
     },
     "StopQueryExecutionOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "String":{"type":"string"},
     "StringList":{
@@ -3094,8 +3115,7 @@
     },
     "TagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -3193,8 +3213,7 @@
     },
     "UntagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateCapacityReservationInput":{
       "type":"structure",
@@ -3209,8 +3228,7 @@
     },
     "UpdateCapacityReservationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateDataCatalogInput":{
       "type":"structure",
@@ -3227,8 +3245,7 @@
     },
     "UpdateDataCatalogOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateNamedQueryInput":{
       "type":"structure",
@@ -3246,8 +3263,7 @@
     },
     "UpdateNamedQueryOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateNotebookInput":{
       "type":"structure",
@@ -3278,13 +3294,11 @@
     },
     "UpdateNotebookMetadataOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateNotebookOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdatePreparedStatementInput":{
       "type":"structure",
@@ -3302,8 +3316,7 @@
     },
     "UpdatePreparedStatementOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateWorkGroupInput":{
       "type":"structure",
@@ -3317,8 +3330,7 @@
     },
     "UpdateWorkGroupOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "WorkGroup":{
       "type":"structure",
@@ -3336,6 +3348,7 @@
       "type":"structure",
       "members":{
         "ResultConfiguration":{"shape":"ResultConfiguration"},
+        "ManagedQueryResultsConfiguration":{"shape":"ManagedQueryResultsConfiguration"},
         "EnforceWorkGroupConfiguration":{"shape":"BoxedBoolean"},
         "PublishCloudWatchMetricsEnabled":{"shape":"BoxedBoolean"},
         "BytesScannedCutoffPerQuery":{"shape":"BytesScannedCutoffValue"},
@@ -3354,6 +3367,7 @@
       "members":{
         "EnforceWorkGroupConfiguration":{"shape":"BoxedBoolean"},
         "ResultConfigurationUpdates":{"shape":"ResultConfigurationUpdates"},
+        "ManagedQueryResultsConfigurationUpdates":{"shape":"ManagedQueryResultsConfigurationUpdates"},
         "PublishCloudWatchMetricsEnabled":{"shape":"BoxedBoolean"},
         "BytesScannedCutoffPerQuery":{"shape":"BytesScannedCutoffValue"},
         "RemoveBytesScannedCutoffPerQuery":{"shape":"BoxedBoolean"},

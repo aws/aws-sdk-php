@@ -23,6 +23,7 @@
     "ListTagsForResource": "<p>Lists the tags for a resource.</p>",
     "TagResource": "<p>Adds a tag to a resource.</p>",
     "UntagResource": "<p>Removes a tag from a resource.</p>",
+    "UpdateCluster": "<p>Updates a cluster. You can only update the network-type of a cluster.</p>",
     "UpdateControlPanel": "<p>Updates a control panel. The only update you can make to a control panel is to change the name of the control panel.</p>",
     "UpdateRoutingControl": "<p>Updates a routing control. You can only update the name of the routing control. To get or update the routing control state, see the Recovery Cluster (data plane) API actions for Amazon Route 53 Application Recovery Controller.</p>",
     "UpdateSafetyRule": "<p>Update a safety rule (an assertion rule or gating rule). You can only update the name and the waiting period for a safety rule. To make other updates, delete the safety rule and create a new one.</p>"
@@ -53,6 +54,7 @@
       "refs": {
         "CreateClusterResponse$Cluster": "<p>The cluster that was created.</p>",
         "DescribeClusterResponse$Cluster": "<p>The cluster for the DescribeCluster request.</p>",
+        "UpdateClusterResponse$Cluster": "<p>The cluster that was updated.</p>",
         "__listOfCluster$member": null
       }
     },
@@ -211,6 +213,14 @@
       "refs": {
       }
     },
+    "NetworkType": {
+      "base": "<p>The network-type of a cluster can either be IPV4 or DUALSTACK.</p>",
+      "refs": {
+        "Cluster$NetworkType": "<p>The network-type can either be IPV4 or DUALSTACK.</p>",
+        "CreateClusterRequest$NetworkType": "<p>The network-type is optional, and can either be IPV4 or DUALSTACK. The default is IPV4.</p>",
+        "UpdateClusterRequest$NetworkType": "<p>The network-type is required, and can either be IPV4 or DUALSTACK.</p>"
+      }
+    },
     "NewAssertionRule": {
       "base": "<p>A new assertion rule for a control panel.</p>",
       "refs": {
@@ -290,6 +300,16 @@
     },
     "UntagResourceResponse": {
       "base": "<p>The result of a successful UntagResource request.</p>",
+      "refs": {
+      }
+    },
+    "UpdateClusterRequest": {
+      "base": "<p>Updates an existing cluster.</p>",
+      "refs": {
+      }
+    },
+    "UpdateClusterResponse": {
+      "base": "<p>The result of a successful UpdateCluster request.</p>",
       "refs": {
       }
     },

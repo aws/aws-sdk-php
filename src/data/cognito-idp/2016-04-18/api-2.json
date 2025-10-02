@@ -242,6 +242,7 @@
       "output":{"shape":"AdminInitiateAuthResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"UnsupportedOperationException"},
         {"shape":"InvalidParameterException"},
         {"shape":"NotAuthorizedException"},
         {"shape":"TooManyRequestsException"},
@@ -624,6 +625,7 @@
         {"shape":"UserNotFoundException"},
         {"shape":"UserNotConfirmedException"},
         {"shape":"InternalErrorException"},
+        {"shape":"DeviceKeyExistsException"},
         {"shape":"ForbiddenException"}
       ],
       "authtype":"none",
@@ -759,6 +761,25 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "CreateTerms":{
+      "name":"CreateTerms",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateTermsRequest"},
+      "output":{"shape":"CreateTermsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"TermsExistsException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
     "CreateUserImportJob":{
       "name":"CreateUserImportJob",
       "http":{
@@ -815,7 +836,8 @@
         {"shape":"NotAuthorizedException"},
         {"shape":"ScopeDoesNotExistException"},
         {"shape":"InvalidOAuthFlowException"},
-        {"shape":"InternalErrorException"}
+        {"shape":"InternalErrorException"},
+        {"shape":"FeatureUnavailableInTierException"}
       ]
     },
     "CreateUserPoolDomain":{
@@ -829,6 +851,7 @@
       "errors":[
         {"shape":"InvalidParameterException"},
         {"shape":"NotAuthorizedException"},
+        {"shape":"ConcurrentModificationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"LimitExceededException"},
         {"shape":"InternalErrorException"},
@@ -895,6 +918,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"NotAuthorizedException"},
         {"shape":"TooManyRequestsException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
+    "DeleteTerms":{
+      "name":"DeleteTerms",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteTermsRequest"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
         {"shape":"InternalErrorException"}
       ]
     },
@@ -984,6 +1023,7 @@
       "errors":[
         {"shape":"NotAuthorizedException"},
         {"shape":"InvalidParameterException"},
+        {"shape":"ConcurrentModificationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalErrorException"}
       ]
@@ -1000,6 +1040,8 @@
         {"shape":"ForbiddenException"},
         {"shape":"InternalErrorException"},
         {"shape":"InvalidParameterException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"LimitExceededException"},
         {"shape":"NotAuthorizedException"},
         {"shape":"ResourceNotFoundException"}
       ],
@@ -1084,6 +1126,22 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"NotAuthorizedException"},
         {"shape":"UserPoolAddOnNotEnabledException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
+    "DescribeTerms":{
+      "name":"DescribeTerms",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeTermsRequest"},
+      "output":{"shape":"DescribeTermsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
         {"shape":"InternalErrorException"}
       ]
     },
@@ -1302,6 +1360,30 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetTokensFromRefreshToken":{
+      "name":"GetTokensFromRefreshToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetTokensFromRefreshTokenRequest"},
+      "output":{"shape":"GetTokensFromRefreshTokenResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"UserNotFoundException"},
+        {"shape":"UnexpectedLambdaException"},
+        {"shape":"UserLambdaValidationException"},
+        {"shape":"InvalidLambdaResponseException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"RefreshTokenReuseException"},
+        {"shape":"InternalErrorException"}
+      ],
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
+    },
     "GetUICustomization":{
       "name":"GetUICustomization",
       "http":{
@@ -1438,6 +1520,7 @@
       "input":{"shape":"InitiateAuthRequest"},
       "output":{"shape":"InitiateAuthResponse"},
       "errors":[
+        {"shape":"UnsupportedOperationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterException"},
         {"shape":"NotAuthorizedException"},
@@ -1545,6 +1628,22 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "ListTerms":{
+      "name":"ListTerms",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListTermsRequest"},
+      "output":{"shape":"ListTermsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
     "ListUserImportJobs":{
       "name":"ListUserImportJobs",
       "http":{
@@ -1636,6 +1735,8 @@
         {"shape":"ForbiddenException"},
         {"shape":"InternalErrorException"},
         {"shape":"InvalidParameterException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"LimitExceededException"},
         {"shape":"NotAuthorizedException"}
       ],
       "authtype":"none",
@@ -2065,6 +2166,24 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "UpdateTerms":{
+      "name":"UpdateTerms",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateTermsRequest"},
+      "output":{"shape":"UpdateTermsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"TermsExistsException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
     "UpdateUserAttributes":{
       "name":"UpdateUserAttributes",
       "http":{
@@ -2137,7 +2256,8 @@
         {"shape":"NotAuthorizedException"},
         {"shape":"ScopeDoesNotExistException"},
         {"shape":"InvalidOAuthFlowException"},
-        {"shape":"InternalErrorException"}
+        {"shape":"InternalErrorException"},
+        {"shape":"FeatureUnavailableInTierException"}
       ]
     },
     "UpdateUserPoolDomain":{
@@ -2151,6 +2271,7 @@
       "errors":[
         {"shape":"InvalidParameterException"},
         {"shape":"NotAuthorizedException"},
+        {"shape":"ConcurrentModificationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalErrorException"},
@@ -2278,8 +2399,7 @@
     },
     "AddCustomAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdminAddUserToGroupRequest":{
       "type":"structure",
@@ -2308,8 +2428,7 @@
     },
     "AdminConfirmSignUpResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdminCreateUserConfigType":{
       "type":"structure",
@@ -2363,8 +2482,7 @@
     },
     "AdminDeleteUserAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdminDeleteUserRequest":{
       "type":"structure",
@@ -2390,8 +2508,7 @@
     },
     "AdminDisableProviderForUserResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdminDisableUserRequest":{
       "type":"structure",
@@ -2406,8 +2523,7 @@
     },
     "AdminDisableUserResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdminEnableUserRequest":{
       "type":"structure",
@@ -2422,8 +2538,7 @@
     },
     "AdminEnableUserResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdminForgetDeviceRequest":{
       "type":"structure",
@@ -2508,7 +2623,8 @@
         "ChallengeName":{"shape":"ChallengeNameType"},
         "Session":{"shape":"SessionType"},
         "ChallengeParameters":{"shape":"ChallengeParametersType"},
-        "AuthenticationResult":{"shape":"AuthenticationResultType"}
+        "AuthenticationResult":{"shape":"AuthenticationResultType"},
+        "AvailableChallenges":{"shape":"AvailableChallengeListType"}
       }
     },
     "AdminLinkProviderForUserRequest":{
@@ -2526,8 +2642,7 @@
     },
     "AdminLinkProviderForUserResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdminListDevicesRequest":{
       "type":"structure",
@@ -2616,8 +2731,7 @@
     },
     "AdminResetUserPasswordResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdminRespondToAuthChallengeRequest":{
       "type":"structure",
@@ -2662,8 +2776,7 @@
     },
     "AdminSetUserMFAPreferenceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdminSetUserPasswordRequest":{
       "type":"structure",
@@ -2681,8 +2794,7 @@
     },
     "AdminSetUserPasswordResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdminSetUserSettingsRequest":{
       "type":"structure",
@@ -2699,8 +2811,7 @@
     },
     "AdminSetUserSettingsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdminUpdateAuthEventFeedbackRequest":{
       "type":"structure",
@@ -2719,8 +2830,7 @@
     },
     "AdminUpdateAuthEventFeedbackResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdminUpdateDeviceStatusRequest":{
       "type":"structure",
@@ -2738,8 +2848,7 @@
     },
     "AdminUpdateDeviceStatusResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdminUpdateUserAttributesRequest":{
       "type":"structure",
@@ -2757,8 +2866,7 @@
     },
     "AdminUpdateUserAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdminUserGlobalSignOutRequest":{
       "type":"structure",
@@ -2773,8 +2881,7 @@
     },
     "AdminUserGlobalSignOutResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdvancedSecurityAdditionalFlowsType":{
       "type":"structure",
@@ -3117,8 +3224,7 @@
     },
     "ChangePasswordResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ClientIdType":{
       "type":"string",
@@ -3207,8 +3313,7 @@
     },
     "CompleteWebAuthnRegistrationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CompletionMessageType":{
       "type":"string",
@@ -3291,8 +3396,7 @@
     },
     "ConfirmForgotPasswordResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ConfirmSignUpRequest":{
       "type":"structure",
@@ -3426,6 +3530,30 @@
         "ResourceServer":{"shape":"ResourceServerType"}
       }
     },
+    "CreateTermsRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "ClientId",
+        "TermsName",
+        "TermsSource",
+        "Enforcement"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "ClientId":{"shape":"ClientIdType"},
+        "TermsName":{"shape":"TermsNameType"},
+        "TermsSource":{"shape":"TermsSourceType"},
+        "Enforcement":{"shape":"TermsEnforcementType"},
+        "Links":{"shape":"LinksType"}
+      }
+    },
+    "CreateTermsResponse":{
+      "type":"structure",
+      "members":{
+        "Terms":{"shape":"TermsType"}
+      }
+    },
     "CreateUserImportJobRequest":{
       "type":"structure",
       "required":[
@@ -3473,7 +3601,8 @@
         "PreventUserExistenceErrors":{"shape":"PreventUserExistenceErrorTypes"},
         "EnableTokenRevocation":{"shape":"WrappedBooleanType"},
         "EnablePropagateAdditionalUserContextData":{"shape":"WrappedBooleanType"},
-        "AuthSessionValidity":{"shape":"AuthSessionValidityType"}
+        "AuthSessionValidity":{"shape":"AuthSessionValidityType"},
+        "RefreshTokenRotation":{"shape":"RefreshTokenRotationType"}
       }
     },
     "CreateUserPoolClientResponse":{
@@ -3639,6 +3768,17 @@
         "Identifier":{"shape":"ResourceServerIdentifierType"}
       }
     },
+    "DeleteTermsRequest":{
+      "type":"structure",
+      "required":[
+        "TermsId",
+        "UserPoolId"
+      ],
+      "members":{
+        "TermsId":{"shape":"TermsIdType"},
+        "UserPoolId":{"shape":"UserPoolIdType"}
+      }
+    },
     "DeleteUserAttributesRequest":{
       "type":"structure",
       "required":[
@@ -3652,8 +3792,7 @@
     },
     "DeleteUserAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteUserPoolClientRequest":{
       "type":"structure",
@@ -3679,8 +3818,7 @@
     },
     "DeleteUserPoolDomainResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteUserPoolRequest":{
       "type":"structure",
@@ -3709,8 +3847,7 @@
     },
     "DeleteWebAuthnCredentialResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletionProtectionType":{
       "type":"string",
@@ -3817,6 +3954,23 @@
         "RiskConfiguration":{"shape":"RiskConfigurationType"}
       }
     },
+    "DescribeTermsRequest":{
+      "type":"structure",
+      "required":[
+        "TermsId",
+        "UserPoolId"
+      ],
+      "members":{
+        "TermsId":{"shape":"TermsIdType"},
+        "UserPoolId":{"shape":"UserPoolIdType"}
+      }
+    },
+    "DescribeTermsResponse":{
+      "type":"structure",
+      "members":{
+        "Terms":{"shape":"TermsType"}
+      }
+    },
     "DescribeUserImportJobRequest":{
       "type":"structure",
       "required":[
@@ -3888,6 +4042,13 @@
         "DeviceOnlyRememberedOnUserPrompt":{"shape":"BooleanType"}
       }
     },
+    "DeviceKeyExistsException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"MessageType"}
+      },
+      "exception":true
+    },
     "DeviceKeyType":{
       "type":"string",
       "max":55,
@@ -3929,8 +4090,7 @@
     },
     "Document":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "DomainDescriptionType":{
@@ -4167,6 +4327,13 @@
         "ALLOW_USER_AUTH"
       ]
     },
+    "FeatureType":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "FeatureUnavailableInTierException":{
       "type":"structure",
       "members":{
@@ -4315,6 +4482,26 @@
         "Certificate":{"shape":"StringType"}
       }
     },
+    "GetTokensFromRefreshTokenRequest":{
+      "type":"structure",
+      "required":[
+        "RefreshToken",
+        "ClientId"
+      ],
+      "members":{
+        "RefreshToken":{"shape":"TokenModelType"},
+        "ClientId":{"shape":"ClientIdType"},
+        "ClientSecret":{"shape":"ClientSecretType"},
+        "DeviceKey":{"shape":"DeviceKeyType"},
+        "ClientMetadata":{"shape":"ClientMetadataType"}
+      }
+    },
+    "GetTokensFromRefreshTokenResponse":{
+      "type":"structure",
+      "members":{
+        "AuthenticationResult":{"shape":"AuthenticationResultType"}
+      }
+    },
     "GetUICustomizationRequest":{
       "type":"structure",
       "required":["UserPoolId"],
@@ -4412,8 +4599,7 @@
     },
     "GlobalSignOutResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GroupExistsException":{
       "type":"structure",
@@ -4618,12 +4804,29 @@
         "KMSKeyID":{"shape":"ArnType"}
       }
     },
+    "LanguageIdType":{
+      "type":"string",
+      "pattern":"^cognito:(default|english|french|spanish|german|bahasa-indonesia|italian|japanese|korean|portuguese-brazil|chinese-(simplified|traditional))$"
+    },
     "LimitExceededException":{
       "type":"structure",
       "members":{
         "message":{"shape":"MessageType"}
       },
       "exception":true
+    },
+    "LinkUrlType":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+$"
+    },
+    "LinksType":{
+      "type":"map",
+      "key":{"shape":"LanguageIdType"},
+      "value":{"shape":"LinkUrlType"},
+      "max":12,
+      "min":1
     },
     "ListDevicesRequest":{
       "type":"structure",
@@ -4716,6 +4919,28 @@
       "type":"structure",
       "members":{
         "Tags":{"shape":"UserPoolTagsType"}
+      }
+    },
+    "ListTermsRequest":{
+      "type":"structure",
+      "required":["UserPoolId"],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "MaxResults":{"shape":"ListTermsRequestMaxResultsInteger"},
+        "NextToken":{"shape":"StringType"}
+      }
+    },
+    "ListTermsRequestMaxResultsInteger":{
+      "type":"integer",
+      "max":60,
+      "min":1
+    },
+    "ListTermsResponse":{
+      "type":"structure",
+      "required":["Terms"],
+      "members":{
+        "Terms":{"shape":"TermsDescriptionListType"},
+        "NextToken":{"shape":"StringType"}
       }
     },
     "ListUserImportJobsRequest":{
@@ -5048,7 +5273,8 @@
       "type":"string",
       "enum":[
         "V1_0",
-        "V2_0"
+        "V2_0",
+        "V3_0"
       ]
     },
     "PreTokenGenerationVersionConfigType":{
@@ -5165,6 +5391,21 @@
       "max":1024,
       "min":1,
       "pattern":"[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+"
+    },
+    "RefreshTokenReuseException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"MessageType"}
+      },
+      "exception":true
+    },
+    "RefreshTokenRotationType":{
+      "type":"structure",
+      "required":["Feature"],
+      "members":{
+        "Feature":{"shape":"FeatureType"},
+        "RetryGracePeriodSeconds":{"shape":"RetryGracePeriodSecondsType"}
+      }
     },
     "RefreshTokenValidityType":{
       "type":"integer",
@@ -5292,6 +5533,11 @@
         "AuthenticationResult":{"shape":"AuthenticationResultType"}
       }
     },
+    "RetryGracePeriodSecondsType":{
+      "type":"integer",
+      "max":60,
+      "min":0
+    },
     "RevokeTokenRequest":{
       "type":"structure",
       "required":[
@@ -5306,8 +5552,7 @@
     },
     "RevokeTokenResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RiskConfigurationType":{
       "type":"structure",
@@ -5511,8 +5756,7 @@
     },
     "SetUserMFAPreferenceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "SetUserPoolMfaConfigRequest":{
       "type":"structure",
@@ -5549,8 +5793,7 @@
     },
     "SetUserSettingsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "SignInPolicyType":{
       "type":"structure",
@@ -5738,8 +5981,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValueType":{
       "type":"string",
@@ -5750,6 +5992,75 @@
       "type":"integer",
       "max":365,
       "min":0
+    },
+    "TermsDescriptionListType":{
+      "type":"list",
+      "member":{"shape":"TermsDescriptionType"}
+    },
+    "TermsDescriptionType":{
+      "type":"structure",
+      "required":[
+        "TermsId",
+        "TermsName",
+        "Enforcement",
+        "CreationDate",
+        "LastModifiedDate"
+      ],
+      "members":{
+        "TermsId":{"shape":"TermsIdType"},
+        "TermsName":{"shape":"TermsNameType"},
+        "Enforcement":{"shape":"TermsEnforcementType"},
+        "CreationDate":{"shape":"DateType"},
+        "LastModifiedDate":{"shape":"DateType"}
+      }
+    },
+    "TermsEnforcementType":{
+      "type":"string",
+      "enum":["NONE"]
+    },
+    "TermsExistsException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"MessageType"}
+      },
+      "exception":true
+    },
+    "TermsIdType":{
+      "type":"string",
+      "pattern":"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[4][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "TermsNameType":{
+      "type":"string",
+      "pattern":"^(terms-of-use|privacy-policy)$"
+    },
+    "TermsSourceType":{
+      "type":"string",
+      "enum":["LINK"]
+    },
+    "TermsType":{
+      "type":"structure",
+      "required":[
+        "TermsId",
+        "UserPoolId",
+        "ClientId",
+        "TermsName",
+        "TermsSource",
+        "Enforcement",
+        "Links",
+        "CreationDate",
+        "LastModifiedDate"
+      ],
+      "members":{
+        "TermsId":{"shape":"TermsIdType"},
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "ClientId":{"shape":"ClientIdType"},
+        "TermsName":{"shape":"TermsNameType"},
+        "TermsSource":{"shape":"TermsSourceType"},
+        "Enforcement":{"shape":"TermsEnforcementType"},
+        "Links":{"shape":"LinksType"},
+        "CreationDate":{"shape":"DateType"},
+        "LastModifiedDate":{"shape":"DateType"}
+      }
     },
     "TierChangeNotAllowedException":{
       "type":"structure",
@@ -5861,8 +6172,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAuthEventFeedbackRequest":{
       "type":"structure",
@@ -5883,8 +6193,7 @@
     },
     "UpdateAuthEventFeedbackResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateDeviceStatusRequest":{
       "type":"structure",
@@ -5900,8 +6209,7 @@
     },
     "UpdateDeviceStatusResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateGroupRequest":{
       "type":"structure",
@@ -5981,6 +6289,27 @@
         "ResourceServer":{"shape":"ResourceServerType"}
       }
     },
+    "UpdateTermsRequest":{
+      "type":"structure",
+      "required":[
+        "TermsId",
+        "UserPoolId"
+      ],
+      "members":{
+        "TermsId":{"shape":"TermsIdType"},
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "TermsName":{"shape":"TermsNameType"},
+        "TermsSource":{"shape":"TermsSourceType"},
+        "Enforcement":{"shape":"TermsEnforcementType"},
+        "Links":{"shape":"LinksType"}
+      }
+    },
+    "UpdateTermsResponse":{
+      "type":"structure",
+      "members":{
+        "Terms":{"shape":"TermsType"}
+      }
+    },
     "UpdateUserAttributesRequest":{
       "type":"structure",
       "required":[
@@ -6027,7 +6356,8 @@
         "PreventUserExistenceErrors":{"shape":"PreventUserExistenceErrorTypes"},
         "EnableTokenRevocation":{"shape":"WrappedBooleanType"},
         "EnablePropagateAdditionalUserContextData":{"shape":"WrappedBooleanType"},
-        "AuthSessionValidity":{"shape":"AuthSessionValidityType"}
+        "AuthSessionValidity":{"shape":"AuthSessionValidityType"},
+        "RefreshTokenRotation":{"shape":"RefreshTokenRotationType"}
       }
     },
     "UpdateUserPoolClientResponse":{
@@ -6085,8 +6415,7 @@
     },
     "UpdateUserPoolResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UserAttributeUpdateSettingsType":{
       "type":"structure",
@@ -6244,7 +6573,8 @@
         "PreventUserExistenceErrors":{"shape":"PreventUserExistenceErrorTypes"},
         "EnableTokenRevocation":{"shape":"WrappedBooleanType"},
         "EnablePropagateAdditionalUserContextData":{"shape":"WrappedBooleanType"},
-        "AuthSessionValidity":{"shape":"AuthSessionValidityType"}
+        "AuthSessionValidity":{"shape":"AuthSessionValidityType"},
+        "RefreshTokenRotation":{"shape":"RefreshTokenRotationType"}
       }
     },
     "UserPoolDescriptionType":{
@@ -6489,8 +6819,7 @@
     },
     "VerifyUserAttributeResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "WebAuthnAuthenticatorAttachmentType":{"type":"string"},
     "WebAuthnAuthenticatorTransportType":{"type":"string"},

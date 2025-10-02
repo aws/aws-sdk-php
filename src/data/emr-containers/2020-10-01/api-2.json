@@ -336,6 +336,13 @@
       "min":44,
       "pattern":"^arn:(aws[a-zA-Z0-9-]*):acm:.+:(\\d{12}):certificate/.+$"
     },
+    "AllowAWSToRetainLogs":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "AuthorizationConfiguration":{
       "type":"structure",
       "members":{
@@ -543,6 +550,7 @@
           "idempotencyToken":true
         },
         "name":{"shape":"ResourceNameString"},
+        "containerProvider":{"shape":"ContainerProvider"},
         "securityConfigurationData":{"shape":"SecurityConfigurationData"},
         "tags":{"shape":"TagMap"}
       }
@@ -770,7 +778,8 @@
     "EksInfo":{
       "type":"structure",
       "members":{
-        "namespace":{"shape":"KubernetesNamespace"}
+        "namespace":{"shape":"KubernetesNamespace"},
+        "nodeLabel":{"shape":"ResourceNameString"}
       }
     },
     "EncryptionConfiguration":{
@@ -1286,6 +1295,13 @@
       "min":1,
       "pattern":"[\\.\\-_/#A-Za-z0-9]+"
     },
+    "ManagedLogs":{
+      "type":"structure",
+      "members":{
+        "allowAWSToRetainLogs":{"shape":"AllowAWSToRetainLogs"},
+        "encryptionKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
     "MaxFilesToKeep":{
       "type":"integer",
       "max":50,
@@ -1294,6 +1310,7 @@
     "MonitoringConfiguration":{
       "type":"structure",
       "members":{
+        "managedLogs":{"shape":"ManagedLogs"},
         "persistentAppUI":{"shape":"PersistentAppUI"},
         "cloudWatchMonitoringConfiguration":{"shape":"CloudWatchMonitoringConfiguration"},
         "s3MonitoringConfiguration":{"shape":"S3MonitoringConfiguration"},
@@ -1618,8 +1635,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TemplateParameter":{
       "type":"string",
@@ -1686,8 +1702,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UriString":{
       "type":"string",

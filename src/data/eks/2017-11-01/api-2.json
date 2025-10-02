@@ -44,7 +44,8 @@
         {"shape":"ServerException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "AssociateIdentityProviderConfig":{
@@ -61,7 +62,8 @@
         {"shape":"ServerException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "CreateAccessEntry":{
@@ -227,7 +229,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ClientException"},
         {"shape":"ServerException"},
-        {"shape":"ServiceUnavailableException"}
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidRequestException"}
       ]
     },
     "DeleteEksAnywhereSubscription":{
@@ -457,6 +460,21 @@
         {"shape":"InvalidParameterException"}
       ]
     },
+    "DescribeInsightsRefresh":{
+      "name":"DescribeInsightsRefresh",
+      "http":{
+        "method":"GET",
+        "requestUri":"/clusters/{name}/insights-refresh"
+      },
+      "input":{"shape":"DescribeInsightsRefreshRequest"},
+      "output":{"shape":"DescribeInsightsRefreshResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"}
+      ]
+    },
     "DescribeNodegroup":{
       "name":"DescribeNodegroup",
       "http":{
@@ -531,7 +549,8 @@
         {"shape":"ServerException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListAccessEntries":{
@@ -745,6 +764,21 @@
         {"shape":"ResourcePropagationDelayException"}
       ]
     },
+    "StartInsightsRefresh":{
+      "name":"StartInsightsRefresh",
+      "http":{
+        "method":"POST",
+        "requestUri":"/clusters/{name}/insights-refresh"
+      },
+      "input":{"shape":"StartInsightsRefreshRequest"},
+      "output":{"shape":"StartInsightsRefreshResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -817,7 +851,8 @@
         {"shape":"ServerException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UpdateClusterVersion":{
@@ -834,7 +869,9 @@
         {"shape":"ServerException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidStateException"}
       ]
     },
     "UpdateEksAnywhereSubscription":{
@@ -913,6 +950,8 @@
         "CUSTOM",
         "BOTTLEROCKET_ARM_64",
         "BOTTLEROCKET_x86_64",
+        "BOTTLEROCKET_ARM_64_FIPS",
+        "BOTTLEROCKET_x86_64_FIPS",
         "BOTTLEROCKET_ARM_64_NVIDIA",
         "BOTTLEROCKET_x86_64_NVIDIA",
         "WINDOWS_CORE_2019_x86_64",
@@ -922,7 +961,8 @@
         "AL2023_x86_64_STANDARD",
         "AL2023_ARM_64_STANDARD",
         "AL2023_x86_64_NEURON",
-        "AL2023_x86_64_NVIDIA"
+        "AL2023_x86_64_NVIDIA",
+        "AL2023_ARM_64_NVIDIA"
       ]
     },
     "AccessConfigResponse":{
@@ -1001,7 +1041,8 @@
         "owner":{"shape":"String"},
         "marketplaceInformation":{"shape":"MarketplaceInformation"},
         "configurationValues":{"shape":"String"},
-        "podIdentityAssociations":{"shape":"StringList"}
+        "podIdentityAssociations":{"shape":"StringList"},
+        "namespaceConfig":{"shape":"AddonNamespaceConfigResponse"}
       }
     },
     "AddonCompatibilityDetail":{
@@ -1029,7 +1070,8 @@
         "addonVersions":{"shape":"AddonVersionInfoList"},
         "publisher":{"shape":"String"},
         "owner":{"shape":"String"},
-        "marketplaceInformation":{"shape":"MarketplaceInformation"}
+        "marketplaceInformation":{"shape":"MarketplaceInformation"},
+        "defaultNamespace":{"shape":"String"}
       }
     },
     "AddonIssue":{
@@ -1058,6 +1100,18 @@
     "AddonIssueList":{
       "type":"list",
       "member":{"shape":"AddonIssue"}
+    },
+    "AddonNamespaceConfigRequest":{
+      "type":"structure",
+      "members":{
+        "namespace":{"shape":"namespace"}
+      }
+    },
+    "AddonNamespaceConfigResponse":{
+      "type":"structure",
+      "members":{
+        "namespace":{"shape":"namespace"}
+      }
     },
     "AddonPodIdentityAssociations":{
       "type":"structure",
@@ -1269,7 +1323,10 @@
     },
     "Category":{
       "type":"string",
-      "enum":["UPGRADE_READINESS"]
+      "enum":[
+        "UPGRADE_READINESS",
+        "MISCONFIGURATION"
+      ]
     },
     "CategoryList":{
       "type":"list",
@@ -1333,7 +1390,8 @@
         "zonalShiftConfig":{"shape":"ZonalShiftConfigResponse"},
         "remoteNetworkConfig":{"shape":"RemoteNetworkConfigResponse"},
         "computeConfig":{"shape":"ComputeConfigResponse"},
-        "storageConfig":{"shape":"StorageConfigResponse"}
+        "storageConfig":{"shape":"StorageConfigResponse"},
+        "deletionProtection":{"shape":"BoxedBoolean"}
       }
     },
     "ClusterHealth":{
@@ -1406,6 +1464,7 @@
         "endOfStandardSupportDate":{"shape":"Timestamp"},
         "endOfExtendedSupportDate":{"shape":"Timestamp"},
         "status":{"shape":"ClusterVersionStatus"},
+        "versionStatus":{"shape":"VersionStatus"},
         "kubernetesPatchVersion":{"shape":"String"}
       }
     },
@@ -1554,7 +1613,8 @@
         },
         "tags":{"shape":"TagMap"},
         "configurationValues":{"shape":"String"},
-        "podIdentityAssociations":{"shape":"AddonPodIdentityAssociationsList"}
+        "podIdentityAssociations":{"shape":"AddonPodIdentityAssociationsList"},
+        "namespaceConfig":{"shape":"AddonNamespaceConfigRequest"}
       }
     },
     "CreateAddonResponse":{
@@ -1590,7 +1650,8 @@
         "zonalShiftConfig":{"shape":"ZonalShiftConfigRequest"},
         "remoteNetworkConfig":{"shape":"RemoteNetworkConfigRequest"},
         "computeConfig":{"shape":"ComputeConfigRequest"},
-        "storageConfig":{"shape":"StorageConfigRequest"}
+        "storageConfig":{"shape":"StorageConfigRequest"},
+        "deletionProtection":{"shape":"BoxedBoolean"}
       }
     },
     "CreateClusterResponse":{
@@ -1718,7 +1779,9 @@
           "shape":"String",
           "idempotencyToken":true
         },
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "disableSessionTags":{"shape":"BoxedBoolean"},
+        "targetRoleArn":{"shape":"String"}
       }
     },
     "CreatePodIdentityAssociationResponse":{
@@ -1748,8 +1811,7 @@
     },
     "DeleteAccessEntryResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAddonRequest":{
       "type":"structure",
@@ -2110,8 +2172,16 @@
         },
         "status":{
           "shape":"ClusterVersionStatus",
+          "deprecated":true,
+          "deprecatedMessage":"status has been replaced by versionStatus",
+          "deprecatedSince":"2025-02-15",
           "location":"querystring",
           "locationName":"status"
+        },
+        "versionStatus":{
+          "shape":"VersionStatus",
+          "location":"querystring",
+          "locationName":"versionStatus"
         }
       }
     },
@@ -2208,6 +2278,26 @@
       "type":"structure",
       "members":{
         "insight":{"shape":"Insight"}
+      }
+    },
+    "DescribeInsightsRefreshRequest":{
+      "type":"structure",
+      "required":["clusterName"],
+      "members":{
+        "clusterName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "DescribeInsightsRefreshResponse":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"},
+        "status":{"shape":"InsightsRefreshStatus"},
+        "startedAt":{"shape":"Timestamp"},
+        "endedAt":{"shape":"Timestamp"}
       }
     },
     "DescribeNodegroupRequest":{
@@ -2322,8 +2412,7 @@
     },
     "DisassociateAccessPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateIdentityProviderConfigRequest":{
       "type":"structure",
@@ -2364,6 +2453,7 @@
         "status":{"shape":"String"},
         "autoRenew":{"shape":"Boolean"},
         "licenseArns":{"shape":"StringList"},
+        "licenses":{"shape":"LicenseList"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -2645,6 +2735,14 @@
         "statuses":{"shape":"InsightStatusValueList"}
       }
     },
+    "InsightsRefreshStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "FAILED",
+        "COMPLETED"
+      ]
+    },
     "Integer":{"type":"integer"},
     "InvalidParameterException":{
       "type":"structure",
@@ -2666,6 +2764,15 @@
         "nodegroupName":{"shape":"String"},
         "addonName":{"shape":"String"},
         "subscriptionId":{"shape":"String"},
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
+    "InvalidStateException":{
+      "type":"structure",
+      "members":{
+        "clusterName":{"shape":"String"},
         "message":{"shape":"String"}
       },
       "error":{"httpStatusCode":400},
@@ -2714,6 +2821,17 @@
         "version":{"shape":"String"},
         "id":{"shape":"String"}
       }
+    },
+    "License":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"String"},
+        "token":{"shape":"String"}
+      }
+    },
+    "LicenseList":{
+      "type":"list",
+      "member":{"shape":"License"}
     },
     "ListAccessEntriesRequest":{
       "type":"structure",
@@ -3195,8 +3313,26 @@
     "NodeRepairConfig":{
       "type":"structure",
       "members":{
-        "enabled":{"shape":"BoxedBoolean"}
+        "enabled":{"shape":"BoxedBoolean"},
+        "maxUnhealthyNodeThresholdCount":{"shape":"NonZeroInteger"},
+        "maxUnhealthyNodeThresholdPercentage":{"shape":"PercentCapacity"},
+        "maxParallelNodesRepairedCount":{"shape":"NonZeroInteger"},
+        "maxParallelNodesRepairedPercentage":{"shape":"PercentCapacity"},
+        "nodeRepairConfigOverrides":{"shape":"NodeRepairConfigOverridesList"}
       }
+    },
+    "NodeRepairConfigOverrides":{
+      "type":"structure",
+      "members":{
+        "nodeMonitoringCondition":{"shape":"String"},
+        "nodeUnhealthyReason":{"shape":"String"},
+        "minRepairWaitTimeMins":{"shape":"NonZeroInteger"},
+        "repairAction":{"shape":"RepairAction"}
+      }
+    },
+    "NodeRepairConfigOverridesList":{
+      "type":"list",
+      "member":{"shape":"NodeRepairConfigOverrides"}
     },
     "Nodegroup":{
       "type":"structure",
@@ -3305,8 +3441,16 @@
       "type":"structure",
       "members":{
         "maxUnavailable":{"shape":"NonZeroInteger"},
-        "maxUnavailablePercentage":{"shape":"PercentCapacity"}
+        "maxUnavailablePercentage":{"shape":"PercentCapacity"},
+        "updateStrategy":{"shape":"NodegroupUpdateStrategies"}
       }
+    },
+    "NodegroupUpdateStrategies":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "MINIMAL"
+      ]
     },
     "NonZeroInteger":{
       "type":"integer",
@@ -3404,7 +3548,10 @@
         "tags":{"shape":"TagMap"},
         "createdAt":{"shape":"Timestamp"},
         "modifiedAt":{"shape":"Timestamp"},
-        "ownerArn":{"shape":"String"}
+        "ownerArn":{"shape":"String"},
+        "disableSessionTags":{"shape":"BoxedBoolean"},
+        "targetRoleArn":{"shape":"String"},
+        "externalId":{"shape":"String"}
       }
     },
     "PodIdentityAssociationSummaries":{
@@ -3493,6 +3640,14 @@
       "member":{"shape":"RemotePodNetwork"},
       "max":1
     },
+    "RepairAction":{
+      "type":"string",
+      "enum":[
+        "Replace",
+        "Reboot",
+        "NoAction"
+      ]
+    },
     "ResolveConflicts":{
       "type":"string",
       "enum":[
@@ -3571,6 +3726,24 @@
       "exception":true,
       "fault":true
     },
+    "StartInsightsRefreshRequest":{
+      "type":"structure",
+      "required":["clusterName"],
+      "members":{
+        "clusterName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "StartInsightsRefreshResponse":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"},
+        "status":{"shape":"InsightsRefreshStatus"}
+      }
+    },
     "StorageConfigRequest":{
       "type":"structure",
       "members":{
@@ -3630,8 +3803,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -3652,6 +3824,15 @@
         "NO_EXECUTE",
         "PREFER_NO_SCHEDULE"
       ]
+    },
+    "ThrottlingException":{
+      "type":"structure",
+      "members":{
+        "clusterName":{"shape":"String"},
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":429},
+      "exception":true
     },
     "Timestamp":{"type":"timestamp"},
     "UnsupportedAvailabilityZoneException":{
@@ -3686,8 +3867,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Update":{
       "type":"structure",
@@ -3791,7 +3971,9 @@
         "zonalShiftConfig":{"shape":"ZonalShiftConfigRequest"},
         "computeConfig":{"shape":"ComputeConfigRequest"},
         "kubernetesNetworkConfig":{"shape":"KubernetesNetworkConfigRequest"},
-        "storageConfig":{"shape":"StorageConfigRequest"}
+        "storageConfig":{"shape":"StorageConfigRequest"},
+        "remoteNetworkConfig":{"shape":"RemoteNetworkConfigRequest"},
+        "deletionProtection":{"shape":"BoxedBoolean"}
       }
     },
     "UpdateClusterConfigResponse":{
@@ -3816,7 +3998,8 @@
         "clientRequestToken":{
           "shape":"String",
           "idempotencyToken":true
-        }
+        },
+        "force":{"shape":"Boolean"}
       }
     },
     "UpdateClusterVersionResponse":{
@@ -3958,6 +4141,7 @@
         "MaxUnavailable",
         "MaxUnavailablePercentage",
         "NodeRepairEnabled",
+        "UpdateStrategy",
         "ConfigurationValues",
         "SecurityGroups",
         "Subnets",
@@ -3967,7 +4151,10 @@
         "ZonalShiftConfig",
         "ComputeConfig",
         "StorageConfig",
-        "KubernetesNetworkConfig"
+        "KubernetesNetworkConfig",
+        "RemoteNetworkConfig",
+        "DeletionProtection",
+        "NodeRepairConfig"
       ]
     },
     "UpdateParams":{
@@ -3995,7 +4182,9 @@
         "clientRequestToken":{
           "shape":"String",
           "idempotencyToken":true
-        }
+        },
+        "disableSessionTags":{"shape":"BoxedBoolean"},
+        "targetRoleArn":{"shape":"String"}
       }
     },
     "UpdatePodIdentityAssociationResponse":{
@@ -4035,7 +4224,9 @@
         "AccessConfigUpdate",
         "UpgradePolicyUpdate",
         "ZonalShiftConfigUpdate",
-        "AutoModeUpdate"
+        "AutoModeUpdate",
+        "RemoteNetworkConfigUpdate",
+        "DeletionProtectionUpdate"
       ]
     },
     "UpgradePolicyRequest":{
@@ -4049,6 +4240,14 @@
       "members":{
         "supportType":{"shape":"SupportType"}
       }
+    },
+    "VersionStatus":{
+      "type":"string",
+      "enum":[
+        "UNSUPPORTED",
+        "STANDARD_SUPPORT",
+        "EXTENDED_SUPPORT"
+      ]
     },
     "VpcConfigRequest":{
       "type":"structure",
@@ -4115,6 +4314,11 @@
       "type":"map",
       "key":{"shape":"labelKey"},
       "value":{"shape":"labelValue"}
+    },
+    "namespace":{
+      "type":"string",
+      "max":63,
+      "min":1
     },
     "requiredClaimsKey":{
       "type":"string",

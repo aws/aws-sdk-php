@@ -5,11 +5,13 @@
     "endpointPrefix":"rum",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"CloudWatch RUM",
     "serviceId":"RUM",
     "signatureVersion":"v4",
     "signingName":"rum",
-    "uid":"rum-2018-05-10"
+    "uid":"rum-2018-05-10",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "BatchCreateRumMetricDefinitions":{
@@ -106,6 +108,27 @@
       ],
       "idempotent":true
     },
+    "DeleteResourcePolicy":{
+      "name":"DeleteResourcePolicy",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/appmonitor/{Name}/policy",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteResourcePolicyRequest"},
+      "output":{"shape":"DeleteResourcePolicyResponse"},
+      "errors":[
+        {"shape":"InvalidPolicyRevisionIdException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"PolicyNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "DeleteRumMetricsDestination":{
       "name":"DeleteRumMetricsDestination",
       "http":{
@@ -159,6 +182,25 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "GetResourcePolicy":{
+      "name":"GetResourcePolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/appmonitor/{Name}/policy",
+        "responseCode":200
+      },
+      "input":{"shape":"GetResourcePolicyRequest"},
+      "output":{"shape":"GetResourcePolicyResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"PolicyNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListAppMonitors":{
       "name":"ListAppMonitors",
       "http":{
@@ -205,6 +247,28 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
       ]
+    },
+    "PutResourcePolicy":{
+      "name":"PutResourcePolicy",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/appmonitor/{Name}/policy",
+        "responseCode":200
+      },
+      "input":{"shape":"PutResourcePolicyRequest"},
+      "output":{"shape":"PutResourcePolicyResponse"},
+      "errors":[
+        {"shape":"PolicySizeLimitExceededException"},
+        {"shape":"InvalidPolicyRevisionIdException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"MalformedPolicyDocumentException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
     },
     "PutRumEvents":{
       "name":"PutRumEvents",
@@ -327,6 +391,11 @@
       },
       "exception":true
     },
+    "Alias":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
     "AppMonitor":{
       "type":"structure",
       "members":{
@@ -334,7 +403,9 @@
         "Created":{"shape":"ISOTimestampString"},
         "CustomEvents":{"shape":"CustomEvents"},
         "DataStorage":{"shape":"DataStorage"},
+        "DeobfuscationConfiguration":{"shape":"DeobfuscationConfiguration"},
         "Domain":{"shape":"AppMonitorDomain"},
+        "DomainList":{"shape":"AppMonitorDomainList"},
         "Id":{"shape":"AppMonitorId"},
         "LastModified":{"shape":"ISOTimestampString"},
         "Name":{"shape":"AppMonitorName"},
@@ -368,7 +439,13 @@
       "type":"string",
       "max":253,
       "min":1,
-      "pattern":"^(localhost)|^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$|^(?![-.])([A-Za-z0-9-\\.\\-]{0,63})((?![-])([a-zA-Z0-9]{1}|^[a-zA-Z0-9]{0,1}))\\.(?![-])[A-Za-z-0-9]{1,63}((?![-])([a-zA-Z0-9]{1}|^[a-zA-Z0-9]{0,1}))|^(\\*\\.)(?![-.])([A-Za-z0-9-\\.\\-]{0,63})((?![-])([a-zA-Z0-9]{1}|^[a-zA-Z0-9]{0,1}))\\.(?![-])[A-Za-z-0-9]{1,63}((?![-])([a-zA-Z0-9]{1}|^[a-zA-Z0-9]{0,1}))"
+      "pattern":"^(localhost)$|^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$|(?=^[a-zA-Z0-9\\.\\*-]{4,253}$)(?!.*\\.-)(?!.*-\\.)(?!.*\\.\\.)(?!.*[^\\.]{64,})^(\\*\\.)?(?![-\\.\\*])[^\\*]{1,}\\.(\\*|(?!.*--)(?=.*[a-zA-Z])[^\\*]{1,}[^\\*-])$"
+    },
+    "AppMonitorDomainList":{
+      "type":"list",
+      "member":{"shape":"AppMonitorDomain"},
+      "max":5,
+      "min":1
     },
     "AppMonitorId":{
       "type":"string",
@@ -562,15 +639,14 @@
     },
     "CreateAppMonitorRequest":{
       "type":"structure",
-      "required":[
-        "Domain",
-        "Name"
-      ],
+      "required":["Name"],
       "members":{
         "AppMonitorConfiguration":{"shape":"AppMonitorConfiguration"},
         "CustomEvents":{"shape":"CustomEvents"},
         "CwLogEnabled":{"shape":"Boolean"},
+        "DeobfuscationConfiguration":{"shape":"DeobfuscationConfiguration"},
         "Domain":{"shape":"AppMonitorDomain"},
+        "DomainList":{"shape":"AppMonitorDomainList"},
         "Name":{"shape":"AppMonitorName"},
         "Tags":{"shape":"TagMap"}
       }
@@ -623,6 +699,28 @@
       "members":{
       }
     },
+    "DeleteResourcePolicyRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{
+          "shape":"AppMonitorName",
+          "location":"uri",
+          "locationName":"Name"
+        },
+        "PolicyRevisionId":{
+          "shape":"PolicyRevisionId",
+          "location":"querystring",
+          "locationName":"policyRevisionId"
+        }
+      }
+    },
+    "DeleteResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "PolicyRevisionId":{"shape":"PolicyRevisionId"}
+      }
+    },
     "DeleteRumMetricsDestinationRequest":{
       "type":"structure",
       "required":[
@@ -651,6 +749,25 @@
       "type":"structure",
       "members":{
       }
+    },
+    "DeobfuscationConfiguration":{
+      "type":"structure",
+      "members":{
+        "JavaScriptSourceMaps":{"shape":"JavaScriptSourceMaps"}
+      }
+    },
+    "DeobfuscationS3Uri":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^s3://[a-z0-9][-.a-z0-9]{1,61}(?:/[-!_*'().a-z0-9A-Z]+(?:/[-!_*'().a-z0-9A-Z]+)*)?/?$"
+    },
+    "DeobfuscationStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "DestinationArn":{
       "type":"string",
@@ -734,6 +851,24 @@
         "AppMonitor":{"shape":"AppMonitor"}
       }
     },
+    "GetResourcePolicyRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{
+          "shape":"AppMonitorName",
+          "location":"uri",
+          "locationName":"Name"
+        }
+      }
+    },
+    "GetResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "PolicyDocument":{"shape":"String"},
+        "PolicyRevisionId":{"shape":"PolicyRevisionId"}
+      }
+    },
     "ISOTimestampString":{
       "type":"string",
       "max":19,
@@ -768,6 +903,26 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
+    },
+    "InvalidPolicyRevisionIdException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "JavaScriptSourceMaps":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "S3Uri":{"shape":"DeobfuscationS3Uri"},
+        "Status":{"shape":"DeobfuscationStatus"}
+      }
     },
     "JsonValue":{"type":"string"},
     "ListAppMonitorsRequest":{
@@ -841,6 +996,18 @@
         "ResourceArn":{"shape":"Arn"},
         "Tags":{"shape":"TagMap"}
       }
+    },
+    "MalformedPolicyDocumentException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
     },
     "MaxQueryResults":{
       "type":"integer",
@@ -934,6 +1101,58 @@
       "max":50,
       "min":0
     },
+    "PolicyNotFoundException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "PolicyRevisionId":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "PolicySizeLimitExceededException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "PutResourcePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "PolicyDocument"
+      ],
+      "members":{
+        "Name":{
+          "shape":"AppMonitorName",
+          "location":"uri",
+          "locationName":"Name"
+        },
+        "PolicyDocument":{"shape":"String"},
+        "PolicyRevisionId":{"shape":"PolicyRevisionId"}
+      }
+    },
+    "PutResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "PolicyDocument":{"shape":"String"},
+        "PolicyRevisionId":{"shape":"PolicyRevisionId"}
+      }
+    },
     "PutRumEventsRequest":{
       "type":"structure",
       "required":[
@@ -944,6 +1163,7 @@
         "UserDetails"
       ],
       "members":{
+        "Alias":{"shape":"Alias"},
         "AppMonitorDetails":{"shape":"AppMonitorDetails"},
         "BatchId":{"shape":"PutRumEventsRequestBatchIdString"},
         "Id":{
@@ -1207,7 +1427,9 @@
         "AppMonitorConfiguration":{"shape":"AppMonitorConfiguration"},
         "CustomEvents":{"shape":"CustomEvents"},
         "CwLogEnabled":{"shape":"Boolean"},
+        "DeobfuscationConfiguration":{"shape":"DeobfuscationConfiguration"},
         "Domain":{"shape":"AppMonitorDomain"},
+        "DomainList":{"shape":"AppMonitorDomainList"},
         "Name":{
           "shape":"AppMonitorName",
           "location":"uri",

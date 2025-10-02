@@ -295,9 +295,7 @@
     },
     "AccountIds":{
       "type":"list",
-      "member":{"shape":"AccountId"},
-      "max":5,
-      "min":1
+      "member":{"shape":"AccountId"}
     },
     "AccountMetaData":{
       "type":"structure",
@@ -318,8 +316,11 @@
       "type":"structure",
       "members":{
         "canadaAdditionalInfo":{"shape":"CanadaAdditionalInfo"},
+        "egyptAdditionalInfo":{"shape":"EgyptAdditionalInfo"},
         "estoniaAdditionalInfo":{"shape":"EstoniaAdditionalInfo"},
         "georgiaAdditionalInfo":{"shape":"GeorgiaAdditionalInfo"},
+        "greeceAdditionalInfo":{"shape":"GreeceAdditionalInfo"},
+        "indonesiaAdditionalInfo":{"shape":"IndonesiaAdditionalInfo"},
         "israelAdditionalInfo":{"shape":"IsraelAdditionalInfo"},
         "italyAdditionalInfo":{"shape":"ItalyAdditionalInfo"},
         "kenyaAdditionalInfo":{"shape":"KenyaAdditionalInfo"},
@@ -330,7 +331,9 @@
         "southKoreaAdditionalInfo":{"shape":"SouthKoreaAdditionalInfo"},
         "spainAdditionalInfo":{"shape":"SpainAdditionalInfo"},
         "turkeyAdditionalInfo":{"shape":"TurkeyAdditionalInfo"},
-        "ukraineAdditionalInfo":{"shape":"UkraineAdditionalInfo"}
+        "ukraineAdditionalInfo":{"shape":"UkraineAdditionalInfo"},
+        "uzbekistanAdditionalInfo":{"shape":"UzbekistanAdditionalInfo"},
+        "vietnamAdditionalInfo":{"shape":"VietnamAdditionalInfo"}
       }
     },
     "AdditionalInfoResponse":{
@@ -338,9 +341,12 @@
       "members":{
         "brazilAdditionalInfo":{"shape":"BrazilAdditionalInfo"},
         "canadaAdditionalInfo":{"shape":"CanadaAdditionalInfo"},
+        "egyptAdditionalInfo":{"shape":"EgyptAdditionalInfo"},
         "estoniaAdditionalInfo":{"shape":"EstoniaAdditionalInfo"},
         "georgiaAdditionalInfo":{"shape":"GeorgiaAdditionalInfo"},
+        "greeceAdditionalInfo":{"shape":"GreeceAdditionalInfo"},
         "indiaAdditionalInfo":{"shape":"IndiaAdditionalInfo"},
+        "indonesiaAdditionalInfo":{"shape":"IndonesiaAdditionalInfo"},
         "israelAdditionalInfo":{"shape":"IsraelAdditionalInfo"},
         "italyAdditionalInfo":{"shape":"ItalyAdditionalInfo"},
         "kenyaAdditionalInfo":{"shape":"KenyaAdditionalInfo"},
@@ -351,7 +357,9 @@
         "southKoreaAdditionalInfo":{"shape":"SouthKoreaAdditionalInfo"},
         "spainAdditionalInfo":{"shape":"SpainAdditionalInfo"},
         "turkeyAdditionalInfo":{"shape":"TurkeyAdditionalInfo"},
-        "ukraineAdditionalInfo":{"shape":"UkraineAdditionalInfo"}
+        "ukraineAdditionalInfo":{"shape":"UkraineAdditionalInfo"},
+        "uzbekistanAdditionalInfo":{"shape":"UzbekistanAdditionalInfo"},
+        "vietnamAdditionalInfo":{"shape":"VietnamAdditionalInfo"}
       }
     },
     "Address":{
@@ -448,8 +456,14 @@
       "type":"structure",
       "required":["accountIds"],
       "members":{
-        "accountIds":{"shape":"AccountIds"}
+        "accountIds":{"shape":"BatchDeleteTaxRegistrationRequestAccountIdsList"}
       }
+    },
+    "BatchDeleteTaxRegistrationRequestAccountIdsList":{
+      "type":"list",
+      "member":{"shape":"AccountId"},
+      "max":5,
+      "min":1
     },
     "BatchDeleteTaxRegistrationResponse":{
       "type":"structure",
@@ -462,8 +476,14 @@
       "type":"structure",
       "required":["accountIds"],
       "members":{
-        "accountIds":{"shape":"AccountIds"}
+        "accountIds":{"shape":"BatchGetTaxExemptionsRequestAccountIdsList"}
       }
+    },
+    "BatchGetTaxExemptionsRequestAccountIdsList":{
+      "type":"list",
+      "member":{"shape":"AccountId"},
+      "max":5,
+      "min":1
     },
     "BatchGetTaxExemptionsResponse":{
       "type":"structure",
@@ -495,9 +515,15 @@
         "taxRegistrationEntry"
       ],
       "members":{
-        "accountIds":{"shape":"AccountIds"},
+        "accountIds":{"shape":"BatchPutTaxRegistrationRequestAccountIdsList"},
         "taxRegistrationEntry":{"shape":"TaxRegistrationEntry"}
       }
+    },
+    "BatchPutTaxRegistrationRequestAccountIdsList":{
+      "type":"list",
+      "member":{"shape":"AccountId"},
+      "max":550,
+      "min":1
     },
     "BatchPutTaxRegistrationResponse":{
       "type":"structure",
@@ -599,6 +625,10 @@
       },
       "exception":true
     },
+    "ContractingAuthorityCode":{
+      "type":"string",
+      "pattern":"^\\d{4}\\.[A-Z]\\d{5}\\.\\d{4}$"
+    },
     "CountryCode":{
       "type":"string",
       "max":2,
@@ -614,6 +644,14 @@
       "max":10,
       "min":10,
       "pattern":"^(\\d{4}-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-1]))$"
+    },
+    "DateString":{
+      "type":"string",
+      "pattern":"^(\\d{4}-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-1]))$"
+    },
+    "DecisionNumber":{
+      "type":"string",
+      "pattern":"^([a-zA-Z0-9/.\\-]{0,200})$"
     },
     "DeleteSupplementalTaxRegistrationRequest":{
       "type":"structure",
@@ -661,6 +699,21 @@
       "max":50,
       "min":1,
       "pattern":"^(?!\\s*$)[\\s\\S]+$"
+    },
+    "EgyptAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "uniqueIdentificationNumber":{"shape":"UniqueIdentificationNumber"},
+        "uniqueIdentificationNumberExpirationDate":{"shape":"DateString"}
+      }
+    },
+    "ElectronicTransactionCodeNumber":{
+      "type":"string",
+      "pattern":"^\\d{17}$"
+    },
+    "EnterpriseIdentificationNumber":{
+      "type":"string",
+      "pattern":"^(\\d{10}|(\\d{10}-\\d{3}))$"
     },
     "EntityExemptionAccountStatus":{
       "type":"string",
@@ -784,6 +837,12 @@
         "taxRegistration":{"shape":"TaxRegistration"}
       }
     },
+    "GreeceAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "contractingAuthorityCode":{"shape":"ContractingAuthorityCode"}
+      }
+    },
     "HeritageStatus":{
       "type":"string",
       "enum":[
@@ -800,6 +859,23 @@
     "IndividualRegistrationNumber":{
       "type":"string",
       "pattern":"^([0-9]{10})$"
+    },
+    "IndonesiaAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "decisionNumber":{"shape":"DecisionNumber"},
+        "ppnExceptionDesignationCode":{"shape":"PpnExceptionDesignationCode"},
+        "taxRegistrationNumberType":{"shape":"IndonesiaTaxRegistrationNumberType"}
+      }
+    },
+    "IndonesiaTaxRegistrationNumberType":{
+      "type":"string",
+      "enum":[
+        "NIK",
+        "PassportNumber",
+        "NPWP",
+        "NITKU"
+      ]
     },
     "Industries":{
       "type":"string",
@@ -990,6 +1066,10 @@
       "type":"string",
       "pattern":"^[A-Z]{5}[0-9]{4}[A-Z]{1}$"
     },
+    "PaymentVoucherNumber":{
+      "type":"string",
+      "pattern":"^(\\d{17}|[A-Za-z]{3}\\d{13})$"
+    },
     "PersonType":{
       "type":"string",
       "enum":[
@@ -1010,6 +1090,10 @@
       "max":20,
       "min":1,
       "pattern":"^(?!\\s*$)[\\s\\S]+$"
+    },
+    "PpnExceptionDesignationCode":{
+      "type":"string",
+      "pattern":"^(01|02|03|07|08)$"
     },
     "PutSupplementalTaxRegistrationRequest":{
       "type":"structure",
@@ -1038,11 +1122,17 @@
         "exemptionType"
       ],
       "members":{
-        "accountIds":{"shape":"AccountIds"},
+        "accountIds":{"shape":"PutTaxExemptionRequestAccountIdsList"},
         "authority":{"shape":"Authority"},
         "exemptionCertificate":{"shape":"ExemptionCertificate"},
         "exemptionType":{"shape":"GenericString"}
       }
+    },
+    "PutTaxExemptionRequestAccountIdsList":{
+      "type":"list",
+      "member":{"shape":"AccountId"},
+      "max":550,
+      "min":1
     },
     "PutTaxExemptionResponse":{
       "type":"structure",
@@ -1477,11 +1567,29 @@
         "Individual"
       ]
     },
+    "UniqueIdentificationNumber":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9]{39}$"
+    },
     "Url":{
       "type":"string",
       "max":200,
       "min":1,
       "pattern":"^https.*\\S.*$"
+    },
+    "UzbekistanAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "taxRegistrationNumberType":{"shape":"UzbekistanTaxRegistrationNumberType"},
+        "vatRegistrationNumber":{"shape":"VatRegistrationNumber"}
+      }
+    },
+    "UzbekistanTaxRegistrationNumberType":{
+      "type":"string",
+      "enum":[
+        "Business",
+        "Individual"
+      ]
     },
     "ValidationException":{
       "type":"structure",
@@ -1521,11 +1629,24 @@
       "type":"list",
       "member":{"shape":"ValidationExceptionField"}
     },
+    "VatRegistrationNumber":{
+      "type":"string",
+      "pattern":"^[0-9]{12}$"
+    },
     "VerificationDetails":{
       "type":"structure",
       "members":{
         "dateOfBirth":{"shape":"DateOfBirth"},
         "taxRegistrationDocuments":{"shape":"TaxRegistrationDocuments"}
+      }
+    },
+    "VietnamAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "electronicTransactionCodeNumber":{"shape":"ElectronicTransactionCodeNumber"},
+        "enterpriseIdentificationNumber":{"shape":"EnterpriseIdentificationNumber"},
+        "paymentVoucherNumber":{"shape":"PaymentVoucherNumber"},
+        "paymentVoucherNumberDate":{"shape":"DateString"}
       }
     }
   }

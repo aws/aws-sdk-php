@@ -11,8 +11,11 @@ use Aws\HandlerList;
 use Aws\ResultInterface;
 use Aws\S3\Parser\S3Parser;
 use Aws\S3\Parser\S3ResultMutator;
+use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class S3ParserTest extends TestCase
@@ -244,6 +247,57 @@ EOXML;
         $s3Parser->removeS3ResultMutator($s3MutatorName);
         $mutators = $s3Parser->getS3ResultMutators();
         $this->assertFalse(isset($mutators[$s3MutatorName]));
+    }
+
+    /**
+     * @param StreamInterface $stream
+     * @param bool $expectValidation
+     *
+     * @dataProvider validate200ErrorValidationJustInSeekableStreamsProvider
+     *
+     * @return void
+     */
+    public function testValidate200ErrorValidationJustInSeekableStreams(
+        StreamInterface $stream,
+        bool $expectValidation
+    ): void
+    {
+        if ($expectValidation) {
+            $this->expectException(AwsException::class);
+            $this->expectExceptionMessage(
+                'We encountered an internal error. Please try again.'
+            );
+        } else {
+            $this->assertTrue(true);
+        }
+
+        $s3Parser = $this->getS3Parser();
+        $command = new Command('HeadObject', [], new HandlerList());
+        $response = new Response(
+            200,
+            [],
+            $stream
+        );
+        $s3Parser($command, $response);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function validate200ErrorValidationJustInSeekableStreamsProvider(): array
+    {
+        return [
+            'seekable_stream_1' => [
+                'stream' => Utils::streamFor(self::INTERNAL_S3200_ERROR),
+                'expectValidation' => true,
+            ],
+            'no_seekable_stream_1' => [
+                'stream' => new NoSeekStream(
+                    Utils::streamFor(self::INTERNAL_S3200_ERROR)
+                ),
+                'expectValidation' => false,
+            ]
+        ];
     }
 
     private function getS3Parser(): S3Parser

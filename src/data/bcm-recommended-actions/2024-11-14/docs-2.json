@@ -1,0 +1,175 @@
+{
+  "version": "2.0",
+  "service": "<p>You can use the Billing and Cost Management Recommended Actions API to programmatically query your best practices and recommendations to optimize your costs.</p> <p>The Billing and Cost Management Recommended Actions API provides the following endpoint:</p> <ul> <li> <p> https://bcm-recommended-actions.us-east-1.api.aws</p> </li> </ul>",
+  "operations": {
+    "ListRecommendedActions": "<p>Returns a list of recommended actions that match the filter criteria.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You do not have sufficient access to perform this action.</p>",
+      "refs": {}
+    },
+    "AccountId": {
+      "base": null,
+      "refs": {
+        "RecommendedAction$accountId": "<p>The account that the recommended action is for.</p>"
+      }
+    },
+    "ActionFilter": {
+      "base": "<p>Describes a filter that returns a more specific list of recommended actions.</p>",
+      "refs": {
+        "ActionFilterList$member": null
+      }
+    },
+    "ActionFilterList": {
+      "base": null,
+      "refs": {
+        "RequestFilter$actions": "<p>A list of action filters that define criteria for filtering results. Each filter specifies a key, match option, and corresponding values to filter on.</p>"
+      }
+    },
+    "ActionType": {
+      "base": null,
+      "refs": {
+        "RecommendedAction$type": "<p>The type of action you can take by adopting the recommended action.</p>"
+      }
+    },
+    "Context": {
+      "base": null,
+      "refs": {
+        "RecommendedAction$context": "<p>Context that applies to the recommended action.</p>"
+      }
+    },
+    "Feature": {
+      "base": null,
+      "refs": {
+        "RecommendedAction$feature": "<p>The feature associated with the recommended action.</p>"
+      }
+    },
+    "FilterName": {
+      "base": null,
+      "refs": {
+        "ActionFilter$key": "<p>The category to filter on. Valid values are <code>FEATURE</code> for feature type, <code>SEVERITY</code> for severity level, and <code>TYPE</code> for recommendation type.</p>"
+      }
+    },
+    "FilterValue": {
+      "base": null,
+      "refs": {
+        "FilterValues$member": null
+      }
+    },
+    "FilterValues": {
+      "base": null,
+      "refs": {
+        "ActionFilter$values": "<p>One or more values to match against the specified key.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>An unexpected error occurred during the processing of your request.</p>",
+      "refs": {}
+    },
+    "ListRecommendedActionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecommendedActionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "MatchOption": {
+      "base": null,
+      "refs": {
+        "ActionFilter$matchOption": "<p>Specifies how to apply the filter. Use <code>EQUALS</code> to include matching results or <code>NOT_EQUALS</code> to exclude matching results.</p>"
+      }
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListRecommendedActionsRequest$maxResults": "<p>The maximum number of results to return in the response.</p>"
+      }
+    },
+    "NextStep": {
+      "base": null,
+      "refs": {
+        "NextSteps$member": null
+      }
+    },
+    "NextSteps": {
+      "base": null,
+      "refs": {
+        "RecommendedAction$nextSteps": "<p>The possible next steps to execute the recommended action.</p>"
+      }
+    },
+    "NextToken": {
+      "base": null,
+      "refs": {
+        "ListRecommendedActionsRequest$nextToken": "<p>The pagination token that indicates the next set of results that you want to retrieve.</p>",
+        "ListRecommendedActionsResponse$nextToken": "<p>The pagination token that indicates the next set of results that you want to retrieve.</p>"
+      }
+    },
+    "RecommendedAction": {
+      "base": "<p>Describes a specific recommended action.</p>",
+      "refs": {
+        "RecommendedActions$member": null
+      }
+    },
+    "RecommendedActions": {
+      "base": null,
+      "refs": {
+        "ListRecommendedActionsResponse$recommendedActions": "<p>The list of recommended actions that satisfy the filter criteria.</p>"
+      }
+    },
+    "RequestFilter": {
+      "base": "<p>Enables filtering of results based on specified action criteria. You can define multiple action filters to refine results using combinations of feature type, severity level, and recommendation type.</p>",
+      "refs": {
+        "ListRecommendedActionsRequest$filter": "<p>The criteria that you want all returned recommended actions to match.</p>"
+      }
+    },
+    "Severity": {
+      "base": null,
+      "refs": {
+        "RecommendedAction$severity": "<p>The severity associated with the recommended action.</p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "Context$key": null,
+        "Context$value": null,
+        "InternalServerException$message": null,
+        "RecommendedAction$id": "<p>The ID for the recommended action.</p>",
+        "RecommendedAction$lastUpdatedTimeStamp": "<p>The time when the recommended action status was last updated.</p>",
+        "ThrottlingException$message": null,
+        "ValidationException$message": null,
+        "ValidationExceptionField$name": "<p>Provides the name of the field that failed validation.</p>",
+        "ValidationExceptionField$message": "<p>Provides a message explaining why the field failed validation.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling.</p>",
+      "refs": {}
+    },
+    "ValidationException": {
+      "base": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Provides specific details about why a particular field failed validation.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": "<p>Lists each problematic field and why it failed validation.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$reason": "<p>Provides a single, overarching explanation for the validation failure.</p>"
+      }
+    }
+  }
+}

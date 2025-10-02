@@ -2,6 +2,10 @@
 namespace Aws\Test\Integ;
 
 use Aws;
+use Aws\Api\ApiProvider;
+use Aws\Api\Service;
+use Aws\AwsClient;
+use Aws\AwsClientInterface;
 use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\Sdk;
@@ -15,6 +19,7 @@ use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use JmesPath\Env;
 use PHPUnit\Framework\Assert;
+use Psr\Http\Message\RequestInterface;
 
 class SmokeContext extends Assert implements
     Context,
@@ -261,13 +266,17 @@ class SmokeContext extends Assert implements
         if (empty($this->serviceName)) {
             throw new PendingException(
                 'No service found for smoke test tagged with: '
-                    . implode(', ', $scope->getFeature()->getTags())
+                . implode(', ', $scope->getFeature()->getTags())
             );
         }
 
-        $this->sdk = self::getSdk(self::$configOverrides);
-
-        $this->client = $this->sdk->createClient($this->serviceName);
+        $scenarioScopeTags = $scope->getScenario()->getTags();
+        if (in_array("queryCompat", $scenarioScopeTags)) {
+            $this->client = $this->getCwQueryCompatClient();
+        } else {
+            $this->sdk = self::getSdk(self::$configOverrides);
+            $this->client = $this->sdk->createClient($this->serviceName);
+        }
     }
 
     /**
@@ -316,6 +325,14 @@ class SmokeContext extends Assert implements
         } catch (AwsException $e) {
             $this->error= $e;
         }
+    }
+
+    /**
+     * @When /^I attempt to call the "([^"]*)" API, using query compatible approach, with:$/
+     */
+    public function iAttemptToCallTheAPIUsingQueryCompatibleApproachWith($command, TableNode $payload)
+    {
+        $this->iAttemptToCallTheApiWith($command, $payload);
     }
 
     /**
@@ -444,5 +461,28 @@ class SmokeContext extends Assert implements
     public function theStatusCodeShouldBe($statusCode)
     {
         $this->assertEquals($statusCode, $this->error->getStatusCode());
+    }
+
+    private function getCwQueryCompatClient(): AwsClientInterface
+    {
+        $provider = ApiProvider::defaultProvider();
+        $apiDefinition = $provider('api', 'monitoring', '2010-08-01');
+        $modifiedDefinition = $apiDefinition;
+        $modifiedDefinition['metadata']['awsQueryCompatible'] = [];
+        $modifiedDefinition['metadata']['protocol'] = 'json';
+        $modifiedDefinition['metadata']['jsonVersion'] = '1.0';
+        $modifiedDefinition['metadata']['protocols'] = ['json', 'query'];
+        $modifiedDefinition['metadata']['targetPrefix'] = 'GraniteServiceVersion20100801';
+        $service = new Service($modifiedDefinition, $provider);
+
+        return new AwsClient([
+            'service' => 'monitoring',
+            'region'  => 'us-west-2',
+            'version' => 'latest',
+            'api_provider' => function () use ($service) {
+                return $service->toArray();
+            },
+            'ua_append' => 'PHPUnit/Integration'
+        ]);
     }
 }

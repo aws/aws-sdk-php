@@ -26,9 +26,9 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ConflictException"},
         {"shape":"InternalServerException"}
       ],
       "endpoint":{"hostPrefix":"api."}
@@ -45,9 +45,9 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ConflictException"},
         {"shape":"InternalServerException"}
       ],
       "endpoint":{"hostPrefix":"api."},
@@ -65,9 +65,9 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ConflictException"},
         {"shape":"InternalServerException"}
       ],
       "endpoint":{"hostPrefix":"api."},
@@ -85,9 +85,9 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ConflictException"},
         {"shape":"InternalServerException"}
       ],
       "endpoint":{"hostPrefix":"api."},
@@ -228,9 +228,9 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ConflictException"},
         {"shape":"InternalServerException"}
       ],
       "endpoint":{"hostPrefix":"api."}
@@ -247,9 +247,9 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ConflictException"},
         {"shape":"InternalServerException"}
       ],
       "endpoint":{"hostPrefix":"api."},
@@ -286,6 +286,7 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -327,7 +328,8 @@
     },
     "ActivationCode":{
       "type":"string",
-      "pattern":"[a-z]{2}[a-z0-9]{6}"
+      "pattern":"[a-z]{2}[a-z0-9]{6}",
+      "sensitive":true
     },
     "ApplyTimeOf":{
       "type":"string",
@@ -507,7 +509,7 @@
         "updatedAt":{"shape":"Timestamp"},
         "arn":{"shape":"Arn"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
-        "tags":{"shape":"TagsMap"}
+        "lastUserId":{"shape":"UserId"}
       }
     },
     "DeviceCreationTagKey":{
@@ -540,7 +542,9 @@
     },
     "DeviceName":{
       "type":"string",
-      "pattern":"[0-9\\p{IsAlphabetic}+:,.@'\" -]{1,64}",
+      "max":64,
+      "min":0,
+      "pattern":"$|^[0-9\\p{IsAlphabetic}+:,.@'\" -]*",
       "sensitive":true
     },
     "DeviceSoftwareSetComplianceStatus":{
@@ -577,7 +581,8 @@
         "lastPostureAt":{"shape":"Timestamp"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
-        "arn":{"shape":"Arn"}
+        "arn":{"shape":"Arn"},
+        "lastUserId":{"shape":"UserId"}
       }
     },
     "Environment":{
@@ -601,7 +606,6 @@
         "updatedAt":{"shape":"Timestamp"},
         "arn":{"shape":"Arn"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
-        "tags":{"shape":"TagsMap"},
         "deviceCreationTags":{"shape":"DeviceCreationTagsMap"}
       }
     },
@@ -615,7 +619,9 @@
     },
     "EnvironmentName":{
       "type":"string",
-      "pattern":"[0-9\\p{IsAlphabetic}+:,.@'\" -][0-9\\p{IsAlphabetic}+=:,.@'\" -]{0,63}",
+      "max":64,
+      "min":0,
+      "pattern":"$|^[0-9\\p{IsAlphabetic}+:,.@'\" -][0-9\\p{IsAlphabetic}+=:,.@'\" -]*",
       "sensitive":true
     },
     "EnvironmentSoftwareSetComplianceStatus":{
@@ -905,8 +911,7 @@
         "supportedUntil":{"shape":"Timestamp"},
         "validationStatus":{"shape":"SoftwareSetValidationStatus"},
         "software":{"shape":"SoftwareList"},
-        "arn":{"shape":"Arn"},
-        "tags":{"shape":"TagsMap"}
+        "arn":{"shape":"Arn"}
       }
     },
     "SoftwareSetId":{
@@ -1107,6 +1112,10 @@
       "type":"structure",
       "members":{
       }
+    },
+    "UserId":{
+      "type":"string",
+      "sensitive":true
     },
     "ValidationException":{
       "type":"structure",
