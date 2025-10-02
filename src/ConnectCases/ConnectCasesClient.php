@@ -69,6 +69,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTemplatesAsync(array $args = [])
  * @method \Aws\Result putCaseEventConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putCaseEventConfigurationAsync(array $args = [])
+ * @method \Aws\Result searchAllRelatedItems(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchAllRelatedItemsAsync(array $args = [])
  * @method \Aws\Result searchCases(array $args = [])
  * @method \GuzzleHttp\Promise\Promise searchCasesAsync(array $args = [])
  * @method \Aws\Result searchRelatedItems(array $args = [])

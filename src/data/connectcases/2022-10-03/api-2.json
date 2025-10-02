@@ -590,6 +590,23 @@
         {"shape":"ConflictException"}
       ]
     },
+    "SearchAllRelatedItems":{
+      "name":"SearchAllRelatedItems",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{domainId}/related-items-search",
+        "responseCode":200
+      },
+      "input":{"shape":"SearchAllRelatedItemsRequest"},
+      "output":{"shape":"SearchAllRelatedItemsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "SearchCases":{
       "name":"SearchCases",
       "http":{
@@ -2730,6 +2747,90 @@
     "RuleType":{
       "type":"string",
       "enum":["Required"]
+    },
+    "SearchAllRelatedItemsRequest":{
+      "type":"structure",
+      "required":["domainId"],
+      "members":{
+        "domainId":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainId"
+        },
+        "maxResults":{"shape":"SearchAllRelatedItemsRequestMaxResultsInteger"},
+        "nextToken":{"shape":"NextToken"},
+        "filters":{"shape":"SearchAllRelatedItemsRequestFiltersList"},
+        "sorts":{"shape":"SearchAllRelatedItemsRequestSortsList"}
+      }
+    },
+    "SearchAllRelatedItemsRequestFiltersList":{
+      "type":"list",
+      "member":{"shape":"RelatedItemTypeFilter"},
+      "max":10,
+      "min":0
+    },
+    "SearchAllRelatedItemsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":25,
+      "min":1
+    },
+    "SearchAllRelatedItemsRequestSortsList":{
+      "type":"list",
+      "member":{"shape":"SearchAllRelatedItemsSort"},
+      "max":2,
+      "min":0
+    },
+    "SearchAllRelatedItemsResponse":{
+      "type":"structure",
+      "required":["relatedItems"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "relatedItems":{"shape":"SearchAllRelatedItemsResponseRelatedItemsList"}
+      }
+    },
+    "SearchAllRelatedItemsResponseItem":{
+      "type":"structure",
+      "required":[
+        "relatedItemId",
+        "caseId",
+        "type",
+        "associationTime",
+        "content"
+      ],
+      "members":{
+        "relatedItemId":{"shape":"RelatedItemId"},
+        "caseId":{"shape":"CaseId"},
+        "type":{"shape":"RelatedItemType"},
+        "associationTime":{"shape":"AssociationTime"},
+        "content":{"shape":"RelatedItemContent"},
+        "performedBy":{"shape":"UserUnion"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "SearchAllRelatedItemsResponseRelatedItemsList":{
+      "type":"list",
+      "member":{"shape":"SearchAllRelatedItemsResponseItem"},
+      "max":25,
+      "min":0
+    },
+    "SearchAllRelatedItemsSort":{
+      "type":"structure",
+      "required":[
+        "sortProperty",
+        "sortOrder"
+      ],
+      "members":{
+        "sortProperty":{"shape":"SearchAllRelatedItemsSortProperty"},
+        "sortOrder":{"shape":"Order"}
+      }
+    },
+    "SearchAllRelatedItemsSortProperty":{
+      "type":"string",
+      "enum":[
+        "AssociationTime",
+        "CaseId"
+      ]
     },
     "SearchCasesRequest":{
       "type":"structure",

@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Synthetics` - Adds support to configure canaries with pre-configured blueprint code on supported runtime versions. This behavior can be controlled via the new BlueprintTypes property exposed in the CreateCanary and UpdateCanary APIs.
+* `Aws\CloudFormation` - Add new warning type 'EXCLUDED_RESOURCES'
+* `Aws\GuardDuty` - Updated descriptions for the Location parameter in CreateTrustedEntitySet and CreateThreatEntitySet.
+* `Aws\ConnectCases` - New Search All Related Items API enables searching related items across cases
+* `Aws\DynamoDB` - Add support for dual-stack account endpoint generation
+
 ## 3.356.30 - 2025-10-01
 
 * `Aws\IVSRealTime` - Remove incorrect ReadOnly trait on IVS RealTime ImportPublicKey API

@@ -415,6 +415,18 @@
       "max":10000000,
       "min":1
     },
+    "BlueprintType":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[0-9a-zA-Z_\\-\\.]+"
+    },
+    "BlueprintTypes":{
+      "type":"list",
+      "member":{"shape":"BlueprintType"},
+      "max":1,
+      "min":0
+    },
     "BrowserConfig":{
       "type":"structure",
       "members":{
@@ -477,13 +489,13 @@
     },
     "CanaryCodeInput":{
       "type":"structure",
-      "required":["Handler"],
       "members":{
         "S3Bucket":{"shape":"String"},
         "S3Key":{"shape":"String"},
         "S3Version":{"shape":"String"},
         "ZipFile":{"shape":"Blob"},
         "Handler":{"shape":"CodeHandler"},
+        "BlueprintTypes":{"shape":"BlueprintTypes"},
         "Dependencies":{"shape":"Dependencies"}
       }
     },
@@ -492,6 +504,7 @@
       "members":{
         "SourceLocationArn":{"shape":"String"},
         "Handler":{"shape":"String"},
+        "BlueprintTypes":{"shape":"BlueprintTypes"},
         "Dependencies":{"shape":"Dependencies"}
       }
     },
@@ -659,8 +672,8 @@
     "CodeHandler":{
       "type":"string",
       "max":128,
-      "min":1,
-      "pattern":"^([0-9a-zA-Z_-]+(\\/|\\.))*[0-9A-Za-z_\\\\-]+(\\.|::)[A-Za-z_][A-Za-z0-9_]*$"
+      "min":0,
+      "pattern":"^(([0-9a-zA-Z_-]+(\\/|\\.))*[0-9A-Za-z_\\\\-]+(\\.|::)[A-Za-z_][A-Za-z0-9_]*)?$"
     },
     "ConflictException":{
       "type":"structure",

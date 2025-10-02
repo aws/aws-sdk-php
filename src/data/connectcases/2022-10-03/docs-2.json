@@ -34,6 +34,7 @@
     "ListTagsForResource": "<p>Lists tags for a resource.</p>",
     "ListTemplates": "<p>Lists all of the templates in a Cases domain. Each list item is a condensed summary object of the template. </p> <p> Other template APIs are: </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateTemplate.html\">CreateTemplate</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_DeleteTemplate.html\">DeleteTemplate</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_GetTemplate.html\">GetTemplate</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_UpdateTemplate.html\">UpdateTemplate</a> </p> </li> </ul>",
     "PutCaseEventConfiguration": "<p>Adds case event publishing configuration. For a complete list of fields you can add to the event message, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/case-fields.html\">Create case fields</a> in the <i>Amazon Connect Administrator Guide</i> </p>",
+    "SearchAllRelatedItems": "<p>Searches for related items across all cases within a domain. This is a global search operation that returns related items from multiple cases, unlike the case-specific <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_SearchRelatedItems.html\">SearchRelatedItems</a> API.</p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>Find cases with similar issues across the domain. For example, search for all cases containing comments about \"product defect\" to identify patterns and existing solutions.</p> </li> <li> <p>Locate all cases associated with specific contacts or orders. For example, find all cases linked to a contactArn to understand the complete customer journey. </p> </li> <li> <p>Monitor SLA compliance across cases. For example, search for all cases with \"Active\" SLA status to prioritize remediation efforts.</p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p>This API returns case IDs, not complete case objects. To retrieve full case details, you must make additional calls to the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_GetCase.html\">GetCase</a> API for each returned case ID. </p> </li> <li> <p>This API searches across related items content, not case fields. Use the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_SearchCases.html\">SearchCases</a> API to search within case field values.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "SearchCases": "<p>Searches for cases within their associated Cases domain. Search results are returned as a paginated list of abridged case documents.</p> <note> <p>For <code>customer_id</code> you must provide the full customer profile ARN in this format: <code> arn:aws:profile:your AWS Region:your AWS account ID:domains/profiles domain name/profiles/profile ID</code>. </p> </note>",
     "SearchRelatedItems": "<p>Searches for related items that are associated with a case.</p> <note> <p>If no filters are provided, this returns all related items associated with a case.</p> </note>",
     "TagResource": "<p>Adds tags to a resource.</p>",
@@ -61,6 +62,7 @@
     "AssociationTime": {
       "base": null,
       "refs": {
+        "SearchAllRelatedItemsResponseItem$associationTime": "<p>Time at which a related item was associated with a case.</p>",
         "SearchRelatedItemsResponseItem$associationTime": "<p>Time at which a related item was associated with a case.</p>"
       }
     },
@@ -278,15 +280,16 @@
       "base": null,
       "refs": {
         "CaseSummary$caseId": "<p>A unique identifier of the case.</p>",
-        "ConnectCaseContent$caseId": "<p>The unique identifier of the related case</p>",
-        "ConnectCaseFilter$caseId": "<p>The unique identifier of the case to filter by</p>",
-        "ConnectCaseInputContent$caseId": "<p>The unique identifier of the case to be related</p>",
+        "ConnectCaseContent$caseId": "<p>A unique identifier of the case.</p>",
+        "ConnectCaseFilter$caseId": "<p>A unique identifier of the case.</p>",
+        "ConnectCaseInputContent$caseId": "<p>A unique identifier of the case.</p>",
         "CreateCaseResponse$caseId": "<p>A unique identifier of the case.</p>",
         "CreateRelatedItemRequest$caseId": "<p>A unique identifier of the case.</p>",
         "DeleteCaseRequest$caseId": "<p>A unique identifier of the case.</p>",
         "DeleteRelatedItemRequest$caseId": "<p>A unique identifier of the case.</p>",
         "GetCaseAuditEventsRequest$caseId": "<p>A unique identifier of the case.</p>",
         "GetCaseRequest$caseId": "<p>A unique identifier of the case.</p>",
+        "SearchAllRelatedItemsResponseItem$caseId": "<p>A unique identifier of the case.</p>",
         "SearchCasesResponseItem$caseId": "<p>A unique identifier of the case.</p>",
         "SearchRelatedItemsRequest$caseId": "<p>A unique identifier of the case.</p>",
         "UpdateCaseRequest$caseId": "<p>A unique identifier of the case.</p>"
@@ -407,21 +410,21 @@
       }
     },
     "ConnectCaseContent": {
-      "base": "<p>Represents the content of a Case related item</p>",
+      "base": "<p>Represents the content of a <code>ConnectCase</code> type related item.</p>",
       "refs": {
-        "RelatedItemContent$connectCase": "<p>Content for a related Connect case</p>"
+        "RelatedItemContent$connectCase": "<p>Represents the Amazon Connect case to be created as a related item.</p>"
       }
     },
     "ConnectCaseFilter": {
-      "base": "<p>A filter for related items of type Case</p>",
+      "base": "<p>A filter for related items of type <code>ConnectCase</code>.</p>",
       "refs": {
-        "RelatedItemTypeFilter$connectCase": "<p>Filter for related items of type Connect case</p>"
+        "RelatedItemTypeFilter$connectCase": "<p>Represents the Amazon Connect case to be created as a related item.</p>"
       }
     },
     "ConnectCaseInputContent": {
-      "base": "<p>Represents the input content of a Case related item</p>",
+      "base": "<p>Represents the content of a <code>ConnectCase</code> related item.</p>",
       "refs": {
-        "RelatedItemInputContent$connectCase": "<p>Input content for a related Connect case</p>"
+        "RelatedItemInputContent$connectCase": "<p>Represents the Amazon Connect case to be created as a related item.</p>"
       }
     },
     "ConnectedToSystemTime": {
@@ -556,9 +559,9 @@
       }
     },
     "CustomContent": {
-      "base": "<p>Represents the content of a Custom related item</p>",
+      "base": "<p>Represents the content of a <code>Custom</code> type related item.</p>",
       "refs": {
-        "RelatedItemContent$custom": "<p>Content for a custom related item</p>"
+        "RelatedItemContent$custom": "<p>Represents the content of a <code>Custom</code> type related item.</p>"
       }
     },
     "CustomEntity": {
@@ -568,42 +571,42 @@
       }
     },
     "CustomFieldsFilter": {
-      "base": "<p>A filter for fields in related items of type Custom</p>",
+      "base": "<p>A filter for fields in <code>Custom</code> type related items. Only one value can be provided.</p>",
       "refs": {
-        "CustomFieldsFilter$not": "<p>Excludes items matching the filter</p>",
+        "CustomFieldsFilter$not": "<p>Excludes items matching the filter.</p>",
         "CustomFieldsFilterAndAllList$member": null,
         "CustomFieldsFilterOrAllList$member": null,
-        "CustomFilter$fields": "<p>Filter conditions for custom fields</p>"
+        "CustomFilter$fields": "<p>Filter conditions for custom fields.</p>"
       }
     },
     "CustomFieldsFilterAndAllList": {
       "base": null,
       "refs": {
-        "CustomFieldsFilter$andAll": "<p>Matches items that satisfy all of the specified filter conditions</p>"
+        "CustomFieldsFilter$andAll": "<p>Provides \"and all\" filtering.</p>"
       }
     },
     "CustomFieldsFilterOrAllList": {
       "base": null,
       "refs": {
-        "CustomFieldsFilter$orAll": "<p>Matches items that satisfy any of the specified filter conditions</p>"
+        "CustomFieldsFilter$orAll": "<p>Provides \"or all\" filtering.</p>"
       }
     },
     "CustomFilter": {
-      "base": "<p>A filter for related items of type Custom</p>",
+      "base": "<p>A filter for related items of type <code>Custom</code>.</p>",
       "refs": {
-        "RelatedItemTypeFilter$custom": "<p>Filter for related items of type Custom</p>"
+        "RelatedItemTypeFilter$custom": "<p>Represents the content of a <code>Custom</code> type related item.</p>"
       }
     },
     "CustomInputContent": {
-      "base": "<p>Represents the input content of a Custom related item</p>",
+      "base": "<p>Represents the content of a <code>Custom</code> related item.</p>",
       "refs": {
-        "RelatedItemInputContent$custom": "<p>Input content for a custom related item</p>"
+        "RelatedItemInputContent$custom": "<p>Represents the content of a <code>Custom</code> type related item.</p>"
       }
     },
     "CustomInputContentFieldsList": {
       "base": null,
       "refs": {
-        "CustomInputContent$fields": "<p>List of field values for the custom related item</p>"
+        "CustomInputContent$fields": "<p>List of field values for the <code>Custom</code> related item.</p>"
       }
     },
     "DeleteCaseRequest": {
@@ -728,6 +731,7 @@
         "ListLayoutsRequest$domainId": "<p>The unique identifier of the Cases domain. </p>",
         "ListTemplatesRequest$domainId": "<p>The unique identifier of the Cases domain. </p>",
         "PutCaseEventConfigurationRequest$domainId": "<p>The unique identifier of the Cases domain. </p>",
+        "SearchAllRelatedItemsRequest$domainId": "<p>The unique identifier of the Cases domain. </p>",
         "SearchCasesRequest$domainId": "<p>The unique identifier of the Cases domain. </p>",
         "SearchRelatedItemsRequest$domainId": "<p>The unique identifier of the Cases domain. </p>",
         "UpdateCaseRequest$domainId": "<p>The unique identifier of the Cases domain. </p>",
@@ -964,7 +968,7 @@
     "FieldValueList": {
       "base": null,
       "refs": {
-        "CustomContent$fields": "<p>List of field values for the custom related item</p>"
+        "CustomContent$fields": "<p>List of field values for the <code>Custom</code> related item.</p>"
       }
     },
     "FieldValueUnion": {
@@ -1333,6 +1337,8 @@
         "ListLayoutsResponse$nextToken": "<p>The token for the next set of results. This is null if there are no more results to return.</p>",
         "ListTemplatesRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListTemplatesResponse$nextToken": "<p>The token for the next set of results. This is null if there are no more results to return.</p>",
+        "SearchAllRelatedItemsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "SearchAllRelatedItemsResponse$nextToken": "<p>The token for the next set of results. This is null if there are no more results to return.</p>",
         "SearchCasesRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "SearchCasesResponse$nextToken": "<p>The token for the next set of results. This is null if there are no more results to return.</p>",
         "SearchRelatedItemsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -1360,6 +1366,7 @@
     "Order": {
       "base": null,
       "refs": {
+        "SearchAllRelatedItemsSort$sortOrder": "<p>Whether related items should be sorted by association time or case ID. </p>",
         "Sort$sortOrder": "<p>A structured set of sort terms</p>"
       }
     },
@@ -1382,6 +1389,7 @@
     "RelatedItemContent": {
       "base": "<p>Represents the content of a particular type of related item.</p>",
       "refs": {
+        "SearchAllRelatedItemsResponseItem$content": null,
         "SearchRelatedItemsResponseItem$content": "<p>Represents the content of a particular type of related item.</p>"
       }
     },
@@ -1396,6 +1404,7 @@
       "refs": {
         "CreateRelatedItemResponse$relatedItemId": "<p>The unique identifier of the related item.</p>",
         "DeleteRelatedItemRequest$relatedItemId": "<p>A unique identifier of a related item.</p>",
+        "SearchAllRelatedItemsResponseItem$relatedItemId": "<p>Unique identifier of a related item.</p>",
         "SearchRelatedItemsResponseItem$relatedItemId": "<p>Unique identifier of a related item.</p>"
       }
     },
@@ -1410,12 +1419,14 @@
       "refs": {
         "AuditEvent$relatedItemType": "<p>The Type of the related item.</p>",
         "CreateRelatedItemRequest$type": "<p>The type of a related item.</p>",
+        "SearchAllRelatedItemsResponseItem$type": "<p>Type of a related item.</p>",
         "SearchRelatedItemsResponseItem$type": "<p>Type of a related item.</p>"
       }
     },
     "RelatedItemTypeFilter": {
       "base": "<p>The list of types of related items and their parameters to use for filtering.</p>",
       "refs": {
+        "SearchAllRelatedItemsRequestFiltersList$member": null,
         "SearchRelatedItemsRequestFiltersList$member": null
       }
     },
@@ -1448,6 +1459,58 @@
       "base": null,
       "refs": {
         "CaseRuleSummary$ruleType": "<p>Possible types for a rule.</p>"
+      }
+    },
+    "SearchAllRelatedItemsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SearchAllRelatedItemsRequestFiltersList": {
+      "base": null,
+      "refs": {
+        "SearchAllRelatedItemsRequest$filters": "<p>The list of types of related items and their parameters to use for filtering. The filters work as an OR condition: caller gets back related items that match any of the specified filter types.</p>"
+      }
+    },
+    "SearchAllRelatedItemsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "SearchAllRelatedItemsRequest$maxResults": "<p>The maximum number of results to return per page.</p>"
+      }
+    },
+    "SearchAllRelatedItemsRequestSortsList": {
+      "base": null,
+      "refs": {
+        "SearchAllRelatedItemsRequest$sorts": "<p>A structured set of sort terms to specify the order in which related items should be returned. Supports sorting by association time or case ID. The sorts work in the order specified: first sort term takes precedence over subsequent terms.</p>"
+      }
+    },
+    "SearchAllRelatedItemsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SearchAllRelatedItemsResponseItem": {
+      "base": "<p>A list of items that represent RelatedItems. This data type is similar to <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_SearchRelatedItemsResponseItem.html\">SearchRelatedItemsResponseItem</a> except Search<b>All</b>RelatedItemsResponseItem has a caseId field.</p>",
+      "refs": {
+        "SearchAllRelatedItemsResponseRelatedItemsList$member": null
+      }
+    },
+    "SearchAllRelatedItemsResponseRelatedItemsList": {
+      "base": null,
+      "refs": {
+        "SearchAllRelatedItemsResponse$relatedItems": "<p>A list of items related to a case.</p>"
+      }
+    },
+    "SearchAllRelatedItemsSort": {
+      "base": "<p>The order in which all returned related items should be sorted.</p>",
+      "refs": {
+        "SearchAllRelatedItemsRequestSortsList$member": null
+      }
+    },
+    "SearchAllRelatedItemsSortProperty": {
+      "base": null,
+      "refs": {
+        "SearchAllRelatedItemsSort$sortProperty": "<p>Whether related items should be sorted in ascending or descending order. </p>"
       }
     },
     "SearchCasesRequest": {
@@ -1681,6 +1744,7 @@
         "GetLayoutResponse$tags": "<p>A map of of key-value pairs that represent tags on a resource. Tags are used to organize, track, or control access for this resource.</p>",
         "GetTemplateResponse$tags": "<p>A map of of key-value pairs that represent tags on a resource. Tags are used to organize, track, or control access for this resource.</p>",
         "ListTagsForResourceResponse$tags": "<p>A map of of key-value pairs that represent tags on a resource. Tags are used to organize, track, or control access for this resource.</p>",
+        "SearchAllRelatedItemsResponseItem$tags": "<p>A map of of key-value pairs that represent tags on a resource. Tags are used to organize, track, or control access for this resource.</p>",
         "SearchCasesResponseItem$tags": "<p>A map of of key-value pairs that represent tags on a resource. Tags are used to organize, track, or control access for this resource.</p>",
         "SearchRelatedItemsResponseItem$tags": "<p>A map of of key-value pairs that represent tags on a resource. Tags are used to organize, track, or control access for this resource.</p>",
         "TagResourceRequest$tags": "<p>A map of of key-value pairs that represent tags on a resource. Tags are used to organize, track, or control access for this resource.</p>"
@@ -1846,6 +1910,7 @@
         "AuditEventPerformedBy$user": null,
         "CreateCaseRequest$performedBy": null,
         "CreateRelatedItemRequest$performedBy": "<p>Represents the creator of the related item.</p>",
+        "SearchAllRelatedItemsResponseItem$performedBy": null,
         "SearchRelatedItemsResponseItem$performedBy": "<p>Represents the creator of the related item.</p>",
         "UpdateCaseRequest$performedBy": null
       }
