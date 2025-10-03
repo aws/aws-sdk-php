@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.32 - 2025-10-03
 
 * `Aws\PaymentCryptographyData` - Added a new API - translateKeyMaterial; allows keys wrapped by ECDH derived keys to be rewrapped under a static AES keyblock without first importing the key into the service.
 * `Aws\CleanRooms` - Added support for reading data sources across regions, and results delivery to allowedlisted regions.
