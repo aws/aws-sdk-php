@@ -331,6 +331,7 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"UnauthorizedException"},
+        {"shape":"DependencyFailedException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
       ],
@@ -1579,7 +1580,10 @@
       "members":{
         "manualSearchAIAgentConfiguration":{"shape":"ManualSearchAIAgentConfiguration"},
         "answerRecommendationAIAgentConfiguration":{"shape":"AnswerRecommendationAIAgentConfiguration"},
-        "selfServiceAIAgentConfiguration":{"shape":"SelfServiceAIAgentConfiguration"}
+        "selfServiceAIAgentConfiguration":{"shape":"SelfServiceAIAgentConfiguration"},
+        "emailResponseAIAgentConfiguration":{"shape":"EmailResponseAIAgentConfiguration"},
+        "emailOverviewAIAgentConfiguration":{"shape":"EmailOverviewAIAgentConfiguration"},
+        "emailGenerativeAnswerAIAgentConfiguration":{"shape":"EmailGenerativeAnswerAIAgentConfiguration"}
       },
       "union":true
     },
@@ -1659,7 +1663,10 @@
       "enum":[
         "MANUAL_SEARCH",
         "ANSWER_RECOMMENDATION",
-        "SELF_SERVICE"
+        "SELF_SERVICE",
+        "EMAIL_RESPONSE",
+        "EMAIL_OVERVIEW",
+        "EMAIL_GENERATIVE_ANSWER"
       ]
     },
     "AIAgentVersionSummariesList":{
@@ -1892,7 +1899,11 @@
         "INTENT_LABELING_GENERATION",
         "QUERY_REFORMULATION",
         "SELF_SERVICE_PRE_PROCESSING",
-        "SELF_SERVICE_ANSWER_GENERATION"
+        "SELF_SERVICE_ANSWER_GENERATION",
+        "EMAIL_RESPONSE",
+        "EMAIL_OVERVIEW",
+        "EMAIL_GENERATIVE_ANSWER",
+        "EMAIL_QUERY_REFORMULATION"
       ]
     },
     "AIPromptVersionSummariesList":{
@@ -2985,7 +2996,8 @@
         "description":{"shape":"Description"},
         "tags":{"shape":"Tags"},
         "tagFilter":{"shape":"TagFilter"},
-        "aiAgentConfiguration":{"shape":"AIAgentConfigurationMap"}
+        "aiAgentConfiguration":{"shape":"AIAgentConfigurationMap"},
+        "contactArn":{"shape":"GenericArn"}
       }
     },
     "CreateSessionResponse":{
@@ -3070,7 +3082,10 @@
         "generativeData":{"shape":"GenerativeDataDetails"},
         "intentDetectedData":{"shape":"IntentDetectedDataDetails"},
         "sourceContentData":{"shape":"SourceContentDataDetails"},
-        "generativeChunkData":{"shape":"GenerativeChunkDataDetails"}
+        "generativeChunkData":{"shape":"GenerativeChunkDataDetails"},
+        "emailResponseChunkData":{"shape":"EmailResponseChunkDataDetails"},
+        "emailOverviewChunkData":{"shape":"EmailOverviewChunkDataDetails"},
+        "emailGenerativeAnswerChunkData":{"shape":"EmailGenerativeAnswerChunkDataDetails"}
       },
       "union":true
     },
@@ -3152,8 +3167,7 @@
     },
     "DeleteAIAgentResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAIAgentVersionRequest":{
       "type":"structure",
@@ -3182,8 +3196,7 @@
     },
     "DeleteAIAgentVersionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAIGuardrailRequest":{
       "type":"structure",
@@ -3206,8 +3219,7 @@
     },
     "DeleteAIGuardrailResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAIGuardrailVersionRequest":{
       "type":"structure",
@@ -3236,8 +3248,7 @@
     },
     "DeleteAIGuardrailVersionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAIPromptRequest":{
       "type":"structure",
@@ -3260,8 +3271,7 @@
     },
     "DeleteAIPromptResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAIPromptVersionRequest":{
       "type":"structure",
@@ -3290,8 +3300,7 @@
     },
     "DeleteAIPromptVersionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAssistantAssociationRequest":{
       "type":"structure",
@@ -3314,8 +3323,7 @@
     },
     "DeleteAssistantAssociationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAssistantRequest":{
       "type":"structure",
@@ -3330,8 +3338,7 @@
     },
     "DeleteAssistantResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteContentAssociationRequest":{
       "type":"structure",
@@ -3360,8 +3367,7 @@
     },
     "DeleteContentAssociationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteContentRequest":{
       "type":"structure",
@@ -3384,8 +3390,7 @@
     },
     "DeleteContentResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteImportJobRequest":{
       "type":"structure",
@@ -3408,8 +3413,7 @@
     },
     "DeleteImportJobResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteKnowledgeBaseRequest":{
       "type":"structure",
@@ -3424,8 +3428,7 @@
     },
     "DeleteKnowledgeBaseResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteMessageTemplateAttachmentRequest":{
       "type":"structure",
@@ -3454,8 +3457,7 @@
     },
     "DeleteMessageTemplateAttachmentResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteMessageTemplateRequest":{
       "type":"structure",
@@ -3478,8 +3480,7 @@
     },
     "DeleteMessageTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteQuickResponseRequest":{
       "type":"structure",
@@ -3502,8 +3503,18 @@
     },
     "DeleteQuickResponseResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "DependencyFailedException":{
+      "type":"structure",
       "members":{
-      }
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":424,
+        "senderFault":true
+      },
+      "exception":true
     },
     "Description":{
       "type":"string",
@@ -3525,6 +3536,23 @@
       "members":{
         "text":{"shape":"SensitiveString"},
         "highlights":{"shape":"Highlights"}
+      }
+    },
+    "EmailGenerativeAnswerAIAgentConfiguration":{
+      "type":"structure",
+      "members":{
+        "emailGenerativeAnswerAIPromptId":{"shape":"UuidWithQualifier"},
+        "emailQueryReformulationAIPromptId":{"shape":"UuidWithQualifier"},
+        "locale":{"shape":"NonEmptyString"},
+        "associationConfigurations":{"shape":"AssociationConfigurationList"}
+      }
+    },
+    "EmailGenerativeAnswerChunkDataDetails":{
+      "type":"structure",
+      "members":{
+        "completion":{"shape":"NonEmptySensitiveString"},
+        "references":{"shape":"DataSummaryList"},
+        "nextChunkToken":{"shape":"NextToken"}
       }
     },
     "EmailHeader":{
@@ -3566,6 +3594,36 @@
       "members":{
         "plainText":{"shape":"MessageTemplateBodyContentProvider"},
         "html":{"shape":"MessageTemplateBodyContentProvider"}
+      }
+    },
+    "EmailOverviewAIAgentConfiguration":{
+      "type":"structure",
+      "members":{
+        "emailOverviewAIPromptId":{"shape":"UuidWithQualifier"},
+        "locale":{"shape":"NonEmptyString"}
+      }
+    },
+    "EmailOverviewChunkDataDetails":{
+      "type":"structure",
+      "members":{
+        "completion":{"shape":"NonEmptySensitiveString"},
+        "nextChunkToken":{"shape":"NextToken"}
+      }
+    },
+    "EmailResponseAIAgentConfiguration":{
+      "type":"structure",
+      "members":{
+        "emailResponseAIPromptId":{"shape":"UuidWithQualifier"},
+        "emailQueryReformulationAIPromptId":{"shape":"UuidWithQualifier"},
+        "locale":{"shape":"NonEmptyString"},
+        "associationConfigurations":{"shape":"AssociationConfigurationList"}
+      }
+    },
+    "EmailResponseChunkDataDetails":{
+      "type":"structure",
+      "members":{
+        "completion":{"shape":"NonEmptySensitiveString"},
+        "nextChunkToken":{"shape":"NextToken"}
       }
     },
     "ExtendedMessageTemplateData":{
@@ -5814,7 +5872,10 @@
         "GENERATIVE_ANSWER_CHUNK",
         "BLOCKED_GENERATIVE_ANSWER_CHUNK",
         "INTENT_ANSWER_CHUNK",
-        "BLOCKED_INTENT_ANSWER_CHUNK"
+        "BLOCKED_INTENT_ANSWER_CHUNK",
+        "EMAIL_RESPONSE_CHUNK",
+        "EMAIL_OVERVIEW_CHUNK",
+        "EMAIL_GENERATIVE_ANSWER_CHUNK"
       ]
     },
     "QueryResultsList":{
@@ -6177,7 +6238,10 @@
         "GENERATIVE_ANSWER_CHUNK",
         "BLOCKED_GENERATIVE_ANSWER_CHUNK",
         "INTENT_ANSWER_CHUNK",
-        "BLOCKED_INTENT_ANSWER_CHUNK"
+        "BLOCKED_INTENT_ANSWER_CHUNK",
+        "EMAIL_RESPONSE_CHUNK",
+        "EMAIL_OVERVIEW_CHUNK",
+        "EMAIL_GENERATIVE_ANSWER_CHUNK"
       ]
     },
     "ReferenceType":{
@@ -6227,8 +6291,7 @@
     },
     "RemoveAssistantAIAgentResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RemoveKnowledgeBaseTemplateUriRequest":{
       "type":"structure",
@@ -6243,8 +6306,7 @@
     },
     "RemoveKnowledgeBaseTemplateUriResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RenderMessageTemplateRequest":{
       "type":"structure",
@@ -6851,8 +6913,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -6966,8 +7027,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAIAgentRequest":{
       "type":"structure",

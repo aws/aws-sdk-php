@@ -7,7 +7,7 @@
     "CreateAIAgentVersion": "<p>Creates and Amazon Q in Connect AI Agent version.</p>",
     "CreateAIGuardrail": "<p>Creates an Amazon Q in Connect AI Guardrail.</p>",
     "CreateAIGuardrailVersion": "<p>Creates an Amazon Q in Connect AI Guardrail version.</p>",
-    "CreateAIPrompt": "<p>Creates an Amazon Q in Connect AI Prompt.</p> <note> <p>For more information on supported models, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/create-ai-prompts.html#cli-create-aiprompt\">Supported models for system and custom prompts</a>.</p> </note>",
+    "CreateAIPrompt": "<p>Creates an Amazon Q in Connect AI Prompt.</p>",
     "CreateAIPromptVersion": "<p>Creates an Amazon Q in Connect AI Prompt version.</p>",
     "CreateAssistant": "<p>Creates an Amazon Q in Connect assistant.</p>",
     "CreateAssistantAssociation": "<p>Creates an association between an Amazon Q in Connect assistant and another resource. Currently, the only supported association is with a knowledge base. An assistant can have only a single association.</p>",
@@ -288,8 +288,8 @@
       "refs": {
         "AIPromptData$modelId": "<p>The identifier of the model used for this AI Prompt. The following model Ids are supported:</p> <ul> <li> <p> <code>anthropic.claude-3-haiku--v1:0</code> </p> </li> <li> <p> <code>apac.amazon.nova-lite-v1:0</code> </p> </li> <li> <p> <code>apac.amazon.nova-micro-v1:0</code> </p> </li> <li> <p> <code>apac.amazon.nova-pro-v1:0</code> </p> </li> <li> <p> <code>apac.anthropic.claude-3-5-sonnet--v2:0</code> </p> </li> <li> <p> <code>apac.anthropic.claude-3-haiku-20240307-v1:0</code> </p> </li> <li> <p> <code>eu.amazon.nova-lite-v1:0</code> </p> </li> <li> <p> <code>eu.amazon.nova-micro-v1:0</code> </p> </li> <li> <p> <code>eu.amazon.nova-pro-v1:0</code> </p> </li> <li> <p> <code>eu.anthropic.claude-3-7-sonnet-20250219-v1:0</code> </p> </li> <li> <p> <code>eu.anthropic.claude-3-haiku-20240307-v1:0</code> </p> </li> <li> <p> <code>us.amazon.nova-lite-v1:0</code> </p> </li> <li> <p> <code>us.amazon.nova-micro-v1:0</code> </p> </li> <li> <p> <code>us.amazon.nova-pro-v1:0</code> </p> </li> <li> <p> <code>us.anthropic.claude-3-5-haiku-20241022-v1:0</code> </p> </li> <li> <p> <code>us.anthropic.claude-3-7-sonnet-20250219-v1:0</code> </p> </li> <li> <p> <code>us.anthropic.claude-3-haiku-20240307-v1:0</code> </p> </li> </ul>",
         "AIPromptSummary$modelId": "<p>The identifier of the model used for this AI Prompt. Model Ids supported are: <code>anthropic.claude-3-haiku-20240307-v1:0</code>.</p>",
-        "CreateAIPromptRequest$modelId": "<p>The identifier of the model used for this AI Prompt.</p>",
-        "UpdateAIPromptRequest$modelId": "<p>The identifier of the model used for this AI Prompt.</p> <note> <p>For more information on supported models, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/create-ai-prompts.html#cli-create-aiprompt\">Supported models for system and custom prompts</a>.</p> </note>"
+        "CreateAIPromptRequest$modelId": "<p>The identifier of the model used for this AI Prompt.</p> <note> <p>For information about which models are supported in each Amazon Web Services Region, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/create-ai-prompts.html#cli-create-aiprompt\">Supported models for system/custom prompts</a>.</p> </note>",
+        "UpdateAIPromptRequest$modelId": "<p>The identifier of the model used for this AI Prompt.</p> <note> <p>For information about which models are supported in each Amazon Web Services Region, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/create-ai-prompts.html#cli-create-aiprompt\">Supported models for system/custom prompts</a>.</p> </note>"
       }
     },
     "AIPromptSummary": {
@@ -343,18 +343,15 @@
     },
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActivateMessageTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ActivateMessageTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AgentAttributes": {
       "base": "<p>Information about an agent.</p>",
@@ -560,6 +557,8 @@
       "base": null,
       "refs": {
         "AnswerRecommendationAIAgentConfiguration$associationConfigurations": "<p>The association configurations for overriding behavior on this AI Agent.</p>",
+        "EmailGenerativeAnswerAIAgentConfiguration$associationConfigurations": "<p>Configuration settings for knowledge base associations used by the email generative answer agent.</p>",
+        "EmailResponseAIAgentConfiguration$associationConfigurations": "<p>Configuration settings for knowledge base associations used by the email response agent.</p>",
         "ManualSearchAIAgentConfiguration$associationConfigurations": "<p>The association configurations for overriding behavior on this AI Agent.</p>",
         "SelfServiceAIAgentConfiguration$associationConfigurations": "<p>The association configurations for overriding behavior on this AI Agent.</p>"
       }
@@ -694,8 +693,7 @@
     },
     "ConflictException": {
       "base": "<p>The request could not be processed because of conflict in the current state of the resource. For example, if you're using a <code>Create</code> API (such as <code>CreateAssistant</code>) that accepts name, a conflicting resource (usually with the same name) is being created or mutated.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConnectConfiguration": {
       "base": "<p>The configuration information of the Amazon Connect data source.</p>",
@@ -875,163 +873,131 @@
     },
     "CreateAIAgentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAIAgentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAIAgentVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAIAgentVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAIGuardrailRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAIGuardrailResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAIGuardrailVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAIGuardrailVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAIPromptRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAIPromptResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAIPromptVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAIPromptVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssistantAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssistantAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssistantRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssistantResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateContentAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateContentAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateContentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateContentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateKnowledgeBaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateKnowledgeBaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMessageTemplateAttachmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMessageTemplateAttachmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMessageTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMessageTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMessageTemplateVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMessageTemplateVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQuickResponseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQuickResponseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomAttributes": {
       "base": null,
@@ -1069,169 +1035,142 @@
     "DataSummaryList": {
       "base": null,
       "refs": {
+        "EmailGenerativeAnswerChunkDataDetails$references": "<p>Source references and citations from knowledge base articles used to generate the answer.</p>",
         "GenerativeChunkDataDetails$references": "<p>The references used to generate the LLM response.</p>",
         "GenerativeDataDetails$references": "<p>The references used to generative the LLM response.</p>"
       }
     },
     "DeactivateMessageTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeactivateMessageTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAIAgentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAIAgentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAIAgentVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAIAgentVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAIGuardrailRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAIGuardrailResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAIGuardrailVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAIGuardrailVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAIPromptRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAIPromptResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAIPromptVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAIPromptVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssistantAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssistantAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssistantRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssistantResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteContentAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteContentAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteContentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteContentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImportJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImportJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteKnowledgeBaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteKnowledgeBaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMessageTemplateAttachmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMessageTemplateAttachmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMessageTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMessageTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQuickResponseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQuickResponseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DependencyFailedException": {
+      "base": "<p>An error occurred while calling a dependency. For example, calling <code>connect:DecribeContact</code> as part of <code>CreateSession</code> with a contactArn.</p>",
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -1277,6 +1216,18 @@
         "TextData$excerpt": null
       }
     },
+    "EmailGenerativeAnswerAIAgentConfiguration": {
+      "base": "<p>Configuration settings for the EMAIL_GENERATIVE_ANSWER AI agent including prompts, locale, and knowledge base associations.</p>",
+      "refs": {
+        "AIAgentConfiguration$emailGenerativeAnswerAIAgentConfiguration": "<p>Configuration for the EMAIL_GENERATIVE_ANSWER AI agent that provides comprehensive knowledge-based answers for customer queries.</p>"
+      }
+    },
+    "EmailGenerativeAnswerChunkDataDetails": {
+      "base": "<p>Details of streaming chunk data for email generative answers including completion text and references.</p>",
+      "refs": {
+        "DataDetails$emailGenerativeAnswerChunkData": "<p>Streaming chunk data for email generative answers containing partial knowledge-based response content.</p>"
+      }
+    },
     "EmailHeader": {
       "base": "<p>The email header to include in email messages.</p>",
       "refs": {
@@ -1311,6 +1262,30 @@
       "base": "<p>The body to use in email messages.</p>",
       "refs": {
         "EmailMessageTemplateContent$body": "<p>The body to use in email messages.</p>"
+      }
+    },
+    "EmailOverviewAIAgentConfiguration": {
+      "base": "<p>Configuration settings for the EMAIL_OVERVIEW AI agent including prompt ID and locale settings.</p>",
+      "refs": {
+        "AIAgentConfiguration$emailOverviewAIAgentConfiguration": "<p>Configuration for the EMAIL_OVERVIEW AI agent that generates structured overview of email conversations.</p>"
+      }
+    },
+    "EmailOverviewChunkDataDetails": {
+      "base": "<p>Details of streaming chunk data for email overview including completion text and pagination tokens.</p>",
+      "refs": {
+        "DataDetails$emailOverviewChunkData": "<p>Streaming chunk data for email overview containing partial overview content.</p>"
+      }
+    },
+    "EmailResponseAIAgentConfiguration": {
+      "base": "<p>Configuration settings for the EMAIL_RESPONSE AI agent including prompts, locale, and knowledge base associations.</p>",
+      "refs": {
+        "AIAgentConfiguration$emailResponseAIAgentConfiguration": "<p>Configuration for the EMAIL_RESPONSE AI agent that generates professional email responses using knowledge base content.</p>"
+      }
+    },
+    "EmailResponseChunkDataDetails": {
+      "base": "<p>Details of streaming chunk data for email responses including completion text and pagination tokens.</p>",
+      "refs": {
+        "DataDetails$emailResponseChunkData": "<p>Streaming chunk data for email response generation containing partial response content.</p>"
       }
     },
     "ExtendedMessageTemplateData": {
@@ -1412,6 +1387,7 @@
         "AmazonConnectGuideAssociationData$flowId": "<p> The Amazon Resource Name (ARN) of an Amazon Connect flow. Step-by-step guides are a type of flow.</p>",
         "AppIntegrationsConfiguration$appIntegrationArn": "<p>The Amazon Resource Name (ARN) of the AppIntegrations DataIntegration to use for ingesting content.</p> <ul> <li> <p> For <a href=\"https://developer.salesforce.com/docs/atlas.en-us.knowledge_dev.meta/knowledge_dev/sforce_api_objects_knowledge__kav.htm\"> Salesforce</a>, your AppIntegrations DataIntegration must have an ObjectConfiguration if objectFields is not provided, including at least <code>Id</code>, <code>ArticleNumber</code>, <code>VersionNumber</code>, <code>Title</code>, <code>PublishStatus</code>, and <code>IsDeleted</code> as source fields. </p> </li> <li> <p> For <a href=\"https://developer.servicenow.com/dev.do#!/reference/api/rome/rest/knowledge-management-api\"> ServiceNow</a>, your AppIntegrations DataIntegration must have an ObjectConfiguration if objectFields is not provided, including at least <code>number</code>, <code>short_description</code>, <code>sys_mod_count</code>, <code>workflow_state</code>, and <code>active</code> as source fields. </p> </li> <li> <p> For <a href=\"https://developer.zendesk.com/api-reference/help_center/help-center-api/articles/\"> Zendesk</a>, your AppIntegrations DataIntegration must have an ObjectConfiguration if <code>objectFields</code> is not provided, including at least <code>id</code>, <code>title</code>, <code>updated_at</code>, and <code>draft</code> as source fields. </p> </li> <li> <p> For <a href=\"https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/sharepoint-net-server-csom-jsom-and-rest-api-index\">SharePoint</a>, your AppIntegrations DataIntegration must have a FileConfiguration, including only file extensions that are among <code>docx</code>, <code>pdf</code>, <code>html</code>, <code>htm</code>, and <code>txt</code>. </p> </li> <li> <p> For <a href=\"http://aws.amazon.com/s3/\">Amazon S3</a>, the ObjectConfiguration and FileConfiguration of your AppIntegrations DataIntegration must be null. The <code>SourceURI</code> of your DataIntegration must use the following format: <code>s3://your_s3_bucket_name</code>.</p> <important> <p>The bucket policy of the corresponding S3 bucket must allow the Amazon Web Services principal <code>app-integrations.amazonaws.com</code> to perform <code>s3:ListBucket</code>, <code>s3:GetObject</code>, and <code>s3:GetBucketLocation</code> against the bucket.</p> </important> </li> </ul>",
         "AssistantIntegrationConfiguration$topicIntegrationArn": "<p>The Amazon Resource Name (ARN) of the integrated Amazon SNS topic used for streaming chat messages.</p>",
+        "CreateSessionRequest$contactArn": "<p>The Amazon Resource Name (ARN) of the email contact in Amazon Connect. Used to retrieve email content and establish session context for AI-powered email assistance.</p>",
         "ExtendedMessageTemplateData$lastModifiedBy": "<p>The Amazon Resource Name (ARN) of the user who last updated the message template data.</p>",
         "MessageTemplateData$lastModifiedBy": "<p>The Amazon Resource Name (ARN) of the user who last updated the message template data.</p>",
         "MessageTemplateSearchResultData$lastModifiedBy": "<p>The Amazon Resource Name (ARN) of the user who last updated the message template data.</p>",
@@ -1424,153 +1400,123 @@
     },
     "GetAIAgentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAIAgentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAIGuardrailRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAIGuardrailResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAIPromptRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAIPromptResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssistantAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssistantAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssistantRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssistantResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContentAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContentAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContentSummaryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContentSummaryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetImportJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetImportJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetKnowledgeBaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetKnowledgeBaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMessageTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMessageTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNextMessageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNextMessageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQuickResponseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQuickResponseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecommendationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecommendationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GroupingConfiguration": {
       "base": "<p>The configuration information of the grouping of Amazon Q in Connect users.</p>",
@@ -1963,173 +1909,139 @@
     },
     "ListAIAgentVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAIAgentVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAIAgentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAIAgentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAIGuardrailVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAIGuardrailVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAIGuardrailsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAIGuardrailsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAIPromptVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAIPromptVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAIPromptsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAIPromptsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssistantAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssistantAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssistantsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssistantsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListContentAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListContentAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListContentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListContentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImportJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImportJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListKnowledgeBasesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListKnowledgeBasesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMessageTemplateVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMessageTemplateVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMessageTemplatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMessageTemplatesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMessagesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMessagesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQuickResponsesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQuickResponsesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LlmModelId": {
       "base": null,
@@ -2511,6 +2423,9 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "EmailGenerativeAnswerChunkDataDetails$nextChunkToken": "<p>Token for retrieving the next chunk of streaming response data, if available.</p>",
+        "EmailOverviewChunkDataDetails$nextChunkToken": "<p>Token for retrieving the next chunk of streaming overview data, if available.</p>",
+        "EmailResponseChunkDataDetails$nextChunkToken": "<p>Token for retrieving the next chunk of streaming response data, if available.</p>",
         "GenerativeChunkDataDetails$nextChunkToken": "<p>The token for the next set of chunks. Use the value returned in the previous response in the next request to retrieve the next set of chunks.</p>",
         "GetNextMessageRequest$nextMessageToken": "<p>The token for the next message. Use the value returned in the SendMessage or previous response in the next request to retrieve the next message.</p>",
         "GetNextMessageResponse$nextMessageToken": "<p>The token for the next message.</p>",
@@ -2555,6 +2470,9 @@
     "NonEmptySensitiveString": {
       "base": null,
       "refs": {
+        "EmailGenerativeAnswerChunkDataDetails$completion": "<p>The partial or complete text content of the generative answer response.</p>",
+        "EmailOverviewChunkDataDetails$completion": "<p>The partial or complete overview text content in structured HTML format with customer issues, resolutions, and next steps.</p>",
+        "EmailResponseChunkDataDetails$completion": "<p>The partial or complete professional email response text with appropriate greetings and closings.</p>",
         "RuntimeSessionData$key": "<p>The key of the data stored on the session.</p>",
         "RuntimeSessionDataValue$stringValue": "<p>The string value of the data stored on the session.</p>"
       }
@@ -2571,6 +2489,9 @@
         "CreateContentRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateKnowledgeBaseRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateQuickResponseRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
+        "EmailGenerativeAnswerAIAgentConfiguration$locale": "<p>The locale setting for language-specific email processing and response generation (for example, en_US, es_ES).</p>",
+        "EmailOverviewAIAgentConfiguration$locale": "<p>The locale setting for language-specific email overview processing (for example, en_US, es_ES).</p>",
+        "EmailResponseAIAgentConfiguration$locale": "<p>The locale setting for language-specific email response generation (for example, en_US, es_ES).</p>",
         "FailureReason$member": null,
         "Filter$value": "<p>The desired field value on which to filter.</p>",
         "Headers$key": null,
@@ -2625,13 +2546,11 @@
     },
     "NotifyRecommendationsReceivedRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "NotifyRecommendationsReceivedResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ObjectFieldsList": {
       "base": null,
@@ -2704,8 +2623,7 @@
     },
     "PreconditionFailedException": {
       "base": "<p>The provided <code>revisionId</code> does not match, indicating the content has been modified since it was last read.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Priority": {
       "base": null,
@@ -2716,23 +2634,19 @@
     },
     "PutFeedbackRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutFeedbackResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryAssistantRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryAssistantResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryCondition": {
       "base": "<p>Information about how to query content.</p>",
@@ -3073,33 +2987,27 @@
     },
     "RemoveAssistantAIAgentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveAssistantAIAgentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveKnowledgeBaseTemplateUriRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveKnowledgeBaseTemplateUriResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RenderMessageTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RenderMessageTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RenderingConfiguration": {
       "base": "<p>Information about how to render the content.</p>",
@@ -3111,13 +3019,11 @@
     },
     "RequestTimeoutException": {
       "base": "<p>The request reached the service more than 15 minutes after the date stamp on the request or more than 15 minutes after the request expiration date (such as for pre-signed URLs), or the date stamp on the request is more than 15 minutes in the future.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResultData": {
       "base": "<p>Information about the result.</p>",
@@ -3159,13 +3065,11 @@
     },
     "SearchContentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchContentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchExpression": {
       "base": "<p>The search expression.</p>",
@@ -3176,33 +3080,27 @@
     },
     "SearchMessageTemplatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchMessageTemplatesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchQuickResponsesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchQuickResponsesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchSessionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchSessionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SeedUrl": {
       "base": "<p>A URL for crawling.</p>",
@@ -3260,13 +3158,11 @@
     },
     "SendMessageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendMessageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SensitiveString": {
       "base": null,
@@ -3292,8 +3188,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>You've exceeded your service quota. To perform the requested action, remove some of the relevant resources, or use service quotas to request a service quota increase.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SessionData": {
       "base": "<p>Information about the session.</p>",
@@ -3359,23 +3254,19 @@
     },
     "StartContentUploadRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartContentUploadResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartImportJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartImportJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Status": {
       "base": null,
@@ -3394,6 +3285,7 @@
         "AccessDeniedException$message": null,
         "ConflictException$message": null,
         "ContentReference$sourceURL": "<p>The web URL of the source content.</p>",
+        "DependencyFailedException$message": null,
         "PreconditionFailedException$message": null,
         "RequestTimeoutException$message": null,
         "ResourceNotFoundException$message": null,
@@ -3492,13 +3384,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -3589,8 +3479,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The throttling limit has been exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TimeToLive": {
       "base": "<p>Expiration time in minutes</p>",
@@ -3615,133 +3504,107 @@
     },
     "TooManyTagsException": {
       "base": "<p>Amazon Q in Connect throws this exception if you have too many tags in your tag set.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnauthorizedException": {
       "base": "<p>You do not have permission to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAIAgentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAIAgentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAIGuardrailRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAIGuardrailResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAIPromptRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAIPromptResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssistantAIAgentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssistantAIAgentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateContentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateContentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateKnowledgeBaseTemplateUriRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateKnowledgeBaseTemplateUriResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMessageTemplateMetadataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMessageTemplateMetadataResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMessageTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMessageTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQuickResponseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQuickResponseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSessionDataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSessionDataResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UploadId": {
       "base": null,
@@ -4031,6 +3894,11 @@
         "AnswerRecommendationAIAgentConfiguration$queryReformulationAIPromptId": "<p>The AI Prompt identifier for the Query Reformulation prompt used by the <code>ANSWER_RECOMMENDATION</code> AI Agent.</p>",
         "AnswerRecommendationAIAgentConfiguration$answerGenerationAIPromptId": "<p>The AI Prompt identifier for the Answer Generation prompt used by the <code>ANSWER_RECOMMENDATION</code> AI Agent.</p>",
         "AnswerRecommendationAIAgentConfiguration$answerGenerationAIGuardrailId": "<p>The AI Guardrail identifier for the Answer Generation Guardrail used by the <code>ANSWER_RECOMMENDATION</code> AI Agent.</p>",
+        "EmailGenerativeAnswerAIAgentConfiguration$emailGenerativeAnswerAIPromptId": "<p>The ID of the System AI prompt used for generating comprehensive knowledge-based answers from email queries.</p>",
+        "EmailGenerativeAnswerAIAgentConfiguration$emailQueryReformulationAIPromptId": "<p>The ID of the System AI prompt used for reformulating email queries to optimize knowledge base search results.</p>",
+        "EmailOverviewAIAgentConfiguration$emailOverviewAIPromptId": "<p>The ID of the System AI prompt used for generating structured email conversation summaries.</p>",
+        "EmailResponseAIAgentConfiguration$emailResponseAIPromptId": "<p>The ID of the System AI prompt used for generating professional email responses based on knowledge base content.</p>",
+        "EmailResponseAIAgentConfiguration$emailQueryReformulationAIPromptId": "<p>The ID of the System AI prompt used for reformulating email queries to optimize knowledge base search for response generation.</p>",
         "ManualSearchAIAgentConfiguration$answerGenerationAIPromptId": "<p>The AI Prompt identifier for the Answer Generation prompt used by the MANUAL_SEARCH AI Agent.</p>",
         "ManualSearchAIAgentConfiguration$answerGenerationAIGuardrailId": "<p>The AI Guardrail identifier for the Answer Generation guardrail used by the MANUAL_SEARCH AI Agent.</p>",
         "SelfServiceAIAgentConfiguration$selfServicePreProcessingAIPromptId": "<p>The AI Prompt identifier for the Self Service Pre-Processing prompt used by the SELF_SERVICE AI Agent</p>",
@@ -4040,8 +3908,7 @@
     },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by a service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "VectorIngestionConfiguration": {
       "base": "<p>Contains details about how to ingest the documents in a data source.</p>",

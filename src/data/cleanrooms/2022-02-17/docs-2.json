@@ -269,6 +269,13 @@
         "ConsolidatedPolicyList$allowedResultReceivers": "<p> The allowed result receivers.</p>"
       }
     },
+    "AllowedResultRegions": {
+      "base": null,
+      "refs": {
+        "Collaboration$allowedResultRegions": "<p>The Amazon Web Services Regions where collaboration query results can be stored. Returns the list of Region identifiers that were specified when the collaboration was created. This list is used to enforce regional storage policies and compliance requirements.</p>",
+        "CreateCollaborationInput$allowedResultRegions": "<p>The Amazon Web Services Regions where collaboration query results can be stored. When specified, results can only be written to these Regions. This parameter enables you to meet your compliance and data governance requirements, and implement regional data governance policies.</p>"
+      }
+    },
     "AnalysisFormat": {
       "base": null,
       "refs": {
@@ -1090,6 +1097,13 @@
       "refs": {
         "Column$type": "<p>The type of the column.</p>",
         "SnowflakeTableSchemaV1$columnType": "<p> The column's data type. Supported data types: <code>ARRAY</code>, <code>BIGINT</code>, <code>BOOLEAN</code>, <code>CHAR</code>, <code>DATE</code>, <code>DECIMAL</code>, <code>DOUBLE</code>, <code>DOUBLE PRECISION</code>, <code>FLOAT</code>, <code>FLOAT4</code>, <code>INT</code>, <code>INTEGER</code>, <code>MAP</code>, <code>NUMERIC</code>, <code>NUMBER</code>, <code>REAL</code>, <code>SMALLINT</code>, <code>STRING</code>, <code>TIMESTAMP</code>, <code>TIMESTAMP_LTZ</code>, <code>TIMESTAMP_NTZ</code>, <code>DATETIME</code>, <code>TINYINT</code>, <code>VARCHAR</code>, <code>TEXT</code>, <code>CHARACTER</code>.</p>"
+      }
+    },
+    "CommercialRegion": {
+      "base": null,
+      "refs": {
+        "AthenaTableReference$region": "<p>The Amazon Web Services Region where the Athena table is located. This parameter is required to uniquely identify and access tables across different Regions.</p>",
+        "GlueTableReference$region": "<p>The Amazon Web Services Region where the Glue table is located. This parameter is required to uniquely identify and access tables across different Regions.</p>"
       }
     },
     "ComputeConfiguration": {
@@ -3700,6 +3714,12 @@
         "ValidationException$message": null,
         "ValidationExceptionField$name": "<p>The name of the input parameter.</p>",
         "ValidationExceptionField$message": "<p>A message for the input validation error.</p>"
+      }
+    },
+    "SupportedS3Region": {
+      "base": null,
+      "refs": {
+        "AllowedResultRegions$member": null
       }
     },
     "TableAlias": {

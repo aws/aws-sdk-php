@@ -19,6 +19,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise generatePinDataAsync(array $args = [])
  * @method \Aws\Result reEncryptData(array $args = [])
  * @method \GuzzleHttp\Promise\Promise reEncryptDataAsync(array $args = [])
+ * @method \Aws\Result translateKeyMaterial(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise translateKeyMaterialAsync(array $args = [])
  * @method \Aws\Result translatePinData(array $args = [])
  * @method \GuzzleHttp\Promise\Promise translatePinDataAsync(array $args = [])
  * @method \Aws\Result verifyAuthRequestCryptogram(array $args = [])

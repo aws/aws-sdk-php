@@ -132,6 +132,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "TranslateKeyMaterial":{
+      "name":"TranslateKeyMaterial",
+      "http":{
+        "method":"POST",
+        "requestUri":"/keymaterial/translate",
+        "responseCode":200
+      },
+      "input":{"shape":"TranslateKeyMaterialInput"},
+      "output":{"shape":"TranslateKeyMaterialOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "TranslatePinData":{
       "name":"TranslatePinData",
       "http":{
@@ -366,8 +383,7 @@
       "type":"string",
       "max":32768,
       "min":1,
-      "pattern":"[^\\[;\\]<>]+",
-      "sensitive":true
+      "pattern":"[^\\[;\\]<>]+"
     },
     "CipherTextType":{
       "type":"string",
@@ -463,6 +479,13 @@
         "Visa":{"shape":"VisaAttributes"},
         "Emv2000":{"shape":"Emv2000Attributes"},
         "Mastercard":{"shape":"MasterCardAttributes"}
+      },
+      "union":true
+    },
+    "DiffieHellmanDerivationData":{
+      "type":"structure",
+      "members":{
+        "SharedInformation":{"shape":"SharedInformation"}
       },
       "union":true
     },
@@ -816,7 +839,6 @@
         "GenerationKeyIdentifier",
         "EncryptionKeyIdentifier",
         "GenerationAttributes",
-        "PrimaryAccountNumber",
         "PinBlockFormat"
       ],
       "members":{
@@ -962,6 +984,36 @@
         "PinValidationData":{"shape":"PinValidationDataType"}
       }
     },
+    "IncomingDiffieHellmanTr31KeyBlock":{
+      "type":"structure",
+      "required":[
+        "PrivateKeyIdentifier",
+        "CertificateAuthorityPublicKeyIdentifier",
+        "PublicKeyCertificate",
+        "DeriveKeyAlgorithm",
+        "KeyDerivationFunction",
+        "KeyDerivationHashAlgorithm",
+        "DerivationData",
+        "WrappedKeyBlock"
+      ],
+      "members":{
+        "PrivateKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
+        "CertificateAuthorityPublicKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
+        "PublicKeyCertificate":{"shape":"CertificateType"},
+        "DeriveKeyAlgorithm":{"shape":"SymmetricKeyAlgorithm"},
+        "KeyDerivationFunction":{"shape":"KeyDerivationFunction"},
+        "KeyDerivationHashAlgorithm":{"shape":"KeyDerivationHashAlgorithm"},
+        "DerivationData":{"shape":"DiffieHellmanDerivationData"},
+        "WrappedKeyBlock":{"shape":"Tr31WrappedKeyBlock"}
+      }
+    },
+    "IncomingKeyMaterial":{
+      "type":"structure",
+      "members":{
+        "DiffieHellmanTr31KeyBlock":{"shape":"IncomingDiffieHellmanTr31KeyBlock"}
+      },
+      "union":true
+    },
     "InitializationVectorType":{
       "type":"string",
       "max":32,
@@ -1043,6 +1095,12 @@
         "SHA_384",
         "SHA_512"
       ]
+    },
+    "KeyMaterial":{
+      "type":"string",
+      "max":16384,
+      "min":48,
+      "sensitive":true
     },
     "MacAlgorithm":{
       "type":"string",
@@ -1146,6 +1204,20 @@
       "min":2,
       "pattern":"[0-9]+"
     },
+    "OutgoingKeyMaterial":{
+      "type":"structure",
+      "members":{
+        "Tr31KeyBlock":{"shape":"OutgoingTr31KeyBlock"}
+      },
+      "union":true
+    },
+    "OutgoingTr31KeyBlock":{
+      "type":"structure",
+      "required":["WrappingKeyIdentifier"],
+      "members":{
+        "WrappingKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"}
+      }
+    },
     "PaddingType":{
       "type":"string",
       "enum":[
@@ -1167,6 +1239,7 @@
       "type":"string",
       "enum":[
         "ISO_FORMAT_0",
+        "ISO_FORMAT_1",
         "ISO_FORMAT_3",
         "ISO_FORMAT_4"
       ]
@@ -1475,7 +1548,7 @@
       "type":"string",
       "max":9984,
       "min":56,
-      "pattern":"[0-9A-Z]+",
+      "pattern":"[0-9a-zA-Z]+",
       "sensitive":true
     },
     "TrackDataType":{
@@ -1491,6 +1564,25 @@
       "min":2,
       "pattern":"[0-9a-fA-F]+",
       "sensitive":true
+    },
+    "TranslateKeyMaterialInput":{
+      "type":"structure",
+      "required":[
+        "IncomingKeyMaterial",
+        "OutgoingKeyMaterial"
+      ],
+      "members":{
+        "IncomingKeyMaterial":{"shape":"IncomingKeyMaterial"},
+        "OutgoingKeyMaterial":{"shape":"OutgoingKeyMaterial"},
+        "KeyCheckValueAlgorithm":{"shape":"KeyCheckValueAlgorithm"}
+      }
+    },
+    "TranslateKeyMaterialOutput":{
+      "type":"structure",
+      "required":["WrappedKey"],
+      "members":{
+        "WrappedKey":{"shape":"WrappedWorkingKey"}
+      }
     },
     "TranslatePinDataInput":{
       "type":"structure",
@@ -1545,8 +1637,7 @@
     },
     "TranslationPinDataIsoFormat1":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ValidationDataType":{
       "type":"string",
@@ -1701,7 +1792,6 @@
         "EncryptionKeyIdentifier",
         "VerificationAttributes",
         "EncryptedPinBlock",
-        "PrimaryAccountNumber",
         "PinBlockFormat"
       ],
       "members":{
@@ -1806,6 +1896,27 @@
         "DiffieHellmanSymmetricKey":{"shape":"EcdhDerivationAttributes"}
       },
       "union":true
+    },
+    "WrappedKeyMaterialFormat":{
+      "type":"string",
+      "enum":[
+        "KEY_CRYPTOGRAM",
+        "TR31_KEY_BLOCK",
+        "TR34_KEY_BLOCK"
+      ]
+    },
+    "WrappedWorkingKey":{
+      "type":"structure",
+      "required":[
+        "WrappedKeyMaterial",
+        "KeyCheckValue",
+        "WrappedKeyMaterialFormat"
+      ],
+      "members":{
+        "WrappedKeyMaterial":{"shape":"KeyMaterial"},
+        "KeyCheckValue":{"shape":"KeyCheckValue"},
+        "WrappedKeyMaterialFormat":{"shape":"WrappedKeyMaterialFormat"}
+      }
     }
   }
 }

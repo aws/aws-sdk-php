@@ -257,7 +257,7 @@
     "ArchiveContainerSettings": {
       "base": "Archive Container Settings",
       "refs": {
-        "ArchiveOutputSettings$ContainerSettings": "Settings specific to the container type of the file."
+        "ArchiveOutputSettings$ContainerSettings": "Container for this output. Can be auto-detected from extension field."
       }
     },
     "ArchiveGroupSettings": {
@@ -1291,7 +1291,7 @@
     "H264ColorSpaceSettings": {
       "base": "H264 Color Space Settings",
       "refs": {
-        "H264Settings$ColorSpaceSettings": "Color Space settings"
+        "H264Settings$ColorSpaceSettings": "Specify the type of color space to apply or choose to pass through. The default is to pass through the color space that is in the source."
       }
     },
     "H264EntropyEncoding": {
@@ -1441,7 +1441,7 @@
     "H265ColorSpaceSettings": {
       "base": "H265 Color Space Settings",
       "refs": {
-        "H265Settings$ColorSpaceSettings": "Color Space settings"
+        "H265Settings$ColorSpaceSettings": "Specify the type of color space to apply or choose to pass through. The default is to pass through the color space that is in the source."
       }
     },
     "H265FilterSettings": {
@@ -3714,13 +3714,13 @@
     "VideoSelectorColorSpace": {
       "base": "Video Selector Color Space",
       "refs": {
-        "VideoSelector$ColorSpace": "Specifies the color space of an input. This setting works in tandem with colorSpaceUsage and a video description's colorSpaceSettingsChoice to determine if any conversion will be performed."
+        "VideoSelector$ColorSpace": "Controls how MediaLive will use the color space metadata from the source. Typically, choose FOLLOW, which means to use the color space metadata without changing it. Or choose another value (a standard). In this case, the handling is controlled by the colorspaceUsage property."
       }
     },
     "VideoSelectorColorSpaceSettings": {
       "base": "Video Selector Color Space Settings",
       "refs": {
-        "VideoSelector$ColorSpaceSettings": "Color space settings"
+        "VideoSelector$ColorSpaceSettings": "Choose HDR10 only if the following situation applies. Firstly, you specified HDR10 in ColorSpace. Secondly, the attached input is for AWS Elemental Link. Thirdly, you plan to convert the content to another color space. You need to specify the color space metadata that is missing from the source sent from AWS Elemental Link."
       }
     },
     "VideoSelectorColorSpaceUsage": {
@@ -4037,7 +4037,8 @@
         "MsSmoothGroupSettings$SendDelayMs": "Number of milliseconds to delay the output from the second pipeline.",
         "UdpOutputSettings$BufferMsec": "UDP output buffering in milliseconds. Larger values increase latency through the transcoder but simultaneously assist the transcoder in maintaining a constant, low-jitter UDP/RTP output while accommodating clock recovery, input switching, input disruptions, picture reordering, etc.",
         "SrtOutputSettings$BufferMsec": "SRT output buffering in milliseconds. A higher value increases latency through the encoder. But the benefits are that it helps to maintain a constant, low-jitter SRT output, and it accommodates clock recovery, input switching, input disruptions, picture reordering, and so on. Range: 0-10000 milliseconds.",
-        "CmafIngestGroupSettings$TimedMetadataId3Period": "If you set up to insert a timecode in the output, specify the frequency for the frame, in seconds."
+        "CmafIngestGroupSettings$TimedMetadataId3Period": "If you set up to insert a timecode in the output, specify the frequency for the frame, in seconds.",
+        "MediaPackageV2GroupSettings$TimedMetadataId3Period": "If you set up to insert a timecode in the output, specify the frequency for the frame, in seconds."
       }
     },
     "__integerMin0Max1000000": {
@@ -4210,7 +4211,8 @@
         "UpdateCloudWatchAlarmTemplateResponseContent$EvaluationPeriods": "The number of periods over which data is compared to the specified threshold.",
         "Av1Settings$FramerateNumerator": "The numerator for the framerate. Framerate is a fraction, for example, 24000 / 1001.",
         "Av1Settings$ParDenominator": "The denominator for the output pixel aspect ratio (PAR).",
-        "Av1Settings$ParNumerator": "The numerator for the output pixel aspect ratio (PAR)."
+        "Av1Settings$ParNumerator": "The numerator for the output pixel aspect ratio (PAR).",
+        "MediaPackageV2GroupSettings$SegmentLength": "The nominal duration of segments. The units are specified in SegmentLengthUnits. The segments will end on the next keyframe after the specified duration, so the actual segment length might be longer, and it might be a fraction of the units."
       }
     },
     "__integerMin100": {
@@ -5486,13 +5488,15 @@
     "CmafIngestSegmentLengthUnits": {
       "base": "Cmaf Ingest Segment Length Units",
       "refs": {
-        "CmafIngestGroupSettings$SegmentLengthUnits": "Time unit for segment length parameter."
+        "CmafIngestGroupSettings$SegmentLengthUnits": "Time unit for segment length parameter.",
+        "MediaPackageV2GroupSettings$SegmentLengthUnits": "Time unit for segment length parameter."
       }
     },
     "CmafNielsenId3Behavior": {
       "base": "Cmaf Nielsen Id3 Behavior",
       "refs": {
-        "CmafIngestGroupSettings$NielsenId3Behavior": "If set to passthrough, Nielsen inaudible tones for media tracking will be detected in the input audio and an equivalent ID3 tag will be inserted in the output."
+        "CmafIngestGroupSettings$NielsenId3Behavior": "If set to passthrough, Nielsen inaudible tones for media tracking will be detected in the input audio and an equivalent ID3 tag will be inserted in the output.",
+        "MediaPackageV2GroupSettings$NielsenId3Behavior": "If set to passthrough, Nielsen inaudible tones for media tracking will be detected in the input audio and an equivalent ID3 tag will be inserted in the output."
       }
     },
     "DashRoleAudio": {
@@ -5529,7 +5533,8 @@
     "Scte35Type": {
       "base": "Scte35 Type",
       "refs": {
-        "CmafIngestGroupSettings$Scte35Type": "Type of scte35 track to add. none or scte35WithoutSegmentation"
+        "CmafIngestGroupSettings$Scte35Type": "Type of scte35 track to add. none or scte35WithoutSegmentation",
+        "MediaPackageV2GroupSettings$Scte35Type": "Type of scte35 track to add. none or scte35WithoutSegmentation"
       }
     },
     "BadRequestExceptionResponseContent": {
@@ -6303,7 +6308,7 @@
     "Av1ColorSpaceSettings": {
       "base": "Av1 Color Space Settings",
       "refs": {
-        "Av1Settings$ColorSpaceSettings": "Color Space settings"
+        "Av1Settings$ColorSpaceSettings": "Specify the type of color space to apply or choose to pass through. The default is to pass through the color space that is in the source."
       }
     },
     "Av1GopSizeUnits": {
@@ -6908,7 +6913,8 @@
     "CmafKLVBehavior": {
       "base": "Cmaf KLVBehavior",
       "refs": {
-        "CmafIngestGroupSettings$KlvBehavior": "If set to passthrough, passes any KLV data from the input source to this output."
+        "CmafIngestGroupSettings$KlvBehavior": "If set to passthrough, passes any KLV data from the input source to this output.",
+        "MediaPackageV2GroupSettings$KlvBehavior": "If set to passthrough, passes any KLV data from the input source to this output."
       }
     },
     "__stringMax100": {
@@ -6951,7 +6957,8 @@
     "CmafId3Behavior": {
       "base": "Cmaf Id3 Behavior",
       "refs": {
-        "CmafIngestGroupSettings$Id3Behavior": "Set to ENABLED to enable ID3 metadata insertion. To include metadata, you configure other parameters in the output group, or you add an ID3 action to the channel schedule."
+        "CmafIngestGroupSettings$Id3Behavior": "Set to ENABLED to enable ID3 metadata insertion. To include metadata, you configure other parameters in the output group, or you add an ID3 action to the channel schedule.",
+        "MediaPackageV2GroupSettings$Id3Behavior": "Set to ENABLED to enable ID3 metadata insertion. To include metadata, you configure other parameters in the output group, or you add an ID3 action to the channel schedule."
       }
     },
     "Id3SegmentTaggingScheduleActionSettings": {
@@ -7151,13 +7158,15 @@
     "CmafTimedMetadataId3Frame": {
       "base": "Cmaf Timed Metadata Id3 Frame",
       "refs": {
-        "CmafIngestGroupSettings$TimedMetadataId3Frame": "Set to none if you don't want to insert a timecode in the output. Otherwise choose the frame type for the timecode."
+        "CmafIngestGroupSettings$TimedMetadataId3Frame": "Set to none if you don't want to insert a timecode in the output. Otherwise choose the frame type for the timecode.",
+        "MediaPackageV2GroupSettings$TimedMetadataId3Frame": "Set to none if you don't want to insert a timecode in the output. Otherwise choose the frame type for the timecode."
       }
     },
     "CmafTimedMetadataPassthrough": {
       "base": "Cmaf Timed Metadata Passthrough",
       "refs": {
-        "CmafIngestGroupSettings$TimedMetadataPassthrough": "Set to enabled to pass through ID3 metadata from the input sources."
+        "CmafIngestGroupSettings$TimedMetadataPassthrough": "Set to enabled to pass through ID3 metadata from the input sources.",
+        "MediaPackageV2GroupSettings$TimedMetadataPassthrough": "Set to enabled to pass through ID3 metadata from the input sources."
       }
     },
     "__listOfCmafIngestCaptionLanguageMapping": {

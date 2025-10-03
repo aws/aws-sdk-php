@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\PaymentCryptographyData` - Added a new API - translateKeyMaterial; allows keys wrapped by ECDH derived keys to be rewrapped under a static AES keyblock without first importing the key into the service.
+* `Aws\CleanRooms` - Added support for reading data sources across regions, and results delivery to allowedlisted regions.
+* `Aws\MediaLive` - AWS Elemental MediaLive enables Mediapackage V2 users to configure ID3, KLV, Nielsen ID3, and Segment Length related parameters through the Mediapackage output group.
+* `Aws\QConnect` - Updated Amazon Q in Connect APIs to support Email Contact Recommendations.
+
 ## 3.356.31 - 2025-10-02
 
 * `Aws\Synthetics` - Adds support to configure canaries with pre-configured blueprint code on supported runtime versions. This behavior can be controlled via the new BlueprintTypes property exposed in the CreateCanary and UpdateCanary APIs.

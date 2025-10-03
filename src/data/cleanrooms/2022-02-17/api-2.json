@@ -1759,6 +1759,10 @@
       "type":"list",
       "member":{"shape":"AccountId"}
     },
+    "AllowedResultRegions":{
+      "type":"list",
+      "member":{"shape":"SupportedS3Region"}
+    },
     "AnalysisFormat":{
       "type":"string",
       "enum":[
@@ -2165,6 +2169,7 @@
         "tableName"
       ],
       "members":{
+        "region":{"shape":"CommercialRegion"},
         "workGroup":{"shape":"AthenaWorkGroup"},
         "outputLocation":{"shape":"AthenaOutputLocation"},
         "databaseName":{"shape":"AthenaDatabaseName"},
@@ -2478,7 +2483,8 @@
         "queryLogStatus":{"shape":"CollaborationQueryLogStatus"},
         "jobLogStatus":{"shape":"CollaborationJobLogStatus"},
         "analyticsEngine":{"shape":"AnalyticsEngine"},
-        "autoApprovedChangeTypes":{"shape":"AutoApprovedChangeTypeList"}
+        "autoApprovedChangeTypes":{"shape":"AutoApprovedChangeTypeList"},
+        "allowedResultRegions":{"shape":"AllowedResultRegions"}
       }
     },
     "CollaborationAnalysisTemplate":{
@@ -2894,6 +2900,44 @@
       "max":255,
       "min":0,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDBFF-\\uDC00\\uDFFF\\t]*"
+    },
+    "CommercialRegion":{
+      "type":"string",
+      "enum":[
+        "us-west-1",
+        "us-west-2",
+        "us-east-1",
+        "us-east-2",
+        "af-south-1",
+        "ap-east-1",
+        "ap-south-2",
+        "ap-southeast-1",
+        "ap-southeast-2",
+        "ap-southeast-3",
+        "ap-southeast-5",
+        "ap-southeast-4",
+        "ap-southeast-7",
+        "ap-south-1",
+        "ap-northeast-3",
+        "ap-northeast-1",
+        "ap-northeast-2",
+        "ca-central-1",
+        "ca-west-1",
+        "eu-south-1",
+        "eu-west-3",
+        "eu-south-2",
+        "eu-central-2",
+        "eu-central-1",
+        "eu-north-1",
+        "eu-west-1",
+        "eu-west-2",
+        "me-south-1",
+        "me-central-1",
+        "il-central-1",
+        "sa-east-1",
+        "mx-central-1",
+        "ap-east-2"
+      ]
     },
     "ComputeConfiguration":{
       "type":"structure",
@@ -3430,7 +3474,8 @@
         "tags":{"shape":"TagMap"},
         "creatorPaymentConfiguration":{"shape":"PaymentConfiguration"},
         "analyticsEngine":{"shape":"AnalyticsEngine"},
-        "autoApprovedChangeRequestTypes":{"shape":"AutoApprovedChangeTypeList"}
+        "autoApprovedChangeRequestTypes":{"shape":"AutoApprovedChangeTypeList"},
+        "allowedResultRegions":{"shape":"AllowedResultRegions"}
       }
     },
     "CreateCollaborationOutput":{
@@ -4715,6 +4760,7 @@
         "databaseName"
       ],
       "members":{
+        "region":{"shape":"CommercialRegion"},
         "tableName":{"shape":"GlueTableName"},
         "databaseName":{"shape":"GlueDatabaseName"}
       }
@@ -7197,6 +7243,44 @@
       }
     },
     "String":{"type":"string"},
+    "SupportedS3Region":{
+      "type":"string",
+      "enum":[
+        "us-west-1",
+        "us-west-2",
+        "us-east-1",
+        "us-east-2",
+        "af-south-1",
+        "ap-east-1",
+        "ap-east-2",
+        "ap-south-2",
+        "ap-southeast-1",
+        "ap-southeast-2",
+        "ap-southeast-3",
+        "ap-southeast-5",
+        "ap-southeast-4",
+        "ap-southeast-7",
+        "ap-south-1",
+        "ap-northeast-3",
+        "ap-northeast-1",
+        "ap-northeast-2",
+        "ca-central-1",
+        "ca-west-1",
+        "eu-south-1",
+        "eu-west-3",
+        "eu-south-2",
+        "eu-central-2",
+        "eu-central-1",
+        "eu-north-1",
+        "eu-west-1",
+        "eu-west-2",
+        "me-south-1",
+        "me-central-1",
+        "il-central-1",
+        "sa-east-1",
+        "mx-central-1"
+      ]
+    },
     "TableAlias":{
       "type":"string",
       "max":128,
