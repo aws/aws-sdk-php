@@ -153,8 +153,7 @@ class MultipartUploader extends AbstractMultipartUploader
             unset($uploadPartCommandArgs['Checksum'. strtoupper($this->requestChecksumAlgorithm)]);
         } elseif ($this->requestChecksumAlgorithm !== null) {
             // Normalize algorithm name
-            $this->requestChecksumAlgorithm = strtolower($this->requestChecksumAlgorithm);
-            unset($uploadPartCommandArgs['Checksum'. strtoupper($this->requestChecksumAlgorithm)]);
+            $uploadPartCommandArgs['ChecksumAlgorithm'] = $this->requestChecksumAlgorithm;
         }
 
         while (!$this->body->eof()) {
