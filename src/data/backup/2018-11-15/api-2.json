@@ -2996,6 +2996,11 @@
           "shape":"string",
           "location":"querystring",
           "locationName":"versionId"
+        },
+        "MaxScheduledRunsPreview":{
+          "shape":"MaxScheduledRunsPreview",
+          "location":"querystring",
+          "locationName":"MaxScheduledRunsPreview"
         }
       }
     },
@@ -3010,7 +3015,8 @@
         "CreationDate":{"shape":"timestamp"},
         "DeletionDate":{"shape":"timestamp"},
         "LastExecutionDate":{"shape":"timestamp"},
-        "AdvancedBackupSettings":{"shape":"AdvancedBackupSettings"}
+        "AdvancedBackupSettings":{"shape":"AdvancedBackupSettings"},
+        "ScheduledRunsPreview":{"shape":"ScheduledRunsPreview"}
       }
     },
     "GetBackupSelectionInput":{
@@ -4438,6 +4444,11 @@
       "max":1000,
       "min":1
     },
+    "MaxScheduledRunsPreview":{
+      "type":"integer",
+      "max":10,
+      "min":0
+    },
     "MessageCategory":{"type":"string"},
     "Metadata":{
       "type":"map",
@@ -5071,6 +5082,26 @@
           "locationName":"requesterComment"
         }
       }
+    },
+    "RuleExecutionType":{
+      "type":"string",
+      "enum":[
+        "CONTINUOUS",
+        "SNAPSHOTS",
+        "CONTINUOUS_AND_SNAPSHOTS"
+      ]
+    },
+    "ScheduledPlanExecutionMember":{
+      "type":"structure",
+      "members":{
+        "ExecutionTime":{"shape":"timestamp"},
+        "RuleId":{"shape":"string"},
+        "RuleExecutionType":{"shape":"RuleExecutionType"}
+      }
+    },
+    "ScheduledRunsPreview":{
+      "type":"list",
+      "member":{"shape":"ScheduledPlanExecutionMember"}
     },
     "SensitiveStringMap":{
       "type":"map",

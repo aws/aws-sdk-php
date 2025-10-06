@@ -2,18 +2,22 @@
   "version": "2.0",
   "service": "<p><note> <p>Amazon Bedrock AgentCore is in preview release and is subject to change.</p> </note> <p>Welcome to the Amazon Bedrock AgentCore Data Plane API reference. Data Plane actions process and handle data or workloads within Amazon Web Services services. </p></p>",
   "operations": {
+    "BatchCreateMemoryRecords": "<p>Creates multiple memory records in a single batch operation for the specified memory with custom content.</p>",
+    "BatchDeleteMemoryRecords": "<p>Deletes multiple memory records in a single batch operation from the specified memory.</p>",
+    "BatchUpdateMemoryRecords": "<p>Updates multiple memory records with custom content in a single batch operation within the specified memory.</p>",
     "CreateEvent": "<p>Creates an event in an AgentCore Memory resource. Events represent interactions or activities that occur within a session and are associated with specific actors.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:CreateEvent</code> permission.</p> <p>This operation is subject to request rate limiting.</p>",
     "DeleteEvent": "<p>Deletes an event from an AgentCore Memory resource. When you delete an event, it is permanently removed.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:DeleteEvent</code> permission.</p>",
     "DeleteMemoryRecord": "<p>Deletes a memory record from an AgentCore Memory resource. When you delete a memory record, it is permanently removed.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:DeleteMemoryRecord</code> permission.</p>",
+    "GetAgentCard": "<p>Retrieves the A2A agent card associated with an AgentCore Runtime agent.</p>",
     "GetBrowserSession": "<p>Retrieves detailed information about a specific browser session in Amazon Bedrock. This operation returns the session's configuration, current status, associated streams, and metadata.</p> <p>To get a browser session, you must specify both the browser identifier and the session ID. The response includes information about the session's viewport configuration, timeout settings, and stream endpoints.</p> <p>The following operations are related to <code>GetBrowserSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_ListBrowserSessions.html\">ListBrowserSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StopBrowserSession.html\">StopBrowserSession</a> </p> </li> </ul>",
     "GetCodeInterpreterSession": "<p>Retrieves detailed information about a specific code interpreter session in Amazon Bedrock. This operation returns the session's configuration, current status, and metadata.</p> <p>To get a code interpreter session, you must specify both the code interpreter identifier and the session ID. The response includes information about the session's timeout settings and current status.</p> <p>The following operations are related to <code>GetCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_ListCodeInterpreterSessions.html\">ListCodeInterpreterSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StopCodeInterpreterSession.html\">StopCodeInterpreterSession</a> </p> </li> </ul>",
     "GetEvent": "<p>Retrieves information about a specific event in an AgentCore Memory resource.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:GetEvent</code> permission.</p>",
     "GetMemoryRecord": "<p>Retrieves a specific memory record from an AgentCore Memory resource.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:GetMemoryRecord</code> permission.</p>",
-    "GetResourceApiKey": "<p>Retrieves an API Key associated with an API Key Credential Provider</p>",
-    "GetResourceOauth2Token": "<p>Returns the OAuth 2.0 token of the provided resource</p>",
-    "GetWorkloadAccessToken": "<p>Obtains an Workload access token for agentic workloads not acting on behalf of user.</p>",
-    "GetWorkloadAccessTokenForJWT": "<p>Obtains an Workload access token for agentic workloads acting on behalf of user with JWT token</p>",
-    "GetWorkloadAccessTokenForUserId": "<p>Obtains an Workload access token for agentic workloads acting on behalf of user with User Id.</p>",
+    "GetResourceApiKey": "<p>Retrieves the API key associated with an API key credential provider.</p>",
+    "GetResourceOauth2Token": "<p>Returns the OAuth 2.0 token of the provided resource.</p>",
+    "GetWorkloadAccessToken": "<p>Obtains a workload access token for agentic workloads not acting on behalf of a user.</p>",
+    "GetWorkloadAccessTokenForJWT": "<p>Obtains a workload access token for agentic workloads acting on behalf of a user, using a JWT token.</p>",
+    "GetWorkloadAccessTokenForUserId": "<p>Obtains a workload access token for agentic workloads acting on behalf of a user, using the user's ID.</p>",
     "InvokeAgentRuntime": "<p>Sends a request to an agent or tool hosted in an Amazon Bedrock AgentCore Runtime and receives responses in real-time. </p> <p>To invoke an agent you must specify the AgentCore Runtime ARN and provide a payload containing your request. You can optionally specify a qualifier to target a specific version or endpoint of the agent.</p> <p>This operation supports streaming responses, allowing you to receive partial responses as they become available. We recommend using pagination to ensure that the operation returns quickly and successfully when processing large responses.</p> <p>For example code, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-invoke-agent.html\">Invoke an AgentCore Runtime agent</a>. </p> <p>If you're integrating your agent with OAuth, you can't use the Amazon Web Services SDK to call <code>InvokeAgentRuntime</code>. Instead, make a HTTPS request to <code>InvokeAgentRuntime</code>. For an example, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-oauth.html\">Authenticate and authorize with Inbound Auth and Outbound Auth</a>.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:InvokeAgentRuntime</code> permission.</p>",
     "InvokeCodeInterpreter": "<p>Executes code within an active code interpreter session in Amazon Bedrock. This operation processes the provided code, runs it in a secure environment, and returns the execution results including output, errors, and generated visualizations.</p> <p>To execute code, you must specify the code interpreter identifier, session ID, and the code to run in the arguments parameter. The operation returns a stream containing the execution results, which can include text output, error messages, and data visualizations.</p> <p>This operation is subject to request rate limiting based on your account's service quotas.</p> <p>The following operations are related to <code>InvokeCodeInterpreter</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
     "ListActors": "<p>Lists all actors in an AgentCore Memory resource. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListActors</code> permission.</p>",
@@ -27,6 +31,7 @@
     "StartCodeInterpreterSession": "<p>Creates and initializes a code interpreter session in Amazon Bedrock. The session enables agents to execute code as part of their response generation, supporting programming languages such as Python for data analysis, visualization, and computation tasks.</p> <p>To create a session, you must specify a code interpreter identifier and a name. The session remains active until it times out or you explicitly stop it using the <code>StopCodeInterpreterSession</code> operation.</p> <p>The following operations are related to <code>StartCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_InvokeCodeInterpreter.html\">InvokeCodeInterpreter</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StopCodeInterpreterSession.html\">StopCodeInterpreterSession</a> </p> </li> </ul>",
     "StopBrowserSession": "<p>Terminates an active browser session in Amazon Bedrock. This operation stops the session, releases associated resources, and makes the session unavailable for further use.</p> <p>To stop a browser session, you must specify both the browser identifier and the session ID. Once stopped, a session cannot be restarted; you must create a new session using <code>StartBrowserSession</code>.</p> <p>The following operations are related to <code>StopBrowserSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> </ul>",
     "StopCodeInterpreterSession": "<p>Terminates an active code interpreter session in Amazon Bedrock. This operation stops the session, releases associated resources, and makes the session unavailable for further use.</p> <p>To stop a code interpreter session, you must specify both the code interpreter identifier and the session ID. Once stopped, a session cannot be restarted; you must create a new session using <code>StartCodeInterpreterSession</code>.</p> <p>The following operations are related to <code>StopCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
+    "StopRuntimeSession": "<p>Stops a session that is running in an running AgentCore Runtime agent.</p>",
     "UpdateBrowserStream": "<p>Updates a browser stream. To use this operation, you must have permissions to perform the bedrock:UpdateBrowserStream action.</p>"
   },
   "shapes": {
@@ -39,7 +44,7 @@
     "AccessTokenType": {
       "base": null,
       "refs": {
-        "GetResourceOauth2TokenResponse$accessToken": "<p>OAuth2 token ready for use</p>"
+        "GetResourceOauth2TokenResponse$accessToken": "<p>The OAuth 2.0 access token to use.</p>"
       }
     },
     "ActorId": {
@@ -67,10 +72,16 @@
         "ListActorsOutput$actorSummaries": "<p>The list of actor summaries.</p>"
       }
     },
+    "AgentCard": {
+      "base": null,
+      "refs": {
+        "GetAgentCardResponse$agentCard": "<p>An agent card document that contains metadata and capabilities for an AgentCore Runtime agent.</p>"
+      }
+    },
     "ApiKeyType": {
       "base": null,
       "refs": {
-        "GetResourceApiKeyResponse$apiKey": "<p>The API Key associated with the resource requested.</p>"
+        "GetResourceApiKeyResponse$apiKey": "<p>The API key associated with the resource requested.</p>"
       }
     },
     "AutomationStream": {
@@ -92,6 +103,30 @@
         "StreamUpdate$automationStreamUpdate": "<p>The update to an automation stream.</p>"
       }
     },
+    "BatchCreateMemoryRecordsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchCreateMemoryRecordsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchDeleteMemoryRecordsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchDeleteMemoryRecordsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchUpdateMemoryRecordsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchUpdateMemoryRecordsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "Blob": {
       "base": null,
       "refs": {
@@ -111,7 +146,7 @@
       "refs": {
         "BranchFilter$includeParentBranches": "<p>Specifies whether to include parent branches in the results. Set to true to include parent branches, or false to exclude them.</p>",
         "CodeInterpreterResult$isError": "<p>Indicates whether the result represents an error. If true, the content contains error messages or exception information. If false, the content contains successful execution results.</p>",
-        "GetResourceOauth2TokenRequest$forceAuthentication": "<p>If true, always initiate a new 3LO flow</p>",
+        "GetResourceOauth2TokenRequest$forceAuthentication": "<p>Indicates whether to always initiate a new three-legged OAuth (3LO) flow, regardless of any existing session.</p>",
         "ListEventsInput$includePayloads": "<p>Specifies whether to include event payloads in the response. Set to true to include payloads, or false to exclude them.</p>",
         "ToolArguments$clearContext": "<p>Whether to clear the context for the tool.</p>"
       }
@@ -198,6 +233,7 @@
         "StartCodeInterpreterSessionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. This parameter helps prevent the creation of duplicate sessions if there are temporary network issues.</p>",
         "StopBrowserSessionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error.</p>",
         "StopCodeInterpreterSessionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error.</p>",
+        "StopRuntimeSessionRequest$clientToken": "<p>Idempotent token used to identify the request. If you use the same token with multiple requests, the same response is returned. Use ClientToken to prevent the same request from being processed more than once.</p>",
         "UpdateBrowserStreamRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error.</p>"
       }
     },
@@ -244,7 +280,7 @@
       "base": null,
       "refs": {
         "GetCodeInterpreterSessionResponse$sessionTimeoutSeconds": "<p>The timeout period for the code interpreter session in seconds.</p>",
-        "StartCodeInterpreterSessionRequest$sessionTimeoutSeconds": "<p>The time in seconds after which the session automatically terminates if there is no activity. The default value is 3600 seconds (1 hour). The minimum allowed value is 60 seconds, and the maximum allowed value is 28800 seconds (8 hours).</p>"
+        "StartCodeInterpreterSessionRequest$sessionTimeoutSeconds": "<p>The time in seconds after which the session automatically terminates if there is no activity. The default value is 900 seconds (15 minutes). The minimum allowed value is 60 seconds, and the maximum allowed value is 28800 seconds (8 hours).</p>"
       }
     },
     "CodeInterpreterStreamOutput": {
@@ -306,8 +342,8 @@
     "CredentialProviderName": {
       "base": null,
       "refs": {
-        "GetResourceApiKeyRequest$resourceCredentialProviderName": "<p>The credential provider name of the resource you are retrieving the API Key of.</p>",
-        "GetResourceOauth2TokenRequest$resourceCredentialProviderName": "<p>Reference to the credential provider</p>"
+        "GetResourceApiKeyRequest$resourceCredentialProviderName": "<p>The credential provider name for the resource from which you are retrieving the API key.</p>",
+        "GetResourceOauth2TokenRequest$resourceCredentialProviderName": "<p>The name of the resource's credential provider.</p>"
       }
     },
     "CustomRequestKeyType": {
@@ -319,7 +355,7 @@
     "CustomRequestParametersType": {
       "base": null,
       "refs": {
-        "GetResourceOauth2TokenRequest$customParameters": "<p>Gives the ability to send extra/custom parameters to the resource credentials provider during the authorization process. Standard OAuth2 flow parameters will not be overriden.</p>"
+        "GetResourceOauth2TokenRequest$customParameters": "<p>A map of custom parameters to include in the authorization request to the resource credential provider. These parameters are in addition to the standard OAuth 2.0 flow parameters, and will not override them.</p>"
       }
     },
     "CustomRequestValueType": {
@@ -398,11 +434,31 @@
         "ListEventsOutput$events": "<p>The list of events that match the specified criteria.</p>"
       }
     },
+    "EventMetadataFilterExpression": {
+      "base": "<p>Filter expression for retrieving events based on metadata associated with an event.</p>",
+      "refs": {
+        "EventMetadataFilterList$member": null
+      }
+    },
+    "EventMetadataFilterList": {
+      "base": null,
+      "refs": {
+        "FilterInput$eventMetadata": "<p>Event metadata filter criteria to apply when retrieving events.</p>"
+      }
+    },
     "FilterInput": {
       "base": "<p>Contains filter criteria for listing events.</p>",
       "refs": {
         "ListEventsInput$filter": "<p>Filter criteria to apply when listing events.</p>"
       }
+    },
+    "GetAgentCardRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentCardResponse": {
+      "base": null,
+      "refs": {}
     },
     "GetBrowserSessionRequest": {
       "base": null,
@@ -479,7 +535,9 @@
     "HttpResponseCode": {
       "base": null,
       "refs": {
-        "InvokeAgentRuntimeResponse$statusCode": "<p>The HTTP status code of the response. A status code of 200 indicates a successful operation. Other status codes indicate various error conditions.</p>"
+        "GetAgentCardResponse$statusCode": "<p>The status code of the request.</p>",
+        "InvokeAgentRuntimeResponse$statusCode": "<p>The HTTP status code of the response. A status code of 200 indicates a successful operation. Other status codes indicate various error conditions.</p>",
+        "StopRuntimeSessionResponse$statusCode": "<p>The status code of the request to stop the session.</p>"
       }
     },
     "InputContentBlock": {
@@ -497,6 +555,7 @@
     "Integer": {
       "base": null,
       "refs": {
+        "MemoryRecordOutput$errorCode": "<p>The error code returned when the memory record operation fails.</p>",
         "ToolResultStructuredContent$exitCode": "<p>The exit code from the tool execution.</p>"
       }
     },
@@ -549,6 +608,12 @@
     "InvokeCodeInterpreterResponse": {
       "base": null,
       "refs": {}
+    },
+    "LeftExpression": {
+      "base": "<p>Left expression of the event metadata filter.</p>",
+      "refs": {
+        "EventMetadataFilterExpression$left": "<p>Left operand of the event metadata filter expression.</p>"
+      }
     },
     "ListActorsInput": {
       "base": null,
@@ -639,12 +704,23 @@
       "base": "<p>Contains the content of a memory record.</p>",
       "refs": {
         "MemoryRecord$content": "<p>The content of the memory record.</p>",
-        "MemoryRecordSummary$content": "<p>The content of the memory record.</p>"
+        "MemoryRecordCreateInput$content": "<p>The content to be stored within the memory record.</p>",
+        "MemoryRecordSummary$content": "<p>The content of the memory record.</p>",
+        "MemoryRecordUpdateInput$content": "<p>The content to be stored within the memory record.</p>"
+      }
+    },
+    "MemoryContentTextString": {
+      "base": null,
+      "refs": {
+        "MemoryContent$text": "<p>The text content of the memory record.</p>"
       }
     },
     "MemoryId": {
       "base": null,
       "refs": {
+        "BatchCreateMemoryRecordsInput$memoryId": "<p>The unique ID of the memory resource where records will be created.</p>",
+        "BatchDeleteMemoryRecordsInput$memoryId": "<p>The unique ID of the memory resource where records will be deleted.</p>",
+        "BatchUpdateMemoryRecordsInput$memoryId": "<p>The unique ID of the memory resource where records will be updated.</p>",
         "CreateEventInput$memoryId": "<p>The identifier of the AgentCore Memory resource in which to create the event.</p>",
         "DeleteEventInput$memoryId": "<p>The identifier of the AgentCore Memory resource from which to delete the event.</p>",
         "DeleteMemoryRecordInput$memoryId": "<p>The identifier of the AgentCore Memory resource from which to delete the memory record.</p>",
@@ -664,11 +740,41 @@
         "GetMemoryRecordOutput$memoryRecord": "<p>The requested memory record.</p>"
       }
     },
+    "MemoryRecordCreateInput": {
+      "base": "<p>Input structure to create a new memory record.</p>",
+      "refs": {
+        "MemoryRecordsCreateInputList$member": null
+      }
+    },
+    "MemoryRecordDeleteInput": {
+      "base": "<p>Input structure to delete an existing memory record.</p>",
+      "refs": {
+        "MemoryRecordsDeleteInputList$member": null
+      }
+    },
     "MemoryRecordId": {
       "base": null,
       "refs": {
+        "DeleteMemoryRecordInput$memoryRecordId": "<p>The identifier of the memory record to delete.</p>",
+        "DeleteMemoryRecordOutput$memoryRecordId": "<p>The identifier of the memory record that was deleted.</p>",
+        "GetMemoryRecordInput$memoryRecordId": "<p>The identifier of the memory record to retrieve.</p>",
         "MemoryRecord$memoryRecordId": "<p>The unique identifier of the memory record.</p>",
-        "MemoryRecordSummary$memoryRecordId": "<p>The unique identifier of the memory record.</p>"
+        "MemoryRecordDeleteInput$memoryRecordId": "<p>The unique ID of the memory record to be deleted.</p>",
+        "MemoryRecordOutput$memoryRecordId": "<p>The unique ID associated to the memory record.</p>",
+        "MemoryRecordSummary$memoryRecordId": "<p>The unique identifier of the memory record.</p>",
+        "MemoryRecordUpdateInput$memoryRecordId": "<p>The unique ID of the memory record to be updated.</p>"
+      }
+    },
+    "MemoryRecordOutput": {
+      "base": "<p>Output information returned after processing a memory record operation.</p>",
+      "refs": {
+        "MemoryRecordsOutputList$member": null
+      }
+    },
+    "MemoryRecordStatus": {
+      "base": null,
+      "refs": {
+        "MemoryRecordOutput$status": "<p>The status of the memory record operation (e.g., SUCCEEDED, FAILED).</p>"
       }
     },
     "MemoryRecordSummary": {
@@ -684,13 +790,77 @@
         "RetrieveMemoryRecordsOutput$memoryRecordSummaries": "<p>The list of memory record summaries that match the search criteria, ordered by relevance.</p>"
       }
     },
+    "MemoryRecordUpdateInput": {
+      "base": "<p>Input structure to update an existing memory record.</p>",
+      "refs": {
+        "MemoryRecordsUpdateInputList$member": null
+      }
+    },
+    "MemoryRecordsCreateInputList": {
+      "base": null,
+      "refs": {
+        "BatchCreateMemoryRecordsInput$records": "<p>A list of memory record creation inputs to be processed in the batch operation.</p>"
+      }
+    },
+    "MemoryRecordsDeleteInputList": {
+      "base": null,
+      "refs": {
+        "BatchDeleteMemoryRecordsInput$records": "<p>A list of memory record deletion inputs to be processed in the batch operation.</p>"
+      }
+    },
+    "MemoryRecordsOutputList": {
+      "base": null,
+      "refs": {
+        "BatchCreateMemoryRecordsOutput$successfulRecords": "<p>A list of memory records that were successfully created during the batch operation.</p>",
+        "BatchCreateMemoryRecordsOutput$failedRecords": "<p>A list of memory records that failed to be created, including error details for each failure.</p>",
+        "BatchDeleteMemoryRecordsOutput$successfulRecords": "<p>A list of memory records that were successfully deleted during the batch operation.</p>",
+        "BatchDeleteMemoryRecordsOutput$failedRecords": "<p>A list of memory records that failed to be deleted, including error details for each failure.</p>",
+        "BatchUpdateMemoryRecordsOutput$successfulRecords": "<p>A list of memory records that were successfully updated during the batch operation.</p>",
+        "BatchUpdateMemoryRecordsOutput$failedRecords": "<p>A list of memory records that failed to be updated, including error details for each failure.</p>"
+      }
+    },
+    "MemoryRecordsUpdateInputList": {
+      "base": null,
+      "refs": {
+        "BatchUpdateMemoryRecordsInput$records": "<p>A list of memory record update inputs to be processed in the batch operation.</p>"
+      }
+    },
     "MemoryStrategyId": {
       "base": null,
       "refs": {
         "ListMemoryRecordsInput$memoryStrategyId": "<p>The memory strategy identifier to filter memory records by. If specified, only memory records with this strategy ID are returned.</p>",
         "MemoryRecord$memoryStrategyId": "<p>The identifier of the memory strategy associated with this record.</p>",
+        "MemoryRecordCreateInput$memoryStrategyId": "<p>The ID of the memory strategy that defines how this memory record is grouped.</p>",
         "MemoryRecordSummary$memoryStrategyId": "<p>The identifier of the memory strategy associated with this record.</p>",
+        "MemoryRecordUpdateInput$memoryStrategyId": "<p>The updated ID of the memory strategy that defines how this memory record is grouped.</p>",
         "SearchCriteria$memoryStrategyId": "<p>The memory strategy identifier to filter memory records by.</p>"
+      }
+    },
+    "MetadataKey": {
+      "base": null,
+      "refs": {
+        "LeftExpression$metadataKey": "<p>Key associated with the metadata in an event.</p>",
+        "MetadataMap$key": null
+      }
+    },
+    "MetadataMap": {
+      "base": null,
+      "refs": {
+        "CreateEventInput$metadata": "<p>The key-value metadata to attach to the event.</p>",
+        "Event$metadata": "<p>Metadata associated with an event.</p>"
+      }
+    },
+    "MetadataValue": {
+      "base": "<p>Value associated with the <code>eventMetadata</code> key.</p>",
+      "refs": {
+        "MetadataMap$value": null,
+        "RightExpression$metadataValue": "<p>Value associated with the key in <code>eventMetadata</code>.</p>"
+      }
+    },
+    "MetadataValueStringValueString": {
+      "base": null,
+      "refs": {
+        "MetadataValue$stringValue": "<p>Value associated with the <code>eventMetadata</code> key.</p>"
       }
     },
     "MimeType": {
@@ -723,7 +893,9 @@
       "base": null,
       "refs": {
         "MemoryRecord$namespaces": "<p>The namespaces associated with this memory record. Namespaces help organize and categorize memory records.</p>",
-        "MemoryRecordSummary$namespaces": "<p>The namespaces associated with this memory record.</p>"
+        "MemoryRecordCreateInput$namespaces": "<p>A list of namespace identifiers that categorize or group the memory record.</p>",
+        "MemoryRecordSummary$namespaces": "<p>The namespaces associated with this memory record.</p>",
+        "MemoryRecordUpdateInput$namespaces": "<p>The updated list of namespace identifiers for categorizing the memory record.</p>"
       }
     },
     "NextToken": {
@@ -751,7 +923,13 @@
     "Oauth2FlowType": {
       "base": null,
       "refs": {
-        "GetResourceOauth2TokenRequest$oauth2Flow": "<p>The type of flow to be performed</p>"
+        "GetResourceOauth2TokenRequest$oauth2Flow": "<p>The type of flow to be performed.</p>"
+      }
+    },
+    "OperatorType": {
+      "base": null,
+      "refs": {
+        "EventMetadataFilterExpression$operator": "<p>Operator applied to the event metadata filter expression.</p>"
       }
     },
     "PaginationToken": {
@@ -788,6 +966,13 @@
         "ToolArguments$language": "<p>The programming language of the code to execute. This tells the code interpreter which language runtime to use for execution. Common values include 'python', 'javascript', and 'r'.</p>"
       }
     },
+    "RequestIdentifier": {
+      "base": null,
+      "refs": {
+        "MemoryRecordCreateInput$requestIdentifier": "<p>A client-provided identifier for tracking this specific record creation request.</p>",
+        "MemoryRecordOutput$requestIdentifier": "<p>The client-provided identifier that was used to track this record operation.</p>"
+      }
+    },
     "ResourceContent": {
       "base": "<p>Contains information about resource content.</p>",
       "refs": {
@@ -809,7 +994,7 @@
     "ResourceOauth2ReturnUrlType": {
       "base": null,
       "refs": {
-        "GetResourceOauth2TokenRequest$resourceOauth2ReturnUrl": "<p>Callback url to redirect after token retrieval completes. Should be one of the provideded urls during WorkloadIdentity creation</p>"
+        "GetResourceOauth2TokenRequest$resourceOauth2ReturnUrl": "<p>The callback URL to redirect to after the OAuth 2.0 token retrieval is complete. This URL must be one of the provided URLs configured for the workload identity.</p>"
       }
     },
     "ResponseStream": {
@@ -825,6 +1010,12 @@
     "RetrieveMemoryRecordsOutput": {
       "base": null,
       "refs": {}
+    },
+    "RightExpression": {
+      "base": "<p>Right expression of the <code>eventMetadata</code>filter.</p>",
+      "refs": {
+        "EventMetadataFilterExpression$right": "<p>Right operand of the event metadata filter expression.</p>"
+      }
     },
     "Role": {
       "base": null,
@@ -845,7 +1036,7 @@
     "ScopesListType": {
       "base": null,
       "refs": {
-        "GetResourceOauth2TokenRequest$scopes": "<p>The OAuth scopes requested</p>"
+        "GetResourceOauth2TokenRequest$scopes": "<p>The OAuth scopes being requested.</p>"
       }
     },
     "SearchCriteria": {
@@ -866,12 +1057,6 @@
         "SearchCriteria$topK": "<p>The maximum number of top-scoring memory records to return. This value is used for semantic search ranking.</p>"
       }
     },
-    "SensitiveString": {
-      "base": null,
-      "refs": {
-        "MemoryContent$text": "<p>The text content of the memory record.</p>"
-      }
-    },
     "ServiceException": {
       "base": "<p>The service encountered an internal error. Try your request again later.</p>",
       "refs": {}
@@ -888,11 +1073,13 @@
         "CreateEventInput$sessionId": "<p>The identifier of the session in which this event occurs. A session represents a sequence of related events.</p>",
         "DeleteEventInput$sessionId": "<p>The identifier of the session containing the event to delete.</p>",
         "Event$sessionId": "<p>The identifier of the session containing the event.</p>",
+        "GetAgentCardResponse$runtimeSessionId": "<p>The ID of the session associated with the AgentCore Runtime agent.</p>",
         "GetEventInput$sessionId": "<p>The identifier of the session containing the event.</p>",
         "InvokeAgentRuntimeResponse$runtimeSessionId": "<p>The identifier of the runtime session.</p>",
         "InvokeAgentRuntimeResponse$mcpSessionId": "<p>The identifier of the MCP session.</p>",
         "ListEventsInput$sessionId": "<p>The identifier of the session for which to list events. If specified, only events from this session are returned.</p>",
-        "SessionSummary$sessionId": "<p>The unique identifier of the session.</p>"
+        "SessionSummary$sessionId": "<p>The unique identifier of the session.</p>",
+        "StopRuntimeSessionResponse$runtimeSessionId": "<p>The ID of the session that you requested to stop.</p>"
       }
     },
     "SessionSummary": {
@@ -910,7 +1097,9 @@
     "SessionType": {
       "base": null,
       "refs": {
-        "InvokeAgentRuntimeRequest$runtimeSessionId": "<p>The identifier of the runtime session.</p>"
+        "GetAgentCardRequest$runtimeSessionId": "<p>The session ID that the AgentCore Runtime agent is using. </p>",
+        "InvokeAgentRuntimeRequest$runtimeSessionId": "<p>The identifier of the runtime session.</p>",
+        "StopRuntimeSessionRequest$runtimeSessionId": "<p>The ID of the session that you want to stop.</p>"
       }
     },
     "StartBrowserSessionRequest": {
@@ -945,6 +1134,14 @@
       "base": null,
       "refs": {}
     },
+    "StopRuntimeSessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopRuntimeSessionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StreamUpdate": {
       "base": "<p>Contains information about an update to a stream.</p>",
       "refs": {
@@ -954,6 +1151,7 @@
     "String": {
       "base": null,
       "refs": {
+        "BatchCreateMemoryRecordsInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotent processing of the batch request.</p>",
         "BrowserSessionSummary$browserIdentifier": "<p>The unique identifier of the browser associated with the session. This identifier specifies which browser environment is used for the session.</p>",
         "CodeInterpreterSessionSummary$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter associated with the session. This identifier specifies which code interpreter environment is used for the session.</p>",
         "ContentBlock$text": "<p>The text content of the block.</p>",
@@ -962,15 +1160,14 @@
         "ContentBlock$name": "<p>The name of the content block.</p>",
         "ContentBlock$description": "<p>The description of the content block.</p>",
         "CreateEventInput$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, AgentCore ignores the request, but does not return an error.</p>",
-        "DeleteMemoryRecordInput$memoryRecordId": "<p>The identifier of the memory record to delete.</p>",
-        "DeleteMemoryRecordOutput$memoryRecordId": "<p>The identifier of the memory record that was deleted.</p>",
+        "GetAgentCardRequest$agentRuntimeArn": "<p>The ARN of the AgentCore Runtime agent for which you want to get the A2A agent card.</p>",
+        "GetAgentCardRequest$qualifier": "<p>Optional qualifier to specify an agent alias, such as <code>prod</code>code&gt; or <code>dev</code>. If you don't provide a value, the DEFAULT alias is used. </p>",
         "GetBrowserSessionRequest$browserIdentifier": "<p>The unique identifier of the browser associated with the session.</p>",
         "GetBrowserSessionResponse$browserIdentifier": "<p>The identifier of the browser.</p>",
         "GetBrowserSessionResponse$sessionReplayArtifact": "<p>The artifact containing the session replay information.</p>",
         "GetCodeInterpreterSessionRequest$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter associated with the session.</p>",
         "GetCodeInterpreterSessionResponse$codeInterpreterIdentifier": "<p>The identifier of the code interpreter.</p>",
-        "GetMemoryRecordInput$memoryRecordId": "<p>The identifier of the memory record to retrieve.</p>",
-        "GetResourceOauth2TokenResponse$authorizationUrl": "<p>The URL for the authorization process, provided if the Access token requires user Authorization.</p>",
+        "GetResourceOauth2TokenResponse$authorizationUrl": "<p>The URL to initiate the authorization process, provided when the access token requires user authorization.</p>",
         "InvalidInputException$message": null,
         "InvokeAgentRuntimeRequest$agentRuntimeArn": "<p>The Amazon Web Services Resource Name (ARN) of the agent runtime to invoke. The ARN uniquely identifies the agent runtime resource in Amazon Bedrock.</p>",
         "InvokeAgentRuntimeRequest$qualifier": "<p>The qualifier to use for the agent runtime. This can be a version number or an endpoint name that points to a specific version. If not specified, Amazon Bedrock uses the default version of the agent runtime.</p>",
@@ -983,6 +1180,7 @@
         "InvokeCodeInterpreterRequest$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter associated with the session. This must match the identifier used when creating the session with <code>StartCodeInterpreterSession</code>.</p>",
         "ListBrowserSessionsRequest$browserIdentifier": "<p>The unique identifier of the browser to list sessions for. If specified, only sessions for this browser are returned. If not specified, sessions for all browsers are returned.</p>",
         "ListCodeInterpreterSessionsRequest$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter to list sessions for. If specified, only sessions for this code interpreter are returned. If not specified, sessions for all code interpreters are returned.</p>",
+        "MemoryRecordOutput$errorMessage": "<p>A human-readable error message describing why the memory record operation failed.</p>",
         "ResourceContent$uri": "<p>The URI of the resource content.</p>",
         "ResourceContent$mimeType": "<p>The MIME type of the resource content.</p>",
         "ResourceContent$text": "<p>The text resource content.</p>",
@@ -995,6 +1193,8 @@
         "StopBrowserSessionResponse$browserIdentifier": "<p>The identifier of the browser.</p>",
         "StopCodeInterpreterSessionRequest$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter associated with the session.</p>",
         "StopCodeInterpreterSessionResponse$codeInterpreterIdentifier": "<p>The identifier of the code interpreter.</p>",
+        "StopRuntimeSessionRequest$agentRuntimeArn": "<p>The ARN of the agent that contains the session that you want to stop.</p>",
+        "StopRuntimeSessionRequest$qualifier": "<p>Optional qualifier to specify an agent alias, such as <code>prod</code>code&gt; or <code>dev</code>. If you don't provide a value, the DEFAULT alias is used. </p>",
         "ThrottledException$message": null,
         "ToolResultStructuredContent$taskId": "<p>The identifier of the task that produced the result.</p>",
         "ToolResultStructuredContent$stdout": "<p>The standard output from the tool execution.</p>",
@@ -1042,7 +1242,9 @@
         "CreateEventInput$eventTimestamp": "<p>The timestamp when the event occurred. If not specified, the current time is used.</p>",
         "Event$eventTimestamp": "<p>The timestamp when the event occurred.</p>",
         "MemoryRecord$createdAt": "<p>The timestamp when the memory record was created.</p>",
+        "MemoryRecordCreateInput$timestamp": "<p>Time at which the memory record was created.</p>",
         "MemoryRecordSummary$createdAt": "<p>The timestamp when the memory record was created.</p>",
+        "MemoryRecordUpdateInput$timestamp": "<p>Time at which the memory record was updated</p>",
         "SessionSummary$createdAt": "<p>The timestamp when the session was created.</p>"
       }
     },
@@ -1079,13 +1281,13 @@
     "UserIdType": {
       "base": null,
       "refs": {
-        "GetWorkloadAccessTokenForUserIdRequest$userId": "<p>The user id of the user you are retrieving the access token for.</p>"
+        "GetWorkloadAccessTokenForUserIdRequest$userId": "<p>The ID of the user for whom you are retrieving the access token.</p>"
       }
     },
     "UserTokenType": {
       "base": null,
       "refs": {
-        "GetWorkloadAccessTokenForJWTRequest$userToken": "<p>OAuth2 token issued by the user's identity provider</p>"
+        "GetWorkloadAccessTokenForJWTRequest$userToken": "<p>The OAuth 2.0 token issued by the user's identity provider.</p>"
       }
     },
     "ValidationException": {
@@ -1134,19 +1336,19 @@
     "WorkloadIdentityNameType": {
       "base": null,
       "refs": {
-        "GetWorkloadAccessTokenForJWTRequest$workloadName": "<p>Unique identifier for the registered agent</p>",
-        "GetWorkloadAccessTokenForUserIdRequest$workloadName": "<p>The name of the worklaod you want to get the access token of.</p>",
-        "GetWorkloadAccessTokenRequest$workloadName": "<p>Unique identifier for the registered agent</p>"
+        "GetWorkloadAccessTokenForJWTRequest$workloadName": "<p>The unique identifier for the registered workload.</p>",
+        "GetWorkloadAccessTokenForUserIdRequest$workloadName": "<p>The name of the workload from which you want to retrieve the access token.</p>",
+        "GetWorkloadAccessTokenRequest$workloadName": "<p>The unique identifier for the registered workload.</p>"
       }
     },
     "WorkloadIdentityTokenType": {
       "base": null,
       "refs": {
-        "GetResourceApiKeyRequest$workloadIdentityToken": "<p>The identity token of the workload you want to get the API Key of.</p>",
-        "GetResourceOauth2TokenRequest$workloadIdentityToken": "<p>The identity token of the workload you want to retrive the Oauth2 Token of.</p>",
-        "GetWorkloadAccessTokenForJWTResponse$workloadAccessToken": "<p>Opaque token representing both agent and user identity</p>",
-        "GetWorkloadAccessTokenForUserIdResponse$workloadAccessToken": "<p>The workload access token of the named workload.</p>",
-        "GetWorkloadAccessTokenResponse$workloadAccessToken": "<p>Opaque token representing both agent and user identity</p>"
+        "GetResourceApiKeyRequest$workloadIdentityToken": "<p>The identity token of the workload from which you want to retrieve the API key.</p>",
+        "GetResourceOauth2TokenRequest$workloadIdentityToken": "<p>The identity token of the workload from which you want to retrieve the OAuth2 token.</p>",
+        "GetWorkloadAccessTokenForJWTResponse$workloadAccessToken": "<p>An opaque token representing the identity of both the workload and the user.</p>",
+        "GetWorkloadAccessTokenForUserIdResponse$workloadAccessToken": "<p>The access token for the specified workload.</p>",
+        "GetWorkloadAccessTokenResponse$workloadAccessToken": "<p>An opaque token representing the identity of both the workload and the user.</p>"
       }
     }
   }

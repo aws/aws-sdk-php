@@ -360,6 +360,36 @@
         {"shape":"MultiRegionClusterNotFoundFault"}
       ]
     },
+    "DescribeMultiRegionParameterGroups":{
+      "name":"DescribeMultiRegionParameterGroups",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeMultiRegionParameterGroupsRequest"},
+      "output":{"shape":"DescribeMultiRegionParameterGroupsResponse"},
+      "errors":[
+        {"shape":"MultiRegionParameterGroupNotFoundFault"},
+        {"shape":"ServiceLinkedRoleNotFoundFault"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidParameterCombinationException"}
+      ]
+    },
+    "DescribeMultiRegionParameters":{
+      "name":"DescribeMultiRegionParameters",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeMultiRegionParametersRequest"},
+      "output":{"shape":"DescribeMultiRegionParametersResponse"},
+      "errors":[
+        {"shape":"MultiRegionParameterGroupNotFoundFault"},
+        {"shape":"ServiceLinkedRoleNotFoundFault"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidParameterCombinationException"}
+      ]
+    },
     "DescribeParameterGroups":{
       "name":"DescribeParameterGroups",
       "http":{
@@ -1312,6 +1342,38 @@
         "MultiRegionClusters":{"shape":"MultiRegionClusterList"}
       }
     },
+    "DescribeMultiRegionParameterGroupsRequest":{
+      "type":"structure",
+      "members":{
+        "MultiRegionParameterGroupName":{"shape":"String"},
+        "MaxResults":{"shape":"IntegerOptional"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "DescribeMultiRegionParameterGroupsResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"String"},
+        "MultiRegionParameterGroups":{"shape":"MultiRegionParameterGroupList"}
+      }
+    },
+    "DescribeMultiRegionParametersRequest":{
+      "type":"structure",
+      "required":["MultiRegionParameterGroupName"],
+      "members":{
+        "MultiRegionParameterGroupName":{"shape":"String"},
+        "Source":{"shape":"String"},
+        "MaxResults":{"shape":"IntegerOptional"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "DescribeMultiRegionParametersResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"String"},
+        "MultiRegionParameters":{"shape":"MultiRegionParametersList"}
+      }
+    },
     "DescribeParameterGroupsRequest":{
       "type":"structure",
       "members":{
@@ -1706,10 +1768,39 @@
       "members":{},
       "exception":true
     },
+    "MultiRegionParameter":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"String"},
+        "Value":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "Source":{"shape":"String"},
+        "DataType":{"shape":"String"},
+        "AllowedValues":{"shape":"String"},
+        "MinimumEngineVersion":{"shape":"String"}
+      }
+    },
+    "MultiRegionParameterGroup":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"String"},
+        "Family":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "ARN":{"shape":"String"}
+      }
+    },
+    "MultiRegionParameterGroupList":{
+      "type":"list",
+      "member":{"shape":"MultiRegionParameterGroup"}
+    },
     "MultiRegionParameterGroupNotFoundFault":{
       "type":"structure",
       "members":{},
       "exception":true
+    },
+    "MultiRegionParametersList":{
+      "type":"list",
+      "member":{"shape":"MultiRegionParameter"}
     },
     "NetworkType":{
       "type":"string",

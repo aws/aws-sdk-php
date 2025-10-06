@@ -1238,6 +1238,26 @@
         "McpLambdaTargetConfiguration$lambdaArn": "<p>The Amazon Resource Name (ARN) of the Lambda function. This function is invoked by the gateway to communicate with the target.</p>"
       }
     },
+    "LifecycleConfiguration": {
+      "base": "<p>LifecycleConfiguration lets you manage the lifecycle of runtime sessions and resources in AgentCore Runtime. This configuration helps optimize resource utilization by automatically cleaning up idle sessions and preventing long-running instances from consuming resources indefinitely.</p>",
+      "refs": {
+        "CreateAgentRuntimeRequest$lifecycleConfiguration": "<p>The life cycle configuration for the AgentCore Runtime.</p>",
+        "GetAgentRuntimeResponse$lifecycleConfiguration": "<p>The life cycle configuration for the AgentCore Runtime.</p>",
+        "UpdateAgentRuntimeRequest$lifecycleConfiguration": "<p>The updated life cycle configuration for the AgentCore Runtime.</p>"
+      }
+    },
+    "LifecycleConfigurationIdleRuntimeSessionTimeoutInteger": {
+      "base": null,
+      "refs": {
+        "LifecycleConfiguration$idleRuntimeSessionTimeout": "<p>Timeout in seconds for idle runtime sessions. When a session remains idle for this duration, it will be automatically terminated. Default: 900 seconds (15 minutes).</p>"
+      }
+    },
+    "LifecycleConfigurationMaxLifetimeInteger": {
+      "base": null,
+      "refs": {
+        "LifecycleConfiguration$maxLifetime": "<p>Maximum lifetime for the instance in seconds. Once reached, instances will be automatically terminated and replaced. Default: 28800 seconds (8 hours).</p>"
+      }
+    },
     "ListAgentRuntimeEndpointsRequest": {
       "base": null,
       "refs": {}
@@ -2150,6 +2170,7 @@
         "CreateBrowserRequest$tags": "<p>A map of tag keys and values to assign to the browser. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateCodeInterpreterRequest$tags": "<p>A map of tag keys and values to assign to the code interpreter. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateGatewayRequest$tags": "<p>A map of key-value pairs to associate with the gateway as metadata tags.</p>",
+        "CreateMemoryInput$tags": "<p>A map of tag keys and values to assign to an AgentCore Memory. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags associated with the resource.</p>",
         "TagResourceRequest$tags": "<p>The tags to add to the resource. A tag is a key-value pair.</p>"
       }

@@ -1487,18 +1487,19 @@
       ],
       "members":{
         "agentRuntimeName":{"shape":"AgentRuntimeName"},
-        "description":{"shape":"Description"},
         "agentRuntimeArtifact":{"shape":"AgentRuntimeArtifact"},
         "roleArn":{"shape":"RoleArn"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
-        "protocolConfiguration":{"shape":"ProtocolConfiguration"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "environmentVariables":{"shape":"EnvironmentVariablesMap"},
+        "description":{"shape":"Description"},
         "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
         "requestHeaderConfiguration":{"shape":"RequestHeaderConfiguration"},
+        "protocolConfiguration":{"shape":"ProtocolConfiguration"},
+        "lifecycleConfiguration":{"shape":"LifecycleConfiguration"},
+        "environmentVariables":{"shape":"EnvironmentVariablesMap"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -1734,7 +1735,8 @@
         "encryptionKeyArn":{"shape":"Arn"},
         "memoryExecutionRoleArn":{"shape":"Arn"},
         "eventExpiryDuration":{"shape":"CreateMemoryInputEventExpiryDurationInteger"},
-        "memoryStrategies":{"shape":"MemoryStrategyInputList"}
+        "memoryStrategies":{"shape":"MemoryStrategyInputList"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreateMemoryInputClientTokenString":{
@@ -2408,25 +2410,27 @@
         "lastUpdatedAt",
         "roleArn",
         "networkConfiguration",
-        "status"
+        "status",
+        "lifecycleConfiguration"
       ],
       "members":{
         "agentRuntimeArn":{"shape":"AgentRuntimeArn"},
-        "workloadIdentityDetails":{"shape":"WorkloadIdentityDetails"},
         "agentRuntimeName":{"shape":"AgentRuntimeName"},
-        "description":{"shape":"Description"},
         "agentRuntimeId":{"shape":"AgentRuntimeId"},
         "agentRuntimeVersion":{"shape":"AgentRuntimeVersion"},
         "createdAt":{"shape":"DateTimestamp"},
         "lastUpdatedAt":{"shape":"DateTimestamp"},
         "roleArn":{"shape":"RoleArn"},
-        "agentRuntimeArtifact":{"shape":"AgentRuntimeArtifact"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
+        "status":{"shape":"AgentRuntimeStatus"},
+        "lifecycleConfiguration":{"shape":"LifecycleConfiguration"},
+        "description":{"shape":"Description"},
+        "workloadIdentityDetails":{"shape":"WorkloadIdentityDetails"},
+        "agentRuntimeArtifact":{"shape":"AgentRuntimeArtifact"},
         "protocolConfiguration":{"shape":"ProtocolConfiguration"},
         "environmentVariables":{"shape":"EnvironmentVariablesMap"},
         "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
-        "requestHeaderConfiguration":{"shape":"RequestHeaderConfiguration"},
-        "status":{"shape":"AgentRuntimeStatus"}
+        "requestHeaderConfiguration":{"shape":"RequestHeaderConfiguration"}
       }
     },
     "GetApiKeyCredentialProviderRequest":{
@@ -2781,6 +2785,25 @@
       "max":170,
       "min":1,
       "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:([a-z]{2}(-gov)?-[a-z]+-\\d{1}):(\\d{12}):function:([a-zA-Z0-9-_.]+)(:(\\$LATEST|[a-zA-Z0-9-]+))?"
+    },
+    "LifecycleConfiguration":{
+      "type":"structure",
+      "members":{
+        "idleRuntimeSessionTimeout":{"shape":"LifecycleConfigurationIdleRuntimeSessionTimeoutInteger"},
+        "maxLifetime":{"shape":"LifecycleConfigurationMaxLifetimeInteger"}
+      }
+    },
+    "LifecycleConfigurationIdleRuntimeSessionTimeoutInteger":{
+      "type":"integer",
+      "box":true,
+      "max":28800,
+      "min":60
+    },
+    "LifecycleConfigurationMaxLifetimeInteger":{
+      "type":"integer",
+      "box":true,
+      "max":28800,
+      "min":60
     },
     "ListAgentRuntimeEndpointsRequest":{
       "type":"structure",
@@ -3721,7 +3744,8 @@
       "type":"string",
       "enum":[
         "MCP",
-        "HTTP"
+        "HTTP",
+        "A2A"
       ]
     },
     "ServiceException":{
@@ -4117,18 +4141,19 @@
           "location":"uri",
           "locationName":"agentRuntimeId"
         },
-        "description":{"shape":"Description"},
         "agentRuntimeArtifact":{"shape":"AgentRuntimeArtifact"},
         "roleArn":{"shape":"RoleArn"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
+        "description":{"shape":"Description"},
+        "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
+        "requestHeaderConfiguration":{"shape":"RequestHeaderConfiguration"},
         "protocolConfiguration":{"shape":"ProtocolConfiguration"},
+        "lifecycleConfiguration":{"shape":"LifecycleConfiguration"},
+        "environmentVariables":{"shape":"EnvironmentVariablesMap"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "environmentVariables":{"shape":"EnvironmentVariablesMap"},
-        "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
-        "requestHeaderConfiguration":{"shape":"RequestHeaderConfiguration"}
+        }
       }
     },
     "UpdateAgentRuntimeResponse":{

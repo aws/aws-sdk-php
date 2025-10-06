@@ -13,6 +13,61 @@
     "uid":"bedrock-agentcore-2024-02-28"
   },
   "operations":{
+    "BatchCreateMemoryRecords":{
+      "name":"BatchCreateMemoryRecords",
+      "http":{
+        "method":"POST",
+        "requestUri":"/memories/{memoryId}/memoryRecords/batchCreate",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchCreateMemoryRecordsInput"},
+      "output":{"shape":"BatchCreateMemoryRecordsOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"}
+      ],
+      "idempotent":true
+    },
+    "BatchDeleteMemoryRecords":{
+      "name":"BatchDeleteMemoryRecords",
+      "http":{
+        "method":"POST",
+        "requestUri":"/memories/{memoryId}/memoryRecords/batchDelete",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchDeleteMemoryRecordsInput"},
+      "output":{"shape":"BatchDeleteMemoryRecordsOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"}
+      ]
+    },
+    "BatchUpdateMemoryRecords":{
+      "name":"BatchUpdateMemoryRecords",
+      "http":{
+        "method":"POST",
+        "requestUri":"/memories/{memoryId}/memoryRecords/batchUpdate",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchUpdateMemoryRecordsInput"},
+      "output":{"shape":"BatchUpdateMemoryRecordsOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"}
+      ]
+    },
     "CreateEvent":{
       "name":"CreateEvent",
       "http":{
@@ -69,6 +124,25 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottledException"},
         {"shape":"ServiceException"}
+      ]
+    },
+    "GetAgentCard":{
+      "name":"GetAgentCard",
+      "http":{
+        "method":"GET",
+        "requestUri":"/runtimes/{agentRuntimeArn}/invocations/.well-known/agent-card.json",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAgentCardRequest"},
+      "output":{"shape":"GetAgentCardResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RuntimeClientError"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "GetBrowserSession":{
@@ -480,6 +554,28 @@
       ],
       "idempotent":true
     },
+    "StopRuntimeSession":{
+      "name":"StopRuntimeSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/runtimes/{agentRuntimeArn}/stopruntimesession",
+        "responseCode":200
+      },
+      "input":{"shape":"StopRuntimeSessionRequest"},
+      "output":{"shape":"StopRuntimeSessionResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"RuntimeClientError"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "UpdateBrowserStream":{
       "name":"UpdateBrowserStream",
       "http":{
@@ -523,7 +619,7 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"[a-zA-Z0-9][a-zA-Z0-9-_/]*"
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9-_/]*(?::[a-zA-Z0-9-_/]+)*[a-zA-Z0-9-_/]*"
     },
     "ActorSummary":{
       "type":"structure",
@@ -535,6 +631,11 @@
     "ActorSummaryList":{
       "type":"list",
       "member":{"shape":"ActorSummary"}
+    },
+    "AgentCard":{
+      "type":"structure",
+      "members":{},
+      "document":true
     },
     "ApiKeyType":{
       "type":"string",
@@ -564,6 +665,88 @@
       "type":"structure",
       "members":{
         "streamStatus":{"shape":"AutomationStreamStatus"}
+      }
+    },
+    "BatchCreateMemoryRecordsInput":{
+      "type":"structure",
+      "required":[
+        "memoryId",
+        "records"
+      ],
+      "members":{
+        "memoryId":{
+          "shape":"MemoryId",
+          "location":"uri",
+          "locationName":"memoryId"
+        },
+        "records":{"shape":"MemoryRecordsCreateInputList"},
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "BatchCreateMemoryRecordsOutput":{
+      "type":"structure",
+      "required":[
+        "successfulRecords",
+        "failedRecords"
+      ],
+      "members":{
+        "successfulRecords":{"shape":"MemoryRecordsOutputList"},
+        "failedRecords":{"shape":"MemoryRecordsOutputList"}
+      }
+    },
+    "BatchDeleteMemoryRecordsInput":{
+      "type":"structure",
+      "required":[
+        "memoryId",
+        "records"
+      ],
+      "members":{
+        "memoryId":{
+          "shape":"MemoryId",
+          "location":"uri",
+          "locationName":"memoryId"
+        },
+        "records":{"shape":"MemoryRecordsDeleteInputList"}
+      }
+    },
+    "BatchDeleteMemoryRecordsOutput":{
+      "type":"structure",
+      "required":[
+        "successfulRecords",
+        "failedRecords"
+      ],
+      "members":{
+        "successfulRecords":{"shape":"MemoryRecordsOutputList"},
+        "failedRecords":{"shape":"MemoryRecordsOutputList"}
+      }
+    },
+    "BatchUpdateMemoryRecordsInput":{
+      "type":"structure",
+      "required":[
+        "memoryId",
+        "records"
+      ],
+      "members":{
+        "memoryId":{
+          "shape":"MemoryId",
+          "location":"uri",
+          "locationName":"memoryId"
+        },
+        "records":{"shape":"MemoryRecordsUpdateInputList"}
+      }
+    },
+    "BatchUpdateMemoryRecordsOutput":{
+      "type":"structure",
+      "required":[
+        "successfulRecords",
+        "failedRecords"
+      ],
+      "members":{
+        "successfulRecords":{"shape":"MemoryRecordsOutputList"},
+        "failedRecords":{"shape":"MemoryRecordsOutputList"}
       }
     },
     "Blob":{"type":"blob"},
@@ -803,7 +986,8 @@
         "clientToken":{
           "shape":"String",
           "idempotencyToken":true
-        }
+        },
+        "metadata":{"shape":"MetadataMap"}
       }
     },
     "CreateEventOutput":{
@@ -891,7 +1075,7 @@
           "locationName":"memoryId"
         },
         "memoryRecordId":{
-          "shape":"String",
+          "shape":"MemoryRecordId",
           "location":"uri",
           "locationName":"memoryRecordId"
         }
@@ -901,7 +1085,7 @@
       "type":"structure",
       "required":["memoryRecordId"],
       "members":{
-        "memoryRecordId":{"shape":"String"}
+        "memoryRecordId":{"shape":"MemoryRecordId"}
       }
     },
     "Document":{
@@ -930,7 +1114,8 @@
         "eventId":{"shape":"EventId"},
         "eventTimestamp":{"shape":"Timestamp"},
         "payload":{"shape":"PayloadTypeList"},
-        "branch":{"shape":"Branch"}
+        "branch":{"shape":"Branch"},
+        "metadata":{"shape":"MetadataMap"}
       }
     },
     "EventId":{
@@ -941,11 +1126,69 @@
       "type":"list",
       "member":{"shape":"Event"}
     },
+    "EventMetadataFilterExpression":{
+      "type":"structure",
+      "required":[
+        "left",
+        "operator"
+      ],
+      "members":{
+        "left":{"shape":"LeftExpression"},
+        "operator":{"shape":"OperatorType"},
+        "right":{"shape":"RightExpression"}
+      }
+    },
+    "EventMetadataFilterList":{
+      "type":"list",
+      "member":{"shape":"EventMetadataFilterExpression"},
+      "max":5,
+      "min":1
+    },
     "FilterInput":{
       "type":"structure",
       "members":{
-        "branch":{"shape":"BranchFilter"}
+        "branch":{"shape":"BranchFilter"},
+        "eventMetadata":{"shape":"EventMetadataFilterList"}
       }
+    },
+    "GetAgentCardRequest":{
+      "type":"structure",
+      "required":["agentRuntimeArn"],
+      "members":{
+        "runtimeSessionId":{
+          "shape":"SessionType",
+          "idempotencyToken":true,
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Runtime-Session-Id"
+        },
+        "agentRuntimeArn":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"agentRuntimeArn"
+        },
+        "qualifier":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"qualifier"
+        }
+      }
+    },
+    "GetAgentCardResponse":{
+      "type":"structure",
+      "required":["agentCard"],
+      "members":{
+        "runtimeSessionId":{
+          "shape":"SessionId",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Runtime-Session-Id"
+        },
+        "agentCard":{"shape":"AgentCard"},
+        "statusCode":{
+          "shape":"HttpResponseCode",
+          "location":"statusCode"
+        }
+      },
+      "payload":"agentCard"
     },
     "GetBrowserSessionRequest":{
       "type":"structure",
@@ -1072,7 +1315,7 @@
           "locationName":"memoryId"
         },
         "memoryRecordId":{
-          "shape":"String",
+          "shape":"MemoryRecordId",
           "location":"uri",
           "locationName":"memoryRecordId"
         }
@@ -1398,6 +1641,13 @@
       },
       "payload":"stream"
     },
+    "LeftExpression":{
+      "type":"structure",
+      "members":{
+        "metadataKey":{"shape":"MetadataKey"}
+      },
+      "union":true
+    },
     "ListActorsInput":{
       "type":"structure",
       "required":["memoryId"],
@@ -1579,9 +1829,15 @@
     "MemoryContent":{
       "type":"structure",
       "members":{
-        "text":{"shape":"SensitiveString"}
+        "text":{"shape":"MemoryContentTextString"}
       },
       "union":true
+    },
+    "MemoryContentTextString":{
+      "type":"string",
+      "max":16000,
+      "min":1,
+      "sensitive":true
     },
     "MemoryId":{
       "type":"string",
@@ -1605,11 +1861,55 @@
         "createdAt":{"shape":"Timestamp"}
       }
     },
+    "MemoryRecordCreateInput":{
+      "type":"structure",
+      "required":[
+        "requestIdentifier",
+        "namespaces",
+        "content",
+        "timestamp"
+      ],
+      "members":{
+        "requestIdentifier":{"shape":"RequestIdentifier"},
+        "namespaces":{"shape":"NamespacesList"},
+        "content":{"shape":"MemoryContent"},
+        "timestamp":{"shape":"Timestamp"},
+        "memoryStrategyId":{"shape":"MemoryStrategyId"}
+      }
+    },
+    "MemoryRecordDeleteInput":{
+      "type":"structure",
+      "required":["memoryRecordId"],
+      "members":{
+        "memoryRecordId":{"shape":"MemoryRecordId"}
+      }
+    },
     "MemoryRecordId":{
       "type":"string",
-      "max":40,
+      "max":50,
       "min":40,
-      "pattern":"mem-[a-zA-Z0-9-]*"
+      "pattern":"mem-[a-zA-Z0-9-_]*"
+    },
+    "MemoryRecordOutput":{
+      "type":"structure",
+      "required":[
+        "memoryRecordId",
+        "status"
+      ],
+      "members":{
+        "memoryRecordId":{"shape":"MemoryRecordId"},
+        "status":{"shape":"MemoryRecordStatus"},
+        "requestIdentifier":{"shape":"RequestIdentifier"},
+        "errorCode":{"shape":"Integer"},
+        "errorMessage":{"shape":"String"}
+      }
+    },
+    "MemoryRecordStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCEEDED",
+        "FAILED"
+      ]
     },
     "MemoryRecordSummary":{
       "type":"structure",
@@ -1633,11 +1933,73 @@
       "type":"list",
       "member":{"shape":"MemoryRecordSummary"}
     },
+    "MemoryRecordUpdateInput":{
+      "type":"structure",
+      "required":[
+        "memoryRecordId",
+        "timestamp"
+      ],
+      "members":{
+        "memoryRecordId":{"shape":"MemoryRecordId"},
+        "timestamp":{"shape":"Timestamp"},
+        "content":{"shape":"MemoryContent"},
+        "namespaces":{"shape":"NamespacesList"},
+        "memoryStrategyId":{"shape":"MemoryStrategyId"}
+      }
+    },
+    "MemoryRecordsCreateInputList":{
+      "type":"list",
+      "member":{"shape":"MemoryRecordCreateInput"},
+      "max":100,
+      "min":0
+    },
+    "MemoryRecordsDeleteInputList":{
+      "type":"list",
+      "member":{"shape":"MemoryRecordDeleteInput"},
+      "max":100,
+      "min":0
+    },
+    "MemoryRecordsOutputList":{
+      "type":"list",
+      "member":{"shape":"MemoryRecordOutput"}
+    },
+    "MemoryRecordsUpdateInputList":{
+      "type":"list",
+      "member":{"shape":"MemoryRecordUpdateInput"},
+      "max":100,
+      "min":0
+    },
     "MemoryStrategyId":{
       "type":"string",
       "max":100,
       "min":1,
       "pattern":"[a-zA-Z0-9][a-zA-Z0-9-_]*"
+    },
+    "MetadataKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*"
+    },
+    "MetadataMap":{
+      "type":"map",
+      "key":{"shape":"MetadataKey"},
+      "value":{"shape":"MetadataValue"},
+      "max":15,
+      "min":0
+    },
+    "MetadataValue":{
+      "type":"structure",
+      "members":{
+        "stringValue":{"shape":"MetadataValueStringValueString"}
+      },
+      "union":true
+    },
+    "MetadataValueStringValueString":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*"
     },
     "MimeType":{
       "type":"string",
@@ -1653,12 +2015,13 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"[a-zA-Z0-9/*][a-zA-Z0-9-_/*]*"
+      "pattern":"[a-zA-Z0-9/*][a-zA-Z0-9-_/*]*(?::[a-zA-Z0-9-_/*]+)*[a-zA-Z0-9-_/*]*"
     },
     "NamespacesList":{
       "type":"list",
       "member":{"shape":"Namespace"},
-      "min":1
+      "max":1,
+      "min":0
     },
     "NextToken":{
       "type":"string",
@@ -1675,6 +2038,14 @@
       "enum":[
         "USER_FEDERATION",
         "M2M"
+      ]
+    },
+    "OperatorType":{
+      "type":"string",
+      "enum":[
+        "EQUALS_TO",
+        "EXISTS",
+        "NOT_EXISTS"
       ]
     },
     "PaginationToken":{"type":"string"},
@@ -1699,6 +2070,12 @@
         "javascript",
         "typescript"
       ]
+    },
+    "RequestIdentifier":{
+      "type":"string",
+      "max":80,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
     },
     "ResourceContent":{
       "type":"structure",
@@ -1767,6 +2144,13 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "RightExpression":{
+      "type":"structure",
+      "members":{
+        "metadataValue":{"shape":"MetadataValue"}
+      },
+      "union":true
+    },
     "Role":{
       "type":"string",
       "enum":[
@@ -1816,10 +2200,6 @@
       "box":true,
       "max":100,
       "min":1
-    },
-    "SensitiveString":{
-      "type":"string",
-      "sensitive":true
     },
     "ServiceException":{
       "type":"structure",
@@ -2002,6 +2382,48 @@
         "codeInterpreterIdentifier":{"shape":"String"},
         "sessionId":{"shape":"CodeInterpreterSessionId"},
         "lastUpdatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "StopRuntimeSessionRequest":{
+      "type":"structure",
+      "required":[
+        "runtimeSessionId",
+        "agentRuntimeArn"
+      ],
+      "members":{
+        "runtimeSessionId":{
+          "shape":"SessionType",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Runtime-Session-Id"
+        },
+        "agentRuntimeArn":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"agentRuntimeArn"
+        },
+        "qualifier":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"qualifier"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StopRuntimeSessionResponse":{
+      "type":"structure",
+      "members":{
+        "runtimeSessionId":{
+          "shape":"SessionId",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-AgentCore-Runtime-Session-Id"
+        },
+        "statusCode":{
+          "shape":"HttpResponseCode",
+          "location":"statusCode"
+        }
       }
     },
     "StreamUpdate":{

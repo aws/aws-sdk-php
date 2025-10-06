@@ -2,16 +2,15 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2022-07-28",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"resource-explorer-2",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceFullName":"AWS Resource Explorer",
     "serviceId":"Resource Explorer 2",
     "signatureVersion":"v4",
     "signingName":"resource-explorer-2",
-    "uid":"resource-explorer-2-2022-07-28",
-    "auth":["aws.auth#sigv4"]
+    "uid":"resource-explorer-2-2022-07-28"
   },
   "operations":{
     "AssociateDefaultView":{
@@ -47,7 +46,8 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "CreateIndex":{
       "name":"CreateIndex",
@@ -58,6 +58,24 @@
       },
       "input":{"shape":"CreateIndexInput"},
       "output":{"shape":"CreateIndexOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "CreateResourceExplorerSetup":{
+      "name":"CreateResourceExplorerSetup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateResourceExplorerSetup",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateResourceExplorerSetupInput"},
+      "output":{"shape":"CreateResourceExplorerSetupOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -99,6 +117,24 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteResourceExplorerSetup":{
+      "name":"DeleteResourceExplorerSetup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteResourceExplorerSetup",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteResourceExplorerSetupInput"},
+      "output":{"shape":"DeleteResourceExplorerSetupOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ],
@@ -152,7 +188,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDefaultView":{
       "name":"GetDefaultView",
@@ -168,7 +205,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetIndex":{
       "name":"GetIndex",
@@ -202,7 +240,61 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "GetResourceExplorerSetup":{
+      "name":"GetResourceExplorerSetup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetResourceExplorerSetup",
+        "responseCode":200
+      },
+      "input":{"shape":"GetResourceExplorerSetupInput"},
+      "output":{"shape":"GetResourceExplorerSetupOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "GetServiceIndex":{
+      "name":"GetServiceIndex",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetServiceIndex",
+        "responseCode":200
+      },
+      "output":{"shape":"GetServiceIndexOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "GetServiceView":{
+      "name":"GetServiceView",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetServiceView",
+        "responseCode":200
+      },
+      "input":{"shape":"GetServiceViewInput"},
+      "output":{"shape":"GetServiceViewOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
     },
     "GetView":{
       "name":"GetView",
@@ -220,7 +312,8 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListIndexes":{
       "name":"ListIndexes",
@@ -236,7 +329,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListIndexesForMembers":{
       "name":"ListIndexesForMembers",
@@ -252,7 +346,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListManagedViews":{
       "name":"ListManagedViews",
@@ -287,6 +382,56 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListServiceIndexes":{
+      "name":"ListServiceIndexes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListServiceIndexes",
+        "responseCode":200
+      },
+      "input":{"shape":"ListServiceIndexesInput"},
+      "output":{"shape":"ListServiceIndexesOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListServiceViews":{
+      "name":"ListServiceViews",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListServiceViews",
+        "responseCode":200
+      },
+      "input":{"shape":"ListServiceViewsInput"},
+      "output":{"shape":"ListServiceViewsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListStreamingAccessForServices":{
+      "name":"ListStreamingAccessForServices",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListStreamingAccessForServices",
+        "responseCode":200
+      },
+      "input":{"shape":"ListStreamingAccessForServicesInput"},
+      "output":{"shape":"ListStreamingAccessForServicesOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "ListSupportedResourceTypes":{
@@ -303,7 +448,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -321,7 +467,8 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListViews":{
       "name":"ListViews",
@@ -337,7 +484,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "Search":{
       "name":"Search",
@@ -355,7 +503,8 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -477,12 +626,12 @@
     "BatchGetViewError":{
       "type":"structure",
       "required":[
-        "ErrorMessage",
-        "ViewArn"
+        "ViewArn",
+        "ErrorMessage"
       ],
       "members":{
-        "ErrorMessage":{"shape":"String"},
-        "ViewArn":{"shape":"String"}
+        "ViewArn":{"shape":"String"},
+        "ErrorMessage":{"shape":"String"}
       }
     },
     "BatchGetViewErrors":{
@@ -504,8 +653,8 @@
     "BatchGetViewOutput":{
       "type":"structure",
       "members":{
-        "Errors":{"shape":"BatchGetViewErrors"},
-        "Views":{"shape":"ViewList"}
+        "Views":{"shape":"ViewList"},
+        "Errors":{"shape":"BatchGetViewErrors"}
       }
     },
     "Boolean":{
@@ -538,9 +687,55 @@
       "type":"structure",
       "members":{
         "Arn":{"shape":"String"},
-        "CreatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "State":{"shape":"IndexState"}
+        "State":{"shape":"IndexState"},
+        "CreatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
+    },
+    "CreateResourceExplorerSetupInput":{
+      "type":"structure",
+      "required":[
+        "RegionList",
+        "ViewName"
+      ],
+      "members":{
+        "RegionList":{"shape":"CreateResourceExplorerSetupInputRegionListList"},
+        "AggregatorRegions":{"shape":"CreateResourceExplorerSetupInputAggregatorRegionsList"},
+        "ViewName":{"shape":"CreateResourceExplorerSetupInputViewNameString"}
+      }
+    },
+    "CreateResourceExplorerSetupInputAggregatorRegionsList":{
+      "type":"list",
+      "member":{"shape":"CreateResourceExplorerSetupInputAggregatorRegionsListMemberString"},
+      "max":1,
+      "min":0
+    },
+    "CreateResourceExplorerSetupInputAggregatorRegionsListMemberString":{
+      "type":"string",
+      "pattern":"[a-z-]+-[a-z]+-[0-9]"
+    },
+    "CreateResourceExplorerSetupInputRegionListList":{
+      "type":"list",
+      "member":{"shape":"CreateResourceExplorerSetupInputRegionListListMemberString"},
+      "min":1
+    },
+    "CreateResourceExplorerSetupInputRegionListListMemberString":{
+      "type":"string",
+      "pattern":"[a-z-]+-[a-z]+-[0-9]"
+    },
+    "CreateResourceExplorerSetupInputViewNameString":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9-]{1,64}"
+    },
+    "CreateResourceExplorerSetupOutput":{
+      "type":"structure",
+      "required":["TaskId"],
+      "members":{
+        "TaskId":{"shape":"CreateResourceExplorerSetupOutputTaskIdString"}
+      }
+    },
+    "CreateResourceExplorerSetupOutputTaskIdString":{
+      "type":"string",
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
     },
     "CreateViewInput":{
       "type":"structure",
@@ -550,11 +745,11 @@
           "shape":"CreateViewInputClientTokenString",
           "idempotencyToken":true
         },
-        "Filters":{"shape":"SearchFilter"},
+        "ViewName":{"shape":"ViewName"},
         "IncludedProperties":{"shape":"IncludedPropertyList"},
         "Scope":{"shape":"CreateViewInputScopeString"},
-        "Tags":{"shape":"TagMap"},
-        "ViewName":{"shape":"ViewName"}
+        "Filters":{"shape":"SearchFilter"},
+        "Tags":{"shape":"TagMap"}
       }
     },
     "CreateViewInputClientTokenString":{
@@ -584,9 +779,27 @@
       "type":"structure",
       "members":{
         "Arn":{"shape":"String"},
-        "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "State":{"shape":"IndexState"}
+        "State":{"shape":"IndexState"},
+        "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
+    },
+    "DeleteResourceExplorerSetupInput":{
+      "type":"structure",
+      "members":{
+        "RegionList":{"shape":"RegionList"},
+        "DeleteInAllRegions":{"shape":"Boolean"}
+      }
+    },
+    "DeleteResourceExplorerSetupOutput":{
+      "type":"structure",
+      "required":["TaskId"],
+      "members":{
+        "TaskId":{"shape":"DeleteResourceExplorerSetupOutputTaskIdString"}
+      }
+    },
+    "DeleteResourceExplorerSetupOutputTaskIdString":{
+      "type":"string",
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
     },
     "DeleteViewInput":{
       "type":"structure",
@@ -608,9 +821,15 @@
     },
     "Document":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
+    },
+    "ErrorDetails":{
+      "type":"structure",
+      "members":{
+        "Code":{"shape":"String"},
+        "Message":{"shape":"String"}
+      }
     },
     "GetAccountLevelServiceConfigurationOutput":{
       "type":"structure",
@@ -628,13 +847,13 @@
       "type":"structure",
       "members":{
         "Arn":{"shape":"String"},
-        "CreatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "Type":{"shape":"IndexType"},
+        "State":{"shape":"IndexState"},
         "ReplicatingFrom":{"shape":"RegionList"},
         "ReplicatingTo":{"shape":"RegionList"},
-        "State":{"shape":"IndexState"},
-        "Tags":{"shape":"TagMap"},
-        "Type":{"shape":"IndexType"}
+        "CreatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "Tags":{"shape":"TagMap"}
       }
     },
     "GetManagedViewInput":{
@@ -655,6 +874,68 @@
         "ManagedView":{"shape":"ManagedView"}
       }
     },
+    "GetResourceExplorerSetupInput":{
+      "type":"structure",
+      "required":["TaskId"],
+      "members":{
+        "TaskId":{"shape":"GetResourceExplorerSetupInputTaskIdString"},
+        "MaxResults":{"shape":"GetResourceExplorerSetupInputMaxResultsInteger"},
+        "NextToken":{"shape":"GetResourceExplorerSetupInputNextTokenString"}
+      }
+    },
+    "GetResourceExplorerSetupInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "GetResourceExplorerSetupInputNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "GetResourceExplorerSetupInputTaskIdString":{
+      "type":"string",
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "GetResourceExplorerSetupOutput":{
+      "type":"structure",
+      "members":{
+        "Regions":{"shape":"RegionStatusList"},
+        "NextToken":{"shape":"GetResourceExplorerSetupOutputNextTokenString"}
+      }
+    },
+    "GetResourceExplorerSetupOutputNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "GetServiceIndexOutput":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"String"},
+        "Type":{"shape":"IndexType"}
+      }
+    },
+    "GetServiceViewInput":{
+      "type":"structure",
+      "required":["ServiceViewArn"],
+      "members":{
+        "ServiceViewArn":{"shape":"GetServiceViewInputServiceViewArnString"}
+      }
+    },
+    "GetServiceViewInputServiceViewArnString":{
+      "type":"string",
+      "max":1011,
+      "min":1
+    },
+    "GetServiceViewOutput":{
+      "type":"structure",
+      "required":["View"],
+      "members":{
+        "View":{"shape":"ServiceView"}
+      }
+    },
     "GetViewInput":{
       "type":"structure",
       "required":["ViewArn"],
@@ -670,8 +951,8 @@
     "GetViewOutput":{
       "type":"structure",
       "members":{
-        "Tags":{"shape":"TagMap"},
-        "View":{"shape":"View"}
+        "View":{"shape":"View"},
+        "Tags":{"shape":"TagMap"}
       }
     },
     "IncludedProperty":{
@@ -693,8 +974,8 @@
     "Index":{
       "type":"structure",
       "members":{
-        "Arn":{"shape":"String"},
         "Region":{"shape":"String"},
+        "Arn":{"shape":"String"},
         "Type":{"shape":"IndexType"}
       }
     },
@@ -711,6 +992,14 @@
         "DELETED",
         "UPDATING"
       ]
+    },
+    "IndexStatus":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"OperationStatus"},
+        "Index":{"shape":"Index"},
+        "ErrorDetails":{"shape":"ErrorDetails"}
+      }
     },
     "IndexType":{
       "type":"string",
@@ -764,10 +1053,10 @@
     "ListIndexesInput":{
       "type":"structure",
       "members":{
-        "MaxResults":{"shape":"ListIndexesInputMaxResultsInteger"},
-        "NextToken":{"shape":"ListIndexesInputNextTokenString"},
+        "Type":{"shape":"IndexType"},
         "Regions":{"shape":"ListIndexesInputRegionsList"},
-        "Type":{"shape":"IndexType"}
+        "MaxResults":{"shape":"ListIndexesInputMaxResultsInteger"},
+        "NextToken":{"shape":"ListIndexesInputNextTokenString"}
       }
     },
     "ListIndexesInputMaxResultsInteger":{
@@ -783,9 +1072,13 @@
     },
     "ListIndexesInputRegionsList":{
       "type":"list",
-      "member":{"shape":"String"},
+      "member":{"shape":"ListIndexesInputRegionsListMemberString"},
       "max":20,
       "min":0
+    },
+    "ListIndexesInputRegionsListMemberString":{
+      "type":"string",
+      "pattern":"[a-z-]+-[a-z]+-[0-9]"
     },
     "ListIndexesOutput":{
       "type":"structure",
@@ -821,8 +1114,8 @@
     "ListManagedViewsOutput":{
       "type":"structure",
       "members":{
-        "ManagedViews":{"shape":"ManagedViewArnList"},
-        "NextToken":{"shape":"String"}
+        "NextToken":{"shape":"String"},
+        "ManagedViews":{"shape":"ManagedViewArnList"}
       }
     },
     "ListResourcesInput":{
@@ -830,8 +1123,8 @@
       "members":{
         "Filters":{"shape":"SearchFilter"},
         "MaxResults":{"shape":"ListResourcesInputMaxResultsInteger"},
-        "NextToken":{"shape":"ListResourcesInputNextTokenString"},
-        "ViewArn":{"shape":"ListResourcesInputViewArnString"}
+        "ViewArn":{"shape":"ListResourcesInputViewArnString"},
+        "NextToken":{"shape":"ListResourcesInputNextTokenString"}
       }
     },
     "ListResourcesInputMaxResultsInteger":{
@@ -853,8 +1146,8 @@
     "ListResourcesOutput":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"ListResourcesOutputNextTokenString"},
         "Resources":{"shape":"ResourceList"},
+        "NextToken":{"shape":"ListResourcesOutputNextTokenString"},
         "ViewArn":{"shape":"ListResourcesOutputViewArnString"}
       }
     },
@@ -868,11 +1161,88 @@
       "max":1011,
       "min":1
     },
+    "ListServiceIndexesInput":{
+      "type":"structure",
+      "members":{
+        "Regions":{"shape":"ListServiceIndexesInputRegionsList"},
+        "MaxResults":{"shape":"ListServiceIndexesInputMaxResultsInteger"},
+        "NextToken":{"shape":"ListServiceIndexesInputNextTokenString"}
+      }
+    },
+    "ListServiceIndexesInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListServiceIndexesInputNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "ListServiceIndexesInputRegionsList":{
+      "type":"list",
+      "member":{"shape":"ListServiceIndexesInputRegionsListMemberString"},
+      "max":20,
+      "min":0
+    },
+    "ListServiceIndexesInputRegionsListMemberString":{
+      "type":"string",
+      "pattern":"[a-z-]+-[a-z]+-[0-9]"
+    },
+    "ListServiceIndexesOutput":{
+      "type":"structure",
+      "members":{
+        "Indexes":{"shape":"IndexList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListServiceViewsInput":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"ListServiceViewsInputMaxResultsInteger"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListServiceViewsInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":1
+    },
+    "ListServiceViewsOutput":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"String"},
+        "ServiceViews":{"shape":"ServiceViewArnList"}
+      }
+    },
+    "ListStreamingAccessForServicesInput":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"ListStreamingAccessForServicesInputMaxResultsInteger"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListStreamingAccessForServicesInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":1
+    },
+    "ListStreamingAccessForServicesOutput":{
+      "type":"structure",
+      "required":["StreamingAccessForServices"],
+      "members":{
+        "StreamingAccessForServices":{"shape":"StreamingAccessDetailsList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "ListSupportedResourceTypesInput":{
       "type":"structure",
       "members":{
-        "MaxResults":{"shape":"ListSupportedResourceTypesInputMaxResultsInteger"},
-        "NextToken":{"shape":"String"}
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"ListSupportedResourceTypesInputMaxResultsInteger"}
       }
     },
     "ListSupportedResourceTypesInputMaxResultsInteger":{
@@ -884,8 +1254,8 @@
     "ListSupportedResourceTypesOutput":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"String"},
-        "ResourceTypes":{"shape":"ResourceTypeList"}
+        "ResourceTypes":{"shape":"ResourceTypeList"},
+        "NextToken":{"shape":"String"}
       }
     },
     "ListTagsForResourceInput":{
@@ -908,8 +1278,8 @@
     "ListViewsInput":{
       "type":"structure",
       "members":{
-        "MaxResults":{"shape":"ListViewsInputMaxResultsInteger"},
-        "NextToken":{"shape":"String"}
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"ListViewsInputMaxResultsInteger"}
       }
     },
     "ListViewsInputMaxResultsInteger":{
@@ -921,8 +1291,8 @@
     "ListViewsOutput":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"String"},
-        "Views":{"shape":"ViewArnList"}
+        "Views":{"shape":"ViewArnList"},
+        "NextToken":{"shape":"String"}
       }
     },
     "Long":{
@@ -932,15 +1302,15 @@
     "ManagedView":{
       "type":"structure",
       "members":{
-        "Filters":{"shape":"SearchFilter"},
-        "IncludedProperties":{"shape":"IncludedPropertyList"},
-        "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
         "ManagedViewArn":{"shape":"String"},
         "ManagedViewName":{"shape":"String"},
-        "Owner":{"shape":"String"},
-        "ResourcePolicy":{"shape":"String"},
-        "Scope":{"shape":"String"},
         "TrustedService":{"shape":"String"},
+        "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "Owner":{"shape":"String"},
+        "Scope":{"shape":"String"},
+        "IncludedProperties":{"shape":"IncludedPropertyList"},
+        "Filters":{"shape":"SearchFilter"},
+        "ResourcePolicy":{"shape":"String"},
         "Version":{"shape":"String"}
       }
     },
@@ -952,14 +1322,23 @@
       "type":"structure",
       "members":{
         "AccountId":{"shape":"String"},
-        "Arn":{"shape":"String"},
         "Region":{"shape":"String"},
+        "Arn":{"shape":"String"},
         "Type":{"shape":"IndexType"}
       }
     },
     "MemberIndexList":{
       "type":"list",
       "member":{"shape":"MemberIndex"}
+    },
+    "OperationStatus":{
+      "type":"string",
+      "enum":[
+        "SUCCEEDED",
+        "FAILED",
+        "IN_PROGRESS",
+        "SKIPPED"
+      ]
     },
     "OrgConfiguration":{
       "type":"structure",
@@ -977,25 +1356,45 @@
     },
     "RegionList":{
       "type":"list",
-      "member":{"shape":"String"}
+      "member":{"shape":"RegionListMemberString"}
+    },
+    "RegionListMemberString":{
+      "type":"string",
+      "pattern":"[a-z-]+-[a-z]+-[0-9]"
+    },
+    "RegionStatus":{
+      "type":"structure",
+      "members":{
+        "Region":{"shape":"RegionStatusRegionString"},
+        "Index":{"shape":"IndexStatus"},
+        "View":{"shape":"ViewStatus"}
+      }
+    },
+    "RegionStatusList":{
+      "type":"list",
+      "member":{"shape":"RegionStatus"}
+    },
+    "RegionStatusRegionString":{
+      "type":"string",
+      "pattern":"[a-z-]+-[a-z]+-[0-9]"
     },
     "Resource":{
       "type":"structure",
       "members":{
         "Arn":{"shape":"String"},
-        "LastReportedAt":{"shape":"SyntheticTimestamp_date_time"},
         "OwningAccountId":{"shape":"String"},
-        "Properties":{"shape":"ResourcePropertyList"},
         "Region":{"shape":"String"},
         "ResourceType":{"shape":"String"},
-        "Service":{"shape":"String"}
+        "Service":{"shape":"String"},
+        "LastReportedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "Properties":{"shape":"ResourcePropertyList"}
       }
     },
     "ResourceCount":{
       "type":"structure",
       "members":{
-        "Complete":{"shape":"Boolean"},
-        "TotalResources":{"shape":"Long"}
+        "TotalResources":{"shape":"Long"},
+        "Complete":{"shape":"Boolean"}
       }
     },
     "ResourceList":{
@@ -1016,9 +1415,9 @@
     "ResourceProperty":{
       "type":"structure",
       "members":{
-        "Data":{"shape":"Document"},
+        "Name":{"shape":"String"},
         "LastReportedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "Name":{"shape":"String"}
+        "Data":{"shape":"Document"}
       }
     },
     "ResourcePropertyList":{
@@ -1046,10 +1445,10 @@
       "type":"structure",
       "required":["QueryString"],
       "members":{
-        "MaxResults":{"shape":"SearchInputMaxResultsInteger"},
-        "NextToken":{"shape":"SearchInputNextTokenString"},
         "QueryString":{"shape":"QueryString"},
-        "ViewArn":{"shape":"SearchInputViewArnString"}
+        "MaxResults":{"shape":"SearchInputMaxResultsInteger"},
+        "ViewArn":{"shape":"SearchInputViewArnString"},
+        "NextToken":{"shape":"SearchInputNextTokenString"}
       }
     },
     "SearchInputMaxResultsInteger":{
@@ -1071,10 +1470,10 @@
     "SearchOutput":{
       "type":"structure",
       "members":{
-        "Count":{"shape":"ResourceCount"},
-        "NextToken":{"shape":"SearchOutputNextTokenString"},
         "Resources":{"shape":"ResourceList"},
-        "ViewArn":{"shape":"SearchOutputViewArnString"}
+        "NextToken":{"shape":"SearchOutputNextTokenString"},
+        "ViewArn":{"shape":"SearchOutputViewArnString"},
+        "Count":{"shape":"ResourceCount"}
       }
     },
     "SearchOutputNextTokenString":{
@@ -1105,6 +1504,36 @@
       },
       "exception":true
     },
+    "ServiceView":{
+      "type":"structure",
+      "required":["ServiceViewArn"],
+      "members":{
+        "ServiceViewArn":{"shape":"String"},
+        "Filters":{"shape":"SearchFilter"},
+        "IncludedProperties":{"shape":"IncludedPropertyList"},
+        "StreamingAccessForService":{"shape":"String"},
+        "ScopeType":{"shape":"String"}
+      }
+    },
+    "ServiceViewArnList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "StreamingAccessDetails":{
+      "type":"structure",
+      "required":[
+        "ServicePrincipal",
+        "CreatedAt"
+      ],
+      "members":{
+        "ServicePrincipal":{"shape":"String"},
+        "CreatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "StreamingAccessDetailsList":{
+      "type":"list",
+      "member":{"shape":"StreamingAccessDetails"}
+    },
     "String":{"type":"string"},
     "StringList":{
       "type":"list",
@@ -1114,8 +1543,8 @@
     "SupportedResourceType":{
       "type":"structure",
       "members":{
-        "ResourceType":{"shape":"String"},
-        "Service":{"shape":"String"}
+        "Service":{"shape":"String"},
+        "ResourceType":{"shape":"String"}
       }
     },
     "SyntheticTimestamp_date_time":{
@@ -1132,18 +1561,17 @@
       "type":"structure",
       "required":["resourceArn"],
       "members":{
-        "Tags":{"shape":"TagMap"},
         "resourceArn":{
           "shape":"String",
           "location":"uri",
           "locationName":"resourceArn"
-        }
+        },
+        "Tags":{"shape":"TagMap"}
       }
     },
     "TagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ThrottlingException":{
       "type":"structure",
@@ -1188,8 +1616,7 @@
     },
     "UntagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateIndexTypeInput":{
       "type":"structure",
@@ -1206,18 +1633,18 @@
       "type":"structure",
       "members":{
         "Arn":{"shape":"String"},
-        "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "Type":{"shape":"IndexType"},
         "State":{"shape":"IndexState"},
-        "Type":{"shape":"IndexType"}
+        "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "UpdateViewInput":{
       "type":"structure",
       "required":["ViewArn"],
       "members":{
-        "Filters":{"shape":"SearchFilter"},
+        "ViewArn":{"shape":"UpdateViewInputViewArnString"},
         "IncludedProperties":{"shape":"IncludedPropertyList"},
-        "ViewArn":{"shape":"UpdateViewInputViewArnString"}
+        "Filters":{"shape":"SearchFilter"}
       }
     },
     "UpdateViewInputViewArnString":{
@@ -1235,8 +1662,8 @@
       "type":"structure",
       "required":["Message"],
       "members":{
-        "FieldList":{"shape":"ValidationExceptionFieldList"},
-        "Message":{"shape":"String"}
+        "Message":{"shape":"String"},
+        "FieldList":{"shape":"ValidationExceptionFieldList"}
       },
       "error":{
         "httpStatusCode":400,
@@ -1262,12 +1689,12 @@
     "View":{
       "type":"structure",
       "members":{
-        "Filters":{"shape":"SearchFilter"},
-        "IncludedProperties":{"shape":"IncludedPropertyList"},
-        "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "ViewArn":{"shape":"String"},
         "Owner":{"shape":"String"},
+        "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
         "Scope":{"shape":"String"},
-        "ViewArn":{"shape":"String"}
+        "IncludedProperties":{"shape":"IncludedPropertyList"},
+        "Filters":{"shape":"SearchFilter"}
       }
     },
     "ViewArnList":{
@@ -1280,7 +1707,15 @@
     },
     "ViewName":{
       "type":"string",
-      "pattern":"^[a-zA-Z0-9\\-]{1,64}$"
+      "pattern":"[a-zA-Z0-9\\-]{1,64}"
+    },
+    "ViewStatus":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"OperationStatus"},
+        "View":{"shape":"View"},
+        "ErrorDetails":{"shape":"ErrorDetails"}
+      }
     }
   }
 }

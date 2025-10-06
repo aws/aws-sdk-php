@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\QuickSight` - Documentation improvements for QuickSight API documentation to clarify that delete operation APIs are global.
+* `Aws\RDS` - Documentation updates to the CreateDBClusterMessage$PubliclyAccessible and CreateDBInstanceMessage$PubliclyAccessible properties.
+* `Aws\MemoryDB` - Support for DescribeMultiRegionParameterGroups and DescribeMultiRegionParameters API.
+* `Aws\Glue` - Adds labeling for DataQualityRuleResult for GetDataQualityResult and PublishDataQualityResult APIs
+* `Aws\MediaConnect` - Enabling Tag-on-Create for AWS Elemental MediaConnect flow-based resource types
+* `Aws\Backup` - Adds optional MaxScheduledRunsPreview input to GetBackupPlan API to provide a preview of up to 10 next scheduled backup plan runs in the GetBackupPlan response.
+* `Aws\BedrockAgentCoreControl` - Add support for VM lifecycle configuration parameters and A2A protocol
+* `Aws\BedrockAgentCore` - Add support for batch memory management, agent card retrieval and session termination
+* `Aws\ResourceExplorer2` - Add new AWS Resource Explorer APIs
+
 ## 3.356.32 - 2025-10-03
 
 * `Aws\PaymentCryptographyData` - Added a new API - translateKeyMaterial; allows keys wrapped by ECDH derived keys to be rewrapped under a static AES keyblock without first importing the key into the service.

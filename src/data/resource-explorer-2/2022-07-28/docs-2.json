@@ -5,19 +5,27 @@
     "AssociateDefaultView": "<p>Sets the specified view as the default for the Amazon Web Services Region in which you call this operation. When a user performs a <a>Search</a> that doesn't explicitly specify which view to use, then Amazon Web Services Resource Explorer automatically chooses this default view for searches performed in this Amazon Web Services Region.</p> <p>If an Amazon Web Services Region doesn't have a default view configured, then users must explicitly specify a view with every <code>Search</code> operation performed in that Region.</p>",
     "BatchGetView": "<p>Retrieves details about a list of views.</p>",
     "CreateIndex": "<p>Turns on Amazon Web Services Resource Explorer in the Amazon Web Services Region in which you called this operation by creating an index. Resource Explorer begins discovering the resources in this Region and stores the details about the resources in the index so that they can be queried by using the <a>Search</a> operation. You can create only one index in a Region.</p> <note> <p>This operation creates only a <i>local</i> index. To promote the local index in one Amazon Web Services Region into the aggregator index for the Amazon Web Services account, use the <a>UpdateIndexType</a> operation. For more information, see <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/manage-aggregator-region.html\">Turning on cross-Region search by creating an aggregator index</a> in the <i>Amazon Web Services Resource Explorer User Guide</i>.</p> </note> <p>For more details about what happens when you turn on Resource Explorer in an Amazon Web Services Region, see <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/manage-service-activate.html\">Turn on Resource Explorer to index your resources in an Amazon Web Services Region</a> in the <i>Amazon Web Services Resource Explorer User Guide</i>.</p> <p>If this is the first Amazon Web Services Region in which you've created an index for Resource Explorer, then this operation also <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/security_iam_service-linked-roles.html\">creates a service-linked role</a> in your Amazon Web Services account that allows Resource Explorer to enumerate your resources to populate the index.</p> <ul> <li> <p> <b>Action</b>: <code>resource-explorer-2:CreateIndex</code> </p> <p> <b>Resource</b>: The ARN of the index (as it will exist after the operation completes) in the Amazon Web Services Region and account in which you're trying to create the index. Use the wildcard character (<code>*</code>) at the end of the string to match the eventual UUID. For example, the following <code>Resource</code> element restricts the role or user to creating an index in only the <code>us-east-2</code> Region of the specified account.</p> <p> <code>\"Resource\": \"arn:aws:resource-explorer-2:us-west-2:<i>&lt;account-id&gt;</i>:index/*\"</code> </p> <p>Alternatively, you can use <code>\"Resource\": \"*\"</code> to allow the role or user to create an index in any Region.</p> </li> <li> <p> <b>Action</b>: <code>iam:CreateServiceLinkedRole</code> </p> <p> <b>Resource</b>: No specific resource (*). </p> <p>This permission is required only the first time you create an index to turn on Resource Explorer in the account. Resource Explorer uses this to create the <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/security_iam_service-linked-roles.html\">service-linked role needed to index the resources in your account</a>. Resource Explorer uses the same service-linked role for all additional indexes you create afterwards.</p> </li> </ul>",
+    "CreateResourceExplorerSetup": "<p>Creates a Resource Explorer setup configuration across multiple Amazon Web Services Regions. This operation sets up indexes and views in the specified Regions. This operation can also be used to set an aggregator Region for cross-Region resource search.</p>",
     "CreateView": "<p>Creates a view that users can query by using the <a>Search</a> operation. Results from queries that you make using this view include only resources that match the view's <code>Filters</code>. For more information about Amazon Web Services Resource Explorer views, see <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/manage-views.html\">Managing views</a> in the <i>Amazon Web Services Resource Explorer User Guide</i>.</p> <p>Only the principals with an IAM identity-based policy that grants <code>Allow</code> to the <code>Search</code> action on a <code>Resource</code> with the <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of this view can <a>Search</a> using views you create with this operation.</p>",
     "DeleteIndex": "<p>Deletes the specified index and turns off Amazon Web Services Resource Explorer in the specified Amazon Web Services Region. When you delete an index, Resource Explorer stops discovering and indexing resources in that Region. Resource Explorer also deletes all views in that Region. These actions occur as asynchronous background tasks. You can check to see when the actions are complete by using the <a>GetIndex</a> operation and checking the <code>Status</code> response value.</p> <note> <p>If the index you delete is the aggregator index for the Amazon Web Services account, you must wait 24 hours before you can promote another local index to be the aggregator index for the account. Users can't perform account-wide searches using Resource Explorer until another aggregator index is configured.</p> </note>",
+    "DeleteResourceExplorerSetup": "<p>Deletes a Resource Explorer setup configuration. This operation removes indexes and views from the specified Regions or all Regions where Resource Explorer is configured.</p>",
     "DeleteView": "<p>Deletes the specified view.</p> <p>If the specified view is the default view for its Amazon Web Services Region, then all <a>Search</a> operations in that Region must explicitly specify the view to use until you configure a new default by calling the <a>AssociateDefaultView</a> operation.</p>",
     "DisassociateDefaultView": "<p>After you call this operation, the affected Amazon Web Services Region no longer has a default view. All <a>Search</a> operations in that Region must explicitly specify a view or the operation fails. You can configure a new default by calling the <a>AssociateDefaultView</a> operation.</p> <p>If an Amazon Web Services Region doesn't have a default view configured, then users must explicitly specify a view with every <code>Search</code> operation performed in that Region.</p>",
     "GetAccountLevelServiceConfiguration": "<p>Retrieves the status of your account's Amazon Web Services service access, and validates the service linked role required to access the multi-account search feature. Only the management account can invoke this API call. </p>",
     "GetDefaultView": "<p>Retrieves the Amazon Resource Name (ARN) of the view that is the default for the Amazon Web Services Region in which you call this operation. You can then call <a>GetView</a> to retrieve the details of that view.</p>",
     "GetIndex": "<p>Retrieves details about the Amazon Web Services Resource Explorer index in the Amazon Web Services Region in which you invoked the operation.</p>",
     "GetManagedView": "<p>Retrieves details of the specified <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/aws-managed-views.html\">Amazon Web Services-managed view</a>. </p>",
+    "GetResourceExplorerSetup": "<p>Retrieves the status and details of a Resource Explorer setup operation. This operation returns information about the progress of creating or deleting Resource Explorer configurations across Regions.</p>",
+    "GetServiceIndex": "<p>Retrieves information about the Resource Explorer index in the current Amazon Web Services Region. This operation returns the ARN and type of the index if one exists.</p>",
+    "GetServiceView": "<p>Retrieves details about a specific Resource Explorer service view. This operation returns the configuration and properties of the specified view.</p>",
     "GetView": "<p>Retrieves details of the specified view.</p>",
     "ListIndexes": "<p>Retrieves a list of all of the indexes in Amazon Web Services Regions that are currently collecting resource information for Amazon Web Services Resource Explorer.</p>",
     "ListIndexesForMembers": "<p>Retrieves a list of a member's indexes in all Amazon Web Services Regions that are currently collecting resource information for Amazon Web Services Resource Explorer. Only the management account or a delegated administrator with service access enabled can invoke this API call. </p>",
     "ListManagedViews": "<p>Lists the Amazon resource names (ARNs) of the <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/aws-managed-views.html\">Amazon Web Services-managed views</a> available in the Amazon Web Services Region in which you call this operation. </p>",
     "ListResources": "<p>Returns a list of resources and their details that match the specified criteria. This query must use a view. If you don’t explicitly specify a view, then Resource Explorer uses the default view for the Amazon Web Services Region in which you call this operation. </p>",
+    "ListServiceIndexes": "<p>Lists all Resource Explorer indexes across the specified Amazon Web Services Regions. This operation returns information about indexes including their ARNs, types, and Regions.</p>",
+    "ListServiceViews": "<p>Lists all Resource Explorer service views available in the current Amazon Web Services account. This operation returns the ARNs of available service views.</p>",
+    "ListStreamingAccessForServices": "<p>Returns a list of Amazon Web Services services that have been granted streaming access to your Resource Explorer data. Streaming access allows Amazon Web Services services to receive real-time updates about your resources as they are indexed by Resource Explorer.</p>",
     "ListSupportedResourceTypes": "<p>Retrieves a list of all resource types currently supported by Amazon Web Services Resource Explorer.</p>",
     "ListTagsForResource": "<p>Lists the tags that are attached to the specified resource.</p>",
     "ListViews": "<p>Lists the <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource names (ARNs)</a> of the views available in the Amazon Web Services Region in which you call this operation.</p> <note> <p>Always check the <code>NextToken</code> response parameter for a <code>null</code> value when calling a paginated operation. These operations can occasionally return an empty set of results even when there are more results available. The <code>NextToken</code> response parameter value is <code>null</code> <i>only</i> when there are no more results to display.</p> </note>",
@@ -36,8 +44,7 @@
     },
     "AccessDeniedException": {
       "base": "<p>The credentials that you used to call this operation don't have the minimum required permissions.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountId": {
       "base": null,
@@ -47,8 +54,7 @@
     },
     "AssociateDefaultViewInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateDefaultViewInputViewArnString": {
       "base": null,
@@ -58,8 +64,7 @@
     },
     "AssociateDefaultViewOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetViewError": {
       "base": "<p>A collection of error messages for any views that Amazon Web Services Resource Explorer couldn't retrieve details.</p>",
@@ -75,8 +80,7 @@
     },
     "BatchGetViewInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetViewInputViewArnsList": {
       "base": null,
@@ -86,34 +90,74 @@
     },
     "BatchGetViewOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Boolean": {
       "base": null,
       "refs": {
+        "DeleteResourceExplorerSetupInput$DeleteInAllRegions": "<p>Specifies whether to delete Resource Explorer configuration from all Regions where it is currently enabled. If this parameter is set to <code>true</code>, a value for <code>RegionList</code> must not be provided. Otherwise, the operation fails with a <code>ValidationException</code> error.</p>",
         "ResourceCount$Complete": "<p>Indicates whether the <code>TotalResources</code> value represents an exhaustive count of search results.</p> <ul> <li> <p>If <code>True</code>, it indicates that the search was exhaustive. Every resource that matches the query was counted.</p> </li> <li> <p>If <code>False</code>, then the search reached the limit of 1,000 matching results, and stopped counting.</p> </li> </ul>"
       }
     },
     "ConflictException": {
       "base": "<p>If you attempted to create a view, then the request failed because either you specified parameters that didn’t match the original request, or you attempted to create a view with a name that already exists in this Amazon Web Services Region.</p> <p>If you attempted to create an index, then the request failed because either you specified parameters that didn't match the original request, or an index already exists in the current Amazon Web Services Region.</p> <p>If you attempted to update an index type to <code>AGGREGATOR</code>, then the request failed because you already have an <code>AGGREGATOR</code> index in a different Amazon Web Services Region.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIndexInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIndexOutput": {
       "base": null,
+      "refs": {}
+    },
+    "CreateResourceExplorerSetupInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateResourceExplorerSetupInputAggregatorRegionsList": {
+      "base": null,
       "refs": {
+        "CreateResourceExplorerSetupInput$AggregatorRegions": "<p>A list of Amazon Web Services Regions that should be configured as aggregator Regions. Aggregator Regions receive replicated index information from all other Regions where there is a user-owned index.</p>"
+      }
+    },
+    "CreateResourceExplorerSetupInputAggregatorRegionsListMemberString": {
+      "base": null,
+      "refs": {
+        "CreateResourceExplorerSetupInputAggregatorRegionsList$member": null
+      }
+    },
+    "CreateResourceExplorerSetupInputRegionListList": {
+      "base": null,
+      "refs": {
+        "CreateResourceExplorerSetupInput$RegionList": "<p>A list of Amazon Web Services Regions where Resource Explorer should be configured. Each Region in the list will have a user-owned index created.</p>"
+      }
+    },
+    "CreateResourceExplorerSetupInputRegionListListMemberString": {
+      "base": null,
+      "refs": {
+        "CreateResourceExplorerSetupInputRegionListList$member": null
+      }
+    },
+    "CreateResourceExplorerSetupInputViewNameString": {
+      "base": null,
+      "refs": {
+        "CreateResourceExplorerSetupInput$ViewName": "<p>The name for the view to be created as part of the Resource Explorer setup. The view name must be unique within the Amazon Web Services account and Region.</p>"
+      }
+    },
+    "CreateResourceExplorerSetupOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateResourceExplorerSetupOutputTaskIdString": {
+      "base": null,
+      "refs": {
+        "CreateResourceExplorerSetupOutput$TaskId": "<p>The unique identifier for the setup task. Use this ID with <code>GetResourceExplorerSetup</code> to monitor the progress of the configuration operation.</p>"
       }
     },
     "CreateViewInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateViewInputClientTokenString": {
       "base": null,
@@ -129,23 +173,33 @@
     },
     "CreateViewOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIndexInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIndexOutput": {
       "base": null,
+      "refs": {}
+    },
+    "DeleteResourceExplorerSetupInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteResourceExplorerSetupOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteResourceExplorerSetupOutputTaskIdString": {
+      "base": null,
       "refs": {
+        "DeleteResourceExplorerSetupOutput$TaskId": "<p>The unique identifier for the deletion task. Use this ID with <code>GetResourceExplorerSetup</code> to monitor the progress of the deletion operation.</p>"
       }
     },
     "DeleteViewInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteViewInputViewArnString": {
       "base": null,
@@ -155,8 +209,7 @@
     },
     "DeleteViewOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Document": {
       "base": null,
@@ -164,25 +217,28 @@
         "ResourceProperty$Data": "<p>Details about this property. The content of this field is a JSON object that varies based on the resource type.</p>"
       }
     },
+    "ErrorDetails": {
+      "base": "<p>Contains information about an error that occurred during a Resource Explorer setup operation.</p>",
+      "refs": {
+        "IndexStatus$ErrorDetails": "<p>Details about any error that occurred during the index operation.</p>",
+        "ViewStatus$ErrorDetails": "<p>Details about any error that occurred during the view operation.</p>"
+      }
+    },
     "GetAccountLevelServiceConfigurationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDefaultViewOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIndexOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedViewInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedViewInputManagedViewArnString": {
       "base": null,
@@ -192,13 +248,61 @@
     },
     "GetManagedViewOutput": {
       "base": null,
+      "refs": {}
+    },
+    "GetResourceExplorerSetupInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetResourceExplorerSetupInputMaxResultsInteger": {
+      "base": null,
       "refs": {
+        "GetResourceExplorerSetupInput$MaxResults": "<p>The maximum number of Region status results to return in a single response. Valid values are between <code>1</code> and <code>100</code>.</p>"
       }
+    },
+    "GetResourceExplorerSetupInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "GetResourceExplorerSetupInput$NextToken": "<p>The pagination token from a previous <code>GetResourceExplorerSetup</code> response. Use this token to retrieve the next set of results.</p>"
+      }
+    },
+    "GetResourceExplorerSetupInputTaskIdString": {
+      "base": null,
+      "refs": {
+        "GetResourceExplorerSetupInput$TaskId": "<p>The unique identifier of the setup task to retrieve status information for. This ID is returned by <code>CreateResourceExplorerSetup</code> or <code>DeleteResourceExplorerSetup</code> operations.</p>"
+      }
+    },
+    "GetResourceExplorerSetupOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetResourceExplorerSetupOutputNextTokenString": {
+      "base": null,
+      "refs": {
+        "GetResourceExplorerSetupOutput$NextToken": "<p>The pagination token to use in a subsequent <code>GetResourceExplorerSetup</code> request to retrieve the next set of results.</p>"
+      }
+    },
+    "GetServiceIndexOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetServiceViewInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetServiceViewInputServiceViewArnString": {
+      "base": null,
+      "refs": {
+        "GetServiceViewInput$ServiceViewArn": "<p>The Amazon Resource Name (ARN) of the service view to retrieve details for.</p>"
+      }
+    },
+    "GetServiceViewOutput": {
+      "base": null,
+      "refs": {}
     },
     "GetViewInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetViewInputViewArnString": {
       "base": null,
@@ -208,8 +312,7 @@
     },
     "GetViewOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IncludedProperty": {
       "base": "<p>Information about an additional property that describes a resource, that you can optionally include in the view. This lets you view that property in search results, and filter your search results based on the value of the property.</p>",
@@ -222,6 +325,7 @@
       "refs": {
         "CreateViewInput$IncludedProperties": "<p>Specifies optional fields that you want included in search results from this view. It is a list of objects that each describe a field to include.</p> <p>The default is an empty list, with no optional fields included in the results.</p>",
         "ManagedView$IncludedProperties": "<p>A structure that contains additional information about the managed view.</p>",
+        "ServiceView$IncludedProperties": "<p>A list of additional resource properties that are included in this view for search and filtering purposes.</p>",
         "UpdateViewInput$IncludedProperties": "<p>Specifies optional fields that you want included in search results from this view. It is a list of objects that each describe a field to include.</p> <p>The default is an empty list, with no optional fields included in the results.</p>",
         "View$IncludedProperties": "<p>A structure that contains additional information about the view.</p>"
       }
@@ -235,13 +339,15 @@
     "Index": {
       "base": "<p>An index is the data store used by Amazon Web Services Resource Explorer to hold information about your Amazon Web Services resources that the service discovers. Creating an index in an Amazon Web Services Region turns on Resource Explorer and lets it discover your resources.</p> <p>By default, an index is <i>local</i>, meaning that it contains information about resources in only the same Region as the index. However, you can promote the index of one Region in the account by calling <a>UpdateIndexType</a> to convert it into an aggregator index. The aggregator index receives a replicated copy of the index information from all other Regions where Resource Explorer is turned on. This allows search operations in that Region to return results from all Regions in the account.</p>",
       "refs": {
-        "IndexList$member": null
+        "IndexList$member": null,
+        "IndexStatus$Index": null
       }
     },
     "IndexList": {
       "base": null,
       "refs": {
-        "ListIndexesOutput$Indexes": "<p>A structure that contains the details and status of each index.</p>"
+        "ListIndexesOutput$Indexes": "<p>A structure that contains the details and status of each index.</p>",
+        "ListServiceIndexesOutput$Indexes": "<p>A list of <code>Index</code> objects that describe the Resource Explorer indexes found in the specified Regions.</p>"
       }
     },
     "IndexState": {
@@ -253,10 +359,17 @@
         "UpdateIndexTypeOutput$State": "<p>Indicates the state of the request to update the index. This operation is asynchronous. Call the <a>GetIndex</a> operation to check for changes.</p>"
       }
     },
+    "IndexStatus": {
+      "base": "<p>Contains information about the status of a Resource Explorer index operation in a specific Region.</p>",
+      "refs": {
+        "RegionStatus$Index": "<p>The status information for the Resource Explorer index in this Region.</p>"
+      }
+    },
     "IndexType": {
       "base": null,
       "refs": {
         "GetIndexOutput$Type": "<p>The type of the index in this Region. For information about the aggregator index and how it differs from a local index, see <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/manage-aggregator-region.html\">Turning on cross-Region search by creating an aggregator index</a>.</p>",
+        "GetServiceIndexOutput$Type": "<p>The type of the index. Valid values are <code>LOCAL</code> (contains resources from the current Region only) or <code>AGGREGATOR</code> (contains replicated resource information from all Regions).</p>",
         "Index$Type": "<p>The type of index. It can be one of the following values:</p> <ul> <li> <p> <code>LOCAL</code> – The index contains information about resources from only the same Amazon Web Services Region.</p> </li> <li> <p> <code>AGGREGATOR</code> – Resource Explorer replicates copies of the indexed information about resources in all other Amazon Web Services Regions to the aggregator index. This lets search results in the Region with the aggregator index to include resources from all Regions in the account where Resource Explorer is turned on.</p> </li> </ul>",
         "ListIndexesInput$Type": "<p>If specified, limits the output to only indexes of the specified Type, either <code>LOCAL</code> or <code>AGGREGATOR</code>.</p> <p>Use this option to discover the aggregator index for your account.</p>",
         "MemberIndex$Type": "<p>The type of index. It can be one of the following values: </p> <ul> <li> <p> <code>LOCAL</code> – The index contains information about resources from only the same Amazon Web Services Region.</p> </li> <li> <p> <code>AGGREGATOR</code> – Resource Explorer replicates copies of the indexed information about resources in all other Amazon Web Services Regions to the aggregator index. This lets search results in the Region with the aggregator index to include resources from all Regions in the account where Resource Explorer is turned on.</p> </li> </ul>",
@@ -266,13 +379,11 @@
     },
     "InternalServerException": {
       "base": "<p>The request failed because of internal service error. Try your request again later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIndexesForMembersInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIndexesForMembersInputAccountIdListList": {
       "base": null,
@@ -294,13 +405,11 @@
     },
     "ListIndexesForMembersOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIndexesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIndexesInputMaxResultsInteger": {
       "base": null,
@@ -320,15 +429,19 @@
         "ListIndexesInput$Regions": "<p>If specified, limits the response to only information about the index in the specified list of Amazon Web Services Regions.</p>"
       }
     },
-    "ListIndexesOutput": {
+    "ListIndexesInputRegionsListMemberString": {
       "base": null,
       "refs": {
+        "ListIndexesInputRegionsList$member": null
       }
+    },
+    "ListIndexesOutput": {
+      "base": null,
+      "refs": {}
     },
     "ListManagedViewsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedViewsInputMaxResultsInteger": {
       "base": null,
@@ -350,13 +463,11 @@
     },
     "ListManagedViewsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourcesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourcesInputMaxResultsInteger": {
       "base": null,
@@ -378,8 +489,7 @@
     },
     "ListResourcesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourcesOutputNextTokenString": {
       "base": null,
@@ -393,10 +503,69 @@
         "ListResourcesOutput$ViewArn": "<p>The Amazon resource name (ARN) of the view that this operation used to perform the search. </p>"
       }
     },
-    "ListSupportedResourceTypesInput": {
+    "ListServiceIndexesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListServiceIndexesInputMaxResultsInteger": {
       "base": null,
       "refs": {
+        "ListServiceIndexesInput$MaxResults": "<p>The maximum number of index results to return in a single response. Valid values are between <code>1</code> and <code>100</code>.</p>"
       }
+    },
+    "ListServiceIndexesInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListServiceIndexesInput$NextToken": "<p>The pagination token from a previous <code>ListServiceIndexes</code> response. Use this token to retrieve the next set of results.</p>"
+      }
+    },
+    "ListServiceIndexesInputRegionsList": {
+      "base": null,
+      "refs": {
+        "ListServiceIndexesInput$Regions": "<p>A list of Amazon Web Services Regions to include in the search for indexes. If not specified, indexes from all Regions are returned.</p>"
+      }
+    },
+    "ListServiceIndexesInputRegionsListMemberString": {
+      "base": null,
+      "refs": {
+        "ListServiceIndexesInputRegionsList$member": null
+      }
+    },
+    "ListServiceIndexesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListServiceViewsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListServiceViewsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListServiceViewsInput$MaxResults": "<p>The maximum number of service view results to return in a single response. Valid values are between <code>1</code> and <code>50</code>.</p>"
+      }
+    },
+    "ListServiceViewsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListStreamingAccessForServicesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListStreamingAccessForServicesInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListStreamingAccessForServicesInput$MaxResults": "<p>The maximum number of streaming access entries to return in the response. If there are more results available, the response includes a NextToken value that you can use in a subsequent call to get the next set of results. The value must be between 1 and 50. If you don't specify a value, the default is 50.</p>"
+      }
+    },
+    "ListStreamingAccessForServicesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSupportedResourceTypesInput": {
+      "base": null,
+      "refs": {}
     },
     "ListSupportedResourceTypesInputMaxResultsInteger": {
       "base": null,
@@ -406,23 +575,19 @@
     },
     "ListSupportedResourceTypesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListViewsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListViewsInputMaxResultsInteger": {
       "base": null,
@@ -432,8 +597,7 @@
     },
     "ListViewsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
@@ -465,6 +629,13 @@
         "ListIndexesForMembersOutput$Indexes": "<p>A structure that contains the details and status of each index.</p>"
       }
     },
+    "OperationStatus": {
+      "base": null,
+      "refs": {
+        "IndexStatus$Status": "<p>The current status of the index operation. Valid values are <code>SUCCEEDED</code>, <code>FAILED</code>, <code>IN_PROGRESS</code>, or <code>SKIPPED</code>.</p>",
+        "ViewStatus$Status": "<p>The current status of the view operation. Valid values are <code>SUCCEEDED</code>, <code>FAILED</code>, <code>IN_PROGRESS</code>, or <code>SKIPPED</code>.</p>"
+      }
+    },
     "OrgConfiguration": {
       "base": "<p>This is a structure that contains the status of Amazon Web Services service access, and whether you have a valid service-linked role to enable multi-account search for your organization.</p>",
       "refs": {
@@ -480,8 +651,33 @@
     "RegionList": {
       "base": null,
       "refs": {
+        "DeleteResourceExplorerSetupInput$RegionList": "<p>A list of Amazon Web Services Regions from which to delete the Resource Explorer configuration. If not specified, the operation uses the <code>DeleteInAllRegions</code> parameter to determine scope.</p>",
         "GetIndexOutput$ReplicatingFrom": "<p>This response value is present only if this index is <code>Type=AGGREGATOR</code>.</p> <p>A list of the Amazon Web Services Regions that replicate their content to the index in this Region.</p>",
         "GetIndexOutput$ReplicatingTo": "<p>This response value is present only if this index is <code>Type=LOCAL</code>.</p> <p>The Amazon Web Services Region that contains the aggregator index, if one exists. If an aggregator index does exist then the Region in which you called this operation replicates its index information to the Region specified in this response value. </p>"
+      }
+    },
+    "RegionListMemberString": {
+      "base": null,
+      "refs": {
+        "RegionList$member": null
+      }
+    },
+    "RegionStatus": {
+      "base": "<p>Contains information about the status of Resource Explorer configuration in a specific Amazon Web Services Region.</p>",
+      "refs": {
+        "RegionStatusList$member": null
+      }
+    },
+    "RegionStatusList": {
+      "base": null,
+      "refs": {
+        "GetResourceExplorerSetupOutput$Regions": "<p>A list of Region status objects that describe the current state of Resource Explorer configuration in each Region.</p>"
+      }
+    },
+    "RegionStatusRegionString": {
+      "base": null,
+      "refs": {
+        "RegionStatus$Region": "<p>The Amazon Web Services Region for which this status information applies.</p>"
       }
     },
     "Resource": {
@@ -505,8 +701,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>You specified a resource that doesn't exist. Check the ID or ARN that you used to identity the resource, and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceProperty": {
       "base": "<p>A structure that describes a property of a resource.</p>",
@@ -532,6 +727,7 @@
         "CreateViewInput$Filters": "<p>An array of strings that specify which resources are included in the results of queries made using this view. When you use this view in a <a>Search</a> operation, the filter string is combined with the search's <code>QueryString</code> parameter using a logical <code>AND</code> operator.</p> <p>For information about the supported syntax, see <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html\">Search query reference for Resource Explorer</a> in the <i>Amazon Web Services Resource Explorer User Guide</i>.</p> <important> <p>This query string in the context of this operation supports only <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html#query-syntax-filters\">filter prefixes</a> with optional <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html#query-syntax-operators\">operators</a>. It doesn't support free-form text. For example, the string <code>region:us* service:ec2 -tag:stage=prod</code> includes all Amazon EC2 resources in any Amazon Web Services Region that begins with the letters <code>us</code> and is <i>not</i> tagged with a key <code>Stage</code> that has the value <code>prod</code>.</p> </important>",
         "ListResourcesInput$Filters": "<p>An array of strings that specify which resources are included in the results of queries made using this view. When you use this view in a <a>Search</a> operation, the filter string is combined with the search's <code>QueryString</code> parameter using a logical <code>AND</code> operator.</p> <p>For information about the supported syntax, see <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html\">Search query reference for Resource Explorer</a> in the <i>Amazon Web Services Resource Explorer User Guide</i>.</p> <important> <p>This query string in the context of this operation supports only <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html#query-syntax-filters\">filter prefixes</a> with optional <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html#query-syntax-operators\">operators</a>. It doesn't support free-form text. For example, the string <code>region:us* service:ec2 -tag:stage=prod</code> includes all Amazon EC2 resources in any Amazon Web Services Region that begins with the letters <code>us</code> and is <i>not</i> tagged with a key <code>Stage</code> that has the value <code>prod</code>.</p> </important>",
         "ManagedView$Filters": null,
+        "ServiceView$Filters": null,
         "UpdateViewInput$Filters": "<p>An array of strings that specify which resources are included in the results of queries made using this view. When you use this view in a <a>Search</a> operation, the filter string is combined with the search's <code>QueryString</code> parameter using a logical <code>AND</code> operator.</p> <p>For information about the supported syntax, see <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html\">Search query reference for Resource Explorer</a> in the <i>Amazon Web Services Resource Explorer User Guide</i>.</p> <important> <p>This query string in the context of this operation supports only <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html#query-syntax-filters\">filter prefixes</a> with optional <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html#query-syntax-operators\">operators</a>. It doesn't support free-form text. For example, the string <code>region:us* service:ec2 -tag:stage=prod</code> includes all Amazon EC2 resources in any Amazon Web Services Region that begins with the letters <code>us</code> and is <i>not</i> tagged with a key <code>Stage</code> that has the value <code>prod</code>.</p> </important>",
         "View$Filters": "<p>An array of <a>SearchFilter</a> objects that specify which resources can be included in the results of queries made using this view.</p>"
       }
@@ -544,8 +740,7 @@
     },
     "SearchInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchInputMaxResultsInteger": {
       "base": null,
@@ -567,8 +762,7 @@
     },
     "SearchOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchOutputNextTokenString": {
       "base": null,
@@ -584,7 +778,30 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The request failed because it exceeds a service quota.</p>",
+      "refs": {}
+    },
+    "ServiceView": {
+      "base": "<p>Contains the configuration and properties of a Resource Explorer service view.</p>",
       "refs": {
+        "GetServiceViewOutput$View": "<p>A <code>ServiceView</code> object that contains the details and configuration of the requested service view.</p>"
+      }
+    },
+    "ServiceViewArnList": {
+      "base": null,
+      "refs": {
+        "ListServiceViewsOutput$ServiceViews": "<p>A list of Amazon Resource Names (ARNs) for the service views available in the current Amazon Web Services account.</p>"
+      }
+    },
+    "StreamingAccessDetails": {
+      "base": "<p>Contains information about an Amazon Web Services service that has been granted streaming access to your Resource Explorer data.</p>",
+      "refs": {
+        "StreamingAccessDetailsList$member": null
+      }
+    },
+    "StreamingAccessDetailsList": {
+      "base": null,
+      "refs": {
+        "ListStreamingAccessForServicesOutput$StreamingAccessForServices": "<p>A list of Amazon Web Services services that have streaming access to your Resource Explorer data, including details about when the access was granted.</p>"
       }
     },
     "String": {
@@ -592,8 +809,8 @@
       "refs": {
         "AccessDeniedException$Message": null,
         "AssociateDefaultViewOutput$ViewArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the view that the operation set as the default for queries made in the Amazon Web Services Region and Amazon Web Services account in which you called this operation.</p>",
-        "BatchGetViewError$ErrorMessage": "<p>The description of the error for the specified view.</p>",
         "BatchGetViewError$ViewArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the view for which Resource Explorer failed to retrieve details.</p>",
+        "BatchGetViewError$ErrorMessage": "<p>The description of the error for the specified view.</p>",
         "BatchGetViewInputViewArnsList$member": null,
         "ConflictException$Message": null,
         "CreateIndexInput$ClientToken": "<p>This value helps ensure idempotency. Resource Explorer uses this value to prevent the accidental creation of duplicate versions. We recommend that you generate a <a href=\"https://wikipedia.org/wiki/Universally_unique_identifier\">UUID-type value</a> to ensure the uniqueness of your index.</p>",
@@ -601,15 +818,22 @@
         "DeleteIndexInput$Arn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the index that you want to delete.</p>",
         "DeleteIndexOutput$Arn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the index that you successfully started the deletion process.</p> <note> <p>This operation is asynchronous. To check its status, call the <a>GetIndex</a> operation.</p> </note>",
         "DeleteViewOutput$ViewArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the view that you successfully deleted.</p>",
+        "ErrorDetails$Code": "<p>The error code that identifies the type of error that occurred.</p>",
+        "ErrorDetails$Message": "<p>A human-readable description of the error that occurred.</p>",
         "GetDefaultViewOutput$ViewArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the view that is the current default for the Amazon Web Services Region in which you called this operation.</p>",
         "GetIndexOutput$Arn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the index.</p>",
-        "Index$Arn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the index.</p>",
+        "GetServiceIndexOutput$Arn": "<p>The Amazon Resource Name (ARN) of the Resource Explorer index in the current Region.</p>",
         "Index$Region": "<p>The Amazon Web Services Region in which the index exists.</p>",
+        "Index$Arn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the index.</p>",
         "InternalServerException$Message": null,
         "ListIndexesForMembersOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>. The pagination tokens expire after 24 hours.</p>",
-        "ListIndexesInputRegionsList$member": null,
         "ListIndexesOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>. The pagination tokens expire after 24 hours.</p>",
         "ListManagedViewsOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>. The pagination tokens expire after 24 hours.</p>",
+        "ListServiceIndexesOutput$NextToken": "<p>The pagination token to use in a subsequent <code>ListServiceIndexes</code> request to retrieve the next set of results.</p>",
+        "ListServiceViewsInput$NextToken": "<p>The pagination token from a previous <code>ListServiceViews</code> response. Use this token to retrieve the next set of results.</p>",
+        "ListServiceViewsOutput$NextToken": "<p>The pagination token to use in a subsequent <code>ListServiceViews</code> request to retrieve the next set of results.</p>",
+        "ListStreamingAccessForServicesInput$NextToken": "<p>The parameter for receiving additional results if you receive a <code>NextToken</code> response in a previous request. A <code>NextToken</code> response indicates that more output is available. Set this parameter to the value of the previous call's <code>NextToken</code> response to indicate where the output should continue from. The pagination tokens expire after 24 hours.</p>",
+        "ListStreamingAccessForServicesOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>. The pagination tokens expire after 24 hours.</p>",
         "ListSupportedResourceTypesInput$NextToken": "<p>The parameter for receiving additional results if you receive a <code>NextToken</code> response in a previous request. A <code>NextToken</code> response indicates that more output is available. Set this parameter to the value of the previous call's <code>NextToken</code> response to indicate where the output should continue from. The pagination tokens expire after 24 hours.</p>",
         "ListSupportedResourceTypesOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>. The pagination tokens expire after 24 hours.</p>",
         "ListTagsForResourceInput$resourceArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the view or index that you want to attach tags to.</p>",
@@ -617,17 +841,16 @@
         "ListViewsOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>. The pagination tokens expire after 24 hours.</p>",
         "ManagedView$ManagedViewArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the managed view.</p>",
         "ManagedView$ManagedViewName": "<p>The name of the managed view. </p>",
-        "ManagedView$Owner": "<p>The Amazon Web Services account that owns this managed view.</p>",
-        "ManagedView$ResourcePolicy": "<p>The resource policy that defines access to the managed view. To learn more about this policy, review <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/aws-managed-views.html\">Managed views</a>.</p>",
-        "ManagedView$Scope": "<p>An <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of an Amazon Web Services account or organization that specifies whether this managed view includes resources from only the specified Amazon Web Services account or all accounts in the specified organization. </p>",
         "ManagedView$TrustedService": "<p>The service principal of the Amazon Web Services service that created and manages the managed view. </p>",
+        "ManagedView$Owner": "<p>The Amazon Web Services account that owns this managed view.</p>",
+        "ManagedView$Scope": "<p>An <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of an Amazon Web Services account or organization that specifies whether this managed view includes resources from only the specified Amazon Web Services account or all accounts in the specified organization. </p>",
+        "ManagedView$ResourcePolicy": "<p>The resource policy that defines access to the managed view. To learn more about this policy, review <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/aws-managed-views.html\">Managed views</a>.</p>",
         "ManagedView$Version": "<p>The version of the managed view. </p>",
         "ManagedViewArnList$member": null,
         "MemberIndex$AccountId": "<p>The account ID for the index.</p>",
-        "MemberIndex$Arn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the index.</p>",
         "MemberIndex$Region": "<p>The Amazon Web Services Region in which the index exists.</p>",
+        "MemberIndex$Arn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the index.</p>",
         "OrgConfiguration$ServiceLinkedRole": "<p>This value shows whether or not you have a valid a service-linked role required to start the multi-account search feature.</p>",
-        "RegionList$member": null,
         "Resource$Arn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the resource.</p>",
         "Resource$OwningAccountId": "<p>The Amazon Web Services account that owns the resource.</p>",
         "Resource$Region": "<p>The Amazon Web Services Region in which the resource was created and exists.</p>",
@@ -638,9 +861,14 @@
         "ServiceQuotaExceededException$Message": null,
         "ServiceQuotaExceededException$Name": "<p>The name of the service quota that was exceeded by the request.</p>",
         "ServiceQuotaExceededException$Value": "<p>The current value for the quota that the request tried to exceed.</p>",
+        "ServiceView$ServiceViewArn": "<p>The Amazon Resource Name (ARN) of the service view.</p>",
+        "ServiceView$StreamingAccessForService": "<p>The Amazon Web Services service that has streaming access to this view's data.</p>",
+        "ServiceView$ScopeType": "<p>The scope type of the service view, which determines what resources are included.</p>",
+        "ServiceViewArnList$member": null,
+        "StreamingAccessDetails$ServicePrincipal": "<p>The service principal of the Amazon Web Services service that has streaming access to your Resource Explorer data. A service principal is a unique identifier for an Amazon Web Services service.</p>",
         "StringList$member": null,
-        "SupportedResourceType$ResourceType": "<p>The unique identifier of the resource type.</p>",
         "SupportedResourceType$Service": "<p>The Amazon Web Services service that is associated with the resource type. This is the primary service that lets you create and interact with resources of this type.</p>",
+        "SupportedResourceType$ResourceType": "<p>The unique identifier of the resource type.</p>",
         "TagMap$key": null,
         "TagMap$value": null,
         "TagResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the view or index that you want to attach tags to.</p>",
@@ -652,9 +880,9 @@
         "ValidationException$Message": null,
         "ValidationExceptionField$Name": "<p>The name of the request field that had a validation error.</p>",
         "ValidationExceptionField$ValidationIssue": "<p>The validation error caused by the request field.</p>",
+        "View$ViewArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the view.</p>",
         "View$Owner": "<p>The Amazon Web Services account that owns this view.</p>",
         "View$Scope": "<p>An <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of an Amazon Web Services account, an organization, or an organizational unit (OU) that specifies whether this view includes resources from only the specified Amazon Web Services account, all accounts in the specified organization, or all accounts in the specified OU.</p> <p>If not specified, the value defaults to the Amazon Web Services account used to call this operation.</p>",
-        "View$ViewArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the view.</p>",
         "ViewArnList$member": null
       }
     },
@@ -680,6 +908,7 @@
         "ManagedView$LastUpdatedAt": "<p>The date and time when this managed view was last modified.</p>",
         "Resource$LastReportedAt": "<p>The date and time that Resource Explorer last queried this resource and updated the index with the latest information about the resource.</p>",
         "ResourceProperty$LastReportedAt": "<p>The date and time that the information about this resource property was last updated.</p>",
+        "StreamingAccessDetails$CreatedAt": "<p>The date and time when streaming access was granted to the Amazon Web Services service, in ISO 8601 format.</p>",
         "UpdateIndexTypeOutput$LastUpdatedAt": "<p>The date and timestamp when the index was last updated.</p>",
         "View$LastUpdatedAt": "<p>The date and time when this view was last modified.</p>"
       }
@@ -697,48 +926,39 @@
     },
     "TagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ThrottlingException": {
       "base": "<p>The request failed because you exceeded a rate limit for this operation. For more information, see <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/quotas.html\">Quotas for Resource Explorer</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnauthorizedException": {
       "base": "<p>The principal making the request isn't permitted to perform the operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIndexTypeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIndexTypeOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateViewInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateViewInputViewArnString": {
       "base": null,
@@ -748,13 +968,11 @@
     },
     "UpdateViewOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>You provided an invalid value for one of the operation's parameters. Check the syntax for the operation, and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>A structure that describes a request field with a validation error.</p>",
@@ -774,7 +992,8 @@
         "CreateViewOutput$View": "<p>A structure that contains the details about the new view.</p>",
         "GetViewOutput$View": "<p>A structure that contains the details for the requested view.</p>",
         "UpdateViewOutput$View": "<p>Details about the view that you changed with this operation.</p>",
-        "ViewList$member": null
+        "ViewList$member": null,
+        "ViewStatus$View": null
       }
     },
     "ViewArnList": {
@@ -793,6 +1012,12 @@
       "base": null,
       "refs": {
         "CreateViewInput$ViewName": "<p>The name of the new view. This name appears in the list of views in Resource Explorer.</p> <p>The name must be no more than 64 characters long, and can include letters, digits, and the dash (-) character. The name must be unique within its Amazon Web Services Region.</p>"
+      }
+    },
+    "ViewStatus": {
+      "base": "<p>Contains information about the status of a Resource Explorer view operation in a specific Region.</p>",
+      "refs": {
+        "RegionStatus$View": "<p>The status information for the Resource Explorer view in this Region.</p>"
       }
     }
   }

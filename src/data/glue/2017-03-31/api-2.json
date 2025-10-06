@@ -7719,7 +7719,8 @@
         "Result":{"shape":"DataQualityRuleResultStatus"},
         "EvaluatedMetrics":{"shape":"EvaluatedMetricsMap"},
         "EvaluatedRule":{"shape":"DataQualityRuleResultDescription"},
-        "RuleMetrics":{"shape":"RuleMetricsMap"}
+        "RuleMetrics":{"shape":"RuleMetricsMap"},
+        "Labels":{"shape":"Labels"}
       }
     },
     "DataQualityRuleResultDescription":{
@@ -11940,6 +11941,11 @@
       "members":{
         "OutputS3Path":{"shape":"UriString"}
       }
+    },
+    "Labels":{
+      "type":"map",
+      "key":{"shape":"NameString"},
+      "value":{"shape":"NameString"}
     },
     "LakeFormationConfiguration":{
       "type":"structure",

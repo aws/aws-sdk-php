@@ -276,7 +276,8 @@
         {"shape":"InternalServerErrorException"},
         {"shape":"NotFoundException"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeFlow":{
       "name":"DescribeFlow",
@@ -294,7 +295,8 @@
         {"shape":"InternalServerErrorException"},
         {"shape":"NotFoundException"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeFlowSourceMetadata":{
       "name":"DescribeFlowSourceMetadata",
@@ -312,7 +314,8 @@
         {"shape":"InternalServerErrorException"},
         {"shape":"NotFoundException"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeFlowSourceThumbnail":{
       "name":"DescribeFlowSourceThumbnail",
@@ -330,7 +333,8 @@
         {"shape":"InternalServerErrorException"},
         {"shape":"NotFoundException"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeGateway":{
       "name":"DescribeGateway",
@@ -349,7 +353,8 @@
         {"shape":"InternalServerErrorException"},
         {"shape":"NotFoundException"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeGatewayInstance":{
       "name":"DescribeGatewayInstance",
@@ -368,7 +373,8 @@
         {"shape":"InternalServerErrorException"},
         {"shape":"NotFoundException"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeOffering":{
       "name":"DescribeOffering",
@@ -385,7 +391,8 @@
         {"shape":"InternalServerErrorException"},
         {"shape":"NotFoundException"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeReservation":{
       "name":"DescribeReservation",
@@ -402,7 +409,8 @@
         {"shape":"InternalServerErrorException"},
         {"shape":"NotFoundException"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "readonly":true
     },
     "GrantFlowEntitlements":{
       "name":"GrantFlowEntitlements",
@@ -438,7 +446,8 @@
         {"shape":"ConflictException"},
         {"shape":"InternalServerErrorException"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListEntitlements":{
       "name":"ListEntitlements",
@@ -454,7 +463,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerErrorException"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListFlows":{
       "name":"ListFlows",
@@ -470,7 +480,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerErrorException"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListGatewayInstances":{
       "name":"ListGatewayInstances",
@@ -487,7 +498,8 @@
         {"shape":"ConflictException"},
         {"shape":"InternalServerErrorException"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListGateways":{
       "name":"ListGateways",
@@ -504,7 +516,8 @@
         {"shape":"ConflictException"},
         {"shape":"InternalServerErrorException"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListOfferings":{
       "name":"ListOfferings",
@@ -520,7 +533,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerErrorException"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListReservations":{
       "name":"ListReservations",
@@ -536,7 +550,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerErrorException"},
         {"shape":"ServiceUnavailableException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -551,7 +566,8 @@
         {"shape":"BadRequestException"},
         {"shape":"InternalServerErrorException"},
         {"shape":"NotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "PurchaseOffering":{
       "name":"PurchaseOffering",
@@ -1388,12 +1404,15 @@
         "VideoFormat":{
           "shape":"String",
           "locationName":"videoFormat"
+        },
+        "MediaStreamTags":{
+          "shape":"__mapOfString",
+          "locationName":"mediaStreamTags"
         }
       }
     },
     "AddOutputRequest":{
       "type":"structure",
-      "required":["Protocol"],
       "members":{
         "CidrAllowList":{
           "shape":"__listOfString",
@@ -1466,6 +1485,10 @@
         "NdiProgramName":{
           "shape":"String",
           "locationName":"ndiProgramName"
+        },
+        "OutputTags":{
+          "shape":"__mapOfString",
+          "locationName":"outputTags"
         }
       }
     },
@@ -1914,6 +1937,10 @@
         "NdiConfig":{
           "shape":"NdiConfig",
           "locationName":"ndiConfig"
+        },
+        "FlowTags":{
+          "shape":"__mapOfString",
+          "locationName":"flowTags"
         }
       }
     },
@@ -2868,6 +2895,10 @@
         "Subscribers":{
           "shape":"__listOfString",
           "locationName":"subscribers"
+        },
+        "EntitlementTags":{
+          "shape":"__mapOfString",
+          "locationName":"entitlementTags"
         }
       }
     },
@@ -4422,6 +4453,10 @@
         "GatewayBridgeSource":{
           "shape":"SetGatewayBridgeSourceRequest",
           "locationName":"gatewayBridgeSource"
+        },
+        "SourceTags":{
+          "shape":"__mapOfString",
+          "locationName":"sourceTags"
         }
       }
     },
@@ -5403,6 +5438,10 @@
         "NdiConfig":{
           "shape":"NdiConfig",
           "locationName":"ndiConfig"
+        },
+        "FlowSize":{
+          "shape":"FlowSize",
+          "locationName":"flowSize"
         }
       }
     },
@@ -5701,6 +5740,10 @@
         "SubnetId":{
           "shape":"String",
           "locationName":"subnetId"
+        },
+        "VpcInterfaceTags":{
+          "shape":"__mapOfString",
+          "locationName":"vpcInterfaceTags"
         }
       }
     },

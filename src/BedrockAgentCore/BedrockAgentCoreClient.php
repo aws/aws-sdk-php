@@ -5,12 +5,20 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Bedrock AgentCore Data Plane Fronting Layer** service.
+ * @method \Aws\Result batchCreateMemoryRecords(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchCreateMemoryRecordsAsync(array $args = [])
+ * @method \Aws\Result batchDeleteMemoryRecords(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchDeleteMemoryRecordsAsync(array $args = [])
+ * @method \Aws\Result batchUpdateMemoryRecords(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchUpdateMemoryRecordsAsync(array $args = [])
  * @method \Aws\Result createEvent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createEventAsync(array $args = [])
  * @method \Aws\Result deleteEvent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteEventAsync(array $args = [])
  * @method \Aws\Result deleteMemoryRecord(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteMemoryRecordAsync(array $args = [])
+ * @method \Aws\Result getAgentCard(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAgentCardAsync(array $args = [])
  * @method \Aws\Result getBrowserSession(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBrowserSessionAsync(array $args = [])
  * @method \Aws\Result getCodeInterpreterSession(array $args = [])
@@ -55,6 +63,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise stopBrowserSessionAsync(array $args = [])
  * @method \Aws\Result stopCodeInterpreterSession(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopCodeInterpreterSessionAsync(array $args = [])
+ * @method \Aws\Result stopRuntimeSession(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopRuntimeSessionAsync(array $args = [])
  * @method \Aws\Result updateBrowserStream(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateBrowserStreamAsync(array $args = [])
  */
