@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Proton` - Deprecating APIs in AWS Proton namespace.
+
 ## 3.356.33 - 2025-10-06
 
 * `Aws\QuickSight` - Documentation improvements for QuickSight API documentation to clarify that delete operation APIs are global.
