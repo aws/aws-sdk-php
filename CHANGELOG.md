@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.34 - 2025-10-07
 
 * `Aws\Proton` - Deprecating APIs in AWS Proton namespace.
 
