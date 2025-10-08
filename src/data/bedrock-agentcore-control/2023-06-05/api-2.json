@@ -1261,7 +1261,10 @@
     },
     "AuthorizerType":{
       "type":"string",
-      "enum":["CUSTOM_JWT"]
+      "enum":[
+        "CUSTOM_JWT",
+        "AWS_IAM"
+      ]
     },
     "AwsAccountId":{
       "type":"string",
@@ -1618,8 +1621,7 @@
         "name",
         "roleArn",
         "protocolType",
-        "authorizerType",
-        "authorizerConfiguration"
+        "authorizerType"
       ],
       "members":{
         "name":{"shape":"GatewayName"},
@@ -4211,8 +4213,7 @@
         "name",
         "roleArn",
         "protocolType",
-        "authorizerType",
-        "authorizerConfiguration"
+        "authorizerType"
       ],
       "members":{
         "gatewayIdentifier":{

@@ -30,6 +30,7 @@
     "ListTagsForResource": "<p>Lists the tags for the specified resource.</p>",
     "StartCapacityTask": "<p>Starts the specified capacity task. You can have one active capacity task for each order and each Outpost.</p>",
     "StartConnection": "<note> <p> Amazon Web Services uses this action to install Outpost servers.</p> </note> <p> Starts the connection required for Outpost server installation. </p> <p> Use CloudTrail to monitor this action or Amazon Web Services managed policy for Amazon Web Services Outposts to secure it. For more information, see <a href=\"https://docs.aws.amazon.com/outposts/latest/userguide/security-iam-awsmanpol.html\"> Amazon Web Services managed policies for Amazon Web Services Outposts</a> and <a href=\"https://docs.aws.amazon.com/outposts/latest/userguide/logging-using-cloudtrail.html\"> Logging Amazon Web Services Outposts API calls with Amazon Web Services CloudTrail</a> in the <i>Amazon Web Services Outposts User Guide</i>. </p>",
+    "StartOutpostDecommission": "<p>Starts the decommission process to return the Outposts racks or servers.</p>",
     "TagResource": "<p>Adds tags to the specified resource.</p>",
     "UntagResource": "<p>Removes tags from the specified resource.</p>",
     "UpdateOutpost": "<p> Updates an Outpost. </p>",
@@ -236,6 +237,18 @@
       "base": null,
       "refs": {
         "ListBlockingInstancesForCapacityTaskOutput$BlockingInstances": "<p>A list of all running Amazon EC2 instances on the Outpost. Stopping one or more of these instances can free up the capacity needed to run the capacity task.</p>"
+      }
+    },
+    "BlockingResourceType": {
+      "base": null,
+      "refs": {
+        "BlockingResourceTypeList$member": null
+      }
+    },
+    "BlockingResourceTypeList": {
+      "base": null,
+      "refs": {
+        "StartOutpostDecommissionOutput$BlockingResourceTypes": "<p>The resources still associated with the Outpost that you are decommissioning.</p>"
       }
     },
     "CIDR": {
@@ -461,6 +474,12 @@
     "CreateSiteOutput": {
       "base": null,
       "refs": {}
+    },
+    "DecommissionRequestStatus": {
+      "base": null,
+      "refs": {
+        "StartOutpostDecommissionOutput$Status": "<p>The status of the decommission request.</p>"
+      }
     },
     "DeleteOutpostInput": {
       "base": null,
@@ -1063,7 +1082,8 @@
         "ListBlockingInstancesForCapacityTaskInput$OutpostIdentifier": "<p>The ID or ARN of the Outpost associated with the specified capacity task.</p>",
         "ListCapacityTasksInput$OutpostIdentifierFilter": "<p>Filters the results by an Outpost ID or an Outpost ARN.</p>",
         "ListOrdersInput$OutpostIdentifierFilter": "<p> The ID or the Amazon Resource Name (ARN) of the Outpost. </p>",
-        "StartCapacityTaskInput$OutpostIdentifier": "<p>The ID or ARN of the Outposts associated with the specified capacity task.</p>"
+        "StartCapacityTaskInput$OutpostIdentifier": "<p>The ID or ARN of the Outposts associated with the specified capacity task.</p>",
+        "StartOutpostDecommissionInput$OutpostIdentifier": "<p>The ID or ARN of the Outpost that you want to decommission.</p>"
       }
     },
     "OutpostInstanceType": {
@@ -1280,6 +1300,14 @@
       "refs": {}
     },
     "StartConnectionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartOutpostDecommissionInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartOutpostDecommissionOutput": {
       "base": null,
       "refs": {}
     },
@@ -1513,6 +1541,12 @@
       "refs": {
         "ComputeAttributes$MaxVcpus": "<p>The maximum number of vCPUs possible for the specified asset.</p>",
         "InstanceTypeItem$VCPUs": "<p>The number of default VCPUs in an instance type.</p>"
+      }
+    },
+    "ValidateOnly": {
+      "base": null,
+      "refs": {
+        "StartOutpostDecommissionInput$ValidateOnly": "<p>Validates the request without starting the decommission process.</p>"
       }
     },
     "ValidationException": {

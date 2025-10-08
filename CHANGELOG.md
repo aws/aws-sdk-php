@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ServiceQuotas` - introduces Service Quotas Automatic Management. Users can opt-in to monitoring and managing service quotas, receive notifications when quota usage reaches thresholds, configure notification channels, subscribe to EventBridge events for automation, and view notifications in the AWS Health dashboard.
+* `Aws\BedrockAgentCoreControl` - Adding support for authorizer type AWS_IAM to AgentCore Control Gateway.
+* `Aws\Outposts` - This release adds the new StartOutpostDecommission API, which starts the decommission process to return Outposts racks or servers.
+* `Aws\LicenseManagerUserSubscriptions` - Released support for IPv6 and dual-stack active directories
+
 ## 3.356.34 - 2025-10-07
 
 * `Aws\Proton` - Deprecating APIs in AWS Proton namespace.
