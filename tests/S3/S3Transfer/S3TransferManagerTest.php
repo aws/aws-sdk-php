@@ -20,7 +20,7 @@ use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\UploadDirectoryResult;
 use Aws\S3\S3Transfer\Models\UploadRequest;
 use Aws\S3\S3Transfer\Models\UploadResult;
-use Aws\S3\S3Transfer\MultipartDownloader;
+use Aws\S3\S3Transfer\AbstractMultipartDownloader;
 use Aws\S3\S3Transfer\MultipartUploader;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
@@ -624,7 +624,7 @@ EOF
            )->wait();
        } finally {
            // Clean up resources
-           if ($isDirectoryValid) {
+           if ($isDirectoryValid && is_dir($directory)) {
                TestsUtility::cleanUpDir($directory);
            }
        }
@@ -1023,7 +1023,7 @@ EOF
         } catch (RuntimeException $exception) {
             if (!$operationCompleted) {
                 $matches = $this->assertEachWordMatchesTheErrorMessage(
-                    "A circular symbolic link traversal have been detected at",
+                    "A circular symbolic link traversal has been detected at",
                     $exception->getMessage()
                 );
 
@@ -1633,7 +1633,7 @@ EOF
                     $this->assertArrayNotHasKey('ChecksumMode', $command);
                 }
 
-                if ($command->getName() === MultipartDownloader::GET_OBJECT_COMMAND) {
+                if ($command->getName() === AbstractMultipartDownloader::GET_OBJECT_COMMAND) {
                     return Create::promiseFor(new Result([
                         'Body' => Utils::streamFor(),
                         'PartsCount' => 1,
@@ -1778,11 +1778,11 @@ EOF
     {
         return [
             'part_get_multipart_download' => [
-                'multipart_download_type' => MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER,
+                'multipart_download_type' => AbstractMultipartDownloader::PART_GET_MULTIPART_DOWNLOADER,
                 'expected_parameter' => 'PartNumber'
             ],
             'range_get_multipart_download' => [
-                'multipart_download_type' => MultipartDownloader::RANGED_GET_MULTIPART_DOWNLOADER,
+                'multipart_download_type' => AbstractMultipartDownloader::RANGED_GET_MULTIPART_DOWNLOADER,
                 'expected_parameter' => 'Range'
             ]
         ];
@@ -1836,7 +1836,7 @@ EOF
                 "s3://bucket/key",
                 [],
                 [
-                    'multipart_download_type' => MultipartDownloader::RANGED_GET_MULTIPART_DOWNLOADER,
+                    'multipart_download_type' => AbstractMultipartDownloader::RANGED_GET_MULTIPART_DOWNLOADER,
                     'target_part_size_bytes' => $minimumPartSize,
                 ]
             )
@@ -2027,9 +2027,9 @@ EOF
                 ],
                 'expected_s3_prefix' => 'TestPrefix'
             ],
-            's3_prefix_from_list_object_v2_args' => [
+            's3_prefix_from_list_objects_v2_args' => [
                 'config' => [
-                    'list_object_v2_args' => [
+                    'list_objects_v2_args' => [
                         'Prefix' => 'PrefixFromArgs'
                     ],
                 ],
@@ -2038,7 +2038,7 @@ EOF
             's3_prefix_from_config_is_ignored_when_present_in_list_object_args' => [
                 'config' => [
                     's3_prefix' => 'TestPrefix',
-                    'list_object_v2_args' => [
+                    'list_objects_v2_args' => [
                         'Prefix' => 'PrefixFromArgs'
                     ],
                 ],

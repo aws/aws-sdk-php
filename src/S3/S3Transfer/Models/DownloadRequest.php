@@ -12,9 +12,9 @@ use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 final class DownloadRequest extends TransferRequest
 {
     public static array $configKeys = [
-        'response_checksum_validation',
-        'multipart_download_type',
-        'track_progress'
+        'response_checksum_validation' => 'string',
+        'multipart_download_type' => 'string',
+        'track_progress' => 'bool',
     ];
 
     /** @var string|array|null */

@@ -1,7 +1,6 @@
 <?php
 namespace Aws\S3\S3Transfer;
 
-use Aws\CommandPool;
 use Aws\HashingStream;
 use Aws\PhpHash;
 use Aws\ResultInterface;
@@ -10,8 +9,10 @@ use Aws\S3\S3Transfer\Models\UploadResult;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use GuzzleHttp\Promise\Create;
+use GuzzleHttp\Promise\Each;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\LazyOpenStream;
+use GuzzleHttp\Psr7\LimitStream;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;
 use Throwable;
@@ -28,6 +29,8 @@ class MultipartUploader extends AbstractMultipartUploader
         'ChecksumSHA1',
         'ChecksumSHA256',
     ];
+
+    private const STREAM_WRAPPER_TYPE_PLAIN_FILE = 'plainfile';
 
     /** @var int */
     protected int $calculatedObjectSize;
@@ -143,8 +146,6 @@ class MultipartUploader extends AbstractMultipartUploader
         $this->calculatedObjectSize = 0;
         $partSize = $this->calculatePartSize();
         $partsCount = ceil($this->getTotalSize() / $partSize);
-        $commands = [];
-        $partNo = count($this->parts);
         $uploadPartCommandArgs['UploadId'] = $this->uploadId;
         // Customer provided checksum
         if ($this->requestChecksum !== null) {
@@ -152,34 +153,75 @@ class MultipartUploader extends AbstractMultipartUploader
             $uploadPartCommandArgs['@context']['request_checksum_calculation'] = 'when_required';
             unset($uploadPartCommandArgs['Checksum'. strtoupper($this->requestChecksumAlgorithm)]);
         } elseif ($this->requestChecksumAlgorithm !== null) {
-            // Normalize algorithm name
             $uploadPartCommandArgs['ChecksumAlgorithm'] = $this->requestChecksumAlgorithm;
         }
 
+        $promises = $this->createUploadPartPromises(
+            $uploadPartCommandArgs,
+            $partSize,
+            $partsCount,
+        );
+
+        return Each::ofLimitAll($promises, $this->config['concurrency']);
+    }
+
+    /**
+     * @param array $uploadPartCommandArgs
+     * @param int $partSize
+     * @param int $partsCount
+     *
+     * @return \Generator
+     */
+    private function createUploadPartPromises(
+        array $uploadPartCommandArgs,
+        int $partSize,
+        int $partsCount
+    ): \Generator
+    {
+        $partNo = count($this->parts);
+        $bytesRead = 0;
+        $isSeekable = $this->body->isSeekable()
+            && $this->body->getMetadata('wrapper_type')
+            === self::STREAM_WRAPPER_TYPE_PLAIN_FILE;
         while (!$this->body->eof()) {
-            $partNo++;
-            $read = $this->body->read($partSize);
-            // To make sure we do not create an empty part when
-            // we already reached the end of file.
-            if (empty($read) && $this->body->eof()) {
+            if ($isSeekable) {
+                $partBody = new LimitStream(
+                    new LazyOpenStream(
+                        $this->body->getMetadata('uri'),
+                        'r'
+                    ),
+                    $partSize,
+                    $bytesRead,
+                );
+            } else {
+                $body = new LimitStream(
+                    $this->body,
+                    $partSize,
+                    $bytesRead,
+                );
+                $body = $this->decorateWithHashes($body, $uploadPartCommandArgs);
+                $partBody = Utils::streamFor();
+                Utils::copyToStream($body, $partBody);
+            }
+
+            $bodyLength = $partBody->getSize();
+            if ($bodyLength === 0) {
+                $partBody->close();
                 break;
             }
 
-            $partBody = Utils::streamFor($read);
+            $partNo++;
+            $bytesRead += $bodyLength;
 
             $uploadPartCommandArgs['PartNumber'] = $partNo;
-            $uploadPartCommandArgs['ContentLength'] = $partBody->getSize();
+            $uploadPartCommandArgs['ContentLength'] = $bodyLength;
             // Attach body
-            $uploadPartCommandArgs['Body'] = $this->decorateWithHashes(
-                $partBody,
-                $uploadPartCommandArgs
-            );
-            $command = $this->s3Client->getCommand(
-                'UploadPart',
-                $uploadPartCommandArgs
-            );
-            $commands[] = $command;
-            $this->calculatedObjectSize += $partBody->getSize();
+            if ($isSeekable) {
+                $partBody->rewind();
+            }
+            $uploadPartCommandArgs['Body'] = $partBody;
+
+            $this->calculatedObjectSize += $bodyLength;
             if ($partNo > self::PART_MAX_NUM) {
                 return Create::rejectionFor(
                     "The max number of parts has been exceeded. " .
@@ -187,27 +229,32 @@ class MultipartUploader extends AbstractMultipartUploader
                 );
             }
 
-            if ($partNo > $partsCount) {
+            if ($isSeekable && $partNo > $partsCount) {
                 return Create::rejectionFor(
                     "The current part `$partNo` is over "
                     . "the expected number of parts `$partsCount`"
                 );
             }
-        }
 
-        return (new CommandPool(
-            $this->s3Client,
-            $commands,
-            [
-                'concurrency' => $this->config['concurrency'],
-                'fulfilled'   => function (ResultInterface $result, $index)
-                use ($commands) {
+            $command = $this->s3Client->getCommand(
+                'UploadPart',
+                $uploadPartCommandArgs
+            );
+
+            // Advance if behind
+            if ($bytesRead < $this->body->tell()) {
+                $this->body->seek($bytesRead);
+            }
+
+            yield $this->s3Client->executeAsync($command)
+                ->then(function (ResultInterface $result)
+                    use ($command, $partBody) {
+                    $partBody->close();
                     // To make sure we don't continue when a failure occurred
                     if ($this->currentSnapshot->getReason() !== null) {
                         throw $this->currentSnapshot->getReason();
                     }
 
-                    $command = $commands[$index];
                     $this->collectPart(
                         $result,
                         $command
@@ -217,14 +264,13 @@ class MultipartUploader extends AbstractMultipartUploader
                         $command['ContentLength'],
                         $command->toArray()
                     );
-                },
-                'rejected'     => function (Throwable $e) {
+                })->otherwise(function (Throwable $e) use ($partBody) {
+                    $partBody->close();
                     $this->partFailed($e);
 
                     throw $e;
-                }
-            ]
-        ))->promise();
+                });
+        }
     }
 
     /**

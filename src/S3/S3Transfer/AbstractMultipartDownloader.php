@@ -17,7 +17,7 @@ use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\PromisorInterface;
 
-abstract class MultipartDownloader implements PromisorInterface
+abstract class AbstractMultipartDownloader implements PromisorInterface
 {
     public const GET_OBJECT_COMMAND = "GetObject";
     public const PART_GET_MULTIPART_DOWNLOADER = "part";
@@ -267,8 +267,7 @@ abstract class MultipartDownloader implements PromisorInterface
     /**
      * Calculates the object size from content range.
      *
-     * @param string $sizeSource
-     *
+     * @param string $contentRange
      * @return int
      */
     protected function computeObjectSizeFromContentRange(
@@ -425,13 +424,13 @@ abstract class MultipartDownloader implements PromisorInterface
     ): string
     {
         return match ($multipartDownloadType) {
-            MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER => PartGetMultipartDownloader::class,
-            MultipartDownloader::RANGED_GET_MULTIPART_DOWNLOADER => RangeGetMultipartDownloader::class,
+            AbstractMultipartDownloader::PART_GET_MULTIPART_DOWNLOADER => PartGetMultipartDownloader::class,
+            AbstractMultipartDownloader::RANGED_GET_MULTIPART_DOWNLOADER => RangeGetMultipartDownloader::class,
             default => throw new \InvalidArgumentException(
                 "The config value for `multipart_download_type` must be one of:\n"
-                . "\t* " . MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER
+                . "\t* " . AbstractMultipartDownloader::PART_GET_MULTIPART_DOWNLOADER
                 ."\n"
-                . "\t* " . MultipartDownloader::RANGED_GET_MULTIPART_DOWNLOADER
+                . "\t* " . AbstractMultipartDownloader::RANGED_GET_MULTIPART_DOWNLOADER
             )
         };
     }

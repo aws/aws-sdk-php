@@ -165,14 +165,16 @@ abstract class AbstractMultipartUploader implements PromisorInterface
             try {
                 yield $this->createMultipartOperation();
                 yield $this->processMultipartOperation();
-                $result = yield $this->completeMultipartOperation();
-                yield Create::promiseFor($this->createResponse($result));
-            } catch (Throwable $e) {
-                $this->operationFailed($e);
-                yield Create::rejectionFor($e);
+                yield $this->completeMultipartOperation();
             } finally {
                 $this->callOnCompletionCallbacks();
             }
+        })->then(function (ResultInterface $result) {
+            return $this->createResponse($result);
+        })->otherwise(function (Throwable $e) {
+            $this->operationFailed($e);
+
+            throw $e;
         });
     }
 
@@ -303,13 +305,13 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     }
 
     /**
-     * @param array $commands
+     * @param \Iterator $commands
      * @param callable $fulfilledCallback
      * @param callable $rejectedCallback
      * @return PromiseInterface
      */
     protected function createCommandPool(
-        array $commands,
+        \Iterator $commands,
         callable $fulfilledCallback,
         callable $rejectedCallback
     ): PromiseInterface

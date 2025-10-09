@@ -9,7 +9,7 @@ use Aws\ResultInterface;
 /**
  * Multipart downloader using the part get approach.
  */
-class PartGetMultipartDownloader extends MultipartDownloader
+class PartGetMultipartDownloader extends AbstractMultipartDownloader
 {
     /**
      * @inheritDoc
@@ -51,6 +51,8 @@ class PartGetMultipartDownloader extends MultipartDownloader
     {
         if (!empty($result['PartsCount'])) {
             $this->objectPartsCount = $result['PartsCount'];
+        } else {
+            $this->objectPartsCount = 1;
         }
 
         $this->objectSizeInBytes = $this->computeObjectSizeFromContentRange(

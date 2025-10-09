@@ -7,7 +7,7 @@ use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\S3\S3Transfer\Models\DownloadResult;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
-use Aws\S3\S3Transfer\MultipartDownloader;
+use Aws\S3\S3Transfer\AbstractMultipartDownloader;
 use Aws\S3\S3Transfer\PartGetMultipartDownloader;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
@@ -30,11 +30,11 @@ class MultipartDownloaderTest extends TestCase
      */
     public function testChooseDownloaderClass(): void {
         $multipartDownloadTypes = [
-            MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER => PartGetMultipartDownloader::class,
-            MultipartDownloader::RANGED_GET_MULTIPART_DOWNLOADER => RangeGetMultipartDownloader::class,
+            AbstractMultipartDownloader::PART_GET_MULTIPART_DOWNLOADER => PartGetMultipartDownloader::class,
+            AbstractMultipartDownloader::RANGED_GET_MULTIPART_DOWNLOADER => RangeGetMultipartDownloader::class,
         ];
         foreach ($multipartDownloadTypes as $multipartDownloadType => $class) {
-            $resolvedClass = MultipartDownloader::chooseDownloaderClass($multipartDownloadType);
+            $resolvedClass = AbstractMultipartDownloader::chooseDownloaderClass($multipartDownloadType);
             $this->assertEquals($class, $resolvedClass);
         }
     }
@@ -49,7 +49,7 @@ class MultipartDownloaderTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('The config value for `multipart_download_type` must be one of:');
 
-        MultipartDownloader::chooseDownloaderClass('invalidType');
+        AbstractMultipartDownloader::chooseDownloaderClass('invalidType');
     }
 
     /**
@@ -59,9 +59,9 @@ class MultipartDownloaderTest extends TestCase
      */
     public function testConstants(): void
     {
-        $this->assertEquals('GetObject', MultipartDownloader::GET_OBJECT_COMMAND);
-        $this->assertEquals('part', MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER);
-        $this->assertEquals('ranged', MultipartDownloader::RANGED_GET_MULTIPART_DOWNLOADER);
+        $this->assertEquals('GetObject', AbstractMultipartDownloader::GET_OBJECT_COMMAND);
+        $this->assertEquals('part', AbstractMultipartDownloader::PART_GET_MULTIPART_DOWNLOADER);
+        $this->assertEquals('ranged', AbstractMultipartDownloader::RANGED_GET_MULTIPART_DOWNLOADER);
     }
 
     /**

@@ -9,11 +9,11 @@ use Psr\Http\Message\StreamInterface;
 final class UploadRequest extends TransferRequest
 {
     public static array $configKeys = [
-        'multipart_upload_threshold_bytes',
-        'target_part_size_bytes',
-        'track_progress',
-        'concurrency',
-        'request_checksum_calculation'
+        'multipart_upload_threshold_bytes' => 'int',
+        'target_part_size_bytes' => 'int',
+        'track_progress' => 'bool',
+        'concurrency' => 'int',
+        'request_checksum_calculation' => 'string',
     ];
 
     /** @var StreamInterface|string  */

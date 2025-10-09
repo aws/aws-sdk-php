@@ -8,6 +8,18 @@ use InvalidArgumentException;
 
 final class UploadDirectoryRequest extends TransferRequest
 {
+    public static array $configKeys = [
+        'follow_symbolic_links' => 'bool',
+        'recursive' => 'bool',
+        's3_prefix' => 'string',
+        'filter' => 'callable',
+        's3_delimiter' => 'string',
+        'upload_object_request_modifier' => 'callable',
+        'failure_policy' => 'callable',
+        'max_concurrency' => 'int',
+        'max_depth' => 'int',
+        'track_progress' => 'bool',
+    ];
     public const DEFAULT_MAX_CONCURRENCY = 100;
 
     /** @var string */
@@ -50,7 +62,6 @@ final class UploadDirectoryRequest extends TransferRequest
         array $config = [],
         array $listeners = [],
         ?TransferListener $progressTracker = null
-
     ) {
         parent::__construct($listeners, $progressTracker, $config);
         $this->sourceDirectory = $sourceDirectory;

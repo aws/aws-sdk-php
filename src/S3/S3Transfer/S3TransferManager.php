@@ -23,14 +23,11 @@ use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Aws\S3\S3Transfer\Utils\DownloadHandler;
 use FilesystemIterator;
 use GuzzleHttp\Promise\Each;
-use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
-use GuzzleHttp\Promise\Utils;
 use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use RuntimeException;
 use Throwable;
 use function Aws\filter;
 use function Aws\map;
@@ -99,6 +96,8 @@ class S3TransferManager
             $this->config->toArray()
         );
 
+        $uploadRequest->validateConfig();
+
         $config = $uploadRequest->getConfig();
 
         // Validate progress tracker
@@ -151,51 +150,19 @@ class S3TransferManager
     ): PromiseInterface
     {
         $uploadDirectoryRequest->validateSourceDirectory();
-        $targetBucket = $uploadDirectoryRequest->getTargetBucket();
 
         $uploadDirectoryRequest->updateConfigWithDefaults(
             $this->config->toArray()
         );
 
+        $uploadDirectoryRequest->validateConfig();
+
         $config = $uploadDirectoryRequest->getConfig();
-        $progressTracker = $uploadDirectoryRequest->getProgressTracker();
-        if ($progressTracker === null
-            && ($config['track_progress'] ?? $this->config->isTrackProgress())) {
-            $progressTracker = new MultiProgressTracker();
-        }
 
-        $filter = null;
-        if (isset($config['filter'])) {
-            if (!is_callable($config['filter'])) {
-                throw new InvalidArgumentException(
-                    "The provided config `filter` must be callable."
-                );
-            }
-
-            $filter = $config['filter'];
-        }
-
-        $uploadObjectRequestModifier = null;
-        if (isset($config['upload_object_request_modifier'])) {
-            if (!is_callable($config['upload_object_request_modifier'])) {
-                throw new InvalidArgumentException(
-                    "The provided config `upload_object_request_modifier` must be callable."
-                );
-            }
-
-            $uploadObjectRequestModifier = $config['upload_object_request_modifier'];
-        }
-
-        $failurePolicyCallback = null;
-        if (isset($config['failure_policy'])) {
-            if (!is_callable($config['failure_policy'])) {
-                throw new InvalidArgumentException(
-                    "The provided config `failure_policy` must be callable."
-                );
-            }
-
-            $failurePolicyCallback = $config['failure_policy'];
-        }
+        $filter = $config['filter'] ?? null;
+        $uploadObjectRequestModifier = $config['upload_object_request_modifier']
+            ?? null;
+        $failurePolicyCallback = $config['failure_policy'] ?? null;
 
         $sourceDirectory = $uploadDirectoryRequest->getSourceDirectory();
         $dirIterator = new RecursiveDirectoryIterator(
@@ -215,29 +182,26 @@ class S3TransferManager
                 RecursiveIteratorIterator::SELF_FIRST
             );
             if (isset($config['max_depth'])) {
-                if (!is_int($config['max_depth'])) {
-                    throw new InvalidArgumentException(
-                        "The provided config `max_depth` must be an integer."
-                    );
-                }
-
                 $dirIterator->setMaxDepth($config['max_depth']);
             }
         }
 
-        // To avoid circular symbolic links traversal
         $dirVisited = [];
         $files = filter(
             $dirIterator,
             function ($file) use ($filter, &$dirVisited) {
                 if (is_dir($file)) {
+                    // To avoid circular symbolic links traversal
                     $dirRealPath = realpath($file);
-                    if ($dirVisited[$dirRealPath] ?? false) {
-                        throw new RuntimeException(
-                            "A circular symbolic link traversal have been detected at $file -> $dirRealPath"
-                        );
+                    if ($dirRealPath !== false) {
+                        if ($dirVisited[$dirRealPath] ?? false) {
+                            throw new S3TransferException(
+                                "A circular symbolic link traversal has been detected at $file -> $dirRealPath"
+                            );
+                        }
+
+                        $dirVisited[$dirRealPath] = true;
                     }
-                    $dirVisited[$dirRealPath] = true;
                 }
 
                 if ($filter !== null) {
@@ -248,24 +212,29 @@ class S3TransferManager
             }
         );
 
-        $prefix = $config['s3_prefix'] ?? '';
-        if ($prefix !== '' && !str_ends_with($prefix, '/')) {
-            $prefix .= '/';
-        }
-
-        $delimiter = $config['s3_delimiter'] ?? '/';
-        $promises = [];
         $objectsUploaded = 0;
         $objectsFailed = 0;
+        $promises = [];
+        $baseDir = rtrim($sourceDirectory, '/') . DIRECTORY_SEPARATOR;
+        $delimiter = $config['s3_delimiter'] ?? '/';
+        $s3Prefix = $config['s3_prefix'] ?? '';
+        if ($s3Prefix !== '' && !str_ends_with($s3Prefix, '/')) {
+            $s3Prefix .= '/';
+        }
+        $targetBucket = $uploadDirectoryRequest->getTargetBucket();
+        $progressTracker = $uploadDirectoryRequest->getProgressTracker();
+        if ($progressTracker === null
+            && ($config['track_progress'] ?? $this->config->isTrackProgress())) {
+            $progressTracker = new MultiProgressTracker();
+        }
         foreach ($files as $file) {
-            $baseDir = rtrim($sourceDirectory, '/') . DIRECTORY_SEPARATOR;
             $relativePath = substr($file, strlen($baseDir));
             if (str_contains($relativePath, $delimiter) && $delimiter !== '/') {
                 throw new S3TransferException(
                     "The filename `$relativePath` must not contain the provided delimiter `$delimiter`"
                 );
             }
-            $objectKey = $prefix.$relativePath;
+            $objectKey = $s3Prefix.$relativePath;
             $objectKey = str_replace(
                 DIRECTORY_SEPARATOR,
                 $delimiter,
@@ -304,7 +273,7 @@ class S3TransferManager
             ) {
                 $objectsFailed++;
                 if($failurePolicyCallback !== null) {
-                    return call_user_func(
+                    call_user_func(
                         $failurePolicyCallback,
                         $uploadRequestArgs,
                         [
@@ -317,9 +286,11 @@ class S3TransferManager
                             $objectsFailed
                         )
                     );
+
+                    return;
                 }
 
-                return $reason;
+                throw $reason;
             });
         }
 
@@ -329,9 +300,13 @@ class S3TransferManager
         return Each::ofLimitAll($promises, $maxConcurrency)
             ->then(function () use (&$objectsUploaded, &$objectsFailed) {
                 return new UploadDirectoryResult($objectsUploaded, $objectsFailed);
-            })->otherwise(function ()
+            })->otherwise(function (Throwable $reason)
             use (&$objectsUploaded, &$objectsFailed) {
-                return new UploadDirectoryResult($objectsUploaded, $objectsFailed);
+                return new UploadDirectoryResult(
+                    $objectsUploaded,
+                    $objectsFailed,
+                    $reason
+                );
             });
     }
 
@@ -346,6 +321,8 @@ class S3TransferManager
         $getObjectRequestArgs = $downloadRequest->getObjectRequestArgs();
 
         $downloadRequest->updateConfigWithDefaults($this->config->toArray());
+
+        $downloadRequest->validateConfig();
 
         $config = $downloadRequest->getConfig();
 
@@ -404,14 +381,17 @@ class S3TransferManager
         $downloadDirectoryRequest->updateConfigWithDefaults(
             $this->config->toArray()
         );
+
+        $downloadDirectoryRequest->validateConfig();
+
         $config = $downloadDirectoryRequest->getConfig();
         if ($progressTracker === null && $config['track_progress']) {
             $progressTracker = new MultiProgressTracker();
         }
 
         $listArgs = [
-            'Bucket' => $sourceBucket,
-        ]  + ($config['list_object_v2_args'] ?? []);
+                'Bucket' => $sourceBucket,
+            ]  + ($config['list_objects_v2_args'] ?? []);
 
         $s3Prefix = $config['s3_prefix'] ?? null;
         if (empty($listArgs['Prefix']) && $s3Prefix !== null) {
@@ -425,53 +405,26 @@ class S3TransferManager
             ->getPaginator('ListObjectsV2', $listArgs)
             ->search('Contents[].Key');
 
-        if (isset($config['filter'])) {
-            if (!is_callable($config['filter'])) {
-                throw new InvalidArgumentException(
-                    "The provided config `filter` must be callable."
-                );
+        $filter = $config['filter'] ?? null;
+        $objects = filter($objects, function (string $key) use ($filter) {
+            if ($filter !== null) {
+                return call_user_func($filter, $key) && !str_ends_with($key, "/");
             }
 
-            $filter = $config['filter'];
-            $objects = filter($objects, function (string $key) use ($filter) {
-                return call_user_func($filter, $key) && !str_ends_with($key, "/");
-            });
-        } else {
-            $objects = filter($objects, function (string $key) {
-                return !str_ends_with($key, "/");
-            });
-        }
-
+            return !str_ends_with($key, "/");
+        });
         $objects = map($objects, function (string $key) use ($sourceBucket) {
             return  self::formatAsS3URI($sourceBucket, $key);
         });
 
-        $downloadObjectRequestModifier = null;
-        if (isset($config['download_object_request_modifier'])) {
-            if (!is_callable($config['download_object_request_modifier'])) {
-                throw new InvalidArgumentException(
-                    "The provided config `download_object_request_modifier` must be callable."
-                );
-            }
+        $downloadObjectRequestModifier = $config['download_object_request_modifier']
+            ?? null;
+        $failurePolicyCallback = $config['failure_policy'] ?? null;
 
-            $downloadObjectRequestModifier = $config['download_object_request_modifier'];
-        }
-
-        $failurePolicyCallback = null;
-        if (isset($config['failure_policy'])) {
-            if (!is_callable($config['failure_policy'])) {
-                throw new InvalidArgumentException(
-                    "The provided config `failure_policy` must be callable."
-                );
-            }
-            
-            $failurePolicyCallback = $config['failure_policy'];
-        }
-
-        $promises = [];
+        $s3Delimiter = '/';
         $objectsDownloaded = 0;
         $objectsFailed = 0;
-        $s3Delimiter = '/';
+        $promises = [];
         foreach ($objects as $object) {
             $bucketAndKeyArray = self::s3UriAsBucketAndKey($object);
             $objectKey = $bucketAndKeyArray['Key'];
@@ -540,7 +493,7 @@ class S3TransferManager
             ) {
                 $objectsFailed++;
                 if ($failurePolicyCallback !== null) {
-                    return call_user_func(
+                    call_user_func(
                         $failurePolicyCallback,
                         $requestArgs,
                         [
@@ -553,9 +506,11 @@ class S3TransferManager
                             $objectsFailed
                         )
                     );
+
+                    return;
                 }
 
-                return $reason;
+                throw $reason;
             });
         }
 
@@ -568,10 +523,12 @@ class S3TransferManager
                     $objectsDownloaded,
                     $objectsFailed
                 );
-            })->otherwise(function () use (&$objectsFailed, &$objectsDownloaded) {
+            })->otherwise(function (Throwable $reason)
+            use (&$objectsFailed, &$objectsDownloaded) {
                 return new DownloadDirectoryResult(
                     $objectsDownloaded,
-                    $objectsFailed
+                    $objectsFailed,
+                    $reason
                 );
             });
     }
@@ -593,7 +550,7 @@ class S3TransferManager
         ?TransferListenerNotifier $listenerNotifier = null,
     ): PromiseInterface
     {
-        $downloaderClassName = MultipartDownloader::chooseDownloaderClass(
+        $downloaderClassName = AbstractMultipartDownloader::chooseDownloaderClass(
             strtolower($config['multipart_download_type'])
         );
         $multipartDownloader = new $downloaderClassName(
@@ -689,7 +646,7 @@ class S3TransferManager
                     ]
                 );
 
-                return $reason;
+                throw $reason;
             });
         }
 

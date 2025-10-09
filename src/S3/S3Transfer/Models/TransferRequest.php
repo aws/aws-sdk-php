@@ -3,11 +3,12 @@
 namespace Aws\S3\S3Transfer\Models;
 
 use Aws\S3\S3Transfer\Progress\TransferListener;
+use InvalidArgumentException;
 
 abstract class TransferRequest
 {
     public static array $configKeys = [
-        'track_progress'
+        'track_progress' => 'bool',
     ];
 
     /** @var array  */
@@ -69,9 +70,25 @@ abstract class TransferRequest
      */
     public function updateConfigWithDefaults(array $defaultConfig): void
     {
-        foreach (static::$configKeys as $key) {
-            if (empty($this->config[$key])) {
+        foreach (static::$configKeys as $key => $_) {
+            if (isset($defaultConfig[$key]) && empty($this->config[$key])) {
                 $this->config[$key] = $defaultConfig[$key];
+            }
+        }
+    }
+
+    /**
+     * For validating config. By default, it provides an empty
+     * implementation.
+     * @return void
+     */
+    public function validateConfig(): void {
+        foreach (static::$configKeys as $key => $type) {
+            if (isset($this->config[$key])
+                && !call_user_func('is_' . $type, $this->config[$key])) {
+                throw new InvalidArgumentException(
+                    "The provided config `$key` must be $type."
+                );
             }
         }
     }

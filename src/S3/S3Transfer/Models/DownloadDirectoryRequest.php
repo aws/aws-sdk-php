@@ -8,6 +8,17 @@ use InvalidArgumentException;
 
 final class DownloadDirectoryRequest extends TransferRequest
 {
+    public static array $configKeys = [
+        's3_prefix' => 'string',
+        'filter' => 'callable',
+        'download_object_request_modifier' => 'callable',
+        'failure_policy' => 'callable',
+        'max_concurrency' => 'int',
+        'track_progress' => 'bool',
+        'target_part_size_bytes' => 'int',
+        'list_objects_v2_args' => 'array',
+        'fails_when_destination_exists' => 'bool',
+    ];
     public const DEFAULT_MAX_CONCURRENCY = 100;
 
     /** @var string */
@@ -27,7 +38,7 @@ final class DownloadDirectoryRequest extends TransferRequest
      * @param array $downloadRequestArgs
      * @param array $config The config options for this download directory operation.
      *  - s3_prefix: (string, optional) This parameter will be considered just if
-     *    not provided as part of the list_object_v2_args config option.
+     *    not provided as part of the list_objects_v2_args config option.
      *  - filter: (Closure, optional) A callable which will receive an object key as
      *    parameter and should return true or false in order to determine
      *    whether the object should be downloaded.
@@ -48,15 +59,15 @@ final class DownloadDirectoryRequest extends TransferRequest
      *    progress should be tracked.
      *  - target_part_size_bytes: (int, optional) The part size in bytes
      *    to be used in a range multipart download.
-     *  - list_object_v2_args: (array, optional) The arguments to be included
+     *  - fails_when_destination_exists: (bool) Whether to fail when a destination
+     *       file exists.
+     *  - max_concurrency: (int, optional) The max number of concurrent downloads.
+     *  - list_objects_v2_args: (array, optional) The arguments to be included
      *    as part of the listObjectV2 request in order to fetch the objects to
      *    be downloaded. The most common arguments would be:
      *    - MaxKeys: (int) Sets the maximum number of keys returned in the response.
      *    - Prefix: (string) To limit the response to keys that begin with the
      *      specified prefix.
-     *    - fails_when_destination_exists: (bool) Whether to fail when a destination
-     *      file exists.
-     *  - max_concurrency: (int, optional) The max number of concurrent downloads.
      * @param TransferListener[] $listeners The listeners for watching
      * transfer events. Each listener will be cloned per file upload.
      * @param TransferListener|null $progressTracker Ideally the progress
