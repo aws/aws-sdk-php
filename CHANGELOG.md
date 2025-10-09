@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.36 - 2025-10-09
 
 * `Aws\QuickSight` - This release adds support for ActionConnector and Flow, which are new resources associated with Amazon Quick Suite. Additional updates include expanded Data Source options, further branding customization, and new capabilities that can be restricted by Admins.
 * `Aws\WAFV2` - This release adds the ability to throw WafLimitsExceededException when the maximum number of Application Load Balancer (ALB) associations per AWS WAF v2 WebACL is exceeded.
