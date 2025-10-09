@@ -102,6 +102,25 @@
         {"shape":"ResourceUnavailableException"}
       ]
     },
+    "CreateActionConnector":{
+      "name":"CreateActionConnector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/action-connectors",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateActionConnectorRequest"},
+      "output":{"shape":"CreateActionConnectorResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceExistsException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "CreateAnalysis":{
       "name":"CreateAnalysis",
       "http":{
@@ -576,6 +595,23 @@
         {"shape":"PreconditionNotMetException"},
         {"shape":"InternalFailureException"},
         {"shape":"ResourceUnavailableException"}
+      ]
+    },
+    "DeleteActionConnector":{
+      "name":"DeleteActionConnector",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/action-connectors/{ActionConnectorId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteActionConnectorRequest"},
+      "output":{"shape":"DeleteActionConnectorResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "DeleteAnalysis":{
@@ -1157,6 +1193,42 @@
         {"shape":"InternalFailureException"},
         {"shape":"ResourceUnavailableException"}
       ]
+    },
+    "DescribeActionConnector":{
+      "name":"DescribeActionConnector",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/action-connectors/{ActionConnectorId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeActionConnectorRequest"},
+      "output":{"shape":"DescribeActionConnectorResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "DescribeActionConnectorPermissions":{
+      "name":"DescribeActionConnectorPermissions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/action-connectors/{ActionConnectorId}/permissions",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeActionConnectorPermissionsRequest"},
+      "output":{"shape":"DescribeActionConnectorPermissionsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
     },
     "DescribeAnalysis":{
       "name":"DescribeAnalysis",
@@ -2060,6 +2132,40 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "GetFlowMetadata":{
+      "name":"GetFlowMetadata",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/flows/{FlowId}/metadata",
+        "responseCode":200
+      },
+      "input":{"shape":"GetFlowMetadataInput"},
+      "output":{"shape":"GetFlowMetadataOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "GetFlowPermissions":{
+      "name":"GetFlowPermissions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/flows/{FlowId}/permissions",
+        "responseCode":200
+      },
+      "input":{"shape":"GetFlowPermissionsInput"},
+      "output":{"shape":"GetFlowPermissionsOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "GetSessionEmbedUrl":{
       "name":"GetSessionEmbedUrl",
       "http":{
@@ -2079,6 +2185,24 @@
         {"shape":"UnsupportedUserEditionException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "ListActionConnectors":{
+      "name":"ListActionConnectors",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/action-connectors",
+        "responseCode":200
+      },
+      "input":{"shape":"ListActionConnectorsRequest"},
+      "output":{"shape":"ListActionConnectorsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
     },
     "ListAnalyses":{
       "name":"ListAnalyses",
@@ -2225,6 +2349,23 @@
         {"shape":"InvalidNextTokenException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "ListFlows":{
+      "name":"ListFlows",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/flows",
+        "responseCode":200
+      },
+      "input":{"shape":"ListFlowsInput"},
+      "output":{"shape":"ListFlowsOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
     },
     "ListFolderMembers":{
       "name":"ListFolderMembers",
@@ -2741,6 +2882,23 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "SearchActionConnectors":{
+      "name":"SearchActionConnectors",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/search/action-connectors",
+        "responseCode":200
+      },
+      "input":{"shape":"SearchActionConnectorsRequest"},
+      "output":{"shape":"SearchActionConnectorsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "SearchAnalyses":{
       "name":"SearchAnalyses",
       "http":{
@@ -2808,6 +2966,23 @@
         {"shape":"InvalidNextTokenException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "SearchFlows":{
+      "name":"SearchFlows",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/flows/searchFlows",
+        "responseCode":200
+      },
+      "input":{"shape":"SearchFlowsInput"},
+      "output":{"shape":"SearchFlowsOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
     },
     "SearchFolders":{
       "name":"SearchFolders",
@@ -3020,6 +3195,45 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"},
         {"shape":"ResourceUnavailableException"}
+      ]
+    },
+    "UpdateActionConnector":{
+      "name":"UpdateActionConnector",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/action-connectors/{ActionConnectorId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateActionConnectorRequest"},
+      "output":{"shape":"UpdateActionConnectorResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateActionConnectorPermissions":{
+      "name":"UpdateActionConnectorPermissions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/action-connectors/{ActionConnectorId}/permissions",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateActionConnectorPermissionsRequest"},
+      "output":{"shape":"UpdateActionConnectorPermissionsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
       ]
     },
     "UpdateAnalysis":{
@@ -3327,6 +3541,23 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "UpdateFlowPermissions":{
+      "name":"UpdateFlowPermissions",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/flows/{FlowId}/permissions",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateFlowPermissionsInput"},
+      "output":{"shape":"UpdateFlowPermissionsOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
     },
     "UpdateFolder":{
       "name":"UpdateFolder",
@@ -3777,6 +4008,22 @@
     }
   },
   "shapes":{
+    "APIKey":{
+      "type":"string",
+      "sensitive":true
+    },
+    "APIKeyConnectionMetadata":{
+      "type":"structure",
+      "required":[
+        "BaseEndpoint",
+        "ApiKey"
+      ],
+      "members":{
+        "BaseEndpoint":{"shape":"Endpoint"},
+        "ApiKey":{"shape":"APIKey"},
+        "Email":{"shape":"Email"}
+      }
+    },
     "AccessDeniedException":{
       "type":"structure",
       "members":{
@@ -3792,6 +4039,12 @@
         "DefaultTheme":{"shape":"Arn"},
         "DefaultEmailCustomizationTemplate":{"shape":"Arn"}
       }
+    },
+    "AccountId":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"[0-9]{12}"
     },
     "AccountInfo":{
       "type":"structure",
@@ -3821,10 +4074,174 @@
         "TerminationProtectionEnabled":{"shape":"Boolean"}
       }
     },
+    "ActionConnector":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "ActionConnectorId",
+        "Type",
+        "Name",
+        "LastUpdatedTime"
+      ],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "ActionConnectorId":{"shape":"ShortRestrictiveResourceId"},
+        "Type":{"shape":"ActionConnectorType"},
+        "Name":{"shape":"ActionConnectorName"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "Status":{"shape":"ResourceStatus"},
+        "Error":{"shape":"ActionConnectorError"},
+        "Description":{"shape":"ActionConnectorDescription"},
+        "AuthenticationConfig":{"shape":"ReadAuthConfig"},
+        "EnabledActions":{"shape":"ActionIdList"},
+        "VpcConnectionArn":{"shape":"Arn"}
+      }
+    },
+    "ActionConnectorDescription":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[A-Za-z0-9 _.,!?-]*",
+      "sensitive":true
+    },
+    "ActionConnectorError":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"},
+        "Type":{"shape":"ActionConnectorErrorType"}
+      }
+    },
+    "ActionConnectorErrorType":{
+      "type":"string",
+      "enum":["INTERNAL_FAILURE"]
+    },
+    "ActionConnectorName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Za-z0-9](?:[\\w- ]*[A-Za-z0-9])?",
+      "sensitive":true
+    },
+    "ActionConnectorSearchFilter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Operator",
+        "Value"
+      ],
+      "members":{
+        "Name":{"shape":"ActionConnectorSearchFilterNameEnum"},
+        "Operator":{"shape":"FilterOperator"},
+        "Value":{"shape":"String"}
+      }
+    },
+    "ActionConnectorSearchFilterList":{
+      "type":"list",
+      "member":{"shape":"ActionConnectorSearchFilter"},
+      "max":1,
+      "min":0
+    },
+    "ActionConnectorSearchFilterNameEnum":{
+      "type":"string",
+      "enum":[
+        "ACTION_CONNECTOR_NAME",
+        "ACTION_CONNECTOR_TYPE",
+        "QUICKSIGHT_OWNER",
+        "QUICKSIGHT_VIEWER_OR_OWNER",
+        "DIRECT_QUICKSIGHT_SOLE_OWNER",
+        "DIRECT_QUICKSIGHT_OWNER",
+        "DIRECT_QUICKSIGHT_VIEWER_OR_OWNER"
+      ],
+      "min":1
+    },
+    "ActionConnectorSummary":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "ActionConnectorId",
+        "Type",
+        "Name",
+        "LastUpdatedTime"
+      ],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "ActionConnectorId":{"shape":"ShortRestrictiveResourceId"},
+        "Type":{"shape":"ActionConnectorType"},
+        "Name":{"shape":"ActionConnectorName"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "Status":{"shape":"ResourceStatus"},
+        "Error":{"shape":"ActionConnectorError"}
+      }
+    },
+    "ActionConnectorSummaryList":{
+      "type":"list",
+      "member":{"shape":"ActionConnectorSummary"}
+    },
+    "ActionConnectorType":{
+      "type":"string",
+      "enum":[
+        "GENERIC_HTTP",
+        "SERVICENOW_NOW_PLATFORM",
+        "SALESFORCE_CRM",
+        "MICROSOFT_OUTLOOK",
+        "PAGERDUTY_ADVANCE",
+        "JIRA_CLOUD",
+        "ATLASSIAN_CONFLUENCE",
+        "AMAZON_S3",
+        "AMAZON_BEDROCK_AGENT_RUNTIME",
+        "AMAZON_BEDROCK_RUNTIME",
+        "AMAZON_BEDROCK_DATA_AUTOMATION_RUNTIME",
+        "AMAZON_TEXTRACT",
+        "AMAZON_COMPREHEND",
+        "AMAZON_COMPREHEND_MEDICAL",
+        "MICROSOFT_ONEDRIVE",
+        "MICROSOFT_SHAREPOINT",
+        "MICROSOFT_TEAMS",
+        "SAP_BUSINESSPARTNER",
+        "SAP_PRODUCTMASTERDATA",
+        "SAP_PHYSICALINVENTORY",
+        "SAP_BILLOFMATERIALS",
+        "SAP_MATERIALSTOCK",
+        "ZENDESK_SUITE",
+        "SMARTSHEET",
+        "SLACK",
+        "ASANA",
+        "BAMBOO_HR"
+      ]
+    },
+    "ActionId":{
+      "type":"string",
+      "pattern":"[\\w@:_.,!?+-/]+"
+    },
+    "ActionIdList":{
+      "type":"list",
+      "member":{"shape":"ActionId"},
+      "max":100,
+      "min":0
+    },
     "ActionList":{
       "type":"list",
       "member":{"shape":"String"},
       "max":20,
+      "min":1
+    },
+    "ActionPassword":{
+      "type":"string",
+      "sensitive":true
+    },
+    "ActionUserName":{
+      "type":"string",
+      "sensitive":true
+    },
+    "ActionsList":{
+      "type":"list",
+      "member":{"shape":"ActionsListMemberString"}
+    },
+    "ActionsListMemberString":{
+      "type":"string",
+      "max":64,
       "min":1
     },
     "ActiveIAMPolicyAssignment":{
@@ -4220,10 +4637,17 @@
       "type":"list",
       "member":{"shape":"AnswerId"}
     },
+    "ApplicationArn":{
+      "type":"string",
+      "max":1284,
+      "min":1,
+      "pattern":"^arn:[-a-z0-9]*:qbusiness:[-a-z0-9]*:[0-9]{12}:application/.+"
+    },
     "ApplicationTheme":{
       "type":"structure",
       "members":{
         "BrandColorPalette":{"shape":"BrandColorPalette"},
+        "ContextualAccentPalette":{"shape":"ContextualAccentPalette"},
         "BrandElementStyle":{"shape":"BrandElementStyle"}
       }
     },
@@ -5196,6 +5620,29 @@
         "Database":{"shape":"Database"}
       }
     },
+    "AuthConfig":{
+      "type":"structure",
+      "required":[
+        "AuthenticationType",
+        "AuthenticationMetadata"
+      ],
+      "members":{
+        "AuthenticationType":{"shape":"ConnectionAuthType"},
+        "AuthenticationMetadata":{"shape":"AuthenticationMetadata"}
+      }
+    },
+    "AuthenticationMetadata":{
+      "type":"structure",
+      "members":{
+        "AuthorizationCodeGrantMetadata":{"shape":"AuthorizationCodeGrantMetadata"},
+        "ClientCredentialsGrantMetadata":{"shape":"ClientCredentialsGrantMetadata"},
+        "BasicAuthConnectionMetadata":{"shape":"BasicAuthConnectionMetadata"},
+        "ApiKeyConnectionMetadata":{"shape":"APIKeyConnectionMetadata"},
+        "NoneConnectionMetadata":{"shape":"NoneConnectionMetadata"},
+        "IamConnectionMetadata":{"shape":"IAMConnectionMetadata"}
+      },
+      "union":true
+    },
     "AuthenticationMethodOption":{
       "type":"string",
       "enum":[
@@ -5233,6 +5680,45 @@
     "AuthorSpecifiedAggregations":{
       "type":"list",
       "member":{"shape":"AuthorSpecifiedAggregation"}
+    },
+    "AuthorizationCodeGrantCredentialsDetails":{
+      "type":"structure",
+      "members":{
+        "AuthorizationCodeGrantDetails":{"shape":"AuthorizationCodeGrantDetails"}
+      },
+      "union":true
+    },
+    "AuthorizationCodeGrantCredentialsSource":{
+      "type":"string",
+      "enum":["PLAIN_CREDENTIALS"]
+    },
+    "AuthorizationCodeGrantDetails":{
+      "type":"structure",
+      "required":[
+        "ClientId",
+        "ClientSecret",
+        "TokenEndpoint",
+        "AuthorizationEndpoint"
+      ],
+      "members":{
+        "ClientId":{"shape":"ClientId"},
+        "ClientSecret":{"shape":"ClientSecret"},
+        "TokenEndpoint":{"shape":"Endpoint"},
+        "AuthorizationEndpoint":{"shape":"Endpoint"}
+      }
+    },
+    "AuthorizationCodeGrantMetadata":{
+      "type":"structure",
+      "required":[
+        "BaseEndpoint",
+        "RedirectUrl"
+      ],
+      "members":{
+        "BaseEndpoint":{"shape":"Endpoint"},
+        "RedirectUrl":{"shape":"Endpoint"},
+        "AuthorizationCodeGrantCredentialsSource":{"shape":"AuthorizationCodeGrantCredentialsSource"},
+        "AuthorizationCodeGrantCredentialsDetails":{"shape":"AuthorizationCodeGrantCredentialsDetails"}
+      }
     },
     "AuthorizedTargetsByService":{
       "type":"structure",
@@ -5462,6 +5948,19 @@
         "STREET",
         "IMAGERY"
       ]
+    },
+    "BasicAuthConnectionMetadata":{
+      "type":"structure",
+      "required":[
+        "BaseEndpoint",
+        "Username",
+        "Password"
+      ],
+      "members":{
+        "BaseEndpoint":{"shape":"Endpoint"},
+        "Username":{"shape":"ActionUserName"},
+        "Password":{"shape":"ActionPassword"}
+      }
     },
     "BatchCreateTopicReviewedAnswerRequest":{
       "type":"structure",
@@ -5956,7 +6455,19 @@
         "ExportToExcelInScheduledReports":{"shape":"CapabilityState"},
         "IncludeContentInScheduledReportsEmail":{"shape":"CapabilityState"},
         "Dashboard":{"shape":"CapabilityState"},
-        "Analysis":{"shape":"CapabilityState"}
+        "Analysis":{"shape":"CapabilityState"},
+        "Automate":{"shape":"CapabilityState"},
+        "Flow":{"shape":"CapabilityState"},
+        "PublishWithoutApproval":{"shape":"CapabilityState"},
+        "UseBedrockModels":{"shape":"CapabilityState"},
+        "PerformFlowUiTask":{"shape":"CapabilityState"},
+        "UseAgentWebSearch":{"shape":"CapabilityState"},
+        "KnowledgeBase":{"shape":"CapabilityState"},
+        "Action":{"shape":"CapabilityState"},
+        "Space":{"shape":"CapabilityState"},
+        "ChatAgent":{"shape":"CapabilityState"},
+        "CreateChatAgents":{"shape":"CapabilityState"},
+        "Research":{"shape":"CapabilityState"}
       }
     },
     "CapabilityState":{
@@ -6133,6 +6644,50 @@
         "SortIconVisibility":{"shape":"Visibility"},
         "AxisLabelOptions":{"shape":"AxisLabelOptionsList"}
       }
+    },
+    "ClientCredentialsDetails":{
+      "type":"structure",
+      "members":{
+        "ClientCredentialsGrantDetails":{"shape":"ClientCredentialsGrantDetails"}
+      },
+      "union":true
+    },
+    "ClientCredentialsGrantDetails":{
+      "type":"structure",
+      "required":[
+        "ClientId",
+        "ClientSecret",
+        "TokenEndpoint"
+      ],
+      "members":{
+        "ClientId":{"shape":"ClientId"},
+        "ClientSecret":{"shape":"ClientSecret"},
+        "TokenEndpoint":{"shape":"Endpoint"}
+      }
+    },
+    "ClientCredentialsGrantMetadata":{
+      "type":"structure",
+      "required":["BaseEndpoint"],
+      "members":{
+        "BaseEndpoint":{"shape":"Endpoint"},
+        "ClientCredentialsSource":{"shape":"ClientCredentialsSource"},
+        "ClientCredentialsDetails":{"shape":"ClientCredentialsDetails"}
+      }
+    },
+    "ClientCredentialsSource":{
+      "type":"string",
+      "enum":["PLAIN_CREDENTIALS"]
+    },
+    "ClientId":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "ClientSecret":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "sensitive":true
     },
     "ClusterId":{
       "type":"string",
@@ -6664,6 +7219,24 @@
       "error":{"httpStatusCode":409},
       "exception":true
     },
+    "ConfluenceParameters":{
+      "type":"structure",
+      "required":["ConfluenceUrl"],
+      "members":{
+        "ConfluenceUrl":{"shape":"SiteBaseUrl"}
+      }
+    },
+    "ConnectionAuthType":{
+      "type":"string",
+      "enum":[
+        "BASIC",
+        "API_KEY",
+        "OAUTH2_CLIENT_CREDENTIALS",
+        "NONE",
+        "IAM",
+        "OAUTH2_AUTHORIZATION_CODE"
+      ]
+    },
     "ConstantType":{
       "type":"string",
       "enum":[
@@ -6680,6 +7253,15 @@
       "type":"structure",
       "members":{
         "AvailabilityStatus":{"shape":"DashboardBehavior"}
+      }
+    },
+    "ContextualAccentPalette":{
+      "type":"structure",
+      "members":{
+        "Connection":{"shape":"Palette"},
+        "Visualization":{"shape":"Palette"},
+        "Insight":{"shape":"Palette"},
+        "Automation":{"shape":"Palette"}
       }
     },
     "ContributionAnalysisDefault":{
@@ -6822,6 +7404,44 @@
           "location":"statusCode"
         },
         "RequestId":{"shape":"String"}
+      }
+    },
+    "CreateActionConnectorRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ActionConnectorId",
+        "Name",
+        "Type",
+        "AuthenticationConfig"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "ActionConnectorId":{"shape":"ShortRestrictiveResourceId"},
+        "Name":{"shape":"ActionConnectorName"},
+        "Type":{"shape":"ActionConnectorType"},
+        "AuthenticationConfig":{"shape":"AuthConfig"},
+        "Description":{"shape":"ActionConnectorDescription"},
+        "Permissions":{"shape":"ResourcePermissionList"},
+        "VpcConnectionArn":{"shape":"Arn"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateActionConnectorResponse":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "CreationStatus":{"shape":"ResourceStatus"},
+        "ActionConnectorId":{"shape":"String"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
       }
     },
     "CreateAnalysisRequest":{
@@ -8022,6 +8642,7 @@
         "DataPointMenuLabelOption":{"shape":"DataPointMenuLabelOption"},
         "DataPointTooltipOption":{"shape":"DataPointTooltipOption"},
         "DataQAEnabledOption":{"shape":"DataQAEnabledOption"},
+        "QuickSuiteActionsOption":{"shape":"QuickSuiteActionsOption"},
         "ExecutiveSummaryOption":{"shape":"ExecutiveSummaryOption"},
         "DataStoriesSharingOption":{"shape":"DataStoriesSharingOption"}
       }
@@ -8555,7 +9176,8 @@
       "members":{
         "CredentialPair":{"shape":"CredentialPair"},
         "CopySourceArn":{"shape":"CopySourceArn"},
-        "SecretArn":{"shape":"SecretArn"}
+        "SecretArn":{"shape":"SecretArn"},
+        "WebProxyCredentials":{"shape":"WebProxyCredentials"}
       },
       "sensitive":true
     },
@@ -8609,6 +9231,7 @@
         "RdsParameters":{"shape":"RdsParameters"},
         "RedshiftParameters":{"shape":"RedshiftParameters"},
         "S3Parameters":{"shape":"S3Parameters"},
+        "S3KnowledgeBaseParameters":{"shape":"S3KnowledgeBaseParameters"},
         "ServiceNowParameters":{"shape":"ServiceNowParameters"},
         "SnowflakeParameters":{"shape":"SnowflakeParameters"},
         "SparkParameters":{"shape":"SparkParameters"},
@@ -8622,7 +9245,10 @@
         "TrinoParameters":{"shape":"TrinoParameters"},
         "BigQueryParameters":{"shape":"BigQueryParameters"},
         "ImpalaParameters":{"shape":"ImpalaParameters"},
-        "CustomConnectionParameters":{"shape":"CustomConnectionParameters"}
+        "CustomConnectionParameters":{"shape":"CustomConnectionParameters"},
+        "WebCrawlerParameters":{"shape":"WebCrawlerParameters"},
+        "ConfluenceParameters":{"shape":"ConfluenceParameters"},
+        "QBusinessParameters":{"shape":"QBusinessParameters"}
       }
     },
     "DataSourceParametersList":{
@@ -8697,7 +9323,14 @@
         "STARBURST",
         "TRINO",
         "BIGQUERY",
-        "GOOGLESHEETS"
+        "GOOGLESHEETS",
+        "GOOGLE_DRIVE",
+        "CONFLUENCE",
+        "SHAREPOINT",
+        "ONE_DRIVE",
+        "WEB_CRAWLER",
+        "S3_KNOWLEDGE_BASE",
+        "QBUSINESS"
       ]
     },
     "DataStoriesConfigurations":{
@@ -9283,6 +9916,37 @@
     "DeleteAccountSubscriptionResponse":{
       "type":"structure",
       "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "DeleteActionConnectorRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ActionConnectorId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "ActionConnectorId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"ActionConnectorId"
+        }
+      }
+    },
+    "DeleteActionConnectorResponse":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "ActionConnectorId":{"shape":"ShortRestrictiveResourceId"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -10359,6 +11023,68 @@
           "location":"statusCode"
         },
         "RequestId":{"shape":"String"}
+      }
+    },
+    "DescribeActionConnectorPermissionsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ActionConnectorId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "ActionConnectorId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"ActionConnectorId"
+        }
+      }
+    },
+    "DescribeActionConnectorPermissionsResponse":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"String"},
+        "ActionConnectorId":{"shape":"ShortRestrictiveResourceId"},
+        "Permissions":{"shape":"ResourcePermissionList"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "DescribeActionConnectorRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ActionConnectorId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "ActionConnectorId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"ActionConnectorId"
+        }
+      }
+    },
+    "DescribeActionConnectorResponse":{
+      "type":"structure",
+      "members":{
+        "ActionConnector":{"shape":"ActionConnector"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
       }
     },
     "DescribeAnalysisDefinitionRequest":{
@@ -12128,6 +12854,11 @@
         "ENTERPRISE_AND_Q"
       ]
     },
+    "Email":{
+      "type":"string",
+      "pattern":"[\\w.%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}",
+      "sensitive":true
+    },
     "EmbeddingIdentityType":{
       "type":"string",
       "enum":[
@@ -12151,6 +12882,12 @@
         "DataSetIdentifier":{"shape":"DataSetIdentifier"},
         "Actions":{"shape":"VisualCustomActionList"}
       }
+    },
+    "Endpoint":{
+      "type":"string",
+      "max":8192,
+      "min":1,
+      "pattern":"https://.*"
     },
     "Entity":{
       "type":"structure",
@@ -12338,6 +13075,16 @@
         "FieldId":{"shape":"FieldId"},
         "Visibility":{"shape":"Visibility"}
       }
+    },
+    "FieldName":{
+      "type":"string",
+      "enum":[
+        "assetName",
+        "assetDescription",
+        "DIRECT_QUICKSIGHT_OWNER",
+        "DIRECT_QUICKSIGHT_VIEWER_OR_OWNER",
+        "DIRECT_QUICKSIGHT_SOLE_OWNER"
+      ]
     },
     "FieldOrderList":{
       "type":"list",
@@ -12763,6 +13510,57 @@
       "type":"list",
       "member":{"shape":"ShortRestrictiveResourceId"},
       "max":50
+    },
+    "FlowDescription":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "FlowId":{
+      "type":"string",
+      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+    },
+    "FlowMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "FlowPublishState":{
+      "type":"string",
+      "enum":[
+        "PUBLISHED",
+        "DRAFT",
+        "PENDING_APPROVAL"
+      ]
+    },
+    "FlowSummary":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "FlowId",
+        "Name",
+        "CreatedTime"
+      ],
+      "members":{
+        "Arn":{"shape":"String"},
+        "FlowId":{"shape":"FlowId"},
+        "Name":{"shape":"Title"},
+        "Description":{"shape":"FlowDescription"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "CreatedBy":{"shape":"String"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "LastUpdatedBy":{"shape":"String"},
+        "PublishState":{"shape":"FlowPublishState"},
+        "RunCount":{"shape":"Integer"},
+        "UserCount":{"shape":"Integer"},
+        "LastPublishedBy":{"shape":"String"},
+        "LastPublishedAt":{"shape":"Timestamp"}
+      }
+    },
+    "FlowSummaryList":{
+      "type":"list",
+      "member":{"shape":"FlowSummary"}
     },
     "Folder":{
       "type":"structure",
@@ -13834,6 +14632,87 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "GetFlowMetadataInput":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "FlowId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "FlowId":{
+          "shape":"FlowId",
+          "location":"uri",
+          "locationName":"FlowId"
+        }
+      }
+    },
+    "GetFlowMetadataOutput":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "FlowId",
+        "Name",
+        "CreatedTime"
+      ],
+      "members":{
+        "Arn":{"shape":"String"},
+        "FlowId":{"shape":"FlowId"},
+        "Name":{"shape":"Title"},
+        "Description":{"shape":"FlowDescription"},
+        "PublishState":{"shape":"FlowPublishState"},
+        "UserCount":{"shape":"Integer"},
+        "RunCount":{"shape":"Integer"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "GetFlowPermissionsInput":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "FlowId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "FlowId":{
+          "shape":"FlowId",
+          "location":"uri",
+          "locationName":"FlowId"
+        }
+      }
+    },
+    "GetFlowPermissionsOutput":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "FlowId",
+        "Permissions"
+      ],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "FlowId":{"shape":"FlowId"},
+        "Permissions":{"shape":"PermissionsList"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "GetSessionEmbedUrlRequest":{
       "type":"structure",
       "required":["AwsAccountId"],
@@ -14231,6 +15110,13 @@
       "type":"string",
       "max":256,
       "min":1
+    },
+    "IAMConnectionMetadata":{
+      "type":"structure",
+      "required":["RoleArn"],
+      "members":{
+        "RoleArn":{"shape":"RoleArn"}
+      }
     },
     "IAMPolicyAssignment":{
       "type":"structure",
@@ -15326,6 +16212,40 @@
         "Permissions":{"shape":"ResourcePermissionList"}
       }
     },
+    "ListActionConnectorsRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        }
+      }
+    },
+    "ListActionConnectorsResponse":{
+      "type":"structure",
+      "required":["ActionConnectorSummaries"],
+      "members":{
+        "ActionConnectorSummaries":{"shape":"ActionConnectorSummaryList"},
+        "NextToken":{"shape":"String"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "ListAnalysesRequest":{
       "type":"structure",
       "required":["AwsAccountId"],
@@ -15648,6 +16568,39 @@
       "type":"structure",
       "members":{
         "DataSources":{"shape":"DataSourceList"},
+        "NextToken":{"shape":"String"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "ListFlowsInput":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"FlowMaxResults",
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListFlowsOutput":{
+      "type":"structure",
+      "members":{
+        "FlowSummaryList":{"shape":"FlowSummaryList"},
         "NextToken":{"shape":"String"},
         "RequestId":{"shape":"String"},
         "Status":{
@@ -16895,6 +17848,11 @@
         "TOPIC"
       ]
     },
+    "MetadataFilesLocation":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
     "MetricComparisonComputation":{
       "type":"structure",
       "required":["ComputationId"],
@@ -17167,6 +18125,13 @@
       "type":"list",
       "member":{"shape":"ShortRestrictiveResourceId"},
       "max":20
+    },
+    "NoneConnectionMetadata":{
+      "type":"structure",
+      "required":["BaseEndpoint"],
+      "members":{
+        "BaseEndpoint":{"shape":"Endpoint"}
+      }
     },
     "NullFilterOption":{
       "type":"string",
@@ -17784,6 +18749,26 @@
       "type":"integer",
       "max":1000,
       "min":1
+    },
+    "Permission":{
+      "type":"structure",
+      "required":[
+        "Actions",
+        "Principal"
+      ],
+      "members":{
+        "Actions":{"shape":"ActionsList"},
+        "Principal":{"shape":"PermissionPrincipalString"}
+      }
+    },
+    "PermissionPrincipalString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "PermissionsList":{
+      "type":"list",
+      "member":{"shape":"Permission"}
     },
     "PersonalizationMode":{
       "type":"string",
@@ -18475,6 +19460,13 @@
         "DISABLED"
       ]
     },
+    "QBusinessParameters":{
+      "type":"structure",
+      "required":["ApplicationArn"],
+      "members":{
+        "ApplicationArn":{"shape":"ApplicationArn"}
+      }
+    },
     "QDataKey":{
       "type":"structure",
       "members":{
@@ -18538,6 +19530,12 @@
       },
       "error":{"httpStatusCode":404},
       "exception":true
+    },
+    "QuickSuiteActionsOption":{
+      "type":"structure",
+      "members":{
+        "AvailabilityStatus":{"shape":"DashboardBehavior"}
+      }
     },
     "RadarChartAggregatedFieldWells":{
       "type":"structure",
@@ -18665,6 +19663,126 @@
       "members":{
         "InstanceId":{"shape":"InstanceId"},
         "Database":{"shape":"Database"}
+      }
+    },
+    "ReadAPIKeyConnectionMetadata":{
+      "type":"structure",
+      "required":["BaseEndpoint"],
+      "members":{
+        "BaseEndpoint":{"shape":"Endpoint"},
+        "Email":{"shape":"Email"}
+      }
+    },
+    "ReadAuthConfig":{
+      "type":"structure",
+      "required":[
+        "AuthenticationType",
+        "AuthenticationMetadata"
+      ],
+      "members":{
+        "AuthenticationType":{"shape":"ConnectionAuthType"},
+        "AuthenticationMetadata":{"shape":"ReadAuthenticationMetadata"}
+      }
+    },
+    "ReadAuthenticationMetadata":{
+      "type":"structure",
+      "members":{
+        "AuthorizationCodeGrantMetadata":{"shape":"ReadAuthorizationCodeGrantMetadata"},
+        "ClientCredentialsGrantMetadata":{"shape":"ReadClientCredentialsGrantMetadata"},
+        "BasicAuthConnectionMetadata":{"shape":"ReadBasicAuthConnectionMetadata"},
+        "ApiKeyConnectionMetadata":{"shape":"ReadAPIKeyConnectionMetadata"},
+        "NoneConnectionMetadata":{"shape":"ReadNoneConnectionMetadata"},
+        "IamConnectionMetadata":{"shape":"ReadIamConnectionMetadata"}
+      },
+      "union":true
+    },
+    "ReadAuthorizationCodeGrantCredentialsDetails":{
+      "type":"structure",
+      "members":{
+        "ReadAuthorizationCodeGrantDetails":{"shape":"ReadAuthorizationCodeGrantDetails"}
+      },
+      "union":true
+    },
+    "ReadAuthorizationCodeGrantDetails":{
+      "type":"structure",
+      "required":[
+        "ClientId",
+        "TokenEndpoint",
+        "AuthorizationEndpoint"
+      ],
+      "members":{
+        "ClientId":{"shape":"ClientId"},
+        "TokenEndpoint":{"shape":"Endpoint"},
+        "AuthorizationEndpoint":{"shape":"Endpoint"}
+      }
+    },
+    "ReadAuthorizationCodeGrantMetadata":{
+      "type":"structure",
+      "required":[
+        "BaseEndpoint",
+        "RedirectUrl"
+      ],
+      "members":{
+        "BaseEndpoint":{"shape":"Endpoint"},
+        "RedirectUrl":{"shape":"Endpoint"},
+        "ReadAuthorizationCodeGrantCredentialsDetails":{"shape":"ReadAuthorizationCodeGrantCredentialsDetails"},
+        "AuthorizationCodeGrantCredentialsSource":{"shape":"AuthorizationCodeGrantCredentialsSource"}
+      }
+    },
+    "ReadBasicAuthConnectionMetadata":{
+      "type":"structure",
+      "required":[
+        "BaseEndpoint",
+        "Username"
+      ],
+      "members":{
+        "BaseEndpoint":{"shape":"Endpoint"},
+        "Username":{"shape":"ActionUserName"}
+      }
+    },
+    "ReadClientCredentialsDetails":{
+      "type":"structure",
+      "members":{
+        "ReadClientCredentialsGrantDetails":{"shape":"ReadClientCredentialsGrantDetails"}
+      },
+      "union":true
+    },
+    "ReadClientCredentialsGrantDetails":{
+      "type":"structure",
+      "required":[
+        "ClientId",
+        "TokenEndpoint"
+      ],
+      "members":{
+        "ClientId":{"shape":"ClientId"},
+        "TokenEndpoint":{"shape":"Endpoint"}
+      }
+    },
+    "ReadClientCredentialsGrantMetadata":{
+      "type":"structure",
+      "required":["BaseEndpoint"],
+      "members":{
+        "BaseEndpoint":{"shape":"Endpoint"},
+        "ReadClientCredentialsDetails":{"shape":"ReadClientCredentialsDetails"},
+        "ClientCredentialsSource":{"shape":"ClientCredentialsSource"}
+      }
+    },
+    "ReadIamConnectionMetadata":{
+      "type":"structure",
+      "required":[
+        "RoleArn",
+        "SourceArn"
+      ],
+      "members":{
+        "RoleArn":{"shape":"RoleArn"},
+        "SourceArn":{"shape":"ResourceArn"}
+      }
+    },
+    "ReadNoneConnectionMetadata":{
+      "type":"structure",
+      "required":["BaseEndpoint"],
+      "members":{
+        "BaseEndpoint":{"shape":"Endpoint"}
       }
     },
     "RecentSnapshotsConfigurations":{
@@ -19099,6 +20217,7 @@
         "RESPONSIVE"
       ]
     },
+    "ResourceArn":{"type":"string"},
     "ResourceExistsException":{
       "type":"structure",
       "members":{
@@ -19385,6 +20504,15 @@
       "max":1024,
       "min":1
     },
+    "S3KnowledgeBaseParameters":{
+      "type":"structure",
+      "required":["BucketUrl"],
+      "members":{
+        "RoleArn":{"shape":"RoleArn"},
+        "BucketUrl":{"shape":"S3Bucket"},
+        "MetadataFilesLocation":{"shape":"MetadataFilesLocation"}
+      }
+    },
     "S3Parameters":{
       "type":"structure",
       "required":["ManifestFileLocation"],
@@ -19542,6 +20670,48 @@
         "VisibleRange":{"shape":"VisibleRangeOptions"}
       }
     },
+    "SearchActionConnectorsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "Filters"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "MaxResults":{
+          "shape":"SearchActionConnectorsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "Filters":{"shape":"ActionConnectorSearchFilterList"}
+      }
+    },
+    "SearchActionConnectorsRequestMaxResultsInteger":{
+      "type":"integer",
+      "max":100,
+      "min":0
+    },
+    "SearchActionConnectorsResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"String"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "ActionConnectorSummaries":{"shape":"ActionConnectorSummaryList"}
+      }
+    },
     "SearchAnalysesRequest":{
       "type":"structure",
       "required":[
@@ -19668,6 +20838,60 @@
           "location":"statusCode"
         },
         "RequestId":{"shape":"String"}
+      }
+    },
+    "SearchFilterOperator":{
+      "type":"string",
+      "enum":[
+        "StringEquals",
+        "StringLike"
+      ]
+    },
+    "SearchFlowsFilter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Operator",
+        "Value"
+      ],
+      "members":{
+        "Name":{"shape":"FieldName"},
+        "Operator":{"shape":"SearchFilterOperator"},
+        "Value":{"shape":"String"}
+      }
+    },
+    "SearchFlowsFilterList":{
+      "type":"list",
+      "member":{"shape":"SearchFlowsFilter"}
+    },
+    "SearchFlowsInput":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "Filters"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Filters":{"shape":"SearchFlowsFilterList"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"FlowMaxResults"}
+      }
+    },
+    "SearchFlowsOutput":{
+      "type":"structure",
+      "required":["FlowSummaryList"],
+      "members":{
+        "FlowSummaryList":{"shape":"FlowSummaryList"},
+        "NextToken":{"shape":"String"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
       }
     },
     "SearchFoldersRequest":{
@@ -21974,6 +23198,11 @@
       }
     },
     "Timestamp":{"type":"timestamp"},
+    "Title":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "TokenProviderUrl":{
       "type":"string",
       "max":2048,
@@ -23036,6 +24265,78 @@
         }
       }
     },
+    "UpdateActionConnectorPermissionsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ActionConnectorId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "ActionConnectorId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"ActionConnectorId"
+        },
+        "GrantPermissions":{"shape":"ResourcePermissionList"},
+        "RevokePermissions":{"shape":"ResourcePermissionList"}
+      }
+    },
+    "UpdateActionConnectorPermissionsResponse":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"String"},
+        "ActionConnectorId":{"shape":"ShortRestrictiveResourceId"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "Permissions":{"shape":"ResourcePermissionList"}
+      }
+    },
+    "UpdateActionConnectorRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ActionConnectorId",
+        "Name",
+        "AuthenticationConfig"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "ActionConnectorId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"ActionConnectorId"
+        },
+        "Name":{"shape":"ActionConnectorName"},
+        "AuthenticationConfig":{"shape":"AuthConfig"},
+        "Description":{"shape":"ActionConnectorDescription"},
+        "VpcConnectionArn":{"shape":"Arn"}
+      }
+    },
+    "UpdateActionConnectorResponse":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "ActionConnectorId":{"shape":"ShortRestrictiveResourceId"},
+        "RequestId":{"shape":"String"},
+        "UpdateStatus":{"shape":"ResourceStatus"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "UpdateAnalysisPermissionsRequest":{
       "type":"structure",
       "required":[
@@ -23596,6 +24897,58 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "UpdateFlowPermissionsInput":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "FlowId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "FlowId":{
+          "shape":"FlowId",
+          "location":"uri",
+          "locationName":"FlowId"
+        },
+        "GrantPermissions":{"shape":"UpdateFlowPermissionsInputGrantPermissionsList"},
+        "RevokePermissions":{"shape":"UpdateFlowPermissionsInputRevokePermissionsList"}
+      }
+    },
+    "UpdateFlowPermissionsInputGrantPermissionsList":{
+      "type":"list",
+      "member":{"shape":"Permission"},
+      "max":100,
+      "min":0
+    },
+    "UpdateFlowPermissionsInputRevokePermissionsList":{
+      "type":"list",
+      "member":{"shape":"Permission"},
+      "max":100,
+      "min":0
+    },
+    "UpdateFlowPermissionsOutput":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Permissions",
+        "RequestId",
+        "FlowId"
+      ],
+      "members":{
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "Arn":{"shape":"String"},
+        "Permissions":{"shape":"PermissionsList"},
+        "RequestId":{"shape":"String"},
+        "FlowId":{"shape":"FlowId"}
       }
     },
     "UpdateFolderPermissionsRequest":{
@@ -24921,6 +26274,40 @@
         "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
+    "WebCrawlerAuthType":{
+      "type":"string",
+      "enum":[
+        "NO_AUTH",
+        "BASIC_AUTH",
+        "FORM",
+        "SAML"
+      ]
+    },
+    "WebCrawlerParameters":{
+      "type":"structure",
+      "required":["WebCrawlerAuthType"],
+      "members":{
+        "WebCrawlerAuthType":{"shape":"WebCrawlerAuthType"},
+        "UsernameFieldXpath":{"shape":"XpathFields"},
+        "PasswordFieldXpath":{"shape":"XpathFields"},
+        "UsernameButtonXpath":{"shape":"XpathFields"},
+        "PasswordButtonXpath":{"shape":"XpathFields"},
+        "LoginPageUrl":{"shape":"SiteBaseUrl"},
+        "WebProxyHostName":{"shape":"Host"},
+        "WebProxyPortNumber":{"shape":"OptionalPort"}
+      }
+    },
+    "WebProxyCredentials":{
+      "type":"structure",
+      "required":[
+        "WebProxyUsername",
+        "WebProxyPassword"
+      ],
+      "members":{
+        "WebProxyUsername":{"shape":"DbUsername"},
+        "WebProxyPassword":{"shape":"Password"}
+      }
+    },
     "WhatIfPointScenario":{
       "type":"structure",
       "required":[
@@ -25061,6 +26448,11 @@
     "WorkGroup":{
       "type":"string",
       "max":128,
+      "min":1
+    },
+    "XpathFields":{
+      "type":"string",
+      "max":1024,
       "min":1
     },
     "YAxisOptions":{
