@@ -224,7 +224,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCloudExadataInfrastructure":{
       "name":"GetCloudExadataInfrastructure",
@@ -240,7 +241,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCloudExadataInfrastructureUnallocatedResources":{
       "name":"GetCloudExadataInfrastructureUnallocatedResources",
@@ -256,7 +258,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCloudVmCluster":{
       "name":"GetCloudVmCluster",
@@ -272,7 +275,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDbNode":{
       "name":"GetDbNode",
@@ -288,7 +292,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDbServer":{
       "name":"GetDbServer",
@@ -304,7 +309,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetOciOnboardingStatus":{
       "name":"GetOciOnboardingStatus",
@@ -319,7 +325,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetOdbNetwork":{
       "name":"GetOdbNetwork",
@@ -335,7 +342,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetOdbPeeringConnection":{
       "name":"GetOdbPeeringConnection",
@@ -351,7 +359,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "InitializeService":{
       "name":"InitializeService",
@@ -383,7 +392,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCloudAutonomousVmClusters":{
       "name":"ListCloudAutonomousVmClusters",
@@ -399,7 +409,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCloudExadataInfrastructures":{
       "name":"ListCloudExadataInfrastructures",
@@ -414,7 +425,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCloudVmClusters":{
       "name":"ListCloudVmClusters",
@@ -430,7 +442,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDbNodes":{
       "name":"ListDbNodes",
@@ -446,7 +459,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDbServers":{
       "name":"ListDbServers",
@@ -462,7 +476,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDbSystemShapes":{
       "name":"ListDbSystemShapes",
@@ -477,7 +492,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListGiVersions":{
       "name":"ListGiVersions",
@@ -492,7 +508,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListOdbNetworks":{
       "name":"ListOdbNetworks",
@@ -507,7 +524,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListOdbPeeringConnections":{
       "name":"ListOdbPeeringConnections",
@@ -523,7 +541,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListSystemVersions":{
       "name":"ListSystemVersions",
@@ -539,7 +558,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -551,7 +571,8 @@
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "RebootDbNode":{
       "name":"RebootDbNode",
@@ -653,6 +674,23 @@
       },
       "input":{"shape":"UpdateOdbNetworkInput"},
       "output":{"shape":"UpdateOdbNetworkOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "UpdateOdbPeeringConnection":{
+      "name":"UpdateOdbPeeringConnection",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateOdbPeeringConnectionInput"},
+      "output":{"shape":"UpdateOdbPeeringConnectionOutput"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -1277,7 +1315,7 @@
     "CreateCloudVmClusterInputCpuCoreCountInteger":{
       "type":"integer",
       "box":true,
-      "max":368,
+      "max":10000,
       "min":0
     },
     "CreateCloudVmClusterInputGiVersionString":{
@@ -1398,6 +1436,7 @@
         "odbNetworkId":{"shape":"ResourceIdOrArn"},
         "peerNetworkId":{"shape":"ResourceIdOrArn"},
         "displayName":{"shape":"ResourceDisplayName"},
+        "peerNetworkCidrsToBeAdded":{"shape":"PeeredCidrList"},
         "clientToken":{
           "shape":"CreateOdbPeeringConnectionInputClientTokenString",
           "idempotencyToken":true
@@ -2549,6 +2588,7 @@
         "odbNetworkArn":{"shape":"String"},
         "peerNetworkArn":{"shape":"String"},
         "odbPeeringConnectionType":{"shape":"String"},
+        "peerNetworkCidrs":{"shape":"PeeredCidrList"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "percentProgress":{"shape":"Float"}
       }
@@ -2569,6 +2609,7 @@
         "odbNetworkArn":{"shape":"String"},
         "peerNetworkArn":{"shape":"String"},
         "odbPeeringConnectionType":{"shape":"String"},
+        "peerNetworkCidrs":{"shape":"PeeredCidrList"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "percentProgress":{"shape":"Float"}
       }
@@ -2579,6 +2620,16 @@
         "ROLLING",
         "NONROLLING"
       ]
+    },
+    "PeeredCidr":{
+      "type":"string",
+      "max":18,
+      "min":1,
+      "pattern":"(?:(?:\\d|[01]?\\d\\d|2[0-4]\\d|25[0-5])\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d|\\d)\\/(?:[1-2][0-9]|3[0-2]|[1-9])"
+    },
+    "PeeredCidrList":{
+      "type":"list",
+      "member":{"shape":"PeeredCidr"}
     },
     "PolicyDocument":{
       "type":"string",
@@ -2882,6 +2933,26 @@
         "status":{"shape":"ResourceStatus"},
         "statusReason":{"shape":"String"},
         "odbNetworkId":{"shape":"String"}
+      }
+    },
+    "UpdateOdbPeeringConnectionInput":{
+      "type":"structure",
+      "required":["odbPeeringConnectionId"],
+      "members":{
+        "odbPeeringConnectionId":{"shape":"ResourceIdOrArn"},
+        "displayName":{"shape":"ResourceDisplayName"},
+        "peerNetworkCidrsToBeAdded":{"shape":"PeeredCidrList"},
+        "peerNetworkCidrsToBeRemoved":{"shape":"PeeredCidrList"}
+      }
+    },
+    "UpdateOdbPeeringConnectionOutput":{
+      "type":"structure",
+      "required":["odbPeeringConnectionId"],
+      "members":{
+        "displayName":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "odbPeeringConnectionId":{"shape":"String"}
       }
     },
     "ValidationException":{

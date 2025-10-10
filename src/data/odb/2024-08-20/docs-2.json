@@ -1,13 +1,13 @@
 {
   "version": "2.0",
-  "service": "<p>Oracle Database@Amazon Web Services is an offering that enables you to access Oracle Exadata infrastructure managed by Oracle Cloud Infrastructure (OCI) inside Amazon Web Services data centers. You can migrate your Oracle Exadata workloads, establish low-latency connectivity with applications running on Amazon Web Services, and integrate with Amazon Web Services services. For example, you can run application servers in a virtual private cloud (VPC) and access an Oracle Exadata system running in Oracle Database@Amazon Web Services. You can get started with Oracle Database@Amazon Web Services by using the familiar Amazon Web Services Management Console, APIs, or CLI.</p> <p>This interface reference for Oracle Database@Amazon Web Services contains documentation for a programming or command line interface that you can use to manage Oracle Database@Amazon Web Services. Oracle Database@Amazon Web Services is asynchronous, which means that some interfaces might require techniques such as polling or callback functions to determine when a command has been applied. The reference structure is as follows.</p> <note> <p>In this preview release documentation, the links in the \"See Also\" sections do not work.</p> </note> <p> <b>Oracle Database@Amazon Web Services API Reference</b> </p> <ul> <li> <p>For the alphabetical list of API actions, see .</p> </li> <li> <p>For the alphabetical list of data types, see .</p> </li> <li> <p>For a list of common parameters, see <a>CommonParameters</a>.</p> </li> <li> <p>For descriptions of the error codes, see <a>CommonErrors</a>.</p> </li> </ul>",
+  "service": "<p>Oracle Database@Amazon Web Services is an offering that enables you to access Oracle Exadata infrastructure managed by Oracle Cloud Infrastructure (OCI) inside Amazon Web Services data centers. You can migrate your Oracle Exadata workloads, establish low-latency connectivity with applications running on Amazon Web Services, and integrate with Amazon Web Services services. For example, you can run application servers in a Virtual Private Cloud (VPC) and access an Oracle Exadata system running in Oracle Database@Amazon Web Services. You can get started with Oracle Database@Amazon Web Services by using the familiar Amazon Web Services Management Console, APIs, or CLI.</p> <p>This interface reference for Oracle Database@Amazon Web Services contains documentation for a programming or command line interface that you can use to manage Oracle Database@Amazon Web Services. Oracle Database@Amazon Web Services is asynchronous, which means that some interfaces might require techniques such as polling or callback functions to determine when a command has been applied. The reference structure is as follows.</p> <p> <b>Oracle Database@Amazon Web Services API Reference</b> </p> <ul> <li> <p>For the alphabetical list of API actions, see <a href=\"https://docs.aws.amazon.com/odb/latest/APIReference/API_Operations.html\">API Actions</a>.</p> </li> <li> <p>For the alphabetical list of data types, see <a href=\"https://docs.aws.amazon.com/odb/latest/APIReference/API_Types.html\">Data Types</a>.</p> </li> <li> <p>For a list of common query parameters, see <a href=\"https://docs.aws.amazon.com/odb/latest/APIReference/CommonParameters.html\">Common Parameters</a>.</p> </li> <li> <p>For descriptions of the error codes, see <a href=\"https://docs.aws.amazon.com/odb/latest/APIReference/CommonErrors.html\">Common Errors</a>.</p> </li> </ul>",
   "operations": {
     "AcceptMarketplaceRegistration": "<p>Registers the Amazon Web Services Marketplace token for your Amazon Web Services account to activate your Oracle Database@Amazon Web Services subscription.</p>",
     "CreateCloudAutonomousVmCluster": "<p>Creates a new Autonomous VM cluster in the specified Exadata infrastructure.</p>",
     "CreateCloudExadataInfrastructure": "<p>Creates an Exadata infrastructure.</p>",
     "CreateCloudVmCluster": "<p>Creates a VM cluster on the specified Exadata infrastructure.</p>",
     "CreateOdbNetwork": "<p>Creates an ODB network.</p>",
-    "CreateOdbPeeringConnection": "<p>Creates a peering connection between an ODB network and either another ODB network or a customer-owned VPC.</p> <p>A peering connection enables private connectivity between the networks for application-tier communication.</p>",
+    "CreateOdbPeeringConnection": "<p>Creates a peering connection between an ODB network and a VPC.</p> <p>A peering connection enables private connectivity between the networks for application-tier communication.</p>",
     "DeleteCloudAutonomousVmCluster": "<p>Deletes an Autonomous VM cluster.</p>",
     "DeleteCloudExadataInfrastructure": "<p>Deletes the specified Exadata infrastructure. Before you use this operation, make sure to delete all of the VM clusters that are hosted on this Exadata infrastructure.</p>",
     "DeleteCloudVmCluster": "<p>Deletes the specified VM cluster.</p>",
@@ -41,7 +41,8 @@
     "TagResource": "<p>Applies tags to the specified resource.</p>",
     "UntagResource": "<p>Removes tags from the specified resource.</p>",
     "UpdateCloudExadataInfrastructure": "<p>Updates the properties of an Exadata infrastructure resource.</p>",
-    "UpdateOdbNetwork": "<p>Updates properties of a specified ODB network.</p>"
+    "UpdateOdbNetwork": "<p>Updates properties of a specified ODB network.</p>",
+    "UpdateOdbPeeringConnection": "<p>Modifies the settings of an Oracle Database@Amazon Web Services peering connection. You can update the display name and add or remove CIDR blocks from the peering connection.</p>"
   },
   "shapes": {
     "AcceptMarketplaceRegistrationInput": {
@@ -1390,6 +1391,22 @@
         "MaintenanceWindow$patchingMode": "<p>The patching mode for the maintenance window.</p>"
       }
     },
+    "PeeredCidr": {
+      "base": null,
+      "refs": {
+        "PeeredCidrList$member": null
+      }
+    },
+    "PeeredCidrList": {
+      "base": null,
+      "refs": {
+        "CreateOdbPeeringConnectionInput$peerNetworkCidrsToBeAdded": "<p>A list of CIDR blocks to add to the peering connection. These CIDR blocks define the IP address ranges that can communicate through the peering connection.</p>",
+        "OdbPeeringConnection$peerNetworkCidrs": "<p>The CIDR blocks associated with the peering connection. These CIDR blocks define the IP address ranges that can communicate through the peering connection.</p>",
+        "OdbPeeringConnectionSummary$peerNetworkCidrs": "<p>The CIDR blocks associated with the peering connection. These CIDR blocks define the IP address ranges that can communicate through the peering connection.</p>",
+        "UpdateOdbPeeringConnectionInput$peerNetworkCidrsToBeAdded": "<p>A list of CIDR blocks to add to the peering connection. These CIDR blocks define the IP address ranges that can communicate through the peering connection. The CIDR blocks must not overlap with existing CIDR blocks in the Oracle Database@Amazon Web Services network.</p>",
+        "UpdateOdbPeeringConnectionInput$peerNetworkCidrsToBeRemoved": "<p>A list of CIDR blocks to remove from the peering connection. The CIDR blocks must currently exist in the peering connection.</p>"
+      }
+    },
     "PolicyDocument": {
       "base": null,
       "refs": {
@@ -1444,7 +1461,8 @@
         "CreateCloudVmClusterInput$displayName": "<p>A user-friendly name for the VM cluster.</p>",
         "CreateOdbNetworkInput$displayName": "<p>A user-friendly name for the ODB network.</p>",
         "CreateOdbPeeringConnectionInput$displayName": "<p>The display name for the ODB peering connection.</p>",
-        "UpdateOdbNetworkInput$displayName": "<p>The new user-friendly name of the ODB network.</p>"
+        "UpdateOdbNetworkInput$displayName": "<p>The new user-friendly name of the ODB network.</p>",
+        "UpdateOdbPeeringConnectionInput$displayName": "<p>A new display name for the peering connection.</p>"
       }
     },
     "ResourceId": {
@@ -1515,7 +1533,8 @@
         "OdbPeeringConnection$odbPeeringConnectionId": "<p>The unique identifier of the ODB peering connection. A sample ID is <code>odbpcx-abcdefgh12345678</code>.</p>",
         "OdbPeeringConnectionSummary$odbPeeringConnectionId": "<p>The unique identifier of the ODB peering connection. A sample ID is <code>odbpcx-abcdefgh12345678</code>.</p>",
         "UpdateCloudExadataInfrastructureInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure to update.</p>",
-        "UpdateOdbNetworkInput$odbNetworkId": "<p>The unique identifier of the ODB network to update.</p>"
+        "UpdateOdbNetworkInput$odbNetworkId": "<p>The unique identifier of the ODB network to update.</p>",
+        "UpdateOdbPeeringConnectionInput$odbPeeringConnectionId": "<p>The identifier of the Oracle Database@Amazon Web Services peering connection to update.</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -1544,7 +1563,8 @@
         "OdbPeeringConnection$status": "<p>The status of the ODB peering connection.</p> <p>Valid Values: <code>provisioning | active | terminating | terminated | failed</code> </p>",
         "OdbPeeringConnectionSummary$status": "<p>The status of the ODB peering connection.</p> <p>Valid Values: <code>provisioning | active | terminating | terminated | failed</code> </p>",
         "UpdateCloudExadataInfrastructureOutput$status": "<p>The current status of the Exadata infrastructure after the update operation.</p>",
-        "UpdateOdbNetworkOutput$status": "<p>The current status of the ODB network.</p>"
+        "UpdateOdbNetworkOutput$status": "<p>The current status of the ODB network.</p>",
+        "UpdateOdbPeeringConnectionOutput$status": "<p>The status of the peering connection update operation.</p>"
       }
     },
     "ResponseTagMap": {
@@ -1840,6 +1860,9 @@
         "UpdateOdbNetworkOutput$displayName": "<p>The user-friendly name of the ODB network.</p>",
         "UpdateOdbNetworkOutput$statusReason": "<p>Additional information about the status of the ODB network.</p>",
         "UpdateOdbNetworkOutput$odbNetworkId": "<p>The unique identifier of the ODB network.</p>",
+        "UpdateOdbPeeringConnectionOutput$displayName": "<p>The display name of the peering connection.</p>",
+        "UpdateOdbPeeringConnectionOutput$statusReason": "<p>Additional information about the status of the peering connection update operation.</p>",
+        "UpdateOdbPeeringConnectionOutput$odbPeeringConnectionId": "<p>The identifier of the Oracle Database@Amazon Web Services peering connection that was updated.</p>",
         "ValidationException$message": null,
         "ValidationExceptionField$name": "<p>The field name for which validation failed.</p>",
         "ValidationExceptionField$message": "<p>The description of the error.</p>",
@@ -1966,6 +1989,14 @@
       "refs": {}
     },
     "UpdateOdbNetworkOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateOdbPeeringConnectionInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateOdbPeeringConnectionOutput": {
       "base": null,
       "refs": {}
     },

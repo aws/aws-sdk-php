@@ -158,7 +158,7 @@
       "http":{
         "method":"POST",
         "requestUri":"/memories/create",
-        "responseCode":200
+        "responseCode":202
       },
       "input":{"shape":"CreateMemoryInput"},
       "output":{"shape":"CreateMemoryOutput"},
@@ -354,7 +354,7 @@
       "http":{
         "method":"DELETE",
         "requestUri":"/memories/{memoryId}/delete",
-        "responseCode":200
+        "responseCode":202
       },
       "input":{"shape":"DeleteMemoryInput"},
       "output":{"shape":"DeleteMemoryOutput"},
@@ -841,6 +841,26 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "SynchronizeGatewayTargets":{
+      "name":"SynchronizeGatewayTargets",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/gateways/{gatewayIdentifier}/synchronizeTargets",
+        "responseCode":202
+      },
+      "input":{"shape":"SynchronizeGatewayTargetsRequest"},
+      "output":{"shape":"SynchronizeGatewayTargetsResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -985,7 +1005,7 @@
       "http":{
         "method":"PUT",
         "requestUri":"/memories/{memoryId}/update",
-        "responseCode":200
+        "responseCode":202
       },
       "input":{"shape":"UpdateMemoryInput"},
       "output":{"shape":"UpdateMemoryOutput"},
@@ -1677,8 +1697,7 @@
       "required":[
         "gatewayIdentifier",
         "name",
-        "targetConfiguration",
-        "credentialProviderConfigurations"
+        "targetConfiguration"
       ],
       "members":{
         "gatewayIdentifier":{
@@ -1718,7 +1737,8 @@
         "name":{"shape":"TargetName"},
         "description":{"shape":"TargetDescription"},
         "targetConfiguration":{"shape":"TargetConfiguration"},
-        "credentialProviderConfigurations":{"shape":"CredentialProviderConfigurations"}
+        "credentialProviderConfigurations":{"shape":"CredentialProviderConfigurations"},
+        "lastSynchronizedAt":{"shape":"DateTimestamp"}
       }
     },
     "CreateMemoryInput":{
@@ -1860,7 +1880,8 @@
       "members":{
         "semanticOverride":{"shape":"SemanticOverrideConfigurationInput"},
         "summaryOverride":{"shape":"SummaryOverrideConfigurationInput"},
-        "userPreferenceOverride":{"shape":"UserPreferenceOverrideConfigurationInput"}
+        "userPreferenceOverride":{"shape":"UserPreferenceOverrideConfigurationInput"},
+        "selfManagedConfiguration":{"shape":"SelfManagedConfigurationInput"}
       },
       "union":true
     },
@@ -2336,6 +2357,36 @@
         "protocolType":{"shape":"GatewayProtocolType"}
       }
     },
+    "GatewayTarget":{
+      "type":"structure",
+      "required":[
+        "gatewayArn",
+        "targetId",
+        "createdAt",
+        "updatedAt",
+        "status",
+        "name",
+        "targetConfiguration",
+        "credentialProviderConfigurations"
+      ],
+      "members":{
+        "gatewayArn":{"shape":"GatewayArn"},
+        "targetId":{"shape":"TargetId"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
+        "status":{"shape":"TargetStatus"},
+        "statusReasons":{"shape":"StatusReasons"},
+        "name":{"shape":"TargetName"},
+        "description":{"shape":"TargetDescription"},
+        "targetConfiguration":{"shape":"TargetConfiguration"},
+        "credentialProviderConfigurations":{"shape":"CredentialProviderConfigurations"},
+        "lastSynchronizedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "GatewayTargetList":{
+      "type":"list",
+      "member":{"shape":"GatewayTarget"}
+    },
     "GatewayUrl":{
       "type":"string",
       "max":1024,
@@ -2614,7 +2665,8 @@
         "name":{"shape":"TargetName"},
         "description":{"shape":"TargetDescription"},
         "targetConfiguration":{"shape":"TargetConfiguration"},
-        "credentialProviderConfigurations":{"shape":"CredentialProviderConfigurations"}
+        "credentialProviderConfigurations":{"shape":"CredentialProviderConfigurations"},
+        "lastSynchronizedAt":{"shape":"DateTimestamp"}
       }
     },
     "GetMemoryInput":{
@@ -2751,6 +2803,10 @@
       "type":"string",
       "sensitive":true
     },
+    "Integer":{
+      "type":"integer",
+      "box":true
+    },
     "InternalServerException":{
       "type":"structure",
       "members":{
@@ -2759,6 +2815,32 @@
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
+    },
+    "InvocationConfiguration":{
+      "type":"structure",
+      "required":[
+        "topicArn",
+        "payloadDeliveryBucketName"
+      ],
+      "members":{
+        "topicArn":{"shape":"Arn"},
+        "payloadDeliveryBucketName":{"shape":"String"}
+      }
+    },
+    "InvocationConfigurationInput":{
+      "type":"structure",
+      "required":[
+        "topicArn",
+        "payloadDeliveryBucketName"
+      ],
+      "members":{
+        "topicArn":{"shape":"Arn"},
+        "payloadDeliveryBucketName":{"shape":"InvocationConfigurationInputPayloadDeliveryBucketNameString"}
+      }
+    },
+    "InvocationConfigurationInputPayloadDeliveryBucketNameString":{
+      "type":"string",
+      "pattern":"[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]"
     },
     "IssuerUrlType":{"type":"string"},
     "KeyType":{
@@ -3121,6 +3203,17 @@
         "toolSchema":{"shape":"ToolSchema"}
       }
     },
+    "McpServerTargetConfiguration":{
+      "type":"structure",
+      "required":["endpoint"],
+      "members":{
+        "endpoint":{"shape":"McpServerTargetConfigurationEndpointString"}
+      }
+    },
+    "McpServerTargetConfigurationEndpointString":{
+      "type":"string",
+      "pattern":"https://.*"
+    },
     "McpSupportedVersions":{
       "type":"list",
       "member":{"shape":"McpVersion"}
@@ -3130,7 +3223,8 @@
       "members":{
         "openApiSchema":{"shape":"ApiSchemaConfiguration"},
         "smithyModel":{"shape":"ApiSchemaConfiguration"},
-        "lambda":{"shape":"McpLambdaTargetConfiguration"}
+        "lambda":{"shape":"McpLambdaTargetConfiguration"},
+        "mcpServer":{"shape":"McpServerTargetConfiguration"}
       },
       "union":true
     },
@@ -3264,6 +3358,24 @@
       "type":"list",
       "member":{"shape":"MemorySummary"}
     },
+    "MessageBasedTrigger":{
+      "type":"structure",
+      "members":{
+        "messageCount":{"shape":"Integer"}
+      }
+    },
+    "MessageBasedTriggerInput":{
+      "type":"structure",
+      "members":{
+        "messageCount":{"shape":"MessageBasedTriggerInputMessageCountInteger"}
+      }
+    },
+    "MessageBasedTriggerInputMessageCountInteger":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":1
+    },
     "MicrosoftOauth2ProviderConfigInput":{
       "type":"structure",
       "required":[
@@ -3296,6 +3408,17 @@
       },
       "union":true
     },
+    "ModifyInvocationConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "topicArn":{"shape":"Arn"},
+        "payloadDeliveryBucketName":{"shape":"ModifyInvocationConfigurationInputPayloadDeliveryBucketNameString"}
+      }
+    },
+    "ModifyInvocationConfigurationInputPayloadDeliveryBucketNameString":{
+      "type":"string",
+      "pattern":"[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]"
+    },
     "ModifyMemoryStrategies":{
       "type":"structure",
       "members":{
@@ -3318,11 +3441,26 @@
         "configuration":{"shape":"ModifyStrategyConfiguration"}
       }
     },
+    "ModifySelfManagedConfiguration":{
+      "type":"structure",
+      "members":{
+        "triggerConditions":{"shape":"TriggerConditionInputList"},
+        "invocationConfiguration":{"shape":"ModifyInvocationConfigurationInput"},
+        "historicalContextWindowSize":{"shape":"ModifySelfManagedConfigurationHistoricalContextWindowSizeInteger"}
+      }
+    },
+    "ModifySelfManagedConfigurationHistoricalContextWindowSizeInteger":{
+      "type":"integer",
+      "box":true,
+      "max":20,
+      "min":3
+    },
     "ModifyStrategyConfiguration":{
       "type":"structure",
       "members":{
         "extraction":{"shape":"ModifyExtractionConfiguration"},
-        "consolidation":{"shape":"ModifyConsolidationConfiguration"}
+        "consolidation":{"shape":"ModifyConsolidationConfiguration"},
+        "selfManagedConfiguration":{"shape":"ModifySelfManagedConfiguration"}
       }
     },
     "Name":{
@@ -3482,7 +3620,8 @@
       "enum":[
         "SEMANTIC_OVERRIDE",
         "SUMMARY_OVERRIDE",
-        "USER_PREFERENCE_OVERRIDE"
+        "USER_PREFERENCE_OVERRIDE",
+        "SELF_MANAGED"
       ]
     },
     "Prompt":{
@@ -3682,6 +3821,34 @@
       "max":16,
       "min":1
     },
+    "SelfManagedConfiguration":{
+      "type":"structure",
+      "required":[
+        "triggerConditions",
+        "invocationConfiguration",
+        "historicalContextWindowSize"
+      ],
+      "members":{
+        "triggerConditions":{"shape":"TriggerConditionsList"},
+        "invocationConfiguration":{"shape":"InvocationConfiguration"},
+        "historicalContextWindowSize":{"shape":"Integer"}
+      }
+    },
+    "SelfManagedConfigurationInput":{
+      "type":"structure",
+      "required":["invocationConfiguration"],
+      "members":{
+        "triggerConditions":{"shape":"TriggerConditionInputList"},
+        "invocationConfiguration":{"shape":"InvocationConfigurationInput"},
+        "historicalContextWindowSize":{"shape":"SelfManagedConfigurationInputHistoricalContextWindowSizeInteger"}
+      }
+    },
+    "SelfManagedConfigurationInputHistoricalContextWindowSizeInteger":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":0
+    },
     "SemanticConsolidationOverride":{
       "type":"structure",
       "required":[
@@ -3826,7 +3993,8 @@
       "members":{
         "type":{"shape":"OverrideType"},
         "extraction":{"shape":"ExtractionConfiguration"},
-        "consolidation":{"shape":"ConsolidationConfiguration"}
+        "consolidation":{"shape":"ConsolidationConfiguration"},
+        "selfManagedConfiguration":{"shape":"SelfManagedConfiguration"}
       }
     },
     "String":{"type":"string"},
@@ -3875,6 +4043,27 @@
       "members":{
         "appendToPrompt":{"shape":"Prompt"},
         "modelId":{"shape":"String"}
+      }
+    },
+    "SynchronizeGatewayTargetsRequest":{
+      "type":"structure",
+      "required":[
+        "gatewayIdentifier",
+        "targetIdList"
+      ],
+      "members":{
+        "gatewayIdentifier":{
+          "shape":"GatewayIdentifier",
+          "location":"uri",
+          "locationName":"gatewayIdentifier"
+        },
+        "targetIdList":{"shape":"TargetIdList"}
+      }
+    },
+    "SynchronizeGatewayTargetsResponse":{
+      "type":"structure",
+      "members":{
+        "targets":{"shape":"GatewayTargetList"}
       }
     },
     "TagKey":{
@@ -3944,6 +4133,12 @@
       "type":"string",
       "pattern":"[0-9a-zA-Z]{10}"
     },
+    "TargetIdList":{
+      "type":"list",
+      "member":{"shape":"TargetId"},
+      "max":1,
+      "min":1
+    },
     "TargetMaxResults":{
       "type":"integer",
       "box":true,
@@ -3969,7 +4164,9 @@
         "UPDATE_UNSUCCESSFUL",
         "DELETING",
         "READY",
-        "FAILED"
+        "FAILED",
+        "SYNCHRONIZING",
+        "SYNCHRONIZE_UNSUCCESSFUL"
       ]
     },
     "TargetSummaries":{
@@ -4017,7 +4214,43 @@
       },
       "exception":true
     },
+    "TimeBasedTrigger":{
+      "type":"structure",
+      "members":{
+        "idleSessionTimeout":{"shape":"Integer"}
+      }
+    },
+    "TimeBasedTriggerInput":{
+      "type":"structure",
+      "members":{
+        "idleSessionTimeout":{"shape":"TimeBasedTriggerInputIdleSessionTimeoutInteger"}
+      }
+    },
+    "TimeBasedTriggerInputIdleSessionTimeoutInteger":{
+      "type":"integer",
+      "box":true,
+      "max":3000,
+      "min":10
+    },
     "Timestamp":{"type":"timestamp"},
+    "TokenBasedTrigger":{
+      "type":"structure",
+      "members":{
+        "tokenCount":{"shape":"Integer"}
+      }
+    },
+    "TokenBasedTriggerInput":{
+      "type":"structure",
+      "members":{
+        "tokenCount":{"shape":"TokenBasedTriggerInputTokenCountInteger"}
+      }
+    },
+    "TokenBasedTriggerInputTokenCountInteger":{
+      "type":"integer",
+      "box":true,
+      "max":500000,
+      "min":100
+    },
     "TokenEndpointType":{"type":"string"},
     "TokenVaultIdType":{
       "type":"string",
@@ -4050,6 +4283,34 @@
         "inlinePayload":{"shape":"ToolDefinitions"}
       },
       "union":true
+    },
+    "TriggerCondition":{
+      "type":"structure",
+      "members":{
+        "messageBasedTrigger":{"shape":"MessageBasedTrigger"},
+        "tokenBasedTrigger":{"shape":"TokenBasedTrigger"},
+        "timeBasedTrigger":{"shape":"TimeBasedTrigger"}
+      },
+      "union":true
+    },
+    "TriggerConditionInput":{
+      "type":"structure",
+      "members":{
+        "messageBasedTrigger":{"shape":"MessageBasedTriggerInput"},
+        "tokenBasedTrigger":{"shape":"TokenBasedTriggerInput"},
+        "timeBasedTrigger":{"shape":"TimeBasedTriggerInput"}
+      },
+      "union":true
+    },
+    "TriggerConditionInputList":{
+      "type":"list",
+      "member":{"shape":"TriggerConditionInput"},
+      "min":1
+    },
+    "TriggerConditionsList":{
+      "type":"list",
+      "member":{"shape":"TriggerCondition"},
+      "min":1
     },
     "UnauthorizedException":{
       "type":"structure",
@@ -4270,8 +4531,7 @@
         "gatewayIdentifier",
         "targetId",
         "name",
-        "targetConfiguration",
-        "credentialProviderConfigurations"
+        "targetConfiguration"
       ],
       "members":{
         "gatewayIdentifier":{
@@ -4312,7 +4572,8 @@
         "name":{"shape":"TargetName"},
         "description":{"shape":"TargetDescription"},
         "targetConfiguration":{"shape":"TargetConfiguration"},
-        "credentialProviderConfigurations":{"shape":"CredentialProviderConfigurations"}
+        "credentialProviderConfigurations":{"shape":"CredentialProviderConfigurations"},
+        "lastSynchronizedAt":{"shape":"DateTimestamp"}
       }
     },
     "UpdateMemoryInput":{

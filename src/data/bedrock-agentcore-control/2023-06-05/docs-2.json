@@ -7,7 +7,7 @@
     "CreateApiKeyCredentialProvider": "<p>Creates a new API key credential provider.</p>",
     "CreateBrowser": "<p>Creates a custom browser.</p>",
     "CreateCodeInterpreter": "<p>Creates a custom code interpreter.</p>",
-    "CreateGateway": "<p>Creates a gateway for Amazon Bedrock Agent. A gateway serves as an integration point between your agent and external services.</p> <p>To create a gateway, you must specify a name, protocol type, and IAM role. The role grants the gateway permission to access Amazon Web Services services and resources.</p>",
+    "CreateGateway": "<p>Creates a gateway for Amazon Bedrock Agent. A gateway serves as an integration point between your agent and external services.</p> <p>If you specify <code>CUSTOM_JWT</code> as the <code>authorizerType</code>, you must provide an <code>authorizerConfiguration</code>.</p>",
     "CreateGatewayTarget": "<p>Creates a target for a gateway. A target defines an endpoint that the gateway can connect to.</p>",
     "CreateMemory": "<p>Creates a new Amazon Bedrock AgentCore Memory resource.</p>",
     "CreateOauth2CredentialProvider": "<p>Creates a new OAuth2 credential provider.</p>",
@@ -46,6 +46,7 @@
     "ListTagsForResource": "<p>Lists the tags associated with the specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Code Interpreter tool, and Gateway.</p> </note>",
     "ListWorkloadIdentities": "<p>Lists all workload identities in your account.</p>",
     "SetTokenVaultCMK": "<p>Sets the customer master key (CMK) for a token vault.</p>",
+    "SynchronizeGatewayTargets": "<p>The gateway targets.</p>",
     "TagResource": "<p>Associates the specified tags to a resource with the specified resourceArn. If existing tags on a resource are not specified in the request parameters, they are not changed. When a resource is deleted, the tags associated with that resource are also deleted.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Code Interpreter tool, and Gateway.</p> </note>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Code Interpreter tool, and Gateway.</p> </note>",
     "UpdateAgentRuntime": "<p>Updates an existing Amazon Secure Agent.</p>",
@@ -292,8 +293,11 @@
       "refs": {
         "CreateMemoryInput$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the memory data.</p>",
         "CreateMemoryInput$memoryExecutionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the memory to access Amazon Web Services services.</p>",
+        "InvocationConfiguration$topicArn": "<p>The ARN of the SNS topic for job notifications.</p>",
+        "InvocationConfigurationInput$topicArn": "<p>The ARN of the SNS topic for job notifications.</p>",
         "Memory$encryptionKeyArn": "<p>The ARN of the KMS key used to encrypt the memory.</p>",
         "Memory$memoryExecutionRoleArn": "<p>The ARN of the IAM role that provides permissions for the memory.</p>",
+        "ModifyInvocationConfigurationInput$topicArn": "<p>The updated ARN of the SNS topic for job notifications.</p>",
         "UpdateMemoryInput$memoryExecutionRoleArn": "<p>The ARN of the IAM role that provides permissions for the AgentCore Memory resource.</p>"
       }
     },
@@ -307,7 +311,7 @@
       "base": "<p>Represents inbound authorization configuration options used to authenticate incoming requests. </p>",
       "refs": {
         "CreateAgentRuntimeRequest$authorizerConfiguration": "<p>The authorizer configuration for the AgentCore Runtime.</p>",
-        "CreateGatewayRequest$authorizerConfiguration": "<p>The authorizer configuration for the gateway.</p>",
+        "CreateGatewayRequest$authorizerConfiguration": "<p>The authorizer configuration for the gateway. Required if <code>authorizerType</code> is <code>CUSTOM_JWT</code>.</p>",
         "CreateGatewayResponse$authorizerConfiguration": "<p>The authorizer configuration for the created gateway.</p>",
         "GetAgentRuntimeResponse$authorizerConfiguration": "<p>The authorizer configuration for the AgentCore Runtime.</p>",
         "GetGatewayResponse$authorizerConfiguration": "<p>The authorizer configuration for the gateway.</p>",
@@ -319,7 +323,7 @@
     "AuthorizerType": {
       "base": null,
       "refs": {
-        "CreateGatewayRequest$authorizerType": "<p>The type of authorizer to use for the gateway.</p>",
+        "CreateGatewayRequest$authorizerType": "<p>The type of authorizer to use for the gateway.</p> <ul> <li> <p> <code>CUSTOM_JWT</code> - Authorize with a bearer token.</p> </li> <li> <p> <code>AWS_IAM</code> - Authorize with your Amazon Web Services IAM credentials.</p> </li> </ul>",
         "CreateGatewayResponse$authorizerType": "<p>The type of authorizer used by the gateway.</p>",
         "GatewaySummary$authorizerType": "<p>The type of authorizer used by the gateway.</p>",
         "GetGatewayResponse$authorizerType": "<p>Authorizer type for the gateway.</p>",
@@ -421,8 +425,8 @@
         "CreateAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request but does not return an error.</p>",
         "CreateCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request but does not return an error.</p>",
-        "CreateGatewayRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
-        "CreateGatewayTargetRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "CreateGatewayRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "CreateGatewayTargetRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "DeleteAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
@@ -621,6 +625,7 @@
       "refs": {
         "CreateGatewayTargetRequest$credentialProviderConfigurations": "<p>The credential provider configurations for the target. These configurations specify how the gateway authenticates with the target endpoint.</p>",
         "CreateGatewayTargetResponse$credentialProviderConfigurations": "<p>The credential provider configurations for the target.</p>",
+        "GatewayTarget$credentialProviderConfigurations": "<p>The provider configurations.</p>",
         "GetGatewayTargetResponse$credentialProviderConfigurations": "<p>The credential provider configurations for the gateway target.</p>",
         "UpdateGatewayTargetRequest$credentialProviderConfigurations": "<p>The updated credential provider configurations for the gateway target.</p>",
         "UpdateGatewayTargetResponse$credentialProviderConfigurations": "<p>The updated credential provider configurations for the gateway target.</p>"
@@ -735,10 +740,14 @@
         "CreateGatewayResponse$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
         "CreateGatewayTargetResponse$createdAt": "<p>The timestamp when the target was created.</p>",
         "CreateGatewayTargetResponse$updatedAt": "<p>The timestamp when the target was last updated.</p>",
+        "CreateGatewayTargetResponse$lastSynchronizedAt": "<p>The last synchronization of the target.</p>",
         "DeleteBrowserResponse$lastUpdatedAt": "<p>The timestamp when the browser was last updated.</p>",
         "DeleteCodeInterpreterResponse$lastUpdatedAt": "<p>The timestamp when the code interpreter was last updated.</p>",
         "GatewaySummary$createdAt": "<p>The timestamp when the gateway was created.</p>",
         "GatewaySummary$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
+        "GatewayTarget$createdAt": "<p>The date and time at which the target was created.</p>",
+        "GatewayTarget$updatedAt": "<p>The date and time at which the target was updated.</p>",
+        "GatewayTarget$lastSynchronizedAt": "<p>The last synchronization time.</p>",
         "GetAgentRuntimeEndpointResponse$createdAt": "<p>The timestamp when the AgentCore Runtime endpoint was created.</p>",
         "GetAgentRuntimeEndpointResponse$lastUpdatedAt": "<p>The timestamp when the AgentCore Runtime endpoint was last updated.</p>",
         "GetAgentRuntimeResponse$createdAt": "<p>The timestamp when the AgentCore Runtime was created.</p>",
@@ -751,6 +760,7 @@
         "GetGatewayResponse$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
         "GetGatewayTargetResponse$createdAt": "<p>The timestamp when the gateway target was created.</p>",
         "GetGatewayTargetResponse$updatedAt": "<p>The timestamp when the gateway target was last updated.</p>",
+        "GetGatewayTargetResponse$lastSynchronizedAt": "<p>The last synchronization of the target.</p>",
         "TargetSummary$createdAt": "<p>The timestamp when the target was created.</p>",
         "TargetSummary$updatedAt": "<p>The timestamp when the target was last updated.</p>",
         "UpdateAgentRuntimeEndpointResponse$createdAt": "<p>The timestamp when the AgentCore Runtime endpoint was created.</p>",
@@ -760,7 +770,8 @@
         "UpdateGatewayResponse$createdAt": "<p>The timestamp when the gateway was created.</p>",
         "UpdateGatewayResponse$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
         "UpdateGatewayTargetResponse$createdAt": "<p>The timestamp when the gateway target was created.</p>",
-        "UpdateGatewayTargetResponse$updatedAt": "<p>The timestamp when the gateway target was last updated.</p>"
+        "UpdateGatewayTargetResponse$updatedAt": "<p>The timestamp when the gateway target was last updated.</p>",
+        "UpdateGatewayTargetResponse$lastSynchronizedAt": "<p>The date and time at which the targets were last synchronized.</p>"
       }
     },
     "DecryptionFailure": {
@@ -958,6 +969,7 @@
         "CreateGatewayResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the created gateway.</p>",
         "CreateGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>",
         "DeleteGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>",
+        "GatewayTarget$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway target.</p>",
         "GetGatewayResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>",
         "GetGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>",
         "UpdateGatewayResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the updated gateway.</p>",
@@ -994,6 +1006,7 @@
         "GetGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to retrieve.</p>",
         "GetGatewayTargetRequest$gatewayIdentifier": "<p>The identifier of the gateway that contains the target.</p>",
         "ListGatewayTargetsRequest$gatewayIdentifier": "<p>The identifier of the gateway to list targets for.</p>",
+        "SynchronizeGatewayTargetsRequest$gatewayIdentifier": "<p>The gateway Identifier.</p>",
         "UpdateGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to update.</p>",
         "UpdateGatewayTargetRequest$gatewayIdentifier": "<p>The unique identifier of the gateway associated with the target.</p>"
       }
@@ -1063,6 +1076,18 @@
       "base": "<p>Contains summary information about a gateway.</p>",
       "refs": {
         "GatewaySummaries$member": null
+      }
+    },
+    "GatewayTarget": {
+      "base": "<p>The gateway target.</p>",
+      "refs": {
+        "GatewayTargetList$member": null
+      }
+    },
+    "GatewayTargetList": {
+      "base": null,
+      "refs": {
+        "SynchronizeGatewayTargetsResponse$targets": "<p>The gateway targets for synchronization.</p>"
       }
     },
     "GatewayUrl": {
@@ -1197,9 +1222,36 @@
         "ApiSchemaConfiguration$inlinePayload": "<p>The inline payload containing the API schema definition.</p>"
       }
     },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "MessageBasedTrigger$messageCount": "<p>The number of messages that trigger memory processing.</p>",
+        "SelfManagedConfiguration$historicalContextWindowSize": "<p>The number of historical messages to include in processing context.</p>",
+        "TimeBasedTrigger$idleSessionTimeout": "<p>Idle session timeout (seconds) that triggers memory processing.</p>",
+        "TokenBasedTrigger$tokenCount": "<p>Number of tokens that trigger memory processing.</p>"
+      }
+    },
     "InternalServerException": {
       "base": "<p>This exception is thrown if there was an unexpected error during processing of request</p>",
       "refs": {}
+    },
+    "InvocationConfiguration": {
+      "base": "<p>The configuration to invoke a self-managed memory processing pipeline with.</p>",
+      "refs": {
+        "SelfManagedConfiguration$invocationConfiguration": "<p>The configuration to use when invoking memory processing.</p>"
+      }
+    },
+    "InvocationConfigurationInput": {
+      "base": "<p>The configuration to invoke a self-managed memory processing pipeline with.</p>",
+      "refs": {
+        "SelfManagedConfigurationInput$invocationConfiguration": "<p>Configuration to invoke a self-managed memory processing pipeline with.</p>"
+      }
+    },
+    "InvocationConfigurationInputPayloadDeliveryBucketNameString": {
+      "base": null,
+      "refs": {
+        "InvocationConfigurationInput$payloadDeliveryBucketName": "<p>The S3 bucket name for event payload delivery.</p>"
+      }
     },
     "IssuerUrlType": {
       "base": null,
@@ -1401,6 +1453,18 @@
         "McpTargetConfiguration$lambda": "<p>The Lambda configuration for the Model Context Protocol target. This configuration defines how the gateway uses a Lambda function to communicate with the target.</p>"
       }
     },
+    "McpServerTargetConfiguration": {
+      "base": "<p>The target configuration for the MCP server.</p>",
+      "refs": {
+        "McpTargetConfiguration$mcpServer": "<p>The MCP server specified as the gateway target.</p>"
+      }
+    },
+    "McpServerTargetConfigurationEndpointString": {
+      "base": null,
+      "refs": {
+        "McpServerTargetConfiguration$endpoint": "<p>The endpoint for the MCP server target configuration.</p>"
+      }
+    },
     "McpSupportedVersions": {
       "base": null,
       "refs": {
@@ -1514,6 +1578,24 @@
         "ListMemoriesOutput$memories": "<p>The list of AgentCore Memory resource summaries.</p>"
       }
     },
+    "MessageBasedTrigger": {
+      "base": "<p>The trigger configuration based on a message.</p>",
+      "refs": {
+        "TriggerCondition$messageBasedTrigger": "<p>Message based trigger configuration.</p>"
+      }
+    },
+    "MessageBasedTriggerInput": {
+      "base": "<p>The trigger configuration based on a message.</p>",
+      "refs": {
+        "TriggerConditionInput$messageBasedTrigger": "<p>Message based trigger configuration.</p>"
+      }
+    },
+    "MessageBasedTriggerInputMessageCountInteger": {
+      "base": null,
+      "refs": {
+        "MessageBasedTriggerInput$messageCount": "<p>The number of messages that trigger memory processing.</p>"
+      }
+    },
     "MicrosoftOauth2ProviderConfigInput": {
       "base": "<p>Input configuration for a Microsoft OAuth2 provider.</p>",
       "refs": {
@@ -1538,6 +1620,18 @@
         "ModifyStrategyConfiguration$extraction": "<p>The updated extraction configuration.</p>"
       }
     },
+    "ModifyInvocationConfigurationInput": {
+      "base": "<p>The configuration for updating invocation settings.</p>",
+      "refs": {
+        "ModifySelfManagedConfiguration$invocationConfiguration": "<p>The updated configuration to invoke self-managed memory processing pipeline.</p>"
+      }
+    },
+    "ModifyInvocationConfigurationInputPayloadDeliveryBucketNameString": {
+      "base": null,
+      "refs": {
+        "ModifyInvocationConfigurationInput$payloadDeliveryBucketName": "<p>The updated S3 bucket name for event payload delivery.</p>"
+      }
+    },
     "ModifyMemoryStrategies": {
       "base": "<p>Contains information for modifying memory strategies.</p>",
       "refs": {
@@ -1554,6 +1648,18 @@
       "base": "<p>Input for modifying a memory strategy.</p>",
       "refs": {
         "ModifyMemoryStrategiesList$member": null
+      }
+    },
+    "ModifySelfManagedConfiguration": {
+      "base": "<p>The configuration for updating the self-managed memory strategy.</p>",
+      "refs": {
+        "ModifyStrategyConfiguration$selfManagedConfiguration": "<p>The updated self-managed configuration.</p>"
+      }
+    },
+    "ModifySelfManagedConfigurationHistoricalContextWindowSizeInteger": {
+      "base": null,
+      "refs": {
+        "ModifySelfManagedConfiguration$historicalContextWindowSize": "<p>The updated number of historical messages to include in processing context.</p>"
       }
     },
     "ModifyStrategyConfiguration": {
@@ -1950,6 +2056,24 @@
         "VpcConfig$securityGroups": "<p>The security groups associated with the VPC configuration.</p>"
       }
     },
+    "SelfManagedConfiguration": {
+      "base": "<p>A configuration for a self-managed memory strategy.</p>",
+      "refs": {
+        "StrategyConfiguration$selfManagedConfiguration": "<p>Self-managed configuration settings.</p>"
+      }
+    },
+    "SelfManagedConfigurationInput": {
+      "base": "<p>Input configuration for a self-managed memory strategy.</p>",
+      "refs": {
+        "CustomConfigurationInput$selfManagedConfiguration": "<p>The self managed configuration for a custom memory strategy.</p>"
+      }
+    },
+    "SelfManagedConfigurationInputHistoricalContextWindowSizeInteger": {
+      "base": null,
+      "refs": {
+        "SelfManagedConfigurationInput$historicalContextWindowSize": "<p>Number of historical messages to include in processing context.</p>"
+      }
+    },
     "SemanticConsolidationOverride": {
       "base": "<p>Contains semantic consolidation override configuration.</p>",
       "refs": {
@@ -2035,6 +2159,7 @@
         "CreateGatewayTargetResponse$statusReasons": "<p>The reasons for the current status of the target.</p>",
         "DeleteGatewayResponse$statusReasons": "<p>The reasons for the current status of the gateway deletion.</p>",
         "DeleteGatewayTargetResponse$statusReasons": "<p>The reasons for the current status of the gateway target deletion.</p>",
+        "GatewayTarget$statusReasons": "<p>The status reasons for the target status.</p>",
         "GetGatewayResponse$statusReasons": "<p>The reasons for the current status of the gateway.</p>",
         "GetGatewayTargetResponse$statusReasons": "<p>The reasons for the current status of the gateway target.</p>",
         "UpdateGatewayResponse$statusReasons": "<p>The reasons for the current status of the updated gateway.</p>",
@@ -2057,6 +2182,7 @@
         "GetAgentRuntimeEndpointResponse$failureReason": "<p>The reason for failure if the AgentCore Runtime endpoint is in a failed state.</p>",
         "GetBrowserResponse$failureReason": "<p>The reason for failure if the browser is in a failed state.</p>",
         "GetCodeInterpreterResponse$failureReason": "<p>The reason for failure if the code interpreter is in a failed state.</p>",
+        "InvocationConfiguration$payloadDeliveryBucketName": "<p>The S3 bucket name for event payload delivery.</p>",
         "ListApiKeyCredentialProvidersRequest$nextToken": "<p>Pagination token.</p>",
         "ListApiKeyCredentialProvidersResponse$nextToken": "<p>Pagination token for the next page of results.</p>",
         "ListMemoriesInput$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -2127,6 +2253,14 @@
         "SummaryOverrideConfigurationInput$consolidation": "<p>The consolidation configuration for a summary override.</p>"
       }
     },
+    "SynchronizeGatewayTargetsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SynchronizeGatewayTargetsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "TagKey": {
       "base": null,
       "refs": {
@@ -2180,6 +2314,7 @@
       "refs": {
         "CreateGatewayTargetRequest$targetConfiguration": "<p>The configuration settings for the target, including endpoint information and schema definitions.</p>",
         "CreateGatewayTargetResponse$targetConfiguration": "<p>The configuration settings for the target.</p>",
+        "GatewayTarget$targetConfiguration": null,
         "GetGatewayTargetResponse$targetConfiguration": null,
         "UpdateGatewayTargetRequest$targetConfiguration": null,
         "UpdateGatewayTargetResponse$targetConfiguration": null
@@ -2190,6 +2325,7 @@
       "refs": {
         "CreateGatewayTargetRequest$description": "<p>The description of the gateway target.</p>",
         "CreateGatewayTargetResponse$description": "<p>The description of the target.</p>",
+        "GatewayTarget$description": "<p>The description for the gateway target.</p>",
         "GetGatewayTargetResponse$description": "<p>The description of the gateway target.</p>",
         "TargetSummary$description": "<p>The description of the target.</p>",
         "UpdateGatewayTargetRequest$description": "<p>The updated description for the gateway target.</p>",
@@ -2202,11 +2338,19 @@
         "CreateGatewayTargetResponse$targetId": "<p>The unique identifier of the created target.</p>",
         "DeleteGatewayTargetRequest$targetId": "<p>The unique identifier of the gateway target to delete.</p>",
         "DeleteGatewayTargetResponse$targetId": "<p>The unique identifier of the deleted gateway target.</p>",
+        "GatewayTarget$targetId": "<p>The target ID.</p>",
         "GetGatewayTargetRequest$targetId": "<p>The unique identifier of the target to retrieve.</p>",
         "GetGatewayTargetResponse$targetId": "<p>The unique identifier of the gateway target.</p>",
+        "TargetIdList$member": null,
         "TargetSummary$targetId": "<p>The unique identifier of the target.</p>",
         "UpdateGatewayTargetRequest$targetId": "<p>The unique identifier of the gateway target to update.</p>",
         "UpdateGatewayTargetResponse$targetId": "<p>The unique identifier of the updated gateway target.</p>"
+      }
+    },
+    "TargetIdList": {
+      "base": null,
+      "refs": {
+        "SynchronizeGatewayTargetsRequest$targetIdList": "<p>The target ID list.</p>"
       }
     },
     "TargetMaxResults": {
@@ -2220,6 +2364,7 @@
       "refs": {
         "CreateGatewayTargetRequest$name": "<p>The name of the gateway target. The name must be unique within the gateway.</p>",
         "CreateGatewayTargetResponse$name": "<p>The name of the target.</p>",
+        "GatewayTarget$name": "<p>The name of the gateway target.</p>",
         "GetGatewayTargetResponse$name": "<p>The name of the gateway target.</p>",
         "TargetSummary$name": "<p>The name of the target.</p>",
         "UpdateGatewayTargetRequest$name": "<p>The updated name for the gateway target.</p>",
@@ -2238,6 +2383,7 @@
       "refs": {
         "CreateGatewayTargetResponse$status": "<p>The current status of the target.</p>",
         "DeleteGatewayTargetResponse$status": "<p>The current status of the gateway target deletion.</p>",
+        "GatewayTarget$status": "<p>The status of the gateway target.</p>",
         "GetGatewayTargetResponse$status": "<p>The current status of the gateway target.</p>",
         "TargetSummary$status": "<p>The current status of the target.</p>",
         "UpdateGatewayTargetResponse$status": "<p>The current status of the updated gateway target.</p>"
@@ -2262,6 +2408,24 @@
     "ThrottlingException": {
       "base": "<p>This exception is thrown when the number of requests exceeds the limit</p>",
       "refs": {}
+    },
+    "TimeBasedTrigger": {
+      "base": "<p>Trigger configuration based on time.</p>",
+      "refs": {
+        "TriggerCondition$timeBasedTrigger": "<p>Time based trigger configuration.</p>"
+      }
+    },
+    "TimeBasedTriggerInput": {
+      "base": "<p>Trigger configuration based on time.</p>",
+      "refs": {
+        "TriggerConditionInput$timeBasedTrigger": "<p>Time based trigger configuration.</p>"
+      }
+    },
+    "TimeBasedTriggerInputIdleSessionTimeoutInteger": {
+      "base": null,
+      "refs": {
+        "TimeBasedTriggerInput$idleSessionTimeout": "<p>Idle session timeout (seconds) that triggers memory processing.</p>"
+      }
     },
     "Timestamp": {
       "base": null,
@@ -2290,6 +2454,24 @@
         "UpdateOauth2CredentialProviderResponse$lastUpdatedTime": "<p>The timestamp when the OAuth2 credential provider was last updated.</p>",
         "UpdateWorkloadIdentityResponse$createdTime": "<p>The timestamp when the workload identity was created.</p>",
         "UpdateWorkloadIdentityResponse$lastUpdatedTime": "<p>The timestamp when the workload identity was last updated.</p>"
+      }
+    },
+    "TokenBasedTrigger": {
+      "base": "<p>Trigger configuration based on tokens.</p>",
+      "refs": {
+        "TriggerCondition$tokenBasedTrigger": "<p>Token based trigger configuration.</p>"
+      }
+    },
+    "TokenBasedTriggerInput": {
+      "base": "<p>Trigger configuration based on tokens.</p>",
+      "refs": {
+        "TriggerConditionInput$tokenBasedTrigger": "<p>Token based trigger configuration.</p>"
+      }
+    },
+    "TokenBasedTriggerInputTokenCountInteger": {
+      "base": null,
+      "refs": {
+        "TokenBasedTriggerInput$tokenCount": "<p>Number of tokens that trigger memory processing.</p>"
       }
     },
     "TokenEndpointType": {
@@ -2323,6 +2505,31 @@
       "base": "<p>A tool schema for a gateway target. This structure defines the schema for a tool that the target exposes through the Model Context Protocol.</p>",
       "refs": {
         "McpLambdaTargetConfiguration$toolSchema": "<p>The tool schema for the Lambda function. This schema defines the structure of the tools that the Lambda function provides.</p>"
+      }
+    },
+    "TriggerCondition": {
+      "base": "<p>Condition that triggers memory processing.</p>",
+      "refs": {
+        "TriggerConditionsList$member": null
+      }
+    },
+    "TriggerConditionInput": {
+      "base": "<p>Condition that triggers memory processing.</p>",
+      "refs": {
+        "TriggerConditionInputList$member": null
+      }
+    },
+    "TriggerConditionInputList": {
+      "base": null,
+      "refs": {
+        "ModifySelfManagedConfiguration$triggerConditions": "<p>The updated list of conditions that trigger memory processing.</p>",
+        "SelfManagedConfigurationInput$triggerConditions": "<p>A list of conditions that trigger memory processing.</p>"
+      }
+    },
+    "TriggerConditionsList": {
+      "base": null,
+      "refs": {
+        "SelfManagedConfiguration$triggerConditions": "<p>A list of conditions that trigger memory processing.</p>"
       }
     },
     "UnauthorizedException": {

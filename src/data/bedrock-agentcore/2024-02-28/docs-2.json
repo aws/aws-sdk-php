@@ -18,7 +18,7 @@
     "GetWorkloadAccessToken": "<p>Obtains a workload access token for agentic workloads not acting on behalf of a user.</p>",
     "GetWorkloadAccessTokenForJWT": "<p>Obtains a workload access token for agentic workloads acting on behalf of a user, using a JWT token.</p>",
     "GetWorkloadAccessTokenForUserId": "<p>Obtains a workload access token for agentic workloads acting on behalf of a user, using the user's ID.</p>",
-    "InvokeAgentRuntime": "<p>Sends a request to an agent or tool hosted in an Amazon Bedrock AgentCore Runtime and receives responses in real-time. </p> <p>To invoke an agent you must specify the AgentCore Runtime ARN and provide a payload containing your request. You can optionally specify a qualifier to target a specific version or endpoint of the agent.</p> <p>This operation supports streaming responses, allowing you to receive partial responses as they become available. We recommend using pagination to ensure that the operation returns quickly and successfully when processing large responses.</p> <p>For example code, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-invoke-agent.html\">Invoke an AgentCore Runtime agent</a>. </p> <p>If you're integrating your agent with OAuth, you can't use the Amazon Web Services SDK to call <code>InvokeAgentRuntime</code>. Instead, make a HTTPS request to <code>InvokeAgentRuntime</code>. For an example, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-oauth.html\">Authenticate and authorize with Inbound Auth and Outbound Auth</a>.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:InvokeAgentRuntime</code> permission.</p>",
+    "InvokeAgentRuntime": "<p>Sends a request to an agent or tool hosted in an Amazon Bedrock AgentCore Runtime and receives responses in real-time. </p> <p>To invoke an agent you must specify the AgentCore Runtime ARN and provide a payload containing your request. You can optionally specify a qualifier to target a specific version or endpoint of the agent.</p> <p>This operation supports streaming responses, allowing you to receive partial responses as they become available. We recommend using pagination to ensure that the operation returns quickly and successfully when processing large responses.</p> <p>For example code, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-invoke-agent.html\">Invoke an AgentCore Runtime agent</a>. </p> <p>If you're integrating your agent with OAuth, you can't use the Amazon Web Services SDK to call <code>InvokeAgentRuntime</code>. Instead, make a HTTPS request to <code>InvokeAgentRuntime</code>. For an example, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-oauth.html\">Authenticate and authorize with Inbound Auth and Outbound Auth</a>.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:InvokeAgentRuntime</code> permission. If you are making a call to <code>InvokeAgentRuntime</code> on behalf of a user ID with the <code>X-Amzn-Bedrock-AgentCore-Runtime-User-Id</code> header, You require permissions to both actions (<code>bedrock-agentcore:InvokeAgentRuntime</code> and <code>bedrock-agentcore:InvokeAgentRuntimeForUser</code>). </p>",
     "InvokeCodeInterpreter": "<p>Executes code within an active code interpreter session in Amazon Bedrock. This operation processes the provided code, runs it in a secure environment, and returns the execution results including output, errors, and generated visualizations.</p> <p>To execute code, you must specify the code interpreter identifier, session ID, and the code to run in the arguments parameter. The operation returns a stream containing the execution results, which can include text output, error messages, and data visualizations.</p> <p>This operation is subject to request rate limiting based on your account's service quotas.</p> <p>The following operations are related to <code>InvokeCodeInterpreter</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
     "ListActors": "<p>Lists all actors in an AgentCore Memory resource. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListActors</code> permission.</p>",
     "ListBrowserSessions": "<p>Retrieves a list of browser sessions in Amazon Bedrock that match the specified criteria. This operation returns summary information about each session, including identifiers, status, and timestamps.</p> <p>You can filter the results by browser identifier and session status. The operation supports pagination to handle large result sets efficiently.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully when retrieving large numbers of sessions.</p> <p>The following operations are related to <code>ListBrowserSessions</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> </ul>",
@@ -605,6 +605,18 @@
       "base": null,
       "refs": {}
     },
+    "InvokeCodeInterpreterRequestTraceIdString": {
+      "base": null,
+      "refs": {
+        "InvokeCodeInterpreterRequest$traceId": "<p>The trace identifier for request tracking.</p>"
+      }
+    },
+    "InvokeCodeInterpreterRequestTraceParentString": {
+      "base": null,
+      "refs": {
+        "InvokeCodeInterpreterRequest$traceParent": "<p>The parent trace information for distributed tracing.</p>"
+      }
+    },
     "InvokeCodeInterpreterResponse": {
       "base": null,
       "refs": {}
@@ -1106,6 +1118,18 @@
       "base": null,
       "refs": {}
     },
+    "StartBrowserSessionRequestTraceIdString": {
+      "base": null,
+      "refs": {
+        "StartBrowserSessionRequest$traceId": "<p>The trace identifier for request tracking.</p>"
+      }
+    },
+    "StartBrowserSessionRequestTraceParentString": {
+      "base": null,
+      "refs": {
+        "StartBrowserSessionRequest$traceParent": "<p>The parent trace information for distributed tracing.</p>"
+      }
+    },
     "StartBrowserSessionResponse": {
       "base": null,
       "refs": {}
@@ -1113,6 +1137,18 @@
     "StartCodeInterpreterSessionRequest": {
       "base": null,
       "refs": {}
+    },
+    "StartCodeInterpreterSessionRequestTraceIdString": {
+      "base": null,
+      "refs": {
+        "StartCodeInterpreterSessionRequest$traceId": "<p>The trace identifier for request tracking.</p>"
+      }
+    },
+    "StartCodeInterpreterSessionRequestTraceParentString": {
+      "base": null,
+      "refs": {
+        "StartCodeInterpreterSessionRequest$traceParent": "<p>The parent trace information for distributed tracing.</p>"
+      }
     },
     "StartCodeInterpreterSessionResponse": {
       "base": null,
@@ -1122,6 +1158,18 @@
       "base": null,
       "refs": {}
     },
+    "StopBrowserSessionRequestTraceIdString": {
+      "base": null,
+      "refs": {
+        "StopBrowserSessionRequest$traceId": "<p>The trace identifier for request tracking.</p>"
+      }
+    },
+    "StopBrowserSessionRequestTraceParentString": {
+      "base": null,
+      "refs": {
+        "StopBrowserSessionRequest$traceParent": "<p>The parent trace information for distributed tracing.</p>"
+      }
+    },
     "StopBrowserSessionResponse": {
       "base": null,
       "refs": {}
@@ -1129,6 +1177,18 @@
     "StopCodeInterpreterSessionRequest": {
       "base": null,
       "refs": {}
+    },
+    "StopCodeInterpreterSessionRequestTraceIdString": {
+      "base": null,
+      "refs": {
+        "StopCodeInterpreterSessionRequest$traceId": "<p>The trace identifier for request tracking.</p>"
+      }
+    },
+    "StopCodeInterpreterSessionRequestTraceParentString": {
+      "base": null,
+      "refs": {
+        "StopCodeInterpreterSessionRequest$traceParent": "<p>The parent trace information for distributed tracing.</p>"
+      }
     },
     "StopCodeInterpreterSessionResponse": {
       "base": null,

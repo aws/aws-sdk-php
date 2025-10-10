@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - fixes #3194 and adds operations aliases for operation names that collide with `AwsClient` operation names.
+* `Aws\Glue` - Addition of AuditContext in GetTable/GetTables Request
+* `Aws\BedrockAgentCore` - Bedrock AgentCore release for Runtime, and Memory.
+* `Aws\CloudFront` - Added new viewer security policy, TLSv1.2_2025, for CloudFront.
+* `Aws\Odb` - This release adds APIs that allow you to specify CIDR ranges in your ODB peering connection.
+* `Aws\BedrockAgentCoreControl` - Bedrock AgentCore release for Gateway, and Memory including Self-Managed Strategies support for Memory.
+* `Aws\RDS` - Updated the text in the Important section of the ModifyDBClusterParameterGroup page.
+* `Aws\Lambda` - Add InvokedViaFunctionUrl context key to limit invocations to only FURL invokes.
+
 ## 3.356.36 - 2025-10-09
 
 * `Aws\QuickSight` - This release adds support for ActionConnector and Flow, which are new resources associated with Amazon Quick Suite. Additional updates include expanded Data Source options, further branding customization, and new capabilities that can be restricted by Admins.

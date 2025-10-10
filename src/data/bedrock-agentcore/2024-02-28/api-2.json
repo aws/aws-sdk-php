@@ -18,7 +18,7 @@
       "http":{
         "method":"POST",
         "requestUri":"/memories/{memoryId}/memoryRecords/batchCreate",
-        "responseCode":200
+        "responseCode":201
       },
       "input":{"shape":"BatchCreateMemoryRecordsInput"},
       "output":{"shape":"BatchCreateMemoryRecordsOutput"},
@@ -73,7 +73,7 @@
       "http":{
         "method":"POST",
         "requestUri":"/memories/{memoryId}/events",
-        "responseCode":200
+        "responseCode":201
       },
       "input":{"shape":"CreateEventInput"},
       "output":{"shape":"CreateEventOutput"},
@@ -1624,9 +1624,29 @@
           "location":"header",
           "locationName":"x-amzn-code-interpreter-session-id"
         },
+        "traceId":{
+          "shape":"InvokeCodeInterpreterRequestTraceIdString",
+          "location":"header",
+          "locationName":"X-Amzn-Trace-Id"
+        },
+        "traceParent":{
+          "shape":"InvokeCodeInterpreterRequestTraceParentString",
+          "location":"header",
+          "locationName":"traceparent"
+        },
         "name":{"shape":"ToolName"},
         "arguments":{"shape":"ToolArguments"}
       }
+    },
+    "InvokeCodeInterpreterRequestTraceIdString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "InvokeCodeInterpreterRequestTraceParentString":{
+      "type":"string",
+      "max":1024,
+      "min":0
     },
     "InvokeCodeInterpreterResponse":{
       "type":"structure",
@@ -2254,6 +2274,16 @@
       "type":"structure",
       "required":["browserIdentifier"],
       "members":{
+        "traceId":{
+          "shape":"StartBrowserSessionRequestTraceIdString",
+          "location":"header",
+          "locationName":"X-Amzn-Trace-Id"
+        },
+        "traceParent":{
+          "shape":"StartBrowserSessionRequestTraceParentString",
+          "location":"header",
+          "locationName":"traceparent"
+        },
         "browserIdentifier":{
           "shape":"String",
           "location":"uri",
@@ -2267,6 +2297,16 @@
           "idempotencyToken":true
         }
       }
+    },
+    "StartBrowserSessionRequestTraceIdString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "StartBrowserSessionRequestTraceParentString":{
+      "type":"string",
+      "max":1024,
+      "min":0
     },
     "StartBrowserSessionResponse":{
       "type":"structure",
@@ -2286,6 +2326,16 @@
       "type":"structure",
       "required":["codeInterpreterIdentifier"],
       "members":{
+        "traceId":{
+          "shape":"StartCodeInterpreterSessionRequestTraceIdString",
+          "location":"header",
+          "locationName":"X-Amzn-Trace-Id"
+        },
+        "traceParent":{
+          "shape":"StartCodeInterpreterSessionRequestTraceParentString",
+          "location":"header",
+          "locationName":"traceparent"
+        },
         "codeInterpreterIdentifier":{
           "shape":"String",
           "location":"uri",
@@ -2298,6 +2348,16 @@
           "idempotencyToken":true
         }
       }
+    },
+    "StartCodeInterpreterSessionRequestTraceIdString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "StartCodeInterpreterSessionRequestTraceParentString":{
+      "type":"string",
+      "max":1024,
+      "min":0
     },
     "StartCodeInterpreterSessionResponse":{
       "type":"structure",
@@ -2319,6 +2379,16 @@
         "sessionId"
       ],
       "members":{
+        "traceId":{
+          "shape":"StopBrowserSessionRequestTraceIdString",
+          "location":"header",
+          "locationName":"X-Amzn-Trace-Id"
+        },
+        "traceParent":{
+          "shape":"StopBrowserSessionRequestTraceParentString",
+          "location":"header",
+          "locationName":"traceparent"
+        },
         "browserIdentifier":{
           "shape":"String",
           "location":"uri",
@@ -2334,6 +2404,16 @@
           "idempotencyToken":true
         }
       }
+    },
+    "StopBrowserSessionRequestTraceIdString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "StopBrowserSessionRequestTraceParentString":{
+      "type":"string",
+      "max":1024,
+      "min":0
     },
     "StopBrowserSessionResponse":{
       "type":"structure",
@@ -2355,6 +2435,16 @@
         "sessionId"
       ],
       "members":{
+        "traceId":{
+          "shape":"StopCodeInterpreterSessionRequestTraceIdString",
+          "location":"header",
+          "locationName":"X-Amzn-Trace-Id"
+        },
+        "traceParent":{
+          "shape":"StopCodeInterpreterSessionRequestTraceParentString",
+          "location":"header",
+          "locationName":"traceparent"
+        },
         "codeInterpreterIdentifier":{
           "shape":"String",
           "location":"uri",
@@ -2370,6 +2460,16 @@
           "idempotencyToken":true
         }
       }
+    },
+    "StopCodeInterpreterSessionRequestTraceIdString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "StopCodeInterpreterSessionRequestTraceParentString":{
+      "type":"string",
+      "max":1024,
+      "min":0
     },
     "StopCodeInterpreterSessionResponse":{
       "type":"structure",
