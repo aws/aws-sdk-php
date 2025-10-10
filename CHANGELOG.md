@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.37 - 2025-10-10
 
 * `Aws\` - fixes #3194 and adds operations aliases for operation names that collide with `AwsClient` operation names.
 * `Aws\Glue` - Addition of AuditContext in GetTable/GetTables Request
