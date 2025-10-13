@@ -130,7 +130,24 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"TooManyRequestsException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "GetTelemetryEnrichmentStatus":{
+      "name":"GetTelemetryEnrichmentStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetTelemetryEnrichmentStatus",
+        "responseCode":200
+      },
+      "output":{"shape":"GetTelemetryEnrichmentStatusOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "readonly":true
     },
     "GetTelemetryEvaluationStatus":{
       "name":"GetTelemetryEvaluationStatus",
@@ -144,7 +161,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"TooManyRequestsException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTelemetryEvaluationStatusForOrganization":{
       "name":"GetTelemetryEvaluationStatusForOrganization",
@@ -159,7 +177,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"TooManyRequestsException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTelemetryRule":{
       "name":"GetTelemetryRule",
@@ -176,7 +195,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"TooManyRequestsException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTelemetryRuleForOrganization":{
       "name":"GetTelemetryRuleForOrganization",
@@ -193,7 +213,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"TooManyRequestsException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCentralizationRulesForOrganization":{
       "name":"ListCentralizationRulesForOrganization",
@@ -209,7 +230,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"TooManyRequestsException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListResourceTelemetry":{
       "name":"ListResourceTelemetry",
@@ -225,7 +247,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"TooManyRequestsException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListResourceTelemetryForOrganization":{
       "name":"ListResourceTelemetryForOrganization",
@@ -241,7 +264,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"TooManyRequestsException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -258,7 +282,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"TooManyRequestsException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTelemetryRules":{
       "name":"ListTelemetryRules",
@@ -274,7 +299,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"TooManyRequestsException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTelemetryRulesForOrganization":{
       "name":"ListTelemetryRulesForOrganization",
@@ -289,6 +315,22 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ],
+      "readonly":true
+    },
+    "StartTelemetryEnrichment":{
+      "name":"StartTelemetryEnrichment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StartTelemetryEnrichment",
+        "responseCode":202
+      },
+      "output":{"shape":"StartTelemetryEnrichmentOutput"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
         {"shape":"TooManyRequestsException"}
       ]
     },
@@ -317,6 +359,21 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
+    "StopTelemetryEnrichment":{
+      "name":"StopTelemetryEnrichment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StopTelemetryEnrichment",
+        "responseCode":202
+      },
+      "output":{"shape":"StopTelemetryEnrichmentOutput"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
         {"shape":"TooManyRequestsException"}
       ]
     },
@@ -464,6 +521,12 @@
       "member":{"shape":"AccountIdentifier"},
       "max":10,
       "min":1
+    },
+    "AwsResourceExplorerManagedViewArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws([a-z0-9\\-]+)?:resource-explorer-2:([a-z0-9\\-]+)?:([0-9]{12})?:managed-view/(.+)"
     },
     "Boolean":{
       "type":"boolean",
@@ -663,6 +726,13 @@
         "RuleHealth":{"shape":"RuleHealth"},
         "FailureReason":{"shape":"CentralizationFailureReason"},
         "CentralizationRule":{"shape":"CentralizationRule"}
+      }
+    },
+    "GetTelemetryEnrichmentStatusOutput":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"TelemetryEnrichmentStatus"},
+        "AwsResourceExplorerManagedViewArn":{"shape":"AwsResourceExplorerManagedViewArn"}
       }
     },
     "GetTelemetryEvaluationStatusForOrganizationOutput":{
@@ -1004,6 +1074,13 @@
         "EncryptedLogGroupStrategy":{"shape":"EncryptedLogGroupStrategy"}
       }
     },
+    "StartTelemetryEnrichmentOutput":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"TelemetryEnrichmentStatus"},
+        "AwsResourceExplorerManagedViewArn":{"shape":"AwsResourceExplorerManagedViewArn"}
+      }
+    },
     "Status":{
       "type":"string",
       "enum":[
@@ -1015,6 +1092,12 @@
         "FAILED_STOP",
         "STOPPED"
       ]
+    },
+    "StopTelemetryEnrichmentOutput":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"TelemetryEnrichmentStatus"}
+      }
     },
     "String":{"type":"string"},
     "TagKey":{
@@ -1086,6 +1169,14 @@
         "RetentionInDays":{"shape":"RetentionPeriodInDays"},
         "VPCFlowLogParameters":{"shape":"VPCFlowLogParameters"}
       }
+    },
+    "TelemetryEnrichmentStatus":{
+      "type":"string",
+      "enum":[
+        "Running",
+        "Stopped",
+        "Impaired"
+      ]
     },
     "TelemetryRule":{
       "type":"structure",

@@ -11,6 +11,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise batchDeleteMemoryRecordsAsync(array $args = [])
  * @method \Aws\Result batchUpdateMemoryRecords(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchUpdateMemoryRecordsAsync(array $args = [])
+ * @method \Aws\Result completeResourceTokenAuth(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise completeResourceTokenAuthAsync(array $args = [])
  * @method \Aws\Result createEvent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createEventAsync(array $args = [])
  * @method \Aws\Result deleteEvent(array $args = [])

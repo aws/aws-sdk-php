@@ -18,7 +18,7 @@
       "http":{
         "method":"PUT",
         "requestUri":"/runtimes/",
-        "responseCode":201
+        "responseCode":202
       },
       "input":{"shape":"CreateAgentRuntimeRequest"},
       "output":{"shape":"CreateAgentRuntimeResponse"},
@@ -37,7 +37,7 @@
       "http":{
         "method":"PUT",
         "requestUri":"/runtimes/{agentRuntimeId}/runtime-endpoints/",
-        "responseCode":200
+        "responseCode":202
       },
       "input":{"shape":"CreateAgentRuntimeEndpointRequest"},
       "output":{"shape":"CreateAgentRuntimeEndpointResponse"},
@@ -57,7 +57,7 @@
       "http":{
         "method":"POST",
         "requestUri":"/identities/CreateApiKeyCredentialProvider",
-        "responseCode":200
+        "responseCode":201
       },
       "input":{"shape":"CreateApiKeyCredentialProviderRequest"},
       "output":{"shape":"CreateApiKeyCredentialProviderResponse"},
@@ -81,7 +81,7 @@
       "http":{
         "method":"PUT",
         "requestUri":"/browsers",
-        "responseCode":201
+        "responseCode":202
       },
       "input":{"shape":"CreateBrowserRequest"},
       "output":{"shape":"CreateBrowserResponse"},
@@ -100,7 +100,7 @@
       "http":{
         "method":"PUT",
         "requestUri":"/code-interpreters",
-        "responseCode":201
+        "responseCode":202
       },
       "input":{"shape":"CreateCodeInterpreterRequest"},
       "output":{"shape":"CreateCodeInterpreterResponse"},
@@ -178,7 +178,7 @@
       "http":{
         "method":"POST",
         "requestUri":"/identities/CreateOauth2CredentialProvider",
-        "responseCode":200
+        "responseCode":201
       },
       "input":{"shape":"CreateOauth2CredentialProviderRequest"},
       "output":{"shape":"CreateOauth2CredentialProviderResponse"},
@@ -202,7 +202,7 @@
       "http":{
         "method":"POST",
         "requestUri":"/identities/CreateWorkloadIdentity",
-        "responseCode":200
+        "responseCode":201
       },
       "input":{"shape":"CreateWorkloadIdentityRequest"},
       "output":{"shape":"CreateWorkloadIdentityResponse"},
@@ -221,7 +221,7 @@
       "http":{
         "method":"DELETE",
         "requestUri":"/runtimes/{agentRuntimeId}/",
-        "responseCode":200
+        "responseCode":202
       },
       "input":{"shape":"DeleteAgentRuntimeRequest"},
       "output":{"shape":"DeleteAgentRuntimeResponse"},
@@ -239,7 +239,7 @@
       "http":{
         "method":"DELETE",
         "requestUri":"/runtimes/{agentRuntimeId}/runtime-endpoints/{endpointName}/",
-        "responseCode":200
+        "responseCode":202
       },
       "input":{"shape":"DeleteAgentRuntimeEndpointRequest"},
       "output":{"shape":"DeleteAgentRuntimeEndpointResponse"},
@@ -257,7 +257,7 @@
       "http":{
         "method":"POST",
         "requestUri":"/identities/DeleteApiKeyCredentialProvider",
-        "responseCode":200
+        "responseCode":204
       },
       "input":{"shape":"DeleteApiKeyCredentialProviderRequest"},
       "output":{"shape":"DeleteApiKeyCredentialProviderResponse"},
@@ -276,7 +276,7 @@
       "http":{
         "method":"DELETE",
         "requestUri":"/browsers/{browserId}",
-        "responseCode":200
+        "responseCode":202
       },
       "input":{"shape":"DeleteBrowserRequest"},
       "output":{"shape":"DeleteBrowserResponse"},
@@ -296,7 +296,7 @@
       "http":{
         "method":"DELETE",
         "requestUri":"/code-interpreters/{codeInterpreterId}",
-        "responseCode":200
+        "responseCode":202
       },
       "input":{"shape":"DeleteCodeInterpreterRequest"},
       "output":{"shape":"DeleteCodeInterpreterResponse"},
@@ -372,7 +372,7 @@
       "http":{
         "method":"POST",
         "requestUri":"/identities/DeleteOauth2CredentialProvider",
-        "responseCode":200
+        "responseCode":204
       },
       "input":{"shape":"DeleteOauth2CredentialProviderRequest"},
       "output":{"shape":"DeleteOauth2CredentialProviderResponse"},
@@ -391,7 +391,7 @@
       "http":{
         "method":"POST",
         "requestUri":"/identities/DeleteWorkloadIdentity",
-        "responseCode":200
+        "responseCode":204
       },
       "input":{"shape":"DeleteWorkloadIdentityRequest"},
       "output":{"shape":"DeleteWorkloadIdentityResponse"},
@@ -902,7 +902,7 @@
       "http":{
         "method":"PUT",
         "requestUri":"/runtimes/{agentRuntimeId}/",
-        "responseCode":201
+        "responseCode":202
       },
       "input":{"shape":"UpdateAgentRuntimeRequest"},
       "output":{"shape":"UpdateAgentRuntimeResponse"},
@@ -922,7 +922,7 @@
       "http":{
         "method":"PUT",
         "requestUri":"/runtimes/{agentRuntimeId}/runtime-endpoints/{endpointName}/",
-        "responseCode":200
+        "responseCode":202
       },
       "input":{"shape":"UpdateAgentRuntimeEndpointRequest"},
       "output":{"shape":"UpdateAgentRuntimeEndpointResponse"},
@@ -1271,6 +1271,25 @@
       "type":"string",
       "pattern":"arn:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[^/].{0,1023}"
     },
+    "AtlassianOauth2ProviderConfigInput":{
+      "type":"structure",
+      "required":[
+        "clientId",
+        "clientSecret"
+      ],
+      "members":{
+        "clientId":{"shape":"ClientIdType"},
+        "clientSecret":{"shape":"ClientSecretType"}
+      }
+    },
+    "AtlassianOauth2ProviderConfigOutput":{
+      "type":"structure",
+      "required":["oauthDiscovery"],
+      "members":{
+        "oauthDiscovery":{"shape":"Oauth2Discovery"},
+        "clientId":{"shape":"ClientIdType"}
+      }
+    },
     "AuthorizationEndpointType":{"type":"string"},
     "AuthorizerConfiguration":{
       "type":"structure",
@@ -1496,6 +1515,8 @@
         "targetVersion":{"shape":"AgentRuntimeVersion"},
         "agentRuntimeEndpointArn":{"shape":"AgentRuntimeEndpointArn"},
         "agentRuntimeArn":{"shape":"AgentRuntimeArn"},
+        "agentRuntimeId":{"shape":"AgentRuntimeId"},
+        "endpointName":{"shape":"EndpointName"},
         "status":{"shape":"AgentRuntimeEndpointStatus"},
         "createdAt":{"shape":"DateTimestamp"}
       }
@@ -1552,7 +1573,8 @@
       ],
       "members":{
         "name":{"shape":"CredentialProviderName"},
-        "apiKey":{"shape":"ApiKeyType"}
+        "apiKey":{"shape":"ApiKeyType"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreateApiKeyCredentialProviderResponse":{
@@ -1788,7 +1810,8 @@
       "members":{
         "name":{"shape":"CredentialProviderName"},
         "credentialProviderVendor":{"shape":"CredentialProviderVendorType"},
-        "oauth2ProviderConfigInput":{"shape":"Oauth2ProviderConfigInput"}
+        "oauth2ProviderConfigInput":{"shape":"Oauth2ProviderConfigInput"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreateOauth2CredentialProviderResponse":{
@@ -1801,7 +1824,9 @@
       "members":{
         "clientSecretArn":{"shape":"Secret"},
         "name":{"shape":"CredentialProviderName"},
-        "credentialProviderArn":{"shape":"CredentialProviderArnType"}
+        "credentialProviderArn":{"shape":"CredentialProviderArnType"},
+        "callbackUrl":{"shape":"String"},
+        "oauth2ProviderConfigOutput":{"shape":"Oauth2ProviderConfigOutput"}
       }
     },
     "CreateWorkloadIdentityRequest":{
@@ -1809,7 +1834,8 @@
       "required":["name"],
       "members":{
         "name":{"shape":"WorkloadIdentityNameType"},
-        "allowedResourceOauth2ReturnUrls":{"shape":"ResourceOauth2ReturnUrlListType"}
+        "allowedResourceOauth2ReturnUrls":{"shape":"ResourceOauth2ReturnUrlListType"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreateWorkloadIdentityResponse":{
@@ -1872,7 +1898,26 @@
         "SlackOauth2",
         "SalesforceOauth2",
         "MicrosoftOauth2",
-        "CustomOauth2"
+        "CustomOauth2",
+        "AtlassianOauth2",
+        "LinkedinOauth2",
+        "XOauth2",
+        "OktaOauth2",
+        "OneLoginOauth2",
+        "PingOneOauth2",
+        "FacebookOauth2",
+        "YandexOauth2",
+        "RedditOauth2",
+        "ZoomOauth2",
+        "TwitchOauth2",
+        "SpotifyOauth2",
+        "DropboxOauth2",
+        "NotionOauth2",
+        "HubspotOauth2",
+        "CyberArkOauth2",
+        "FusionAuthOauth2",
+        "Auth0Oauth2",
+        "CognitoOauth2"
       ]
     },
     "CustomConfigurationInput":{
@@ -1955,7 +2000,8 @@
       "type":"structure",
       "required":["oauthDiscovery"],
       "members":{
-        "oauthDiscovery":{"shape":"Oauth2Discovery"}
+        "oauthDiscovery":{"shape":"Oauth2Discovery"},
+        "clientId":{"shape":"ClientIdType"}
       }
     },
     "DateTimestamp":{
@@ -2003,7 +2049,9 @@
       "type":"structure",
       "required":["status"],
       "members":{
-        "status":{"shape":"AgentRuntimeEndpointStatus"}
+        "status":{"shape":"AgentRuntimeEndpointStatus"},
+        "agentRuntimeId":{"shape":"AgentRuntimeId"},
+        "endpointName":{"shape":"EndpointName"}
       }
     },
     "DeleteAgentRuntimeRequest":{
@@ -2021,7 +2069,8 @@
       "type":"structure",
       "required":["status"],
       "members":{
-        "status":{"shape":"AgentRuntimeStatus"}
+        "status":{"shape":"AgentRuntimeStatus"},
+        "agentRuntimeId":{"shape":"AgentRuntimeId"}
       }
     },
     "DeleteApiKeyCredentialProviderRequest":{
@@ -2710,6 +2759,7 @@
         "name":{"shape":"CredentialProviderName"},
         "credentialProviderArn":{"shape":"CredentialProviderArnType"},
         "credentialProviderVendor":{"shape":"CredentialProviderVendorType"},
+        "callbackUrl":{"shape":"String"},
         "oauth2ProviderConfigOutput":{"shape":"Oauth2ProviderConfigOutput"},
         "createdTime":{"shape":"Timestamp"},
         "lastUpdatedTime":{"shape":"Timestamp"}
@@ -2772,7 +2822,8 @@
       "type":"structure",
       "required":["oauthDiscovery"],
       "members":{
-        "oauthDiscovery":{"shape":"Oauth2Discovery"}
+        "oauthDiscovery":{"shape":"Oauth2Discovery"},
+        "clientId":{"shape":"ClientIdType"}
       }
     },
     "GoogleOauth2ProviderConfigInput":{
@@ -2790,7 +2841,8 @@
       "type":"structure",
       "required":["oauthDiscovery"],
       "members":{
-        "oauthDiscovery":{"shape":"Oauth2Discovery"}
+        "oauthDiscovery":{"shape":"Oauth2Discovery"},
+        "clientId":{"shape":"ClientIdType"}
       }
     },
     "HeaderName":{
@@ -2798,6 +2850,28 @@
       "max":256,
       "min":1,
       "pattern":"(Authorization|X-Amzn-Bedrock-AgentCore-Runtime-Custom-[a-zA-Z0-9_-]+)"
+    },
+    "IncludedOauth2ProviderConfigInput":{
+      "type":"structure",
+      "required":[
+        "clientId",
+        "clientSecret"
+      ],
+      "members":{
+        "clientId":{"shape":"ClientIdType"},
+        "clientSecret":{"shape":"ClientSecretType"},
+        "issuer":{"shape":"IssuerUrlType"},
+        "authorizationEndpoint":{"shape":"AuthorizationEndpointType"},
+        "tokenEndpoint":{"shape":"TokenEndpointType"}
+      }
+    },
+    "IncludedOauth2ProviderConfigOutput":{
+      "type":"structure",
+      "required":["oauthDiscovery"],
+      "members":{
+        "oauthDiscovery":{"shape":"Oauth2Discovery"},
+        "clientId":{"shape":"ClientIdType"}
+      }
     },
     "InlinePayload":{
       "type":"string",
@@ -2888,6 +2962,25 @@
       "box":true,
       "max":28800,
       "min":60
+    },
+    "LinkedinOauth2ProviderConfigInput":{
+      "type":"structure",
+      "required":[
+        "clientId",
+        "clientSecret"
+      ],
+      "members":{
+        "clientId":{"shape":"ClientIdType"},
+        "clientSecret":{"shape":"ClientSecretType"}
+      }
+    },
+    "LinkedinOauth2ProviderConfigOutput":{
+      "type":"structure",
+      "required":["oauthDiscovery"],
+      "members":{
+        "oauthDiscovery":{"shape":"Oauth2Discovery"},
+        "clientId":{"shape":"ClientIdType"}
+      }
     },
     "ListAgentRuntimeEndpointsRequest":{
       "type":"structure",
@@ -3384,14 +3477,16 @@
       ],
       "members":{
         "clientId":{"shape":"ClientIdType"},
-        "clientSecret":{"shape":"ClientSecretType"}
+        "clientSecret":{"shape":"ClientSecretType"},
+        "tenantId":{"shape":"TenantIdType"}
       }
     },
     "MicrosoftOauth2ProviderConfigOutput":{
       "type":"structure",
       "required":["oauthDiscovery"],
       "members":{
-        "oauthDiscovery":{"shape":"Oauth2Discovery"}
+        "oauthDiscovery":{"shape":"Oauth2Discovery"},
+        "clientId":{"shape":"ClientIdType"}
       }
     },
     "ModifyConsolidationConfiguration":{
@@ -3452,8 +3547,8 @@
     "ModifySelfManagedConfigurationHistoricalContextWindowSizeInteger":{
       "type":"integer",
       "box":true,
-      "max":20,
-      "min":3
+      "max":50,
+      "min":0
     },
     "ModifyStrategyConfiguration":{
       "type":"structure",
@@ -3559,7 +3654,8 @@
         "issuer":{"shape":"IssuerUrlType"},
         "authorizationEndpoint":{"shape":"AuthorizationEndpointType"},
         "tokenEndpoint":{"shape":"TokenEndpointType"},
-        "responseTypes":{"shape":"ResponseListType"}
+        "responseTypes":{"shape":"ResponseListType"},
+        "tokenEndpointAuthMethods":{"shape":"TokenEndpointAuthMethodsType"}
       }
     },
     "Oauth2CredentialProviderItem":{
@@ -3599,7 +3695,10 @@
         "githubOauth2ProviderConfig":{"shape":"GithubOauth2ProviderConfigInput"},
         "slackOauth2ProviderConfig":{"shape":"SlackOauth2ProviderConfigInput"},
         "salesforceOauth2ProviderConfig":{"shape":"SalesforceOauth2ProviderConfigInput"},
-        "microsoftOauth2ProviderConfig":{"shape":"MicrosoftOauth2ProviderConfigInput"}
+        "microsoftOauth2ProviderConfig":{"shape":"MicrosoftOauth2ProviderConfigInput"},
+        "atlassianOauth2ProviderConfig":{"shape":"AtlassianOauth2ProviderConfigInput"},
+        "linkedinOauth2ProviderConfig":{"shape":"LinkedinOauth2ProviderConfigInput"},
+        "includedOauth2ProviderConfig":{"shape":"IncludedOauth2ProviderConfigInput"}
       },
       "union":true
     },
@@ -3611,7 +3710,10 @@
         "githubOauth2ProviderConfig":{"shape":"GithubOauth2ProviderConfigOutput"},
         "slackOauth2ProviderConfig":{"shape":"SlackOauth2ProviderConfigOutput"},
         "salesforceOauth2ProviderConfig":{"shape":"SalesforceOauth2ProviderConfigOutput"},
-        "microsoftOauth2ProviderConfig":{"shape":"MicrosoftOauth2ProviderConfigOutput"}
+        "microsoftOauth2ProviderConfig":{"shape":"MicrosoftOauth2ProviderConfigOutput"},
+        "atlassianOauth2ProviderConfig":{"shape":"AtlassianOauth2ProviderConfigOutput"},
+        "linkedinOauth2ProviderConfig":{"shape":"LinkedinOauth2ProviderConfigOutput"},
+        "includedOauth2ProviderConfig":{"shape":"IncludedOauth2ProviderConfigOutput"}
       },
       "union":true
     },
@@ -3762,7 +3864,8 @@
       "type":"structure",
       "required":["oauthDiscovery"],
       "members":{
-        "oauthDiscovery":{"shape":"Oauth2Discovery"}
+        "oauthDiscovery":{"shape":"Oauth2Discovery"},
+        "clientId":{"shape":"ClientIdType"}
       }
     },
     "SandboxName":{
@@ -3974,7 +4077,8 @@
       "type":"structure",
       "required":["oauthDiscovery"],
       "members":{
-        "oauthDiscovery":{"shape":"Oauth2Discovery"}
+        "oauthDiscovery":{"shape":"Oauth2Discovery"},
+        "clientId":{"shape":"ClientIdType"}
       }
     },
     "StatusReason":{
@@ -4191,6 +4295,11 @@
         "updatedAt":{"shape":"DateTimestamp"}
       }
     },
+    "TenantIdType":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "ThrottledException":{
       "type":"structure",
       "members":{
@@ -4233,6 +4342,10 @@
       "min":10
     },
     "Timestamp":{"type":"timestamp"},
+    "TokenAuthMethod":{
+      "type":"string",
+      "pattern":"(client_secret_post|client_secret_basic)"
+    },
     "TokenBasedTrigger":{
       "type":"structure",
       "members":{
@@ -4250,6 +4363,12 @@
       "box":true,
       "max":500000,
       "min":100
+    },
+    "TokenEndpointAuthMethodsType":{
+      "type":"list",
+      "member":{"shape":"TokenAuthMethod"},
+      "max":2,
+      "min":1
     },
     "TokenEndpointType":{"type":"string"},
     "TokenVaultIdType":{
@@ -4641,6 +4760,7 @@
         "name":{"shape":"CredentialProviderName"},
         "credentialProviderVendor":{"shape":"CredentialProviderVendorType"},
         "credentialProviderArn":{"shape":"CredentialProviderArnType"},
+        "callbackUrl":{"shape":"String"},
         "oauth2ProviderConfigOutput":{"shape":"Oauth2ProviderConfigOutput"},
         "createdTime":{"shape":"Timestamp"},
         "lastUpdatedTime":{"shape":"Timestamp"}

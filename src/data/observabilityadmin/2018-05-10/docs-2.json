@@ -9,6 +9,7 @@
     "DeleteTelemetryRule": "<p> Deletes a telemetry rule from your account. Any telemetry configurations previously created by the rule will remain but no new resources will be configured by this rule. </p>",
     "DeleteTelemetryRuleForOrganization": "<p> Deletes an organization-wide telemetry rule. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
     "GetCentralizationRuleForOrganization": "<p>Retrieves the details of a specific organization centralization rule. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
+    "GetTelemetryEnrichmentStatus": "<p> Returns the current status of the resource tags for telemetry feature, which enhances telemetry data with additional resource metadata from Amazon Web Services Resource Explorer. </p>",
     "GetTelemetryEvaluationStatus": "<p> Returns the current onboarding status of the telemetry config feature, including the status of the feature and reason the feature failed to start or stop. </p>",
     "GetTelemetryEvaluationStatusForOrganization": "<p> This returns the onboarding status of the telemetry configuration feature for the organization. It can only be called by a Management Account of an Amazon Web Services Organization or an assigned Delegated Admin Account of Amazon CloudWatch telemetry config. </p>",
     "GetTelemetryRule": "<p> Retrieves the details of a specific telemetry rule in your account. </p>",
@@ -19,8 +20,10 @@
     "ListTagsForResource": "<p> Lists all tags attached to the specified telemetry rule resource. </p>",
     "ListTelemetryRules": "<p> Lists all telemetry rules in your account. You can filter the results by specifying a rule name prefix. </p>",
     "ListTelemetryRulesForOrganization": "<p> Lists all telemetry rules in your organization. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
+    "StartTelemetryEnrichment": "<p> Enables the resource tags for telemetry feature for your account, which enhances telemetry data with additional resource metadata from Amazon Web Services Resource Explorer to provide richer context for monitoring and observability. </p>",
     "StartTelemetryEvaluation": "<p> This action begins onboarding the caller Amazon Web Services account to the telemetry config feature. </p>",
     "StartTelemetryEvaluationForOrganization": "<p> This actions begins onboarding the organization and all member accounts to the telemetry config feature. </p>",
+    "StopTelemetryEnrichment": "<p> Disables the resource tags for telemetry feature for your account, stopping the enhancement of telemetry data with additional resource metadata. </p>",
     "StopTelemetryEvaluation": "<p> This action begins offboarding the caller Amazon Web Services account from the telemetry config feature. </p>",
     "StopTelemetryEvaluationForOrganization": "<p> This action offboards the Organization of the caller Amazon Web Services account from the telemetry config feature. </p>",
     "TagResource": "<p> Adds or updates tags for a telemetry rule resource. </p>",
@@ -32,8 +35,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p> Indicates you don't have permissions to perform the requested operation. The user or role that is making the request must have at least one IAM permissions policy attached that grants the required permissions. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html\">Access management for Amazon Web Services resources</a> in the IAM user guide. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountIdentifier": {
       "base": null,
@@ -48,6 +50,13 @@
       "refs": {
         "ListResourceTelemetryForOrganizationInput$AccountIdentifiers": "<p> A list of Amazon Web Services accounts used to filter the resources to those associated with the specified accounts. </p>",
         "ListTelemetryRulesForOrganizationInput$SourceAccountIds": "<p> The list of account IDs to filter organization telemetry rules by their source accounts. </p>"
+      }
+    },
+    "AwsResourceExplorerManagedViewArn": {
+      "base": null,
+      "refs": {
+        "GetTelemetryEnrichmentStatusOutput$AwsResourceExplorerManagedViewArn": "<p> The Amazon Resource Name (ARN) of the Amazon Web Services Resource Explorer managed view used for resource tags for telemetry, if the feature is enabled. </p>",
+        "StartTelemetryEnrichmentOutput$AwsResourceExplorerManagedViewArn": "<p> The Amazon Resource Name (ARN) of the Amazon Web Services Resource Explorer managed view created for resource tags for telemetry. </p>"
       }
     },
     "Boolean": {
@@ -97,53 +106,43 @@
     },
     "ConflictException": {
       "base": "<p> The requested operation conflicts with the current state of the specified resource or with another request. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCentralizationRuleForOrganizationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCentralizationRuleForOrganizationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTelemetryRuleForOrganizationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTelemetryRuleForOrganizationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTelemetryRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTelemetryRuleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCentralizationRuleForOrganizationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTelemetryRuleForOrganizationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTelemetryRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DestinationLogsConfiguration": {
       "base": "<p>Configuration for centralization destination log groups, including encryption and backup settings.</p>",
@@ -184,43 +183,39 @@
     },
     "GetCentralizationRuleForOrganizationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCentralizationRuleForOrganizationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "GetTelemetryEnrichmentStatusOutput": {
+      "base": null,
+      "refs": {}
     },
     "GetTelemetryEvaluationStatusForOrganizationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTelemetryEvaluationStatusOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTelemetryRuleForOrganizationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTelemetryRuleForOrganizationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTelemetryRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTelemetryRuleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Integer": {
       "base": null,
@@ -230,13 +225,11 @@
     },
     "InternalServerException": {
       "base": "<p> Indicates the request has failed to process because of an unknown server error, exception, or failure. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCentralizationRulesForOrganizationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCentralizationRulesForOrganizationInputRuleNamePrefixString": {
       "base": null,
@@ -252,13 +245,11 @@
     },
     "ListCentralizationRulesForOrganizationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceTelemetryForOrganizationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceTelemetryForOrganizationMaxResults": {
       "base": null,
@@ -268,13 +259,11 @@
     },
     "ListResourceTelemetryForOrganizationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceTelemetryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceTelemetryMaxResults": {
       "base": null,
@@ -284,23 +273,19 @@
     },
     "ListResourceTelemetryOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTelemetryRulesForOrganizationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTelemetryRulesForOrganizationMaxResults": {
       "base": null,
@@ -310,13 +295,11 @@
     },
     "ListTelemetryRulesForOrganizationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTelemetryRulesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTelemetryRulesMaxResults": {
       "base": null,
@@ -326,8 +309,7 @@
     },
     "ListTelemetryRulesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LogsBackupConfiguration": {
       "base": "<p>Configuration for backing up centralized log data to a secondary region.</p>",
@@ -443,8 +425,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p> The specified resource (such as a telemetry rule) could not be found. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceType": {
       "base": null,
@@ -504,8 +485,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p> The requested operation would exceed the allowed quota for the specified resource type. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SourceFilterString": {
       "base": null,
@@ -519,12 +499,20 @@
         "CentralizationRuleSource$SourceLogsConfiguration": "<p>Log specific configuration for centralization source log groups.</p>"
       }
     },
+    "StartTelemetryEnrichmentOutput": {
+      "base": null,
+      "refs": {}
+    },
     "Status": {
       "base": null,
       "refs": {
         "GetTelemetryEvaluationStatusForOrganizationOutput$Status": "<p> The onboarding status of the telemetry config feature for the organization. </p>",
         "GetTelemetryEvaluationStatusOutput$Status": "<p> The onboarding status of the telemetry config feature. </p>"
       }
+    },
+    "StopTelemetryEnrichmentOutput": {
+      "base": null,
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -586,8 +574,7 @@
     },
     "TagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -620,6 +607,14 @@
       "base": "<p> Configuration specifying where and how telemetry data should be delivered for Amazon Web Services resources. </p>",
       "refs": {
         "TelemetryRule$DestinationConfiguration": "<p> Configuration specifying where and how the telemetry data should be delivered. </p>"
+      }
+    },
+    "TelemetryEnrichmentStatus": {
+      "base": null,
+      "refs": {
+        "GetTelemetryEnrichmentStatusOutput$Status": "<p> The current status of the resource tags for telemetry feature (<code>Running</code>, <code>Stopped</code>, or <code>Impaired</code>). </p>",
+        "StartTelemetryEnrichmentOutput$Status": "<p> The status of the resource tags for telemetry feature after the start operation (<code>Running</code>, <code>Stopped</code>, or <code>Impaired</code>). </p>",
+        "StopTelemetryEnrichmentOutput$Status": "<p> The status of the resource tags for telemetry feature after the stop operation (<code>Running</code>, <code>Stopped</code>, or <code>Impaired</code>). </p>"
       }
     },
     "TelemetryRule": {
@@ -662,43 +657,35 @@
     },
     "TooManyRequestsException": {
       "base": "<p> The request throughput limit was exceeded. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCentralizationRuleForOrganizationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCentralizationRuleForOrganizationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTelemetryRuleForOrganizationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTelemetryRuleForOrganizationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTelemetryRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTelemetryRuleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "VPCFlowLogParameters": {
       "base": "<p> Configuration parameters specific to VPC Flow Logs. </p>",
@@ -708,8 +695,7 @@
     },
     "ValidationException": {
       "base": "<p> Indicates input validation failed. Check your request parameters and retry the request. </p>",
-      "refs": {
-      }
+      "refs": {}
     }
   }
 }

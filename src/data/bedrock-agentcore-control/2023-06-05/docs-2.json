@@ -142,9 +142,12 @@
       "refs": {
         "AgentRuntime$agentRuntimeId": "<p>The unique identifier of the agent runtime.</p>",
         "CreateAgentRuntimeEndpointRequest$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime to create an endpoint for.</p>",
+        "CreateAgentRuntimeEndpointResponse$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime.</p>",
         "CreateAgentRuntimeResponse$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime.</p>",
         "DeleteAgentRuntimeEndpointRequest$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime associated with the endpoint.</p>",
+        "DeleteAgentRuntimeEndpointResponse$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime.</p>",
         "DeleteAgentRuntimeRequest$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime to delete.</p>",
+        "DeleteAgentRuntimeResponse$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime.</p>",
         "GetAgentRuntimeEndpointRequest$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime associated with the endpoint.</p>",
         "GetAgentRuntimeRequest$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime to retrieve.</p>",
         "GetAgentRuntimeResponse$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime.</p>",
@@ -301,9 +304,22 @@
         "UpdateMemoryInput$memoryExecutionRoleArn": "<p>The ARN of the IAM role that provides permissions for the AgentCore Memory resource.</p>"
       }
     },
+    "AtlassianOauth2ProviderConfigInput": {
+      "base": "<p>Configuration settings for connecting to Atlassian services using OAuth2 authentication. This includes the client credentials required to authenticate with Atlassian's OAuth2 authorization server.</p>",
+      "refs": {
+        "Oauth2ProviderConfigInput$atlassianOauth2ProviderConfig": "<p>Configuration settings for Atlassian OAuth2 provider integration.</p>"
+      }
+    },
+    "AtlassianOauth2ProviderConfigOutput": {
+      "base": "<p>The configuration details returned for an Atlassian OAuth2 provider, including the client ID and OAuth2 discovery information.</p>",
+      "refs": {
+        "Oauth2ProviderConfigOutput$atlassianOauth2ProviderConfig": "<p>The configuration details for the Atlassian OAuth2 provider.</p>"
+      }
+    },
     "AuthorizationEndpointType": {
       "base": null,
       "refs": {
+        "IncludedOauth2ProviderConfigInput$authorizationEndpoint": "<p>OAuth2 authorization endpoint for your isolated OAuth2 application tenant. This is where users are redirected to authenticate and authorize access to their resources.</p>",
         "Oauth2AuthorizationServerMetadata$authorizationEndpoint": "<p>The authorization endpoint URL for the OAuth2 authorization server.</p>"
       }
     },
@@ -399,20 +415,35 @@
     "ClientIdType": {
       "base": null,
       "refs": {
+        "AtlassianOauth2ProviderConfigInput$clientId": "<p>The client ID for the Atlassian OAuth2 provider. This identifier is assigned by Atlassian when you register your application.</p>",
+        "AtlassianOauth2ProviderConfigOutput$clientId": "<p>The client ID for the Atlassian OAuth2 provider.</p>",
         "CustomOauth2ProviderConfigInput$clientId": "<p>The client ID for the custom OAuth2 provider.</p>",
+        "CustomOauth2ProviderConfigOutput$clientId": "<p>The client ID for the custom OAuth2 provider.</p>",
         "GithubOauth2ProviderConfigInput$clientId": "<p>The client ID for the GitHub OAuth2 provider.</p>",
+        "GithubOauth2ProviderConfigOutput$clientId": "<p>The client ID for the GitHub OAuth2 provider.</p>",
         "GoogleOauth2ProviderConfigInput$clientId": "<p>The client ID for the Google OAuth2 provider.</p>",
+        "GoogleOauth2ProviderConfigOutput$clientId": "<p>The client ID for the Google OAuth2 provider.</p>",
+        "IncludedOauth2ProviderConfigInput$clientId": "<p>The client ID for the supported OAuth2 provider. This identifier is assigned by the OAuth2 provider when you register your application.</p>",
+        "IncludedOauth2ProviderConfigOutput$clientId": "<p>The client ID for the supported OAuth2 provider.</p>",
+        "LinkedinOauth2ProviderConfigInput$clientId": "<p>The client ID for the LinkedIn OAuth2 provider. This identifier is assigned by LinkedIn when you register your application.</p>",
+        "LinkedinOauth2ProviderConfigOutput$clientId": "<p>The client ID for the LinkedIn OAuth2 provider.</p>",
         "MicrosoftOauth2ProviderConfigInput$clientId": "<p>The client ID for the Microsoft OAuth2 provider.</p>",
+        "MicrosoftOauth2ProviderConfigOutput$clientId": "<p>The client ID for the Microsoft OAuth2 provider.</p>",
         "SalesforceOauth2ProviderConfigInput$clientId": "<p>The client ID for the Salesforce OAuth2 provider.</p>",
-        "SlackOauth2ProviderConfigInput$clientId": "<p>The client ID for the Slack OAuth2 provider.</p>"
+        "SalesforceOauth2ProviderConfigOutput$clientId": "<p>The client ID for the Salesforce OAuth2 provider.</p>",
+        "SlackOauth2ProviderConfigInput$clientId": "<p>The client ID for the Slack OAuth2 provider.</p>",
+        "SlackOauth2ProviderConfigOutput$clientId": "<p>The client ID for the Slack OAuth2 provider.</p>"
       }
     },
     "ClientSecretType": {
       "base": null,
       "refs": {
+        "AtlassianOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Atlassian OAuth2 provider. This secret is assigned by Atlassian and used along with the client ID to authenticate your application.</p>",
         "CustomOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the custom OAuth2 provider.</p>",
         "GithubOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the GitHub OAuth2 provider.</p>",
         "GoogleOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Google OAuth2 provider.</p>",
+        "IncludedOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the supported OAuth2 provider. This secret is assigned by the OAuth2 provider and used along with the client ID to authenticate your application.</p>",
+        "LinkedinOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the LinkedIn OAuth2 provider. This secret is assigned by LinkedIn and used along with the client ID to authenticate your application.</p>",
         "MicrosoftOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Microsoft OAuth2 provider.</p>",
         "SalesforceOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Salesforce OAuth2 provider.</p>",
         "SlackOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Slack OAuth2 provider.</p>"
@@ -921,7 +952,9 @@
       "refs": {
         "AgentRuntimeEndpoint$name": "<p>The name of the agent runtime endpoint.</p>",
         "CreateAgentRuntimeEndpointRequest$name": "<p>The name of the AgentCore Runtime endpoint.</p>",
+        "CreateAgentRuntimeEndpointResponse$endpointName": "<p>The name of the AgentCore Runtime endpoint.</p>",
         "DeleteAgentRuntimeEndpointRequest$endpointName": "<p>The name of the AgentCore Runtime endpoint to delete.</p>",
+        "DeleteAgentRuntimeEndpointResponse$endpointName": "<p>The name of the AgentCore Runtime endpoint.</p>",
         "GetAgentRuntimeEndpointRequest$endpointName": "<p>The name of the AgentCore Runtime endpoint to retrieve.</p>",
         "GetAgentRuntimeEndpointResponse$name": "<p>The name of the AgentCore Runtime endpoint.</p>",
         "UpdateAgentRuntimeEndpointRequest$endpointName": "<p>The name of the AgentCore Runtime endpoint to update.</p>"
@@ -1216,6 +1249,18 @@
         "RequestHeaderAllowlist$member": null
       }
     },
+    "IncludedOauth2ProviderConfigInput": {
+      "base": "<p>Configuration settings for connecting to a supported OAuth2 provider. This includes client credentials and OAuth2 discovery information for providers that have built-in support.</p>",
+      "refs": {
+        "Oauth2ProviderConfigInput$includedOauth2ProviderConfig": "<p>The configuration for a non-custom OAuth2 provider. This includes settings for supported OAuth2 providers that have built-in integration support.</p>"
+      }
+    },
+    "IncludedOauth2ProviderConfigOutput": {
+      "base": "<p>The configuration details returned for a supported OAuth2 provider, including client credentials and OAuth2 discovery information.</p>",
+      "refs": {
+        "Oauth2ProviderConfigOutput$includedOauth2ProviderConfig": "<p>The configuration for a non-custom OAuth2 provider. This includes the configuration details for supported OAuth2 providers that have built-in integration support.</p>"
+      }
+    },
     "InlinePayload": {
       "base": null,
       "refs": {
@@ -1256,6 +1301,7 @@
     "IssuerUrlType": {
       "base": null,
       "refs": {
+        "IncludedOauth2ProviderConfigInput$issuer": "<p>Token issuer of your isolated OAuth2 application tenant. This URL identifies the authorization server that issues tokens for this provider.</p>",
         "Oauth2AuthorizationServerMetadata$issuer": "<p>The issuer URL for the OAuth2 authorization server.</p>"
       }
     },
@@ -1308,6 +1354,18 @@
       "base": null,
       "refs": {
         "LifecycleConfiguration$maxLifetime": "<p>Maximum lifetime for the instance in seconds. Once reached, instances will be automatically terminated and replaced. Default: 28800 seconds (8 hours).</p>"
+      }
+    },
+    "LinkedinOauth2ProviderConfigInput": {
+      "base": "<p>Configuration settings for connecting to LinkedIn services using OAuth2 authentication. This includes the client credentials required to authenticate with LinkedIn's OAuth2 authorization server.</p>",
+      "refs": {
+        "Oauth2ProviderConfigInput$linkedinOauth2ProviderConfig": "<p>Configuration settings for LinkedIn OAuth2 provider integration.</p>"
+      }
+    },
+    "LinkedinOauth2ProviderConfigOutput": {
+      "base": "<p>The configuration details returned for a LinkedIn OAuth2 provider, including the client ID and OAuth2 discovery information.</p>",
+      "refs": {
+        "Oauth2ProviderConfigOutput$linkedinOauth2ProviderConfig": "<p>The configuration details for the LinkedIn OAuth2 provider.</p>"
       }
     },
     "ListAgentRuntimeEndpointsRequest": {
@@ -1801,10 +1859,13 @@
     "Oauth2Discovery": {
       "base": "<p>Contains the discovery information for an OAuth2 provider.</p>",
       "refs": {
+        "AtlassianOauth2ProviderConfigOutput$oauthDiscovery": null,
         "CustomOauth2ProviderConfigInput$oauthDiscovery": "<p>The OAuth2 discovery information for the custom provider.</p>",
         "CustomOauth2ProviderConfigOutput$oauthDiscovery": "<p>The OAuth2 discovery information for the custom provider.</p>",
         "GithubOauth2ProviderConfigOutput$oauthDiscovery": "<p>The OAuth2 discovery information for the GitHub provider.</p>",
         "GoogleOauth2ProviderConfigOutput$oauthDiscovery": "<p>The OAuth2 discovery information for the Google provider.</p>",
+        "IncludedOauth2ProviderConfigOutput$oauthDiscovery": null,
+        "LinkedinOauth2ProviderConfigOutput$oauthDiscovery": null,
         "MicrosoftOauth2ProviderConfigOutput$oauthDiscovery": "<p>The OAuth2 discovery information for the Microsoft provider.</p>",
         "SalesforceOauth2ProviderConfigOutput$oauthDiscovery": "<p>The OAuth2 discovery information for the Salesforce provider.</p>",
         "SlackOauth2ProviderConfigOutput$oauthDiscovery": "<p>The OAuth2 discovery information for the Slack provider.</p>"
@@ -1820,6 +1881,7 @@
     "Oauth2ProviderConfigOutput": {
       "base": "<p>Contains the output configuration for an OAuth2 provider.</p>",
       "refs": {
+        "CreateOauth2CredentialProviderResponse$oauth2ProviderConfigOutput": null,
         "GetOauth2CredentialProviderResponse$oauth2ProviderConfigOutput": "<p>The configuration output for the OAuth2 provider.</p>",
         "UpdateOauth2CredentialProviderResponse$oauth2ProviderConfigOutput": "<p>The configuration output for the OAuth2 provider.</p>"
       }
@@ -2176,12 +2238,14 @@
       "base": null,
       "refs": {
         "ConcurrentModificationException$message": null,
+        "CreateOauth2CredentialProviderResponse$callbackUrl": "<p>Callback URL to register on the OAuth2 credential provider as an allowed callback URL. This URL is where the OAuth2 authorization server redirects users after they complete the authorization flow.</p>",
         "DecryptionFailure$message": null,
         "DeleteMemoryStrategyInput$memoryStrategyId": "<p>The unique identifier of the memory strategy to delete.</p>",
         "EncryptionFailure$message": null,
         "GetAgentRuntimeEndpointResponse$failureReason": "<p>The reason for failure if the AgentCore Runtime endpoint is in a failed state.</p>",
         "GetBrowserResponse$failureReason": "<p>The reason for failure if the browser is in a failed state.</p>",
         "GetCodeInterpreterResponse$failureReason": "<p>The reason for failure if the code interpreter is in a failed state.</p>",
+        "GetOauth2CredentialProviderResponse$callbackUrl": "<p>Callback URL to register on the OAuth2 credential provider as an allowed callback URL. This URL is where the OAuth2 authorization server redirects users after they complete the authorization flow.</p>",
         "InvocationConfiguration$payloadDeliveryBucketName": "<p>The S3 bucket name for event payload delivery.</p>",
         "ListApiKeyCredentialProvidersRequest$nextToken": "<p>Pagination token.</p>",
         "ListApiKeyCredentialProvidersResponse$nextToken": "<p>Pagination token for the next page of results.</p>",
@@ -2207,6 +2271,7 @@
         "ThrottledException$message": null,
         "ToolDefinition$name": "<p>The name of the tool. This name identifies the tool in the Model Context Protocol.</p>",
         "ToolDefinition$description": "<p>The description of the tool. This description provides information about the purpose and usage of the tool.</p>",
+        "UpdateOauth2CredentialProviderResponse$callbackUrl": "<p>Callback URL to register on the OAuth2 credential provider as an allowed callback URL. This URL is where the OAuth2 authorization server redirects users after they complete the authorization flow.</p>",
         "UserPreferenceConsolidationOverride$modelId": "<p>The model ID to use for user preference consolidation.</p>",
         "UserPreferenceExtractionOverride$modelId": "<p>The model ID to use for user preference extraction.</p>",
         "UserPreferenceOverrideConsolidationConfigurationInput$modelId": "<p>The model ID to use for user preference consolidation.</p>",
@@ -2301,10 +2366,13 @@
       "refs": {
         "CreateAgentRuntimeEndpointRequest$tags": "<p>A map of tag keys and values to assign to the agent runtime endpoint. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateAgentRuntimeRequest$tags": "<p>A map of tag keys and values to assign to the agent runtime. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
+        "CreateApiKeyCredentialProviderRequest$tags": "<p>A map of tag keys and values to assign to the API key credential provider. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateBrowserRequest$tags": "<p>A map of tag keys and values to assign to the browser. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateCodeInterpreterRequest$tags": "<p>A map of tag keys and values to assign to the code interpreter. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "CreateGatewayRequest$tags": "<p>A map of key-value pairs to associate with the gateway as metadata tags.</p>",
         "CreateMemoryInput$tags": "<p>A map of tag keys and values to assign to an AgentCore Memory. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
+        "CreateOauth2CredentialProviderRequest$tags": "<p>A map of tag keys and values to assign to the OAuth2 credential provider. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
+        "CreateWorkloadIdentityRequest$tags": "<p>A map of tag keys and values to assign to the workload identity. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags associated with the resource.</p>",
         "TagResourceRequest$tags": "<p>The tags to add to the resource. A tag is a key-value pair.</p>"
       }
@@ -2401,6 +2469,12 @@
         "TargetSummaries$member": null
       }
     },
+    "TenantIdType": {
+      "base": null,
+      "refs": {
+        "MicrosoftOauth2ProviderConfigInput$tenantId": "<p>The Microsoft Entra ID (formerly Azure AD) tenant ID for your organization. This identifies the specific tenant within Microsoft's identity platform where your application is registered.</p>"
+      }
+    },
     "ThrottledException": {
       "base": "<p>API rate limit has been exceeded.</p>",
       "refs": {}
@@ -2456,6 +2530,12 @@
         "UpdateWorkloadIdentityResponse$lastUpdatedTime": "<p>The timestamp when the workload identity was last updated.</p>"
       }
     },
+    "TokenAuthMethod": {
+      "base": null,
+      "refs": {
+        "TokenEndpointAuthMethodsType$member": null
+      }
+    },
     "TokenBasedTrigger": {
       "base": "<p>Trigger configuration based on tokens.</p>",
       "refs": {
@@ -2474,9 +2554,16 @@
         "TokenBasedTriggerInput$tokenCount": "<p>Number of tokens that trigger memory processing.</p>"
       }
     },
+    "TokenEndpointAuthMethodsType": {
+      "base": null,
+      "refs": {
+        "Oauth2AuthorizationServerMetadata$tokenEndpointAuthMethods": "<p>The authentication methods supported by the token endpoint. This specifies how clients can authenticate when requesting tokens from the authorization server.</p>"
+      }
+    },
     "TokenEndpointType": {
       "base": null,
       "refs": {
+        "IncludedOauth2ProviderConfigInput$tokenEndpoint": "<p>OAuth2 token endpoint for your isolated OAuth2 application tenant. This is where authorization codes are exchanged for access tokens.</p>",
         "Oauth2AuthorizationServerMetadata$tokenEndpoint": "<p>The token endpoint URL for the OAuth2 authorization server.</p>"
       }
     },

@@ -5,6 +5,7 @@
     "BatchCreateMemoryRecords": "<p>Creates multiple memory records in a single batch operation for the specified memory with custom content.</p>",
     "BatchDeleteMemoryRecords": "<p>Deletes multiple memory records in a single batch operation from the specified memory.</p>",
     "BatchUpdateMemoryRecords": "<p>Updates multiple memory records with custom content in a single batch operation within the specified memory.</p>",
+    "CompleteResourceTokenAuth": "<p>Confirms the user authentication session for obtaining OAuth2.0 tokens for a resource.</p>",
     "CreateEvent": "<p>Creates an event in an AgentCore Memory resource. Events represent interactions or activities that occur within a session and are associated with specific actors.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:CreateEvent</code> permission.</p> <p>This operation is subject to request rate limiting.</p>",
     "DeleteEvent": "<p>Deletes an event from an AgentCore Memory resource. When you delete an event, it is permanently removed.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:DeleteEvent</code> permission.</p>",
     "DeleteMemoryRecord": "<p>Deletes a memory record from an AgentCore Memory resource. When you delete a memory record, it is permanently removed.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:DeleteMemoryRecord</code> permission.</p>",
@@ -82,6 +83,12 @@
       "base": null,
       "refs": {
         "GetResourceApiKeyResponse$apiKey": "<p>The API key associated with the resource requested.</p>"
+      }
+    },
+    "AuthorizationUrlType": {
+      "base": null,
+      "refs": {
+        "GetResourceOauth2TokenResponse$authorizationUrl": "<p>The URL to initiate the authorization process, provided when the access token requires user authorization.</p>"
       }
     },
     "AutomationStream": {
@@ -288,6 +295,14 @@
       "refs": {
         "InvokeCodeInterpreterResponse$stream": "<p>The stream containing the results of the code execution. This includes output, errors, and execution status.</p>"
       }
+    },
+    "CompleteResourceTokenAuthRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CompleteResourceTokenAuthResponse": {
+      "base": null,
+      "refs": {}
     },
     "ConflictException": {
       "base": "<p>The exception that occurs when the request conflicts with the current state of the resource. This can happen when trying to modify a resource that is currently being modified by another request, or when trying to create a resource that already exists.</p>",
@@ -572,6 +587,12 @@
     "InvokeAgentRuntimeRequest": {
       "base": null,
       "refs": {}
+    },
+    "InvokeAgentRuntimeRequestAccountIdString": {
+      "base": null,
+      "refs": {
+        "InvokeAgentRuntimeRequest$accountId": "<p>The identifier of the Amazon Web Services account for the agent runtime resource.</p>"
+      }
     },
     "InvokeAgentRuntimeRequestBaggageString": {
       "base": null,
@@ -985,6 +1006,14 @@
         "MemoryRecordOutput$requestIdentifier": "<p>The client-provided identifier that was used to track this record operation.</p>"
       }
     },
+    "RequestUri": {
+      "base": null,
+      "refs": {
+        "CompleteResourceTokenAuthRequest$sessionUri": "<p>Unique identifier for the user's authentication session for retrieving OAuth2 tokens. This ID tracks the authorization flow state across multiple requests and responses during the OAuth2 authentication process.</p>",
+        "GetResourceOauth2TokenRequest$sessionUri": "<p>Unique identifier for the user's authentication session for retrieving OAuth2 tokens. This ID tracks the authorization flow state across multiple requests and responses during the OAuth2 authentication process.</p>",
+        "GetResourceOauth2TokenResponse$sessionUri": "<p>Unique identifier for the user's authorization session for retrieving OAuth2 tokens. This matches the sessionId from the request and can be used to track the session state.</p>"
+      }
+    },
     "ResourceContent": {
       "base": "<p>Contains information about resource content.</p>",
       "refs": {
@@ -1094,6 +1123,12 @@
         "StopRuntimeSessionResponse$runtimeSessionId": "<p>The ID of the session that you requested to stop.</p>"
       }
     },
+    "SessionStatus": {
+      "base": null,
+      "refs": {
+        "GetResourceOauth2TokenResponse$sessionStatus": "<p>Status indicating whether the user's authorization session is in progress or has failed. This helps determine the next steps in the OAuth2 authentication flow.</p>"
+      }
+    },
     "SessionSummary": {
       "base": "<p>Contains summary information about a session in an AgentCore Memory resource.</p>",
       "refs": {
@@ -1153,6 +1188,12 @@
     "StartCodeInterpreterSessionResponse": {
       "base": null,
       "refs": {}
+    },
+    "State": {
+      "base": null,
+      "refs": {
+        "GetResourceOauth2TokenRequest$customState": "<p>An opaque string that will be sent back to the callback URL provided in resourceOauth2ReturnUrl. This state should be used to protect the callback URL of your application against CSRF attacks by ensuring the response corresponds to the original request.</p>"
+      }
     },
     "StopBrowserSessionRequest": {
       "base": null,
@@ -1227,7 +1268,6 @@
         "GetBrowserSessionResponse$sessionReplayArtifact": "<p>The artifact containing the session replay information.</p>",
         "GetCodeInterpreterSessionRequest$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter associated with the session.</p>",
         "GetCodeInterpreterSessionResponse$codeInterpreterIdentifier": "<p>The identifier of the code interpreter.</p>",
-        "GetResourceOauth2TokenResponse$authorizationUrl": "<p>The URL to initiate the authorization process, provided when the access token requires user authorization.</p>",
         "InvalidInputException$message": null,
         "InvokeAgentRuntimeRequest$agentRuntimeArn": "<p>The Amazon Web Services Resource Name (ARN) of the agent runtime to invoke. The ARN uniquely identifies the agent runtime resource in Amazon Bedrock.</p>",
         "InvokeAgentRuntimeRequest$qualifier": "<p>The qualifier to use for the agent runtime. This can be a version number or an endpoint name that points to a specific version. If not specified, Amazon Bedrock uses the default version of the agent runtime.</p>",
@@ -1341,13 +1381,21 @@
     "UserIdType": {
       "base": null,
       "refs": {
-        "GetWorkloadAccessTokenForUserIdRequest$userId": "<p>The ID of the user for whom you are retrieving the access token.</p>"
+        "GetWorkloadAccessTokenForUserIdRequest$userId": "<p>The ID of the user for whom you are retrieving the access token.</p>",
+        "UserIdentifier$userId": "<p>The ID of the user for whom you have retrieved a workload access token for</p>"
+      }
+    },
+    "UserIdentifier": {
+      "base": "<p>The OAuth2.0 token or user ID that was used to generate the workload access token used for initiating the user authorization flow to retrieve OAuth2.0 tokens.</p>",
+      "refs": {
+        "CompleteResourceTokenAuthRequest$userIdentifier": "<p>The OAuth2.0 token or user ID that was used to generate the workload access token used for initiating the user authorization flow to retrieve OAuth2.0 tokens.</p>"
       }
     },
     "UserTokenType": {
       "base": null,
       "refs": {
-        "GetWorkloadAccessTokenForJWTRequest$userToken": "<p>The OAuth 2.0 token issued by the user's identity provider.</p>"
+        "GetWorkloadAccessTokenForJWTRequest$userToken": "<p>The OAuth 2.0 token issued by the user's identity provider.</p>",
+        "UserIdentifier$userToken": "<p>The OAuth2.0 token issued by the user’s identity provider</p>"
       }
     },
     "ValidationException": {
