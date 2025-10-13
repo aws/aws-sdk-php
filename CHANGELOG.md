@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.38 - 2025-10-13
 
 * `Aws\BedrockAgentCoreControl` - Updated http status code in control plane apis of agentcore runtime, tools and identity. Additional included provider types for AgentCore Identity
 * `Aws\ObservabilityAdmin` - CloudWatch Observability Admin adds the ability to enable Resource tags for telemetry in a customer account. The release introduces new APIs to enable, disable and describe the status of Resource tags for telemetry feature. This new capability simplifies monitoring AWS resources using tags.
