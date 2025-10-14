@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.39 - 2025-10-14
 
 * `Aws\AppStream` - This release introduces support for Microsoft license included applications streaming.
 * `Aws\Transfer` - SFTP connectors now support routing connections via customers' VPC. This enables connections to remote servers that are only accessible in a customer's VPC environment, and to servers that are accessible over the internet but need connections coming from an IP address in a customer VPC's CIDR range.
