@@ -550,6 +550,15 @@
       "input":{"shape":"CopySnapshotRequest"},
       "output":{"shape":"CopySnapshotResult"}
     },
+    "CopyVolumes":{
+      "name":"CopyVolumes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CopyVolumesRequest"},
+      "output":{"shape":"CopyVolumesResult"}
+    },
     "CreateCapacityReservation":{
       "name":"CreateCapacityReservation",
       "http":{
@@ -11605,6 +11614,36 @@
     "CopyTagsFromSource":{
       "type":"string",
       "enum":["volume"]
+    },
+    "CopyVolumesRequest":{
+      "type":"structure",
+      "required":["SourceVolumeId"],
+      "members":{
+        "SourceVolumeId":{"shape":"VolumeId"},
+        "Iops":{"shape":"Integer"},
+        "Size":{"shape":"Integer"},
+        "VolumeType":{"shape":"VolumeType"},
+        "DryRun":{"shape":"Boolean"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "MultiAttachEnabled":{"shape":"Boolean"},
+        "Throughput":{"shape":"Integer"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CopyVolumesResult":{
+      "type":"structure",
+      "members":{
+        "Volumes":{
+          "shape":"VolumeList",
+          "locationName":"volumeSet"
+        }
+      }
     },
     "CoreCount":{"type":"integer"},
     "CoreCountList":{
@@ -30040,7 +30079,8 @@
       "type":"string",
       "enum":[
         "default",
-        "provisioned-rate"
+        "provisioned-rate",
+        "volume-copy"
       ]
     },
     "InsideCidrBlocksStringList":{
@@ -52518,6 +52558,10 @@
         "OutpostArn":{
           "shape":"String",
           "locationName":"outpostArn"
+        },
+        "SourceVolumeId":{
+          "shape":"String",
+          "locationName":"sourceVolumeId"
         },
         "Iops":{
           "shape":"Integer",

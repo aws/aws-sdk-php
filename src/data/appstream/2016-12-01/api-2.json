@@ -80,6 +80,22 @@
         {"shape":"OperationNotPermittedException"}
       ]
     },
+    "AssociateSoftwareToImageBuilder":{
+      "name":"AssociateSoftwareToImageBuilder",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateSoftwareToImageBuilderRequest"},
+      "output":{"shape":"AssociateSoftwareToImageBuilderResult"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"IncompatibleImageException"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
     "BatchAssociateUserStack":{
       "name":"BatchAssociateUserStack",
       "http":{
@@ -598,6 +614,20 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "DescribeAppLicenseUsage":{
+      "name":"DescribeAppLicenseUsage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeAppLicenseUsageRequest"},
+      "output":{"shape":"DescribeAppLicenseUsageResult"},
+      "errors":[
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "DescribeApplicationFleetAssociations":{
       "name":"DescribeApplicationFleetAssociations",
       "http":{
@@ -709,6 +739,19 @@
       "output":{"shape":"DescribeSessionsResult"},
       "errors":[
         {"shape":"InvalidParameterCombinationException"}
+      ]
+    },
+    "DescribeSoftwareAssociations":{
+      "name":"DescribeSoftwareAssociations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSoftwareAssociationsRequest"},
+      "output":{"shape":"DescribeSoftwareAssociationsResult"},
+      "errors":[
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "DescribeStacks":{
@@ -847,6 +890,21 @@
         {"shape":"OperationNotPermittedException"}
       ]
     },
+    "DisassociateSoftwareFromImageBuilder":{
+      "name":"DisassociateSoftwareFromImageBuilder",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateSoftwareFromImageBuilderRequest"},
+      "output":{"shape":"DisassociateSoftwareFromImageBuilderResult"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
     "EnableUser":{
       "name":"EnableUser",
       "http":{
@@ -964,6 +1022,20 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"InvalidAccountStatusException"},
         {"shape":"IncompatibleImageException"}
+      ]
+    },
+    "StartSoftwareDeploymentToImageBuilder":{
+      "name":"StartSoftwareDeploymentToImageBuilder",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartSoftwareDeploymentToImageBuilderRequest"},
+      "output":{"shape":"StartSoftwareDeploymentToImageBuilderResult"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"ConcurrentModificationException"}
       ]
     },
     "StopAppBlockBuilder":{
@@ -1216,6 +1288,31 @@
         "DOMAIN_SMART_CARD_SIGNIN",
         "AUTO_TIME_ZONE_REDIRECTION"
       ]
+    },
+    "AdminAppLicenseUsageList":{
+      "type":"list",
+      "member":{"shape":"AdminAppLicenseUsageRecord"}
+    },
+    "AdminAppLicenseUsageRecord":{
+      "type":"structure",
+      "required":[
+        "UserArn",
+        "BillingPeriod",
+        "OwnerAWSAccountId",
+        "SubscriptionFirstUsedDate",
+        "SubscriptionLastUsedDate",
+        "LicenseType",
+        "UserId"
+      ],
+      "members":{
+        "UserArn":{"shape":"String"},
+        "BillingPeriod":{"shape":"String"},
+        "OwnerAWSAccountId":{"shape":"AwsAccountId"},
+        "SubscriptionFirstUsedDate":{"shape":"Timestamp"},
+        "SubscriptionLastUsedDate":{"shape":"Timestamp"},
+        "LicenseType":{"shape":"String"},
+        "UserId":{"shape":"String"}
+      }
     },
     "AppBlock":{
       "type":"structure",
@@ -1484,6 +1581,21 @@
       }
     },
     "AssociateFleetResult":{
+      "type":"structure",
+      "members":{}
+    },
+    "AssociateSoftwareToImageBuilderRequest":{
+      "type":"structure",
+      "required":[
+        "ImageBuilderName",
+        "SoftwareNames"
+      ],
+      "members":{
+        "ImageBuilderName":{"shape":"Name"},
+        "SoftwareNames":{"shape":"StringList"}
+      }
+    },
+    "AssociateSoftwareToImageBuilderResult":{
       "type":"structure",
       "members":{}
     },
@@ -1789,7 +1901,9 @@
         "DomainJoinInfo":{"shape":"DomainJoinInfo"},
         "AppstreamAgentVersion":{"shape":"AppstreamAgentVersion"},
         "Tags":{"shape":"Tags"},
-        "AccessEndpoints":{"shape":"AccessEndpointList"}
+        "AccessEndpoints":{"shape":"AccessEndpointList"},
+        "SoftwaresToInstall":{"shape":"StringList"},
+        "SoftwaresToUninstall":{"shape":"StringList"}
       }
     },
     "CreateImageBuilderResult":{
@@ -2137,6 +2251,22 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "DescribeAppLicenseUsageRequest":{
+      "type":"structure",
+      "required":["BillingPeriod"],
+      "members":{
+        "BillingPeriod":{"shape":"String"},
+        "MaxResults":{"shape":"Integer"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "DescribeAppLicenseUsageResult":{
+      "type":"structure",
+      "members":{
+        "AppLicenseUsages":{"shape":"AdminAppLicenseUsageList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "DescribeApplicationFleetAssociationsRequest":{
       "type":"structure",
       "members":{
@@ -2290,6 +2420,23 @@
       "type":"structure",
       "members":{
         "Sessions":{"shape":"SessionList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "DescribeSoftwareAssociationsRequest":{
+      "type":"structure",
+      "required":["AssociatedResource"],
+      "members":{
+        "AssociatedResource":{"shape":"Arn"},
+        "MaxResults":{"shape":"Integer"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "DescribeSoftwareAssociationsResult":{
+      "type":"structure",
+      "members":{
+        "AssociatedResource":{"shape":"Arn"},
+        "SoftwareAssociations":{"shape":"SoftwareAssociationsList"},
         "NextToken":{"shape":"String"}
       }
     },
@@ -2465,6 +2612,21 @@
       }
     },
     "DisassociateFleetResult":{
+      "type":"structure",
+      "members":{}
+    },
+    "DisassociateSoftwareFromImageBuilderRequest":{
+      "type":"structure",
+      "required":[
+        "ImageBuilderName",
+        "SoftwareNames"
+      ],
+      "members":{
+        "ImageBuilderName":{"shape":"Name"},
+        "SoftwareNames":{"shape":"StringList"}
+      }
+    },
+    "DisassociateSoftwareFromImageBuilderResult":{
       "type":"structure",
       "members":{}
     },
@@ -2756,7 +2918,8 @@
         "LatestAppstreamAgentVersion":{"shape":"LatestAppstreamAgentVersion"},
         "SupportedInstanceFamilies":{"shape":"StringList"},
         "DynamicAppProvidersEnabled":{"shape":"DynamicAppProvidersEnabled"},
-        "ImageSharedWithOthers":{"shape":"ImageSharedWithOthers"}
+        "ImageSharedWithOthers":{"shape":"ImageSharedWithOthers"},
+        "ManagedSoftwareIncluded":{"shape":"Boolean"}
       }
     },
     "ImageBuilder":{
@@ -2801,7 +2964,9 @@
         "DELETING",
         "FAILED",
         "UPDATING",
-        "PENDING_QUALIFICATION"
+        "PENDING_QUALIFICATION",
+        "PENDING_SYNCING_APPS",
+        "SYNCING_APPS"
       ]
     },
     "ImageBuilderStateChangeReason":{
@@ -3234,6 +3399,30 @@
       "type":"list",
       "member":{"shape":"SharedImagePermissions"}
     },
+    "SoftwareAssociations":{
+      "type":"structure",
+      "members":{
+        "SoftwareName":{"shape":"String"},
+        "Status":{"shape":"SoftwareDeploymentStatus"},
+        "DeploymentError":{"shape":"ErrorDetailsList"}
+      }
+    },
+    "SoftwareAssociationsList":{
+      "type":"list",
+      "member":{"shape":"SoftwareAssociations"}
+    },
+    "SoftwareDeploymentStatus":{
+      "type":"string",
+      "enum":[
+        "STAGED_FOR_INSTALLATION",
+        "PENDING_INSTALLATION",
+        "INSTALLED",
+        "STAGED_FOR_UNINSTALLATION",
+        "PENDING_UNINSTALLATION",
+        "FAILED_TO_INSTALL",
+        "FAILED_TO_UNINSTALL"
+      ]
+    },
     "Stack":{
       "type":"structure",
       "required":["Name"],
@@ -3334,6 +3523,18 @@
       "members":{
         "ImageBuilder":{"shape":"ImageBuilder"}
       }
+    },
+    "StartSoftwareDeploymentToImageBuilderRequest":{
+      "type":"structure",
+      "required":["ImageBuilderName"],
+      "members":{
+        "ImageBuilderName":{"shape":"Name"},
+        "RetryFailedDeployments":{"shape":"Boolean"}
+      }
+    },
+    "StartSoftwareDeploymentToImageBuilderResult":{
+      "type":"structure",
+      "members":{}
     },
     "StopAppBlockBuilderRequest":{
       "type":"structure",

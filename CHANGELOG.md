@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - This release introduces support for Microsoft license included applications streaming.
+* `Aws\Transfer` - SFTP connectors now support routing connections via customers' VPC. This enables connections to remote servers that are only accessible in a customer's VPC environment, and to servers that are accessible over the internet but need connections coming from an IP address in a customer VPC's CIDR range.
+* `Aws\DataZone` - Support creating scoped and trustedIdentityPropagation enabled connections.
+* `Aws\Backup` - The AWS Backup job attribute extension enhancement helps customers better understand the plan that initiated each job, and the properties of the resource each job creates.
+* `Aws\TranscribeService` - Move UntagResource API body member to query parameter
+* `Aws\Connect` - SDK release for TaskTemplateInfo in Contact for DescribeContact response.
+* `Aws\EC2` - This release adds support for creating instant, point-in-time copies of EBS volumes within the same Availability Zone
+
 ## 3.356.38 - 2025-10-13
 
 * `Aws\BedrockAgentCoreControl` - Updated http status code in control plane apis of agentcore runtime, tools and identity. Additional included provider types for AgentCore Identity

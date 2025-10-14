@@ -6140,6 +6140,7 @@
         "Recordings":{"shape":"Recordings"},
         "DisconnectReason":{"shape":"String"},
         "ContactEvaluations":{"shape":"ContactEvaluations"},
+        "TaskTemplateInfo":{"shape":"TaskTemplateInfoV2"},
         "ContactDetails":{"shape":"ContactDetails"},
         "Attributes":{"shape":"Attributes"}
       }
@@ -17653,6 +17654,13 @@
       "type":"string",
       "max":500,
       "min":1
+    },
+    "TaskTemplateInfoV2":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ARN"},
+        "Name":{"shape":"TaskTemplateName"}
+      }
     },
     "TaskTemplateList":{
       "type":"list",

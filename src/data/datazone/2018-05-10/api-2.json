@@ -3587,6 +3587,66 @@
       "type":"structure",
       "members":{}
     },
+    "AmazonQPropertiesInput":{
+      "type":"structure",
+      "required":["isEnabled"],
+      "members":{
+        "authMode":{"shape":"AmazonQPropertiesInputAuthModeString"},
+        "isEnabled":{"shape":"Boolean"},
+        "profileArn":{"shape":"AmazonQPropertiesInputProfileArnString"}
+      }
+    },
+    "AmazonQPropertiesInputAuthModeString":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
+    "AmazonQPropertiesInputProfileArnString":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"^arn:aws[a-z\\-]*:[a-z0-9\\-]+:[a-z0-9\\-]*:[0-9]*:.*"
+    },
+    "AmazonQPropertiesOutput":{
+      "type":"structure",
+      "required":["isEnabled"],
+      "members":{
+        "authMode":{"shape":"AmazonQPropertiesOutputAuthModeString"},
+        "isEnabled":{"shape":"Boolean"},
+        "profileArn":{"shape":"AmazonQPropertiesOutputProfileArnString"}
+      }
+    },
+    "AmazonQPropertiesOutputAuthModeString":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
+    "AmazonQPropertiesOutputProfileArnString":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"^arn:aws[a-z\\-]*:[a-z0-9\\-]+:[a-z0-9\\-]*:[0-9]*:.*"
+    },
+    "AmazonQPropertiesPatch":{
+      "type":"structure",
+      "required":["isEnabled"],
+      "members":{
+        "authMode":{"shape":"AmazonQPropertiesPatchAuthModeString"},
+        "isEnabled":{"shape":"Boolean"},
+        "profileArn":{"shape":"AmazonQPropertiesPatchProfileArnString"}
+      }
+    },
+    "AmazonQPropertiesPatchAuthModeString":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
+    "AmazonQPropertiesPatchProfileArnString":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"^arn:aws[a-z\\-]*:[a-z0-9\\-]+:[a-z0-9\\-]*:[0-9]*:.*"
+    },
     "ApplicableAssetTypes":{
       "type":"list",
       "member":{"shape":"TypeName"}
@@ -4289,6 +4349,7 @@
     "ConnectionPropertiesInput":{
       "type":"structure",
       "members":{
+        "amazonQProperties":{"shape":"AmazonQPropertiesInput"},
         "athenaProperties":{"shape":"AthenaPropertiesInput"},
         "glueProperties":{"shape":"GluePropertiesInput"},
         "hyperPodProperties":{"shape":"HyperPodPropertiesInput"},
@@ -4303,6 +4364,7 @@
     "ConnectionPropertiesOutput":{
       "type":"structure",
       "members":{
+        "amazonQProperties":{"shape":"AmazonQPropertiesOutput"},
         "athenaProperties":{"shape":"AthenaPropertiesOutput"},
         "glueProperties":{"shape":"GluePropertiesOutput"},
         "hyperPodProperties":{"shape":"HyperPodPropertiesOutput"},
@@ -4317,6 +4379,7 @@
     "ConnectionPropertiesPatch":{
       "type":"structure",
       "members":{
+        "amazonQProperties":{"shape":"AmazonQPropertiesPatch"},
         "athenaProperties":{"shape":"AthenaPropertiesPatch"},
         "glueProperties":{"shape":"GluePropertiesPatch"},
         "iamProperties":{"shape":"IamPropertiesPatch"},
@@ -4330,6 +4393,13 @@
       "type":"string",
       "max":2048,
       "min":1
+    },
+    "ConnectionScope":{
+      "type":"string",
+      "enum":[
+        "DOMAIN",
+        "PROJECT"
+      ]
     },
     "ConnectionStatus":{
       "type":"string",
@@ -4367,6 +4437,7 @@
         "physicalEndpoints":{"shape":"PhysicalEndpoints"},
         "projectId":{"shape":"ProjectId"},
         "props":{"shape":"ConnectionPropertiesOutput"},
+        "scope":{"shape":"ConnectionScope"},
         "type":{"shape":"ConnectionType"}
       }
     },
@@ -4392,7 +4463,8 @@
         "SQLSERVER",
         "TERADATA",
         "VERTICA",
-        "WORKFLOWS_MWAA"
+        "WORKFLOWS_MWAA",
+        "AMAZON_Q"
       ]
     },
     "CreateAccountPoolInput":{
@@ -4680,7 +4752,6 @@
       "type":"structure",
       "required":[
         "domainIdentifier",
-        "environmentIdentifier",
         "name"
       ],
       "members":{
@@ -4695,9 +4766,11 @@
           "location":"uri",
           "locationName":"domainIdentifier"
         },
+        "enableTrustedIdentityPropagation":{"shape":"Boolean"},
         "environmentIdentifier":{"shape":"EnvironmentId"},
         "name":{"shape":"ConnectionName"},
-        "props":{"shape":"ConnectionPropertiesInput"}
+        "props":{"shape":"ConnectionPropertiesInput"},
+        "scope":{"shape":"ConnectionScope"}
       }
     },
     "CreateConnectionInputDescriptionString":{
@@ -4726,6 +4799,7 @@
         "physicalEndpoints":{"shape":"PhysicalEndpoints"},
         "projectId":{"shape":"ProjectId"},
         "props":{"shape":"ConnectionPropertiesOutput"},
+        "scope":{"shape":"ConnectionScope"},
         "type":{"shape":"ConnectionType"}
       }
     },
@@ -8026,6 +8100,7 @@
         "physicalEndpoints":{"shape":"PhysicalEndpoints"},
         "projectId":{"shape":"ProjectId"},
         "props":{"shape":"ConnectionPropertiesOutput"},
+        "scope":{"shape":"ConnectionScope"},
         "type":{"shape":"ConnectionType"}
       }
     },
@@ -10333,10 +10408,7 @@
     },
     "ListConnectionsInput":{
       "type":"structure",
-      "required":[
-        "domainIdentifier",
-        "projectIdentifier"
-      ],
+      "required":["domainIdentifier"],
       "members":{
         "domainIdentifier":{
           "shape":"DomainId",
@@ -10367,6 +10439,11 @@
           "shape":"ProjectId",
           "location":"querystring",
           "locationName":"projectIdentifier"
+        },
+        "scope":{
+          "shape":"ConnectionScope",
+          "location":"querystring",
+          "locationName":"scope"
         },
         "sortBy":{
           "shape":"SortFieldConnection",
@@ -12297,6 +12374,7 @@
       "type":"structure",
       "members":{
         "awsLocation":{"shape":"AwsLocation"},
+        "enableTrustedIdentityPropagation":{"shape":"Boolean"},
         "glueConnection":{"shape":"GlueConnection"},
         "glueConnectionName":{"shape":"String"},
         "host":{"shape":"String"},
@@ -14970,6 +15048,7 @@
         "physicalEndpoints":{"shape":"PhysicalEndpoints"},
         "projectId":{"shape":"ProjectId"},
         "props":{"shape":"ConnectionPropertiesOutput"},
+        "scope":{"shape":"ConnectionScope"},
         "type":{"shape":"ConnectionType"}
       }
     },

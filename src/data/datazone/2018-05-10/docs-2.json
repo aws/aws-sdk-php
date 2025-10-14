@@ -415,6 +415,60 @@
         "UserPolicyGrantPrincipal$allUsersGrantFilter": "<p>The all users grant filter of the user policy grant principal.</p>"
       }
     },
+    "AmazonQPropertiesInput": {
+      "base": "<p>The Amazon Q properties of the connection.</p>",
+      "refs": {
+        "ConnectionPropertiesInput$amazonQProperties": "<p>The Amazon Q properties of the connection.</p>"
+      }
+    },
+    "AmazonQPropertiesInputAuthModeString": {
+      "base": null,
+      "refs": {
+        "AmazonQPropertiesInput$authMode": "<p>The authentication mode of the connection's Amazon Q properties.</p>"
+      }
+    },
+    "AmazonQPropertiesInputProfileArnString": {
+      "base": null,
+      "refs": {
+        "AmazonQPropertiesInput$profileArn": "<p>The profile ARN of the connection's Amazon Q properties.</p>"
+      }
+    },
+    "AmazonQPropertiesOutput": {
+      "base": "<p>The Amazon Q properties of the connection.</p>",
+      "refs": {
+        "ConnectionPropertiesOutput$amazonQProperties": "<p>The Amazon Q properties of the connection.</p>"
+      }
+    },
+    "AmazonQPropertiesOutputAuthModeString": {
+      "base": null,
+      "refs": {
+        "AmazonQPropertiesOutput$authMode": "<p>The authentication mode of the connection's Amazon Q properties.</p>"
+      }
+    },
+    "AmazonQPropertiesOutputProfileArnString": {
+      "base": null,
+      "refs": {
+        "AmazonQPropertiesOutput$profileArn": "<p>The profile ARN of the connection's Amazon Q properties.</p>"
+      }
+    },
+    "AmazonQPropertiesPatch": {
+      "base": "<p>The Amazon Q properties of the connection.</p>",
+      "refs": {
+        "ConnectionPropertiesPatch$amazonQProperties": "<p>The Amazon Q properties of the connection.</p>"
+      }
+    },
+    "AmazonQPropertiesPatchAuthModeString": {
+      "base": null,
+      "refs": {
+        "AmazonQPropertiesPatch$authMode": "<p>The authentication mode of the connection's Amazon Q properties.</p>"
+      }
+    },
+    "AmazonQPropertiesPatchProfileArnString": {
+      "base": null,
+      "refs": {
+        "AmazonQPropertiesPatch$profileArn": "<p>The profile ARN of the connection's Amazon Q properties.</p>"
+      }
+    },
     "ApplicableAssetTypes": {
       "base": null,
       "refs": {
@@ -893,9 +947,13 @@
       "base": null,
       "refs": {
         "AddToProjectMemberPoolPolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy grant is applied to child domain units.</p>",
+        "AmazonQPropertiesInput$isEnabled": "<p>Specifies whether Amazon Q is enabled for the connection.</p>",
+        "AmazonQPropertiesOutput$isEnabled": "<p>Specifies whether Amazon Q is enabled for the connection.</p>",
+        "AmazonQPropertiesPatch$isEnabled": "<p>Specifies whether Amazon Q is enabled for the connection.</p>",
         "BusinessNameGenerationConfiguration$enabled": "<p>Specifies whether the business name generation is enabled.</p>",
         "CancelSubscriptionOutput$retainPermissions": "<p>Specifies whether the permissions to the asset are retained after the subscription is cancelled.</p>",
         "CreateAssetTypePolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy grant is applied to child domain units.</p>",
+        "CreateConnectionInput$enableTrustedIdentityPropagation": "<p>Specifies whether the trusted identity propagation is enabled.</p>",
         "CreateDataSourceInput$publishOnImport": "<p>Specifies whether the assets that this data source creates in the inventory are to be also automatically published to the catalog.</p>",
         "CreateDataSourceOutput$publishOnImport": "<p>Specifies whether the assets that this data source creates in the inventory are to be also automatically published to the catalog.</p>",
         "CreateDomainUnitPolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy grant is applied to child domain units.</p>",
@@ -931,6 +989,7 @@
         "ListRulesInput$includeCascaded": "<p>Specifies whether to include cascading rules in the results.</p>",
         "OverrideDomainUnitOwnersPolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy is inherited by child domain units.</p>",
         "OverrideProjectOwnersPolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy is inherited by child domain units.</p>",
+        "PhysicalEndpoint$enableTrustedIdentityPropagation": "<p>Specified whether trusted identity propagation for the connection is enabled.</p>",
         "RecommendationConfiguration$enableBusinessNameGeneration": "<p>Specifies whether automatic business name generation is to be enabled or not as part of the recommendation configuration.</p>",
         "RedshiftLineageSyncConfigurationInput$enabled": "<p>Specifies whether the Amaon Redshift lineage sync configuration is enabled.</p>",
         "RedshiftLineageSyncConfigurationOutput$enabled": "<p>Specifies whether the Amaon Redshift lineage sync configuration is enabled.</p>",
@@ -1127,6 +1186,17 @@
       "base": null,
       "refs": {
         "ConnectionProperties$value": null
+      }
+    },
+    "ConnectionScope": {
+      "base": null,
+      "refs": {
+        "ConnectionSummary$scope": "<p>The scope of the connection.</p>",
+        "CreateConnectionInput$scope": "<p>The scope of the connection.</p>",
+        "CreateConnectionOutput$scope": "<p>The scope of the connection.</p>",
+        "GetConnectionOutput$scope": "<p>The scope of the connection.</p>",
+        "ListConnectionsInput$scope": "<p>The scope of the connection.</p>",
+        "UpdateConnectionOutput$scope": "<p>The scope of the connection.</p>"
       }
     },
     "ConnectionStatus": {

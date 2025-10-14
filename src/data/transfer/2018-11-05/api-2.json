@@ -1310,6 +1310,21 @@
       },
       "exception":true
     },
+    "ConnectorEgressConfig":{
+      "type":"structure",
+      "members":{
+        "VpcLattice":{"shape":"ConnectorVpcLatticeEgressConfig"}
+      },
+      "union":true
+    },
+    "ConnectorEgressType":{
+      "type":"string",
+      "enum":[
+        "SERVICE_MANAGED",
+        "VPC_LATTICE"
+      ]
+    },
+    "ConnectorErrorMessage":{"type":"string"},
     "ConnectorFileTransferResult":{
       "type":"structure",
       "required":[
@@ -1340,6 +1355,22 @@
       "max":100,
       "min":0,
       "pattern":"TransferSFTPConnectorSecurityPolicy-[A-Za-z0-9-]+"
+    },
+    "ConnectorStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "ERRORED",
+        "PENDING"
+      ]
+    },
+    "ConnectorVpcLatticeEgressConfig":{
+      "type":"structure",
+      "required":["ResourceConfigurationArn"],
+      "members":{
+        "ResourceConfigurationArn":{"shape":"VpcLatticeResourceConfigurationArn"},
+        "PortNumber":{"shape":"SftpPort"}
+      }
     },
     "CopyStepDetails":{
       "type":"structure",
@@ -1410,10 +1441,7 @@
     },
     "CreateConnectorRequest":{
       "type":"structure",
-      "required":[
-        "Url",
-        "AccessRole"
-      ],
+      "required":["AccessRole"],
       "members":{
         "Url":{"shape":"Url"},
         "As2Config":{"shape":"As2ConnectorConfig"},
@@ -1421,7 +1449,8 @@
         "LoggingRole":{"shape":"Role"},
         "Tags":{"shape":"Tags"},
         "SftpConfig":{"shape":"SftpConnectorConfig"},
-        "SecurityPolicyName":{"shape":"ConnectorSecurityPolicyName"}
+        "SecurityPolicyName":{"shape":"ConnectorSecurityPolicyName"},
+        "EgressConfig":{"shape":"ConnectorEgressConfig"}
       }
     },
     "CreateConnectorResponse":{
@@ -1993,7 +2022,11 @@
     },
     "DescribedConnector":{
       "type":"structure",
-      "required":["Arn"],
+      "required":[
+        "Arn",
+        "EgressType",
+        "Status"
+      ],
       "members":{
         "Arn":{"shape":"Arn"},
         "ConnectorId":{"shape":"ConnectorId"},
@@ -2004,7 +2037,26 @@
         "Tags":{"shape":"Tags"},
         "SftpConfig":{"shape":"SftpConnectorConfig"},
         "ServiceManagedEgressIpAddresses":{"shape":"ServiceManagedEgressIpAddresses"},
-        "SecurityPolicyName":{"shape":"ConnectorSecurityPolicyName"}
+        "SecurityPolicyName":{"shape":"ConnectorSecurityPolicyName"},
+        "EgressConfig":{"shape":"DescribedConnectorEgressConfig"},
+        "EgressType":{"shape":"ConnectorEgressType"},
+        "ErrorMessage":{"shape":"ConnectorErrorMessage"},
+        "Status":{"shape":"ConnectorStatus"}
+      }
+    },
+    "DescribedConnectorEgressConfig":{
+      "type":"structure",
+      "members":{
+        "VpcLattice":{"shape":"DescribedConnectorVpcLatticeEgressConfig"}
+      },
+      "union":true
+    },
+    "DescribedConnectorVpcLatticeEgressConfig":{
+      "type":"structure",
+      "required":["ResourceConfigurationArn"],
+      "members":{
+        "ResourceConfigurationArn":{"shape":"VpcLatticeResourceConfigurationArn"},
+        "PortNumber":{"shape":"SftpPort"}
       }
     },
     "DescribedExecution":{
@@ -3448,6 +3500,12 @@
       "max":10,
       "min":0
     },
+    "SftpPort":{
+      "type":"integer",
+      "box":true,
+      "max":65535,
+      "min":1
+    },
     "SigningAlg":{
       "type":"string",
       "enum":[
@@ -3837,6 +3895,13 @@
         "CertificateId":{"shape":"CertificateId"}
       }
     },
+    "UpdateConnectorEgressConfig":{
+      "type":"structure",
+      "members":{
+        "VpcLattice":{"shape":"UpdateConnectorVpcLatticeEgressConfig"}
+      },
+      "union":true
+    },
     "UpdateConnectorRequest":{
       "type":"structure",
       "required":["ConnectorId"],
@@ -3847,7 +3912,8 @@
         "AccessRole":{"shape":"Role"},
         "LoggingRole":{"shape":"Role"},
         "SftpConfig":{"shape":"SftpConnectorConfig"},
-        "SecurityPolicyName":{"shape":"ConnectorSecurityPolicyName"}
+        "SecurityPolicyName":{"shape":"ConnectorSecurityPolicyName"},
+        "EgressConfig":{"shape":"UpdateConnectorEgressConfig"}
       }
     },
     "UpdateConnectorResponse":{
@@ -3855,6 +3921,13 @@
       "required":["ConnectorId"],
       "members":{
         "ConnectorId":{"shape":"ConnectorId"}
+      }
+    },
+    "UpdateConnectorVpcLatticeEgressConfig":{
+      "type":"structure",
+      "members":{
+        "ResourceConfigurationArn":{"shape":"VpcLatticeResourceConfigurationArn"},
+        "PortNumber":{"shape":"SftpPort"}
       }
     },
     "UpdateHostKeyRequest":{
@@ -4041,6 +4114,12 @@
       "pattern":"vpce-[0-9a-f]{17}"
     },
     "VpcId":{"type":"string"},
+    "VpcLatticeResourceConfigurationArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:resourceconfiguration/rcfg-[0-9a-z]{17}"
+    },
     "WebAppAccessEndpoint":{
       "type":"string",
       "max":1024,

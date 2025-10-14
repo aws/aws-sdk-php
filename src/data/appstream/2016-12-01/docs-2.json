@@ -6,6 +6,7 @@
     "AssociateApplicationFleet": "<p>Associates the specified application with the specified fleet. This is only supported for Elastic fleets.</p>",
     "AssociateApplicationToEntitlement": "<p>Associates an application to entitle.</p>",
     "AssociateFleet": "<p>Associates the specified fleet with the specified stack.</p>",
+    "AssociateSoftwareToImageBuilder": "<p>Associates license included application(s) with an existing image builder instance.</p>",
     "BatchAssociateUserStack": "<p>Associates the specified users with the specified stacks. Users in a user pool cannot be assigned to stacks with fleets that are joined to an Active Directory domain.</p>",
     "BatchDisassociateUserStack": "<p>Disassociates the specified users from the specified stacks.</p>",
     "CopyImage": "<p>Copies the image within the same region or to a new region within the same AWS account. Note that any tags you added to the image will not be copied.</p>",
@@ -40,6 +41,7 @@
     "DescribeAppBlockBuilderAppBlockAssociations": "<p>Retrieves a list that describes one or more app block builder associations.</p>",
     "DescribeAppBlockBuilders": "<p>Retrieves a list that describes one or more app block builders.</p>",
     "DescribeAppBlocks": "<p>Retrieves a list that describes one or more app blocks.</p>",
+    "DescribeAppLicenseUsage": "<p>Retrieves license included application usage information.</p>",
     "DescribeApplicationFleetAssociations": "<p>Retrieves a list that describes one or more application fleet associations. Either ApplicationArn or FleetName must be specified.</p>",
     "DescribeApplications": "<p>Retrieves a list that describes one or more applications.</p>",
     "DescribeDirectoryConfigs": "<p>Retrieves a list that describes one or more specified Directory Config objects for AppStream 2.0, if the names for these objects are provided. Otherwise, all Directory Config objects in the account are described. These objects include the configuration information required to join fleets and image builders to Microsoft Active Directory domains. </p> <p>Although the response syntax in this topic includes the account password, this password is not returned in the actual response.</p>",
@@ -49,6 +51,7 @@
     "DescribeImagePermissions": "<p>Retrieves a list that describes the permissions for shared AWS account IDs on a private image that you own. </p>",
     "DescribeImages": "<p>Retrieves a list that describes one or more specified images, if the image names or image ARNs are provided. Otherwise, all images in the account are described.</p>",
     "DescribeSessions": "<p>Retrieves a list that describes the streaming sessions for a specified stack and fleet. If a UserId is provided for the stack and fleet, only streaming sessions for that user are described. If an authentication type is not provided, the default is to authenticate users using a streaming URL.</p>",
+    "DescribeSoftwareAssociations": "<p>Retrieves license included application associations for a specified resource.</p>",
     "DescribeStacks": "<p>Retrieves a list that describes one or more specified stacks, if the stack names are provided. Otherwise, all stacks in the account are described.</p>",
     "DescribeThemeForStack": "<p>Retrieves a list that describes the theme for a specified stack. A theme is custom branding that customizes the appearance of the streaming application catalog page.</p>",
     "DescribeUsageReportSubscriptions": "<p>Retrieves a list that describes one or more usage report subscriptions.</p>",
@@ -59,6 +62,7 @@
     "DisassociateApplicationFleet": "<p>Disassociates the specified application from the fleet.</p>",
     "DisassociateApplicationFromEntitlement": "<p>Deletes the specified application from the specified entitlement.</p>",
     "DisassociateFleet": "<p>Disassociates the specified fleet from the specified stack.</p>",
+    "DisassociateSoftwareFromImageBuilder": "<p>Removes license included application(s) association(s) from an image builder instance.</p>",
     "EnableUser": "<p>Enables a user in the user pool. After being enabled, users can sign in to AppStream 2.0 and open applications from the stacks to which they are assigned.</p>",
     "ExpireSession": "<p>Immediately stops the specified streaming session.</p>",
     "ListAssociatedFleets": "<p>Retrieves the name of the fleet that is associated with the specified stack.</p>",
@@ -68,6 +72,7 @@
     "StartAppBlockBuilder": "<p>Starts an app block builder.</p> <p>An app block builder can only be started when it's associated with an app block.</p> <p>Starting an app block builder starts a new instance, which is equivalent to an elastic fleet instance with application builder assistance functionality.</p>",
     "StartFleet": "<p>Starts the specified fleet.</p>",
     "StartImageBuilder": "<p>Starts the specified image builder.</p>",
+    "StartSoftwareDeploymentToImageBuilder": "<p>Initiates license included applications deployment to an image builder instance.</p>",
     "StopAppBlockBuilder": "<p>Stops an app block builder.</p> <p>Stopping an app block builder terminates the instance, and the instance state is not persisted.</p>",
     "StopFleet": "<p>Stops the specified fleet.</p>",
     "StopImageBuilder": "<p>Stops the specified image builder.</p>",
@@ -124,6 +129,18 @@
       "base": null,
       "refs": {
         "UserSetting$Action": "<p>The action that is enabled or disabled.</p>"
+      }
+    },
+    "AdminAppLicenseUsageList": {
+      "base": null,
+      "refs": {
+        "DescribeAppLicenseUsageResult$AppLicenseUsages": "<p>Collection of license usage records.</p>"
+      }
+    },
+    "AdminAppLicenseUsageRecord": {
+      "base": "<p>The collection of license usage records.</p>",
+      "refs": {
+        "AdminAppLicenseUsageList$member": null
       }
     },
     "AppBlock": {
@@ -303,6 +320,8 @@
         "CreateImageBuilderRequest$IamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role to apply to the image builder. To assume a role, the image builder calls the AWS Security Token Service (STS) <code>AssumeRole</code> API operation and passes the ARN of the role to use. The operation creates a new session with temporary credentials. AppStream 2.0 retrieves the temporary credentials and creates the <b>appstream_machine_role</b> credential profile on the instance.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/appstream2/latest/developerguide/using-iam-roles-to-grant-permissions-to-applications-scripts-streaming-instances.html\">Using an IAM Role to Grant Permissions to Applications and Scripts Running on AppStream 2.0 Streaming Instances</a> in the <i>Amazon AppStream 2.0 Administration Guide</i>.</p>",
         "DescribeAppBlockBuilderAppBlockAssociationsRequest$AppBlockArn": "<p>The ARN of the app block.</p>",
         "DescribeApplicationFleetAssociationsRequest$ApplicationArn": "<p>The ARN of the application.</p>",
+        "DescribeSoftwareAssociationsRequest$AssociatedResource": "<p>The ARN of the resource to describe software associations. Possible resources are Image and ImageBuilder.</p>",
+        "DescribeSoftwareAssociationsResult$AssociatedResource": "<p>The ARN of the resource to describe software associations.</p>",
         "DisassociateAppBlockBuilderAppBlockRequest$AppBlockArn": "<p>The ARN of the app block.</p>",
         "DisassociateApplicationFleetRequest$ApplicationArn": "<p>The ARN of the application.</p>",
         "Fleet$Arn": "<p>The Amazon Resource Name (ARN) for the fleet.</p>",
@@ -364,6 +383,14 @@
       "base": null,
       "refs": {}
     },
+    "AssociateSoftwareToImageBuilderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateSoftwareToImageBuilderResult": {
+      "base": null,
+      "refs": {}
+    },
     "AuthenticationType": {
       "base": null,
       "refs": {
@@ -382,6 +409,7 @@
     "AwsAccountId": {
       "base": null,
       "refs": {
+        "AdminAppLicenseUsageRecord$OwnerAWSAccountId": "<p>The account ID of the owner of the license.</p>",
         "AwsAccountIdList$member": null,
         "DeleteImagePermissionsRequest$SharedAccountId": "<p>The 12-digit identifier of the AWS account for which to delete image permissions.</p>",
         "SharedImagePermissions$sharedAccountId": "<p>The 12-digit identifier of the AWS account with which the image is shared.</p>",
@@ -419,6 +447,8 @@
         "CreateUpdatedImageRequest$dryRun": "<p>Indicates whether to display the status of image update availability before AppStream 2.0 initiates the process of creating a new updated image. If this value is set to <code>true</code>, AppStream 2.0 displays whether image updates are available. If this value is set to <code>false</code>, AppStream 2.0 initiates the process of creating a new updated image without displaying whether image updates are available.</p>",
         "CreateUpdatedImageResult$canUpdateImage": "<p>Indicates whether a new image can be created.</p>",
         "Image$ImageBuilderSupported": "<p>Indicates whether an image builder can be launched from this image.</p>",
+        "Image$ManagedSoftwareIncluded": "<p>Indicates whether the image includes license-included applications.</p>",
+        "StartSoftwareDeploymentToImageBuilderRequest$RetryFailedDeployments": "<p>Whether to retry previously failed license included application deployments.</p>",
         "UpdateFleetRequest$DeleteVpcConfig": "<p>Deletes the VPC association for the specified fleet.</p>",
         "UpdateStackRequest$DeleteStorageConnectors": "<p>Deletes the storage connectors currently enabled for the stack.</p>",
         "User$Enabled": "<p>Specifies whether the user in the user pool is enabled.</p>",
@@ -727,6 +757,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeAppLicenseUsageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAppLicenseUsageResult": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeApplicationFleetAssociationsRequest": {
       "base": null,
       "refs": {}
@@ -802,6 +840,14 @@
       "refs": {}
     },
     "DescribeSessionsResult": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeSoftwareAssociationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeSoftwareAssociationsResult": {
       "base": null,
       "refs": {}
     },
@@ -936,6 +982,14 @@
       "base": null,
       "refs": {}
     },
+    "DisassociateSoftwareFromImageBuilderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateSoftwareFromImageBuilderResult": {
+      "base": null,
+      "refs": {}
+    },
     "DisplayName": {
       "base": null,
       "refs": {
@@ -1060,7 +1114,8 @@
     "ErrorDetailsList": {
       "base": null,
       "refs": {
-        "AppBlock$AppBlockErrors": "<p>The errors of the app block.</p>"
+        "AppBlock$AppBlockErrors": "<p>The errors of the app block.</p>",
+        "SoftwareAssociations$DeploymentError": "<p>The error details for failed deployments of the license-included application.</p>"
       }
     },
     "ErrorMessage": {
@@ -1261,12 +1316,14 @@
         "DescribeAppBlockBuilderAppBlockAssociationsRequest$MaxResults": "<p>The maximum size of each page of results.</p>",
         "DescribeAppBlockBuildersRequest$MaxResults": "<p>The maximum size of each page of results. The maximum value is 25.</p>",
         "DescribeAppBlocksRequest$MaxResults": "<p>The maximum size of each page of results.</p>",
+        "DescribeAppLicenseUsageRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "DescribeApplicationFleetAssociationsRequest$MaxResults": "<p>The maximum size of each page of results.</p>",
         "DescribeApplicationsRequest$MaxResults": "<p>The maximum size of each page of results.</p>",
         "DescribeDirectoryConfigsRequest$MaxResults": "<p>The maximum size of each page of results.</p>",
         "DescribeEntitlementsRequest$MaxResults": "<p>The maximum size of each page of results.</p>",
         "DescribeImageBuildersRequest$MaxResults": "<p>The maximum size of each page of results.</p>",
         "DescribeSessionsRequest$Limit": "<p>The size of each page of results. The default value is 20 and the maximum value is 50.</p>",
+        "DescribeSoftwareAssociationsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "DescribeUsageReportSubscriptionsRequest$MaxResults": "<p>The maximum size of each page of results.</p>",
         "DescribeUsersRequest$MaxResults": "<p>The maximum size of each page of results.</p>",
         "Fleet$MaxUserDurationInSeconds": "<p>The maximum amount of time that a streaming session can remain active, in seconds. If users are still connected to a streaming instance five minutes before this limit is reached, they are prompted to save any open documents before being disconnected. After this time elapses, the instance is terminated and replaced by a new instance. </p> <p>Specify a value between 600 and 360000.</p>",
@@ -1386,6 +1443,7 @@
         "AssociateApplicationFleetRequest$FleetName": "<p>The name of the fleet.</p>",
         "AssociateApplicationToEntitlementRequest$StackName": "<p>The name of the stack.</p>",
         "AssociateApplicationToEntitlementRequest$EntitlementName": "<p>The name of the entitlement.</p>",
+        "AssociateSoftwareToImageBuilderRequest$ImageBuilderName": "<p>The name of the target image builder instance.</p>",
         "CopyImageRequest$SourceImageName": "<p>The name of the image to copy.</p>",
         "CopyImageRequest$DestinationImageName": "<p>The name that the image will have when it is copied to the destination.</p>",
         "CopyImageResponse$DestinationImageName": "<p>The name of the destination image.</p>",
@@ -1424,11 +1482,13 @@
         "DisassociateApplicationFleetRequest$FleetName": "<p>The name of the fleet.</p>",
         "DisassociateApplicationFromEntitlementRequest$StackName": "<p>The name of the stack with which the entitlement is associated.</p>",
         "DisassociateApplicationFromEntitlementRequest$EntitlementName": "<p>The name of the entitlement.</p>",
+        "DisassociateSoftwareFromImageBuilderRequest$ImageBuilderName": "<p>The name of the target image builder instance.</p>",
         "Entitlement$Name": "<p>The name of the entitlement.</p>",
         "Entitlement$StackName": "<p>The name of the stack with which the entitlement is associated.</p>",
         "ListEntitledApplicationsRequest$StackName": "<p>The name of the stack with which the entitlement is associated.</p>",
         "ListEntitledApplicationsRequest$EntitlementName": "<p>The name of the entitlement.</p>",
         "StartAppBlockBuilderRequest$Name": "<p>The name of the app block builder.</p>",
+        "StartSoftwareDeploymentToImageBuilderRequest$ImageBuilderName": "<p>The name of the target image builder instance.</p>",
         "StopAppBlockBuilderRequest$Name": "<p>The name of the app block builder.</p>",
         "Theme$StackName": "<p>The stack that has the custom branding theme.</p>",
         "UpdateAppBlockBuilderRequest$Name": "<p>The unique name for the app block builder.</p>",
@@ -1654,6 +1714,24 @@
         "DescribeImagePermissionsResult$SharedImagePermissionsList": "<p>The permissions for a private image that you own. </p>"
       }
     },
+    "SoftwareAssociations": {
+      "base": "<p>The association between a license-included application and a resource.</p>",
+      "refs": {
+        "SoftwareAssociationsList$member": null
+      }
+    },
+    "SoftwareAssociationsList": {
+      "base": null,
+      "refs": {
+        "DescribeSoftwareAssociationsResult$SoftwareAssociations": "<p>Collection of license included applications association details including:</p> <ul> <li> <p>License included application name and version information</p> </li> <li> <p>Deployment status (SoftwareDeploymentStatus enum)</p> </li> <li> <p>Error details for failed deployments</p> </li> <li> <p>Association timestamps</p> </li> </ul>"
+      }
+    },
+    "SoftwareDeploymentStatus": {
+      "base": null,
+      "refs": {
+        "SoftwareAssociations$Status": "<p>The deployment status of the license-included application.</p>"
+      }
+    },
     "Stack": {
       "base": "<p>Describes a stack.</p>",
       "refs": {
@@ -1719,6 +1797,14 @@
       "refs": {}
     },
     "StartImageBuilderResult": {
+      "base": null,
+      "refs": {}
+    },
+    "StartSoftwareDeploymentToImageBuilderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartSoftwareDeploymentToImageBuilderResult": {
       "base": null,
       "refs": {}
     },
@@ -1792,6 +1878,10 @@
       "base": null,
       "refs": {
         "AccessEndpoint$VpceId": "<p>The identifier (ID) of the VPC in which the interface endpoint is used.</p>",
+        "AdminAppLicenseUsageRecord$UserArn": "<p>The ARN of the user who used the license-included application.</p>",
+        "AdminAppLicenseUsageRecord$BillingPeriod": "<p>The billing period for the license usage record.</p>",
+        "AdminAppLicenseUsageRecord$LicenseType": "<p>The type of license (for example, Microsoft Office).</p>",
+        "AdminAppLicenseUsageRecord$UserId": "<p>The ID of the user who used the license-included application.</p>",
         "AppBlock$Name": "<p>The name of the app block.</p>",
         "AppBlock$Description": "<p>The description of the app block.</p>",
         "AppBlock$DisplayName": "<p>The display name of the app block.</p>",
@@ -1836,6 +1926,9 @@
         "DescribeAppBlockBuildersResult$NextToken": "<p>The pagination token used to retrieve the next page of results for this operation.</p>",
         "DescribeAppBlocksRequest$NextToken": "<p>The pagination token used to retrieve the next page of results for this operation.</p>",
         "DescribeAppBlocksResult$NextToken": "<p>The pagination token used to retrieve the next page of results for this operation.</p>",
+        "DescribeAppLicenseUsageRequest$BillingPeriod": "<p>Billing period for the usage record.</p> <p>Specify the value in <i>yyyy-mm</i> format. For example, for August 2025, use <i>2025-08</i>.</p>",
+        "DescribeAppLicenseUsageRequest$NextToken": "<p>Token for pagination of results.</p>",
+        "DescribeAppLicenseUsageResult$NextToken": "<p>Token for pagination of results.</p>",
         "DescribeApplicationFleetAssociationsRequest$NextToken": "<p>The pagination token used to retrieve the next page of results for this operation.</p>",
         "DescribeApplicationFleetAssociationsResult$NextToken": "<p>The pagination token used to retrieve the next page of results for this operation.</p>",
         "DescribeApplicationsRequest$NextToken": "<p>The pagination token used to retrieve the next page of results for this operation.</p>",
@@ -1855,6 +1948,8 @@
         "DescribeSessionsRequest$NextToken": "<p>The pagination token to use to retrieve the next page of results for this operation. If this value is null, it retrieves the first page.</p>",
         "DescribeSessionsRequest$InstanceId": "<p>The identifier for the instance hosting the session.</p>",
         "DescribeSessionsResult$NextToken": "<p>The pagination token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.</p>",
+        "DescribeSoftwareAssociationsRequest$NextToken": "<p>The pagination token to use to retrieve the next page of results for this operation.</p>",
+        "DescribeSoftwareAssociationsResult$NextToken": "<p>The pagination token to use to retrieve the next page of results for this operation.</p>",
         "DescribeStacksRequest$NextToken": "<p>The pagination token to use to retrieve the next page of results for this operation. If this value is null, it retrieves the first page.</p>",
         "DescribeStacksResult$NextToken": "<p>The pagination token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.</p>",
         "DescribeUsageReportSubscriptionsRequest$NextToken": "<p>The pagination token to use to retrieve the next page of results for this operation. If this value is null, it retrieves the first page.</p>",
@@ -1910,6 +2005,7 @@
         "Session$StackName": "<p>The name of the stack for the streaming session.</p>",
         "Session$FleetName": "<p>The name of the fleet for the streaming session.</p>",
         "Session$InstanceId": "<p>The identifier for the instance hosting the session.</p>",
+        "SoftwareAssociations$SoftwareName": "<p>The name of the license-included application.</p> <p>Possible values include the following:</p> <ul> <li> <p>Microsoft_Office_2021_LTSC_Professional_Plus_32Bit</p> </li> <li> <p>Microsoft_Office_2021_LTSC_Professional_Plus_64Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Professional_Plus_32Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Professional_Plus_64Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Professional_32Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Professional_64Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Professional_32Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Professional_64Bit</p> </li> <li> <p>Microsoft_Project_2021_Professional_32Bit</p> </li> <li> <p>Microsoft_Project_2021_Professional_64Bit</p> </li> <li> <p>Microsoft_Project_2024_Professional_32Bit</p> </li> <li> <p>Microsoft_Project_2024_Professional_64Bit</p> </li> <li> <p>Microsoft_Office_2021_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Office_2021_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Project_2021_Standard_32Bit</p> </li> <li> <p>Microsoft_Project_2021_Standard_64Bit</p> </li> <li> <p>Microsoft_Project_2024_Standard_32Bit</p> </li> <li> <p>Microsoft_Project_2024_Standard_64Bit</p> </li> </ul>",
         "Stack$Name": "<p>The name of the stack.</p>",
         "Stack$Description": "<p>The description to display.</p>",
         "Stack$DisplayName": "<p>The stack name to display.</p>",
@@ -1939,12 +2035,16 @@
       "base": null,
       "refs": {
         "Application$InstanceFamilies": "<p>The instance families for the application.</p>",
+        "AssociateSoftwareToImageBuilderRequest$SoftwareNames": "<p>The list of license included applications to associate with the image builder.</p> <p>Possible values include the following:</p> <ul> <li> <p>Microsoft_Office_2021_LTSC_Professional_Plus_32Bit</p> </li> <li> <p>Microsoft_Office_2021_LTSC_Professional_Plus_64Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Professional_Plus_32Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Professional_Plus_64Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Professional_32Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Professional_64Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Professional_32Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Professional_64Bit</p> </li> <li> <p>Microsoft_Project_2021_Professional_32Bit</p> </li> <li> <p>Microsoft_Project_2021_Professional_64Bit</p> </li> <li> <p>Microsoft_Project_2024_Professional_32Bit</p> </li> <li> <p>Microsoft_Project_2024_Professional_64Bit</p> </li> <li> <p>Microsoft_Office_2021_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Office_2021_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Project_2021_Standard_32Bit</p> </li> <li> <p>Microsoft_Project_2021_Standard_64Bit</p> </li> <li> <p>Microsoft_Project_2024_Standard_32Bit</p> </li> <li> <p>Microsoft_Project_2024_Standard_64Bit</p> </li> </ul>",
         "CreateApplicationRequest$InstanceFamilies": "<p>The instance families the application supports. Valid values are GENERAL_PURPOSE and GRAPHICS_G4.</p>",
+        "CreateImageBuilderRequest$SoftwaresToInstall": "<p>The list of license included applications to install on the image builder during creation.</p> <p>Possible values include the following:</p> <ul> <li> <p>Microsoft_Office_2021_LTSC_Professional_Plus_32Bit</p> </li> <li> <p>Microsoft_Office_2021_LTSC_Professional_Plus_64Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Professional_Plus_32Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Professional_Plus_64Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Professional_32Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Professional_64Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Professional_32Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Professional_64Bit</p> </li> <li> <p>Microsoft_Project_2021_Professional_32Bit</p> </li> <li> <p>Microsoft_Project_2021_Professional_64Bit</p> </li> <li> <p>Microsoft_Project_2024_Professional_32Bit</p> </li> <li> <p>Microsoft_Project_2024_Professional_64Bit</p> </li> <li> <p>Microsoft_Office_2021_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Office_2021_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Project_2021_Standard_32Bit</p> </li> <li> <p>Microsoft_Project_2021_Standard_64Bit</p> </li> <li> <p>Microsoft_Project_2024_Standard_32Bit</p> </li> <li> <p>Microsoft_Project_2024_Standard_64Bit</p> </li> </ul>",
+        "CreateImageBuilderRequest$SoftwaresToUninstall": "<p>The list of license included applications to uninstall from the image builder during creation.</p> <p>Possible values include the following:</p> <ul> <li> <p>Microsoft_Office_2021_LTSC_Professional_Plus_32Bit</p> </li> <li> <p>Microsoft_Office_2021_LTSC_Professional_Plus_64Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Professional_Plus_32Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Professional_Plus_64Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Professional_32Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Professional_64Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Professional_32Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Professional_64Bit</p> </li> <li> <p>Microsoft_Project_2021_Professional_32Bit</p> </li> <li> <p>Microsoft_Project_2021_Professional_64Bit</p> </li> <li> <p>Microsoft_Project_2024_Professional_32Bit</p> </li> <li> <p>Microsoft_Project_2024_Professional_64Bit</p> </li> <li> <p>Microsoft_Office_2021_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Office_2021_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Project_2021_Standard_32Bit</p> </li> <li> <p>Microsoft_Project_2021_Standard_64Bit</p> </li> <li> <p>Microsoft_Project_2024_Standard_32Bit</p> </li> <li> <p>Microsoft_Project_2024_Standard_64Bit</p> </li> </ul>",
         "DescribeAppBlockBuildersRequest$Names": "<p>The names of the app block builders.</p>",
         "DescribeFleetsRequest$Names": "<p>The names of the fleets to describe.</p>",
         "DescribeImageBuildersRequest$Names": "<p>The names of the image builders to describe.</p>",
         "DescribeImagesRequest$Names": "<p>The names of the public or private images to describe.</p>",
         "DescribeStacksRequest$Names": "<p>The names of the stacks to describe.</p>",
+        "DisassociateSoftwareFromImageBuilderRequest$SoftwareNames": "<p>The list of license included applications to disassociate from the image builder.</p> <p>Possible values include the following:</p> <ul> <li> <p>Microsoft_Office_2021_LTSC_Professional_Plus_32Bit</p> </li> <li> <p>Microsoft_Office_2021_LTSC_Professional_Plus_64Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Professional_Plus_32Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Professional_Plus_64Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Professional_32Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Professional_64Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Professional_32Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Professional_64Bit</p> </li> <li> <p>Microsoft_Project_2021_Professional_32Bit</p> </li> <li> <p>Microsoft_Project_2021_Professional_64Bit</p> </li> <li> <p>Microsoft_Project_2024_Professional_32Bit</p> </li> <li> <p>Microsoft_Project_2024_Professional_64Bit</p> </li> <li> <p>Microsoft_Office_2021_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Office_2021_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Office_2024_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Visio_2021_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Standard_32Bit</p> </li> <li> <p>Microsoft_Visio_2024_LTSC_Standard_64Bit</p> </li> <li> <p>Microsoft_Project_2021_Standard_32Bit</p> </li> <li> <p>Microsoft_Project_2021_Standard_64Bit</p> </li> <li> <p>Microsoft_Project_2024_Standard_32Bit</p> </li> <li> <p>Microsoft_Project_2024_Standard_64Bit</p> </li> </ul>",
         "Image$SupportedInstanceFamilies": "<p>The supported instances families that determine which image a customer can use when the customer launches a fleet or image builder. The following instances families are supported:</p> <ul> <li> <p>General Purpose</p> </li> <li> <p>Compute Optimized</p> </li> <li> <p>Memory Optimized</p> </li> <li> <p>Graphics</p> </li> <li> <p>Graphics Design</p> </li> <li> <p>Graphics Pro</p> </li> <li> <p>Graphics G4</p> </li> <li> <p>Graphics G5</p> </li> </ul>",
         "ListAssociatedFleetsResult$Names": "<p>The name of the fleet.</p>",
         "ListAssociatedStacksResult$Names": "<p>The name of the stack.</p>"
@@ -2069,6 +2169,8 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "AdminAppLicenseUsageRecord$SubscriptionFirstUsedDate": "<p>The date and time when the license was first used.</p>",
+        "AdminAppLicenseUsageRecord$SubscriptionLastUsedDate": "<p>The date and time when the license was last used.</p>",
         "AppBlock$CreatedTime": "<p>The created time of the app block.</p>",
         "AppBlockBuilder$CreatedTime": "<p>The creation time of the app block builder.</p>",
         "Application$CreatedTime": "<p>The time at which the application was created within the app block.</p>",
