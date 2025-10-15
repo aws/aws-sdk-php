@@ -359,12 +359,9 @@
       "type":"structure",
       "required":[
         "name",
-        "password",
         "dbInstanceType",
-        "allocatedStorage",
         "vpcSubnetIds",
-        "vpcSecurityGroupIds",
-        "deploymentType"
+        "vpcSecurityGroupIds"
       ],
       "members":{
         "name":{"shape":"DbClusterName"},
@@ -453,7 +450,8 @@
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
         "influxAuthParametersSecretArn":{"shape":"String"},
         "dbClusterId":{"shape":"DbClusterId"},
-        "instanceMode":{"shape":"InstanceMode"}
+        "instanceMode":{"shape":"InstanceMode"},
+        "instanceModes":{"shape":"InstanceModeList"}
       }
     },
     "CreateDbParameterGroupInput":{
@@ -486,6 +484,13 @@
         "parameters":{"shape":"Parameters"}
       }
     },
+    "DataFusionRuntimeType":{
+      "type":"string",
+      "enum":[
+        "multi-thread",
+        "multi-thread-alt"
+      ]
+    },
     "DbClusterId":{
       "type":"string",
       "max":64,
@@ -517,7 +522,8 @@
         "dbInstanceType":{"shape":"DbInstanceType"},
         "networkType":{"shape":"NetworkType"},
         "dbStorageType":{"shape":"DbStorageType"},
-        "allocatedStorage":{"shape":"AllocatedStorage"}
+        "allocatedStorage":{"shape":"AllocatedStorage"},
+        "engineType":{"shape":"EngineType"}
       }
     },
     "DbClusterSummaryList":{
@@ -543,7 +549,8 @@
         "dbStorageType":{"shape":"DbStorageType"},
         "allocatedStorage":{"shape":"AllocatedStorage"},
         "deploymentType":{"shape":"DeploymentType"},
-        "instanceMode":{"shape":"InstanceMode"}
+        "instanceMode":{"shape":"InstanceMode"},
+        "instanceModes":{"shape":"InstanceModeList"}
       }
     },
     "DbInstanceForClusterSummaryList":{
@@ -700,7 +707,8 @@
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
         "influxAuthParametersSecretArn":{"shape":"String"},
         "dbClusterId":{"shape":"DbClusterId"},
-        "instanceMode":{"shape":"InstanceMode"}
+        "instanceMode":{"shape":"InstanceMode"},
+        "instanceModes":{"shape":"InstanceModeList"}
       }
     },
     "DeploymentType":{
@@ -727,13 +735,22 @@
         "hours",
         "minutes",
         "seconds",
-        "milliseconds"
+        "milliseconds",
+        "days"
       ]
     },
     "DurationValueLong":{
       "type":"long",
       "box":true,
       "min":0
+    },
+    "EngineType":{
+      "type":"string",
+      "enum":[
+        "INFLUXDB_V2",
+        "INFLUXDB_V3_CORE",
+        "INFLUXDB_V3_ENTERPRISE"
+      ]
     },
     "FailoverMode":{
       "type":"string",
@@ -769,6 +786,7 @@
         "networkType":{"shape":"NetworkType"},
         "dbStorageType":{"shape":"DbStorageType"},
         "allocatedStorage":{"shape":"AllocatedStorage"},
+        "engineType":{"shape":"EngineType"},
         "publiclyAccessible":{"shape":"Boolean"},
         "dbParameterGroupIdentifier":{"shape":"DbParameterGroupIdentifier"},
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
@@ -814,7 +832,8 @@
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
         "influxAuthParametersSecretArn":{"shape":"String"},
         "dbClusterId":{"shape":"DbClusterId"},
-        "instanceMode":{"shape":"InstanceMode"}
+        "instanceMode":{"shape":"InstanceMode"},
+        "instanceModes":{"shape":"InstanceModeList"}
       }
     },
     "GetDbParameterGroupInput":{
@@ -980,13 +999,379 @@
       "max":256,
       "min":0
     },
+    "InfluxDBv3CoreParameters":{
+      "type":"structure",
+      "members":{
+        "queryFileLimit":{"shape":"InfluxDBv3CoreParametersQueryFileLimitInteger"},
+        "queryLogSize":{"shape":"InfluxDBv3CoreParametersQueryLogSizeInteger"},
+        "logFilter":{"shape":"InfluxDBv3CoreParametersLogFilterString"},
+        "logFormat":{"shape":"LogFormats"},
+        "dataFusionNumThreads":{"shape":"InfluxDBv3CoreParametersDataFusionNumThreadsInteger"},
+        "dataFusionRuntimeType":{"shape":"DataFusionRuntimeType"},
+        "dataFusionRuntimeDisableLifoSlot":{"shape":"Boolean"},
+        "dataFusionRuntimeEventInterval":{"shape":"InfluxDBv3CoreParametersDataFusionRuntimeEventIntervalInteger"},
+        "dataFusionRuntimeGlobalQueueInterval":{"shape":"InfluxDBv3CoreParametersDataFusionRuntimeGlobalQueueIntervalInteger"},
+        "dataFusionRuntimeMaxBlockingThreads":{"shape":"InfluxDBv3CoreParametersDataFusionRuntimeMaxBlockingThreadsInteger"},
+        "dataFusionRuntimeMaxIoEventsPerTick":{"shape":"InfluxDBv3CoreParametersDataFusionRuntimeMaxIoEventsPerTickInteger"},
+        "dataFusionRuntimeThreadKeepAlive":{"shape":"Duration"},
+        "dataFusionRuntimeThreadPriority":{"shape":"InfluxDBv3CoreParametersDataFusionRuntimeThreadPriorityInteger"},
+        "dataFusionMaxParquetFanout":{"shape":"InfluxDBv3CoreParametersDataFusionMaxParquetFanoutInteger"},
+        "dataFusionUseCachedParquetLoader":{"shape":"Boolean"},
+        "dataFusionConfig":{"shape":"InfluxDBv3CoreParametersDataFusionConfigString"},
+        "maxHttpRequestSize":{"shape":"InfluxDBv3CoreParametersMaxHttpRequestSizeLong"},
+        "forceSnapshotMemThreshold":{"shape":"PercentOrAbsoluteLong"},
+        "walSnapshotSize":{"shape":"InfluxDBv3CoreParametersWalSnapshotSizeInteger"},
+        "walMaxWriteBufferSize":{"shape":"InfluxDBv3CoreParametersWalMaxWriteBufferSizeInteger"},
+        "snapshottedWalFilesToKeep":{"shape":"InfluxDBv3CoreParametersSnapshottedWalFilesToKeepInteger"},
+        "preemptiveCacheAge":{"shape":"Duration"},
+        "parquetMemCachePrunePercentage":{"shape":"InfluxDBv3CoreParametersParquetMemCachePrunePercentageFloat"},
+        "parquetMemCachePruneInterval":{"shape":"Duration"},
+        "disableParquetMemCache":{"shape":"Boolean"},
+        "parquetMemCacheQueryPathDuration":{"shape":"Duration"},
+        "lastCacheEvictionInterval":{"shape":"Duration"},
+        "distinctCacheEvictionInterval":{"shape":"Duration"},
+        "gen1Duration":{"shape":"Duration"},
+        "execMemPoolBytes":{"shape":"PercentOrAbsoluteLong"},
+        "parquetMemCacheSize":{"shape":"PercentOrAbsoluteLong"},
+        "walReplayFailOnError":{"shape":"Boolean"},
+        "walReplayConcurrencyLimit":{"shape":"InfluxDBv3CoreParametersWalReplayConcurrencyLimitInteger"},
+        "tableIndexCacheMaxEntries":{"shape":"InfluxDBv3CoreParametersTableIndexCacheMaxEntriesInteger"},
+        "tableIndexCacheConcurrencyLimit":{"shape":"InfluxDBv3CoreParametersTableIndexCacheConcurrencyLimitInteger"},
+        "gen1LookbackDuration":{"shape":"Duration"},
+        "retentionCheckInterval":{"shape":"Duration"},
+        "deleteGracePeriod":{"shape":"Duration"},
+        "hardDeleteDefaultDuration":{"shape":"Duration"}
+      }
+    },
+    "InfluxDBv3CoreParametersDataFusionConfigString":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9_]+=[^,\\s]+(?:,[a-zA-Z0-9_]+=[^,\\s]+)*"
+    },
+    "InfluxDBv3CoreParametersDataFusionMaxParquetFanoutInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000000,
+      "min":1
+    },
+    "InfluxDBv3CoreParametersDataFusionNumThreadsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":2048,
+      "min":1
+    },
+    "InfluxDBv3CoreParametersDataFusionRuntimeEventIntervalInteger":{
+      "type":"integer",
+      "box":true,
+      "max":128,
+      "min":1
+    },
+    "InfluxDBv3CoreParametersDataFusionRuntimeGlobalQueueIntervalInteger":{
+      "type":"integer",
+      "box":true,
+      "max":128,
+      "min":1
+    },
+    "InfluxDBv3CoreParametersDataFusionRuntimeMaxBlockingThreadsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1024,
+      "min":1
+    },
+    "InfluxDBv3CoreParametersDataFusionRuntimeMaxIoEventsPerTickInteger":{
+      "type":"integer",
+      "box":true,
+      "max":4096,
+      "min":1
+    },
+    "InfluxDBv3CoreParametersDataFusionRuntimeThreadPriorityInteger":{
+      "type":"integer",
+      "box":true,
+      "max":19,
+      "min":-20
+    },
+    "InfluxDBv3CoreParametersLogFilterString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "InfluxDBv3CoreParametersMaxHttpRequestSizeLong":{
+      "type":"long",
+      "box":true,
+      "max":16777216,
+      "min":1024
+    },
+    "InfluxDBv3CoreParametersParquetMemCachePrunePercentageFloat":{
+      "type":"float",
+      "box":true,
+      "max":1,
+      "min":0
+    },
+    "InfluxDBv3CoreParametersQueryFileLimitInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1024,
+      "min":0
+    },
+    "InfluxDBv3CoreParametersQueryLogSizeInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":1
+    },
+    "InfluxDBv3CoreParametersSnapshottedWalFilesToKeepInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":0
+    },
+    "InfluxDBv3CoreParametersTableIndexCacheConcurrencyLimitInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "InfluxDBv3CoreParametersTableIndexCacheMaxEntriesInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "InfluxDBv3CoreParametersWalMaxWriteBufferSizeInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000000,
+      "min":1
+    },
+    "InfluxDBv3CoreParametersWalReplayConcurrencyLimitInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "InfluxDBv3CoreParametersWalSnapshotSizeInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":1
+    },
+    "InfluxDBv3EnterpriseParameters":{
+      "type":"structure",
+      "required":[
+        "ingestQueryInstances",
+        "queryOnlyInstances",
+        "dedicatedCompactor"
+      ],
+      "members":{
+        "queryFileLimit":{"shape":"InfluxDBv3EnterpriseParametersQueryFileLimitInteger"},
+        "queryLogSize":{"shape":"InfluxDBv3EnterpriseParametersQueryLogSizeInteger"},
+        "logFilter":{"shape":"InfluxDBv3EnterpriseParametersLogFilterString"},
+        "logFormat":{"shape":"LogFormats"},
+        "dataFusionNumThreads":{"shape":"InfluxDBv3EnterpriseParametersDataFusionNumThreadsInteger"},
+        "dataFusionRuntimeType":{"shape":"DataFusionRuntimeType"},
+        "dataFusionRuntimeDisableLifoSlot":{"shape":"Boolean"},
+        "dataFusionRuntimeEventInterval":{"shape":"InfluxDBv3EnterpriseParametersDataFusionRuntimeEventIntervalInteger"},
+        "dataFusionRuntimeGlobalQueueInterval":{"shape":"InfluxDBv3EnterpriseParametersDataFusionRuntimeGlobalQueueIntervalInteger"},
+        "dataFusionRuntimeMaxBlockingThreads":{"shape":"InfluxDBv3EnterpriseParametersDataFusionRuntimeMaxBlockingThreadsInteger"},
+        "dataFusionRuntimeMaxIoEventsPerTick":{"shape":"InfluxDBv3EnterpriseParametersDataFusionRuntimeMaxIoEventsPerTickInteger"},
+        "dataFusionRuntimeThreadKeepAlive":{"shape":"Duration"},
+        "dataFusionRuntimeThreadPriority":{"shape":"InfluxDBv3EnterpriseParametersDataFusionRuntimeThreadPriorityInteger"},
+        "dataFusionMaxParquetFanout":{"shape":"InfluxDBv3EnterpriseParametersDataFusionMaxParquetFanoutInteger"},
+        "dataFusionUseCachedParquetLoader":{"shape":"Boolean"},
+        "dataFusionConfig":{"shape":"InfluxDBv3EnterpriseParametersDataFusionConfigString"},
+        "maxHttpRequestSize":{"shape":"InfluxDBv3EnterpriseParametersMaxHttpRequestSizeLong"},
+        "forceSnapshotMemThreshold":{"shape":"PercentOrAbsoluteLong"},
+        "walSnapshotSize":{"shape":"InfluxDBv3EnterpriseParametersWalSnapshotSizeInteger"},
+        "walMaxWriteBufferSize":{"shape":"InfluxDBv3EnterpriseParametersWalMaxWriteBufferSizeInteger"},
+        "snapshottedWalFilesToKeep":{"shape":"InfluxDBv3EnterpriseParametersSnapshottedWalFilesToKeepInteger"},
+        "preemptiveCacheAge":{"shape":"Duration"},
+        "parquetMemCachePrunePercentage":{"shape":"InfluxDBv3EnterpriseParametersParquetMemCachePrunePercentageFloat"},
+        "parquetMemCachePruneInterval":{"shape":"Duration"},
+        "disableParquetMemCache":{"shape":"Boolean"},
+        "parquetMemCacheQueryPathDuration":{"shape":"Duration"},
+        "lastCacheEvictionInterval":{"shape":"Duration"},
+        "distinctCacheEvictionInterval":{"shape":"Duration"},
+        "gen1Duration":{"shape":"Duration"},
+        "execMemPoolBytes":{"shape":"PercentOrAbsoluteLong"},
+        "parquetMemCacheSize":{"shape":"PercentOrAbsoluteLong"},
+        "walReplayFailOnError":{"shape":"Boolean"},
+        "walReplayConcurrencyLimit":{"shape":"InfluxDBv3EnterpriseParametersWalReplayConcurrencyLimitInteger"},
+        "tableIndexCacheMaxEntries":{"shape":"InfluxDBv3EnterpriseParametersTableIndexCacheMaxEntriesInteger"},
+        "tableIndexCacheConcurrencyLimit":{"shape":"InfluxDBv3EnterpriseParametersTableIndexCacheConcurrencyLimitInteger"},
+        "gen1LookbackDuration":{"shape":"Duration"},
+        "retentionCheckInterval":{"shape":"Duration"},
+        "deleteGracePeriod":{"shape":"Duration"},
+        "hardDeleteDefaultDuration":{"shape":"Duration"},
+        "ingestQueryInstances":{"shape":"InfluxDBv3EnterpriseParametersIngestQueryInstancesInteger"},
+        "queryOnlyInstances":{"shape":"InfluxDBv3EnterpriseParametersQueryOnlyInstancesInteger"},
+        "dedicatedCompactor":{"shape":"Boolean"},
+        "compactionRowLimit":{"shape":"InfluxDBv3EnterpriseParametersCompactionRowLimitInteger"},
+        "compactionMaxNumFilesPerPlan":{"shape":"InfluxDBv3EnterpriseParametersCompactionMaxNumFilesPerPlanInteger"},
+        "compactionGen2Duration":{"shape":"Duration"},
+        "compactionMultipliers":{"shape":"InfluxDBv3EnterpriseParametersCompactionMultipliersString"},
+        "compactionCleanupWait":{"shape":"Duration"},
+        "compactionCheckInterval":{"shape":"Duration"},
+        "lastValueCacheDisableFromHistory":{"shape":"Boolean"},
+        "distinctValueCacheDisableFromHistory":{"shape":"Boolean"},
+        "replicationInterval":{"shape":"Duration"},
+        "catalogSyncInterval":{"shape":"Duration"}
+      }
+    },
+    "InfluxDBv3EnterpriseParametersCompactionMaxNumFilesPerPlanInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":1
+    },
+    "InfluxDBv3EnterpriseParametersCompactionMultipliersString":{
+      "type":"string",
+      "max":16,
+      "min":7,
+      "pattern":"\\d+,\\d+,\\d+,\\d+"
+    },
+    "InfluxDBv3EnterpriseParametersCompactionRowLimitInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100000000,
+      "min":1
+    },
+    "InfluxDBv3EnterpriseParametersDataFusionConfigString":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9_]+=[^,\\s]+(?:,[a-zA-Z0-9_]+=[^,\\s]+)*"
+    },
+    "InfluxDBv3EnterpriseParametersDataFusionMaxParquetFanoutInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000000,
+      "min":1
+    },
+    "InfluxDBv3EnterpriseParametersDataFusionNumThreadsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":2048,
+      "min":1
+    },
+    "InfluxDBv3EnterpriseParametersDataFusionRuntimeEventIntervalInteger":{
+      "type":"integer",
+      "box":true,
+      "max":128,
+      "min":1
+    },
+    "InfluxDBv3EnterpriseParametersDataFusionRuntimeGlobalQueueIntervalInteger":{
+      "type":"integer",
+      "box":true,
+      "max":128,
+      "min":1
+    },
+    "InfluxDBv3EnterpriseParametersDataFusionRuntimeMaxBlockingThreadsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1024,
+      "min":1
+    },
+    "InfluxDBv3EnterpriseParametersDataFusionRuntimeMaxIoEventsPerTickInteger":{
+      "type":"integer",
+      "box":true,
+      "max":4096,
+      "min":1
+    },
+    "InfluxDBv3EnterpriseParametersDataFusionRuntimeThreadPriorityInteger":{
+      "type":"integer",
+      "box":true,
+      "max":19,
+      "min":-20
+    },
+    "InfluxDBv3EnterpriseParametersIngestQueryInstancesInteger":{
+      "type":"integer",
+      "box":true,
+      "max":4,
+      "min":1
+    },
+    "InfluxDBv3EnterpriseParametersLogFilterString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "InfluxDBv3EnterpriseParametersMaxHttpRequestSizeLong":{
+      "type":"long",
+      "box":true,
+      "max":16777216,
+      "min":1024
+    },
+    "InfluxDBv3EnterpriseParametersParquetMemCachePrunePercentageFloat":{
+      "type":"float",
+      "box":true,
+      "max":1,
+      "min":0
+    },
+    "InfluxDBv3EnterpriseParametersQueryFileLimitInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1024,
+      "min":0
+    },
+    "InfluxDBv3EnterpriseParametersQueryLogSizeInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":1
+    },
+    "InfluxDBv3EnterpriseParametersQueryOnlyInstancesInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":0
+    },
+    "InfluxDBv3EnterpriseParametersSnapshottedWalFilesToKeepInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":0
+    },
+    "InfluxDBv3EnterpriseParametersTableIndexCacheConcurrencyLimitInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "InfluxDBv3EnterpriseParametersTableIndexCacheMaxEntriesInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "InfluxDBv3EnterpriseParametersWalMaxWriteBufferSizeInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000000,
+      "min":1
+    },
+    "InfluxDBv3EnterpriseParametersWalReplayConcurrencyLimitInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "InfluxDBv3EnterpriseParametersWalSnapshotSizeInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":1
+    },
     "InstanceMode":{
       "type":"string",
       "enum":[
         "PRIMARY",
         "STANDBY",
-        "REPLICA"
+        "REPLICA",
+        "INGEST",
+        "QUERY",
+        "COMPACT",
+        "PROCESS"
       ]
+    },
+    "InstanceModeList":{
+      "type":"list",
+      "member":{"shape":"InstanceMode"}
     },
     "Integer":{
       "type":"integer",
@@ -1084,6 +1469,10 @@
         "s3Configuration":{"shape":"S3Configuration"}
       }
     },
+    "LogFormats":{
+      "type":"string",
+      "enum":["full"]
+    },
     "LogLevel":{
       "type":"string",
       "enum":[
@@ -1117,7 +1506,9 @@
     "Parameters":{
       "type":"structure",
       "members":{
-        "InfluxDBv2":{"shape":"InfluxDBv2Parameters"}
+        "InfluxDBv2":{"shape":"InfluxDBv2Parameters"},
+        "InfluxDBv3Core":{"shape":"InfluxDBv3CoreParameters"},
+        "InfluxDBv3Enterprise":{"shape":"InfluxDBv3EnterpriseParameters"}
       },
       "union":true
     },
@@ -1127,6 +1518,26 @@
       "min":8,
       "pattern":"[a-zA-Z0-9]+",
       "sensitive":true
+    },
+    "PercentOrAbsoluteLong":{
+      "type":"structure",
+      "members":{
+        "percent":{"shape":"PercentOrAbsoluteLongPercentString"},
+        "absolute":{"shape":"PercentOrAbsoluteLongAbsoluteLong"}
+      },
+      "union":true
+    },
+    "PercentOrAbsoluteLongAbsoluteLong":{
+      "type":"long",
+      "box":true,
+      "max":1610612736000,
+      "min":0
+    },
+    "PercentOrAbsoluteLongPercentString":{
+      "type":"string",
+      "max":4,
+      "min":2,
+      "pattern":"(?:100|[1-9]?[0-9])%"
     },
     "Port":{
       "type":"integer",
@@ -1244,7 +1655,8 @@
       "type":"string",
       "enum":[
         "log",
-        "jaeger"
+        "jaeger",
+        "disabled"
       ]
     },
     "UntagResourceRequest":{
@@ -1319,7 +1731,8 @@
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
         "influxAuthParametersSecretArn":{"shape":"String"},
         "dbClusterId":{"shape":"DbClusterId"},
-        "instanceMode":{"shape":"InstanceMode"}
+        "instanceMode":{"shape":"InstanceMode"},
+        "instanceModes":{"shape":"InstanceModeList"}
       }
     },
     "Username":{

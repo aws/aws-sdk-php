@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\GuardDuty` - Added default pagination value for ListMalwareProtectionPlans API and updated UpdateFindingsFeedback API
+* `Aws\TimestreamInfluxDB` - This release adds support for creating and managing InfluxDB 3 Core and Enterprise DbClusters.
+* `Aws\ElasticLoadBalancingv2` - This release expands Listener Rule Conditions to support RegexValues and adds support for a new Transforms field in Listener Rules.
+* `Aws\EC2` - Introducing EC2 Capacity Manager for monitoring and analyzing capacity usage across On-Demand Instances, Spot Instances, and Capacity Reservations.
+* `Aws\Lightsail` - Add support for manage Lightsail Bucket CORS configuration
+* `Aws\Bedrock` - Amazon Bedrock Automated Reasoning Policy now offers enhanced AWS KMS integration. The CreateAutomatedReasoningPolicy API includes a new kmsKeyId field, allowing customers to specify their preferred KMS key for encryption, improving control and compliance with AWS encryption mandates.
+* `Aws\DocDB` - Add support for NetworkType field in CreateDbCluster, ModifyDbCluster, RestoreDbClusterFromSnapshot and RestoreDbClusterToPointInTime for DocumentDB.
+
 ## 3.356.39 - 2025-10-14
 
 * `Aws\AppStream` - This release introduces support for Microsoft license included applications streaming.

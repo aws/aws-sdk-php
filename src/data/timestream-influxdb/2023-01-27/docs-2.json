@@ -77,6 +77,17 @@
         "InfluxDBv2Parameters$sessionRenewDisabled": "<p>Disables automatically extending a user’s session TTL on each request. By default, every request sets the session’s expiration time to five minutes from now. When disabled, sessions expire after the specified <a href=\"https://docs.influxdata.com/influxdb/v2/reference/config-options/#session-length\">session length</a> and the user is redirected to the login page, even if recently active.</p> <p>Default: false</p>",
         "InfluxDBv2Parameters$storageNoValidateFieldSize": "<p>Skip field size validation on incoming write requests.</p> <p>Default: false</p>",
         "InfluxDBv2Parameters$uiDisabled": "<p>Disable the InfluxDB user interface (UI). The UI is enabled by default.</p> <p>Default: false</p>",
+        "InfluxDBv3CoreParameters$dataFusionRuntimeDisableLifoSlot": "<p>Disables the LIFO slot of the DataFusion runtime.</p>",
+        "InfluxDBv3CoreParameters$dataFusionUseCachedParquetLoader": "<p>Uses a cached parquet loader when reading parquet files from the object store.</p>",
+        "InfluxDBv3CoreParameters$disableParquetMemCache": "<p>Disables the in-memory Parquet cache. By default, the cache is enabled.</p>",
+        "InfluxDBv3CoreParameters$walReplayFailOnError": "<p>Determines whether WAL replay should fail when encountering errors.</p> <p>Default: false</p>",
+        "InfluxDBv3EnterpriseParameters$dataFusionRuntimeDisableLifoSlot": "<p>Disables the LIFO slot of the DataFusion runtime.</p>",
+        "InfluxDBv3EnterpriseParameters$dataFusionUseCachedParquetLoader": "<p>Uses a cached parquet loader when reading parquet files from the object store.</p>",
+        "InfluxDBv3EnterpriseParameters$disableParquetMemCache": "<p>Disables the in-memory Parquet cache. By default, the cache is enabled.</p>",
+        "InfluxDBv3EnterpriseParameters$walReplayFailOnError": "<p>Determines whether WAL replay should fail when encountering errors.</p> <p>Default: false</p>",
+        "InfluxDBv3EnterpriseParameters$dedicatedCompactor": "<p>Specifies if the compactor instance should be a standalone instance or not.</p>",
+        "InfluxDBv3EnterpriseParameters$lastValueCacheDisableFromHistory": "<p>Disables populating the last-N-value cache from historical data. If disabled, the cache is still populated with data from the write-ahead log (WAL).</p>",
+        "InfluxDBv3EnterpriseParameters$distinctValueCacheDisableFromHistory": "<p>Disables populating the distinct value cache from historical data. If disabled, the cache is still populated with data from the write-ahead log (WAL).</p>",
         "S3Configuration$enabled": "<p>Indicates whether log delivery to the S3 bucket is enabled.</p>",
         "UpdateDbInstanceOutput$publiclyAccessible": "<p>Indicates if the DB instance has a public IP to facilitate access.</p>"
       }
@@ -145,6 +156,13 @@
     "CreateDbParameterGroupOutput": {
       "base": null,
       "refs": {
+      }
+    },
+    "DataFusionRuntimeType": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$dataFusionRuntimeType": "<p>Specifies the DataFusion tokio runtime type.</p> <p>Default: multi-thread</p>",
+        "InfluxDBv3EnterpriseParameters$dataFusionRuntimeType": "<p>Specifies the DataFusion tokio runtime type.</p> <p>Default: multi-thread</p>"
       }
     },
     "DbClusterId": {
@@ -358,7 +376,34 @@
         "InfluxDBv2Parameters$storageCacheSnapshotWriteColdDuration": "<p>Duration at which the storage engine will snapshot the cache and write it to a new TSM file if the shard hasn’t received writes or deletes.</p> <p>Default: 10 minutes</p>",
         "InfluxDBv2Parameters$storageCompactFullWriteColdDuration": "<p>Duration at which the storage engine will compact all TSM files in a shard if it hasn't received writes or deletes.</p> <p>Default: 4 hours</p>",
         "InfluxDBv2Parameters$storageRetentionCheckInterval": "<p>Interval of retention policy enforcement checks. Must be greater than 0.</p> <p>Default: 30 minutes</p>",
-        "InfluxDBv2Parameters$storageWalMaxWriteDelay": "<p>Maximum amount of time a write request to the WAL directory will wait when the <a href=\"https://docs.influxdata.com/influxdb/v2/reference/config-options/#storage-wal-max-concurrent-writes\">maximum number of concurrent active writes to the WAL directory has been met</a>. Set to 0 to disable the timeout.</p> <p>Default: 10 minutes</p>"
+        "InfluxDBv2Parameters$storageWalMaxWriteDelay": "<p>Maximum amount of time a write request to the WAL directory will wait when the <a href=\"https://docs.influxdata.com/influxdb/v2/reference/config-options/#storage-wal-max-concurrent-writes\">maximum number of concurrent active writes to the WAL directory has been met</a>. Set to 0 to disable the timeout.</p> <p>Default: 10 minutes</p>",
+        "InfluxDBv3CoreParameters$dataFusionRuntimeThreadKeepAlive": "<p>Sets a custom timeout for a thread in the blocking pool of the tokio DataFusion runtime.</p>",
+        "InfluxDBv3CoreParameters$preemptiveCacheAge": "<p>Specifies the interval to prefetch into the Parquet cache during compaction.</p> <p>Default: 3d</p>",
+        "InfluxDBv3CoreParameters$parquetMemCachePruneInterval": "<p>Sets the interval to check if the in-memory Parquet cache needs to be pruned.</p> <p>Default: 1s</p>",
+        "InfluxDBv3CoreParameters$parquetMemCacheQueryPathDuration": "<p>Specifies the time window for caching recent Parquet files in memory.</p> <p>Default: 5h</p>",
+        "InfluxDBv3CoreParameters$lastCacheEvictionInterval": "<p>Specifies the interval to evict expired entries from the Last-N-Value cache, expressed as a human-readable duration–for example: 20s, 1m, 1h.</p> <p>Default: 10s</p>",
+        "InfluxDBv3CoreParameters$distinctCacheEvictionInterval": "<p>Specifies the interval to evict expired entries from the distinct value cache, expressed as a human-readable duration–for example: 20s, 1m, 1h.</p> <p>Default: 10s</p>",
+        "InfluxDBv3CoreParameters$gen1Duration": "<p>Specifies the duration that Parquet files are arranged into. Data timestamps land each row into a file of this duration. Supported durations are 1m, 5m, and 10m. These files are known as “generation 1” files that the compactor in InfluxDB 3 Enterprise can merge into larger generations.</p> <p>Default: 10m</p>",
+        "InfluxDBv3CoreParameters$gen1LookbackDuration": "<p>Specifies how far back to look when creating generation 1 Parquet files.</p> <p>Default: 24h</p>",
+        "InfluxDBv3CoreParameters$retentionCheckInterval": "<p>The interval at which retention policies are checked and enforced. Enter as a human-readable time–for example: 30m or 1h.</p> <p>Default: 30m</p>",
+        "InfluxDBv3CoreParameters$deleteGracePeriod": "<p>Specifies the grace period before permanently deleting data.</p> <p>Default: 24h</p>",
+        "InfluxDBv3CoreParameters$hardDeleteDefaultDuration": "<p>Sets the default duration for hard deletion of data.</p> <p>Default: 90d</p>",
+        "InfluxDBv3EnterpriseParameters$dataFusionRuntimeThreadKeepAlive": "<p>Sets a custom timeout for a thread in the blocking pool of the tokio DataFusion runtime.</p>",
+        "InfluxDBv3EnterpriseParameters$preemptiveCacheAge": "<p>Specifies the interval to prefetch into the Parquet cache during compaction.</p> <p>Default: 3d</p>",
+        "InfluxDBv3EnterpriseParameters$parquetMemCachePruneInterval": "<p>Sets the interval to check if the in-memory Parquet cache needs to be pruned.</p> <p>Default: 1s</p>",
+        "InfluxDBv3EnterpriseParameters$parquetMemCacheQueryPathDuration": "<p>Specifies the time window for caching recent Parquet files in memory.</p> <p>Default: 5h</p>",
+        "InfluxDBv3EnterpriseParameters$lastCacheEvictionInterval": "<p>Specifies the interval to evict expired entries from the Last-N-Value cache, expressed as a human-readable duration–for example: 20s, 1m, 1h.</p> <p>Default: 10s</p>",
+        "InfluxDBv3EnterpriseParameters$distinctCacheEvictionInterval": "<p>Specifies the interval to evict expired entries from the distinct value cache, expressed as a human-readable duration–for example: 20s, 1m, 1h.</p> <p>Default: 10s</p>",
+        "InfluxDBv3EnterpriseParameters$gen1Duration": "<p>Specifies the duration that Parquet files are arranged into. Data timestamps land each row into a file of this duration. Supported durations are 1m, 5m, and 10m. These files are known as “generation 1” files, which the compactor can merge into larger generations.</p> <p>Default: 10m</p>",
+        "InfluxDBv3EnterpriseParameters$gen1LookbackDuration": "<p>Specifies how far back to look when creating generation 1 Parquet files.</p> <p>Default: 24h</p>",
+        "InfluxDBv3EnterpriseParameters$retentionCheckInterval": "<p>The interval at which retention policies are checked and enforced. Enter as a human-readable time–for example: 30m or 1h.</p> <p>Default: 30m</p>",
+        "InfluxDBv3EnterpriseParameters$deleteGracePeriod": "<p>Specifies the grace period before permanently deleting data.</p> <p>Default: 24h</p>",
+        "InfluxDBv3EnterpriseParameters$hardDeleteDefaultDuration": "<p>Sets the default duration for hard deletion of data.</p> <p>Default: 90d</p>",
+        "InfluxDBv3EnterpriseParameters$compactionGen2Duration": "<p>Specifies the duration of the first level of compaction (gen2). Later levels of compaction are multiples of this duration. This value should be equal to or greater than the gen1 duration.</p> <p>Default: 20m</p>",
+        "InfluxDBv3EnterpriseParameters$compactionCleanupWait": "<p>Specifies the amount of time that the compactor waits after finishing a compaction run to delete files marked as needing deletion during that compaction run.</p> <p>Default: 10m</p>",
+        "InfluxDBv3EnterpriseParameters$compactionCheckInterval": "<p>Specifies how often the compactor checks for new compaction work to perform.</p> <p>Default: 10s</p>",
+        "InfluxDBv3EnterpriseParameters$replicationInterval": "<p>Specifies the interval at which data replication occurs between cluster nodes.</p> <p>Default: 250ms</p>",
+        "InfluxDBv3EnterpriseParameters$catalogSyncInterval": "<p>Defines how often the catalog synchronizes across cluster nodes.</p> <p>Default: 10s</p>"
       }
     },
     "DurationType": {
@@ -371,6 +416,13 @@
       "base": null,
       "refs": {
         "Duration$value": "<p>The value of duration for InfluxDB parameters.</p>"
+      }
+    },
+    "EngineType": {
+      "base": null,
+      "refs": {
+        "DbClusterSummary$engineType": "<p>The engine type of your DB cluster.</p>",
+        "GetDbClusterOutput$engineType": "<p>The engine type of your DB cluster.</p>"
       }
     },
     "FailoverMode": {
@@ -519,6 +571,276 @@
         "InfluxDBv2Parameters$storageWalMaxConcurrentWrites": "<p>Maximum number writes to the WAL directory to attempt at the same time. Setting this value to 0 results in number of processing units available x2.</p> <p>Default: 0</p>"
       }
     },
+    "InfluxDBv3CoreParameters": {
+      "base": "<p>All the customer-modifiable InfluxDB v3 Core parameters in Timestream for InfluxDB.</p>",
+      "refs": {
+        "Parameters$InfluxDBv3Core": "<p>All the customer-modifiable InfluxDB v3 Core parameters in Timestream for InfluxDB.</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersDataFusionConfigString": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$dataFusionConfig": "<p>Provides custom configuration to DataFusion as a comma-separated list of key:value pairs.</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersDataFusionMaxParquetFanoutInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$dataFusionMaxParquetFanout": "<p>When multiple parquet files are required in a sorted way (deduplication for example), specifies the maximum fanout.</p> <p>Default: 1000</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersDataFusionNumThreadsInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$dataFusionNumThreads": "<p>Sets the maximum number of DataFusion runtime threads to use.</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersDataFusionRuntimeEventIntervalInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$dataFusionRuntimeEventInterval": "<p>Sets the number of scheduler ticks after which the scheduler of the DataFusion tokio runtime polls for external events–for example: timers, I/O.</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersDataFusionRuntimeGlobalQueueIntervalInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$dataFusionRuntimeGlobalQueueInterval": "<p>Sets the number of scheduler ticks after which the scheduler of the DataFusion runtime polls the global task queue.</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersDataFusionRuntimeMaxBlockingThreadsInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$dataFusionRuntimeMaxBlockingThreads": "<p>Specifies the limit for additional threads spawned by the DataFusion runtime.</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersDataFusionRuntimeMaxIoEventsPerTickInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$dataFusionRuntimeMaxIoEventsPerTick": "<p>Configures the maximum number of events processed per tick by the tokio DataFusion runtime.</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersDataFusionRuntimeThreadPriorityInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$dataFusionRuntimeThreadPriority": "<p>Sets the thread priority for tokio DataFusion runtime workers.</p> <p>Default: 10</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersLogFilterString": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$logFilter": "<p>Sets the filter directive for logs.</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersMaxHttpRequestSizeLong": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$maxHttpRequestSize": "<p>Specifies the maximum size of HTTP requests.</p> <p>Default: 10485760</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersParquetMemCachePrunePercentageFloat": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$parquetMemCachePrunePercentage": "<p>Specifies the percentage of entries to prune during a prune operation on the in-memory Parquet cache.</p> <p>Default: 0.1</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersQueryFileLimitInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$queryFileLimit": "<p>Limits the number of Parquet files a query can access. If a query attempts to read more than this limit, InfluxDB 3 returns an error.</p> <p>Default: 432</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersQueryLogSizeInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$queryLogSize": "<p>Defines the size of the query log. Up to this many queries remain in the log before older queries are evicted to make room for new ones.</p> <p>Default: 1000</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersSnapshottedWalFilesToKeepInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$snapshottedWalFilesToKeep": "<p>Specifies the number of snapshotted WAL files to retain in the object store. Flushing the WAL files does not clear the WAL files immediately; they are deleted when the number of snapshotted WAL files exceeds this number.</p> <p>Default: 300</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersTableIndexCacheConcurrencyLimitInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$tableIndexCacheConcurrencyLimit": "<p>Limits the concurrency level for table index cache operations.</p> <p>Default: 8</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersTableIndexCacheMaxEntriesInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$tableIndexCacheMaxEntries": "<p>Specifies the maximum number of entries in the table index cache.</p> <p>Default: 1000</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersWalMaxWriteBufferSizeInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$walMaxWriteBufferSize": "<p>Specifies the maximum number of write requests that can be buffered before a flush must be executed and succeed.</p> <p>Default: 100000</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersWalReplayConcurrencyLimitInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$walReplayConcurrencyLimit": "<p>Concurrency limit during WAL replay. Setting this number too high can lead to OOM. The default is dynamically determined.</p> <p>Default: max(num_cpus, 10)</p>"
+      }
+    },
+    "InfluxDBv3CoreParametersWalSnapshotSizeInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$walSnapshotSize": "<p>Defines the number of WAL files to attempt to remove in a snapshot. This, multiplied by the interval, determines how often snapshots are taken.</p> <p>Default: 600</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParameters": {
+      "base": "<p>All the customer-modifiable InfluxDB v3 Enterprise parameters in Timestream for InfluxDB.</p>",
+      "refs": {
+        "Parameters$InfluxDBv3Enterprise": "<p>All the customer-modifiable InfluxDB v3 Enterprise parameters in Timestream for InfluxDB.</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersCompactionMaxNumFilesPerPlanInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$compactionMaxNumFilesPerPlan": "<p>Sets the maximum number of files included in any compaction plan.</p> <p>Default: 500</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersCompactionMultipliersString": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$compactionMultipliers": "<p>Specifies a comma-separated list of multiples defining the duration of each level of compaction. The number of elements in the list determines the number of compaction levels. The first element specifies the duration of the first level (gen3); subsequent levels are multiples of the previous level.</p> <p>Default: 3,4,6,5</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersCompactionRowLimitInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$compactionRowLimit": "<p>Specifies the soft limit for the number of rows per file that the compactor writes. The compactor may write more rows than this limit.</p> <p>Default: 1000000</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersDataFusionConfigString": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$dataFusionConfig": "<p>Provides custom configuration to DataFusion as a comma-separated list of key:value pairs.</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersDataFusionMaxParquetFanoutInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$dataFusionMaxParquetFanout": "<p>When multiple parquet files are required in a sorted way (deduplication for example), specifies the maximum fanout.</p> <p>Default: 1000</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersDataFusionNumThreadsInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$dataFusionNumThreads": "<p>Sets the maximum number of DataFusion runtime threads to use.</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersDataFusionRuntimeEventIntervalInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$dataFusionRuntimeEventInterval": "<p>Sets the number of scheduler ticks after which the scheduler of the DataFusion tokio runtime polls for external events–for example: timers, I/O.</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersDataFusionRuntimeGlobalQueueIntervalInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$dataFusionRuntimeGlobalQueueInterval": "<p>Sets the number of scheduler ticks after which the scheduler of the DataFusion runtime polls the global task queue.</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersDataFusionRuntimeMaxBlockingThreadsInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$dataFusionRuntimeMaxBlockingThreads": "<p>Specifies the limit for additional threads spawned by the DataFusion runtime.</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersDataFusionRuntimeMaxIoEventsPerTickInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$dataFusionRuntimeMaxIoEventsPerTick": "<p>Configures the maximum number of events processed per tick by the tokio DataFusion runtime.</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersDataFusionRuntimeThreadPriorityInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$dataFusionRuntimeThreadPriority": "<p>Sets the thread priority for tokio DataFusion runtime workers.</p> <p>Default: 10</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersIngestQueryInstancesInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$ingestQueryInstances": "<p>Specifies number of instances in the DbCluster which can both ingest and query.</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersLogFilterString": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$logFilter": "<p>Sets the filter directive for logs.</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersMaxHttpRequestSizeLong": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$maxHttpRequestSize": "<p>Specifies the maximum size of HTTP requests.</p> <p>Default: 10485760</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersParquetMemCachePrunePercentageFloat": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$parquetMemCachePrunePercentage": "<p>Specifies the percentage of entries to prune during a prune operation on the in-memory Parquet cache.</p> <p>Default: 0.1</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersQueryFileLimitInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$queryFileLimit": "<p>Limits the number of Parquet files a query can access. If a query attempts to read more than this limit, InfluxDB 3 returns an error.</p> <p>Default: 432</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersQueryLogSizeInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$queryLogSize": "<p>Defines the size of the query log. Up to this many queries remain in the log before older queries are evicted to make room for new ones.</p> <p>Default: 1000</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersQueryOnlyInstancesInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$queryOnlyInstances": "<p>Specifies number of instances in the DbCluster which can only query.</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersSnapshottedWalFilesToKeepInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$snapshottedWalFilesToKeep": "<p>Specifies the number of snapshotted WAL files to retain in the object store. Flushing the WAL files does not clear the WAL files immediately; they are deleted when the number of snapshotted WAL files exceeds this number.</p> <p>Default: 300</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersTableIndexCacheConcurrencyLimitInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$tableIndexCacheConcurrencyLimit": "<p>Limits the concurrency level for table index cache operations.</p> <p>Default: 8</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersTableIndexCacheMaxEntriesInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$tableIndexCacheMaxEntries": "<p>Specifies the maximum number of entries in the table index cache.</p> <p>Default: 1000</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersWalMaxWriteBufferSizeInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$walMaxWriteBufferSize": "<p>Specifies the maximum number of write requests that can be buffered before a flush must be executed and succeed.</p> <p>Default: 100000</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersWalReplayConcurrencyLimitInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$walReplayConcurrencyLimit": "<p>Concurrency limit during WAL replay. Setting this number too high can lead to OOM. The default is dynamically determined.</p> <p>Default: max(num_cpus, 10)</p>"
+      }
+    },
+    "InfluxDBv3EnterpriseParametersWalSnapshotSizeInteger": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3EnterpriseParameters$walSnapshotSize": "<p>Defines the number of WAL files to attempt to remove in a snapshot. This, multiplied by the interval, determines how often snapshots are taken.</p> <p>Default: 600</p>"
+      }
+    },
     "InstanceMode": {
       "base": null,
       "refs": {
@@ -526,7 +848,18 @@
         "DbInstanceForClusterSummary$instanceMode": "<p>Specifies the DB instance's role in the cluster.</p>",
         "DeleteDbInstanceOutput$instanceMode": "<p>Specifies the DbInstance's role in the cluster.</p>",
         "GetDbInstanceOutput$instanceMode": "<p>Specifies the DbInstance's role in the cluster.</p>",
+        "InstanceModeList$member": null,
         "UpdateDbInstanceOutput$instanceMode": "<p>Specifies the DbInstance's role in the cluster.</p>"
+      }
+    },
+    "InstanceModeList": {
+      "base": null,
+      "refs": {
+        "CreateDbInstanceOutput$instanceModes": "<p>Specifies the DbInstance's roles in the cluster.</p>",
+        "DbInstanceForClusterSummary$instanceModes": "<p>Specifies the DB instance's roles in the cluster.</p>",
+        "DeleteDbInstanceOutput$instanceModes": "<p>Specifies the DbInstance's roles in the cluster.</p>",
+        "GetDbInstanceOutput$instanceModes": "<p>Specifies the DbInstance's roles in the cluster.</p>",
+        "UpdateDbInstanceOutput$instanceModes": "<p>Specifies the DbInstance's roles in the cluster.</p>"
       }
     },
     "Integer": {
@@ -604,6 +937,13 @@
         "UpdateDbInstanceOutput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to send to specified S3 bucket.</p>"
       }
     },
+    "LogFormats": {
+      "base": null,
+      "refs": {
+        "InfluxDBv3CoreParameters$logFormat": "<p>Defines the message format for logs.</p> <p>Default: full</p>",
+        "InfluxDBv3EnterpriseParameters$logFormat": "<p>Defines the message format for logs.</p> <p>Default: full</p>"
+      }
+    },
     "LogLevel": {
       "base": null,
       "refs": {
@@ -666,13 +1006,36 @@
       "base": null,
       "refs": {
         "CreateDbClusterInput$password": "<p>The password of the initial admin user created in InfluxDB. This password will allow you to access the InfluxDB UI to perform various administrative tasks and also use the InfluxDB CLI to create an operator token. These attributes will be stored in a secret created in Secrets Manager in your account.</p>",
-        "CreateDbInstanceInput$password": "<p>The password of the initial admin user created in InfluxDB. This password will allow you to access the InfluxDB UI to perform various administrative tasks and also use the InfluxDB CLI to create an operator token. These attributes will be stored in a Secret created in Secrets Manager in your account.</p>"
+        "CreateDbInstanceInput$password": "<p>The password of the initial admin user created in InfluxDB v2. This password will allow you to access the InfluxDB UI to perform various administrative tasks and also use the InfluxDB CLI to create an operator token. These attributes will be stored in a Secret created in Secrets Manager in your account.</p>"
+      }
+    },
+    "PercentOrAbsoluteLong": {
+      "base": "<p>Percent or Absolute Long for InfluxDB parameters</p>",
+      "refs": {
+        "InfluxDBv3CoreParameters$forceSnapshotMemThreshold": "<p>Specifies the threshold for the internal memory buffer. Supports either a percentage (portion of available memory) or absolute value in MB–for example: 70% or 100</p> <p>Default: 70%</p>",
+        "InfluxDBv3CoreParameters$execMemPoolBytes": "<p>Specifies the size of memory pool used during query execution. Can be given as absolute value in bytes or as a percentage of the total available memory–for example: 8000000000 or 10%.</p> <p>Default: 20%</p>",
+        "InfluxDBv3CoreParameters$parquetMemCacheSize": "<p>Specifies the size of the in-memory Parquet cache in megabytes or percentage of total available memory.</p> <p>Default: 20%</p>",
+        "InfluxDBv3EnterpriseParameters$forceSnapshotMemThreshold": "<p>Specifies the threshold for the internal memory buffer. Supports either a percentage (portion of available memory) or absolute value in MB–for example: 70% or 100</p> <p>Default: 70%</p>",
+        "InfluxDBv3EnterpriseParameters$execMemPoolBytes": "<p>Specifies the size of memory pool used during query execution. Can be given as absolute value in bytes or as a percentage of the total available memory–for example: 8000000000 or 10%.</p> <p>Default: 20%</p>",
+        "InfluxDBv3EnterpriseParameters$parquetMemCacheSize": "<p>Specifies the size of the in-memory Parquet cache in megabytes or percentage of total available memory.</p> <p>Default: 20%</p>"
+      }
+    },
+    "PercentOrAbsoluteLongAbsoluteLong": {
+      "base": null,
+      "refs": {
+        "PercentOrAbsoluteLong$absolute": "<p>Absolute long for InfluxDB parameters.</p>"
+      }
+    },
+    "PercentOrAbsoluteLongPercentString": {
+      "base": null,
+      "refs": {
+        "PercentOrAbsoluteLong$percent": "<p>Percent for InfluxDB parameters.</p>"
       }
     },
     "Port": {
       "base": null,
       "refs": {
-        "CreateDbClusterInput$port": "<p>The port number on which InfluxDB accepts connections.</p> <p>Valid Values: 1024-65535</p> <p>Default: 8086</p> <p>Constraints: The value can't be 2375-2376, 7788-7799, 8090, or 51678-51680</p>",
+        "CreateDbClusterInput$port": "<p>The port number on which InfluxDB accepts connections.</p> <p>Valid Values: 1024-65535</p> <p>Default: 8086 for InfluxDB v2, 8181 for InfluxDB v3</p> <p>Constraints: The value can't be 2375-2376, 7788-7799, 8090, or 51678-51680</p>",
         "CreateDbInstanceInput$port": "<p>The port number on which InfluxDB accepts connections.</p> <p>Valid Values: 1024-65535</p> <p>Default: 8086</p> <p>Constraints: The value can't be 2375-2376, 7788-7799, 8090, or 51678-51680</p>",
         "CreateDbInstanceOutput$port": "<p>The port number on which InfluxDB accepts connections. The default value is 8086.</p>",
         "DbClusterSummary$port": "<p>The port number on which InfluxDB accepts connections.</p>",

@@ -559,6 +559,15 @@
       "input":{"shape":"CopyVolumesRequest"},
       "output":{"shape":"CopyVolumesResult"}
     },
+    "CreateCapacityManagerDataExport":{
+      "name":"CreateCapacityManagerDataExport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateCapacityManagerDataExportRequest"},
+      "output":{"shape":"CreateCapacityManagerDataExportResult"}
+    },
     "CreateCapacityReservation":{
       "name":"CreateCapacityReservation",
       "http":{
@@ -1392,6 +1401,15 @@
       },
       "input":{"shape":"CreateVpnGatewayRequest"},
       "output":{"shape":"CreateVpnGatewayResult"}
+    },
+    "DeleteCapacityManagerDataExport":{
+      "name":"DeleteCapacityManagerDataExport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteCapacityManagerDataExportRequest"},
+      "output":{"shape":"DeleteCapacityManagerDataExportResult"}
     },
     "DeleteCarrierGateway":{
       "name":"DeleteCarrierGateway",
@@ -2310,6 +2328,15 @@
       },
       "input":{"shape":"DescribeCapacityBlocksRequest"},
       "output":{"shape":"DescribeCapacityBlocksResult"}
+    },
+    "DescribeCapacityManagerDataExports":{
+      "name":"DescribeCapacityManagerDataExports",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeCapacityManagerDataExportsRequest"},
+      "output":{"shape":"DescribeCapacityManagerDataExportsResult"}
     },
     "DescribeCapacityReservationBillingRequests":{
       "name":"DescribeCapacityReservationBillingRequests",
@@ -3811,6 +3838,15 @@
       "input":{"shape":"DisableAwsNetworkPerformanceMetricSubscriptionRequest"},
       "output":{"shape":"DisableAwsNetworkPerformanceMetricSubscriptionResult"}
     },
+    "DisableCapacityManager":{
+      "name":"DisableCapacityManager",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisableCapacityManagerRequest"},
+      "output":{"shape":"DisableCapacityManagerResult"}
+    },
     "DisableEbsEncryptionByDefault":{
       "name":"DisableEbsEncryptionByDefault",
       "http":{
@@ -4132,6 +4168,15 @@
       "input":{"shape":"EnableAwsNetworkPerformanceMetricSubscriptionRequest"},
       "output":{"shape":"EnableAwsNetworkPerformanceMetricSubscriptionResult"}
     },
+    "EnableCapacityManager":{
+      "name":"EnableCapacityManager",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableCapacityManagerRequest"},
+      "output":{"shape":"EnableCapacityManagerResult"}
+    },
     "EnableEbsEncryptionByDefault":{
       "name":"EnableEbsEncryptionByDefault",
       "http":{
@@ -4372,6 +4417,33 @@
       },
       "input":{"shape":"GetAwsNetworkPerformanceDataRequest"},
       "output":{"shape":"GetAwsNetworkPerformanceDataResult"}
+    },
+    "GetCapacityManagerAttributes":{
+      "name":"GetCapacityManagerAttributes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetCapacityManagerAttributesRequest"},
+      "output":{"shape":"GetCapacityManagerAttributesResult"}
+    },
+    "GetCapacityManagerMetricData":{
+      "name":"GetCapacityManagerMetricData",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetCapacityManagerMetricDataRequest"},
+      "output":{"shape":"GetCapacityManagerMetricDataResult"}
+    },
+    "GetCapacityManagerMetricDimensions":{
+      "name":"GetCapacityManagerMetricDimensions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetCapacityManagerMetricDimensionsRequest"},
+      "output":{"shape":"GetCapacityManagerMetricDimensionsResult"}
     },
     "GetCapacityReservationUsage":{
       "name":"GetCapacityReservationUsage",
@@ -6188,6 +6260,15 @@
       },
       "input":{"shape":"UnmonitorInstancesRequest"},
       "output":{"shape":"UnmonitorInstancesResult"}
+    },
+    "UpdateCapacityManagerOrganizationsAccess":{
+      "name":"UpdateCapacityManagerOrganizationsAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateCapacityManagerOrganizationsAccessRequest"},
+      "output":{"shape":"UpdateCapacityManagerOrganizationsAccessResult"}
     },
     "UpdateSecurityGroupRuleDescriptionsEgress":{
       "name":"UpdateSecurityGroupRuleDescriptionsEgress",
@@ -9100,6 +9181,7 @@
         "uefi-preferred"
       ]
     },
+    "BoxedBoolean":{"type":"boolean"},
     "BoxedDouble":{"type":"double"},
     "BoxedInteger":{"type":"integer"},
     "BoxedLong":{"type":"long"},
@@ -9965,6 +10047,174 @@
         "locationName":"item"
       }
     },
+    "CapacityManagerCondition":{
+      "type":"structure",
+      "members":{
+        "DimensionCondition":{"shape":"DimensionCondition"}
+      }
+    },
+    "CapacityManagerConditionSet":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityManagerCondition",
+        "locationName":"item"
+      },
+      "max":20,
+      "min":0
+    },
+    "CapacityManagerDataExportId":{"type":"string"},
+    "CapacityManagerDataExportIdSet":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityManagerDataExportId",
+        "locationName":"item"
+      }
+    },
+    "CapacityManagerDataExportResponse":{
+      "type":"structure",
+      "members":{
+        "CapacityManagerDataExportId":{
+          "shape":"CapacityManagerDataExportId",
+          "locationName":"capacityManagerDataExportId"
+        },
+        "S3BucketName":{
+          "shape":"String",
+          "locationName":"s3BucketName"
+        },
+        "S3BucketPrefix":{
+          "shape":"String",
+          "locationName":"s3BucketPrefix"
+        },
+        "Schedule":{
+          "shape":"Schedule",
+          "locationName":"schedule"
+        },
+        "OutputFormat":{
+          "shape":"OutputFormat",
+          "locationName":"outputFormat"
+        },
+        "CreateTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"createTime"
+        },
+        "LatestDeliveryStatus":{
+          "shape":"CapacityManagerDataExportStatus",
+          "locationName":"latestDeliveryStatus"
+        },
+        "LatestDeliveryStatusMessage":{
+          "shape":"String",
+          "locationName":"latestDeliveryStatusMessage"
+        },
+        "LatestDeliveryS3LocationUri":{
+          "shape":"String",
+          "locationName":"latestDeliveryS3LocationUri"
+        },
+        "LatestDeliveryTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"latestDeliveryTime"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "CapacityManagerDataExportResponseSet":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityManagerDataExportResponse",
+        "locationName":"item"
+      }
+    },
+    "CapacityManagerDataExportStatus":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "in-progress",
+        "delivered",
+        "failed"
+      ]
+    },
+    "CapacityManagerDimension":{
+      "type":"structure",
+      "members":{
+        "ResourceRegion":{
+          "shape":"String",
+          "locationName":"resourceRegion"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
+        },
+        "AccountId":{
+          "shape":"String",
+          "locationName":"accountId"
+        },
+        "InstanceFamily":{
+          "shape":"String",
+          "locationName":"instanceFamily"
+        },
+        "InstanceType":{
+          "shape":"String",
+          "locationName":"instanceType"
+        },
+        "InstancePlatform":{
+          "shape":"String",
+          "locationName":"instancePlatform"
+        },
+        "ReservationArn":{
+          "shape":"String",
+          "locationName":"reservationArn"
+        },
+        "ReservationId":{
+          "shape":"String",
+          "locationName":"reservationId"
+        },
+        "ReservationType":{
+          "shape":"ReservationType",
+          "locationName":"reservationType"
+        },
+        "ReservationCreateTimestamp":{
+          "shape":"MillisecondDateTime",
+          "locationName":"reservationCreateTimestamp"
+        },
+        "ReservationStartTimestamp":{
+          "shape":"MillisecondDateTime",
+          "locationName":"reservationStartTimestamp"
+        },
+        "ReservationEndTimestamp":{
+          "shape":"MillisecondDateTime",
+          "locationName":"reservationEndTimestamp"
+        },
+        "ReservationEndDateType":{
+          "shape":"ReservationEndDateType",
+          "locationName":"reservationEndDateType"
+        },
+        "Tenancy":{
+          "shape":"CapacityTenancy",
+          "locationName":"tenancy"
+        },
+        "ReservationState":{
+          "shape":"ReservationState",
+          "locationName":"reservationState"
+        },
+        "ReservationInstanceMatchCriteria":{
+          "shape":"String",
+          "locationName":"reservationInstanceMatchCriteria"
+        },
+        "ReservationUnusedFinancialOwner":{
+          "shape":"String",
+          "locationName":"reservationUnusedFinancialOwner"
+        }
+      }
+    },
+    "CapacityManagerStatus":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled"
+      ]
+    },
     "CapacityReservation":{
       "type":"structure",
       "members":{
@@ -10463,6 +10713,13 @@
       "enum":[
         "default",
         "capacity-block"
+      ]
+    },
+    "CapacityTenancy":{
+      "type":"string",
+      "enum":[
+        "default",
+        "dedicated"
       ]
     },
     "CarrierGateway":{
@@ -11242,6 +11499,13 @@
         "locationName":"item"
       }
     },
+    "Comparison":{
+      "type":"string",
+      "enum":[
+        "equals",
+        "in"
+      ]
+    },
     "ComponentAccount":{
       "type":"string",
       "pattern":"\\d{12}"
@@ -11249,6 +11513,15 @@
     "ComponentRegion":{
       "type":"string",
       "pattern":"[a-z]{2}-[a-z]+-[1-9]+"
+    },
+    "ConditionValueList":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"item"
+      },
+      "max":10,
+      "min":0
     },
     "ConfirmProductInstanceRequest":{
       "type":"structure",
@@ -11711,6 +11984,38 @@
         "References":{
           "shape":"PerformanceFactorReferenceSetRequest",
           "locationName":"Reference"
+        }
+      }
+    },
+    "CreateCapacityManagerDataExportRequest":{
+      "type":"structure",
+      "required":[
+        "S3BucketName",
+        "Schedule",
+        "OutputFormat"
+      ],
+      "members":{
+        "S3BucketName":{"shape":"String"},
+        "S3BucketPrefix":{"shape":"String"},
+        "Schedule":{"shape":"Schedule"},
+        "OutputFormat":{"shape":"OutputFormat"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "DryRun":{"shape":"Boolean"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        }
+      }
+    },
+    "CreateCapacityManagerDataExportResult":{
+      "type":"structure",
+      "members":{
+        "CapacityManagerDataExportId":{
+          "shape":"CapacityManagerDataExportId",
+          "locationName":"capacityManagerDataExportId"
         }
       }
     },
@@ -15138,6 +15443,23 @@
       ]
     },
     "DefaultingDhcpOptionsId":{"type":"string"},
+    "DeleteCapacityManagerDataExportRequest":{
+      "type":"structure",
+      "required":["CapacityManagerDataExportId"],
+      "members":{
+        "CapacityManagerDataExportId":{"shape":"CapacityManagerDataExportId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DeleteCapacityManagerDataExportResult":{
+      "type":"structure",
+      "members":{
+        "CapacityManagerDataExportId":{
+          "shape":"CapacityManagerDataExportId",
+          "locationName":"capacityManagerDataExportId"
+        }
+      }
+    },
     "DeleteCarrierGatewayRequest":{
       "type":"structure",
       "required":["CarrierGatewayId"],
@@ -17321,6 +17643,40 @@
         "CapacityBlocks":{
           "shape":"CapacityBlockSet",
           "locationName":"capacityBlockSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeCapacityManagerDataExportsRequest":{
+      "type":"structure",
+      "members":{
+        "CapacityManagerDataExportIds":{
+          "shape":"CapacityManagerDataExportIdSet",
+          "locationName":"CapacityManagerDataExportId"
+        },
+        "MaxResults":{"shape":"DescribeCapacityManagerDataExportsRequestMaxResults"},
+        "NextToken":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        }
+      }
+    },
+    "DescribeCapacityManagerDataExportsRequestMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "DescribeCapacityManagerDataExportsResult":{
+      "type":"structure",
+      "members":{
+        "CapacityManagerDataExports":{
+          "shape":"CapacityManagerDataExportResponseSet",
+          "locationName":"capacityManagerDataExportSet"
         },
         "NextToken":{
           "shape":"String",
@@ -22727,6 +23083,17 @@
         "locationName":"item"
       }
     },
+    "DimensionCondition":{
+      "type":"structure",
+      "members":{
+        "Dimension":{"shape":"FilterByDimension"},
+        "Comparison":{"shape":"Comparison"},
+        "Values":{
+          "shape":"ConditionValueList",
+          "locationName":"Value"
+        }
+      }
+    },
     "DirectoryServiceAuthentication":{
       "type":"structure",
       "members":{
@@ -22790,6 +23157,29 @@
         "Output":{
           "shape":"Boolean",
           "locationName":"output"
+        }
+      }
+    },
+    "DisableCapacityManagerRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "DisableCapacityManagerResult":{
+      "type":"structure",
+      "members":{
+        "CapacityManagerStatus":{
+          "shape":"CapacityManagerStatus",
+          "locationName":"capacityManagerStatus"
+        },
+        "OrganizationsAccess":{
+          "shape":"Boolean",
+          "locationName":"organizationsAccess"
         }
       }
     },
@@ -24461,6 +24851,30 @@
         }
       }
     },
+    "EnableCapacityManagerRequest":{
+      "type":"structure",
+      "members":{
+        "OrganizationsAccess":{"shape":"Boolean"},
+        "DryRun":{"shape":"Boolean"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "EnableCapacityManagerResult":{
+      "type":"structure",
+      "members":{
+        "CapacityManagerStatus":{
+          "shape":"CapacityManagerStatus",
+          "locationName":"capacityManagerStatus"
+        },
+        "OrganizationsAccess":{
+          "shape":"Boolean",
+          "locationName":"organizationsAccess"
+        }
+      }
+    },
     "EnableEbsEncryptionByDefaultRequest":{
       "type":"structure",
       "members":{
@@ -25749,6 +26163,28 @@
         }
       }
     },
+    "FilterByDimension":{
+      "type":"string",
+      "enum":[
+        "resource-region",
+        "availability-zone-id",
+        "account-id",
+        "instance-family",
+        "instance-type",
+        "instance-platform",
+        "reservation-arn",
+        "reservation-id",
+        "reservation-type",
+        "reservation-create-timestamp",
+        "reservation-start-timestamp",
+        "reservation-end-timestamp",
+        "reservation-end-date-type",
+        "tenancy",
+        "reservation-state",
+        "reservation-instance-match-criteria",
+        "reservation-unused-financial-owner"
+      ]
+    },
     "FilterList":{
       "type":"list",
       "member":{
@@ -26709,6 +27145,116 @@
         },
         "NextToken":{
           "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetCapacityManagerAttributesRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetCapacityManagerAttributesResult":{
+      "type":"structure",
+      "members":{
+        "CapacityManagerStatus":{
+          "shape":"CapacityManagerStatus",
+          "locationName":"capacityManagerStatus"
+        },
+        "OrganizationsAccess":{
+          "shape":"Boolean",
+          "locationName":"organizationsAccess"
+        },
+        "DataExportCount":{
+          "shape":"Integer",
+          "locationName":"dataExportCount"
+        },
+        "IngestionStatus":{
+          "shape":"IngestionStatus",
+          "locationName":"ingestionStatus"
+        },
+        "IngestionStatusMessage":{
+          "shape":"String",
+          "locationName":"ingestionStatusMessage"
+        },
+        "EarliestDatapointTimestamp":{
+          "shape":"MillisecondDateTime",
+          "locationName":"earliestDatapointTimestamp"
+        },
+        "LatestDatapointTimestamp":{
+          "shape":"MillisecondDateTime",
+          "locationName":"latestDatapointTimestamp"
+        }
+      }
+    },
+    "GetCapacityManagerMetricDataRequest":{
+      "type":"structure",
+      "required":[
+        "MetricNames",
+        "StartTime",
+        "EndTime",
+        "Period"
+      ],
+      "members":{
+        "MetricNames":{
+          "shape":"MetricSet",
+          "locationName":"MetricName"
+        },
+        "StartTime":{"shape":"MillisecondDateTime"},
+        "EndTime":{"shape":"MillisecondDateTime"},
+        "Period":{"shape":"Period"},
+        "GroupBy":{"shape":"GroupBySet"},
+        "FilterBy":{"shape":"CapacityManagerConditionSet"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetCapacityManagerMetricDataResult":{
+      "type":"structure",
+      "members":{
+        "MetricDataResults":{
+          "shape":"MetricDataResultSet",
+          "locationName":"metricDataResultSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetCapacityManagerMetricDimensionsRequest":{
+      "type":"structure",
+      "required":[
+        "GroupBy",
+        "StartTime",
+        "EndTime",
+        "MetricNames"
+      ],
+      "members":{
+        "GroupBy":{"shape":"GroupBySet"},
+        "FilterBy":{"shape":"CapacityManagerConditionSet"},
+        "StartTime":{"shape":"MillisecondDateTime"},
+        "EndTime":{"shape":"MillisecondDateTime"},
+        "MetricNames":{
+          "shape":"MetricSet",
+          "locationName":"MetricName"
+        },
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetCapacityManagerMetricDimensionsResult":{
+      "type":"structure",
+      "members":{
+        "MetricDimensionResults":{
+          "shape":"MetricDimensionResultSet",
+          "locationName":"metricDimensionResultSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
           "locationName":"nextToken"
         }
       }
@@ -28183,6 +28729,37 @@
           "locationName":"totalGpuMemoryInMiB"
         }
       }
+    },
+    "GroupBy":{
+      "type":"string",
+      "enum":[
+        "resource-region",
+        "availability-zone-id",
+        "account-id",
+        "instance-family",
+        "instance-type",
+        "instance-platform",
+        "reservation-arn",
+        "reservation-id",
+        "reservation-type",
+        "reservation-create-timestamp",
+        "reservation-start-timestamp",
+        "reservation-end-timestamp",
+        "reservation-end-date-type",
+        "tenancy",
+        "reservation-state",
+        "reservation-instance-match-criteria",
+        "reservation-unused-financial-owner"
+      ]
+    },
+    "GroupBySet":{
+      "type":"list",
+      "member":{
+        "shape":"GroupBy",
+        "locationName":"item"
+      },
+      "max":20,
+      "min":0
     },
     "GroupIdStringList":{
       "type":"list",
@@ -30058,6 +30635,14 @@
     },
     "InferenceDeviceMemorySize":{"type":"integer"},
     "InferenceDeviceName":{"type":"string"},
+    "IngestionStatus":{
+      "type":"string",
+      "enum":[
+        "initial-ingestion-in-progress",
+        "ingestion-complete",
+        "ingestion-failed"
+      ]
+    },
     "InitializationStatusDetails":{
       "type":"structure",
       "members":{
@@ -37206,6 +37791,85 @@
         "no-preference"
       ]
     },
+    "Metric":{
+      "type":"string",
+      "enum":[
+        "reservation-total-capacity-hrs-vcpu",
+        "reservation-total-capacity-hrs-inst",
+        "reservation-max-size-vcpu",
+        "reservation-max-size-inst",
+        "reservation-min-size-vcpu",
+        "reservation-min-size-inst",
+        "reservation-unused-total-capacity-hrs-vcpu",
+        "reservation-unused-total-capacity-hrs-inst",
+        "reservation-unused-total-estimated-cost",
+        "reservation-max-unused-size-vcpu",
+        "reservation-max-unused-size-inst",
+        "reservation-min-unused-size-vcpu",
+        "reservation-min-unused-size-inst",
+        "reservation-max-utilization",
+        "reservation-min-utilization",
+        "reservation-avg-utilization-vcpu",
+        "reservation-avg-utilization-inst",
+        "reservation-total-count",
+        "reservation-total-estimated-cost",
+        "reservation-avg-future-size-vcpu",
+        "reservation-avg-future-size-inst",
+        "reservation-min-future-size-vcpu",
+        "reservation-min-future-size-inst",
+        "reservation-max-future-size-vcpu",
+        "reservation-max-future-size-inst",
+        "reservation-avg-committed-size-vcpu",
+        "reservation-avg-committed-size-inst",
+        "reservation-max-committed-size-vcpu",
+        "reservation-max-committed-size-inst",
+        "reservation-min-committed-size-vcpu",
+        "reservation-min-committed-size-inst",
+        "reserved-total-usage-hrs-vcpu",
+        "reserved-total-usage-hrs-inst",
+        "reserved-total-estimated-cost",
+        "unreserved-total-usage-hrs-vcpu",
+        "unreserved-total-usage-hrs-inst",
+        "unreserved-total-estimated-cost",
+        "spot-total-usage-hrs-vcpu",
+        "spot-total-usage-hrs-inst",
+        "spot-total-estimated-cost",
+        "spot-avg-run-time-before-interruption-inst",
+        "spot-max-run-time-before-interruption-inst",
+        "spot-min-run-time-before-interruption-inst"
+      ]
+    },
+    "MetricDataResult":{
+      "type":"structure",
+      "members":{
+        "Dimension":{
+          "shape":"CapacityManagerDimension",
+          "locationName":"dimension"
+        },
+        "Timestamp":{
+          "shape":"MillisecondDateTime",
+          "locationName":"timestamp"
+        },
+        "MetricValues":{
+          "shape":"MetricValueSet",
+          "locationName":"metricValueSet"
+        }
+      }
+    },
+    "MetricDataResultSet":{
+      "type":"list",
+      "member":{
+        "shape":"MetricDataResult",
+        "locationName":"item"
+      }
+    },
+    "MetricDimensionResultSet":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityManagerDimension",
+        "locationName":"item"
+      }
+    },
     "MetricPoint":{
       "type":"structure",
       "members":{
@@ -37234,9 +37898,38 @@
         "locationName":"item"
       }
     },
+    "MetricSet":{
+      "type":"list",
+      "member":{
+        "shape":"Metric",
+        "locationName":"item"
+      },
+      "max":40,
+      "min":0
+    },
     "MetricType":{
       "type":"string",
       "enum":["aggregate-latency"]
+    },
+    "MetricValue":{
+      "type":"structure",
+      "members":{
+        "Metric":{
+          "shape":"Metric",
+          "locationName":"metric"
+        },
+        "Value":{
+          "shape":"Double",
+          "locationName":"value"
+        }
+      }
+    },
+    "MetricValueSet":{
+      "type":"list",
+      "member":{
+        "shape":"MetricValue",
+        "locationName":"item"
+      }
     },
     "MillisecondDateTime":{"type":"timestamp"},
     "ModifyAddressAttributeRequest":{
@@ -40885,6 +41578,13 @@
         "locationName":"item"
       }
     },
+    "OutputFormat":{
+      "type":"string",
+      "enum":[
+        "csv",
+        "parquet"
+      ]
+    },
     "OwnerStringList":{
       "type":"list",
       "member":{
@@ -41222,6 +41922,11 @@
         "shape":"PerformanceFactorReferenceRequest",
         "locationName":"item"
       }
+    },
+    "Period":{
+      "type":"integer",
+      "max":86400,
+      "min":3600
     },
     "PeriodType":{
       "type":"string",
@@ -43759,6 +44464,13 @@
         }
       }
     },
+    "ReservationEndDateType":{
+      "type":"string",
+      "enum":[
+        "limited",
+        "unlimited"
+      ]
+    },
     "ReservationFleetInstanceSpecification":{
       "type":"structure",
       "members":{
@@ -43786,10 +44498,24 @@
     "ReservationState":{
       "type":"string",
       "enum":[
+        "active",
+        "expired",
+        "cancelled",
+        "scheduled",
+        "pending",
+        "failed",
+        "delayed",
+        "unsupported",
         "payment-pending",
         "payment-failed",
-        "active",
         "retired"
+      ]
+    },
+    "ReservationType":{
+      "type":"string",
+      "enum":[
+        "capacity-block",
+        "odcr"
       ]
     },
     "ReservationValue":{
@@ -44490,7 +45216,8 @@
         "verified-access-endpoint-target",
         "ipam-external-resource-verification-token",
         "capacity-block",
-        "mac-modification-task"
+        "mac-modification-task",
+        "capacity-manager-data-export"
       ]
     },
     "ResourceTypeOption":{
@@ -45976,6 +46703,10 @@
         "sse-kms",
         "none"
       ]
+    },
+    "Schedule":{
+      "type":"string",
+      "enum":["hourly"]
     },
     "ScheduledInstance":{
       "type":"structure",
@@ -51434,6 +52165,31 @@
       "member":{
         "shape":"UnsuccessfulItem",
         "locationName":"item"
+      }
+    },
+    "UpdateCapacityManagerOrganizationsAccessRequest":{
+      "type":"structure",
+      "required":["OrganizationsAccess"],
+      "members":{
+        "OrganizationsAccess":{"shape":"BoxedBoolean"},
+        "DryRun":{"shape":"Boolean"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateCapacityManagerOrganizationsAccessResult":{
+      "type":"structure",
+      "members":{
+        "CapacityManagerStatus":{
+          "shape":"CapacityManagerStatus",
+          "locationName":"capacityManagerStatus"
+        },
+        "OrganizationsAccess":{
+          "shape":"Boolean",
+          "locationName":"organizationsAccess"
+        }
       }
     },
     "UpdateSecurityGroupRuleDescriptionsEgressRequest":{

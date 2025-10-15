@@ -1330,7 +1330,8 @@
         "Conditions":{"shape":"RuleConditionList"},
         "Priority":{"shape":"RulePriority"},
         "Actions":{"shape":"Actions"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "Transforms":{"shape":"RuleTransformList"}
       }
     },
     "CreateRuleOutput":{
@@ -1925,7 +1926,14 @@
     "HostHeaderConditionConfig":{
       "type":"structure",
       "members":{
-        "Values":{"shape":"ListOfString"}
+        "Values":{"shape":"ListOfString"},
+        "RegexValues":{"shape":"ListOfString"}
+      }
+    },
+    "HostHeaderRewriteConfig":{
+      "type":"structure",
+      "members":{
+        "Rewrites":{"shape":"RewriteConfigList"}
       }
     },
     "HttpCode":{"type":"string"},
@@ -1933,7 +1941,8 @@
       "type":"structure",
       "members":{
         "HttpHeaderName":{"shape":"HttpHeaderConditionName"},
-        "Values":{"shape":"ListOfString"}
+        "Values":{"shape":"ListOfString"},
+        "RegexValues":{"shape":"ListOfString"}
       }
     },
     "HttpHeaderConditionName":{"type":"string"},
@@ -2362,7 +2371,9 @@
       "members":{
         "RuleArn":{"shape":"RuleArn"},
         "Conditions":{"shape":"RuleConditionList"},
-        "Actions":{"shape":"Actions"}
+        "Actions":{"shape":"Actions"},
+        "Transforms":{"shape":"RuleTransformList"},
+        "ResetTransforms":{"shape":"ResetTransforms"}
       }
     },
     "ModifyRuleOutput":{
@@ -2467,7 +2478,8 @@
     "PathPatternConditionConfig":{
       "type":"structure",
       "members":{
-        "Values":{"shape":"ListOfString"}
+        "Values":{"shape":"ListOfString"},
+        "RegexValues":{"shape":"ListOfString"}
       }
     },
     "Policy":{
@@ -2638,6 +2650,7 @@
       "members":{}
     },
     "ResetCapacityReservation":{"type":"boolean"},
+    "ResetTransforms":{"type":"boolean"},
     "ResourceArn":{"type":"string"},
     "ResourceArns":{
       "type":"list",
@@ -2705,6 +2718,21 @@
       "type":"string",
       "enum":["CRL"]
     },
+    "RewriteConfig":{
+      "type":"structure",
+      "required":[
+        "Regex",
+        "Replace"
+      ],
+      "members":{
+        "Regex":{"shape":"StringValue"},
+        "Replace":{"shape":"StringValue"}
+      }
+    },
+    "RewriteConfigList":{
+      "type":"list",
+      "member":{"shape":"RewriteConfig"}
+    },
     "Rule":{
       "type":"structure",
       "members":{
@@ -2712,7 +2740,8 @@
         "Priority":{"shape":"String"},
         "Conditions":{"shape":"RuleConditionList"},
         "Actions":{"shape":"Actions"},
-        "IsDefault":{"shape":"IsDefault"}
+        "IsDefault":{"shape":"IsDefault"},
+        "Transforms":{"shape":"RuleTransformList"}
       }
     },
     "RuleArn":{"type":"string"},
@@ -2730,7 +2759,8 @@
         "HttpHeaderConfig":{"shape":"HttpHeaderConditionConfig"},
         "QueryStringConfig":{"shape":"QueryStringConditionConfig"},
         "HttpRequestMethodConfig":{"shape":"HttpRequestMethodConditionConfig"},
-        "SourceIpConfig":{"shape":"SourceIpConditionConfig"}
+        "SourceIpConfig":{"shape":"SourceIpConditionConfig"},
+        "RegexValues":{"shape":"ListOfString"}
       }
     },
     "RuleConditionList":{
@@ -2762,6 +2792,19 @@
         "RuleArn":{"shape":"RuleArn"},
         "Priority":{"shape":"RulePriority"}
       }
+    },
+    "RuleTransform":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"TransformTypeEnum"},
+        "HostHeaderRewriteConfig":{"shape":"HostHeaderRewriteConfig"},
+        "UrlRewriteConfig":{"shape":"UrlRewriteConfig"}
+      }
+    },
+    "RuleTransformList":{
+      "type":"list",
+      "member":{"shape":"RuleTransform"}
     },
     "Rules":{
       "type":"list",
@@ -3274,6 +3317,13 @@
       "exception":true
     },
     "TotalRevokedEntries":{"type":"long"},
+    "TransformTypeEnum":{
+      "type":"string",
+      "enum":[
+        "host-header-rewrite",
+        "url-rewrite"
+      ]
+    },
     "TrustStore":{
       "type":"structure",
       "members":{
@@ -3390,6 +3440,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "UrlRewriteConfig":{
+      "type":"structure",
+      "members":{
+        "Rewrites":{"shape":"RewriteConfigList"}
+      }
     },
     "VpcId":{"type":"string"},
     "ZonalCapacityReservationState":{

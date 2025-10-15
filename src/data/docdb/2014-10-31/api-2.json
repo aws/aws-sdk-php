@@ -126,7 +126,8 @@
         {"shape":"DBInstanceNotFoundFault"},
         {"shape":"DBSubnetGroupDoesNotCoverEnoughAZs"},
         {"shape":"GlobalClusterNotFoundFault"},
-        {"shape":"InvalidGlobalClusterStateFault"}
+        {"shape":"InvalidGlobalClusterStateFault"},
+        {"shape":"NetworkTypeNotSupported"}
       ]
     },
     "CreateDBClusterParameterGroup":{
@@ -661,7 +662,8 @@
         {"shape":"DBClusterParameterGroupNotFoundFault"},
         {"shape":"InvalidDBSecurityGroupStateFault"},
         {"shape":"InvalidDBInstanceStateFault"},
-        {"shape":"DBClusterAlreadyExistsFault"}
+        {"shape":"DBClusterAlreadyExistsFault"},
+        {"shape":"NetworkTypeNotSupported"}
       ]
     },
     "ModifyDBClusterParameterGroup":{
@@ -884,7 +886,8 @@
         {"shape":"InvalidRestoreFault"},
         {"shape":"DBSubnetGroupNotFoundFault"},
         {"shape":"InvalidSubnet"},
-        {"shape":"KMSKeyNotAccessibleFault"}
+        {"shape":"KMSKeyNotAccessibleFault"},
+        {"shape":"NetworkTypeNotSupported"}
       ]
     },
     "RestoreDBClusterToPointInTime":{
@@ -913,7 +916,8 @@
         {"shape":"InvalidSubnet"},
         {"shape":"InvalidVPCNetworkStateFault"},
         {"shape":"KMSKeyNotAccessibleFault"},
-        {"shape":"StorageQuotaExceededFault"}
+        {"shape":"StorageQuotaExceededFault"},
+        {"shape":"NetworkTypeNotSupported"}
       ]
     },
     "StartDBCluster":{
@@ -1197,7 +1201,8 @@
         "StorageType":{"shape":"String"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
         "ManageMasterUserPassword":{"shape":"BooleanOptional"},
-        "MasterUserSecretKmsKeyId":{"shape":"String"}
+        "MasterUserSecretKmsKeyId":{"shape":"String"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "CreateDBClusterParameterGroupMessage":{
@@ -1370,9 +1375,11 @@
         "ClusterCreateTime":{"shape":"TStamp"},
         "EnabledCloudwatchLogsExports":{"shape":"LogTypeList"},
         "DeletionProtection":{"shape":"Boolean"},
+        "IOOptimizedNextAllowedModificationTime":{"shape":"TStamp"},
         "StorageType":{"shape":"String"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfigurationInfo"},
-        "MasterUserSecret":{"shape":"ClusterMasterUserSecret"}
+        "MasterUserSecret":{"shape":"ClusterMasterUserSecret"},
+        "NetworkType":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -1768,7 +1775,8 @@
         "VpcId":{"shape":"String"},
         "SubnetGroupStatus":{"shape":"String"},
         "Subnets":{"shape":"SubnetList"},
-        "DBSubnetGroupArn":{"shape":"String"}
+        "DBSubnetGroupArn":{"shape":"String"},
+        "SupportedNetworkTypes":{"shape":"NetworkTypeList"}
       },
       "wrapper":true
     },
@@ -2571,7 +2579,8 @@
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
         "ManageMasterUserPassword":{"shape":"BooleanOptional"},
         "MasterUserSecretKmsKeyId":{"shape":"String"},
-        "RotateMasterUserPassword":{"shape":"BooleanOptional"}
+        "RotateMasterUserPassword":{"shape":"BooleanOptional"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "ModifyDBClusterParameterGroupMessage":{
@@ -2683,6 +2692,20 @@
       "members":{
         "GlobalCluster":{"shape":"GlobalCluster"}
       }
+    },
+    "NetworkTypeList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "NetworkTypeNotSupported":{
+      "type":"structure",
+      "members":{},
+      "error":{
+        "code":"NetworkTypeNotSupported",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
     },
     "OrderableDBInstanceOption":{
       "type":"structure",
@@ -2910,7 +2933,8 @@
         "DeletionProtection":{"shape":"BooleanOptional"},
         "DBClusterParameterGroupName":{"shape":"String"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
-        "StorageType":{"shape":"String"}
+        "StorageType":{"shape":"String"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "RestoreDBClusterFromSnapshotResult":{
@@ -2939,7 +2963,8 @@
         "EnableCloudwatchLogsExports":{"shape":"LogTypeList"},
         "DeletionProtection":{"shape":"BooleanOptional"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
-        "StorageType":{"shape":"String"}
+        "StorageType":{"shape":"String"},
+        "NetworkType":{"shape":"String"}
       }
     },
     "RestoreDBClusterToPointInTimeResult":{
