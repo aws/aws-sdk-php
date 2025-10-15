@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.40 - 2025-10-15
 
 * `Aws\GuardDuty` - Added default pagination value for ListMalwareProtectionPlans API and updated UpdateFindingsFeedback API
 * `Aws\TimestreamInfluxDB` - This release adds support for creating and managing InfluxDB 3 Core and Enterprise DbClusters.
