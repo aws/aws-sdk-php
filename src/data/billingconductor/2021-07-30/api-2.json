@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2021-07-30",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"billingconductor",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWSBillingConductor",
     "serviceId":"billingconductor",
     "signatureVersion":"v4",
@@ -22,8 +23,8 @@
       "input":{"shape":"AssociateAccountsInput"},
       "output":{"shape":"AssociateAccountsOutput"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceLimitExceededException"},
@@ -42,8 +43,8 @@
       "input":{"shape":"AssociatePricingRulesInput"},
       "output":{"shape":"AssociatePricingRulesOutput"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceLimitExceededException"},
@@ -62,8 +63,8 @@
       "input":{"shape":"BatchAssociateResourcesToCustomLineItemInput"},
       "output":{"shape":"BatchAssociateResourcesToCustomLineItemOutput"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceLimitExceededException"},
@@ -82,8 +83,8 @@
       "input":{"shape":"BatchDisassociateResourcesFromCustomLineItemInput"},
       "output":{"shape":"BatchDisassociateResourcesFromCustomLineItemOutput"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
@@ -101,8 +102,8 @@
       "input":{"shape":"CreateBillingGroupInput"},
       "output":{"shape":"CreateBillingGroupOutput"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceLimitExceededException"},
@@ -120,8 +121,8 @@
       "input":{"shape":"CreateCustomLineItemInput"},
       "output":{"shape":"CreateCustomLineItemOutput"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceLimitExceededException"},
@@ -138,8 +139,8 @@
       "input":{"shape":"CreatePricingPlanInput"},
       "output":{"shape":"CreatePricingPlanOutput"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceLimitExceededException"},
@@ -158,8 +159,8 @@
       "input":{"shape":"CreatePricingRuleInput"},
       "output":{"shape":"CreatePricingRuleOutput"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceLimitExceededException"},
@@ -194,8 +195,8 @@
       "input":{"shape":"DeleteCustomLineItemInput"},
       "output":{"shape":"DeleteCustomLineItemOutput"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
@@ -212,8 +213,8 @@
       "input":{"shape":"DeletePricingPlanInput"},
       "output":{"shape":"DeletePricingPlanOutput"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
@@ -230,8 +231,8 @@
       "input":{"shape":"DeletePricingRuleInput"},
       "output":{"shape":"DeletePricingRuleOutput"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
@@ -248,8 +249,8 @@
       "input":{"shape":"DisassociateAccountsInput"},
       "output":{"shape":"DisassociateAccountsOutput"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
@@ -267,8 +268,8 @@
       "input":{"shape":"DisassociatePricingRulesInput"},
       "output":{"shape":"DisassociatePricingRulesOutput"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
@@ -521,8 +522,8 @@
       "input":{"shape":"UpdateBillingGroupInput"},
       "output":{"shape":"UpdateBillingGroupOutput"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
@@ -558,8 +559,8 @@
       "input":{"shape":"UpdatePricingPlanInput"},
       "output":{"shape":"UpdatePricingPlanOutput"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
@@ -577,8 +578,8 @@
       "input":{"shape":"UpdatePricingRuleInput"},
       "output":{"shape":"UpdatePricingRuleOutput"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
@@ -769,11 +770,11 @@
     },
     "BillingEntity":{
       "type":"string",
-      "pattern":"[a-zA-Z0-9 ]+"
+      "pattern":"[a-zA-Z0-9() ]+"
     },
     "BillingGroupArn":{
       "type":"string",
-      "pattern":"(arn:aws(-cn)?:billingconductor::[0-9]{12}:billinggroup/)?[0-9]{12}"
+      "pattern":"(arn:aws(-cn)?:billingconductor::[0-9]{12}:billinggroup/)?[a-zA-Z0-9]{10,12}"
     },
     "BillingGroupArnList":{
       "type":"list",
@@ -820,7 +821,7 @@
     },
     "BillingGroupFullArn":{
       "type":"string",
-      "pattern":"arn:aws(-cn)?:billingconductor::[0-9]{12}:billinggroup/[0-9]{12}"
+      "pattern":"arn:aws(-cn)?:billingconductor::[0-9]{12}:billinggroup/[a-zA-Z0-9]{10,12}"
     },
     "BillingGroupList":{
       "type":"list",
@@ -894,6 +895,10 @@
       "members":{
         "PricingPlanArn":{"shape":"PricingPlanFullArn"}
       }
+    },
+    "ComputationRuleEnum":{
+      "type":"string",
+      "enum":["CONSOLIDATED"]
     },
     "ConflictException":{
       "type":"structure",
@@ -973,7 +978,9 @@
         "BillingPeriodRange":{"shape":"CustomLineItemBillingPeriodRange"},
         "Tags":{"shape":"TagMap"},
         "ChargeDetails":{"shape":"CustomLineItemChargeDetails"},
-        "AccountId":{"shape":"AccountId"}
+        "AccountId":{"shape":"AccountId"},
+        "ComputationRule":{"shape":"ComputationRuleEnum"},
+        "PresentationDetails":{"shape":"PresentationObject"}
       }
     },
     "CreateCustomLineItemOutput":{
@@ -1145,7 +1152,9 @@
         "CreationTime":{"shape":"Instant"},
         "LastModifiedTime":{"shape":"Instant"},
         "AssociationSize":{"shape":"NumberOfAssociations"},
-        "AccountId":{"shape":"AccountId"}
+        "AccountId":{"shape":"AccountId"},
+        "ComputationRule":{"shape":"ComputationRuleEnum"},
+        "PresentationDetails":{"shape":"PresentationObject"}
       }
     },
     "CustomLineItemName":{
@@ -1214,7 +1223,9 @@
         "EndBillingPeriod":{"shape":"BillingPeriod"},
         "Arn":{"shape":"CustomLineItemArn"},
         "StartTime":{"shape":"Instant"},
-        "AccountId":{"shape":"AccountId"}
+        "AccountId":{"shape":"AccountId"},
+        "ComputationRule":{"shape":"ComputationRuleEnum"},
+        "PresentationDetails":{"shape":"PresentationObject"}
       }
     },
     "DeleteBillingGroupInput":{
@@ -1756,9 +1767,16 @@
       "min":1,
       "pattern":"\\S+"
     },
+    "PresentationObject":{
+      "type":"structure",
+      "required":["Service"],
+      "members":{
+        "Service":{"shape":"Service"}
+      }
+    },
     "PricingPlanArn":{
       "type":"string",
-      "pattern":"(arn:aws(-cn)?:billingconductor::[0-9]{12}:pricingplan/)?[a-zA-Z0-9]{10}"
+      "pattern":"(arn:aws(-cn)?:billingconductor::(aws|[0-9]{12}):pricingplan/)?(BasicPricingPlan|[a-zA-Z0-9]{10})"
     },
     "PricingPlanArns":{
       "type":"list",
@@ -1774,7 +1792,7 @@
     },
     "PricingPlanFullArn":{
       "type":"string",
-      "pattern":"arn:aws(-cn)?:billingconductor::[0-9]{12}:pricingplan/[a-zA-Z0-9]{10}"
+      "pattern":"arn:aws(-cn)?:billingconductor::(aws|[0-9]{12}):pricingplan/(BasicPricingPlan|[a-zA-Z0-9]{10})"
     },
     "PricingPlanList":{
       "type":"list",
@@ -1955,8 +1973,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2013,8 +2030,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateBillingGroupAccountGrouping":{
       "type":"structure",
@@ -2217,6 +2233,7 @@
         "MISSING_PRICINGPLAN",
         "MISMATCHED_PRICINGRULE_ARN",
         "DUPLICATE_PRICINGRULE_ARNS",
+        "MISSING_COSTCATEGORY",
         "ILLEGAL_EXPRESSION",
         "ILLEGAL_SCOPE",
         "ILLEGAL_SERVICE",
@@ -2254,7 +2271,10 @@
         "INVALID_FILTER",
         "TOO_MANY_AUTO_ASSOCIATE_BILLING_GROUPS",
         "CANNOT_DELETE_AUTO_ASSOCIATE_BILLING_GROUP",
-        "ILLEGAL_ACCOUNT_ID"
+        "ILLEGAL_ACCOUNT_ID",
+        "BILLING_GROUP_ALREADY_EXIST_IN_CURRENT_BILLING_PERIOD",
+        "ILLEGAL_COMPUTATION_RULE",
+        "ILLEGAL_LINE_ITEM_FILTER"
       ]
     }
   }

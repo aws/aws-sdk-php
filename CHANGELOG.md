@@ -1,5 +1,59 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Lambda` - Adds alias to Lambda's `invokeAsync`, which collides with the `invoke` async variant
+* `Aws\PersonalizeRuntime` - Update endpoint ruleset parameters casing
+* `Aws\CustomerProfiles` - Update endpoint ruleset parameters casing
+* `Aws\IdentityStore` - Update endpoint ruleset parameters casing
+* `Aws\AppRunner` - Update endpoint ruleset parameters casing
+* `Aws\MigrationHubConfig` - Update endpoint ruleset parameters casing
+* `Aws\PinpointSMSVoice` - Update endpoint ruleset parameters casing
+* `Aws\Keyspaces` - Update endpoint ruleset parameters casing
+* `Aws\MedicalImaging` - Update endpoint ruleset parameters casing
+* `Aws\ApiGatewayManagementApi` - Update endpoint ruleset parameters casing
+* `Aws\Pricing` - Update endpoint ruleset parameters casing
+* `Aws\SSMContacts` - Update endpoint ruleset parameters casing
+* `Aws\IVSRealTime` - Update endpoint ruleset parameters casing
+* `Aws\TimestreamQuery` - Update endpoint ruleset parameters casing
+* `Aws\Route53RecoveryControlConfig` - Update endpoint ruleset parameters casing
+* `Aws\Amplify` - Update endpoint ruleset parameters casing
+* `Aws\SSMGuiConnect` - Update endpoint ruleset parameters casing
+* `Aws\LexRuntimeV2` - Update endpoint ruleset parameters casing
+* `Aws\MemoryDB` - Update endpoint ruleset parameters casing
+* `Aws\MainframeModernization` - Update endpoint ruleset parameters casing
+* `Aws\QLDB` - Update endpoint ruleset parameters casing
+* `Aws\VoiceID` - Update endpoint ruleset parameters casing
+* `Aws\Kafka` - Update endpoint ruleset parameters casing
+* `Aws\AppTest` - Update endpoint ruleset parameters casing
+* `Aws\MarketplaceEntitlementService` - Update endpoint ruleset parameters casing
+* `Aws\KMS` - Update endpoint ruleset parameters casing
+* `Aws\LookoutEquipment` - Update endpoint ruleset parameters casing
+* `Aws\Batch` - Update endpoint ruleset parameters casing
+* `Aws\AutoScalingPlans` - Updated FIPS endpoints for US GovCloud regions
+* `Aws\GlobalAccelerator` - Update endpoint ruleset parameters casing
+* `Aws\Polly` - Update endpoint ruleset parameters casing
+* `Aws\QLDBSession` - Update endpoint ruleset parameters casing
+* `Aws\SSM` - Update endpoint ruleset parameters casing
+* `Aws\GlueDataBrew` - Update endpoint ruleset parameters casing
+* `Aws\Personalize` - Update endpoint ruleset parameters casing
+* `Aws\BillingConductor` - New feature: service flat CLI and first AWS managed pricing plan (BasicPricingPlan)
+* `Aws\FreeTier` - Update endpoint ruleset parameters casing
+* `Aws\DataExchange` - Update endpoint ruleset parameters casing
+* `Aws\DLM` - Update endpoint ruleset parameters casing
+* `Aws\IVS` - Update endpoint ruleset parameters casing
+* `Aws\BCMDataExports` - Update endpoint ruleset parameters casing
+* `Aws\OSIS` - Update endpoint ruleset parameters casing
+* `Aws\LexModelBuildingService` - Update endpoint ruleset parameters casing
+* `Aws\ManagedGrafana` - Update endpoint ruleset parameters casing
+* `Aws\NetworkFlowMonitor` - Update endpoint ruleset parameters casing
+* `Aws\GameLift` - Update endpoint ruleset parameters casing
+* `Aws\MediaPackageV2` - Update endpoint ruleset parameters casing
+* `Aws\ACMPCA` - Update endpoint ruleset parameters casing
+* `Aws\WorkSpacesWeb` - Update endpoint ruleset parameters casing
+* `Aws\MachineLearning` - Update endpoint ruleset parameters casing
+* `Aws\GeoRoutes` - Update endpoint ruleset parameters casing
+
 ## 3.356.40 - 2025-10-15
 
 * `Aws\GuardDuty` - Added default pagination value for ListMalwareProtectionPlans API and updated UpdateFindingsFeedback API

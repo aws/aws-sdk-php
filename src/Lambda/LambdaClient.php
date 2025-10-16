@@ -80,7 +80,6 @@ use Aws\Middleware;
  * @method \GuzzleHttp\Promise\Promise invokeAsync(array $args = [])
  * @method \Aws\Result invokeAsynchronous(array $args = [])
  * @method \GuzzleHttp\Promise\Promise invokeAsynchronousAsync(array $args = [])
- * @method \GuzzleHttp\Promise\Promise invokeAsyncAsync(array $args = [])
  * @method \Aws\Result invokeWithResponseStream(array $args = [])
  * @method \GuzzleHttp\Promise\Promise invokeWithResponseStreamAsync(array $args = [])
  * @method \Aws\Result listAliases(array $args = [])

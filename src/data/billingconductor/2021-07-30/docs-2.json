@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>Amazon Web Services Billing Conductor is a fully managed service that you can use to customize a <a href=\"https://docs.aws.amazon.com/billingconductor/latest/userguide/understanding-eb.html#eb-other-definitions\">proforma</a> version of your billing data each month, to accurately show or chargeback your end customers. Amazon Web Services Billing Conductor doesn't change the way you're billed by Amazon Web Services each month by design. Instead, it provides you with a mechanism to configure, generate, and display rates to certain customers over a given billing period. You can also analyze the difference between the rates you apply to your accounting groupings relative to your actual rates from Amazon Web Services. As a result of your Amazon Web Services Billing Conductor configuration, the payer account can also see the custom rate applied on the billing details page of the <a href=\"https://console.aws.amazon.com/billing\">Amazon Web Services Billing console</a>, or configure a cost and usage report per billing group.</p> <p>This documentation shows how you can configure Amazon Web Services Billing Conductor using its API. For more information about using the <a href=\"https://console.aws.amazon.com/billingconductor/\">Amazon Web Services Billing Conductor</a> user interface, see the <a href=\"https://docs.aws.amazon.com/billingconductor/latest/userguide/what-is-billingconductor.html\"> Amazon Web Services Billing Conductor User Guide</a>.</p>",
+  "service": "<p>Billing Conductor is a fully managed service that you can use to customize a <a href=\"https://docs.aws.amazon.com/billingconductor/latest/userguide/understanding-eb.html#eb-other-definitions\">pro forma</a> version of your billing data each month, to accurately show or chargeback your end customers. Billing Conductor doesn't change the way you're billed by Amazon Web Services each month by design. Instead, it provides you with a mechanism to configure, generate, and display rates to certain customers over a given billing period. You can also analyze the difference between the rates you apply to your accounting groupings relative to your actual rates from Amazon Web Services. As a result of your Billing Conductor configuration, the payer account can also see the custom rate applied on the billing details page of the <a href=\"https://console.aws.amazon.com/billing\">Billing console</a>, or configure a cost and usage report per billing group.</p> <p>This documentation shows how you can configure Billing Conductor by using its API. For more information about using the <a href=\"https://console.aws.amazon.com/billingconductor/\">Billing Conductor</a> user interface, see the <a href=\"https://docs.aws.amazon.com/billingconductor/latest/userguide/what-is-billingconductor.html\"> Billing Conductor User Guide</a>.</p>",
   "operations": {
     "AssociateAccounts": "<p>Connects an array of account IDs in a consolidated billing family to a predefined billing group. The account IDs must be a part of the consolidated billing family during the current month, and not already associated with another billing group. The maximum number of accounts that can be associated in one call is 30. </p>",
     "AssociatePricingRules": "<p>Connects an array of <code>PricingRuleArns</code> to a defined <code>PricingPlan</code>. The maximum number <code>PricingRuleArn</code> that can be associated in one call is 30. </p>",
@@ -16,7 +16,7 @@
     "DeletePricingRule": "<p> Deletes the pricing rule that's identified by the input Amazon Resource Name (ARN). </p>",
     "DisassociateAccounts": "<p>Removes the specified list of account IDs from the given billing group. </p>",
     "DisassociatePricingRules": "<p> Disassociates a list of pricing rules from a pricing plan. </p>",
-    "GetBillingGroupCostReport": "<p>Retrieves the margin summary report, which includes the Amazon Web Services cost and charged amount (pro forma cost) by Amazon Web Service for a specific billing group.</p>",
+    "GetBillingGroupCostReport": "<p>Retrieves the margin summary report, which includes the Amazon Web Services cost and charged amount (pro forma cost) by Amazon Web Services service for a specific billing group.</p>",
     "ListAccountAssociations": "<p> This is a paginated call to list linked accounts that are linked to the payer account for the specified time period. If no information is provided, the current billing period is used. The response will optionally include the billing group that's associated with the linked account.</p>",
     "ListBillingGroupCostReports": "<p>A paginated call to retrieve a summary report of actual Amazon Web Services charges and the calculated Amazon Web Services charges based on the associated pricing plan of a billing group.</p>",
     "ListBillingGroups": "<p>A paginated call to retrieve a list of billing groups for the given billing period. If you don't provide a billing group, the current billing period is used.</p>",
@@ -45,8 +45,7 @@
     },
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountAssociationsList": {
       "base": null,
@@ -118,23 +117,19 @@
     },
     "AssociateAccountsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateAccountsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociatePricingRulesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociatePricingRulesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateResourceError": {
       "base": "<p>A representation of a resource association error.</p>",
@@ -182,23 +177,19 @@
     },
     "BatchAssociateResourcesToCustomLineItemInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchAssociateResourcesToCustomLineItemOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDisassociateResourcesFromCustomLineItemInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDisassociateResourcesFromCustomLineItemOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BillingEntity": {
       "base": null,
@@ -366,10 +357,10 @@
     "ClientToken": {
       "base": null,
       "refs": {
-        "CreateBillingGroupInput$ClientToken": "<p> The token that is needed to support idempotency. Idempotency isn't currently supported, but will be implemented in a future update. </p>",
-        "CreateCustomLineItemInput$ClientToken": "<p> The token that is needed to support idempotency. Idempotency isn't currently supported, but will be implemented in a future update. </p>",
-        "CreatePricingPlanInput$ClientToken": "<p> The token that is needed to support idempotency. Idempotency isn't currently supported, but will be implemented in a future update. </p>",
-        "CreatePricingRuleInput$ClientToken": "<p> The token that's needed to support idempotency. Idempotency isn't currently supported, but will be implemented in a future update. </p>"
+        "CreateBillingGroupInput$ClientToken": "<p>A unique, case-sensitive identifier that you specify to ensure idempotency of the request. Idempotency ensures that an API request completes no more than one time. With an idempotent request, if the original request completes successfully, any subsequent retries complete successfully without performing any further actions.</p>",
+        "CreateCustomLineItemInput$ClientToken": "<p>A unique, case-sensitive identifier that you specify to ensure idempotency of the request. Idempotency ensures that an API request completes no more than one time. With an idempotent request, if the original request completes successfully, any subsequent retries complete successfully without performing any further actions.</p>",
+        "CreatePricingPlanInput$ClientToken": "<p>A unique, case-sensitive identifier that you specify to ensure idempotency of the request. Idempotency ensures that an API request completes no more than one time. With an idempotent request, if the original request completes successfully, any subsequent retries complete successfully without performing any further actions.</p>",
+        "CreatePricingRuleInput$ClientToken": "<p>A unique, case-sensitive identifier that you specify to ensure idempotency of the request. Idempotency ensures that an API request completes no more than one time. With an idempotent request, if the original request completes successfully, any subsequent retries complete successfully without performing any further actions.</p>"
       }
     },
     "ComputationPreference": {
@@ -380,10 +371,17 @@
         "UpdateBillingGroupInput$ComputationPreference": "<p> The preferences and settings that will be used to compute the Amazon Web Services charges for a billing group. </p>"
       }
     },
+    "ComputationRuleEnum": {
+      "base": "<p>The display settings of the custom line item</p>",
+      "refs": {
+        "CreateCustomLineItemInput$ComputationRule": null,
+        "CustomLineItemListElement$ComputationRule": "<p>The display settings of the custom line item</p>",
+        "CustomLineItemVersionListElement$ComputationRule": "<p>The display settings of the custom line item</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>You can cause an inconsistent state by updating or deleting a resource. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConflictExceptionReason": {
       "base": null,
@@ -393,23 +391,19 @@
     },
     "CreateBillingGroupInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBillingGroupOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCustomLineItemInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCustomLineItemOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFreeTierConfig": {
       "base": "<p> The possible Amazon Web Services Free Tier configurations. </p>",
@@ -419,23 +413,19 @@
     },
     "CreatePricingPlanInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePricingPlanOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePricingRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePricingRuleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTieringInput": {
       "base": "<p> The set of tiering configurations for the pricing rule. </p>",
@@ -628,63 +618,51 @@
     },
     "DeleteBillingGroupInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBillingGroupOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCustomLineItemInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCustomLineItemOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePricingPlanInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePricingPlanOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePricingRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePricingRuleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateAccountsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateAccountsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociatePricingRulesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociatePricingRulesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateResourceResponseElement": {
       "base": "<p>A resource disassociation result for a percentage custom line item.</p>",
@@ -707,13 +685,11 @@
     },
     "GetBillingGroupCostReportInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBillingGroupCostReportOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GroupByAttributeName": {
       "base": null,
@@ -724,7 +700,7 @@
     "GroupByAttributesList": {
       "base": null,
       "refs": {
-        "GetBillingGroupCostReportInput$GroupBy": "<p>A list of strings that specify the attributes that are used to break down costs in the margin summary reports for the billing group. For example, you can view your costs by the Amazon Web Service name or the billing period.</p>"
+        "GetBillingGroupCostReportInput$GroupBy": "<p>A list of strings that specify the attributes that are used to break down costs in the margin summary reports for the billing group. For example, you can view your costs by the Amazon Web Services service name or the billing period.</p>"
       }
     },
     "Instant": {
@@ -749,8 +725,7 @@
     },
     "InternalServerException": {
       "base": "<p>An unexpected error occurred while processing a request. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LineItemFilter": {
       "base": "<p>A representation of the line item filter for your custom line item. You can use line item filters to include or exclude specific resource values from the billing group's total cost. For example, if you create a custom line item and you want to filter out a value, such as Savings Plan discounts, you can update <code>LineItemFilter</code> to exclude it.</p>",
@@ -792,13 +767,11 @@
     },
     "ListAccountAssociationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccountAssociationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBillingGroupAccountGrouping": {
       "base": "<p>Specifies if the billing group has the following features enabled.</p>",
@@ -814,13 +787,11 @@
     },
     "ListBillingGroupCostReportsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBillingGroupCostReportsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBillingGroupsFilter": {
       "base": "<p>The filter that specifies the billing groups and pricing plans to retrieve billing group information.</p>",
@@ -830,13 +801,11 @@
     },
     "ListBillingGroupsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBillingGroupsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomLineItemChargeDetails": {
       "base": "<p> A representation of the charge details of a custom line item. </p>",
@@ -872,13 +841,11 @@
     },
     "ListCustomLineItemVersionsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomLineItemVersionsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomLineItemsFilter": {
       "base": "<p>A filter that specifies the custom line items and billing groups to retrieve FFLI information.</p>",
@@ -888,23 +855,19 @@
     },
     "ListCustomLineItemsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomLineItemsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPricingPlansAssociatedWithPricingRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPricingPlansAssociatedWithPricingRuleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPricingPlansFilter": {
       "base": "<p>The filter that specifies the Amazon Resource Names (ARNs) of pricing plans, to retrieve pricing plan information.</p>",
@@ -914,23 +877,19 @@
     },
     "ListPricingPlansInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPricingPlansOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPricingRulesAssociatedToPricingPlanInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPricingRulesAssociatedToPricingPlanOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPricingRulesFilter": {
       "base": "<p> The filter that specifies criteria that the pricing rules returned by the <code>ListPricingRules</code> API will adhere to.</p>",
@@ -940,13 +899,11 @@
     },
     "ListPricingRulesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPricingRulesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourcesAssociatedToCustomLineItemFilter": {
       "base": "<p> A filter that specifies the type of resource associations that should be retrieved for a custom line item. </p>",
@@ -956,13 +913,11 @@
     },
     "ListResourcesAssociatedToCustomLineItemInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourcesAssociatedToCustomLineItemOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourcesAssociatedToCustomLineItemResponseElement": {
       "base": "<p> A representation of a resource association for a custom line item. </p>",
@@ -978,13 +933,11 @@
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Margin": {
       "base": null,
@@ -1044,9 +997,9 @@
     "ModifierPercentage": {
       "base": null,
       "refs": {
-        "CreatePricingRuleInput$ModifierPercentage": "<p> A percentage modifier that's applied on the public pricing rates. </p>",
+        "CreatePricingRuleInput$ModifierPercentage": "<p>A percentage modifier that's applied on the public pricing rates. Your entry will be rounded to the nearest 2 decimal places.</p>",
         "PricingRuleListElement$ModifierPercentage": "<p>A percentage modifier applied on the public pricing rates.</p>",
-        "UpdatePricingRuleInput$ModifierPercentage": "<p> The new modifier to show pricing plan rates as a percentage. </p>",
+        "UpdatePricingRuleInput$ModifierPercentage": "<p> The new modifier to show pricing plan rates as a percentage. Your entry will be rounded to the nearest 2 decimal places. </p>",
         "UpdatePricingRuleOutput$ModifierPercentage": "<p> The new modifier to show pricing plan rates as a percentage. </p>"
       }
     },
@@ -1085,6 +1038,14 @@
         "CreatePricingRuleInput$Operation": "<p> Operation is the specific Amazon Web Services action covered by this line item. This describes the specific usage of the line item.</p> <p> If the <code>Scope</code> attribute is set to <code>SKU</code>, this attribute indicates which operation the <code>PricingRule</code> is modifying. For example, a value of <code>RunInstances:0202</code> indicates the operation of running an Amazon EC2 instance.</p>",
         "PricingRuleListElement$Operation": "<p> Operation is the specific Amazon Web Services action covered by this line item. This describes the specific usage of the line item.</p> <p> If the <code>Scope</code> attribute is set to <code>SKU</code>, this attribute indicates which operation the <code>PricingRule</code> is modifying. For example, a value of <code>RunInstances:0202</code> indicates the operation of running an Amazon EC2 instance.</p>",
         "UpdatePricingRuleOutput$Operation": "<p>Operation refers to the specific Amazon Web Services covered by this line item. This describes the specific usage of the line item.</p> <p> If the <code>Scope</code> attribute is set to <code>SKU</code>, this attribute indicates which operation the <code>PricingRule</code> is modifying. For example, a value of <code>RunInstances:0202</code> indicates the operation of running an Amazon EC2 instance.</p>"
+      }
+    },
+    "PresentationObject": {
+      "base": "<p>The presentation configuration of the custom line item</p>",
+      "refs": {
+        "CreateCustomLineItemInput$PresentationDetails": null,
+        "CustomLineItemListElement$PresentationDetails": "<p>The presentation configuration of the custom line item</p>",
+        "CustomLineItemVersionListElement$PresentationDetails": "<p>The presentation configuration of the custom line item</p>"
       }
     },
     "PricingPlanArn": {
@@ -1242,8 +1203,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The request references a resource that doesn't exist. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RetryAfterSeconds": {
       "base": null,
@@ -1256,14 +1216,14 @@
       "base": null,
       "refs": {
         "CreatePricingRuleInput$Service": "<p> If the <code>Scope</code> attribute is set to <code>SERVICE</code> or <code>SKU</code>, the attribute indicates which service the <code>PricingRule</code> is applicable for. </p>",
+        "PresentationObject$Service": "<p>This defines the service of where the custom line item is presented</p>",
         "PricingRuleListElement$Service": "<p>If the <code>Scope</code> attribute is <code>SERVICE</code>, this attribute indicates which service the <code>PricingRule</code> is applicable for.</p>",
         "UpdatePricingRuleOutput$Service": "<p> If the <code>Scope</code> attribute is set to <code>SERVICE</code>, the attribute indicates which service the <code>PricingRule</code> is applicable for. </p>"
       }
     },
     "ServiceLimitExceededException": {
       "base": "<p>The request would cause a service limit to exceed. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -1316,13 +1276,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1332,8 +1290,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Tiering": {
       "base": "<p> The set of tiering configurations for the pricing rule. </p>",
@@ -1378,13 +1335,11 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBillingGroupAccountGrouping": {
       "base": "<p>Specifies if the billing group has the following features enabled.</p>",
@@ -1395,13 +1350,11 @@
     },
     "UpdateBillingGroupInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBillingGroupOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCustomLineItemChargeDetails": {
       "base": "<p> A representation of the new charge details of a custom line item. This should contain only one of <code>Flat</code> or <code>Percentage</code>. </p>",
@@ -1417,13 +1370,11 @@
     },
     "UpdateCustomLineItemInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCustomLineItemOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCustomLineItemPercentageChargeDetails": {
       "base": "<p> A representation of the new charge details that are associated with a percentage custom line item. </p>",
@@ -1439,23 +1390,19 @@
     },
     "UpdatePricingPlanInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePricingPlanOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePricingRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePricingRuleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTieringInput": {
       "base": "<p> The set of tiering configurations for the pricing rule. </p>",
@@ -1467,15 +1414,14 @@
     "UsageType": {
       "base": null,
       "refs": {
-        "CreatePricingRuleInput$UsageType": "<p> Usage type is the unit that each service uses to measure the usage of a specific type of resource.</p> <p>If the <code>Scope</code> attribute is set to <code>SKU</code>, this attribute indicates which usage type the <code>PricingRule</code> is modifying. For example, <code>USW2-BoxUsage:m2.2xlarge</code> describes an<code> M2 High Memory Double Extra Large</code> instance in the US West (Oregon) Region. <pre><code>&lt;/p&gt; </code></pre>",
-        "PricingRuleListElement$UsageType": "<p> Usage type is the unit that each service uses to measure the usage of a specific type of resource.</p> <p>If the <code>Scope</code> attribute is set to <code>SKU</code>, this attribute indicates which usage type the <code>PricingRule</code> is modifying. For example, <code>USW2-BoxUsage:m2.2xlarge</code> describes an<code> M2 High Memory Double Extra Large</code> instance in the US West (Oregon) Region. <pre><code>&lt;/p&gt; </code></pre>",
+        "CreatePricingRuleInput$UsageType": "<p> Usage type is the unit that each service uses to measure the usage of a specific type of resource.</p> <p>If the <code>Scope</code> attribute is set to <code>SKU</code>, this attribute indicates which usage type the <code>PricingRule</code> is modifying. For example, <code>USW2-BoxUsage:m2.2xlarge</code> describes an<code> M2 High Memory Double Extra Large</code> instance in the US West (Oregon) Region. </p>",
+        "PricingRuleListElement$UsageType": "<p> Usage type is the unit that each service uses to measure the usage of a specific type of resource.</p> <p>If the <code>Scope</code> attribute is set to <code>SKU</code>, this attribute indicates which usage type the <code>PricingRule</code> is modifying. For example, <code>USW2-BoxUsage:m2.2xlarge</code> describes an<code> M2 High Memory Double Extra Large</code> instance in the US West (Oregon) Region. </p>",
         "UpdatePricingRuleOutput$UsageType": "<p>Usage type is the unit that each service uses to measure the usage of a specific type of resource.</p> <p>If the <code>Scope</code> attribute is set to <code>SKU</code>, this attribute indicates which usage type the <code>PricingRule</code> is modifying. For example, <code>USW2-BoxUsage:m2.2xlarge</code> describes an <code>M2 High Memory Double Extra Large</code> instance in the US West (Oregon) Region. </p>"
       }
     },
     "ValidationException": {
-      "base": "<p>The input doesn't match with the constraints specified by Amazon Web Services.</p>",
-      "refs": {
-      }
+      "base": "<p>The input doesn't match with the constraints specified by Amazon Web Services services.</p>",
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>The field's information of a request that resulted in an exception.</p>",
