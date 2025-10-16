@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.41 - 2025-10-16
 
 * `Aws\Lambda` - Adds alias to Lambda's `invokeAsync`, which collides with the `invoke` async variant
 * `Aws\PersonalizeRuntime` - Update endpoint ruleset parameters casing
