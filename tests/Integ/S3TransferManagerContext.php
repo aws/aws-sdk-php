@@ -740,4 +740,129 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         Assert::assertEquals(0, $multipartUploadCount,
             "Expected no in-progress multipart uploads for file: {$file}");
     }
+
+    /**
+     * @Given /^I have a file (.*) to be uploaded of size (.*)$/
+     */
+    public function iHaveAFileToBeUploadedOfSize($file, $size): void
+    {
+        $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
+        file_put_contents($fullFilePath, str_repeat('*', (int)$size));
+    }
+
+    /**
+     * @When /^I upload the file (.*) with custom checksum algorithm (.*)$/
+     */
+    public function iUploadTheFileWithCustomChecksumAlgorithm(
+        $file,
+        $algorithm
+    ): void
+    {
+        $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
+        $s3TransferManager = new S3TransferManager(
+            self::getSdk()->createS3()
+        );
+        $s3TransferManager->upload(
+            new UploadRequest(
+                $fullFilePath,
+                [
+                    'Bucket' => self::getResourceName(),
+                    'Key' => $file,
+                    'ChecksumAlgorithm' => $algorithm,
+                ],
+                [
+                    'multipart_upload_threshold_bytes' => 1024 * 1024 * 5,
+                ]
+            )
+        )->wait();
+    }
+
+    /**
+     * @Then /^The checksum validation with algorithm (.*) for file (.*) should succeed$/
+     */
+    public function theChecksumValidationWithAlgorithmForFileShouldSucceed(
+        $algorithm,
+        $file
+    ): void
+    {
+        $s3TransferManager = new S3TransferManager(
+            self::getSdk()->createS3()
+        );
+        $result = $s3TransferManager->download(
+            new DownloadRequest(
+                source: [
+                    'Bucket' => self::getResourceName(),
+                    'Key' => $file,
+                ],
+                config: [
+                    'response_checksum_validation' => 'when_supported'
+                ]
+            )
+        )->wait();
+        Assert::assertEqualsIgnoringCase(
+            $algorithm,
+            $result['ChecksumValidated'],
+        );
+    }
+
+    /**
+     * @When /^I upload the file (.*) with custom checksum (.*) and algorithm (.*)$/
+     */
+    public function iUploadTheFileWithCustomChecksumAndAlgorithm(
+        $file,
+        $checksum,
+        $algorithm
+    ): void
+    {
+        $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
+        $s3TransferManager = new S3TransferManager(
+            self::getSdk()->createS3()
+        );
+        $s3TransferManager->upload(
+            new UploadRequest(
+                $fullFilePath,
+                [
+                    'Bucket' => self::getResourceName(),
+                    'Key' => $file,
+                    'Checksum'.strtoupper($algorithm) => $checksum,
+                ],
+                [
+                    'multipart_upload_threshold_bytes' => 1024 * 1024 * 5,
+                ]
+            )
+        )->wait();
+    }
+
+    /**
+     * @Then /^The checksum validation with checksum (.*) and algorithm (.*) for file (.*) should succeed$/
+     */
+    public function theChecksumValidationWithChecksumAndAlgorithmForFileShouldSucceed(
+        $checksum,
+        $algorithm,
+        $file
+    ): void
+    {
+        $s3TransferManager = new S3TransferManager(
+            self::getSdk()->createS3()
+        );
+        $result = $s3TransferManager->download(
+            new DownloadRequest(
+                source: [
+                    'Bucket' => self::getResourceName(),
+                    'Key' => $file,
+                ],
+                config: [
+                    'response_checksum_validation' => 'when_supported'
+                ]
+            )
+        )->wait();
+        Assert::assertEqualsIgnoringCase(
+            $algorithm,
+            $result['ChecksumValidated'],
+        );
+        Assert::assertEquals(
+            $checksum,
+            $result['Checksum'.strtoupper($algorithm)],
+        );
+    }
 }

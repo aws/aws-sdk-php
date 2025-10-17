@@ -1022,14 +1022,9 @@ EOF
             );
         } catch (RuntimeException $exception) {
             if (!$operationCompleted) {
-                $matches = $this->assertEachWordMatchesTheErrorMessage(
+                $this->assertStringContainsString(
                     "A circular symbolic link traversal has been detected at",
                     $exception->getMessage()
-                );
-
-                $this->assertTrue(
-                    $matches,
-                    "Exception message does not match expected"
                 );
             }
         } finally {
@@ -3020,11 +3015,9 @@ EOF
                 "Operation did not expect a failure"
             );
 
-            $this->assertTrue(
-                $this->assertEachWordMatchesTheErrorMessage(
-                    $outcome['errorMessage'],
-                    $e->getMessage()
-                )
+            $this->assertStringContainsString(
+                $outcome['errorMessage'],
+                $e->getMessage()
             );
         }
     }
@@ -3168,11 +3161,9 @@ EOF
                 "Operation did not expect a failure"
             );
 
-            $this->assertTrue(
-                $this->assertEachWordMatchesTheErrorMessage(
-                    $outcome['errorMessage'],
-                    $e->getMessage()
-                )
+            $this->assertStringContainsString(
+                $outcome['errorMessage'],
+                $e->getMessage()
             );
         }
     }
@@ -3603,72 +3594,6 @@ EOF
             unset($config[$key]);
             $config[$newKey] = $value;
         }
-    }
-
-    /**
-     * Checks if all words from the expected message appear in the actual message
-     * in the same order (allowing for gaps between words).
-     * Example that resolves to true:
-     *  expected: "error validating config"
-     *  actual:   "error validating download config"
-     *  reason: The words "error" -> "validating" -> "config" were found in the
-     *  same error in the actual message.
-     *
-     * Example that resolves to false:
-     *  expected: "error validating config"
-     *  actual:   "error in download config validation"
-     *  reason: The words error->validating->config were not
-     *  found in order.
-     *
-     * @param string $expectedMessage The message containing words to find
-     * @param string $actualMessage   The message to search within
-     *
-     * @return bool True if all expected words are found in order, false otherwise
-     */
-    private function assertEachWordMatchesTheErrorMessage(
-        string $expectedMessage,
-        string $actualMessage
-    ): bool
-    {
-        $expectedMessage = trim($expectedMessage);
-        $actualMessage = trim($actualMessage);
-
-        // To make the validation case-insensitive
-        $expectedMessage = strtolower($expectedMessage);
-        $actualMessage = strtolower($actualMessage);
-
-        // Split into words and filter empty elements
-        $expectedWords = array_filter(preg_split('/\s+/', $expectedMessage));
-        $actualWords = array_filter(preg_split('/\s+/', $actualMessage));
-
-        if (empty($expectedWords)) {
-            return true;
-        }
-
-        if (empty($actualWords)) {
-            return false;
-        }
-
-        $actualIndex = 0;
-        $actualWordsCount = count($actualWords);
-
-        foreach ($expectedWords as $expectedWord) {
-            $wordFound = false;
-            while ($actualIndex < $actualWordsCount) {
-                if ($expectedWord === $actualWords[$actualIndex]) {
-                    $wordFound = true;
-                    $actualIndex++;
-                    break;
-                }
-                $actualIndex++;
-            }
-
-            if (!$wordFound) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**

@@ -176,9 +176,13 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
 
                     $prevPartNo = $this->currentPartNo;
 
-                    yield $this->s3Client->executeAsync($this->nextCommand())
-                        ->then(function ($result) {
-                            $this->partDownloadCompleted($result);
+                    $command = $this->nextCommand();
+                    yield $this->s3Client->executeAsync($command)
+                        ->then(function ($result) use ($command) {
+                            $this->partDownloadCompleted(
+                                $result,
+                                $command->toArray()
+                            );
 
                             return $result;
                         })->otherwise(function ($reason) {
@@ -225,7 +229,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
         $this->downloadInitiated($command->toArray());
 
         return $this->s3Client->executeAsync($command)
-            ->then(function (ResultInterface $result) {
+            ->then(function (ResultInterface $result) use ($command) {
                 // Compute object dimensions such as parts count and object size
                 $this->computeObjectDimensions($result);
 
@@ -235,7 +239,10 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
                 }
 
                 // Notify listeners
-                $this->partDownloadCompleted($result);
+                $this->partDownloadCompleted(
+                    $result,
+                    $command->toArray()
+                );
 
                 // Assign custom fields in the result
                 $result['ContentLength'] = $this->objectSizeInBytes;
@@ -359,7 +366,8 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
      * @return void
      */
     private function partDownloadCompleted(
-        ResultInterface $result
+        ResultInterface $result,
+        array $requestArgs
     ): void
     {
         $partDownloadBytes = $result['ContentLength'];
@@ -375,7 +383,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
         );
         $this->currentSnapshot = $newSnapshot;
         $this->listenerNotifier?->bytesTransferred([
-            TransferListener::REQUEST_ARGS_KEY => $this->downloadRequestArgs,
+            TransferListener::REQUEST_ARGS_KEY => $requestArgs,
             TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
         ]);
     }

@@ -115,3 +115,35 @@ Feature: S3 Transfer Manager
       | abort-file-1.txt   | 20971520 | 3              |
       | abort-file-2.txt   | 41943040 | 5              |
       | abort-file-3.txt   | 10485760 | 1              |
+
+  Scenario Outline: Multipart upload with custom checksum algorithm
+    Given I have a file <file> to be uploaded of size <size>
+    When I upload the file <file> with custom checksum algorithm <algorithm>
+    Then The checksum validation with algorithm <algorithm> for file <file> should succeed
+    Examples:
+      | file       | size      | algorithm |
+      | myfile-8-1 | 10485760  | sha256    |
+      | myfile-8-2 | 15728640  | sha256    |
+      | myfile-8-3 | 7340032   | sha256    |
+      | myfile-8-4 | 10485760  | crc32     |
+      | myfile-8-5 | 15728640  | crc32     |
+      | myfile-8-6 | 7340032   | crc32     |
+      | myfile-8-7 | 10485760  | sha1      |
+      | myfile-8-8 | 15728640  | sha1      |
+      | myfile-8-9 | 7340032   | sha1      |
+
+  Scenario Outline: Multipart upload with custom checksum
+    Given I have a file <file> to be uploaded of size <size>
+    When I upload the file <file> with custom checksum <checksum> and algorithm <algorithm>
+    Then The checksum validation with checksum <checksum> and algorithm <algorithm> for file <file> should succeed
+    Examples:
+      | file       | size      | algorithm | checksum                                     |
+      | myfile-9-1 | 10485760  | sha256    | sdbKFd7hCpt0S5H2EVeHtz+lLMh+drFj1PR+CSyYBSs= |
+      | myfile-9-2 | 15728640  | sha256    | DCKSUVOFEHo7XBcHLyOzG3ELCzXebwcOJMMsMpWktFE= |
+      | myfile-9-3 | 7340032   | sha256    | DnkSYSeq3vpPaB+oP4Fy/1ogzNvqdYAqR+0jxB5YKjU= |
+      | myfile-9-4 | 10485760  | crc32     | vMU7HA==                                     |
+      | myfile-9-5 | 15728640  | crc32     | gjLQ1Q==                                     |
+      | myfile-9-6 | 7340032   | crc32     | CKbfZQ==                                     |
+      | myfile-9-7 | 10485760  | sha1      | baaAJRIP4FjliKgAhv7veG8TbaA=                 |
+      | myfile-9-8 | 15728640  | sha1      | wMitTD6HySDcZ+9ycl4MPnVt0zs=                 |
+      | myfile-9-9 | 7340032   | sha1      | mQTUWIygeeDpTwFw+QzyHCb0GnU=                 |
