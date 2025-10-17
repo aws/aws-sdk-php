@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.42 - 2025-10-17
 
 * `Aws\IoTDeviceAdvisor` - Update endpoint ruleset parameters casing
 * `Aws\TimestreamWrite` - Update endpoint ruleset parameters casing
