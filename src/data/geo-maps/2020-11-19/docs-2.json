@@ -2,11 +2,11 @@
   "version": "2.0",
   "service": "<p> Integrate high-quality base map data into your applications using <a href=\"https://maplibre.org\">MapLibre</a>. Capabilities include: </p> <ul> <li> <p>Access to comprehensive base map data, allowing you to tailor the map display to your specific needs.</p> </li> <li> <p>Multiple pre-designed map styles suited for various application types, such as navigation, logistics, or data visualization.</p> </li> <li> <p>Generation of static map images for scenarios where interactive maps aren't suitable, such as:</p> <ul> <li> <p>Embedding in emails or documents</p> </li> <li> <p>Displaying in low-bandwidth environments</p> </li> <li> <p>Creating printable maps</p> </li> <li> <p>Enhancing application performance by reducing client-side rendering</p> </li> </ul> </li> </ul>",
   "operations": {
-    "GetGlyphs": "<p> <code>GetGlyphs</code> returns the map's glyphs.</p>",
-    "GetSprites": "<p> <code>GetSprites</code> returns the map's sprites.</p>",
-    "GetStaticMap": "<p> <code>GetStaticMap</code> provides high-quality static map images with customizable options. You can modify the map's appearance and overlay additional information. It's an ideal solution for applications requiring tailored static map snapshots.</p>",
-    "GetStyleDescriptor": "<p> <code>GetStyleDescriptor</code> returns information about the style.</p>",
-    "GetTile": "<p> <code>GetTile</code> returns a tile. Map tiles are used by clients to render a map. they're addressed using a grid arrangement with an X coordinate, Y coordinate, and Z (zoom) level.</p>"
+    "GetGlyphs": "<p> <code>GetGlyphs</code> returns the map's glyphs.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/styling-labels-with-glyphs.html\">Style labels with glyphs</a> in the <i>Amazon Location Service Developer Guide</i>.</p>",
+    "GetSprites": "<p> <code>GetSprites</code> returns the map's sprites.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/styling-iconography-with-sprites.html\">Style iconography with sprites</a> in the <i>Amazon Location Service Developer Guide</i>.</p>",
+    "GetStaticMap": "<p> <code>GetStaticMap</code> provides high-quality static map images with customizable options. You can modify the map's appearance and overlay additional information. It's an ideal solution for applications requiring tailored static map snapshots.</p> <p>For more information, see the following topics in the <i>Amazon Location Service Developer Guide</i>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/static-maps.html\">Static maps</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/customizing-static-maps.html\">Customize static maps</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/overlaying-static-map.html\">Overlay on the static map</a> </p> </li> </ul>",
+    "GetStyleDescriptor": "<p> <code>GetStyleDescriptor</code> returns information about the style.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/styling-dynamic-maps.html\">Style dynamic maps</a> in the <i>Amazon Location Service Developer Guide</i>.</p>",
+    "GetTile": "<p> <code>GetTile</code> returns a tile. Map tiles are used by clients to render a map. they're addressed using a grid arrangement with an X coordinate, Y coordinate, and Z (zoom) level.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/tiles.html\">Tiles</a> in the <i>Amazon Location Service Developer Guide</i>.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -51,6 +51,12 @@
         "GetStaticMapRequest$CompactOverlay": "<p>Takes in a string to draw geometries on the image. The input is a comma separated format as follows format: <code>[Lon, Lat]</code> </p> <p>Example: <code>line:-122.407653,37.798557,-122.413291,37.802443;color=%23DD0000;width=7;outline-color=#00DD00;outline-width=5yd|point:-122.40572,37.80004;label=Fog Hill Market;size=large;text-color=%23DD0000;color=#EE4B2B</code> </p> <note> <p>Currently it supports the following geometry types: point, line and polygon. It does not support multiPoint , multiLine and multiPolgyon.</p> </note>"
       }
     },
+    "ContourDensity": {
+      "base": null,
+      "refs": {
+        "GetStyleDescriptorRequest$ContourDensity": "<p>Displays the shape and steepness of terrain features using elevation lines. The density value controls how densely the available contour line information is rendered on the map.</p> <p>This parameter is valid only for the <code>Standard</code> map style.</p>"
+      }
+    },
     "CountryCode": {
       "base": null,
       "refs": {
@@ -83,7 +89,7 @@
     "GetGlyphsRequestFontUnicodeRangeString": {
       "base": null,
       "refs": {
-        "GetGlyphsRequest$FontUnicodeRange": "<p>A Unicode range of characters to download glyphs for. This must be aligned to multiples of 256. </p> <p>Example: <code>0-255.pdf</code> </p>"
+        "GetGlyphsRequest$FontUnicodeRange": "<p>A Unicode range of characters to download glyphs for. This must be aligned to multiples of 256. </p> <p>Example: <code>0-255.pbf</code> </p>"
       }
     },
     "GetGlyphsResponse": {
@@ -202,14 +208,14 @@
     "PositionListString": {
       "base": null,
       "refs": {
-        "GetStaticMapRequest$BoundingBox": "<p>Takes in two pairs of coordinates, [Lon, Lat], denoting south-westerly and north-easterly edges of the image. The underlying area becomes the view of the image. </p> <p>Example: -123.17075,49.26959,-123.08125,49.31429</p>",
-        "GetStaticMapRequest$BoundedPositions": "<p>Takes in two or more pair of coordinates, [Lon, Lat], with each coordinate separated by a comma. The API will generate an image to encompass all of the provided coordinates. </p> <note> <p>Cannot be used with <code>Zoom</code> and or <code>Radius</code> </p> </note> <p>Example: 97.170451,78.039098,99.045536,27.176178</p>"
+        "GetStaticMapRequest$BoundingBox": "<p>Takes in two pairs of coordinates in World Geodetic System (WGS 84) format: [longitude, latitude], denoting south-westerly and north-easterly edges of the image. The underlying area becomes the view of the image. </p> <p>Example: -123.17075,49.26959,-123.08125,49.31429</p>",
+        "GetStaticMapRequest$BoundedPositions": "<p>Takes in two or more pair of coordinates in World Geodetic System (WGS 84) format: [longitude, latitude], with each coordinate separated by a comma. The API will generate an image to encompass all of the provided coordinates. </p> <note> <p>Cannot be used with <code>Zoom</code> and or <code>Radius</code> </p> </note> <p>Example: 97.170451,78.039098,99.045536,27.176178</p>"
       }
     },
     "PositionString": {
       "base": null,
       "refs": {
-        "GetStaticMapRequest$Center": "<p>Takes in a pair of coordinates, [Lon, Lat], which becomes the center point of the image. This parameter requires that either zoom or radius is set.</p> <note> <p>Cannot be used with <code>Zoom</code> and or <code>Radius</code> </p> </note> <p>Example: 49.295,-123.108</p>"
+        "GetStaticMapRequest$Center": "<p>Takes in a pair of coordinates in World Geodetic System (WGS 84) format: [longitude, latitude], which becomes the center point of the image. This parameter requires that either zoom or radius is set.</p> <note> <p>Cannot be used with <code>Zoom</code> and or <code>Radius</code> </p> </note> <p>Example: 49.295,-123.108</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -263,6 +269,12 @@
         "ValidationExceptionField$Message": "<p>The error message.</p>"
       }
     },
+    "Terrain": {
+      "base": null,
+      "refs": {
+        "GetStyleDescriptorRequest$Terrain": "<p>Adjusts how physical terrain details are rendered on the map.</p> <p>The following terrain styles are currently supported:</p> <ul> <li> <p> <code>Hillshade</code>: Displays the physical terrain details through shading and highlighting of elevation change and geographic features.</p> </li> </ul> <p>This parameter is valid only for the <code>Standard</code> map style.</p>"
+      }
+    },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
       "refs": {}
@@ -271,6 +283,24 @@
       "base": null,
       "refs": {
         "GetTileRequest$Tileset": "<p>Specifies the desired tile set.</p> <p>Valid Values: <code>raster.satellite | vector.basemap</code> </p>"
+      }
+    },
+    "Traffic": {
+      "base": null,
+      "refs": {
+        "GetStyleDescriptorRequest$Traffic": "<p>Displays real-time traffic information overlay on map, such as incident events and flow events.</p> <p>This parameter is valid only for the <code>Standard</code> map style.</p>"
+      }
+    },
+    "TravelMode": {
+      "base": null,
+      "refs": {
+        "TravelModeList$member": null
+      }
+    },
+    "TravelModeList": {
+      "base": null,
+      "refs": {
+        "GetStyleDescriptorRequest$TravelModes": "<p>Renders additional map information relevant to selected travel modes. Information for multiple travel modes can be displayed simultaneously, although this increases the overall information density rendered on the map.</p> <p>This parameter is valid only for the <code>Standard</code> map style.</p>"
       }
     },
     "ValidationException": {

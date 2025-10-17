@@ -1,5 +1,58 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoTDeviceAdvisor` - Update endpoint ruleset parameters casing
+* `Aws\TimestreamWrite` - Update endpoint ruleset parameters casing
+* `Aws\AppIntegrationsService` - Update endpoint ruleset parameters casing
+* `Aws\EventBridge` - Update endpoint ruleset parameters casing
+* `Aws\ControlCatalog` - Update endpoint ruleset parameters casing
+* `Aws\QApps` - Update endpoint ruleset parameters casing
+* `Aws\AppConfigData` - Update endpoint ruleset parameters casing
+* `Aws\SageMakerGeospatial` - Update endpoint ruleset parameters casing
+* `Aws\LicenseManager` - Update endpoint ruleset parameters casing
+* `Aws\RolesAnywhere` - Update endpoint ruleset parameters casing
+* `Aws\MediaConnect` - Update endpoint ruleset parameters casing
+* `Aws\ARCZonalShift` - Update endpoint ruleset parameters casing
+* `Aws\BedrockDataAutomationRuntime` - Update endpoint ruleset parameters casing
+* `Aws\AmplifyBackend` - Update endpoint ruleset parameters casing
+* `Aws\DirectoryService` - Update endpoint ruleset parameters casing
+* `Aws\ChimeSDKMeetings` - Update endpoint ruleset parameters casing
+* `Aws\MarketplaceCatalog` - The ListEntities API now supports two new CAPI filters: DeliveryOptionTypes for SaaS products and CompatibleAWSServices for Container products.
+* `Aws\GeoMaps` - Added support for optional style parameters in maps, including Terrain, ContourDensity, Traffic, and TravelModes.
+* `Aws\CloudFrontKeyValueStore` - Update endpoint ruleset parameters casing
+* `Aws\PrometheusService` - Update endpoint ruleset parameters casing
+* `Aws\GameLiftStreams` - Updates documentation to clarify valid application binaries for an Amazon GameLift Streams application and provide descriptions of stream session error status reasons
+* `Aws\CloudWatchEvidently` - Update endpoint ruleset parameters casing
+* `Aws\MigrationHubRefactorSpaces` - Update endpoint ruleset parameters casing
+* `Aws\NetworkFirewall` - Update endpoint ruleset parameters casing
+* `Aws\Organizations` - Update endpoint ruleset parameters casing
+* `Aws\SWF` - Releasing minor endpoint updates.
+* `Aws\KinesisVideoMedia` - Update endpoint ruleset parameters casing
+* `Aws\LakeFormation` - Update endpoint ruleset parameters casing
+* `Aws\DSQL` - Update endpoint ruleset parameters casing
+* `Aws\ApplicationInsights` - Update endpoint ruleset parameters casing
+* `Aws\finspace` - Update endpoint ruleset parameters casing
+* `Aws\DataSync` - Update endpoint ruleset parameters casing
+* `Aws\signer` - Update endpoint ruleset parameters casing
+* `Aws\WellArchitected` - Update endpoint ruleset parameters casing
+* `Aws\BCMRecommendedActions` - Update endpoint ruleset parameters casing
+* `Aws\IoTTwinMaker` - Update endpoint ruleset parameters casing
+* `Aws\CloudFront` - Update endpoint ruleset parameters casing
+* `Aws\IoTDataPlane` - Update endpoint ruleset parameters casing
+* `Aws\LicenseManagerUserSubscriptions` - Update endpoint ruleset parameters casing
+* `Aws\Tnb` - Update endpoint ruleset parameters casing
+* `Aws\Route53RecoveryReadiness` - Update endpoint ruleset parameters casing
+* `Aws\FinSpaceData` - Update endpoint ruleset parameters casing
+* `Aws\CodeStarNotifications` - Update endpoint ruleset parameters casing
+* `Aws\ElasticsearchService` - Update endpoint ruleset parameters casing
+* `Aws\KendraRanking` - Update endpoint ruleset parameters casing
+* `Aws\EC2` - Documentation updates for Amazon EC2.
+* `Aws\PI` - Update endpoint ruleset parameters casing
+* `Aws\IoTThingsGraph` - Update endpoint ruleset parameters casing
+* `Aws\NetworkManager` - Update endpoint ruleset parameters casing
+* `Aws\imagebuilder` - Update endpoint ruleset parameters casing
+
 ## 3.356.41 - 2025-10-16
 
 * `Aws\Lambda` - Adds alias to Lambda's `invokeAsync`, which collides with the `invoke` async variant
