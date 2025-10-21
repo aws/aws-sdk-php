@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EMR` - Added RECONFIGURING to the InstanceFleetState convenience enum.
+* `Aws\MediaConvert` - This release adds the ability to set resolution for the black video generator and also adds the StartJobsQuery and GetJobsQueryResults APIs which allow asynchronous search of job history using new filters.
+* `Aws\DynamoDB` - Add AccountID based endpoint metric to endpoint rules.
+* `Aws\MarketplaceMetering` - Added ClientToken parameter to MeterUsage API for specifying idempotent requests.
+
 ## 3.356.42 - 2025-10-17
 
 * `Aws\IoTDeviceAdvisor` - Update endpoint ruleset parameters casing
