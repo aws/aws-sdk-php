@@ -36,7 +36,6 @@ class AssumeRoleWithWebIdentityCredentialProvider
 
     /** @var integer */
     private $tokenFileReadAttempts;
-
     /** @var string */
     private $source;
 
@@ -73,17 +72,14 @@ class AssumeRoleWithWebIdentityCredentialProvider
         $this->tokenFileReadAttempts = 0;
         $this->session = $config['SessionName']
             ?? 'aws-sdk-php-' . round(microtime(true) * 1000);
-        $region = $config['region'] ?? null;
+        $region = $config['region'] ?? 'us-east-1';
         if (isset($config['client'])) {
             $this->client = $config['client'];
         } else {
             $this->client = new StsClient([
                 'credentials' => false,
-                'region' => $region ?? 'us-east-1',
-                'version' => 'latest',
-                'sts_regional_endpoints' => $region
-                    ? 'regional'
-                    : 'legacy'
+                'region' => $region,
+                'version' => 'latest'
             ]);
         }
 

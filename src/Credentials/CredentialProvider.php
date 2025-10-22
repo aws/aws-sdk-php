@@ -708,7 +708,9 @@ class CredentialProvider
         }
 
         if (empty($stsClient)) {
-            $sourceRegion = $profiles[$sourceProfileName]['region'] ?? null;
+            $sourceRegion = isset($profiles[$sourceProfileName]['region'])
+                ? $profiles[$sourceProfileName]['region']
+                : 'us-east-1';
             $config['preferStaticCredentials'] = true;
             $sourceCredentials = null;
             if (!empty($roleProfile['source_profile'])){
@@ -723,11 +725,8 @@ class CredentialProvider
             }
             $stsClient = new StsClient([
                 'credentials' => $sourceCredentials,
-                'region' => $sourceRegion ?? 'us-east-1',
+                'region' => $sourceRegion,
                 'version' => '2011-06-15',
-                'sts_regional_endpoints' => $sourceRegion
-                    ? 'regional'
-                    : 'legacy'
             ]);
         }
 
