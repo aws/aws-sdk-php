@@ -1,5 +1,57 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DirectConnect` - Update endpoint ruleset parameters casing
+* `Aws\MarketplaceAgreement` - Update endpoint ruleset parameters casing
+* `Aws\CloudHSMV2` - Update endpoint ruleset parameters casing
+* `Aws\PCS` - Update endpoint ruleset parameters casing
+* `Aws\AutoScaling` - Update endpoint ruleset parameters casing
+* `Aws\SNS` - Update endpoint ruleset parameters casing
+* `Aws\EC2InstanceConnect` - Update endpoint ruleset parameters casing
+* `Aws\CognitoIdentity` - Update endpoint ruleset parameters casing
+* `Aws\EC2` - This release adds AvailabilityZoneId support for CreateNetworkInterface and DescribeNetworkInterfaces APIs.
+* `Aws\WorkMail` - Update endpoint ruleset parameters casing
+* `Aws\KinesisAnalyticsV2` - Update endpoint ruleset parameters casing
+* `Aws\ComprehendMedical` - Update endpoint ruleset parameters casing
+* `Aws\Route53` - Amazon Route 53 now supports the ISOB West Region for private DNS for Amazon VPCs and cloudwatch healthchecks.
+* `Aws\IAM` - Updated OIDC and SAML apis to reject multiple simultaneous requests to change a unique object.
+* `Aws\BCMDashboards` - Update endpoint ruleset parameters casing
+* `Aws\RedshiftDataAPIService` - Update endpoint ruleset parameters casing
+* `Aws\IoTFleetWise` - Update endpoint ruleset parameters casing
+* `Aws\RTBFabric` - Update for general availability of AWS RTB Fabric service.
+* `Aws\Inspector2` - Update endpoint ruleset parameters casing
+* `Aws\Connect` - This release added support for email address alias configuration and outbound campaign preview mode.
+* `Aws\CostExplorer` - Update endpoint ruleset parameters casing
+* `Aws\MailManager` - Update endpoint ruleset parameters casing
+* `Aws\IoTSiteWise` - Update endpoint ruleset parameters casing
+* `Aws\ConnectParticipant` - Update endpoint ruleset parameters casing
+* `Aws\Chatbot` - Update endpoint ruleset parameters casing
+* `Aws\DeviceFarm` - This release adds support for optionally including an app as part of a CreateRemoteAccessSession request
+* `Aws\OAM` - Update endpoint ruleset parameters casing
+* `Aws\ConnectCampaignsV2` - Updated Amazon Connect Outbound Campaigns V2 SDK to support Preview Outbound Mode
+* `Aws\IoTSecureTunneling` - Update endpoint ruleset parameters casing
+* `Aws\CloudHSM` - Update endpoint ruleset parameters casing
+* `Aws\AugmentedAIRuntime` - Update endpoint ruleset parameters casing
+* `Aws\AppFabric` - Update endpoint ruleset parameters casing
+* `Aws\NotificationsContacts` - Update endpoint ruleset parameters casing
+* `Aws\DirectoryServiceData` - Update endpoint ruleset parameters casing
+* `Aws\SSMIncidents` - Update endpoint ruleset parameters casing
+* `Aws\CodeGuruReviewer` - Update endpoint ruleset parameters casing
+* `Aws\MWAA` - Update endpoint ruleset parameters casing
+* `Aws\MediaLive` - Add 3 API operations for fetching alerts: ListAlerts (Channels), ListClusterAlerts (MediaLive Anywhere), and ListMultiplexAlerts
+* `Aws\WorkSpaces` - Update endpoint ruleset parameters casing
+* `Aws\PinpointSMSVoiceV2` - Update endpoint ruleset parameters casing
+* `Aws\CloudFormation` - Update endpoint ruleset parameters casing
+* `Aws\B2bi` - Update endpoint ruleset parameters casing
+* `Aws\ForecastQueryService` - Update endpoint ruleset parameters casing
+* `Aws\ivschat` - Update endpoint ruleset parameters casing
+* `Aws\WorkDocs` - Update endpoint ruleset parameters casing
+* `Aws\IoT` - Update endpoint ruleset parameters casing
+* `Aws\Route53RecoveryCluster` - Update endpoint ruleset parameters casing
+* `Aws\IoTAnalytics` - Update endpoint ruleset parameters casing
+* `Aws\LexModelsV2` - Update endpoint ruleset parameters casing
+
 ## 3.356.43 - 2025-10-21
 
 * `Aws\EMR` - Added RECONFIGURING to the InstanceFleetState convenience enum.

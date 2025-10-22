@@ -628,6 +628,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionRAM(array $args = [])
  * @method \Aws\RDSDataService\RDSDataServiceClient createRDSDataService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionRDSDataService(array $args = [])
+ * @method \Aws\RTBFabric\RTBFabricClient createRTBFabric(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionRTBFabric(array $args = [])
  * @method \Aws\Rds\RdsClient createRds(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionRds(array $args = [])
  * @method \Aws\RecycleBin\RecycleBinClient createRecycleBin(array $args = [])

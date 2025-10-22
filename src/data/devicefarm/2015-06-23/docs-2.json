@@ -104,10 +104,12 @@
       "refs": {
         "AmazonResourceNames$member": null,
         "Artifact$arn": "<p>The artifact's ARN.</p>",
+        "AuxiliaryAppArnList$member": null,
         "CreateDevicePoolRequest$projectArn": "<p>The ARN of the project for the device pool.</p>",
         "CreateNetworkProfileRequest$projectArn": "<p>The Amazon Resource Name (ARN) of the project for which you want to create a network profile.</p>",
         "CreateRemoteAccessSessionRequest$projectArn": "<p>The Amazon Resource Name (ARN) of the project for which you want to create a remote access session.</p>",
         "CreateRemoteAccessSessionRequest$deviceArn": "<p>The ARN of the device for which you want to create a remote access session.</p>",
+        "CreateRemoteAccessSessionRequest$appArn": "<p>The Amazon Resource Name (ARN) of the app to create the remote access session.</p>",
         "CreateRemoteAccessSessionRequest$instanceArn": "<p>The Amazon Resource Name (ARN) of the device instance for which you want to create a remote access session.</p>",
         "CreateRemoteAccessSessionRequest$remoteRecordAppArn": "<p>The Amazon Resource Name (ARN) for the app to be recorded in the remote access session.</p>",
         "CreateUploadRequest$projectArn": "<p>The ARN of the project for the upload.</p>",
@@ -163,6 +165,7 @@
         "RemoteAccessSession$arn": "<p>The Amazon Resource Name (ARN) of the remote access session.</p>",
         "RemoteAccessSession$instanceArn": "<p>The ARN of the instance.</p>",
         "RemoteAccessSession$remoteRecordAppArn": "<p>The ARN for the app to be recorded in the remote access session.</p>",
+        "RemoteAccessSession$appUpload": "<p>The ARN for the app to be installed onto your device.</p>",
         "Run$arn": "<p>The run's ARN.</p>",
         "Run$appUpload": "<p>An app to upload or that has been uploaded.</p>",
         "Run$devicePoolArn": "<p>The ARN of the device pool for the run.</p>",
@@ -241,6 +244,12 @@
       "base": null,
       "refs": {
         "ListArtifactsResult$artifacts": "<p>Information about the artifacts.</p>"
+      }
+    },
+    "AuxiliaryAppArnList": {
+      "base": null,
+      "refs": {
+        "CreateRemoteAccessSessionConfiguration$auxiliaryApps": "<p>A list of upload ARNs for app packages to be installed onto your device. (Maximum 3)</p>"
       }
     },
     "BillingMethod": {

@@ -114,6 +114,25 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "AssociateEmailAddressAlias":{
+      "name":"AssociateEmailAddressAlias",
+      "http":{
+        "method":"POST",
+        "requestUri":"/email-addresses/{InstanceId}/{EmailAddressId}/associate-alias"
+      },
+      "input":{"shape":"AssociateEmailAddressAliasRequest"},
+      "output":{"shape":"AssociateEmailAddressAliasResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"IdempotencyException"}
+      ]
+    },
     "AssociateFlow":{
       "name":"AssociateFlow",
       "http":{
@@ -1841,6 +1860,24 @@
         {"shape":"InternalServiceException"},
         {"shape":"InvalidRequestException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "DisassociateEmailAddressAlias":{
+      "name":"DisassociateEmailAddressAlias",
+      "http":{
+        "method":"POST",
+        "requestUri":"/email-addresses/{InstanceId}/{EmailAddressId}/disassociate-alias"
+      },
+      "input":{"shape":"DisassociateEmailAddressAliasRequest"},
+      "output":{"shape":"DisassociateEmailAddressAliasResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceConflictException"}
       ]
     },
     "DisassociateFlow":{
@@ -4783,6 +4820,12 @@
       "type":"list",
       "member":{"shape":"AgentContactReference"}
     },
+    "AgentFirst":{
+      "type":"structure",
+      "members":{
+        "Preview":{"shape":"Preview"}
+      }
+    },
     "AgentFirstName":{
       "type":"string",
       "max":255,
@@ -4817,6 +4860,8 @@
       "type":"structure",
       "members":{
         "Id":{"shape":"AgentResourceId"},
+        "AcceptedByAgentTimestamp":{"shape":"timestamp"},
+        "PreviewEndTimestamp":{"shape":"timestamp"},
         "ConnectedToAgentTimestamp":{"shape":"timestamp"},
         "AgentPauseDurationInSeconds":{"shape":"AgentPauseDurationInSeconds"},
         "HierarchyGroups":{"shape":"HierarchyGroups"},
@@ -4985,6 +5030,18 @@
       "max":100,
       "min":1
     },
+    "AliasConfiguration":{
+      "type":"structure",
+      "required":["EmailAddressId"],
+      "members":{
+        "EmailAddressId":{"shape":"EmailAddressId"}
+      }
+    },
+    "AliasConfigurationList":{
+      "type":"list",
+      "member":{"shape":"AliasConfiguration"},
+      "max":1
+    },
     "AllowedAccessControlTags":{
       "type":"map",
       "key":{"shape":"SecurityProfilePolicyKey"},
@@ -5002,6 +5059,17 @@
       "type":"list",
       "member":{"shape":"MonitorCapability"},
       "max":2
+    },
+    "AllowedUserAction":{
+      "type":"string",
+      "enum":[
+        "CALL",
+        "DISCARD"
+      ]
+    },
+    "AllowedUserActions":{
+      "type":"list",
+      "member":{"shape":"AllowedUserAction"}
     },
     "AnalyticsDataAssociationResult":{
       "type":"structure",
@@ -5205,6 +5273,35 @@
       }
     },
     "AssociateDefaultVocabularyResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "AssociateEmailAddressAliasRequest":{
+      "type":"structure",
+      "required":[
+        "EmailAddressId",
+        "InstanceId",
+        "AliasConfiguration"
+      ],
+      "members":{
+        "EmailAddressId":{
+          "shape":"EmailAddressId",
+          "location":"uri",
+          "locationName":"EmailAddressId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "AliasConfiguration":{"shape":"AliasConfiguration"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "AssociateEmailAddressAliasResponse":{
       "type":"structure",
       "members":{}
     },
@@ -6142,6 +6239,7 @@
         "ContactEvaluations":{"shape":"ContactEvaluations"},
         "TaskTemplateInfo":{"shape":"TaskTemplateInfoV2"},
         "ContactDetails":{"shape":"ContactDetails"},
+        "OutboundStrategy":{"shape":"OutboundStrategy"},
         "Attributes":{"shape":"Attributes"}
       }
     },
@@ -6168,7 +6266,8 @@
         "RequestIdentifier":{"shape":"RequestIdentifier"},
         "QueueId":{"shape":"QueueId"},
         "Attributes":{"shape":"Attributes"},
-        "Campaign":{"shape":"Campaign"}
+        "Campaign":{"shape":"Campaign"},
+        "OutboundStrategy":{"shape":"OutboundStrategy"}
       }
     },
     "ContactDataRequestList":{
@@ -8515,6 +8614,7 @@
         "Description":{"shape":"Description"},
         "CreateTimestamp":{"shape":"ISO8601Datetime"},
         "ModifiedTimestamp":{"shape":"ISO8601Datetime"},
+        "AliasConfigurations":{"shape":"AliasConfigurationList"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -9151,6 +9251,35 @@
         }
       }
     },
+    "DisassociateEmailAddressAliasRequest":{
+      "type":"structure",
+      "required":[
+        "EmailAddressId",
+        "InstanceId",
+        "AliasConfiguration"
+      ],
+      "members":{
+        "EmailAddressId":{
+          "shape":"EmailAddressId",
+          "location":"uri",
+          "locationName":"EmailAddressId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "AliasConfiguration":{"shape":"AliasConfiguration"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "DisassociateEmailAddressAliasResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DisassociateFlowRequest":{
       "type":"structure",
       "required":[
@@ -9543,7 +9672,8 @@
         "EmailAddressArn":{"shape":"EmailAddressArn"},
         "EmailAddress":{"shape":"EmailAddress"},
         "Description":{"shape":"Description"},
-        "DisplayName":{"shape":"EmailAddressDisplayName"}
+        "DisplayName":{"shape":"EmailAddressDisplayName"},
+        "AliasConfigurations":{"shape":"AliasConfigurationList"}
       }
     },
     "EmailAddressRecipientList":{
@@ -10279,6 +10409,7 @@
         "INVALID_CUSTOMER_ENDPOINT",
         "INVALID_SYSTEM_ENDPOINT",
         "INVALID_QUEUE",
+        "INVALID_OUTBOUND_STRATEGY",
         "MISSING_CAMPAIGN",
         "MISSING_CUSTOMER_ENDPOINT",
         "MISSING_QUEUE_ID_AND_SYSTEM_ENDPOINT",
@@ -13813,6 +13944,24 @@
       "max":36,
       "min":36
     },
+    "OutboundStrategy":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"OutboundStrategyType"},
+        "Config":{"shape":"OutboundStrategyConfig"}
+      }
+    },
+    "OutboundStrategyConfig":{
+      "type":"structure",
+      "members":{
+        "AgentFirst":{"shape":"AgentFirst"}
+      }
+    },
+    "OutboundStrategyType":{
+      "type":"string",
+      "enum":["AGENT_FIRST"]
+    },
     "OutboundSubject":{
       "type":"string",
       "max":998,
@@ -14368,6 +14517,17 @@
       "max":128,
       "min":0
     },
+    "PostAcceptPreviewTimeoutDurationInSeconds":{
+      "type":"integer",
+      "min":0
+    },
+    "PostAcceptTimeoutConfig":{
+      "type":"structure",
+      "required":["DurationInSeconds"],
+      "members":{
+        "DurationInSeconds":{"shape":"PostAcceptPreviewTimeoutDurationInSeconds"}
+      }
+    },
     "PotentialAudioQualityIssue":{
       "type":"string",
       "max":128,
@@ -14473,6 +14633,17 @@
       "type":"string",
       "max":128,
       "min":1
+    },
+    "Preview":{
+      "type":"structure",
+      "required":[
+        "PostAcceptTimeoutConfig",
+        "AllowedUserActions"
+      ],
+      "members":{
+        "PostAcceptTimeoutConfig":{"shape":"PostAcceptTimeoutConfig"},
+        "AllowedUserActions":{"shape":"AllowedUserActions"}
+      }
     },
     "Priority":{
       "type":"integer",
@@ -17115,7 +17286,8 @@
         "Attributes":{"shape":"Attributes"},
         "AnswerMachineDetectionConfig":{"shape":"AnswerMachineDetectionConfig"},
         "CampaignId":{"shape":"CampaignId"},
-        "TrafficType":{"shape":"TrafficType"}
+        "TrafficType":{"shape":"TrafficType"},
+        "OutboundStrategy":{"shape":"OutboundStrategy"}
       }
     },
     "StartOutboundVoiceContactResponse":{

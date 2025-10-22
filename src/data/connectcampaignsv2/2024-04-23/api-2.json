@@ -643,6 +643,14 @@
       },
       "exception":true
     },
+    "AgentAction":{
+      "type":"string",
+      "enum":["DISCARD"]
+    },
+    "AgentActions":{
+      "type":"list",
+      "member":{"shape":"AgentAction"}
+    },
     "AgentlessConfig":{
       "type":"structure",
       "members":{
@@ -734,8 +742,8 @@
     "CampaignId":{
       "type":"string",
       "max":256,
-      "min":0,
-      "pattern":"[a-zA-Z0-9\\-:/]*"
+      "min":1,
+      "pattern":"[-:/a-zA-Z0-9]+"
     },
     "CampaignName":{
       "type":"string",
@@ -1119,8 +1127,8 @@
     "DialRequestId":{
       "type":"string",
       "max":256,
-      "min":0,
-      "pattern":"[a-zA-Z0-9_\\-.]*"
+      "min":1,
+      "pattern":"[-_.a-zA-Z0-9]+"
     },
     "EmailAddress":{
       "type":"string",
@@ -1380,8 +1388,8 @@
     "InstanceId":{
       "type":"string",
       "max":256,
-      "min":0,
-      "pattern":"[a-zA-Z0-9_\\-.]*"
+      "min":1,
+      "pattern":"[-_.a-zA-Z0-9]+"
     },
     "InstanceIdFilter":{
       "type":"structure",
@@ -1673,6 +1681,18 @@
       "required":["bandwidthAllocation"],
       "members":{
         "bandwidthAllocation":{"shape":"BandwidthAllocation"}
+      }
+    },
+    "PreviewConfig":{
+      "type":"structure",
+      "required":[
+        "bandwidthAllocation",
+        "timeoutConfig"
+      ],
+      "members":{
+        "bandwidthAllocation":{"shape":"BandwidthAllocation"},
+        "timeoutConfig":{"shape":"TimeoutConfig"},
+        "agentActions":{"shape":"AgentActions"}
       }
     },
     "ProfileId":{
@@ -2126,7 +2146,8 @@
       "members":{
         "progressive":{"shape":"ProgressiveConfig"},
         "predictive":{"shape":"PredictiveConfig"},
-        "agentless":{"shape":"AgentlessConfig"}
+        "agentless":{"shape":"AgentlessConfig"},
+        "preview":{"shape":"PreviewConfig"}
       },
       "union":true
     },
@@ -2180,6 +2201,19 @@
       "max":50,
       "min":0,
       "pattern":"[a-zA-Z0-9_\\-/]*"
+    },
+    "TimeoutConfig":{
+      "type":"structure",
+      "required":["durationInSeconds"],
+      "members":{
+        "durationInSeconds":{"shape":"TimeoutDuration"}
+      }
+    },
+    "TimeoutDuration":{
+      "type":"integer",
+      "box":true,
+      "max":300,
+      "min":1
     },
     "UntagResourceRequest":{
       "type":"structure",

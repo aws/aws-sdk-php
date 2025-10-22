@@ -121,7 +121,10 @@
     "DeleteSdiSource": "Delete an SdiSource. The SdiSource must not be part of any SidSourceMapping and must not be attached to any input.",
     "DescribeSdiSource": "Gets details about a SdiSource.",
     "ListSdiSources": "List all the SdiSources in the AWS account.",
-    "UpdateSdiSource": "Change some of the settings in an SdiSource."
+    "UpdateSdiSource": "Change some of the settings in an SdiSource.",
+    "ListAlerts": "List the alerts for a channel with optional filtering based on alert state.",
+    "ListClusterAlerts": "List the alerts for a cluster with optional filtering based on alert state.",
+    "ListMultiplexAlerts": "List the alerts for a multiplex with optional filtering based on alert state."
   },
   "shapes": {
     "AacCodingMode": {
@@ -5261,7 +5264,23 @@
         "SdiSourceSummary$Name": "The name of the SdiSource.",
         "UpdateSdiSourceRequest$Name": "Include this parameter only if you want to change the name of the SdiSource. Specify a name that is unique in the AWS account. We recommend you assign a name that describes the source, for example curling-cameraA. Names are case-sensitive.",
         "MediaPackageV2DestinationSettings$AudioGroupId": "Applies only to an output that contains audio. If you want to put several audio encodes into one audio rendition group, decide on a name (ID) for the group. Then in every audio output that you want to belong to that group, enter that ID in this field. Note that this information is part of the HLS specification (not the CMAF specification), but if you include it then MediaPackage will include it in the manifest it creates for the video player.",
-        "MediaPackageV2DestinationSettings$AudioRenditionSets": "Applies only to an output that contains video, and only if you want to associate one or more audio groups to this video. In this field you assign the groups that you create (in the Group ID fields in the various audio outputs). Enter one group ID, or enter a comma-separated list of group IDs. Note that this information is part of the HLS specification (not the CMAF specification), but if you include it then MediaPackage will include it in the manifest it creates for the video player."
+        "MediaPackageV2DestinationSettings$AudioRenditionSets": "Applies only to an output that contains video, and only if you want to associate one or more audio groups to this video. In this field you assign the groups that you create (in the Group ID fields in the various audio outputs). Enter one group ID, or enter a comma-separated list of group IDs. Note that this information is part of the HLS specification (not the CMAF specification), but if you include it then MediaPackage will include it in the manifest it creates for the video player.",
+        "ChannelAlert$AlertType": "The type of the alert",
+        "ChannelAlert$Id": "The unique ID for this alert instance",
+        "ChannelAlert$Message": "The user facing alert message which can have more context",
+        "ChannelAlert$PipelineId": "The ID of the pipeline this alert is associated with",
+        "ClusterAlert$AlertType": "The type of the alert",
+        "ClusterAlert$ChannelId": "The ID of the channel this alert is associated with",
+        "ClusterAlert$Id": "The further subtype of this alert",
+        "ClusterAlert$Message": "The user facing alert message which can have more context",
+        "ClusterAlert$NodeId": "The ID of the node this alert is associated with",
+        "ListAlertsResultModel$NextToken": "The token to use to retrieve the next page of results",
+        "ListClusterAlertsResultModel$NextToken": "The token to use to retrieve the next page of results",
+        "ListMultiplexAlertsResultModel$NextToken": "The token to use to retrieve the next page of results",
+        "MultiplexAlert$AlertType": "The type of the alert",
+        "MultiplexAlert$Id": "The unique ID for this alert instance",
+        "MultiplexAlert$Message": "The user facing alert message which can have more context",
+        "MultiplexAlert$PipelineId": "The ID of the pipeline this alert is associated with"
       }
     },
     "__stringMax1000": {
@@ -7254,6 +7273,75 @@
       "base": null,
       "refs": {
         "Av1Settings$MinBitrate": "Used for QVBR rate control mode only.\nOptional.\nEnter a minimum bitrate if you want to keep the output bitrate about a threshold, in order to prevent the downstream system from de-allocating network bandwidth for this output."
+      }
+    },
+    "ChannelAlert": {
+      "base": "An alert on a channel",
+      "refs": {
+        "__listOfChannelAlert$member": null
+      }
+    },
+    "ChannelAlertState": {
+      "base": "The possible states of a channel alert. SET - The alert is actively happening. CLEARED - The alert is no longer happening.",
+      "refs": {
+        "ChannelAlert$State": "The state of the alert"
+      }
+    },
+    "ClusterAlert": {
+      "base": "An alert on a cluster",
+      "refs": {
+        "__listOfClusterAlert$member": null
+      }
+    },
+    "ClusterAlertState": {
+      "base": "The possible states of a cluster alert. SET - The alert is actively happening. CLEARED - The alert is no longer happening.",
+      "refs": {
+        "ClusterAlert$State": "The state of the alert"
+      }
+    },
+    "ListAlertsResultModel": {
+      "base": "The result of a successful ListAlerts request",
+      "refs": {
+      }
+    },
+    "ListClusterAlertsResultModel": {
+      "base": "The result of a successful ListClusterAlerts request",
+      "refs": {
+      }
+    },
+    "ListMultiplexAlertsResultModel": {
+      "base": "The result of a successful ListMultiplexAlerts request.",
+      "refs": {
+      }
+    },
+    "MultiplexAlert": {
+      "base": "An alert on a multiplex",
+      "refs": {
+        "__listOfMultiplexAlert$member": null
+      }
+    },
+    "MultiplexAlertState": {
+      "base": "The possible states of a multiplex alert. SET - The alert is actively happening. CLEARED - The alert is no longer happening.",
+      "refs": {
+        "MultiplexAlert$State": "The state of the alert"
+      }
+    },
+    "__listOfChannelAlert": {
+      "base": null,
+      "refs": {
+        "ListAlertsResultModel$Alerts": "The alerts found for this channel"
+      }
+    },
+    "__listOfClusterAlert": {
+      "base": null,
+      "refs": {
+        "ListClusterAlertsResultModel$Alerts": "The alerts found for this cluster"
+      }
+    },
+    "__listOfMultiplexAlert": {
+      "base": null,
+      "refs": {
+        "ListMultiplexAlertsResultModel$Alerts": "The alerts found for this multiplex"
       }
     }
   },

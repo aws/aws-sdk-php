@@ -23,6 +23,7 @@
       },
       "input":{"shape":"AddClientIDToOpenIDConnectProviderRequest"},
       "errors":[
+        {"shape":"ConcurrentModificationException"},
         {"shape":"InvalidInputException"},
         {"shape":"NoSuchEntityException"},
         {"shape":"LimitExceededException"},
@@ -1938,6 +1939,7 @@
       },
       "input":{"shape":"RemoveClientIDFromOpenIDConnectProviderRequest"},
       "errors":[
+        {"shape":"ConcurrentModificationException"},
         {"shape":"InvalidInputException"},
         {"shape":"NoSuchEntityException"},
         {"shape":"ServiceFailureException"}
@@ -2368,6 +2370,7 @@
       },
       "input":{"shape":"UpdateOpenIDConnectProviderThumbprintRequest"},
       "errors":[
+        {"shape":"ConcurrentModificationException"},
         {"shape":"InvalidInputException"},
         {"shape":"NoSuchEntityException"},
         {"shape":"ServiceFailureException"}
@@ -2422,7 +2425,8 @@
         {"shape":"NoSuchEntityException"},
         {"shape":"InvalidInputException"},
         {"shape":"LimitExceededException"},
-        {"shape":"ServiceFailureException"}
+        {"shape":"ServiceFailureException"},
+        {"shape":"ConcurrentModificationException"}
       ]
     },
     "UpdateSSHPublicKey":{

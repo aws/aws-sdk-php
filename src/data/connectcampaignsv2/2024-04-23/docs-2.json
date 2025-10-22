@@ -44,6 +44,18 @@
       "refs": {
       }
     },
+    "AgentAction": {
+      "base": "<p>Actions that can performed on a contact by an agent</p>",
+      "refs": {
+        "AgentActions$member": null
+      }
+    },
+    "AgentActions": {
+      "base": "<p>Actions that can be performed by agent during preview phase.</p>",
+      "refs": {
+        "PreviewConfig$agentActions": null
+      }
+    },
     "AgentlessConfig": {
       "base": "<p>Agentless config</p>",
       "refs": {
@@ -109,6 +121,7 @@
       "base": "<p>The bandwidth allocation of a queue resource.</p>",
       "refs": {
         "PredictiveConfig$bandwidthAllocation": null,
+        "PreviewConfig$bandwidthAllocation": null,
         "ProgressiveConfig$bandwidthAllocation": null
       }
     },
@@ -840,6 +853,12 @@
         "TelephonyOutboundMode$predictive": null
       }
     },
+    "PreviewConfig": {
+      "base": "<p>Preview config</p>",
+      "refs": {
+        "TelephonyOutboundMode$preview": null
+      }
+    },
     "ProfileId": {
       "base": "<p>Identifier of the customer profile</p>",
       "refs": {
@@ -1190,6 +1209,18 @@
       "base": "<p>Time Zone Id in the IANA format</p>",
       "refs": {
         "LocalTimeZoneConfig$defaultTimeZone": null
+      }
+    },
+    "TimeoutConfig": {
+      "base": "<p>Timeout Config for preview contacts.</p>",
+      "refs": {
+        "PreviewConfig$timeoutConfig": null
+      }
+    },
+    "TimeoutDuration": {
+      "base": "<p>Timeout duration for a preview contact in seconds.</p>",
+      "refs": {
+        "TimeoutConfig$durationInSeconds": null
       }
     },
     "UntagResourceRequest": {

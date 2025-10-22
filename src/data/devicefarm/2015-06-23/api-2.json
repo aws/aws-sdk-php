@@ -1261,6 +1261,12 @@
       "type":"list",
       "member":{"shape":"Artifact"}
     },
+    "AuxiliaryAppArnList":{
+      "type":"list",
+      "member":{"shape":"AmazonResourceName"},
+      "max":3,
+      "min":0
+    },
     "BillingMethod":{
       "type":"string",
       "enum":[
@@ -1389,6 +1395,7 @@
     "CreateRemoteAccessSessionConfiguration":{
       "type":"structure",
       "members":{
+        "auxiliaryApps":{"shape":"AuxiliaryAppArnList"},
         "billingMethod":{"shape":"BillingMethod"},
         "vpceConfigurationArns":{"shape":"AmazonResourceNames"},
         "deviceProxy":{"shape":"DeviceProxy"}
@@ -1403,6 +1410,7 @@
       "members":{
         "projectArn":{"shape":"AmazonResourceName"},
         "deviceArn":{"shape":"AmazonResourceName"},
+        "appArn":{"shape":"AmazonResourceName"},
         "instanceArn":{"shape":"AmazonResourceName"},
         "sshPublicKey":{"shape":"SshPublicKey"},
         "remoteDebugEnabled":{"shape":"Boolean"},
@@ -2893,7 +2901,8 @@
         "interactionMode":{"shape":"InteractionMode"},
         "skipAppResign":{"shape":"SkipAppResign"},
         "vpcConfig":{"shape":"VpcConfig"},
-        "deviceProxy":{"shape":"DeviceProxy"}
+        "deviceProxy":{"shape":"DeviceProxy"},
+        "appUpload":{"shape":"AmazonResourceName"}
       }
     },
     "RemoteAccessSessions":{

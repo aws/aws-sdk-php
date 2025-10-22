@@ -1,0 +1,1031 @@
+{
+  "version": "2.0",
+  "service": "<p>Amazon Web Services RTB Fabric provides secure, low-latency infrastructure for connecting real-time bidding (RTB) applications. Rather than hosting applications directly, RTB Fabric acts as the connecting fabric that enables your applications to communicate efficiently over private networks instead of the public internet. You maintain complete control over your applications, data, and bidding decisions, while RTB Fabric provides the underlying infrastructure for secure, reliable connectivity.</p> <p>You can use these APIs to complete RTB Fabric tasks, such as setting up audit log ingestions or viewing user access. For more information about RTB Fabric, including the required permissions to use the service, see the <a href=\"https://docs.aws.amazon.com/rtb-fabric/latest/userguide/\">Amazon Web Services RTB Fabric User Guide</a>.</p>",
+  "operations": {
+    "AcceptLink": "<p>Accepts a link request between RTB applications.</p> <p>When a requester RTB application requests to link with a responder RTB application, the responder can use this operation to accept the link request and establish the connection.</p>",
+    "CreateInboundExternalLink": "<p>Creates an inbound external link.</p>",
+    "CreateLink": "<p>Creates a new link between RTB applications.</p> <p>Establishes a connection that allows RTB applications to communicate and exchange bid requests and responses.</p>",
+    "CreateOutboundExternalLink": "<p>Creates an outbound external link.</p>",
+    "CreateRequesterGateway": "<p>Creates a requester gateway.</p>",
+    "CreateResponderGateway": "<p>Creates a responder gateway.</p>",
+    "DeleteInboundExternalLink": "<p>Deletes an inbound external link.</p>",
+    "DeleteLink": "<p>Deletes a link between RTB applications.</p> <p>Permanently removes the connection between RTB applications. This action cannot be undone.</p>",
+    "DeleteOutboundExternalLink": "<p>Deletes an outbound external link.</p>",
+    "DeleteRequesterGateway": "<p>Deletes a requester gateway.</p>",
+    "DeleteResponderGateway": "<p>Deletes a responder gateway.</p>",
+    "GetInboundExternalLink": "<p>Retrieves information about an inbound external link.</p>",
+    "GetLink": "<p>Retrieves information about a link between RTB applications.</p> <p>Returns detailed information about the link configuration, status, and associated RTB applications.</p>",
+    "GetOutboundExternalLink": "<p>Retrieves information about an outbound external link.</p>",
+    "GetRequesterGateway": "<p>Retrieves information about a requester gateway.</p>",
+    "GetResponderGateway": "<p>Retrieves information about a responder gateway.</p>",
+    "ListLinks": "<p>Lists links associated with an RTB application.</p> <p>Returns a list of all links for the specified RTB application, including their status and configuration details.</p>",
+    "ListRequesterGateways": "<p>Lists requester gateways.</p>",
+    "ListResponderGateways": "<p>Lists reponder gateways.</p>",
+    "ListTagsForResource": "<p>Lists tags for a resource.</p>",
+    "RejectLink": "<p>Rejects a link request between RTB applications.</p> <p>When a requester RTB application requests to link with a responder RTB application, the responder can use this operation to decline the link request.</p>",
+    "TagResource": "<p>Assigns one or more tags (key-value pairs) to the specified resource.</p>",
+    "UntagResource": "<p>Removes a tag or tags from a resource.</p>",
+    "UpdateLink": "<p>Updates the configuration of a link between RTB applications.</p> <p>Allows you to modify settings and parameters for an existing link.</p>",
+    "UpdateLinkModuleFlow": "<p>Updates a link module flow.</p>",
+    "UpdateRequesterGateway": "<p>Updates a requester gateway.</p>",
+    "UpdateResponderGateway": "<p>Updates a responder gateway.</p>"
+  },
+  "shapes": {
+    "AcceptLinkRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AcceptLinkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "AccessDeniedException": {
+      "base": "<p>The request could not be completed because you do not have sufficient access to perform this action.</p>",
+      "refs": {}
+    },
+    "Action": {
+      "base": "<p>Describes a bid action.</p>",
+      "refs": {
+        "OpenRtbAttributeModuleParameters$action": "<p>Describes a bid action.</p>"
+      }
+    },
+    "AutoScalingGroupName": {
+      "base": null,
+      "refs": {
+        "AutoScalingGroupNameList$member": null
+      }
+    },
+    "AutoScalingGroupNameList": {
+      "base": null,
+      "refs": {
+        "AutoScalingGroupsConfiguration$autoScalingGroupNames": "<p>The names of the auto scaling group.</p>"
+      }
+    },
+    "AutoScalingGroupsConfiguration": {
+      "base": "<p>Describes the configuration of an auto scaling group.</p>",
+      "refs": {
+        "ManagedEndpointConfiguration$autoScalingGroups": "<p>Describes the configuration of an auto scaling group.</p>"
+      }
+    },
+    "Base64EncodedCertificateChain": {
+      "base": null,
+      "refs": {
+        "CertificateAuthorityCertificates$member": null,
+        "EksEndpointsConfiguration$clusterApiServerCaCertificateChain": "<p>The CA certificate chain of the cluster API server.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "CreateLinkRequest$httpResponderAllowed": "<p>Boolean to specify if an HTTP responder is allowed.</p>"
+      }
+    },
+    "CertificateAuthorityCertificates": {
+      "base": null,
+      "refs": {
+        "TrustStoreConfiguration$certificateAuthorityCertificates": "<p>The certificate authority certificate.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The request could not be completed because of a conflict in the current state of the resource.</p>",
+      "refs": {}
+    },
+    "CreateInboundExternalLinkRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateInboundExternalLinkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateLinkRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateLinkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateLinkResponseCustomerProvidedIdString": {
+      "base": null,
+      "refs": {
+        "CreateLinkResponse$customerProvidedId": "<p>The customer-provided unique identifier of the link.</p>"
+      }
+    },
+    "CreateOutboundExternalLinkRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateOutboundExternalLinkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRequesterGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRequesterGatewayRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "CreateRequesterGatewayRequest$description": "<p>An optional description for the requester gateway.</p>"
+      }
+    },
+    "CreateRequesterGatewayRequestSecurityGroupIdsList": {
+      "base": null,
+      "refs": {
+        "CreateRequesterGatewayRequest$securityGroupIds": "<p>The unique identifiers of the security groups.</p>"
+      }
+    },
+    "CreateRequesterGatewayRequestSubnetIdsList": {
+      "base": null,
+      "refs": {
+        "CreateRequesterGatewayRequest$subnetIds": "<p>The unique identifiers of the subnets.</p>"
+      }
+    },
+    "CreateRequesterGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateResponderGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateResponderGatewayRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "CreateResponderGatewayRequest$description": "<p>An optional description for the responder gateway.</p>"
+      }
+    },
+    "CreateResponderGatewayRequestPortInteger": {
+      "base": null,
+      "refs": {
+        "CreateResponderGatewayRequest$port": "<p>The networking port to use.</p>"
+      }
+    },
+    "CreateResponderGatewayRequestSecurityGroupIdsList": {
+      "base": null,
+      "refs": {
+        "CreateResponderGatewayRequest$securityGroupIds": "<p>The unique identifiers of the security groups.</p>"
+      }
+    },
+    "CreateResponderGatewayRequestSubnetIdsList": {
+      "base": null,
+      "refs": {
+        "CreateResponderGatewayRequest$subnetIds": "<p>The unique identifiers of the subnets.</p>"
+      }
+    },
+    "CreateResponderGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CustomerProvidedId": {
+      "base": null,
+      "refs": {
+        "LinkAttributes$customerProvidedId": "<p>The customer-provided unique identifier of the link.</p>"
+      }
+    },
+    "DeleteInboundExternalLinkRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteInboundExternalLinkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteLinkRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteLinkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteOutboundExternalLinkRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteOutboundExternalLinkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRequesterGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRequesterGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteResponderGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteResponderGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DomainName": {
+      "base": null,
+      "refs": {
+        "CreateInboundExternalLinkResponse$domainName": "<p>The domain name.</p>",
+        "CreateRequesterGatewayResponse$domainName": "<p>The domain name of the requester gateway.</p>",
+        "CreateResponderGatewayRequest$domainName": "<p>The domain name for the responder gateway.</p>",
+        "GetInboundExternalLinkResponse$domainName": "<p>The domain name.</p>",
+        "GetRequesterGatewayResponse$domainName": "<p>The domain name of the requester gateway.</p>",
+        "GetResponderGatewayResponse$domainName": "<p>The domain name of the responder gateway.</p>",
+        "UpdateResponderGatewayRequest$domainName": "<p>The domain name for the responder gateway.</p>"
+      }
+    },
+    "EksEndpointsConfiguration": {
+      "base": "<p>Describes the configuration of an Amazon Elastic Kubernetes Service endpoint.</p>",
+      "refs": {
+        "ManagedEndpointConfiguration$eksEndpoints": "<p>Describes the configuration of an Amazon Elastic Kubernetes Service endpoint.</p>"
+      }
+    },
+    "Filter": {
+      "base": "<p>Describes the configuration of a filter.</p>",
+      "refs": {
+        "FilterConfiguration$member": null
+      }
+    },
+    "FilterConfiguration": {
+      "base": null,
+      "refs": {
+        "OpenRtbAttributeModuleParameters$filterConfiguration": "<p>Describes the configuration of a filter.</p>"
+      }
+    },
+    "FilterCriteria": {
+      "base": null,
+      "refs": {
+        "Filter$criteria": "<p>Describes the criteria for a filter.</p>"
+      }
+    },
+    "FilterCriterion": {
+      "base": "<p>Describes the criteria for a filter.</p>",
+      "refs": {
+        "FilterCriteria$member": null
+      }
+    },
+    "FilterCriterionValuesList": {
+      "base": null,
+      "refs": {
+        "FilterCriterion$values": "<p>The value to filter.</p>"
+      }
+    },
+    "FilterType": {
+      "base": null,
+      "refs": {
+        "OpenRtbAttributeModuleParameters$filterType": "<p>The filter type.</p>"
+      }
+    },
+    "FlowModuleName": {
+      "base": null,
+      "refs": {
+        "FlowModuleNameList$member": null,
+        "ModuleConfiguration$name": "<p>The name of the module.</p>"
+      }
+    },
+    "FlowModuleNameList": {
+      "base": null,
+      "refs": {
+        "ModuleConfiguration$dependsOn": "<p>The dependencies of the module.</p>"
+      }
+    },
+    "GatewayId": {
+      "base": null,
+      "refs": {
+        "AcceptLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "AcceptLinkResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "AcceptLinkResponse$peerGatewayId": "<p>The unique identifier of the peer gateway.</p>",
+        "CreateInboundExternalLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "CreateInboundExternalLinkResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "CreateLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "CreateLinkRequest$peerGatewayId": "<p>The unique identifier of the peer gateway.</p>",
+        "CreateLinkResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "CreateLinkResponse$peerGatewayId": "<p>The unique identifier of the peer gateway.</p>",
+        "CreateOutboundExternalLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "CreateOutboundExternalLinkResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "CreateRequesterGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "CreateResponderGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "DeleteInboundExternalLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "DeleteLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "DeleteOutboundExternalLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "DeleteRequesterGatewayRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "DeleteRequesterGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "DeleteResponderGatewayRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "DeleteResponderGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "GatewayIdList$member": null,
+        "GetInboundExternalLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "GetInboundExternalLinkResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "GetLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "GetLinkResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "GetLinkResponse$peerGatewayId": "<p>The unique identifier of the peer gateway.</p>",
+        "GetOutboundExternalLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "GetOutboundExternalLinkResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "GetRequesterGatewayRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "GetRequesterGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "GetResponderGatewayRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "GetResponderGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "ListLinksRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "ListLinksResponseStructure$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "ListLinksResponseStructure$peerGatewayId": "<p>The unique identifier of the peer gateway.</p>",
+        "RejectLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "RejectLinkResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "RejectLinkResponse$peerGatewayId": "<p>The unique identifier of the peer gateway.</p>",
+        "UpdateLinkModuleFlowRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "UpdateLinkModuleFlowResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "UpdateLinkRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "UpdateRequesterGatewayRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "UpdateRequesterGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "UpdateResponderGatewayRequest$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "UpdateResponderGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>"
+      }
+    },
+    "GatewayIdList": {
+      "base": null,
+      "refs": {
+        "ListRequesterGatewaysResponse$gatewayIds": "<p>The unique identifier of the gateways.</p>",
+        "ListResponderGatewaysResponse$gatewayIds": "<p>The unique identifier of the gateways.</p>"
+      }
+    },
+    "GetInboundExternalLinkRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetInboundExternalLinkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetLinkRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetLinkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOutboundExternalLinkRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOutboundExternalLinkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRequesterGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRequesterGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRequesterGatewayResponseDescriptionString": {
+      "base": null,
+      "refs": {
+        "GetRequesterGatewayResponse$description": "<p>The description of the requester gateway.</p>"
+      }
+    },
+    "GetRequesterGatewayResponseSecurityGroupIdsList": {
+      "base": null,
+      "refs": {
+        "GetRequesterGatewayResponse$securityGroupIds": "<p>The unique identifiers of the security groups.</p>"
+      }
+    },
+    "GetRequesterGatewayResponseSubnetIdsList": {
+      "base": null,
+      "refs": {
+        "GetRequesterGatewayResponse$subnetIds": "<p>The unique identifiers of the subnets.</p>"
+      }
+    },
+    "GetResponderGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetResponderGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetResponderGatewayResponseDescriptionString": {
+      "base": null,
+      "refs": {
+        "GetResponderGatewayResponse$description": "<p>The description of the responder gateway.</p>"
+      }
+    },
+    "GetResponderGatewayResponsePortInteger": {
+      "base": null,
+      "refs": {
+        "GetResponderGatewayResponse$port": "<p>The networking port.</p>"
+      }
+    },
+    "GetResponderGatewayResponseSecurityGroupIdsList": {
+      "base": null,
+      "refs": {
+        "GetResponderGatewayResponse$securityGroupIds": "<p>The unique identifiers of the security groups.</p>"
+      }
+    },
+    "GetResponderGatewayResponseSubnetIdsList": {
+      "base": null,
+      "refs": {
+        "GetResponderGatewayResponse$subnetIds": "<p>The unique identifiers of the subnets.</p>"
+      }
+    },
+    "HeaderTagAction": {
+      "base": "<p>Describes the header tag for a bid action.</p>",
+      "refs": {
+        "Action$headerTag": "<p>Describes the header tag for a bid action.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "GetRequesterGatewayResponse$activeLinksCount": "<p>The count of active links for the requester gateway.</p>",
+        "GetRequesterGatewayResponse$totalLinksCount": "<p>The total count of links for the requester gateway.</p>",
+        "GetResponderGatewayResponse$activeLinksCount": "<p>The count of active links for the responder gateway.</p>",
+        "GetResponderGatewayResponse$totalLinksCount": "<p>The total count of links for the responder gateway.</p>",
+        "GetResponderGatewayResponse$inboundLinksCount": "<p>The count of inbound links for the responder gateway.</p>",
+        "ListLinksRequest$maxResults": "<p>The maximum number of results that are returned per call. You can use <code>nextToken</code> to obtain further pages of results.</p> <p>This is only an upper limit. The actual number of results returned per call might be fewer than the specified maximum.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>The request could not be completed because of an internal server error. Try your call again.</p>",
+      "refs": {}
+    },
+    "KubernetesClusterName": {
+      "base": null,
+      "refs": {
+        "EksEndpointsConfiguration$clusterName": "<p>The name of the cluster.</p>"
+      }
+    },
+    "KubernetesEndpointsResourceName": {
+      "base": null,
+      "refs": {
+        "EksEndpointsConfiguration$endpointsResourceName": "<p>The name of the endpoint resource.</p>"
+      }
+    },
+    "KubernetesNamespace": {
+      "base": null,
+      "refs": {
+        "EksEndpointsConfiguration$endpointsResourceNamespace": "<p>The namespace of the endpoint resource.</p>"
+      }
+    },
+    "LinkApplicationLogConfiguration": {
+      "base": "<p>Describes the configuration of a link application log.</p>",
+      "refs": {
+        "LinkLogSettings$applicationLogs": "<p>Describes the configuration of a link application log.</p>"
+      }
+    },
+    "LinkApplicationLogSampling": {
+      "base": "<p>Describes a link application log sample.</p>",
+      "refs": {
+        "LinkApplicationLogConfiguration$sampling": "<p>Describes a link application log sample.</p>"
+      }
+    },
+    "LinkApplicationLogSamplingErrorLogDouble": {
+      "base": null,
+      "refs": {
+        "LinkApplicationLogSampling$errorLog": "<p>An error log entry.</p>"
+      }
+    },
+    "LinkApplicationLogSamplingFilterLogDouble": {
+      "base": null,
+      "refs": {
+        "LinkApplicationLogSampling$filterLog": "<p>A filter log entry.</p>"
+      }
+    },
+    "LinkAttributes": {
+      "base": "<p>Describes the attributes of a link.</p>",
+      "refs": {
+        "AcceptLinkRequest$attributes": "<p>Attributes of the link.</p>",
+        "AcceptLinkResponse$attributes": "<p>Attributes of the link.</p>",
+        "CreateInboundExternalLinkRequest$attributes": "<p>Attributes of the link.</p>",
+        "CreateLinkRequest$attributes": "<p>Attributes of the link.</p>",
+        "CreateLinkResponse$attributes": "<p>Attributes of the link.</p>",
+        "GetInboundExternalLinkResponse$attributes": "<p>Attributes of the link.</p>",
+        "GetLinkResponse$attributes": "<p>Attributes of the link.</p>",
+        "ListLinksResponseStructure$attributes": "<p>Describes attributes of a link.</p>",
+        "RejectLinkResponse$attributes": "<p>Attributes of the link.</p>"
+      }
+    },
+    "LinkDirection": {
+      "base": null,
+      "refs": {
+        "AcceptLinkResponse$direction": "<p>The direction of the link.</p>",
+        "CreateLinkResponse$direction": "<p>The direction of the link.</p>",
+        "GetLinkResponse$direction": "<p>The direction of the link.</p>",
+        "ListLinksResponseStructure$direction": "<p>The direction of the link.</p>",
+        "RejectLinkResponse$direction": "<p>The direction of the link.</p>"
+      }
+    },
+    "LinkId": {
+      "base": null,
+      "refs": {
+        "AcceptLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
+        "AcceptLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "CreateInboundExternalLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "CreateLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "CreateOutboundExternalLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "DeleteInboundExternalLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
+        "DeleteInboundExternalLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "DeleteLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
+        "DeleteLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "DeleteOutboundExternalLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
+        "DeleteOutboundExternalLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "GetInboundExternalLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
+        "GetInboundExternalLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "GetLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
+        "GetLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "GetOutboundExternalLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
+        "GetOutboundExternalLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "ListLinksResponseStructure$linkId": "<p>The unique identifier of the link.</p>",
+        "RejectLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
+        "RejectLinkResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "UpdateLinkModuleFlowRequest$linkId": "<p>The unique identifier of the link.</p>",
+        "UpdateLinkModuleFlowResponse$linkId": "<p>The unique identifier of the link.</p>",
+        "UpdateLinkRequest$linkId": "<p>The unique identifier of the link.</p>",
+        "UpdateLinkResponse$linkId": "<p>The unique identifier of the link.</p>"
+      }
+    },
+    "LinkList": {
+      "base": null,
+      "refs": {
+        "ListLinksResponse$links": "<p>Information about created links.</p>"
+      }
+    },
+    "LinkLogSettings": {
+      "base": "<p>Describes the settings for a link log.</p>",
+      "refs": {
+        "AcceptLinkRequest$logSettings": "<p>Settings for the application logs.</p>",
+        "CreateLinkRequest$logSettings": "<p>Settings for the application logs.</p>",
+        "GetLinkResponse$logSettings": "<p>Settings for the application logs.</p>",
+        "UpdateLinkRequest$logSettings": "<p>Settings for the application logs.</p>"
+      }
+    },
+    "LinkStatus": {
+      "base": null,
+      "refs": {
+        "AcceptLinkResponse$status": "<p>The status of the link.</p>",
+        "CreateInboundExternalLinkResponse$status": "<p>The status of the request.</p>",
+        "CreateLinkResponse$status": "<p>The status of the request.</p>",
+        "CreateOutboundExternalLinkResponse$status": "<p>The status of the request.</p>",
+        "DeleteInboundExternalLinkResponse$status": "<p>The status of the request.</p>",
+        "DeleteLinkResponse$status": "<p>The status of the link.</p>",
+        "DeleteOutboundExternalLinkResponse$status": "<p>The status of the request.</p>",
+        "GetInboundExternalLinkResponse$status": "<p>The status of the request.</p>",
+        "GetLinkResponse$status": "<p>The status of the link.</p>",
+        "GetOutboundExternalLinkResponse$status": "<p>The status of the request.</p>",
+        "ListLinksResponseStructure$status": "<p>The status of the link.</p>",
+        "RejectLinkResponse$status": "<p>The status of the link.</p>",
+        "UpdateLinkModuleFlowResponse$status": "<p>The status of the request.</p>",
+        "UpdateLinkResponse$status": "<p>The status of the request.</p>"
+      }
+    },
+    "ListLinksRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListLinksResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListLinksResponseStructure": {
+      "base": "<p>Describes a link.</p>",
+      "refs": {
+        "LinkList$member": null
+      }
+    },
+    "ListRequesterGatewaysRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRequesterGatewaysRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRequesterGatewaysRequest$maxResults": "<p>The maximum number of results that are returned per call. You can use <code>nextToken</code> to obtain further pages of results.</p> <p>This is only an upper limit. The actual number of results returned per call might be fewer than the specified maximum.</p>"
+      }
+    },
+    "ListRequesterGatewaysResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListResponderGatewaysRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListResponderGatewaysRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListResponderGatewaysRequest$maxResults": "<p>The maximum number of results that are returned per call. You can use <code>nextToken</code> to obtain further pages of results.</p> <p>This is only an upper limit. The actual number of results returned per call might be fewer than the specified maximum.</p>"
+      }
+    },
+    "ListResponderGatewaysResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ManagedEndpointConfiguration": {
+      "base": "<p>Describes the configuration of a managed endpoint.</p>",
+      "refs": {
+        "CreateResponderGatewayRequest$managedEndpointConfiguration": "<p>The configuration for the managed endpoint.</p>",
+        "GetResponderGatewayResponse$managedEndpointConfiguration": "<p>The configuration of the managed endpoint.</p>",
+        "UpdateResponderGatewayRequest$managedEndpointConfiguration": "<p>The configuration for the managed endpoint.</p>"
+      }
+    },
+    "ModuleConfiguration": {
+      "base": "<p>Describes the configuration of a module.</p>",
+      "refs": {
+        "ModuleConfigurationList$member": null
+      }
+    },
+    "ModuleConfigurationList": {
+      "base": null,
+      "refs": {
+        "AcceptLinkResponse$flowModules": "<p>The configuration of flow modules.</p>",
+        "AcceptLinkResponse$pendingFlowModules": "<p>The configuration of pending flow modules.</p>",
+        "CreateLinkResponse$flowModules": "<p>The configuration of flow modules.</p>",
+        "CreateLinkResponse$pendingFlowModules": "<p>The configuration of pending flow modules.</p>",
+        "GetInboundExternalLinkResponse$flowModules": "<p>The configuration of flow modules.</p>",
+        "GetInboundExternalLinkResponse$pendingFlowModules": "<p>The configuration of pending flow modules.</p>",
+        "GetLinkResponse$flowModules": "<p>The configuration of flow modules.</p>",
+        "GetLinkResponse$pendingFlowModules": "<p>The configuration of pending flow modules.</p>",
+        "ListLinksResponseStructure$flowModules": "<p>Describes the configuration of flow modules.</p>",
+        "ListLinksResponseStructure$pendingFlowModules": "<p>Describes the configuration of pending flow modules.</p>",
+        "RejectLinkResponse$flowModules": "<p>The configuration of flow modules.</p>",
+        "RejectLinkResponse$pendingFlowModules": "<p>The configuration of pending flow modules.</p>",
+        "UpdateLinkModuleFlowRequest$modules": "<p>The configuration of a module.</p>"
+      }
+    },
+    "ModuleParameters": {
+      "base": "<p>Describes the parameters of a module.</p>",
+      "refs": {
+        "ModuleConfiguration$moduleParameters": "<p>Describes the parameters of a module.</p>"
+      }
+    },
+    "NoBidAction": {
+      "base": "<p>Describes a no bid action.</p>",
+      "refs": {
+        "Action$noBid": "<p>Describes a no bid action.</p>"
+      }
+    },
+    "NoBidActionNoBidReasonCodeInteger": {
+      "base": null,
+      "refs": {
+        "NoBidAction$noBidReasonCode": "<p>The reason code for the no bid action.</p>"
+      }
+    },
+    "NoBidModuleParameters": {
+      "base": "<p>Describes the parameters of a no bid module.</p>",
+      "refs": {
+        "ModuleParameters$noBid": "<p>Describes the parameters of a no bid module.</p>"
+      }
+    },
+    "NoBidModuleParametersPassThroughPercentageFloat": {
+      "base": null,
+      "refs": {
+        "NoBidModuleParameters$passThroughPercentage": "<p>The pass through percentage.</p>"
+      }
+    },
+    "NoBidModuleParametersReasonCodeInteger": {
+      "base": null,
+      "refs": {
+        "NoBidModuleParameters$reasonCode": "<p>The reason code.</p>"
+      }
+    },
+    "NoBidModuleParametersReasonString": {
+      "base": null,
+      "refs": {
+        "NoBidModuleParameters$reason": "<p>The reason description.</p>"
+      }
+    },
+    "OpenRtbAttributeModuleParameters": {
+      "base": "<p>Describes the parameters of an open RTB attribute module.</p>",
+      "refs": {
+        "ModuleParameters$openRtbAttribute": "<p>Describes the parameters of an open RTB attribute module.</p>"
+      }
+    },
+    "OpenRtbAttributeModuleParametersHoldbackPercentageFloat": {
+      "base": null,
+      "refs": {
+        "OpenRtbAttributeModuleParameters$holdbackPercentage": "<p>The hold back percentage.</p>"
+      }
+    },
+    "Protocol": {
+      "base": null,
+      "refs": {
+        "CreateResponderGatewayRequest$protocol": "<p>The networking protocol to use.</p>",
+        "GetResponderGatewayResponse$protocol": "<p>The networking protocol.</p>",
+        "UpdateResponderGatewayRequest$protocol": "<p>The networking protocol to use.</p>"
+      }
+    },
+    "RejectLinkRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RejectLinkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "RequesterGatewayStatus": {
+      "base": null,
+      "refs": {
+        "CreateRequesterGatewayResponse$status": "<p>The status of the request.</p>",
+        "DeleteRequesterGatewayResponse$status": "<p>The status of the request.</p>",
+        "GetRequesterGatewayResponse$status": "<p>The status of the request.</p>",
+        "UpdateRequesterGatewayResponse$status": "<p>The status of the request.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The request could not be completed because the resource does not exist.</p>",
+      "refs": {}
+    },
+    "ResponderErrorMasking": {
+      "base": null,
+      "refs": {
+        "LinkAttributes$responderErrorMasking": "<p>Describes the masking for HTTP error codes.</p>"
+      }
+    },
+    "ResponderErrorMaskingAction": {
+      "base": null,
+      "refs": {
+        "ResponderErrorMaskingForHttpCode$action": "<p>The action for the error..</p>"
+      }
+    },
+    "ResponderErrorMaskingForHttpCode": {
+      "base": "<p>Describes the masking for HTTP error codes.</p>",
+      "refs": {
+        "ResponderErrorMasking$member": null
+      }
+    },
+    "ResponderErrorMaskingForHttpCodeHttpCodeString": {
+      "base": null,
+      "refs": {
+        "ResponderErrorMaskingForHttpCode$httpCode": "<p>The HTTP error code.</p>"
+      }
+    },
+    "ResponderErrorMaskingForHttpCodeResponseLoggingPercentageFloat": {
+      "base": null,
+      "refs": {
+        "ResponderErrorMaskingForHttpCode$responseLoggingPercentage": "<p>The percentage of response logging.</p>"
+      }
+    },
+    "ResponderErrorMaskingLoggingType": {
+      "base": null,
+      "refs": {
+        "ResponderErrorMaskingLoggingTypes$member": null
+      }
+    },
+    "ResponderErrorMaskingLoggingTypes": {
+      "base": null,
+      "refs": {
+        "ResponderErrorMaskingForHttpCode$loggingTypes": "<p>The error log type.</p>"
+      }
+    },
+    "ResponderGatewayStatus": {
+      "base": null,
+      "refs": {
+        "CreateResponderGatewayResponse$status": "<p>The status of the request.</p>",
+        "DeleteResponderGatewayResponse$status": "<p>The status of the request.</p>",
+        "GetResponderGatewayResponse$status": "<p>The status of the request.</p>",
+        "UpdateResponderGatewayResponse$status": "<p>The status of the request.</p>"
+      }
+    },
+    "RtbTaggableResourceArn": {
+      "base": null,
+      "refs": {
+        "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which you want to retrieve tags.</p>",
+        "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to tag.</p>",
+        "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to untag.</p>"
+      }
+    },
+    "SecurityGroupId": {
+      "base": null,
+      "refs": {
+        "CreateRequesterGatewayRequestSecurityGroupIdsList$member": null,
+        "CreateResponderGatewayRequestSecurityGroupIdsList$member": null,
+        "GetRequesterGatewayResponseSecurityGroupIdsList$member": null,
+        "GetResponderGatewayResponseSecurityGroupIdsList$member": null
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request could not be completed because you exceeded a service quota.</p>",
+      "refs": {}
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "AutoScalingGroupsConfiguration$roleArn": "<p>The role ARN of the auto scaling group.</p>",
+        "ConflictException$message": null,
+        "CreateInboundExternalLinkRequest$clientToken": "<p>The unique client token.</p>",
+        "CreateOutboundExternalLinkRequest$clientToken": "<p>The unique client token.</p>",
+        "CreateRequesterGatewayRequest$clientToken": "<p>The unique client token.</p>",
+        "CreateResponderGatewayRequest$clientToken": "<p>The unique client token.</p>",
+        "EksEndpointsConfiguration$roleArn": "<p>The role ARN for the cluster.</p>",
+        "FilterCriterion$path": "<p>The path to filter.</p>",
+        "FilterCriterionValuesList$member": null,
+        "HeaderTagAction$name": "<p>The name of the bid action.</p>",
+        "HeaderTagAction$value": "<p>The value of the bid action.</p>",
+        "InternalServerException$message": null,
+        "ListLinksRequest$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
+        "ListLinksResponse$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
+        "ListRequesterGatewaysRequest$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
+        "ListRequesterGatewaysResponse$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
+        "ListResponderGatewaysRequest$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
+        "ListResponderGatewaysResponse$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an <i>HTTP 400 InvalidToken error</i>.</p>",
+        "ResourceNotFoundException$message": null,
+        "ServiceQuotaExceededException$message": null,
+        "ThrottlingException$message": null,
+        "UpdateLinkModuleFlowRequest$clientToken": "<p>The unique client token.</p>",
+        "UpdateRequesterGatewayRequest$clientToken": "<p>The unique client token.</p>",
+        "UpdateResponderGatewayRequest$clientToken": "<p>The unique client token.</p>",
+        "ValidationException$message": null
+      }
+    },
+    "SubnetId": {
+      "base": null,
+      "refs": {
+        "CreateRequesterGatewayRequestSubnetIdsList$member": null,
+        "CreateResponderGatewayRequestSubnetIdsList$member": null,
+        "GetRequesterGatewayResponseSubnetIdsList$member": null,
+        "GetResponderGatewayResponseSubnetIdsList$member": null
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagKeyList$member": null,
+        "TagsMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p>The keys of the key-value pairs for the tag or tags you want to remove from the specified resource.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "TagsMap$value": null
+      }
+    },
+    "TagsMap": {
+      "base": null,
+      "refs": {
+        "CreateInboundExternalLinkRequest$tags": "<p>A map of the key-value pairs of the tag or tags to assign to the resource.</p>",
+        "CreateLinkRequest$tags": "<p>A map of the key-value pairs of the tag or tags to assign to the resource.</p>",
+        "CreateOutboundExternalLinkRequest$tags": "<p>A map of the key-value pairs of the tag or tags to assign to the resource.</p>",
+        "CreateRequesterGatewayRequest$tags": "<p>A map of the key-value pairs of the tag or tags to assign to the resource.</p>",
+        "CreateResponderGatewayRequest$tags": "<p>A map of the key-value pairs of the tag or tags to assign to the resource.</p>",
+        "GetInboundExternalLinkResponse$tags": "<p>A map of the key-value pairs for the tag or tags assigned to the specified resource.</p>",
+        "GetLinkResponse$tags": "<p>A map of the key-value pairs for the tag or tags assigned to the specified resource.</p>",
+        "GetOutboundExternalLinkResponse$tags": "<p>A map of the key-value pairs for the tag or tags assigned to the specified resource.</p>",
+        "GetRequesterGatewayResponse$tags": "<p>A map of the key-value pairs for the tag or tags assigned to the specified resource.</p>",
+        "GetResponderGatewayResponse$tags": "<p>A map of the key-value pairs for the tag or tags assigned to the specified resource.</p>",
+        "ListLinksResponseStructure$tags": "<p>A map of the key-value pairs of the tag or tags to assign to the resource.</p>",
+        "ListTagsForResourceResponse$tags": "<p>A map of the key-value pairs for the tag or tags assigned to the specified resource.</p>",
+        "TagResourceRequest$tags": "<p>A map of the key-value pairs of the tag or tags to assign to the resource.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling.</p>",
+      "refs": {}
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "AcceptLinkResponse$createdAt": "<p>The timestamp of when the link was created.</p>",
+        "AcceptLinkResponse$updatedAt": "<p>The timestamp of when the link was updated.</p>",
+        "CreateLinkResponse$createdAt": "<p>The timestamp of when the link was created.</p>",
+        "CreateLinkResponse$updatedAt": "<p>The timestamp of when the link was updated.</p>",
+        "GetInboundExternalLinkResponse$createdAt": "<p>The timestamp of when the inbound external link was created.</p>",
+        "GetInboundExternalLinkResponse$updatedAt": "<p>The timestamp of when the inbound external link was updated.</p>",
+        "GetLinkResponse$createdAt": "<p>The timestamp of when the link was created.</p>",
+        "GetLinkResponse$updatedAt": "<p>The timestamp of when the link was updated.</p>",
+        "GetOutboundExternalLinkResponse$createdAt": "<p>The timestamp of when the outbound external link was created.</p>",
+        "GetOutboundExternalLinkResponse$updatedAt": "<p>The timestamp of when the outbound external link was updated.</p>",
+        "GetRequesterGatewayResponse$createdAt": "<p>The timestamp of when the requester gateway was created.</p>",
+        "GetRequesterGatewayResponse$updatedAt": "<p>The timestamp of when the requester gateway was updated.</p>",
+        "GetResponderGatewayResponse$createdAt": "<p>The timestamp of when the responder gateway was created.</p>",
+        "GetResponderGatewayResponse$updatedAt": "<p>The timestamp of when the responder gateway was updated.</p>",
+        "ListLinksResponseStructure$createdAt": "<p>The timestamp of when the link was created.</p>",
+        "ListLinksResponseStructure$updatedAt": "<p>The timestamp of when the link was updated.</p>",
+        "RejectLinkResponse$createdAt": "<p>The timestamp of when the link was created.</p>",
+        "RejectLinkResponse$updatedAt": "<p>The timestamp of when the link was updated.</p>"
+      }
+    },
+    "TrustStoreConfiguration": {
+      "base": "<p>Describes the configuration of a trust store.</p>",
+      "refs": {
+        "CreateResponderGatewayRequest$trustStoreConfiguration": "<p>The configuration of the trust store.</p>",
+        "GetResponderGatewayResponse$trustStoreConfiguration": "<p>The configuration of the trust store.</p>",
+        "UpdateResponderGatewayRequest$trustStoreConfiguration": "<p>The configuration of the trust store.</p>"
+      }
+    },
+    "URI": {
+      "base": null,
+      "refs": {
+        "EksEndpointsConfiguration$clusterApiServerEndpointUri": "<p>The URI of the cluster API server endpoint.</p>"
+      }
+    },
+    "URL": {
+      "base": null,
+      "refs": {
+        "CreateOutboundExternalLinkRequest$publicEndpoint": "<p>The public endpoint of the link.</p>",
+        "GetOutboundExternalLinkResponse$publicEndpoint": "<p>The public endpoint for the link.</p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLinkModuleFlowRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLinkModuleFlowResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLinkRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLinkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRequesterGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRequesterGatewayRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "UpdateRequesterGatewayRequest$description": "<p>An optional description for the requester gateway.</p>"
+      }
+    },
+    "UpdateRequesterGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateResponderGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateResponderGatewayRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "UpdateResponderGatewayRequest$description": "<p>An optional description for the responder gateway.</p>"
+      }
+    },
+    "UpdateResponderGatewayRequestPortInteger": {
+      "base": null,
+      "refs": {
+        "UpdateResponderGatewayRequest$port": "<p>The networking port to use.</p>"
+      }
+    },
+    "UpdateResponderGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ValidationException": {
+      "base": "<p>The request could not be completed because it fails satisfy the constraints specified by the service.</p>",
+      "refs": {}
+    },
+    "Version": {
+      "base": null,
+      "refs": {
+        "ModuleConfiguration$version": "<p>The version of the module.</p>"
+      }
+    },
+    "VpcId": {
+      "base": null,
+      "refs": {
+        "CreateRequesterGatewayRequest$vpcId": "<p>The unique identifier of the Virtual Private Cloud (VPC).</p>",
+        "CreateResponderGatewayRequest$vpcId": "<p>The unique identifier of the Virtual Private Cloud (VPC).</p>",
+        "GetRequesterGatewayResponse$vpcId": "<p>The unique identifier of the Virtual Private Cloud (VPC).</p>",
+        "GetResponderGatewayResponse$vpcId": "<p>The unique identifier of the Virtual Private Cloud (VPC).</p>"
+      }
+    }
+  }
+}

@@ -4385,6 +4385,117 @@
           "shape": "ConflictException"
         }
       ]
+    },
+    "ListAlerts": {
+      "name": "ListAlerts",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/channels/{channelId}/alerts",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListAlertsRequest"
+      },
+      "output": {
+        "shape": "ListAlertsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "ListClusterAlerts": {
+      "name": "ListClusterAlerts",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/clusters/{clusterId}/alerts",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListClusterAlertsRequest"
+      },
+      "output": {
+        "shape": "ListClusterAlertsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "ListMultiplexAlerts": {
+      "name": "ListMultiplexAlerts",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/multiplexes/{multiplexId}/alerts",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListMultiplexAlertsRequest"
+      },
+      "output": {
+        "shape": "ListMultiplexAlertsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
     }
   },
   "shapes": {
@@ -24779,6 +24890,310 @@
       "type": "integer",
       "min": 0,
       "max": 8000000
+    },
+    "ChannelAlert": {
+      "type": "structure",
+      "members": {
+        "AlertType": {
+          "shape": "__string",
+          "locationName": "alertType"
+        },
+        "ClearedTimestamp": {
+          "shape": "__timestampIso8601",
+          "locationName": "clearedTimestamp"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
+        },
+        "PipelineId": {
+          "shape": "__string",
+          "locationName": "pipelineId"
+        },
+        "SetTimestamp": {
+          "shape": "__timestampIso8601",
+          "locationName": "setTimestamp"
+        },
+        "State": {
+          "shape": "ChannelAlertState",
+          "locationName": "state"
+        }
+      }
+    },
+    "ChannelAlertState": {
+      "type": "string",
+      "enum": [
+        "SET",
+        "CLEARED"
+      ]
+    },
+    "ClusterAlert": {
+      "type": "structure",
+      "members": {
+        "AlertType": {
+          "shape": "__string",
+          "locationName": "alertType"
+        },
+        "ChannelId": {
+          "shape": "__string",
+          "locationName": "channelId"
+        },
+        "ClearedTimestamp": {
+          "shape": "__timestampIso8601",
+          "locationName": "clearedTimestamp"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
+        },
+        "NodeId": {
+          "shape": "__string",
+          "locationName": "nodeId"
+        },
+        "SetTimestamp": {
+          "shape": "__timestampIso8601",
+          "locationName": "setTimestamp"
+        },
+        "State": {
+          "shape": "ClusterAlertState",
+          "locationName": "state"
+        }
+      }
+    },
+    "ClusterAlertState": {
+      "type": "string",
+      "enum": [
+        "SET",
+        "CLEARED"
+      ]
+    },
+    "ListAlertsRequest": {
+      "type": "structure",
+      "members": {
+        "ChannelId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "channelId"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        },
+        "StateFilter": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "stateFilter"
+        }
+      },
+      "required": [
+        "ChannelId"
+      ]
+    },
+    "ListAlertsResponse": {
+      "type": "structure",
+      "members": {
+        "Alerts": {
+          "shape": "__listOfChannelAlert",
+          "locationName": "alerts"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListAlertsResultModel": {
+      "type": "structure",
+      "members": {
+        "Alerts": {
+          "shape": "__listOfChannelAlert",
+          "locationName": "alerts"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListClusterAlertsRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterId"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        },
+        "StateFilter": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "stateFilter"
+        }
+      },
+      "required": [
+        "ClusterId"
+      ]
+    },
+    "ListClusterAlertsResponse": {
+      "type": "structure",
+      "members": {
+        "Alerts": {
+          "shape": "__listOfClusterAlert",
+          "locationName": "alerts"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListClusterAlertsResultModel": {
+      "type": "structure",
+      "members": {
+        "Alerts": {
+          "shape": "__listOfClusterAlert",
+          "locationName": "alerts"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListMultiplexAlertsRequest": {
+      "type": "structure",
+      "members": {
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "MultiplexId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "multiplexId"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        },
+        "StateFilter": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "stateFilter"
+        }
+      },
+      "required": [
+        "MultiplexId"
+      ]
+    },
+    "ListMultiplexAlertsResponse": {
+      "type": "structure",
+      "members": {
+        "Alerts": {
+          "shape": "__listOfMultiplexAlert",
+          "locationName": "alerts"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListMultiplexAlertsResultModel": {
+      "type": "structure",
+      "members": {
+        "Alerts": {
+          "shape": "__listOfMultiplexAlert",
+          "locationName": "alerts"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "MultiplexAlert": {
+      "type": "structure",
+      "members": {
+        "AlertType": {
+          "shape": "__string",
+          "locationName": "alertType"
+        },
+        "ClearedTimestamp": {
+          "shape": "__timestampIso8601",
+          "locationName": "clearedTimestamp"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
+        },
+        "PipelineId": {
+          "shape": "__string",
+          "locationName": "pipelineId"
+        },
+        "SetTimestamp": {
+          "shape": "__timestampIso8601",
+          "locationName": "setTimestamp"
+        },
+        "State": {
+          "shape": "MultiplexAlertState",
+          "locationName": "state"
+        }
+      }
+    },
+    "MultiplexAlertState": {
+      "type": "string",
+      "enum": [
+        "SET",
+        "CLEARED"
+      ]
+    },
+    "__listOfChannelAlert": {
+      "type": "list",
+      "member": {
+        "shape": "ChannelAlert"
+      }
+    },
+    "__listOfClusterAlert": {
+      "type": "list",
+      "member": {
+        "shape": "ClusterAlert"
+      }
+    },
+    "__listOfMultiplexAlert": {
+      "type": "list",
+      "member": {
+        "shape": "MultiplexAlert"
+      }
     }
   }
 }

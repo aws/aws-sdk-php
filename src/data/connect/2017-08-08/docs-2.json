@@ -8,6 +8,7 @@
     "AssociateBot": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Allows the specified Amazon Connect instance to access the specified Amazon Lex or Amazon Lex V2 bot.</p>",
     "AssociateContactWithUser": "<p>Associates a queued contact with an agent.</p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>Programmatically assign queued contacts to available users.</p> </li> <li> <p>Leverage the IAM context key <code>connect:PreferredUserArn</code> to restrict contact association to specific preferred user.</p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p>Use this API with chat, email, and task contacts. It does not support voice contacts.</p> </li> <li> <p>Use it to associate contacts with users regardless of their current state, including custom states. Ensure your application logic accounts for user availability before making associations.</p> </li> <li> <p>It honors the IAM context key <code>connect:PreferredUserArn</code> to prevent unauthorized contact associations.</p> </li> <li> <p>It respects the IAM context key <code>connect:PreferredUserArn</code> to enforce authorization controls and prevent unauthorized contact associations. Verify that your IAM policies are properly configured to support your intended use cases.</p> </li> <li> <p>The service quota <i>Queues per routing profile per instance</i> applies to manually assigned queues, too. For more information about this quota, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#connect-quotas\">Amazon Connect quotas</a> in the <i>Amazon Connect Administrator Guide</i>.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "AssociateDefaultVocabulary": "<p>Associates an existing vocabulary as the default. Contact Lens for Amazon Connect uses the vocabulary in post-call and real-time analysis sessions for the given language.</p>",
+    "AssociateEmailAddressAlias": "<p>Associates an email address alias with an existing email address in an Amazon Connect instance. This creates a forwarding relationship where emails sent to the alias email address are automatically forwarded to the primary email address. </p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p> <b>Unified customer support</b>: Create multiple entry points (for example, support@example.com, help@example.com, customercare@example.com) that all forward to a single agent queue for streamlined management.</p> </li> <li> <p> <b>Department consolidation</b>: Forward emails from legacy department addresses (for example, sales@example.com, info@example.com) to a centralized customer service email during organizational restructuring.</p> </li> <li> <p> <b>Brand management</b>: Enable you to use familiar brand-specific email addresses that forward to the appropriate Amazon Connect instance email address.</p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p>Each email address can have a maximum of one alias. You cannot create multiple aliases for the same email address. </p> </li> <li> <p>If the alias email address already receives direct emails, it continues to receive direct emails plus forwarded emails.</p> </li> <li> <p>You cannot chain email aliases together (that is, create an alias of an alias).</p> </li> </ul> <p> <code>AssociateEmailAddressAlias</code> does not return the following information:</p> <ul> <li> <p>A confirmation of the alias relationship details (you must call <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribeEmailAddress.html\">DescribeEmailAddress</a> to verify).</p> </li> <li> <p>The timestamp of when the association occurred.</p> </li> <li> <p>The status of the forwarding configuration.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p> <p> <b>Related operations</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DisassociateEmailAddressAlias.html\">DisassociateEmailAddressAlias</a>: Removes the alias association between two email addresses in an Amazon Connect instance.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribeEmailAddress.html\">DescribeEmailAddress</a>: View current alias configurations for an email address.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_SearchEmailAddresses.html\">SearchEmailAddresses</a>: Find email addresses and their alias relationships across an instance.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_CreateEmailAddress.html\">CreateEmailAddress</a>: Create new email addresses that can participate in alias relationships.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DeleteEmailAddress.html\">DeleteEmailAddress</a>: Remove email addresses (automatically removes any alias relationships).</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdateEmailAddressMetadata.html\">UpdateEmailAddressMetadata</a>: Modify email address properties (does not affect alias relationships).</p> </li> </ul>",
     "AssociateFlow": "<p>Associates a connect resource to a flow.</p>",
     "AssociateInstanceStorageConfig": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Associates a storage resource type for the first time. You can only associate one type of storage configuration in a single call. This means, for example, that you can't define an instance with multiple S3 buckets for storing chat transcripts.</p> <p>This API does not create a resource that doesn't exist. It only associates it to the instance. Ensure that the resource being specified in the storage configuration, like an S3 bucket, exists when being used for association.</p>",
     "AssociateLambdaFunction": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Allows the specified Amazon Connect instance to access the specified Lambda function.</p>",
@@ -83,7 +84,7 @@
     "DeleteViewVersion": "<p>Deletes the particular version specified in <code>ViewVersion</code> identifier.</p>",
     "DeleteVocabulary": "<p>Deletes the vocabulary that has the given identifier.</p>",
     "DescribeAgentStatus": "<p>Describes an agent status.</p>",
-    "DescribeAuthenticationProfile": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>Describes the target authentication profile.</p>",
+    "DescribeAuthenticationProfile": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web ServicesSupport.</p> <p>Describes the target authentication profile.</p>",
     "DescribeContact": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Describes the specified contact. </p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>Retrieve contact information such as the caller's phone number and the specific number the caller dialed to integrate into custom monitoring or custom agent experience solutions.</p> </li> <li> <p>Detect when a customer chat session disconnects due to a network issue on the agent's end. Use the DisconnectReason field in the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/ctr-data-model.html#ctr-ContactTraceRecord\">ContactTraceRecord</a> to detect this event and then re-queue the chat for followup.</p> </li> <li> <p>Identify after contact work (ACW) duration and call recordings information when a COMPLETED event is received by using the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/contact-events.html\">contact event stream</a>. </p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p> <code>SystemEndpoint</code> is not populated for contacts with initiation method of MONITOR, QUEUE_TRANSFER, or CALLBACK</p> </li> <li> <p>Contact information remains available in Amazon Connect for 24 months from the <code>InitiationTimestamp</code>, and then it is deleted. Only contact information that is available in Amazon Connect is returned by this API.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "DescribeContactEvaluation": "<p>Describes a contact evaluation in the specified Amazon Connect instance.</p>",
     "DescribeContactFlow": "<p>Describes the specified flow.</p> <p>You can also create and update flows using the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/flow-language.html\">Amazon Connect Flow language</a>.</p> <p>Use the <code>$SAVED</code> alias in the request to describe the <code>SAVED</code> content of a Flow. For example, <code>arn:aws:.../contact-flow/{id}:$SAVED</code>. After a flow is published, <code>$SAVED</code> needs to be supplied to view saved content that has not been published.</p> <p>Use <code>arn:aws:.../contact-flow/{id}:{version}</code> to retrieve the content of a specific flow version.</p> <p>In the response, <b>Status</b> indicates the flow status as either <code>SAVED</code> or <code>PUBLISHED</code>. The <code>PUBLISHED</code> status will initiate validation on the content. <code>SAVED</code> does not initiate validation of the content. <code>SAVED</code> | <code>PUBLISHED</code> </p>",
@@ -112,6 +113,7 @@
     "DisassociateAnalyticsDataSet": "<p>Removes the dataset ID associated with a given Amazon Connect instance.</p>",
     "DisassociateApprovedOrigin": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Revokes access to integrated applications from Amazon Connect.</p>",
     "DisassociateBot": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Revokes authorization from the specified instance to access the specified Amazon Lex or Amazon Lex V2 bot. </p>",
+    "DisassociateEmailAddressAlias": "<p>Removes the alias association between two email addresses in an Amazon Connect instance. After disassociation, emails sent to the former alias email address are no longer forwarded to the primary email address. Both email addresses continue to exist independently and can receive emails directly.</p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p> <b>Department separation</b>: Remove alias relationships when splitting a consolidated support queue back into separate department-specific queues.</p> </li> <li> <p> <b>Email address retirement</b>: Cleanly remove forwarding relationships before decommissioning old email addresses.</p> </li> <li> <p> <b>Organizational restructuring</b>: Reconfigure email routing when business processes change and aliases are no longer needed.</p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p>Concurrent operations: This API uses distributed locking, so concurrent operations on the same email addresses may be temporarily blocked.</p> </li> <li> <p>Emails sent to the former alias address are still delivered directly to that address if it exists.</p> </li> <li> <p>You do not need to delete the email addresses after disassociation. Both addresses remain active independently.</p> </li> <li> <p>After a successful disassociation, you can immediately create a new alias relationship with the same addresses.</p> </li> <li> <p>200 status means alias was successfully disassociated.</p> </li> </ul> <p> <code>DisassociateEmailAddressAlias</code> does not return the following information:</p> <ul> <li> <p>Details in the response about the email that was disassociated. The response returns an empty body.</p> </li> <li> <p>The timestamp of when the disassociation occurred.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p> <p> <b>Related operations</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_AssociateEmailAddressAlias.html\">AssociateEmailAddressAlias</a>: Associates an email address alias with an existing email address in an Amazon Connect instance.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribeEmailAddress.html\">DescribeEmailAddress</a>: View current alias configurations for an email address.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_SearchEmailAddresses.html\">SearchEmailAddresses</a>: Find email addresses and their alias relationships across an instance.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_CreateEmailAddress.html\">CreateEmailAddress</a>: Create new email addresses that can participate in alias relationships.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DeleteEmailAddress.html\">DeleteEmailAddress</a>: Remove email addresses (automatically removes any alias relationships).</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdateEmailAddressMetadata.html\">UpdateEmailAddressMetadata</a>: Modify email address properties (does not affect alias relationships).</p> </li> </ul>",
     "DisassociateFlow": "<p>Disassociates a connect resource from a flow.</p>",
     "DisassociateInstanceStorageConfig": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Removes the storage type configurations for the specified resource type and association ID.</p>",
     "DisassociateLambdaFunction": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Remove the Lambda function from the dropdown options available in the relevant flow blocks.</p>",
@@ -136,13 +138,13 @@
     "GetPromptFile": "<p>Gets the prompt file.</p>",
     "GetTaskTemplate": "<p>Gets details about a specific task template in the specified Amazon Connect instance.</p>",
     "GetTrafficDistribution": "<p>Retrieves the current traffic distribution for a given traffic distribution group.</p>",
-    "ImportPhoneNumber": "<p>Imports a claimed phone number from an external service, such as Amazon Web Services End User Messaging, into an Amazon Connect instance. You can call this API only in the same Amazon Web Services Region where the Amazon Connect instance was created.</p> <important> <p>Call the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribePhoneNumber.html\">DescribePhoneNumber</a> API to verify the status of a previous <code>ImportPhoneNumber</code> operation. </p> </important> <p>If you plan to claim or import numbers and then release numbers frequently, contact us for a service quota exception. Otherwise, it is possible you will be blocked from claiming and releasing any more numbers until up to 180 days past the oldest number released has expired. </p> <p> By default you can claim or import and then release up to 200% of your maximum number of active phone numbers. If you claim or import and then release phone numbers using the UI or API during a rolling 180 day cycle that exceeds 200% of your phone number service level quota, you will be blocked from claiming or importing any more numbers until 180 days past the oldest number released has expired. </p> <p>For example, if you already have 99 claimed or imported numbers and a service level quota of 99 phone numbers, and in any 180 day period you release 99, claim 99, and then release 99, you will have exceeded the 200% limit. At that point you are blocked from claiming any more numbers until you open an Amazon Web Services Support ticket. </p>",
+    "ImportPhoneNumber": "<p>Imports a claimed phone number from an external service, such as Amazon Web Services End User Messaging, into an Amazon Connect instance. You can call this API only in the same Amazon Web Services Region where the Amazon Connect instance was created.</p> <important> <p>Call the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribePhoneNumber.html\">DescribePhoneNumber</a> API to verify the status of a previous <code>ImportPhoneNumber</code> operation. </p> </important> <p>If you plan to claim or import numbers and then release numbers frequently, contact us for a service quota exception. Otherwise, it is possible you will be blocked from claiming and releasing any more numbers until up to 180 days past the oldest number released has expired. </p> <p> By default you can claim or import and then release up to 200% of your maximum number of active phone numbers. If you claim or import and then release phone numbers using the UI or API during a rolling 180 day cycle that exceeds 200% of your phone number service level quota, you will be blocked from claiming or importing any more numbers until 180 days past the oldest number released has expired. </p> <p>For example, if you already have 99 claimed or imported numbers and a service level quota of 99 phone numbers, and in any 180 day period you release 99, claim 99, and then release 99, you will have exceeded the 200% limit. At that point you are blocked from claiming any more numbers until you open an Amazon Web ServicesSupport ticket. </p>",
     "ListAgentStatuses": "<p>Lists agent statuses.</p>",
     "ListAnalyticsDataAssociations": "<p>Lists the association status of requested dataset ID for a given Amazon Connect instance.</p>",
     "ListAnalyticsDataLakeDataSets": "<p>Lists the data lake datasets available to associate with for a given Amazon Connect instance.</p>",
     "ListApprovedOrigins": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Returns a paginated list of all approved origins associated with the instance.</p>",
     "ListAssociatedContacts": "<p>Provides information about contact tree, a list of associated contacts with a unique identifier.</p>",
-    "ListAuthenticationProfiles": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>Provides summary information about the authentication profiles in a specified Amazon Connect instance.</p>",
+    "ListAuthenticationProfiles": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web ServicesSupport.</p> <p>Provides summary information about the authentication profiles in a specified Amazon Connect instance.</p>",
     "ListBots": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>For the specified version of Amazon Lex, returns a paginated list of all the Amazon Lex bots currently associated with the instance. Use this API to return both Amazon Lex V1 and V2 bots.</p>",
     "ListContactEvaluations": "<p>Lists contact evaluations in the specified Amazon Connect instance.</p>",
     "ListContactFlowModules": "<p>Provides information about the flow modules for the specified Amazon Connect instance.</p>",
@@ -190,7 +192,7 @@
     "MonitorContact": "<p>Initiates silent monitoring of a contact. The Contact Control Panel (CCP) of the user specified by <i>userId</i> will be set to silent monitoring mode on the contact.</p>",
     "PauseContact": "<p>Allows pausing an ongoing task contact.</p>",
     "PutUserStatus": "<p>Changes the current status of a user or agent in Amazon Connect. If the agent is currently handling a contact, this sets the agent's next status.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/metrics-agent-status.html\">Agent status</a> and <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/set-next-status.html\">Set your next status</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
-    "ReleasePhoneNumber": "<p>Releases a phone number previously claimed to an Amazon Connect instance or traffic distribution group. You can call this API only in the Amazon Web Services Region where the number was claimed.</p> <important> <p>To release phone numbers from a traffic distribution group, use the <code>ReleasePhoneNumber</code> API, not the Amazon Connect admin website.</p> <p>After releasing a phone number, the phone number enters into a cooldown period for up to 180 days. It cannot be searched for or claimed again until the period has ended. If you accidentally release a phone number, contact Amazon Web Services Support.</p> </important> <p>If you plan to claim and release numbers frequently, contact us for a service quota exception. Otherwise, it is possible you will be blocked from claiming and releasing any more numbers until up to 180 days past the oldest number released has expired.</p> <p>By default you can claim and release up to 200% of your maximum number of active phone numbers. If you claim and release phone numbers using the UI or API during a rolling 180 day cycle that exceeds 200% of your phone number service level quota, you will be blocked from claiming any more numbers until 180 days past the oldest number released has expired. </p> <p>For example, if you already have 99 claimed numbers and a service level quota of 99 phone numbers, and in any 180 day period you release 99, claim 99, and then release 99, you will have exceeded the 200% limit. At that point you are blocked from claiming any more numbers until you open an Amazon Web Services support ticket.</p>",
+    "ReleasePhoneNumber": "<p>Releases a phone number previously claimed to an Amazon Connect instance or traffic distribution group. You can call this API only in the Amazon Web Services Region where the number was claimed.</p> <important> <p>To release phone numbers from a traffic distribution group, use the <code>ReleasePhoneNumber</code> API, not the Amazon Connect admin website.</p> <p>After releasing a phone number, the phone number enters into a cooldown period for up to 180 days. It cannot be searched for or claimed again until the period has ended. If you accidentally release a phone number, contact Amazon Web ServicesSupport.</p> </important> <p>If you plan to claim and release numbers frequently, contact us for a service quota exception. Otherwise, it is possible you will be blocked from claiming and releasing any more numbers until up to 180 days past the oldest number released has expired.</p> <p>By default you can claim and release up to 200% of your maximum number of active phone numbers. If you claim and release phone numbers using the UI or API during a rolling 180 day cycle that exceeds 200% of your phone number service level quota, you will be blocked from claiming any more numbers until 180 days past the oldest number released has expired. </p> <p>For example, if you already have 99 claimed numbers and a service level quota of 99 phone numbers, and in any 180 day period you release 99, claim 99, and then release 99, you will have exceeded the 200% limit. At that point you are blocked from claiming any more numbers until you open an Amazon Web Services support ticket.</p>",
     "ReplicateInstance": "<p>Replicates an Amazon Connect instance in the specified Amazon Web Services Region and copies configuration information for Amazon Connect resources across Amazon Web Services Regions. </p> <p>For more information about replicating an Amazon Connect instance, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/create-replica-connect-instance.html\">Create a replica of your existing Amazon Connect instance</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
     "ResumeContact": "<p>Allows resuming a task contact in a paused state.</p>",
     "ResumeContactRecording": "<p>When a contact is being recorded, and the recording has been suspended using SuspendContactRecording, this API resumes recording whatever recording is selected in the flow configuration: call, screen, or both. If only call recording or only screen recording is enabled, then it would resume.</p> <p>Voice and screen recordings are supported.</p>",
@@ -215,7 +217,7 @@
     "SendChatIntegrationEvent": "<p>Processes chat integration events from Amazon Web Services or external integrations to Amazon Connect. A chat integration event includes:</p> <ul> <li> <p>SourceId, DestinationId, and Subtype: a set of identifiers, uniquely representing a chat</p> </li> <li> <p> ChatEvent: details of the chat action to perform such as sending a message, event, or disconnecting from a chat</p> </li> </ul> <p>When a chat integration event is sent with chat identifiers that do not map to an active chat contact, a new chat contact is also created before handling chat action. </p> <p>Access to this API is currently restricted to Amazon Web Services End User Messaging for supporting SMS integration. </p>",
     "SendOutboundEmail": "<p>Send outbound email for outbound campaigns. For more information about outbound campaigns, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/enable-outbound-campaigns.html\">Set up Amazon Connect outbound campaigns</a>.</p> <note> <p>Only the Amazon Connect outbound campaigns service principal is allowed to assume a role in your account and call this API.</p> </note>",
     "StartAttachedFileUpload": "<p>Provides a pre-signed Amazon S3 URL in response for uploading your content.</p> <important> <p>You may only use this API to upload attachments to an <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html\">Amazon Connect Case</a> or <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html\">Amazon Connect Email</a>. </p> </important>",
-    "StartChatContact": "<p>Initiates a flow to start a new chat for the customer. Response of this API provides a token required to obtain credentials from the <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> API in the Amazon Connect Participant Service.</p> <p>When a new chat contact is successfully created, clients must subscribe to the participant’s connection for the created chat within 5 minutes. This is achieved by invoking <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> with WEBSOCKET and CONNECTION_CREDENTIALS. </p> <p>A 429 error occurs in the following situations:</p> <ul> <li> <p>API rate limit is exceeded. API TPS throttling returns a <code>TooManyRequests</code> exception.</p> </li> <li> <p>The <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html\">quota for concurrent active chats</a> is exceeded. Active chat throttling returns a <code>LimitExceededException</code>.</p> </li> </ul> <p>If you use the <code>ChatDurationInMinutes</code> parameter and receive a 400 error, your account may not support the ability to configure custom chat durations. For more information, contact Amazon Web Services Support. </p> <p>For more information about chat, see the following topics in the <i>Amazon Connect Administrator Guide</i>: </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/web-and-mobile-chat.html\">Concepts: Web and mobile messaging capabilities in Amazon Connect</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat\">Amazon Connect Chat security best practices</a> </p> </li> </ul>",
+    "StartChatContact": "<p>Initiates a flow to start a new chat for the customer. Response of this API provides a token required to obtain credentials from the <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> API in the Amazon Connect Participant Service.</p> <p>When a new chat contact is successfully created, clients must subscribe to the participant’s connection for the created chat within 5 minutes. This is achieved by invoking <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> with WEBSOCKET and CONNECTION_CREDENTIALS. </p> <p>A 429 error occurs in the following situations:</p> <ul> <li> <p>API rate limit is exceeded. API TPS throttling returns a <code>TooManyRequests</code> exception.</p> </li> <li> <p>The <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html\">quota for concurrent active chats</a> is exceeded. Active chat throttling returns a <code>LimitExceededException</code>.</p> </li> </ul> <p>If you use the <code>ChatDurationInMinutes</code> parameter and receive a 400 error, your account may not support the ability to configure custom chat durations. For more information, contact Amazon Web ServicesSupport. </p> <p>For more information about chat, see the following topics in the <i>Amazon Connect Administrator Guide</i>: </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/web-and-mobile-chat.html\">Concepts: Web and mobile messaging capabilities in Amazon Connect</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat\">Amazon Connect Chat security best practices</a> </p> </li> </ul>",
     "StartContactEvaluation": "<p>Starts an empty evaluation in the specified Amazon Connect instance, using the given evaluation form for the particular contact. The evaluation form version used for the contact evaluation corresponds to the currently activated version. If no version is activated for the evaluation form, the contact evaluation cannot be started. </p> <note> <p>Evaluations created through the public API do not contain answer values suggested from automation.</p> </note>",
     "StartContactRecording": "<p>Starts recording the contact: </p> <ul> <li> <p>If the API is called <i>before</i> the agent joins the call, recording starts when the agent joins the call.</p> </li> <li> <p>If the API is called <i>after</i> the agent joins the call, recording starts at the time of the API call.</p> </li> </ul> <p>StartContactRecording is a one-time action. For example, if you use StopContactRecording to stop recording an ongoing call, you can't use StartContactRecording to restart it. For scenarios where the recording has started and you want to suspend and resume it, such as when collecting sensitive information (for example, a credit card number), use SuspendContactRecording and ResumeContactRecording.</p> <p>You can use this API to override the recording behavior configured in the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/set-recording-behavior.html\">Set recording behavior</a> block.</p> <p>Only voice recordings are supported at this time.</p>",
     "StartContactStreaming": "<p> Initiates real-time message streaming for a new chat contact.</p> <p> For more information about message streaming, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-message-streaming.html\">Enable real-time chat message streaming</a> in the <i>Amazon Connect Administrator Guide</i>.</p> <p>For more information about chat, see the following topics in the <i>Amazon Connect Administrator Guide</i>: </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/web-and-mobile-chat.html\">Concepts: Web and mobile messaging capabilities in Amazon Connect</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat\">Amazon Connect Chat security best practices</a> </p> </li> </ul>",
@@ -237,7 +239,7 @@
     "UntagContact": "<p>Removes the specified tags from the contact resource. For more information about this API is used, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/granular-billing.html\">Set up granular billing for a detailed view of your Amazon Connect usage</a>.</p>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
     "UpdateAgentStatus": "<p>Updates agent status.</p>",
-    "UpdateAuthenticationProfile": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>Updates the selected authentication profile.</p>",
+    "UpdateAuthenticationProfile": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web ServicesSupport.</p> <p>Updates the selected authentication profile.</p>",
     "UpdateContact": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Adds or updates user-defined contact information associated with the specified contact. At least one field to be updated must be present in the request.</p> <important> <p>You can add or update user-defined contact information for both ongoing and completed contacts.</p> </important>",
     "UpdateContactAttributes": "<p>Creates or updates user-defined contact attributes associated with the specified contact.</p> <p>You can create or update user-defined attributes for both ongoing and completed contacts. For example, while the call is active, you can update the customer's name or the reason the customer called. You can add notes about steps that the agent took during the call that display to the next agent that takes the call. You can also update attributes for a contact using data from your CRM application and save the data with the contact in Amazon Connect. You could also flag calls for additional analysis, such as legal review or to identify abusive callers.</p> <p>Contact attributes are available in Amazon Connect for 24 months, and are then deleted. For information about contact record retention and the maximum size of the contact record attributes section, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#feature-limits\">Feature specifications</a> in the <i>Amazon Connect Administrator Guide</i>. </p>",
     "UpdateContactEvaluation": "<p>Updates details about a contact evaluation in the specified Amazon Connect instance. A contact evaluation must be in draft state. Answers included in the request are merged with existing answers for the given evaluation. An answer or note can be deleted by passing an empty object (<code>{}</code>) to the question identifier. </p>",
@@ -538,6 +540,12 @@
         "UserData$Contacts": "<p>A list of contact reference information.</p>"
       }
     },
+    "AgentFirst": {
+      "base": "<p>Information about agent-first outbound strategy configuration.</p>",
+      "refs": {
+        "OutboundStrategyConfig$AgentFirst": "<p>The config of agent first outbound strategy.</p>"
+      }
+    },
     "AgentFirstName": {
       "base": null,
       "refs": {
@@ -769,6 +777,21 @@
         "LexV2Bot$AliasArn": "<p>The Amazon Resource Name (ARN) of the Amazon Lex V2 bot.</p>"
       }
     },
+    "AliasConfiguration": {
+      "base": "<p>Configuration information of an email alias.</p>",
+      "refs": {
+        "AliasConfigurationList$member": null,
+        "AssociateEmailAddressAliasRequest$AliasConfiguration": "<p>Configuration object that specifies which email address will serve as the alias. The specified email address must already exist in the Amazon Connect instance and cannot already be configured as an alias or have an alias of its own.</p>",
+        "DisassociateEmailAddressAliasRequest$AliasConfiguration": "<p>Configuration object that specifies which alias relationship to remove. The alias association must currently exist between the primary email address and the specified alias email address.</p>"
+      }
+    },
+    "AliasConfigurationList": {
+      "base": null,
+      "refs": {
+        "DescribeEmailAddressResponse$AliasConfigurations": "<p>A list of alias configurations associated with this email address. Contains details about email addresses that forward to this primary email address. The list can contain at most one alias configuration per email address.</p>",
+        "EmailAddressMetadata$AliasConfigurations": "<p>A list of alias configurations for this email address, showing which email addresses forward to this primary address. Each configuration contains the email address ID of an alias that forwards emails to this address.</p>"
+      }
+    },
     "AllowedAccessControlTags": {
       "base": null,
       "refs": {
@@ -787,6 +810,18 @@
       "base": null,
       "refs": {
         "MonitorContactRequest$AllowedMonitorCapabilities": "<p>Specify which monitoring actions the user is allowed to take. For example, whether the user is allowed to escalate from silent monitoring to barge. AllowedMonitorCapabilities is required if barge is enabled.</p>"
+      }
+    },
+    "AllowedUserAction": {
+      "base": null,
+      "refs": {
+        "AllowedUserActions$member": null
+      }
+    },
+    "AllowedUserActions": {
+      "base": null,
+      "refs": {
+        "Preview$AllowedUserActions": "<p>The actions the agent can perform after accepting the preview outbound contact.</p>"
       }
     },
     "AnalyticsDataAssociationResult": {
@@ -920,6 +955,14 @@
       "refs": {}
     },
     "AssociateDefaultVocabularyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateEmailAddressAliasRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateEmailAddressAliasResponse": {
       "base": null,
       "refs": {}
     },
@@ -1166,7 +1209,7 @@
       }
     },
     "AuthenticationProfile": {
-      "base": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>Information about an authentication profile. An authentication profile is a resource that stores the authentication settings for users in your contact center. You use authentication profiles to set up IP address range restrictions and session timeouts. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/authentication-profiles.html\">Set IP address restrictions or session timeouts</a>. </p>",
+      "base": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web ServicesSupport.</p> <p>Information about an authentication profile. An authentication profile is a resource that stores the authentication settings for users in your contact center. You use authentication profiles to set up IP address range restrictions and session timeouts. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/authentication-profiles.html\">Set IP address restrictions or session timeouts</a>. </p>",
       "refs": {
         "DescribeAuthenticationProfileResponse$AuthenticationProfile": "<p>The authentication profile object being described.</p>"
       }
@@ -1196,7 +1239,7 @@
       }
     },
     "AuthenticationProfileSummary": {
-      "base": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>A summary of a given authentication profile.</p>",
+      "base": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web ServicesSupport.</p> <p>A summary of a given authentication profile.</p>",
       "refs": {
         "AuthenticationProfileSummaryList$member": null
       }
@@ -1484,6 +1527,7 @@
       "refs": {
         "AssociateApprovedOriginRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "AssociateBotRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
+        "AssociateEmailAddressAliasRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "AssociateInstanceStorageConfigRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "AssociateLambdaFunctionRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "AssociateLexBotRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
@@ -1505,6 +1549,7 @@
         "DeleteInstanceRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "DisassociateApprovedOriginRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "DisassociateBotRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
+        "DisassociateEmailAddressAliasRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "DisassociateInstanceStorageConfigRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "DisassociateLambdaFunctionRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "DisassociateLexBotRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
@@ -2085,7 +2130,7 @@
       }
     },
     "ContactNotFoundException": {
-      "base": "<p>The contact with the specified ID is not active or does not exist.</p>",
+      "base": "<p>The contact with the specified ID does not exist.</p>",
       "refs": {}
     },
     "ContactRecordingType": {
@@ -3147,6 +3192,14 @@
       "base": null,
       "refs": {}
     },
+    "DisassociateEmailAddressAliasRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateEmailAddressAliasResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DisassociateFlowRequest": {
       "base": null,
       "refs": {}
@@ -3204,7 +3257,7 @@
     "DisconnectReason": {
       "base": "<p>Contains details about why a contact was disconnected. Only Amazon Connect outbound campaigns can provide this field.</p>",
       "refs": {
-        "StopContactRequest$DisconnectReason": "<p>The reason a contact can be disconnected. Only Amazon Connect outbound campaigns can provide this field.</p>"
+        "StopContactRequest$DisconnectReason": "<p>The reason a contact can be disconnected. Only Amazon Connect outbound campaigns can provide this field. For a list and description of all the possible disconnect reasons by channel (including outbound campaign voice contacts) see DisconnectReason under <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/ctr-data-model.html#ctr-ContactTraceRecord\">ContactTraceRecord</a> in the <i>Amazon Connect Administrator Guide</i>. </p>"
       }
     },
     "DisconnectReasonCode": {
@@ -3335,10 +3388,13 @@
     "EmailAddressId": {
       "base": null,
       "refs": {
+        "AliasConfiguration$EmailAddressId": "<p>The email address ID.</p>",
+        "AssociateEmailAddressAliasRequest$EmailAddressId": "<p>The identifier of the email address.</p>",
         "CreateEmailAddressResponse$EmailAddressId": "<p>The identifier of the email address.</p>",
         "DeleteEmailAddressRequest$EmailAddressId": "<p>The identifier of the email address.</p>",
         "DescribeEmailAddressRequest$EmailAddressId": "<p>The identifier of the email address.</p>",
         "DescribeEmailAddressResponse$EmailAddressId": "<p>The identifier of the email address.</p>",
+        "DisassociateEmailAddressAliasRequest$EmailAddressId": "<p>The identifier of the email address.</p>",
         "EmailAddressMetadata$EmailAddressId": "<p>The identifier of the email address.</p>",
         "OutboundEmailConfig$OutboundEmailAddressId": "<p>The identifier of the email address.</p>",
         "UpdateEmailAddressMetadataRequest$EmailAddressId": "<p>The identifier of the email address.</p>",
@@ -4806,7 +4862,7 @@
       "refs": {
         "Attribute$AttributeType": "<p>The type of attribute.</p>",
         "DescribeInstanceAttributeRequest$AttributeType": "<p>The type of attribute.</p>",
-        "UpdateInstanceAttributeRequest$AttributeType": "<p>The type of attribute.</p> <note> <p>Only allowlisted customers can consume USE_CUSTOM_TTS_VOICES. To access this feature, contact Amazon Web Services Support for allowlisting.</p> </note>"
+        "UpdateInstanceAttributeRequest$AttributeType": "<p>The type of attribute.</p> <note> <p>Only allowlisted customers can consume USE_CUSTOM_TTS_VOICES. To access this feature, contact Amazon Web ServicesSupport for allowlisting.</p> </note>"
       }
     },
     "InstanceAttributeValue": {
@@ -4825,6 +4881,7 @@
         "AssociateBotRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateContactWithUserRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateDefaultVocabularyRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "AssociateEmailAddressAliasRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateFlowRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateInstanceStorageConfigRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateLambdaFunctionRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -4922,6 +4979,7 @@
         "DisassociateAnalyticsDataSetRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DisassociateApprovedOriginRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DisassociateBotRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "DisassociateEmailAddressAliasRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DisassociateFlowRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DisassociateInstanceStorageConfigRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DisassociateLambdaFunctionRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance..</p>",
@@ -6482,6 +6540,26 @@
         "SourceCampaign$OutboundRequestId": "<p>A unique identifier for a each request part of same campaign.</p>"
       }
     },
+    "OutboundStrategy": {
+      "base": "<p>Information about the outbound strategy.</p>",
+      "refs": {
+        "Contact$OutboundStrategy": "<p>Information about the outbound strategy.</p>",
+        "ContactDataRequest$OutboundStrategy": "<p>Information about the outbound strategy.</p>",
+        "StartOutboundVoiceContactRequest$OutboundStrategy": "<p>Information about the outbound strategy.</p>"
+      }
+    },
+    "OutboundStrategyConfig": {
+      "base": "<p>The config of the outbound strategy.</p>",
+      "refs": {
+        "OutboundStrategy$Config": "<p>Config of the outbound strategy.</p>"
+      }
+    },
+    "OutboundStrategyType": {
+      "base": null,
+      "refs": {
+        "OutboundStrategy$Type": "<p>Type of the outbound strategy.</p>"
+      }
+    },
     "OutboundSubject": {
       "base": null,
       "refs": {
@@ -6819,6 +6897,18 @@
         "DeviceInfo$PlatformVersion": "<p>Version of the platform that the participant used for the call.</p>"
       }
     },
+    "PostAcceptPreviewTimeoutDurationInSeconds": {
+      "base": null,
+      "refs": {
+        "PostAcceptTimeoutConfig$DurationInSeconds": "<p>Duration in seconds for the countdown timer after the agent accepted the contact.</p>"
+      }
+    },
+    "PostAcceptTimeoutConfig": {
+      "base": "<p>Countdown timer configuration after the agent accepted the contact.</p>",
+      "refs": {
+        "Preview$PostAcceptTimeoutConfig": "<p>Countdown timer configuration after the agent accepted the preview outbound contact.</p>"
+      }
+    },
     "PotentialAudioQualityIssue": {
       "base": null,
       "refs": {
@@ -6943,6 +7033,12 @@
       "refs": {
         "KinesisVideoStreamConfig$Prefix": "<p>The prefix of the video stream.</p>",
         "S3Config$BucketPrefix": "<p>The S3 bucket prefix.</p>"
+      }
+    },
+    "Preview": {
+      "base": "<p>Information about agent-first preview mode outbound strategy configuration.</p>",
+      "refs": {
+        "AgentFirst$Preview": "<p>Information about preview configuration of agent first outbound strategy</p>"
       }
     },
     "Priority": {
@@ -9126,7 +9222,7 @@
         "AnalyticsDataAssociationResult$ResourceShareStatus": "<p>The Amazon Web Services Resource Access Manager status of association.</p>",
         "AnalyticsDataSetsResult$DataSetName": "<p>The name of the dataset.</p>",
         "AssociateAnalyticsDataSetResponse$ResourceShareId": "<p>The Resource Access Manager share ID that is generated.</p>",
-        "Contact$DisconnectReason": "<p>The disconnect reason for the contact.</p>",
+        "Contact$DisconnectReason": "<p>The disconnect reason for the contact. For a list and description of all the possible disconnect reasons by channel, see DisconnectReason under <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/ctr-data-model.html#ctr-ContactTraceRecord\">ContactTraceRecord</a> in the <i>Amazon Connect Administrator Guide</i>. </p>",
         "DateCondition$FieldName": "<p>An object to specify the hours of operation override date field.</p>",
         "ErrorResult$ErrorCode": "<p>The error code.</p>",
         "ErrorResult$ErrorMessage": "<p>The corresponding error message for the error code.</p>",
@@ -9172,7 +9268,7 @@
         "RoutingProfileSearchCriteria$StringCondition": "<p>A leaf node condition which can be used to specify a string condition.</p> <note> <p>The currently supported values for <code>FieldName</code> are <code>associatedQueueIds</code>, <code>name</code>, <code>description</code>, and <code>resourceID</code>.</p> </note>",
         "SecurityProfileSearchCriteria$StringCondition": null,
         "UserHierarchyGroupSearchCriteria$StringCondition": "<p>A leaf node condition which can be used to specify a string condition.</p> <note> <p>The currently supported values for <code>FieldName</code> are <code>name</code>,&#x2028;&#x2028; <code>parentId</code>, <code>levelId</code>, and <code>resourceID</code>.</p> </note>",
-        "UserSearchCriteria$StringCondition": "<p>A leaf node condition which can be used to specify a string condition.</p> <p>The currently supported values for <code>FieldName</code> are <code>Username</code>, <code>FirstName</code>, <code>LastName</code>, <code>RoutingProfileId</code>, <code>SecurityProfileId</code>, <code>ResourceId</code>.</p>"
+        "UserSearchCriteria$StringCondition": "<p>A leaf node condition which can be used to specify a string condition.</p> <p>The currently supported values for <code>FieldName</code> are <code>Username</code>, <code>FirstName</code>, <code>LastName</code>, <code>RoutingProfileId</code>, <code>SecurityProfileId</code>, <code>resourceId</code>.</p>"
       }
     },
     "StringReference": {
@@ -10799,6 +10895,8 @@
     "timestamp": {
       "base": null,
       "refs": {
+        "AgentInfo$AcceptedByAgentTimestamp": "<p>The timestamp when the contact was accepted by the agent.</p>",
+        "AgentInfo$PreviewEndTimestamp": "<p>The timestamp when the agent finished previewing the contact.</p>",
         "AgentInfo$ConnectedToAgentTimestamp": "<p>The timestamp when the contact was connected to the agent.</p>",
         "AgentInfo$AfterContactWorkStartTimestamp": "<p>The date and time when the agent started doing After Contact Work for the contact, in UTC time.</p>",
         "AgentInfo$AfterContactWorkEndTimestamp": "<p>The date and time when the agent ended After Contact Work for the contact, in UTC time. In cases when agent finishes doing <code>AfterContactWork</code> for chat contacts and switches their activity status to offline or equivalent without clearing the contact in CCP, discrepancies may be noticed for <code>AfterContactWorkEndTimestamp</code>.</p>",

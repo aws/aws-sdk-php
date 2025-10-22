@@ -1,0 +1,570 @@
+{
+  "version": "1.0",
+  "examples": {
+    "AcceptLink": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "logSettings": {
+            "applicationLogs": {
+              "sampling": {
+                "errorLog": 100.0,
+                "filterLog": 0.0
+              }
+            }
+          }
+        },
+        "output": {
+          "createdAt": "2024-01-15T10:30:00Z",
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "peerGatewayId": "rtb-gw-87654321",
+          "status": "ACCEPTED",
+          "updatedAt": "2024-01-15T10:35:00Z"
+        },
+        "description": "Accepts a link request from requester gateway",
+        "id": "example-1",
+        "title": "Accept a link request"
+      }
+    ],
+    "CreateInboundExternalLink": [
+      {
+        "input": {
+          "clientToken": "randomClientToken",
+          "gatewayId": "rtb-gw-12345678"
+        },
+        "output": {
+          "domainName": "rtb-gw-12345678.example.com",
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "status": "ACTIVE"
+        },
+        "description": "Create an inbound external link for a responder gateway",
+        "id": "example-1",
+        "title": "Create an inbound external link"
+      }
+    ],
+    "CreateLink": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "logSettings": {
+            "applicationLogs": {
+              "sampling": {
+                "errorLog": 100.0,
+                "filterLog": 0.0
+              }
+            }
+          },
+          "peerGatewayId": "rtb-gw-87654321"
+        },
+        "output": {
+          "createdAt": "2024-01-15T10:30:00Z",
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "peerGatewayId": "rtb-gw-87654321",
+          "status": "PENDING_REQUEST",
+          "updatedAt": "2024-01-15T10:30:00Z"
+        },
+        "description": "Creates a new link between RTB applications",
+        "id": "example-1",
+        "title": "Create a new link"
+      }
+    ],
+    "CreateOutboundExternalLink": [
+      {
+        "input": {
+          "clientToken": "12345678-1234-1234-1234-123456789012",
+          "gatewayId": "rtb-gw-12345678",
+          "publicEndpoint": "https://external-responder.example.com"
+        },
+        "output": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "status": "ACTIVE"
+        },
+        "description": "Create an outbound external link for a requester gateway to connect to external public responder endpoints",
+        "id": "example-1",
+        "title": "Create an outbound external link"
+      }
+    ],
+    "CreateRequesterGateway": [
+      {
+        "input": {
+          "clientToken": "12345678-1234-1234-1234-123456789012",
+          "description": "My requester gateway",
+          "securityGroupIds": [
+            "sg-12345678"
+          ],
+          "subnetIds": [
+            "subnet-12345678",
+            "subnet-87654321"
+          ],
+          "vpcId": "vpc-12345678"
+        },
+        "output": {
+          "domainName": "rtb-gw-12345678.example.com",
+          "gatewayId": "rtb-gw-12345678",
+          "status": "ACTIVE"
+        },
+        "description": "Create requester gateway",
+        "id": "example-1",
+        "title": "Create a requester gateway"
+      }
+    ],
+    "CreateResponderGateway": [
+      {
+        "input": {
+          "clientToken": "12345678-1234-1234-1234-123456789012",
+          "description": "My responder gateway",
+          "port": 443,
+          "protocol": "HTTPS",
+          "securityGroupIds": [
+            "sg-12345678"
+          ],
+          "subnetIds": [
+            "subnet-12345678",
+            "subnet-87654321"
+          ],
+          "vpcId": "vpc-12345678"
+        },
+        "output": {
+          "gatewayId": "rtb-gw-12345678",
+          "status": "ACTIVE"
+        },
+        "description": "Create responder gateway",
+        "id": "example-1",
+        "title": "Create a responder gateway"
+      }
+    ],
+    "DeleteInboundExternalLink": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321"
+        },
+        "output": {
+          "linkId": "link-87654321",
+          "status": "DELETED"
+        },
+        "description": "Delete an inbound external link",
+        "id": "example-1",
+        "title": "Delete an inbound external link"
+      }
+    ],
+    "DeleteLink": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321"
+        },
+        "output": {
+          "linkId": "link-87654321",
+          "status": "PENDING_DELETION"
+        },
+        "description": "Deletes an existing link",
+        "id": "example-1",
+        "title": "Delete a link"
+      }
+    ],
+    "DeleteOutboundExternalLink": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321"
+        },
+        "output": {
+          "linkId": "link-87654321",
+          "status": "DELETED"
+        },
+        "description": "Delete an outbound external link",
+        "id": "example-1",
+        "title": "Delete an outbound external link"
+      }
+    ],
+    "DeleteRequesterGateway": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678"
+        },
+        "output": {
+          "gatewayId": "rtb-gw-12345678",
+          "status": "PENDING_DELETION"
+        },
+        "description": "Delete requester gateway",
+        "id": "example-1",
+        "title": "Delete a requester gateway"
+      }
+    ],
+    "DeleteResponderGateway": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678"
+        },
+        "output": {
+          "gatewayId": "rtb-gw-12345678",
+          "status": "PENDING_DELETION"
+        },
+        "description": "Delete responder gateway",
+        "id": "example-1",
+        "title": "Delete a responder gateway"
+      }
+    ],
+    "GetInboundExternalLink": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321"
+        },
+        "output": {
+          "createdAt": "2024-01-15T10:30:00Z",
+          "domainName": "rtb-gw-12345678.example.com",
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "status": "ACTIVE",
+          "updatedAt": "2024-01-15T10:35:00Z"
+        },
+        "description": "Get details of an inbound external link",
+        "id": "example-1",
+        "title": "Get inbound external link details"
+      }
+    ],
+    "GetLink": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321"
+        },
+        "output": {
+          "createdAt": "2024-01-15T10:30:00Z",
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "peerGatewayId": "rtb-gw-87654321",
+          "status": "ACTIVE",
+          "updatedAt": "2024-01-15T10:35:00Z"
+        },
+        "description": "Retrieves details of a specific link",
+        "id": "example-1",
+        "title": "Get link details"
+      }
+    ],
+    "GetOutboundExternalLink": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321"
+        },
+        "output": {
+          "createdAt": "2024-01-15T10:30:00Z",
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "publicEndpoint": "https://external-responder.example.com",
+          "status": "ACTIVE",
+          "updatedAt": "2024-01-15T10:35:00Z"
+        },
+        "description": "Get details of a specific outbound external link",
+        "id": "example-1",
+        "title": "Get outbound external link details"
+      }
+    ],
+    "GetRequesterGateway": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678"
+        },
+        "output": {
+          "activeLinksCount": 2,
+          "createdAt": "2024-01-15T10:30:00Z",
+          "description": "My requester gateway",
+          "domainName": "rtb-gw-12345678.example.com",
+          "gatewayId": "rtb-gw-12345678",
+          "securityGroupIds": [
+            "sg-12345678"
+          ],
+          "status": "ACTIVE",
+          "subnetIds": [
+            "subnet-12345678",
+            "subnet-87654321"
+          ],
+          "totalLinksCount": 5,
+          "updatedAt": "2024-01-15T10:35:00Z",
+          "vpcId": "vpc-12345678"
+        },
+        "description": "Get requester gateway",
+        "id": "example-1",
+        "title": "Get requester gateway details"
+      }
+    ],
+    "GetResponderGateway": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678"
+        },
+        "output": {
+          "activeLinksCount": 2,
+          "createdAt": "2024-01-15T10:30:00Z",
+          "description": "My responder gateway",
+          "gatewayId": "rtb-gw-12345678",
+          "inboundLinksCount": 3,
+          "port": 443,
+          "protocol": "HTTPS",
+          "securityGroupIds": [
+            "sg-12345678"
+          ],
+          "status": "ACTIVE",
+          "subnetIds": [
+            "subnet-12345678",
+            "subnet-87654321"
+          ],
+          "totalLinksCount": 5,
+          "updatedAt": "2024-01-15T10:35:00Z",
+          "vpcId": "vpc-12345678"
+        },
+        "description": "Get responder gateway",
+        "id": "example-1",
+        "title": "Get responder gateway details"
+      }
+    ],
+    "ListLinks": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "maxResults": 10
+        },
+        "output": {
+          "links": [
+            {
+              "createdAt": "2024-01-15T10:30:00Z",
+              "gatewayId": "rtb-gw-12345678",
+              "linkId": "link-87654321",
+              "peerGatewayId": "rtb-gw-87654321",
+              "status": "ACTIVE",
+              "updatedAt": "2024-01-15T10:35:00Z"
+            }
+          ]
+        },
+        "description": "Lists all links for the specified gateway",
+        "id": "example-1",
+        "title": "List links for a gateway"
+      }
+    ],
+    "ListRequesterGateways": [
+      {
+        "input": {
+          "maxResults": 10
+        },
+        "output": {
+          "gatewayIds": [
+            "rtb-gw-12345",
+            "rtb-gw-67890"
+          ]
+        },
+        "description": "Lists requester gateways using default pagination settings",
+        "id": "example-1",
+        "title": "List requester gateways with default pagination"
+      },
+      {
+        "input": {
+          "maxResults": 5,
+          "nextToken": "eyJsYXN0RXZhbHVhdGVkS2V5Ijp7ImlkIjp7IlMiOiJydGJhcHAtcmVxLTEyMzQ1In19fQ=="
+        },
+        "output": {
+          "gatewayIds": [
+            "rtb-gw-12345",
+            "rtb-gw-09876"
+          ],
+          "nextToken": "eyJsYXN0RXZhbHVhdGVkS2V5Ijp7ImlkIjp7IlMiOiJydGJhcHAtcmVxLWZnaGlqIn19fQ=="
+        },
+        "description": "Lists requester gateways using a pagination token to get the next page",
+        "id": "example-2",
+        "title": "List requester gateways with pagination token"
+      }
+    ],
+    "ListResponderGateways": [
+      {
+        "input": {
+          "maxResults": 10
+        },
+        "output": {
+          "gatewayIds": [
+            "rtb-gw-54321",
+            "rtb-gw-09876"
+          ]
+        },
+        "description": "Lists responder gateways using default pagination settings",
+        "id": "example-1",
+        "title": "List responder gateways with default pagination"
+      },
+      {
+        "input": {
+          "maxResults": 3,
+          "nextToken": "eyJsYXN0RXZhbHVhdGVkS2V5Ijp7ImlkIjp7IlMiOiJydGJhcHAtcmVzcC01NDMyMSJ9fX0="
+        },
+        "output": {
+          "gatewayIds": [
+            "rtb-gw-12345",
+            "rtb-gw-09876"
+          ],
+          "nextToken": "eyJsYXN0RXZhbHVhdGVkS2V5Ijp7ImlkIjp7IlMiOiJydGJhcHAtcmVzcC1hYmMzNCJ9fX0="
+        },
+        "description": "Lists responder gateways using a pagination token to get the next page",
+        "id": "example-2",
+        "title": "List responder gateways with pagination token"
+      }
+    ],
+    "ListTagsForResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:rtbfabric:us-east-1:123456789012:gateway/rtb-gw-12345678"
+        },
+        "output": {
+          "tags": {
+            "Environment": "Production",
+            "Team": "RTB"
+          }
+        },
+        "description": "Lists tags for a resource",
+        "id": "example-1",
+        "title": "List tags for a resource"
+      }
+    ],
+    "RejectLink": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321"
+        },
+        "output": {
+          "createdAt": "2024-01-15T10:30:00Z",
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "peerGatewayId": "rtb-gw-87654321",
+          "status": "REJECTED",
+          "updatedAt": "2024-01-15T10:35:00Z"
+        },
+        "description": "Rejects a requested link request",
+        "id": "example-1",
+        "title": "Reject a link request"
+      }
+    ],
+    "TagResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:rtbfabric:us-east-1:123456789012:gateway/rtb-gw-12345678",
+          "tags": {
+            "Environment": "Production",
+            "Team": "RTB"
+          }
+        },
+        "output": {},
+        "description": "Adds tags to a resource",
+        "id": "example-1",
+        "title": "Add tags to a resource"
+      }
+    ],
+    "UntagResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:rtbfabric:us-east-1:123456789012:gateway/rtb-gw-12345678",
+          "tagKeys": [
+            "Environment",
+            "Team"
+          ]
+        },
+        "output": {},
+        "description": "Removes tags from a resource",
+        "id": "example-1",
+        "title": "Remove tags from a resource"
+      }
+    ],
+    "UpdateLink": [
+      {
+        "input": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "logSettings": {
+            "applicationLogs": {
+              "sampling": {
+                "errorLog": 100.0,
+                "filterLog": 10.0
+              }
+            }
+          }
+        },
+        "output": {
+          "linkId": "link-87654321",
+          "status": "ACTIVE"
+        },
+        "description": "Updates configuration settings for an existing link",
+        "id": "example-1",
+        "title": "Update link settings"
+      }
+    ],
+    "UpdateLinkModuleFlow": [
+      {
+        "input": {
+          "clientToken": "randomClientToken",
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "modules": [
+            {
+              "version": "1dot0dot0",
+              "name": "noBidModule",
+              "dependsOn": [],
+              "moduleParameters": {
+                "noBid": {
+                  "passThroughPercentage": 50.0,
+                  "reason": "test",
+                  "reasonCode": 1
+                }
+              }
+            }
+          ]
+        },
+        "output": {
+          "gatewayId": "rtb-gw-12345678",
+          "linkId": "link-87654321",
+          "status": "ACTIVE"
+        },
+        "description": "Update link module flow for link",
+        "id": "example-1",
+        "title": "Update link module flow"
+      }
+    ],
+    "UpdateRequesterGateway": [
+      {
+        "input": {
+          "clientToken": "12345678-1234-1234-1234-123456789012",
+          "description": "Updated requester gateway description",
+          "gatewayId": "rtb-gw-12345678"
+        },
+        "output": {
+          "gatewayId": "rtb-gw-12345678",
+          "status": "PENDING_UPDATE"
+        },
+        "description": "Update requester gateway",
+        "id": "example-1",
+        "title": "Update requester gateway"
+      }
+    ],
+    "UpdateResponderGateway": [
+      {
+        "input": {
+          "clientToken": "12345678-1234-1234-1234-123456789012",
+          "description": "Updated responder gateway description",
+          "gatewayId": "rtb-gw-12345678",
+          "port": 8080,
+          "protocol": "HTTP"
+        },
+        "output": {
+          "gatewayId": "rtb-gw-12345678",
+          "status": "PENDING_UPDATE"
+        },
+        "description": "Update responder gateway",
+        "id": "example-1",
+        "title": "Update responder gateway"
+      }
+    ]
+  }
+}
