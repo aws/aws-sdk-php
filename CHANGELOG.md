@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.357.0 - 2025-10-22
 
 * `Aws\DirectConnect` - Update endpoint ruleset parameters casing
 * `Aws\MarketplaceAgreement` - Update endpoint ruleset parameters casing
