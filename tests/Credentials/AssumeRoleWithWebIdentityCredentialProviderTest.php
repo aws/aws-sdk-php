@@ -6,6 +6,7 @@ use Aws\Command;
 use Aws\Credentials\AssumeRoleWithWebIdentityCredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
+use Aws\Middleware;
 use Aws\Result;
 use Aws\Sts\StsClient;
 use Aws\Sts\Exception\StsException;
@@ -395,5 +396,86 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         } finally {
             unlink($tokenPath);
         }
+    }
+
+    /**
+     * @dataProvider endpointConfigurationProvider
+     */
+    public function testEndpointConfigurationBasedOnRegion(
+        ?string $region,
+        string $expectedEndpoint,
+        string $description
+    ): void
+    {
+        $tokenFile = tempnam(sys_get_temp_dir(), 'token');
+        file_put_contents($tokenFile, 'test-token-content');
+
+        $config = [
+            'RoleArn' => self::SAMPLE_ROLE_ARN,
+            'WebIdentityTokenFile' => $tokenFile,
+        ];
+
+        if ($region !== null) {
+            $config['region'] = $region;
+        }
+
+
+        $provider = new AssumeRoleWithWebIdentityCredentialProvider($config);
+        $reflection = new \ReflectionClass($provider);
+        $clientProperty = $reflection->getProperty('client');
+        $stsClient = $clientProperty->getValue($provider);
+
+        $capturedEndpoint = null;
+        $stsClient->getHandlerList()->appendBuild(
+            Middleware::tap(
+                function ($cmd, $req) use (&$capturedEndpoint) {
+                    $capturedEndpoint = (string) $req->getUri();
+                }
+            )
+        );
+
+        $stsClient->getHandlerList()->setHandler(
+            function ($c, $r) {
+                $result = [
+                    'Credentials' => [
+                        'AccessKeyId'     => 'foo',
+                        'SecretAccessKey' => 'bar',
+                        'SessionToken'    => 'baz',
+                        'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
+                    ],
+                    'AssumedRoleUser' => [
+                        'AssumedRoleId' => 'ARXXXXXXXXXXXXXXXXXXX:test_session',
+                        'Arn' => self::SAMPLE_ROLE_ARN . "/test_session"
+                    ]
+                ];
+                return Promise\Create::promiseFor(new Result($result));
+            }
+        );
+
+        $provider()->wait();
+
+        $this->assertEquals(
+            $expectedEndpoint,
+            $capturedEndpoint,
+            "Failed asserting endpoint for: {$description}"
+        );
+
+        unlink($tokenFile);
+    }
+
+    public function endpointConfigurationProvider(): array
+    {
+        return [
+            'explicit us-east-1 uses regional endpoint' => [
+                'region' => 'us-east-1',
+                'expectedEndpoint' => 'https://sts.us-east-1.amazonaws.com/',
+                'description' => 'explicit us-east-1'
+            ],
+            'no region defaults to us-east-1 with global endpoint' => [
+                'region' => null,
+                'expectedEndpoint' => 'https://sts.amazonaws.com/',
+                'description' => 'default region'
+            ]
+        ];
     }
 }
