@@ -1,5 +1,58 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SageMaker` - Update endpoint ruleset parameters casing
+* `Aws\KinesisVideoArchivedMedia` - Update endpoint ruleset parameters casing
+* `Aws\ResilienceHub` - Update endpoint ruleset parameters casing
+* `Aws\InternetMonitor` - Update endpoint ruleset parameters casing
+* `Aws\drs` - Update endpoint ruleset parameters casing
+* `Aws\DatabaseMigrationService` - Update endpoint ruleset parameters casing
+* `Aws\ChimeSDKVoice` - Update endpoint ruleset parameters casing
+* `Aws\MigrationHub` - Update endpoint ruleset parameters casing
+* `Aws\IoTJobsDataPlane` - Update endpoint ruleset parameters casing
+* `Aws\ConfigService` - Update endpoint ruleset parameters casing
+* `Aws\HealthLake` - Update endpoint ruleset parameters casing
+* `Aws\mgn` - Update endpoint ruleset parameters casing
+* `Aws\NetworkMonitor` - Update endpoint ruleset parameters casing
+* `Aws\SESv2` - Update endpoint ruleset parameters casing
+* `Aws\Macie2` - Update endpoint ruleset parameters casing
+* `Aws\OpenSearchServerless` - Update endpoint ruleset parameters casing
+* `Aws\Odb` - Doc-only update that removes duplicate values from descriptions of ODB peering APIs.
+* `Aws\StorageGateway` - Update endpoint ruleset parameters casing
+* `Aws\ApplicationAutoScaling` - Update endpoint ruleset parameters casing
+* `Aws\CostandUsageReportService` - Update endpoint ruleset parameters casing
+* `Aws\EBS` - Update endpoint ruleset parameters casing
+* `Aws\SavingsPlans` - Update endpoint ruleset parameters casing
+* `Aws\CloudWatchRUM` - Update endpoint ruleset parameters casing
+* `Aws\ECRPublic` - Update endpoint ruleset parameters casing
+* `Aws\PersonalizeEvents` - Update endpoint ruleset parameters casing
+* `Aws\SecurityLake` - Update endpoint ruleset parameters casing
+* `Aws\SagemakerEdgeManager` - Update endpoint ruleset parameters casing
+* `Aws\KinesisVideoWebRTCStorage` - Update endpoint ruleset parameters casing
+* `Aws\Lambda` - Add NodeJs 24 (nodejs24.x) support to AWS Lambda.
+* `Aws\Omics` - Update endpoint ruleset parameters casing
+* `Aws\CodeStarconnections` - Update endpoint ruleset parameters casing
+* `Aws\ApplicationDiscoveryService` - Update endpoint ruleset parameters casing
+* `Aws\MPA` - Update endpoint ruleset parameters casing
+* `Aws\PcaConnectorScep` - Update endpoint ruleset parameters casing
+* `Aws\IoTEvents` - Update endpoint ruleset parameters casing
+* `Aws\ConnectContactLens` - Update endpoint ruleset parameters casing
+* `Aws\BedrockAgentCoreControl` - Fixing the service documentation name
+* `Aws\CodeBuild` - Update endpoint ruleset parameters casing
+* `Aws\BedrockAgentCore` - Fixing the service documentation name
+* `Aws\Synthetics` - Update endpoint ruleset parameters casing
+* `Aws\ManagedBlockchainQuery` - Update endpoint ruleset parameters casing
+* `Aws\CloudTrailData` - Update endpoint ruleset parameters casing
+* `Aws\Account` - Update endpoint ruleset parameters casing
+* `Aws\PinpointEmail` - Update endpoint ruleset parameters casing
+* `Aws\DocDBElastic` - Update endpoint ruleset parameters casing
+* `Aws\MediaTailor` - Update endpoint ruleset parameters casing
+* `Aws\Neptunedata` - Update endpoint ruleset parameters casing
+* `Aws\ECR` - Update endpoint ruleset parameters casing
+* `Aws\DSQL` - Add support for resource-based policies for Aurora DSQL clusters. This will enable you to implement Block Public Access (BPA) which will help restrict access to your Aurora DSQL public or VPC endpoints.
+* `Aws\MarketplaceCommerceAnalytics` - Update endpoint ruleset parameters casing
+
 ## 3.357.0 - 2025-10-22
 
 * `Aws\DirectConnect` - Update endpoint ruleset parameters casing

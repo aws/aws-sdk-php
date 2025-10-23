@@ -2,15 +2,18 @@
   "version": "2.0",
   "service": "<p>This is an interface reference for Amazon Aurora DSQL. It contains documentation for one of the programming or command line interfaces you can use to manage Amazon Aurora DSQL.</p> <p>Amazon Aurora DSQL is a serverless, distributed SQL database suitable for workloads of any size. is available in both single-Region and multi-Region configurations, so your clusters and databases are always available even if an Availability Zone or an Amazon Web Services Region are unavailable. lets you focus on using your data to acquire new insights for your business and customers.</p>",
   "operations": {
-    "CreateCluster": "<p>The CreateCluster API allows you to create both single-region clusters and multi-Region clusters. With the addition of the <i>multiRegionProperties</i> parameter, you can create a cluster with witness Region support and establish peer relationships with clusters in other Regions during creation.</p> <note> <p>Creating multi-Region clusters requires additional IAM permissions beyond those needed for single-Region clusters, as detailed in the <b>Required permissions</b> section below.</p> </note> <p> <b>Required permissions</b> </p> <dl> <dt>dsql:CreateCluster</dt> <dd> <p>Required to create a cluster.</p> <p>Resources: <code>arn:aws:dsql:region:account-id:cluster/*</code> </p> </dd> <dt>dsql:TagResource</dt> <dd> <p>Permission to add tags to a resource.</p> <p>Resources: <code>arn:aws:dsql:region:account-id:cluster/*</code> </p> </dd> <dt>dsql:PutMultiRegionProperties</dt> <dd> <p>Permission to configure multi-region properties for a cluster.</p> <p>Resources: <code>arn:aws:dsql:region:account-id:cluster/*</code> </p> </dd> <dt>dsql:AddPeerCluster</dt> <dd> <p>When specifying <code>multiRegionProperties.clusters</code>, permission to add peer clusters.</p> <p>Resources:</p> <ul> <li> <p>Local cluster: <code>arn:aws:dsql:region:account-id:cluster/*</code> </p> </li> <li> <p>Each peer cluster: exact ARN of each specified peer cluster</p> </li> </ul> </dd> <dt>dsql:PutWitnessRegion</dt> <dd> <p>When specifying <code>multiRegionProperties.witnessRegion</code>, permission to set a witness Region. This permission is checked both in the cluster Region and in the witness Region.</p> <p>Resources: <code>arn:aws:dsql:region:account-id:cluster/*</code> </p> <p>Condition Keys: <code>dsql:WitnessRegion</code> (matching the specified witness region)</p> </dd> </dl> <important> <ul> <li> <p>The witness Region specified in <code>multiRegionProperties.witnessRegion</code> cannot be the same as the cluster's Region.</p> </li> </ul> </important>",
+    "CreateCluster": "<p>The CreateCluster API allows you to create both single-Region clusters and multi-Region clusters. With the addition of the <i>multiRegionProperties</i> parameter, you can create a cluster with witness Region support and establish peer relationships with clusters in other Regions during creation.</p> <note> <p>Creating multi-Region clusters requires additional IAM permissions beyond those needed for single-Region clusters, as detailed in the <b>Required permissions</b> section below.</p> </note> <p> <b>Required permissions</b> </p> <dl> <dt>dsql:CreateCluster</dt> <dd> <p>Required to create a cluster.</p> <p>Resources: <code>arn:aws:dsql:region:account-id:cluster/*</code> </p> </dd> <dt>dsql:TagResource</dt> <dd> <p>Permission to add tags to a resource.</p> <p>Resources: <code>arn:aws:dsql:region:account-id:cluster/*</code> </p> </dd> <dt>dsql:PutMultiRegionProperties</dt> <dd> <p>Permission to configure multi-Region properties for a cluster.</p> <p>Resources: <code>arn:aws:dsql:region:account-id:cluster/*</code> </p> </dd> <dt>dsql:AddPeerCluster</dt> <dd> <p>When specifying <code>multiRegionProperties.clusters</code>, permission to add peer clusters.</p> <p>Resources:</p> <ul> <li> <p>Local cluster: <code>arn:aws:dsql:region:account-id:cluster/*</code> </p> </li> <li> <p>Each peer cluster: exact ARN of each specified peer cluster</p> </li> </ul> </dd> <dt>dsql:PutWitnessRegion</dt> <dd> <p>When specifying <code>multiRegionProperties.witnessRegion</code>, permission to set a witness Region. This permission is checked both in the cluster Region and in the witness Region.</p> <p>Resources: <code>arn:aws:dsql:region:account-id:cluster/*</code> </p> <p>Condition Keys: <code>dsql:WitnessRegion</code> (matching the specified witness region)</p> </dd> </dl> <important> <ul> <li> <p>The witness Region specified in <code>multiRegionProperties.witnessRegion</code> cannot be the same as the cluster's Region.</p> </li> </ul> </important>",
     "DeleteCluster": "<p>Deletes a cluster in Amazon Aurora DSQL.</p>",
+    "DeleteClusterPolicy": "<p>Deletes the resource-based policy attached to a cluster. This removes all access permissions defined by the policy, reverting to default access controls.</p>",
     "GetCluster": "<p>Retrieves information about a cluster.</p>",
+    "GetClusterPolicy": "<p>Retrieves the resource-based policy document attached to a cluster. This policy defines the access permissions and conditions for the cluster.</p>",
     "GetVpcEndpointServiceName": "<p>Retrieves the VPC endpoint service name.</p>",
     "ListClusters": "<p>Retrieves information about a list of clusters.</p>",
     "ListTagsForResource": "<p>Lists all of the tags for a resource.</p>",
+    "PutClusterPolicy": "<p>Attaches a resource-based policy to a cluster. This policy defines access permissions and conditions for the cluster, allowing you to control which principals can perform actions on the cluster.</p>",
     "TagResource": "<p>Tags a resource with a map of key and value pairs.</p>",
     "UntagResource": "<p>Removes a tag from a resource.</p>",
-    "UpdateCluster": "<p>The <i>UpdateCluster</i> API allows you to modify both single-Region and multi-Region cluster configurations. With the <i>multiRegionProperties</i> parameter, you can add or modify witness Region support and manage peer relationships with clusters in other Regions.</p> <note> <p>Note that updating multi-region clusters requires additional IAM permissions beyond those needed for standard cluster updates, as detailed in the Permissions section.</p> </note> <p> <b>Required permissions</b> </p> <dl> <dt>dsql:UpdateCluster</dt> <dd> <p>Permission to update a DSQL cluster.</p> <p>Resources: <code>arn:aws:dsql:<i>region</i>:<i>account-id</i>:cluster/<i>cluster-id</i> </code> </p> </dd> </dl> <dl> <dt>dsql:PutMultiRegionProperties</dt> <dd> <p>Permission to configure multi-Region properties for a cluster.</p> <p>Resources: <code>arn:aws:dsql:<i>region</i>:<i>account-id</i>:cluster/<i>cluster-id</i> </code> </p> </dd> </dl> <dl> <dt>dsql:GetCluster</dt> <dd> <p>Permission to retrieve cluster information.</p> <p>Resources: <code>arn:aws:dsql:<i>region</i>:<i>account-id</i>:cluster/<i>cluster-id</i> </code> </p> </dd> <dt>dsql:AddPeerCluster</dt> <dd> <p>Permission to add peer clusters.</p> <p>Resources:</p> <ul> <li> <p>Local cluster: <code>arn:aws:dsql:<i>region</i>:<i>account-id</i>:cluster/<i>cluster-id</i> </code> </p> </li> <li> <p>Each peer cluster: exact ARN of each specified peer cluster</p> </li> </ul> </dd> <dt>dsql:RemovePeerCluster</dt> <dd> <p>Permission to remove peer clusters. The <i>dsql:RemovePeerCluster</i> permission uses a wildcard ARN pattern to simplify permission management during updates.</p> <p>Resources: <code>arn:aws:dsql:*:<i>account-id</i>:cluster/*</code> </p> </dd> </dl> <dl> <dt>dsql:PutWitnessRegion</dt> <dd> <p>Permission to set a witness Region.</p> <p>Resources: <code>arn:aws:dsql:<i>region</i>:<i>account-id</i>:cluster/<i>cluster-id</i> </code> </p> <p>Condition Keys: dsql:WitnessRegion (matching the specified witness Region)</p> <p> <b>This permission is checked both in the cluster Region and in the witness Region.</b> </p> </dd> </dl> <important> <ul> <li> <p>The witness region specified in <code>multiRegionProperties.witnessRegion</code> cannot be the same as the cluster's Region.</p> </li> <li> <p>When updating clusters with peer relationships, permissions are checked for both adding and removing peers.</p> </li> <li> <p>The <code>dsql:RemovePeerCluster</code> permission uses a wildcard ARN pattern to simplify permission management during updates.</p> </li> </ul> </important>"
+    "UpdateCluster": "<p>The <i>UpdateCluster</i> API allows you to modify both single-Region and multi-Region cluster configurations. With the <i>multiRegionProperties</i> parameter, you can add or modify witness Region support and manage peer relationships with clusters in other Regions.</p> <note> <p>Note that updating multi-Region clusters requires additional IAM permissions beyond those needed for standard cluster updates, as detailed in the Permissions section.</p> </note> <p> <b>Required permissions</b> </p> <dl> <dt>dsql:UpdateCluster</dt> <dd> <p>Permission to update a DSQL cluster.</p> <p>Resources: <code>arn:aws:dsql:<i>region</i>:<i>account-id</i>:cluster/<i>cluster-id</i> </code> </p> </dd> </dl> <dl> <dt>dsql:PutMultiRegionProperties</dt> <dd> <p>Permission to configure multi-Region properties for a cluster.</p> <p>Resources: <code>arn:aws:dsql:<i>region</i>:<i>account-id</i>:cluster/<i>cluster-id</i> </code> </p> </dd> </dl> <dl> <dt>dsql:GetCluster</dt> <dd> <p>Permission to retrieve cluster information.</p> <p>Resources: <code>arn:aws:dsql:<i>region</i>:<i>account-id</i>:cluster/<i>cluster-id</i> </code> </p> </dd> <dt>dsql:AddPeerCluster</dt> <dd> <p>Permission to add peer clusters.</p> <p>Resources:</p> <ul> <li> <p>Local cluster: <code>arn:aws:dsql:<i>region</i>:<i>account-id</i>:cluster/<i>cluster-id</i> </code> </p> </li> <li> <p>Each peer cluster: exact ARN of each specified peer cluster</p> </li> </ul> </dd> <dt>dsql:RemovePeerCluster</dt> <dd> <p>Permission to remove peer clusters. The <i>dsql:RemovePeerCluster</i> permission uses a wildcard ARN pattern to simplify permission management during updates.</p> <p>Resources: <code>arn:aws:dsql:*:<i>account-id</i>:cluster/*</code> </p> </dd> </dl> <dl> <dt>dsql:PutWitnessRegion</dt> <dd> <p>Permission to set a witness Region.</p> <p>Resources: <code>arn:aws:dsql:<i>region</i>:<i>account-id</i>:cluster/<i>cluster-id</i> </code> </p> <p>Condition Keys: dsql:WitnessRegion (matching the specified witness Region)</p> <p> <b>This permission is checked both in the cluster Region and in the witness Region.</b> </p> </dd> </dl> <important> <ul> <li> <p>The witness region specified in <code>multiRegionProperties.witnessRegion</code> cannot be the same as the cluster's Region.</p> </li> <li> <p>When updating clusters with peer relationships, permissions are checked for both adding and removing peers.</p> </li> <li> <p>The <code>dsql:RemovePeerCluster</code> permission uses a wildcard ARN pattern to simplify permission management during updates.</p> </li> </ul> </important>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -26,11 +29,20 @@
         "UntagResourceInput$resourceArn": "<p>The ARN of the resource from which to remove tags.</p>"
       }
     },
+    "BypassPolicyLockoutSafetyCheck": {
+      "base": null,
+      "refs": {
+        "CreateClusterInput$bypassPolicyLockoutSafetyCheck": "<p>An optional field that controls whether to bypass the lockout prevention check. When set to true, this parameter allows you to apply a policy that might lock you out of the cluster. Use with caution.</p>",
+        "PutClusterPolicyInput$bypassPolicyLockoutSafetyCheck": "<p>A flag that allows you to bypass the policy lockout safety check. When set to true, this parameter allows you to apply a policy that might lock you out of the cluster. Use with caution.</p>"
+      }
+    },
     "ClientToken": {
       "base": "<p>Idempotency token so a request is only processed once.</p>",
       "refs": {
         "CreateClusterInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, the subsequent retries with the same client token return the result from the original successful request and they have no additional effect.</p> <p>If you don't specify a client token, the Amazon Web Services SDK automatically generates one.</p>",
         "DeleteClusterInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully. The subsequent retries with the same client token return the result from the original successful request and they have no additional effect.</p> <p>If you don't specify a client token, the Amazon Web Services SDK automatically generates one.</p>",
+        "DeleteClusterPolicyInput$clientToken": null,
+        "PutClusterPolicyInput$clientToken": null,
         "UpdateClusterInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully. The subsequent retries with the same client token return the result from the original successful request and they have no additional effect.</p> <p>If you don't specify a client token, the Amazon Web Services SDK automatically generates one.</p>"
       }
     },
@@ -48,7 +60,7 @@
     "ClusterArnList": {
       "base": "<p>A list of the Amazon Resource Names of the cluster.</p>",
       "refs": {
-        "MultiRegionProperties$clusters": "<p>The set of linked clusters that form the multi-Region cluster configuration. Each linked cluster represents a database instance in a different Region.</p>"
+        "MultiRegionProperties$clusters": "<p>The set of peered clusters that form the multi-Region cluster configuration. Each peered cluster represents a database instance in a different Region.</p>"
       }
     },
     "ClusterCreationTime": {
@@ -67,9 +79,12 @@
         "CreateClusterOutput$identifier": "<p>The ID of the created cluster.</p>",
         "DeleteClusterInput$identifier": "<p>The ID of the cluster to delete.</p>",
         "DeleteClusterOutput$identifier": "<p>The ID of the deleted cluster.</p>",
+        "DeleteClusterPolicyInput$identifier": null,
         "GetClusterInput$identifier": "<p>The ID of the cluster to retrieve.</p>",
         "GetClusterOutput$identifier": "<p>The ID of the retrieved cluster.</p>",
+        "GetClusterPolicyInput$identifier": "<p>The ID of the cluster to retrieve the policy from.</p>",
         "GetVpcEndpointServiceNameInput$identifier": "<p>The ID of the cluster to retrieve.</p>",
+        "PutClusterPolicyInput$identifier": null,
         "UpdateClusterInput$identifier": "<p>The ID of the cluster you want to update.</p>",
         "UpdateClusterOutput$identifier": "<p>The ID of the cluster to update.</p>"
       }
@@ -120,6 +135,16 @@
       "refs": {
       }
     },
+    "DeleteClusterPolicyInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteClusterPolicyOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeletionProtectionEnabled": {
       "base": "<p>Indicates whether deletion protection is enabled for a cluster.</p>",
       "refs": {
@@ -155,6 +180,16 @@
     },
     "GetClusterOutput": {
       "base": "<p>The output of a cluster.</p>",
+      "refs": {
+      }
+    },
+    "GetClusterPolicyInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetClusterPolicyOutput": {
+      "base": null,
       "refs": {
       }
     },
@@ -235,10 +270,38 @@
         "ListClustersOutput$nextToken": "<p>If nextToken is returned, there are more results available. The value of nextToken is a unique pagination token for each page. To retrieve the next page, make the call again using the returned token.</p>"
       }
     },
+    "PolicyDocument": {
+      "base": "<p>A resource-based policy document in JSON format. Length constraints: Minimum length of 1. Maximum length of 20480 characters (approximately 20KB).</p>",
+      "refs": {
+        "CreateClusterInput$policy": "<p>An optional resource-based policy document in JSON format that defines access permissions for the cluster.</p>",
+        "GetClusterPolicyOutput$policy": "<p>The resource-based policy document attached to the cluster, returned as a JSON string.</p>",
+        "PutClusterPolicyInput$policy": "<p>The resource-based policy document to attach to the cluster. This should be a valid JSON policy document that defines permissions and conditions.</p>"
+      }
+    },
+    "PolicyVersion": {
+      "base": null,
+      "refs": {
+        "DeleteClusterPolicyInput$expectedPolicyVersion": "<p>The expected version of the policy to delete. This parameter ensures that you're deleting the correct version of the policy and helps prevent accidental deletions.</p>",
+        "DeleteClusterPolicyOutput$policyVersion": "<p>The version of the policy that was deleted.</p>",
+        "GetClusterPolicyOutput$policyVersion": "<p>The version of the policy document. This version number is incremented each time the policy is updated.</p>",
+        "PutClusterPolicyInput$expectedPolicyVersion": "<p>The expected version of the current policy. This parameter ensures that you're updating the correct version of the policy and helps prevent concurrent modification conflicts.</p>",
+        "PutClusterPolicyOutput$policyVersion": "<p>The version of the policy after it has been updated or created.</p>"
+      }
+    },
+    "PutClusterPolicyInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutClusterPolicyOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "Region": {
       "base": "<p> Region name.</p>",
       "refs": {
-        "MultiRegionProperties$witnessRegion": "<p>The that serves as the witness region for a multi-Region cluster. The witness region helps maintain cluster consistency and quorum.</p>"
+        "MultiRegionProperties$witnessRegion": "<p>The Region that serves as the witness region for a multi-Region cluster. The witness Region helps maintain cluster consistency and quorum.</p>"
       }
     },
     "ResourceNotFoundException": {
