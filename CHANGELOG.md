@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.357.1 - 2025-10-23
 
 * `Aws\SageMaker` - Update endpoint ruleset parameters casing
 * `Aws\KinesisVideoArchivedMedia` - Update endpoint ruleset parameters casing
