@@ -333,15 +333,12 @@ class SignatureV4Test extends TestCase
         $request = new Request('GET', 'https://example.com/service?' . $query);
 
         $parseRequest = new \ReflectionMethod($signature, 'parseRequest');
-        $parseRequest->setAccessible(true);
         $parsedRequest = $parseRequest->invoke($signature, $request);
 
         $getPayload = new \ReflectionMethod($signature, 'getPayload');
-        $getPayload->setAccessible(true);
         $payload = $getPayload->invoke($signature, $request);
 
         $createContext = new \ReflectionMethod($signature, 'createContext');
-        $createContext->setAccessible(true);
         $context = $createContext->invoke($signature, $parsedRequest, $payload);
 
         $canonicalQuery = explode("\n", $context['creq'])[2];
