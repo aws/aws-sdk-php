@@ -4354,6 +4354,7 @@
         "glueProperties":{"shape":"GluePropertiesInput"},
         "hyperPodProperties":{"shape":"HyperPodPropertiesInput"},
         "iamProperties":{"shape":"IamPropertiesInput"},
+        "mlflowProperties":{"shape":"MlflowPropertiesInput"},
         "redshiftProperties":{"shape":"RedshiftPropertiesInput"},
         "s3Properties":{"shape":"S3PropertiesInput"},
         "sparkEmrProperties":{"shape":"SparkEmrPropertiesInput"},
@@ -4369,6 +4370,7 @@
         "glueProperties":{"shape":"GluePropertiesOutput"},
         "hyperPodProperties":{"shape":"HyperPodPropertiesOutput"},
         "iamProperties":{"shape":"IamPropertiesOutput"},
+        "mlflowProperties":{"shape":"MlflowPropertiesOutput"},
         "redshiftProperties":{"shape":"RedshiftPropertiesOutput"},
         "s3Properties":{"shape":"S3PropertiesOutput"},
         "sparkEmrProperties":{"shape":"SparkEmrPropertiesOutput"},
@@ -4383,6 +4385,7 @@
         "athenaProperties":{"shape":"AthenaPropertiesPatch"},
         "glueProperties":{"shape":"GluePropertiesPatch"},
         "iamProperties":{"shape":"IamPropertiesPatch"},
+        "mlflowProperties":{"shape":"MlflowPropertiesPatch"},
         "redshiftProperties":{"shape":"RedshiftPropertiesPatch"},
         "s3Properties":{"shape":"S3PropertiesPatch"},
         "sparkEmrProperties":{"shape":"SparkEmrPropertiesPatch"}
@@ -4464,7 +4467,8 @@
         "TERADATA",
         "VERTICA",
         "WORKFLOWS_MWAA",
-        "AMAZON_Q"
+        "AMAZON_Q",
+        "MLFLOW"
       ]
     },
     "CreateAccountPoolInput":{
@@ -12084,6 +12088,27 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"String"}
+    },
+    "MlflowPropertiesInput":{
+      "type":"structure",
+      "members":{
+        "trackingServerArn":{"shape":"String"},
+        "trackingServerName":{"shape":"String"}
+      }
+    },
+    "MlflowPropertiesOutput":{
+      "type":"structure",
+      "members":{
+        "trackingServerArn":{"shape":"String"},
+        "trackingServerName":{"shape":"String"}
+      }
+    },
+    "MlflowPropertiesPatch":{
+      "type":"structure",
+      "members":{
+        "trackingServerArn":{"shape":"String"},
+        "trackingServerName":{"shape":"String"}
+      }
     },
     "Model":{
       "type":"structure",

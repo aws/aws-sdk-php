@@ -5925,6 +5925,13 @@
         "JupyterLabAppSettings$EmrSettings": "<p>The configuration parameters that specify the IAM roles assumed by the execution role of SageMaker (assumable roles) and the cluster instances or job execution environments (execution roles or runtime roles) to manage and access resources required for running Amazon EMR clusters or Amazon EMR Serverless applications.</p>"
       }
     },
+    "EnableCaching": {
+      "base": null,
+      "refs": {
+        "InferenceComponentDataCacheConfig$EnableCaching": "<p>Sets whether the endpoint that hosts the inference component caches the model artifacts and container image.</p> <p>With caching enabled, the endpoint caches this data in each instance that it provisions for the inference component. That way, the inference component deploys faster during the auto scaling process. If caching isn't enabled, the inference component takes longer to deploy because of the time it spends downloading the data.</p>",
+        "InferenceComponentDataCacheConfigSummary$EnableCaching": "<p>Indicates whether the inference component caches model artifacts as part of the auto scaling process.</p>"
+      }
+    },
     "EnableCapture": {
       "base": null,
       "refs": {
@@ -8358,6 +8365,18 @@
         "InferenceComponentRuntimeConfig$CopyCount": "<p>The number of runtime copies of the model container to deploy with the inference component. Each copy can serve inference requests.</p>",
         "InferenceComponentRuntimeConfigSummary$DesiredCopyCount": "<p>The number of runtime copies of the model container that you requested to deploy with the inference component.</p>",
         "InferenceComponentRuntimeConfigSummary$CurrentCopyCount": "<p>The number of runtime copies of the model container that are currently deployed.</p>"
+      }
+    },
+    "InferenceComponentDataCacheConfig": {
+      "base": "<p>Settings that affect how the inference component caches data.</p>",
+      "refs": {
+        "InferenceComponentSpecification$DataCacheConfig": "<p>Settings that affect how the inference component caches data.</p>"
+      }
+    },
+    "InferenceComponentDataCacheConfigSummary": {
+      "base": "<p>Settings that affect how the inference component caches data.</p>",
+      "refs": {
+        "InferenceComponentSpecificationSummary$DataCacheConfig": "<p>Settings that affect how the inference component caches data.</p>"
       }
     },
     "InferenceComponentDeploymentConfig": {
@@ -13242,7 +13261,7 @@
     "PlatformIdentifier": {
       "base": null,
       "refs": {
-        "CreateNotebookInstanceInput$PlatformIdentifier": "<p>The platform identifier of the notebook instance runtime environment.</p>",
+        "CreateNotebookInstanceInput$PlatformIdentifier": "<p>The platform identifier of the notebook instance runtime environment. The default value is <code>notebook-al2-v2</code>.</p>",
         "DescribeNotebookInstanceOutput$PlatformIdentifier": "<p>The platform identifier of the notebook instance runtime environment.</p>"
       }
     },
@@ -13494,7 +13513,7 @@
       "refs": {
         "BatchTransformInput$S3DataDistributionType": "<p>Whether input data distributed in Amazon S3 is fully replicated or sharded by an S3 key. Defaults to <code>FullyReplicated</code> </p>",
         "EndpointInput$S3DataDistributionType": "<p>Whether input data distributed in Amazon S3 is fully replicated or sharded by an Amazon S3 key. Defaults to <code>FullyReplicated</code> </p>",
-        "ProcessingS3Input$S3DataDistributionType": "<p>Whether to distribute the data from Amazon S3 to all processing instances with <code>FullyReplicated</code>, or whether the data from Amazon S3 is shared by Amazon S3 key, downloading one shard of data to each processing instance.</p>"
+        "ProcessingS3Input$S3DataDistributionType": "<p>Whether to distribute the data from Amazon S3 to all processing instances with <code>FullyReplicated</code>, or whether the data from Amazon S3 is sharded by Amazon S3 key, downloading one shard of data to each processing instance.</p>"
       }
     },
     "ProcessingS3DataType": {

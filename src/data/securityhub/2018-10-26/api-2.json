@@ -8106,6 +8106,8 @@
         "BooleanFilters":{"shape":"OcsfBooleanFilterList"},
         "NumberFilters":{"shape":"OcsfNumberFilterList"},
         "MapFilters":{"shape":"OcsfMapFilterList"},
+        "IpFilters":{"shape":"OcsfIpFilterList"},
+        "NestedCompositeFilters":{"shape":"CompositeFilterList"},
         "Operator":{"shape":"AllowedOperators"}
       }
     },
@@ -9596,7 +9598,11 @@
         "severity",
         "status",
         "vulnerabilities.fix_coverage",
-        "class_name"
+        "class_name",
+        "vulnerabilities.affected_packages.name",
+        "finding_info.analytic.name",
+        "compliance.standards",
+        "cloud.account.name"
       ]
     },
     "GroupByResult":{
@@ -10535,7 +10541,10 @@
         "finding_info.created_time_dt",
         "finding_info.first_seen_time_dt",
         "finding_info.last_seen_time_dt",
-        "finding_info.modified_time_dt"
+        "finding_info.modified_time_dt",
+        "resources.image.created_time_dt",
+        "resources.image.last_used_time_dt",
+        "resources.modified_time_dt"
       ]
     },
     "OcsfDateFilter":{
@@ -10584,9 +10593,32 @@
       "type":"list",
       "member":{"shape":"OcsfFinding"}
     },
+    "OcsfIpField":{
+      "type":"string",
+      "enum":[
+        "evidences.dst_endpoint.ip",
+        "evidences.src_endpoint.ip"
+      ]
+    },
+    "OcsfIpFilter":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"OcsfIpField"},
+        "Filter":{"shape":"IpFilter"}
+      }
+    },
+    "OcsfIpFilterList":{
+      "type":"list",
+      "member":{"shape":"OcsfIpFilter"}
+    },
     "OcsfMapField":{
       "type":"string",
-      "enum":["resources.tags"]
+      "enum":[
+        "resources.tags",
+        "compliance.control_parameters",
+        "databucket.tags",
+        "finding_info.tags"
+      ]
     },
     "OcsfMapFilter":{
       "type":"structure",
@@ -10607,7 +10639,13 @@
         "confidence_score",
         "severity_id",
         "status_id",
-        "finding_info.related_events_count"
+        "finding_info.related_events_count",
+        "evidences.api.response.code",
+        "evidences.dst_endpoint.autonomous_system.number",
+        "evidences.dst_endpoint.port",
+        "evidences.src_endpoint.autonomous_system.number",
+        "evidences.src_endpoint.port",
+        "resources.image.in_use_count"
       ]
     },
     "OcsfNumberFilter":{
@@ -10655,7 +10693,44 @@
         "status",
         "comment",
         "vulnerabilities.fix_coverage",
-        "class_name"
+        "class_name",
+        "databucket.encryption_details.algorithm",
+        "databucket.encryption_details.key_uid",
+        "databucket.file.data_classifications.classifier_details.type",
+        "evidences.actor.user.account.uid",
+        "evidences.api.operation",
+        "evidences.api.response.error_message",
+        "evidences.api.service.name",
+        "evidences.connection_info.direction",
+        "evidences.connection_info.protocol_name",
+        "evidences.dst_endpoint.autonomous_system.name",
+        "evidences.dst_endpoint.location.city",
+        "evidences.dst_endpoint.location.country",
+        "evidences.src_endpoint.autonomous_system.name",
+        "evidences.src_endpoint.hostname",
+        "evidences.src_endpoint.location.city",
+        "evidences.src_endpoint.location.country",
+        "finding_info.analytic.name",
+        "malware.name",
+        "malware_scan_info.uid",
+        "malware.severity",
+        "resources.cloud_function.layers.uid_alt",
+        "resources.cloud_function.runtime",
+        "resources.cloud_function.user.uid",
+        "resources.device.encryption_details.key_uid",
+        "resources.device.image.uid",
+        "resources.image.architecture",
+        "resources.image.registry_uid",
+        "resources.image.repository_name",
+        "resources.image.uid",
+        "resources.subnet_info.uid",
+        "resources.vpc_uid",
+        "vulnerabilities.affected_code.file.path",
+        "vulnerabilities.affected_packages.name",
+        "vulnerabilities.cve.epss.score",
+        "vulnerabilities.cve.uid",
+        "vulnerabilities.related_vulnerabilities",
+        "cloud.account.name"
       ]
     },
     "OcsfStringFilter":{
@@ -11163,12 +11238,12 @@
     "ResourceGroupByField":{
       "type":"string",
       "enum":[
-        "account_id",
-        "region",
-        "resource_category",
-        "resource_type",
-        "resource_name",
-        "findings_summary.finding_type"
+        "AccountId",
+        "Region",
+        "ResourceCategory",
+        "ResourceType",
+        "ResourceName",
+        "FindingsSummary.FindingType"
       ]
     },
     "ResourceGroupByRule":{
@@ -11215,7 +11290,7 @@
         "ResourceConfig"
       ],
       "members":{
-        "ResourceArn":{"shape":"NonEmptyString"},
+        "ResourceGuid":{"shape":"NonEmptyString"},
         "ResourceId":{"shape":"NonEmptyString"},
         "AccountId":{"shape":"NonEmptyString"},
         "Region":{"shape":"NonEmptyString"},
@@ -11268,6 +11343,7 @@
         "DateFilters":{"shape":"ResourcesDateFilterList"},
         "NumberFilters":{"shape":"ResourcesNumberFilterList"},
         "MapFilters":{"shape":"ResourcesMapFilterList"},
+        "NestedCompositeFilters":{"shape":"ResourcesCompositeFilterList"},
         "Operator":{"shape":"AllowedOperators"}
       }
     },
@@ -11278,8 +11354,8 @@
     "ResourcesDateField":{
       "type":"string",
       "enum":[
-        "resource_detail_capture_time_dt",
-        "resource_creation_time_dt"
+        "ResourceDetailCaptureTime",
+        "ResourceCreationTime"
       ]
     },
     "ResourcesDateFilter":{
@@ -11302,7 +11378,7 @@
     },
     "ResourcesMapField":{
       "type":"string",
-      "enum":["tags"]
+      "enum":["ResourceTags"]
     },
     "ResourcesMapFilter":{
       "type":"structure",
@@ -11318,15 +11394,15 @@
     "ResourcesNumberField":{
       "type":"string",
       "enum":[
-        "findings_summary.total_findings",
-        "findings_summary.severities.other",
-        "findings_summary.severities.fatal",
-        "findings_summary.severities.critical",
-        "findings_summary.severities.high",
-        "findings_summary.severities.medium",
-        "findings_summary.severities.low",
-        "findings_summary.severities.informational",
-        "findings_summary.severities.unknown"
+        "FindingsSummary.TotalFindings",
+        "FindingsSummary.Severities.Other",
+        "FindingsSummary.Severities.Fatal",
+        "FindingsSummary.Severities.Critical",
+        "FindingsSummary.Severities.High",
+        "FindingsSummary.Severities.Medium",
+        "FindingsSummary.Severities.Low",
+        "FindingsSummary.Severities.Informational",
+        "FindingsSummary.Severities.Unknown"
       ]
     },
     "ResourcesNumberFilter":{
@@ -11343,15 +11419,15 @@
     "ResourcesStringField":{
       "type":"string",
       "enum":[
-        "resource_arn",
-        "resource_id",
-        "account_id",
-        "region",
-        "resource_category",
-        "resource_type",
-        "resource_name",
-        "findings_summary.finding_type",
-        "findings_summary.product_name"
+        "ResourceGuid",
+        "ResourceId",
+        "AccountId",
+        "Region",
+        "ResourceCategory",
+        "ResourceType",
+        "ResourceName",
+        "FindingsSummary.FindingType",
+        "FindingsSummary.ProductName"
       ]
     },
     "ResourcesStringFilter":{

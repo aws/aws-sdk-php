@@ -1,5 +1,59 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaStoreData` - Update endpoint ruleset parameters casing
+* `Aws\ChimeSDKMessaging` - Update endpoint ruleset parameters casing
+* `Aws\SupplyChain` - Update endpoint ruleset parameters casing
+* `Aws\Budgets` - Update endpoint ruleset parameters casing
+* `Aws\FIS` - Update endpoint ruleset parameters casing
+* `Aws\KinesisAnalytics` - Update endpoint ruleset parameters casing
+* `Aws\WorkSpacesThinClient` - Update endpoint ruleset parameters casing
+* `Aws\DataZone` - This release adds support for MLflow connections Creation in DataZone
+* `Aws\RTBFabric` - Add support for custom rate limits.
+* `Aws\MigrationHubStrategyRecommendations` - Update endpoint ruleset parameters casing
+* `Aws\ElasticLoadBalancing` - Update endpoint ruleset parameters casing
+* `Aws\VerifiedPermissions` - Update endpoint ruleset parameters casing
+* `Aws\PaymentCryptography` - Update endpoint ruleset parameters casing
+* `Aws\SageMaker` - Added inference components model data caching feature
+* `Aws\SSOOIDC` - Update endpoint ruleset parameters casing
+* `Aws\VPCLattice` - Update endpoint ruleset parameters casing
+* `Aws\DocDB` - Update endpoint ruleset parameters casing
+* `Aws\SageMakerMetrics` - Update endpoint ruleset parameters casing
+* `Aws\Inspector` - Update endpoint ruleset parameters casing
+* `Aws\CodePipeline` - Update endpoint ruleset parameters casing
+* `Aws\AmplifyUIBuilder` - Update endpoint ruleset parameters casing
+* `Aws\PcaConnectorAd` - Update endpoint ruleset parameters casing
+* `Aws\Route53Domains` - Update endpoint ruleset parameters casing
+* `Aws\EKS` - Update endpoint ruleset parameters casing
+* `Aws\KinesisVideoSignalingChannels` - Update endpoint ruleset parameters casing
+* `Aws\MQ` - Update endpoint ruleset parameters casing
+* `Aws\GameLiftStreams` - Add status reasons for TERMINATED stream sessions
+* `Aws\ConnectWisdomService` - Update endpoint ruleset parameters casing
+* `Aws\Translate` - Update endpoint ruleset parameters casing
+* `Aws\IoTWireless` - Update endpoint ruleset parameters casing
+* `Aws\ServiceDiscovery` - Update endpoint ruleset parameters casing
+* `Aws\QBusiness` - Update endpoint ruleset parameters casing
+* `Aws\ApplicationSignals` - Update endpoint ruleset parameters casing
+* `Aws\IoTManagedIntegrations` - Update endpoint ruleset parameters casing
+* `Aws\CloudTrail` - Update endpoint ruleset parameters casing
+* `Aws\Panorama` - Update endpoint ruleset parameters casing
+* `Aws\MediaStore` - Update endpoint ruleset parameters casing
+* `Aws\DynamoDBStreams` - Update endpoint ruleset parameters casing
+* `Aws\MediaPackage` - Update endpoint ruleset parameters casing
+* `Aws\SnowDeviceManagement` - Update endpoint ruleset parameters casing
+* `Aws\SecurityHub` - Release 3 layer filter support in GetFindingsV2, GetFindingStatisticsV2, GetResourcesV2,GetResourcesStatisticsV2, AutomationRule V2 APIs. Update filter casing in GetResourcesV2, GetResourcesStatisticsV2 APIs. Add new filters in GetFindingsV2, GetFindingStatisticsV2, AutomationRule V2 APIs.
+* `Aws\Evs` - Update endpoint ruleset parameters casing
+* `Aws\Billing` - Update endpoint ruleset parameters casing
+* `Aws\LookoutforVision` - Update endpoint ruleset parameters casing
+* `Aws\PaymentCryptographyData` - Update endpoint ruleset parameters casing
+* `Aws\S3Tables` - Update endpoint ruleset parameters casing
+* `Aws\DataPipeline` - Update endpoint ruleset parameters casing
+* `Aws\RoboMaker` - Update endpoint ruleset parameters casing
+* `Aws\ACM` - Update endpoint ruleset parameters casing
+* `Aws\GeoMaps` - Added support for optional AdditionalFeatures parameter in the V2 GetTile API.
+* `Aws\LocationService` - Added support for mobile app restrictions in Amazon Location API keys.
+
 ## 3.357.1 - 2025-10-23
 
 * `Aws\SageMaker` - Update endpoint ruleset parameters casing

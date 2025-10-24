@@ -114,6 +114,18 @@
       "base": null,
       "refs": {}
     },
+    "GetStaticMapRequestBoundedPositionsString": {
+      "base": null,
+      "refs": {
+        "GetStaticMapRequest$BoundedPositions": "<p>Takes in two or more pair of coordinates in World Geodetic System (WGS 84) format: [longitude, latitude], with each coordinate separated by a comma. The API will generate an image to encompass all of the provided coordinates. </p> <note> <p>Cannot be used with <code>Zoom</code> and or <code>Radius</code> </p> </note> <p>Example: 97.170451,78.039098,99.045536,27.176178</p>"
+      }
+    },
+    "GetStaticMapRequestBoundingBoxString": {
+      "base": null,
+      "refs": {
+        "GetStaticMapRequest$BoundingBox": "<p>Takes in two pairs of coordinates in World Geodetic System (WGS 84) format: [longitude, latitude], denoting south-westerly and north-easterly edges of the image. The underlying area becomes the view of the image. </p> <p>Example: -123.17075,49.26959,-123.08125,49.31429</p>"
+      }
+    },
     "GetStaticMapRequestFileNameString": {
       "base": null,
       "refs": {
@@ -124,6 +136,12 @@
       "base": null,
       "refs": {
         "GetStaticMapRequest$Height": "<p>Specifies the height of the map image.</p>"
+      }
+    },
+    "GetStaticMapRequestPaddingInteger": {
+      "base": null,
+      "refs": {
+        "GetStaticMapRequest$Padding": "<p>Applies additional space (in pixels) around overlay feature to prevent them from being cut or obscured.</p> <note> <p>Value for max and min is determined by:</p> <p>Min: <code>1</code> </p> <p>Max: <code>min(height, width)/4</code> </p> </note> <p>Example: <code>100</code> </p>"
       }
     },
     "GetStaticMapRequestWidthInteger": {
@@ -205,13 +223,6 @@
         "GetStyleDescriptorRequest$Style": "<p>Style specifies the desired map style.</p>"
       }
     },
-    "PositionListString": {
-      "base": null,
-      "refs": {
-        "GetStaticMapRequest$BoundingBox": "<p>Takes in two pairs of coordinates in World Geodetic System (WGS 84) format: [longitude, latitude], denoting south-westerly and north-easterly edges of the image. The underlying area becomes the view of the image. </p> <p>Example: -123.17075,49.26959,-123.08125,49.31429</p>",
-        "GetStaticMapRequest$BoundedPositions": "<p>Takes in two or more pair of coordinates in World Geodetic System (WGS 84) format: [longitude, latitude], with each coordinate separated by a comma. The API will generate an image to encompass all of the provided coordinates. </p> <note> <p>Cannot be used with <code>Zoom</code> and or <code>Radius</code> </p> </note> <p>Example: 97.170451,78.039098,99.045536,27.176178</p>"
-      }
-    },
     "PositionString": {
       "base": null,
       "refs": {
@@ -226,12 +237,6 @@
       "base": null,
       "refs": {
         "GetStaticMapRequest$ScaleBarUnit": "<p>Displays a scale on the bottom right of the map image with the unit specified in the input. </p> <p>Example: <code>KilometersMiles, Miles, Kilometers, MilesKilometers</code> </p>"
-      }
-    },
-    "SensitiveInteger": {
-      "base": null,
-      "refs": {
-        "GetStaticMapRequest$Padding": "<p>Applies additional space (in pixels) around overlay feature to prevent them from being cut or obscured.</p> <note> <p>Value for max and min is determined by:</p> <p>Min: <code>1</code> </p> <p>Max: <code>min(height, width)/4</code> </p> </note> <p>Example: <code>100</code> </p>"
       }
     },
     "StaticMapStyle": {
@@ -278,6 +283,18 @@
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
       "refs": {}
+    },
+    "TileAdditionalFeature": {
+      "base": null,
+      "refs": {
+        "TileAdditionalFeatureList$member": null
+      }
+    },
+    "TileAdditionalFeatureList": {
+      "base": null,
+      "refs": {
+        "GetTileRequest$AdditionalFeatures": "<p>A list of optional additional parameters such as map styles that can be requested for each result.</p>"
+      }
     },
     "Tileset": {
       "base": null,

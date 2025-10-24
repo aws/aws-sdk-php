@@ -13640,6 +13640,7 @@
         "ExecutionRoleArns":{"shape":"ExecutionRoleArns"}
       }
     },
+    "EnableCaching":{"type":"boolean"},
     "EnableCapture":{"type":"boolean"},
     "EnableInfraCheck":{
       "type":"boolean",
@@ -15999,6 +16000,26 @@
       "box":true,
       "min":0
     },
+    "InferenceComponentDataCacheConfig":{
+      "type":"structure",
+      "required":["EnableCaching"],
+      "members":{
+        "EnableCaching":{
+          "shape":"EnableCaching",
+          "box":true
+        }
+      }
+    },
+    "InferenceComponentDataCacheConfigSummary":{
+      "type":"structure",
+      "required":["EnableCaching"],
+      "members":{
+        "EnableCaching":{
+          "shape":"EnableCaching",
+          "box":true
+        }
+      }
+    },
     "InferenceComponentDeploymentConfig":{
       "type":"structure",
       "required":["RollingUpdatePolicy"],
@@ -16061,7 +16082,8 @@
         "Container":{"shape":"InferenceComponentContainerSpecification"},
         "StartupParameters":{"shape":"InferenceComponentStartupParameters"},
         "ComputeResourceRequirements":{"shape":"InferenceComponentComputeResourceRequirements"},
-        "BaseInferenceComponentName":{"shape":"InferenceComponentName"}
+        "BaseInferenceComponentName":{"shape":"InferenceComponentName"},
+        "DataCacheConfig":{"shape":"InferenceComponentDataCacheConfig"}
       }
     },
     "InferenceComponentSpecificationSummary":{
@@ -16071,7 +16093,8 @@
         "Container":{"shape":"InferenceComponentContainerSpecificationSummary"},
         "StartupParameters":{"shape":"InferenceComponentStartupParameters"},
         "ComputeResourceRequirements":{"shape":"InferenceComponentComputeResourceRequirements"},
-        "BaseInferenceComponentName":{"shape":"InferenceComponentName"}
+        "BaseInferenceComponentName":{"shape":"InferenceComponentName"},
+        "DataCacheConfig":{"shape":"InferenceComponentDataCacheConfigSummary"}
       }
     },
     "InferenceComponentStartupParameters":{
