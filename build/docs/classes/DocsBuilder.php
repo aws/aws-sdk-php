@@ -139,6 +139,7 @@ class DocsBuilder
         if ($this->issueLoggingEnabled) {
             $this->updateIssues();
         }
+        $this->updateMetadataInFiles($this->outputDir);
     }
 
     private function updateHomepage(array $services)
@@ -351,6 +352,7 @@ EOT;
         fwrite(STDOUT, "Writing file: {$name}.\n");
         $updatedTemplate = str_replace('index.html#top', $name . '#top', $this->template);
         $html = str_replace('{{ contents }}', $contents, $updatedTemplate);
+
         return (bool) file_put_contents("{$this->outputDir}/{$name}", $html);
     }
 
@@ -362,6 +364,71 @@ EOT;
         $contents = file_get_contents($path);
         $contents = str_replace($search, $replace, $contents);
         file_put_contents($path, $contents);
+    }
+
+    /**
+     * @param string $name
+     * @param string $html
+     *
+     * @return void
+     */
+    private function updateMetadata(string $name, string &$html): void
+    {
+        // Standardize file name to be capitalized and without .html
+        $normalizedName = implode(
+            '-',
+            array_map('ucfirst',
+                explode('-',
+                    str_replace(
+                        '.',
+                        '-',
+                        str_replace(
+                            '.html',
+                            '',
+                            $name
+                        )
+                    )
+                )
+            )
+        );
+        fwrite(STDOUT, "Adding metadata description to {$name}.\n");
+        $html = str_replace(
+            '<meta name="description" content="">',
+            "<meta name='description' content='$normalizedName'>",
+            $html
+        );
+        // Add title
+        fwrite(STDOUT, "Adding title to {$name}.\n");
+        $html = str_replace(
+            '<title></title>',
+            "<title>$normalizedName - AWS SDK for PHP V3</title>",
+            $html
+        );
+    }
+
+    /**
+     * @param string $outputDir
+     *
+     * @return void
+     */
+    public function updateMetadataInFiles(string $outputDir): void
+    {
+        $dirIterator = new \DirectoryIterator($outputDir);
+        $filter = function ($iterable, callable $pred) {
+            foreach ($iterable as $value) {
+                if ($pred($value)) {
+                    yield $value;
+                }
+            }
+        };
+        $files = $filter($dirIterator, function ($file) {
+            return str_ends_with($file, '.html');
+        });
+        foreach ($files as $file) {
+            $contents = file_get_contents($file->getPathname());
+            $this->updateMetadata($file->getFilename(), $contents);
+            file_put_contents($file->getPathname(), $contents);
+        }
     }
 
     private function gatherServiceVersions()
