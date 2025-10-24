@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.357.2 - 2025-10-24
 
 * `Aws\MediaStoreData` - Update endpoint ruleset parameters casing
 * `Aws\ChimeSDKMessaging` - Update endpoint ruleset parameters casing
