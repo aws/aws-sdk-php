@@ -1118,6 +1118,41 @@
                 }
             }
         },
+        "UpdateMaxRecordSize": {
+            "name": "UpdateMaxRecordSize",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/"
+            },
+            "input": {
+                "shape": "UpdateMaxRecordSizeInput"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceInUseException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                },
+                {
+                    "shape": "ValidationException"
+                }
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
+        },
         "UpdateShardCount": {
             "name": "UpdateShardCount",
             "http": {
@@ -1342,12 +1377,15 @@
                 },
                 "Tags": {
                     "shape": "TagMap"
+                },
+                "MaxRecordSizeInKiB": {
+                    "shape": "MaxRecordSizeInKiB"
                 }
             }
         },
         "Data": {
             "type": "blob",
-            "max": 1048576,
+            "max": 10485760,
             "min": 0
         },
         "DecreaseStreamRetentionPeriodInput": {
@@ -2062,6 +2100,11 @@
                 }
             }
         },
+        "MaxRecordSizeInKiB": {
+            "type": "integer",
+            "max": 10240,
+            "min": 1024
+        },
         "MergeShardsInput": {
             "type": "structure",
             "required": [
@@ -2713,6 +2756,9 @@
                 },
                 "ConsumerCount": {
                     "shape": "ConsumerCountObject"
+                },
+                "MaxRecordSizeInKiB": {
+                    "shape": "MaxRecordSizeInKiB"
                 }
             }
         },
@@ -2968,6 +3014,23 @@
                     "contextParam": {
                         "name": "ResourceARN"
                     }
+                }
+            }
+        },
+        "UpdateMaxRecordSizeInput": {
+            "type": "structure",
+            "required": [
+                "MaxRecordSizeInKiB"
+            ],
+            "members": {
+                "StreamARN": {
+                    "shape": "StreamARN",
+                    "contextParam": {
+                        "name": "StreamARN"
+                    }
+                },
+                "MaxRecordSizeInKiB": {
+                    "shape": "MaxRecordSizeInKiB"
                 }
             }
         },

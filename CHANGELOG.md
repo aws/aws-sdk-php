@@ -1,5 +1,58 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ControlTower` - Update endpoint ruleset parameters casing
+* `Aws\Kinesis` - Adds support for record sizes up to 10MiB and introduces new UpdateMaxRecordSize API to modify stream record size limits. Adds record size parameters to existing CreateStream and DescribeStreamSummary APIs for request and response payloads respectively.
+* `Aws\ForecastService` - Update endpoint ruleset parameters casing
+* `Aws\LaunchWizard` - Update endpoint ruleset parameters casing
+* `Aws\LexRuntimeService` - Update endpoint ruleset parameters casing
+* `Aws\RedshiftServerless` - Update endpoint ruleset parameters casing
+* `Aws\Outposts` - Update endpoint ruleset parameters casing
+* `Aws\AIOps` - Update endpoint ruleset parameters casing
+* `Aws\RecycleBin` - Update endpoint ruleset parameters casing
+* `Aws\Rekognition` - Update endpoint ruleset parameters casing
+* `Aws\WAFRegional` - Update endpoint ruleset parameters casing
+* `Aws\CodeArtifact` - Update endpoint ruleset parameters casing
+* `Aws\ConnectCampaignService` - Update endpoint ruleset parameters casing
+* `Aws\CostExplorer` - Updated endpoint for eusc-de-east-1 region.
+* `Aws\Invoicing` - Update endpoint ruleset parameters casing
+* `Aws\ElasticBeanstalk` - Update endpoint ruleset parameters casing
+* `Aws\DAX` - Update endpoint ruleset parameters casing
+* `Aws\Pinpoint` - Update endpoint ruleset parameters casing
+* `Aws\CostOptimizationHub` - Update endpoint ruleset parameters casing
+* `Aws\EntityResolution` - Update endpoint ruleset parameters casing
+* `Aws\Route53Resolver` - Update endpoint ruleset parameters casing
+* `Aws\CognitoIdentityProvider` - Update endpoint ruleset parameters casing
+* `Aws\S3Vectors` - Update endpoint ruleset parameters casing
+* `Aws\Braket` - Update endpoint ruleset parameters casing
+* `Aws\WorkMailMessageFlow` - Update endpoint ruleset parameters casing
+* `Aws\SSOAdmin` - Update endpoint ruleset parameters casing
+* `Aws\SFN` - Update endpoint ruleset parameters casing
+* `Aws\Route53Profiles` - Update endpoint ruleset parameters casing
+* `Aws\SecretsManager` - Update endpoint ruleset parameters casing
+* `Aws\RDSDataService` - Update endpoint ruleset parameters casing
+* `Aws\SsmSap` - Update endpoint ruleset parameters casing
+* `Aws\BackupGateway` - Update endpoint ruleset parameters casing
+* `Aws\BedrockDataAutomation` - Update endpoint ruleset parameters casing
+* `Aws\NeptuneGraph` - Update endpoint ruleset parameters casing
+* `Aws\SimSpaceWeaver` - Update endpoint ruleset parameters casing
+* `Aws\Shield` - Update endpoint ruleset parameters casing
+* `Aws\SES` - Update endpoint ruleset parameters casing
+* `Aws\Greengrass` - Update endpoint ruleset parameters casing
+* `Aws\IAM` - Fixed missing SummaryMap keys in GetAccountSummary response that were being filtered out during deserialization in AWS Java SDK v2
+* `Aws\MTurk` - Update endpoint ruleset parameters casing
+* `Aws\Athena` - Update endpoint ruleset parameters casing
+* `Aws\Comprehend` - Update endpoint ruleset parameters casing
+* `Aws\SocialMessaging` - Update endpoint ruleset parameters casing
+* `Aws\ChimeSDKIdentity` - Update endpoint ruleset parameters casing
+* `Aws\Repostspace` - Update endpoint ruleset parameters casing
+* `Aws\Scheduler` - Update endpoint ruleset parameters casing
+* `Aws\ChimeSDKMediaPipelines` - Update endpoint ruleset parameters casing
+* `Aws\ManagedBlockchain` - Update endpoint ruleset parameters casing
+* `Aws\CodeGuruProfiler` - Update endpoint ruleset parameters casing
+* `Aws\AccessAnalyzer` - Update endpoint ruleset parameters casing
+
 ## 3.357.2 - 2025-10-24
 
 * `Aws\MediaStoreData` - Update endpoint ruleset parameters casing
