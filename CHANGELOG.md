@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.357.3 - 2025-10-27
 
 * `Aws\ControlTower` - Update endpoint ruleset parameters casing
 * `Aws\Kinesis` - Adds support for record sizes up to 10MiB and introduces new UpdateMaxRecordSize API to modify stream record size limits. Adds record size parameters to existing CreateStream and DescribeStreamSummary APIs for request and response payloads respectively.
