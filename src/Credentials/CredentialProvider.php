@@ -52,6 +52,8 @@ class CredentialProvider
     const ENV_SESSION = 'AWS_SESSION_TOKEN';
     const ENV_TOKEN_FILE = 'AWS_WEB_IDENTITY_TOKEN_FILE';
     const ENV_SHARED_CREDENTIALS_FILE = 'AWS_SHARED_CREDENTIALS_FILE';
+    public const ENV_REGION = 'AWS_REGION';
+    public const FALLBACK_REGION = 'us-east-1';
     public const REFRESH_WINDOW = 60;
 
     /**
@@ -102,7 +104,7 @@ class CredentialProvider
                 $config
             );
             $defaultChain['process_credentials'] = self::process();
-            $defaultChain['ini'] = self::ini();
+            $defaultChain['ini'] = self::ini(null, null, $config);
             $defaultChain['process_config'] = self::process(
                 'profile ' . $profileName,
                 self::getHomeDir() . '/.aws/config'
@@ -708,9 +710,6 @@ class CredentialProvider
         }
 
         if (empty($stsClient)) {
-            $sourceRegion = isset($profiles[$sourceProfileName]['region'])
-                ? $profiles[$sourceProfileName]['region']
-                : 'us-east-1';
             $config['preferStaticCredentials'] = true;
             $sourceCredentials = null;
             if (!empty($roleProfile['source_profile'])){
@@ -723,11 +722,13 @@ class CredentialProvider
                     $filename
                 );
             }
-            $stsClient = new StsClient([
-                'credentials' => $sourceCredentials,
-                'region' => $sourceRegion,
-                'version' => '2011-06-15',
-            ]);
+
+            $region = $profiles[$sourceProfileName]['region']
+                ?? $config['region']
+                ?? getEnv(self::ENV_REGION)
+                ?: null;
+
+            $stsClient = self::createDefaultStsClient($sourceCredentials, $region);
         }
 
         $result = $stsClient->assumeRole([
@@ -1025,6 +1026,38 @@ class CredentialProvider
 
         $ssoCredentials = $ssoResponse['roleCredentials'];
         return $ssoCredentials;
+    }
+
+    /**
+     * @param CredentialsInterface $credentials
+     * @param string|null $region
+     *
+     * @return StsClient
+     */
+    private static function createDefaultStsClient(
+        CredentialsInterface $credentials,
+        ?string $region
+    ): StsClient
+    {
+        if (empty($region)) {
+            $region = self::FALLBACK_REGION;
+            trigger_error(
+                'NOTICE: STS client created without explicit `region` configuration.' . PHP_EOL
+                . "Defaulting to `{$region}`. This fallback behavior may be removed." . PHP_EOL
+                . 'To avoid potential disruptions, configure a `region` using one of the following methods:' . PHP_EOL
+                . '(1) Add `region` to your source profile in ~/.aws/credentials,' . PHP_EOL
+                . '(2) Pass `region` in the `$config` array when calling the provider,' . PHP_EOL
+                . '(3) Set the `AWS_REGION` environment variable.' . PHP_EOL
+                . 'See: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_credentials_assume_role.html#assume-role-with-profile'
+                . PHP_EOL,
+                E_USER_NOTICE
+            );
+        }
+
+        return new StsClient([
+            'credentials' => $credentials,
+            'region' => $region
+        ]);
     }
 }
 

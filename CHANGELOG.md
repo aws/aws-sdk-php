@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.358.0 - 2025-10-27
+
+* `Aws\Credentials` - Updates STS providers to accept region passed from client, directly through in-code or profile configuration, or from `AWS_REGION`. Adds notice regarding fallback region.
+
 ## 3.357.3 - 2025-10-27
 
 * `Aws\ControlTower` - Update endpoint ruleset parameters casing

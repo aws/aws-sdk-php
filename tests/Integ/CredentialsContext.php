@@ -22,6 +22,7 @@ class CredentialsContext extends Assert implements
     private static $roleArn;
     private $credentials;
     private $client;
+    private $result;
 
     /**
      * @BeforeFeature @credentials
@@ -98,6 +99,7 @@ EOT;
 aws_access_key_id = $sourceKeyId
 aws_secret_access_key = $sourceAccessKey
 aws_session_token = $sourceToken
+region = us-west-2
 [assumeInteg]
 role_arn = $roleArn
 source_profile = default
@@ -123,7 +125,7 @@ EOT;
     public function iHaveAnStsClient()
     {
         $this->client = self::getSdk()->createSts([
-            'credentials' => $this->credentials
+            'credentials' => $this->credentials,
         ]);
     }
 
