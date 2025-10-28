@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.358.1 - 2025-10-28
 
 * `Aws\TaxSettings` - Update endpoint ruleset parameters casing
 * `Aws\MigrationHubOrchestrator` - Update endpoint ruleset parameters casing
