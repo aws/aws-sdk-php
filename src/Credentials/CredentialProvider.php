@@ -1035,7 +1035,7 @@ class CredentialProvider
      * @return StsClient
      */
     private static function createDefaultStsClient(
-        CredentialsInterface $credentials,
+        CredentialsInterface|callable $credentials,
         ?string $region
     ): StsClient
     {

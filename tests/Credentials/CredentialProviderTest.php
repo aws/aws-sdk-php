@@ -689,7 +689,7 @@ EOT;
         $this->assertFalse($creds->isExpired());
     }
 
-    public function testCreatesFromRoleArnEmitsNoticeOnFallbackRegion(): void
+    public function testCreatesFromRoleArnWithSourceProfileEmitsNoticeOnFallbackRegion(): void
     {
         $this->expectNotice();
         $this->expectNoticeMessage(
@@ -702,12 +702,36 @@ EOT;
 aws_access_key_id = foo
 aws_secret_access_key = defaultSecret
 [assume]
-role_arn = arn:aws:iam::012345678910:role/role_name
+role_arn = arn:aws:iam::foo:role/role_name
 source_profile = default
 role_session_name = foobar
 EOT;
         file_put_contents($awsDir . '/credentials', $ini);
         call_user_func(CredentialProvider::ini('assume', null))->wait();
+    }
+
+    public function testCreatesFromRoleArnWithCredentialSourceEmitsNoticeOnFallbackRegion(): void
+    {
+        $this->expectNotice();
+        $this->expectNoticeMessage(
+            'NOTICE: STS client created without explicit `region` configuration'
+        );
+
+        $awsDir = $this->createAwsHome();
+        $ini = <<<EOT
+[assume-with-credential-source]
+role_arn=arn:aws:iam::foo:role/role_name
+credential_source=Environment
+role_session_name=test_session
+EOT;
+        file_put_contents($awsDir . '/credentials', $ini);
+
+        // Set up environment credentials for credential_source=Environment
+        putenv(CredentialProvider::ENV_KEY . '=foo');
+        putenv(CredentialProvider::ENV_SECRET . '=bar');
+
+
+        call_user_func(CredentialProvider::ini('assume-with-credential-source', null))->wait();
     }
 
     public function testCreatesFromRoleArnCatchesCircular(): void
