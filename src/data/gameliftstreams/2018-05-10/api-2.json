@@ -665,6 +665,7 @@
         "StatusReason":{"shape":"StreamGroupStatusReason"},
         "LastUpdatedAt":{"shape":"Timestamp"},
         "CreatedAt":{"shape":"Timestamp"},
+        "ExpiresAt":{"shape":"Timestamp"},
         "AssociatedApplications":{"shape":"ArnList"}
       }
     },
@@ -899,6 +900,7 @@
         "StatusReason":{"shape":"StreamGroupStatusReason"},
         "LastUpdatedAt":{"shape":"Timestamp"},
         "CreatedAt":{"shape":"Timestamp"},
+        "ExpiresAt":{"shape":"Timestamp"},
         "AssociatedApplications":{"shape":"ArnList"}
       }
     },
@@ -1359,7 +1361,8 @@
         "ACTIVE",
         "ACTIVE_WITH_ERRORS",
         "ERROR",
-        "DELETING"
+        "DELETING",
+        "EXPIRED"
       ]
     },
     "StreamGroupStatusReason":{
@@ -1380,7 +1383,8 @@
         "StreamClass":{"shape":"StreamClass"},
         "Status":{"shape":"StreamGroupStatus"},
         "CreatedAt":{"shape":"Timestamp"},
-        "LastUpdatedAt":{"shape":"Timestamp"}
+        "LastUpdatedAt":{"shape":"Timestamp"},
+        "ExpiresAt":{"shape":"Timestamp"}
       }
     },
     "StreamGroupSummaryList":{
@@ -1594,6 +1598,7 @@
         "StatusReason":{"shape":"StreamGroupStatusReason"},
         "LastUpdatedAt":{"shape":"Timestamp"},
         "CreatedAt":{"shape":"Timestamp"},
+        "ExpiresAt":{"shape":"Timestamp"},
         "AssociatedApplications":{"shape":"ArnList"}
       }
     },

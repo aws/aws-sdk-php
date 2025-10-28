@@ -5,15 +5,15 @@
     "CancelContact": "<p>Cancels a contact with a specified contact ID.</p>",
     "CreateConfig": "<p>Creates a <code>Config</code> with the specified <code>configData</code> parameters.</p> <p>Only one type of <code>configData</code> can be specified.</p>",
     "CreateDataflowEndpointGroup": "<p>Creates a <code>DataflowEndpoint</code> group containing the specified list of <code>DataflowEndpoint</code> objects.</p> <p>The <code>name</code> field in each endpoint is used in your mission profile <code>DataflowEndpointConfig</code> to specify which endpoints to use during a contact.</p> <p>When a contact uses multiple <code>DataflowEndpointConfig</code> objects, each <code>Config</code> must match a <code>DataflowEndpoint</code> in the same group.</p>",
-    "CreateEphemeris": "<p>Creates an Ephemeris with the specified <code>EphemerisData</code>.</p>",
+    "CreateEphemeris": "<p>Create an ephemeris with your specified <a>EphemerisData</a>.</p>",
     "CreateMissionProfile": "<p>Creates a mission profile.</p> <p> <code>dataflowEdges</code> is a list of lists of strings. Each lower level list of strings has two elements: a <i>from</i> ARN and a <i>to</i> ARN.</p>",
     "DeleteConfig": "<p>Deletes a <code>Config</code>.</p>",
     "DeleteDataflowEndpointGroup": "<p>Deletes a dataflow endpoint group.</p>",
-    "DeleteEphemeris": "<p>Deletes an ephemeris</p>",
+    "DeleteEphemeris": "<p>Delete an ephemeris.</p>",
     "DeleteMissionProfile": "<p>Deletes a mission profile.</p>",
     "DescribeContact": "<p>Describes an existing contact.</p>",
-    "DescribeEphemeris": "<p>Describes an existing ephemeris.</p>",
-    "GetAgentConfiguration": "<note> <p> For use by AWS Ground Station Agent and shouldn't be called directly.</p> </note> <p>Gets the latest configuration information for a registered agent.</p>",
+    "DescribeEphemeris": "<p>Retrieve information about an existing ephemeris.</p>",
+    "GetAgentConfiguration": "<p><note> <p> For use by AWS Ground Station Agent and shouldn't be called directly.</p> </note> <p>Gets the latest configuration information for a registered agent.</p></p>",
     "GetConfig": "<p>Returns <code>Config</code> information.</p> <p>Only one <code>Config</code> response can be returned.</p>",
     "GetDataflowEndpointGroup": "<p>Returns the dataflow endpoint group.</p>",
     "GetMinuteUsage": "<p>Returns the number of reserved minutes used by account.</p>",
@@ -22,18 +22,18 @@
     "ListConfigs": "<p>Returns a list of <code>Config</code> objects.</p>",
     "ListContacts": "<p>Returns a list of contacts.</p> <p>If <code>statusList</code> contains AVAILABLE, the request must include <code>groundStation</code>, <code>missionprofileArn</code>, and <code>satelliteArn</code>. </p>",
     "ListDataflowEndpointGroups": "<p>Returns a list of <code>DataflowEndpoint</code> groups.</p>",
-    "ListEphemerides": "<p>List existing ephemerides.</p>",
+    "ListEphemerides": "<p>List your existing ephemerides.</p>",
     "ListGroundStations": "<p>Returns a list of ground stations. </p>",
     "ListMissionProfiles": "<p>Returns a list of mission profiles.</p>",
     "ListSatellites": "<p>Returns a list of satellites.</p>",
     "ListTagsForResource": "<p>Returns a list of tags for a specified resource.</p>",
-    "RegisterAgent": "<note> <p> For use by AWS Ground Station Agent and shouldn't be called directly.</p> </note> <p> Registers a new agent with AWS Ground Station. </p>",
+    "RegisterAgent": "<p><note> <p> For use by AWS Ground Station Agent and shouldn't be called directly.</p> </note> <p> Registers a new agent with AWS Ground Station. </p></p>",
     "ReserveContact": "<p>Reserves a contact using specified parameters.</p>",
     "TagResource": "<p>Assigns a tag to a resource.</p>",
     "UntagResource": "<p>Deassigns a resource tag.</p>",
-    "UpdateAgentStatus": "<note> <p> For use by AWS Ground Station Agent and shouldn't be called directly.</p> </note> <p>Update the status of the agent.</p>",
+    "UpdateAgentStatus": "<p><note> <p> For use by AWS Ground Station Agent and shouldn't be called directly.</p> </note> <p>Update the status of the agent.</p></p>",
     "UpdateConfig": "<p>Updates the <code>Config</code> used when scheduling contacts.</p> <p>Updating a <code>Config</code> will not update the execution parameters for existing future contacts scheduled with this <code>Config</code>.</p>",
-    "UpdateEphemeris": "<p>Updates an existing ephemeris</p>",
+    "UpdateEphemeris": "<p>Update an existing ephemeris.</p>",
     "UpdateMissionProfile": "<p>Updates a mission profile.</p> <p>Updating a mission profile will not update the execution parameters for existing future contacts.</p>"
   },
   "shapes": {
@@ -48,8 +48,8 @@
     "AgentCpuCoresList": {
       "base": null,
       "refs": {
-        "AgentDetails$agentCpuCores": "<p>List of CPU cores reserved for the agent.</p>",
-        "AgentDetails$reservedCpuCores": "<note> <p>This field should not be used. Use agentCpuCores instead.</p> </note> <p>List of CPU cores reserved for processes other than the agent running on the EC2 instance.</p>"
+        "AgentDetails$reservedCpuCores": "<p><note> <p>This field should not be used. Use agentCpuCores instead.</p> </note> <p>List of CPU cores reserved for processes other than the agent running on the EC2 instance.</p></p>",
+        "AgentDetails$agentCpuCores": "<p>List of CPU cores reserved for the agent.</p>"
       }
     },
     "AgentDetails": {
@@ -75,6 +75,7 @@
     "AngleUnits": {
       "base": null,
       "refs": {
+        "AzElSegments$angleUnit": "<p>The unit of measure for azimuth and elevation angles. All angles in all segments must use the same unit.</p>",
         "Elevation$unit": "<p>Elevation angle units.</p>"
       }
     },
@@ -122,6 +123,48 @@
         "EndpointDetails$awsGroundStationAgentEndpoint": "<p>An agent endpoint.</p>"
       }
     },
+    "AzElEphemeris": {
+      "base": "<p>Azimuth elevation ephemeris data.</p> <p> Use this ephemeris type to provide pointing angles directly, rather than satellite orbital elements. Use this when you need precise antenna pointing but have imprecise or unknown satellite trajectory information. </p> <p> The azimuth elevation data specifies the antenna pointing direction at specific times relative to a ground station location. AWS Ground Station uses 4th order Lagrange interpolation to compute pointing angles between the provided data points. </p> <p> AWS Ground Station automatically filters interpolated pointing angles, including only those that are above the site mask elevation of the specified ground station. </p> <p> For more detail about providing azimuth elevation ephemerides to AWS Ground Station, see the <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/providing-azimuth-elevation-ephemeris-data.html\">azimuth elevation ephemeris section</a> of the AWS Ground Station User Guide. </p>",
+      "refs": {
+        "EphemerisData$azEl": null
+      }
+    },
+    "AzElEphemerisFilter": {
+      "base": "<p>Filter for selecting contacts that use a specific <a>AzElEphemeris</a>.</p>",
+      "refs": {
+        "EphemerisFilter$azEl": "<p>Filter for <a>AzElEphemeris</a>.</p>"
+      }
+    },
+    "AzElProgramTrackSettings": {
+      "base": "<p>Program track settings for <a>AzElEphemeris</a>.</p>",
+      "refs": {
+        "ProgramTrackSettings$azEl": "<p>Program track settings for <a>AzElEphemeris</a>.</p>"
+      }
+    },
+    "AzElSegment": {
+      "base": "<p>A time segment containing azimuth elevation pointing data.</p> <p> Each segment defines a continuous time period with pointing angle data points. AWS Ground Station uses 4th order Lagrange interpolation between the provided points, so each segment must contain at least five data points. </p>",
+      "refs": {
+        "AzElSegmentList$member": null
+      }
+    },
+    "AzElSegmentList": {
+      "base": null,
+      "refs": {
+        "AzElSegments$azElSegmentList": "<p>List of azimuth elevation segments.</p> <p>Must contain between 1 and 100 segments. Segments must be in chronological order with no overlaps.</p>"
+      }
+    },
+    "AzElSegments": {
+      "base": "<p>Azimuth elevation segment collection.</p> <p>Contains five or more time-ordered segments that define antenna pointing angles over the ephemeris validity period.</p>",
+      "refs": {
+        "AzElSegmentsData$azElData": "<p>Azimuth elevation segment data provided directly in the request.</p> <p>Use this option for smaller datasets or when Amazon S3 access is not available.</p>"
+      }
+    },
+    "AzElSegmentsData": {
+      "base": "<p>Container for azimuth elevation segment data.</p> <p>Specify either <a>AzElSegmentsData$s3Object</a> to reference data in Amazon S3, or <a>AzElSegmentsData$azElData</a> to provide data inline.</p>",
+      "refs": {
+        "AzElEphemeris$data": "<p>Azimuth elevation segment data.</p> <p>You can provide data inline in the request or through an Amazon S3 object reference.</p>"
+      }
+    },
     "BandwidthUnits": {
       "base": null,
       "refs": {
@@ -132,12 +175,12 @@
       "base": null,
       "refs": {
         "AntennaUplinkConfig$transmitDisabled": "<p>Whether or not uplink transmit is disabled.</p>",
-        "CreateEphemerisRequest$enabled": "<p>Whether to set the ephemeris status to <code>ENABLED</code> after validation.</p> <p>Setting this to false will set the ephemeris status to <code>DISABLED</code> after validation.</p>",
+        "CreateEphemerisRequest$enabled": "<p>Set to <code>true</code> to enable the ephemeris after validation. Set to <code>false</code> to keep it disabled.</p>",
         "DescribeEphemerisResponse$enabled": "<p>Whether or not the ephemeris is enabled.</p>",
         "EphemerisItem$enabled": "<p>Whether or not the ephemeris is enabled.</p>",
         "GetMinuteUsageResponse$isReservedMinutesCustomer": "<p>Returns whether or not an account has signed up for the reserved minutes pricing plan, specific to the month being requested.</p>",
         "SignatureMap$value": null,
-        "UpdateEphemerisRequest$enabled": "<p>Whether the ephemeris is enabled or not. Changing this value will not require the ephemeris to be re-validated.</p>",
+        "UpdateEphemerisRequest$enabled": "<p>Enable or disable the ephemeris. Changing this value doesn't require re-validation.</p>",
         "UplinkEchoConfig$enabled": "<p>Whether or not an uplink <code>Config</code> is enabled.</p>"
       }
     },
@@ -150,8 +193,7 @@
     },
     "CancelContactRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CapabilityArn": {
       "base": null,
@@ -250,8 +292,7 @@
     },
     "ConfigIdResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConfigList": {
       "base": null,
@@ -287,8 +328,7 @@
     },
     "ContactIdResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ContactList": {
       "base": null,
@@ -306,23 +346,19 @@
     },
     "CreateConfigRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDataflowEndpointGroupRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEphemerisRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMissionProfileRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Criticality": {
       "base": null,
@@ -333,7 +369,7 @@
     "CustomerEphemerisPriority": {
       "base": null,
       "refs": {
-        "CreateEphemerisRequest$priority": "<p>Customer-provided priority score to establish the order in which overlapping ephemerides should be used.</p> <p>The default for customer-provided ephemeris priority is 1, and higher numbers take precedence.</p> <p>Priority must be 1 or greater</p>"
+        "CreateEphemerisRequest$priority": "<p>A priority score that determines which ephemeris to use when multiple ephemerides overlap.</p> <p>Higher numbers take precedence. The default is 1. Must be 1 or greater.</p>"
       }
     },
     "DataflowDetail": {
@@ -378,16 +414,15 @@
     "DataflowEndpointGroupDurationInSeconds": {
       "base": null,
       "refs": {
-        "CreateDataflowEndpointGroupRequest$contactPostPassDurationSeconds": "<p>Amount of time, in seconds, after a contact ends that the Ground Station Dataflow Endpoint Group will be in a <code>POSTPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>POSTPASS</code> state.</p>",
         "CreateDataflowEndpointGroupRequest$contactPrePassDurationSeconds": "<p>Amount of time, in seconds, before a contact starts that the Ground Station Dataflow Endpoint Group will be in a <code>PREPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>PREPASS</code> state.</p>",
-        "GetDataflowEndpointGroupResponse$contactPostPassDurationSeconds": "<p>Amount of time, in seconds, after a contact ends that the Ground Station Dataflow Endpoint Group will be in a <code>POSTPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>POSTPASS</code> state.</p>",
-        "GetDataflowEndpointGroupResponse$contactPrePassDurationSeconds": "<p>Amount of time, in seconds, before a contact starts that the Ground Station Dataflow Endpoint Group will be in a <code>PREPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>PREPASS</code> state.</p>"
+        "CreateDataflowEndpointGroupRequest$contactPostPassDurationSeconds": "<p>Amount of time, in seconds, after a contact ends that the Ground Station Dataflow Endpoint Group will be in a <code>POSTPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>POSTPASS</code> state.</p>",
+        "GetDataflowEndpointGroupResponse$contactPrePassDurationSeconds": "<p>Amount of time, in seconds, before a contact starts that the Ground Station Dataflow Endpoint Group will be in a <code>PREPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>PREPASS</code> state.</p>",
+        "GetDataflowEndpointGroupResponse$contactPostPassDurationSeconds": "<p>Amount of time, in seconds, after a contact ends that the Ground Station Dataflow Endpoint Group will be in a <code>POSTPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>POSTPASS</code> state.</p>"
       }
     },
     "DataflowEndpointGroupIdResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DataflowEndpointGroupList": {
       "base": null,
@@ -421,23 +456,19 @@
     },
     "DeleteConfigRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDataflowEndpointGroupRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEphemerisRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMissionProfileRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DemodulationConfig": {
       "base": "<p>Information about the demodulation <code>Config</code>.</p>",
@@ -447,28 +478,23 @@
     },
     "DependencyException": {
       "base": "<p>Dependency encountered an error.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeContactRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeContactResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEphemerisRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEphemerisResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Destination": {
       "base": "<p>Dataflow details for the destination side.</p>",
@@ -488,18 +514,21 @@
         "Eirp$value": "<p>Value of an EIRP. Valid values are between 20.0 to 50.0 dBW.</p>",
         "Elevation$value": "<p>Elevation angle value.</p>",
         "Frequency$value": "<p>Frequency value. Valid values are between 2200 to 2300 MHz and 7750 to 8400 MHz for downlink and 2025 to 2120 MHz for uplink.</p>",
-        "FrequencyBandwidth$value": "<p>Frequency bandwidth value. AWS Ground Station currently has the following bandwidth limitations:</p> <ul> <li> <p>For <code>AntennaDownlinkDemodDecodeconfig</code>, valid values are between 125 kHz to 650 MHz.</p> </li> <li> <p>For <code>AntennaDownlinkconfig</code>, valid values are between 10 kHz to 54 MHz.</p> </li> <li> <p>For <code>AntennaUplinkConfig</code>, valid values are between 10 kHz to 54 MHz.</p> </li> </ul>"
+        "FrequencyBandwidth$value": "<p>Frequency bandwidth value. AWS Ground Station currently has the following bandwidth limitations:</p> <ul> <li> <p>For <code>AntennaDownlinkDemodDecodeconfig</code>, valid values are between 125 kHz to 650 MHz.</p> </li> <li> <p>For <code>AntennaDownlinkconfig</code>, valid values are between 10 kHz to 54 MHz.</p> </li> <li> <p>For <code>AntennaUplinkConfig</code>, valid values are between 10 kHz to 54 MHz.</p> </li> </ul>",
+        "TimeAzEl$dt": "<p>Time offset in atomic seconds from the segment's reference epoch.</p> <p>All <code>dt</code> values within a segment must be in ascending order with no duplicates.</p> <p> <code>dt</code> values may be:</p> <ul> <li> <p>negative</p> </li> <li> <p>expressed as fractions of a second</p> </li> <li> <p>expressed in scientific notation</p> </li> </ul>",
+        "TimeAzEl$az": "<p>Azimuth angle at the specified time.</p> <p>Valid ranges by unit:</p> <ul> <li> <p> <code>DEGREE_ANGLE</code>: -180 to 360 degrees, measured clockwise from true north</p> </li> <li> <p> <code>RADIAN</code>: -π to 2π radians, measured clockwise from true north</p> </li> </ul>",
+        "TimeAzEl$el": "<p>Elevation angle at the specified time.</p> <p>Valid ranges by unit:</p> <ul> <li> <p> <code>DEGREE_ANGLE</code>: -90 to 90 degrees, where 0 is the horizon, 90 is zenith, and negative values are below the horizon </p> </li> <li> <p> <code>RADIAN</code>: -π/2 to π/2 radians, where 0 is the horizon, π/2 is zenith, and negative values are below the horizon </p> </li> </ul>"
       }
     },
     "DurationInSeconds": {
       "base": null,
       "refs": {
-        "CreateMissionProfileRequest$contactPostPassDurationSeconds": "<p>Amount of time after a contact ends that you’d like to receive a Ground Station Contact State Change event indicating the pass has finished.</p>",
         "CreateMissionProfileRequest$contactPrePassDurationSeconds": "<p>Amount of time prior to contact start you’d like to receive a Ground Station Contact State Change event indicating an upcoming pass.</p>",
-        "GetMissionProfileResponse$contactPostPassDurationSeconds": "<p>Amount of time after a contact ends that you’d like to receive a CloudWatch event indicating the pass has finished.</p>",
+        "CreateMissionProfileRequest$contactPostPassDurationSeconds": "<p>Amount of time after a contact ends that you’d like to receive a Ground Station Contact State Change event indicating the pass has finished.</p>",
         "GetMissionProfileResponse$contactPrePassDurationSeconds": "<p>Amount of time prior to contact start you’d like to receive a CloudWatch event indicating an upcoming pass.</p>",
-        "UpdateMissionProfileRequest$contactPostPassDurationSeconds": "<p>Amount of time after a contact ends that you’d like to receive a Ground Station Contact State Change event indicating the pass has finished.</p>",
-        "UpdateMissionProfileRequest$contactPrePassDurationSeconds": "<p>Amount of time after a contact ends that you’d like to receive a Ground Station Contact State Change event indicating the pass has finished.</p>"
+        "GetMissionProfileResponse$contactPostPassDurationSeconds": "<p>Amount of time after a contact ends that you’d like to receive a CloudWatch event indicating the pass has finished.</p>",
+        "UpdateMissionProfileRequest$contactPrePassDurationSeconds": "<p>Amount of time after a contact ends that you’d like to receive a Ground Station Contact State Change event indicating the pass has finished.</p>",
+        "UpdateMissionProfileRequest$contactPostPassDurationSeconds": "<p>Amount of time after a contact ends that you’d like to receive a Ground Station Contact State Change event indicating the pass has finished.</p>"
       }
     },
     "Eirp": {
@@ -531,7 +560,7 @@
     "EndpointDetailsList": {
       "base": null,
       "refs": {
-        "CreateDataflowEndpointGroupRequest$endpointDetails": "<p>Endpoint details of each endpoint in the dataflow endpoint group. <pre><code> All dataflow endpoints within a single dataflow endpoint group must be of the same type. You cannot mix &lt;a href=&quot;https://docs.aws.amazon.com/ground-station/latest/APIReference/API_AwsGroundStationAgentEndpoint.html&quot;&gt; AWS Ground Station Agent endpoints&lt;/a&gt; with &lt;a href=&quot;https://docs.aws.amazon.com/ground-station/latest/APIReference/API_DataflowEndpoint.html&quot;&gt;Dataflow endpoints&lt;/a&gt; in the same group. If your use case requires both types of endpoints, you must create separate dataflow endpoint groups for each type. &lt;/p&gt; </code></pre>",
+        "CreateDataflowEndpointGroupRequest$endpointDetails": "<p>Endpoint details of each endpoint in the dataflow endpoint group. All dataflow endpoints within a single dataflow endpoint group must be of the same type. You cannot mix <a href=\"https://docs.aws.amazon.com/ground-station/latest/APIReference/API_AwsGroundStationAgentEndpoint.html\"> AWS Ground Station Agent endpoints</a> with <a href=\"https://docs.aws.amazon.com/ground-station/latest/APIReference/API_DataflowEndpoint.html\">Dataflow endpoints</a> in the same group. If your use case requires both types of endpoints, you must create separate dataflow endpoint groups for each type. </p>",
         "GetDataflowEndpointGroupResponse$endpointsDetails": "<p>Details of a dataflow endpoint.</p>"
       }
     },
@@ -556,19 +585,43 @@
     "EphemerisDescription": {
       "base": "<p>Description of ephemeris.</p>",
       "refs": {
+        "EphemerisTypeDescription$tle": null,
         "EphemerisTypeDescription$oem": null,
-        "EphemerisTypeDescription$tle": null
+        "EphemerisTypeDescription$azEl": null
+      }
+    },
+    "EphemerisErrorCode": {
+      "base": null,
+      "refs": {
+        "EphemerisErrorReason$errorCode": "<p>The error code identifying the type of validation failure.</p> <p>See the <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/troubleshooting-invalid-ephemerides.html\">Troubleshooting Invalid Ephemerides guide</a> for error code details.</p>"
+      }
+    },
+    "EphemerisErrorReason": {
+      "base": "<p>Detailed error information for ephemeris validation failures.</p> <p>Provides an error code and descriptive message to help diagnose and resolve validation issues.</p>",
+      "refs": {
+        "EphemerisErrorReasonList$member": null
+      }
+    },
+    "EphemerisErrorReasonList": {
+      "base": null,
+      "refs": {
+        "DescribeEphemerisResponse$errorReasons": "<p>Detailed error information for ephemerides with <code>INVALID</code> status.</p> <p>Provides specific error codes and messages to help diagnose validation failures.</p>"
+      }
+    },
+    "EphemerisFilter": {
+      "base": "<p>Filter for selecting contacts that use a specific ephemeris\".</p>",
+      "refs": {
+        "ListContactsRequest$ephemeris": "<p>Filter for selecting contacts that use a specific ephemeris\".</p>"
       }
     },
     "EphemerisIdResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EphemerisInvalidReason": {
       "base": null,
       "refs": {
-        "DescribeEphemerisResponse$invalidReason": "<p>Reason that an ephemeris failed validation. Only provided for ephemerides with <code>INVALID</code> status.</p>"
+        "DescribeEphemerisResponse$invalidReason": "<p>Reason that an ephemeris failed validation. Appears only when the status is <code>INVALID</code>.</p>"
       }
     },
     "EphemerisItem": {
@@ -587,9 +640,16 @@
     "EphemerisPriority": {
       "base": null,
       "refs": {
-        "DescribeEphemerisResponse$priority": "<p>Customer-provided priority score to establish the order in which overlapping ephemerides should be used.</p> <p>The default for customer-provided ephemeris priority is 1, and higher numbers take precedence.</p> <p>Priority must be 1 or greater</p>",
-        "EphemerisItem$priority": "<p>Customer-provided priority score to establish the order in which overlapping ephemerides should be used.</p> <p>The default for customer-provided ephemeris priority is 1, and higher numbers take precedence.</p> <p>Priority must be 1 or greater</p>",
-        "UpdateEphemerisRequest$priority": "<p>Customer-provided priority score to establish the order in which overlapping ephemerides should be used.</p> <p>The default for customer-provided ephemeris priority is 1, and higher numbers take precedence.</p> <p>Priority must be 1 or greater</p>"
+        "DescribeEphemerisResponse$priority": "<p>A priority score that determines which ephemeris to use when multiple ephemerides overlap.</p> <p>Higher numbers take precedence. The default is 1. Must be 1 or greater.</p>",
+        "EphemerisItem$priority": "<p>A priority score that determines which ephemeris to use when multiple ephemerides overlap.</p> <p>Higher numbers take precedence. The default is 1. Must be 1 or greater.</p>",
+        "UpdateEphemerisRequest$priority": "<p>A priority score that determines which ephemeris to use when multiple ephemerides overlap.</p> <p>Higher numbers take precedence. The default is 1. Must be 1 or greater.</p>"
+      }
+    },
+    "EphemerisResponseData": {
+      "base": "<p>Ephemeris data for a contact.</p>",
+      "refs": {
+        "ContactData$ephemeris": "<p>The ephemeris that determines antenna pointing for the contact.</p>",
+        "DescribeContactResponse$ephemeris": "<p>The ephemeris that determines antenna pointing directions for the contact.</p>"
       }
     },
     "EphemerisSource": {
@@ -612,10 +672,24 @@
         "ListEphemeridesRequest$statusList": "<p>The list of ephemeris status to return.</p>"
       }
     },
+    "EphemerisType": {
+      "base": null,
+      "refs": {
+        "EphemerisItem$ephemerisType": "<p>The type of ephemeris.</p>",
+        "EphemerisResponseData$ephemerisType": "<p>Type of ephemeris.</p>",
+        "ListEphemeridesRequest$ephemerisType": "<p>Filter ephemerides by type. If not specified, all ephemeris types will be returned.</p>"
+      }
+    },
     "EphemerisTypeDescription": {
       "base": "<p/>",
       "refs": {
         "DescribeEphemerisResponse$suppliedData": "<p>Supplied ephemeris data.</p>"
+      }
+    },
+    "ErrorString": {
+      "base": null,
+      "refs": {
+        "EphemerisErrorReason$errorMessage": "<p>A human-readable message describing the validation failure.</p> <p>Provides specific details about what failed and may include suggestions for remediation.</p>"
       }
     },
     "Frequency": {
@@ -639,63 +713,51 @@
     },
     "GetAgentConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAgentConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfigRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfigResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataflowEndpointGroupRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataflowEndpointGroupResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMinuteUsageRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMinuteUsageResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMissionProfileRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMissionProfileResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSatelliteRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSatelliteResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GroundStationData": {
       "base": "<p>Information about the ground station data.</p>",
@@ -719,11 +781,18 @@
     "GroundStationName": {
       "base": null,
       "refs": {
+        "AzElEphemeris$groundStation": "<p>The ground station name for which you're providing azimuth elevation data.</p> <p>This ephemeris is specific to this ground station and can't be used at other locations.</p>",
         "GroundStationData$groundStationId": "<p>UUID of a ground station.</p>",
         "GroundStationData$groundStationName": "<p>Name of a ground station.</p>",
         "GroundStationIdList$member": null,
         "ListContactsRequest$groundStation": "<p>Name of a ground station.</p>",
         "ReserveContactRequest$groundStation": "<p>Name of a ground station.</p>"
+      }
+    },
+    "ISO8601TimeRange": {
+      "base": "<p>Time range specified using ISO 8601 format timestamps.</p>",
+      "refs": {
+        "AzElSegment$validTimeRange": "<p>The valid time range for this segment.</p> <p> Specifies the start and end timestamps in ISO 8601 format in Coordinated Universal Time (UTC). The segment's pointing data must cover this entire time range. </p>"
       }
     },
     "InstanceId": {
@@ -743,12 +812,12 @@
       "refs": {
         "AgentCpuCoresList$member": null,
         "ConnectionDetails$mtu": "<p>Maximum transmission unit (MTU) size in bytes of a dataflow endpoint.</p>",
-        "GetMinuteUsageResponse$estimatedMinutesRemaining": "<p>Estimated number of minutes remaining for an account, specific to the month being requested.</p>",
         "GetMinuteUsageResponse$totalReservedMinuteAllocation": "<p>Total number of reserved minutes allocated, specific to the month being requested.</p>",
-        "GetMinuteUsageResponse$totalScheduledMinutes": "<p>Total scheduled minutes for an account, specific to the month being requested.</p>",
         "GetMinuteUsageResponse$upcomingMinutesScheduled": "<p>Upcoming minutes scheduled for an account, specific to the month being requested.</p>",
-        "IntegerRange$maximum": "<p>A maximum value.</p>",
+        "GetMinuteUsageResponse$totalScheduledMinutes": "<p>Total scheduled minutes for an account, specific to the month being requested.</p>",
+        "GetMinuteUsageResponse$estimatedMinutesRemaining": "<p>Estimated number of minutes remaining for an account, specific to the month being requested.</p>",
         "IntegerRange$minimum": "<p>A minimum value.</p>",
+        "IntegerRange$maximum": "<p>A maximum value.</p>",
         "SocketAddress$port": "<p>Port of a socket address.</p>"
       }
     },
@@ -760,14 +829,13 @@
     },
     "InvalidParameterException": {
       "base": "<p>One or more parameters are not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IpAddressList": {
       "base": null,
       "refs": {
-        "DiscoveryData$privateIpAddresses": "<p>List of private IP addresses to associate with agent.</p>",
-        "DiscoveryData$publicIpAddresses": "<p>List of public IP addresses to associate with agent.</p>"
+        "DiscoveryData$publicIpAddresses": "<p>List of public IP addresses to associate with agent.</p>",
+        "DiscoveryData$privateIpAddresses": "<p>List of private IP addresses to associate with agent.</p>"
       }
     },
     "IpV4Address": {
@@ -799,7 +867,7 @@
     "KeyArn": {
       "base": null,
       "refs": {
-        "CreateEphemerisRequest$kmsKeyArn": "<p>The ARN of a KMS key used to encrypt the ephemeris in Ground Station.</p>",
+        "CreateEphemerisRequest$kmsKeyArn": "<p>The ARN of the KMS key to use for encrypting the ephemeris.</p>",
         "KmsKey$kmsKeyArn": "<p>KMS Key Arn.</p>"
       }
     },
@@ -813,89 +881,73 @@
     },
     "ListConfigsRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConfigsResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListContactsRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListContactsResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataflowEndpointGroupsRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataflowEndpointGroupsResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEphemeridesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEphemeridesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGroundStationsRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGroundStationsResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMissionProfilesRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMissionProfilesResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSatellitesRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSatellitesResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
       "refs": {
-        "ComponentStatusData$bytesReceived": "<p>Bytes received by the component.</p>",
         "ComponentStatusData$bytesSent": "<p>Bytes sent by the component.</p>",
+        "ComponentStatusData$bytesReceived": "<p>Bytes received by the component.</p>",
         "ComponentStatusData$packetsDropped": "<p>Packets dropped by component.</p>"
       }
     },
@@ -912,8 +964,7 @@
     },
     "MissionProfileIdResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "MissionProfileList": {
       "base": null,
@@ -934,7 +985,7 @@
       }
     },
     "OEMEphemeris": {
-      "base": "<p> Ephemeris data in Orbit Ephemeris Message (OEM) format. </p> <p> AWS Ground Station processes OEM Customer Provided Ephemerides according to the <a href=\"https://public.ccsds.org/Pubs/502x0b3e1.pdf\">CCSDS standard</a> with some extra restrictions. OEM files should be in KVN format. For more detail about the OEM format that AWS Ground Station supports, see <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/providing-custom-ephemeris-data.html#oem-ephemeris-format\">OEM ephemeris format</a> in the AWS Ground Station user guide. </p>",
+      "base": "<p>Ephemeris data in Orbit Ephemeris Message (OEM) format.</p> <p> AWS Ground Station processes OEM ephemerides according to the <a href=\"https://ccsds.org/wp-content/uploads/gravity_forms/5-448e85c647331d9cbaf66c096458bdd5/2025/01//502x0b3e1.pdf\">CCSDS standard</a> with some extra restrictions. OEM files should be in KVN format. For more detail about the OEM format that AWS Ground Station supports, see <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/providing-oem-ephemeris-data.html#oem-ephemeris-format\">OEM ephemeris format</a> in the AWS Ground Station user guide. </p>",
       "refs": {
         "EphemerisData$oem": null
       }
@@ -985,6 +1036,12 @@
         "UpdateMissionProfileRequest$minimumViableContactDurationSeconds": "<p>Smallest amount of time in seconds that you’d like to see for an available contact. AWS Ground Station will not present you with contacts shorter than this duration.</p>"
       }
     },
+    "ProgramTrackSettings": {
+      "base": "<p>Program track settings for an antenna during a contact.</p>",
+      "refs": {
+        "TrackingOverrides$programTrackSettings": "<p>Program track settings to override for antenna tracking during the contact.</p>"
+      }
+    },
     "RangedConnectionDetails": {
       "base": "<p>Ingress address of AgentEndpoint with a port range and an optional mtu.</p>",
       "refs": {
@@ -1005,28 +1062,27 @@
     },
     "RegisterAgentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterAgentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ReserveContactRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ResourceInUseException": {
+      "base": "<p>The specified resource is in use by non-terminal state contacts and cannot be modified or deleted.</p>",
+      "refs": {}
     },
     "ResourceLimitExceededException": {
       "base": "<p>Account limits for this resource have been exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>Resource was not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RoleArn": {
       "base": null,
@@ -1051,12 +1107,13 @@
       }
     },
     "S3Object": {
-      "base": "<p>Object stored in S3 containing ephemeris data.</p>",
+      "base": "<p>Object stored in Amazon S3 containing ephemeris data.</p>",
       "refs": {
-        "EphemerisDescription$sourceS3Object": "<p>Source S3 object used for the ephemeris.</p>",
-        "EphemerisItem$sourceS3Object": "<p>Source S3 object used for the ephemeris.</p>",
-        "OEMEphemeris$s3Object": "<p>Identifies the S3 object to be used as the ephemeris.</p>",
-        "TLEEphemeris$s3Object": "<p>Identifies the S3 object to be used as the ephemeris.</p>"
+        "AzElSegmentsData$s3Object": "<p>The Amazon S3 object containing azimuth elevation segment data.</p> <p>The Amazon S3 object must contain JSON-formatted azimuth elevation data matching the <a>AzElSegments</a> structure.</p>",
+        "EphemerisDescription$sourceS3Object": "<p>Source Amazon S3 object used for the ephemeris.</p>",
+        "EphemerisItem$sourceS3Object": "<p>Source Amazon S3 object used for the ephemeris.</p>",
+        "OEMEphemeris$s3Object": "<p>The Amazon S3 object that contains the ephemeris data.</p>",
+        "TLEEphemeris$s3Object": "<p>The Amazon S3 object that contains the ephemeris data.</p>"
       }
     },
     "S3ObjectKey": {
@@ -1080,7 +1137,7 @@
     "S3VersionId": {
       "base": null,
       "refs": {
-        "S3Object$version": "<p>For versioned S3 objects, the version to use for the ephemeris.</p>"
+        "S3Object$version": "<p>For versioned Amazon S3 objects, the version to use for the ephemeris.</p>"
       }
     },
     "SafeName": {
@@ -1088,16 +1145,16 @@
       "refs": {
         "AwsGroundStationAgentEndpoint$name": "<p>Name string associated with AgentEndpoint. Used as a human-readable identifier for AgentEndpoint.</p>",
         "CreateConfigRequest$name": "<p>Name of a <code>Config</code>.</p>",
-        "CreateEphemerisRequest$name": "<p>A name string associated with the ephemeris. Used as a human-readable identifier for the ephemeris.</p>",
+        "CreateEphemerisRequest$name": "<p>A name that you can use to identify the ephemeris.</p>",
         "CreateMissionProfileRequest$name": "<p>Name of a mission profile.</p>",
         "DataflowEndpoint$name": "<p>Name of a dataflow endpoint.</p>",
-        "DescribeEphemerisResponse$name": "<p>A name string associated with the ephemeris. Used as a human-readable identifier for the ephemeris.</p>",
-        "EphemerisItem$name": "<p>A name string associated with the ephemeris. Used as a human-readable identifier for the ephemeris.</p>",
+        "DescribeEphemerisResponse$name": "<p>A name that you can use to identify the ephemeris.</p>",
+        "EphemerisItem$name": "<p>A name that you can use to identify the ephemeris.</p>",
         "EphemerisMetaData$name": "<p>A name string associated with the ephemeris. Used as a human-readable identifier for the ephemeris.</p> <p>A name is only returned for customer-provider ephemerides that have a name associated.</p>",
         "GetMissionProfileResponse$name": "<p>Name of a mission profile.</p>",
         "MissionProfileListItem$name": "<p>Name of a mission profile.</p>",
         "UpdateConfigRequest$name": "<p>Name of a <code>Config</code>.</p>",
-        "UpdateEphemerisRequest$name": "<p>A name string associated with the ephemeris. Used as a human-readable identifier for the ephemeris.</p>",
+        "UpdateEphemerisRequest$name": "<p>A name that you can use to identify the ephemeris.</p>",
         "UpdateMissionProfileRequest$name": "<p>Name of a mission profile.</p>"
       }
     },
@@ -1164,16 +1221,16 @@
         "ConfigIdResponse$configId": "<p>UUID of a <code>Config</code>.</p>",
         "ConfigListItem$configId": "<p>UUID of a <code>Config</code>.</p>",
         "ConfigListItem$name": "<p>Name of a <code>Config</code>.</p>",
-        "ContactData$errorMessage": "<p>Error message of a contact.</p>",
         "ContactData$groundStation": "<p>Name of a ground station.</p>",
+        "ContactData$errorMessage": "<p>Error message of a contact.</p>",
         "ContactData$region": "<p>Region of a contact.</p>",
         "DataflowDetail$errorMessage": "<p>Error message for a dataflow.</p>",
         "DataflowEndpointConfig$dataflowEndpointName": "<p>Name of a dataflow endpoint.</p>",
         "DataflowEndpointConfig$dataflowEndpointRegion": "<p>Region of a dataflow endpoint.</p>",
         "DependencyException$message": null,
         "DependencyException$parameterName": "<p/>",
-        "DescribeContactResponse$errorMessage": "<p>Error message for a contact.</p>",
         "DescribeContactResponse$groundStation": "<p>Ground station for a contact.</p>",
+        "DescribeContactResponse$errorMessage": "<p>Error message for a contact.</p>",
         "DescribeContactResponse$region": "<p>Region of a contact.</p>",
         "Destination$dataflowDestinationRegion": "<p>Region of a dataflow destination.</p>",
         "GetAgentConfigurationResponse$taskingDocument": "<p>Tasking document for agent.</p>",
@@ -1181,6 +1238,7 @@
         "GetConfigResponse$name": "<p>Name of a <code>Config</code>.</p>",
         "InvalidParameterException$message": null,
         "InvalidParameterException$parameterName": "<p/>",
+        "ResourceInUseException$message": null,
         "ResourceLimitExceededException$message": null,
         "ResourceLimitExceededException$parameterName": "<p/>",
         "ResourceNotFoundException$message": null,
@@ -1201,6 +1259,14 @@
         "SecurityDetails$subnetIds": "<p>A list of subnets where AWS Ground Station places elastic network interfaces to send streams to your instances.</p>"
       }
     },
+    "SyntheticTimestamp_date_time": {
+      "base": null,
+      "refs": {
+        "AzElSegment$referenceEpoch": "<p>The reference time for this segment in ISO 8601 format in Coordinated Universal Time (UTC).</p> <p>All time values within the segment's <a>AzElSegment$azElList</a> are specified as offsets in atomic seconds from this reference epoch.</p> <p>Example: <code>2024-01-15T12:00:00.000Z</code> </p>",
+        "ISO8601TimeRange$startTime": "<p>Start time in ISO 8601 format in Coordinated Universal Time (UTC).</p> <p>Example: <code>2026-11-15T10:28:48.000Z</code> </p>",
+        "ISO8601TimeRange$endTime": "<p>End time in ISO 8601 format in Coordinated Universal Time (UTC).</p> <p>Example: <code>2024-01-15T12:00:00.000Z</code> </p>"
+      }
+    },
     "TLEData": {
       "base": "<p>Two-line element set (TLE) data.</p>",
       "refs": {
@@ -1210,11 +1276,11 @@
     "TLEDataList": {
       "base": null,
       "refs": {
-        "TLEEphemeris$tleData": "<p>The data for a TLE ephemeris, supplied directly in the request rather than through an S3 object.</p>"
+        "TLEEphemeris$tleData": "<p>TLE data that you provide directly instead of using an Amazon S3 object.</p>"
       }
     },
     "TLEEphemeris": {
-      "base": "<p>Two-line element set (TLE) ephemeris.</p>",
+      "base": "<p>Two-line element set (TLE) ephemeris.</p> <p> For more detail about providing Two-line element sets to AWS Ground Station, see the <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/providing-tle-ephemeris-data.html\">TLE section</a> of the AWS Ground Station user guide. </p>",
       "refs": {
         "EphemerisData$tle": null
       }
@@ -1227,13 +1293,11 @@
     },
     "TagResourceRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TagsMap": {
       "base": null,
@@ -1254,39 +1318,51 @@
         "TagResourceRequest$tags": "<p>Tags assigned to a resource.</p>"
       }
     },
+    "TimeAzEl": {
+      "base": "<p>Time-tagged azimuth elevation pointing data.</p> <p>Specifies the antenna pointing direction at a specific time offset from the segment's reference epoch.</p>",
+      "refs": {
+        "TimeAzElList$member": null
+      }
+    },
+    "TimeAzElList": {
+      "base": null,
+      "refs": {
+        "AzElSegment$azElList": "<p>List of time-tagged azimuth elevation data points.</p> <p> Must contain at least five points to support 4th order Lagrange interpolation. Points must be in chronological order with no duplicates. </p>"
+      }
+    },
     "TimeRange": {
       "base": "<p>A time range with a start and end time.</p>",
       "refs": {
-        "TLEData$validTimeRange": "<p>The valid time range for the TLE. Gaps or overlap are not permitted.</p>"
+        "TLEData$validTimeRange": "<p>The valid time range for the TLE. Time ranges must be continuous without gaps or overlaps.</p>"
       }
     },
     "Timestamp": {
       "base": null,
       "refs": {
-        "ContactData$endTime": "<p>End time of a contact in UTC.</p>",
-        "ContactData$postPassEndTime": "<p>Amount of time after a contact ends that you’d like to receive a CloudWatch event indicating the pass has finished.</p>",
-        "ContactData$prePassStartTime": "<p>Amount of time prior to contact start you’d like to receive a CloudWatch event indicating an upcoming pass.</p>",
         "ContactData$startTime": "<p>Start time of a contact in UTC.</p>",
-        "ContactData$visibilityEndTime": "<p> Projected time in UTC your satellite will set below the <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/site-masks.html\">receive mask</a>. This time is based on the satellite's current active ephemeris for future contacts and the ephemeris that was active during contact execution for completed contacts. <i>This field is not present for contacts with a <code>SCHEDULING</code> or <code>SCHEDULED</code> status.</i> </p>",
+        "ContactData$endTime": "<p>End time of a contact in UTC.</p>",
+        "ContactData$prePassStartTime": "<p>Amount of time prior to contact start you’d like to receive a CloudWatch event indicating an upcoming pass.</p>",
+        "ContactData$postPassEndTime": "<p>Amount of time after a contact ends that you’d like to receive a CloudWatch event indicating the pass has finished.</p>",
         "ContactData$visibilityStartTime": "<p> Projected time in UTC your satellite will rise above the <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/site-masks.html\">receive mask</a>. This time is based on the satellite's current active ephemeris for future contacts and the ephemeris that was active during contact execution for completed contacts. <i>This field is not present for contacts with a <code>SCHEDULING</code> or <code>SCHEDULED</code> status.</i> </p>",
+        "ContactData$visibilityEndTime": "<p> Projected time in UTC your satellite will set below the <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/site-masks.html\">receive mask</a>. This time is based on the satellite's current active ephemeris for future contacts and the ephemeris that was active during contact execution for completed contacts. <i>This field is not present for contacts with a <code>SCHEDULING</code> or <code>SCHEDULED</code> status.</i> </p>",
         "CreateEphemerisRequest$expirationTime": "<p>An overall expiration time for the ephemeris in UTC, after which it will become <code>EXPIRED</code>.</p>",
-        "DescribeContactResponse$endTime": "<p>End time of a contact in UTC.</p>",
-        "DescribeContactResponse$postPassEndTime": "<p>Amount of time after a contact ends that you’d like to receive a CloudWatch event indicating the pass has finished.</p>",
-        "DescribeContactResponse$prePassStartTime": "<p>Amount of time prior to contact start you’d like to receive a CloudWatch event indicating an upcoming pass.</p>",
         "DescribeContactResponse$startTime": "<p>Start time of a contact in UTC.</p>",
-        "DescribeContactResponse$visibilityEndTime": "<p> Projected time in UTC your satellite will set below the <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/site-masks.html\">receive mask</a>. This time is based on the satellite's current active ephemeris for future contacts and the ephemeris that was active during contact execution for completed contacts. </p>",
+        "DescribeContactResponse$endTime": "<p>End time of a contact in UTC.</p>",
+        "DescribeContactResponse$prePassStartTime": "<p>Amount of time prior to contact start you’d like to receive a CloudWatch event indicating an upcoming pass.</p>",
+        "DescribeContactResponse$postPassEndTime": "<p>Amount of time after a contact ends that you’d like to receive a CloudWatch event indicating the pass has finished.</p>",
         "DescribeContactResponse$visibilityStartTime": "<p> Projected time in UTC your satellite will rise above the <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/site-masks.html\">receive mask</a>. This time is based on the satellite's current active ephemeris for future contacts and the ephemeris that was active during contact execution for completed contacts. </p>",
+        "DescribeContactResponse$visibilityEndTime": "<p> Projected time in UTC your satellite will set below the <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/site-masks.html\">receive mask</a>. This time is based on the satellite's current active ephemeris for future contacts and the ephemeris that was active during contact execution for completed contacts. </p>",
         "DescribeEphemerisResponse$creationTime": "<p>The time the ephemeris was uploaded in UTC.</p>",
         "EphemerisItem$creationTime": "<p>The time the ephemeris was uploaded in UTC.</p>",
         "EphemerisMetaData$epoch": "<p>The epoch of a default, ephemeris from Space Track in UTC.</p> <p>This field is not populated for customer-provided ephemerides.</p>",
-        "ListContactsRequest$endTime": "<p>End time of a contact in UTC.</p>",
         "ListContactsRequest$startTime": "<p>Start time of a contact in UTC.</p>",
-        "ListEphemeridesRequest$endTime": "<p>The end time to list in UTC. The operation will return an ephemeris if its expiration time is within the time range defined by the <code>startTime</code> and <code>endTime</code>.</p>",
-        "ListEphemeridesRequest$startTime": "<p>The start time to list in UTC. The operation will return an ephemeris if its expiration time is within the time range defined by the <code>startTime</code> and <code>endTime</code>.</p>",
-        "ReserveContactRequest$endTime": "<p>End time of a contact in UTC.</p>",
+        "ListContactsRequest$endTime": "<p>End time of a contact in UTC.</p>",
+        "ListEphemeridesRequest$startTime": "<p>The start time for the list operation in UTC. Returns ephemerides with expiration times within your specified time range.</p>",
+        "ListEphemeridesRequest$endTime": "<p>The end time for the list operation in UTC. Returns ephemerides with expiration times within your specified time range.</p>",
         "ReserveContactRequest$startTime": "<p>Start time of a contact in UTC.</p>",
-        "TimeRange$endTime": "<p>Time in UTC at which the time range ends.</p>",
-        "TimeRange$startTime": "<p>Time in UTC at which the time range starts.</p>"
+        "ReserveContactRequest$endTime": "<p>End time of a contact in UTC.</p>",
+        "TimeRange$startTime": "<p>Unix epoch timestamp in UTC at which the time range starts.</p>",
+        "TimeRange$endTime": "<p>Unix epoch timestamp in UTC at which the time range ends.</p>"
       }
     },
     "TleLineOne": {
@@ -1307,48 +1383,48 @@
         "ConfigTypeData$trackingConfig": "<p>Object that determines whether tracking should be used during a contact executed with this <code>Config</code> in the mission profile. </p>"
       }
     },
+    "TrackingOverrides": {
+      "base": "<p>Overrides the default tracking configuration on an antenna during a contact.</p>",
+      "refs": {
+        "DescribeContactResponse$trackingOverrides": "<p>Tracking configuration overrides specified when the contact was reserved.</p>",
+        "ReserveContactRequest$trackingOverrides": "<p>Tracking configuration overrides for the contact.</p>"
+      }
+    },
     "UnboundedString": {
       "base": null,
       "refs": {
         "EphemerisDescription$ephemerisData": "<p>Supplied ephemeris data.</p>",
-        "OEMEphemeris$oemData": "<p>The data for an OEM ephemeris, supplied directly in the request rather than through an S3 object.</p>",
+        "OEMEphemeris$oemData": "<p>OEM data that you provide directly instead of using an Amazon S3 object.</p>",
         "TagKeys$member": null
       }
     },
     "UntagResourceRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAgentStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAgentStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConfigRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEphemerisRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMissionProfileRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UplinkEchoConfig": {
       "base": "<p>Information about an uplink echo <code>Config</code>.</p> <p>Parameters from the <code>AntennaUplinkConfig</code>, corresponding to the specified <code>AntennaUplinkConfigArn</code>, are used when this <code>UplinkEchoConfig</code> is used in a contact.</p>",
@@ -1365,11 +1441,13 @@
     "Uuid": {
       "base": null,
       "refs": {
+        "AzElEphemerisFilter$id": "<p>Unique identifier of the azimuth elevation ephemeris.</p>",
+        "AzElProgramTrackSettings$ephemerisId": "<p>Unique identifier of the azimuth elevation ephemeris.</p>",
         "CancelContactRequest$contactId": "<p>UUID of a contact.</p>",
         "ComponentStatusData$dataflowId": "<p>Dataflow UUID associated with the component.</p>",
         "ContactData$contactId": "<p>UUID of a contact.</p>",
         "ContactIdResponse$contactId": "<p>UUID of a contact.</p>",
-        "CreateEphemerisRequest$satelliteId": "<p>AWS Ground Station satellite ID for this ephemeris.</p>",
+        "CreateEphemerisRequest$satelliteId": "<p>The satellite ID that associates this ephemeris with a satellite in AWS Ground Station.</p>",
         "DataflowEndpointGroupIdResponse$dataflowEndpointGroupId": "<p>UUID of a dataflow endpoint group.</p>",
         "DataflowEndpointListItem$dataflowEndpointGroupId": "<p>UUID of a dataflow endpoint group.</p>",
         "DeleteConfigRequest$configId": "<p>UUID of a <code>Config</code>.</p>",
@@ -1385,6 +1463,7 @@
         "EphemerisIdResponse$ephemerisId": "<p>The AWS Ground Station ephemeris ID.</p>",
         "EphemerisItem$ephemerisId": "<p>The AWS Ground Station ephemeris ID.</p>",
         "EphemerisMetaData$ephemerisId": "<p>UUID of a customer-provided ephemeris.</p> <p>This field is not populated for default ephemerides from Space Track.</p>",
+        "EphemerisResponseData$ephemerisId": "<p>Unique identifier of the ephemeris. Appears only for custom ephemerides.</p>",
         "GetAgentConfigurationRequest$agentId": "<p>UUID of agent to get configuration information for.</p>",
         "GetAgentConfigurationResponse$agentId": "<p>UUID of agent.</p>",
         "GetConfigRequest$configId": "<p>UUID of a <code>Config</code>.</p>",

@@ -448,7 +448,8 @@
       "members":{
         "Service":{"shape":"ServiceEntity"},
         "Slo":{"shape":"ServiceLevelObjectiveEntity"},
-        "ServiceOperation":{"shape":"ServiceOperationEntity"}
+        "ServiceOperation":{"shape":"ServiceOperationEntity"},
+        "Canary":{"shape":"CanaryEntity"}
       },
       "union":true
     },
@@ -596,6 +597,13 @@
       "type":"integer",
       "box":true,
       "min":1
+    },
+    "CanaryEntity":{
+      "type":"structure",
+      "required":["CanaryName"],
+      "members":{
+        "CanaryName":{"shape":"String"}
+      }
     },
     "ChangeEvent":{
       "type":"structure",

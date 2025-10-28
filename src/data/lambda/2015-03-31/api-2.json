@@ -611,6 +611,7 @@
         {"shape":"RequestTooLargeException"},
         {"shape":"KMSDisabledException"},
         {"shape":"UnsupportedMediaTypeException"},
+        {"shape":"SerializedRequestEntityTooLargeException"},
         {"shape":"InvalidRuntimeException"},
         {"shape":"EC2UnexpectedException"},
         {"shape":"InvalidSubnetIDException"},
@@ -671,6 +672,7 @@
         {"shape":"RequestTooLargeException"},
         {"shape":"KMSDisabledException"},
         {"shape":"UnsupportedMediaTypeException"},
+        {"shape":"SerializedRequestEntityTooLargeException"},
         {"shape":"InvalidRuntimeException"},
         {"shape":"EC2UnexpectedException"},
         {"shape":"InvalidSubnetIDException"},
@@ -4347,6 +4349,18 @@
     "SensitiveString":{
       "type":"string",
       "sensitive":true
+    },
+    "SerializedRequestEntityTooLargeException":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"String"},
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":413,
+        "senderFault":true
+      },
+      "exception":true
     },
     "ServiceException":{
       "type":"structure",

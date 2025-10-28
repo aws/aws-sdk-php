@@ -1,5 +1,57 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\TaxSettings` - Update endpoint ruleset parameters casing
+* `Aws\MigrationHubOrchestrator` - Update endpoint ruleset parameters casing
+* `Aws\RAM` - Update endpoint ruleset parameters casing
+* `Aws\ApplicationSignals` - Added support for CloudWatch Synthetics Canary resources in ListAuditFindings API. This enhancement allows customers to retrieve audit findings specifically for CloudWatch Synthetics canaries and enables service-canary correlation analysis.
+* `Aws\Pipes` - Update endpoint ruleset parameters casing
+* `Aws\EMRContainers` - Update endpoint ruleset parameters casing
+* `Aws\Notifications` - Update endpoint ruleset parameters casing
+* `Aws\AppRegistry` - Update endpoint ruleset parameters casing
+* `Aws\S3` - Amazon Simple Storage Service / Features: Add conditional writes in CopyObject on destination key to prevent unintended object modifications.
+* `Aws\BedrockAgentRuntime` - Update endpoint ruleset parameters casing
+* `Aws\GroundStation` - Enable use of AzEl ephemerides
+* `Aws\OpenSearchService` - Update endpoint ruleset parameters casing
+* `Aws\WorkspacesInstances` - Update endpoint ruleset parameters casing
+* `Aws\PartnerCentralSelling` - Update endpoint ruleset parameters casing
+* `Aws\ECS` - Amazon ECS supports native linear and canary service deployments, allowing you to shift traffic in increments for more control.
+* `Aws\SQS` - Update endpoint ruleset parameters casing
+* `Aws\kendra` - Update endpoint ruleset parameters casing
+* `Aws\BedrockRuntime` - Update endpoint ruleset parameters casing
+* `Aws\Glacier` - Update endpoint ruleset parameters casing
+* `Aws\CloudSearchDomain` - Update endpoint ruleset parameters casing
+* `Aws\CodeGuruSecurity` - Update endpoint ruleset parameters casing
+* `Aws\MediaPackageVod` - Update endpoint ruleset parameters casing
+* `Aws\BCMPricingCalculator` - Update endpoint ruleset parameters casing
+* `Aws\SupportApp` - Update endpoint ruleset parameters casing
+* `Aws\CleanRoomsML` - Update endpoint ruleset parameters casing
+* `Aws\ResourceGroups` - Update endpoint ruleset parameters casing
+* `Aws\KinesisVideo` - Update endpoint ruleset parameters casing
+* `Aws\EFS` - Update endpoint ruleset parameters casing
+* `Aws\SageMakerFeatureStoreRuntime` - Update endpoint ruleset parameters casing
+* `Aws\XRay` - Update endpoint ruleset parameters casing
+* `Aws\WorkSpaces` - Added IPv6 address support for WorkSpaces using Dual-Stack subnets
+* `Aws\Organizations` - Added Account State field to the ListDelegatedAdministrators API response.
+* `Aws\TrustedAdvisor` - Update endpoint ruleset parameters casing
+* `Aws\InspectorScan` - Update endpoint ruleset parameters casing
+* `Aws\BackupSearch` - Update endpoint ruleset parameters casing
+* `Aws\GameLiftStreams` - Add stream group expiration date and expired status
+* `Aws\ElasticTranscoder` - Update endpoint ruleset parameters casing
+* `Aws\Cloud9` - Update endpoint ruleset parameters casing
+* `Aws\Detective` - Update endpoint ruleset parameters casing
+* `Aws\KafkaConnect` - Update endpoint ruleset parameters casing
+* `Aws\SageMaker` - Amazon SageMaker now supports deleting training and processing jobs in a terminal status.
+* `Aws\SecurityIR` - Update endpoint ruleset parameters casing
+* `Aws\ApiGatewayV2` - Update endpoint ruleset parameters casing
+* `Aws\S3Control` - Update endpoint ruleset parameters casing
+* `Aws\EC2` - This released the DescribeCapacityReservationTopology API.
+* `Aws\CloudWatchEvents` - Update endpoint ruleset parameters casing
+* `Aws\CodeConnections` - Update endpoint ruleset parameters casing
+* `Aws\Lambda` - Added SerializedRequestEntityTooLargeException to Lambda Invoke API
+* `Aws\MarketplaceDeployment` - Update endpoint ruleset parameters casing
+
 ## 3.358.0 - 2025-10-27
 
 * `Aws\Credentials` - Updates STS providers to accept region passed from client, directly through in-code or profile configuration, or from `AWS_REGION`. Adds notice regarding fallback region.

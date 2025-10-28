@@ -796,6 +796,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise describeCapacityReservationBillingRequestsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result describeCapacityReservationFleets(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise describeCapacityReservationFleetsAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result describeCapacityReservationTopology(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise describeCapacityReservationTopologyAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result describeCapacityReservations(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise describeCapacityReservationsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result describeCarrierGateways(array $args = []) (supported in versions 2016-11-15)

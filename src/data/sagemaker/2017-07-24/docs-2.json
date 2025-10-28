@@ -121,10 +121,12 @@
     "DeleteOptimizationJob": "<p>Deletes an optimization job.</p>",
     "DeletePartnerApp": "<p>Deletes a SageMaker Partner AI App.</p>",
     "DeletePipeline": "<p>Deletes a pipeline if there are no running instances of the pipeline. To delete a pipeline, you must stop all running instances of the pipeline using the <code>StopPipelineExecution</code> API. When you delete a pipeline, all instances of the pipeline are deleted.</p>",
+    "DeleteProcessingJob": "<p>Deletes a processing job. After Amazon SageMaker deletes a processing job, all of the metadata for the processing job is lost. You can delete only processing jobs that are in a terminal state (<code>Stopped</code>, <code>Failed</code>, or <code>Completed</code>). You cannot delete a job that is in the <code>InProgress</code> or <code>Stopping</code> state. After deleting the job, you can reuse its name to create another processing job.</p>",
     "DeleteProject": "<p>Delete the specified project.</p>",
     "DeleteSpace": "<p>Used to delete a space.</p>",
     "DeleteStudioLifecycleConfig": "<p>Deletes the Amazon SageMaker AI Studio Lifecycle Configuration. In order to delete the Lifecycle Configuration, there must be no running apps using the Lifecycle Configuration. You must also remove the Lifecycle Configuration from UserSettings in all Domains and UserProfiles.</p>",
     "DeleteTags": "<p>Deletes the specified tags from an SageMaker resource.</p> <p>To list a resource's tags, use the <code>ListTags</code> API. </p> <note> <p>When you call this API to delete tags from a hyperparameter tuning job, the deleted tags are not removed from training jobs that the hyperparameter tuning job launched before you called this API.</p> </note> <note> <p>When you call this API to delete tags from a SageMaker Domain or User Profile, the deleted tags are not removed from Apps that the SageMaker Domain or User Profile launched before you called this API.</p> </note>",
+    "DeleteTrainingJob": "<p>Deletes a training job. After SageMaker deletes a training job, all of the metadata for the training job is lost. You can delete only training jobs that are in a terminal state (<code>Stopped</code>, <code>Failed</code>, or <code>Completed</code>) and don't retain an <code>Available</code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/train-warm-pools.html\">managed warm pool</a>. You cannot delete a job that is in the <code>InProgress</code> or <code>Stopping</code> state. After deleting the job, you can reuse its name to create another training job.</p>",
     "DeleteTrial": "<p>Deletes the specified trial. All trial components that make up the trial must be deleted first. Use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeTrialComponent.html\">DescribeTrialComponent</a> API to get the list of trial components.</p>",
     "DeleteTrialComponent": "<p>Deletes the specified trial component. A trial component must be disassociated from all trials before the trial component can be deleted. To disassociate a trial component from a trial, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DisassociateTrialComponent.html\">DisassociateTrialComponent</a> API.</p>",
     "DeleteUserProfile": "<p>Deletes a user profile. When a user profile is deleted, the user loses access to their EFS volume, including data, notebooks, and other artifacts.</p>",
@@ -4551,6 +4553,10 @@
       "base": null,
       "refs": {}
     },
+    "DeleteProcessingJobRequest": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteProjectInput": {
       "base": null,
       "refs": {}
@@ -4568,6 +4574,10 @@
       "refs": {}
     },
     "DeleteTagsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTrainingJobRequest": {
       "base": null,
       "refs": {}
     },
@@ -13419,6 +13429,7 @@
       "refs": {
         "CreateProcessingJobRequest$ProcessingJobName": "<p> The name of the processing job. The name must be unique within an Amazon Web Services Region in the Amazon Web Services account.</p>",
         "DataQualityBaselineConfig$BaseliningJobName": "<p>The name of the job that performs baselining for the data quality monitoring job.</p>",
+        "DeleteProcessingJobRequest$ProcessingJobName": "<p>The name of the processing job to delete.</p>",
         "DescribeProcessingJobRequest$ProcessingJobName": "<p>The name of the processing job. The name must be unique within an Amazon Web Services Region in the Amazon Web Services account.</p>",
         "DescribeProcessingJobResponse$ProcessingJobName": "<p>The name of the processing job. The name must be unique within an Amazon Web Services Region in the Amazon Web Services account.</p>",
         "ModelBiasBaselineConfig$BaseliningJobName": "<p>The name of the baseline model bias job.</p>",
@@ -17476,6 +17487,7 @@
       "base": null,
       "refs": {
         "CreateTrainingJobRequest$TrainingJobName": "<p>The name of the training job. The name must be unique within an Amazon Web Services Region in an Amazon Web Services account. </p>",
+        "DeleteTrainingJobRequest$TrainingJobName": "<p>The name of the training job to delete.</p>",
         "DescribeTrainingJobRequest$TrainingJobName": "<p>The name of the training job.</p>",
         "DescribeTrainingJobResponse$TrainingJobName": "<p> Name of the model training job. </p>",
         "HyperParameterTrainingJobSummary$TrainingJobName": "<p>The name of the training job.</p>",

@@ -2356,6 +2356,15 @@
       "input":{"shape":"DescribeCapacityReservationFleetsRequest"},
       "output":{"shape":"DescribeCapacityReservationFleetsResult"}
     },
+    "DescribeCapacityReservationTopology":{
+      "name":"DescribeCapacityReservationTopology",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeCapacityReservationTopologyRequest"},
+      "output":{"shape":"DescribeCapacityReservationTopologyResult"}
+    },
     "DescribeCapacityReservations":{
       "name":"DescribeCapacityReservations",
       "http":{
@@ -10708,6 +10717,50 @@
         "dedicated"
       ]
     },
+    "CapacityReservationTopology":{
+      "type":"structure",
+      "members":{
+        "CapacityReservationId":{
+          "shape":"String",
+          "locationName":"capacityReservationId"
+        },
+        "CapacityBlockId":{
+          "shape":"String",
+          "locationName":"capacityBlockId"
+        },
+        "State":{
+          "shape":"String",
+          "locationName":"state"
+        },
+        "InstanceType":{
+          "shape":"String",
+          "locationName":"instanceType"
+        },
+        "GroupName":{
+          "shape":"String",
+          "locationName":"groupName"
+        },
+        "NetworkNodes":{
+          "shape":"NetworkNodeSet",
+          "locationName":"networkNodeSet"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
+        },
+        "AvailabilityZone":{
+          "shape":"String",
+          "locationName":"availabilityZone"
+        }
+      }
+    },
+    "CapacityReservationTopologySet":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityReservationTopology",
+        "locationName":"item"
+      }
+    },
     "CapacityReservationType":{
       "type":"string",
       "enum":[
@@ -17751,6 +17804,40 @@
         "NextToken":{
           "shape":"String",
           "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeCapacityReservationTopologyMaxResults":{
+      "type":"integer",
+      "max":10,
+      "min":1
+    },
+    "DescribeCapacityReservationTopologyRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"DescribeCapacityReservationTopologyMaxResults"},
+        "CapacityReservationIds":{
+          "shape":"CapacityReservationIdSet",
+          "locationName":"CapacityReservationId"
+        },
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        }
+      }
+    },
+    "DescribeCapacityReservationTopologyResult":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        },
+        "CapacityReservations":{
+          "shape":"CapacityReservationTopologySet",
+          "locationName":"capacityReservationSet"
         }
       }
     },
@@ -41245,6 +41332,13 @@
         "iot_rules_managed",
         "aws_codestar_connections_managed"
       ]
+    },
+    "NetworkNodeSet":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"item"
+      }
     },
     "NetworkNodesList":{
       "type":"list",

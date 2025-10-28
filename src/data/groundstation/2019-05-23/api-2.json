@@ -2,16 +2,15 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2019-05-23",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"groundstation",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceFullName":"AWS Ground Station",
     "serviceId":"GroundStation",
     "signatureVersion":"v4",
     "signingName":"groundstation",
-    "uid":"groundstation-2019-05-23",
-    "auth":["aws.auth#sigv4"]
+    "uid":"groundstation-2019-05-23"
   },
   "operations":{
     "CancelContact":{
@@ -135,7 +134,8 @@
       "errors":[
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceInUseException"}
       ],
       "idempotent":true
     },
@@ -168,7 +168,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeEphemeris":{
       "name":"DescribeEphemeris",
@@ -183,7 +184,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetAgentConfiguration":{
       "name":"GetAgentConfiguration",
@@ -198,7 +200,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetConfig":{
       "name":"GetConfig",
@@ -213,7 +216,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDataflowEndpointGroup":{
       "name":"GetDataflowEndpointGroup",
@@ -228,7 +232,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetMinuteUsage":{
       "name":"GetMinuteUsage",
@@ -243,7 +248,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetMissionProfile":{
       "name":"GetMissionProfile",
@@ -258,7 +264,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetSatellite":{
       "name":"GetSatellite",
@@ -273,7 +280,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListConfigs":{
       "name":"ListConfigs",
@@ -288,7 +296,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListContacts":{
       "name":"ListContacts",
@@ -303,7 +312,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDataflowEndpointGroups":{
       "name":"ListDataflowEndpointGroups",
@@ -318,7 +328,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListEphemerides":{
       "name":"ListEphemerides",
@@ -333,7 +344,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListGroundStations":{
       "name":"ListGroundStations",
@@ -348,7 +360,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListMissionProfiles":{
       "name":"ListMissionProfiles",
@@ -363,7 +376,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListSatellites":{
       "name":"ListSatellites",
@@ -378,7 +392,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -393,7 +408,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "RegisterAgent":{
       "name":"RegisterAgent",
@@ -422,6 +438,7 @@
       "errors":[
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
+        {"shape":"ResourceLimitExceededException"},
         {"shape":"ResourceNotFoundException"}
       ]
     },
@@ -526,7 +543,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[\\w-]+$"
+      "pattern":"[\\w-]+"
     },
     "AgentCpuCoresList":{
       "type":"list",
@@ -538,17 +555,17 @@
       "type":"structure",
       "required":[
         "agentVersion",
-        "componentVersions",
         "instanceId",
-        "instanceType"
+        "instanceType",
+        "componentVersions"
       ],
       "members":{
-        "agentCpuCores":{"shape":"AgentCpuCoresList"},
         "agentVersion":{"shape":"VersionString"},
-        "componentVersions":{"shape":"ComponentVersionList"},
         "instanceId":{"shape":"InstanceId"},
         "instanceType":{"shape":"InstanceType"},
-        "reservedCpuCores":{"shape":"AgentCpuCoresList"}
+        "reservedCpuCores":{"shape":"AgentCpuCoresList"},
+        "agentCpuCores":{"shape":"AgentCpuCoresList"},
+        "componentVersions":{"shape":"ComponentVersionList"}
       }
     },
     "AgentStatus":{
@@ -564,8 +581,8 @@
       "type":"structure",
       "required":["status"],
       "members":{
-        "signatureMap":{"shape":"SignatureMap"},
-        "status":{"shape":"AgentStatus"}
+        "status":{"shape":"AgentStatus"},
+        "signatureMap":{"shape":"SignatureMap"}
       }
     },
     "AngleUnits":{
@@ -591,14 +608,14 @@
     "AntennaDownlinkDemodDecodeConfig":{
       "type":"structure",
       "required":[
-        "decodeConfig",
+        "spectrumConfig",
         "demodulationConfig",
-        "spectrumConfig"
+        "decodeConfig"
       ],
       "members":{
-        "decodeConfig":{"shape":"DecodeConfig"},
+        "spectrumConfig":{"shape":"SpectrumConfig"},
         "demodulationConfig":{"shape":"DemodulationConfig"},
-        "spectrumConfig":{"shape":"SpectrumConfig"}
+        "decodeConfig":{"shape":"DecodeConfig"}
       }
     },
     "AntennaUplinkConfig":{
@@ -608,16 +625,16 @@
         "targetEirp"
       ],
       "members":{
+        "transmitDisabled":{"shape":"Boolean"},
         "spectrumConfig":{"shape":"UplinkSpectrumConfig"},
-        "targetEirp":{"shape":"Eirp"},
-        "transmitDisabled":{"shape":"Boolean"}
+        "targetEirp":{"shape":"Eirp"}
       }
     },
     "AnyArn":{
       "type":"string",
       "max":1024,
       "min":5,
-      "pattern":"^(arn:aws:)[\\s\\S]{0,1024}$"
+      "pattern":"(arn:aws:)[\\s\\S]{0,1024}"
     },
     "AuditResults":{
       "type":"string",
@@ -629,17 +646,80 @@
     "AwsGroundStationAgentEndpoint":{
       "type":"structure",
       "required":[
+        "name",
         "egressAddress",
-        "ingressAddress",
-        "name"
+        "ingressAddress"
       ],
       "members":{
-        "agentStatus":{"shape":"AgentStatus"},
-        "auditResults":{"shape":"AuditResults"},
+        "name":{"shape":"SafeName"},
         "egressAddress":{"shape":"ConnectionDetails"},
         "ingressAddress":{"shape":"RangedConnectionDetails"},
-        "name":{"shape":"SafeName"}
+        "agentStatus":{"shape":"AgentStatus"},
+        "auditResults":{"shape":"AuditResults"}
       }
+    },
+    "AzElEphemeris":{
+      "type":"structure",
+      "required":[
+        "groundStation",
+        "data"
+      ],
+      "members":{
+        "groundStation":{"shape":"GroundStationName"},
+        "data":{"shape":"AzElSegmentsData"}
+      }
+    },
+    "AzElEphemerisFilter":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{"shape":"Uuid"}
+      }
+    },
+    "AzElProgramTrackSettings":{
+      "type":"structure",
+      "required":["ephemerisId"],
+      "members":{
+        "ephemerisId":{"shape":"Uuid"}
+      }
+    },
+    "AzElSegment":{
+      "type":"structure",
+      "required":[
+        "referenceEpoch",
+        "validTimeRange",
+        "azElList"
+      ],
+      "members":{
+        "referenceEpoch":{"shape":"SyntheticTimestamp_date_time"},
+        "validTimeRange":{"shape":"ISO8601TimeRange"},
+        "azElList":{"shape":"TimeAzElList"}
+      }
+    },
+    "AzElSegmentList":{
+      "type":"list",
+      "member":{"shape":"AzElSegment"},
+      "max":100,
+      "min":1
+    },
+    "AzElSegments":{
+      "type":"structure",
+      "required":[
+        "angleUnit",
+        "azElSegmentList"
+      ],
+      "members":{
+        "angleUnit":{"shape":"AngleUnits"},
+        "azElSegmentList":{"shape":"AzElSegmentList"}
+      }
+    },
+    "AzElSegmentsData":{
+      "type":"structure",
+      "members":{
+        "s3Object":{"shape":"S3Object"},
+        "azElData":{"shape":"AzElSegments"}
+      },
+      "union":true
     },
     "BandwidthUnits":{
       "type":"string",
@@ -700,19 +780,19 @@
     "ComponentStatusData":{
       "type":"structure",
       "required":[
-        "capabilityArn",
         "componentType",
-        "dataflowId",
-        "status"
+        "capabilityArn",
+        "status",
+        "dataflowId"
       ],
       "members":{
-        "bytesReceived":{"shape":"Long"},
-        "bytesSent":{"shape":"Long"},
-        "capabilityArn":{"shape":"CapabilityArn"},
         "componentType":{"shape":"ComponentTypeString"},
-        "dataflowId":{"shape":"Uuid"},
+        "capabilityArn":{"shape":"CapabilityArn"},
+        "status":{"shape":"AgentStatus"},
+        "bytesSent":{"shape":"Long"},
+        "bytesReceived":{"shape":"Long"},
         "packetsDropped":{"shape":"Long"},
-        "status":{"shape":"AgentStatus"}
+        "dataflowId":{"shape":"Uuid"}
       }
     },
     "ComponentStatusList":{
@@ -723,7 +803,7 @@
     },
     "ComponentTypeString":{
       "type":"string",
-      "pattern":"^[a-zA-Z0-9_]{1,64}$"
+      "pattern":"[a-zA-Z0-9_]{1,64}"
     },
     "ComponentVersion":{
       "type":"structure",
@@ -746,7 +826,7 @@
       "type":"string",
       "max":424,
       "min":82,
-      "pattern":"^arn:aws:groundstation:[-a-z0-9]{1,50}:[0-9]{12}:config/[a-z0-9]+(-[a-z0-9]+){0,4}/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}(/.{1,256})?$"
+      "pattern":"arn:aws:groundstation:[-a-z0-9]{1,50}:[0-9]{12}:config/[a-z0-9]+(-[a-z0-9]+){0,4}/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}(/.{1,256})?"
     },
     "ConfigCapabilityType":{
       "type":"string",
@@ -763,8 +843,8 @@
     "ConfigDetails":{
       "type":"structure",
       "members":{
-        "antennaDemodDecodeDetails":{"shape":"AntennaDemodDecodeDetails"},
         "endpointDetails":{"shape":"EndpointDetails"},
+        "antennaDemodDecodeDetails":{"shape":"AntennaDemodDecodeDetails"},
         "s3RecordingDetails":{"shape":"S3RecordingDetails"}
       },
       "union":true
@@ -772,9 +852,9 @@
     "ConfigIdResponse":{
       "type":"structure",
       "members":{
-        "configArn":{"shape":"ConfigArn"},
         "configId":{"shape":"String"},
-        "configType":{"shape":"ConfigCapabilityType"}
+        "configType":{"shape":"ConfigCapabilityType"},
+        "configArn":{"shape":"ConfigArn"}
       }
     },
     "ConfigList":{
@@ -784,9 +864,9 @@
     "ConfigListItem":{
       "type":"structure",
       "members":{
-        "configArn":{"shape":"ConfigArn"},
         "configId":{"shape":"String"},
         "configType":{"shape":"ConfigCapabilityType"},
+        "configArn":{"shape":"ConfigArn"},
         "name":{"shape":"String"}
       }
     },
@@ -794,12 +874,12 @@
       "type":"structure",
       "members":{
         "antennaDownlinkConfig":{"shape":"AntennaDownlinkConfig"},
+        "trackingConfig":{"shape":"TrackingConfig"},
+        "dataflowEndpointConfig":{"shape":"DataflowEndpointConfig"},
         "antennaDownlinkDemodDecodeConfig":{"shape":"AntennaDownlinkDemodDecodeConfig"},
         "antennaUplinkConfig":{"shape":"AntennaUplinkConfig"},
-        "dataflowEndpointConfig":{"shape":"DataflowEndpointConfig"},
-        "s3RecordingConfig":{"shape":"S3RecordingConfig"},
-        "trackingConfig":{"shape":"TrackingConfig"},
-        "uplinkEchoConfig":{"shape":"UplinkEchoConfig"}
+        "uplinkEchoConfig":{"shape":"UplinkEchoConfig"},
+        "s3RecordingConfig":{"shape":"S3RecordingConfig"}
       },
       "union":true
     },
@@ -807,28 +887,29 @@
       "type":"structure",
       "required":["socketAddress"],
       "members":{
-        "mtu":{"shape":"Integer"},
-        "socketAddress":{"shape":"SocketAddress"}
+        "socketAddress":{"shape":"SocketAddress"},
+        "mtu":{"shape":"Integer"}
       }
     },
     "ContactData":{
       "type":"structure",
       "members":{
         "contactId":{"shape":"Uuid"},
-        "contactStatus":{"shape":"ContactStatus"},
-        "endTime":{"shape":"Timestamp"},
-        "errorMessage":{"shape":"String"},
-        "groundStation":{"shape":"String"},
-        "maximumElevation":{"shape":"Elevation"},
         "missionProfileArn":{"shape":"MissionProfileArn"},
-        "postPassEndTime":{"shape":"Timestamp"},
-        "prePassStartTime":{"shape":"Timestamp"},
-        "region":{"shape":"String"},
         "satelliteArn":{"shape":"satelliteArn"},
         "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "prePassStartTime":{"shape":"Timestamp"},
+        "postPassEndTime":{"shape":"Timestamp"},
+        "groundStation":{"shape":"String"},
+        "contactStatus":{"shape":"ContactStatus"},
+        "errorMessage":{"shape":"String"},
+        "maximumElevation":{"shape":"Elevation"},
+        "region":{"shape":"String"},
         "tags":{"shape":"TagsMap"},
+        "visibilityStartTime":{"shape":"Timestamp"},
         "visibilityEndTime":{"shape":"Timestamp"},
-        "visibilityStartTime":{"shape":"Timestamp"}
+        "ephemeris":{"shape":"EphemerisResponseData"}
       }
     },
     "ContactIdResponse":{
@@ -862,12 +943,12 @@
     "CreateConfigRequest":{
       "type":"structure",
       "required":[
-        "configData",
-        "name"
+        "name",
+        "configData"
       ],
       "members":{
-        "configData":{"shape":"ConfigTypeData"},
         "name":{"shape":"SafeName"},
+        "configData":{"shape":"ConfigTypeData"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -875,47 +956,44 @@
       "type":"structure",
       "required":["endpointDetails"],
       "members":{
-        "contactPostPassDurationSeconds":{"shape":"DataflowEndpointGroupDurationInSeconds"},
-        "contactPrePassDurationSeconds":{"shape":"DataflowEndpointGroupDurationInSeconds"},
         "endpointDetails":{"shape":"EndpointDetailsList"},
-        "tags":{"shape":"TagsMap"}
+        "tags":{"shape":"TagsMap"},
+        "contactPrePassDurationSeconds":{"shape":"DataflowEndpointGroupDurationInSeconds"},
+        "contactPostPassDurationSeconds":{"shape":"DataflowEndpointGroupDurationInSeconds"}
       }
     },
     "CreateEphemerisRequest":{
       "type":"structure",
-      "required":[
-        "name",
-        "satelliteId"
-      ],
+      "required":["name"],
       "members":{
-        "enabled":{"shape":"Boolean"},
-        "ephemeris":{"shape":"EphemerisData"},
-        "expirationTime":{"shape":"Timestamp"},
-        "kmsKeyArn":{"shape":"KeyArn"},
-        "name":{"shape":"SafeName"},
-        "priority":{"shape":"CustomerEphemerisPriority"},
         "satelliteId":{"shape":"Uuid"},
+        "enabled":{"shape":"Boolean"},
+        "priority":{"shape":"CustomerEphemerisPriority"},
+        "expirationTime":{"shape":"Timestamp"},
+        "name":{"shape":"SafeName"},
+        "kmsKeyArn":{"shape":"KeyArn"},
+        "ephemeris":{"shape":"EphemerisData"},
         "tags":{"shape":"TagsMap"}
       }
     },
     "CreateMissionProfileRequest":{
       "type":"structure",
       "required":[
-        "dataflowEdges",
-        "minimumViableContactDurationSeconds",
         "name",
+        "minimumViableContactDurationSeconds",
+        "dataflowEdges",
         "trackingConfigArn"
       ],
       "members":{
-        "contactPostPassDurationSeconds":{"shape":"DurationInSeconds"},
-        "contactPrePassDurationSeconds":{"shape":"DurationInSeconds"},
-        "dataflowEdges":{"shape":"DataflowEdgeList"},
-        "minimumViableContactDurationSeconds":{"shape":"PositiveDurationInSeconds"},
         "name":{"shape":"SafeName"},
-        "streamsKmsKey":{"shape":"KmsKey"},
-        "streamsKmsRole":{"shape":"RoleArn"},
+        "contactPrePassDurationSeconds":{"shape":"DurationInSeconds"},
+        "contactPostPassDurationSeconds":{"shape":"DurationInSeconds"},
+        "minimumViableContactDurationSeconds":{"shape":"PositiveDurationInSeconds"},
+        "dataflowEdges":{"shape":"DataflowEdgeList"},
+        "trackingConfigArn":{"shape":"ConfigArn"},
         "tags":{"shape":"TagsMap"},
-        "trackingConfigArn":{"shape":"ConfigArn"}
+        "streamsKmsKey":{"shape":"KmsKey"},
+        "streamsKmsRole":{"shape":"RoleArn"}
       }
     },
     "Criticality":{
@@ -935,9 +1013,9 @@
     "DataflowDetail":{
       "type":"structure",
       "members":{
+        "source":{"shape":"Source"},
         "destination":{"shape":"Destination"},
-        "errorMessage":{"shape":"String"},
-        "source":{"shape":"Source"}
+        "errorMessage":{"shape":"String"}
       }
     },
     "DataflowEdge":{
@@ -955,10 +1033,10 @@
     "DataflowEndpoint":{
       "type":"structure",
       "members":{
-        "address":{"shape":"SocketAddress"},
-        "mtu":{"shape":"DataflowEndpointMtuInteger"},
         "name":{"shape":"SafeName"},
-        "status":{"shape":"EndpointStatus"}
+        "address":{"shape":"SocketAddress"},
+        "status":{"shape":"EndpointStatus"},
+        "mtu":{"shape":"DataflowEndpointMtuInteger"}
       }
     },
     "DataflowEndpointConfig":{
@@ -973,7 +1051,7 @@
       "type":"string",
       "max":146,
       "min":97,
-      "pattern":"^arn:aws:groundstation:[-a-z0-9]{1,50}:[0-9]{12}:dataflow-endpoint-group/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+      "pattern":"arn:aws:groundstation:[-a-z0-9]{1,50}:[0-9]{12}:dataflow-endpoint-group/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
     },
     "DataflowEndpointGroupDurationInSeconds":{
       "type":"integer",
@@ -994,8 +1072,8 @@
     "DataflowEndpointListItem":{
       "type":"structure",
       "members":{
-        "dataflowEndpointGroupArn":{"shape":"DataflowEndpointGroupArn"},
-        "dataflowEndpointGroupId":{"shape":"Uuid"}
+        "dataflowEndpointGroupId":{"shape":"Uuid"},
+        "dataflowEndpointGroupArn":{"shape":"DataflowEndpointGroupArn"}
       }
     },
     "DataflowEndpointMtuInteger":{
@@ -1099,21 +1177,23 @@
       "type":"structure",
       "members":{
         "contactId":{"shape":"Uuid"},
-        "contactStatus":{"shape":"ContactStatus"},
-        "dataflowList":{"shape":"DataflowList"},
-        "endTime":{"shape":"Timestamp"},
-        "errorMessage":{"shape":"String"},
-        "groundStation":{"shape":"String"},
-        "maximumElevation":{"shape":"Elevation"},
         "missionProfileArn":{"shape":"MissionProfileArn"},
-        "postPassEndTime":{"shape":"Timestamp"},
-        "prePassStartTime":{"shape":"Timestamp"},
-        "region":{"shape":"String"},
         "satelliteArn":{"shape":"satelliteArn"},
         "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "prePassStartTime":{"shape":"Timestamp"},
+        "postPassEndTime":{"shape":"Timestamp"},
+        "groundStation":{"shape":"String"},
+        "contactStatus":{"shape":"ContactStatus"},
+        "errorMessage":{"shape":"String"},
+        "maximumElevation":{"shape":"Elevation"},
         "tags":{"shape":"TagsMap"},
+        "region":{"shape":"String"},
+        "dataflowList":{"shape":"DataflowList"},
+        "visibilityStartTime":{"shape":"Timestamp"},
         "visibilityEndTime":{"shape":"Timestamp"},
-        "visibilityStartTime":{"shape":"Timestamp"}
+        "trackingOverrides":{"shape":"TrackingOverrides"},
+        "ephemeris":{"shape":"EphemerisResponseData"}
       }
     },
     "DescribeEphemerisRequest":{
@@ -1130,38 +1210,39 @@
     "DescribeEphemerisResponse":{
       "type":"structure",
       "members":{
-        "creationTime":{"shape":"Timestamp"},
-        "enabled":{"shape":"Boolean"},
         "ephemerisId":{"shape":"Uuid"},
-        "invalidReason":{"shape":"EphemerisInvalidReason"},
-        "name":{"shape":"SafeName"},
-        "priority":{"shape":"EphemerisPriority"},
         "satelliteId":{"shape":"Uuid"},
         "status":{"shape":"EphemerisStatus"},
+        "priority":{"shape":"EphemerisPriority"},
+        "creationTime":{"shape":"Timestamp"},
+        "enabled":{"shape":"Boolean"},
+        "name":{"shape":"SafeName"},
+        "tags":{"shape":"TagsMap"},
         "suppliedData":{"shape":"EphemerisTypeDescription"},
-        "tags":{"shape":"TagsMap"}
+        "invalidReason":{"shape":"EphemerisInvalidReason"},
+        "errorReasons":{"shape":"EphemerisErrorReasonList"}
       }
     },
     "Destination":{
       "type":"structure",
       "members":{
-        "configDetails":{"shape":"ConfigDetails"},
-        "configId":{"shape":"Uuid"},
         "configType":{"shape":"ConfigCapabilityType"},
+        "configId":{"shape":"Uuid"},
+        "configDetails":{"shape":"ConfigDetails"},
         "dataflowDestinationRegion":{"shape":"String"}
       }
     },
     "DiscoveryData":{
       "type":"structure",
       "required":[
-        "capabilityArns",
+        "publicIpAddresses",
         "privateIpAddresses",
-        "publicIpAddresses"
+        "capabilityArns"
       ],
       "members":{
-        "capabilityArns":{"shape":"CapabilityArnList"},
+        "publicIpAddresses":{"shape":"IpAddressList"},
         "privateIpAddresses":{"shape":"IpAddressList"},
-        "publicIpAddresses":{"shape":"IpAddressList"}
+        "capabilityArns":{"shape":"CapabilityArnList"}
       }
     },
     "Double":{
@@ -1177,12 +1258,12 @@
     "Eirp":{
       "type":"structure",
       "required":[
-        "units",
-        "value"
+        "value",
+        "units"
       ],
       "members":{
-        "units":{"shape":"EirpUnits"},
-        "value":{"shape":"Double"}
+        "value":{"shape":"Double"},
+        "units":{"shape":"EirpUnits"}
       }
     },
     "EirpUnits":{
@@ -1192,22 +1273,22 @@
     "Elevation":{
       "type":"structure",
       "required":[
-        "unit",
-        "value"
+        "value",
+        "unit"
       ],
       "members":{
-        "unit":{"shape":"AngleUnits"},
-        "value":{"shape":"Double"}
+        "value":{"shape":"Double"},
+        "unit":{"shape":"AngleUnits"}
       }
     },
     "EndpointDetails":{
       "type":"structure",
       "members":{
-        "awsGroundStationAgentEndpoint":{"shape":"AwsGroundStationAgentEndpoint"},
+        "securityDetails":{"shape":"SecurityDetails"},
         "endpoint":{"shape":"DataflowEndpoint"},
-        "healthReasons":{"shape":"CapabilityHealthReasonList"},
+        "awsGroundStationAgentEndpoint":{"shape":"AwsGroundStationAgentEndpoint"},
         "healthStatus":{"shape":"CapabilityHealth"},
-        "securityDetails":{"shape":"SecurityDetails"}
+        "healthReasons":{"shape":"CapabilityHealthReasonList"}
       }
     },
     "EndpointDetailsList":{
@@ -1235,17 +1316,85 @@
     "EphemerisData":{
       "type":"structure",
       "members":{
+        "tle":{"shape":"TLEEphemeris"},
         "oem":{"shape":"OEMEphemeris"},
-        "tle":{"shape":"TLEEphemeris"}
+        "azEl":{"shape":"AzElEphemeris"}
       },
       "union":true
     },
     "EphemerisDescription":{
       "type":"structure",
       "members":{
-        "ephemerisData":{"shape":"UnboundedString"},
-        "sourceS3Object":{"shape":"S3Object"}
+        "sourceS3Object":{"shape":"S3Object"},
+        "ephemerisData":{"shape":"UnboundedString"}
       }
+    },
+    "EphemerisErrorCode":{
+      "type":"string",
+      "enum":[
+        "INTERNAL_ERROR",
+        "MISMATCHED_SATCAT_ID",
+        "OEM_VERSION_UNSUPPORTED",
+        "ORIGINATOR_MISSING",
+        "CREATION_DATE_MISSING",
+        "OBJECT_NAME_MISSING",
+        "OBJECT_ID_MISSING",
+        "REF_FRAME_UNSUPPORTED",
+        "REF_FRAME_EPOCH_UNSUPPORTED",
+        "TIME_SYSTEM_UNSUPPORTED",
+        "CENTER_BODY_UNSUPPORTED",
+        "INTERPOLATION_MISSING",
+        "INTERPOLATION_DEGREE_INVALID",
+        "AZ_EL_SEGMENT_LIST_MISSING",
+        "INSUFFICIENT_TIME_AZ_EL",
+        "START_TIME_IN_FUTURE",
+        "END_TIME_IN_PAST",
+        "EXPIRATION_TIME_TOO_EARLY",
+        "START_TIME_METADATA_TOO_EARLY",
+        "STOP_TIME_METADATA_TOO_LATE",
+        "AZ_EL_SEGMENT_END_TIME_BEFORE_START_TIME",
+        "AZ_EL_SEGMENT_TIMES_OVERLAP",
+        "AZ_EL_SEGMENTS_OUT_OF_ORDER",
+        "TIME_AZ_EL_ITEMS_OUT_OF_ORDER",
+        "MEAN_MOTION_INVALID",
+        "TIME_AZ_EL_AZ_RADIAN_RANGE_INVALID",
+        "TIME_AZ_EL_EL_RADIAN_RANGE_INVALID",
+        "TIME_AZ_EL_AZ_DEGREE_RANGE_INVALID",
+        "TIME_AZ_EL_EL_DEGREE_RANGE_INVALID",
+        "TIME_AZ_EL_ANGLE_UNITS_INVALID",
+        "INSUFFICIENT_KMS_PERMISSIONS",
+        "FILE_FORMAT_INVALID",
+        "AZ_EL_SEGMENT_REFERENCE_EPOCH_INVALID",
+        "AZ_EL_SEGMENT_START_TIME_INVALID",
+        "AZ_EL_SEGMENT_END_TIME_INVALID",
+        "AZ_EL_SEGMENT_VALID_TIME_RANGE_INVALID",
+        "AZ_EL_SEGMENT_END_TIME_TOO_LATE",
+        "AZ_EL_TOTAL_DURATION_EXCEEDED"
+      ]
+    },
+    "EphemerisErrorReason":{
+      "type":"structure",
+      "required":[
+        "errorCode",
+        "errorMessage"
+      ],
+      "members":{
+        "errorCode":{"shape":"EphemerisErrorCode"},
+        "errorMessage":{"shape":"ErrorString"}
+      }
+    },
+    "EphemerisErrorReasonList":{
+      "type":"list",
+      "member":{"shape":"EphemerisErrorReason"},
+      "max":50,
+      "min":1
+    },
+    "EphemerisFilter":{
+      "type":"structure",
+      "members":{
+        "azEl":{"shape":"AzElEphemerisFilter"}
+      },
+      "union":true
     },
     "EphemerisIdResponse":{
       "type":"structure",
@@ -1266,23 +1415,24 @@
     "EphemerisItem":{
       "type":"structure",
       "members":{
-        "creationTime":{"shape":"Timestamp"},
-        "enabled":{"shape":"Boolean"},
         "ephemerisId":{"shape":"Uuid"},
-        "name":{"shape":"SafeName"},
+        "ephemerisType":{"shape":"EphemerisType"},
+        "status":{"shape":"EphemerisStatus"},
         "priority":{"shape":"EphemerisPriority"},
-        "sourceS3Object":{"shape":"S3Object"},
-        "status":{"shape":"EphemerisStatus"}
+        "enabled":{"shape":"Boolean"},
+        "creationTime":{"shape":"Timestamp"},
+        "name":{"shape":"SafeName"},
+        "sourceS3Object":{"shape":"S3Object"}
       }
     },
     "EphemerisMetaData":{
       "type":"structure",
       "required":["source"],
       "members":{
+        "source":{"shape":"EphemerisSource"},
         "ephemerisId":{"shape":"Uuid"},
         "epoch":{"shape":"Timestamp"},
-        "name":{"shape":"SafeName"},
-        "source":{"shape":"EphemerisSource"}
+        "name":{"shape":"SafeName"}
       }
     },
     "EphemerisPriority":{
@@ -1290,6 +1440,14 @@
       "box":true,
       "max":99999,
       "min":0
+    },
+    "EphemerisResponseData":{
+      "type":"structure",
+      "required":["ephemerisType"],
+      "members":{
+        "ephemerisId":{"shape":"Uuid"},
+        "ephemerisType":{"shape":"EphemerisType"}
+      }
     },
     "EphemerisSource":{
       "type":"string",
@@ -1315,34 +1473,49 @@
       "max":500,
       "min":0
     },
+    "EphemerisType":{
+      "type":"string",
+      "enum":[
+        "TLE",
+        "OEM",
+        "AZ_EL",
+        "SERVICE_MANAGED"
+      ]
+    },
     "EphemerisTypeDescription":{
       "type":"structure",
       "members":{
+        "tle":{"shape":"EphemerisDescription"},
         "oem":{"shape":"EphemerisDescription"},
-        "tle":{"shape":"EphemerisDescription"}
+        "azEl":{"shape":"EphemerisDescription"}
       },
       "union":true
+    },
+    "ErrorString":{
+      "type":"string",
+      "max":1000,
+      "min":0
     },
     "Frequency":{
       "type":"structure",
       "required":[
-        "units",
-        "value"
+        "value",
+        "units"
       ],
       "members":{
-        "units":{"shape":"FrequencyUnits"},
-        "value":{"shape":"Double"}
+        "value":{"shape":"Double"},
+        "units":{"shape":"FrequencyUnits"}
       }
     },
     "FrequencyBandwidth":{
       "type":"structure",
       "required":[
-        "units",
-        "value"
+        "value",
+        "units"
       ],
       "members":{
-        "units":{"shape":"BandwidthUnits"},
-        "value":{"shape":"Double"}
+        "value":{"shape":"Double"},
+        "units":{"shape":"BandwidthUnits"}
       }
     },
     "FrequencyUnits":{
@@ -1393,17 +1566,17 @@
     "GetConfigResponse":{
       "type":"structure",
       "required":[
-        "configArn",
-        "configData",
         "configId",
-        "name"
+        "configArn",
+        "name",
+        "configData"
       ],
       "members":{
-        "configArn":{"shape":"ConfigArn"},
-        "configData":{"shape":"ConfigTypeData"},
         "configId":{"shape":"String"},
-        "configType":{"shape":"ConfigCapabilityType"},
+        "configArn":{"shape":"ConfigArn"},
         "name":{"shape":"String"},
+        "configType":{"shape":"ConfigCapabilityType"},
+        "configData":{"shape":"ConfigTypeData"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -1421,12 +1594,12 @@
     "GetDataflowEndpointGroupResponse":{
       "type":"structure",
       "members":{
-        "contactPostPassDurationSeconds":{"shape":"DataflowEndpointGroupDurationInSeconds"},
-        "contactPrePassDurationSeconds":{"shape":"DataflowEndpointGroupDurationInSeconds"},
-        "dataflowEndpointGroupArn":{"shape":"DataflowEndpointGroupArn"},
         "dataflowEndpointGroupId":{"shape":"Uuid"},
+        "dataflowEndpointGroupArn":{"shape":"DataflowEndpointGroupArn"},
         "endpointsDetails":{"shape":"EndpointDetailsList"},
-        "tags":{"shape":"TagsMap"}
+        "tags":{"shape":"TagsMap"},
+        "contactPrePassDurationSeconds":{"shape":"DataflowEndpointGroupDurationInSeconds"},
+        "contactPostPassDurationSeconds":{"shape":"DataflowEndpointGroupDurationInSeconds"}
       }
     },
     "GetMinuteUsageRequest":{
@@ -1443,11 +1616,11 @@
     "GetMinuteUsageResponse":{
       "type":"structure",
       "members":{
-        "estimatedMinutesRemaining":{"shape":"Integer"},
         "isReservedMinutesCustomer":{"shape":"Boolean"},
         "totalReservedMinuteAllocation":{"shape":"Integer"},
+        "upcomingMinutesScheduled":{"shape":"Integer"},
         "totalScheduledMinutes":{"shape":"Integer"},
-        "upcomingMinutesScheduled":{"shape":"Integer"}
+        "estimatedMinutesRemaining":{"shape":"Integer"}
       }
     },
     "GetMissionProfileRequest":{
@@ -1464,18 +1637,18 @@
     "GetMissionProfileResponse":{
       "type":"structure",
       "members":{
-        "contactPostPassDurationSeconds":{"shape":"DurationInSeconds"},
-        "contactPrePassDurationSeconds":{"shape":"DurationInSeconds"},
-        "dataflowEdges":{"shape":"DataflowEdgeList"},
-        "minimumViableContactDurationSeconds":{"shape":"PositiveDurationInSeconds"},
-        "missionProfileArn":{"shape":"MissionProfileArn"},
         "missionProfileId":{"shape":"Uuid"},
+        "missionProfileArn":{"shape":"MissionProfileArn"},
         "name":{"shape":"SafeName"},
         "region":{"shape":"AWSRegion"},
-        "streamsKmsKey":{"shape":"KmsKey"},
-        "streamsKmsRole":{"shape":"RoleArn"},
+        "contactPrePassDurationSeconds":{"shape":"DurationInSeconds"},
+        "contactPostPassDurationSeconds":{"shape":"DurationInSeconds"},
+        "minimumViableContactDurationSeconds":{"shape":"PositiveDurationInSeconds"},
+        "dataflowEdges":{"shape":"DataflowEdgeList"},
+        "trackingConfigArn":{"shape":"ConfigArn"},
         "tags":{"shape":"TagsMap"},
-        "trackingConfigArn":{"shape":"ConfigArn"}
+        "streamsKmsKey":{"shape":"KmsKey"},
+        "streamsKmsRole":{"shape":"RoleArn"}
       }
     },
     "GetSatelliteRequest":{
@@ -1492,11 +1665,11 @@
     "GetSatelliteResponse":{
       "type":"structure",
       "members":{
-        "currentEphemeris":{"shape":"EphemerisMetaData"},
-        "groundStations":{"shape":"GroundStationIdList"},
-        "noradSatelliteID":{"shape":"noradSatelliteID"},
+        "satelliteId":{"shape":"Uuid"},
         "satelliteArn":{"shape":"satelliteArn"},
-        "satelliteId":{"shape":"Uuid"}
+        "noradSatelliteID":{"shape":"noradSatelliteID"},
+        "groundStations":{"shape":"GroundStationIdList"},
+        "currentEphemeris":{"shape":"EphemerisMetaData"}
       }
     },
     "GroundStationData":{
@@ -1521,19 +1694,30 @@
       "type":"string",
       "max":500,
       "min":4,
-      "pattern":"^[ a-zA-Z0-9-._:=]{4,256}$"
+      "pattern":"[ a-zA-Z0-9-._:=]{4,256}"
+    },
+    "ISO8601TimeRange":{
+      "type":"structure",
+      "required":[
+        "startTime",
+        "endTime"
+      ],
+      "members":{
+        "startTime":{"shape":"SyntheticTimestamp_date_time"},
+        "endTime":{"shape":"SyntheticTimestamp_date_time"}
+      }
     },
     "InstanceId":{
       "type":"string",
       "max":64,
       "min":10,
-      "pattern":"^[a-z0-9-]{10,64}$"
+      "pattern":"[a-z0-9-]{10,64}"
     },
     "InstanceType":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-z0-9.-]{1,64}$"
+      "pattern":"[a-z0-9.-]{1,64}"
     },
     "Integer":{
       "type":"integer",
@@ -1542,12 +1726,12 @@
     "IntegerRange":{
       "type":"structure",
       "required":[
-        "maximum",
-        "minimum"
+        "minimum",
+        "maximum"
       ],
       "members":{
-        "maximum":{"shape":"Integer"},
-        "minimum":{"shape":"Integer"}
+        "minimum":{"shape":"Integer"},
+        "maximum":{"shape":"Integer"}
       }
     },
     "InvalidParameterException":{
@@ -1572,33 +1756,33 @@
       "type":"string",
       "max":16,
       "min":7,
-      "pattern":"^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$"
+      "pattern":"\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}"
     },
     "JsonString":{
       "type":"string",
       "max":8192,
       "min":2,
-      "pattern":"^[{}\\[\\]:.,\"0-9A-Za-z\\-_\\s]{2,8192}$"
+      "pattern":"[{}\\[\\]:.,\"0-9A-Za-z\\-_\\s]{2,8192}"
     },
     "KeyAliasArn":{
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"^arn:aws[a-zA-Z-]{0,16}:kms:[-a-z0-9]{1,50}:[0-9]{12}:((alias/[a-zA-Z0-9:/_-]{1,256}))$"
+      "pattern":"arn:aws[a-zA-Z-]{0,16}:kms:[-a-z0-9]{1,50}:[0-9]{12}:((alias/[a-zA-Z0-9:/_-]{1,256}))"
     },
     "KeyAliasName":{
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^alias/[a-zA-Z0-9:/_-]+$"
+      "pattern":"alias/[a-zA-Z0-9:/_-]+"
     },
     "KeyArn":{"type":"string"},
     "KmsKey":{
       "type":"structure",
       "members":{
+        "kmsKeyArn":{"shape":"KeyArn"},
         "kmsAliasArn":{"shape":"KeyAliasArn"},
-        "kmsAliasName":{"shape":"KeyAliasName"},
-        "kmsKeyArn":{"shape":"KeyArn"}
+        "kmsAliasName":{"shape":"KeyAliasName"}
       },
       "union":true
     },
@@ -1620,33 +1804,34 @@
     "ListConfigsResponse":{
       "type":"structure",
       "members":{
-        "configList":{"shape":"ConfigList"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "configList":{"shape":"ConfigList"}
       }
     },
     "ListContactsRequest":{
       "type":"structure",
       "required":[
-        "endTime",
+        "statusList",
         "startTime",
-        "statusList"
+        "endTime"
       ],
       "members":{
+        "maxResults":{"shape":"PaginationMaxResults"},
+        "nextToken":{"shape":"PaginationToken"},
+        "statusList":{"shape":"StatusList"},
+        "startTime":{"shape":"Timestamp"},
         "endTime":{"shape":"Timestamp"},
         "groundStation":{"shape":"GroundStationName"},
-        "maxResults":{"shape":"PaginationMaxResults"},
-        "missionProfileArn":{"shape":"MissionProfileArn"},
-        "nextToken":{"shape":"PaginationToken"},
         "satelliteArn":{"shape":"satelliteArn"},
-        "startTime":{"shape":"Timestamp"},
-        "statusList":{"shape":"StatusList"}
+        "missionProfileArn":{"shape":"MissionProfileArn"},
+        "ephemeris":{"shape":"EphemerisFilter"}
       }
     },
     "ListContactsResponse":{
       "type":"structure",
       "members":{
-        "contactList":{"shape":"ContactList"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "contactList":{"shape":"ContactList"}
       }
     },
     "ListDataflowEndpointGroupsRequest":{
@@ -1667,19 +1852,22 @@
     "ListDataflowEndpointGroupsResponse":{
       "type":"structure",
       "members":{
-        "dataflowEndpointGroupList":{"shape":"DataflowEndpointGroupList"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "dataflowEndpointGroupList":{"shape":"DataflowEndpointGroupList"}
       }
     },
     "ListEphemeridesRequest":{
       "type":"structure",
       "required":[
-        "endTime",
-        "satelliteId",
-        "startTime"
+        "startTime",
+        "endTime"
       ],
       "members":{
+        "satelliteId":{"shape":"Uuid"},
+        "ephemerisType":{"shape":"EphemerisType"},
+        "startTime":{"shape":"Timestamp"},
         "endTime":{"shape":"Timestamp"},
+        "statusList":{"shape":"EphemerisStatusList"},
         "maxResults":{
           "shape":"PaginationMaxResults",
           "location":"querystring",
@@ -1689,22 +1877,24 @@
           "shape":"PaginationToken",
           "location":"querystring",
           "locationName":"nextToken"
-        },
-        "satelliteId":{"shape":"Uuid"},
-        "startTime":{"shape":"Timestamp"},
-        "statusList":{"shape":"EphemerisStatusList"}
+        }
       }
     },
     "ListEphemeridesResponse":{
       "type":"structure",
       "members":{
-        "ephemerides":{"shape":"EphemeridesList"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "ephemerides":{"shape":"EphemeridesList"}
       }
     },
     "ListGroundStationsRequest":{
       "type":"structure",
       "members":{
+        "satelliteId":{
+          "shape":"Uuid",
+          "location":"querystring",
+          "locationName":"satelliteId"
+        },
         "maxResults":{
           "shape":"PaginationMaxResults",
           "location":"querystring",
@@ -1714,19 +1904,14 @@
           "shape":"PaginationToken",
           "location":"querystring",
           "locationName":"nextToken"
-        },
-        "satelliteId":{
-          "shape":"Uuid",
-          "location":"querystring",
-          "locationName":"satelliteId"
         }
       }
     },
     "ListGroundStationsResponse":{
       "type":"structure",
       "members":{
-        "groundStationList":{"shape":"GroundStationList"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "groundStationList":{"shape":"GroundStationList"}
       }
     },
     "ListMissionProfilesRequest":{
@@ -1747,8 +1932,8 @@
     "ListMissionProfilesResponse":{
       "type":"structure",
       "members":{
-        "missionProfileList":{"shape":"MissionProfileList"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "missionProfileList":{"shape":"MissionProfileList"}
       }
     },
     "ListSatellitesRequest":{
@@ -1798,7 +1983,7 @@
       "type":"string",
       "max":138,
       "min":89,
-      "pattern":"^arn:aws:groundstation:[-a-z0-9]{1,50}:[0-9]{12}:mission-profile/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+      "pattern":"arn:aws:groundstation:[-a-z0-9]{1,50}:[0-9]{12}:mission-profile/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
     },
     "MissionProfileIdResponse":{
       "type":"structure",
@@ -1813,10 +1998,10 @@
     "MissionProfileListItem":{
       "type":"structure",
       "members":{
-        "missionProfileArn":{"shape":"MissionProfileArn"},
         "missionProfileId":{"shape":"Uuid"},
-        "name":{"shape":"SafeName"},
-        "region":{"shape":"AWSRegion"}
+        "missionProfileArn":{"shape":"MissionProfileArn"},
+        "region":{"shape":"AWSRegion"},
+        "name":{"shape":"SafeName"}
       }
     },
     "Month":{
@@ -1828,8 +2013,8 @@
     "OEMEphemeris":{
       "type":"structure",
       "members":{
-        "oemData":{"shape":"UnboundedString"},
-        "s3Object":{"shape":"S3Object"}
+        "s3Object":{"shape":"S3Object"},
+        "oemData":{"shape":"UnboundedString"}
       }
     },
     "PaginationMaxResults":{
@@ -1842,7 +2027,7 @@
       "type":"string",
       "max":1000,
       "min":3,
-      "pattern":"^[A-Za-z0-9-/+_.=]+$"
+      "pattern":"[A-Za-z0-9-/+_.=]+"
     },
     "Polarization":{
       "type":"string",
@@ -1858,12 +2043,19 @@
       "max":21600,
       "min":1
     },
+    "ProgramTrackSettings":{
+      "type":"structure",
+      "members":{
+        "azEl":{"shape":"AzElProgramTrackSettings"}
+      },
+      "union":true
+    },
     "RangedConnectionDetails":{
       "type":"structure",
       "required":["socketAddress"],
       "members":{
-        "mtu":{"shape":"RangedConnectionDetailsMtuInteger"},
-        "socketAddress":{"shape":"RangedSocketAddress"}
+        "socketAddress":{"shape":"RangedSocketAddress"},
+        "mtu":{"shape":"RangedConnectionDetailsMtuInteger"}
       }
     },
     "RangedConnectionDetailsMtuInteger":{
@@ -1886,12 +2078,12 @@
     "RegisterAgentRequest":{
       "type":"structure",
       "required":[
-        "agentDetails",
-        "discoveryData"
+        "discoveryData",
+        "agentDetails"
       ],
       "members":{
-        "agentDetails":{"shape":"AgentDetails"},
         "discoveryData":{"shape":"DiscoveryData"},
+        "agentDetails":{"shape":"AgentDetails"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -1904,20 +2096,31 @@
     "ReserveContactRequest":{
       "type":"structure",
       "required":[
-        "endTime",
-        "groundStation",
         "missionProfileArn",
-        "satelliteArn",
-        "startTime"
+        "startTime",
+        "endTime",
+        "groundStation"
       ],
       "members":{
-        "endTime":{"shape":"Timestamp"},
-        "groundStation":{"shape":"GroundStationName"},
         "missionProfileArn":{"shape":"MissionProfileArn"},
         "satelliteArn":{"shape":"satelliteArn"},
         "startTime":{"shape":"Timestamp"},
-        "tags":{"shape":"TagsMap"}
+        "endTime":{"shape":"Timestamp"},
+        "groundStation":{"shape":"GroundStationName"},
+        "tags":{"shape":"TagsMap"},
+        "trackingOverrides":{"shape":"TrackingOverrides"}
       }
+    },
+    "ResourceInUseException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
+      "exception":true
     },
     "ResourceLimitExceededException":{
       "type":"structure",
@@ -1947,13 +2150,13 @@
       "type":"string",
       "max":63,
       "min":3,
-      "pattern":"^[a-z0-9.-]{3,63}$"
+      "pattern":"[a-z0-9.-]{3,63}"
     },
     "S3KeyPrefix":{
       "type":"string",
       "max":900,
       "min":1,
-      "pattern":"^([a-zA-Z0-9_\\-=/]|\\{satellite_id\\}|\\{config\\-name}|\\{s3\\-config-id}|\\{year\\}|\\{month\\}|\\{day\\}){1,900}$"
+      "pattern":"([a-zA-Z0-9_\\-=/]|\\{satellite_id\\}|\\{config\\-name}|\\{s3\\-config-id}|\\{year\\}|\\{month\\}|\\{day\\}){1,900}"
     },
     "S3Object":{
       "type":"structure",
@@ -1967,7 +2170,7 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"^[a-zA-Z0-9!*'\\)\\(./_-]{1,1024}$"
+      "pattern":"[a-zA-Z0-9!*'\\)\\(./_-]{1,1024}"
     },
     "S3RecordingConfig":{
       "type":"structure",
@@ -1977,8 +2180,8 @@
       ],
       "members":{
         "bucketArn":{"shape":"BucketArn"},
-        "prefix":{"shape":"S3KeyPrefix"},
-        "roleArn":{"shape":"RoleArn"}
+        "roleArn":{"shape":"RoleArn"},
+        "prefix":{"shape":"S3KeyPrefix"}
       }
     },
     "S3RecordingDetails":{
@@ -1992,13 +2195,13 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"^[\\s\\S]{1,1024}$"
+      "pattern":"[\\s\\S]{1,1024}"
     },
     "SafeName":{
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[ a-zA-Z0-9_:-]{1,256}$"
+      "pattern":"[ a-zA-Z0-9_:-]{1,256}"
     },
     "SatelliteList":{
       "type":"list",
@@ -2007,24 +2210,24 @@
     "SatelliteListItem":{
       "type":"structure",
       "members":{
-        "currentEphemeris":{"shape":"EphemerisMetaData"},
-        "groundStations":{"shape":"GroundStationIdList"},
-        "noradSatelliteID":{"shape":"noradSatelliteID"},
+        "satelliteId":{"shape":"Uuid"},
         "satelliteArn":{"shape":"satelliteArn"},
-        "satelliteId":{"shape":"Uuid"}
+        "noradSatelliteID":{"shape":"noradSatelliteID"},
+        "groundStations":{"shape":"GroundStationIdList"},
+        "currentEphemeris":{"shape":"EphemerisMetaData"}
       }
     },
     "SecurityDetails":{
       "type":"structure",
       "required":[
-        "roleArn",
+        "subnetIds",
         "securityGroupIds",
-        "subnetIds"
+        "roleArn"
       ],
       "members":{
-        "roleArn":{"shape":"RoleArn"},
+        "subnetIds":{"shape":"SubnetList"},
         "securityGroupIds":{"shape":"SecurityGroupIdList"},
-        "subnetIds":{"shape":"SubnetList"}
+        "roleArn":{"shape":"RoleArn"}
       }
     },
     "SecurityGroupIdList":{
@@ -2050,21 +2253,21 @@
     "Source":{
       "type":"structure",
       "members":{
-        "configDetails":{"shape":"ConfigDetails"},
-        "configId":{"shape":"String"},
         "configType":{"shape":"ConfigCapabilityType"},
+        "configId":{"shape":"String"},
+        "configDetails":{"shape":"ConfigDetails"},
         "dataflowSourceRegion":{"shape":"String"}
       }
     },
     "SpectrumConfig":{
       "type":"structure",
       "required":[
-        "bandwidth",
-        "centerFrequency"
+        "centerFrequency",
+        "bandwidth"
       ],
       "members":{
-        "bandwidth":{"shape":"FrequencyBandwidth"},
         "centerFrequency":{"shape":"Frequency"},
+        "bandwidth":{"shape":"FrequencyBandwidth"},
         "polarization":{"shape":"Polarization"}
       }
     },
@@ -2078,6 +2281,10 @@
     "SubnetList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "SyntheticTimestamp_date_time":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
     },
     "TLEData":{
       "type":"structure",
@@ -2128,23 +2335,40 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagsMap":{
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"String"}
     },
+    "TimeAzEl":{
+      "type":"structure",
+      "required":[
+        "dt",
+        "az",
+        "el"
+      ],
+      "members":{
+        "dt":{"shape":"Double"},
+        "az":{"shape":"Double"},
+        "el":{"shape":"Double"}
+      }
+    },
+    "TimeAzElList":{
+      "type":"list",
+      "member":{"shape":"TimeAzEl"},
+      "min":5
+    },
     "TimeRange":{
       "type":"structure",
       "required":[
-        "endTime",
-        "startTime"
+        "startTime",
+        "endTime"
       ],
       "members":{
-        "endTime":{"shape":"Timestamp"},
-        "startTime":{"shape":"Timestamp"}
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"}
       }
     },
     "Timestamp":{"type":"timestamp"},
@@ -2152,13 +2376,13 @@
       "type":"string",
       "max":69,
       "min":69,
-      "pattern":"^1 [ 0-9]{5}[A-Z] [ 0-9]{5}[ A-Z]{3} [ 0-9]{5}[.][ 0-9]{8} (?:(?:[ 0+-][.][ 0-9]{8})|(?: [ +-][.][ 0-9]{7})) [ +-][ 0-9]{5}[+-][ 0-9] [ +-][ 0-9]{5}[+-][ 0-9] [ 0-9] [ 0-9]{4}[ 0-9]$"
+      "pattern":"1 [ 0-9]{5}[A-Z] [ 0-9]{5}[ A-Z]{3} [ 0-9]{5}[.][ 0-9]{8} (?:(?:[ 0+-][.][ 0-9]{8})|(?: [ +-][.][ 0-9]{7})) [ +-][ 0-9]{5}[+-][ 0-9] [ +-][ 0-9]{5}[+-][ 0-9] [ 0-9] [ 0-9]{4}[ 0-9]"
     },
     "TleLineTwo":{
       "type":"string",
       "max":69,
       "min":69,
-      "pattern":"^2 [ 0-9]{5} [ 0-9]{3}[.][ 0-9]{4} [ 0-9]{3}[.][ 0-9]{4} [ 0-9]{7} [ 0-9]{3}[.][ 0-9]{4} [ 0-9]{3}[.][ 0-9]{4} [ 0-9]{2}[.][ 0-9]{13}[ 0-9]$"
+      "pattern":"2 [ 0-9]{5} [ 0-9]{3}[.][ 0-9]{4} [ 0-9]{3}[.][ 0-9]{4} [ 0-9]{7} [ 0-9]{3}[.][ 0-9]{4} [ 0-9]{3}[.][ 0-9]{4} [ 0-9]{2}[.][ 0-9]{13}[ 0-9]"
     },
     "TrackingConfig":{
       "type":"structure",
@@ -2167,10 +2391,17 @@
         "autotrack":{"shape":"Criticality"}
       }
     },
+    "TrackingOverrides":{
+      "type":"structure",
+      "required":["programTrackSettings"],
+      "members":{
+        "programTrackSettings":{"shape":"ProgramTrackSettings"}
+      }
+    },
     "UnboundedString":{
       "type":"string",
       "min":1,
-      "pattern":"^[\\s\\S]+$"
+      "pattern":"[\\s\\S]+"
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -2193,16 +2424,15 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAgentStatusRequest":{
       "type":"structure",
       "required":[
         "agentId",
+        "taskId",
         "aggregateStatus",
-        "componentStatuses",
-        "taskId"
+        "componentStatuses"
       ],
       "members":{
         "agentId":{
@@ -2210,9 +2440,9 @@
           "location":"uri",
           "locationName":"agentId"
         },
+        "taskId":{"shape":"Uuid"},
         "aggregateStatus":{"shape":"AggregateStatus"},
-        "componentStatuses":{"shape":"ComponentStatusList"},
-        "taskId":{"shape":"Uuid"}
+        "componentStatuses":{"shape":"ComponentStatusList"}
       }
     },
     "UpdateAgentStatusResponse":{
@@ -2225,39 +2455,39 @@
     "UpdateConfigRequest":{
       "type":"structure",
       "required":[
-        "configData",
         "configId",
+        "name",
         "configType",
-        "name"
+        "configData"
       ],
       "members":{
-        "configData":{"shape":"ConfigTypeData"},
         "configId":{
           "shape":"Uuid",
           "location":"uri",
           "locationName":"configId"
         },
+        "name":{"shape":"SafeName"},
         "configType":{
           "shape":"ConfigCapabilityType",
           "location":"uri",
           "locationName":"configType"
         },
-        "name":{"shape":"SafeName"}
+        "configData":{"shape":"ConfigTypeData"}
       }
     },
     "UpdateEphemerisRequest":{
       "type":"structure",
       "required":[
-        "enabled",
-        "ephemerisId"
+        "ephemerisId",
+        "enabled"
       ],
       "members":{
-        "enabled":{"shape":"Boolean"},
         "ephemerisId":{
           "shape":"Uuid",
           "location":"uri",
           "locationName":"ephemerisId"
         },
+        "enabled":{"shape":"Boolean"},
         "name":{"shape":"SafeName"},
         "priority":{"shape":"EphemerisPriority"}
       }
@@ -2266,30 +2496,30 @@
       "type":"structure",
       "required":["missionProfileId"],
       "members":{
-        "contactPostPassDurationSeconds":{"shape":"DurationInSeconds"},
-        "contactPrePassDurationSeconds":{"shape":"DurationInSeconds"},
-        "dataflowEdges":{"shape":"DataflowEdgeList"},
-        "minimumViableContactDurationSeconds":{"shape":"PositiveDurationInSeconds"},
         "missionProfileId":{
           "shape":"Uuid",
           "location":"uri",
           "locationName":"missionProfileId"
         },
         "name":{"shape":"SafeName"},
+        "contactPrePassDurationSeconds":{"shape":"DurationInSeconds"},
+        "contactPostPassDurationSeconds":{"shape":"DurationInSeconds"},
+        "minimumViableContactDurationSeconds":{"shape":"PositiveDurationInSeconds"},
+        "dataflowEdges":{"shape":"DataflowEdgeList"},
+        "trackingConfigArn":{"shape":"ConfigArn"},
         "streamsKmsKey":{"shape":"KmsKey"},
-        "streamsKmsRole":{"shape":"RoleArn"},
-        "trackingConfigArn":{"shape":"ConfigArn"}
+        "streamsKmsRole":{"shape":"RoleArn"}
       }
     },
     "UplinkEchoConfig":{
       "type":"structure",
       "required":[
-        "antennaUplinkConfigArn",
-        "enabled"
+        "enabled",
+        "antennaUplinkConfigArn"
       ],
       "members":{
-        "antennaUplinkConfigArn":{"shape":"ConfigArn"},
-        "enabled":{"shape":"Boolean"}
+        "enabled":{"shape":"Boolean"},
+        "antennaUplinkConfigArn":{"shape":"ConfigArn"}
       }
     },
     "UplinkSpectrumConfig":{
@@ -2304,13 +2534,13 @@
       "type":"string",
       "max":36,
       "min":36,
-      "pattern":"^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
     },
     "VersionString":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^(0|[1-9]\\d*)(\\.(0|[1-9]\\d*))*$"
+      "pattern":"(0|[1-9]\\d*)(\\.(0|[1-9]\\d*))*"
     },
     "VersionStringList":{
       "type":"list",
@@ -2333,7 +2563,7 @@
       "type":"string",
       "max":132,
       "min":82,
-      "pattern":"^arn:aws:groundstation:([-a-z0-9]{1,50})?:[0-9]{12}:satellite/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+      "pattern":"arn:aws:groundstation:([-a-z0-9]{1,50})?:[0-9]{12}:satellite/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
     }
   }
 }

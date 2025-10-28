@@ -1229,6 +1229,19 @@
         "ARM64"
       ]
     },
+    "CanaryConfiguration":{
+      "type":"structure",
+      "members":{
+        "canaryPercent":{
+          "shape":"Double",
+          "box":true
+        },
+        "canaryBakeTimeInMinutes":{
+          "shape":"Integer",
+          "box":true
+        }
+      }
+    },
     "CapacityProvider":{
       "type":"structure",
       "members":{
@@ -1950,7 +1963,9 @@
         "alarms":{"shape":"DeploymentAlarms"},
         "strategy":{"shape":"DeploymentStrategy"},
         "bakeTimeInMinutes":{"shape":"BoxedInteger"},
-        "lifecycleHooks":{"shape":"DeploymentLifecycleHookList"}
+        "lifecycleHooks":{"shape":"DeploymentLifecycleHookList"},
+        "linearConfiguration":{"shape":"LinearConfiguration"},
+        "canaryConfiguration":{"shape":"CanaryConfiguration"}
       }
     },
     "DeploymentController":{
@@ -2015,7 +2030,9 @@
       "type":"string",
       "enum":[
         "ROLLING",
-        "BLUE_GREEN"
+        "BLUE_GREEN",
+        "LINEAR",
+        "CANARY"
       ]
     },
     "Deployments":{
@@ -2694,6 +2711,19 @@
       "type":"structure",
       "members":{},
       "exception":true
+    },
+    "LinearConfiguration":{
+      "type":"structure",
+      "members":{
+        "stepPercent":{
+          "shape":"Double",
+          "box":true
+        },
+        "stepBakeTimeInMinutes":{
+          "shape":"Integer",
+          "box":true
+        }
+      }
     },
     "LinuxParameters":{
       "type":"structure",
@@ -3946,7 +3976,15 @@
         "arn":{"shape":"String"},
         "requestedTaskCount":{"shape":"Integer"},
         "runningTaskCount":{"shape":"Integer"},
-        "pendingTaskCount":{"shape":"Integer"}
+        "pendingTaskCount":{"shape":"Integer"},
+        "requestedTestTrafficWeight":{
+          "shape":"Double",
+          "box":true
+        },
+        "requestedProductionTrafficWeight":{
+          "shape":"Double",
+          "box":true
+        }
       }
     },
     "ServiceRevisions":{

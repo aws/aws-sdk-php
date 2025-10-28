@@ -1423,6 +1423,18 @@
         {"shape":"ResourceNotFound"}
       ]
     },
+    "DeleteProcessingJob":{
+      "name":"DeleteProcessingJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteProcessingJobRequest"},
+      "errors":[
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
+      ]
+    },
     "DeleteProject":{
       "name":"DeleteProject",
       "http":{
@@ -1466,6 +1478,18 @@
       },
       "input":{"shape":"DeleteTagsInput"},
       "output":{"shape":"DeleteTagsOutput"}
+    },
+    "DeleteTrainingJob":{
+      "name":"DeleteTrainingJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteTrainingJobRequest"},
+      "errors":[
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
+      ]
     },
     "DeleteTrial":{
       "name":"DeleteTrial",
@@ -10447,6 +10471,13 @@
         "PipelineArn":{"shape":"PipelineArn"}
       }
     },
+    "DeleteProcessingJobRequest":{
+      "type":"structure",
+      "required":["ProcessingJobName"],
+      "members":{
+        "ProcessingJobName":{"shape":"ProcessingJobName"}
+      }
+    },
     "DeleteProjectInput":{
       "type":"structure",
       "required":["ProjectName"],
@@ -10486,6 +10517,13 @@
     "DeleteTagsOutput":{
       "type":"structure",
       "members":{}
+    },
+    "DeleteTrainingJobRequest":{
+      "type":"structure",
+      "required":["TrainingJobName"],
+      "members":{
+        "TrainingJobName":{"shape":"TrainingJobName"}
+      }
     },
     "DeleteTrialComponentRequest":{
       "type":"structure",
@@ -26597,7 +26635,8 @@
         "Completed",
         "Failed",
         "Stopping",
-        "Stopped"
+        "Stopped",
+        "Deleting"
       ]
     },
     "TrainingJobStatusCounter":{
