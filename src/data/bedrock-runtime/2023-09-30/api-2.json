@@ -649,6 +649,9 @@
         "CitationLocation": {
             "type": "structure",
             "members": {
+                "web": {
+                    "shape": "WebLocation"
+                },
                 "documentChar": {
                     "shape": "DocumentCharLocation"
                 },
@@ -790,6 +793,9 @@
                 "toolUse": {
                     "shape": "ToolUseBlockDelta"
                 },
+                "toolResult": {
+                    "shape": "ToolResultBlocksDelta"
+                },
                 "reasoningContent": {
                     "shape": "ReasoningContentBlockDelta"
                 },
@@ -820,6 +826,9 @@
             "members": {
                 "toolUse": {
                     "shape": "ToolUseBlockStart"
+                },
+                "toolResult": {
+                    "shape": "ToolResultBlockStart"
                 }
             },
             "union": true
@@ -3411,6 +3420,17 @@
                 "shape": "SystemContentBlock"
             }
         },
+        "SystemTool": {
+            "type": "structure",
+            "required": [
+                "name"
+            ],
+            "members": {
+                "name": {
+                    "shape": "ToolName"
+                }
+            }
+        },
         "Tag": {
             "type": "structure",
             "required": [
@@ -3527,6 +3547,9 @@
                 "toolSpec": {
                     "shape": "ToolSpecification"
                 },
+                "systemTool": {
+                    "shape": "SystemTool"
+                },
                 "cachePoint": {
                     "shape": "CachePointBlock"
                 }
@@ -3599,7 +3622,42 @@
                 },
                 "status": {
                     "shape": "ToolResultStatus"
+                },
+                "type": {
+                    "shape": "String"
                 }
+            }
+        },
+        "ToolResultBlockDelta": {
+            "type": "structure",
+            "members": {
+                "text": {
+                    "shape": "String"
+                }
+            },
+            "union": true
+        },
+        "ToolResultBlockStart": {
+            "type": "structure",
+            "required": [
+                "toolUseId"
+            ],
+            "members": {
+                "toolUseId": {
+                    "shape": "ToolUseId"
+                },
+                "type": {
+                    "shape": "String"
+                },
+                "status": {
+                    "shape": "ToolResultStatus"
+                }
+            }
+        },
+        "ToolResultBlocksDelta": {
+            "type": "list",
+            "member": {
+                "shape": "ToolResultBlockDelta"
             }
         },
         "ToolResultContentBlock": {
@@ -3670,6 +3728,9 @@
                 },
                 "input": {
                     "shape": "Document"
+                },
+                "type": {
+                    "shape": "ToolUseType"
                 }
             }
         },
@@ -3696,6 +3757,9 @@
                 },
                 "name": {
                     "shape": "ToolName"
+                },
+                "type": {
+                    "shape": "ToolUseType"
                 }
             }
         },
@@ -3704,6 +3768,12 @@
             "max": 64,
             "min": 1,
             "pattern": "[a-zA-Z0-9_-]+"
+        },
+        "ToolUseType": {
+            "type": "string",
+            "enum": [
+                "server_tool_use"
+            ]
         },
         "Trace": {
             "type": "string",
@@ -3770,6 +3840,17 @@
         "VideoSourceBytesBlob": {
             "type": "blob",
             "min": 1
+        },
+        "WebLocation": {
+            "type": "structure",
+            "members": {
+                "url": {
+                    "shape": "String"
+                },
+                "domain": {
+                    "shape": "String"
+                }
+            }
         }
     }
 }

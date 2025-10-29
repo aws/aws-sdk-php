@@ -26,7 +26,7 @@
       }
     },
     "AnyToolChoice": {
-      "base": "<p>The model must request at least one tool (no text is generated). For example, <code>{\"any\" : {}}</code>.</p>",
+      "base": "<p>The model must request at least one tool (no text is generated). For example, <code>{\"any\" : {}}</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Call a tool with the Converse API</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "ToolChoice$any": "<p>The model must request at least one tool (no text is generated).</p>"
       }
@@ -102,7 +102,7 @@
       }
     },
     "AutoToolChoice": {
-      "base": "<p>The Model automatically decides if a tool should be called or whether to generate text instead. For example, <code>{\"auto\" : {}}</code>.</p>",
+      "base": "<p>The Model automatically decides if a tool should be called or whether to generate text instead. For example, <code>{\"auto\" : {}}</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Call a tool with the Converse API</a> in the Amazon Bedrock User Guide</p>",
       "refs": {
         "ToolChoice$auto": "<p>(Default). The Model automatically decides if a tool should be called or whether to generate text instead. </p>"
       }
@@ -144,7 +144,7 @@
     "Boolean": {
       "base": null,
       "refs": {
-        "CitationsConfig$enabled": "<p>Specifies whether document citations should be included in the model's response. When set to true, the model can generate citations that reference the source documents used to inform the response.</p>",
+        "CitationsConfig$enabled": "<p>Specifies whether citations from the selected document should be used in the model's response. When set to true, the model can generate citations that reference the source documents used to inform the response.</p>",
         "GuardrailContentFilter$detected": "<p>Indicates whether content that breaches the guardrail configuration is detected.</p>",
         "GuardrailContextualGroundingFilter$detected": "<p>Indicates whether content that fails the contextual grounding evaluation (grounding or relevance score less than the corresponding threshold) was detected.</p>",
         "GuardrailCustomWord$detected": "<p>Indicates whether custom word content that breaches the guardrail configuration is detected.</p>",
@@ -372,7 +372,7 @@
       "refs": {}
     },
     "ConverseStreamTrace": {
-      "base": "<p>The trace object in a response from <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a>. Currently, you can only trace guardrails.</p>",
+      "base": "<p>The trace object in a response from <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a>.</p>",
       "refs": {
         "ConverseStreamMetadataEvent$trace": "<p>The trace object in the response from <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a> that contains information about the guardrail behavior.</p>"
       }
@@ -384,7 +384,7 @@
       }
     },
     "ConverseTrace": {
-      "base": "<p>The trace object in a response from <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a>. Currently, you can only trace guardrails.</p>",
+      "base": "<p>The trace object in a response from <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a>.</p>",
       "refs": {
         "ConverseResponse$trace": "<p>A trace object that contains information about the Guardrail behavior.</p>"
       }
@@ -411,7 +411,7 @@
         "ConverseStreamRequest$additionalModelRequestFields": "<p>Additional inference parameters that the model supports, beyond the base set of inference parameters that <code>Converse</code> and <code>ConverseStream</code> support in the <code>inferenceConfig</code> field. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Model parameters</a>.</p>",
         "MessageStopEvent$additionalModelResponseFields": "<p>The additional model response fields.</p>",
         "ToolInputSchema$json": "<p>The JSON schema for the tool. For more information, see <a href=\"https://json-schema.org/understanding-json-schema/reference\">JSON Schema Reference</a>.</p>",
-        "ToolResultContentBlock$json": "<p>A tool result that is JSON format data.</p>",
+        "ToolResultContentBlock$json": "<p>A tool result that is JSON format data. </p>",
         "ToolUseBlock$input": "<p>The input to pass to the tool. </p>"
       }
     },
@@ -915,7 +915,7 @@
     "GuardrailConverseContentBlock": {
       "base": "<p/> <p>A content block for selective guarding with the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> or <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a> API operations. </p>",
       "refs": {
-        "ContentBlock$guardContent": "<p>Contains the content to assess with the guardrail. If you don't specify <code>guardContent</code> in a call to the Converse API, the guardrail (if passed in the Converse API) assesses the entire message.</p> <p>For more information, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. </p>",
+        "ContentBlock$guardContent": "<p>Contains the content to assess with the guardrail. If you don't specify <code>guardContent</code> in a call to the Converse API, the guardrail (if passed in the Converse API) assesses the entire message.</p> <p>For more information, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>.</p>",
         "SystemContentBlock$guardContent": "<p>A content block to assess with the guardrail. Use with the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> or <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a> API operations. </p> <p>For more information, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>.</p>"
       }
     },
@@ -956,7 +956,7 @@
       }
     },
     "GuardrailConverseTextBlock": {
-      "base": "<p>A text block that contains text that you want to assess with a guardrail. For more information, see <a>GuardrailConverseContentBlock</a>.</p>",
+      "base": "<p>A text block that contains text that you want to assess with a guardrail. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_GuardrailConverseContentBlock.html\">GuardrailConverseContentBlock</a>.</p>",
       "refs": {
         "GuardrailConverseContentBlock$text": "<p>The text to guard.</p>"
       }
@@ -1113,7 +1113,7 @@
       }
     },
     "GuardrailSensitiveInformationPolicyAssessment": {
-      "base": "<p>The assessment for aPersonally Identifiable Information (PII) policy. </p>",
+      "base": "<p>The assessment for a Personally Identifiable Information (PII) policy. </p>",
       "refs": {
         "GuardrailAssessment$sensitiveInformationPolicy": "<p>The sensitive information policy.</p>"
       }
@@ -1131,7 +1131,7 @@
       }
     },
     "GuardrailStreamConfiguration": {
-      "base": "<p>Configuration information for a guardrail that you use with the <a>ConverseStream</a> action. </p>",
+      "base": "<p>Configuration information for a guardrail that you use with the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a> action. </p>",
       "refs": {
         "ConverseStreamRequest$guardrailConfig": "<p>Configuration information for a guardrail that you want to use in the request. If you include <code>guardContent</code> blocks in the <code>content</code> field in the <code>messages</code> field, the guardrail operates only on those messages. If you include no <code>guardContent</code> blocks, the guardrail operates on all messages in the request body and in any included prompt resource.</p>"
       }
@@ -1198,7 +1198,7 @@
       }
     },
     "GuardrailTraceAssessment": {
-      "base": "<p>A Top level guardrail trace object. For more information, see <a>ConverseTrace</a>.</p>",
+      "base": "<p>A Top level guardrail trace object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseTrace.html\">ConverseTrace</a>.</p>",
       "refs": {
         "ConverseStreamTrace$guardrail": "<p>The guardrail trace object. </p>",
         "ConverseTrace$guardrail": "<p>The guardrail trace object. </p>"
@@ -1244,7 +1244,7 @@
       "base": "<p>Image content for a message.</p>",
       "refs": {
         "ContentBlock$image": "<p>Image to include in the message. </p> <note> <p>This field is only supported by Anthropic Claude 3 models.</p> </note>",
-        "ToolResultContentBlock$image": "<p>A tool result that is an image.</p> <note> <p>This field is only supported by Anthropic Claude 3 models.</p> </note>"
+        "ToolResultContentBlock$image": "<p>A tool result that is an image. </p> <note> <p>This field is only supported by Amazon Nova and Anthropic Claude 3 and 4 models.</p> </note>"
       }
     },
     "ImageFormat": {
@@ -1669,9 +1669,9 @@
       }
     },
     "SpecificToolChoice": {
-      "base": "<p>The model must request a specific tool. For example, <code>{\"tool\" : {\"name\" : \"Your tool name\"}}</code>.</p> <note> <p>This field is only supported by Anthropic Claude 3 models.</p> </note>",
+      "base": "<p>The model must request a specific tool. For example, <code>{\"tool\" : {\"name\" : \"Your tool name\"}}</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Call a tool with the Converse API</a> in the Amazon Bedrock User Guide</p> <note> <p>This field is only supported by Anthropic Claude 3 models.</p> </note>",
       "refs": {
-        "ToolChoice$tool": "<p>The Model must request the specified tool. Only supported by Anthropic Claude 3 models. </p>"
+        "ToolChoice$tool": "<p>The Model must request the specified tool. Only supported by Anthropic Claude 3 and Amazon Nova models. </p>"
       }
     },
     "StartAsyncInvokeRequest": {
@@ -1728,12 +1728,17 @@
         "ReasoningContentBlockDelta$signature": "<p>A token that verifies that the reasoning text was generated by the model. If you pass a reasoning block back to the API in a multi-turn conversation, include the text and its signature unmodified.</p>",
         "ReasoningTextBlock$text": "<p>The reasoning that the model used to return the output.</p>",
         "ReasoningTextBlock$signature": "<p>A token that verifies that the reasoning text was generated by the model. If you pass a reasoning block back to the API in a multi-turn conversation, include the text and its signature unmodified.</p>",
-        "ToolResultContentBlock$text": "<p>A tool result that is text.</p>",
-        "ToolUseBlockDelta$input": "<p>The input for a requested tool.</p>"
+        "ToolResultBlock$type": "<p>The type for the tool result content block.</p>",
+        "ToolResultBlockDelta$text": "<p>The reasoning the model used to return the output.</p>",
+        "ToolResultBlockStart$type": "<p>The type for the tool that was used to generate this tool result block.</p>",
+        "ToolResultContentBlock$text": "<p>A tool result that is text. </p>",
+        "ToolUseBlockDelta$input": "<p>The input for a requested tool.</p>",
+        "WebLocation$url": "<p>The URL that was cited when performing a web search.</p>",
+        "WebLocation$domain": "<p>The domain that was cited when performing a web search.</p>"
       }
     },
     "SystemContentBlock": {
-      "base": "<p>A system content block.</p>",
+      "base": "<p>Contains configurations for instructions to provide the model for how to handle input. To learn more, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-call.html\">Using the Converse API</a>.</p>",
       "refs": {
         "SystemContentBlocks$member": null
       }
@@ -1744,6 +1749,12 @@
         "ConverseRequest$system": "<p>A prompt that provides instructions or context to the model about the task it should perform, or the persona it should adopt during the conversation.</p>",
         "ConverseStreamRequest$system": "<p>A prompt that provides instructions or context to the model about the task it should perform, or the persona it should adopt during the conversation.</p>",
         "ConverseTokensRequest$system": "<p>The system content blocks to count tokens for. System content provides instructions or context to the model about how it should behave or respond. The token count will include any system content provided.</p>"
+      }
+    },
+    "SystemTool": {
+      "base": "<p>Specifies a system-defined tool for the model to use. <i>System-defined tools</i> are tools that are created and provided by the model provider.</p>",
+      "refs": {
+        "Tool$systemTool": "<p>Specifies the system-defined tool that you want use.</p>"
       }
     },
     "Tag": {
@@ -1785,7 +1796,7 @@
     "ThrottlingException": {
       "base": "<p>Your request was denied due to exceeding the account quotas for <i>Amazon Bedrock</i>. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-throttling-exception\">ThrottlingException</a> in the Amazon Bedrock User Guide</p>",
       "refs": {
-        "ConverseStreamOutput$throttlingException": "<p>Your request was denied due to exceeding the account quotas for <i>Amazon Bedrock</i>. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-throttling-exception\">ThrottlingException</a> in the Amazon Bedrock User Guide</p>",
+        "ConverseStreamOutput$throttlingException": "<p>Your request was denied due to exceeding the account quotas for <i>Amazon Bedrock</i>. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-throttling-exception\">ThrottlingException</a> in the Amazon Bedrock User Guide.</p>",
         "InvokeModelWithBidirectionalStreamOutput$throttlingException": "<p>The request was denied due to request throttling.</p>",
         "ResponseStream$throttlingException": "<p>Your request was throttled because of service-wide limitations. Resubmit your request later or in a different region. You can also purchase <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> to increase the rate or number of tokens you can process.</p>"
       }
@@ -1841,15 +1852,15 @@
       }
     },
     "Tool": {
-      "base": "<p>Information about a tool that you can use with the Converse API. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Tool use (function calling)</a> in the Amazon Bedrock User Guide.</p>",
+      "base": "<p>Information about a tool that you can use with the Converse API. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Call a tool with the Converse API</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "ToolConfigurationToolsList$member": null
       }
     },
     "ToolChoice": {
-      "base": "<p>Determines which tools the model should request in a call to <code>Converse</code> or <code>ConverseStream</code>. <code>ToolChoice</code> is only supported by Anthropic Claude 3 models and by Mistral AI Mistral Large.</p>",
+      "base": "<p>Determines which tools the model should request in a call to <code>Converse</code> or <code>ConverseStream</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Call a tool with the Converse API</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
-        "ToolConfiguration$toolChoice": "<p>If supported by model, forces the model to request a tool.</p>"
+        "ToolConfiguration$toolChoice": "<p>If supported by model, forces the model to request a tool. </p>"
       }
     },
     "ToolConfiguration": {
@@ -1862,11 +1873,11 @@
     "ToolConfigurationToolsList": {
       "base": null,
       "refs": {
-        "ToolConfiguration$tools": "<p>An array of tools that you want to pass to a model.</p>"
+        "ToolConfiguration$tools": "<p>An array of tools that you want to pass to a model. </p>"
       }
     },
     "ToolInputSchema": {
-      "base": "<p>The schema for the tool. The top level schema type must be <code>object</code>. </p>",
+      "base": "<p>The schema for the tool. The top level schema type must be <code>object</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Call a tool with the Converse API</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "ToolSpecification$inputSchema": "<p>The input schema for the tool in JSON format.</p>"
       }
@@ -1875,19 +1886,38 @@
       "base": null,
       "refs": {
         "SpecificToolChoice$name": "<p>The name of the tool that the model must request. </p>",
+        "SystemTool$name": "<p>The name of the system-defined tool that you want to call. </p>",
         "ToolSpecification$name": "<p>The name for the tool.</p>",
         "ToolUseBlock$name": "<p>The name of the tool that the model wants to use.</p>",
         "ToolUseBlockStart$name": "<p>The name of the tool that the model is requesting to use.</p>"
       }
     },
     "ToolResultBlock": {
-      "base": "<p>A tool result block that contains the results for a tool request that the model previously made.</p>",
+      "base": "<p>A tool result block that contains the results for a tool request that the model previously made. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Call a tool with the Converse API</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "ContentBlock$toolResult": "<p>The result for a tool request that a model makes.</p>"
       }
     },
+    "ToolResultBlockDelta": {
+      "base": "<p>Contains incremental updates to tool results information during streaming responses. This allows clients to build up tool results data progressively as the response is generated.</p>",
+      "refs": {
+        "ToolResultBlocksDelta$member": null
+      }
+    },
+    "ToolResultBlockStart": {
+      "base": "<p>The start of a tool result block. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Call a tool with the Converse API</a> in the Amazon Bedrock User Guide.</p>",
+      "refs": {
+        "ContentBlockStart$toolResult": "<p>The </p>"
+      }
+    },
+    "ToolResultBlocksDelta": {
+      "base": null,
+      "refs": {
+        "ContentBlockDelta$toolResult": "<p>An incremental update that contains the results from a tool call.</p>"
+      }
+    },
     "ToolResultContentBlock": {
-      "base": "<p>The tool result content block.</p>",
+      "base": "<p>The tool result content block. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Call a tool with the Converse API</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "ToolResultContentBlocks$member": null
       }
@@ -1901,17 +1931,18 @@
     "ToolResultStatus": {
       "base": null,
       "refs": {
-        "ToolResultBlock$status": "<p>The status for the tool result content block.</p> <note> <p>This field is only supported Anthropic Claude 3 models.</p> </note>"
+        "ToolResultBlock$status": "<p>The status for the tool result content block.</p> <note> <p>This field is only supported by Amazon Nova and Anthropic Claude 3 and 4 models.</p> </note>",
+        "ToolResultBlockStart$status": "<p>The status of the tool result block.</p>"
       }
     },
     "ToolSpecification": {
-      "base": "<p>The specification for the tool.</p>",
+      "base": "<p>The specification for the tool. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Call a tool with the Converse API</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
-        "Tool$toolSpec": "<p>The specfication for the tool.</p>"
+        "Tool$toolSpec": "<p>The specfication for the tool. </p>"
       }
     },
     "ToolUseBlock": {
-      "base": "<p>A tool use content block. Contains information about a tool that the model is requesting be run., The model uses the result from the tool to generate a response. </p>",
+      "base": "<p>A tool use content block. Contains information about a tool that the model is requesting be run., The model uses the result from the tool to generate a response. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Call a tool with the Converse API</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "ContentBlock$toolUse": "<p>Information about a tool use request from a model.</p>"
       }
@@ -1923,7 +1954,7 @@
       }
     },
     "ToolUseBlockStart": {
-      "base": "<p>The start of a tool use block.</p>",
+      "base": "<p>The start of a tool use block. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Call a tool with the Converse API</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "ContentBlockStart$toolUse": "<p>Information about a tool that the model is requesting to use.</p>"
       }
@@ -1931,9 +1962,17 @@
     "ToolUseId": {
       "base": null,
       "refs": {
-        "ToolResultBlock$toolUseId": "<p>The ID of the tool request that this is the result for.</p>",
+        "ToolResultBlock$toolUseId": "<p>The ID of the tool request that this is the result for. </p>",
+        "ToolResultBlockStart$toolUseId": "<p>The ID of the tool that was used to generate this tool result block.</p>",
         "ToolUseBlock$toolUseId": "<p>The ID for the tool request.</p>",
         "ToolUseBlockStart$toolUseId": "<p>The ID for the tool request.</p>"
+      }
+    },
+    "ToolUseType": {
+      "base": null,
+      "refs": {
+        "ToolUseBlock$type": "<p>The type for the tool request.</p>",
+        "ToolUseBlockStart$type": "<p>The type for the tool request.</p>"
       }
     },
     "Trace": {
@@ -1946,7 +1985,7 @@
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by <i>Amazon Bedrock</i>. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-validation-error\">ValidationError</a> in the Amazon Bedrock User Guide</p>",
       "refs": {
-        "ConverseStreamOutput$validationException": "<p>The input fails to satisfy the constraints specified by <i>Amazon Bedrock</i>. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-validation-error\">ValidationError</a> in the Amazon Bedrock User Guide</p>",
+        "ConverseStreamOutput$validationException": "<p>The input fails to satisfy the constraints specified by <i>Amazon Bedrock</i>. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-validation-error\">ValidationError</a> in the Amazon Bedrock User Guide.</p>",
         "InvokeModelWithBidirectionalStreamOutput$validationException": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>",
         "ResponseStream$validationException": "<p>Input validation failed. Check your request parameters and retry the request.</p>"
       }
@@ -1974,6 +2013,12 @@
       "base": null,
       "refs": {
         "VideoSource$bytes": "<p>Video content encoded in base64.</p>"
+      }
+    },
+    "WebLocation": {
+      "base": "<p>Provides the URL and domain information for the website that was cited when performing a web search.</p>",
+      "refs": {
+        "CitationLocation$web": "<p>The web URL that was cited for this reference.</p>"
       }
     }
   }

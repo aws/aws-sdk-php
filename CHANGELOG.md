@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockRuntime` - Add support for system tool and web citation response.
+
 ## 3.359.0 - 2025-10-28
 
 * `Aws\Credentials` - Fixes issue caused by #3203 with role assumption when `credential_source` is specified.
