@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.359.1 - 2025-10-29
 
 * `Aws\BedrockRuntime` - Add support for system tool and web citation response.
 
