@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.359.2 - 2025-10-30
 
 * `Aws\ConnectCases` - Update endpoint ruleset parameters casing
 * `Aws\CleanRooms` - Added support for advanced Spark configurations to optimize SQL performance
