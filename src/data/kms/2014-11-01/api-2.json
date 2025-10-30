@@ -974,6 +974,12 @@
   },
   "shapes":{
     "AWSAccountIdType":{"type":"string"},
+    "AccountIdType":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"[0-9]{12}"
+    },
     "AlgorithmSpec":{
       "type":"string",
       "enum":[
@@ -1168,6 +1174,7 @@
         "XksProxyUriEndpoint":{"shape":"XksProxyUriEndpointType"},
         "XksProxyUriPath":{"shape":"XksProxyUriPathType"},
         "XksProxyVpcEndpointServiceName":{"shape":"XksProxyVpcEndpointServiceNameType"},
+        "XksProxyVpcEndpointServiceOwner":{"shape":"AccountIdType"},
         "XksProxyAuthenticationCredential":{"shape":"XksProxyAuthenticationCredentialType"},
         "XksProxyConnectivity":{"shape":"XksProxyConnectivityType"}
       }
@@ -2688,6 +2695,7 @@
         "XksProxyUriEndpoint":{"shape":"XksProxyUriEndpointType"},
         "XksProxyUriPath":{"shape":"XksProxyUriPathType"},
         "XksProxyVpcEndpointServiceName":{"shape":"XksProxyVpcEndpointServiceNameType"},
+        "XksProxyVpcEndpointServiceOwner":{"shape":"AccountIdType"},
         "XksProxyAuthenticationCredential":{"shape":"XksProxyAuthenticationCredentialType"},
         "XksProxyConnectivity":{"shape":"XksProxyConnectivityType"}
       }
@@ -2843,7 +2851,8 @@
         "AccessKeyId":{"shape":"XksProxyAuthenticationAccessKeyIdType"},
         "UriEndpoint":{"shape":"XksProxyUriEndpointType"},
         "UriPath":{"shape":"XksProxyUriPathType"},
-        "VpcEndpointServiceName":{"shape":"XksProxyVpcEndpointServiceNameType"}
+        "VpcEndpointServiceName":{"shape":"XksProxyVpcEndpointServiceNameType"},
+        "VpcEndpointServiceOwner":{"shape":"AccountIdType"}
       }
     },
     "XksProxyConnectivityType":{

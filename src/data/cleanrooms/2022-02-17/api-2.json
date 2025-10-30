@@ -1794,7 +1794,7 @@
     "AnalysisParameterList":{
       "type":"list",
       "member":{"shape":"AnalysisParameter"},
-      "max":10,
+      "max":50,
       "min":0
     },
     "AnalysisRule":{
@@ -4026,7 +4026,7 @@
       "type":"structure",
       "required":["name"],
       "members":{
-        "name":{"shape":"String"}
+        "name":{"shape":"ColumnName"}
       }
     },
     "DifferentialPrivacyColumnList":{
@@ -6875,6 +6875,8 @@
     },
     "S3LocationKeyString":{
       "type":"string",
+      "max":1024,
+      "min":1,
       "pattern":"[a-zA-Z0-9!_.*'()-/]+"
     },
     "ScalarFunctions":{
@@ -7189,6 +7191,23 @@
         "columnName":{"shape":"ColumnName"},
         "columnType":{"shape":"ColumnTypeString"}
       }
+    },
+    "SparkProperties":{
+      "type":"map",
+      "key":{"shape":"SparkPropertyKey"},
+      "value":{"shape":"SparkPropertyValue"},
+      "max":50,
+      "min":0
+    },
+    "SparkPropertyKey":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
+    "SparkPropertyValue":{
+      "type":"string",
+      "max":500,
+      "min":0
     },
     "StartProtectedJobInput":{
       "type":"structure",
@@ -7798,7 +7817,8 @@
       "type":"structure",
       "members":{
         "type":{"shape":"WorkerComputeType"},
-        "number":{"shape":"WorkerComputeConfigurationNumberInteger"}
+        "number":{"shape":"WorkerComputeConfigurationNumberInteger"},
+        "properties":{"shape":"WorkerComputeConfigurationProperties"}
       }
     },
     "WorkerComputeConfigurationNumberInteger":{
@@ -7806,6 +7826,13 @@
       "box":true,
       "max":400,
       "min":2
+    },
+    "WorkerComputeConfigurationProperties":{
+      "type":"structure",
+      "members":{
+        "spark":{"shape":"SparkProperties"}
+      },
+      "union":true
     },
     "WorkerComputeType":{
       "type":"string",

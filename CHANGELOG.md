@@ -1,5 +1,58 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConnectCases` - Update endpoint ruleset parameters casing
+* `Aws\CleanRooms` - Added support for advanced Spark configurations to optimize SQL performance
+* `Aws\DevOpsGuru` - Update endpoint ruleset parameters casing
+* `Aws\ComputeOptimizer` - Update endpoint ruleset parameters casing
+* `Aws\AuditManager` - Update endpoint ruleset parameters casing
+* `Aws\CloudDirectory` - Update endpoint ruleset parameters casing
+* `Aws\AppSync` - Update endpoint ruleset parameters casing
+* `Aws\PrometheusService` - Add Anomaly Detection APIs for Amazon Managed Prometheus
+* `Aws\RTBFabric` - RTB Fabric documentation update.
+* `Aws\Deadline` - Update endpoint ruleset parameters casing
+* `Aws\Glue` - This release adds the capability to enable User Background Sessions for customers running Trusted Identity Propagation enabled Interactive Sessions on AWS Glue.
+* `Aws\AppConfig` - Update endpoint ruleset parameters casing
+* `Aws\Neptune` - Update endpoint ruleset parameters casing
+* `Aws\ApplicationCostProfiler` - Update endpoint ruleset parameters casing
+* `Aws\GeoPlaces` - Update endpoint ruleset parameters casing
+* `Aws\Firehose` - Update endpoint ruleset parameters casing
+* `Aws\FraudDetector` - Update endpoint ruleset parameters casing
+* `Aws\ElastiCache` - Update endpoint ruleset parameters casing
+* `Aws\CodeCommit` - Update endpoint ruleset parameters casing
+* `Aws\EKSAuth` - Update endpoint ruleset parameters casing
+* `Aws\BedrockAgentCoreControl` - Web-Bot-Auth support for AgentCore Browser tool to help reduce captcha challenges.
+* `Aws\EMRServerless` - This release adds the capability to enable User Background Sessions for customers running Trusted Identity Propagation enabled Interactive Sessions on EMR Serverless Applications.
+* `Aws\Schemas` - Update endpoint ruleset parameters casing
+* `Aws\BedrockAgent` - Update endpoint ruleset parameters casing
+* `Aws\Chime` - Update endpoint ruleset parameters casing
+* `Aws\AppMesh` - Update endpoint ruleset parameters casing
+* `Aws\LicenseManagerLinuxSubscriptions` - Update endpoint ruleset parameters casing
+* `Aws\IoTManagedIntegrations` - Add a new GetManagedThingCertificate API to expose Iot ManagedIntegrations (MI) device certificate, and add "-" support for name, properties, actions and events in the CapabilityReportCapability object.
+* `Aws\IoTEventsData` - Update endpoint ruleset parameters casing
+* `Aws\APIGateway` - Update endpoint ruleset parameters casing
+* `Aws\KMS` - Add cross account VPC endpoint service connectivity support to CustomKeyStore.
+* `Aws\ECS` - Amazon ECS Service Connect now supports Envoy access logs, providing deeper observability into request-level traffic patterns and service interactions.
+* `Aws\Artifact` - Update endpoint ruleset parameters casing
+* `Aws\MarketplaceReporting` - Update endpoint ruleset parameters casing
+* `Aws\Appflow` - Update endpoint ruleset parameters casing
+* `Aws\STS` - Update endpoint ruleset parameters casing
+* `Aws\GreengrassV2` - Update endpoint ruleset parameters casing
+* `Aws\CodeCatalyst` - Update endpoint ruleset parameters casing
+* `Aws\CloudSearch` - Update endpoint ruleset parameters casing
+* `Aws\S3Outposts` - Update endpoint ruleset parameters casing
+* `Aws\ServiceCatalog` - Update endpoint ruleset parameters casing
+* `Aws\CloudControlApi` - Update endpoint ruleset parameters casing
+* `Aws\KeyspacesStreams` - Update endpoint ruleset parameters casing
+* `Aws\ServerlessApplicationRepository` - Update endpoint ruleset parameters casing
+* `Aws\CognitoSync` - Update endpoint ruleset parameters casing
+* `Aws\SageMakerRuntime` - Update endpoint ruleset parameters casing
+* `Aws\SSO` - Update endpoint ruleset parameters casing
+* `Aws\CloudWatch` - Update endpoint ruleset parameters casing
+* `Aws\DocDB` - Adding FailoverState and TagList to GlobalCluster and SynchronizationStatus to GlobalClusterMember.
+* `Aws\CodeDeploy` - Update endpoint ruleset parameters casing
+
 ## 3.359.1 - 2025-10-29
 
 * `Aws\BedrockRuntime` - Add support for system tool and web citation response.

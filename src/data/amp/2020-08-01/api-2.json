@@ -33,6 +33,25 @@
       ],
       "idempotent":true
     },
+    "CreateAnomalyDetector":{
+      "name":"CreateAnomalyDetector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workspaces/{workspaceId}/anomalydetectors",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateAnomalyDetectorRequest"},
+      "output":{"shape":"CreateAnomalyDetectorResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
     "CreateLoggingConfiguration":{
       "name":"CreateLoggingConfiguration",
       "http":{
@@ -134,6 +153,24 @@
         "responseCode":202
       },
       "input":{"shape":"DeleteAlertManagerDefinitionRequest"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteAnomalyDetector":{
+      "name":"DeleteAnomalyDetector",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/workspaces/{workspaceId}/anomalydetectors/{anomalyDetectorId}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteAnomalyDetectorRequest"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
@@ -283,7 +320,26 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "DescribeAnomalyDetector":{
+      "name":"DescribeAnomalyDetector",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceId}/anomalydetectors/{anomalyDetectorId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeAnomalyDetectorRequest"},
+      "output":{"shape":"DescribeAnomalyDetectorResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
     },
     "DescribeLoggingConfiguration":{
       "name":"DescribeLoggingConfiguration",
@@ -299,7 +355,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeQueryLoggingConfiguration":{
       "name":"DescribeQueryLoggingConfiguration",
@@ -315,7 +372,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeResourcePolicy":{
       "name":"DescribeResourcePolicy",
@@ -332,7 +390,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeRuleGroupsNamespace":{
       "name":"DescribeRuleGroupsNamespace",
@@ -349,7 +408,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeScraper":{
       "name":"DescribeScraper",
@@ -366,7 +426,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeScraperLoggingConfiguration":{
       "name":"DescribeScraperLoggingConfiguration",
@@ -382,7 +443,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeWorkspace":{
       "name":"DescribeWorkspace",
@@ -399,7 +461,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeWorkspaceConfiguration":{
       "name":"DescribeWorkspaceConfiguration",
@@ -416,7 +479,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDefaultScraperConfiguration":{
       "name":"GetDefaultScraperConfiguration",
@@ -431,7 +495,26 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "ListAnomalyDetectors":{
+      "name":"ListAnomalyDetectors",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceId}/anomalydetectors",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAnomalyDetectorsRequest"},
+      "output":{"shape":"ListAnomalyDetectorsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
     },
     "ListRuleGroupsNamespaces":{
       "name":"ListRuleGroupsNamespaces",
@@ -448,7 +531,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListScrapers":{
       "name":"ListScrapers",
@@ -464,7 +548,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -481,7 +566,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListWorkspaces":{
       "name":"ListWorkspaces",
@@ -497,7 +583,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutAlertManagerDefinition":{
       "name":"PutAlertManagerDefinition",
@@ -513,6 +600,25 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
+    "PutAnomalyDetector":{
+      "name":"PutAnomalyDetector",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/workspaces/{workspaceId}/anomalydetectors/{anomalyDetectorId}",
+        "responseCode":202
+      },
+      "input":{"shape":"PutAnomalyDetectorRequest"},
+      "output":{"shape":"PutAnomalyDetectorResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"}
@@ -762,7 +868,116 @@
         "workspaceArn":{"shape":"WorkspaceArn"}
       }
     },
+    "AnomalyDetectorAlias":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[0-9A-Za-z][-.0-9A-Z_a-z]*"
+    },
+    "AnomalyDetectorArn":{
+      "type":"string",
+      "pattern":"arn:aws[-a-z]*:aps:[-a-z0-9]+:[0-9]{12}:anomalydetector/ws-.+/ad-.+"
+    },
+    "AnomalyDetectorConfiguration":{
+      "type":"structure",
+      "members":{
+        "randomCutForest":{"shape":"RandomCutForestConfiguration"}
+      },
+      "union":true
+    },
+    "AnomalyDetectorDescription":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "anomalyDetectorId",
+        "alias",
+        "status",
+        "createdAt",
+        "modifiedAt"
+      ],
+      "members":{
+        "arn":{"shape":"AnomalyDetectorArn"},
+        "anomalyDetectorId":{"shape":"AnomalyDetectorId"},
+        "alias":{"shape":"AnomalyDetectorAlias"},
+        "evaluationIntervalInSeconds":{"shape":"AnomalyDetectorEvaluationInterval"},
+        "missingDataAction":{"shape":"AnomalyDetectorMissingDataAction"},
+        "configuration":{"shape":"AnomalyDetectorConfiguration"},
+        "labels":{"shape":"PrometheusMetricLabelMap"},
+        "status":{"shape":"AnomalyDetectorStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "modifiedAt":{"shape":"Timestamp"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "AnomalyDetectorEvaluationInterval":{
+      "type":"integer",
+      "box":true,
+      "max":86400,
+      "min":30
+    },
+    "AnomalyDetectorId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"ad-[0-9A-Za-z][-.0-9A-Z_a-z]*"
+    },
+    "AnomalyDetectorMissingDataAction":{
+      "type":"structure",
+      "members":{
+        "markAsAnomaly":{"shape":"Boolean"},
+        "skip":{"shape":"Boolean"}
+      },
+      "union":true
+    },
+    "AnomalyDetectorStatus":{
+      "type":"structure",
+      "required":["statusCode"],
+      "members":{
+        "statusCode":{"shape":"AnomalyDetectorStatusCode"},
+        "statusReason":{"shape":"String"}
+      }
+    },
+    "AnomalyDetectorStatusCode":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING",
+        "CREATION_FAILED",
+        "UPDATE_FAILED",
+        "DELETION_FAILED"
+      ]
+    },
+    "AnomalyDetectorSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "anomalyDetectorId",
+        "alias",
+        "status",
+        "createdAt",
+        "modifiedAt"
+      ],
+      "members":{
+        "arn":{"shape":"AnomalyDetectorArn"},
+        "anomalyDetectorId":{"shape":"AnomalyDetectorId"},
+        "alias":{"shape":"AnomalyDetectorAlias"},
+        "status":{"shape":"AnomalyDetectorStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "modifiedAt":{"shape":"Timestamp"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "AnomalyDetectorSummaryList":{
+      "type":"list",
+      "member":{"shape":"AnomalyDetectorSummary"}
+    },
     "Blob":{"type":"blob"},
+    "Boolean":{
+      "type":"boolean",
+      "box":true
+    },
     "CloudWatchLogDestination":{
       "type":"structure",
       "required":["logGroupArn"],
@@ -822,6 +1037,52 @@
       "required":["status"],
       "members":{
         "status":{"shape":"AlertManagerDefinitionStatus"}
+      }
+    },
+    "CreateAnomalyDetectorRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceId",
+        "alias",
+        "configuration"
+      ],
+      "members":{
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
+        "alias":{"shape":"AnomalyDetectorAlias"},
+        "evaluationIntervalInSeconds":{"shape":"AnomalyDetectorEvaluationInterval"},
+        "missingDataAction":{"shape":"AnomalyDetectorMissingDataAction"},
+        "configuration":{"shape":"AnomalyDetectorConfiguration"},
+        "labels":{"shape":"CreateAnomalyDetectorRequestLabelsMap"},
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateAnomalyDetectorRequestLabelsMap":{
+      "type":"map",
+      "key":{"shape":"PrometheusMetricLabelKey"},
+      "value":{"shape":"PrometheusMetricLabelValue"},
+      "max":140,
+      "min":0
+    },
+    "CreateAnomalyDetectorResponse":{
+      "type":"structure",
+      "required":[
+        "anomalyDetectorId",
+        "arn",
+        "status"
+      ],
+      "members":{
+        "anomalyDetectorId":{"shape":"AnomalyDetectorId"},
+        "arn":{"shape":"AnomalyDetectorArn"},
+        "status":{"shape":"AnomalyDetectorStatus"},
+        "tags":{"shape":"TagMap"}
       }
     },
     "CreateLoggingConfigurationRequest":{
@@ -990,6 +1251,31 @@
         }
       }
     },
+    "DeleteAnomalyDetectorRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceId",
+        "anomalyDetectorId"
+      ],
+      "members":{
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
+        "anomalyDetectorId":{
+          "shape":"AnomalyDetectorId",
+          "location":"uri",
+          "locationName":"anomalyDetectorId"
+        },
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
     "DeleteLoggingConfigurationRequest":{
       "type":"structure",
       "required":["workspaceId"],
@@ -1149,6 +1435,32 @@
       "required":["alertManagerDefinition"],
       "members":{
         "alertManagerDefinition":{"shape":"AlertManagerDefinitionDescription"}
+      }
+    },
+    "DescribeAnomalyDetectorRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceId",
+        "anomalyDetectorId"
+      ],
+      "members":{
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
+        "anomalyDetectorId":{
+          "shape":"AnomalyDetectorId",
+          "location":"uri",
+          "locationName":"anomalyDetectorId"
+        }
+      }
+    },
+    "DescribeAnomalyDetectorResponse":{
+      "type":"structure",
+      "required":["anomalyDetector"],
+      "members":{
+        "anomalyDetector":{"shape":"AnomalyDetectorDescription"}
       }
     },
     "DescribeLoggingConfigurationRequest":{
@@ -1375,6 +1687,24 @@
       "min":1,
       "pattern":"[!-~]+"
     },
+    "IgnoreNearExpected":{
+      "type":"structure",
+      "members":{
+        "amount":{"shape":"IgnoreNearExpectedAmountDouble"},
+        "ratio":{"shape":"IgnoreNearExpectedRatioDouble"}
+      },
+      "union":true
+    },
+    "IgnoreNearExpectedAmountDouble":{
+      "type":"double",
+      "box":true,
+      "min":0
+    },
+    "IgnoreNearExpectedRatioDouble":{
+      "type":"double",
+      "box":true,
+      "min":0
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -1440,6 +1770,46 @@
     "LimitsPerLabelSetList":{
       "type":"list",
       "member":{"shape":"LimitsPerLabelSet"}
+    },
+    "ListAnomalyDetectorsRequest":{
+      "type":"structure",
+      "required":["workspaceId"],
+      "members":{
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
+        "alias":{
+          "shape":"AnomalyDetectorAlias",
+          "location":"querystring",
+          "locationName":"alias"
+        },
+        "maxResults":{
+          "shape":"ListAnomalyDetectorsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListAnomalyDetectorsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListAnomalyDetectorsResponse":{
+      "type":"structure",
+      "required":["anomalyDetectors"],
+      "members":{
+        "anomalyDetectors":{"shape":"AnomalyDetectorSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
     },
     "ListRuleGroupsNamespacesRequest":{
       "type":"structure",
@@ -1639,6 +2009,22 @@
       "max":1000,
       "min":0
     },
+    "PrometheusMetricLabelKey":{
+      "type":"string",
+      "max":7168,
+      "min":1,
+      "pattern":"(?!__)[a-zA-Z_][a-zA-Z0-9_]*"
+    },
+    "PrometheusMetricLabelMap":{
+      "type":"map",
+      "key":{"shape":"PrometheusMetricLabelKey"},
+      "value":{"shape":"PrometheusMetricLabelValue"}
+    },
+    "PrometheusMetricLabelValue":{
+      "type":"string",
+      "max":7168,
+      "min":1
+    },
     "PutAlertManagerDefinitionRequest":{
       "type":"structure",
       "required":[
@@ -1663,6 +2049,48 @@
       "required":["status"],
       "members":{
         "status":{"shape":"AlertManagerDefinitionStatus"}
+      }
+    },
+    "PutAnomalyDetectorRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceId",
+        "anomalyDetectorId",
+        "configuration"
+      ],
+      "members":{
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
+        "anomalyDetectorId":{
+          "shape":"AnomalyDetectorId",
+          "location":"uri",
+          "locationName":"anomalyDetectorId"
+        },
+        "evaluationIntervalInSeconds":{"shape":"AnomalyDetectorEvaluationInterval"},
+        "missingDataAction":{"shape":"AnomalyDetectorMissingDataAction"},
+        "configuration":{"shape":"AnomalyDetectorConfiguration"},
+        "labels":{"shape":"PrometheusMetricLabelMap"},
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "PutAnomalyDetectorResponse":{
+      "type":"structure",
+      "required":[
+        "anomalyDetectorId",
+        "arn",
+        "status"
+      ],
+      "members":{
+        "anomalyDetectorId":{"shape":"AnomalyDetectorId"},
+        "arn":{"shape":"AnomalyDetectorArn"},
+        "status":{"shape":"AnomalyDetectorStatus"},
+        "tags":{"shape":"TagMap"}
       }
     },
     "PutResourcePolicyRequest":{
@@ -1770,6 +2198,34 @@
         "CREATION_FAILED",
         "UPDATE_FAILED"
       ]
+    },
+    "RandomCutForestConfiguration":{
+      "type":"structure",
+      "required":["query"],
+      "members":{
+        "query":{"shape":"RandomCutForestQuery"},
+        "shingleSize":{"shape":"RandomCutForestConfigurationShingleSizeInteger"},
+        "sampleSize":{"shape":"RandomCutForestConfigurationSampleSizeInteger"},
+        "ignoreNearExpectedFromAbove":{"shape":"IgnoreNearExpected"},
+        "ignoreNearExpectedFromBelow":{"shape":"IgnoreNearExpected"}
+      }
+    },
+    "RandomCutForestConfigurationSampleSizeInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1024,
+      "min":256
+    },
+    "RandomCutForestConfigurationShingleSizeInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1024,
+      "min":2
+    },
+    "RandomCutForestQuery":{
+      "type":"string",
+      "max":8192,
+      "min":1
     },
     "ResourceNotFoundException":{
       "type":"structure",

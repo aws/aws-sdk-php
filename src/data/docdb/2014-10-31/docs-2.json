@@ -137,6 +137,7 @@
         "DescribeDBClusterSnapshotsMessage$IncludePublic": "<p>Set to <code>true</code> to include manual cluster snapshots that are public and can be copied or restored by any Amazon Web Services account, and otherwise <code>false</code>. The default is <code>false</code>.</p>",
         "DescribeDBEngineVersionsMessage$DefaultOnly": "<p>Indicates that only the default version of the specified engine or engine and major version combination is returned.</p>",
         "EventSubscription$Enabled": "<p>A Boolean value indicating whether the subscription is enabled. A value of <code>true</code> indicates that the subscription is enabled.</p>",
+        "FailoverState$IsDataLossAllowed": "<p>Indicates whether the operation is a global switchover or a global failover. If data loss is allowed, then the operation is a global failover. Otherwise, it's a switchover.</p>",
         "GlobalClusterMember$IsWriter": "<p> Specifies whether the Amazon DocumentDB cluster is the primary cluster (that is, has read-write capability) for the Amazon DocumentDB global cluster with which it is associated. </p>",
         "ModifyDBClusterMessage$ApplyImmediately": "<p>A value that specifies whether the changes in this request and any pending changes are asynchronously applied as soon as possible, regardless of the <code>PreferredMaintenanceWindow</code> setting for the cluster. If this parameter is set to <code>false</code>, changes to the cluster are applied during the next maintenance window.</p> <p>The <code>ApplyImmediately</code> parameter affects only the <code>NewDBClusterIdentifier</code> and <code>MasterUserPassword</code> values. If you set this parameter value to <code>false</code>, the changes to the <code>NewDBClusterIdentifier</code> and <code>MasterUserPassword</code> values are applied during the next maintenance window. All other changes are applied immediately, regardless of the value of the <code>ApplyImmediately</code> parameter.</p> <p>Default: <code>false</code> </p>",
         "ModifyDBClusterMessage$AllowMajorVersionUpgrade": "<p>A value that indicates whether major version upgrades are allowed.</p> <p>Constraints:</p> <ul> <li> <p>You must allow major version upgrades when specifying a value for the <code>EngineVersion</code> parameter that is a different major version than the cluster's current version.</p> </li> <li> <p>Since some parameters are version specific, changing them requires executing a new <code>ModifyDBCluster</code> API call after the in-place MVU completes.</p> </li> </ul> <note> <p>Performing an MVU directly impacts the following parameters:</p> <ul> <li> <p> <code>MasterUserPassword</code> </p> </li> <li> <p> <code>NewDBClusterIdentifier</code> </p> </li> <li> <p> <code>VpcSecurityGroupIds</code> </p> </li> <li> <p> <code>Port</code> </p> </li> </ul> </note>",
@@ -796,6 +797,18 @@
       "base": null,
       "refs": {}
     },
+    "FailoverState": {
+      "base": "<p>Contains the state of scheduled or in-process operations on an Amazon DocumentDB global cluster. This data type is empty unless a switchover or failover operation is scheduled or is in progress on the global cluster.</p>",
+      "refs": {
+        "GlobalCluster$FailoverState": "<p>A data object containing all properties for the current state of an in-process or pending switchover or failover process for this global cluster. This object is empty unless the <code>SwitchoverGlobalCluster</code> or <code>FailoverGlobalCluster</code> operation was called on this global cluster.</p>"
+      }
+    },
+    "FailoverStatus": {
+      "base": null,
+      "refs": {
+        "FailoverState$Status": "<p>The current status of the global cluster. Possible values are as follows:</p> <ul> <li> <p> <b>pending</b> – The service received a request to switch over or fail over the global cluster. The global cluster's primary cluster and the specified secondary cluster are being verified before the operation starts.</p> </li> <li> <p> <b>failing-over</b> – The chosen secondary cluster is being promoted to become the new primary cluster to fail over the global cluster.</p> </li> <li> <p> <b>cancelling</b> – The request to switch over or fail over the global cluster was cancelled and the primary cluster and the selected secondary cluster are returning to their previous states.</p> </li> </ul>"
+      }
+    },
     "Filter": {
       "base": "<p>A named set of filter values, used to return a more specific list of results. You can use a filter to match a set of resources by specific criteria, such as IDs.</p> <p>Wildcards are not supported in filters.</p>",
       "refs": {
@@ -876,6 +889,12 @@
       "base": null,
       "refs": {
         "GlobalCluster$GlobalClusterMembers": "<p>The list of cluster IDs for secondary clusters within the global cluster. Currently limited to one item. </p>"
+      }
+    },
+    "GlobalClusterMemberSynchronizationStatus": {
+      "base": null,
+      "refs": {
+        "GlobalClusterMember$SynchronizationStatus": "<p>The status of synchronization of each Amazon DocumentDB cluster in the global cluster.</p>"
       }
     },
     "GlobalClusterNotFoundFault": {
@@ -1519,6 +1538,8 @@
         "EventsMessage$Marker": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
         "FailoverDBClusterMessage$DBClusterIdentifier": "<p>A cluster identifier to force a failover for. This parameter is not case sensitive.</p> <p>Constraints:</p> <ul> <li> <p>Must match the identifier of an existing <code>DBCluster</code>.</p> </li> </ul>",
         "FailoverDBClusterMessage$TargetDBInstanceIdentifier": "<p>The name of the instance to promote to the primary instance.</p> <p>You must specify the instance identifier for an Amazon DocumentDB replica in the cluster. For example, <code>mydbcluster-replica1</code>.</p>",
+        "FailoverState$FromDbClusterArn": "<p>The Amazon Resource Name (ARN) of the Amazon DocumentDB cluster that is currently being demoted, and which is associated with this state.</p>",
+        "FailoverState$ToDbClusterArn": "<p>The Amazon Resource Name (ARN) of the Amazon DocumentDB cluster that is currently being promoted, and which is associated with this state.</p>",
         "Filter$Name": "<p>The name of the filter. Filter names are case sensitive.</p>",
         "FilterValueList$member": null,
         "GlobalCluster$GlobalClusterResourceId": "<p>The Amazon Web Services RegionRegion-unique, immutable identifier for the global database cluster. This identifier is found in CloudTrail log entries whenever the KMS customer master key (CMK) for the cluster is accessed. </p>",
@@ -1708,6 +1729,7 @@
         "CreateDBInstanceMessage$Tags": "<p>The tags to be assigned to the instance. You can assign up to 10 tags to an instance.</p>",
         "CreateDBSubnetGroupMessage$Tags": "<p>The tags to be assigned to the subnet group.</p>",
         "CreateEventSubscriptionMessage$Tags": "<p>The tags to be assigned to the event subscription.</p>",
+        "GlobalCluster$TagList": "<p>A list of global cluster tags.</p>",
         "RestoreDBClusterFromSnapshotMessage$Tags": "<p>The tags to be assigned to the restored cluster.</p>",
         "RestoreDBClusterToPointInTimeMessage$Tags": "<p>The tags to be assigned to the restored cluster.</p>",
         "TagListMessage$TagList": "<p>A list of one or more tags.</p>"

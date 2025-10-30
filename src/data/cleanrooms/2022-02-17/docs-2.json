@@ -253,7 +253,7 @@
     "AllowedColumnList": {
       "base": null,
       "refs": {
-        "ConfiguredTable$allowedColumns": "<p>The columns within the underlying Glue table that can be utilized within collaborations.</p>",
+        "ConfiguredTable$allowedColumns": "<p>The columns within the underlying Glue table that can be used within collaborations.</p>",
         "CreateConfiguredTableInput$allowedColumns": "<p>The columns of the underlying table that can be used by collaborations or analysis rules.</p>",
         "UpdateConfiguredTableInput$allowedColumns": "<p>The columns of the underlying table that can be used by collaborations or analysis rules.</p>"
       }
@@ -1089,6 +1089,7 @@
       "refs": {
         "AllowedColumnList$member": null,
         "Column$name": "<p>The name of the column.</p>",
+        "DifferentialPrivacyColumn$name": "<p>The name of the column, such as user_id, that contains the unique identifier of your users, whose privacy you want to protect. If you want to turn on differential privacy for two or more tables in a collaboration, you must configure the same column as the user identifier column in both analysis rules.</p>",
         "SnowflakeTableSchemaV1$columnName": "<p> The column name.</p>"
       }
     },
@@ -3666,6 +3667,24 @@
         "SnowflakeTableSchemaList$member": null
       }
     },
+    "SparkProperties": {
+      "base": null,
+      "refs": {
+        "WorkerComputeConfigurationProperties$spark": "<p>The Spark configuration properties for SQL workloads. This map contains key-value pairs that configure Apache Spark settings to optimize performance for your data processing jobs. You can specify up to 50 Spark properties, with each key being 1-200 characters and each value being 0-500 characters. These properties allow you to adjust compute capacity for large datasets and complex workloads.</p>"
+      }
+    },
+    "SparkPropertyKey": {
+      "base": null,
+      "refs": {
+        "SparkProperties$key": null
+      }
+    },
+    "SparkPropertyValue": {
+      "base": null,
+      "refs": {
+        "SparkProperties$value": null
+      }
+    },
     "StartProtectedJobInput": {
       "base": null,
       "refs": {}
@@ -3695,7 +3714,6 @@
         "BatchGetSchemaError$message": "<p>An error message for the error.</p>",
         "ConflictException$message": null,
         "ConflictException$resourceId": "<p>The ID of the conflicting resource.</p>",
-        "DifferentialPrivacyColumn$name": "<p>The name of the column, such as user_id, that contains the unique identifier of your users, whose privacy you want to protect. If you want to turn on differential privacy for two or more tables in a collaboration, you must configure the same column as the user identifier column in both analysis rules.</p>",
         "Hash$sha256": "<p> The SHA-256 hash value.</p>",
         "IdMappingTableInputSource$idNamespaceAssociationId": "<p>The unique identifier of the ID namespace association.</p>",
         "InternalServerException$message": null,
@@ -4131,6 +4149,12 @@
       "base": null,
       "refs": {
         "WorkerComputeConfiguration$number": "<p> The number of workers.</p> <p>SQL queries support a minimum value of 2 and a maximum value of 400. </p> <p>PySpark jobs support a minimum value of 4 and a maximum value of 128.</p>"
+      }
+    },
+    "WorkerComputeConfigurationProperties": {
+      "base": "<p>The configuration properties that define the compute environment settings for workers in Clean Rooms. These properties enable customization of the underlying compute environment to optimize performance for your specific workloads.</p>",
+      "refs": {
+        "WorkerComputeConfiguration$properties": "<p>The configuration properties for the worker compute environment. These properties allow you to customize the compute settings for your Clean Rooms workloads.</p>"
       }
     },
     "WorkerComputeType": {

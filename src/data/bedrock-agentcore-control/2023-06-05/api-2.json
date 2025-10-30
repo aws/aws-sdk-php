@@ -1336,6 +1336,20 @@
         "VPC"
       ]
     },
+    "BrowserSigningConfigInput":{
+      "type":"structure",
+      "required":["enabled"],
+      "members":{
+        "enabled":{"shape":"Boolean"}
+      }
+    },
+    "BrowserSigningConfigOutput":{
+      "type":"structure",
+      "required":["enabled"],
+      "members":{
+        "enabled":{"shape":"Boolean"}
+      }
+    },
     "BrowserStatus":{
       "type":"string",
       "enum":[
@@ -1602,6 +1616,7 @@
         "executionRoleArn":{"shape":"RoleArn"},
         "networkConfiguration":{"shape":"BrowserNetworkConfiguration"},
         "recording":{"shape":"RecordingConfig"},
+        "browserSigning":{"shape":"BrowserSigningConfigInput"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -2589,6 +2604,7 @@
         "executionRoleArn":{"shape":"RoleArn"},
         "networkConfiguration":{"shape":"BrowserNetworkConfiguration"},
         "recording":{"shape":"RecordingConfig"},
+        "browserSigning":{"shape":"BrowserSigningConfigOutput"},
         "status":{"shape":"BrowserStatus"},
         "failureReason":{"shape":"String"},
         "createdAt":{"shape":"DateTimestamp"},
@@ -2849,7 +2865,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"(Authorization|X-Amzn-Bedrock-AgentCore-Runtime-Custom-[a-zA-Z0-9_-]+)"
+      "pattern":"(Authorization|X-Amzn-Bedrock-AgentCore-Runtime-Custom-[a-zA-Z0-9-]+)"
     },
     "IncludedOauth2ProviderConfigInput":{
       "type":"structure",

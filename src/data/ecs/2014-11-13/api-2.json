@@ -3681,6 +3681,21 @@
         "availabilityZoneRebalancing":{"shape":"AvailabilityZoneRebalancing"}
       }
     },
+    "ServiceConnectAccessLogConfiguration":{
+      "type":"structure",
+      "required":["format"],
+      "members":{
+        "format":{"shape":"ServiceConnectAccessLoggingFormat"},
+        "includeQueryParameters":{"shape":"ServiceConnectIncludeQueryParameters"}
+      }
+    },
+    "ServiceConnectAccessLoggingFormat":{
+      "type":"string",
+      "enum":[
+        "TEXT",
+        "JSON"
+      ]
+    },
     "ServiceConnectClientAlias":{
       "type":"structure",
       "required":["port"],
@@ -3701,8 +3716,16 @@
         "enabled":{"shape":"Boolean"},
         "namespace":{"shape":"String"},
         "services":{"shape":"ServiceConnectServiceList"},
-        "logConfiguration":{"shape":"LogConfiguration"}
+        "logConfiguration":{"shape":"LogConfiguration"},
+        "accessLogConfiguration":{"shape":"ServiceConnectAccessLogConfiguration"}
       }
+    },
+    "ServiceConnectIncludeQueryParameters":{
+      "type":"string",
+      "enum":[
+        "DISABLED",
+        "ENABLED"
+      ]
     },
     "ServiceConnectService":{
       "type":"structure",

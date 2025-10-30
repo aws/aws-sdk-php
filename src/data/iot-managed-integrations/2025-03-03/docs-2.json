@@ -5,52 +5,53 @@
     "CreateAccountAssociation": "<p>Creates a new account association via the destination id.</p>",
     "CreateCloudConnector": "<p>Creates a C2C (cloud-to-cloud) connector.</p>",
     "CreateConnectorDestination": "<p>Create a connector destination for connecting a cloud-to-cloud (C2C) connector to the customer's Amazon Web Services account.</p>",
-    "CreateCredentialLocker": "<p>Create a product credential locker. This operation will trigger the creation of all the manufacturing resources including the Wi-Fi setup key pair and device certificate.</p>",
-    "CreateDestination": "<p> Create a destination. IoT managed integrations uses the destination to determine where to deliver notifications for a device. </p>",
+    "CreateCredentialLocker": "<p>Create a credential locker.</p> <note> <p>This operation will not trigger the creation of all the manufacturing resources.</p> </note>",
+    "CreateDestination": "<p> Create a notification destination such as Kinesis Data Streams that receive events and notifications from Managed integrations. Managed integrations uses the destination to determine where to deliver notifications.</p>",
     "CreateEventLogConfiguration": "<p>Set the event log configuration for the account, resource type, or specific resource.</p>",
-    "CreateManagedThing": "<p>Creates a managed thing. A managed thing contains the device identifier, protocol supported, and capabilities of the device in a protocol-specific format.</p>",
+    "CreateManagedThing": "<p>Creates a managed thing. A managed thing contains the device identifier, protocol supported, and capabilities of the device in a data model format defined by Managed integrations.</p>",
     "CreateNotificationConfiguration": "<p>Creates a notification configuration. A configuration is a connection between an event type and a destination that you have already created. </p>",
-    "CreateOtaTask": "<p>Create an over-the-air (OTA) task to update a device.</p>",
+    "CreateOtaTask": "<p>Create an over-the-air (OTA) task to target a device.</p>",
     "CreateOtaTaskConfiguration": "<p>Create a configuraiton for the over-the-air (OTA) task.</p>",
     "CreateProvisioningProfile": "<p>Create a provisioning profile for a device to execute the provisioning flows using a provisioning template. The provisioning template is a document that defines the set of resources and policies applied to a device during the provisioning process.</p>",
-    "DeleteAccountAssociation": "<p>Remove a third party account and related devices from an end user.</p>",
+    "DeleteAccountAssociation": "<p>Remove a third-party account association for an end user.</p> <note> <p>You must first call the <code>DeregisterAccountAssociation</code> to remove the connection between the managed thing and the third-party account before calling the <code>DeleteAccountAssociation</code> API.</p> </note>",
     "DeleteCloudConnector": "<p>Delete a cloud connector.</p>",
-    "DeleteConnectorDestination": "<p>Delete a connector destination for connecting a cloud-to-cloud (C2C) connector to the customer's Amazon Web Services account.</p>",
+    "DeleteConnectorDestination": "<p>Delete a connector destination linked to a cloud-to-cloud (C2C) connector.</p> <note> <p>Deletion can't be done if the account association has used this connector destination.</p> </note>",
     "DeleteCredentialLocker": "<p>Delete a credential locker. </p> <note> <p>This operation can't be undone and any existing device won't be able to use IoT managed integrations.</p> </note>",
-    "DeleteDestination": "<p>Deletes a customer-managed destination specified by id. </p>",
+    "DeleteDestination": "<p>Deletes a notification destination specified by name. </p>",
     "DeleteEventLogConfiguration": "<p>Delete an event log configuration.</p>",
-    "DeleteManagedThing": "<p>Delete a managed thing. If a controller is deleted, all of the devices connected to it will have their status changed to <code>PENDING</code>. It is not possible to remove a cloud device.</p>",
+    "DeleteManagedThing": "<p>Delete a managed thing. For direct-connected and hub-connected devices connecting with Managed integrations via a controller, all of the devices connected to it will have their status changed to <code>PENDING</code>. It is not possible to remove a cloud-to-cloud device.</p>",
     "DeleteNotificationConfiguration": "<p>Deletes a notification configuration. </p>",
     "DeleteOtaTask": "<p>Delete the over-the-air (OTA) task.</p>",
     "DeleteOtaTaskConfiguration": "<p>Delete the over-the-air (OTA) task configuration.</p>",
     "DeleteProvisioningProfile": "<p>Delete a provisioning profile.</p>",
-    "DeregisterAccountAssociation": "<p>Deregisters an account association, removing the connection between a managed thing and a third-party account.</p>",
+    "DeregisterAccountAssociation": "<p>Deregister an account association from a managed thing.</p>",
     "GetAccountAssociation": "<p>Get an account association for an Amazon Web Services account linked to a customer-managed destination.</p>",
-    "GetCloudConnector": "<p>Gets all the information about a connector for a connector developer.</p>",
-    "GetConnectorDestination": "<p>Get a connector destination of a cloud-to-cloud (C2C) connector connecting to a customer's Amazon Web Services account.</p>",
+    "GetCloudConnector": "<p>Get configuration details for a cloud connector.</p>",
+    "GetConnectorDestination": "<p>Get connector destination details linked to a cloud-to-cloud (C2C) connector.</p>",
     "GetCredentialLocker": "<p>Get information on an existing credential locker</p>",
     "GetCustomEndpoint": "<p>Returns the IoT managed integrations custom endpoint.</p>",
     "GetDefaultEncryptionConfiguration": "<p> Retrieves information about the default encryption configuration for the Amazon Web Services account in the default or specified region. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/key-management.html\">Key management</a> in the <i>AWS IoT SiteWise User Guide</i>.</p>",
-    "GetDestination": "<p>Gets a destination by ID. </p>",
+    "GetDestination": "<p>Gets a destination by name. </p>",
     "GetDeviceDiscovery": "<p> Get the current state of a device discovery.</p>",
     "GetEventLogConfiguration": "<p>Get an event log configuration.</p>",
     "GetHubConfiguration": "<p>Get a hub configuration.</p>",
-    "GetManagedThing": "<p> Get the attributes and capabilities associated with a managed thing.</p>",
+    "GetManagedThing": "<p> Get details of a managed thing including its attributes and capabilities.</p>",
     "GetManagedThingCapabilities": "<p>Get the capabilities for a managed thing using the device ID.</p>",
+    "GetManagedThingCertificate": "<p>Retrieves the certificate PEM for a managed IoT thing.</p>",
     "GetManagedThingConnectivityData": "<p>Get the connectivity status of a managed thing.</p>",
     "GetManagedThingMetaData": "<p>Get the metadata information for a managed thing.</p> <note> <p>The <code>managedThing</code> <code>metadata</code> parameter is used for associating attributes with a <code>managedThing</code> that can be used for grouping over-the-air (OTA) tasks. Name value pairs in <code>metadata</code> can be used in the <code>OtaTargetQueryString</code> parameter for the <code>CreateOtaTask</code> API operation.</p> </note>",
     "GetManagedThingState": "<p> Returns the managed thing state for the given device Id.</p>",
-    "GetNotificationConfiguration": "<p> Get a notification configuration.</p>",
-    "GetOtaTask": "<p>Get the over-the-air (OTA) task.</p>",
+    "GetNotificationConfiguration": "<p> Get a notification configuration for a specified event type.</p>",
+    "GetOtaTask": "<p>Get details of the over-the-air (OTA) task by its task id.</p>",
     "GetOtaTaskConfiguration": "<p>Get a configuraiton for the over-the-air (OTA) task.</p>",
     "GetProvisioningProfile": "<p>Get a provisioning profile by template name.</p>",
-    "GetRuntimeLogConfiguration": "<p>Get the runtime log configuration for a specific managed thing or for all managed things as a group.</p>",
+    "GetRuntimeLogConfiguration": "<p>Get the runtime log configuration for a specific managed thing.</p>",
     "GetSchemaVersion": "<p>Gets a schema version with the provided information.</p>",
     "ListAccountAssociations": "<p>Lists all account associations, with optional filtering by connector destination ID.</p>",
-    "ListCloudConnectors": "<p>Returns a list of connectors based on permissions. </p>",
+    "ListCloudConnectors": "<p>Returns a list of connectors filtered by its Lambda Amazon Resource Name (ARN) and <code>type</code>.</p>",
     "ListConnectorDestinations": "<p>Lists all connector destinations, with optional filtering by cloud connector ID.</p>",
     "ListCredentialLockers": "<p>List information on an existing credential locker.</p>",
-    "ListDestinations": "<p> List all destination names under one Amazon Web Services account.</p>",
+    "ListDestinations": "<p> List all notification destinations.</p>",
     "ListDeviceDiscoveries": "<p>Lists all device discovery tasks, with optional filtering by type and status.</p>",
     "ListDiscoveredDevices": "<p>Lists all devices discovered during a specific device discovery task.</p>",
     "ListEventLogConfigurations": "<p>List all event log configurations for an account.</p>",
@@ -69,17 +70,17 @@
     "PutRuntimeLogConfiguration": "<p>Set the runtime log configuration for a specific managed thing or for all managed things as a group.</p>",
     "RegisterAccountAssociation": "<p>Registers an account association with a managed thing, establishing a connection between a device and a third-party account.</p>",
     "RegisterCustomEndpoint": "<p>Customers can request IoT managed integrations to manage the server trust for them or bring their own external server trusts for the custom domain. Returns an IoT managed integrations endpoint.</p>",
-    "ResetRuntimeLogConfiguration": "<p>Reset a runtime log configuration for a specific managed thing or for all managed things as a group.</p>",
+    "ResetRuntimeLogConfiguration": "<p>Reset a runtime log configuration for a specific managed thing.</p>",
     "SendConnectorEvent": "<p>Relays third-party device events for a connector such as a new device or a device state change event.</p>",
     "SendManagedThingCommand": "<p>Send the command to the device represented by the managed thing. </p>",
     "StartAccountAssociationRefresh": "<p>Initiates a refresh of an existing account association to update its authorization and connection status.</p>",
-    "StartDeviceDiscovery": "<p> This API is used to start device discovery for hub-connected and third-party-connected devices. The authentication material (install code) is passed as a message to the controller telling it to start the discovery.</p>",
+    "StartDeviceDiscovery": "<p> This API is used to start device discovery for hub-connected and third-party-connected devices. The authentication material (install code) is delivered as a message to the controller instructing it to start the discovery.</p>",
     "TagResource": "<p>Add tags for the specified resource.</p>",
     "UntagResource": "<p>Remove tags for the specified resource.</p>",
     "UpdateAccountAssociation": "<p>Updates the properties of an existing account association.</p>",
     "UpdateCloudConnector": "<p>Update an existing cloud connector.</p>",
     "UpdateConnectorDestination": "<p>Updates the properties of an existing connector destination.</p>",
-    "UpdateDestination": "<p> Update a destination specified by id. </p>",
+    "UpdateDestination": "<p> Update a destination specified by name. </p>",
     "UpdateEventLogConfiguration": "<p>Update an event log configuration by log configuration ID.</p>",
     "UpdateManagedThing": "<p>Update the attributes and capabilities associated with a managed thing.</p>",
     "UpdateNotificationConfiguration": "<p> Update a notification configuration.</p>",
@@ -421,6 +422,12 @@
         "CapabilityReportCapability$version": "<p>The version of the capability.</p>",
         "CommandCapability$version": "<p>Describe the capability with a version.</p>",
         "StateCapability$version": "<p>Version for the Amazon Web Services capability.</p>"
+      }
+    },
+    "CertificatePem": {
+      "base": null,
+      "refs": {
+        "GetManagedThingCertificateResponse$CertificatePem": "<p>The PEM-encoded certificate for the managed thing.</p>"
       }
     },
     "ClaimCertificate": {
@@ -1438,6 +1445,16 @@
       "refs": {
       }
     },
+    "GetManagedThingCertificateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetManagedThingCertificateResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetManagedThingConnectivityDataRequest": {
       "base": null,
       "refs": {
@@ -1903,6 +1920,8 @@
         "GetDeviceDiscoveryResponse$ControllerId": "<p>The id of the end-user's IoT hub.</p>",
         "GetManagedThingCapabilitiesRequest$Identifier": "<p>The id of the device.</p>",
         "GetManagedThingCapabilitiesResponse$ManagedThingId": "<p>The id of the device.</p>",
+        "GetManagedThingCertificateRequest$Identifier": "<p>The identifier of the managed thing.</p>",
+        "GetManagedThingCertificateResponse$ManagedThingId": "<p>The identifier of the managed thing.</p>",
         "GetManagedThingConnectivityDataRequest$Identifier": "<p>The identifier of a managed thing.</p>",
         "GetManagedThingConnectivityDataResponse$ManagedThingId": "<p>The id of a managed thing.</p>",
         "GetManagedThingMetaDataRequest$Identifier": "<p>The managed thing id.</p>",
@@ -2516,7 +2535,7 @@
         "CreateProvisioningProfileResponse$Id": "<p>The identifier of the provisioning profile.</p>",
         "DeleteProvisioningProfileRequest$Identifier": "<p>The name of the provisioning template.</p>",
         "GetProvisioningProfileRequest$Identifier": "<p>The provisioning template the device uses for the provisioning process.</p>",
-        "GetProvisioningProfileResponse$Id": "<p>The provisioning profile id..</p>",
+        "GetProvisioningProfileResponse$Id": "<p>The provisioning profile id.</p>",
         "ProvisioningProfileSummary$Id": "<p>The identifier of the provisioning profile.</p>"
       }
     },
@@ -3040,8 +3059,8 @@
     "TraceId": {
       "base": null,
       "refs": {
-        "SendConnectorEventRequest$TraceId": "<p>The trace request identifier used to correlate a command request and response. This is specified by the device owner, but will be generated by IoT managed integrations if not provided by the device owner.</p>",
-        "SendManagedThingCommandResponse$TraceId": "<p>The trace request identifier. This is specified by the device owner, but will be generated by IoT managed integrations if not provided by the device owner.</p>"
+        "SendConnectorEventRequest$TraceId": "<p>The trace request identifier. This is generated by IoT managed integrations and can be used to trace this command and its related operations in CloudWatch.</p>",
+        "SendManagedThingCommandResponse$TraceId": "<p>The trace request identifier. This is generated by IoT managed integrations and can be used to trace this command and its related operations in CloudWatch.</p>"
       }
     },
     "UnauthorizedException": {

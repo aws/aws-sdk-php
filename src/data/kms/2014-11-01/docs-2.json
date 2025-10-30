@@ -63,6 +63,14 @@
         "KeyMetadata$AWSAccountId": "<p>The twelve-digit account ID of the Amazon Web Services account that owns the KMS key.</p>"
       }
     },
+    "AccountIdType": {
+      "base": null,
+      "refs": {
+        "CreateCustomKeyStoreRequest$XksProxyVpcEndpointServiceOwner": "<p>Specifies the Amazon Web Services account ID that owns the Amazon VPC service endpoint for the interface that is used to communicate with your external key store proxy (XKS proxy). This parameter is optional. If not provided, the Amazon Web Services account ID calling the action will be used.</p>",
+        "UpdateCustomKeyStoreRequest$XksProxyVpcEndpointServiceOwner": "<p>Changes the Amazon Web Services account ID that KMS uses to identify the Amazon VPC endpoint service for your external key store proxy (XKS proxy). This parameter is optional. If not specified, the current Amazon Web Services account ID for the VPC endpoint service will not be updated.</p> <p>To change this value, the external key store must be disconnected.</p>",
+        "XksProxyConfigurationType$VpcEndpointServiceOwner": "<p>The Amazon Web Services account ID that owns the Amazon VPC endpoint service used to communicate with the external key store proxy (XKS). This field appears only when the XKS uses an VPC endpoint service to communicate with KMS.</p>"
+      }
+    },
     "AlgorithmSpec": {
       "base": null,
       "refs": {

@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p><note> <p> is in preview release and is subject to change.</p> </note> <p>Welcome to the Amazon Bedrock AgentCore Control plane API reference. Control plane actions configure, create, modify, and monitor Amazon Web Services resources.</p></p>",
+  "service": "<p>Welcome to the Amazon Bedrock AgentCore Control plane API reference. Control plane actions configure, create, modify, and monitor Amazon Web Services resources.</p>",
   "operations": {
     "CreateAgentRuntime": "<p>Creates an Amazon Bedrock AgentCore Runtime.</p>",
     "CreateAgentRuntimeEndpoint": "<p>Creates an AgentCore Runtime endpoint.</p>",
@@ -356,6 +356,8 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "BrowserSigningConfigInput$enabled": "<p>Specifies whether browser signing is enabled. When enabled, the browser will cryptographically sign HTTP requests to identify itself as an AI agent to bot control vendors.</p>",
+        "BrowserSigningConfigOutput$enabled": "<p>Indicates whether browser signing is currently enabled for cryptographic agent identification using HTTP message signatures.</p>",
         "RecordingConfig$enabled": "<p>Indicates whether recording is enabled for the browser. When set to true, browser sessions are recorded.</p>"
       }
     },
@@ -389,6 +391,18 @@
       "base": null,
       "refs": {
         "BrowserNetworkConfiguration$networkMode": "<p>The network mode for the browser. This field specifies how the browser connects to the network.</p>"
+      }
+    },
+    "BrowserSigningConfigInput": {
+      "base": "<p>Configuration for enabling browser signing capabilities that allow agents to cryptographically identify themselves to websites using HTTP message signatures.</p>",
+      "refs": {
+        "CreateBrowserRequest$browserSigning": "<p>The browser signing configuration that enables cryptographic agent identification using HTTP message signatures for web bot authentication.</p>"
+      }
+    },
+    "BrowserSigningConfigOutput": {
+      "base": "<p>The current browser signing configuration that shows whether cryptographic agent identification is enabled for web bot authentication.</p>",
+      "refs": {
+        "GetBrowserResponse$browserSigning": "<p>The browser signing configuration that shows whether cryptographic agent identification is enabled for web bot authentication.</p>"
       }
     },
     "BrowserStatus": {
