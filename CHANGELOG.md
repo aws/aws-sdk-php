@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.359.3 - 2025-10-31
 
 * `Aws\Omics` - Added WDL_LENIENT engine type that enables implicit typecasting of variable values to its compatible declared types
 * `Aws\SavingsPlans` - Add dual-stack endpoint support for Savings Plans
