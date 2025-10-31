@@ -1804,6 +1804,10 @@
           "shape": "AudioNormalizationSettings",
           "locationName": "audioNormalizationSettings"
         },
+        "AudioPitchCorrectionSettings": {
+          "shape": "AudioPitchCorrectionSettings",
+          "locationName": "audioPitchCorrectionSettings"
+        },
         "AudioSourceName": {
           "shape": "__stringMax2048",
           "locationName": "audioSourceName"
@@ -1922,6 +1926,15 @@
         }
       }
     },
+    "AudioPitchCorrectionSettings": {
+      "type": "structure",
+      "members": {
+        "SlowPalPitchCorrection": {
+          "shape": "SlowPalPitchCorrection",
+          "locationName": "slowPalPitchCorrection"
+        }
+      }
+    },
     "AudioProperties": {
       "type": "structure",
       "members": {
@@ -1998,6 +2011,10 @@
           "shape": "AudioSelectorType",
           "locationName": "selectorType"
         },
+        "Streams": {
+          "shape": "__listOf__integerMin1Max2147483647",
+          "locationName": "streams"
+        },
         "Tracks": {
           "shape": "__listOf__integerMin1Max2147483647",
           "locationName": "tracks"
@@ -2020,7 +2037,8 @@
         "TRACK",
         "LANGUAGE_CODE",
         "HLS_RENDITION_GROUP",
-        "ALL_PCM"
+        "ALL_PCM",
+        "STREAM"
       ]
     },
     "AudioTypeControl": {
@@ -4126,7 +4144,8 @@
       "enum": [
         "BASIC",
         "COMPACT",
-        "DISTINCT"
+        "DISTINCT",
+        "FULL"
       ]
     },
     "DataProperties": {
@@ -10032,6 +10051,15 @@
         }
       }
     },
+    "PassthroughSettings": {
+      "type": "structure",
+      "members": {
+        "VideoSelectorMode": {
+          "shape": "VideoSelectorMode",
+          "locationName": "videoSelectorMode"
+        }
+      }
+    },
     "Policy": {
       "type": "structure",
       "members": {
@@ -10800,6 +10828,13 @@
         "ENABLED"
       ]
     },
+    "SlowPalPitchCorrection": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
     "SpekeKeyProvider": {
       "type": "structure",
       "members": {
@@ -11168,6 +11203,10 @@
     "TrackSourceSettings": {
       "type": "structure",
       "members": {
+        "StreamNumber": {
+          "shape": "__integerMin1Max2147483647",
+          "locationName": "streamNumber"
+        },
         "TrackNumber": {
           "shape": "__integerMin1Max2147483647",
           "locationName": "trackNumber"
@@ -11631,6 +11670,10 @@
           "shape": "Mpeg2Settings",
           "locationName": "mpeg2Settings"
         },
+        "PassthroughSettings": {
+          "shape": "PassthroughSettings",
+          "locationName": "passthroughSettings"
+        },
         "ProresSettings": {
           "shape": "ProresSettings",
           "locationName": "proresSettings"
@@ -11849,6 +11892,10 @@
           "shape": "__integerMinNegative1Max2147483647",
           "locationName": "height"
         },
+        "Opacity": {
+          "shape": "__integerMin0Max100",
+          "locationName": "opacity"
+        },
         "Unit": {
           "shape": "VideoOverlayUnit",
           "locationName": "unit"
@@ -12025,6 +12072,13 @@
           "locationName": "streams"
         }
       }
+    },
+    "VideoSelectorMode": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "REMUX_ALL"
+      ]
     },
     "VideoSelectorType": {
       "type": "string",

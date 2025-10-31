@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Omics` - Added WDL_LENIENT engine type that enables implicit typecasting of variable values to its compatible declared types
+* `Aws\SavingsPlans` - Add dual-stack endpoint support for Savings Plans
+* `Aws\PaymentCryptography` - Allow additional characters in the CertificateSubject for GetCertificateSigningRequest API.
+* `Aws\SSMQuickSetup` - Update endpoint ruleset parameters casing
+* `Aws\MarketplaceCatalog` - Update endpoint ruleset parameters casing
+* `Aws\WAF` - Update endpoint ruleset parameters casing
+* `Aws\Kinesis` - Update endpoint ruleset parameters casing
+* `Aws\FSx` - Update endpoint ruleset parameters casing
+* `Aws\Textract` - Update endpoint ruleset parameters casing
+* `Aws\ResourceGroupsTaggingAPI` - Update endpoint ruleset parameters casing
+* `Aws\Snowball` - Update endpoint ruleset parameters casing
+* `Aws\Health` - Update endpoint ruleset parameters casing
+* `Aws\ConnectCases` - Added two new case rule types: Parent Child Field Options (restricts child field options based on parent field value) and Hidden (controls child field visibility based on parent field value). Both enable dynamic field behavior within templates.
+* `Aws\EMR` - Update endpoint ruleset parameters casing
+* `Aws\EC2` - Amazon VPC IP Address Manager (IPAM) now supports automated prefix list management, allowing you to create rules that automatically populate customer-managed prefix lists with CIDRs from your IPAM pools or AWS resources based on tags, Regions, or other criteria.
+* `Aws\Redshift` - Update endpoint ruleset parameters casing
+* `Aws\MediaConvert` - Adds SlowPalPitchCorrection to audio pitch correction settings. Enables opacity for VideoOverlays. Adds REMUX_ALL option to enable multi-rendition passthrough to VideoSelector for allow listed accounts.
+* `Aws\CloudWatchLogs` - Update endpoint ruleset parameters casing
+* `Aws\Lambda` - Add Python3.14 (python3.14) and Java 25 (java25) support to AWS Lambda
+* `Aws\SageMaker` - Allow update of platform identifier via UpdateNotebookInstance operation.
+* `Aws\FMS` - Update endpoint ruleset parameters casing
+
 ## 3.359.2 - 2025-10-30
 
 * `Aws\ConnectCases` - Update endpoint ruleset parameters casing

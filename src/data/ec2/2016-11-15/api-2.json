@@ -802,6 +802,24 @@
       "input":{"shape":"CreateIpamPoolRequest"},
       "output":{"shape":"CreateIpamPoolResult"}
     },
+    "CreateIpamPrefixListResolver":{
+      "name":"CreateIpamPrefixListResolver",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateIpamPrefixListResolverRequest"},
+      "output":{"shape":"CreateIpamPrefixListResolverResult"}
+    },
+    "CreateIpamPrefixListResolverTarget":{
+      "name":"CreateIpamPrefixListResolverTarget",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateIpamPrefixListResolverTargetRequest"},
+      "output":{"shape":"CreateIpamPrefixListResolverTargetResult"}
+    },
     "CreateIpamResourceDiscovery":{
       "name":"CreateIpamResourceDiscovery",
       "http":{
@@ -1569,6 +1587,24 @@
       },
       "input":{"shape":"DeleteIpamPoolRequest"},
       "output":{"shape":"DeleteIpamPoolResult"}
+    },
+    "DeleteIpamPrefixListResolver":{
+      "name":"DeleteIpamPrefixListResolver",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIpamPrefixListResolverRequest"},
+      "output":{"shape":"DeleteIpamPrefixListResolverResult"}
+    },
+    "DeleteIpamPrefixListResolverTarget":{
+      "name":"DeleteIpamPrefixListResolverTarget",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIpamPrefixListResolverTargetRequest"},
+      "output":{"shape":"DeleteIpamPrefixListResolverTargetResult"}
     },
     "DeleteIpamResourceDiscovery":{
       "name":"DeleteIpamResourceDiscovery",
@@ -2841,6 +2877,24 @@
       },
       "input":{"shape":"DescribeIpamPoolsRequest"},
       "output":{"shape":"DescribeIpamPoolsResult"}
+    },
+    "DescribeIpamPrefixListResolverTargets":{
+      "name":"DescribeIpamPrefixListResolverTargets",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeIpamPrefixListResolverTargetsRequest"},
+      "output":{"shape":"DescribeIpamPrefixListResolverTargetsResult"}
+    },
+    "DescribeIpamPrefixListResolvers":{
+      "name":"DescribeIpamPrefixListResolvers",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeIpamPrefixListResolversRequest"},
+      "output":{"shape":"DescribeIpamPrefixListResolversResult"}
     },
     "DescribeIpamResourceDiscoveries":{
       "name":"DescribeIpamResourceDiscoveries",
@@ -4652,6 +4706,33 @@
       "input":{"shape":"GetIpamPoolCidrsRequest"},
       "output":{"shape":"GetIpamPoolCidrsResult"}
     },
+    "GetIpamPrefixListResolverRules":{
+      "name":"GetIpamPrefixListResolverRules",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIpamPrefixListResolverRulesRequest"},
+      "output":{"shape":"GetIpamPrefixListResolverRulesResult"}
+    },
+    "GetIpamPrefixListResolverVersionEntries":{
+      "name":"GetIpamPrefixListResolverVersionEntries",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIpamPrefixListResolverVersionEntriesRequest"},
+      "output":{"shape":"GetIpamPrefixListResolverVersionEntriesResult"}
+    },
+    "GetIpamPrefixListResolverVersions":{
+      "name":"GetIpamPrefixListResolverVersions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIpamPrefixListResolverVersionsRequest"},
+      "output":{"shape":"GetIpamPrefixListResolverVersionsResult"}
+    },
     "GetIpamResourceCidrs":{
       "name":"GetIpamResourceCidrs",
       "http":{
@@ -5232,6 +5313,24 @@
       },
       "input":{"shape":"ModifyIpamPoolRequest"},
       "output":{"shape":"ModifyIpamPoolResult"}
+    },
+    "ModifyIpamPrefixListResolver":{
+      "name":"ModifyIpamPrefixListResolver",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyIpamPrefixListResolverRequest"},
+      "output":{"shape":"ModifyIpamPrefixListResolverResult"}
+    },
+    "ModifyIpamPrefixListResolverTarget":{
+      "name":"ModifyIpamPrefixListResolverTarget",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyIpamPrefixListResolverTargetRequest"},
+      "output":{"shape":"ModifyIpamPrefixListResolverTargetResult"}
     },
     "ModifyIpamResourceCidr":{
       "name":"ModifyIpamResourceCidr",
@@ -12978,6 +13077,74 @@
         }
       }
     },
+    "CreateIpamPrefixListResolverRequest":{
+      "type":"structure",
+      "required":[
+        "IpamId",
+        "AddressFamily"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamId":{"shape":"IpamId"},
+        "Description":{"shape":"String"},
+        "AddressFamily":{"shape":"AddressFamily"},
+        "Rules":{
+          "shape":"IpamPrefixListResolverRuleRequestSet",
+          "locationName":"Rule"
+        },
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateIpamPrefixListResolverResult":{
+      "type":"structure",
+      "members":{
+        "IpamPrefixListResolver":{
+          "shape":"IpamPrefixListResolver",
+          "locationName":"ipamPrefixListResolver"
+        }
+      }
+    },
+    "CreateIpamPrefixListResolverTargetRequest":{
+      "type":"structure",
+      "required":[
+        "IpamPrefixListResolverId",
+        "PrefixListId",
+        "PrefixListRegion",
+        "TrackLatestVersion"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPrefixListResolverId":{"shape":"IpamPrefixListResolverId"},
+        "PrefixListId":{"shape":"String"},
+        "PrefixListRegion":{"shape":"String"},
+        "DesiredVersion":{"shape":"BoxedLong"},
+        "TrackLatestVersion":{"shape":"Boolean"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateIpamPrefixListResolverTargetResult":{
+      "type":"structure",
+      "members":{
+        "IpamPrefixListResolverTarget":{
+          "shape":"IpamPrefixListResolverTarget",
+          "locationName":"ipamPrefixListResolverTarget"
+        }
+      }
+    },
     "CreateIpamRequest":{
       "type":"structure",
       "members":{
@@ -15875,6 +16042,40 @@
         "IpamPool":{
           "shape":"IpamPool",
           "locationName":"ipamPool"
+        }
+      }
+    },
+    "DeleteIpamPrefixListResolverRequest":{
+      "type":"structure",
+      "required":["IpamPrefixListResolverId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPrefixListResolverId":{"shape":"IpamPrefixListResolverId"}
+      }
+    },
+    "DeleteIpamPrefixListResolverResult":{
+      "type":"structure",
+      "members":{
+        "IpamPrefixListResolver":{
+          "shape":"IpamPrefixListResolver",
+          "locationName":"ipamPrefixListResolver"
+        }
+      }
+    },
+    "DeleteIpamPrefixListResolverTargetRequest":{
+      "type":"structure",
+      "required":["IpamPrefixListResolverTargetId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPrefixListResolverTargetId":{"shape":"IpamPrefixListResolverTargetId"}
+      }
+    },
+    "DeleteIpamPrefixListResolverTargetResult":{
+      "type":"structure",
+      "members":{
+        "IpamPrefixListResolverTarget":{
+          "shape":"IpamPrefixListResolverTarget",
+          "locationName":"ipamPrefixListResolverTarget"
         }
       }
     },
@@ -19643,6 +19844,65 @@
         "IpamPools":{
           "shape":"IpamPoolSet",
           "locationName":"ipamPoolSet"
+        }
+      }
+    },
+    "DescribeIpamPrefixListResolverTargetsRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "IpamPrefixListResolverTargetIds":{
+          "shape":"ValueStringList",
+          "locationName":"IpamPrefixListResolverTargetId"
+        },
+        "IpamPrefixListResolverId":{"shape":"IpamPrefixListResolverId"}
+      }
+    },
+    "DescribeIpamPrefixListResolverTargetsResult":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        },
+        "IpamPrefixListResolverTargets":{
+          "shape":"IpamPrefixListResolverTargetSet",
+          "locationName":"ipamPrefixListResolverTargetSet"
+        }
+      }
+    },
+    "DescribeIpamPrefixListResolversRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "IpamPrefixListResolverIds":{
+          "shape":"ValueStringList",
+          "locationName":"IpamPrefixListResolverId"
+        }
+      }
+    },
+    "DescribeIpamPrefixListResolversResult":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        },
+        "IpamPrefixListResolvers":{
+          "shape":"IpamPrefixListResolverSet",
+          "locationName":"ipamPrefixListResolverSet"
         }
       }
     },
@@ -27979,6 +28239,91 @@
         }
       }
     },
+    "GetIpamPrefixListResolverRulesRequest":{
+      "type":"structure",
+      "required":["IpamPrefixListResolverId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPrefixListResolverId":{"shape":"IpamPrefixListResolverId"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetIpamPrefixListResolverRulesResult":{
+      "type":"structure",
+      "members":{
+        "Rules":{
+          "shape":"IpamPrefixListResolverRuleSet",
+          "locationName":"ruleSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetIpamPrefixListResolverVersionEntriesRequest":{
+      "type":"structure",
+      "required":[
+        "IpamPrefixListResolverId",
+        "IpamPrefixListResolverVersion"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPrefixListResolverId":{"shape":"IpamPrefixListResolverId"},
+        "IpamPrefixListResolverVersion":{"shape":"Long"},
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetIpamPrefixListResolverVersionEntriesResult":{
+      "type":"structure",
+      "members":{
+        "Entries":{
+          "shape":"IpamPrefixListResolverVersionEntrySet",
+          "locationName":"entrySet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetIpamPrefixListResolverVersionsRequest":{
+      "type":"structure",
+      "required":["IpamPrefixListResolverId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPrefixListResolverId":{"shape":"IpamPrefixListResolverId"},
+        "IpamPrefixListResolverVersions":{
+          "shape":"IpamPrefixListResolverVersionNumberSet",
+          "locationName":"IpamPrefixListResolverVersion"
+        },
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetIpamPrefixListResolverVersionsResult":{
+      "type":"structure",
+      "members":{
+        "IpamPrefixListResolverVersions":{
+          "shape":"IpamPrefixListResolverVersionSet",
+          "locationName":"ipamPrefixListResolverVersionSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
     "GetIpamResourceCidrsRequest":{
       "type":"structure",
       "required":["IpamScopeId"],
@@ -34910,6 +35255,337 @@
         "restore-in-progress"
       ]
     },
+    "IpamPrefixListResolver":{
+      "type":"structure",
+      "members":{
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "IpamPrefixListResolverId":{
+          "shape":"IpamPrefixListResolverId",
+          "locationName":"ipamPrefixListResolverId"
+        },
+        "IpamPrefixListResolverArn":{
+          "shape":"ResourceArn",
+          "locationName":"ipamPrefixListResolverArn"
+        },
+        "IpamArn":{
+          "shape":"ResourceArn",
+          "locationName":"ipamArn"
+        },
+        "IpamRegion":{
+          "shape":"String",
+          "locationName":"ipamRegion"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "AddressFamily":{
+          "shape":"AddressFamily",
+          "locationName":"addressFamily"
+        },
+        "State":{
+          "shape":"IpamPrefixListResolverState",
+          "locationName":"state"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        },
+        "LastVersionCreationStatus":{
+          "shape":"IpamPrefixListResolverVersionCreationStatus",
+          "locationName":"lastVersionCreationStatus"
+        },
+        "LastVersionCreationStatusMessage":{
+          "shape":"String",
+          "locationName":"lastVersionCreationStatusMessage"
+        }
+      }
+    },
+    "IpamPrefixListResolverId":{"type":"string"},
+    "IpamPrefixListResolverRule":{
+      "type":"structure",
+      "members":{
+        "RuleType":{
+          "shape":"IpamPrefixListResolverRuleType",
+          "locationName":"ruleType"
+        },
+        "StaticCidr":{
+          "shape":"String",
+          "locationName":"staticCidr"
+        },
+        "IpamScopeId":{
+          "shape":"IpamScopeId",
+          "locationName":"ipamScopeId"
+        },
+        "ResourceType":{
+          "shape":"IpamResourceType",
+          "locationName":"resourceType"
+        },
+        "Conditions":{
+          "shape":"IpamPrefixListResolverRuleConditionSet",
+          "locationName":"conditionSet"
+        }
+      }
+    },
+    "IpamPrefixListResolverRuleCondition":{
+      "type":"structure",
+      "members":{
+        "Operation":{
+          "shape":"IpamPrefixListResolverRuleConditionOperation",
+          "locationName":"operation"
+        },
+        "IpamPoolId":{
+          "shape":"String",
+          "locationName":"ipamPoolId"
+        },
+        "ResourceId":{
+          "shape":"String",
+          "locationName":"resourceId"
+        },
+        "ResourceOwner":{
+          "shape":"String",
+          "locationName":"resourceOwner"
+        },
+        "ResourceRegion":{
+          "shape":"String",
+          "locationName":"resourceRegion"
+        },
+        "ResourceTag":{
+          "shape":"IpamResourceTag",
+          "locationName":"resourceTag"
+        },
+        "Cidr":{
+          "shape":"String",
+          "locationName":"cidr"
+        }
+      }
+    },
+    "IpamPrefixListResolverRuleConditionOperation":{
+      "type":"string",
+      "enum":[
+        "equals",
+        "not-equals",
+        "subnet-of"
+      ]
+    },
+    "IpamPrefixListResolverRuleConditionRequest":{
+      "type":"structure",
+      "required":["Operation"],
+      "members":{
+        "Operation":{"shape":"IpamPrefixListResolverRuleConditionOperation"},
+        "IpamPoolId":{"shape":"String"},
+        "ResourceId":{"shape":"String"},
+        "ResourceOwner":{"shape":"String"},
+        "ResourceRegion":{"shape":"String"},
+        "ResourceTag":{"shape":"RequestIpamResourceTag"},
+        "Cidr":{"shape":"String"}
+      }
+    },
+    "IpamPrefixListResolverRuleConditionRequestSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamPrefixListResolverRuleConditionRequest",
+        "locationName":"Condition"
+      }
+    },
+    "IpamPrefixListResolverRuleConditionSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamPrefixListResolverRuleCondition",
+        "locationName":"item"
+      }
+    },
+    "IpamPrefixListResolverRuleRequest":{
+      "type":"structure",
+      "required":["RuleType"],
+      "members":{
+        "RuleType":{"shape":"IpamPrefixListResolverRuleType"},
+        "StaticCidr":{"shape":"String"},
+        "IpamScopeId":{"shape":"IpamScopeId"},
+        "ResourceType":{"shape":"IpamResourceType"},
+        "Conditions":{
+          "shape":"IpamPrefixListResolverRuleConditionRequestSet",
+          "locationName":"Condition"
+        }
+      }
+    },
+    "IpamPrefixListResolverRuleRequestSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamPrefixListResolverRuleRequest",
+        "locationName":"Rule"
+      }
+    },
+    "IpamPrefixListResolverRuleSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamPrefixListResolverRule",
+        "locationName":"item"
+      }
+    },
+    "IpamPrefixListResolverRuleType":{
+      "type":"string",
+      "enum":[
+        "static-cidr",
+        "ipam-resource-cidr",
+        "ipam-pool-cidr"
+      ]
+    },
+    "IpamPrefixListResolverSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamPrefixListResolver",
+        "locationName":"item"
+      }
+    },
+    "IpamPrefixListResolverState":{
+      "type":"string",
+      "enum":[
+        "create-in-progress",
+        "create-complete",
+        "create-failed",
+        "modify-in-progress",
+        "modify-complete",
+        "modify-failed",
+        "delete-in-progress",
+        "delete-complete",
+        "delete-failed",
+        "isolate-in-progress",
+        "isolate-complete",
+        "restore-in-progress"
+      ]
+    },
+    "IpamPrefixListResolverTarget":{
+      "type":"structure",
+      "members":{
+        "IpamPrefixListResolverTargetId":{
+          "shape":"IpamPrefixListResolverTargetId",
+          "locationName":"ipamPrefixListResolverTargetId"
+        },
+        "IpamPrefixListResolverTargetArn":{
+          "shape":"ResourceArn",
+          "locationName":"ipamPrefixListResolverTargetArn"
+        },
+        "IpamPrefixListResolverId":{
+          "shape":"IpamPrefixListResolverId",
+          "locationName":"ipamPrefixListResolverId"
+        },
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "PrefixListId":{
+          "shape":"PrefixListResourceId",
+          "locationName":"prefixListId"
+        },
+        "PrefixListRegion":{
+          "shape":"String",
+          "locationName":"prefixListRegion"
+        },
+        "DesiredVersion":{
+          "shape":"BoxedLong",
+          "locationName":"desiredVersion"
+        },
+        "LastSyncedVersion":{
+          "shape":"BoxedLong",
+          "locationName":"lastSyncedVersion"
+        },
+        "TrackLatestVersion":{
+          "shape":"Boolean",
+          "locationName":"trackLatestVersion"
+        },
+        "StateMessage":{
+          "shape":"String",
+          "locationName":"stateMessage"
+        },
+        "State":{
+          "shape":"IpamPrefixListResolverTargetState",
+          "locationName":"state"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "IpamPrefixListResolverTargetId":{"type":"string"},
+    "IpamPrefixListResolverTargetSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamPrefixListResolverTarget",
+        "locationName":"item"
+      }
+    },
+    "IpamPrefixListResolverTargetState":{
+      "type":"string",
+      "enum":[
+        "create-in-progress",
+        "create-complete",
+        "create-failed",
+        "modify-in-progress",
+        "modify-complete",
+        "modify-failed",
+        "sync-in-progress",
+        "sync-complete",
+        "sync-failed",
+        "delete-in-progress",
+        "delete-complete",
+        "delete-failed",
+        "isolate-in-progress",
+        "isolate-complete",
+        "restore-in-progress"
+      ]
+    },
+    "IpamPrefixListResolverVersion":{
+      "type":"structure",
+      "members":{
+        "Version":{
+          "shape":"Long",
+          "locationName":"version"
+        }
+      }
+    },
+    "IpamPrefixListResolverVersionCreationStatus":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "success",
+        "failure"
+      ]
+    },
+    "IpamPrefixListResolverVersionEntry":{
+      "type":"structure",
+      "members":{
+        "Cidr":{
+          "shape":"String",
+          "locationName":"cidr"
+        }
+      }
+    },
+    "IpamPrefixListResolverVersionEntrySet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamPrefixListResolverVersionEntry",
+        "locationName":"item"
+      }
+    },
+    "IpamPrefixListResolverVersionNumberSet":{
+      "type":"list",
+      "member":{
+        "shape":"Long",
+        "locationName":"item"
+      }
+    },
+    "IpamPrefixListResolverVersionSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamPrefixListResolverVersion",
+        "locationName":"item"
+      }
+    },
     "IpamPublicAddressAssociationStatus":{
       "type":"string",
       "enum":[
@@ -37698,6 +38374,14 @@
         "OwnerId":{
           "shape":"String",
           "locationName":"ownerId"
+        },
+        "IpamPrefixListResolverTargetId":{
+          "shape":"String",
+          "locationName":"ipamPrefixListResolverTargetId"
+        },
+        "IpamPrefixListResolverSyncEnabled":{
+          "shape":"Boolean",
+          "locationName":"ipamPrefixListResolverSyncEnabled"
         }
       }
     },
@@ -38716,6 +39400,51 @@
         }
       }
     },
+    "ModifyIpamPrefixListResolverRequest":{
+      "type":"structure",
+      "required":["IpamPrefixListResolverId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPrefixListResolverId":{"shape":"IpamPrefixListResolverId"},
+        "Description":{"shape":"String"},
+        "Rules":{
+          "shape":"IpamPrefixListResolverRuleRequestSet",
+          "locationName":"Rule"
+        }
+      }
+    },
+    "ModifyIpamPrefixListResolverResult":{
+      "type":"structure",
+      "members":{
+        "IpamPrefixListResolver":{
+          "shape":"IpamPrefixListResolver",
+          "locationName":"ipamPrefixListResolver"
+        }
+      }
+    },
+    "ModifyIpamPrefixListResolverTargetRequest":{
+      "type":"structure",
+      "required":["IpamPrefixListResolverTargetId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPrefixListResolverTargetId":{"shape":"IpamPrefixListResolverTargetId"},
+        "DesiredVersion":{"shape":"BoxedLong"},
+        "TrackLatestVersion":{"shape":"BoxedBoolean"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "ModifyIpamPrefixListResolverTargetResult":{
+      "type":"structure",
+      "members":{
+        "IpamPrefixListResolverTarget":{
+          "shape":"IpamPrefixListResolverTarget",
+          "locationName":"ipamPrefixListResolverTarget"
+        }
+      }
+    },
     "ModifyIpamRequest":{
       "type":"structure",
       "required":["IpamId"],
@@ -38887,7 +39616,8 @@
           "shape":"RemovePrefixListEntries",
           "locationName":"RemoveEntry"
         },
-        "MaxEntries":{"shape":"Integer"}
+        "MaxEntries":{"shape":"Integer"},
+        "IpamPrefixListResolverSyncEnabled":{"shape":"BoxedBoolean"}
       }
     },
     "ModifyManagedPrefixListResult":{
@@ -45315,6 +46045,8 @@
         "ipam-external-resource-verification-token",
         "capacity-block",
         "mac-modification-task",
+        "ipam-prefix-list-resolver",
+        "ipam-prefix-list-resolver-target",
         "capacity-manager-data-export"
       ]
     },
@@ -54229,6 +54961,18 @@
         "VpcPeering":{
           "shape":"VpcEncryptionControlExclusion",
           "locationName":"vpcPeering"
+        },
+        "Lambda":{
+          "shape":"VpcEncryptionControlExclusion",
+          "locationName":"lambda"
+        },
+        "VpcLattice":{
+          "shape":"VpcEncryptionControlExclusion",
+          "locationName":"vpcLattice"
+        },
+        "ElasticFileSystem":{
+          "shape":"VpcEncryptionControlExclusion",
+          "locationName":"elasticFileSystem"
         }
       }
     },
