@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.359.4 - 2025-11-03
 
 * `Aws\Kinesis` - Adds support for MinimumThroughputBillingCommitment with new UpdateAccountSettings API. Adds support to configure warm throughput for on-demand streams in new UpdateStreamWarmThroughput API and existing CreateStream API and UpdateStreamMode API.
 * `Aws\EC2` - Add Amazon EC2 trn2.3xlarge instance type.
