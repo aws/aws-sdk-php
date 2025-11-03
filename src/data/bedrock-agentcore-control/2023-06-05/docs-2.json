@@ -72,6 +72,12 @@
         "UpdateAgentRuntimeEndpointRequest$description": "<p>The updated description of the AgentCore Runtime endpoint.</p>"
       }
     },
+    "AgentManagedRuntimeType": {
+      "base": null,
+      "refs": {
+        "CodeConfiguration$runtime": "<p>The runtime environment for executing the code (for example, Python 3.9 or Node.js 18).</p>"
+      }
+    },
     "AgentRuntime": {
       "base": "<p>Contains information about an agent runtime. An agent runtime is the execution environment for a Amazon Bedrock Agent.</p>",
       "refs": {
@@ -473,10 +479,29 @@
         "CreateGatewayRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGatewayTargetRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "DeleteAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "DeleteAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, the service ignores the request but does not return an error.</p>",
         "DeleteBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>"
+      }
+    },
+    "Code": {
+      "base": "<p>The source code configuration that specifies the location and details of the code to be executed.</p>",
+      "refs": {
+        "CodeConfiguration$code": "<p>The source code location and configuration details.</p>"
+      }
+    },
+    "CodeConfiguration": {
+      "base": "<p>The configuration for the source code that defines how the agent runtime code should be executed, including the code location, runtime environment, and entry point.</p>",
+      "refs": {
+        "AgentRuntimeArtifact$codeConfiguration": "<p>The code configuration for the agent runtime artifact, including the source code location and execution settings.</p>"
+      }
+    },
+    "CodeConfigurationEntryPointList": {
+      "base": null,
+      "refs": {
+        "CodeConfiguration$entryPoint": "<p>The entry point for the code execution, specifying the function or method that should be invoked when the code runs.</p>"
       }
     },
     "CodeInterpreterArn": {
@@ -2038,6 +2063,7 @@
     "S3Location": {
       "base": "<p>The Amazon S3 location for storing data. This structure defines where in Amazon S3 data is stored.</p>",
       "refs": {
+        "Code$s3": "<p>The Amazon Amazon S3 object that contains the source code for the agent runtime.</p>",
         "RecordingConfig$s3Location": "<p>The Amazon S3 location where browser recordings are stored. This location contains the recorded browser sessions.</p>"
       }
     },
@@ -2051,6 +2077,12 @@
       "base": null,
       "refs": {
         "S3Location$prefix": "<p>The prefix for objects in the Amazon S3 bucket. This prefix is added to the object keys to organize the data.</p>"
+      }
+    },
+    "S3LocationVersionIdString": {
+      "base": null,
+      "refs": {
+        "S3Location$versionId": "<p>The version ID of the Amazon Amazon S3 object. If not specified, the latest version of the object is used.</p>"
       }
     },
     "SalesforceOauth2ProviderConfigInput": {
@@ -2838,6 +2870,12 @@
       "base": "<p>Contains information about a workload identity.</p>",
       "refs": {
         "WorkloadIdentityList$member": null
+      }
+    },
+    "entryPoint": {
+      "base": null,
+      "refs": {
+        "CodeConfigurationEntryPointList$member": null
       }
     }
   }

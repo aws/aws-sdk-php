@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Kinesis` - Adds support for MinimumThroughputBillingCommitment with new UpdateAccountSettings API. Adds support to configure warm throughput for on-demand streams in new UpdateStreamWarmThroughput API and existing CreateStream API and UpdateStreamMode API.
+* `Aws\EC2` - Add Amazon EC2 trn2.3xlarge instance type.
+* `Aws\BedrockAgentCoreControl` - Adds support for direct code deploy with CreateAgentRuntime and UpdateAgentRuntime
+* `Aws\ECS` - Documentation-only update for LINEAR and CANARY deployment strategies.
+* `Aws\Budgets` - Fix the AWS Budgets endpoint for the aws-eusc partition.
+
 ## 3.359.3 - 2025-10-31
 
 * `Aws\Omics` - Added WDL_LENIENT engine type that enables implicit typecasting of variable values to its compatible declared types
