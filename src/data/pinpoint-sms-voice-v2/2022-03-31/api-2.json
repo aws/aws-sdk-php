@@ -50,6 +50,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "CarrierLookup":{
+      "name":"CarrierLookup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CarrierLookupRequest"},
+      "output":{"shape":"CarrierLookupResult"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateConfigurationSet":{
       "name":"CreateConfigurationSet",
       "http":{
@@ -1651,6 +1667,36 @@
       "type":"boolean",
       "box":true
     },
+    "CarrierLookupInputPhoneNumberType":{
+      "type":"string",
+      "max":40,
+      "min":1,
+      "pattern":"\\+[({\\s\\[]?[1-9][0-9(){}\\s\\[\\],.-]{1,38}"
+    },
+    "CarrierLookupRequest":{
+      "type":"structure",
+      "required":["PhoneNumber"],
+      "members":{
+        "PhoneNumber":{"shape":"CarrierLookupInputPhoneNumberType"}
+      }
+    },
+    "CarrierLookupResult":{
+      "type":"structure",
+      "required":[
+        "E164PhoneNumber",
+        "PhoneNumberType"
+      ],
+      "members":{
+        "E164PhoneNumber":{"shape":"E164PhoneNumberType"},
+        "DialingCountryCode":{"shape":"DialingCountryCodeType"},
+        "IsoCountryCode":{"shape":"IsoCountryCode"},
+        "Country":{"shape":"String"},
+        "MCC":{"shape":"MCCType"},
+        "MNC":{"shape":"MNCType"},
+        "Carrier":{"shape":"String"},
+        "PhoneNumberType":{"shape":"PhoneNumberType"}
+      }
+    },
     "ClientToken":{
       "type":"string",
       "max":64,
@@ -2835,6 +2881,12 @@
       "max":5,
       "min":0
     },
+    "DialingCountryCodeType":{
+      "type":"string",
+      "max":3,
+      "min":1,
+      "pattern":"[\\d]+"
+    },
     "DisassociateOriginationIdentityRequest":{
       "type":"structure",
       "required":[
@@ -2911,6 +2963,12 @@
         "RegistrationVersionStatus":{"shape":"RegistrationVersionStatus"},
         "RegistrationVersionStatusHistory":{"shape":"RegistrationVersionStatusHistory"}
       }
+    },
+    "E164PhoneNumberType":{
+      "type":"string",
+      "max":20,
+      "min":1,
+      "pattern":"\\+[1-9][0-9]{1,18}"
     },
     "EventDestination":{
       "type":"structure",
@@ -3286,6 +3344,18 @@
       "min":20,
       "pattern":"arn:\\S+"
     },
+    "MCCType":{
+      "type":"string",
+      "max":3,
+      "min":3,
+      "pattern":"[\\d]+"
+    },
+    "MNCType":{
+      "type":"string",
+      "max":3,
+      "min":2,
+      "pattern":"[\\d]+"
+    },
     "MaxPrice":{
       "type":"string",
       "max":8,
@@ -3592,6 +3662,15 @@
     "PhoneNumberInformationList":{
       "type":"list",
       "member":{"shape":"PhoneNumberInformation"}
+    },
+    "PhoneNumberType":{
+      "type":"string",
+      "enum":[
+        "MOBILE",
+        "LANDLINE",
+        "OTHER",
+        "INVALID"
+      ]
     },
     "PhoneOrPoolIdOrArn":{
       "type":"string",

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\PinpointSMSVoiceV2` - This release adds support for the CarrierLookup API, which returns information about a destination phone number including if the number is valid, the carrier, and more.
+
 ## 3.359.4 - 2025-11-03
 
 * `Aws\Kinesis` - Adds support for MinimumThroughputBillingCommitment with new UpdateAccountSettings API. Adds support to configure warm throughput for on-demand streams in new UpdateStreamWarmThroughput API and existing CreateStream API and UpdateStreamMode API.
