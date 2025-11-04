@@ -10,7 +10,6 @@ use Aws\Result;
 use Aws\S3\ApplyChecksumMiddleware;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
-use Aws\S3\S3Transfer\AbstractMultipartUploader;
 use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryResult;
@@ -503,7 +502,7 @@ EOF
         $manager = new S3TransferManager();
         $this->testUploadResolvedChecksum(
             null, // No checksum provided
-            AbstractMultipartUploader::DEFAULT_CHECKSUM_CALCULATION_ALGORITHM,
+            MultipartUploader::DEFAULT_CHECKSUM_CALCULATION_ALGORITHM,
         );
     }
 
