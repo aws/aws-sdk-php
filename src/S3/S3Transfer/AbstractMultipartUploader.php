@@ -25,8 +25,6 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     public const PART_MIN_SIZE = 5 * 1024 * 1024; // 5 MiB
     public const PART_MAX_SIZE = 5 * 1024 * 1024 * 1024; // 5 GiB
     public const PART_MAX_NUM = 10000;
-    public const DEFAULT_CHECKSUM_CALCULATION_ALGORITHM = 'crc32';
-    private const CHECKSUM_TYPE_FULL_OBJECT = 'FULL_OBJECT';
 
     /** @var S3ClientInterface */
     protected readonly S3ClientInterface $s3Client;
@@ -54,28 +52,10 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     protected ?TransferProgressSnapshot $currentSnapshot;
 
     /**
-     * For custom or default checksum.
-     *
-     * @var string|null
-     */
-    protected ?string $requestChecksum;
-
-    /**
-     * This will be used for custom or default checksum.
-     *
-     * @var string|null
-     */
-    protected ?string $requestChecksumAlgorithm;
-
-    /** @var bool */
-    private bool $isFullObjectChecksum;
-
-    /**
      * @param S3ClientInterface $s3Client
      * @param array $requestArgs
      * @param array $config
      * - target_part_size_bytes: (int, optional)
-     * - request_checksum_calculation: (string, optional)
      * - concurrency: (int, optional)
      * @param string|null $uploadId
      * @param array $parts
@@ -99,8 +79,34 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         $this->parts = $parts;
         $this->currentSnapshot = $currentSnapshot;
         $this->listenerNotifier = $listenerNotifier;
-        $this->isFullObjectChecksum = false;
     }
+
+    /**
+     * @return PromiseInterface
+     */
+    abstract protected function createMultipartOperation(): PromiseInterface;
+
+    /**
+     * @return PromiseInterface
+     */
+    abstract protected function completeMultipartOperation(): PromiseInterface;
+
+    /**
+     * @return PromiseInterface
+     */
+    abstract protected function processMultipartOperation(): PromiseInterface;
+
+    /**
+     * @return int
+     */
+    abstract protected function getTotalSize(): int;
+
+    /**
+     * @param ResultInterface $result
+     *
+     * @return mixed
+     */
+    abstract protected function createResponse(ResultInterface $result): mixed;
 
     /**
      * @param array $config
@@ -115,10 +121,6 @@ abstract class AbstractMultipartUploader implements PromisorInterface
 
         if (!isset($config['concurrency'])) {
             $config['concurrency'] = S3TransferManagerConfig::DEFAULT_CONCURRENCY;
-        }
-
-        if (!isset($config['request_checksum_calculation'])) {
-            $config['request_checksum_calculation'] = 'when_supported';
         }
 
         $partSize = $config['target_part_size_bytes'];
@@ -176,78 +178,6 @@ abstract class AbstractMultipartUploader implements PromisorInterface
 
             throw $e;
         });
-    }
-
-    /**
-     * @return PromiseInterface
-     */
-    protected function createMultipartOperation(): PromiseInterface
-    {
-        $createMultipartUploadArgs = $this->requestArgs;
-        if ($this->requestChecksum !== null) {
-            $createMultipartUploadArgs['ChecksumType'] = self::CHECKSUM_TYPE_FULL_OBJECT;
-            $createMultipartUploadArgs['ChecksumAlgorithm'] = $this->requestChecksumAlgorithm;
-            $this->isFullObjectChecksum = true;
-        } elseif ($this->config['request_checksum_calculation'] === 'when_supported') {
-            $this->requestChecksumAlgorithm = $createMultipartUploadArgs['ChecksumAlgorithm']
-                ?? self::DEFAULT_CHECKSUM_CALCULATION_ALGORITHM;
-            $createMultipartUploadArgs['ChecksumAlgorithm'] = $this->requestChecksumAlgorithm;
-        }
-        
-        // Make sure algorithm with full object is a supported one
-        if (($createMultipartUploadArgs['ChecksumType'] ?? '') === self::CHECKSUM_TYPE_FULL_OBJECT) {
-            if (stripos($this->requestChecksumAlgorithm, 'crc') !== 0) {
-                return Create::rejectionFor(
-                    new S3TransferException(
-                        "Full object checksum algorithm must be `CRC` family base."
-                    )
-                );
-            }
-        }
-        
-        $this->operationInitiated($createMultipartUploadArgs);
-        $command = $this->s3Client->getCommand(
-            'CreateMultipartUpload',
-            $createMultipartUploadArgs
-        );
-
-        return $this->s3Client->executeAsync($command)
-            ->then(function (ResultInterface $result) {
-                $this->uploadId = $result['UploadId'];
-                return $result;
-            });
-    }
-
-    /**
-     * @return PromiseInterface
-     */
-    protected function completeMultipartOperation(): PromiseInterface
-    {
-        $this->sortParts();
-        $completeMultipartUploadArgs = $this->requestArgs;
-        $completeMultipartUploadArgs['UploadId'] = $this->uploadId;
-        $completeMultipartUploadArgs['MultipartUpload'] = [
-            'Parts' => $this->parts
-        ];
-        $completeMultipartUploadArgs['MpuObjectSize'] = $this->getTotalSize();
-
-        if ($this->isFullObjectChecksum && $this->requestChecksum !== null) {
-            $completeMultipartUploadArgs['ChecksumType'] = self::CHECKSUM_TYPE_FULL_OBJECT;
-            $completeMultipartUploadArgs[
-                'Checksum' . strtoupper($this->requestChecksumAlgorithm)
-            ] = $this->requestChecksum;
-        }
-
-        $command = $this->s3Client->getCommand(
-            'CompleteMultipartUpload',
-            $completeMultipartUploadArgs
-        );
-
-        return $this->s3Client->executeAsync($command)
-            ->then(function (ResultInterface $result) {
-                $this->operationCompleted($result);
-                return $result;
-            });
     }
 
     /**
@@ -473,21 +403,4 @@ abstract class AbstractMultipartUploader implements PromisorInterface
             $this->config['target_part_size_bytes']
         );
     }
-
-    /**
-     * @return PromiseInterface
-     */
-    abstract protected function processMultipartOperation(): PromiseInterface;
-
-    /**
-     * @return int
-     */
-    abstract protected function getTotalSize(): int;
-
-    /**
-     * @param ResultInterface $result
-     *
-     * @return mixed
-     */
-    abstract protected function createResponse(ResultInterface $result): mixed;
 }

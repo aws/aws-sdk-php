@@ -5,6 +5,8 @@ use Aws\HashingStream;
 use Aws\PhpHash;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
+use Aws\S3\S3Transfer\Exception\S3TransferException;
+use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Models\UploadResult;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
@@ -31,6 +33,8 @@ class MultipartUploader extends AbstractMultipartUploader
     ];
 
     private const STREAM_WRAPPER_TYPE_PLAIN_FILE = 'plainfile';
+    public const DEFAULT_CHECKSUM_CALCULATION_ALGORITHM = 'crc32';
+    private const CHECKSUM_TYPE_FULL_OBJECT = 'FULL_OBJECT';
 
     /** @var int */
     protected int $calculatedObjectSize;
@@ -38,6 +42,36 @@ class MultipartUploader extends AbstractMultipartUploader
     /** @var StreamInterface */
     private StreamInterface $body;
 
+    /**
+     * For custom or default checksum.
+     *
+     * @var string|null
+     */
+    protected ?string $requestChecksum;
+
+    /**
+     * This will be used for custom or default checksum.
+     *
+     * @var string|null
+     */
+    protected ?string $requestChecksumAlgorithm;
+
+    /** @var bool */
+    private bool $isFullObjectChecksum;
+
+    /**
+     * @param S3ClientInterface $s3Client
+     * @param array $requestArgs
+     * @param string|StreamInterface $source
+     * @param array $config
+     *  - target_part_size_bytes: (int, optional)
+     *  - request_checksum_calculation: (string, optional)
+     *  - concurrency: (int, optional)
+     * @param string|null $uploadId
+     * @param array $parts
+     * @param TransferProgressSnapshot|null $currentSnapshot
+     * @param TransferListenerNotifier|null $listenerNotifier
+     */
     public function __construct(
         S3ClientInterface $s3Client,
         array $requestArgs,
@@ -48,6 +82,9 @@ class MultipartUploader extends AbstractMultipartUploader
         ?TransferProgressSnapshot $currentSnapshot = null,
         ?TransferListenerNotifier $listenerNotifier = null,
     ) {
+        if (!isset($config['request_checksum_calculation'])) {
+            $config['request_checksum_calculation'] = S3TransferManagerConfig::DEFAULT_REQUEST_CHECKSUM_CALCULATION;
+        }
         parent::__construct(
             $s3Client,
             $requestArgs,
@@ -59,7 +96,84 @@ class MultipartUploader extends AbstractMultipartUploader
         );
         $this->body = $this->parseBody($source);
         $this->calculatedObjectSize = 0;
+        $this->isFullObjectChecksum = false;
         $this->evaluateCustomChecksum();
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @return PromiseInterface
+     */
+    protected function createMultipartOperation(): PromiseInterface
+    {
+        $createMultipartUploadArgs = $this->requestArgs;
+        if ($this->requestChecksum !== null) {
+            $createMultipartUploadArgs['ChecksumType'] = self::CHECKSUM_TYPE_FULL_OBJECT;
+            $createMultipartUploadArgs['ChecksumAlgorithm'] = $this->requestChecksumAlgorithm;
+            $this->isFullObjectChecksum = true;
+        } elseif ($this->config['request_checksum_calculation'] === 'when_supported') {
+            $this->requestChecksumAlgorithm = $createMultipartUploadArgs['ChecksumAlgorithm']
+                ?? self::DEFAULT_CHECKSUM_CALCULATION_ALGORITHM;
+            $createMultipartUploadArgs['ChecksumAlgorithm'] = $this->requestChecksumAlgorithm;
+        }
+
+        // Make sure algorithm with full object is a supported one
+        if (($createMultipartUploadArgs['ChecksumType'] ?? '') === self::CHECKSUM_TYPE_FULL_OBJECT) {
+            if (stripos($this->requestChecksumAlgorithm, 'crc') !== 0) {
+                return Create::rejectionFor(
+                    new S3TransferException(
+                        "Full object checksum algorithm must be `CRC` family base."
+                    )
+                );
+            }
+        }
+
+        $this->operationInitiated($createMultipartUploadArgs);
+        $command = $this->s3Client->getCommand(
+            'CreateMultipartUpload',
+            $createMultipartUploadArgs
+        );
+
+        return $this->s3Client->executeAsync($command)
+            ->then(function (ResultInterface $result) {
+                $this->uploadId = $result['UploadId'];
+                return $result;
+            });
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @return PromiseInterface
+     */
+    protected function completeMultipartOperation(): PromiseInterface
+    {
+        $this->sortParts();
+        $completeMultipartUploadArgs = $this->requestArgs;
+        $completeMultipartUploadArgs['UploadId'] = $this->uploadId;
+        $completeMultipartUploadArgs['MultipartUpload'] = [
+            'Parts' => $this->parts
+        ];
+        $completeMultipartUploadArgs['MpuObjectSize'] = $this->getTotalSize();
+
+        if ($this->isFullObjectChecksum && $this->requestChecksum !== null) {
+            $completeMultipartUploadArgs['ChecksumType'] = self::CHECKSUM_TYPE_FULL_OBJECT;
+            $completeMultipartUploadArgs[
+            'Checksum' . strtoupper($this->requestChecksumAlgorithm)
+            ] = $this->requestChecksum;
+        }
+
+        $command = $this->s3Client->getCommand(
+            'CompleteMultipartUpload',
+            $completeMultipartUploadArgs
+        );
+
+        return $this->s3Client->executeAsync($command)
+            ->then(function (ResultInterface $result) {
+                $this->operationCompleted($result);
+                return $result;
+            });
     }
 
     /**

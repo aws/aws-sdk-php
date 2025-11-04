@@ -95,6 +95,22 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
         $this->listenerNotifier  = $listenerNotifier;
     }
 
+    /**
+     * Returns the next command for fetching the next object part.
+     *
+     * @return CommandInterface
+     */
+    abstract protected function nextCommand(): CommandInterface;
+
+    /**
+     * Compute the object dimensions, such as size and parts count.
+     *
+     * @param ResultInterface $result
+     *
+     * @return void
+     */
+    abstract protected function computeObjectDimensions(ResultInterface $result): void;
+
     private function validateConfig(array &$config): void
     {
         if (!isset($config['target_part_size_bytes'])) {
@@ -254,22 +270,6 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
                 throw $reason;
             });
     }
-
-    /**
-     * Returns the next command for fetching the next object part.
-     *
-     * @return CommandInterface
-     */
-    abstract protected function nextCommand(): CommandInterface;
-
-    /**
-     * Compute the object dimensions, such as size and parts count.
-     *
-     * @param ResultInterface $result
-     *
-     * @return void
-     */
-    abstract protected function computeObjectDimensions(ResultInterface $result): void;
 
     /**
      * Calculates the object size from content range.
