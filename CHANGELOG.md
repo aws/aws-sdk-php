@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.359.5 - 2025-11-04
 
 * `Aws\PinpointSMSVoiceV2` - This release adds support for the CarrierLookup API, which returns information about a destination phone number including if the number is valid, the carrier, and more.
 
