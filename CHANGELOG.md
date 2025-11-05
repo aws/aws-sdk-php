@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.359.6 - 2025-11-05
 
 * `Aws\FSx` - Amazon FSx now enables secure management of Active Directory credentials through AWS Secrets Manager integration. Customers can use Secret ARNs instead of direct credentials when joining resources to Active Directory domains.
 * `Aws\EC2` - This release adds AvailabilityZoneId support for DescribeFastSnapshotRestores, DisableFastSnapshotRestores, and EnableFastSnapshotRestores APIs.
