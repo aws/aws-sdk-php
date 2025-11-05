@@ -35,7 +35,7 @@
     "DeleteCloudFrontOriginAccessIdentity": "<p>Delete an origin access identity.</p>",
     "DeleteConnectionGroup": "<p>Deletes a connection group.</p>",
     "DeleteContinuousDeploymentPolicy": "<p>Deletes a continuous deployment policy.</p> <p>You cannot delete a continuous deployment policy that's attached to a primary distribution. First update your distribution to remove the continuous deployment policy, then you can delete the policy.</p>",
-    "DeleteDistribution": "<p>Delete a distribution.</p>",
+    "DeleteDistribution": "<p>Delete a distribution.</p> <important> <p>Before you can delete a distribution, you must disable it, which requires permission to update the distribution. Once deleted, a distribution cannot be recovered.</p> </important>",
     "DeleteDistributionTenant": "<p>Deletes a distribution tenant. If you use this API operation to delete a distribution tenant that is currently enabled, the request will fail.</p> <p>To delete a distribution tenant, you must first disable the distribution tenant by using the <code>UpdateDistributionTenant</code> API operation.</p>",
     "DeleteFieldLevelEncryptionConfig": "<p>Remove a field-level encryption configuration.</p>",
     "DeleteFieldLevelEncryptionProfile": "<p>Remove a field-level encryption profile.</p>",
@@ -47,6 +47,7 @@
     "DeleteOriginRequestPolicy": "<p>Deletes an origin request policy.</p> <p>You cannot delete an origin request policy if it's attached to any cache behaviors. First update your distributions to remove the origin request policy from all cache behaviors, then delete the origin request policy.</p> <p>To delete an origin request policy, you must provide the policy's identifier and version. To get the identifier, you can use <code>ListOriginRequestPolicies</code> or <code>GetOriginRequestPolicy</code>.</p>",
     "DeletePublicKey": "<p>Remove a public key you previously added to CloudFront.</p>",
     "DeleteRealtimeLogConfig": "<p>Deletes a real-time log configuration.</p> <p>You cannot delete a real-time log configuration if it's attached to a cache behavior. First update your distributions to remove the real-time log configuration from all cache behaviors, then delete the real-time log configuration.</p> <p>To delete a real-time log configuration, you can provide the configuration's name or its Amazon Resource Name (ARN). You must provide at least one. If you provide both, CloudFront uses the name to identify the real-time log configuration to delete.</p>",
+    "DeleteResourcePolicy": "<p>Deletes the resource policy attached to the CloudFront resource.</p>",
     "DeleteResponseHeadersPolicy": "<p>Deletes a response headers policy.</p> <p>You cannot delete a response headers policy if it's attached to a cache behavior. First update your distributions to remove the response headers policy from all cache behaviors, then delete the response headers policy.</p> <p>To delete a response headers policy, you must provide the policy's identifier and version. To get these values, you can use <code>ListResponseHeadersPolicies</code> or <code>GetResponseHeadersPolicy</code>.</p>",
     "DeleteStreamingDistribution": "<p>Delete a streaming distribution. To delete an RTMP distribution using the CloudFront API, perform the following steps.</p> <p> <b>To delete an RTMP distribution using the CloudFront API</b>:</p> <ol> <li> <p>Disable the RTMP distribution.</p> </li> <li> <p>Submit a <code>GET Streaming Distribution Config</code> request to get the current configuration and the <code>Etag</code> header for the distribution. </p> </li> <li> <p>Update the XML document that was returned in the response to your <code>GET Streaming Distribution Config</code> request to change the value of <code>Enabled</code> to <code>false</code>.</p> </li> <li> <p>Submit a <code>PUT Streaming Distribution Config</code> request to update the configuration for your distribution. In the request body, include the XML document that you updated in Step 3. Then set the value of the HTTP <code>If-Match</code> header to the value of the <code>ETag</code> header that CloudFront returned when you submitted the <code>GET Streaming Distribution Config</code> request in Step 2.</p> </li> <li> <p>Review the response to the <code>PUT Streaming Distribution Config</code> request to confirm that the distribution was successfully disabled.</p> </li> <li> <p>Submit a <code>GET Streaming Distribution Config</code> request to confirm that your changes have propagated. When propagation is complete, the value of <code>Status</code> is <code>Deployed</code>.</p> </li> <li> <p>Submit a <code>DELETE Streaming Distribution</code> request. Set the value of the HTTP <code>If-Match</code> header to the value of the <code>ETag</code> header that CloudFront returned when you submitted the <code>GET Streaming Distribution Config</code> request in Step 2.</p> </li> <li> <p>Review the response to your <code>DELETE Streaming Distribution</code> request to confirm that the distribution was successfully deleted.</p> </li> </ol> <p>For information about deleting a distribution using the CloudFront console, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/HowToDeleteDistribution.html\">Deleting a Distribution</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
     "DeleteVpcOrigin": "<p>Delete an Amazon CloudFront VPC origin.</p>",
@@ -85,6 +86,7 @@
     "GetPublicKey": "<p>Gets a public key.</p>",
     "GetPublicKeyConfig": "<p>Gets a public key configuration.</p>",
     "GetRealtimeLogConfig": "<p>Gets a real-time log configuration.</p> <p>To get a real-time log configuration, you can provide the configuration's name or its Amazon Resource Name (ARN). You must provide at least one. If you provide both, CloudFront uses the name to identify the real-time log configuration to get.</p>",
+    "GetResourcePolicy": "<p>Retrieves the resource policy for the specified CloudFront resource that you own and have shared.</p>",
     "GetResponseHeadersPolicy": "<p>Gets a response headers policy, including metadata (the policy's identifier and the date and time when the policy was last modified).</p> <p>To get a response headers policy, you must provide the policy's identifier. If the response headers policy is attached to a distribution's cache behavior, you can get the policy's identifier using <code>ListDistributions</code> or <code>GetDistribution</code>. If the response headers policy is not attached to a cache behavior, you can get the identifier using <code>ListResponseHeadersPolicies</code>.</p>",
     "GetResponseHeadersPolicyConfig": "<p>Gets a response headers policy configuration.</p> <p>To get a response headers policy configuration, you must provide the policy's identifier. If the response headers policy is attached to a distribution's cache behavior, you can get the policy's identifier using <code>ListDistributions</code> or <code>GetDistribution</code>. If the response headers policy is not attached to a cache behavior, you can get the identifier using <code>ListResponseHeadersPolicies</code>.</p>",
     "GetStreamingDistribution": "<p>Gets information about a specified RTMP distribution, including the distribution configuration.</p>",
@@ -104,6 +106,7 @@
     "ListDistributionsByConnectionMode": "<p>Lists the distributions by the connection mode that you specify.</p>",
     "ListDistributionsByKeyGroup": "<p>Gets a list of distribution IDs for distributions that have a cache behavior that references the specified key group.</p> <p>You can optionally specify the maximum number of items to receive in the response. If the total number of items in the list exceeds the maximum that you specify, or the default maximum, the response is paginated. To get the next page of items, send a subsequent request that specifies the <code>NextMarker</code> value from the current response as the <code>Marker</code> value in the subsequent request.</p>",
     "ListDistributionsByOriginRequestPolicyId": "<p>Gets a list of distribution IDs for distributions that have a cache behavior that's associated with the specified origin request policy.</p> <p>You can optionally specify the maximum number of items to receive in the response. If the total number of items in the list exceeds the maximum that you specify, or the default maximum, the response is paginated. To get the next page of items, send a subsequent request that specifies the <code>NextMarker</code> value from the current response as the <code>Marker</code> value in the subsequent request.</p>",
+    "ListDistributionsByOwnedResource": "<p>Lists the CloudFront distributions that are associated with the specified resource that you own.</p>",
     "ListDistributionsByRealtimeLogConfig": "<p>Gets a list of distributions that have a cache behavior that's associated with the specified real-time log configuration.</p> <p>You can specify the real-time log configuration by its name or its Amazon Resource Name (ARN). You must provide at least one. If you provide both, CloudFront uses the name to identify the real-time log configuration to list distributions for.</p> <p>You can optionally specify the maximum number of items to receive in the response. If the total number of items in the list exceeds the maximum that you specify, or the default maximum, the response is paginated. To get the next page of items, send a subsequent request that specifies the <code>NextMarker</code> value from the current response as the <code>Marker</code> value in the subsequent request.</p>",
     "ListDistributionsByResponseHeadersPolicyId": "<p>Gets a list of distribution IDs for distributions that have a cache behavior that's associated with the specified response headers policy.</p> <p>You can optionally specify the maximum number of items to receive in the response. If the total number of items in the list exceeds the maximum that you specify, or the default maximum, the response is paginated. To get the next page of items, send a subsequent request that specifies the <code>NextMarker</code> value from the current response as the <code>Marker</code> value in the subsequent request.</p>",
     "ListDistributionsByVpcOriginId": "<p>List CloudFront distributions by their VPC origin ID.</p>",
@@ -125,9 +128,11 @@
     "ListTagsForResource": "<p>List tags for a CloudFront resource. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/tagging.html\">Tagging a distribution</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
     "ListVpcOrigins": "<p>List the CloudFront VPC origins in your account.</p>",
     "PublishFunction": "<p>Publishes a CloudFront function by copying the function code from the <code>DEVELOPMENT</code> stage to <code>LIVE</code>. This automatically updates all cache behaviors that are using this function to use the newly published copy in the <code>LIVE</code> stage.</p> <p>When a function is published to the <code>LIVE</code> stage, you can attach the function to a distribution's cache behavior, using the function's Amazon Resource Name (ARN).</p> <p>To publish a function, you must provide the function's name and version (<code>ETag</code> value). To get these values, you can use <code>ListFunctions</code> and <code>DescribeFunction</code>.</p>",
+    "PutResourcePolicy": "<p>Creates a resource control policy for a given CloudFront resource.</p>",
     "TagResource": "<p>Add tags to a CloudFront resource. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/tagging.html\">Tagging a distribution</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
     "TestFunction": "<p>Tests a CloudFront function.</p> <p>To test a function, you provide an <i>event object</i> that represents an HTTP request or response that your CloudFront distribution could receive in production. CloudFront runs the function, passing it the event object that you provided, and returns the function's result (the modified event object) in the response. The response also contains function logs and error messages, if any exist. For more information about testing functions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/managing-functions.html#test-function\">Testing functions</a> in the <i>Amazon CloudFront Developer Guide</i>.</p> <p>To test a function, you provide the function's name and version (<code>ETag</code> value) along with the event object. To get the function's name and version, you can use <code>ListFunctions</code> and <code>DescribeFunction</code>.</p>",
     "UntagResource": "<p>Remove tags from a CloudFront resource. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/tagging.html\">Tagging a distribution</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
+    "UpdateAnycastIpList": "<p>Updates an Anycast static IP list.</p>",
     "UpdateCachePolicy": "<p>Updates a cache policy configuration.</p> <p>When you update a cache policy configuration, all the fields are updated with the values provided in the request. You cannot update some fields independent of others. To update a cache policy configuration:</p> <ol> <li> <p>Use <code>GetCachePolicyConfig</code> to get the current configuration.</p> </li> <li> <p>Locally modify the fields in the cache policy configuration that you want to update.</p> </li> <li> <p>Call <code>UpdateCachePolicy</code> by providing the entire cache policy configuration, including the fields that you modified and those that you didn't.</p> </li> </ol> <important> <p>If your minimum TTL is greater than 0, CloudFront will cache content for at least the duration specified in the cache policy's minimum TTL, even if the <code>Cache-Control: no-cache</code>, <code>no-store</code>, or <code>private</code> directives are present in the origin headers.</p> </important>",
     "UpdateCloudFrontOriginAccessIdentity": "<p>Update an origin access identity.</p>",
     "UpdateConnectionGroup": "<p>Updates a connection group.</p>",
@@ -231,7 +236,8 @@
       "base": "<p>An Anycast static IP list. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/request-static-ips.html\">Request Anycast static IPs to use for allowlisting</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
       "refs": {
         "CreateAnycastIpListResult$AnycastIpList": "<p>A response structure that includes the version identifier (ETag) and the created <a>AnycastIpList</a> structure.</p>",
-        "GetAnycastIpListResult$AnycastIpList": "<p>The Anycast static IP list details.</p>"
+        "GetAnycastIpListResult$AnycastIpList": "<p>The Anycast static IP list details.</p>",
+        "UpdateAnycastIpListResult$AnycastIpList": null
       }
     },
     "AnycastIpListCollection": {
@@ -982,6 +988,10 @@
       "base": null,
       "refs": {}
     },
+    "DeleteResourcePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteResponseHeadersPolicyRequest": {
       "base": null,
       "refs": {}
@@ -1075,6 +1085,24 @@
       "base": null,
       "refs": {
         "DistributionIdList$Items": "<p>Contains the distribution IDs in the list.</p>"
+      }
+    },
+    "DistributionIdOwner": {
+      "base": "<p>A structure that pairs a CloudFront distribution ID with its owning Amazon Web Services account ID.</p>",
+      "refs": {
+        "DistributionIdOwnerItemList$member": null
+      }
+    },
+    "DistributionIdOwnerItemList": {
+      "base": null,
+      "refs": {
+        "DistributionIdOwnerList$Items": "<p>The number of <code>DistributionIdOwner</code> objects.</p>"
+      }
+    },
+    "DistributionIdOwnerList": {
+      "base": "<p>The list of distribution IDs and the Amazon Web Services accounts that they belong to.</p>",
+      "refs": {
+        "ListDistributionsByOwnedResourceResult$DistributionList": "<p>The list of distributions that are using the shared resource.</p>"
       }
     },
     "DistributionList": {
@@ -1781,6 +1809,14 @@
       "base": null,
       "refs": {}
     },
+    "GetResourcePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetResourcePolicyResult": {
+      "base": null,
+      "refs": {}
+    },
     "GetResponseHeadersPolicyConfigRequest": {
       "base": null,
       "refs": {}
@@ -2034,7 +2070,11 @@
     "IpAddressType": {
       "base": null,
       "refs": {
-        "CustomOriginConfig$IpAddressType": "<p>Specifies which IP protocol CloudFront uses when connecting to your origin. If your origin uses both IPv4 and IPv6 protocols, you can choose <code>dualstack</code> to help optimize reliability.</p>"
+        "AnycastIpList$IpAddressType": "<p>The IP address type for the Anycast static IP list.</p>",
+        "AnycastIpListSummary$IpAddressType": "<p>The IP address type for the Anycast static IP list.</p>",
+        "CreateAnycastIpListRequest$IpAddressType": "<p>The IP address type for the Anycast static IP list. You can specify one of the following options:</p> <ul> <li> <p> <code>ipv4</code> - Allocate a list of only IPv4 addresses</p> </li> <li> <p> <code>ipv6</code> - Allocate a list of only IPv4 addresses</p> </li> <li> <p> <code>dualstack</code> - Allocate a list of both IPv4 and IPv6 addresses</p> </li> </ul>",
+        "CustomOriginConfig$IpAddressType": "<p>Specifies which IP protocol CloudFront uses when connecting to your origin. If your origin uses both IPv4 and IPv6 protocols, you can choose <code>dualstack</code> to help optimize reliability.</p>",
+        "UpdateAnycastIpListRequest$IpAddressType": "<p>The IP address type for the Anycast static IP list. You can specify one of the following options:</p> <ul> <li> <p> <code>ipv4</code> - Allocate a list of only IPv4 addresses</p> </li> <li> <p> <code>ipv6</code> - Allocate a list of only IPv4 addresses</p> </li> <li> <p> <code>dualstack</code> - Allocate a list of both IPv4 and IPv6 addresses</p> </li> </ul>"
       }
     },
     "ItemSelection": {
@@ -2301,6 +2341,14 @@
       "refs": {}
     },
     "ListDistributionsByOriginRequestPolicyIdResult": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDistributionsByOwnedResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDistributionsByOwnedResourceResult": {
       "base": null,
       "refs": {}
     },
@@ -2995,6 +3043,14 @@
       "refs": {}
     },
     "PublishFunctionResult": {
+      "base": null,
+      "refs": {}
+    },
+    "PutResourcePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutResourcePolicyResult": {
       "base": null,
       "refs": {}
     },
@@ -3781,6 +3837,14 @@
       "base": "<p>The request to remove tags from a CloudFront resource.</p>",
       "refs": {}
     },
+    "UpdateAnycastIpListRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAnycastIpListResult": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateCachePolicyRequest": {
       "base": null,
       "refs": {}
@@ -4062,6 +4126,7 @@
         "DistributionConfig$IsIPV6Enabled": "<p><note> <p>To use this field for a multi-tenant distribution, use a connection group instead. For more information, see <a href=\"https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ConnectionGroup.html\">ConnectionGroup</a>.</p> </note> <p>If you want CloudFront to respond to IPv6 DNS requests with an IPv6 address for your distribution, specify <code>true</code>. If you specify <code>false</code>, CloudFront responds to IPv6 DNS requests with the DNS response code <code>NOERROR</code> and with no IP addresses. This allows viewers to submit a second request, for an IPv4 address for your distribution.</p> <p>In general, you should enable IPv6 if you have users on IPv6 networks who want to access your content. However, if you're using signed URLs or signed cookies to restrict access to your content, and if you're using a custom policy that includes the <code>IpAddress</code> parameter to restrict the IP addresses that can access your content, don't enable IPv6. If you want to restrict access to some content by IP address and not restrict access to other content (or restrict access but not by IP address), you can create two distributions. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-creating-signed-url-custom-policy.html\">Creating a Signed URL Using a Custom Policy</a> in the <i>Amazon CloudFront Developer Guide</i>.</p> <p>If you're using an Route 53 Amazon Web Services Integration alias resource record set to route traffic to your CloudFront distribution, you need to create a second alias resource record set when both of the following are true:</p> <ul> <li> <p>You enable IPv6 for the distribution</p> </li> <li> <p>You're using alternate domain names in the URLs for your objects</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-to-cloudfront-distribution.html\">Routing Traffic to an Amazon CloudFront Web Distribution by Using Your Domain Name</a> in the <i>Route 53 Amazon Web Services Integration Developer Guide</i>.</p> <p>If you created a CNAME resource record set, either with Route 53 Amazon Web Services Integration or with another DNS service, you don't need to make any changes. A CNAME record will route traffic to your distribution regardless of the IP address format of the viewer request.</p></p>",
         "DistributionConfig$Staging": "<p><note> <p>This field only supports standard distributions. You can't specify this field for multi-tenant distributions. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-config-options.html#unsupported-saas\">Unsupported features for SaaS Manager for Amazon CloudFront</a> in the <i>Amazon CloudFront Developer Guide</i>.</p> </note> <p>A Boolean that indicates whether this is a staging distribution. When this value is <code>true</code>, this is a staging distribution. When this value is <code>false</code>, this is not a staging distribution.</p></p>",
         "DistributionIdList$IsTruncated": "<p>A flag that indicates whether more distribution IDs remain to be listed. If your results were truncated, you can make a subsequent request using the <code>Marker</code> request field to retrieve more distribution IDs in the list.</p>",
+        "DistributionIdOwnerList$IsTruncated": "<p>A flag that indicates whether more <code>DistributionIdOwner</code> objects remain to be listed. If your results were truncated, you can make a follow-up pagination request using the <code>Marker</code> request parameter to retrieve more results in the list.</p>",
         "DistributionList$IsTruncated": "<p>A flag that indicates whether more distributions remain to be listed. If your results were truncated, you can make a follow-up pagination request using the <code>Marker</code> request parameter to retrieve more distributions in the list.</p>",
         "DistributionSummary$Enabled": "<p>Whether the distribution is enabled to accept user requests for content.</p>",
         "DistributionSummary$IsIPV6Enabled": "<p>Whether CloudFront responds to IPv6 DNS requests with an IPv6 address for your distribution.</p>",
@@ -4154,6 +4219,8 @@
         "Distribution$InProgressInvalidationBatches": "<p>The number of invalidation batches currently in progress.</p>",
         "DistributionIdList$MaxItems": "<p>The maximum number of distribution IDs requested.</p>",
         "DistributionIdList$Quantity": "<p>The total number of distribution IDs returned in the response.</p>",
+        "DistributionIdOwnerList$MaxItems": "<p>The maximum number of <code>DistributionIdOwner</code> objects to return.</p>",
+        "DistributionIdOwnerList$Quantity": "<p>Specifies the actual number of <code>DistributionIdOwner</code> objects included in the list for the current page.</p>",
         "DistributionList$MaxItems": "<p>The value you provided for the <code>MaxItems</code> request parameter.</p>",
         "DistributionList$Quantity": "<p>The number of distributions that were created by the current Amazon Web Services account.</p>",
         "EncryptionEntities$Quantity": "<p>Number of field pattern items in a field-level encryption content type-profile mapping.</p>",
@@ -4280,6 +4347,7 @@
         "AnycastIpListSummary$Id": "<p>The ID of the Anycast static IP list.</p>",
         "AnycastIpListSummary$Status": "<p>The deployment status of the Anycast static IP list. Valid values: Deployed, Deploying, or Failed.</p>",
         "AnycastIpListSummary$Arn": "<p>The Amazon Resource Name (ARN) of the Anycast static IP list.</p>",
+        "AnycastIpListSummary$ETag": "<p>The current version (ETag value) of the Anycast static IP list.</p>",
         "AnycastIps$member": null,
         "AssociateAliasRequest$TargetDistributionId": "<p>The ID of the standard distribution that you're associating the alias with.</p>",
         "AssociateAliasRequest$Alias": "<p>The alias (also known as a CNAME) to add to the target standard distribution.</p>",
@@ -4444,6 +4512,7 @@
         "DeletePublicKeyRequest$IfMatch": "<p>The value of the <code>ETag</code> header that you received when retrieving the public key identity to delete. For example: <code>E2QWRUHAPOMQZL</code>.</p>",
         "DeleteRealtimeLogConfigRequest$Name": "<p>The name of the real-time log configuration to delete.</p>",
         "DeleteRealtimeLogConfigRequest$ARN": "<p>The Amazon Resource Name (ARN) of the real-time log configuration to delete.</p>",
+        "DeleteResourcePolicyRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the CloudFront resource for which the resource policy should be deleted.</p>",
         "DeleteResponseHeadersPolicyRequest$Id": "<p>The identifier for the response headers policy that you are deleting.</p> <p>To get the identifier, you can use <code>ListResponseHeadersPolicies</code>.</p>",
         "DeleteResponseHeadersPolicyRequest$IfMatch": "<p>The version of the response headers policy that you are deleting.</p> <p>The version is the response headers policy's <code>ETag</code> value, which you can get using <code>ListResponseHeadersPolicies</code>, <code>GetResponseHeadersPolicy</code>, or <code>GetResponseHeadersPolicyConfig</code>.</p>",
         "DeleteStreamingDistributionRequest$Id": "<p>The distribution ID.</p>",
@@ -4474,6 +4543,10 @@
         "DistributionIdList$Marker": "<p>The value provided in the <code>Marker</code> request field.</p>",
         "DistributionIdList$NextMarker": "<p>Contains the value that you should use in the <code>Marker</code> field of a subsequent request to continue listing distribution IDs where you left off.</p>",
         "DistributionIdListSummary$member": null,
+        "DistributionIdOwner$DistributionId": "<p>The ID of the distribution.</p>",
+        "DistributionIdOwner$OwnerAccountId": "<p>The ID of the Amazon Web Services account that owns the distribution. </p>",
+        "DistributionIdOwnerList$Marker": "<p>Use this field when paginating results to indicate where to begin in your list of <code>DistributionIdOwner</code> objects. The response includes distributions in the list that occur after the marker. To get the next page of the list, set this field's value to the value of <code>NextMarker</code> from the current page's response.</p>",
+        "DistributionIdOwnerList$NextMarker": "<p>A token used for pagination of results returned in the response. You can use the token from the previous request to define where the current request should begin.</p>",
         "DistributionList$Marker": "<p>The value you provided for the <code>Marker</code> request parameter.</p>",
         "DistributionList$NextMarker": "<p>If <code>IsTruncated</code> is <code>true</code>, this element is present and contains the value you can use for the <code>Marker</code> request parameter to continue listing your distributions where they left off.</p>",
         "DistributionNotDisabled$Message": null,
@@ -4604,6 +4677,9 @@
         "GetPublicKeyResult$ETag": "<p>The identifier for this version of the public key.</p>",
         "GetRealtimeLogConfigRequest$Name": "<p>The name of the real-time log configuration to get.</p>",
         "GetRealtimeLogConfigRequest$ARN": "<p>The Amazon Resource Name (ARN) of the real-time log configuration to get.</p>",
+        "GetResourcePolicyRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the CloudFront resource that is associated with the resource policy.</p>",
+        "GetResourcePolicyResult$ResourceArn": "<p>The Amazon Resource Name (ARN) of the CloudFront resource that is associated with the resource policy.</p>",
+        "GetResourcePolicyResult$PolicyDocument": "<p>The resource policy in JSON format.</p>",
         "GetResponseHeadersPolicyConfigRequest$Id": "<p>The identifier for the response headers policy.</p> <p>If the response headers policy is attached to a distribution's cache behavior, you can get the policy's identifier using <code>ListDistributions</code> or <code>GetDistribution</code>. If the response headers policy is not attached to a cache behavior, you can get the identifier using <code>ListResponseHeadersPolicies</code>.</p>",
         "GetResponseHeadersPolicyConfigResult$ETag": "<p>The version identifier for the current version of the response headers policy.</p>",
         "GetResponseHeadersPolicyRequest$Id": "<p>The identifier for the response headers policy.</p> <p>If the response headers policy is attached to a distribution's cache behavior, you can get the policy's identifier using <code>ListDistributions</code> or <code>GetDistribution</code>. If the response headers policy is not attached to a cache behavior, you can get the identifier using <code>ListResponseHeadersPolicies</code>.</p>",
@@ -4699,6 +4775,9 @@
         "ListDistributionsByOriginRequestPolicyIdRequest$Marker": "<p>Use this field when paginating results to indicate where to begin in your list of distribution IDs. The response includes distribution IDs in the list that occur after the marker. To get the next page of the list, set this field's value to the value of <code>NextMarker</code> from the current page's response.</p>",
         "ListDistributionsByOriginRequestPolicyIdRequest$MaxItems": "<p>The maximum number of distribution IDs that you want in the response.</p>",
         "ListDistributionsByOriginRequestPolicyIdRequest$OriginRequestPolicyId": "<p>The ID of the origin request policy whose associated distribution IDs you want to list.</p>",
+        "ListDistributionsByOwnedResourceRequest$ResourceArn": "<p>The ARN of the CloudFront resource that you've shared with other Amazon Web Services accounts.</p>",
+        "ListDistributionsByOwnedResourceRequest$Marker": "<p>Use this field when paginating results to indicate where to begin in your list of distributions. The response includes distributions in the list that occur after the marker. To get the next page of the list, set this field's value to the value of <code>NextMarker</code> from the current page's response.</p>",
+        "ListDistributionsByOwnedResourceRequest$MaxItems": "<p>The maximum number of distributions to return.</p>",
         "ListDistributionsByRealtimeLogConfigRequest$Marker": "<p>Use this field when paginating results to indicate where to begin in your list of distributions. The response includes distributions in the list that occur after the marker. To get the next page of the list, set this field's value to the value of <code>NextMarker</code> from the current page's response.</p>",
         "ListDistributionsByRealtimeLogConfigRequest$MaxItems": "<p>The maximum number of distributions that you want in the response.</p>",
         "ListDistributionsByRealtimeLogConfigRequest$RealtimeLogConfigName": "<p>The name of the real-time log configuration whose associated distributions you want to list.</p>",
@@ -4810,6 +4889,9 @@
         "PublicKeySummary$EncodedKey": "<p>The public key.</p>",
         "PublicKeySummary$Comment": "<p>A comment to describe the public key. The comment cannot be longer than 128 characters.</p>",
         "PublishFunctionRequest$IfMatch": "<p>The current version (<code>ETag</code> value) of the function that you are publishing, which you can get using <code>DescribeFunction</code>.</p>",
+        "PutResourcePolicyRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the CloudFront resource for which the policy is being created.</p>",
+        "PutResourcePolicyRequest$PolicyDocument": "<p>The JSON-formatted resource policy to create.</p>",
+        "PutResourcePolicyResult$ResourceArn": "<p>The Amazon Resource Name (ARN) of the CloudFront resource for which the policy was created.</p>",
         "QueryArgProfile$QueryArg": "<p>Query argument for field-level encryption query argument-profile mapping.</p>",
         "QueryArgProfile$ProfileId": "<p>ID of profile to use for field-level encryption query argument-profile mapping</p>",
         "QueryArgProfileEmpty$Message": null,
@@ -4917,6 +4999,9 @@
         "TrustedKeyGroupIdList$member": null,
         "TrustedSignerDoesNotExist$Message": null,
         "UnsupportedOperation$Message": null,
+        "UpdateAnycastIpListRequest$Id": "<p>The ID of the Anycast static IP list.</p>",
+        "UpdateAnycastIpListRequest$IfMatch": "<p>The current version (ETag value) of the Anycast static IP list that you are updating.</p>",
+        "UpdateAnycastIpListResult$ETag": "<p>The current version of the Anycast static IP list.</p>",
         "UpdateCachePolicyRequest$Id": "<p>The unique identifier for the cache policy that you are updating. The identifier is returned in a cache behavior's <code>CachePolicyId</code> field in the response to <code>GetDistributionConfig</code>.</p>",
         "UpdateCachePolicyRequest$IfMatch": "<p>The version of the cache policy that you are updating. The version is returned in the cache policy's <code>ETag</code> field in the response to <code>GetCachePolicyConfig</code>.</p>",
         "UpdateCachePolicyResult$ETag": "<p>The current version of the cache policy.</p>",
@@ -4989,8 +5074,10 @@
         "ViewerCertificate$Certificate": "<p>This field is deprecated. Use one of the following fields instead:</p> <ul> <li> <p> <code>ACMCertificateArn</code> </p> </li> <li> <p> <code>IAMCertificateId</code> </p> </li> <li> <p> <code>CloudFrontDefaultCertificate</code> </p> </li> </ul>",
         "VpcOrigin$Id": "<p>The VPC origin ID.</p>",
         "VpcOrigin$Arn": "<p>The VPC origin ARN.</p>",
+        "VpcOrigin$AccountId": "<p>The account ID of the Amazon Web Services account that owns the VPC origin.</p>",
         "VpcOrigin$Status": "<p>The VPC origin status.</p>",
         "VpcOriginConfig$VpcOriginId": "<p>The VPC origin ID.</p>",
+        "VpcOriginConfig$OwnerAccountId": "<p>The account ID of the Amazon Web Services account that owns the VPC origin.</p>",
         "VpcOriginEndpointConfig$Name": "<p>The name of the CloudFront VPC origin endpoint configuration.</p>",
         "VpcOriginEndpointConfig$Arn": "<p>The ARN of the CloudFront VPC origin endpoint configuration.</p>",
         "VpcOriginList$Marker": "<p>The marker associated with the VPC origins list.</p>",
@@ -4999,6 +5086,7 @@
         "VpcOriginSummary$Name": "<p>The VPC origin summary name.</p>",
         "VpcOriginSummary$Status": "<p>The VPC origin summary status.</p>",
         "VpcOriginSummary$Arn": "<p>The VPC origin summary ARN.</p>",
+        "VpcOriginSummary$AccountId": "<p>The account ID of the Amazon Web Services account that owns the VPC origin.</p>",
         "VpcOriginSummary$OriginEndpointArn": "<p>The VPC origin summary origin endpoint ARN.</p>",
         "WebAclCustomization$Arn": "<p>The Amazon Resource Name (ARN) of the WAF web ACL.</p>"
       }

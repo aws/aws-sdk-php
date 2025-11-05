@@ -5,6 +5,7 @@
     "CancelContact": "<p>Cancels a contact with a specified contact ID.</p>",
     "CreateConfig": "<p>Creates a <code>Config</code> with the specified <code>configData</code> parameters.</p> <p>Only one type of <code>configData</code> can be specified.</p>",
     "CreateDataflowEndpointGroup": "<p>Creates a <code>DataflowEndpoint</code> group containing the specified list of <code>DataflowEndpoint</code> objects.</p> <p>The <code>name</code> field in each endpoint is used in your mission profile <code>DataflowEndpointConfig</code> to specify which endpoints to use during a contact.</p> <p>When a contact uses multiple <code>DataflowEndpointConfig</code> objects, each <code>Config</code> must match a <code>DataflowEndpoint</code> in the same group.</p>",
+    "CreateDataflowEndpointGroupV2": "<p>Creates a <code>DataflowEndpointGroupV2</code> containing the specified list of <code>DataflowEndpoint</code> objects.</p> <p>The <code>name</code> field in each endpoint is used in your mission profile <code>DataflowEndpointConfig</code> to specify which endpoints to use during a contact.</p> <p>When a contact uses multiple <code>DataflowEndpointConfig</code> objects, each <code>Config</code> must match a <code>DataflowEndpoint</code> in the same group.</p>",
     "CreateEphemeris": "<p>Create an ephemeris with your specified <a>EphemerisData</a>.</p>",
     "CreateMissionProfile": "<p>Creates a mission profile.</p> <p> <code>dataflowEdges</code> is a list of lists of strings. Each lower level list of strings has two elements: a <i>from</i> ARN and a <i>to</i> ARN.</p>",
     "DeleteConfig": "<p>Deletes a <code>Config</code>.</p>",
@@ -14,6 +15,7 @@
     "DescribeContact": "<p>Describes an existing contact.</p>",
     "DescribeEphemeris": "<p>Retrieve information about an existing ephemeris.</p>",
     "GetAgentConfiguration": "<p><note> <p> For use by AWS Ground Station Agent and shouldn't be called directly.</p> </note> <p>Gets the latest configuration information for a registered agent.</p></p>",
+    "GetAgentTaskResponseUrl": "<p><note> <p> For use by AWS Ground Station Agent and shouldn't be called directly.</p> </note> <p>Gets a presigned URL for uploading agent task response logs.</p></p>",
     "GetConfig": "<p>Returns <code>Config</code> information.</p> <p>Only one <code>Config</code> response can be returned.</p>",
     "GetDataflowEndpointGroup": "<p>Returns the dataflow endpoint group.</p>",
     "GetMinuteUsage": "<p>Returns the number of reserved minutes used by account.</p>",
@@ -63,7 +65,9 @@
       "refs": {
         "AggregateStatus$status": "<p>Aggregate status.</p>",
         "AwsGroundStationAgentEndpoint$agentStatus": "<p>The status of AgentEndpoint.</p>",
-        "ComponentStatusData$status": "<p>Component status.</p>"
+        "ComponentStatusData$status": "<p>Component status.</p>",
+        "DownlinkAwsGroundStationAgentEndpointDetails$agentStatus": "<p>Status of the agent associated with the downlink dataflow endpoint</p>",
+        "UplinkAwsGroundStationAgentEndpointDetails$agentStatus": "<p>Status of the agent associated with the uplink dataflow endpoint</p>"
       }
     },
     "AggregateStatus": {
@@ -114,7 +118,9 @@
     "AuditResults": {
       "base": null,
       "refs": {
-        "AwsGroundStationAgentEndpoint$auditResults": "<p>The results of the audit.</p>"
+        "AwsGroundStationAgentEndpoint$auditResults": "<p>The results of the audit.</p>",
+        "DownlinkAwsGroundStationAgentEndpointDetails$auditResults": "<p>Health audit results for the downlink dataflow endpoint</p>",
+        "UplinkAwsGroundStationAgentEndpointDetails$auditResults": "<p>Health audit results for the uplink dataflow endpoint</p>"
       }
     },
     "AwsGroundStationAgentEndpoint": {
@@ -317,7 +323,9 @@
     "ConnectionDetails": {
       "base": "<p>Egress address of AgentEndpoint with an optional mtu.</p>",
       "refs": {
-        "AwsGroundStationAgentEndpoint$egressAddress": "<p>The egress address of AgentEndpoint.</p>"
+        "AwsGroundStationAgentEndpoint$egressAddress": "<p>The egress address of AgentEndpoint.</p>",
+        "DownlinkConnectionDetails$egressAddressAndPort": null,
+        "UplinkConnectionDetails$ingressAddressAndPort": null
       }
     },
     "ContactData": {
@@ -351,6 +359,26 @@
     "CreateDataflowEndpointGroupRequest": {
       "base": "<p/>",
       "refs": {}
+    },
+    "CreateDataflowEndpointGroupV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDataflowEndpointGroupV2Response": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateEndpointDetails": {
+      "base": "<p>Endpoint definition used for creating a dataflow endpoint</p>",
+      "refs": {
+        "CreateEndpointDetailsList$member": null
+      }
+    },
+    "CreateEndpointDetailsList": {
+      "base": null,
+      "refs": {
+        "CreateDataflowEndpointGroupV2Request$endpoints": "<p>Dataflow endpoint group's endpoint definitions</p>"
+      }
     },
     "CreateEphemerisRequest": {
       "base": null,
@@ -416,6 +444,8 @@
       "refs": {
         "CreateDataflowEndpointGroupRequest$contactPrePassDurationSeconds": "<p>Amount of time, in seconds, before a contact starts that the Ground Station Dataflow Endpoint Group will be in a <code>PREPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>PREPASS</code> state.</p>",
         "CreateDataflowEndpointGroupRequest$contactPostPassDurationSeconds": "<p>Amount of time, in seconds, after a contact ends that the Ground Station Dataflow Endpoint Group will be in a <code>POSTPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>POSTPASS</code> state.</p>",
+        "CreateDataflowEndpointGroupV2Request$contactPrePassDurationSeconds": "<p>Amount of time, in seconds, before a contact starts that the Ground Station Dataflow Endpoint Group will be in a <code>PREPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>PREPASS</code> state.</p>",
+        "CreateDataflowEndpointGroupV2Request$contactPostPassDurationSeconds": "<p>Amount of time, in seconds, after a contact ends that the Ground Station Dataflow Endpoint Group will be in a <code>POSTPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>POSTPASS</code> state.</p>",
         "GetDataflowEndpointGroupResponse$contactPrePassDurationSeconds": "<p>Amount of time, in seconds, before a contact starts that the Ground Station Dataflow Endpoint Group will be in a <code>PREPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>PREPASS</code> state.</p>",
         "GetDataflowEndpointGroupResponse$contactPostPassDurationSeconds": "<p>Amount of time, in seconds, after a contact ends that the Ground Station Dataflow Endpoint Group will be in a <code>POSTPASS</code> state. A Ground Station Dataflow Endpoint Group State Change event will be emitted when the Dataflow Endpoint Group enters and exits the <code>POSTPASS</code> state.</p>"
       }
@@ -518,6 +548,31 @@
         "TimeAzEl$dt": "<p>Time offset in atomic seconds from the segment's reference epoch.</p> <p>All <code>dt</code> values within a segment must be in ascending order with no duplicates.</p> <p> <code>dt</code> values may be:</p> <ul> <li> <p>negative</p> </li> <li> <p>expressed as fractions of a second</p> </li> <li> <p>expressed in scientific notation</p> </li> </ul>",
         "TimeAzEl$az": "<p>Azimuth angle at the specified time.</p> <p>Valid ranges by unit:</p> <ul> <li> <p> <code>DEGREE_ANGLE</code>: -180 to 360 degrees, measured clockwise from true north</p> </li> <li> <p> <code>RADIAN</code>: -π to 2π radians, measured clockwise from true north</p> </li> </ul>",
         "TimeAzEl$el": "<p>Elevation angle at the specified time.</p> <p>Valid ranges by unit:</p> <ul> <li> <p> <code>DEGREE_ANGLE</code>: -90 to 90 degrees, where 0 is the horizon, 90 is zenith, and negative values are below the horizon </p> </li> <li> <p> <code>RADIAN</code>: -π/2 to π/2 radians, where 0 is the horizon, π/2 is zenith, and negative values are below the horizon </p> </li> </ul>"
+      }
+    },
+    "DownlinkAwsGroundStationAgentEndpoint": {
+      "base": "<p>Definition for a downlink agent endpoint</p>",
+      "refs": {
+        "CreateEndpointDetails$downlinkAwsGroundStationAgentEndpoint": "<p>Definition for a downlink agent endpoint</p>"
+      }
+    },
+    "DownlinkAwsGroundStationAgentEndpointDetails": {
+      "base": "<p>Details for a downlink agent endpoint</p>",
+      "refs": {
+        "EndpointDetails$downlinkAwsGroundStationAgentEndpoint": "<p>Definition for a downlink agent endpoint</p>"
+      }
+    },
+    "DownlinkConnectionDetails": {
+      "base": "<p>Connection details for Ground Station to Agent and Agent to customer</p>",
+      "refs": {
+        "DownlinkDataflowDetails$agentConnectionDetails": "<p>Downlink connection details for customer to Agent and Agent to Ground Station</p>"
+      }
+    },
+    "DownlinkDataflowDetails": {
+      "base": "<p>Dataflow details for a downlink endpoint</p>",
+      "refs": {
+        "DownlinkAwsGroundStationAgentEndpoint$dataflowDetails": "<p>Dataflow details for the downlink endpoint</p>",
+        "DownlinkAwsGroundStationAgentEndpointDetails$dataflowDetails": "<p>Dataflow details for the downlink endpoint</p>"
       }
     },
     "DurationInSeconds": {
@@ -716,6 +771,14 @@
       "refs": {}
     },
     "GetAgentConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentTaskResponseUrlRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentTaskResponseUrlResponse": {
       "base": null,
       "refs": {}
     },
@@ -1045,7 +1108,9 @@
     "RangedConnectionDetails": {
       "base": "<p>Ingress address of AgentEndpoint with a port range and an optional mtu.</p>",
       "refs": {
-        "AwsGroundStationAgentEndpoint$ingressAddress": "<p>The ingress address of AgentEndpoint.</p>"
+        "AwsGroundStationAgentEndpoint$ingressAddress": "<p>The ingress address of AgentEndpoint.</p>",
+        "DownlinkConnectionDetails$agentIpAndPortAddress": null,
+        "UplinkConnectionDetails$agentIpAndPortAddress": null
       }
     },
     "RangedConnectionDetailsMtuInteger": {
@@ -1149,13 +1214,17 @@
         "CreateMissionProfileRequest$name": "<p>Name of a mission profile.</p>",
         "DataflowEndpoint$name": "<p>Name of a dataflow endpoint.</p>",
         "DescribeEphemerisResponse$name": "<p>A name that you can use to identify the ephemeris.</p>",
+        "DownlinkAwsGroundStationAgentEndpoint$name": "<p>Downlink dataflow endpoint name</p>",
+        "DownlinkAwsGroundStationAgentEndpointDetails$name": "<p>Downlink dataflow endpoint name</p>",
         "EphemerisItem$name": "<p>A name that you can use to identify the ephemeris.</p>",
         "EphemerisMetaData$name": "<p>A name string associated with the ephemeris. Used as a human-readable identifier for the ephemeris.</p> <p>A name is only returned for customer-provider ephemerides that have a name associated.</p>",
         "GetMissionProfileResponse$name": "<p>Name of a mission profile.</p>",
         "MissionProfileListItem$name": "<p>Name of a mission profile.</p>",
         "UpdateConfigRequest$name": "<p>Name of a <code>Config</code>.</p>",
         "UpdateEphemerisRequest$name": "<p>A name that you can use to identify the ephemeris.</p>",
-        "UpdateMissionProfileRequest$name": "<p>Name of a mission profile.</p>"
+        "UpdateMissionProfileRequest$name": "<p>Name of a mission profile.</p>",
+        "UplinkAwsGroundStationAgentEndpoint$name": "<p>Uplink dataflow endpoint name</p>",
+        "UplinkAwsGroundStationAgentEndpointDetails$name": "<p>Uplink dataflow endpoint name</p>"
       }
     },
     "SatelliteList": {
@@ -1181,6 +1250,10 @@
       "refs": {
         "SecurityDetails$securityGroupIds": "<p>The security groups to attach to the elastic network interfaces.</p>"
       }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>Request would cause a service quota to be exceeded.</p>",
+      "refs": {}
     },
     "SignatureMap": {
       "base": null,
@@ -1234,6 +1307,7 @@
         "DescribeContactResponse$region": "<p>Region of a contact.</p>",
         "Destination$dataflowDestinationRegion": "<p>Region of a dataflow destination.</p>",
         "GetAgentConfigurationResponse$taskingDocument": "<p>Tasking document for agent.</p>",
+        "GetAgentTaskResponseUrlResponse$presignedLogUrl": "<p>Presigned URL for uploading agent task response logs.</p>",
         "GetConfigResponse$configId": "<p>UUID of a <code>Config</code>.</p>",
         "GetConfigResponse$name": "<p>Name of a <code>Config</code>.</p>",
         "InvalidParameterException$message": null,
@@ -1244,6 +1318,8 @@
         "ResourceNotFoundException$message": null,
         "S3RecordingDetails$keyTemplate": "<p>Key template used for the S3 Recording Configuration</p>",
         "SecurityGroupIdList$member": null,
+        "ServiceQuotaExceededException$message": null,
+        "ServiceQuotaExceededException$parameterName": "<p>Parameter name that caused the exception</p>",
         "SignatureMap$key": null,
         "SocketAddress$name": "<p>Name of a socket address.</p>",
         "Source$configId": "<p>UUID of a <code>Config</code>.</p>",
@@ -1305,6 +1381,7 @@
         "ContactData$tags": "<p>Tags assigned to a contact.</p>",
         "CreateConfigRequest$tags": "<p>Tags assigned to a <code>Config</code>.</p>",
         "CreateDataflowEndpointGroupRequest$tags": "<p>Tags of a dataflow endpoint group.</p>",
+        "CreateDataflowEndpointGroupV2Request$tags": "<p>Tags of a V2 dataflow endpoint group.</p>",
         "CreateEphemerisRequest$tags": "<p>Tags assigned to an ephemeris.</p>",
         "CreateMissionProfileRequest$tags": "<p>Tags assigned to a mission profile.</p>",
         "DescribeContactResponse$tags": "<p>Tags assigned to a contact.</p>",
@@ -1426,6 +1503,31 @@
       "base": "<p/>",
       "refs": {}
     },
+    "UplinkAwsGroundStationAgentEndpoint": {
+      "base": "<p>Definition for an uplink agent endpoint</p>",
+      "refs": {
+        "CreateEndpointDetails$uplinkAwsGroundStationAgentEndpoint": "<p>Definition for an uplink agent endpoint</p>"
+      }
+    },
+    "UplinkAwsGroundStationAgentEndpointDetails": {
+      "base": "<p>Details for an uplink agent endpoint</p>",
+      "refs": {
+        "EndpointDetails$uplinkAwsGroundStationAgentEndpoint": "<p>Definition for an uplink agent endpoint</p>"
+      }
+    },
+    "UplinkConnectionDetails": {
+      "base": "<p>Connection details for customer to Agent and Agent to Ground Station</p>",
+      "refs": {
+        "UplinkDataflowDetails$agentConnectionDetails": "<p>Uplink connection details for customer to Agent and Agent to Ground Station</p>"
+      }
+    },
+    "UplinkDataflowDetails": {
+      "base": "<p>Dataflow details for an uplink endpoint</p>",
+      "refs": {
+        "UplinkAwsGroundStationAgentEndpoint$dataflowDetails": "<p>Dataflow details for the uplink endpoint</p>",
+        "UplinkAwsGroundStationAgentEndpointDetails$dataflowDetails": "<p>Dataflow details for the uplink endpoint</p>"
+      }
+    },
     "UplinkEchoConfig": {
       "base": "<p>Information about an uplink echo <code>Config</code>.</p> <p>Parameters from the <code>AntennaUplinkConfig</code>, corresponding to the specified <code>AntennaUplinkConfigArn</code>, are used when this <code>UplinkEchoConfig</code> is used in a contact.</p>",
       "refs": {
@@ -1447,6 +1549,7 @@
         "ComponentStatusData$dataflowId": "<p>Dataflow UUID associated with the component.</p>",
         "ContactData$contactId": "<p>UUID of a contact.</p>",
         "ContactIdResponse$contactId": "<p>UUID of a contact.</p>",
+        "CreateDataflowEndpointGroupV2Response$dataflowEndpointGroupId": "<p>Dataflow endpoint group ID</p>",
         "CreateEphemerisRequest$satelliteId": "<p>The satellite ID that associates this ephemeris with a satellite in AWS Ground Station.</p>",
         "DataflowEndpointGroupIdResponse$dataflowEndpointGroupId": "<p>UUID of a dataflow endpoint group.</p>",
         "DataflowEndpointListItem$dataflowEndpointGroupId": "<p>UUID of a dataflow endpoint group.</p>",
@@ -1466,6 +1569,10 @@
         "EphemerisResponseData$ephemerisId": "<p>Unique identifier of the ephemeris. Appears only for custom ephemerides.</p>",
         "GetAgentConfigurationRequest$agentId": "<p>UUID of agent to get configuration information for.</p>",
         "GetAgentConfigurationResponse$agentId": "<p>UUID of agent.</p>",
+        "GetAgentTaskResponseUrlRequest$agentId": "<p>UUID of agent requesting the response URL.</p>",
+        "GetAgentTaskResponseUrlRequest$taskId": "<p>GUID of the agent task for which the response URL is being requested.</p>",
+        "GetAgentTaskResponseUrlResponse$agentId": "<p>UUID of the agent.</p>",
+        "GetAgentTaskResponseUrlResponse$taskId": "<p>GUID of the agent task.</p>",
         "GetConfigRequest$configId": "<p>UUID of a <code>Config</code>.</p>",
         "GetDataflowEndpointGroupRequest$dataflowEndpointGroupId": "<p>UUID of a dataflow endpoint group.</p>",
         "GetDataflowEndpointGroupResponse$dataflowEndpointGroupId": "<p>UUID of a dataflow endpoint group.</p>",

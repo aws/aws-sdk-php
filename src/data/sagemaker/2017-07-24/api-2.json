@@ -6967,7 +6967,10 @@
         "OverrideVpcConfig":{"shape":"VpcConfig"},
         "ScheduledUpdateConfig":{"shape":"ScheduledUpdateConfig"},
         "CurrentImageId":{"shape":"ImageId"},
-        "DesiredImageId":{"shape":"ImageId"}
+        "DesiredImageId":{"shape":"ImageId"},
+        "TargetStateCount":{"shape":"ClusterInstanceCount"},
+        "SoftwareUpdateStatus":{"shape":"SoftwareUpdateStatus"},
+        "ActiveSoftwareUpdateConfig":{"shape":"DeploymentConfiguration"}
       }
     },
     "ClusterInstanceGroupDetailsList":{
@@ -9450,10 +9453,8 @@
       "type":"structure",
       "required":[
         "TrainingJobName",
-        "AlgorithmSpecification",
         "RoleArn",
         "OutputDataConfig",
-        "ResourceConfig",
         "StoppingCondition"
       ],
       "members":{
@@ -24975,6 +24976,17 @@
       "max":2048,
       "min":0,
       "pattern":"arn:aws[a-z\\-]*:sns:[a-z0-9\\-]*:[0-9]{12}:[a-zA-Z0-9_.-]+"
+    },
+    "SoftwareUpdateStatus":{
+      "type":"string",
+      "enum":[
+        "Pending",
+        "InProgress",
+        "Succeeded",
+        "Failed",
+        "RollbackInProgress",
+        "RollbackComplete"
+      ]
     },
     "SortActionsBy":{
       "type":"string",

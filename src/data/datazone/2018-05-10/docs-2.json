@@ -961,6 +961,8 @@
         "CreateGlossaryPolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy grant is applied to child domain units.</p>",
         "CreateProjectFromProjectProfilePolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether to include child domain units when creating a project from project profile policy grant details</p>",
         "CreateProjectPolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy grant is applied to child domain units.</p>",
+        "CreateProjectProfileInput$allowCustomProjectResourceTags": "<p>Specifies whether custom project resource tags are supported.</p>",
+        "CreateProjectProfileOutput$allowCustomProjectResourceTags": "<p>Specifies whether custom project resource tags are supported.</p>",
         "CustomParameter$isEditable": "<p>Specifies whether the parameter is editable.</p>",
         "CustomParameter$isOptional": "<p>Specifies whether the custom parameter is optional.</p>",
         "CustomParameter$isUpdateSupported": "<p>Specifies whether a parameter value can be updated after creation. </p>",
@@ -977,6 +979,7 @@
         "FormEntryOutput$required": "<p>Specifies whether a form entry is required.</p>",
         "GetConnectionInput$withSecret": "<p>Specifies whether a connection has a secret.</p>",
         "GetDataSourceOutput$publishOnImport": "<p>Specifies whether the assets that this data source creates in the inventory are to be also automatically published to the catalog.</p>",
+        "GetProjectProfileOutput$allowCustomProjectResourceTags": "<p>Specifies whether custom project resource tags are supported.</p>",
         "GetSubscriptionOutput$retainPermissions": "<p>The retain permissions of the subscription.</p>",
         "GlueConnectionInput$validateCredentials": "<p>Speciefies whether to validate credentials of the Amazon Web Services Glue connection.</p>",
         "GlueRunConfigurationInput$autoImportDataQualityResult": "<p>Specifies whether to automatically import data quality metrics as part of the data source run.</p>",
@@ -994,6 +997,7 @@
         "RedshiftLineageSyncConfigurationInput$enabled": "<p>Specifies whether the Amaon Redshift lineage sync configuration is enabled.</p>",
         "RedshiftLineageSyncConfigurationOutput$enabled": "<p>Specifies whether the Amaon Redshift lineage sync configuration is enabled.</p>",
         "RedshiftPropertiesOutput$isProvisionedSecret": "<p>Specifies whether Amaon Redshift properties has a provisioned secret.</p>",
+        "ResourceTagParameter$isValueEditable": "<p>Specifies whether the value of the resource tag parameter of the project profile is editable at the project level.</p>",
         "RevokeSubscriptionInput$retainPermissions": "<p>Specifies whether permissions are retained when the subscription is revoked.</p>",
         "RevokeSubscriptionOutput$retainPermissions": "<p>Specifies whether permissions are retained when the subscription is revoked.</p>",
         "RowFilterConfiguration$sensitive": "<p>Specifies whether the row filter is sensitive.</p>",
@@ -1004,6 +1008,8 @@
         "UpdateDataSourceInput$retainPermissionsOnRevokeFailure": "<p>Specifies that the granted permissions are retained in case of a self-subscribe functionality failure for a data source.</p>",
         "UpdateDataSourceOutput$publishOnImport": "<p>The publish on import setting to be updated as part of the <code>UpdateDataSource</code> action.</p>",
         "UpdateDataSourceOutput$retainPermissionsOnRevokeFailure": "<p>Specifies that the granted permissions are retained in case of a self-subscribe functionality failure for a data source.</p>",
+        "UpdateProjectProfileInput$allowCustomProjectResourceTags": "<p>Specifies whether custom project resource tags are supported.</p>",
+        "UpdateProjectProfileOutput$allowCustomProjectResourceTags": "<p>Specifies whether custom project resource tags are supported.</p>",
         "UpdateRuleInput$includeChildDomainUnits": "<p>Specifies whether to update this rule in the child domain units.</p>"
       }
     },
@@ -1466,6 +1472,12 @@
     "CreateProjectInput": {
       "base": null,
       "refs": {}
+    },
+    "CreateProjectInputResourceTagsMap": {
+      "base": null,
+      "refs": {
+        "CreateProjectInput$resourceTags": "<p>The resource tags of the project.</p>"
+      }
     },
     "CreateProjectMembershipInput": {
       "base": null,
@@ -2374,7 +2386,9 @@
         "CreateProjectInput$description": "<p>The description of the Amazon DataZone project.</p>",
         "CreateProjectOutput$description": "<p>The description of the project.</p>",
         "CreateProjectProfileInput$description": "<p>A description of a project profile.</p>",
+        "CreateProjectProfileInput$projectResourceTagsDescription": "<p>Field viewable through the UI that provides a project user with the allowed resource tag specifications.</p>",
         "CreateProjectProfileOutput$description": "<p>A project profile description.</p>",
+        "CreateProjectProfileOutput$projectResourceTagsDescription": "<p>Field viewable through the UI that provides a project user with the allowed resource tag specifications.</p>",
         "CreateRuleInput$description": "<p>The description of the rule.</p>",
         "CreateRuleOutput$description": "<p>The description of the rule.</p>",
         "CustomParameter$description": "<p>The description of the parameter.</p>",
@@ -2400,6 +2414,7 @@
         "GetListingOutput$description": "<p>The description of the listing.</p>",
         "GetProjectOutput$description": "<p>The description of the project.</p>",
         "GetProjectProfileOutput$description": "<p>The description of the project profile.</p>",
+        "GetProjectProfileOutput$projectResourceTagsDescription": "<p>Field viewable through the UI that provides a project user with the allowed resource tag specifications.</p>",
         "GetRuleOutput$description": "<p>The description of the rule.</p>",
         "ProjectProfileSummary$description": "<p>The description of the project profile.</p>",
         "ProjectSummary$description": "<p>The description of a project.</p>",
@@ -2417,7 +2432,9 @@
         "UpdateProjectInput$description": "<p>The description to be updated as part of the <code>UpdateProject</code> action.</p>",
         "UpdateProjectOutput$description": "<p>The description of the project that is to be updated.</p>",
         "UpdateProjectProfileInput$description": "<p>The description of a project profile.</p>",
+        "UpdateProjectProfileInput$projectResourceTagsDescription": "<p>Field viewable through the UI that provides a project user with the allowed resource tag specifications.</p>",
         "UpdateProjectProfileOutput$description": "<p>The description of a project profile.</p>",
+        "UpdateProjectProfileOutput$projectResourceTagsDescription": "<p>Field viewable through the UI that provides a project user with the allowed resource tag specifications.</p>",
         "UpdateRuleInput$description": "<p>The description of the rule.</p>",
         "UpdateRuleOutput$description": "<p>The description of the rule.</p>"
       }
@@ -5943,6 +5960,16 @@
         "ProjectProfileSummaries$member": null
       }
     },
+    "ProjectResourceTagParameters": {
+      "base": null,
+      "refs": {
+        "CreateProjectProfileInput$projectResourceTags": "<p>The resource tags of the project profile.</p>",
+        "CreateProjectProfileOutput$projectResourceTags": "<p>The resource tags of the project profile.</p>",
+        "GetProjectProfileOutput$projectResourceTags": "<p>The resource tags of the project profile.</p>",
+        "UpdateProjectProfileInput$projectResourceTags": "<p>The resource tags of the project profile.</p>",
+        "UpdateProjectProfileOutput$projectResourceTags": "<p>The resource tags of the project profile.</p>"
+      }
+    },
     "ProjectStatus": {
       "base": null,
       "refs": {
@@ -6392,6 +6419,32 @@
     "ResourceNotFoundException": {
       "base": "<p>The specified resource cannot be found.</p>",
       "refs": {}
+    },
+    "ResourceTag": {
+      "base": "<p>The resource tag of the project.</p>",
+      "refs": {
+        "ResourceTags$member": null
+      }
+    },
+    "ResourceTagParameter": {
+      "base": "<p>The resource tag parameter of the project profile.</p>",
+      "refs": {
+        "ProjectResourceTagParameters$member": null
+      }
+    },
+    "ResourceTagSource": {
+      "base": null,
+      "refs": {
+        "ResourceTag$source": "<p>The source of the resource tag of the project.</p>"
+      }
+    },
+    "ResourceTags": {
+      "base": null,
+      "refs": {
+        "CreateProjectOutput$resourceTags": "<p>The resource tags of the project.</p>",
+        "GetProjectOutput$resourceTags": "<p>The resource tags of the project.</p>",
+        "UpdateProjectOutput$resourceTags": "<p>The resource tags of the project.</p>"
+      }
     },
     "Revision": {
       "base": null,
@@ -7886,8 +7939,12 @@
     "TagKey": {
       "base": null,
       "refs": {
+        "CreateProjectInputResourceTagsMap$key": null,
+        "ResourceTag$key": "<p>The key of the resource tag of the project.</p>",
+        "ResourceTagParameter$key": "<p>The key of the resource tag parameter of the project profile.</p>",
         "TagKeyList$member": null,
-        "Tags$key": null
+        "Tags$key": null,
+        "UpdateProjectInputResourceTagsMap$key": null
       }
     },
     "TagKeyList": {
@@ -7907,7 +7964,11 @@
     "TagValue": {
       "base": null,
       "refs": {
-        "Tags$value": null
+        "CreateProjectInputResourceTagsMap$value": null,
+        "ResourceTag$value": "<p>The value of the resource tag of the project.</p>",
+        "ResourceTagParameter$value": "<p>The value of the resource tag parameter key of the project profile.</p>",
+        "Tags$value": null,
+        "UpdateProjectInputResourceTagsMap$value": null
       }
     },
     "Tags": {
@@ -8308,6 +8369,12 @@
     "UpdateProjectInput": {
       "base": null,
       "refs": {}
+    },
+    "UpdateProjectInputResourceTagsMap": {
+      "base": null,
+      "refs": {
+        "UpdateProjectInput$resourceTags": "<p>The resource tags of the project.</p>"
+      }
     },
     "UpdateProjectOutput": {
       "base": null,

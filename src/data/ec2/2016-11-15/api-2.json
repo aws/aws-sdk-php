@@ -9018,6 +9018,13 @@
       }
     },
     "AvailabilityZoneId":{"type":"string"},
+    "AvailabilityZoneIdStringList":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"AvailabilityZoneId"
+      }
+    },
     "AvailabilityZoneList":{
       "type":"list",
       "member":{
@@ -18678,6 +18685,10 @@
           "shape":"String",
           "locationName":"availabilityZone"
         },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
+        },
         "State":{
           "shape":"FastSnapshotRestoreStateCode",
           "locationName":"state"
@@ -23635,6 +23646,10 @@
           "shape":"String",
           "locationName":"availabilityZone"
         },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
+        },
         "Error":{
           "shape":"DisableFastSnapshotRestoreStateError",
           "locationName":"error"
@@ -23658,6 +23673,10 @@
         "AvailabilityZone":{
           "shape":"String",
           "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
         },
         "State":{
           "shape":"FastSnapshotRestoreStateCode",
@@ -23706,14 +23725,15 @@
     },
     "DisableFastSnapshotRestoresRequest":{
       "type":"structure",
-      "required":[
-        "AvailabilityZones",
-        "SourceSnapshotIds"
-      ],
+      "required":["SourceSnapshotIds"],
       "members":{
         "AvailabilityZones":{
           "shape":"AvailabilityZoneStringList",
           "locationName":"AvailabilityZone"
+        },
+        "AvailabilityZoneIds":{
+          "shape":"AvailabilityZoneIdStringList",
+          "locationName":"AvailabilityZoneId"
         },
         "SourceSnapshotIds":{
           "shape":"SnapshotIdStringList",
@@ -25330,6 +25350,10 @@
           "shape":"String",
           "locationName":"availabilityZone"
         },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
+        },
         "Error":{
           "shape":"EnableFastSnapshotRestoreStateError",
           "locationName":"error"
@@ -25353,6 +25377,10 @@
         "AvailabilityZone":{
           "shape":"String",
           "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
         },
         "State":{
           "shape":"FastSnapshotRestoreStateCode",
@@ -25401,14 +25429,15 @@
     },
     "EnableFastSnapshotRestoresRequest":{
       "type":"structure",
-      "required":[
-        "AvailabilityZones",
-        "SourceSnapshotIds"
-      ],
+      "required":["SourceSnapshotIds"],
       "members":{
         "AvailabilityZones":{
           "shape":"AvailabilityZoneStringList",
           "locationName":"AvailabilityZone"
+        },
+        "AvailabilityZoneIds":{
+          "shape":"AvailabilityZoneIdStringList",
+          "locationName":"AvailabilityZoneId"
         },
         "SourceSnapshotIds":{
           "shape":"SnapshotIdStringList",

@@ -5502,8 +5502,16 @@
         "glossaryTerms":{"shape":"GlossaryTerms"},
         "name":{"shape":"ProjectName"},
         "projectProfileId":{"shape":"ProjectProfileId"},
+        "resourceTags":{"shape":"CreateProjectInputResourceTagsMap"},
         "userParameters":{"shape":"EnvironmentConfigurationUserParametersList"}
       }
+    },
+    "CreateProjectInputResourceTagsMap":{
+      "type":"map",
+      "key":{"shape":"TagKey"},
+      "value":{"shape":"TagValue"},
+      "max":25,
+      "min":0
     },
     "CreateProjectMembershipInput":{
       "type":"structure",
@@ -5554,6 +5562,7 @@
         "name":{"shape":"ProjectName"},
         "projectProfileId":{"shape":"ProjectProfileId"},
         "projectStatus":{"shape":"ProjectStatus"},
+        "resourceTags":{"shape":"ResourceTags"},
         "userParameters":{"shape":"EnvironmentConfigurationUserParametersList"}
       }
     },
@@ -5570,6 +5579,7 @@
         "name"
       ],
       "members":{
+        "allowCustomProjectResourceTags":{"shape":"Boolean"},
         "description":{"shape":"Description"},
         "domainIdentifier":{
           "shape":"DomainId",
@@ -5579,6 +5589,8 @@
         "domainUnitIdentifier":{"shape":"DomainUnitId"},
         "environmentConfigurations":{"shape":"EnvironmentConfigurationsList"},
         "name":{"shape":"ProjectProfileName"},
+        "projectResourceTags":{"shape":"ProjectResourceTagParameters"},
+        "projectResourceTagsDescription":{"shape":"Description"},
         "status":{"shape":"Status"}
       }
     },
@@ -5591,6 +5603,7 @@
         "name"
       ],
       "members":{
+        "allowCustomProjectResourceTags":{"shape":"Boolean"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "createdBy":{"shape":"CreatedBy"},
         "description":{"shape":"Description"},
@@ -5600,6 +5613,8 @@
         "id":{"shape":"ProjectProfileId"},
         "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
         "name":{"shape":"ProjectProfileName"},
+        "projectResourceTags":{"shape":"ProjectResourceTagParameters"},
+        "projectResourceTagsDescription":{"shape":"Description"},
         "status":{"shape":"Status"}
       }
     },
@@ -9026,6 +9041,7 @@
         "name":{"shape":"ProjectName"},
         "projectProfileId":{"shape":"ProjectProfileId"},
         "projectStatus":{"shape":"ProjectStatus"},
+        "resourceTags":{"shape":"ResourceTags"},
         "userParameters":{"shape":"EnvironmentConfigurationUserParametersList"}
       }
     },
@@ -9057,6 +9073,7 @@
         "name"
       ],
       "members":{
+        "allowCustomProjectResourceTags":{"shape":"Boolean"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "createdBy":{"shape":"CreatedBy"},
         "description":{"shape":"Description"},
@@ -9066,6 +9083,8 @@
         "id":{"shape":"ProjectProfileId"},
         "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
         "name":{"shape":"ProjectProfileName"},
+        "projectResourceTags":{"shape":"ProjectResourceTagParameters"},
+        "projectResourceTagsDescription":{"shape":"Description"},
         "status":{"shape":"Status"}
       }
     },
@@ -12639,6 +12658,12 @@
         "status":{"shape":"Status"}
       }
     },
+    "ProjectResourceTagParameters":{
+      "type":"list",
+      "member":{"shape":"ResourceTagParameter"},
+      "max":25,
+      "min":0
+    },
     "ProjectStatus":{
       "type":"string",
       "enum":[
@@ -13276,6 +13301,45 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ResourceTag":{
+      "type":"structure",
+      "required":[
+        "key",
+        "source",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"TagKey"},
+        "source":{"shape":"ResourceTagSource"},
+        "value":{"shape":"TagValue"}
+      }
+    },
+    "ResourceTagParameter":{
+      "type":"structure",
+      "required":[
+        "isValueEditable",
+        "key",
+        "value"
+      ],
+      "members":{
+        "isValueEditable":{"shape":"Boolean"},
+        "key":{"shape":"TagKey"},
+        "value":{"shape":"TagValue"}
+      }
+    },
+    "ResourceTagSource":{
+      "type":"string",
+      "enum":[
+        "PROJECT",
+        "PROJECT_PROFILE"
+      ]
+    },
+    "ResourceTags":{
+      "type":"list",
+      "member":{"shape":"ResourceTag"},
+      "max":25,
+      "min":0
     },
     "Revision":{
       "type":"string",
@@ -15555,8 +15619,16 @@
         },
         "name":{"shape":"ProjectName"},
         "projectProfileVersion":{"shape":"String"},
+        "resourceTags":{"shape":"UpdateProjectInputResourceTagsMap"},
         "userParameters":{"shape":"EnvironmentConfigurationUserParametersList"}
       }
+    },
+    "UpdateProjectInputResourceTagsMap":{
+      "type":"map",
+      "key":{"shape":"TagKey"},
+      "value":{"shape":"TagValue"},
+      "max":25,
+      "min":0
     },
     "UpdateProjectOutput":{
       "type":"structure",
@@ -15580,6 +15652,7 @@
         "name":{"shape":"ProjectName"},
         "projectProfileId":{"shape":"ProjectProfileId"},
         "projectStatus":{"shape":"ProjectStatus"},
+        "resourceTags":{"shape":"ResourceTags"},
         "userParameters":{"shape":"EnvironmentConfigurationUserParametersList"}
       }
     },
@@ -15590,6 +15663,7 @@
         "identifier"
       ],
       "members":{
+        "allowCustomProjectResourceTags":{"shape":"Boolean"},
         "description":{"shape":"Description"},
         "domainIdentifier":{
           "shape":"DomainId",
@@ -15604,6 +15678,8 @@
           "locationName":"identifier"
         },
         "name":{"shape":"ProjectProfileName"},
+        "projectResourceTags":{"shape":"ProjectResourceTagParameters"},
+        "projectResourceTagsDescription":{"shape":"Description"},
         "status":{"shape":"Status"}
       }
     },
@@ -15616,6 +15692,7 @@
         "name"
       ],
       "members":{
+        "allowCustomProjectResourceTags":{"shape":"Boolean"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "createdBy":{"shape":"CreatedBy"},
         "description":{"shape":"Description"},
@@ -15625,6 +15702,8 @@
         "id":{"shape":"ProjectProfileId"},
         "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
         "name":{"shape":"ProjectProfileName"},
+        "projectResourceTags":{"shape":"ProjectResourceTagParameters"},
+        "projectResourceTagsDescription":{"shape":"Description"},
         "status":{"shape":"Status"}
       }
     },

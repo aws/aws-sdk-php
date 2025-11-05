@@ -2549,6 +2549,7 @@
       "base": null,
       "refs": {
         "ClusterInstanceGroupDetails$TargetCount": "<p>The number of instances you specified to add to the instance group of a SageMaker HyperPod cluster.</p>",
+        "ClusterInstanceGroupDetails$TargetStateCount": "<p>The number of nodes running a specific image ID since the last software update request.</p>",
         "ClusterInstanceGroupSpecification$InstanceCount": "<p>Specifies the number of instances to add to the instance group of a SageMaker HyperPod cluster.</p>",
         "ClusterRestrictedInstanceGroupDetails$TargetCount": "<p>The number of instances you specified to add to the restricted instance group of a SageMaker HyperPod cluster.</p>",
         "ClusterRestrictedInstanceGroupSpecification$InstanceCount": "<p>Specifies the number of instances to add to the restricted instance group of a SageMaker HyperPod cluster.</p>"
@@ -4654,6 +4655,7 @@
     "DeploymentConfiguration": {
       "base": "<p>The configuration to use when updating the AMI versions.</p>",
       "refs": {
+        "ClusterInstanceGroupDetails$ActiveSoftwareUpdateConfig": null,
         "ScheduledUpdateConfig$DeploymentConfig": "<p>The configuration to use when updating the AMI versions.</p>",
         "UpdateClusterSoftwareRequest$DeploymentConfig": "<p>The configuration to use when updating the AMI versions.</p>"
       }
@@ -15441,6 +15443,12 @@
         "AsyncInferenceNotificationConfig$ErrorTopic": "<p>Amazon SNS topic to post a notification to when inference fails. If no topic is provided, no notification is sent on failure.</p>",
         "LabelingJobOutputConfig$SnsTopicArn": "<p>An Amazon Simple Notification Service (Amazon SNS) output topic ARN. Provide a <code>SnsTopicArn</code> if you want to do real time chaining to another streaming job and receive an Amazon SNS notifications each time a data object is submitted by a worker.</p> <p>If you provide an <code>SnsTopicArn</code> in <code>OutputConfig</code>, when workers complete labeling tasks, Ground Truth will send labeling task output data to the SNS output topic you specify here. </p> <p>To learn more, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-streaming-labeling-job.html#sms-streaming-how-it-works-output-data\">Receive Output Data from a Streaming Labeling Job</a>. </p>",
         "LabelingJobSnsDataSource$SnsTopicArn": "<p>The Amazon SNS input topic Amazon Resource Name (ARN). Specify the ARN of the input topic you will use to send new data objects to a streaming labeling job.</p>"
+      }
+    },
+    "SoftwareUpdateStatus": {
+      "base": null,
+      "refs": {
+        "ClusterInstanceGroupDetails$SoftwareUpdateStatus": "<p>Status of the last software udpate request.</p>"
       }
     },
     "SortActionsBy": {

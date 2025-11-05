@@ -1739,6 +1739,12 @@
       }
     },
     "CreationTime":{"type":"timestamp"},
+    "CustomerSecretsManagerARN":{
+      "type":"string",
+      "max":1024,
+      "min":64,
+      "pattern":"^arn:[^:]{1,63}:secretsmanager:[a-z0-9-]+:[0-9]{12}:secret:[a-zA-Z0-9/_+=.@-]+-[a-zA-Z0-9]{6}$"
+    },
     "DNSName":{
       "type":"string",
       "max":275,
@@ -3774,15 +3780,14 @@
         "OrganizationalUnitDistinguishedName":{"shape":"OrganizationalUnitDistinguishedName"},
         "FileSystemAdministratorsGroup":{"shape":"FileSystemAdministratorsGroupName"},
         "UserName":{"shape":"DirectoryUserName"},
-        "DnsIps":{"shape":"DnsIps"}
+        "DnsIps":{"shape":"DnsIps"},
+        "DomainJoinServiceAccountSecret":{"shape":"CustomerSecretsManagerARN"}
       }
     },
     "SelfManagedActiveDirectoryConfiguration":{
       "type":"structure",
       "required":[
         "DomainName",
-        "UserName",
-        "Password",
         "DnsIps"
       ],
       "members":{
@@ -3791,7 +3796,8 @@
         "FileSystemAdministratorsGroup":{"shape":"FileSystemAdministratorsGroupName"},
         "UserName":{"shape":"DirectoryUserName"},
         "Password":{"shape":"DirectoryPassword"},
-        "DnsIps":{"shape":"DnsIps"}
+        "DnsIps":{"shape":"DnsIps"},
+        "DomainJoinServiceAccountSecret":{"shape":"CustomerSecretsManagerARN"}
       }
     },
     "SelfManagedActiveDirectoryConfigurationUpdates":{
@@ -3802,7 +3808,8 @@
         "DnsIps":{"shape":"DnsIps"},
         "DomainName":{"shape":"ActiveDirectoryFullyQualifiedName"},
         "OrganizationalUnitDistinguishedName":{"shape":"OrganizationalUnitDistinguishedName"},
-        "FileSystemAdministratorsGroup":{"shape":"FileSystemAdministratorsGroupName"}
+        "FileSystemAdministratorsGroup":{"shape":"FileSystemAdministratorsGroupName"},
+        "DomainJoinServiceAccountSecret":{"shape":"CustomerSecretsManagerARN"}
       }
     },
     "ServiceLimit":{

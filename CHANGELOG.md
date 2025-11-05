@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\FSx` - Amazon FSx now enables secure management of Active Directory credentials through AWS Secrets Manager integration. Customers can use Secret ARNs instead of direct credentials when joining resources to Active Directory domains.
+* `Aws\EC2` - This release adds AvailabilityZoneId support for DescribeFastSnapshotRestores, DisableFastSnapshotRestores, and EnableFastSnapshotRestores APIs.
+* `Aws\GroundStation` - Introduce CreateDataflowEndpointGroupV2 action
+* `Aws\CloudFront` - This release adds new and updated API operations. You can now use the IpAddressType field to specify either ipv4 or dualstack for your Anycast static IP list. You can also enable cross-account resource sharing to share your VPC origins with other AWS accounts
+* `Aws\S3` - Launch IPv6 dual-stack support for S3 Express
+* `Aws\DataZone` - Added support for Project Resource Tags
+* `Aws\SageMaker` - Add new fields in SageMaker Hyperpod DescribeCluster API response: TargetStateCount, SoftwareUpdateStatus and ActiveSoftwareDeploymentConfig to provide AMI update progress visibility .
+
 ## 3.359.5 - 2025-11-04
 
 * `Aws\PinpointSMSVoiceV2` - This release adds support for the CarrierLookup API, which returns information about a destination phone number including if the number is valid, the carrier, and more.

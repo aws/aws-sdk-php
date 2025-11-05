@@ -60,6 +60,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "CreateDataflowEndpointGroupV2":{
+      "name":"CreateDataflowEndpointGroupV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/dataflowEndpointGroupV2",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateDataflowEndpointGroupV2Request"},
+      "output":{"shape":"CreateDataflowEndpointGroupV2Response"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"DependencyException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "CreateEphemeris":{
       "name":"CreateEphemeris",
       "http":{
@@ -196,6 +212,22 @@
       },
       "input":{"shape":"GetAgentConfigurationRequest"},
       "output":{"shape":"GetAgentConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"DependencyException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "GetAgentTaskResponseUrl":{
+      "name":"GetAgentTaskResponseUrl",
+      "http":{
+        "method":"GET",
+        "requestUri":"/agentResponseUrl/{agentId}/{taskId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAgentTaskResponseUrlRequest"},
+      "output":{"shape":"GetAgentTaskResponseUrlResponse"},
       "errors":[
         {"shape":"InvalidParameterException"},
         {"shape":"DependencyException"},
@@ -962,6 +994,36 @@
         "contactPostPassDurationSeconds":{"shape":"DataflowEndpointGroupDurationInSeconds"}
       }
     },
+    "CreateDataflowEndpointGroupV2Request":{
+      "type":"structure",
+      "required":["endpoints"],
+      "members":{
+        "endpoints":{"shape":"CreateEndpointDetailsList"},
+        "contactPrePassDurationSeconds":{"shape":"DataflowEndpointGroupDurationInSeconds"},
+        "contactPostPassDurationSeconds":{"shape":"DataflowEndpointGroupDurationInSeconds"},
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "CreateDataflowEndpointGroupV2Response":{
+      "type":"structure",
+      "members":{
+        "dataflowEndpointGroupId":{"shape":"Uuid"}
+      }
+    },
+    "CreateEndpointDetails":{
+      "type":"structure",
+      "members":{
+        "uplinkAwsGroundStationAgentEndpoint":{"shape":"UplinkAwsGroundStationAgentEndpoint"},
+        "downlinkAwsGroundStationAgentEndpoint":{"shape":"DownlinkAwsGroundStationAgentEndpoint"}
+      },
+      "union":true
+    },
+    "CreateEndpointDetailsList":{
+      "type":"list",
+      "member":{"shape":"CreateEndpointDetails"},
+      "max":12,
+      "min":1
+    },
     "CreateEphemerisRequest":{
       "type":"structure",
       "required":["name"],
@@ -1057,7 +1119,7 @@
       "type":"integer",
       "box":true,
       "max":480,
-      "min":120
+      "min":30
     },
     "DataflowEndpointGroupIdResponse":{
       "type":"structure",
@@ -1249,6 +1311,48 @@
       "type":"double",
       "box":true
     },
+    "DownlinkAwsGroundStationAgentEndpoint":{
+      "type":"structure",
+      "required":[
+        "name",
+        "dataflowDetails"
+      ],
+      "members":{
+        "name":{"shape":"SafeName"},
+        "dataflowDetails":{"shape":"DownlinkDataflowDetails"}
+      }
+    },
+    "DownlinkAwsGroundStationAgentEndpointDetails":{
+      "type":"structure",
+      "required":[
+        "name",
+        "dataflowDetails"
+      ],
+      "members":{
+        "name":{"shape":"SafeName"},
+        "dataflowDetails":{"shape":"DownlinkDataflowDetails"},
+        "agentStatus":{"shape":"AgentStatus"},
+        "auditResults":{"shape":"AuditResults"}
+      }
+    },
+    "DownlinkConnectionDetails":{
+      "type":"structure",
+      "required":[
+        "agentIpAndPortAddress",
+        "egressAddressAndPort"
+      ],
+      "members":{
+        "agentIpAndPortAddress":{"shape":"RangedConnectionDetails"},
+        "egressAddressAndPort":{"shape":"ConnectionDetails"}
+      }
+    },
+    "DownlinkDataflowDetails":{
+      "type":"structure",
+      "members":{
+        "agentConnectionDetails":{"shape":"DownlinkConnectionDetails"}
+      },
+      "union":true
+    },
     "DurationInSeconds":{
       "type":"integer",
       "box":true,
@@ -1287,6 +1391,8 @@
         "securityDetails":{"shape":"SecurityDetails"},
         "endpoint":{"shape":"DataflowEndpoint"},
         "awsGroundStationAgentEndpoint":{"shape":"AwsGroundStationAgentEndpoint"},
+        "uplinkAwsGroundStationAgentEndpoint":{"shape":"UplinkAwsGroundStationAgentEndpointDetails"},
+        "downlinkAwsGroundStationAgentEndpoint":{"shape":"DownlinkAwsGroundStationAgentEndpointDetails"},
         "healthStatus":{"shape":"CapabilityHealth"},
         "healthReasons":{"shape":"CapabilityHealthReasonList"}
       }
@@ -1542,6 +1648,38 @@
       "members":{
         "agentId":{"shape":"Uuid"},
         "taskingDocument":{"shape":"String"}
+      }
+    },
+    "GetAgentTaskResponseUrlRequest":{
+      "type":"structure",
+      "required":[
+        "agentId",
+        "taskId"
+      ],
+      "members":{
+        "agentId":{
+          "shape":"Uuid",
+          "location":"uri",
+          "locationName":"agentId"
+        },
+        "taskId":{
+          "shape":"Uuid",
+          "location":"uri",
+          "locationName":"taskId"
+        }
+      }
+    },
+    "GetAgentTaskResponseUrlResponse":{
+      "type":"structure",
+      "required":[
+        "agentId",
+        "taskId",
+        "presignedLogUrl"
+      ],
+      "members":{
+        "agentId":{"shape":"Uuid"},
+        "taskId":{"shape":"Uuid"},
+        "presignedLogUrl":{"shape":"String"}
       }
     },
     "GetConfigRequest":{
@@ -2234,6 +2372,18 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "ServiceQuotaExceededException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"},
+        "parameterName":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":402,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "SignatureMap":{
       "type":"map",
       "key":{"shape":"String"},
@@ -2510,6 +2660,48 @@
         "streamsKmsKey":{"shape":"KmsKey"},
         "streamsKmsRole":{"shape":"RoleArn"}
       }
+    },
+    "UplinkAwsGroundStationAgentEndpoint":{
+      "type":"structure",
+      "required":[
+        "name",
+        "dataflowDetails"
+      ],
+      "members":{
+        "name":{"shape":"SafeName"},
+        "dataflowDetails":{"shape":"UplinkDataflowDetails"}
+      }
+    },
+    "UplinkAwsGroundStationAgentEndpointDetails":{
+      "type":"structure",
+      "required":[
+        "name",
+        "dataflowDetails"
+      ],
+      "members":{
+        "name":{"shape":"SafeName"},
+        "dataflowDetails":{"shape":"UplinkDataflowDetails"},
+        "agentStatus":{"shape":"AgentStatus"},
+        "auditResults":{"shape":"AuditResults"}
+      }
+    },
+    "UplinkConnectionDetails":{
+      "type":"structure",
+      "required":[
+        "ingressAddressAndPort",
+        "agentIpAndPortAddress"
+      ],
+      "members":{
+        "ingressAddressAndPort":{"shape":"ConnectionDetails"},
+        "agentIpAndPortAddress":{"shape":"RangedConnectionDetails"}
+      }
+    },
+    "UplinkDataflowDetails":{
+      "type":"structure",
+      "members":{
+        "agentConnectionDetails":{"shape":"UplinkConnectionDetails"}
+      },
+      "union":true
     },
     "UplinkEchoConfig":{
       "type":"structure",
