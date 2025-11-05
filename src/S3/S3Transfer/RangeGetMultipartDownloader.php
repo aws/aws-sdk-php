@@ -57,7 +57,7 @@ class RangeGetMultipartDownloader extends AbstractMultipartDownloader
     {
         // Assign object size just if needed.
         if ($this->objectSizeInBytes === 0) {
-            $this->objectSizeInBytes = $this->computeObjectSizeFromContentRange(
+            $this->objectSizeInBytes = self::computeObjectSizeFromContentRange(
                 $result['ContentRange'] ?? ""
             );
         }

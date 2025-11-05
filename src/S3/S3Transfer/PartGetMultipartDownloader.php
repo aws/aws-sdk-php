@@ -55,7 +55,7 @@ class PartGetMultipartDownloader extends AbstractMultipartDownloader
             $this->objectPartsCount = 1;
         }
 
-        $this->objectSizeInBytes = $this->computeObjectSizeFromContentRange(
+        $this->objectSizeInBytes = self::computeObjectSizeFromContentRange(
             $result['ContentRange'] ?? ""
         );
     }

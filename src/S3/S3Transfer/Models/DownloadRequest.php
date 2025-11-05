@@ -15,6 +15,7 @@ final class DownloadRequest extends TransferRequest
         'response_checksum_validation' => 'string',
         'multipart_download_type' => 'string',
         'track_progress' => 'bool',
+        'concurrency' => 'int',
     ];
 
     /** @var string|array|null */

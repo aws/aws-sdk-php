@@ -14,8 +14,10 @@ use Aws\S3\S3Transfer\Utils\DownloadHandler;
 use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 use GuzzleHttp\Promise\Coroutine;
 use GuzzleHttp\Promise\Create;
+use GuzzleHttp\Promise\Each;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\PromisorInterface;
+use Throwable;
 
 abstract class AbstractMultipartDownloader implements PromisorInterface
 {
@@ -117,6 +119,10 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
             $config['target_part_size_bytes'] = S3TransferManagerConfig::DEFAULT_TARGET_PART_SIZE_BYTES;
         }
 
+        if (!isset($config['concurrency'])) {
+            $config['concurrency'] = S3TransferManagerConfig::DEFAULT_CONCURRENCY;
+        }
+
         if (!isset($config['response_checksum_validation'])) {
             $config['response_checksum_validation'] = S3TransferManagerConfig::DEFAULT_RESPONSE_CHECKSUM_VALIDATION;
         }
@@ -179,57 +185,32 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
     public function promise(): PromiseInterface
     {
         return Coroutine::of(function () {
-            try {
-                $initialRequestResult = yield $this->initialRequest();
-                $prevPartNo = $this->currentPartNo - 1;
-                while ($this->currentPartNo < $this->objectPartsCount) {
-                    // To prevent infinite loops
-                    if ($prevPartNo !== $this->currentPartNo - 1) {
-                        throw new S3TransferException(
-                            "Current part `$this->currentPartNo` MUST increment."
-                        );
-                    }
+            $initialRequestResult = yield $this->initialRequest();
 
-                    $prevPartNo = $this->currentPartNo;
+            $partsDownloadPromises = $this->partDownloadRequests();
 
-                    $command = $this->nextCommand();
-                    yield $this->s3Client->executeAsync($command)
-                        ->then(function ($result) use ($command) {
-                            $this->partDownloadCompleted(
-                                $result,
-                                $command->toArray()
-                            );
+            // When concurrency is not supported by the download handler
+            // Then the number of concurrency will be just one.
+            $concurrency = $this->downloadHandler->isConcurrencySupported()
+                ? $this->config['concurrency']
+                : 1;
 
-                            return $result;
-                        })->otherwise(function ($reason) {
-                            $this->partDownloadFailed($reason);
-
-                            throw $reason;
-                        });
-                }
-
-                if ($this->currentPartNo !== $this->objectPartsCount) {
-                    throw new S3TransferException(
-                        "Expected number of parts `$this->objectPartsCount`"
-                        . " to have been transferred but got `$this->currentPartNo`."
-                    );
-                }
-
+            yield Each::ofLimitAll(
+                $partsDownloadPromises,
+                $concurrency,
+            )->then(function () use ($initialRequestResult) {
                 // Transfer completed
                 $this->downloadComplete();
 
-                // Return response
-                $result = $initialRequestResult->toArray();
-                unset($result['Body']);
-
-                yield Create::promiseFor(new DownloadResult(
+                return Create::promiseFor(new DownloadResult(
                     $this->downloadHandler->getHandlerResult(),
-                    $result,
+                    $initialRequestResult->toArray(),
                 ));
-            } catch (\Throwable $e) {
+            })->otherwise(function (Throwable $e) {
                 $this->downloadFailed($e);
-                yield Create::rejectionFor($e);
-            }
+
+                throw $e;
+            });
         });
     }
 
@@ -262,6 +243,12 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
 
                 // Assign custom fields in the result
                 $result['ContentLength'] = $this->objectSizeInBytes;
+                $result['ContentRange'] = "0-"
+                    . ($this->objectSizeInBytes - 1)
+                    . "/"
+                    . $this->objectPartsCount;
+
+                unset($result['Body']);
 
                 return $result;
             })->otherwise(function ($reason)  {
@@ -272,12 +259,48 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
     }
 
     /**
+     * @return \Generator
+     */
+    private function partDownloadRequests(): \Generator
+    {
+        // To prevent infinite loops
+        $prevPartNo = $this->currentPartNo - 1;
+        while ($this->currentPartNo < $this->objectPartsCount) {
+            if ($prevPartNo !== $this->currentPartNo - 1) {
+                throw new S3TransferException(
+                    "Current part `$this->currentPartNo` MUST increment."
+                );
+            }
+
+            $prevPartNo = $this->currentPartNo;
+
+            $command = $this->nextCommand();
+            yield $this->s3Client->executeAsync($command)
+                ->then(function (ResultInterface $result) use ($command) {
+                    $this->partDownloadCompleted(
+                        $result,
+                        $command->toArray()
+                    );
+
+                    return $result;
+                });
+        }
+
+        if ($this->currentPartNo !== $this->objectPartsCount) {
+            throw new S3TransferException(
+                "Expected number of parts `$this->objectPartsCount`"
+                . " to have been transferred but got `$this->currentPartNo`."
+            );
+        }
+    }
+
+    /**
      * Calculates the object size from content range.
      *
      * @param string $contentRange
      * @return int
      */
-    protected function computeObjectSizeFromContentRange(
+    public static function computeObjectSizeFromContentRange(
         string $contentRange
     ): int
     {
@@ -371,10 +394,6 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
     ): void
     {
         $partDownloadBytes = $result['ContentLength'];
-        if (isset($result['ETag'])) {
-            $this->eTag = $result['ETag'];
-        }
-
         $newSnapshot = new TransferProgressSnapshot(
             $this->currentSnapshot->getIdentifier(),
             $this->currentSnapshot->getTransferredBytes() + $partDownloadBytes,

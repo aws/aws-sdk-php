@@ -80,4 +80,12 @@ class StreamDownloadHandler extends DownloadHandler
     {
         return $this->stream;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function isConcurrencySupported(): bool
+    {
+        return false;
+    }
 }

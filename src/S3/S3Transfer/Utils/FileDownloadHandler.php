@@ -2,6 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Utils;
 
+use Aws\S3\S3Transfer\AbstractMultipartDownloader;
 use Aws\S3\S3Transfer\Exception\FileDownloadException;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 
@@ -9,17 +10,22 @@ class FileDownloadHandler extends DownloadHandler
 {
     private const IDENTIFIER_LENGTH = 8;
     private const TEMP_INFIX = '.s3tmp.';
+    private const MAX_UNIQUE_ID_ATTEMPTS = 100;
 
     /** @var string */
     private string $destination;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private bool $failsWhenDestinationExists;
 
     /** @var string */
-    private string $temporaryDestination;
+    private string $temporaryDestination = '';
+
+    /** @var mixed|null */
+    protected mixed $handle = null;
+
+    /** @var int */
+    protected int $fixedPartSize = 0;
 
     /**
      * @param string $destination
@@ -31,7 +37,6 @@ class FileDownloadHandler extends DownloadHandler
     ) {
         $this->destination = $destination;
         $this->failsWhenDestinationExists = $failsWhenDestinationExists;
-        $this->temporaryDestination = "";
     }
 
     /**
@@ -57,32 +62,9 @@ class FileDownloadHandler extends DownloadHandler
      */
     public function transferInitiated(array $context): void
     {
-        if ($this->failsWhenDestinationExists && file_exists($this->destination)) {
-            throw new FileDownloadException(
-                "The destination '$this->destination' already exists."
-            );
-        } elseif (is_dir($this->destination)) {
-            throw new FileDownloadException(
-                "The destination '$this->destination' can't be a directory."
-            );
-        }
-
-        // Create directory if necessary
-        $directory = dirname($this->destination);
-        if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
-        }
-
-        $uniqueId = self::getUniqueIdentifier();
-        $temporaryName = $this->destination . self::TEMP_INFIX . $uniqueId;
-        while (file_exists($temporaryName)) {
-            $uniqueId = self::getUniqueIdentifier();
-            $temporaryName = $this->destination . self::TEMP_INFIX . $uniqueId;
-        }
-
-        // Create the file
-        file_put_contents($temporaryName, "");
-        $this->temporaryDestination = $temporaryName;
+        $this->validateDestination();
+        $this->ensureDirectoryExists();
+        $this->temporaryDestination = $this->generateTemporaryFilePath();
     }
 
     /**
@@ -94,11 +76,19 @@ class FileDownloadHandler extends DownloadHandler
     {
         $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
         $response = $snapshot->getResponse();
-        file_put_contents(
-            $this->temporaryDestination,
-            $response['Body'],
-            FILE_APPEND
-        );
+
+        if ($this->handle === null) {
+            $this->fixedPartSize = $response['ContentLength'];
+            $this->initializeDestination($response);
+        }
+
+        if ($this->handle === null) {
+            throw new FileDownloadException(
+                "Failed to initialize destination for downloading."
+            );
+        }
+
+        $this->writePartToDestinationHandle($response);
     }
 
     /**
@@ -108,22 +98,8 @@ class FileDownloadHandler extends DownloadHandler
      */
     public function transferComplete(array $context): void
     {
-        // Make sure the file is deleted if exists
-        if (file_exists($this->destination) && is_file($this->destination)) {
-            if ($this->failsWhenDestinationExists) {
-                throw new FileDownloadException(
-                    "The destination '$this->destination' already exists."
-                );
-            } else {
-                unlink($this->destination);
-            }
-        }
-
-        if (!rename($this->temporaryDestination, $this->destination)) {
-            throw new FileDownloadException(
-                "Unable to rename the file `$this->temporaryDestination` to `$this->destination`."
-            );
-        }
+        $this->closeDestinationHandle();
+        $this->replaceDestinationFile();
     }
 
     /**
@@ -133,30 +109,72 @@ class FileDownloadHandler extends DownloadHandler
      */
     public function transferFail(array $context): void
     {
-        if (file_exists($this->temporaryDestination)) {
-            unlink($this->temporaryDestination);
-        } elseif (file_exists($this->destination)
-            && !str_contains(
-                $context[self::REASON_KEY],
-                "The destination '$this->destination' already exists.")
-        ) {
-            unlink($this->destination);
+        $this->closeDestinationHandle();
+        $this->cleanupAfterFailure($context);
+    }
+
+    /**
+     * @param array $response
+     *
+     * @return void
+     */
+    public function initializeDestination(array $response): void
+    {
+        $objectSize = AbstractMultipartDownloader::computeObjectSizeFromContentRange(
+            $response['ContentRange'] ?? ""
+        );
+
+        $this->createTruncatedFile($objectSize);
+    }
+
+    /**
+     * @param array $response
+     *
+     * @return void
+     */
+    protected function writePartToDestinationHandle(array $response): void
+    {
+        $contentRange = $response['ContentRange'] ?? null;
+        if ($contentRange === null) {
+            throw new FileDownloadException(
+                "Unable to get content range from response."
+            );
+        }
+
+        $partNo = (int) ceil(
+            self::getRangeTo($contentRange) / $this->fixedPartSize
+        );
+        $position = ($partNo - 1) * $this->fixedPartSize;
+
+        if (!flock($this->handle, LOCK_EX)) {
+            throw new FileDownloadException("Failed to acquire file lock.");
+        }
+
+        try {
+            fseek($this->handle, $position);
+
+            $body = $response['Body'];
+            while (!$body->eof()) {
+                $chunk = $body->read(self::READ_BUFFER_SIZE);
+
+                if (fwrite($this->handle, $chunk) === false) {
+                    throw new FileDownloadException("Failed to write data to temporary file.");
+                }
+            }
+        } finally {
+            flock($this->handle, LOCK_UN);
         }
     }
 
     /**
-     * @return string
+     * @return void
      */
-    private static function getUniqueIdentifier(): string
+    protected function closeDestinationHandle(): void
     {
-        $uniqueId = uniqid();
-        if (strlen($uniqueId) > self::IDENTIFIER_LENGTH) {
-            $uniqueId = substr($uniqueId, 0, self::IDENTIFIER_LENGTH);
-        } else {
-            $uniqueId = str_pad($uniqueId, self::IDENTIFIER_LENGTH, "0");
+        if (is_resource($this->handle)) {
+            fclose($this->handle);
+            $this->handle = null;
         }
-
-        return $uniqueId;
     }
 
     /**
@@ -165,5 +183,167 @@ class FileDownloadHandler extends DownloadHandler
     public function getHandlerResult(): string
     {
         return $this->destination;
+    }
+
+    /**
+     * @return void
+     */
+    private function validateDestination(): void
+    {
+        if ($this->failsWhenDestinationExists && file_exists($this->destination)) {
+            throw new FileDownloadException(
+                "The destination '{$this->destination}' already exists."
+            );
+        }
+
+        if (is_dir($this->destination)) {
+            throw new FileDownloadException(
+                "The destination '{$this->destination}' can't be a directory."
+            );
+        }
+    }
+
+    /**
+     * @return void
+     */
+    private function ensureDirectoryExists(): void
+    {
+        $directory = dirname($this->destination);
+
+        if (!is_dir($directory) && !mkdir($directory, 0755, true)
+            && !is_dir($directory)) {
+            throw new FileDownloadException(
+                "Failed to create directory '{$directory}'."
+            );
+        }
+    }
+
+    /**
+     * @return string
+     */
+    private function generateTemporaryFilePath(): string
+    {
+        for ($attempt = 0; $attempt < self::MAX_UNIQUE_ID_ATTEMPTS; $attempt++) {
+            $uniqueId = $this->generateUniqueIdentifier();
+            $temporaryPath = $this->destination . self::TEMP_INFIX . $uniqueId;
+
+            if (!file_exists($temporaryPath)) {
+                return $temporaryPath;
+            }
+        }
+
+        throw new FileDownloadException(
+            "Unable to generate a unique temporary file name after " . self::MAX_UNIQUE_ID_ATTEMPTS . " attempts."
+        );
+    }
+
+    /**
+     * @return string
+     */
+    private function generateUniqueIdentifier(): string
+    {
+        $uniqueId = uniqid();
+
+        if (strlen($uniqueId) > self::IDENTIFIER_LENGTH) {
+            return substr($uniqueId, 0, self::IDENTIFIER_LENGTH);
+        }
+
+        return str_pad($uniqueId, self::IDENTIFIER_LENGTH, "0");
+    }
+
+    /**
+     * @param array $response
+     *
+     * @return void
+     */
+    private function initializeFile(array $response): void
+    {
+        $this->fixedPartSize = $response['ContentLength'];
+        $objectSize = AbstractMultipartDownloader::computeObjectSizeFromContentRange(
+            $response['ContentRange'] ?? ""
+        );
+
+        $this->createTruncatedFile($objectSize);
+    }
+
+    /**
+     * @param int $size
+     *
+     * @return void
+     */
+    private function createTruncatedFile(int $size): void
+    {
+        $handle = fopen($this->temporaryDestination, 'w+');
+
+        if ($handle === false) {
+            throw new FileDownloadException(
+                "Failed to open temporary file '{$this->temporaryDestination}' for writing."
+            );
+        }
+
+        $this->handle = $handle;
+
+        if (!ftruncate($this->handle, $size)) {
+            throw new FileDownloadException(
+                "Failed to allocate {$size} bytes for temporary file."
+            );
+        }
+    }
+
+    /**
+     * @return void
+     */
+    private function replaceDestinationFile(): void
+    {
+        if (file_exists($this->destination)) {
+            if ($this->failsWhenDestinationExists) {
+                throw new FileDownloadException(
+                    "The destination '{$this->destination}' already exists."
+                );
+            }
+
+            if (!unlink($this->destination)) {
+                throw new FileDownloadException(
+                    "Failed to delete existing file '{$this->destination}'."
+                );
+            }
+        }
+
+        if (!rename($this->temporaryDestination, $this->destination)) {
+            throw new FileDownloadException(
+                "Unable to rename the file '{$this->temporaryDestination}' to '{$this->destination}'."
+            );
+        }
+    }
+
+    /**
+     * @param array $context
+     *
+     * @return void
+     */
+    private function cleanupAfterFailure(array $context): void
+    {
+        if (file_exists($this->temporaryDestination)) {
+            unlink($this->temporaryDestination);
+            return;
+        }
+
+        $reason = $context[self::REASON_KEY] ?? '';
+        $isDestinationExistsError = str_contains(
+            $reason,
+            "The destination '{$this->destination}' already exists."
+        );
+
+        if (file_exists($this->destination) && !$isDestinationExistsError) {
+            unlink($this->destination);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isConcurrencySupported(): bool
+    {
+        return true;
     }
 }
