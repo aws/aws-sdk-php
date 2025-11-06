@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.359.7 - 2025-11-06
 
 * `Aws\Backup` - AWS Backup now supports customer-managed keys (CMK) for logically air-gapped vaults, enabling customers to maintain full control over their encryption key lifecycle. This feature helps organizations meet specific internal governance requirements or external regulatory compliance standards.
 * `Aws\SSM` - Provides NoLongerSupportedException error message
