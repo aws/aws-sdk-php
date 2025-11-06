@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Backup` - AWS Backup now supports customer-managed keys (CMK) for logically air-gapped vaults, enabling customers to maintain full control over their encryption key lifecycle. This feature helps organizations meet specific internal governance requirements or external regulatory compliance standards.
+* `Aws\SSM` - Provides NoLongerSupportedException error message
+* `Aws\QuickSight` - Support for New Data Prep Experience
+* `Aws\IdentityStore` - IdentityStore API: added new KMSExceptionReason fields to the Exception object; added multiple new fields to the User APIs - UserStatus, Birthdate, Website and Photos; added multiple new metadata fields for User, Groups and Membership APIs - CreatedAt, CreatedBy, UpdatedAt and UpdatedBy.
+* `Aws\EC2` - Add Amazon EC2 R8a instance types
+* `Aws\S3Tables` - Adds support for tagging APIs for S3 Tables
+* `Aws\AccessAnalyzer` - New field totalActiveErrors added to getFindingsStatistics response.
+* `Aws\S3Vectors` - Amazon S3 Vectors provides cost-effective, elastic, and durable vector storage for queries based on semantic meaning and similarity.
+* `Aws\SageMaker` - Added NodeProvisioningMode parameter to UpdateCluster API to determine how instance provisioning is handled during cluster operations; in Continuous mode. Added VpcId field in UpdateDomain request for SageMaker Unified Studio domains with no VPC to add a customer VPC.
+* `Aws\GameLift` - Amazon GameLift Servers now supports game builds that use the Windows 2022 operating system.
+* `Aws\Connect` - Added support for Conditional Questions in Evaluation Forms. Introduced Auto Evaluation capability for Evaluation Forms and Contact Evaluations. Added new API operations: SearchEvaluationForms and SearchContactEvaluations.
+
 ## 3.359.6 - 2025-11-05
 
 * `Aws\FSx` - Amazon FSx now enables secure management of Active Directory credentials through AWS Secrets Manager integration. Customers can use Secret ARNs instead of direct credentials when joining resources to Active Directory domains.

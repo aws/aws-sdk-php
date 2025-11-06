@@ -126,6 +126,7 @@
         "CreateBackupVaultOutput$BackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
         "CreateFrameworkOutput$FrameworkArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>",
         "CreateLegalHoldOutput$LegalHoldArn": "<p>The Amazon Resource Name (ARN) of the legal hold.</p>",
+        "CreateLogicallyAirGappedBackupVaultInput$EncryptionKeyArn": "<p>The ARN of the customer-managed KMS key to use for encrypting the logically air-gapped backup vault. If not specified, the vault will be encrypted with an Amazon Web Services-owned key managed by Amazon Web Services Backup.</p>",
         "CreateLogicallyAirGappedBackupVaultOutput$BackupVaultArn": "<p>The ARN (Amazon Resource Name) of the vault.</p>",
         "CreateReportPlanOutput$ReportPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>",
         "CreateRestoreAccessBackupVaultInput$SourceBackupVaultArn": "<p>The ARN of the source backup vault containing the recovery points to which temporary access is requested.</p>",
@@ -949,6 +950,16 @@
     "DisassociateRecoveryPointInput": {
       "base": null,
       "refs": {}
+    },
+    "EncryptionKeyType": {
+      "base": null,
+      "refs": {
+        "BackupVaultListMember$EncryptionKeyType": "<p>The type of encryption key used for the backup vault. Valid values are CUSTOMER_MANAGED_KMS_KEY for customer-managed keys or Amazon Web Services_OWNED_KMS_KEY for Amazon Web Services-owned keys.</p>",
+        "DescribeBackupVaultOutput$EncryptionKeyType": "<p>The type of encryption key used for the backup vault. Valid values are CUSTOMER_MANAGED_KMS_KEY for customer-managed keys or Amazon Web Services_OWNED_KMS_KEY for Amazon Web Services-owned keys.</p>",
+        "DescribeRecoveryPointOutput$EncryptionKeyType": "<p>The type of encryption key used for the recovery point. Valid values are CUSTOMER_MANAGED_KMS_KEY for customer-managed keys or Amazon Web Services_OWNED_KMS_KEY for Amazon Web Services-owned keys.</p>",
+        "RecoveryPointByBackupVault$EncryptionKeyType": "<p>The type of encryption key used for the recovery point. Valid values are CUSTOMER_MANAGED_KMS_KEY for customer-managed keys or Amazon Web Services_OWNED_KMS_KEY for Amazon Web Services-owned keys.</p>",
+        "RecoveryPointByResource$EncryptionKeyType": "<p>The type of encryption key used for the recovery point. Valid values are CUSTOMER_MANAGED_KMS_KEY for customer-managed keys or Amazon Web Services_OWNED_KMS_KEY for Amazon Web Services-owned keys.</p>"
+      }
     },
     "ExportBackupPlanTemplateInput": {
       "base": null,
@@ -2181,7 +2192,7 @@
         "CreateRestoreTestingSelectionInput$RestoreTestingPlanName": "<p>Input the restore testing plan name that was returned from the related CreateRestoreTestingPlan request.</p>",
         "CreateRestoreTestingSelectionOutput$RestoreTestingPlanArn": "<p>The ARN of the restore testing plan with which the restore testing selection is associated.</p>",
         "CreateRestoreTestingSelectionOutput$RestoreTestingPlanName": "<p>The name of the restore testing plan.</p> <p>The name cannot be changed after creation. The name consists of only alphanumeric characters and underscores. Maximum length is 50.</p>",
-        "CreateRestoreTestingSelectionOutput$RestoreTestingSelectionName": "<p>The name of the restore testing selection for the related restore testing plan.</p>",
+        "CreateRestoreTestingSelectionOutput$RestoreTestingSelectionName": "<p>The name of the restore testing selection for the related restore testing plan.</p> <p>The name cannot be changed after creation. The name consists of only alphanumeric characters and underscores. Maximum length is 50.</p>",
         "DeleteRestoreTestingPlanInput$RestoreTestingPlanName": "<p>Required unique name of the restore testing plan you wish to delete.</p>",
         "DeleteRestoreTestingSelectionInput$RestoreTestingPlanName": "<p>Required unique name of the restore testing plan that contains the restore testing selection you wish to delete.</p>",
         "DeleteRestoreTestingSelectionInput$RestoreTestingSelectionName": "<p>Required unique name of the restore testing selection you wish to delete.</p>",
@@ -2214,16 +2225,16 @@
         "RestoreTestingPlanForUpdate$ScheduleExpressionTimezone": "<p>Optional. This is the timezone in which the schedule expression is set. By default, ScheduleExpressions are in UTC. You can modify this to a specified timezone.</p>",
         "RestoreTestingSelectionForCreate$IamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that Backup uses to create the target resource; for example: <code>arn:aws:iam::123456789012:role/S3Access</code>. </p>",
         "RestoreTestingSelectionForCreate$ProtectedResourceType": "<p>The type of Amazon Web Services resource included in a restore testing selection; for example, an Amazon EBS volume or an Amazon RDS database.</p> <p>Supported resource types accepted include:</p> <ul> <li> <p> <code>Aurora</code> for Amazon Aurora</p> </li> <li> <p> <code>DocumentDB</code> for Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p> <code>DynamoDB</code> for Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> for Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> for Amazon FSx</p> </li> <li> <p> <code>Neptune</code> for Amazon Neptune</p> </li> <li> <p> <code>RDS</code> for Amazon Relational Database Service</p> </li> <li> <p> <code>S3</code> for Amazon S3</p> </li> </ul>",
-        "RestoreTestingSelectionForCreate$RestoreTestingSelectionName": "<p>The unique name of the restore testing selection that belongs to the related restore testing plan.</p>",
+        "RestoreTestingSelectionForCreate$RestoreTestingSelectionName": "<p>The unique name of the restore testing selection that belongs to the related restore testing plan.</p> <p>The name consists of only alphanumeric characters and underscores. Maximum length is 50.</p>",
         "RestoreTestingSelectionForGet$CreatorRequestId": "<p>This identifies the request and allows failed requests to be retried without the risk of running the operation twice. If the request includes a <code>CreatorRequestId</code> that matches an existing backup plan, that plan is returned. This parameter is optional.</p> <p>If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.</p>",
         "RestoreTestingSelectionForGet$IamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that Backup uses to create the target resource; for example:<code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
         "RestoreTestingSelectionForGet$ProtectedResourceType": "<p>The type of Amazon Web Services resource included in a resource testing selection; for example, an Amazon EBS volume or an Amazon RDS database.</p>",
         "RestoreTestingSelectionForGet$RestoreTestingPlanName": "<p>The RestoreTestingPlanName is a unique string that is the name of the restore testing plan.</p>",
-        "RestoreTestingSelectionForGet$RestoreTestingSelectionName": "<p>The unique name of the restore testing selection that belongs to the related restore testing plan.</p>",
+        "RestoreTestingSelectionForGet$RestoreTestingSelectionName": "<p>The unique name of the restore testing selection that belongs to the related restore testing plan.</p> <p>The name consists of only alphanumeric characters and underscores. Maximum length is 50.</p>",
         "RestoreTestingSelectionForList$IamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that Backup uses to create the target resource; for example: <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
         "RestoreTestingSelectionForList$ProtectedResourceType": "<p>The type of Amazon Web Services resource included in a restore testing selection; for example, an Amazon EBS volume or an Amazon RDS database.</p>",
         "RestoreTestingSelectionForList$RestoreTestingPlanName": "<p>Unique string that is the name of the restore testing plan.</p> <p>The name cannot be changed after creation. The name must consist of only alphanumeric characters and underscores. Maximum length is 50.</p>",
-        "RestoreTestingSelectionForList$RestoreTestingSelectionName": "<p>Unique name of a restore testing selection.</p>",
+        "RestoreTestingSelectionForList$RestoreTestingSelectionName": "<p>Unique name of a restore testing selection.</p> <p>The name consists of only alphanumeric characters and underscores. Maximum length is 50.</p>",
         "RestoreTestingSelectionForUpdate$IamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that Backup uses to create the target resource; for example: <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
         "SensitiveStringMap$key": null,
         "SensitiveStringMap$value": null,

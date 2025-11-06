@@ -84,7 +84,7 @@
     "DeleteViewVersion": "<p>Deletes the particular version specified in <code>ViewVersion</code> identifier.</p>",
     "DeleteVocabulary": "<p>Deletes the vocabulary that has the given identifier.</p>",
     "DescribeAgentStatus": "<p>Describes an agent status.</p>",
-    "DescribeAuthenticationProfile": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web ServicesSupport.</p> <p>Describes the target authentication profile.</p>",
+    "DescribeAuthenticationProfile": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>Describes the target authentication profile.</p>",
     "DescribeContact": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Describes the specified contact. </p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>Retrieve contact information such as the caller's phone number and the specific number the caller dialed to integrate into custom monitoring or custom agent experience solutions.</p> </li> <li> <p>Detect when a customer chat session disconnects due to a network issue on the agent's end. Use the DisconnectReason field in the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/ctr-data-model.html#ctr-ContactTraceRecord\">ContactTraceRecord</a> to detect this event and then re-queue the chat for followup.</p> </li> <li> <p>Identify after contact work (ACW) duration and call recordings information when a COMPLETED event is received by using the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/contact-events.html\">contact event stream</a>. </p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p> <code>SystemEndpoint</code> is not populated for contacts with initiation method of MONITOR, QUEUE_TRANSFER, or CALLBACK</p> </li> <li> <p>Contact information remains available in Amazon Connect for 24 months from the <code>InitiationTimestamp</code>, and then it is deleted. Only contact information that is available in Amazon Connect is returned by this API.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "DescribeContactEvaluation": "<p>Describes a contact evaluation in the specified Amazon Connect instance.</p>",
     "DescribeContactFlow": "<p>Describes the specified flow.</p> <p>You can also create and update flows using the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/flow-language.html\">Amazon Connect Flow language</a>.</p> <p>Use the <code>$SAVED</code> alias in the request to describe the <code>SAVED</code> content of a Flow. For example, <code>arn:aws:.../contact-flow/{id}:$SAVED</code>. After a flow is published, <code>$SAVED</code> needs to be supplied to view saved content that has not been published.</p> <p>Use <code>arn:aws:.../contact-flow/{id}:{version}</code> to retrieve the content of a specific flow version.</p> <p>In the response, <b>Status</b> indicates the flow status as either <code>SAVED</code> or <code>PUBLISHED</code>. The <code>PUBLISHED</code> status will initiate validation on the content. <code>SAVED</code> does not initiate validation of the content. <code>SAVED</code> | <code>PUBLISHED</code> </p>",
@@ -138,13 +138,13 @@
     "GetPromptFile": "<p>Gets the prompt file.</p>",
     "GetTaskTemplate": "<p>Gets details about a specific task template in the specified Amazon Connect instance.</p>",
     "GetTrafficDistribution": "<p>Retrieves the current traffic distribution for a given traffic distribution group.</p>",
-    "ImportPhoneNumber": "<p>Imports a claimed phone number from an external service, such as Amazon Web Services End User Messaging, into an Amazon Connect instance. You can call this API only in the same Amazon Web Services Region where the Amazon Connect instance was created.</p> <important> <p>Call the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribePhoneNumber.html\">DescribePhoneNumber</a> API to verify the status of a previous <code>ImportPhoneNumber</code> operation. </p> </important> <p>If you plan to claim or import numbers and then release numbers frequently, contact us for a service quota exception. Otherwise, it is possible you will be blocked from claiming and releasing any more numbers until up to 180 days past the oldest number released has expired. </p> <p> By default you can claim or import and then release up to 200% of your maximum number of active phone numbers. If you claim or import and then release phone numbers using the UI or API during a rolling 180 day cycle that exceeds 200% of your phone number service level quota, you will be blocked from claiming or importing any more numbers until 180 days past the oldest number released has expired. </p> <p>For example, if you already have 99 claimed or imported numbers and a service level quota of 99 phone numbers, and in any 180 day period you release 99, claim 99, and then release 99, you will have exceeded the 200% limit. At that point you are blocked from claiming any more numbers until you open an Amazon Web ServicesSupport ticket. </p>",
+    "ImportPhoneNumber": "<p>Imports a claimed phone number from an external service, such as Amazon Web Services End User Messaging, into an Amazon Connect instance. You can call this API only in the same Amazon Web Services Region where the Amazon Connect instance was created.</p> <important> <p>Call the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribePhoneNumber.html\">DescribePhoneNumber</a> API to verify the status of a previous <code>ImportPhoneNumber</code> operation. </p> </important> <p>If you plan to claim or import numbers and then release numbers frequently, contact us for a service quota exception. Otherwise, it is possible you will be blocked from claiming and releasing any more numbers until up to 180 days past the oldest number released has expired. </p> <p> By default you can claim or import and then release up to 200% of your maximum number of active phone numbers. If you claim or import and then release phone numbers using the UI or API during a rolling 180 day cycle that exceeds 200% of your phone number service level quota, you will be blocked from claiming or importing any more numbers until 180 days past the oldest number released has expired. </p> <p>For example, if you already have 99 claimed or imported numbers and a service level quota of 99 phone numbers, and in any 180 day period you release 99, claim 99, and then release 99, you will have exceeded the 200% limit. At that point you are blocked from claiming any more numbers until you open an Amazon Web Services Support ticket. </p>",
     "ListAgentStatuses": "<p>Lists agent statuses.</p>",
     "ListAnalyticsDataAssociations": "<p>Lists the association status of requested dataset ID for a given Amazon Connect instance.</p>",
     "ListAnalyticsDataLakeDataSets": "<p>Lists the data lake datasets available to associate with for a given Amazon Connect instance.</p>",
     "ListApprovedOrigins": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Returns a paginated list of all approved origins associated with the instance.</p>",
     "ListAssociatedContacts": "<p>Provides information about contact tree, a list of associated contacts with a unique identifier.</p>",
-    "ListAuthenticationProfiles": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web ServicesSupport.</p> <p>Provides summary information about the authentication profiles in a specified Amazon Connect instance.</p>",
+    "ListAuthenticationProfiles": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>Provides summary information about the authentication profiles in a specified Amazon Connect instance.</p>",
     "ListBots": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>For the specified version of Amazon Lex, returns a paginated list of all the Amazon Lex bots currently associated with the instance. Use this API to return both Amazon Lex V1 and V2 bots.</p>",
     "ListContactEvaluations": "<p>Lists contact evaluations in the specified Amazon Connect instance.</p>",
     "ListContactFlowModules": "<p>Provides information about the flow modules for the specified Amazon Connect instance.</p>",
@@ -192,16 +192,18 @@
     "MonitorContact": "<p>Initiates silent monitoring of a contact. The Contact Control Panel (CCP) of the user specified by <i>userId</i> will be set to silent monitoring mode on the contact.</p>",
     "PauseContact": "<p>Allows pausing an ongoing task contact.</p>",
     "PutUserStatus": "<p>Changes the current status of a user or agent in Amazon Connect. If the agent is currently handling a contact, this sets the agent's next status.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/metrics-agent-status.html\">Agent status</a> and <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/set-next-status.html\">Set your next status</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
-    "ReleasePhoneNumber": "<p>Releases a phone number previously claimed to an Amazon Connect instance or traffic distribution group. You can call this API only in the Amazon Web Services Region where the number was claimed.</p> <important> <p>To release phone numbers from a traffic distribution group, use the <code>ReleasePhoneNumber</code> API, not the Amazon Connect admin website.</p> <p>After releasing a phone number, the phone number enters into a cooldown period for up to 180 days. It cannot be searched for or claimed again until the period has ended. If you accidentally release a phone number, contact Amazon Web ServicesSupport.</p> </important> <p>If you plan to claim and release numbers frequently, contact us for a service quota exception. Otherwise, it is possible you will be blocked from claiming and releasing any more numbers until up to 180 days past the oldest number released has expired.</p> <p>By default you can claim and release up to 200% of your maximum number of active phone numbers. If you claim and release phone numbers using the UI or API during a rolling 180 day cycle that exceeds 200% of your phone number service level quota, you will be blocked from claiming any more numbers until 180 days past the oldest number released has expired. </p> <p>For example, if you already have 99 claimed numbers and a service level quota of 99 phone numbers, and in any 180 day period you release 99, claim 99, and then release 99, you will have exceeded the 200% limit. At that point you are blocked from claiming any more numbers until you open an Amazon Web Services support ticket.</p>",
+    "ReleasePhoneNumber": "<p>Releases a phone number previously claimed to an Amazon Connect instance or traffic distribution group. You can call this API only in the Amazon Web Services Region where the number was claimed.</p> <important> <p>To release phone numbers from a traffic distribution group, use the <code>ReleasePhoneNumber</code> API, not the Amazon Connect admin website.</p> <p>After releasing a phone number, the phone number enters into a cooldown period for up to 180 days. It cannot be searched for or claimed again until the period has ended. If you accidentally release a phone number, contact Amazon Web Services Support.</p> </important> <p>If you plan to claim and release numbers frequently, contact us for a service quota exception. Otherwise, it is possible you will be blocked from claiming and releasing any more numbers until up to 180 days past the oldest number released has expired.</p> <p>By default you can claim and release up to 200% of your maximum number of active phone numbers. If you claim and release phone numbers using the UI or API during a rolling 180 day cycle that exceeds 200% of your phone number service level quota, you will be blocked from claiming any more numbers until 180 days past the oldest number released has expired. </p> <p>For example, if you already have 99 claimed numbers and a service level quota of 99 phone numbers, and in any 180 day period you release 99, claim 99, and then release 99, you will have exceeded the 200% limit. At that point you are blocked from claiming any more numbers until you open an Amazon Web Services support ticket.</p>",
     "ReplicateInstance": "<p>Replicates an Amazon Connect instance in the specified Amazon Web Services Region and copies configuration information for Amazon Connect resources across Amazon Web Services Regions. </p> <p>For more information about replicating an Amazon Connect instance, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/create-replica-connect-instance.html\">Create a replica of your existing Amazon Connect instance</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
     "ResumeContact": "<p>Allows resuming a task contact in a paused state.</p>",
     "ResumeContactRecording": "<p>When a contact is being recorded, and the recording has been suspended using SuspendContactRecording, this API resumes recording whatever recording is selected in the flow configuration: call, screen, or both. If only call recording or only screen recording is enabled, then it would resume.</p> <p>Voice and screen recordings are supported.</p>",
     "SearchAgentStatuses": "<p>Searches AgentStatuses in an Amazon Connect instance, with optional filtering.</p>",
     "SearchAvailablePhoneNumbers": "<p>Searches for available phone numbers that you can claim to your Amazon Connect instance or traffic distribution group. If the provided <code>TargetArn</code> is a traffic distribution group, you can call this API in both Amazon Web Services Regions associated with the traffic distribution group.</p>",
+    "SearchContactEvaluations": "<p>Searches contact evaluations in an Amazon Connect instance, with optional filtering. </p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>Find contact evaluations by using specific search criteria.</p> </li> <li> <p>Find contact evaluations that are tagged with a specific set of tags.</p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p>A Search operation, unlike a List operation, takes time to index changes to resource (create, update or delete). If you don't see updated information for recently changed contact evaluations, try calling the API again in a few seconds. Contact Evaluations may not be fully backfilled with historical data in all regions yet, however all recently created Contact Evaluations should be available for search.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "SearchContactFlowModules": "<p>Searches the flow modules in an Amazon Connect instance, with optional filtering.</p>",
     "SearchContactFlows": "<p>Searches the flows in an Amazon Connect instance, with optional filtering.</p>",
     "SearchContacts": "<p>Searches contacts in an Amazon Connect instance.</p>",
     "SearchEmailAddresses": "<p>Searches email address in an instance, with optional filtering.</p>",
+    "SearchEvaluationForms": "<p>Searches evaluation forms in an Amazon Connect instance, with optional filtering.</p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>List all evaluation forms in an instance.</p> </li> <li> <p>Find all evaluation forms that meet specific criteria, such as Title, Description, Status, and more.</p> </li> <li> <p>Find all evaluation forms that are tagged with a specific set of tags.</p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p>A Search operation, unlike a List operation, takes time to index changes to resource (create, update or delete). If you don't see updated information for recently changed contact evaluations, try calling the API again in a few seconds.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "SearchHoursOfOperationOverrides": "<p>Searches the hours of operation overrides.</p>",
     "SearchHoursOfOperations": "<p>Searches the hours of operation in an Amazon Connect instance, with optional filtering.</p>",
     "SearchPredefinedAttributes": "<p>Searches predefined attributes that meet certain criteria. A <i>predefined attribute</i> is made up of a name and a value. You can use predefined attributes for:</p> <ul> <li> <p>Routing proficiency (for example, agent certification) that has predefined values (for example, a list of possible certifications). For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p> </li> <li> <p>Contact information that varies between transfers or conferences, such as the name of the business unit handling the contact. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-contact-segment-attributes.html\">Use contact segment attributes</a>.</p> </li> </ul> <p>For the predefined attributes per instance quota, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#connect-quotas\">Amazon Connect quotas</a>.</p> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
@@ -217,7 +219,7 @@
     "SendChatIntegrationEvent": "<p>Processes chat integration events from Amazon Web Services or external integrations to Amazon Connect. A chat integration event includes:</p> <ul> <li> <p>SourceId, DestinationId, and Subtype: a set of identifiers, uniquely representing a chat</p> </li> <li> <p> ChatEvent: details of the chat action to perform such as sending a message, event, or disconnecting from a chat</p> </li> </ul> <p>When a chat integration event is sent with chat identifiers that do not map to an active chat contact, a new chat contact is also created before handling chat action. </p> <p>Access to this API is currently restricted to Amazon Web Services End User Messaging for supporting SMS integration. </p>",
     "SendOutboundEmail": "<p>Send outbound email for outbound campaigns. For more information about outbound campaigns, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/enable-outbound-campaigns.html\">Set up Amazon Connect outbound campaigns</a>.</p> <note> <p>Only the Amazon Connect outbound campaigns service principal is allowed to assume a role in your account and call this API.</p> </note>",
     "StartAttachedFileUpload": "<p>Provides a pre-signed Amazon S3 URL in response for uploading your content.</p> <important> <p>You may only use this API to upload attachments to an <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html\">Amazon Connect Case</a> or <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html\">Amazon Connect Email</a>. </p> </important>",
-    "StartChatContact": "<p>Initiates a flow to start a new chat for the customer. Response of this API provides a token required to obtain credentials from the <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> API in the Amazon Connect Participant Service.</p> <p>When a new chat contact is successfully created, clients must subscribe to the participant’s connection for the created chat within 5 minutes. This is achieved by invoking <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> with WEBSOCKET and CONNECTION_CREDENTIALS. </p> <p>A 429 error occurs in the following situations:</p> <ul> <li> <p>API rate limit is exceeded. API TPS throttling returns a <code>TooManyRequests</code> exception.</p> </li> <li> <p>The <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html\">quota for concurrent active chats</a> is exceeded. Active chat throttling returns a <code>LimitExceededException</code>.</p> </li> </ul> <p>If you use the <code>ChatDurationInMinutes</code> parameter and receive a 400 error, your account may not support the ability to configure custom chat durations. For more information, contact Amazon Web ServicesSupport. </p> <p>For more information about chat, see the following topics in the <i>Amazon Connect Administrator Guide</i>: </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/web-and-mobile-chat.html\">Concepts: Web and mobile messaging capabilities in Amazon Connect</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat\">Amazon Connect Chat security best practices</a> </p> </li> </ul>",
+    "StartChatContact": "<p>Initiates a flow to start a new chat for the customer. Response of this API provides a token required to obtain credentials from the <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> API in the Amazon Connect Participant Service.</p> <p>When a new chat contact is successfully created, clients must subscribe to the participant’s connection for the created chat within 5 minutes. This is achieved by invoking <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> with WEBSOCKET and CONNECTION_CREDENTIALS. </p> <p>A 429 error occurs in the following situations:</p> <ul> <li> <p>API rate limit is exceeded. API TPS throttling returns a <code>TooManyRequests</code> exception.</p> </li> <li> <p>The <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html\">quota for concurrent active chats</a> is exceeded. Active chat throttling returns a <code>LimitExceededException</code>.</p> </li> </ul> <p>If you use the <code>ChatDurationInMinutes</code> parameter and receive a 400 error, your account may not support the ability to configure custom chat durations. For more information, contact Amazon Web Services Support. </p> <p>For more information about chat, see the following topics in the <i>Amazon Connect Administrator Guide</i>: </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/web-and-mobile-chat.html\">Concepts: Web and mobile messaging capabilities in Amazon Connect</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat\">Amazon Connect Chat security best practices</a> </p> </li> </ul>",
     "StartContactEvaluation": "<p>Starts an empty evaluation in the specified Amazon Connect instance, using the given evaluation form for the particular contact. The evaluation form version used for the contact evaluation corresponds to the currently activated version. If no version is activated for the evaluation form, the contact evaluation cannot be started. </p> <note> <p>Evaluations created through the public API do not contain answer values suggested from automation.</p> </note>",
     "StartContactRecording": "<p>Starts recording the contact: </p> <ul> <li> <p>If the API is called <i>before</i> the agent joins the call, recording starts when the agent joins the call.</p> </li> <li> <p>If the API is called <i>after</i> the agent joins the call, recording starts at the time of the API call.</p> </li> </ul> <p>StartContactRecording is a one-time action. For example, if you use StopContactRecording to stop recording an ongoing call, you can't use StartContactRecording to restart it. For scenarios where the recording has started and you want to suspend and resume it, such as when collecting sensitive information (for example, a credit card number), use SuspendContactRecording and ResumeContactRecording.</p> <p>You can use this API to override the recording behavior configured in the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/set-recording-behavior.html\">Set recording behavior</a> block.</p> <p>Only voice recordings are supported at this time.</p>",
     "StartContactStreaming": "<p> Initiates real-time message streaming for a new chat contact.</p> <p> For more information about message streaming, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-message-streaming.html\">Enable real-time chat message streaming</a> in the <i>Amazon Connect Administrator Guide</i>.</p> <p>For more information about chat, see the following topics in the <i>Amazon Connect Administrator Guide</i>: </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/web-and-mobile-chat.html\">Concepts: Web and mobile messaging capabilities in Amazon Connect</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security-best-practices.html#bp-security-chat\">Amazon Connect Chat security best practices</a> </p> </li> </ul>",
@@ -239,7 +241,7 @@
     "UntagContact": "<p>Removes the specified tags from the contact resource. For more information about this API is used, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/granular-billing.html\">Set up granular billing for a detailed view of your Amazon Connect usage</a>.</p>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
     "UpdateAgentStatus": "<p>Updates agent status.</p>",
-    "UpdateAuthenticationProfile": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web ServicesSupport.</p> <p>Updates the selected authentication profile.</p>",
+    "UpdateAuthenticationProfile": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>Updates the selected authentication profile.</p>",
     "UpdateContact": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Adds or updates user-defined contact information associated with the specified contact. At least one field to be updated must be present in the request.</p> <important> <p>You can add or update user-defined contact information for both ongoing and completed contacts.</p> </important>",
     "UpdateContactAttributes": "<p>Creates or updates user-defined contact attributes associated with the specified contact.</p> <p>You can create or update user-defined attributes for both ongoing and completed contacts. For example, while the call is active, you can update the customer's name or the reason the customer called. You can add notes about steps that the agent took during the call that display to the next agent that takes the call. You can also update attributes for a contact using data from your CRM application and save the data with the contact in Amazon Connect. You could also flag calls for additional analysis, such as legal review or to identify abusive callers.</p> <p>Contact attributes are available in Amazon Connect for 24 months, and are then deleted. For information about contact record retention and the maximum size of the contact record attributes section, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#feature-limits\">Feature specifications</a> in the <i>Amazon Connect Administrator Guide</i>. </p>",
     "UpdateContactEvaluation": "<p>Updates details about a contact evaluation in the specified Amazon Connect instance. A contact evaluation must be in draft state. Answers included in the request are merged with existing answers for the given evaluation. An answer or note can be deleted by passing an empty object (<code>{}</code>) to the question identifier. </p>",
@@ -353,10 +355,16 @@
         "DeleteVocabularyResponse$VocabularyArn": "<p>The Amazon Resource Name (ARN) of the custom vocabulary.</p>",
         "DisassociateFlowRequest$ResourceId": "<p>The identifier of the resource.</p> <ul> <li> <p>Amazon Web Services End User Messaging SMS phone number ARN when using <code>SMS_PHONE_NUMBER</code> </p> </li> <li> <p>Amazon Web Services End User Messaging Social phone number ARN when using <code>WHATSAPP_MESSAGING_PHONE_NUMBER</code> </p> </li> </ul>",
         "Evaluation$EvaluationArn": "<p>The Amazon Resource Name (ARN) for the contact evaluation resource.</p>",
+        "EvaluationAcknowledgement$AcknowledgedBy": "<p>The agent who acknowledged the evaluation.</p>",
+        "EvaluationAcknowledgementSummary$AcknowledgedBy": "<p>The agent who acknowledged the evaluation.</p>",
         "EvaluationForm$EvaluationFormArn": "<p>The Amazon Resource Name (ARN) for the evaluation form resource.</p>",
         "EvaluationForm$CreatedBy": "<p>The Amazon Resource Name (ARN) of the user who created the evaluation form.</p>",
         "EvaluationForm$LastModifiedBy": "<p>The Amazon Resource Name (ARN) of the user who last updated the evaluation form.</p>",
         "EvaluationFormContent$EvaluationFormArn": "<p>The Amazon Resource Name (ARN) for the evaluation form resource.</p>",
+        "EvaluationFormSearchSummary$EvaluationFormArn": "<p>The Amazon Resource Name (ARN) for the evaluation form resource.</p>",
+        "EvaluationFormSearchSummary$CreatedBy": "<p>Who created the evaluation form.</p>",
+        "EvaluationFormSearchSummary$LastModifiedBy": "<p>Who changed the evaluation form.</p>",
+        "EvaluationFormSearchSummary$LastActivatedBy": "<p>The ID of user who last activated evaluation form.</p>",
         "EvaluationFormSummary$EvaluationFormArn": "<p>The Amazon Resource Name (ARN) for the evaluation form resource.</p>",
         "EvaluationFormSummary$CreatedBy": "<p>The Amazon Resource Name (ARN) of the user who created the evaluation form.</p>",
         "EvaluationFormSummary$LastModifiedBy": "<p>The Amazon Resource Name (ARN) of the user who last updated the evaluation form.</p>",
@@ -365,8 +373,12 @@
         "EvaluationFormVersionSummary$CreatedBy": "<p>The Amazon Resource Name (ARN) of the user who created the evaluation form.</p>",
         "EvaluationFormVersionSummary$LastModifiedBy": "<p>The Amazon Resource Name (ARN) of the user who last updated the evaluation form.</p>",
         "EvaluationMetadata$EvaluatorArn": "<p>The Amazon Resource Name (ARN) of the user who last updated the evaluation.</p>",
+        "EvaluationSearchMetadata$EvaluatorArn": "<p>The Amazon Resource Name (ARN) of the person who evaluated the contact.</p>",
+        "EvaluationSearchMetadata$AcknowledgedBy": "<p>The agent who acknowledged the evaluation.</p>",
+        "EvaluationSearchSummary$EvaluationArn": "<p>The Amazon Resource Name (ARN) for the contact evaluation resource.</p>",
         "EvaluationSummary$EvaluationArn": "<p>The Amazon Resource Name (ARN) for the contact evaluation resource.</p>",
         "EvaluationSummary$EvaluatorArn": "<p>The Amazon Resource Name (ARN) of the user who last updated the evaluation.</p>",
+        "EvaluatorUserUnion$ConnectUserArn": "<p>Represents the Amazon Connect ARN of the user.</p>",
         "FlowAssociationSummary$ResourceId": "<p>The identifier of the resource.</p>",
         "FlowAssociationSummary$FlowId": "<p>The identifier of the flow.</p>",
         "GetAttachedFileRequest$AssociatedResourceArn": "<p>The resource to which the attached file is (being) uploaded to. The supported resources are <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/cases.html\">Cases</a> and <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html\">Email</a>.</p> <note> <p>This value must be a valid ARN.</p> </note>",
@@ -887,9 +899,11 @@
         "GetCurrentMetricDataResponse$ApproximateTotalCount": "<p>The total count of the result, regardless of the current page size. </p>",
         "GetCurrentUserDataResponse$ApproximateTotalCount": "<p>The total count of the result, regardless of the current page size.</p>",
         "SearchAgentStatusesResponse$ApproximateTotalCount": "<p>The total number of agent statuses which matched your search query.</p>",
+        "SearchContactEvaluationsResponse$ApproximateTotalCount": "<p>The total number of contact evaluations that matched your search query.</p>",
         "SearchContactFlowModulesResponse$ApproximateTotalCount": "<p>The total number of flows which matched your search query.</p>",
         "SearchContactFlowsResponse$ApproximateTotalCount": "<p>The total number of flows which matched your search query.</p>",
         "SearchEmailAddressesResponse$ApproximateTotalCount": "<p>The total number of email addresses which matched your search query.</p>",
+        "SearchEvaluationFormsResponse$ApproximateTotalCount": "<p>The total number of evaluation forms that matched your search query.</p>",
         "SearchHoursOfOperationOverridesResponse$ApproximateTotalCount": "<p>The total number of hours of operations which matched your search query.</p>",
         "SearchHoursOfOperationsResponse$ApproximateTotalCount": "<p>The total number of hours of operations which matched your search query.</p>",
         "SearchPredefinedAttributesResponse$ApproximateTotalCount": "<p>The approximate number of predefined attributes which matched your search query.</p>",
@@ -1209,7 +1223,7 @@
       }
     },
     "AuthenticationProfile": {
-      "base": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web ServicesSupport.</p> <p>Information about an authentication profile. An authentication profile is a resource that stores the authentication settings for users in your contact center. You use authentication profiles to set up IP address range restrictions and session timeouts. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/authentication-profiles.html\">Set IP address restrictions or session timeouts</a>. </p>",
+      "base": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>Information about an authentication profile. An authentication profile is a resource that stores the authentication settings for users in your contact center. You use authentication profiles to set up IP address range restrictions and session timeouts. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/authentication-profiles.html\">Set IP address restrictions or session timeouts</a>. </p>",
       "refs": {
         "DescribeAuthenticationProfileResponse$AuthenticationProfile": "<p>The authentication profile object being described.</p>"
       }
@@ -1239,7 +1253,7 @@
       }
     },
     "AuthenticationProfileSummary": {
-      "base": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web ServicesSupport.</p> <p>A summary of a given authentication profile.</p>",
+      "base": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>A summary of a given authentication profile.</p>",
       "refs": {
         "AuthenticationProfileSummaryList$member": null
       }
@@ -1260,6 +1274,33 @@
       "base": null,
       "refs": {
         "UserPhoneConfig$AutoAccept": "<p>The Auto accept setting.</p>"
+      }
+    },
+    "AutoEvaluationConfiguration": {
+      "base": "<p>Configuration information about automated evaluations.</p>",
+      "refs": {
+        "StartContactEvaluationRequest$AutoEvaluationConfiguration": "<p>Whether automated evaluations are enabled.</p>"
+      }
+    },
+    "AutoEvaluationDetails": {
+      "base": "<p>Details about automated evaluations.</p>",
+      "refs": {
+        "EvaluationMetadata$AutoEvaluation": "<p>Information related to automated evaluation.</p>"
+      }
+    },
+    "AutoEvaluationStatus": {
+      "base": null,
+      "refs": {
+        "AutoEvaluationDetails$AutoEvaluationStatus": "<p>The status of the contact auto-evaluation. </p>",
+        "EvaluationSearchMetadata$AutoEvaluationStatus": "<p>The status of the contact auto evaluation. </p>",
+        "EvaluationSummary$AutoEvaluationStatus": "<p>The status of the contact auto evaluation. </p>"
+      }
+    },
+    "AutomaticFailConfiguration": {
+      "base": "<p>Information about automatic fail configuration for an evaluation form.</p>",
+      "refs": {
+        "EvaluationFormNumericQuestionOption$AutomaticFailConfiguration": "<p>A configuration for automatic fail.</p>",
+        "EvaluationFormSingleSelectQuestionOption$AutomaticFailConfiguration": "<p>Whether automatic fail is configured on a single select question. </p>"
       }
     },
     "AvailableNumberSummary": {
@@ -1344,12 +1385,20 @@
         "AnswerMachineDetectionConfig$AwaitAnswerMachinePrompt": "<p>Wait for the answering machine prompt.</p>",
         "AuthenticationProfile$IsDefault": "<p>Shows whether the authentication profile is the default authentication profile for the Amazon Connect instance. The default authentication profile applies to all agents in an Amazon Connect instance, unless overridden by another authentication profile.</p>",
         "AuthenticationProfileSummary$IsDefault": "<p>Shows whether the authentication profile is the default authentication profile for the Amazon Connect instance. The default authentication profile applies to all agents in an Amazon Connect instance, unless overridden by another authentication profile.</p>",
+        "AutoEvaluationConfiguration$Enabled": "<p>Whether automated evaluations are enabled.</p>",
+        "AutoEvaluationDetails$AutoEvaluationEnabled": "<p>Whether automated evaluation is enabled.</p>",
         "EvaluationAnswerData$NotApplicable": "<p>The flag to mark the question as not applicable.</p>",
+        "EvaluationFormAutoEvaluationConfiguration$Enabled": "<p>When automated evaluation is enabled.</p>",
         "EvaluationFormNumericQuestionOption$AutomaticFail": "<p>The flag to mark the option as automatic fail. If an automatic fail answer is provided, the overall evaluation gets a score of 0.</p>",
         "EvaluationFormQuestion$NotApplicableEnabled": "<p>The flag to enable not applicable answers to the question.</p>",
+        "EvaluationFormSearchSummary$AutoEvaluationEnabled": "<p>Whether automated evaluation is enabled.</p>",
         "EvaluationFormSingleSelectQuestionOption$AutomaticFail": "<p>The flag to mark the option as automatic fail. If an automatic fail answer is provided, the overall evaluation gets a score of 0.</p>",
         "EvaluationScore$NotApplicable": "<p>The flag to mark the item as not applicable for scoring.</p>",
         "EvaluationScore$AutomaticFail": "<p>The flag that marks the item as automatic fail. If the item or a child item gets an automatic fail answer, this flag will be true.</p>",
+        "EvaluationSearchMetadata$ScoreAutomaticFail": "<p>The flag that marks the item as automatic fail. If the item or a child item gets an automatic fail answer, this flag is true.</p>",
+        "EvaluationSearchMetadata$ScoreNotApplicable": "<p>The flag to mark the item as not applicable for scoring.</p>",
+        "EvaluationSearchMetadata$AutoEvaluationEnabled": "<p>Whether auto-evaluation is enabled.</p>",
+        "EvaluationSummary$AutoEvaluationEnabled": "<p>Whether automated evaluation is enabled.</p>",
         "FieldValueUnion$BooleanValue": "<p>A Boolean number value type.</p>",
         "MetricFilterV2$Negate": "<p>If set to <code>true</code>, the API response contains results that filter out the results matched by the metric-level filters condition. By default, <code>Negate</code> is set to <code>false</code>. </p>",
         "RoutingProfile$IsDefault": "<p>Whether this a default routing profile.</p>",
@@ -1357,6 +1406,19 @@
         "TrafficDistributionGroup$IsDefault": "<p>Whether this is the default traffic distribution group created during instance replication. The default traffic distribution group cannot be deleted by the <code>DeleteTrafficDistributionGroup</code> API. The default traffic distribution group is deleted as part of the process for deleting a replica.</p> <note> <p>The <code>SignInConfig</code> distribution is available only on a default <code>TrafficDistributionGroup</code> (see the <code>IsDefault</code> parameter in the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_TrafficDistributionGroup.html\">TrafficDistributionGroup</a> data type). If you call <code>UpdateTrafficDistribution</code> with a modified <code>SignInConfig</code> and a non-default <code>TrafficDistributionGroup</code>, an <code>InvalidRequestException</code> is returned.</p> </note>",
         "TrafficDistributionGroupSummary$IsDefault": "<p>Whether this is the default traffic distribution group created during instance replication. The default traffic distribution group cannot be deleted by the <code>DeleteTrafficDistributionGroup</code> API. The default traffic distribution group is deleted as part of the process for deleting a replica.</p>",
         "UpdateAgentStatusRequest$ResetOrderNumber": "<p>A number indicating the reset order of the agent status.</p>"
+      }
+    },
+    "BooleanComparisonType": {
+      "base": null,
+      "refs": {
+        "BooleanCondition$ComparisonType": "<p>Boolean property comparison type.</p>"
+      }
+    },
+    "BooleanCondition": {
+      "base": "<p>A boolean search condition for Search APIs.</p>",
+      "refs": {
+        "EvaluationFormSearchCriteria$BooleanCondition": "<p>Boolean search condition.</p>",
+        "EvaluationSearchCriteria$BooleanCondition": "<p>The boolean condition search criteria for searching evaluations.</p>"
       }
     },
     "BotName": {
@@ -2028,6 +2090,7 @@
         "DescribeContactRequest$ContactId": "<p>The identifier of the contact.</p>",
         "DismissUserContactRequest$ContactId": "<p>The identifier of the contact.</p>",
         "EvaluationMetadata$ContactId": "<p>The identifier of the contact in this instance of Amazon Connect. </p>",
+        "EvaluationSearchMetadata$ContactId": "<p>The identifier of the contact in this instance of Amazon Connect. </p>",
         "GetContactAttributesRequest$InitialContactId": "<p>The identifier of the initial contact.</p>",
         "GetContactMetricsResponse$Id": "<p>The unique identifier of the contact for which metrics were retrieved.</p>",
         "ListAssociatedContactsRequest$ContactId": "<p>The identifier of the contact in this instance of Amazon Connect. </p>",
@@ -2244,6 +2307,8 @@
       "base": "<p>An object that can be used to specify Tag conditions inside the <code>SearchFilter</code>. This accepts an <code>OR</code> or <code>AND</code> (List of List) input where: </p> <ul> <li> <p>The top level list specifies conditions that need to be applied with <code>OR</code> operator.</p> </li> <li> <p>The inner list specifies conditions that need to be applied with <code>AND</code> operator.</p> </li> </ul>",
       "refs": {
         "AgentStatusSearchFilter$AttributeFilter": "<p>An object that can be used to specify Tag conditions inside the <code>SearchFilter</code>. This accepts an <code>OR</code> of <code>AND</code> (List of List) input where: </p> <ul> <li> <p>The top level list specifies conditions that need to be applied with <code>OR</code> operator.</p> </li> <li> <p>The inner list specifies conditions that need to be applied with <code>AND</code> operator.</p> </li> </ul>",
+        "EvaluationFormSearchFilter$AttributeFilter": null,
+        "EvaluationSearchFilter$AttributeFilter": null,
         "UserHierarchyGroupSearchFilter$AttributeFilter": "<p>An object that can be used to specify Tag conditions inside the SearchFilter. This accepts an OR or AND (List of List) input where:</p> <ul> <li> <p>The top level list specifies conditions that need to be applied with <code>OR</code> operator.</p> </li> <li> <p>The inner list specifies conditions that need to be applied with <code>AND</code> operator.</p> </li> </ul>"
       }
     },
@@ -2671,6 +2736,26 @@
         "ReferenceSummary$Date": "<p>Information about a reference when the <code>referenceType</code> is <code>DATE</code>. Otherwise, null.</p>"
       }
     },
+    "DateTimeComparisonType": {
+      "base": null,
+      "refs": {
+        "DateTimeCondition$ComparisonType": "<p>Datetime property comparison type. </p>"
+      }
+    },
+    "DateTimeCondition": {
+      "base": "<p>A datetime search condition for Search APIs.</p>",
+      "refs": {
+        "EvaluationFormSearchCriteria$DateTimeCondition": "<p>Datetime search condition.</p>",
+        "EvaluationSearchCriteria$DateTimeCondition": "<p>The datetime condition search criteria for searching evaluations.</p>"
+      }
+    },
+    "DateTimeFormat": {
+      "base": null,
+      "refs": {
+        "DateTimeCondition$MinValue": "<p>A minimum value of the property. </p>",
+        "DateTimeCondition$MaxValue": "<p>A maximum value of the property. </p>"
+      }
+    },
     "DateYearMonthDayFormat": {
       "base": null,
       "refs": {
@@ -2684,6 +2769,18 @@
     "DeactivateEvaluationFormResponse": {
       "base": null,
       "refs": {}
+    },
+    "DecimalComparisonType": {
+      "base": null,
+      "refs": {
+        "DecimalCondition$ComparisonType": "<p>The type of comparison to be made when evaluating the decimal condition. </p>"
+      }
+    },
+    "DecimalCondition": {
+      "base": "<p>A decimal search condition for Search APIs.</p>",
+      "refs": {
+        "EvaluationSearchCriteria$DecimalCondition": "<p>The decimal condition search criteria for searching evaluations.</p>"
+      }
     },
     "DefaultVocabulary": {
       "base": "<p>Contains information about a default vocabulary.</p>",
@@ -3617,12 +3714,33 @@
         "DescribeContactEvaluationResponse$Evaluation": "<p>Information about the evaluation form completed for a specific contact.</p>"
       }
     },
+    "EvaluationAcknowledgement": {
+      "base": "<p>Information about the evaluation acknowledgement.</p>",
+      "refs": {
+        "EvaluationMetadata$Acknowledgement": "<p>Information related to evaluation acknowledgement.</p>"
+      }
+    },
+    "EvaluationAcknowledgementSummary": {
+      "base": "<p>Summary information about an evaluation acknowledgement.</p>",
+      "refs": {
+        "EvaluationSummary$Acknowledgement": "<p>Information related to evaluation acknowledgement.</p>"
+      }
+    },
+    "EvaluationAcknowledgerCommentString": {
+      "base": null,
+      "refs": {
+        "EvaluationAcknowledgement$AcknowledgerComment": "<p>A comment from the agent when they confirmed they acknowledged the evaluation.</p>",
+        "EvaluationAcknowledgementSummary$AcknowledgerComment": "<p>A comment from the agent when they confirmed they acknowledged the evaluation.</p>",
+        "EvaluationSearchMetadata$AcknowledgerComment": "<p>The comment from the agent when they acknowledged the evaluation.</p>"
+      }
+    },
     "EvaluationAnswerData": {
       "base": "<p>Information about answer data for a contact evaluation. Answer data must be either string, numeric, or not applicable.</p>",
       "refs": {
         "EvaluationAnswerInput$Value": "<p>The value for an answer in a contact evaluation.</p>",
         "EvaluationAnswerOutput$Value": "<p>The value for an answer in a contact evaluation.</p>",
-        "EvaluationAnswerOutput$SystemSuggestedValue": "<p>The system suggested value for an answer in a contact evaluation.</p>"
+        "EvaluationAnswerOutput$SystemSuggestedValue": "<p>The system suggested value for an answer in a contact evaluation.</p>",
+        "EvaluationSuggestedAnswer$Value": null
       }
     },
     "EvaluationAnswerDataNumericValue": {
@@ -3668,10 +3786,37 @@
         "ContactEvaluation$EvaluationArn": "<p>The Amazon Resource Name for the evaluation form. It is always present.</p>"
       }
     },
+    "EvaluationAutomationRuleCategory": {
+      "base": "<p>The Contact Lens category used by evaluation automation.</p>",
+      "refs": {
+        "EvaluationAutomationRuleCategoryList$member": null
+      }
+    },
+    "EvaluationAutomationRuleCategoryList": {
+      "base": null,
+      "refs": {
+        "EvaluationContactLensAnswerAnalysisDetails$MatchedRuleCategories": "<p>A list of match rule categories.</p>"
+      }
+    },
+    "EvaluationContactLensAnswerAnalysisDetails": {
+      "base": "<p>Analysis details providing explanation for Contact Lens automation decision.</p>",
+      "refs": {
+        "EvaluationQuestionAnswerAnalysisDetails$ContactLens": "<p>Analysis results from the Contact Lens automation for the question.</p>"
+      }
+    },
     "EvaluationForm": {
       "base": "<p>Information about the evaluation form.</p>",
       "refs": {
         "DescribeEvaluationFormResponse$EvaluationForm": "<p>Information about the evaluation form.</p>"
+      }
+    },
+    "EvaluationFormAutoEvaluationConfiguration": {
+      "base": "<p>The automatic evaluation configuration of an evaluation form.</p>",
+      "refs": {
+        "CreateEvaluationFormRequest$AutoEvaluationConfiguration": "<p>Configuration information about automated evaluations.</p>",
+        "EvaluationForm$AutoEvaluationConfiguration": "<p>The automatic evaluation configuration of an evaluation form.</p>",
+        "EvaluationFormContent$AutoEvaluationConfiguration": "<p>The configuration of the automated evaluation.</p>",
+        "UpdateEvaluationFormRequest$AutoEvaluationConfiguration": "<p>Whether automated evaluations are enabled.</p>"
       }
     },
     "EvaluationFormContent": {
@@ -3686,6 +3831,7 @@
         "CreateEvaluationFormRequest$Description": "<p>The description of the evaluation form.</p>",
         "EvaluationForm$Description": "<p>The description of the evaluation form.</p>",
         "EvaluationFormContent$Description": "<p>The description of the evaluation form.</p>",
+        "EvaluationFormSearchSummary$Description": "<p>The description of the evaluation form.</p>",
         "UpdateEvaluationFormRequest$Description": "<p>The description of the evaluation form.</p>"
       }
     },
@@ -3699,6 +3845,86 @@
       "base": "<p>Information about an item from an evaluation form. The item must be either a section or a question.</p>",
       "refs": {
         "EvaluationFormItemsList$member": null
+      }
+    },
+    "EvaluationFormItemEnablementAction": {
+      "base": null,
+      "refs": {
+        "EvaluationFormItemEnablementConfiguration$Action": "<p>An enablement action that if condition is satisfied. </p>",
+        "EvaluationFormItemEnablementConfiguration$DefaultAction": "<p>An enablement action that if condition is not satisfied. </p>"
+      }
+    },
+    "EvaluationFormItemEnablementCondition": {
+      "base": "<p>A condition for item enablement.</p>",
+      "refs": {
+        "EvaluationFormItemEnablementConditionOperand$Condition": "<p>A condition for item enablement.</p>",
+        "EvaluationFormItemEnablementConfiguration$Condition": "<p>A condition for item enablement configuration.</p>"
+      }
+    },
+    "EvaluationFormItemEnablementConditionOperand": {
+      "base": "<p>An operand of the enablement condition.</p>",
+      "refs": {
+        "EvaluationFormItemEnablementConditionOperandList$member": null
+      }
+    },
+    "EvaluationFormItemEnablementConditionOperandList": {
+      "base": null,
+      "refs": {
+        "EvaluationFormItemEnablementCondition$Operands": "<p>Operands of the enablement condition.</p>"
+      }
+    },
+    "EvaluationFormItemEnablementConfiguration": {
+      "base": "<p>An item enablement configuration.</p>",
+      "refs": {
+        "EvaluationFormQuestion$Enablement": "<p>A question conditional enablement.</p>"
+      }
+    },
+    "EvaluationFormItemEnablementExpression": {
+      "base": "<p>An expression that defines a basic building block of conditional enablement.</p>",
+      "refs": {
+        "EvaluationFormItemEnablementConditionOperand$Expression": "<p>An expression of the enablement condition.</p>"
+      }
+    },
+    "EvaluationFormItemEnablementOperator": {
+      "base": null,
+      "refs": {
+        "EvaluationFormItemEnablementCondition$Operator": "<p>The operator to be used to be applied to operands if more than one provided. </p>"
+      }
+    },
+    "EvaluationFormItemEnablementSource": {
+      "base": "<p>An enablement expression source item.</p>",
+      "refs": {
+        "EvaluationFormItemEnablementExpression$Source": "<p>A source item of enablement expression.</p>"
+      }
+    },
+    "EvaluationFormItemEnablementSourceType": {
+      "base": null,
+      "refs": {
+        "EvaluationFormItemEnablementSource$Type": "<p>A type of source item. </p>"
+      }
+    },
+    "EvaluationFormItemEnablementSourceValue": {
+      "base": "<p>An enablement expression source value.</p>",
+      "refs": {
+        "EvaluationFormItemEnablementSourceValueList$member": null
+      }
+    },
+    "EvaluationFormItemEnablementSourceValueList": {
+      "base": null,
+      "refs": {
+        "EvaluationFormItemEnablementExpression$Values": "<p>A list of values from source item.</p>"
+      }
+    },
+    "EvaluationFormItemEnablementSourceValueType": {
+      "base": null,
+      "refs": {
+        "EvaluationFormItemEnablementSourceValue$Type": "<p>A type of source item value. </p>"
+      }
+    },
+    "EvaluationFormItemSourceValuesComparator": {
+      "base": null,
+      "refs": {
+        "EvaluationFormItemEnablementExpression$Comparator": "<p>A comparator to be used against list of values. </p>"
       }
     },
     "EvaluationFormItemWeight": {
@@ -3755,6 +3981,20 @@
         "EvaluationFormSingleSelectQuestionOption$Score": "<p>The score assigned to the answer option.</p>"
       }
     },
+    "EvaluationFormQuestionAutomationAnswerSource": {
+      "base": "<p>A question automation answer.</p>",
+      "refs": {
+        "EvaluationFormNumericQuestionAutomation$AnswerSource": "<p>A source of automation answer for numeric question.</p>",
+        "EvaluationFormSingleSelectQuestionAutomation$AnswerSource": "<p>Automation answer source.</p>",
+        "EvaluationFormTextQuestionAutomation$AnswerSource": "<p>Automation answer source.</p>"
+      }
+    },
+    "EvaluationFormQuestionAutomationAnswerSourceType": {
+      "base": null,
+      "refs": {
+        "EvaluationFormQuestionAutomationAnswerSource$SourceType": "<p>The automation answer source type.</p>"
+      }
+    },
     "EvaluationFormQuestionInstructions": {
       "base": null,
       "refs": {
@@ -3799,6 +4039,38 @@
         "EvaluationForm$ScoringStrategy": "<p>A scoring strategy of the evaluation form.</p>",
         "EvaluationFormContent$ScoringStrategy": "<p>A scoring strategy of the evaluation form.</p>",
         "UpdateEvaluationFormRequest$ScoringStrategy": "<p>A scoring strategy of the evaluation form.</p>"
+      }
+    },
+    "EvaluationFormSearchConditionList": {
+      "base": null,
+      "refs": {
+        "EvaluationFormSearchCriteria$OrConditions": "<p>A list of conditions which would be applied together with an OR condition.</p>",
+        "EvaluationFormSearchCriteria$AndConditions": "<p>A list of conditions which would be applied together with an AND condition.</p>"
+      }
+    },
+    "EvaluationFormSearchCriteria": {
+      "base": "<p>The search criteria to be used to return evaluation forms.</p>",
+      "refs": {
+        "EvaluationFormSearchConditionList$member": null,
+        "SearchEvaluationFormsRequest$SearchCriteria": "<p>The search criteria to be used to return evaluation forms.</p>"
+      }
+    },
+    "EvaluationFormSearchFilter": {
+      "base": "<p>Filters to be applied to search results.</p>",
+      "refs": {
+        "SearchEvaluationFormsRequest$SearchFilter": "<p>Filters to be applied to search results.</p>"
+      }
+    },
+    "EvaluationFormSearchSummary": {
+      "base": "<p>Information about the returned evaluation forms.</p>",
+      "refs": {
+        "EvaluationFormSearchSummaryList$member": null
+      }
+    },
+    "EvaluationFormSearchSummaryList": {
+      "base": null,
+      "refs": {
+        "SearchEvaluationFormsResponse$EvaluationFormSearchSummaryList": "<p>Information about the returned evaluation forms.</p>"
       }
     },
     "EvaluationFormSection": {
@@ -3873,12 +4145,25 @@
         "ListEvaluationFormsResponse$EvaluationFormSummaryList": "<p>Provides details about a list of evaluation forms belonging to an instance.</p>"
       }
     },
+    "EvaluationFormTextQuestionAutomation": {
+      "base": "<p>Information about the automation configuration in text questions.</p>",
+      "refs": {
+        "EvaluationFormTextQuestionProperties$Automation": "<p>The automation properties of the text question.</p>"
+      }
+    },
+    "EvaluationFormTextQuestionProperties": {
+      "base": "<p>Information about properties for a text question in an evaluation form.</p>",
+      "refs": {
+        "EvaluationFormQuestionTypeProperties$Text": "<p>The properties of the text question.</p>"
+      }
+    },
     "EvaluationFormTitle": {
       "base": null,
       "refs": {
         "CreateEvaluationFormRequest$Title": "<p>A title of the evaluation form.</p>",
         "EvaluationForm$Title": "<p>A title of the evaluation form.</p>",
         "EvaluationFormContent$Title": "<p>A title of the evaluation form.</p>",
+        "EvaluationFormSearchSummary$Title": "<p>The title of the evaluation form.</p>",
         "EvaluationFormSummary$Title": "<p>A title of the evaluation form.</p>",
         "EvaluationSummary$EvaluationFormTitle": "<p>A title of the evaluation form.</p>",
         "UpdateEvaluationFormRequest$Title": "<p>A title of the evaluation form.</p>"
@@ -3895,6 +4180,7 @@
       "base": null,
       "refs": {
         "EvaluationForm$Status": "<p>The status of the evaluation form.</p>",
+        "EvaluationFormSearchSummary$Status": "<p>The status of the evaluation form.</p>",
         "EvaluationFormVersionSummary$Status": "<p>The status of the evaluation form.</p>"
       }
     },
@@ -3908,6 +4194,12 @@
       "base": null,
       "refs": {
         "ListEvaluationFormVersionsResponse$EvaluationFormVersionSummaryList": "<p>Provides details about a list of evaluation forms belonging to an instance.</p>"
+      }
+    },
+    "EvaluationGenAIAnswerAnalysisDetails": {
+      "base": "<p>An analysis for a generative AI answer to the question.</p>",
+      "refs": {
+        "EvaluationQuestionAnswerAnalysisDetails$GenAI": "<p>Analysis results from the generative AI automation for the question.</p>"
       }
     },
     "EvaluationId": {
@@ -3942,6 +4234,24 @@
         "UpdateContactEvaluationRequest$Notes": "<p>A map of question identifiers to note value.</p>"
       }
     },
+    "EvaluationQuestionAnswerAnalysisDetails": {
+      "base": "<p>Detailed analysis results of the automated answer to the evaluation question.</p>",
+      "refs": {
+        "EvaluationSuggestedAnswer$AnalysisDetails": "<p>Detailed analysis results.</p>"
+      }
+    },
+    "EvaluationQuestionAnswerAnalysisType": {
+      "base": null,
+      "refs": {
+        "EvaluationSuggestedAnswer$AnalysisType": "<p>Type of analysis used to provide suggested answer.</p>"
+      }
+    },
+    "EvaluationQuestionInputDetails": {
+      "base": "<p>Details of the input data used for automated question processing.</p>",
+      "refs": {
+        "EvaluationSuggestedAnswer$Input": "<p>Details about the input used to question automation.</p>"
+      }
+    },
     "EvaluationScore": {
       "base": "<p>Information about scores of a contact evaluation item (section or question).</p>",
       "refs": {
@@ -3953,7 +4263,8 @@
     "EvaluationScorePercentage": {
       "base": null,
       "refs": {
-        "EvaluationScore$Percentage": "<p>The score percentage for an item in a contact evaluation.</p>"
+        "EvaluationScore$Percentage": "<p>The score percentage for an item in a contact evaluation.</p>",
+        "EvaluationSearchMetadata$ScorePercentage": "<p>The total evaluation score expressed as a percentage.</p>"
       }
     },
     "EvaluationScoresMap": {
@@ -3962,11 +4273,92 @@
         "Evaluation$Scores": "<p>A map of item (section or question) identifiers to score value.</p>"
       }
     },
+    "EvaluationSearchConditionList": {
+      "base": null,
+      "refs": {
+        "EvaluationSearchCriteria$OrConditions": "<p>A list of conditions which would be applied together with an OR condition.</p>",
+        "EvaluationSearchCriteria$AndConditions": "<p>A list of conditions which would be applied together with an AND condition.</p>"
+      }
+    },
+    "EvaluationSearchCriteria": {
+      "base": "<p>The search criteria to be used to return evaluations.</p>",
+      "refs": {
+        "EvaluationSearchConditionList$member": null,
+        "SearchContactEvaluationsRequest$SearchCriteria": "<p>The search criteria to be used to return contact evaluations.</p>"
+      }
+    },
+    "EvaluationSearchFilter": {
+      "base": "<p>Filters to be applied to search results.</p>",
+      "refs": {
+        "SearchContactEvaluationsRequest$SearchFilter": "<p>Filters to be applied to search results.</p>"
+      }
+    },
+    "EvaluationSearchMetadata": {
+      "base": "<p>Metadata information about an evaluation search.</p>",
+      "refs": {
+        "EvaluationSearchSummary$Metadata": "<p>Summary information about the evaluation search.</p>"
+      }
+    },
+    "EvaluationSearchSummary": {
+      "base": "<p>Summary of evaluation obtained from the search operation.</p>",
+      "refs": {
+        "EvaluationSearchSummaryList$member": null
+      }
+    },
+    "EvaluationSearchSummaryList": {
+      "base": null,
+      "refs": {
+        "SearchContactEvaluationsResponse$EvaluationSearchSummaryList": "<p>Contains information about contact evaluations.</p>"
+      }
+    },
     "EvaluationStatus": {
       "base": null,
       "refs": {
         "Evaluation$Status": "<p>The status of the contact evaluation.</p>",
+        "EvaluationSearchSummary$Status": "<p>The status of the evaluation. </p>",
         "EvaluationSummary$Status": "<p>The status of the contact evaluation.</p>"
+      }
+    },
+    "EvaluationSuggestedAnswer": {
+      "base": "<p>The information about the suggested answer for the question.</p>",
+      "refs": {
+        "EvaluationSuggestedAnswersList$member": null
+      }
+    },
+    "EvaluationSuggestedAnswerJustification": {
+      "base": null,
+      "refs": {
+        "EvaluationGenAIAnswerAnalysisDetails$Justification": "<p>Generative AI automation answer justification.</p>"
+      }
+    },
+    "EvaluationSuggestedAnswerStatus": {
+      "base": null,
+      "refs": {
+        "EvaluationSuggestedAnswer$Status": "<p>The status of the suggested answer. D</p>"
+      }
+    },
+    "EvaluationSuggestedAnswerTranscriptMillisOffset": {
+      "base": null,
+      "refs": {
+        "EvaluationSuggestedAnswerTranscriptMillisecondOffsets$BeginOffsetMillis": "<p>Offset in milliseconds from the beginning of the transcript.</p>"
+      }
+    },
+    "EvaluationSuggestedAnswerTranscriptMillisecondOffsets": {
+      "base": "<p>The milliseconds offset for transcript reference in suggested answer.</p>",
+      "refs": {
+        "EvaluationTranscriptPointOfInterest$MillisecondOffsets": "<p>Offset in milliseconds from the beginning of transcript.</p>"
+      }
+    },
+    "EvaluationSuggestedAnswerTranscriptSegment": {
+      "base": null,
+      "refs": {
+        "EvaluationTranscriptPointOfInterest$TranscriptSegment": "<p>Segment of transcript.</p>"
+      }
+    },
+    "EvaluationSuggestedAnswersList": {
+      "base": null,
+      "refs": {
+        "EvaluationAnswerOutput$SuggestedAnswers": "<p>Automation suggested answers for the questions.</p>"
       }
     },
     "EvaluationSummary": {
@@ -3979,6 +4371,40 @@
       "base": null,
       "refs": {
         "ListContactEvaluationsResponse$EvaluationSummaryList": "<p>Provides details about a list of contact evaluations belonging to an instance.</p>"
+      }
+    },
+    "EvaluationTranscriptPointOfInterest": {
+      "base": "<p>Information about the point of interest in transcript provided to evaluation.</p>",
+      "refs": {
+        "EvaluationTranscriptPointsOfInterest$member": null
+      }
+    },
+    "EvaluationTranscriptPointsOfInterest": {
+      "base": null,
+      "refs": {
+        "EvaluationAutomationRuleCategory$PointsOfInterest": "<p>A point of interest in a contact transcript that indicates match of condition.</p>",
+        "EvaluationGenAIAnswerAnalysisDetails$PointsOfInterest": "<p>Generative AI automation answer analysis points of interest.</p>"
+      }
+    },
+    "EvaluationTranscriptType": {
+      "base": null,
+      "refs": {
+        "EvaluationQuestionInputDetails$TranscriptType": "<p>Transcript type.</p>"
+      }
+    },
+    "EvaluationType": {
+      "base": null,
+      "refs": {
+        "Evaluation$EvaluationType": "<p>Type of the evaluation. </p>",
+        "EvaluationSearchSummary$EvaluationType": "<p>Type of the evaluation. </p>",
+        "EvaluationSummary$EvaluationType": "<p>Type of the evaluation. </p>"
+      }
+    },
+    "EvaluatorUserUnion": {
+      "base": "<p>Represents the entity that performed the action on the evaluation.</p>",
+      "refs": {
+        "SubmitContactEvaluationRequest$SubmittedBy": "<p>The ID of the user who submitted the contact evaluation.</p>",
+        "UpdateContactEvaluationRequest$UpdatedBy": "<p>The ID of the user who updated the contact evaluation.</p>"
       }
     },
     "EventBridgeActionDefinition": {
@@ -4862,7 +5288,7 @@
       "refs": {
         "Attribute$AttributeType": "<p>The type of attribute.</p>",
         "DescribeInstanceAttributeRequest$AttributeType": "<p>The type of attribute.</p>",
-        "UpdateInstanceAttributeRequest$AttributeType": "<p>The type of attribute.</p> <note> <p>Only allowlisted customers can consume USE_CUSTOM_TTS_VOICES. To access this feature, contact Amazon Web ServicesSupport for allowlisting.</p> </note>"
+        "UpdateInstanceAttributeRequest$AttributeType": "<p>The type of attribute.</p> <note> <p>Only allowlisted customers can consume USE_CUSTOM_TTS_VOICES. To access this feature, contact Amazon Web Services Support for allowlisting.</p> </note>"
       }
     },
     "InstanceAttributeValue": {
@@ -5060,10 +5486,12 @@
         "RoutingProfile$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchAgentStatusesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.</p>",
         "SearchAvailablePhoneNumbersRequest$InstanceId": "<p>The identifier of the Amazon Connect instance that phone numbers are claimed to. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance. You must enter <code>InstanceId</code> or <code>TargetArn</code>. </p>",
+        "SearchContactEvaluationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchContactFlowModulesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchContactFlowsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchContactsRequest$InstanceId": "<p>The identifier of Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchEmailAddressesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "SearchEvaluationFormsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchHoursOfOperationOverridesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
         "SearchHoursOfOperationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchPredefinedAttributesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -5913,10 +6341,12 @@
         "ListUseCasesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListUserProficienciesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchAgentStatusesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
+        "SearchContactEvaluationsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchContactFlowModulesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchContactFlowsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchContactsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchEmailAddressesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
+        "SearchEvaluationFormsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchHoursOfOperationOverridesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchHoursOfOperationsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchPredefinedAttributesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
@@ -6333,7 +6763,11 @@
         "ListUserProficienciesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListUsersRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListUsersResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
-        "SearchEmailAddressesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>"
+        "SearchContactEvaluationsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "SearchContactEvaluationsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "SearchEmailAddressesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "SearchEvaluationFormsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "SearchEvaluationFormsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>"
       }
     },
     "NextToken2500": {
@@ -6397,6 +6831,13 @@
         "ParticipantMetrics$ConversationAbandon": "<p>A boolean flag indicating whether the chat conversation was abandoned by a Participant.</p>"
       }
     },
+    "NullableDouble": {
+      "base": null,
+      "refs": {
+        "DecimalCondition$MinValue": "<p>A minimum value of the decimal property.</p>",
+        "DecimalCondition$MaxValue": "<p>A maximum value of the decimal property.</p>"
+      }
+    },
     "NullableProficiencyLevel": {
       "base": null,
       "refs": {
@@ -6421,7 +6862,9 @@
     "NumberCondition": {
       "base": "<p>A leaf node condition which can be used to specify a numeric condition.</p> <note> <p>The currently supported value for <code>FieldName</code> is <code>limit</code>.</p> </note>",
       "refs": {
-        "Condition$NumberCondition": "<p>A leaf node condition which can be used to specify a numeric condition.</p>"
+        "Condition$NumberCondition": "<p>A leaf node condition which can be used to specify a numeric condition.</p>",
+        "EvaluationFormSearchCriteria$NumberCondition": null,
+        "EvaluationSearchCriteria$NumberCondition": null
       }
     },
     "NumberReference": {
@@ -7193,6 +7636,18 @@
         "Contact$QualityMetrics": "<p>Information about the quality of the participant's media connection.</p>"
       }
     },
+    "QuestionRuleCategoryAutomationCondition": {
+      "base": null,
+      "refs": {
+        "EvaluationAutomationRuleCategory$Condition": "<p>An automation condition for a Contact Lens category.</p>"
+      }
+    },
+    "QuestionRuleCategoryAutomationLabel": {
+      "base": null,
+      "refs": {
+        "EvaluationAutomationRuleCategory$Category": "<p>A category label.</p>"
+      }
+    },
     "Queue": {
       "base": "<p>Contains information about a queue.</p>",
       "refs": {
@@ -7791,6 +8246,9 @@
     "ReferenceId": {
       "base": null,
       "refs": {
+        "AutomaticFailConfiguration$TargetSection": "<p>The referenceId of the target section for auto failure.</p>",
+        "EvaluationFormItemEnablementSource$RefId": "<p>A referenceId of the source item.</p>",
+        "EvaluationFormItemEnablementSourceValue$RefId": "<p>A referenceId of the source value.</p>",
         "EvaluationFormQuestion$RefId": "<p>The identifier of the question. An identifier must be unique within the evaluation form.</p>",
         "EvaluationFormSection$RefId": "<p>The identifier of the section. An identifier must be unique within the evaluation form.</p>",
         "EvaluationFormSingleSelectQuestionAutomation$DefaultOptionRefId": "<p>The identifier of the default answer option, when none of the automation options match the criteria.</p>",
@@ -8004,13 +8462,20 @@
         "EvaluationAnswersOutputMap$key": null,
         "EvaluationForm$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "EvaluationFormContent$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
+        "EvaluationFormSearchSummary$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "EvaluationFormSummary$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "EvaluationFormVersionSummary$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "EvaluationMetadata$ContactAgentId": "<p>The identifier of the agent who performed the contact.</p>",
+        "EvaluationMetadata$CalibrationSessionId": "<p>The calibration session ID that this evaluation belongs to.</p>",
         "EvaluationNotesMap$key": null,
         "EvaluationScoresMap$key": null,
+        "EvaluationSearchMetadata$ContactAgentId": "<p>The unique ID of the agent who handled the contact.</p>",
+        "EvaluationSearchMetadata$CalibrationSessionId": "<p>The calibration session ID that this evaluation belongs to.</p>",
+        "EvaluationSearchSummary$EvaluationId": "<p>A unique identifier for the contact evaluation.</p>",
+        "EvaluationSearchSummary$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "EvaluationSummary$EvaluationId": "<p>A unique identifier for the contact evaluation.</p>",
         "EvaluationSummary$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
+        "EvaluationSummary$CalibrationSessionId": "<p>The calibration session ID that this evaluation belongs to.</p>",
         "ListEvaluationFormVersionsRequest$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "StartContactEvaluationRequest$EvaluationFormId": "<p>The unique identifier for the evaluation form.</p>",
         "StartContactEvaluationResponse$EvaluationId": "<p>A unique identifier for the contact evaluation.</p>",
@@ -8407,6 +8872,14 @@
       "base": null,
       "refs": {}
     },
+    "SearchContactEvaluationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchContactEvaluationsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "SearchContactFlowModulesRequest": {
       "base": null,
       "refs": {}
@@ -8498,6 +8971,14 @@
       "refs": {}
     },
     "SearchEmailAddressesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchEvaluationFormsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SearchEvaluationFormsResponse": {
       "base": null,
       "refs": {}
     },
@@ -9222,8 +9703,11 @@
         "AnalyticsDataAssociationResult$ResourceShareStatus": "<p>The Amazon Web Services Resource Access Manager status of association.</p>",
         "AnalyticsDataSetsResult$DataSetName": "<p>The name of the dataset.</p>",
         "AssociateAnalyticsDataSetResponse$ResourceShareId": "<p>The Resource Access Manager share ID that is generated.</p>",
+        "BooleanCondition$FieldName": "<p>A name of the property to be searched.</p>",
         "Contact$DisconnectReason": "<p>The disconnect reason for the contact. For a list and description of all the possible disconnect reasons by channel, see DisconnectReason under <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/ctr-data-model.html#ctr-ContactTraceRecord\">ContactTraceRecord</a> in the <i>Amazon Connect Administrator Guide</i>. </p>",
         "DateCondition$FieldName": "<p>An object to specify the hours of operation override date field.</p>",
+        "DateTimeCondition$FieldName": "<p>A name of the datetime property to be searched</p>",
+        "DecimalCondition$FieldName": "<p>A name of the decimal property to be searched.</p>",
         "ErrorResult$ErrorCode": "<p>The error code.</p>",
         "ErrorResult$ErrorMessage": "<p>The corresponding error message for the error code.</p>",
         "FailedRequest$FailureReasonMessage": "<p>Why the request to create a contact failed.</p>",
@@ -9259,6 +9743,8 @@
         "ContactFlowModuleSearchCriteria$StringCondition": null,
         "ContactFlowSearchCriteria$StringCondition": null,
         "EmailAddressSearchCriteria$StringCondition": null,
+        "EvaluationFormSearchCriteria$StringCondition": null,
+        "EvaluationSearchCriteria$StringCondition": null,
         "HoursOfOperationOverrideSearchCriteria$StringCondition": null,
         "HoursOfOperationSearchCriteria$StringCondition": "<p>A leaf node condition which can be used to specify a string condition.</p> <note> <p>The currently supported values for <code>FieldName</code> are <code>name</code>, <code>description</code>, <code>timezone</code>, and <code>resourceID</code>.</p> </note>",
         "PredefinedAttributeSearchCriteria$StringCondition": null,
@@ -9396,6 +9882,7 @@
         "CreateContactFlowModuleRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateContactFlowRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateEmailAddressRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
+        "CreateEvaluationFormRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateHoursOfOperationRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateInstanceRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, <code>{ \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }</code>.</p>",
         "CreateIntegrationAssociationRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
@@ -9413,6 +9900,8 @@
         "DescribeEmailAddressResponse$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "Evaluation$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "EvaluationForm$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
+        "EvaluationFormSearchSummary$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
+        "EvaluationSearchSummary$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "GetAttachedFileResponse$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, <code>{ \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }</code>.</p>",
         "GetTaskTemplateResponse$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "HierarchyGroup$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
@@ -9428,6 +9917,7 @@
         "SecurityProfile$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "SecurityProfileSearchSummary$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "StartAttachedFileUploadRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, <code>{ \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }</code>.</p>",
+        "StartContactEvaluationRequest$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "TagResourceRequest$tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "TrafficDistributionGroup$Tags": "<p>The tags used to organize, track, or control access for this resource. For example, { \"Tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "User$Tags": "<p>The tags.</p>",
@@ -9765,13 +10255,21 @@
         "CreateContactFlowVersionRequest$LastModifiedTime": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "Evaluation$CreatedTime": "<p>The timestamp for when the evaluation was created.</p>",
         "Evaluation$LastModifiedTime": "<p>The timestamp for when the evaluation was last updated.</p>",
+        "EvaluationAcknowledgement$AcknowledgedTime": "<p>When the agent acknowledged the evaluation.</p>",
+        "EvaluationAcknowledgementSummary$AcknowledgedTime": "<p>The time when an agent acknowledged the evaluation.</p>",
         "EvaluationForm$CreatedTime": "<p>The timestamp for when the evaluation form was created.</p>",
         "EvaluationForm$LastModifiedTime": "<p>The timestamp for when the evaluation form was last updated.</p>",
+        "EvaluationFormSearchSummary$CreatedTime": "<p>When the evaluation form was created.</p>",
+        "EvaluationFormSearchSummary$LastModifiedTime": "<p>When the evaluation form was last changed.</p>",
+        "EvaluationFormSearchSummary$LastActivatedTime": "<p>When the evaluation format was last activated.</p>",
         "EvaluationFormSummary$CreatedTime": "<p>The timestamp for when the evaluation form was created.</p>",
         "EvaluationFormSummary$LastModifiedTime": "<p>The timestamp for when the evaluation form was last updated.</p>",
         "EvaluationFormSummary$LastActivatedTime": "<p>The timestamp for when the evaluation form was last activated.</p>",
         "EvaluationFormVersionSummary$CreatedTime": "<p>The timestamp for when the evaluation form was created.</p>",
         "EvaluationFormVersionSummary$LastModifiedTime": "<p>The timestamp for when the evaluation form was last updated.</p>",
+        "EvaluationSearchMetadata$AcknowledgedTime": "<p>When the evaluation was acknowledged by the agent.</p>",
+        "EvaluationSearchSummary$CreatedTime": "<p>The date and time when the evaluation was created, in UTC time.</p>",
+        "EvaluationSearchSummary$LastModifiedTime": "<p>The date and time when the evaluation was modified last time, in UTC time.</p>",
         "EvaluationSummary$CreatedTime": "<p>The timestamp for when the evaluation was created.</p>",
         "EvaluationSummary$LastModifiedTime": "<p>The timestamp for when the evaluation was last updated.</p>",
         "GetMetricDataV2Request$StartTime": "<p>The timestamp, in UNIX Epoch time format, at which to start the reporting interval for the retrieval of historical metrics data. The time must be before the end time timestamp. The start and end time depends on the <code>IntervalPeriod</code> selected. By default the time range between start and end time is 35 days. Historical metrics are available for 3 months.</p>",
@@ -10590,9 +11088,12 @@
         "DescribeEvaluationFormRequest$EvaluationFormVersion": "<p>A version of the evaluation form.</p>",
         "EvaluationForm$EvaluationFormVersion": "<p>A version of the evaluation form.</p>",
         "EvaluationFormContent$EvaluationFormVersion": "<p>A version of the evaluation form.</p>",
+        "EvaluationFormSearchSummary$LatestVersion": "<p>Latest version of the evaluation form.</p>",
+        "EvaluationFormSearchSummary$ActiveVersion": "<p>Active version of the evaluation form.</p>",
         "EvaluationFormSummary$LatestVersion": "<p>The version number of the latest evaluation form version.</p>",
         "EvaluationFormSummary$ActiveVersion": "<p>The version of the active evaluation form version.</p>",
         "EvaluationFormVersionSummary$EvaluationFormVersion": "<p>A version of the evaluation form.</p>",
+        "EvaluationSearchSummary$EvaluationFormVersion": "<p>A version of the evaluation form.</p>",
         "UpdateEvaluationFormRequest$EvaluationFormVersion": "<p>A version of the evaluation form to update.</p>",
         "UpdateEvaluationFormResponse$EvaluationFormVersion": "<p>The version of the updated evaluation form resource.</p>"
       }

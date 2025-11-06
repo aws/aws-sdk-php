@@ -2752,7 +2752,8 @@
       "base": null,
       "refs": {
         "CreateClusterRequest$NodeProvisioningMode": "<p>The mode for provisioning nodes in the cluster. You can specify the following modes:</p> <ul> <li> <p> <b>Continuous</b>: Scaling behavior that enables 1) concurrent operation execution within instance groups, 2) continuous retry mechanisms for failed operations, 3) enhanced customer visibility into cluster events through detailed event streams, 4) partial provisioning capabilities. Your clusters and instance groups remain <code>InService</code> while scaling. This mode is only supported for EKS orchestrated clusters.</p> </li> </ul>",
-        "DescribeClusterResponse$NodeProvisioningMode": "<p>The mode used for provisioning nodes in the cluster.</p>"
+        "DescribeClusterResponse$NodeProvisioningMode": "<p>The mode used for provisioning nodes in the cluster.</p>",
+        "UpdateClusterRequest$NodeProvisioningMode": "<p>Determines how instance provisioning is handled during cluster operations. In <code>Continuous</code> mode, the cluster provisions available instances incrementally and retries until the target count is reached. The cluster becomes operational once cluster-level resources are ready. Use <code>CurrentCount</code> and <code>TargetCount</code> in <code>DescribeCluster</code> to track provisioning progress.</p>"
       }
     },
     "ClusterNodeRecovery": {
@@ -18959,7 +18960,8 @@
       "base": null,
       "refs": {
         "CreateDomainRequest$VpcId": "<p>The ID of the Amazon Virtual Private Cloud (VPC) that the domain uses for communication.</p> <p>The field is optional when the <code>AppNetworkAccessType</code> parameter is set to <code>PublicInternetOnly</code> for domains created from Amazon SageMaker Unified Studio.</p>",
-        "DescribeDomainResponse$VpcId": "<p>The ID of the Amazon Virtual Private Cloud (VPC) that the domain uses for communication.</p>"
+        "DescribeDomainResponse$VpcId": "<p>The ID of the Amazon Virtual Private Cloud (VPC) that the domain uses for communication.</p>",
+        "UpdateDomainRequest$VpcId": "<p>The identifier for the VPC used by the domain for network communication. Use this field only when adding VPC configuration to a SageMaker AI domain used in Amazon SageMaker Unified Studio that was created without VPC settings. SageMaker AI doesn't automatically apply VPC updates to existing applications. Stop and restart your applications to apply the changes.</p>"
       }
     },
     "VpcOnlyTrustedAccounts": {

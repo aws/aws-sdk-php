@@ -1907,7 +1907,8 @@
         "Locked":{"shape":"Boolean"},
         "MinRetentionDays":{"shape":"Long"},
         "MaxRetentionDays":{"shape":"Long"},
-        "LockDate":{"shape":"timestamp"}
+        "LockDate":{"shape":"timestamp"},
+        "EncryptionKeyType":{"shape":"EncryptionKeyType"}
       }
     },
     "BackupVaultName":{
@@ -2266,7 +2267,8 @@
           "idempotencyToken":true
         },
         "MinRetentionDays":{"shape":"Long"},
-        "MaxRetentionDays":{"shape":"Long"}
+        "MaxRetentionDays":{"shape":"Long"},
+        "EncryptionKeyArn":{"shape":"ARN"}
       }
     },
     "CreateLogicallyAirGappedBackupVaultOutput":{
@@ -2640,7 +2642,8 @@
         "SourceBackupVaultArn":{"shape":"ARN"},
         "MpaApprovalTeamArn":{"shape":"ARN"},
         "MpaSessionArn":{"shape":"ARN"},
-        "LatestMpaApprovalTeamUpdate":{"shape":"LatestMpaApprovalTeamUpdate"}
+        "LatestMpaApprovalTeamUpdate":{"shape":"LatestMpaApprovalTeamUpdate"},
+        "EncryptionKeyType":{"shape":"EncryptionKeyType"}
       }
     },
     "DescribeCopyJobInput":{
@@ -2773,7 +2776,8 @@
         "ResourceName":{"shape":"string"},
         "VaultType":{"shape":"VaultType"},
         "IndexStatus":{"shape":"IndexStatus"},
-        "IndexStatusMessage":{"shape":"string"}
+        "IndexStatusMessage":{"shape":"string"},
+        "EncryptionKeyType":{"shape":"EncryptionKeyType"}
       }
     },
     "DescribeRegionSettingsInput":{
@@ -2907,6 +2911,13 @@
           "locationName":"recoveryPointArn"
         }
       }
+    },
+    "EncryptionKeyType":{
+      "type":"string",
+      "enum":[
+        "AWS_OWNED_KMS_KEY",
+        "CUSTOMER_MANAGED_KMS_KEY"
+      ]
     },
     "ExportBackupPlanTemplateInput":{
       "type":"structure",
@@ -4610,7 +4621,8 @@
         "ResourceName":{"shape":"string"},
         "VaultType":{"shape":"VaultType"},
         "IndexStatus":{"shape":"IndexStatus"},
-        "IndexStatusMessage":{"shape":"string"}
+        "IndexStatusMessage":{"shape":"string"},
+        "EncryptionKeyType":{"shape":"EncryptionKeyType"}
       }
     },
     "RecoveryPointByBackupVaultList":{
@@ -4632,7 +4644,8 @@
         "ResourceName":{"shape":"string"},
         "VaultType":{"shape":"VaultType"},
         "IndexStatus":{"shape":"IndexStatus"},
-        "IndexStatusMessage":{"shape":"string"}
+        "IndexStatusMessage":{"shape":"string"},
+        "EncryptionKeyType":{"shape":"EncryptionKeyType"}
       }
     },
     "RecoveryPointByResourceList":{

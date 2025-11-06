@@ -215,6 +215,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InvalidDataSetParameterValueException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -3470,6 +3471,7 @@
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InvalidDataSetParameterValueException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -4315,6 +4317,33 @@
         "CUSTOM"
       ]
     },
+    "AggregateOperation":{
+      "type":"structure",
+      "required":[
+        "Alias",
+        "Source",
+        "Aggregations"
+      ],
+      "members":{
+        "Alias":{"shape":"TransformOperationAlias"},
+        "Source":{"shape":"TransformOperationSource"},
+        "GroupByColumnNames":{"shape":"GroupByColumnNameList"},
+        "Aggregations":{"shape":"AggregationList"}
+      }
+    },
+    "Aggregation":{
+      "type":"structure",
+      "required":[
+        "AggregationFunction",
+        "NewColumnName",
+        "NewColumnId"
+      ],
+      "members":{
+        "AggregationFunction":{"shape":"DataPrepAggregationFunction"},
+        "NewColumnName":{"shape":"ColumnName"},
+        "NewColumnId":{"shape":"ColumnId"}
+      }
+    },
     "AggregationFunction":{
       "type":"structure",
       "members":{
@@ -4328,6 +4357,12 @@
       "type":"map",
       "key":{"shape":"LimitedString"},
       "value":{"shape":"LimitedString"}
+    },
+    "AggregationList":{
+      "type":"list",
+      "member":{"shape":"Aggregation"},
+      "max":128,
+      "min":0
     },
     "AggregationPartitionBy":{
       "type":"structure",
@@ -4636,6 +4671,36 @@
     "AnswerIds":{
       "type":"list",
       "member":{"shape":"AnswerId"}
+    },
+    "AppendOperation":{
+      "type":"structure",
+      "required":[
+        "Alias",
+        "AppendedColumns"
+      ],
+      "members":{
+        "Alias":{"shape":"TransformOperationAlias"},
+        "FirstSource":{"shape":"TransformOperationSource"},
+        "SecondSource":{"shape":"TransformOperationSource"},
+        "AppendedColumns":{"shape":"AppendedColumnList"}
+      }
+    },
+    "AppendedColumn":{
+      "type":"structure",
+      "required":[
+        "ColumnName",
+        "NewColumnId"
+      ],
+      "members":{
+        "ColumnName":{"shape":"ColumnName"},
+        "NewColumnId":{"shape":"ColumnId"}
+      }
+    },
+    "AppendedColumnList":{
+      "type":"list",
+      "member":{"shape":"AppendedColumn"},
+      "max":2048,
+      "min":0
     },
     "ApplicationArn":{
       "type":"string",
@@ -6348,8 +6413,8 @@
     "CalculatedColumnList":{
       "type":"list",
       "member":{"shape":"CalculatedColumn"},
-      "max":128,
-      "min":1
+      "max":256,
+      "min":0
     },
     "CalculatedField":{
       "type":"structure",
@@ -6505,6 +6570,25 @@
         "Format":{"shape":"TypeCastFormat"}
       }
     },
+    "CastColumnTypeOperationList":{
+      "type":"list",
+      "member":{"shape":"CastColumnTypeOperation"},
+      "max":2048,
+      "min":0
+    },
+    "CastColumnTypesOperation":{
+      "type":"structure",
+      "required":[
+        "Alias",
+        "Source",
+        "CastColumnTypeOperations"
+      ],
+      "members":{
+        "Alias":{"shape":"TransformOperationAlias"},
+        "Source":{"shape":"TransformOperationSource"},
+        "CastColumnTypeOperations":{"shape":"CastColumnTypeOperationList"}
+      }
+    },
     "Catalog":{
       "type":"string",
       "max":128
@@ -6625,6 +6709,11 @@
       "type":"list",
       "member":{"shape":"CategoryValue"},
       "max":100000
+    },
+    "CellValue":{
+      "type":"string",
+      "max":2047,
+      "min":0
     },
     "CellValueSynonym":{
       "type":"structure",
@@ -6883,8 +6972,13 @@
       "type":"structure",
       "members":{
         "Principals":{"shape":"PrincipalList"},
-        "ColumnNames":{"shape":"ColumnNameList"}
+        "ColumnNames":{"shape":"ColumnLevelPermissionRuleColumnNameList"}
       }
+    },
+    "ColumnLevelPermissionRuleColumnNameList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "min":1
     },
     "ColumnLevelPermissionRuleList":{
       "type":"list",
@@ -6900,11 +6994,6 @@
     "ColumnName":{
       "type":"string",
       "max":128,
-      "min":1
-    },
-    "ColumnNameList":{
-      "type":"list",
-      "member":{"shape":"String"},
       "min":1
     },
     "ColumnOrderingType":{
@@ -6970,6 +7059,19 @@
     "ColumnTagNames":{
       "type":"list",
       "member":{"shape":"ColumnTagName"}
+    },
+    "ColumnToUnpivot":{
+      "type":"structure",
+      "members":{
+        "ColumnName":{"shape":"ColumnName"},
+        "NewValue":{"shape":"CellValue"}
+      }
+    },
+    "ColumnToUnpivotList":{
+      "type":"list",
+      "member":{"shape":"ColumnToUnpivot"},
+      "max":100,
+      "min":0
     },
     "ColumnTooltipItem":{
       "type":"structure",
@@ -7519,6 +7621,8 @@
       "type":"structure",
       "required":["Columns"],
       "members":{
+        "Alias":{"shape":"TransformOperationAlias"},
+        "Source":{"shape":"TransformOperationSource"},
         "Columns":{"shape":"CalculatedColumnList"}
       }
     },
@@ -7612,20 +7716,37 @@
         "DataSetId":{"shape":"ResourceId"},
         "Name":{"shape":"ResourceName"},
         "PhysicalTableMap":{"shape":"PhysicalTableMap"},
-        "LogicalTableMap":{"shape":"LogicalTableMap"},
+        "LogicalTableMap":{
+          "shape":"LogicalTableMap",
+          "deprecated":true,
+          "deprecatedMessage":"Only used in the legacy data preparation experience.",
+          "deprecatedSince":"2025-10-23"
+        },
         "ImportMode":{"shape":"DataSetImportMode"},
         "ColumnGroups":{"shape":"ColumnGroupList"},
         "FieldFolders":{"shape":"FieldFolderMap"},
         "Permissions":{"shape":"ResourcePermissionList"},
-        "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
-        "RowLevelPermissionTagConfiguration":{"shape":"RowLevelPermissionTagConfiguration"},
+        "RowLevelPermissionDataSet":{
+          "shape":"RowLevelPermissionDataSet",
+          "deprecated":true,
+          "deprecatedMessage":"Only used in the legacy data preparation experience.",
+          "deprecatedSince":"2025-10-23"
+        },
+        "RowLevelPermissionTagConfiguration":{
+          "shape":"RowLevelPermissionTagConfiguration",
+          "deprecated":true,
+          "deprecatedMessage":"Only used in the legacy data preparation experience.",
+          "deprecatedSince":"2025-10-23"
+        },
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"},
         "Tags":{"shape":"TagList"},
         "DataSetUsageConfiguration":{"shape":"DataSetUsageConfiguration"},
         "DatasetParameters":{"shape":"DatasetParameterList"},
         "FolderArns":{"shape":"FolderArnList"},
         "PerformanceConfiguration":{"shape":"PerformanceConfiguration"},
-        "UseAs":{"shape":"DataSetUseAs"}
+        "UseAs":{"shape":"DataSetUseAs"},
+        "DataPrepConfiguration":{"shape":"DataPrepConfiguration"},
+        "SemanticModelConfiguration":{"shape":"SemanticModelConfiguration"}
       }
     },
     "CreateDataSetResponse":{
@@ -8538,7 +8659,7 @@
     },
     "CustomSqlName":{
       "type":"string",
-      "max":64,
+      "max":128,
       "min":1
     },
     "CustomValuesConfiguration":{
@@ -8964,6 +9085,57 @@
         "AvailabilityStatus":{"shape":"DashboardBehavior"}
       }
     },
+    "DataPrepAggregationFunction":{
+      "type":"structure",
+      "members":{
+        "SimpleAggregation":{"shape":"DataPrepSimpleAggregationFunction"},
+        "ListAggregation":{"shape":"DataPrepListAggregationFunction"}
+      }
+    },
+    "DataPrepConfiguration":{
+      "type":"structure",
+      "required":[
+        "SourceTableMap",
+        "TransformStepMap",
+        "DestinationTableMap"
+      ],
+      "members":{
+        "SourceTableMap":{"shape":"SourceTableMap"},
+        "TransformStepMap":{"shape":"TransformStepMap"},
+        "DestinationTableMap":{"shape":"DestinationTableMap"}
+      }
+    },
+    "DataPrepListAggregationFunction":{
+      "type":"structure",
+      "required":[
+        "Separator",
+        "Distinct"
+      ],
+      "members":{
+        "InputColumnName":{"shape":"ColumnName"},
+        "Separator":{"shape":"Separator"},
+        "Distinct":{"shape":"Boolean"}
+      }
+    },
+    "DataPrepSimpleAggregationFunction":{
+      "type":"structure",
+      "required":["FunctionType"],
+      "members":{
+        "InputColumnName":{"shape":"ColumnName"},
+        "FunctionType":{"shape":"DataPrepSimpleAggregationFunctionType"}
+      }
+    },
+    "DataPrepSimpleAggregationFunctionType":{
+      "type":"string",
+      "enum":[
+        "COUNT",
+        "DISTINCT_COUNT",
+        "SUM",
+        "AVERAGE",
+        "MAX",
+        "MIN"
+      ]
+    },
     "DataQAEnabledOption":{
       "type":"structure",
       "members":{
@@ -8998,7 +9170,9 @@
         "DataSetUsageConfiguration":{"shape":"DataSetUsageConfiguration"},
         "DatasetParameters":{"shape":"DatasetParameterList"},
         "PerformanceConfiguration":{"shape":"PerformanceConfiguration"},
-        "UseAs":{"shape":"DataSetUseAs"}
+        "UseAs":{"shape":"DataSetUseAs"},
+        "DataPrepConfiguration":{"shape":"DataPrepConfiguration"},
+        "SemanticModelConfiguration":{"shape":"SemanticModelConfiguration"}
       }
     },
     "DataSetArnsList":{
@@ -9012,6 +9186,23 @@
       "min":1,
       "sensitive":true
     },
+    "DataSetColumnIdMapping":{
+      "type":"structure",
+      "required":[
+        "SourceColumnId",
+        "TargetColumnId"
+      ],
+      "members":{
+        "SourceColumnId":{"shape":"ColumnId"},
+        "TargetColumnId":{"shape":"ColumnId"}
+      }
+    },
+    "DataSetColumnIdMappingList":{
+      "type":"list",
+      "member":{"shape":"DataSetColumnIdMapping"},
+      "max":2048,
+      "min":1
+    },
     "DataSetConfiguration":{
       "type":"structure",
       "members":{
@@ -9024,6 +9215,58 @@
       "type":"list",
       "member":{"shape":"DataSetConfiguration"},
       "max":30
+    },
+    "DataSetDateComparisonFilterCondition":{
+      "type":"structure",
+      "required":["Operator"],
+      "members":{
+        "Operator":{"shape":"DataSetDateComparisonFilterOperator"},
+        "Value":{"shape":"DataSetDateFilterValue"}
+      }
+    },
+    "DataSetDateComparisonFilterOperator":{
+      "type":"string",
+      "enum":[
+        "BEFORE",
+        "BEFORE_OR_EQUALS_TO",
+        "AFTER",
+        "AFTER_OR_EQUALS_TO"
+      ]
+    },
+    "DataSetDateFilterCondition":{
+      "type":"structure",
+      "members":{
+        "ColumnName":{"shape":"ColumnName"},
+        "ComparisonFilterCondition":{"shape":"DataSetDateComparisonFilterCondition"},
+        "RangeFilterCondition":{"shape":"DataSetDateRangeFilterCondition"}
+      }
+    },
+    "DataSetDateFilterValue":{
+      "type":"structure",
+      "members":{
+        "StaticValue":{"shape":"SensitiveTimestamp"}
+      }
+    },
+    "DataSetDateRangeFilterCondition":{
+      "type":"structure",
+      "members":{
+        "RangeMinimum":{"shape":"DataSetDateFilterValue"},
+        "RangeMaximum":{"shape":"DataSetDateFilterValue"},
+        "IncludeMinimum":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "IncludeMaximum":{
+          "shape":"Boolean",
+          "box":true
+        }
+      }
+    },
+    "DataSetEntityResourceId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[0-9a-zA-Z-]*"
     },
     "DataSetFilterAttribute":{
       "type":"string",
@@ -9069,6 +9312,57 @@
       "type":"string",
       "max":128,
       "min":1
+    },
+    "DataSetNumericComparisonFilterCondition":{
+      "type":"structure",
+      "required":["Operator"],
+      "members":{
+        "Operator":{"shape":"DataSetNumericComparisonFilterOperator"},
+        "Value":{"shape":"DataSetNumericFilterValue"}
+      }
+    },
+    "DataSetNumericComparisonFilterOperator":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "DOES_NOT_EQUAL",
+        "GREATER_THAN",
+        "GREATER_THAN_OR_EQUALS_TO",
+        "LESS_THAN",
+        "LESS_THAN_OR_EQUALS_TO"
+      ]
+    },
+    "DataSetNumericFilterCondition":{
+      "type":"structure",
+      "members":{
+        "ColumnName":{"shape":"ColumnName"},
+        "ComparisonFilterCondition":{"shape":"DataSetNumericComparisonFilterCondition"},
+        "RangeFilterCondition":{"shape":"DataSetNumericRangeFilterCondition"}
+      }
+    },
+    "DataSetNumericFilterValue":{
+      "type":"structure",
+      "members":{
+        "StaticValue":{
+          "shape":"SensitiveDouble",
+          "box":true
+        }
+      }
+    },
+    "DataSetNumericRangeFilterCondition":{
+      "type":"structure",
+      "members":{
+        "RangeMinimum":{"shape":"DataSetNumericFilterValue"},
+        "RangeMaximum":{"shape":"DataSetNumericFilterValue"},
+        "IncludeMinimum":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "IncludeMaximum":{
+          "shape":"Boolean",
+          "box":true
+        }
+      }
     },
     "DataSetReference":{
       "type":"structure",
@@ -9123,6 +9417,70 @@
       "max":1,
       "min":1
     },
+    "DataSetStringComparisonFilterCondition":{
+      "type":"structure",
+      "required":["Operator"],
+      "members":{
+        "Operator":{"shape":"DataSetStringComparisonFilterOperator"},
+        "Value":{"shape":"DataSetStringFilterValue"}
+      }
+    },
+    "DataSetStringComparisonFilterOperator":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "DOES_NOT_EQUAL",
+        "CONTAINS",
+        "DOES_NOT_CONTAIN",
+        "STARTS_WITH",
+        "ENDS_WITH"
+      ]
+    },
+    "DataSetStringFilterCondition":{
+      "type":"structure",
+      "members":{
+        "ColumnName":{"shape":"ColumnName"},
+        "ComparisonFilterCondition":{"shape":"DataSetStringComparisonFilterCondition"},
+        "ListFilterCondition":{"shape":"DataSetStringListFilterCondition"}
+      }
+    },
+    "DataSetStringFilterStaticValue":{
+      "type":"string",
+      "max":512,
+      "sensitive":true
+    },
+    "DataSetStringFilterStaticValueList":{
+      "type":"list",
+      "member":{"shape":"DataSetStringFilterStaticValue"},
+      "max":1000
+    },
+    "DataSetStringFilterValue":{
+      "type":"structure",
+      "members":{
+        "StaticValue":{"shape":"DataSetStringFilterStaticValue"}
+      }
+    },
+    "DataSetStringListFilterCondition":{
+      "type":"structure",
+      "required":["Operator"],
+      "members":{
+        "Operator":{"shape":"DataSetStringListFilterOperator"},
+        "Values":{"shape":"DataSetStringListFilterValue"}
+      }
+    },
+    "DataSetStringListFilterOperator":{
+      "type":"string",
+      "enum":[
+        "INCLUDE",
+        "EXCLUDE"
+      ]
+    },
+    "DataSetStringListFilterValue":{
+      "type":"structure",
+      "members":{
+        "StaticValues":{"shape":"DataSetStringFilterStaticValueList"}
+      }
+    },
     "DataSetSummary":{
       "type":"structure",
       "members":{
@@ -9133,6 +9491,7 @@
         "LastUpdatedTime":{"shape":"Timestamp"},
         "ImportMode":{"shape":"DataSetImportMode"},
         "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
+        "RowLevelPermissionDataSetMap":{"shape":"RowLevelPermissionDataSetMap"},
         "RowLevelPermissionTagConfigurationApplied":{"shape":"Boolean"},
         "ColumnLevelPermissionRulesApplied":{"shape":"Boolean"},
         "UseAs":{"shape":"DataSetUseAs"}
@@ -12735,6 +13094,36 @@
         "SourceColumn":{"shape":"ColumnIdentifier"}
       }
     },
+    "DestinationTable":{
+      "type":"structure",
+      "required":[
+        "Alias",
+        "Source"
+      ],
+      "members":{
+        "Alias":{"shape":"DestinationTableAlias"},
+        "Source":{"shape":"DestinationTableSource"}
+      }
+    },
+    "DestinationTableAlias":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "DestinationTableMap":{
+      "type":"map",
+      "key":{"shape":"DataSetEntityResourceId"},
+      "value":{"shape":"DestinationTable"},
+      "max":1,
+      "min":1
+    },
+    "DestinationTableSource":{
+      "type":"structure",
+      "required":["TransformOperationId"],
+      "members":{
+        "TransformOperationId":{"shape":"DataSetEntityResourceId"}
+      }
+    },
     "DigitGroupingStyle":{
       "type":"string",
       "enum":[
@@ -13395,10 +13784,18 @@
     },
     "FilterOperation":{
       "type":"structure",
-      "required":["ConditionExpression"],
       "members":{
-        "ConditionExpression":{"shape":"Expression"}
+        "ConditionExpression":{"shape":"Expression"},
+        "StringFilterCondition":{"shape":"DataSetStringFilterCondition"},
+        "NumericFilterCondition":{"shape":"DataSetNumericFilterCondition"},
+        "DateFilterCondition":{"shape":"DataSetDateFilterCondition"}
       }
+    },
+    "FilterOperationList":{
+      "type":"list",
+      "member":{"shape":"FilterOperation"},
+      "max":128,
+      "min":0
     },
     "FilterOperationSelectedFieldsConfiguration":{
       "type":"structure",
@@ -13510,6 +13907,19 @@
       "type":"list",
       "member":{"shape":"ShortRestrictiveResourceId"},
       "max":50
+    },
+    "FiltersOperation":{
+      "type":"structure",
+      "required":[
+        "Alias",
+        "Source",
+        "FilterOperations"
+      ],
+      "members":{
+        "Alias":{"shape":"TransformOperationAlias"},
+        "Source":{"shape":"TransformOperationSource"},
+        "FilterOperations":{"shape":"FilterOperationList"}
+      }
     },
     "FlowDescription":{
       "type":"string",
@@ -14856,6 +15266,12 @@
         "PrincipalId":{"shape":"String"}
       }
     },
+    "GroupByColumnNameList":{
+      "type":"list",
+      "member":{"shape":"ColumnName"},
+      "max":128,
+      "min":0
+    },
     "GroupDescription":{
       "type":"string",
       "max":512,
@@ -15356,6 +15772,25 @@
         "SqlEndpointPath":{"shape":"SqlEndpointPath"}
       }
     },
+    "ImportTableOperation":{
+      "type":"structure",
+      "required":[
+        "Alias",
+        "Source"
+      ],
+      "members":{
+        "Alias":{"shape":"TransformOperationAlias"},
+        "Source":{"shape":"ImportTableOperationSource"}
+      }
+    },
+    "ImportTableOperationSource":{
+      "type":"structure",
+      "required":["SourceTableId"],
+      "members":{
+        "SourceTableId":{"shape":"DataSetEntityResourceId"},
+        "ColumnIdMappings":{"shape":"DataSetColumnIdMappingList"}
+      }
+    },
     "IncludeFolderMembers":{
       "type":"string",
       "enum":[
@@ -15525,6 +15960,7 @@
       ],
       "members":{
         "Name":{"shape":"ColumnName"},
+        "Id":{"shape":"ColumnId"},
         "Type":{"shape":"InputColumnDataType"},
         "SubType":{"shape":"ColumnDataSubType"}
       }
@@ -15545,7 +15981,7 @@
       "type":"list",
       "member":{"shape":"InputColumn"},
       "max":2048,
-      "min":1
+      "min":0
     },
     "InsightConfiguration":{
       "type":"structure",
@@ -15676,6 +16112,15 @@
       "exception":true,
       "fault":true
     },
+    "InvalidDataSetParameterValueException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"},
+        "RequestId":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
     "InvalidNextTokenException":{
       "type":"structure",
       "members":{
@@ -15766,6 +16211,47 @@
           "box":true
         }
       }
+    },
+    "JoinOperandProperties":{
+      "type":"structure",
+      "required":["OutputColumnNameOverrides"],
+      "members":{
+        "OutputColumnNameOverrides":{"shape":"OutputColumnNameOverrideList"}
+      }
+    },
+    "JoinOperation":{
+      "type":"structure",
+      "required":[
+        "Alias",
+        "LeftOperand",
+        "RightOperand",
+        "Type",
+        "OnClause"
+      ],
+      "members":{
+        "Alias":{"shape":"TransformOperationAlias"},
+        "LeftOperand":{"shape":"TransformOperationSource"},
+        "RightOperand":{"shape":"TransformOperationSource"},
+        "Type":{"shape":"JoinOperationType"},
+        "OnClause":{"shape":"JoinOperationOnClause"},
+        "LeftOperandProperties":{"shape":"JoinOperandProperties"},
+        "RightOperandProperties":{"shape":"JoinOperandProperties"}
+      }
+    },
+    "JoinOperationOnClause":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "sensitive":true
+    },
+    "JoinOperationType":{
+      "type":"string",
+      "enum":[
+        "INNER",
+        "OUTER",
+        "LEFT",
+        "RIGHT"
+      ]
     },
     "JoinType":{
       "type":"string",
@@ -18404,6 +18890,7 @@
       "type":"structure",
       "members":{
         "Name":{"shape":"ColumnName"},
+        "Id":{"shape":"ColumnId"},
         "Description":{"shape":"ColumnDescriptiveText"},
         "Type":{"shape":"ColumnDataType"},
         "SubType":{"shape":"ColumnDataSubType"}
@@ -18412,6 +18899,20 @@
     "OutputColumnList":{
       "type":"list",
       "member":{"shape":"OutputColumn"}
+    },
+    "OutputColumnNameOverride":{
+      "type":"structure",
+      "required":["OutputColumnName"],
+      "members":{
+        "SourceColumnName":{"shape":"ColumnName"},
+        "OutputColumnName":{"shape":"ColumnName"}
+      }
+    },
+    "OutputColumnNameOverrideList":{
+      "type":"list",
+      "member":{"shape":"OutputColumnNameOverride"},
+      "max":2048,
+      "min":1
     },
     "OverrideDatasetParameterOperation":{
       "type":"structure",
@@ -18662,6 +19163,17 @@
         "DateTimeParameters":{"shape":"DateTimeParameterList"}
       }
     },
+    "ParentDataSet":{
+      "type":"structure",
+      "required":[
+        "DataSetArn",
+        "InputColumns"
+      ],
+      "members":{
+        "DataSetArn":{"shape":"Arn"},
+        "InputColumns":{"shape":"InputColumnList"}
+      }
+    },
     "Password":{
       "type":"string",
       "max":1024,
@@ -18782,7 +19294,8 @@
       "members":{
         "RelationalTable":{"shape":"RelationalTable"},
         "CustomSql":{"shape":"CustomSql"},
-        "S3Source":{"shape":"S3Source"}
+        "S3Source":{"shape":"S3Source"},
+        "SaaSTable":{"shape":"SaaSTable"}
       }
     },
     "PhysicalTableId":{
@@ -18851,6 +19364,14 @@
         "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
+    "PivotConfiguration":{
+      "type":"structure",
+      "required":["PivotedLabels"],
+      "members":{
+        "LabelColumnName":{"shape":"ColumnName"},
+        "PivotedLabels":{"shape":"PivotedLabelList"}
+      }
+    },
     "PivotFieldSortOptions":{
       "type":"structure",
       "required":[
@@ -18867,10 +19388,32 @@
       "member":{"shape":"PivotFieldSortOptions"},
       "max":200
     },
+    "PivotGroupByColumnNameList":{
+      "type":"list",
+      "member":{"shape":"ColumnName"},
+      "max":128,
+      "min":0
+    },
     "PivotMeasureFieldList":{
       "type":"list",
       "member":{"shape":"MeasureField"},
       "max":40
+    },
+    "PivotOperation":{
+      "type":"structure",
+      "required":[
+        "Alias",
+        "Source",
+        "ValueColumnConfiguration",
+        "PivotConfiguration"
+      ],
+      "members":{
+        "Alias":{"shape":"TransformOperationAlias"},
+        "Source":{"shape":"TransformOperationSource"},
+        "GroupByColumnNames":{"shape":"PivotGroupByColumnNameList"},
+        "ValueColumnConfiguration":{"shape":"ValueColumnConfiguration"},
+        "PivotConfiguration":{"shape":"PivotConfiguration"}
+      }
     },
     "PivotTableAggregatedFieldWells":{
       "type":"structure",
@@ -19138,6 +19681,25 @@
         "TotalAggregationOptions":{"shape":"TotalAggregationOptionList"}
       }
     },
+    "PivotedLabel":{
+      "type":"structure",
+      "required":[
+        "LabelName",
+        "NewColumnName",
+        "NewColumnId"
+      ],
+      "members":{
+        "LabelName":{"shape":"CellValue"},
+        "NewColumnName":{"shape":"ColumnName"},
+        "NewColumnId":{"shape":"ColumnId"}
+      }
+    },
+    "PivotedLabelList":{
+      "type":"list",
+      "member":{"shape":"PivotedLabel"},
+      "max":100,
+      "min":0
+    },
     "PixelLength":{"type":"string"},
     "PluginVisual":{
       "type":"structure",
@@ -19364,14 +19926,16 @@
       "type":"structure",
       "required":["ProjectedColumns"],
       "members":{
-        "ProjectedColumns":{"shape":"ProjectedColumnList"}
+        "Alias":{"shape":"TransformOperationAlias"},
+        "Source":{"shape":"TransformOperationSource"},
+        "ProjectedColumns":{"shape":"ProjectedColumnNameList"}
       }
     },
-    "ProjectedColumnList":{
+    "ProjectedColumnNameList":{
       "type":"list",
       "member":{"shape":"String"},
-      "max":2000,
-      "min":1
+      "max":2048,
+      "min":0
     },
     "PropertyRole":{
       "type":"string",
@@ -20210,6 +20774,25 @@
         "NewColumnName":{"shape":"ColumnName"}
       }
     },
+    "RenameColumnOperationList":{
+      "type":"list",
+      "member":{"shape":"RenameColumnOperation"},
+      "max":2048,
+      "min":0
+    },
+    "RenameColumnsOperation":{
+      "type":"structure",
+      "required":[
+        "Alias",
+        "Source",
+        "RenameColumnOperations"
+      ],
+      "members":{
+        "Alias":{"shape":"TransformOperationAlias"},
+        "Source":{"shape":"TransformOperationSource"},
+        "RenameColumnOperations":{"shape":"RenameColumnOperationList"}
+      }
+    },
     "ResizeOption":{
       "type":"string",
       "enum":[
@@ -20404,6 +20987,13 @@
         }
       }
     },
+    "RowLevelPermissionConfiguration":{
+      "type":"structure",
+      "members":{
+        "TagConfiguration":{"shape":"RowLevelPermissionTagConfiguration"},
+        "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"}
+      }
+    },
     "RowLevelPermissionDataSet":{
       "type":"structure",
       "required":[
@@ -20417,6 +21007,11 @@
         "FormatVersion":{"shape":"RowLevelPermissionFormatVersion"},
         "Status":{"shape":"Status"}
       }
+    },
+    "RowLevelPermissionDataSetMap":{
+      "type":"map",
+      "key":{"shape":"DataSetEntityResourceId"},
+      "value":{"shape":"RowLevelPermissionDataSet"}
     },
     "RowLevelPermissionFormatVersion":{
       "type":"string",
@@ -20536,6 +21131,19 @@
     "S3Uri":{
       "type":"string",
       "pattern":"^(https|s3)://([^/]+)/?(.*)$"
+    },
+    "SaaSTable":{
+      "type":"structure",
+      "required":[
+        "DataSourceArn",
+        "TablePath",
+        "InputColumns"
+      ],
+      "members":{
+        "DataSourceArn":{"shape":"Arn"},
+        "TablePath":{"shape":"TablePathElementList"},
+        "InputColumns":{"shape":"InputColumnList"}
+      }
     },
     "SameSheetTargetVisualConfiguration":{
       "type":"structure",
@@ -21128,6 +21736,36 @@
         "TypeParameters":{"shape":"TypeParameters"}
       }
     },
+    "SemanticModelConfiguration":{
+      "type":"structure",
+      "members":{
+        "TableMap":{"shape":"SemanticTableMap"}
+      }
+    },
+    "SemanticTable":{
+      "type":"structure",
+      "required":[
+        "Alias",
+        "DestinationTableId"
+      ],
+      "members":{
+        "Alias":{"shape":"SemanticTableAlias"},
+        "DestinationTableId":{"shape":"DataSetEntityResourceId"},
+        "RowLevelPermissionConfiguration":{"shape":"RowLevelPermissionConfiguration"}
+      }
+    },
+    "SemanticTableAlias":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "SemanticTableMap":{
+      "type":"map",
+      "key":{"shape":"DataSetEntityResourceId"},
+      "value":{"shape":"SemanticTable"},
+      "max":1,
+      "min":1
+    },
     "SemanticType":{
       "type":"structure",
       "members":{
@@ -21189,6 +21827,7 @@
       "type":"list",
       "member":{"shape":"SensitiveTimestamp"}
     },
+    "Separator":{"type":"string"},
     "SeriesItem":{
       "type":"structure",
       "members":{
@@ -21907,6 +22546,20 @@
         "DESC"
       ]
     },
+    "SourceTable":{
+      "type":"structure",
+      "members":{
+        "PhysicalTableId":{"shape":"DataSetEntityResourceId"},
+        "DataSet":{"shape":"ParentDataSet"}
+      }
+    },
+    "SourceTableMap":{
+      "type":"map",
+      "key":{"shape":"DataSetEntityResourceId"},
+      "value":{"shape":"SourceTable"},
+      "max":32,
+      "min":1
+    },
     "Spacing":{
       "type":"structure",
       "members":{
@@ -21951,7 +22604,8 @@
     "SqlQuery":{
       "type":"string",
       "max":168000,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "SqlServerParameters":{
       "type":"structure",
@@ -22572,6 +23226,29 @@
         "VerticalOverflowVisibility":{"shape":"Visibility"},
         "OverflowColumnHeaderVisibility":{"shape":"Visibility"}
       }
+    },
+    "TablePathElement":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"TablePathElementName"},
+        "Id":{"shape":"TablePathElementId"}
+      }
+    },
+    "TablePathElementId":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "TablePathElementList":{
+      "type":"list",
+      "member":{"shape":"TablePathElement"},
+      "max":32,
+      "min":1
+    },
+    "TablePathElementName":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "TablePinnedFieldOptions":{
       "type":"structure",
@@ -23897,10 +24574,46 @@
         "OverrideDatasetParameterOperation":{"shape":"OverrideDatasetParameterOperation"}
       }
     },
+    "TransformOperationAlias":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "TransformOperationList":{
       "type":"list",
       "member":{"shape":"TransformOperation"},
       "max":2048,
+      "min":1
+    },
+    "TransformOperationSource":{
+      "type":"structure",
+      "required":["TransformOperationId"],
+      "members":{
+        "TransformOperationId":{"shape":"DataSetEntityResourceId"},
+        "ColumnIdMappings":{"shape":"DataSetColumnIdMappingList"}
+      }
+    },
+    "TransformStep":{
+      "type":"structure",
+      "members":{
+        "ImportTableStep":{"shape":"ImportTableOperation"},
+        "ProjectStep":{"shape":"ProjectOperation"},
+        "FiltersStep":{"shape":"FiltersOperation"},
+        "CreateColumnsStep":{"shape":"CreateColumnsOperation"},
+        "RenameColumnsStep":{"shape":"RenameColumnsOperation"},
+        "CastColumnTypesStep":{"shape":"CastColumnTypesOperation"},
+        "JoinStep":{"shape":"JoinOperation"},
+        "AggregateStep":{"shape":"AggregateOperation"},
+        "PivotStep":{"shape":"PivotOperation"},
+        "UnpivotStep":{"shape":"UnpivotOperation"},
+        "AppendStep":{"shape":"AppendOperation"}
+      }
+    },
+    "TransformStepMap":{
+      "type":"map",
+      "key":{"shape":"DataSetEntityResourceId"},
+      "value":{"shape":"TransformStep"},
+      "max":256,
       "min":1
     },
     "TransposedColumnIndex":{
@@ -24124,6 +24837,27 @@
       }
     },
     "UnlimitedPixelLength":{"type":"string"},
+    "UnpivotOperation":{
+      "type":"structure",
+      "required":[
+        "Alias",
+        "Source",
+        "ColumnsToUnpivot",
+        "UnpivotedLabelColumnName",
+        "UnpivotedLabelColumnId",
+        "UnpivotedValueColumnName",
+        "UnpivotedValueColumnId"
+      ],
+      "members":{
+        "Alias":{"shape":"TransformOperationAlias"},
+        "Source":{"shape":"TransformOperationSource"},
+        "ColumnsToUnpivot":{"shape":"ColumnToUnpivotList"},
+        "UnpivotedLabelColumnName":{"shape":"ColumnName"},
+        "UnpivotedLabelColumnId":{"shape":"ColumnId"},
+        "UnpivotedValueColumnName":{"shape":"ColumnName"},
+        "UnpivotedValueColumnId":{"shape":"ColumnId"}
+      }
+    },
     "UnsupportedPricingPlanException":{
       "type":"structure",
       "members":{
@@ -24772,16 +25506,33 @@
         },
         "Name":{"shape":"ResourceName"},
         "PhysicalTableMap":{"shape":"PhysicalTableMap"},
-        "LogicalTableMap":{"shape":"LogicalTableMap"},
+        "LogicalTableMap":{
+          "shape":"LogicalTableMap",
+          "deprecated":true,
+          "deprecatedMessage":"Only used in the legacy data preparation experience.",
+          "deprecatedSince":"2025-10-23"
+        },
         "ImportMode":{"shape":"DataSetImportMode"},
         "ColumnGroups":{"shape":"ColumnGroupList"},
         "FieldFolders":{"shape":"FieldFolderMap"},
-        "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
-        "RowLevelPermissionTagConfiguration":{"shape":"RowLevelPermissionTagConfiguration"},
+        "RowLevelPermissionDataSet":{
+          "shape":"RowLevelPermissionDataSet",
+          "deprecated":true,
+          "deprecatedMessage":"Only used in the legacy data preparation experience.",
+          "deprecatedSince":"2025-10-23"
+        },
+        "RowLevelPermissionTagConfiguration":{
+          "shape":"RowLevelPermissionTagConfiguration",
+          "deprecated":true,
+          "deprecatedMessage":"Only used in the legacy data preparation experience.",
+          "deprecatedSince":"2025-10-23"
+        },
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"},
         "DataSetUsageConfiguration":{"shape":"DataSetUsageConfiguration"},
         "DatasetParameters":{"shape":"DatasetParameterList"},
-        "PerformanceConfiguration":{"shape":"PerformanceConfiguration"}
+        "PerformanceConfiguration":{"shape":"PerformanceConfiguration"},
+        "DataPrepConfiguration":{"shape":"DataPrepConfiguration"},
+        "SemanticModelConfiguration":{"shape":"SemanticModelConfiguration"}
       }
     },
     "UpdateDataSetResponse":{
@@ -25816,7 +26567,8 @@
           "box":true
         },
         "TextQualifier":{"shape":"TextQualifier"},
-        "Delimiter":{"shape":"Delimiter"}
+        "Delimiter":{"shape":"Delimiter"},
+        "CustomCellAddressRange":{"shape":"String"}
       }
     },
     "User":{
@@ -25941,6 +26693,12 @@
         "STRICT",
         "LENIENT"
       ]
+    },
+    "ValueColumnConfiguration":{
+      "type":"structure",
+      "members":{
+        "AggregationFunction":{"shape":"DataPrepAggregationFunction"}
+      }
     },
     "ValueWhenUnsetOption":{
       "type":"string",

@@ -111,7 +111,8 @@
       "base": null,
       "refs": {
         "CreateIndexInput$distanceMetric": "<p>The distance metric to be used for similarity search. </p>",
-        "Index$distanceMetric": "<p>The distance metric to be used for similarity search. </p>"
+        "Index$distanceMetric": "<p>The distance metric to be used for similarity search. </p>",
+        "QueryVectorsOutput$distanceMetric": "<p>The distance metric that was used for the similarity search calculation. This is the same distance metric that was configured for the vector index when it was created.</p>"
       }
     },
     "Document": {
@@ -138,6 +139,7 @@
         "KmsInvalidStateException$message": null,
         "KmsNotFoundException$message": null,
         "NotFoundException$message": null,
+        "RequestTimeoutException$message": null,
         "ServiceQuotaExceededException$message": null,
         "ServiceUnavailableException$message": null,
         "TooManyRequestsException$message": null
@@ -215,6 +217,7 @@
     "IndexArn": {
       "base": null,
       "refs": {
+        "CreateIndexOutput$indexArn": "<p>The Amazon Resource Name (ARN) of the newly created vector index.</p>",
         "DeleteIndexInput$indexArn": "<p>The ARN of the vector index to delete.</p>",
         "DeleteVectorsInput$indexArn": "<p>The ARN of the vector index that contains a vector you want to delete.</p>",
         "GetIndexInput$indexArn": "<p>The ARN of the vector index.</p>",
@@ -455,6 +458,10 @@
         "QueryVectorsOutput$vectors": "<p>The vectors in the approximate nearest neighbor search.</p>"
       }
     },
+    "RequestTimeoutException": {
+      "base": "<p>The request timed out. Retry your request.</p>",
+      "refs": {}
+    },
     "ServiceQuotaExceededException": {
       "base": "<p>Your request exceeds a service quota. </p>",
       "refs": {}
@@ -522,6 +529,7 @@
       "base": null,
       "refs": {
         "CreateIndexInput$vectorBucketArn": "<p>The Amazon Resource Name (ARN) of the vector bucket to create the vector index in.</p>",
+        "CreateVectorBucketOutput$vectorBucketArn": "<p>The Amazon Resource Name (ARN) of the newly created vector bucket.</p>",
         "DeleteVectorBucketInput$vectorBucketArn": "<p>The ARN of the vector bucket to delete.</p>",
         "DeleteVectorBucketPolicyInput$vectorBucketArn": "<p>The ARN of the vector bucket to delete the policy from.</p>",
         "GetVectorBucketInput$vectorBucketArn": "<p>The ARN of the vector bucket to retrieve information about.</p>",
