@@ -2,16 +2,15 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2018-05-10",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"controltower",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceFullName":"AWS Control Tower",
     "serviceId":"ControlTower",
     "signatureVersion":"v4",
     "signingName":"controltower",
-    "uid":"controltower-2018-05-10",
-    "auth":["aws.auth#sigv4"]
+    "uid":"controltower-2018-05-10"
   },
   "operations":{
     "CreateLandingZone":{
@@ -142,7 +141,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetBaselineOperation":{
       "name":"GetBaselineOperation",
@@ -159,7 +159,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetControlOperation":{
       "name":"GetControlOperation",
@@ -176,7 +177,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetEnabledBaseline":{
       "name":"GetEnabledBaseline",
@@ -193,7 +195,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetEnabledControl":{
       "name":"GetEnabledControl",
@@ -210,7 +213,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetLandingZone":{
       "name":"GetLandingZone",
@@ -227,7 +231,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetLandingZoneOperation":{
       "name":"GetLandingZoneOperation",
@@ -244,7 +249,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListBaselines":{
       "name":"ListBaselines",
@@ -260,7 +266,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListControlOperations":{
       "name":"ListControlOperations",
@@ -276,7 +283,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListEnabledBaselines":{
       "name":"ListEnabledBaselines",
@@ -292,7 +300,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListEnabledControls":{
       "name":"ListEnabledControls",
@@ -309,7 +318,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListLandingZoneOperations":{
       "name":"ListLandingZoneOperations",
@@ -325,7 +335,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListLandingZones":{
       "name":"ListLandingZones",
@@ -341,7 +352,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -356,7 +368,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ResetEnabledBaseline":{
       "name":"ResetEnabledBaseline",
@@ -518,20 +531,20 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:aws[0-9a-zA-Z_\\-:\\/]+$"
+      "pattern":"arn:aws[0-9a-zA-Z_\\-:\\/]+"
     },
     "BaselineArn":{
       "type":"string",
-      "pattern":"^arn:[a-z-]+:controltower:[a-z0-9-]*:[0-9]{0,12}:baseline/[A-Z0-9]{16}$"
+      "pattern":"arn:[a-z-]+:controltower:[a-z0-9-]*:[0-9]{0,12}:baseline/[A-Z0-9]{16}"
     },
     "BaselineOperation":{
       "type":"structure",
       "members":{
-        "endTime":{"shape":"Timestamp"},
         "operationIdentifier":{"shape":"OperationIdentifier"},
         "operationType":{"shape":"BaselineOperationType"},
-        "startTime":{"shape":"Timestamp"},
         "status":{"shape":"BaselineOperationStatus"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
         "statusMessage":{"shape":"String"}
       }
     },
@@ -560,15 +573,15 @@
       ],
       "members":{
         "arn":{"shape":"String"},
-        "description":{"shape":"String"},
-        "name":{"shape":"String"}
+        "name":{"shape":"String"},
+        "description":{"shape":"String"}
       }
     },
     "BaselineVersion":{
       "type":"string",
       "max":10,
       "min":1,
-      "pattern":"^\\d+(?:\\.\\d+){0,2}$"
+      "pattern":"\\d+(?:\\.\\d+){0,2}"
     },
     "Baselines":{
       "type":"list",
@@ -594,7 +607,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:aws[0-9a-zA-Z_\\-:\\/]+$"
+      "pattern":"arn:aws[0-9a-zA-Z_\\-:\\/]+"
     },
     "ControlIdentifiers":{
       "type":"list",
@@ -605,25 +618,25 @@
     "ControlOperation":{
       "type":"structure",
       "members":{
-        "controlIdentifier":{"shape":"ControlIdentifier"},
-        "enabledControlIdentifier":{"shape":"Arn"},
-        "endTime":{"shape":"SyntheticTimestamp_date_time"},
-        "operationIdentifier":{"shape":"OperationIdentifier"},
         "operationType":{"shape":"ControlOperationType"},
         "startTime":{"shape":"SyntheticTimestamp_date_time"},
+        "endTime":{"shape":"SyntheticTimestamp_date_time"},
         "status":{"shape":"ControlOperationStatus"},
         "statusMessage":{"shape":"String"},
-        "targetIdentifier":{"shape":"TargetIdentifier"}
+        "operationIdentifier":{"shape":"OperationIdentifier"},
+        "controlIdentifier":{"shape":"ControlIdentifier"},
+        "targetIdentifier":{"shape":"TargetIdentifier"},
+        "enabledControlIdentifier":{"shape":"Arn"}
       }
     },
     "ControlOperationFilter":{
       "type":"structure",
       "members":{
         "controlIdentifiers":{"shape":"ControlIdentifiers"},
-        "controlOperationTypes":{"shape":"ControlOperationTypes"},
+        "targetIdentifiers":{"shape":"TargetIdentifiers"},
         "enabledControlIdentifiers":{"shape":"EnabledControlIdentifiers"},
         "statuses":{"shape":"ControlOperationStatuses"},
-        "targetIdentifiers":{"shape":"TargetIdentifiers"}
+        "controlOperationTypes":{"shape":"ControlOperationTypes"}
       }
     },
     "ControlOperationStatus":{
@@ -643,15 +656,15 @@
     "ControlOperationSummary":{
       "type":"structure",
       "members":{
-        "controlIdentifier":{"shape":"ControlIdentifier"},
-        "enabledControlIdentifier":{"shape":"Arn"},
-        "endTime":{"shape":"SyntheticTimestamp_date_time"},
-        "operationIdentifier":{"shape":"OperationIdentifier"},
         "operationType":{"shape":"ControlOperationType"},
         "startTime":{"shape":"SyntheticTimestamp_date_time"},
+        "endTime":{"shape":"SyntheticTimestamp_date_time"},
         "status":{"shape":"ControlOperationStatus"},
         "statusMessage":{"shape":"String"},
-        "targetIdentifier":{"shape":"TargetIdentifier"}
+        "operationIdentifier":{"shape":"OperationIdentifier"},
+        "controlIdentifier":{"shape":"ControlIdentifier"},
+        "targetIdentifier":{"shape":"TargetIdentifier"},
+        "enabledControlIdentifier":{"shape":"Arn"}
       }
     },
     "ControlOperationType":{
@@ -676,13 +689,14 @@
     "CreateLandingZoneInput":{
       "type":"structure",
       "required":[
-        "manifest",
-        "version"
+        "version",
+        "manifest"
       ],
       "members":{
+        "version":{"shape":"LandingZoneVersion"},
         "manifest":{"shape":"Manifest"},
-        "tags":{"shape":"TagMap"},
-        "version":{"shape":"LandingZoneVersion"}
+        "remediationTypes":{"shape":"RemediationTypes"},
+        "tags":{"shape":"TagMap"}
       }
     },
     "CreateLandingZoneOutput":{
@@ -726,13 +740,10 @@
     },
     "DisableControlInput":{
       "type":"structure",
-      "required":[
-        "controlIdentifier",
-        "targetIdentifier"
-      ],
       "members":{
         "controlIdentifier":{"shape":"ControlIdentifier"},
-        "targetIdentifier":{"shape":"TargetIdentifier"}
+        "targetIdentifier":{"shape":"TargetIdentifier"},
+        "enabledControlIdentifier":{"shape":"Arn"}
       }
     },
     "DisableControlOutput":{
@@ -744,8 +755,7 @@
     },
     "Document":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "DriftStatus":{
@@ -760,7 +770,8 @@
     "DriftStatusSummary":{
       "type":"structure",
       "members":{
-        "driftStatus":{"shape":"DriftStatus"}
+        "driftStatus":{"shape":"DriftStatus"},
+        "types":{"shape":"EnabledControlDriftTypes"}
       }
     },
     "DriftStatuses":{
@@ -772,27 +783,27 @@
     "EnableBaselineInput":{
       "type":"structure",
       "required":[
-        "baselineIdentifier",
         "baselineVersion",
+        "baselineIdentifier",
         "targetIdentifier"
       ],
       "members":{
-        "baselineIdentifier":{"shape":"Arn"},
         "baselineVersion":{"shape":"BaselineVersion"},
         "parameters":{"shape":"EnabledBaselineParameters"},
-        "tags":{"shape":"TagMap"},
-        "targetIdentifier":{"shape":"Arn"}
+        "baselineIdentifier":{"shape":"Arn"},
+        "targetIdentifier":{"shape":"Arn"},
+        "tags":{"shape":"TagMap"}
       }
     },
     "EnableBaselineOutput":{
       "type":"structure",
       "required":[
-        "arn",
-        "operationIdentifier"
+        "operationIdentifier",
+        "arn"
       ],
       "members":{
-        "arn":{"shape":"Arn"},
-        "operationIdentifier":{"shape":"OperationIdentifier"}
+        "operationIdentifier":{"shape":"OperationIdentifier"},
+        "arn":{"shape":"Arn"}
       }
     },
     "EnableControlInput":{
@@ -803,17 +814,17 @@
       ],
       "members":{
         "controlIdentifier":{"shape":"ControlIdentifier"},
-        "parameters":{"shape":"EnabledControlParameters"},
+        "targetIdentifier":{"shape":"TargetIdentifier"},
         "tags":{"shape":"TagMap"},
-        "targetIdentifier":{"shape":"TargetIdentifier"}
+        "parameters":{"shape":"EnabledControlParameters"}
       }
     },
     "EnableControlOutput":{
       "type":"structure",
       "required":["operationIdentifier"],
       "members":{
-        "arn":{"shape":"Arn"},
-        "operationIdentifier":{"shape":"OperationIdentifier"}
+        "operationIdentifier":{"shape":"OperationIdentifier"},
+        "arn":{"shape":"Arn"}
       }
     },
     "EnabledBaselineBaselineIdentifiers":{
@@ -827,18 +838,18 @@
       "required":[
         "arn",
         "baselineIdentifier",
-        "statusSummary",
-        "targetIdentifier"
+        "targetIdentifier",
+        "statusSummary"
       ],
       "members":{
         "arn":{"shape":"Arn"},
         "baselineIdentifier":{"shape":"String"},
         "baselineVersion":{"shape":"String"},
         "driftStatusSummary":{"shape":"EnabledBaselineDriftStatusSummary"},
-        "parameters":{"shape":"EnabledBaselineParameterSummaries"},
+        "targetIdentifier":{"shape":"String"},
         "parentIdentifier":{"shape":"Arn"},
         "statusSummary":{"shape":"EnablementStatusSummary"},
-        "targetIdentifier":{"shape":"String"}
+        "parameters":{"shape":"EnabledBaselineParameterSummaries"}
       }
     },
     "EnabledBaselineDriftStatus":{
@@ -875,11 +886,11 @@
     "EnabledBaselineFilter":{
       "type":"structure",
       "members":{
+        "targetIdentifiers":{"shape":"EnabledBaselineTargetIdentifiers"},
         "baselineIdentifiers":{"shape":"EnabledBaselineBaselineIdentifiers"},
-        "inheritanceDriftStatuses":{"shape":"EnabledBaselineDriftStatuses"},
         "parentIdentifiers":{"shape":"EnabledBaselineParentIdentifiers"},
         "statuses":{"shape":"EnabledBaselineEnablementStatuses"},
-        "targetIdentifiers":{"shape":"EnabledBaselineTargetIdentifiers"}
+        "inheritanceDriftStatuses":{"shape":"EnabledBaselineDriftStatuses"}
       }
     },
     "EnabledBaselineInheritanceDrift":{
@@ -901,8 +912,7 @@
     },
     "EnabledBaselineParameterDocument":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "EnabledBaselineParameterSummaries":{
@@ -935,17 +945,17 @@
       "required":[
         "arn",
         "baselineIdentifier",
-        "statusSummary",
-        "targetIdentifier"
+        "targetIdentifier",
+        "statusSummary"
       ],
       "members":{
         "arn":{"shape":"Arn"},
         "baselineIdentifier":{"shape":"String"},
         "baselineVersion":{"shape":"String"},
         "driftStatusSummary":{"shape":"EnabledBaselineDriftStatusSummary"},
+        "targetIdentifier":{"shape":"String"},
         "parentIdentifier":{"shape":"Arn"},
-        "statusSummary":{"shape":"EnablementStatusSummary"},
-        "targetIdentifier":{"shape":"String"}
+        "statusSummary":{"shape":"EnablementStatusSummary"}
       }
     },
     "EnabledBaselineTargetIdentifiers":{
@@ -963,19 +973,30 @@
       "members":{
         "arn":{"shape":"Arn"},
         "controlIdentifier":{"shape":"ControlIdentifier"},
-        "driftStatusSummary":{"shape":"DriftStatusSummary"},
-        "parameters":{"shape":"EnabledControlParameterSummaries"},
-        "statusSummary":{"shape":"EnablementStatusSummary"},
         "targetIdentifier":{"shape":"TargetIdentifier"},
-        "targetRegions":{"shape":"TargetRegions"}
+        "statusSummary":{"shape":"EnablementStatusSummary"},
+        "driftStatusSummary":{"shape":"DriftStatusSummary"},
+        "parentIdentifier":{"shape":"ParentIdentifier"},
+        "targetRegions":{"shape":"TargetRegions"},
+        "parameters":{"shape":"EnabledControlParameterSummaries"}
+      }
+    },
+    "EnabledControlDriftTypes":{
+      "type":"structure",
+      "members":{
+        "inheritance":{"shape":"EnabledControlInheritanceDrift"},
+        "resource":{"shape":"EnabledControlResourceDrift"}
       }
     },
     "EnabledControlFilter":{
       "type":"structure",
       "members":{
         "controlIdentifiers":{"shape":"ControlIdentifiers"},
+        "statuses":{"shape":"EnablementStatuses"},
         "driftStatuses":{"shape":"DriftStatuses"},
-        "statuses":{"shape":"EnablementStatuses"}
+        "parentIdentifiers":{"shape":"ParentIdentifiers"},
+        "inheritanceDriftStatuses":{"shape":"DriftStatuses"},
+        "resourceDriftStatuses":{"shape":"DriftStatuses"}
       }
     },
     "EnabledControlIdentifiers":{
@@ -983,6 +1004,12 @@
       "member":{"shape":"Arn"},
       "max":1,
       "min":1
+    },
+    "EnabledControlInheritanceDrift":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"DriftStatus"}
+      }
     },
     "EnabledControlParameter":{
       "type":"structure",
@@ -1014,14 +1041,21 @@
       "type":"list",
       "member":{"shape":"EnabledControlParameter"}
     },
+    "EnabledControlResourceDrift":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"DriftStatus"}
+      }
+    },
     "EnabledControlSummary":{
       "type":"structure",
       "members":{
         "arn":{"shape":"Arn"},
         "controlIdentifier":{"shape":"ControlIdentifier"},
-        "driftStatusSummary":{"shape":"DriftStatusSummary"},
+        "targetIdentifier":{"shape":"TargetIdentifier"},
         "statusSummary":{"shape":"EnablementStatusSummary"},
-        "targetIdentifier":{"shape":"TargetIdentifier"}
+        "driftStatusSummary":{"shape":"DriftStatusSummary"},
+        "parentIdentifier":{"shape":"ParentIdentifier"}
       }
     },
     "EnabledControls":{
@@ -1039,8 +1073,8 @@
     "EnablementStatusSummary":{
       "type":"structure",
       "members":{
-        "lastOperationIdentifier":{"shape":"OperationIdentifier"},
-        "status":{"shape":"EnablementStatus"}
+        "status":{"shape":"EnablementStatus"},
+        "lastOperationIdentifier":{"shape":"OperationIdentifier"}
       }
     },
     "EnablementStatuses":{
@@ -1078,8 +1112,8 @@
       ],
       "members":{
         "arn":{"shape":"BaselineArn"},
-        "description":{"shape":"String"},
-        "name":{"shape":"String"}
+        "name":{"shape":"String"},
+        "description":{"shape":"String"}
       }
     },
     "GetControlOperationInput":{
@@ -1169,16 +1203,17 @@
     "LandingZoneDetail":{
       "type":"structure",
       "required":[
-        "manifest",
-        "version"
+        "version",
+        "manifest"
       ],
       "members":{
-        "arn":{"shape":"Arn"},
-        "driftStatus":{"shape":"LandingZoneDriftStatusSummary"},
-        "latestAvailableVersion":{"shape":"LandingZoneVersion"},
+        "version":{"shape":"LandingZoneVersion"},
         "manifest":{"shape":"Manifest"},
+        "remediationTypes":{"shape":"RemediationTypes"},
+        "arn":{"shape":"Arn"},
         "status":{"shape":"LandingZoneStatus"},
-        "version":{"shape":"LandingZoneVersion"}
+        "latestAvailableVersion":{"shape":"LandingZoneVersion"},
+        "driftStatus":{"shape":"LandingZoneDriftStatusSummary"}
       }
     },
     "LandingZoneDriftStatus":{
@@ -1197,19 +1232,19 @@
     "LandingZoneOperationDetail":{
       "type":"structure",
       "members":{
-        "endTime":{"shape":"Timestamp"},
-        "operationIdentifier":{"shape":"OperationIdentifier"},
         "operationType":{"shape":"LandingZoneOperationType"},
-        "startTime":{"shape":"Timestamp"},
+        "operationIdentifier":{"shape":"OperationIdentifier"},
         "status":{"shape":"LandingZoneOperationStatus"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
         "statusMessage":{"shape":"String"}
       }
     },
     "LandingZoneOperationFilter":{
       "type":"structure",
       "members":{
-        "statuses":{"shape":"LandingZoneOperationStatuses"},
-        "types":{"shape":"LandingZoneOperationTypes"}
+        "types":{"shape":"LandingZoneOperationTypes"},
+        "statuses":{"shape":"LandingZoneOperationStatuses"}
       }
     },
     "LandingZoneOperationStatus":{
@@ -1229,8 +1264,8 @@
     "LandingZoneOperationSummary":{
       "type":"structure",
       "members":{
-        "operationIdentifier":{"shape":"OperationIdentifier"},
         "operationType":{"shape":"LandingZoneOperationType"},
+        "operationIdentifier":{"shape":"OperationIdentifier"},
         "status":{"shape":"LandingZoneOperationStatus"}
       }
     },
@@ -1271,13 +1306,13 @@
       "type":"string",
       "max":10,
       "min":3,
-      "pattern":"^\\d+.\\d+$"
+      "pattern":"\\d+.\\d+"
     },
     "ListBaselinesInput":{
       "type":"structure",
       "members":{
-        "maxResults":{"shape":"ListBaselinesMaxResults"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"String"},
+        "maxResults":{"shape":"ListBaselinesMaxResults"}
       }
     },
     "ListBaselinesMaxResults":{
@@ -1298,8 +1333,8 @@
       "type":"structure",
       "members":{
         "filter":{"shape":"ControlOperationFilter"},
-        "maxResults":{"shape":"ListControlOperationsMaxResults"},
-        "nextToken":{"shape":"ListControlOperationsNextToken"}
+        "nextToken":{"shape":"ListControlOperationsNextToken"},
+        "maxResults":{"shape":"ListControlOperationsMaxResults"}
       }
     },
     "ListControlOperationsMaxResults":{
@@ -1310,7 +1345,7 @@
     },
     "ListControlOperationsNextToken":{
       "type":"string",
-      "pattern":"\\S+"
+      "pattern":".*\\S+.*"
     },
     "ListControlOperationsOutput":{
       "type":"structure",
@@ -1324,9 +1359,9 @@
       "type":"structure",
       "members":{
         "filter":{"shape":"EnabledBaselineFilter"},
-        "includeChildren":{"shape":"Boolean"},
+        "nextToken":{"shape":"ListEnabledBaselinesNextToken"},
         "maxResults":{"shape":"ListEnabledBaselinesMaxResults"},
-        "nextToken":{"shape":"ListEnabledBaselinesNextToken"}
+        "includeChildren":{"shape":"Boolean"}
       }
     },
     "ListEnabledBaselinesMaxResults":{
@@ -1337,7 +1372,7 @@
     },
     "ListEnabledBaselinesNextToken":{
       "type":"string",
-      "pattern":"\\S+"
+      "pattern":".*\\S+.*"
     },
     "ListEnabledBaselinesOutput":{
       "type":"structure",
@@ -1350,10 +1385,11 @@
     "ListEnabledControlsInput":{
       "type":"structure",
       "members":{
-        "filter":{"shape":"EnabledControlFilter"},
-        "maxResults":{"shape":"MaxResults"},
+        "targetIdentifier":{"shape":"TargetIdentifier"},
         "nextToken":{"shape":"String"},
-        "targetIdentifier":{"shape":"TargetIdentifier"}
+        "maxResults":{"shape":"MaxResults"},
+        "filter":{"shape":"EnabledControlFilter"},
+        "includeChildren":{"shape":"Boolean"}
       }
     },
     "ListEnabledControlsOutput":{
@@ -1368,8 +1404,8 @@
       "type":"structure",
       "members":{
         "filter":{"shape":"LandingZoneOperationFilter"},
-        "maxResults":{"shape":"ListLandingZoneOperationsMaxResults"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"String"},
+        "maxResults":{"shape":"ListLandingZoneOperationsMaxResults"}
       }
     },
     "ListLandingZoneOperationsMaxResults":{
@@ -1389,8 +1425,8 @@
     "ListLandingZonesInput":{
       "type":"structure",
       "members":{
-        "maxResults":{"shape":"ListLandingZonesMaxResults"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"String"},
+        "maxResults":{"shape":"ListLandingZonesMaxResults"}
       }
     },
     "ListLandingZonesMaxResults":{
@@ -1433,8 +1469,7 @@
     },
     "Manifest":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "MaxResults":{
@@ -1447,7 +1482,19 @@
       "type":"string",
       "max":36,
       "min":36,
-      "pattern":"^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+    },
+    "ParentIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[0-9a-zA-Z_\\-:\\/]+"
+    },
+    "ParentIdentifiers":{
+      "type":"list",
+      "member":{"shape":"ParentIdentifier"},
+      "max":1,
+      "min":1
     },
     "Region":{
       "type":"structure",
@@ -1458,6 +1505,16 @@
     "RegionName":{
       "type":"string",
       "max":50,
+      "min":1
+    },
+    "RemediationType":{
+      "type":"string",
+      "enum":["INHERITANCE_DRIFT"]
+    },
+    "RemediationTypes":{
+      "type":"list",
+      "member":{"shape":"RemediationType"},
+      "max":1,
       "min":1
     },
     "ResetEnabledBaselineInput":{
@@ -1566,8 +1623,7 @@
     },
     "TagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1578,7 +1634,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:aws[0-9a-zA-Z_\\-:\\/]+$"
+      "pattern":"arn:aws[0-9a-zA-Z_\\-:\\/]+"
     },
     "TargetIdentifiers":{
       "type":"list",
@@ -1595,13 +1651,13 @@
       "required":["message"],
       "members":{
         "message":{"shape":"String"},
+        "serviceCode":{"shape":"String"},
         "quotaCode":{"shape":"String"},
         "retryAfterSeconds":{
           "shape":"Integer",
           "location":"header",
           "locationName":"Retry-After"
-        },
-        "serviceCode":{"shape":"String"}
+        }
       },
       "error":{
         "httpStatusCode":429,
@@ -1635,8 +1691,7 @@
     },
     "UntagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateEnabledBaselineInput":{
       "type":"structure",
@@ -1646,8 +1701,8 @@
       ],
       "members":{
         "baselineVersion":{"shape":"BaselineVersion"},
-        "enabledBaselineIdentifier":{"shape":"Arn"},
-        "parameters":{"shape":"EnabledBaselineParameters"}
+        "parameters":{"shape":"EnabledBaselineParameters"},
+        "enabledBaselineIdentifier":{"shape":"Arn"}
       }
     },
     "UpdateEnabledBaselineOutput":{
@@ -1660,12 +1715,12 @@
     "UpdateEnabledControlInput":{
       "type":"structure",
       "required":[
-        "enabledControlIdentifier",
-        "parameters"
+        "parameters",
+        "enabledControlIdentifier"
       ],
       "members":{
-        "enabledControlIdentifier":{"shape":"Arn"},
-        "parameters":{"shape":"EnabledControlParameters"}
+        "parameters":{"shape":"EnabledControlParameters"},
+        "enabledControlIdentifier":{"shape":"Arn"}
       }
     },
     "UpdateEnabledControlOutput":{
@@ -1678,14 +1733,15 @@
     "UpdateLandingZoneInput":{
       "type":"structure",
       "required":[
-        "landingZoneIdentifier",
+        "version",
         "manifest",
-        "version"
+        "landingZoneIdentifier"
       ],
       "members":{
-        "landingZoneIdentifier":{"shape":"String"},
+        "version":{"shape":"LandingZoneVersion"},
         "manifest":{"shape":"Manifest"},
-        "version":{"shape":"LandingZoneVersion"}
+        "remediationTypes":{"shape":"RemediationTypes"},
+        "landingZoneIdentifier":{"shape":"String"}
       }
     },
     "UpdateLandingZoneOutput":{

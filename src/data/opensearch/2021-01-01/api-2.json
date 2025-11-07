@@ -679,6 +679,22 @@
         {"shape":"DependencyFailureException"}
       ]
     },
+    "GetDefaultApplicationSetting":{
+      "name":"GetDefaultApplicationSetting",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/defaultApplicationSetting",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDefaultApplicationSettingRequest"},
+      "output":{"shape":"GetDefaultApplicationSettingResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetDirectQueryDataSource":{
       "name":"GetDirectQueryDataSource",
       "http":{
@@ -991,6 +1007,22 @@
         {"shape":"DisabledOperationException"},
         {"shape":"ValidationException"},
         {"shape":"InternalException"}
+      ]
+    },
+    "PutDefaultApplicationSetting":{
+      "name":"PutDefaultApplicationSetting",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2021-01-01/opensearch/defaultApplicationSetting",
+        "responseCode":200
+      },
+      "input":{"shape":"PutDefaultApplicationSettingRequest"},
+      "output":{"shape":"PutDefaultApplicationSettingResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "RejectInboundConnection":{
@@ -3181,6 +3213,16 @@
         "Status":{"shape":"DataSourceStatus"}
       }
     },
+    "GetDefaultApplicationSettingRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "GetDefaultApplicationSettingResponse":{
+      "type":"structure",
+      "members":{
+        "applicationArn":{"shape":"ARN"}
+      }
+    },
     "GetDirectQueryDataSourceRequest":{
       "type":"structure",
       "required":["DataSourceName"],
@@ -4603,6 +4645,23 @@
       "members":{
         "ReservedInstanceId":{"shape":"GUID"},
         "ReservationName":{"shape":"ReservationToken"}
+      }
+    },
+    "PutDefaultApplicationSettingRequest":{
+      "type":"structure",
+      "required":[
+        "applicationArn",
+        "setAsDefault"
+      ],
+      "members":{
+        "applicationArn":{"shape":"ARN"},
+        "setAsDefault":{"shape":"Boolean"}
+      }
+    },
+    "PutDefaultApplicationSettingResponse":{
+      "type":"structure",
+      "members":{
+        "applicationArn":{"shape":"ARN"}
       }
     },
     "RecurringCharge":{

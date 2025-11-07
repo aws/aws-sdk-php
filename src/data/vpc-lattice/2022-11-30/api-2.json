@@ -287,6 +287,24 @@
       ],
       "idempotent":true
     },
+    "DeleteDomainVerification":{
+      "name":"DeleteDomainVerification",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domainverifications/{domainVerificationIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteDomainVerificationRequest"},
+      "output":{"shape":"DeleteDomainVerificationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "DeleteListener":{
       "name":"DeleteListener",
       "http":{
@@ -546,7 +564,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetAuthPolicy":{
       "name":"GetAuthPolicy",
@@ -563,7 +582,26 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "GetDomainVerification":{
+      "name":"GetDomainVerification",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domainverifications/{domainVerificationIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDomainVerificationRequest"},
+      "output":{"shape":"GetDomainVerificationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
     },
     "GetListener":{
       "name":"GetListener",
@@ -580,7 +618,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetResourceConfiguration":{
       "name":"GetResourceConfiguration",
@@ -597,7 +636,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetResourceGateway":{
       "name":"GetResourceGateway",
@@ -614,7 +654,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetResourcePolicy":{
       "name":"GetResourcePolicy",
@@ -631,7 +672,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetRule":{
       "name":"GetRule",
@@ -648,7 +690,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetService":{
       "name":"GetService",
@@ -665,7 +708,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetServiceNetwork":{
       "name":"GetServiceNetwork",
@@ -682,7 +726,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetServiceNetworkResourceAssociation":{
       "name":"GetServiceNetworkResourceAssociation",
@@ -699,7 +744,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetServiceNetworkServiceAssociation":{
       "name":"GetServiceNetworkServiceAssociation",
@@ -716,7 +762,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetServiceNetworkVpcAssociation":{
       "name":"GetServiceNetworkVpcAssociation",
@@ -733,7 +780,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTargetGroup":{
       "name":"GetTargetGroup",
@@ -750,7 +798,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAccessLogSubscriptions":{
       "name":"ListAccessLogSubscriptions",
@@ -766,7 +815,26 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "ListDomainVerifications":{
+      "name":"ListDomainVerifications",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domainverifications",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDomainVerificationsRequest"},
+      "output":{"shape":"ListDomainVerificationsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
     },
     "ListListeners":{
       "name":"ListListeners",
@@ -783,7 +851,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListResourceConfigurations":{
       "name":"ListResourceConfigurations",
@@ -799,7 +868,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListResourceEndpointAssociations":{
       "name":"ListResourceEndpointAssociations",
@@ -815,7 +885,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListResourceGateways":{
       "name":"ListResourceGateways",
@@ -831,7 +902,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListRules":{
       "name":"ListRules",
@@ -848,7 +920,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListServiceNetworkResourceAssociations":{
       "name":"ListServiceNetworkResourceAssociations",
@@ -864,7 +937,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListServiceNetworkServiceAssociations":{
       "name":"ListServiceNetworkServiceAssociations",
@@ -880,7 +954,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListServiceNetworkVpcAssociations":{
       "name":"ListServiceNetworkVpcAssociations",
@@ -896,7 +971,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListServiceNetworkVpcEndpointAssociations":{
       "name":"ListServiceNetworkVpcEndpointAssociations",
@@ -912,7 +988,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListServiceNetworks":{
       "name":"ListServiceNetworks",
@@ -928,7 +1005,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListServices":{
       "name":"ListServices",
@@ -944,7 +1022,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -960,7 +1039,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTargetGroups":{
       "name":"ListTargetGroups",
@@ -976,7 +1056,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTargets":{
       "name":"ListTargets",
@@ -993,7 +1074,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutAuthPolicy":{
       "name":"PutAuthPolicy",
@@ -1048,6 +1130,25 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "StartDomainVerification":{
+      "name":"StartDomainVerification",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domainverifications",
+        "responseCode":201
+      },
+      "input":{"shape":"StartDomainVerificationRequest"},
+      "output":{"shape":"StartDomainVerificationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -1506,6 +1607,9 @@
         "resourceConfigurationGroupIdentifier":{"shape":"ResourceConfigurationIdentifier"},
         "resourceConfigurationDefinition":{"shape":"ResourceConfigurationDefinition"},
         "allowAssociationToShareableServiceNetwork":{"shape":"Boolean"},
+        "customDomainName":{"shape":"DomainName"},
+        "groupDomain":{"shape":"DomainName"},
+        "domainVerificationIdentifier":{"shape":"DomainVerificationIdentifier"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -1528,7 +1632,11 @@
         "resourceConfigurationDefinition":{"shape":"ResourceConfigurationDefinition"},
         "allowAssociationToShareableServiceNetwork":{"shape":"Boolean"},
         "createdAt":{"shape":"Timestamp"},
-        "failureReason":{"shape":"String"}
+        "failureReason":{"shape":"String"},
+        "customDomainName":{"shape":"DomainName"},
+        "domainVerificationId":{"shape":"DomainVerificationId"},
+        "groupDomain":{"shape":"DomainName"},
+        "domainVerificationArn":{"shape":"DomainVerificationArn"}
       }
     },
     "CreateResourceGatewayRequest":{
@@ -1638,6 +1746,7 @@
         },
         "resourceConfigurationIdentifier":{"shape":"ResourceConfigurationIdentifier"},
         "serviceNetworkIdentifier":{"shape":"ServiceNetworkIdentifierWithoutRegex"},
+        "privateDnsEnabled":{"shape":"Boolean"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -1647,7 +1756,8 @@
         "id":{"shape":"ServiceNetworkResourceAssociationId"},
         "arn":{"shape":"ServiceNetworkResourceAssociationArn"},
         "status":{"shape":"ServiceNetworkResourceAssociationStatus"},
-        "createdBy":{"shape":"AccountId"}
+        "createdBy":{"shape":"AccountId"},
+        "privateDnsEnabled":{"shape":"Boolean"}
       }
     },
     "CreateServiceNetworkResponse":{
@@ -1700,8 +1810,10 @@
         },
         "serviceNetworkIdentifier":{"shape":"ServiceNetworkIdentifier"},
         "vpcIdentifier":{"shape":"VpcId"},
+        "privateDnsEnabled":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"CreateServiceNetworkVpcAssociationRequestSecurityGroupIdsList"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "dnsOptions":{"shape":"DnsOptions"}
       }
     },
     "CreateServiceNetworkVpcAssociationRequestSecurityGroupIdsList":{
@@ -1717,7 +1829,9 @@
         "status":{"shape":"ServiceNetworkVpcAssociationStatus"},
         "arn":{"shape":"ServiceNetworkVpcAssociationArn"},
         "createdBy":{"shape":"AccountId"},
-        "securityGroupIds":{"shape":"SecurityGroupList"}
+        "securityGroupIds":{"shape":"SecurityGroupList"},
+        "privateDnsEnabled":{"shape":"Boolean"},
+        "dnsOptions":{"shape":"DnsOptions"}
       }
     },
     "CreateServiceRequest":{
@@ -1803,6 +1917,21 @@
       }
     },
     "DeleteAuthPolicyResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteDomainVerificationRequest":{
+      "type":"structure",
+      "required":["domainVerificationIdentifier"],
+      "members":{
+        "domainVerificationIdentifier":{
+          "shape":"DomainVerificationIdentifier",
+          "location":"uri",
+          "locationName":"domainVerificationIdentifier"
+        }
+      }
+    },
+    "DeleteDomainVerificationResponse":{
       "type":"structure",
       "members":{}
     },
@@ -2075,6 +2204,13 @@
         "hostedZoneId":{"shape":"String"}
       }
     },
+    "DnsOptions":{
+      "type":"structure",
+      "members":{
+        "privateDnsPreference":{"shape":"PrivateDnsPreference"},
+        "privateDnsSpecifiedDomains":{"shape":"PrivateDnsSpecifiedDomainsList"}
+      }
+    },
     "DnsResource":{
       "type":"structure",
       "members":{
@@ -2086,6 +2222,48 @@
       "type":"string",
       "max":255,
       "min":3
+    },
+    "DomainVerificationArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:[a-z0-9f\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:domainverification/dv-[a-fA-F0-9]{17}"
+    },
+    "DomainVerificationId":{
+      "type":"string",
+      "max":20,
+      "min":20,
+      "pattern":"dv-[a-fA-F0-9]{17}"
+    },
+    "DomainVerificationIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"((dv-[0-9a-z]{17})|(arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:domainverification/dv-[a-fA-F0-9]{17}))"
+    },
+    "DomainVerificationList":{
+      "type":"list",
+      "member":{"shape":"DomainVerificationSummary"}
+    },
+    "DomainVerificationSummary":{
+      "type":"structure",
+      "required":[
+        "id",
+        "arn",
+        "domainName",
+        "status",
+        "createdAt"
+      ],
+      "members":{
+        "id":{"shape":"DomainVerificationId"},
+        "arn":{"shape":"DomainVerificationArn"},
+        "domainName":{"shape":"DomainName"},
+        "status":{"shape":"VerificationStatus"},
+        "txtMethodConfig":{"shape":"TxtMethodConfig"},
+        "createdAt":{"shape":"Timestamp"},
+        "lastVerifiedTime":{"shape":"Timestamp"},
+        "tags":{"shape":"TagMap"}
+      }
     },
     "FailureCode":{"type":"string"},
     "FailureMessage":{"type":"string"},
@@ -2156,6 +2334,37 @@
         "lastUpdatedAt":{"shape":"Timestamp"}
       }
     },
+    "GetDomainVerificationRequest":{
+      "type":"structure",
+      "required":["domainVerificationIdentifier"],
+      "members":{
+        "domainVerificationIdentifier":{
+          "shape":"DomainVerificationIdentifier",
+          "location":"uri",
+          "locationName":"domainVerificationIdentifier"
+        }
+      }
+    },
+    "GetDomainVerificationResponse":{
+      "type":"structure",
+      "required":[
+        "id",
+        "arn",
+        "domainName",
+        "status",
+        "createdAt"
+      ],
+      "members":{
+        "id":{"shape":"DomainVerificationId"},
+        "arn":{"shape":"DomainVerificationArn"},
+        "domainName":{"shape":"DomainName"},
+        "status":{"shape":"VerificationStatus"},
+        "txtMethodConfig":{"shape":"TxtMethodConfig"},
+        "createdAt":{"shape":"Timestamp"},
+        "lastVerifiedTime":{"shape":"Timestamp"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
     "GetListenerRequest":{
       "type":"structure",
       "required":[
@@ -2219,7 +2428,11 @@
         "createdAt":{"shape":"Timestamp"},
         "amazonManaged":{"shape":"Boolean"},
         "failureReason":{"shape":"String"},
-        "lastUpdatedAt":{"shape":"Timestamp"}
+        "lastUpdatedAt":{"shape":"Timestamp"},
+        "domainVerificationId":{"shape":"DomainVerificationId"},
+        "domainVerificationArn":{"shape":"DomainVerificationArn"},
+        "domainVerificationStatus":{"shape":"VerificationStatus"},
+        "groupDomain":{"shape":"DomainName"}
       }
     },
     "GetResourceGatewayRequest":{
@@ -2345,8 +2558,10 @@
         "failureCode":{"shape":"String"},
         "lastUpdatedAt":{"shape":"Timestamp"},
         "privateDnsEntry":{"shape":"DnsEntry"},
+        "privateDnsEnabled":{"shape":"Boolean"},
         "dnsEntry":{"shape":"DnsEntry"},
-        "isManagedAssociation":{"shape":"Boolean"}
+        "isManagedAssociation":{"shape":"Boolean"},
+        "domainVerificationStatus":{"shape":"VerificationStatus"}
       }
     },
     "GetServiceNetworkResponse":{
@@ -2418,9 +2633,11 @@
         "serviceNetworkArn":{"shape":"ServiceNetworkArn"},
         "vpcId":{"shape":"VpcId"},
         "securityGroupIds":{"shape":"SecurityGroupList"},
+        "privateDnsEnabled":{"shape":"Boolean"},
         "failureMessage":{"shape":"String"},
         "failureCode":{"shape":"String"},
-        "lastUpdatedAt":{"shape":"Timestamp"}
+        "lastUpdatedAt":{"shape":"Timestamp"},
+        "dnsOptions":{"shape":"DnsOptions"}
       }
     },
     "GetServiceRequest":{
@@ -2682,6 +2899,29 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListDomainVerificationsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListDomainVerificationsResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"DomainVerificationList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListListenersRequest":{
       "type":"structure",
       "required":["serviceIdentifier"],
@@ -2723,6 +2963,11 @@
           "shape":"ResourceConfigurationIdentifier",
           "location":"querystring",
           "locationName":"resourceConfigurationGroupIdentifier"
+        },
+        "domainVerificationIdentifier":{
+          "shape":"DomainVerificationIdentifier",
+          "location":"querystring",
+          "locationName":"domainVerificationIdentifier"
         },
         "maxResults":{
           "shape":"MaxResults",
@@ -3229,6 +3474,26 @@
       "type":"list",
       "member":{"shape":"PortRange"}
     },
+    "PrivateDnsPreference":{
+      "type":"string",
+      "enum":[
+        "VERIFIED_DOMAINS_ONLY",
+        "ALL_DOMAINS",
+        "VERIFIED_DOMAINS_AND_SPECIFIED_DOMAINS",
+        "SPECIFIED_DOMAINS_ONLY"
+      ]
+    },
+    "PrivateDnsSpecifiedDomain":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "PrivateDnsSpecifiedDomainsList":{
+      "type":"list",
+      "member":{"shape":"PrivateDnsSpecifiedDomain"},
+      "max":10,
+      "min":1
+    },
     "ProtocolType":{
       "type":"string",
       "enum":["TCP"]
@@ -3373,7 +3638,10 @@
         "status":{"shape":"ResourceConfigurationStatus"},
         "amazonManaged":{"shape":"Boolean"},
         "createdAt":{"shape":"Timestamp"},
-        "lastUpdatedAt":{"shape":"Timestamp"}
+        "lastUpdatedAt":{"shape":"Timestamp"},
+        "customDomainName":{"shape":"DomainName"},
+        "domainVerificationId":{"shape":"DomainVerificationId"},
+        "groupDomain":{"shape":"DomainName"}
       }
     },
     "ResourceConfigurationSummaryList":{
@@ -3783,7 +4051,8 @@
         "dnsEntry":{"shape":"DnsEntry"},
         "privateDnsEntry":{"shape":"DnsEntry"},
         "isManagedAssociation":{"shape":"Boolean"},
-        "failureCode":{"shape":"String"}
+        "failureCode":{"shape":"String"},
+        "privateDnsEnabled":{"shape":"Boolean"}
       }
     },
     "ServiceNetworkServiceAssociationArn":{
@@ -3888,6 +4157,8 @@
         "serviceNetworkId":{"shape":"ServiceNetworkId"},
         "serviceNetworkName":{"shape":"ServiceNetworkName"},
         "serviceNetworkArn":{"shape":"ServiceNetworkArn"},
+        "privateDnsEnabled":{"shape":"Boolean"},
+        "dnsOptions":{"shape":"DnsOptions"},
         "vpcId":{"shape":"VpcId"},
         "lastUpdatedAt":{"shape":"Timestamp"}
       }
@@ -3944,6 +4215,34 @@
       "type":"structure",
       "members":{
         "enabled":{"shape":"Boolean"}
+      }
+    },
+    "StartDomainVerificationRequest":{
+      "type":"structure",
+      "required":["domainName"],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "domainName":{"shape":"DomainName"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "StartDomainVerificationResponse":{
+      "type":"structure",
+      "required":[
+        "id",
+        "arn",
+        "domainName",
+        "status"
+      ],
+      "members":{
+        "id":{"shape":"DomainVerificationId"},
+        "arn":{"shape":"DomainVerificationArn"},
+        "domainName":{"shape":"DomainName"},
+        "status":{"shape":"VerificationStatus"},
+        "txtMethodConfig":{"shape":"TxtMethodConfig"}
       }
     },
     "String":{"type":"string"},
@@ -4174,6 +4473,17 @@
     "Timestamp":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
+    },
+    "TxtMethodConfig":{
+      "type":"structure",
+      "required":[
+        "value",
+        "name"
+      ],
+      "members":{
+        "value":{"shape":"String"},
+        "name":{"shape":"String"}
+      }
     },
     "UnhealthyThresholdCount":{
       "type":"integer",
@@ -4515,6 +4825,14 @@
         "cannotParse",
         "fieldValidationFailed",
         "other"
+      ]
+    },
+    "VerificationStatus":{
+      "type":"string",
+      "enum":[
+        "VERIFIED",
+        "PENDING",
+        "VERIFICATION_TIMED_OUT"
       ]
     },
     "VpcEndpointId":{

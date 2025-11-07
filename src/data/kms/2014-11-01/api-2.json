@@ -1329,7 +1329,8 @@
         "ECC_NIST_P384",
         "ECC_NIST_P521",
         "ECC_SECG_P256K1",
-        "SM2"
+        "SM2",
+        "ECC_NIST_EDWARDS25519"
       ]
     },
     "DataKeySpec":{
@@ -2117,7 +2118,8 @@
         "SM2",
         "ML_DSA_44",
         "ML_DSA_65",
-        "ML_DSA_87"
+        "ML_DSA_87",
+        "ECC_NIST_EDWARDS25519"
       ]
     },
     "KeyState":{
@@ -2596,7 +2598,9 @@
         "ECDSA_SHA_384",
         "ECDSA_SHA_512",
         "SM2DSA",
-        "ML_DSA_SHAKE_256"
+        "ML_DSA_SHAKE_256",
+        "ED25519_SHA_512",
+        "ED25519_PH_SHA_512"
       ]
     },
     "SigningAlgorithmSpecList":{
@@ -2934,7 +2938,7 @@
       "type":"string",
       "max":64,
       "min":20,
-      "pattern":"^com\\.amazonaws\\.vpce\\.([a-z]+-){2,3}\\d+\\.vpce-svc-[0-9a-z]+$"
+      "pattern":"^(com|eu)\\.amazonaws\\.vpce\\.([a-z]+-){2,3}\\d+\\.vpce-svc-[0-9a-z]+$"
     },
     "XksProxyVpcEndpointServiceNotFoundException":{
       "type":"structure",

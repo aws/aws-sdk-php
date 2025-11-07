@@ -44,6 +44,7 @@
     "GetApplication": "<p>Retrieves the configuration and status of an existing OpenSearch application.</p>",
     "GetCompatibleVersions": "<p>Returns a map of OpenSearch or Elasticsearch versions and the versions you can upgrade them to.</p>",
     "GetDataSource": "<p>Retrieves information about a direct query data source.</p>",
+    "GetDefaultApplicationSetting": "<p>Gets the ARN of the current default application.</p> <p> If the default application isn't set, the operation returns a resource not found error.</p>",
     "GetDirectQueryDataSource": "<p> Returns detailed configuration information for a specific direct query data source in Amazon OpenSearch Service. </p>",
     "GetDomainMaintenanceStatus": "<p>The status of the maintenance action.</p>",
     "GetPackageVersionHistory": "<p>Returns a list of Amazon OpenSearch Service package versions, along with their creation time, commit message, and plugin properties (if the package is a zip plugin package). For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
@@ -64,6 +65,7 @@
     "ListVpcEndpoints": "<p>Retrieves all Amazon OpenSearch Service-managed VPC endpoints in the current Amazon Web Services account and Region.</p>",
     "ListVpcEndpointsForDomain": "<p>Retrieves all Amazon OpenSearch Service-managed VPC endpoints associated with a particular domain.</p>",
     "PurchaseReservedInstanceOffering": "<p>Allows you to purchase Amazon OpenSearch Service Reserved Instances.</p>",
+    "PutDefaultApplicationSetting": "<p>Sets the default application to the application with the specified ARN.</p> <p> To remove the default application, use the <code>GetDefaultApplicationSetting</code> operation to get the current default and then call the <code>PutDefaultApplicationSetting</code> with the current applications ARN and the <code>setAsDefault</code> parameter set to <code>false</code>.</p>",
     "RejectInboundConnection": "<p>Allows the remote Amazon OpenSearch Service domain owner to reject an inbound cross-cluster connection request.</p>",
     "RemoveTags": "<p>Removes the specified set of tags from an Amazon OpenSearch Service domain, data source, or application. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains.html#managedomains-awsresorcetagging\"> Tagging Amazon OpenSearch Service resources</a>.</p>",
     "RevokeVpcEndpointAccess": "<p>Revokes access to an Amazon OpenSearch Service domain that was provided through an interface VPC endpoint.</p>",
@@ -111,11 +113,14 @@
         "DomainEndpointOptions$CustomEndpointCertificateArn": "<p>The ARN for your security certificate, managed in Amazon Web Services Certificate Manager (ACM).</p>",
         "DomainStatus$ARN": "<p>The Amazon Resource Name (ARN) of the domain. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html\">IAM identifiers </a> in the <i>AWS Identity and Access Management User Guide</i>.</p>",
         "GetApplicationResponse$arn": null,
+        "GetDefaultApplicationSettingResponse$applicationArn": null,
         "IamIdentityCenterOptions$iamIdentityCenterInstanceArn": null,
         "IamIdentityCenterOptions$iamIdentityCenterApplicationArn": null,
         "IamIdentityCenterOptionsInput$iamIdentityCenterInstanceArn": null,
         "ListTagsRequest$ARN": "<p>Amazon Resource Name (ARN) for the domain, data source, or application to view tags for.</p>",
         "MasterUserOptions$MasterUserARN": "<p>Amazon Resource Name (ARN) for the master user. Only specify if <code>InternalUserDatabaseEnabled</code> is <code>false</code>.</p>",
+        "PutDefaultApplicationSettingRequest$applicationArn": null,
+        "PutDefaultApplicationSettingResponse$applicationArn": null,
         "RemoveTagsRequest$ARN": "<p>The Amazon Resource Name (ARN) of the domain, data source, or application from which you want to delete the specified tags.</p>",
         "UpdateApplicationResponse$arn": null
       }
@@ -501,8 +506,8 @@
         "DomainStatus$UpgradeProcessing": "<p>The status of a domain version upgrade to a new version of OpenSearch or Elasticsearch. True if OpenSearch Service is in the process of a version upgrade. False if the configuration is active.</p>",
         "EBSOptions$EBSEnabled": "<p>Indicates whether EBS volumes are attached to data nodes in an OpenSearch Service domain.</p>",
         "EncryptionAtRestOptions$Enabled": "<p>True to enable encryption at rest.</p>",
-        "IAMFederationOptionsInput$Enabled": "<p>True to enable IAM federation authentication for a domain.</p>",
-        "IAMFederationOptionsOutput$Enabled": "<p>True if IAM federation is enabled.</p>",
+        "IAMFederationOptionsInput$Enabled": "<p>Specifies whether IAM identity federation is enabled for the OpenSearch domain.</p>",
+        "IAMFederationOptionsOutput$Enabled": "<p>Indicates whether IAM identity federation is currently enabled for the domain.</p>",
         "IamIdentityCenterOptions$enabled": "<p>Indicates whether IAM Identity Center is enabled for the OpenSearch application.</p>",
         "IamIdentityCenterOptionsInput$enabled": "<p>Specifies whether IAM Identity Center is enabled or disabled.</p>",
         "IdentityCenterOptions$EnabledAPIAccess": "<p>Indicates whether IAM Identity Center is enabled for the application.</p>",
@@ -524,6 +529,7 @@
         "PackageConfiguration$RequiresRestartForConfigurationUpdate": "<p>This indicates whether a B/G deployment is required for updating the configuration that the plugin is prerequisite for.</p>",
         "PackageEncryptionOptions$EncryptionEnabled": "<p>Whether encryption is enabled for the package.</p>",
         "PackageVendingOptions$VendingEnabled": "<p>Indicates whether the package vending feature is enabled, allowing the package to be used by other users.</p>",
+        "PutDefaultApplicationSettingRequest$setAsDefault": "<p>Set to true to set the specified ARN as the default application. Set to false to clear the default application.</p>",
         "S3VectorsEngine$Enabled": "<p>Enables S3 vectors engine features.</p>",
         "SAMLOptionsInput$Enabled": "<p>True to enable SAML authentication for a domain.</p>",
         "SAMLOptionsOutput$Enabled": "<p>True if SAML is enabled.</p>",
@@ -1576,6 +1582,14 @@
       "base": "<p>The result of a <code>GetDataSource</code> operation.</p>",
       "refs": {}
     },
+    "GetDefaultApplicationSettingRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDefaultApplicationSettingResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetDirectQueryDataSourceRequest": {
       "base": null,
       "refs": {}
@@ -1623,29 +1637,29 @@
       }
     },
     "IAMFederationOptionsInput": {
-      "base": "<p>The IAM federation authentication configuration for an Amazon OpenSearch Service domain.</p>",
+      "base": "<p>Input parameters for configuring IAM identity federation settings.</p>",
       "refs": {
-        "AdvancedSecurityOptionsInput$IAMFederationOptions": "<p>Container for information about the IAM federation configuration for an OpenSearch UI application.</p>"
+        "AdvancedSecurityOptionsInput$IAMFederationOptions": "<p>Input configuration for IAM identity federation within advanced security options.</p>"
       }
     },
     "IAMFederationOptionsOutput": {
-      "base": "<p>Describes the IAM federation options configured for the domain.</p>",
+      "base": "<p>Output parameters showing the current IAM identity federation configuration.</p>",
       "refs": {
-        "AdvancedSecurityOptions$IAMFederationOptions": "<p>Container for information about the IAM federation configuration for an OpenSearch UI application.</p>"
+        "AdvancedSecurityOptions$IAMFederationOptions": "<p>Configuration options for IAM identity federation in advanced security settings.</p>"
       }
     },
     "IAMFederationRolesKey": {
       "base": null,
       "refs": {
-        "IAMFederationOptionsInput$RolesKey": "<p>Element of the IAM federation assertion to use for backend roles. Default is <code>roles</code>.</p>",
-        "IAMFederationOptionsOutput$RolesKey": "<p>The key used for matching the IAM federation roles attribute.</p>"
+        "IAMFederationOptionsInput$RolesKey": "<p>The key in the SAML assertion that contains the user's role information.</p>",
+        "IAMFederationOptionsOutput$RolesKey": "<p>The configured key in the SAML assertion for the user's role information.</p>"
       }
     },
     "IAMFederationSubjectKey": {
       "base": null,
       "refs": {
-        "IAMFederationOptionsInput$SubjectKey": "<p>Element of the IAM federation assertion to use for the user name. Default is <code>sub</code>.</p>",
-        "IAMFederationOptionsOutput$SubjectKey": "<p>The key used for matching the IAM federation subject attribute.</p>"
+        "IAMFederationOptionsInput$SubjectKey": "<p>The key in the SAML assertion that contains the user's subject identifier.</p>",
+        "IAMFederationOptionsOutput$SubjectKey": "<p>The configured key in the SAML assertion for the user's subject identifier.</p>"
       }
     },
     "IPAddressType": {
@@ -2674,6 +2688,14 @@
     },
     "PurchaseReservedInstanceOfferingResponse": {
       "base": "<p>Represents the output of a <code>PurchaseReservedInstanceOffering</code> operation.</p>",
+      "refs": {}
+    },
+    "PutDefaultApplicationSettingRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutDefaultApplicationSettingResponse": {
+      "base": null,
       "refs": {}
     },
     "RecurringCharge": {

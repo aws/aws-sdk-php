@@ -3054,6 +3054,7 @@
         "ModifyIpamResourceCidrRequest$Monitored": "<p>Determines if the resource is monitored by IPAM. If a resource is monitored, the resource is discovered by IPAM and you can view details about the resource’s CIDR.</p>",
         "ModifyIpamResourceDiscoveryRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyIpamScopeRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "ModifyIpamScopeRequest$RemoveExternalAuthorityConfiguration": "<p>Remove the external authority configuration. <code>true</code> to remove.</p>",
         "ModifyLaunchTemplateRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyLocalGatewayRouteRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyManagedPrefixListRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -10066,7 +10067,7 @@
     "DnsNameState": {
       "base": null,
       "refs": {
-        "PrivateDnsNameConfiguration$State": "<p>The verification state of the VPC endpoint service.</p> <p>&gt;Consumers of the endpoint service can use the private name only when the state is <code>verified</code>.</p>",
+        "PrivateDnsNameConfiguration$State": "<p>The verification state of the VPC endpoint service.</p> <p>Consumers of the endpoint service can use the private name only when the state is <code>verified</code>.</p>",
         "ServiceDetail$PrivateDnsNameVerificationState": "<p>The verification state of the VPC endpoint service.</p> <p>Consumers of the endpoint service cannot use the private name when the state is not <code>verified</code>.</p>"
       }
     },
@@ -10991,6 +10992,13 @@
       "base": null,
       "refs": {
         "CancelExportTaskRequest$ExportTaskId": "<p>The ID of the export task. This is the ID returned by the <code>CreateInstanceExportTask</code> and <code>ExportImage</code> operations.</p>"
+      }
+    },
+    "ExternalAuthorityConfiguration": {
+      "base": "<p>The configuration that links an Amazon VPC IPAM scope to an external authority system. It specifies the type of external system and the external resource identifier that identifies your account or instance in that system.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/integrate-infoblox-ipam.html\">Integrate VPC IPAM with Infoblox infrastructure</a> in the <i>Amazon VPC IPAM User Guide</i>..</p>",
+      "refs": {
+        "CreateIpamScopeRequest$ExternalAuthorityConfiguration": "<p>The configuration that links an Amazon VPC IPAM scope to an external authority system. It specifies the type of external system and the external resource identifier that identifies your account or instance in that system.</p> <p>In IPAM, an external authority is a third-party IP address management system that provides CIDR blocks when you provision address space for top-level IPAM pools. This allows you to use your existing IP management system to control which address ranges are allocated to Amazon Web Services while using Amazon VPC IPAM to manage subnets within those ranges.</p>",
+        "ModifyIpamScopeRequest$ExternalAuthorityConfiguration": "<p>The configuration that links an Amazon VPC IPAM scope to an external authority system. It specifies the type of external system and the external resource identifier that identifies your account or instance in that system.</p> <p>In IPAM, an external authority is a third-party IP address management system that provides CIDR blocks when you provision address space for top-level IPAM pools. This allows you to use your existing IP management system to control which address ranges are allocated to Amazon Web Services while using Amazon VPC IPAM to manage subnets within those ranges.</p>"
       }
     },
     "FailedCapacityReservationFleetCancellationResult": {
@@ -15605,6 +15613,19 @@
         "ModifyIpamScopeResult$IpamScope": "<p>The results of the modification.</p>"
       }
     },
+    "IpamScopeExternalAuthorityConfiguration": {
+      "base": "<p>The configuration that links an Amazon VPC IPAM scope to an external authority system. It specifies the type of external system and the external resource identifier that identifies your account or instance in that system.</p> <p>In IPAM, an external authority is a third-party IP address management system that provides CIDR blocks when you provision address space for top-level IPAM pools. This allows you to use your existing IP management system to control which address ranges are allocated to Amazon Web Services while using Amazon VPC IPAM to manage subnets within those ranges.</p>",
+      "refs": {
+        "IpamScope$ExternalAuthorityConfiguration": "<p>The external authority configuration for this IPAM scope, if configured.</p> <p>The configuration that links an Amazon VPC IPAM scope to an external authority system. It specifies the type of external system and the external resource identifier that identifies your account or instance in that system.</p> <p>In IPAM, an external authority is a third-party IP address management system that provides CIDR blocks when you provision address space for top-level IPAM pools. This allows you to use your existing IP management system to control which address ranges are allocated to Amazon Web Services while using Amazon VPC IPAM to manage subnets within those ranges.</p>"
+      }
+    },
+    "IpamScopeExternalAuthorityType": {
+      "base": null,
+      "refs": {
+        "ExternalAuthorityConfiguration$Type": "<p>The type of external authority.</p>",
+        "IpamScopeExternalAuthorityConfiguration$Type": "<p>The type of external authority managing this scope. Currently supports <code>Infoblox</code> for integration with Infoblox Universal DDI.</p>"
+      }
+    },
     "IpamScopeId": {
       "base": null,
       "refs": {
@@ -19977,6 +19998,13 @@
         "Instance$PrivateDnsNameOptions": "<p>The options for the instance hostname.</p>"
       }
     },
+    "PrivateDnsSpecifiedDomainSet": {
+      "base": null,
+      "refs": {
+        "DnsOptions$PrivateDnsSpecifiedDomains": "<p> Indicates which of the private domains to create private hosted zones for and associate with the specified VPC. Only supported when private DNS is enabled and the private DNS preference is <code>VERIFIED_DOMAINS_AND_SPECIFIED_DOMAINS</code> or <code>SPECIFIED_DOMAINS_ONLY</code>. </p>",
+        "DnsOptionsSpecification$PrivateDnsSpecifiedDomains": "<p> Indicates which of the private domains to create private hosted zones for and associate with the specified VPC. Only supported when private DNS is enabled and the private DNS preference is verified-domains-and-specified-domains or specified-domains-only. </p>"
+      }
+    },
     "PrivateIpAddressConfigSet": {
       "base": null,
       "refs": {
@@ -23836,6 +23864,8 @@
         "DiskImageVolumeDescription$Id": "<p>The volume identifier.</p>",
         "DnsEntry$DnsName": "<p>The DNS name.</p>",
         "DnsEntry$HostedZoneId": "<p>The ID of the private hosted zone.</p>",
+        "DnsOptions$PrivateDnsPreference": "<p> The preference for which private domains have a private hosted zone created for and associated with the specified VPC. Only supported when private DNS is enabled and when the VPC endpoint type is ServiceNetwork or Resource. </p> <ul> <li> <p> <code>ALL_DOMAINS</code> - VPC Lattice provisions private hosted zones for all custom domain names.</p> </li> <li> <p> <code>VERIFIED_DOMAINS_ONLY</code> - VPC Lattice provisions a private hosted zone only if custom domain name has been verified by the provider.</p> </li> <li> <p> <code>VERIFIED_DOMAINS_AND_SPECIFIED_DOMAINS</code> - VPC Lattice provisions private hosted zones for all verified custom domain names and other domain names that the resource consumer specifies. The resource consumer specifies the domain names in the PrivateDnsSpecifiedDomains parameter.</p> </li> <li> <p> <code>SPECIFIED_DOMAINS_ONLY</code> - VPC Lattice provisions a private hosted zone for domain names specified by the resource consumer. The resource consumer specifies the domain names in the PrivateDnsSpecifiedDomains parameter.</p> </li> </ul>",
+        "DnsOptionsSpecification$PrivateDnsPreference": "<p> The preference for which private domains have a private hosted zone created for and associated with the specified VPC. Only supported when private DNS is enabled and when the VPC endpoint type is ServiceNetwork or Resource. </p> <ul> <li> <p> <code>ALL_DOMAINS</code> - VPC Lattice provisions private hosted zones for all custom domain names.</p> </li> <li> <p> <code>VERIFIED_DOMAINS_ONLY</code> - VPC Lattice provisions a private hosted zone only if custom domain name has been verified by the provider.</p> </li> <li> <p> <code>VERIFIED_DOMAINS_AND_SPECIFIED_DOMAINS</code> - VPC Lattice provisions private hosted zones for all verified custom domain names and other domain names that the resource consumer specifies. The resource consumer specifies the domain names in the PrivateDnsSpecifiedDomains parameter.</p> </li> <li> <p> <code>SPECIFIED_DOMAINS_ONLY</code> - VPC Lattice provisions a private hosted zone for domain names specified by the resource consumer. The resource consumer specifies the domain names in the PrivateDnsSpecifiedDomains parameter.</p> </li> </ul>",
         "EbsBlockDevice$KmsKeyId": "<p>Identifier (key ID, key alias, key ARN, or alias ARN) of the customer managed KMS key to use for EBS encryption.</p> <p>This parameter is only supported on <code>BlockDeviceMapping</code> objects called by <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html\">RunInstances</a>, <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet.html\">RequestSpotFleet</a>, and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html\">RequestSpotInstances</a>.</p>",
         "EbsBlockDevice$OutpostArn": "<p>The ARN of the Outpost on which the snapshot is stored.</p> <p>This parameter is not supported when using <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html\">CreateImage</a>.</p>",
         "EbsBlockDevice$AvailabilityZone": "<p>The Availability Zone where the EBS volume will be created (for example, <code>us-east-1a</code>).</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> can be specified, but not both. If neither is specified, Amazon EC2 automatically selects an Availability Zone within the Region.</p> <p>This parameter is not supported when using <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFleet.html\">CreateFleet</a>, <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html\">CreateImage</a>, <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeImages.html\">DescribeImages</a>, <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet.html\">RequestSpotFleet</a>, <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html\">RequestSpotInstances</a>, and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html\">RunInstances</a>.</p>",
@@ -23924,6 +23954,7 @@
         "ExportVerifiedAccessInstanceClientConfigurationResult$Version": "<p>The version.</p>",
         "ExportVerifiedAccessInstanceClientConfigurationResult$VerifiedAccessInstanceId": "<p>The ID of the Verified Access instance.</p>",
         "ExportVerifiedAccessInstanceClientConfigurationResult$Region": "<p>The Region.</p>",
+        "ExternalAuthorityConfiguration$ExternalResourceIdentifier": "<p>The identifier for the external resource managing this scope. For Infoblox integrations, this is the Infoblox resource identifier in the format <code>&lt;version&gt;.identity.account.&lt;entity_realm&gt;.&lt;entity_id&gt;</code>.</p>",
         "FailedQueuedPurchaseDeletion$ReservedInstancesId": "<p>The ID of the Reserved Instance.</p>",
         "FastLaunchLaunchTemplateSpecificationRequest$LaunchTemplateName": "<p>Specify the name of the launch template that the AMI should use for Windows fast launch.</p>",
         "FastLaunchLaunchTemplateSpecificationRequest$Version": "<p>Specify the version of the launch template that the AMI should use for Windows fast launch.</p>",
@@ -24367,6 +24398,7 @@
         "IpamScope$OwnerId": "<p>The Amazon Web Services account ID of the owner of the scope.</p>",
         "IpamScope$IpamRegion": "<p>The Amazon Web Services Region of the IPAM scope.</p>",
         "IpamScope$Description": "<p>The description of the scope.</p>",
+        "IpamScopeExternalAuthorityConfiguration$ExternalResourceIdentifier": "<p>The identifier for the external resource managing this scope. For Infoblox integrations, this is the Infoblox resource identifier in the format <code>&lt;version&gt;.identity.account.&lt;entity_realm&gt;.&lt;entity_id&gt;</code>.</p>",
         "Ipv4PrefixSpecification$Ipv4Prefix": "<p>The IPv4 prefix. For information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-prefix-eni.html\"> Assigning prefixes to network interfaces</a> in the <i>Amazon EC2 User Guide</i>.</p>",
         "Ipv4PrefixSpecificationRequest$Ipv4Prefix": "<p>The IPv4 prefix. For information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-prefix-eni.html\"> Assigning prefixes to network interfaces</a> in the <i>Amazon EC2 User Guide</i>.</p>",
         "Ipv4PrefixSpecificationResponse$Ipv4Prefix": "<p>The IPv4 delegated prefixes assigned to the network interface.</p>",
@@ -24709,6 +24741,7 @@
         "PrivateDnsNameConfiguration$Type": "<p>The endpoint service verification type, for example TXT.</p>",
         "PrivateDnsNameConfiguration$Value": "<p>The value the service provider adds to the private DNS name domain record before verification.</p>",
         "PrivateDnsNameConfiguration$Name": "<p>The name of the record subdomain the service provider needs to create. The service provider adds the <code>value</code> text to the <code>name</code>.</p>",
+        "PrivateDnsSpecifiedDomainSet$member": null,
         "PrivateIpAddressSpecification$PrivateIpAddress": "<p>The private IPv4 address.</p>",
         "PrivateIpAddressStringList$member": null,
         "ProductCode$ProductCodeId": "<p>The product code.</p>",

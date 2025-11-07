@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Removes `QLDB`, `QLDBSession`, `Robomaker`, `LookoutMetrics`, `LookoutVision`, `IoTFleetHub` and `Apptest` services, which have been deprecated.
+* `Aws\KMS` - Added support for new ECC_NIST_EDWARDS25519 AWS KMS key spec
+* `Aws\ControlTower` - Added Parent Identifier support to ListEnabledControls and GetEnabledControl API. Implemented RemediationType support for Landing Zone operations: CreateLandingZone, UpdateLandingZone and GetLandingZone APIs
+* `Aws\VPCLattice` - Amazon VPC Lattice now supports custom domain name for resource configurations
+* `Aws\OpenSearchService` - This release introduces the Default Application feature, allowing users to set, change, or unset a preferred OpenSearch UI application on a per-region basis for a streamlined and consistent user experience.
+* `Aws\EC2` - Adds PrivateDnsPreference and PrivateDnsSpecifiedDomains to control private DNS resolution for resource and service network VPC endpoints and IpamScopeExternalAuthorityConfiguration to integrate Amazon VPC IPAM with a third-party IPAM service
+
 ## 3.359.7 - 2025-11-06
 
 * `Aws\Backup` - AWS Backup now supports customer-managed keys (CMK) for logically air-gapped vaults, enabling customers to maintain full control over their encryption key lifecycle. This feature helps organizations meet specific internal governance requirements or external regulatory compliance standards.

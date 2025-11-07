@@ -13225,7 +13225,8 @@
         "ClientToken":{
           "shape":"String",
           "idempotencyToken":true
-        }
+        },
+        "ExternalAuthorityConfiguration":{"shape":"ExternalAuthorityConfiguration"}
       }
     },
     "CreateIpamScopeResult":{
@@ -24484,6 +24485,14 @@
         "PrivateDnsOnlyForInboundResolverEndpoint":{
           "shape":"Boolean",
           "locationName":"privateDnsOnlyForInboundResolverEndpoint"
+        },
+        "PrivateDnsPreference":{
+          "shape":"String",
+          "locationName":"privateDnsPreference"
+        },
+        "PrivateDnsSpecifiedDomains":{
+          "shape":"PrivateDnsSpecifiedDomainSet",
+          "locationName":"privateDnsSpecifiedDomainSet"
         }
       }
     },
@@ -24491,7 +24500,12 @@
       "type":"structure",
       "members":{
         "DnsRecordIpType":{"shape":"DnsRecordIpType"},
-        "PrivateDnsOnlyForInboundResolverEndpoint":{"shape":"Boolean"}
+        "PrivateDnsOnlyForInboundResolverEndpoint":{"shape":"Boolean"},
+        "PrivateDnsPreference":{"shape":"String"},
+        "PrivateDnsSpecifiedDomains":{
+          "shape":"PrivateDnsSpecifiedDomainSet",
+          "locationName":"PrivateDnsSpecifiedDomain"
+        }
       }
     },
     "DnsRecordIpType":{
@@ -26396,6 +26410,13 @@
       }
     },
     "ExportVmTaskId":{"type":"string"},
+    "ExternalAuthorityConfiguration":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"IpamScopeExternalAuthorityType"},
+        "ExternalResourceIdentifier":{"shape":"String"}
+      }
+    },
     "FailedCapacityReservationFleetCancellationResult":{
       "type":"structure",
       "members":{
@@ -36011,8 +36032,29 @@
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "ExternalAuthorityConfiguration":{
+          "shape":"IpamScopeExternalAuthorityConfiguration",
+          "locationName":"externalAuthorityConfiguration"
         }
       }
+    },
+    "IpamScopeExternalAuthorityConfiguration":{
+      "type":"structure",
+      "members":{
+        "Type":{
+          "shape":"IpamScopeExternalAuthorityType",
+          "locationName":"type"
+        },
+        "ExternalResourceIdentifier":{
+          "shape":"String",
+          "locationName":"externalResourceIdentifier"
+        }
+      }
+    },
+    "IpamScopeExternalAuthorityType":{
+      "type":"string",
+      "enum":["infoblox"]
     },
     "IpamScopeId":{"type":"string"},
     "IpamScopeSet":{
@@ -39584,7 +39626,9 @@
       "members":{
         "DryRun":{"shape":"Boolean"},
         "IpamScopeId":{"shape":"IpamScopeId"},
-        "Description":{"shape":"String"}
+        "Description":{"shape":"String"},
+        "ExternalAuthorityConfiguration":{"shape":"ExternalAuthorityConfiguration"},
+        "RemoveExternalAuthorityConfiguration":{"shape":"Boolean"}
       }
     },
     "ModifyIpamScopeResult":{
@@ -43507,6 +43551,15 @@
           "locationName":"enableResourceNameDnsAAAARecord"
         }
       }
+    },
+    "PrivateDnsSpecifiedDomainSet":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"item"
+      },
+      "max":10,
+      "min":0
     },
     "PrivateIpAddressConfigSet":{
       "type":"list",
