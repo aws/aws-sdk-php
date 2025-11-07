@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.359.8 - 2025-11-07
 
 * `Aws\` - Removes `QLDB`, `QLDBSession`, `Robomaker`, `LookoutMetrics`, `LookoutVision`, `IoTFleetHub` and `Apptest` services, which have been deprecated.
 * `Aws\KMS` - Added support for new ECC_NIST_EDWARDS25519 AWS KMS key spec
