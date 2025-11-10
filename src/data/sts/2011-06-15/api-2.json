@@ -133,6 +133,22 @@
         "resultWrapper":"GetCallerIdentityResult"
       }
     },
+    "GetDelegatedAccessToken":{
+      "name":"GetDelegatedAccessToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDelegatedAccessTokenRequest"},
+      "output":{
+        "shape":"GetDelegatedAccessTokenResponse",
+        "resultWrapper":"GetDelegatedAccessTokenResult"
+      },
+      "errors":[
+        {"shape":"ExpiredTradeInTokenException"},
+        {"shape":"RegionDisabledException"}
+      ]
+    },
     "GetFederationToken":{
       "name":"GetFederationToken",
       "http":{
@@ -327,6 +343,18 @@
       },
       "exception":true
     },
+    "ExpiredTradeInTokenException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"expiredTradeInTokenExceptionMessage"}
+      },
+      "error":{
+        "code":"ExpiredTradeInTokenException",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "FederatedUser":{
       "type":"structure",
       "required":[
@@ -361,6 +389,21 @@
         "UserId":{"shape":"userIdType"},
         "Account":{"shape":"accountType"},
         "Arn":{"shape":"arnType"}
+      }
+    },
+    "GetDelegatedAccessTokenRequest":{
+      "type":"structure",
+      "required":["TradeInToken"],
+      "members":{
+        "TradeInToken":{"shape":"tradeInTokenType"}
+      }
+    },
+    "GetDelegatedAccessTokenResponse":{
+      "type":"structure",
+      "members":{
+        "Credentials":{"shape":"Credentials"},
+        "PackedPolicySize":{"shape":"nonNegativeIntegerType"},
+        "AssumedPrincipal":{"shape":"arnType"}
       }
     },
     "GetFederationTokenRequest":{
@@ -486,7 +529,8 @@
     "ProvidedContextsListType":{
       "type":"list",
       "member":{"shape":"ProvidedContext"},
-      "max":5
+      "max":5,
+      "min":1
     },
     "RegionDisabledException":{
       "type":"structure",
@@ -576,6 +620,7 @@
       "min":1
     },
     "expiredIdentityTokenMessage":{"type":"string"},
+    "expiredTradeInTokenExceptionMessage":{"type":"string"},
     "externalIdType":{
       "type":"string",
       "max":1224,
@@ -661,6 +706,10 @@
       "pattern":"[\\d]*"
     },
     "tokenType":{"type":"string"},
+    "tradeInTokenType":{
+      "type":"string",
+      "sensitive":true
+    },
     "unrestrictedSessionPolicyDocumentType":{
       "type":"string",
       "min":1,

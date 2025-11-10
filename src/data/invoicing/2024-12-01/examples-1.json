@@ -67,6 +67,43 @@
         "title": "DeleteInvoiceUnit"
       }
     ],
+    "GetInvoicePDF": [
+      {
+        "input": {
+          "InvoiceId": "abc123"
+        },
+        "output": {
+          "InvoicePDF": {
+            "DocumentUrl": "https://abcd123.com?securityTokenForDoc",
+            "DocumentUrlExpirationDate": "2025-04-01T01:00:00.000Z",
+            "InvoiceId": "abc123",
+            "SupplementalDocuments": []
+          }
+        },
+        "id": "example-1",
+        "title": "GetInvoicePDF without supplemental documents"
+      },
+      {
+        "input": {
+          "InvoiceId": "abc123"
+        },
+        "output": {
+          "InvoicePDF": {
+            "DocumentUrl": "https://abcd123.com?securityTokenForDoc",
+            "DocumentUrlExpirationDate": "2025-04-01T01:00:00.000Z",
+            "InvoiceId": "abc123",
+            "SupplementalDocuments": [
+              {
+                "DocumentUrl": "https://abcd123.com?securityTokenForSupplementalDoc",
+                "DocumentUrlExpirationDate": "2025-04-01T01:00:00.000Z"
+              }
+            ]
+          }
+        },
+        "id": "example-2",
+        "title": "GetInvoicePDF with supplemental documents"
+      }
+    ],
     "GetInvoiceUnit": [
       {
         "input": {
@@ -611,8 +648,7 @@
     ],
     "ListInvoiceUnits": [
       {
-        "input": {
-        },
+        "input": {},
         "output": {
           "InvoiceUnits": [
             {
@@ -754,8 +790,7 @@
             }
           ]
         },
-        "output": {
-        },
+        "output": {},
         "id": "example-1",
         "title": "TagResource"
       }
@@ -768,8 +803,7 @@
             "TagKey"
           ]
         },
-        "output": {
-        },
+        "output": {},
         "id": "example-1",
         "title": "UntagResource"
       }

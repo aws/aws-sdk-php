@@ -51,6 +51,7 @@
     "UpdateClusterConfiguration" : "<p>Updates the cluster with the configuration that is specified in the request body.</p>",
     "UpdateClusterKafkaVersion" : "<p>Updates the Apache Kafka version for the cluster.</p>",
     "UpdateMonitoring" : "<p>Updates the monitoring settings for the cluster. You can use this operation to specify which Apache Kafka metrics you want Amazon MSK to send to Amazon CloudWatch. You can also specify settings for open monitoring with Prometheus.</p>",
+    "UpdateRebalancing" : "<p>Use this resource to update the intelligent rebalancing status of an Amazon MSK Provisioned cluster with Express brokers.</p>",
     "UpdateReplicationInfo" : "<p>Updates replication info of a replicator.</p>",
     "UpdateSecurity" : "<p>You can use this operation to update the encrypting and authentication settings for an existing cluster.</p>",
     "UpdateStorage" : "<p>Updates cluster broker volume size (or) sets cluster storage mode to TIERED.</p>"
@@ -101,6 +102,22 @@
         "Provisioned$BrokerNodeGroupInfo" : "<p>Information about the brokers.</p>",
         "CreateClusterRequest$BrokerNodeGroupInfo" : "<p>Information about the brokers.</p>",
         "ProvisionedRequest$BrokerNodeGroupInfo" : "<p>Information about the brokers.</p>"
+      }
+    },
+    "Rebalancing" : {
+      "base" : "<p>Includes all rebalancing-related information for the cluster.</p>",
+      "refs" : {
+        "ClusterInfo$Rebalancing" : "<p>Contains information about intelligent rebalancing for new MSK Provisioned clusters with Express brokers. By default, intelligent rebalancing status is ACTIVE.</p>",
+        "CreateClusterRequest$Rebalancing" : "<p>Specifies if intelligent rebalancing should be turned on for the new MSK Provisioned cluster with Express brokers. By default, intelligent rebalancing status is ACTIVE for all new clusters.</p>",
+        "MutableClusterInfo$Rebalancing" : "<p>Describes the intelligent rebalancing configuration of an MSK Provisioned cluster with Express brokers.</p>",
+        "Provisioned$Rebalancing" : "<p>Specifies whether or not intelligent rebalancing is turned on for a newly created MSK Provisioned cluster with Express brokers. Intelligent rebalancing performs automatic partition balancing operations when you scale your clusters up or down.  By default, intelligent rebalancing is ACTIVE for all new Express-based clusters.</p>",
+        "ProvisionedRequest$Rebalancing" : "<p>Specifies if intelligent rebalancing is turned on for your MSK Provisioned cluster with Express brokers. For all new Express-based clusters that you create, intelligent rebalancing is turned on by default.</p>"
+      }
+    },
+    "RebalancingStatus" : {
+      "base" : "<p>Describes the status of rebalancing of the cluster.</p>",
+      "refs" : {
+        "Rebalancing$RebalancingStatus" : "<p>Intelligent rebalancing status. The default intelligent rebalancing status is ACTIVE for all new Express-based clusters.</p>"
       }
     },
     "Provisioned" : {
@@ -944,6 +961,14 @@
       "base" : "<p>Response body for UpdateMonitoring.</p>",
       "refs" : { }
     },
+    "UpdateRebalancingRequest" : {
+      "base" : "<p>Request body for UpdateRebalancing.</p>",
+      "refs" : { }
+    },
+    "UpdateRebalancingResponse" : {
+      "base" : "<p>Response body for UpdateRebalancing.</p>",
+      "refs" : { }
+    },
     "UpdateReplicationInfoRequest" : {
       "base" : "<p>Parameters for updating replication information between source and target Kafka clusters of a replicator.</p>",
       "refs" : { }
@@ -1445,6 +1470,10 @@
         "UpdateMonitoringRequest$CurrentVersion" : "<p>The version of cluster to update from. A successful operation will then generate a new version.</p>",
         "UpdateMonitoringResponse$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
         "UpdateMonitoringResponse$ClusterOperationArn" : "<p>The Amazon Resource Name (ARN) of the cluster operation.</p>",
+        "UpdateRebalancingRequest$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
+        "UpdateRebalancingRequest$CurrentVersion" : "<p>The current version of the cluster.</p>",
+        "UpdateRebalancingResponse$ClusterArn" : "<p>The Amazon Resource Name (ARN) of the cluster whose intelligent rebalancing status you've updated.</p>",
+        "UpdateRebalancingResponse$ClusterOperationArn" : "<p>The Amazon Resource Name (ARN) of the cluster operation.</p>",
         "UpdateReplicationInfoRequest$CurrentVersion" : "<p>Current replicator version.</p>",
         "UpdateReplicationInfoRequest$SourceKafkaClusterArn" : "<p>The ARN of the source Kafka cluster.</p>",
         "UpdateReplicationInfoRequest$TargetKafkaClusterArn" : "<p>The ARN of the target Kafka cluster.</p>",

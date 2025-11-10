@@ -84,7 +84,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetClusterPolicy":{
       "name":"GetClusterPolicy",
@@ -101,7 +102,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetVpcEndpointServiceName":{
       "name":"GetVpcEndpointServiceName",
@@ -118,7 +120,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListClusters":{
       "name":"ListClusters",
@@ -135,7 +138,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -152,7 +156,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutClusterPolicy":{
       "name":"PutClusterPolicy",
@@ -344,7 +349,8 @@
         "creationTime":{"shape":"ClusterCreationTime"},
         "multiRegionProperties":{"shape":"MultiRegionProperties"},
         "encryptionDetails":{"shape":"EncryptionDetails"},
-        "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"}
+        "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
+        "endpoint":{"shape":"Endpoint"}
       }
     },
     "DeleteClusterInput":{
@@ -440,6 +446,10 @@
         "CUSTOMER_MANAGED_KMS_KEY"
       ]
     },
+    "Endpoint":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9.-]+"
+    },
     "GetClusterInput":{
       "type":"structure",
       "required":["identifier"],
@@ -468,7 +478,8 @@
         "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
         "multiRegionProperties":{"shape":"MultiRegionProperties"},
         "tags":{"shape":"TagMap"},
-        "encryptionDetails":{"shape":"EncryptionDetails"}
+        "encryptionDetails":{"shape":"EncryptionDetails"},
+        "endpoint":{"shape":"Endpoint"}
       }
     },
     "GetClusterPolicyInput":{

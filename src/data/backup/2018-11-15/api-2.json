@@ -2859,7 +2859,9 @@
         "ValidationStatus":{"shape":"RestoreValidationStatus"},
         "ValidationStatusMessage":{"shape":"string"},
         "DeletionStatus":{"shape":"RestoreDeletionStatus"},
-        "DeletionStatusMessage":{"shape":"string"}
+        "DeletionStatusMessage":{"shape":"string"},
+        "IsParent":{"shape":"boolean"},
+        "ParentJobId":{"shape":"string"}
       }
     },
     "DisassociateBackupVaultMpaApprovalTeamInput":{
@@ -4358,6 +4360,11 @@
           "shape":"ARN",
           "location":"querystring",
           "locationName":"restoreTestingPlanArn"
+        },
+        "ByParentJobId":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"parentJobId"
         }
       }
     },
@@ -4910,6 +4917,8 @@
         "CreatedResourceArn":{"shape":"ARN"},
         "ResourceType":{"shape":"ResourceType"},
         "RecoveryPointCreationDate":{"shape":"timestamp"},
+        "IsParent":{"shape":"boolean"},
+        "ParentJobId":{"shape":"string"},
         "CreatedBy":{"shape":"RestoreJobCreator"},
         "ValidationStatus":{"shape":"RestoreValidationStatus"},
         "ValidationStatusMessage":{"shape":"string"},

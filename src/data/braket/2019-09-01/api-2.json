@@ -105,7 +105,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetJob":{
       "name":"GetJob",
@@ -122,7 +123,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetQuantumTask":{
       "name":"GetQuantumTask",
@@ -139,7 +141,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -154,7 +157,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "SearchDevices":{
       "name":"SearchDevices",
@@ -170,7 +174,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "SearchJobs":{
       "name":"SearchJobs",
@@ -202,7 +207,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -454,7 +460,8 @@
         },
         "tags":{"shape":"TagsMap"},
         "jobToken":{"shape":"JobToken"},
-        "associations":{"shape":"CreateQuantumTaskRequestAssociationsList"}
+        "associations":{"shape":"CreateQuantumTaskRequestAssociationsList"},
+        "experimentalCapabilities":{"shape":"ExperimentalCapabilities"}
       }
     },
     "CreateQuantumTaskRequestAssociationsList":{
@@ -581,6 +588,20 @@
       "enum":[
         "QPU",
         "SIMULATOR"
+      ]
+    },
+    "ExperimentalCapabilities":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"ExperimentalCapabilitiesEnablementType"}
+      },
+      "union":true
+    },
+    "ExperimentalCapabilitiesEnablementType":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "NONE"
       ]
     },
     "GetDeviceRequest":{
@@ -722,7 +743,8 @@
         "queueInfo":{"shape":"QuantumTaskQueueInfo"},
         "associations":{"shape":"Associations"},
         "numSuccessfulShots":{"shape":"Long"},
-        "actionMetadata":{"shape":"ActionMetadata"}
+        "actionMetadata":{"shape":"ActionMetadata"},
+        "experimentalCapabilities":{"shape":"ExperimentalCapabilities"}
       }
     },
     "HybridJobAdditionalAttributeName":{

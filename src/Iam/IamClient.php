@@ -24,6 +24,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createAccessKeyAsync(array $args = [])
  * @method \Aws\Result createAccountAlias(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createAccountAliasAsync(array $args = [])
+ * @method \Aws\Result createDelegationRequest(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createDelegationRequestAsync(array $args = [])
  * @method \Aws\Result createGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createGroupAsync(array $args = [])
  * @method \Aws\Result createInstanceProfile(array $args = [])

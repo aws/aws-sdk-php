@@ -234,6 +234,19 @@
         "GetDeviceResponse$deviceType": "<p>The type of the device.</p>"
       }
     },
+    "ExperimentalCapabilities": {
+      "base": "<p>Enabled experimental capabilities for quantum hardware. Note that the use of these features may impact device capabilities and performance beyond its standard specifications.</p>",
+      "refs": {
+        "CreateQuantumTaskRequest$experimentalCapabilities": "<p>Enable experimental capabilities for the quantum task.</p>",
+        "GetQuantumTaskResponse$experimentalCapabilities": "<p>Enabled experimental capabilities for the quantum task, if any.</p>"
+      }
+    },
+    "ExperimentalCapabilitiesEnablementType": {
+      "base": null,
+      "refs": {
+        "ExperimentalCapabilities$enabled": "<p>Enabled experimental capabilities.</p>"
+      }
+    },
     "GetDeviceRequest": {
       "base": null,
       "refs": {}
@@ -456,8 +469,8 @@
     "Long": {
       "base": null,
       "refs": {
-        "ActionMetadata$programCount": "<p>The number of programs in a program set. This is only available for a Program Set.</p>",
-        "ActionMetadata$executableCount": "<p>The number of executables in a program set. This is only available for a Program Set.</p>",
+        "ActionMetadata$programCount": "<p>The number of programs in a program set. This is only available for a program set.</p>",
+        "ActionMetadata$executableCount": "<p>The number of executables in a program set. This is only available for a program set.</p>",
         "GetQuantumTaskResponse$shots": "<p>The number of shots used in the quantum task.</p>",
         "GetQuantumTaskResponse$numSuccessfulShots": "<p>The number of successful shots for the quantum task. This is available after a successfully completed quantum task.</p>",
         "ProgramSetValidationFailure$programIndex": "<p>The index of the program within the program set that failed validation.</p>",

@@ -5,6 +5,7 @@
     "BatchGetInvoiceProfile": "<p>This gets the invoice profile associated with a set of accounts. The accounts must be linked accounts under the requester management account organization.</p>",
     "CreateInvoiceUnit": "<p>This creates a new invoice unit with the provided definition.</p>",
     "DeleteInvoiceUnit": "<p>This deletes an invoice unit with the provided invoice unit ARN. </p>",
+    "GetInvoicePDF": "<p>Returns a URL to download the invoice document and supplemental documents associated with an invoice. The URLs are pre-signed and have expiration time. For special cases like Brazil, where Amazon Web Services generated invoice identifiers and government provided identifiers do not match, use the Amazon Web Services generated invoice identifier when making API requests. To grant IAM permission to use this operation, the caller needs the <code>invoicing:GetInvoicePDF</code> policy action.</p>",
     "GetInvoiceUnit": "<p>This retrieves the invoice unit definition.</p>",
     "ListInvoiceSummaries": "<p>Retrieves your invoice details programmatically, without line item details.</p>",
     "ListInvoiceUnits": "<p>This fetches a list of all invoice unit definitions for a given account, as of the provided <code>AsOf</code> date.</p>",
@@ -16,8 +17,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You don't have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountIdList": {
       "base": null,
@@ -106,13 +106,11 @@
     },
     "BatchGetInvoiceProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetInvoiceProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BillingPeriod": {
       "base": "<p> The billing period for which you want to retrieve invoice-related documents. </p>",
@@ -123,13 +121,11 @@
     },
     "CreateInvoiceUnitRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateInvoiceUnitResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CurrencyCode": {
       "base": null,
@@ -151,13 +147,11 @@
     },
     "DeleteInvoiceUnitRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInvoiceUnitResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescriptionString": {
       "base": null,
@@ -216,15 +210,21 @@
         "ListInvoiceUnitsRequest$Filters": "<p> An optional input to the list API. If multiple filters are specified, the returned list will be a configuration that match all of the provided filters. Supported filter types are <code>InvoiceReceivers</code>, <code>Names</code>, and <code>Accounts</code>. </p>"
       }
     },
+    "GetInvoicePDFRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetInvoicePDFResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetInvoiceUnitRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInvoiceUnitResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Integer": {
       "base": null,
@@ -234,8 +234,7 @@
     },
     "InternalServerException": {
       "base": "<p>The processing request failed because of an unknown error, exception, or failure. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvoiceCurrencyAmount": {
       "base": "<p> The amount charged after taxes, in the preferred currency. </p>",
@@ -243,6 +242,12 @@
         "InvoiceSummary$BaseCurrencyAmount": "<p> The summary with the product and service currency. </p>",
         "InvoiceSummary$TaxCurrencyAmount": "<p> The summary with the tax currency. </p>",
         "InvoiceSummary$PaymentCurrencyAmount": "<p> The summary with the customer configured currency. </p>"
+      }
+    },
+    "InvoicePDF": {
+      "base": "<p> Invoice document data. </p>",
+      "refs": {
+        "GetInvoicePDFResponse$InvoicePDF": "<p> The invoice document and supplemental documents associated with the invoice. </p>"
       }
     },
     "InvoiceProfile": {
@@ -348,8 +353,7 @@
     },
     "ListInvoiceSummariesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInvoiceSummariesResourceType": {
       "base": null,
@@ -359,28 +363,23 @@
     },
     "ListInvoiceSummariesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInvoiceUnitsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInvoiceUnitsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxResultsInteger": {
       "base": null,
@@ -417,8 +416,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The resource could not be found. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceTag": {
       "base": "<p>The tag structure that contains a tag key and value. </p>",
@@ -462,24 +460,37 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The request was rejected because it attempted to create resources beyond the current Amazon Web Services account limits. The error message describes the limit exceeded. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StringWithoutNewLine": {
       "base": null,
       "refs": {
-        "InvoiceSummariesSelector$Value": "<p>The value of the query identifier.</p>"
+        "GetInvoicePDFRequest$InvoiceId": "<p> Your unique invoice ID. </p>",
+        "InvoicePDF$InvoiceId": "<p> Your unique invoice ID. </p>",
+        "InvoicePDF$DocumentUrl": "<p>The pre-signed URL to download the invoice document. </p>",
+        "InvoiceSummariesSelector$Value": "<p>The value of the query identifier.</p>",
+        "SupplementalDocument$DocumentUrl": "<p>The pre-signed URL to download invoice supplemental document.</p>"
+      }
+    },
+    "SupplementalDocument": {
+      "base": "<p>Supplemental document associated with the invoice.</p>",
+      "refs": {
+        "SupplementalDocuments$member": null
+      }
+    },
+    "SupplementalDocuments": {
+      "base": null,
+      "refs": {
+        "InvoicePDF$SupplementalDocuments": "<p>List of supplemental documents associated with the invoice.</p>"
       }
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagrisArn": {
       "base": null,
@@ -518,42 +529,38 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
       "refs": {
         "DateInterval$StartDate": "<p> The beginning of the time period that you want invoice-related documents for. The start date is inclusive. For example, if <code>start</code> is <code>2019-01-01</code>, AWS retrieves invoices starting at <code>2019-01-01</code> up to the end date. </p>",
         "DateInterval$EndDate": "<p> The end of the time period that you want invoice-related documents for. The end date is exclusive. For example, if <code>end</code> is <code>2019-01-10</code>, Amazon Web Services retrieves invoice-related documents from the start date up to, but not including, <code>2018-01-10</code>. </p>",
+        "InvoicePDF$DocumentUrlExpirationDate": "<p>The pre-signed URL expiration date of the invoice document.</p>",
         "InvoiceSummary$IssuedDate": "<p> The issued date of the invoice. </p>",
-        "InvoiceSummary$DueDate": "<p> The invoice due date. </p>"
+        "InvoiceSummary$DueDate": "<p> The invoice due date. </p>",
+        "SupplementalDocument$DocumentUrlExpirationDate": "<p>The pre-signed URL expiration date of invoice supplemental document.</p>"
       }
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateInvoiceUnitRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateInvoiceUnitResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p> The input fails to satisfy the constraints specified by an Amazon Web Services service. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p> The input fails to satisfy the constraints specified by an Amazon Web Services service. </p>",

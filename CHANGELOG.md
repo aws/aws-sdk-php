@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DSQL` - Cluster endpoint added to CreateCluster and GetCluster API responses
+* `Aws\Invoicing` - Added new invoicing get-invoice-pdf API Operation
+* `Aws\Braket` - Adds ExperimentalCapabilities field to CreateQuantumTask request and GetQuantumTask response objects. Enables use of experimental software capabilities when creating quantum tasks.
+* `Aws\Kafka` - Amazon MSK now supports intelligent rebalancing for MSK Express brokers.
+* `Aws\WAFV2` - AWS WAF now supports CLOUDWATCH_TELEMETRY_RULE_MANAGED as a LogScope option, enabling automated logging configuration through Amazon CloudWatch Logs for telemetry data collection and analysis.
+* `Aws\STS` - Added GetDelegatedAccessToken API, which is not available for general use at this time.
+* `Aws\IAM` - Added CreateDelegationRequest API, which is not available for general use at this time.
+* `Aws\EC2` - Amazon EC2 Fleet customers can now filter instance types based on encryption-in-transit support using Attribute-Based Instance Type Selection (ABIS), eliminating the manual effort of identifying and selecting compatible instance types for security-sensitive workloads.
+* `Aws\GuardDuty` - Include tags filed in CreatePublishingDestinationRequest and DescribePublishingDestinationResponse.
+* `Aws\Backup` - AWS Backup supports backups of Amazon EKS clusters, including Kubernetes cluster state and persistent storage attached to the EKS cluster via a persistent volume claim (EBS volumes, EFS file systems, and S3 buckets).
+* `Aws\ACMPCA` - Private Certificate Authority service now supports ML-DSA key algorithms.
+* `Aws\DataZone` - Remove trackingServerName from DataZone Connection MLflowProperties
+* `Aws\AppStream` - AWS Appstream support for IPv6
+* `Aws\VerifiedPermissions` - Amazon Verified Permissions / Features : Adds support for entity Cedar tags.
+
 ## 3.359.8 - 2025-11-07
 
 * `Aws\` - Removes `QLDB`, `QLDBSession`, `Robomaker`, `LookoutMetrics`, `LookoutVision`, `IoTFleetHub` and `Apptest` services, which have been deprecated.

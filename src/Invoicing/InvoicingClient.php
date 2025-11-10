@@ -11,6 +11,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createInvoiceUnitAsync(array $args = [])
  * @method \Aws\Result deleteInvoiceUnit(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteInvoiceUnitAsync(array $args = [])
+ * @method \Aws\Result getInvoicePDF(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getInvoicePDFAsync(array $args = [])
  * @method \Aws\Result getInvoiceUnit(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getInvoiceUnitAsync(array $args = [])
  * @method \Aws\Result listInvoiceSummaries(array $args = [])

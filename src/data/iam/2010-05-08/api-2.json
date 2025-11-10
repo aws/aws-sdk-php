@@ -151,6 +151,25 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "CreateDelegationRequest":{
+      "name":"CreateDelegationRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateDelegationRequestRequest"},
+      "output":{
+        "shape":"CreateDelegationRequestResponse",
+        "resultWrapper":"CreateDelegationRequestResult"
+      },
+      "errors":[
+        {"shape":"EntityAlreadyExistsException"},
+        {"shape":"ServiceFailureException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
     "CreateGroup":{
       "name":"CreateGroup",
       "http":{
@@ -2835,6 +2854,34 @@
         "AccountAlias":{"shape":"accountAliasType"}
       }
     },
+    "CreateDelegationRequestRequest":{
+      "type":"structure",
+      "required":[
+        "Description",
+        "Permissions",
+        "RequestorWorkflowId",
+        "NotificationChannel",
+        "SessionDuration"
+      ],
+      "members":{
+        "OwnerAccountId":{"shape":"accountIdType"},
+        "Description":{"shape":"delegationRequestDescriptionType"},
+        "Permissions":{"shape":"DelegationPermission"},
+        "RequestMessage":{"shape":"requestMessageType"},
+        "RequestorWorkflowId":{"shape":"requestorWorkflowIdType"},
+        "RedirectUrl":{"shape":"redirectUrlType"},
+        "NotificationChannel":{"shape":"notificationChannelType"},
+        "SessionDuration":{"shape":"sessionDurationType"},
+        "OnlySendByOwner":{"shape":"booleanType"}
+      }
+    },
+    "CreateDelegationRequestResponse":{
+      "type":"structure",
+      "members":{
+        "ConsoleDeepLink":{"shape":"consoleDeepLinkType"},
+        "DelegationRequestId":{"shape":"delegationRequestIdType"}
+      }
+    },
     "CreateGroupRequest":{
       "type":"structure",
       "required":["GroupName"],
@@ -3087,6 +3134,13 @@
       "members":{
         "UserName":{"shape":"existingUserNameType"},
         "SerialNumber":{"shape":"serialNumberType"}
+      }
+    },
+    "DelegationPermission":{
+      "type":"structure",
+      "members":{
+        "PolicyTemplateArn":{"shape":"arnType"},
+        "Parameters":{"shape":"policyParameterListType"}
       }
     },
     "DeleteAccessKeyRequest":{
@@ -5000,6 +5054,21 @@
       },
       "exception":true
     },
+    "PolicyParameter":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"policyParameterNameType"},
+        "Values":{"shape":"policyParameterValuesListType"},
+        "Type":{"shape":"PolicyParameterTypeEnum"}
+      }
+    },
+    "PolicyParameterTypeEnum":{
+      "type":"string",
+      "enum":[
+        "string",
+        "stringList"
+      ]
+    },
     "PolicyRole":{
       "type":"structure",
       "members":{
@@ -6115,6 +6184,10 @@
       "min":3,
       "pattern":"^[a-z0-9]([a-z0-9]|-(?!-)){1,61}[a-z0-9]$"
     },
+    "accountIdType":{
+      "type":"string",
+      "pattern":"\\d{12}"
+    },
     "allUsers":{
       "type":"boolean",
       "box":true
@@ -6186,6 +6259,11 @@
       "max":255,
       "min":1
     },
+    "consoleDeepLinkType":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
     "credentialAgeDays":{
       "type":"integer",
       "max":36600,
@@ -6201,6 +6279,17 @@
       "pattern":"[\\w+=,.@-]+"
     },
     "dateType":{"type":"timestamp"},
+    "delegationRequestDescriptionType":{
+      "type":"string",
+      "max":1000,
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*"
+    },
+    "delegationRequestIdType":{
+      "type":"string",
+      "max":128,
+      "min":16,
+      "pattern":"[\\w-]+"
+    },
     "deleteConflictMessage":{"type":"string"},
     "duplicateCertificateMessage":{"type":"string"},
     "duplicateSSHPublicKeyMessage":{"type":"string"},
@@ -6328,6 +6417,11 @@
       "min":6
     },
     "noSuchEntityMessage":{"type":"string"},
+    "notificationChannelType":{
+      "type":"string",
+      "max":400,
+      "min":2
+    },
     "openIdIdpCommunicationErrorExceptionMessage":{"type":"string"},
     "organizationsEntityPathType":{
       "type":"string",
@@ -6411,6 +6505,21 @@
         "GROUP"
       ]
     },
+    "policyParameterListType":{
+      "type":"list",
+      "member":{"shape":"PolicyParameter"},
+      "max":50
+    },
+    "policyParameterNameType":{
+      "type":"string",
+      "max":256,
+      "min":5
+    },
+    "policyParameterValueType":{"type":"string"},
+    "policyParameterValuesListType":{
+      "type":"list",
+      "member":{"shape":"policyParameterValueType"}
+    },
     "policyPathType":{
       "type":"string",
       "max":512,
@@ -6472,7 +6581,23 @@
       "min":1,
       "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+"
     },
+    "redirectUrlType":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^http(s?)://[a-zA-Z0-9._/-]*(\\?[a-zA-Z0-9._=&-]*)?(#[a-zA-Z0-9._/-]*)?$"
+    },
     "reportGenerationLimitExceededMessage":{"type":"string"},
+    "requestMessageType":{
+      "type":"string",
+      "max":200,
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*"
+    },
+    "requestorWorkflowIdType":{
+      "type":"string",
+      "max":400,
+      "min":5
+    },
     "responseMarkerType":{"type":"string"},
     "roleDescriptionType":{
       "type":"string",
@@ -6555,6 +6680,11 @@
       "max":200,
       "min":0,
       "pattern":"[\\w+=,.@-]*"
+    },
+    "sessionDurationType":{
+      "type":"integer",
+      "max":43200,
+      "min":3600
     },
     "sortKeyType":{
       "type":"string",

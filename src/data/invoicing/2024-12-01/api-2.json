@@ -29,7 +29,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "CreateInvoiceUnit":{
       "name":"CreateInvoiceUnit",
@@ -62,6 +63,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "GetInvoicePDF":{
+      "name":"GetInvoicePDF",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetInvoicePDFRequest"},
+      "output":{"shape":"GetInvoicePDFResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "GetInvoiceUnit":{
       "name":"GetInvoiceUnit",
       "http":{
@@ -76,7 +94,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListInvoiceSummaries":{
       "name":"ListInvoiceSummaries",
@@ -107,7 +126,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -123,7 +143,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -357,6 +378,19 @@
         "Accounts":{"shape":"AccountIdList"}
       }
     },
+    "GetInvoicePDFRequest":{
+      "type":"structure",
+      "required":["InvoiceId"],
+      "members":{
+        "InvoiceId":{"shape":"StringWithoutNewLine"}
+      }
+    },
+    "GetInvoicePDFResponse":{
+      "type":"structure",
+      "members":{
+        "InvoicePDF":{"shape":"InvoicePDF"}
+      }
+    },
     "GetInvoiceUnitRequest":{
       "type":"structure",
       "required":["InvoiceUnitArn"],
@@ -401,6 +435,15 @@
         "CurrencyCode":{"shape":"CurrencyCode"},
         "AmountBreakdown":{"shape":"AmountBreakdown"},
         "CurrencyExchangeDetails":{"shape":"CurrencyExchangeDetails"}
+      }
+    },
+    "InvoicePDF":{
+      "type":"structure",
+      "members":{
+        "InvoiceId":{"shape":"StringWithoutNewLine"},
+        "DocumentUrl":{"shape":"StringWithoutNewLine"},
+        "DocumentUrlExpirationDate":{"shape":"Timestamp"},
+        "SupplementalDocuments":{"shape":"SupplementalDocuments"}
       }
     },
     "InvoiceProfile":{
@@ -661,6 +704,17 @@
       "min":0,
       "pattern":".*"
     },
+    "SupplementalDocument":{
+      "type":"structure",
+      "members":{
+        "DocumentUrl":{"shape":"StringWithoutNewLine"},
+        "DocumentUrlExpirationDate":{"shape":"Timestamp"}
+      }
+    },
+    "SupplementalDocuments":{
+      "type":"list",
+      "member":{"shape":"SupplementalDocument"}
+    },
     "TagResourceRequest":{
       "type":"structure",
       "required":[
@@ -674,8 +728,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagrisArn":{
       "type":"string",
@@ -724,8 +777,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateInvoiceUnitRequest":{
       "type":"structure",

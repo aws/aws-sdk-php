@@ -11,6 +11,7 @@
     "ChangePassword": "<p>Changes the password of the IAM user who is calling this operation. This operation can be performed using the CLI, the Amazon Web Services API, or the <b>My Security Credentials</b> page in the Amazon Web Services Management Console. The Amazon Web Services account root user password is not affected by this operation.</p> <p>Use <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_UpdateLoginProfile.html\">UpdateLoginProfile</a> to use the CLI, the Amazon Web Services API, or the <b>Users</b> page in the IAM console to change the password for any IAM user. For more information about modifying passwords, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_ManagingLogins.html\">Managing passwords</a> in the <i>IAM User Guide</i>.</p>",
     "CreateAccessKey": "<p> Creates a new Amazon Web Services secret access key and corresponding Amazon Web Services access key ID for the specified user. The default status for new keys is <code>Active</code>.</p> <p>If you do not specify a user name, IAM determines the user name implicitly based on the Amazon Web Services access key ID signing the request. This operation works for access keys under the Amazon Web Services account. Consequently, you can use this operation to manage Amazon Web Services account root user credentials. This is true even if the Amazon Web Services account has no associated users.</p> <p> For information about quotas on the number of keys you can create, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-quotas.html\">IAM and STS quotas</a> in the <i>IAM User Guide</i>.</p> <important> <p>To ensure the security of your Amazon Web Services account, the secret access key is accessible only during key and user creation. You must save the key (for example, in a text file) if you want to be able to access it again. If a secret key is lost, you can delete the access keys for the associated user and then create new keys.</p> </important>",
     "CreateAccountAlias": "<p>Creates an alias for your Amazon Web Services account. For information about using an Amazon Web Services account alias, see <a href=\"https://docs.aws.amazon.com/signin/latest/userguide/CreateAccountAlias.html\">Creating, deleting, and listing an Amazon Web Services account alias</a> in the <i>Amazon Web Services Sign-In User Guide</i>.</p>",
+    "CreateDelegationRequest": "<p>This API is currently unavailable for general use.</p>",
     "CreateGroup": "<p>Creates a new group.</p> <p> For information about the number of groups you can create, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-quotas.html\">IAM and STS quotas</a> in the <i>IAM User Guide</i>.</p>",
     "CreateInstanceProfile": "<p> Creates a new instance profile. For information about instance profiles, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2.html\">Using roles for applications on Amazon EC2</a> in the <i>IAM User Guide</i>, and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html#ec2-instance-profile\">Instance profiles</a> in the <i>Amazon EC2 User Guide</i>.</p> <p> For information about the number of instance profiles you can create, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-quotas.html\">IAM object quotas</a> in the <i>IAM User Guide</i>.</p>",
     "CreateLoginProfile": "<p>Creates a password for the specified IAM user. A password allows an IAM user to access Amazon Web Services services through the Amazon Web Services Management Console.</p> <p>You can use the CLI, the Amazon Web Services API, or the <b>Users</b> page in the IAM console to create a password for any IAM user. Use <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_ChangePassword.html\">ChangePassword</a> to update your own existing password in the <b>My Security Credentials</b> page in the Amazon Web Services Management Console.</p> <p>For more information about managing passwords, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_ManagingLogins.html\">Managing passwords</a> in the <i>IAM User Guide</i>.</p>",
@@ -375,6 +376,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateDelegationRequestRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDelegationRequestResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateGroupRequest": {
       "base": null,
       "refs": {}
@@ -486,6 +495,12 @@
     "DeactivateMFADeviceRequest": {
       "base": null,
       "refs": {}
+    },
+    "DelegationPermission": {
+      "base": "<p/>",
+      "refs": {
+        "CreateDelegationRequestRequest$Permissions": "<p/>"
+      }
     },
     "DeleteAccessKeyRequest": {
       "base": null,
@@ -1449,6 +1464,18 @@
       "base": "<p>The request failed because Amazon Web Services service role policies can only be attached to the service-linked role for that service.</p>",
       "refs": {}
     },
+    "PolicyParameter": {
+      "base": "<p/>",
+      "refs": {
+        "policyParameterListType$member": null
+      }
+    },
+    "PolicyParameterTypeEnum": {
+      "base": null,
+      "refs": {
+        "PolicyParameter$Type": "<p/>"
+      }
+    },
     "PolicyRole": {
       "base": "<p>Contains information about a role that a managed policy is attached to.</p> <p>This data type is used as a response element in the <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListEntitiesForPolicy.html\">ListEntitiesForPolicy</a> operation. </p> <p>For more information about managed policies, refer to <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/policies-managed-vs-inline.html\">Managed policies and inline policies</a> in the <i>IAM User Guide</i>. </p>",
       "refs": {
@@ -2057,6 +2084,12 @@
         "accountAliasListType$member": null
       }
     },
+    "accountIdType": {
+      "base": null,
+      "refs": {
+        "CreateDelegationRequestRequest$OwnerAccountId": "<p/>"
+      }
+    },
     "allUsers": {
       "base": null,
       "refs": {
@@ -2078,6 +2111,7 @@
         "CreateRoleRequest$PermissionsBoundary": "<p>The ARN of the managed policy that is used to set the permissions boundary for the role.</p> <p>A permissions boundary policy defines the maximum permissions that identity-based policies can grant to an entity, but does not grant permissions. Permissions boundaries do not define the maximum permissions that a resource-based policy can grant to an entity. To learn more, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html\">Permissions boundaries for IAM entities</a> in the <i>IAM User Guide</i>.</p> <p>For more information about policy types, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#access_policy-types\">Policy types </a> in the <i>IAM User Guide</i>.</p>",
         "CreateSAMLProviderResponse$SAMLProviderArn": "<p>The Amazon Resource Name (ARN) of the new SAML provider resource in IAM.</p>",
         "CreateUserRequest$PermissionsBoundary": "<p>The ARN of the managed policy that is used to set the permissions boundary for the user.</p> <p>A permissions boundary policy defines the maximum permissions that identity-based policies can grant to an entity, but does not grant permissions. Permissions boundaries do not define the maximum permissions that a resource-based policy can grant to an entity. To learn more, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html\">Permissions boundaries for IAM entities</a> in the <i>IAM User Guide</i>.</p> <p>For more information about policy types, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#access_policy-types\">Policy types </a> in the <i>IAM User Guide</i>.</p>",
+        "DelegationPermission$PolicyTemplateArn": null,
         "DeleteOpenIDConnectProviderRequest$OpenIDConnectProviderArn": "<p>The Amazon Resource Name (ARN) of the IAM OpenID Connect provider resource object to delete. You can get a list of OpenID Connect provider resource ARNs by using the <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListOpenIDConnectProviders.html\">ListOpenIDConnectProviders</a> operation.</p>",
         "DeletePolicyRequest$PolicyArn": "<p>The Amazon Resource Name (ARN) of the IAM policy you want to delete.</p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "DeletePolicyVersionRequest$PolicyArn": "<p>The Amazon Resource Name (ARN) of the IAM policy from which you want to delete a version.</p> <p>For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i>.</p>",
@@ -2183,6 +2217,7 @@
     "booleanType": {
       "base": null,
       "refs": {
+        "CreateDelegationRequestRequest$OnlySendByOwner": "<p/>",
         "CreateLoginProfileRequest$PasswordResetRequired": "<p>Specifies whether the user is required to set a new password on next sign-in.</p>",
         "CreatePolicyVersionRequest$SetAsDefault": "<p>Specifies whether to set this version as the policy's default version.</p> <p>When this parameter is <code>true</code>, the new policy version becomes the operative version. That is, it becomes the version that is in effect for the IAM users, groups, and roles that the policy is attached to.</p> <p>For more information about managed policy versions, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/policies-managed-versions.html\">Versioning for managed policies</a> in the <i>IAM User Guide</i>.</p>",
         "GetAccountAuthorizationDetailsResponse$IsTruncated": "<p>A flag that indicates whether there are more items to return. If your results were truncated, you can make a subsequent pagination request using the <code>Marker</code> request parameter to retrieve more items. Note that IAM might return fewer than the <code>MaxItems</code> number of results even when there are more results available. We recommend that you check <code>IsTruncated</code> after every call to ensure that you receive all your results.</p>",
@@ -2288,6 +2323,12 @@
         "clientIDListType$member": null
       }
     },
+    "consoleDeepLinkType": {
+      "base": null,
+      "refs": {
+        "CreateDelegationRequestResponse$ConsoleDeepLink": "<p/>"
+      }
+    },
     "credentialAgeDays": {
       "base": null,
       "refs": {
@@ -2368,6 +2409,18 @@
         "User$PasswordLastUsed": "<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the user's password was last used to sign in to an Amazon Web Services website. For a list of Amazon Web Services websites that capture a user's last sign-in time, see the <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/credential-reports.html\">Credential reports</a> topic in the <i>IAM User Guide</i>. If a password is used more than once in a five-minute span, only the first use is returned in this field. If the field is null (no value), then it indicates that they never signed in with a password. This can be because:</p> <ul> <li> <p>The user never had a password.</p> </li> <li> <p>A password exists but has not been used since IAM started tracking this information on October 20, 2014.</p> </li> </ul> <p>A null value does not mean that the user <i>never</i> had a password. Also, if the user does not currently have a password but had one in the past, then this field contains the date and time the most recent password was used.</p> <p>This value is returned only in the <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetUser.html\">GetUser</a> and <a href=\"https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListUsers.html\">ListUsers</a> operations. </p>",
         "UserDetail$CreateDate": "<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the user was created.</p>",
         "VirtualMFADevice$EnableDate": "<p>The date and time on which the virtual MFA device was enabled.</p>"
+      }
+    },
+    "delegationRequestDescriptionType": {
+      "base": null,
+      "refs": {
+        "CreateDelegationRequestRequest$Description": "<p/>"
+      }
+    },
+    "delegationRequestIdType": {
+      "base": null,
+      "refs": {
+        "CreateDelegationRequestResponse$DelegationRequestId": "<p/>"
       }
     },
     "deleteConflictMessage": {
@@ -2748,6 +2801,12 @@
         "NoSuchEntityException$message": null
       }
     },
+    "notificationChannelType": {
+      "base": null,
+      "refs": {
+        "CreateDelegationRequestRequest$NotificationChannel": "<p/>"
+      }
+    },
     "openIdIdpCommunicationErrorExceptionMessage": {
       "base": null,
       "refs": {
@@ -2931,6 +2990,30 @@
         "PolicyGrantingServiceAccess$EntityType": "<p>The type of entity (user or role) that used the policy to access the service to which the inline policy is attached.</p> <p>This field is null for managed policies. For more information about these policy types, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html\">Managed policies and inline policies</a> in the <i>IAM User Guide</i>.</p>"
       }
     },
+    "policyParameterListType": {
+      "base": null,
+      "refs": {
+        "DelegationPermission$Parameters": "<p/>"
+      }
+    },
+    "policyParameterNameType": {
+      "base": null,
+      "refs": {
+        "PolicyParameter$Name": "<p/>"
+      }
+    },
+    "policyParameterValueType": {
+      "base": null,
+      "refs": {
+        "policyParameterValuesListType$member": null
+      }
+    },
+    "policyParameterValuesListType": {
+      "base": null,
+      "refs": {
+        "PolicyParameter$Values": "<p/>"
+      }
+    },
     "policyPathType": {
       "base": null,
       "refs": {
@@ -3011,10 +3094,28 @@
         "UploadSSHPublicKeyRequest$SSHPublicKeyBody": "<p>The SSH public key. The public key must be encoded in ssh-rsa format or PEM format. The minimum bit-length of the public key is 2048 bits. For example, you can generate a 2048-bit key, and the resulting PEM file is 1679 bytes long.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> used to validate this parameter is a string of characters consisting of the following:</p> <ul> <li> <p>Any printable ASCII character ranging from the space character (<code>\\u0020</code>) through the end of the ASCII character range</p> </li> <li> <p>The printable characters in the Basic Latin and Latin-1 Supplement character set (through <code>\\u00FF</code>)</p> </li> <li> <p>The special characters tab (<code>\\u0009</code>), line feed (<code>\\u000A</code>), and carriage return (<code>\\u000D</code>)</p> </li> </ul>"
       }
     },
+    "redirectUrlType": {
+      "base": null,
+      "refs": {
+        "CreateDelegationRequestRequest$RedirectUrl": "<p/>"
+      }
+    },
     "reportGenerationLimitExceededMessage": {
       "base": null,
       "refs": {
         "ReportGenerationLimitExceededException$message": null
+      }
+    },
+    "requestMessageType": {
+      "base": null,
+      "refs": {
+        "CreateDelegationRequestRequest$RequestMessage": "<p/>"
+      }
+    },
+    "requestorWorkflowIdType": {
+      "base": null,
+      "refs": {
+        "CreateDelegationRequestRequest$RequestorWorkflowId": "<p/>"
       }
     },
     "responseMarkerType": {
@@ -3235,6 +3336,12 @@
       "refs": {
         "ServiceSpecificCredential$ServiceUserName": "<p>The generated user name for the service-specific credential. This value is generated by combining the IAM user's name combined with the ID number of the Amazon Web Services account, as in <code>jane-at-123456789012</code>, for example. This value cannot be configured by the user.</p>",
         "ServiceSpecificCredentialMetadata$ServiceUserName": "<p>The generated user name for the service-specific credential.</p>"
+      }
+    },
+    "sessionDurationType": {
+      "base": null,
+      "refs": {
+        "CreateDelegationRequestRequest$SessionDuration": "<p/>"
       }
     },
     "sortKeyType": {

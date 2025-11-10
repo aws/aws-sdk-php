@@ -103,6 +103,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateConnectivityAsync(array $args = [])
  * @method \Aws\Result updateMonitoring(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateMonitoringAsync(array $args = [])
+ * @method \Aws\Result updateRebalancing(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateRebalancingAsync(array $args = [])
  * @method \Aws\Result updateReplicationInfo(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateReplicationInfoAsync(array $args = [])
  * @method \Aws\Result updateSecurity(array $args = [])
