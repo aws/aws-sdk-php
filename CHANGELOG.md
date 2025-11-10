@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.359.9 - 2025-11-10
 
 * `Aws\DSQL` - Cluster endpoint added to CreateCluster and GetCluster API responses
 * `Aws\Invoicing` - Added new invoicing get-invoice-pdf API Operation
