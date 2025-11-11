@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.359.10 - 2025-11-11
 
 * `Aws\RTBFabric` - Added LogSettings and LinkAttribute fields to external links
 * `Aws\SecurityIR` - Added support for configuring communication preferences as well as clearly displaying case comment author identities.
