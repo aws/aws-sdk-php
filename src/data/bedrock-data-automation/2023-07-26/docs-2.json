@@ -46,6 +46,24 @@
         "AudioExtractionCategory$types": null
       }
     },
+    "AudioGenerativeOutputLanguage": {
+      "base": "<p>Configuration for Audio output language</p>",
+      "refs": {
+        "AudioLanguageConfiguration$generativeOutputLanguage": null
+      }
+    },
+    "AudioInputLanguages": {
+      "base": "<p>List of supported audio languages</p>",
+      "refs": {
+        "AudioLanguageConfiguration$inputLanguages": null
+      }
+    },
+    "AudioLanguageConfiguration": {
+      "base": "<p>Optional configuration for audio language settings</p>",
+      "refs": {
+        "AudioOverrideConfiguration$languageConfiguration": null
+      }
+    },
     "AudioOverrideConfiguration": {
       "base": "<p>Override Configuration of Audio</p>",
       "refs": {
@@ -178,6 +196,12 @@
       "base": "<p>List of Blueprints</p>",
       "refs": {
         "ListBlueprintsResponse$blueprints": null
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "AudioLanguageConfiguration$identifyMultipleLanguages": "<p>Enable multiple language identification in audio</p>"
       }
     },
     "ChannelLabelingConfiguration": {
@@ -542,6 +566,12 @@
         "Blueprint$kmsKeyId": null,
         "DataAutomationProject$kmsKeyId": null,
         "EncryptionConfiguration$kmsKeyId": null
+      }
+    },
+    "Language": {
+      "base": "<p>Supported input languages</p>",
+      "refs": {
+        "AudioInputLanguages$member": null
       }
     },
     "ListBlueprintsRequest": {

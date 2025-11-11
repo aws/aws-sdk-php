@@ -55725,6 +55725,10 @@
         "TunnelOptions":{
           "shape":"TunnelOptionsList",
           "locationName":"tunnelOptionSet"
+        },
+        "TunnelBandwidth":{
+          "shape":"VpnTunnelBandwidth",
+          "locationName":"tunnelBandwidth"
         }
       }
     },
@@ -55740,6 +55744,7 @@
         "RemoteIpv6NetworkCidr":{"shape":"String"},
         "OutsideIpAddressType":{"shape":"String"},
         "TransportTransitGatewayAttachmentId":{"shape":"TransitGatewayAttachmentId"},
+        "TunnelBandwidth":{"shape":"VpnTunnelBandwidth"},
         "StaticRoutesOnly":{
           "shape":"Boolean",
           "locationName":"staticRoutesOnly"
@@ -55841,6 +55846,13 @@
     "VpnStaticRouteSource":{
       "type":"string",
       "enum":["Static"]
+    },
+    "VpnTunnelBandwidth":{
+      "type":"string",
+      "enum":[
+        "standard",
+        "large"
+      ]
     },
     "VpnTunnelLogOptions":{
       "type":"structure",

@@ -628,7 +628,8 @@
       "type":"structure",
       "required":[
         "clientToken",
-        "gatewayId"
+        "gatewayId",
+        "logSettings"
       ],
       "members":{
         "clientToken":{
@@ -641,6 +642,7 @@
           "locationName":"gatewayId"
         },
         "attributes":{"shape":"LinkAttributes"},
+        "logSettings":{"shape":"LinkLogSettings"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -712,7 +714,8 @@
       "required":[
         "clientToken",
         "gatewayId",
-        "publicEndpoint"
+        "publicEndpoint",
+        "logSettings"
       ],
       "members":{
         "clientToken":{
@@ -724,7 +727,9 @@
           "location":"uri",
           "locationName":"gatewayId"
         },
+        "attributes":{"shape":"LinkAttributes"},
         "publicEndpoint":{"shape":"URL"},
+        "logSettings":{"shape":"LinkLogSettings"},
         "tags":{"shape":"TagsMap"}
       }
     },
@@ -1108,7 +1113,8 @@
         "attributes":{"shape":"LinkAttributes"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
-        "tags":{"shape":"TagsMap"}
+        "tags":{"shape":"TagsMap"},
+        "logSettings":{"shape":"LinkLogSettings"}
       }
     },
     "GetLinkRequest":{
@@ -1189,7 +1195,8 @@
         "publicEndpoint":{"shape":"URL"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
-        "tags":{"shape":"TagsMap"}
+        "tags":{"shape":"TagsMap"},
+        "logSettings":{"shape":"LinkLogSettings"}
       }
     },
     "GetRequesterGatewayRequest":{

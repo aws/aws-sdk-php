@@ -28871,6 +28871,13 @@
         "VpnStaticRoute$Source": "<p>Indicates how the routes were provided.</p>"
       }
     },
+    "VpnTunnelBandwidth": {
+      "base": null,
+      "refs": {
+        "VpnConnectionOptions$TunnelBandwidth": "<p> The configured bandwidth for the VPN tunnel. Represents the current throughput capacity setting for the tunnel connection. <code>standard</code> tunnel bandwidth supports up to 1.25 Gbps per tunnel while <code>large</code> supports up to 5 Gbps per tunnel. If no tunnel bandwidth was specified for the connection, <code>standard</code> is used as the default value. </p>",
+        "VpnConnectionOptionsSpecification$TunnelBandwidth": "<p> The desired bandwidth specification for the VPN tunnel, used when creating or modifying VPN connection options to set the tunnel's throughput capacity. <code>standard</code> supports up to 1.25 Gbps per tunnel, while <code>large</code> supports up to 5 Gbps per tunnel. The default value is <code>standard</code>. Existing VPN connections without a bandwidth setting will automatically default to <code>standard</code>. </p>"
+      }
+    },
     "VpnTunnelLogOptions": {
       "base": "<p>Options for logging VPN tunnel activity.</p>",
       "refs": {

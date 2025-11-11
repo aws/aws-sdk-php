@@ -121,7 +121,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDataAutomationProject":{
       "name":"GetDataAutomationProject",
@@ -138,7 +139,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListBlueprints":{
       "name":"ListBlueprints",
@@ -155,7 +157,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDataAutomationProjects":{
       "name":"ListDataAutomationProjects",
@@ -172,7 +175,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -305,10 +309,30 @@
       "type":"list",
       "member":{"shape":"AudioExtractionCategoryType"}
     },
+    "AudioGenerativeOutputLanguage":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "EN"
+      ]
+    },
+    "AudioInputLanguages":{
+      "type":"list",
+      "member":{"shape":"Language"}
+    },
+    "AudioLanguageConfiguration":{
+      "type":"structure",
+      "members":{
+        "inputLanguages":{"shape":"AudioInputLanguages"},
+        "generativeOutputLanguage":{"shape":"AudioGenerativeOutputLanguage"},
+        "identifyMultipleLanguages":{"shape":"Boolean"}
+      }
+    },
     "AudioOverrideConfiguration":{
       "type":"structure",
       "members":{
-        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"}
+        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"},
+        "languageConfiguration":{"shape":"AudioLanguageConfiguration"}
       }
     },
     "AudioStandardExtraction":{
@@ -448,6 +472,10 @@
     "Blueprints":{
       "type":"list",
       "member":{"shape":"BlueprintSummary"}
+    },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
     },
     "ChannelLabelingConfiguration":{
       "type":"structure",
@@ -947,6 +975,22 @@
       "max":2048,
       "min":1,
       "pattern":"[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]+"
+    },
+    "Language":{
+      "type":"string",
+      "enum":[
+        "EN",
+        "DE",
+        "ES",
+        "FR",
+        "IT",
+        "PT",
+        "JA",
+        "KO",
+        "CN",
+        "TW",
+        "HK"
+      ]
     },
     "ListBlueprintsRequest":{
       "type":"structure",

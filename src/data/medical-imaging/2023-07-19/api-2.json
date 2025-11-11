@@ -525,7 +525,8 @@
         },
         "tags":{"shape":"TagMap"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
-        "lambdaAuthorizerArn":{"shape":"LambdaArn"}
+        "lambdaAuthorizerArn":{"shape":"LambdaArn"},
+        "losslessStorageFormat":{"shape":"LosslessStorageFormat"}
       }
     },
     "CreateDatastoreResponse":{
@@ -748,6 +749,7 @@
         "datastoreStatus":{"shape":"DatastoreStatus"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
         "lambdaAuthorizerArn":{"shape":"LambdaArn"},
+        "losslessStorageFormat":{"shape":"LosslessStorageFormat"},
         "datastoreArn":{"shape":"Arn"},
         "createdAt":{"shape":"Date"},
         "updatedAt":{"shape":"Date"}
@@ -1005,7 +1007,9 @@
         "message":{"shape":"Message"},
         "imageSetArn":{"shape":"Arn"},
         "overrides":{"shape":"Overrides"},
-        "isPrimary":{"shape":"Boolean"}
+        "isPrimary":{"shape":"Boolean"},
+        "lastAccessedAt":{"shape":"Date"},
+        "storageTier":{"shape":"StorageTier"}
       }
     },
     "ImageFrameId":{
@@ -1093,6 +1097,8 @@
         "version":{"shape":"Integer"},
         "createdAt":{"shape":"Date"},
         "updatedAt":{"shape":"Date"},
+        "lastAccessedAt":{"shape":"Date"},
+        "storageTier":{"shape":"StorageTier"},
         "DICOMTags":{"shape":"DICOMTags"},
         "isPrimary":{"shape":"Boolean"}
       }
@@ -1275,6 +1281,13 @@
       "members":{
         "tags":{"shape":"TagMap"}
       }
+    },
+    "LosslessStorageFormat":{
+      "type":"string",
+      "enum":[
+        "HTJ2K",
+        "JPEG_2000_LOSSLESS"
+      ]
     },
     "Message":{
       "type":"string",
@@ -1506,6 +1519,13 @@
         "jobStatus":{"shape":"JobStatus"},
         "submittedAt":{"shape":"Date"}
       }
+    },
+    "StorageTier":{
+      "type":"string",
+      "enum":[
+        "FREQUENT_ACCESS",
+        "ARCHIVE_INSTANT_ACCESS"
+      ]
     },
     "String":{"type":"string"},
     "TagKey":{

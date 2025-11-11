@@ -32,7 +32,15 @@
       {
         "input": {
           "clientToken": "randomClientToken",
-          "gatewayId": "rtb-gw-12345678"
+          "gatewayId": "rtb-gw-12345678",
+          "logSettings": {
+            "applicationLogs": {
+              "sampling": {
+                "errorLog": 100.0,
+                "filterLog": 0.0
+              }
+            }
+          }
         },
         "output": {
           "domainName": "rtb-gw-12345678.example.com",
@@ -77,6 +85,14 @@
         "input": {
           "clientToken": "12345678-1234-1234-1234-123456789012",
           "gatewayId": "rtb-gw-12345678",
+          "logSettings": {
+            "applicationLogs": {
+              "sampling": {
+                "errorLog": 100.0,
+                "filterLog": 0.0
+              }
+            }
+          },
           "publicEndpoint": "https://external-responder.example.com"
         },
         "output": {

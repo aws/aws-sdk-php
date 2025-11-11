@@ -32,7 +32,8 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidTokenException"}
-      ]
+      ],
+      "readonly":true
     },
     "CancelMembership":{
       "name":"CancelMembership",
@@ -162,7 +163,8 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidTokenException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCaseAttachmentDownloadUrl":{
       "name":"GetCaseAttachmentDownloadUrl",
@@ -183,7 +185,8 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidTokenException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCaseAttachmentUploadUrl":{
       "name":"GetCaseAttachmentUploadUrl",
@@ -226,7 +229,8 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidTokenException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCaseEdits":{
       "name":"ListCaseEdits",
@@ -247,7 +251,8 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidTokenException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCases":{
       "name":"ListCases",
@@ -268,7 +273,8 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidTokenException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListComments":{
       "name":"ListComments",
@@ -289,7 +295,8 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidTokenException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListMemberships":{
       "name":"ListMemberships",
@@ -310,7 +317,8 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidTokenException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -331,7 +339,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
         {"shape":"InvalidTokenException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -535,6 +544,7 @@
         "ap-southeast-3",
         "ap-southeast-4",
         "ap-southeast-5",
+        "ap-southeast-6",
         "ap-southeast-7",
         "ca-central-1",
         "ca-west-1",
@@ -737,6 +747,31 @@
       "max":6,
       "min":6,
       "pattern":"\\d{6}"
+    },
+    "CommunicationPreferences":{
+      "type":"list",
+      "member":{"shape":"CommunicationType"}
+    },
+    "CommunicationType":{
+      "type":"string",
+      "enum":[
+        "Case Created",
+        "Case Updated",
+        "Case Acknowledged",
+        "Case Closed",
+        "Case Updated To Service Managed",
+        "Case Status Updated",
+        "Case Pending Customer Action Reminder",
+        "Case Attachment Url Uploaded",
+        "Case Comment Added",
+        "Case Comment Updated",
+        "Membership Created",
+        "Membership Updated",
+        "Membership Cancelled",
+        "Register Delegated Administrator",
+        "Deregister Delegated Administrator",
+        "Disable AWS Service Access"
+      ]
     },
     "ConflictException":{
       "type":"structure",
@@ -1089,7 +1124,8 @@
       "members":{
         "name":{"shape":"IncidentResponderName"},
         "jobTitle":{"shape":"JobTitle"},
-        "email":{"shape":"EmailAddress"}
+        "email":{"shape":"EmailAddress"},
+        "communicationPreferences":{"shape":"CommunicationPreferences"}
       }
     },
     "IncidentResponderName":{
@@ -1443,7 +1479,7 @@
     },
     "PrincipalId":{
       "type":"string",
-      "pattern":".*((^AWS Responder)|(^\\d{12}$)|(^security-ir.amazonaws.com)).*"
+      "pattern":".*((^AWS Responder)|(^\\d{12}$)|(^arn:([^:]*aws[^:]*):(?:(?:iam)::\\d{12}:(?:user|role|group|root)(?:(?:/[^/]+)+)?|(?:sts)::\\d{12}:assumed-role/[^/]+/[^/]+)$)|(^security-ir.amazonaws.com)).*"
     },
     "ResolverType":{
       "type":"string",

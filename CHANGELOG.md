@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\RTBFabric` - Added LogSettings and LinkAttribute fields to external links
+* `Aws\SecurityIR` - Added support for configuring communication preferences as well as clearly displaying case comment author identities.
+* `Aws\EC2` - AWS Site-to-Site VPN now supports VPN connections with up to 5 Gbps bandwidth per tunnel, a 4x improvement from existing limit of 1.25 Gbps.
+* `Aws\MedicalImaging` - Added new fields in existing APIs.
+* `Aws\Batch` - Documentation-only update: update API and doc descriptions per EKS ImageType default value switch from AL2 to AL2023.
+* `Aws\BedrockDataAutomation` - Added support for Language Expansion feature for BDA Audio modality.
+
 ## 3.359.9 - 2025-11-10
 
 * `Aws\DSQL` - Cluster endpoint added to CreateCluster and GetCluster API responses
