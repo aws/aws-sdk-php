@@ -9,35 +9,17 @@ use Aws\ResultInterface;
 /**
  * Multipart downloader using the part get approach.
  */
-class PartGetMultipartDownloader extends AbstractMultipartDownloader
+final class PartGetMultipartDownloader extends AbstractMultipartDownloader
 {
     /**
      * @inheritDoc
-     *
-     * @return CommandInterface
      */
-    protected function nextCommand(): CommandInterface
+    protected function getFetchCommandArgs(): array
     {
-        if ($this->currentPartNo === 0) {
-            $this->currentPartNo = 1;
-        } else {
-            $this->currentPartNo++;
-        }
+        $nextCommandArgs = $this->downloadRequestArgs;
+        $nextCommandArgs['PartNumber'] = $this->currentPartNo;
 
-        $nextRequestArgs = $this->downloadRequestArgs;
-        $nextRequestArgs['PartNumber'] = $this->currentPartNo;
-        if ($this->config['response_checksum_validation'] === 'when_supported') {
-            $nextRequestArgs['ChecksumMode'] = 'ENABLED';
-        }
-
-        if (!empty($this->eTag)) {
-            $nextRequestArgs['IfMatch'] = $this->eTag;
-        }
-
-        return $this->s3Client->getCommand(
-            self::GET_OBJECT_COMMAND,
-            $nextRequestArgs
-        );
+        return $nextCommandArgs;
     }
 
     /**

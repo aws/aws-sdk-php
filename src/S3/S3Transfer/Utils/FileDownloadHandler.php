@@ -4,12 +4,16 @@ namespace Aws\S3\S3Transfer\Utils;
 
 use Aws\S3\S3Transfer\AbstractMultipartDownloader;
 use Aws\S3\S3Transfer\Exception\FileDownloadException;
+use Aws\S3\S3Transfer\Exception\S3TransferException;
+use Aws\S3\S3Transfer\Models\ResumableDownload;
 use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 
-class FileDownloadHandler extends DownloadHandler
+class FileDownloadHandler extends DownloadHandler implements ResumableDownloadHandler
 {
     private const IDENTIFIER_LENGTH = 8;
     private const TEMP_INFIX = '.s3tmp.';
+    private const RESUME_SUFFIX = '.resume';
     private const MAX_UNIQUE_ID_ATTEMPTS = 100;
 
     /** @var string */
@@ -18,25 +22,42 @@ class FileDownloadHandler extends DownloadHandler
     /** @var bool */
     private bool $failsWhenDestinationExists;
 
-    /** @var string */
-    private string $temporaryDestination = '';
+    /** @var string|null */
+    private ?string $temporaryFilePath;
+
+    /** @var int|null */
+    private ?int $fixedPartSize;
+
+    /** @var bool */
+    private bool $resumeEnabled;
 
     /** @var mixed|null */
-    protected mixed $handle = null;
+    private mixed $handle;
 
-    /** @var int */
-    protected int $fixedPartSize = 0;
+    /** @var bool */
+    private bool $transferFailed;
 
     /**
      * @param string $destination
      * @param bool $failsWhenDestinationExists
+     * @param bool $resumeEnabled
+     * @param string|null $temporaryFilePath
+     * @param int|null $fixedPartSize
      */
     public function __construct(
         string $destination,
-        bool $failsWhenDestinationExists
+        bool $failsWhenDestinationExists,
+        bool $resumeEnabled = false,
+        ?string $temporaryFilePath = null,
+        ?int $fixedPartSize = null,
     ) {
         $this->destination = $destination;
         $this->failsWhenDestinationExists = $failsWhenDestinationExists;
+        $this->resumeEnabled = $resumeEnabled;
+        $this->temporaryFilePath = $temporaryFilePath;
+        $this->fixedPartSize = $fixedPartSize;
+        $this->handle = null;
+        $this->transferFailed = false;
     }
 
     /**
@@ -64,16 +85,46 @@ class FileDownloadHandler extends DownloadHandler
     {
         $this->validateDestination();
         $this->ensureDirectoryExists();
-        $this->temporaryDestination = $this->generateTemporaryFilePath();
+        // temporary destination may have been set by resume
+        if (empty($this->temporaryFilePath)) {
+            $this->temporaryFilePath = $this->generateTemporaryFilePath();
+        } else {
+            $this->openExistingFile();
+        }
+    }
+
+    /**
+     * Open an existing temporary file for resuming.
+     * Opens in 'r+' mode which allows reading and writing without truncating.
+     *
+     * @return void
+     */
+    private function openExistingFile(): void
+    {
+        if ($this->handle !== null) {
+            return;
+        }
+
+        $handle = fopen($this->temporaryFilePath, 'r+');
+
+        if ($handle === false) {
+            throw new FileDownloadException(
+                "Failed to open existing temporary file '{$this->temporaryFilePath}' for resuming."
+            );
+        }
+
+        $this->handle = $handle;
     }
 
     /**
      * @param array $context
-     *
-     * @return void
      */
-    public function bytesTransferred(array $context): void
+    public function bytesTransferred(array $context): bool
     {
+        if ($this->transferFailed) {
+            return false;
+        }
+
         $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
         $response = $snapshot->getResponse();
 
@@ -88,7 +139,7 @@ class FileDownloadHandler extends DownloadHandler
             );
         }
 
-        $this->writePartToDestinationHandle($response);
+        return $this->writePartToDestinationHandle($response);
     }
 
     /**
@@ -109,6 +160,7 @@ class FileDownloadHandler extends DownloadHandler
      */
     public function transferFail(array $context): void
     {
+        $this->transferFailed = true;
         $this->closeDestinationHandle();
         $this->cleanupAfterFailure($context);
     }
@@ -130,9 +182,9 @@ class FileDownloadHandler extends DownloadHandler
     /**
      * @param array $response
      *
-     * @return void
+     * @return bool
      */
-    protected function writePartToDestinationHandle(array $response): void
+    private function writePartToDestinationHandle(array $response): bool
     {
         $contentRange = $response['ContentRange'] ?? null;
         if ($contentRange === null) {
@@ -142,7 +194,7 @@ class FileDownloadHandler extends DownloadHandler
         }
 
         $partNo = (int) ceil(
-            self::getRangeTo($contentRange) / $this->fixedPartSize
+            AbstractMultipartDownloader::getRangeTo($contentRange) / $this->fixedPartSize
         );
         $position = ($partNo - 1) * $this->fixedPartSize;
 
@@ -154,13 +206,29 @@ class FileDownloadHandler extends DownloadHandler
             fseek($this->handle, $position);
 
             $body = $response['Body'];
+            $checksumContext = hash_init('sha256');
             while (!$body->eof()) {
                 $chunk = $body->read(self::READ_BUFFER_SIZE);
 
                 if (fwrite($this->handle, $chunk) === false) {
                     throw new FileDownloadException("Failed to write data to temporary file.");
                 }
+
+                hash_update($checksumContext, $chunk);
             }
+
+            $finalChecksum = base64_encode(
+                hash_final($checksumContext, true)
+            );
+            if ($finalChecksum !== $response['ChecksumSHA256']) {
+                throw new FileDownloadException(
+                    "Checksum mismatch when writing part to temporary file."
+                );
+            }
+
+            fflush($this->handle);
+
+            return true;
         } finally {
             flock($this->handle, LOCK_UN);
         }
@@ -169,7 +237,7 @@ class FileDownloadHandler extends DownloadHandler
     /**
      * @return void
      */
-    protected function closeDestinationHandle(): void
+    private function closeDestinationHandle(): void
     {
         if (is_resource($this->handle)) {
             fclose($this->handle);
@@ -252,32 +320,17 @@ class FileDownloadHandler extends DownloadHandler
     }
 
     /**
-     * @param array $response
-     *
-     * @return void
-     */
-    private function initializeFile(array $response): void
-    {
-        $this->fixedPartSize = $response['ContentLength'];
-        $objectSize = AbstractMultipartDownloader::computeObjectSizeFromContentRange(
-            $response['ContentRange'] ?? ""
-        );
-
-        $this->createTruncatedFile($objectSize);
-    }
-
-    /**
      * @param int $size
      *
      * @return void
      */
     private function createTruncatedFile(int $size): void
     {
-        $handle = fopen($this->temporaryDestination, 'w+');
+        $handle = fopen($this->temporaryFilePath, 'w+');
 
         if ($handle === false) {
             throw new FileDownloadException(
-                "Failed to open temporary file '{$this->temporaryDestination}' for writing."
+                "Failed to open temporary file '{$this->temporaryFilePath}' for writing."
             );
         }
 
@@ -309,9 +362,9 @@ class FileDownloadHandler extends DownloadHandler
             }
         }
 
-        if (!rename($this->temporaryDestination, $this->destination)) {
+        if (!rename($this->temporaryFilePath, $this->destination)) {
             throw new FileDownloadException(
-                "Unable to rename the file '{$this->temporaryDestination}' to '{$this->destination}'."
+                "Unable to rename the file '{$this->temporaryFilePath}' to '{$this->destination}'."
             );
         }
     }
@@ -323,8 +376,8 @@ class FileDownloadHandler extends DownloadHandler
      */
     private function cleanupAfterFailure(array $context): void
     {
-        if (file_exists($this->temporaryDestination)) {
-            unlink($this->temporaryDestination);
+        if (!$this->resumeEnabled && file_exists($this->temporaryFilePath)) {
+            unlink($this->temporaryFilePath);
             return;
         }
 
@@ -345,5 +398,29 @@ class FileDownloadHandler extends DownloadHandler
     public function isConcurrencySupported(): bool
     {
         return true;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResumeFilePath(): string
+    {
+        return $this->temporaryFilePath . self::RESUME_SUFFIX;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemporaryFilePath(): string
+    {
+        return $this->temporaryFilePath;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFixedPartSize(): int
+    {
+        return $this->fixedPartSize;
     }
 }

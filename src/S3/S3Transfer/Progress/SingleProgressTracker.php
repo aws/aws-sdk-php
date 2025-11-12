@@ -109,10 +109,8 @@ final class SingleProgressTracker extends TransferListener
 
     /**
      * @inheritDoc
-     *
-     * @return void
      */
-    public function bytesTransferred(array $context): void
+    public function bytesTransferred(array $context): bool
     {
         $this->currentSnapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressFormat = $this->progressBar->getProgressBarFormat();
@@ -124,6 +122,8 @@ final class SingleProgressTracker extends TransferListener
         }
 
         $this->updateProgressBar();
+
+        return true;
     }
 
     /**
@@ -194,7 +194,10 @@ final class SingleProgressTracker extends TransferListener
         }
 
         $this->progressBar->getProgressBarFormat()->setArgs([
-            'transferred' => $this->currentSnapshot->getTransferredBytes(),
+            'transferred' => min(
+                $this->currentSnapshot->getTransferredBytes(),
+                $this->currentSnapshot->getTotalBytes()
+            ),
             'to_be_transferred' => $this->currentSnapshot->getTotalBytes(),
             'unit' => 'B',
         ]);

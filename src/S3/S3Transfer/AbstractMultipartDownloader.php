@@ -2,15 +2,18 @@
 namespace Aws\S3\S3Transfer;
 
 use Aws\CommandInterface;
+use Aws\Result;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadResult;
+use Aws\S3\S3Transfer\Models\ResumableDownload;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Aws\S3\S3Transfer\Utils\DownloadHandler;
+use Aws\S3\S3Transfer\Utils\ResumableDownloadHandler;
 use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 use GuzzleHttp\Promise\Coroutine;
 use GuzzleHttp\Promise\Create;
@@ -25,6 +28,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
     public const PART_GET_MULTIPART_DOWNLOADER = "part";
     public const RANGED_GET_MULTIPART_DOWNLOADER = "ranged";
     private const OBJECT_SIZE_REGEX = "/\/(\d+)$/";
+    private const RANGE_TO_REGEX = "/(\d+)\//";
     
     /** @var array */
     protected readonly array $downloadRequestArgs;
@@ -53,30 +57,68 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
     /** Tracking Members */
     private ?TransferProgressSnapshot $currentSnapshot;
 
+    /** @var array */
+    private array $partsCompleted;
+
+    /** @var ResumableDownload|null */
+    private ?ResumableDownload $resumableDownload;
+
+    /** @var bool Whether this is a resumed download */
+    private readonly bool $isResuming;
+
+    /** @var array|null Initial request response for resume state */
+    private ?array $initialRequestResult = null;
+
     /**
      * @param S3ClientInterface $s3Client
      * @param array $downloadRequestArgs
      * @param array $config
      * @param ?DownloadHandler $downloadHandler
-     * @param int $currentPartNo
+     * @param array $completedParts
      * @param int $objectPartsCount
      * @param int $objectSizeInBytes
      * @param string|null $eTag
      * @param TransferProgressSnapshot|null $currentSnapshot
      * @param TransferListenerNotifier|null $listenerNotifier
+     * @param ResumableDownload|null $resumableDownload
      */
     public function __construct(
         protected readonly S3ClientInterface $s3Client,
         array $downloadRequestArgs,
         array $config = [],
         ?DownloadHandler $downloadHandler = null,
-        int $currentPartNo = 0,
+        array $completedParts = [],
         int $objectPartsCount = 0,
         int $objectSizeInBytes = 0,
         ?string $eTag = null,
         ?TransferProgressSnapshot $currentSnapshot = null,
-        ?TransferListenerNotifier $listenerNotifier  = null
+        ?TransferListenerNotifier $listenerNotifier  = null,
+        ?ResumableDownload $resumableDownload = null
     ) {
+        $this->resumableDownload = $resumableDownload;
+        $this->isResuming = $resumableDownload !== null;
+        // Initialize from resume state if available
+        if ($this->isResuming) {
+            $this->objectPartsCount = $resumableDownload->getTotalNumberOfParts();
+            $this->objectSizeInBytes = $resumableDownload->getObjectSizeInBytes();
+            $this->eTag = $resumableDownload->getETag();
+            $this->partsCompleted = $resumableDownload->getPartsCompleted();
+            $this->initialRequestResult = $this->resumableDownload->getInitialRequestResult();
+            // Restore current snapshot
+            $snapshotData = $resumableDownload->getCurrentSnapshot();
+            if (!empty($snapshotData)) {
+                $this->currentSnapshot = TransferProgressSnapshot::fromArray(
+                    $snapshotData
+                );
+            }
+        } else {
+            $this->partsCompleted = $completedParts;
+            $this->objectPartsCount = $objectPartsCount;
+            $this->objectSizeInBytes = $objectSizeInBytes;
+            $this->eTag = $eTag;
+            $this->currentSnapshot = $currentSnapshot;
+        }
+
         $this->downloadRequestArgs = $downloadRequestArgs;
         $this->validateConfig($config);
         $this->config = $config;
@@ -84,25 +126,17 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
             $downloadHandler = new StreamDownloadHandler();
         }
         $this->downloadHandler = $downloadHandler;
-        $this->currentPartNo = $currentPartNo;
-        $this->objectPartsCount = $objectPartsCount;
-        $this->objectSizeInBytes = $objectSizeInBytes;
-        $this->eTag = $eTag;
-        $this->currentSnapshot = $currentSnapshot;
-        if ($listenerNotifier === null) {
-            $listenerNotifier = new TransferListenerNotifier();
-        }
-        // Add download handler to the listener notifier
-        $listenerNotifier->addListener($downloadHandler);
         $this->listenerNotifier  = $listenerNotifier;
+        // Always starts in 1
+        $this->currentPartNo = 1;
     }
 
     /**
-     * Returns the next command for fetching the next object part.
+     * Returns the next command args for fetching the next object part.
      *
-     * @return CommandInterface
+     * @return array
      */
-    abstract protected function nextCommand(): CommandInterface;
+    abstract protected function getFetchCommandArgs(): array;
 
     /**
      * Compute the object dimensions, such as size and parts count.
@@ -125,6 +159,10 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
 
         if (!isset($config['response_checksum_validation'])) {
             $config['response_checksum_validation'] = S3TransferManagerConfig::DEFAULT_RESPONSE_CHECKSUM_VALIDATION;
+        }
+
+        if (!isset($config['resume_enabled'])) {
+            $config['resume_enabled'] = false;
         }
     }
 
@@ -185,7 +223,12 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
     public function promise(): PromiseInterface
     {
         return Coroutine::of(function () {
-            $initialRequestResult = yield $this->initialRequest();
+            // Skip initial request if resuming (we already have object dimensions)
+            if ($this->isResuming) {
+                $this->downloadInitiated($this->downloadRequestArgs);
+            } else {
+                yield $this->initialRequest();
+            }
 
             $partsDownloadPromises = $this->partDownloadRequests();
 
@@ -198,13 +241,13 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
             yield Each::ofLimitAll(
                 $partsDownloadPromises,
                 $concurrency,
-            )->then(function () use ($initialRequestResult) {
+            )->then(function () {
                 // Transfer completed
                 $this->downloadComplete();
 
                 return Create::promiseFor(new DownloadResult(
                     $this->downloadHandler->getHandlerResult(),
-                    $initialRequestResult->toArray(),
+                    $this->initialRequestResult,
                 ));
             })->otherwise(function (Throwable $e) {
                 $this->downloadFailed($e);
@@ -221,7 +264,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
      */
     protected function initialRequest(): PromiseInterface
     {
-        $command = $this->nextCommand();
+        $command = $this->getNextGetObjectCommand();
         // Notify download initiated
         $this->downloadInitiated($command->toArray());
 
@@ -235,22 +278,28 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
                     $this->eTag = $result['ETag'];
                 }
 
-                // Notify listeners
-                $this->partDownloadCompleted(
-                    $result,
-                    $command->toArray()
-                );
-
-                // Assign custom fields in the result
-                $result['ContentLength'] = $this->objectSizeInBytes;
-                $result['ContentRange'] = "0-"
+                $initialRequestResult = $result->toArray();
+                // Set full object size
+                $initialRequestResult['ContentLength'] = $this->objectSizeInBytes;
+                // Set full object content range
+                $initialRequestResult['ContentRange'] = "0-"
                     . ($this->objectSizeInBytes - 1)
                     . "/"
-                    . $this->objectPartsCount;
+                    . $this->objectSizeInBytes;
 
-                unset($result['Body']);
+                // Remove unnecessary fields
+                unset($initialRequestResult['Body']);
+                unset($initialRequestResult['@metadata']);
 
-                return $result;
+                // Store initial response for resume state
+                $this->initialRequestResult = $initialRequestResult;
+
+                // Notify listeners but we pass the actual request result
+                $this->partDownloadCompleted(
+                    1,
+                    $result->toArray(),
+                    $command->toArray()
+                );
             })->otherwise(function ($reason)  {
                 $this->partDownloadFailed($reason);
 
@@ -263,26 +312,28 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
      */
     private function partDownloadRequests(): \Generator
     {
-        // To prevent infinite loops
-        $prevPartNo = $this->currentPartNo - 1;
         while ($this->currentPartNo < $this->objectPartsCount) {
-            if ($prevPartNo !== $this->currentPartNo - 1) {
-                throw new S3TransferException(
-                    "Current part `$this->currentPartNo` MUST increment."
-                );
+            $this->currentPartNo++;
+            if ($this->partsCompleted[$this->currentPartNo] ?? false) {
+                continue;
             }
 
-            $prevPartNo = $this->currentPartNo;
+            $partNumber = $this->currentPartNo;
+            $command = $this->getNextGetObjectCommand();
 
-            $command = $this->nextCommand();
             yield $this->s3Client->executeAsync($command)
-                ->then(function (ResultInterface $result) use ($command) {
-                    $this->partDownloadCompleted(
-                        $result,
-                        $command->toArray()
-                    );
+                ->then(function (ResultInterface $result)
+                use ($command, $partNumber) {
+                    $requestArgs = $command->toArray();
 
-                    return $result;
+                    // Remove metadata
+                    unset($result['@metadata']);
+
+                    $this->partDownloadCompleted(
+                        $partNumber,
+                        $result->toArray(),
+                        $requestArgs
+                    );
                 });
         }
 
@@ -295,26 +346,22 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
     }
 
     /**
-     * Calculates the object size from content range.
-     *
-     * @param string $contentRange
-     * @return int
+     * @return CommandInterface
      */
-    public static function computeObjectSizeFromContentRange(
-        string $contentRange
-    ): int
+    private function getNextGetObjectCommand(): CommandInterface
     {
-        if (empty($contentRange)) {
-            return 0;
+        $nextCommandArgs = $this->getFetchCommandArgs();
+        if ($this->config['response_checksum_validation'] === 'when_supported') {
+            $nextCommandArgs['ChecksumMode'] = 'ENABLED';
         }
 
-        // For extracting the object size from the ContentRange header value.
-        if (preg_match(self::OBJECT_SIZE_REGEX, $contentRange, $matches)) {
-            return $matches[1];
+        if (!empty($this->eTag)) {
+            $nextCommandArgs['IfMatch'] = $this->eTag;
         }
 
-        throw new S3TransferException(
-            "Invalid content range \"$contentRange\""
+        return $this->s3Client->getCommand(
+            self::GET_OBJECT_COMMAND,
+            $nextCommandArgs
         );
     }
 
@@ -345,10 +392,17 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
            );
        }
 
-        $this->listenerNotifier?->transferInitiated([
+       // Prepare context
+        $context = [
             TransferListener::REQUEST_ARGS_KEY => $commandArgs,
             TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
-        ]);
+        ];
+
+        // Notify download handler
+        $this->downloadHandler->transferInitiated($context);
+
+       // Notify listeners
+        $this->listenerNotifier?->transferInitiated($context);
     }
 
     /**
@@ -373,36 +427,74 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
             $reason
         );
 
-        $this->listenerNotifier?->transferFail([
+        // Prepare context
+        $context = [
             TransferListener::REQUEST_ARGS_KEY => $this->downloadRequestArgs,
             TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
             'reason' => $reason,
-        ]);
+        ];
+
+        // Notify download handler
+        $this->downloadHandler->transferFail($context);
+
+        // Notify listeners
+        $this->listenerNotifier?->transferFail($context);
     }
 
     /**
      * Propagates part-download-completed to listeners.
      * It also does some computation in order to maintain internal states.
      *
-     * @param ResultInterface $result
+     * @param int $partNumber
+     * @param array $result
+     * @param array $requestArgs
      *
      * @return void
      */
     private function partDownloadCompleted(
-        ResultInterface $result,
+        int $partNumber,
+        array $result,
         array $requestArgs
     ): void
     {
-        $partDownloadBytes = $result['ContentLength'];
+        $partTransferredBytes = $result['ContentLength'];
+        // Snapshot and context for listeners
         $newSnapshot = new TransferProgressSnapshot(
             $this->currentSnapshot->getIdentifier(),
-            $this->currentSnapshot->getTransferredBytes() + $partDownloadBytes,
+            $this->currentSnapshot->getTransferredBytes() + $partTransferredBytes,
             $this->objectSizeInBytes,
-            $result->toArray()
+            $this->initialRequestResult
         );
         $this->currentSnapshot = $newSnapshot;
-        $this->listenerNotifier?->bytesTransferred([
+
+        // Notify download handler and evaluate if part was written
+        $downloadHandlerSnapshot = $this->currentSnapshot->withResponse(
+            $result
+        );
+        $wasPartWritten = $this->downloadHandler->bytesTransferred([
             TransferListener::REQUEST_ARGS_KEY => $requestArgs,
+            TransferListener::PROGRESS_SNAPSHOT_KEY => $downloadHandlerSnapshot,
+        ]);
+        // If part was written to destination then we mark it as completed
+        if ($wasPartWritten) {
+            $this->partsCompleted[$partNumber] = true;
+
+            // Persist resume state just if resume is enabled
+            if ($this->config['resume_enabled'] ?? false) {
+                // Update the resume state holder
+                $this->resumableDownload?->updateCurrentSnapshot(
+                    $this->currentSnapshot->toArray()
+                );
+                $this->resumableDownload?->markPartCompleted($partNumber);
+
+                // Persist the resume state
+                $this->persistResumeState();
+            }
+        }
+
+        // Notify listeners
+        $this->listenerNotifier?->bytesTransferred([
+            TransferListener::REQUEST_ARGS_KEY => $this->downloadRequestArgs,
             TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
         ]);
     }
@@ -435,10 +527,133 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
             $this->currentSnapshot->getResponse()
         );
         $this->currentSnapshot = $newSnapshot;
-        $this->listenerNotifier?->transferComplete([
+        // Prepare context
+        $context = [
             TransferListener::REQUEST_ARGS_KEY => $this->downloadRequestArgs,
             TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
-        ]);
+        ];
+
+        // Notify download handler
+        $this->downloadHandler->transferComplete($context);
+
+        // Notify listeners
+        $this->listenerNotifier?->transferComplete($context);
+
+        // Delete resume file on successful completion
+        if ($this->config['resume_enabled'] ?? false) {
+            $this->deleteResumeFile();
+        }
+    }
+
+    /**
+     * Delete the resume file.
+     *
+     * @return void
+     */
+    private function deleteResumeFile(): void
+    {
+        if ($this->resumableDownload === null) {
+            return;
+        }
+
+        $resumeFilePath = $this->resumableDownload->getResumeFilePath();
+        if (file_exists($resumeFilePath)) {
+            unlink($resumeFilePath);
+        }
+    }
+
+    /**
+     * Persist the current download state to the resume file.
+     * This method is called after each part is downloaded.
+     *
+     * @return void
+     */
+    private function persistResumeState(): void
+    {
+        // Only persist if we have a download handler that supports resume
+        if (!($this->downloadHandler instanceof ResumableDownloadHandler)) {
+            return;
+        }
+
+        // Create ResumableDownload object
+        if ($this->resumableDownload === null) {
+            // Resume file destination
+            $resumeFilePath = $this->config['resume_file_path'] ??
+                $this->downloadHandler->getResumeFilePath();
+            // Create snapshot data
+            $snapshotData = $this->currentSnapshot->toArray();
+            // Determine multipart download type
+            $config = $this->config;
+            $this->resumableDownload = new ResumableDownload(
+                $resumeFilePath,
+                $this->downloadRequestArgs,
+                $config,
+                $this->initialRequestResult,
+                $snapshotData,
+                $this->partsCompleted,
+                $this->objectPartsCount,
+                $this->downloadHandler->getTemporaryFilePath(),
+                $this->eTag ?? '',
+                $this->objectSizeInBytes,
+                $this->downloadHandler->getFixedPartSize(),
+                $this->downloadHandler->getDestination()
+            );
+        }
+
+        try {
+
+            // Ensure directory exists
+            $resumeFilePath = $this->resumableDownload->getResumeFilePath();
+            $resumeDir = dirname($resumeFilePath);
+            if (!is_dir($resumeDir) && !mkdir($resumeDir, 0755, true)) {
+                throw new S3TransferException("Failed to create resume directory: $resumeDir");
+            }
+
+            $this->resumableDownload->toFile($resumeFilePath);
+        } catch (\Exception $e) {
+            throw new S3TransferException(
+                "Unable to persists resumable download state due to: " . $e->getMessage(),
+            );
+        }
+    }
+
+    /**
+     * Calculates the object size from content range.
+     *
+     * @param string $contentRange
+     * @return int
+     */
+    public static function computeObjectSizeFromContentRange(
+        string $contentRange
+    ): int
+    {
+        if (empty($contentRange)) {
+            return 0;
+        }
+
+        // For extracting the object size from the ContentRange header value.
+        if (preg_match(self::OBJECT_SIZE_REGEX, $contentRange, $matches)) {
+            return $matches[1];
+        }
+
+        throw new S3TransferException(
+            "Invalid content range \"$contentRange\""
+        );
+    }
+
+    /**
+     * @param string $range
+     *
+     * @return int
+     */
+    public static function getRangeTo(string $range): int
+    {
+        preg_match(self::RANGE_TO_REGEX, $range, $match);
+        if (empty($match)) {
+            return 0;
+        }
+
+        return $match[1];
     }
 
     /**

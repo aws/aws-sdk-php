@@ -670,7 +670,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
                 $this->partNumber = 0;
             }
 
-            public function bytesTransferred(array $context): void
+            public function bytesTransferred(array $context): bool
             {
                 $this->partNumber++;
                 if ($this->partNumber === $this->partNumberFail) {
@@ -678,6 +678,8 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
                         "Transfer failed at part number {$this->partNumber} failed"
                     );
                 }
+
+                return true;
             }
         };
 
@@ -713,6 +715,8 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
                 "Transfer failed at part number {$partNumberFail} failed",
                 $exception->getMessage(),
             );
+        } catch (\Exception $e) {
+            Assert::fail("Unexpected exception type: " . get_class($e) . " - " . $e->getMessage());
         }
     }
 

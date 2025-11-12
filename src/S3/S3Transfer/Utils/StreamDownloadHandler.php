@@ -6,7 +6,7 @@ use Aws\S3\S3Transfer\Progress\TransferListener;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;
 
-class StreamDownloadHandler extends DownloadHandler
+final class StreamDownloadHandler extends DownloadHandler
 {
     /** @var StreamInterface|null */
     private ?StreamInterface $stream;
@@ -17,6 +17,14 @@ class StreamDownloadHandler extends DownloadHandler
     public function __construct(?StreamInterface $stream = null)
     {
         $this->stream = $stream;
+    }
+
+    /**
+     * @return int
+     */
+    public function priority(): int
+    {
+        return -1;
     }
 
     /**
@@ -36,11 +44,9 @@ class StreamDownloadHandler extends DownloadHandler
     }
 
     /**
-     * @param array $context
-     *
-     * @return void
+     * @inheritDoc
      */
-    public function bytesTransferred(array $context): void
+    public function bytesTransferred(array $context): bool
     {
         $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
         $response = $snapshot->getResponse();
@@ -48,6 +54,8 @@ class StreamDownloadHandler extends DownloadHandler
             $response['Body'],
             $this->stream
         );
+
+        return true;
     }
 
     /**

@@ -22,7 +22,7 @@ use Throwable;
 /**
  * Multipart uploader implementation.
  */
-class MultipartUploader extends AbstractMultipartUploader
+final class MultipartUploader extends AbstractMultipartUploader
 {
     static array $supportedAlgorithms = [
         'ChecksumCRC32',

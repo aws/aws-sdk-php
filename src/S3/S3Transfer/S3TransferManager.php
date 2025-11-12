@@ -5,11 +5,14 @@ namespace Aws\S3\S3Transfer;
 use Aws\ResultInterface;
 use Aws\S3\S3Client;
 use Aws\S3\S3ClientInterface;
+use Aws\S3\S3Transfer\Exception\FileDownloadException;
 use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryResult;
 use Aws\S3\S3Transfer\Models\DownloadFileRequest;
 use Aws\S3\S3Transfer\Models\DownloadRequest;
+use Aws\S3\S3Transfer\Models\ResumableDownload;
+use Aws\S3\S3Transfer\Models\ResumeDownloadRequest;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\UploadDirectoryResult;
@@ -21,6 +24,8 @@ use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Aws\S3\S3Transfer\Utils\DownloadHandler;
+use Aws\S3\S3Transfer\Utils\FileDownloadHandler;
+use Aws\S3\S3Transfer\Utils\ResumableDownloadHandler;
 use FilesystemIterator;
 use GuzzleHttp\Promise\Each;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -32,7 +37,7 @@ use Throwable;
 use function Aws\filter;
 use function Aws\map;
 
-class S3TransferManager
+final class S3TransferManager
 {
     /** @var S3Client  */
     private S3ClientInterface $s3Client;
@@ -317,6 +322,8 @@ class S3TransferManager
      */
     public function download(DownloadRequest $downloadRequest): PromiseInterface
     {
+        $source = $downloadRequest->getSource();
+
         $sourceArgs = $downloadRequest->normalizeSourceAsArray();
         $getObjectRequestArgs = $downloadRequest->getObjectRequestArgs();
 
@@ -353,6 +360,135 @@ class S3TransferManager
     }
 
     /**
+     * @param ResumeDownloadRequest $resumeDownloadRequest
+     *
+     * @return PromiseInterface
+     */
+    public function resumeDownload(
+        ResumeDownloadRequest $resumeDownloadRequest
+    ): PromiseInterface
+    {
+        $resumableDownload = $resumeDownloadRequest->getResumableDownload();
+        if (is_string($resumableDownload)
+            && $this->isResumeFile($resumableDownload)) {
+            $resumableDownload = ResumableDownload::fromFile($resumableDownload);
+        }
+
+        // Verify that temporary file still exists
+        if (!file_exists($resumableDownload->getTemporaryFile())) {
+            throw new S3TransferException(
+                "Cannot resume download: temporary file does not exist: "
+                . $resumableDownload->getTemporaryFile()
+            );
+        }
+
+        // Verify object ETag hasn't changed
+        $headResult = $this->s3Client->headObject([
+            'Bucket' => $resumableDownload->getBucket(),
+            'Key' => $resumableDownload->getKey(),
+        ]);
+
+        $currentETag = $headResult['ETag'] ?? null;
+        $resumeETag = $resumableDownload->getETag();
+        if (empty($currentETag) || empty($resumeETag)) {
+            throw new S3TransferException(
+                "Cannot resume download: missing eTag in resumable download"
+            );
+        }
+
+        if ($currentETag !== $resumableDownload->getETag()) {
+            throw new S3TransferException(
+                "Cannot resume download: S3 object has changed (ETag mismatch). "
+                . "Expected: {$resumableDownload->getETag()}, "
+                . "Current: {$currentETag}"
+            );
+        }
+
+        // Make sure it uses a supported file download handler
+        $downloadHandlerClass = $resumeDownloadRequest->getDownloadHandlerClass();
+        if (!class_exists($downloadHandlerClass)) {
+            throw new S3TransferException(
+                "Download handler class `$downloadHandlerClass` does not exist"
+            );
+        }
+
+        if ($downloadHandlerClass !== FileDownloadHandler::class
+            && !is_subclass_of($downloadHandlerClass, FileDownloadHandler::class)) {
+            throw new S3TransferException(
+                "Download handler class `$downloadHandlerClass` must extend `FileDownloadHandler`"
+            );
+        }
+
+        $config = $resumableDownload->getConfig();
+        $downloadHandler = new $downloadHandlerClass(
+            $resumableDownload->getDestination(),
+            $config['fails_when_destination_exists'] ?? false,
+            $config['resume_enabled'] ?? false,
+            $resumableDownload->getTemporaryFile(),
+            $resumableDownload->getFixedPartSize()
+        );
+
+        $progressTracker = $resumeDownloadRequest->getProgressTracker();
+        $listeners = $resumeDownloadRequest->getListeners();
+
+        if ($progressTracker === null
+            && ($resumableDownload->getConfig()['track_progress']
+                ?? $this->config->isTrackProgress())) {
+            $progressTracker = new SingleProgressTracker();
+            $listeners[] = $progressTracker;
+        }
+
+        $listenerNotifier = new TransferListenerNotifier(
+            $listeners,
+        );
+
+        return $this->tryMultipartDownload(
+            $resumableDownload->getRequestArgs(),
+            $resumableDownload->getConfig(),
+            $downloadHandler,
+            $listenerNotifier,
+            $resumableDownload,
+        );
+    }
+
+    /**
+     * Check if a file path is a valid resume file.
+     *
+     * @param string $filePath
+     * @return bool
+     */
+    private function isResumeFile(string $filePath): bool
+    {
+        // Check file extension
+        if (!str_ends_with($filePath, '.resume')) {
+            return false;
+        }
+
+        // Check if file exists and is readable
+        if (!file_exists($filePath) || !is_readable($filePath)) {
+            return false;
+        }
+
+        // Validate file content by attempting to parse it
+        try {
+            $json = file_get_contents($filePath);
+            if ($json === false) {
+                return false;
+            }
+
+            $data = json_decode($json, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                return false;
+            }
+
+            // Check for required version field
+            return isset($data['version']) && is_array($data);
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
      * @param DownloadFileRequest $downloadFileRequest
      *
      * @return PromiseInterface
@@ -361,7 +497,7 @@ class S3TransferManager
         DownloadFileRequest $downloadFileRequest
     ): PromiseInterface
     {
-       return $this->download($downloadFileRequest->getDownloadRequest());
+        return $this->download($downloadFileRequest->getDownloadRequest());
     }
 
     /**
@@ -548,6 +684,7 @@ class S3TransferManager
         array $config,
         DownloadHandler $downloadHandler,
         ?TransferListenerNotifier $listenerNotifier = null,
+        ?ResumableDownload $resumableDownload = null,
     ): PromiseInterface
     {
         $downloaderClassName = AbstractMultipartDownloader::chooseDownloaderClass(
@@ -559,6 +696,7 @@ class S3TransferManager
             $config,
             $downloadHandler,
             listenerNotifier: $listenerNotifier,
+            resumableDownload: $resumableDownload,
         );
 
         return $multipartDownloader->promise();

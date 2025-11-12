@@ -135,12 +135,14 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
     /**
      * @inheritDoc
      */
-    public function bytesTransferred(array $context): void
+    public function bytesTransferred(array $context): bool
     {
         $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressTracker = $this->singleProgressTrackers[$snapshot->getIdentifier()];
         $progressTracker->bytesTransferred($context);
         $this->showProgress();
+
+        return true;
     }
 
     /**

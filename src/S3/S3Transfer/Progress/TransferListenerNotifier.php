@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Progress;
 
-class TransferListenerNotifier extends TransferListener
+final class TransferListenerNotifier extends TransferListener
 {
     /** @var TransferListener[] */
     private array $listeners;
@@ -12,6 +12,7 @@ class TransferListenerNotifier extends TransferListener
      */
     public function __construct(array $listeners = [])
     {
+        usort($listeners, fn($a, $b) => $a->priority() <=> $b->priority());
         foreach ($listeners as $listener) {
             if (!$listener instanceof TransferListener) {
                 throw new \InvalidArgumentException(
@@ -19,6 +20,7 @@ class TransferListenerNotifier extends TransferListener
                 );
             }
         }
+
         $this->listeners = $listeners;
     }
 
@@ -46,14 +48,14 @@ class TransferListenerNotifier extends TransferListener
 
     /**
      * @inheritDoc
-     *
-     * @return void
      */
-    public function bytesTransferred(array $context): void
+    public function bytesTransferred(array $context): bool
     {
         foreach ($this->listeners as $listener) {
             $listener->bytesTransferred($context);
         }
+
+        return true;
     }
 
     /**

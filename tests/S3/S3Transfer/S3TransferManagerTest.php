@@ -2961,16 +2961,16 @@ EOF
                             }
 
                             /**
-                             * @param array $context
-                             *
-                             * @return void
+                             * @inheritDoc
                              */
-                            public function bytesTransferred(array $context): void {
+                            public function bytesTransferred(array $context): bool {
                                 $snapshot = $context[
                                 TransferListener::PROGRESS_SNAPSHOT_KEY
                                 ];
                                 $this->totalBytesReceived = $snapshot->getTransferredBytes();
                                 $this->totalPartsReceived++;
+
+                                return true;
                             }
                         }
                     ]
@@ -3117,11 +3117,9 @@ EOF
                             }
 
                             /**
-                             * @param array $context
-                             *
-                             * @return void
+                             * @inheritDoc
                              */
-                            public function bytesTransferred(array $context): void {
+                            public function bytesTransferred(array $context): bool {
                                 $snapshot = $context[
                                 TransferListener::PROGRESS_SNAPSHOT_KEY
                                 ];
