@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.359.11 - 2025-11-12
 
 * `Aws\Connect` - Updated Authentication Profile APIs to add support for automatic logout on user inactivity
 * `Aws\ElasticLoadBalancingv2` - This release expands ALB Authentication to support JWT verification and adds support for a new JWT validation action in listener rule.
