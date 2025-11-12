@@ -1680,6 +1680,24 @@
         {"shape":"UnsupportedOperationFault"}
       ]
     },
+    "GetIdentityCenterAuthToken":{
+      "name":"GetIdentityCenterAuthToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIdentityCenterAuthTokenRequest"},
+      "output":{
+        "shape":"GetIdentityCenterAuthTokenResponse",
+        "resultWrapper":"GetIdentityCenterAuthTokenResult"
+      },
+      "errors":[
+        {"shape":"ClusterNotFoundFault"},
+        {"shape":"InvalidClusterStateFault"},
+        {"shape":"UnsupportedOperationFault"},
+        {"shape":"RedshiftInvalidParameterFault"}
+      ]
+    },
     "GetReservedNodeExchangeConfigurationOptions":{
       "name":"GetReservedNodeExchangeConfigurationOptions",
       "http":{
@@ -2993,6 +3011,13 @@
       "member":{
         "shape":"ClusterIamRole",
         "locationName":"ClusterIamRole"
+      }
+    },
+    "ClusterIdentifierList":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"ClusterIdentifier"
       }
     },
     "ClusterList":{
@@ -4995,6 +5020,20 @@
         "CustomDomainName":{"shape":"String"}
       }
     },
+    "GetIdentityCenterAuthTokenRequest":{
+      "type":"structure",
+      "required":["ClusterIds"],
+      "members":{
+        "ClusterIds":{"shape":"ClusterIdentifierList"}
+      }
+    },
+    "GetIdentityCenterAuthTokenResponse":{
+      "type":"structure",
+      "members":{
+        "Token":{"shape":"SensitiveString"},
+        "ExpirationTime":{"shape":"TStamp"}
+      }
+    },
     "GetReservedNodeExchangeConfigurationOptionsInputMessage":{
       "type":"structure",
       "required":["ActionType"],
@@ -6592,6 +6631,16 @@
       "members":{},
       "error":{
         "code":"RedshiftIdcApplicationQuotaExceeded",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "RedshiftInvalidParameterFault":{
+      "type":"structure",
+      "members":{},
+      "error":{
+        "code":"RedshiftInvalidParameter",
         "httpStatusCode":400,
         "senderFault":true
       },

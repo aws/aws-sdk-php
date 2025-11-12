@@ -1384,6 +1384,7 @@
         "AnswerMachineDetectionConfig$EnableAnswerMachineDetection": "<p>The flag to indicate if answer machine detection analysis needs to be performed for a voice call. If set to <code>true</code>, <code>TrafficType</code> must be set as <code>CAMPAIGN</code>. </p>",
         "AnswerMachineDetectionConfig$AwaitAnswerMachinePrompt": "<p>Wait for the answering machine prompt.</p>",
         "AuthenticationProfile$IsDefault": "<p>Shows whether the authentication profile is the default authentication profile for the Amazon Connect instance. The default authentication profile applies to all agents in an Amazon Connect instance, unless overridden by another authentication profile.</p>",
+        "AuthenticationProfile$SessionInactivityHandlingEnabled": "<p>Determines if automatic logout on user inactivity is enabled.</p>",
         "AuthenticationProfileSummary$IsDefault": "<p>Shows whether the authentication profile is the default authentication profile for the Amazon Connect instance. The default authentication profile applies to all agents in an Amazon Connect instance, unless overridden by another authentication profile.</p>",
         "AutoEvaluationConfiguration$Enabled": "<p>Whether automated evaluations are enabled.</p>",
         "AutoEvaluationDetails$AutoEvaluationEnabled": "<p>Whether automated evaluation is enabled.</p>",
@@ -1405,7 +1406,8 @@
         "SignInDistribution$Enabled": "<p>Whether sign in distribution is enabled.</p>",
         "TrafficDistributionGroup$IsDefault": "<p>Whether this is the default traffic distribution group created during instance replication. The default traffic distribution group cannot be deleted by the <code>DeleteTrafficDistributionGroup</code> API. The default traffic distribution group is deleted as part of the process for deleting a replica.</p> <note> <p>The <code>SignInConfig</code> distribution is available only on a default <code>TrafficDistributionGroup</code> (see the <code>IsDefault</code> parameter in the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_TrafficDistributionGroup.html\">TrafficDistributionGroup</a> data type). If you call <code>UpdateTrafficDistribution</code> with a modified <code>SignInConfig</code> and a non-default <code>TrafficDistributionGroup</code>, an <code>InvalidRequestException</code> is returned.</p> </note>",
         "TrafficDistributionGroupSummary$IsDefault": "<p>Whether this is the default traffic distribution group created during instance replication. The default traffic distribution group cannot be deleted by the <code>DeleteTrafficDistributionGroup</code> API. The default traffic distribution group is deleted as part of the process for deleting a replica.</p>",
-        "UpdateAgentStatusRequest$ResetOrderNumber": "<p>A number indicating the reset order of the agent status.</p>"
+        "UpdateAgentStatusRequest$ResetOrderNumber": "<p>A number indicating the reset order of the agent status.</p>",
+        "UpdateAuthenticationProfileRequest$SessionInactivityHandlingEnabled": "<p>Determines if automatic logout on user inactivity is enabled.</p>"
       }
     },
     "BooleanComparisonType": {
@@ -5200,6 +5202,13 @@
     "ImportPhoneNumberResponse": {
       "base": null,
       "refs": {}
+    },
+    "InactivityDuration": {
+      "base": null,
+      "refs": {
+        "AuthenticationProfile$SessionInactivityDuration": "<p>The period, in minutes, before an agent is automatically signed out of the contact center when they go inactive.</p>",
+        "UpdateAuthenticationProfileRequest$SessionInactivityDuration": "<p>The period, in minutes, before an agent is automatically signed out of the contact center when they go inactive.</p>"
+      }
     },
     "InboundAdditionalRecipients": {
       "base": "<p>Information about the additional TO and CC recipients of an inbound email contact.</p> <note> <p>You can include up to 50 email addresses in total, distributed across <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_StartEmailContact.html#API_StartEmailContact_RequestBody\">DestinationEmailAddress</a>, <code>ToAddresses</code>, and <code>CcAddresses</code>. This total must include one required <code>DestinationEmailAddress</code>. You can then specify up to 49 addresses allocated across <code>ToAddresses</code> and <code>CcAddresses</code> as needed.</p> </note>",

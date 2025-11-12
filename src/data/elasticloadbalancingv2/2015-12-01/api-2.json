@@ -947,7 +947,8 @@
         "Order":{"shape":"ActionOrder"},
         "RedirectConfig":{"shape":"RedirectActionConfig"},
         "FixedResponseConfig":{"shape":"FixedResponseActionConfig"},
-        "ForwardConfig":{"shape":"ForwardActionConfig"}
+        "ForwardConfig":{"shape":"ForwardActionConfig"},
+        "JwtValidationConfig":{"shape":"JwtValidationActionConfig"}
       }
     },
     "ActionOrder":{
@@ -962,7 +963,8 @@
         "authenticate-oidc",
         "authenticate-cognito",
         "redirect",
-        "fixed-response"
+        "fixed-response",
+        "jwt-validation"
       ]
     },
     "Actions":{
@@ -2074,6 +2076,51 @@
       }
     },
     "IsDefault":{"type":"boolean"},
+    "JwtValidationActionAdditionalClaim":{
+      "type":"structure",
+      "required":[
+        "Format",
+        "Name",
+        "Values"
+      ],
+      "members":{
+        "Format":{"shape":"JwtValidationActionAdditionalClaimFormatEnum"},
+        "Name":{"shape":"JwtValidationActionAdditionalClaimName"},
+        "Values":{"shape":"JwtValidationActionAdditionalClaimValues"}
+      }
+    },
+    "JwtValidationActionAdditionalClaimFormatEnum":{
+      "type":"string",
+      "enum":[
+        "single-string",
+        "string-array",
+        "space-separated-values"
+      ]
+    },
+    "JwtValidationActionAdditionalClaimName":{"type":"string"},
+    "JwtValidationActionAdditionalClaimValue":{"type":"string"},
+    "JwtValidationActionAdditionalClaimValues":{
+      "type":"list",
+      "member":{"shape":"JwtValidationActionAdditionalClaimValue"}
+    },
+    "JwtValidationActionAdditionalClaims":{
+      "type":"list",
+      "member":{"shape":"JwtValidationActionAdditionalClaim"}
+    },
+    "JwtValidationActionConfig":{
+      "type":"structure",
+      "required":[
+        "JwksEndpoint",
+        "Issuer"
+      ],
+      "members":{
+        "JwksEndpoint":{"shape":"JwtValidationActionJwksEndpoint"},
+        "Issuer":{"shape":"JwtValidationActionIssuer"},
+        "AdditionalClaims":{"shape":"JwtValidationActionAdditionalClaims"}
+      }
+    },
+    "JwtValidationActionIssuer":{"type":"string"},
+    "JwtValidationActionJwksEndpoint":{"type":"string"},
     "LastModifiedTime":{"type":"timestamp"},
     "Limit":{
       "type":"structure",

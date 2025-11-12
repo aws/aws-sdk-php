@@ -1144,6 +1144,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise getFlowLogsIntegrationTemplateAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getGroupsForCapacityReservation(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise getGroupsForCapacityReservationAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result getImageAncestry(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise getImageAncestryAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getImageBlockPublicAccessState(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise getImageBlockPublicAccessStateAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getInstanceMetadataDefaults(array $args = []) (supported in versions 2016-11-15)

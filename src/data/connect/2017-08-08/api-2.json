@@ -5746,8 +5746,21 @@
         "CreatedTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
         "LastModifiedRegion":{"shape":"RegionName"},
-        "PeriodicSessionDuration":{"shape":"AccessTokenDuration"},
-        "MaxSessionDuration":{"shape":"RefreshTokenDuration"}
+        "PeriodicSessionDuration":{
+          "shape":"AccessTokenDuration",
+          "deprecated":true,
+          "deprecatedMessage":"PeriodicSessionDuration is deprecated. Use SessionInactivityDuration instead.",
+          "deprecatedSince":"10/31/2025"
+        },
+        "MaxSessionDuration":{"shape":"RefreshTokenDuration"},
+        "SessionInactivityDuration":{
+          "shape":"InactivityDuration",
+          "box":true
+        },
+        "SessionInactivityHandlingEnabled":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "AuthenticationProfileDescription":{
@@ -11956,6 +11969,12 @@
         "PhoneNumberId":{"shape":"PhoneNumberId"},
         "PhoneNumberArn":{"shape":"ARN"}
       }
+    },
+    "InactivityDuration":{
+      "type":"integer",
+      "box":true,
+      "max":720,
+      "min":15
     },
     "InboundAdditionalRecipients":{
       "type":"structure",
@@ -18823,6 +18842,17 @@
         "BlockedIps":{"shape":"IpCidrList"},
         "PeriodicSessionDuration":{
           "shape":"AccessTokenDuration",
+          "box":true,
+          "deprecated":true,
+          "deprecatedMessage":"PeriodicSessionDuration is deprecated. Use SessionInactivityDuration instead.",
+          "deprecatedSince":"10/31/2025"
+        },
+        "SessionInactivityDuration":{
+          "shape":"InactivityDuration",
+          "box":true
+        },
+        "SessionInactivityHandlingEnabled":{
+          "shape":"Boolean",
           "box":true
         }
       }

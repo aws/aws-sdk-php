@@ -4607,6 +4607,15 @@
       "input":{"shape":"GetHostReservationPurchasePreviewRequest"},
       "output":{"shape":"GetHostReservationPurchasePreviewResult"}
     },
+    "GetImageAncestry":{
+      "name":"GetImageAncestry",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetImageAncestryRequest"},
+      "output":{"shape":"GetImageAncestryResult"}
+    },
     "GetImageBlockPublicAccessState":{
       "name":"GetImageBlockPublicAccessState",
       "http":{
@@ -27976,6 +27985,23 @@
         }
       }
     },
+    "GetImageAncestryRequest":{
+      "type":"structure",
+      "required":["ImageId"],
+      "members":{
+        "ImageId":{"shape":"ImageId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetImageAncestryResult":{
+      "type":"structure",
+      "members":{
+        "ImageAncestryEntries":{
+          "shape":"ImageAncestryEntryList",
+          "locationName":"imageAncestryEntrySet"
+        }
+      }
+    },
     "GetImageBlockPublicAccessStateRequest":{
       "type":"structure",
       "members":{
@@ -29952,6 +29978,38 @@
           "shape":"PlatformValues",
           "locationName":"platform"
         }
+      }
+    },
+    "ImageAncestryEntry":{
+      "type":"structure",
+      "members":{
+        "CreationDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"creationDate"
+        },
+        "ImageId":{
+          "shape":"ImageId",
+          "locationName":"imageId"
+        },
+        "ImageOwnerAlias":{
+          "shape":"String",
+          "locationName":"imageOwnerAlias"
+        },
+        "SourceImageId":{
+          "shape":"ImageId",
+          "locationName":"sourceImageId"
+        },
+        "SourceImageRegion":{
+          "shape":"String",
+          "locationName":"sourceImageRegion"
+        }
+      }
+    },
+    "ImageAncestryEntryList":{
+      "type":"list",
+      "member":{
+        "shape":"ImageAncestryEntry",
+        "locationName":"item"
       }
     },
     "ImageAttribute":{

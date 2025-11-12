@@ -2511,7 +2511,8 @@
     "Source":{
       "type":"structure",
       "members":{
-        "eksConfiguration":{"shape":"EksConfiguration"}
+        "eksConfiguration":{"shape":"EksConfiguration"},
+        "vpcConfiguration":{"shape":"VpcConfiguration"}
       },
       "union":true
     },
@@ -2822,6 +2823,17 @@
         "FIELD_VALIDATION_FAILED",
         "OTHER"
       ]
+    },
+    "VpcConfiguration":{
+      "type":"structure",
+      "required":[
+        "securityGroupIds",
+        "subnetIds"
+      ],
+      "members":{
+        "securityGroupIds":{"shape":"SecurityGroupIds"},
+        "subnetIds":{"shape":"SubnetIds"}
+      }
     },
     "WorkspaceAlias":{
       "type":"string",

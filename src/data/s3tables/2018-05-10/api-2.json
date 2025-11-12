@@ -139,6 +139,24 @@
       ],
       "idempotent":true
     },
+    "DeleteTableBucketMetricsConfiguration":{
+      "name":"DeleteTableBucketMetricsConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/buckets/{tableBucketARN}/metrics",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteTableBucketMetricsConfigurationRequest"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
+    },
     "DeleteTableBucketPolicy":{
       "name":"DeleteTableBucketPolicy",
       "http":{
@@ -263,6 +281,25 @@
       },
       "input":{"shape":"GetTableBucketMaintenanceConfigurationRequest"},
       "output":{"shape":"GetTableBucketMaintenanceConfigurationResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "readonly":true
+    },
+    "GetTableBucketMetricsConfiguration":{
+      "name":"GetTableBucketMetricsConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/buckets/{tableBucketARN}/metrics",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTableBucketMetricsConfigurationRequest"},
+      "output":{"shape":"GetTableBucketMetricsConfigurationResponse"},
       "errors":[
         {"shape":"InternalServerErrorException"},
         {"shape":"ForbiddenException"},
@@ -499,6 +536,24 @@
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
       ]
+    },
+    "PutTableBucketMetricsConfiguration":{
+      "name":"PutTableBucketMetricsConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/buckets/{tableBucketARN}/metrics",
+        "responseCode":204
+      },
+      "input":{"shape":"PutTableBucketMetricsConfigurationRequest"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
     },
     "PutTableBucketPolicy":{
       "name":"PutTableBucketPolicy",
@@ -786,6 +841,17 @@
         }
       }
     },
+    "DeleteTableBucketMetricsConfigurationRequest":{
+      "type":"structure",
+      "required":["tableBucketARN"],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"uri",
+          "locationName":"tableBucketARN"
+        }
+      }
+    },
     "DeleteTableBucketPolicyRequest":{
       "type":"structure",
       "required":["tableBucketARN"],
@@ -963,6 +1029,25 @@
       "members":{
         "tableBucketARN":{"shape":"TableBucketARN"},
         "configuration":{"shape":"TableBucketMaintenanceConfiguration"}
+      }
+    },
+    "GetTableBucketMetricsConfigurationRequest":{
+      "type":"structure",
+      "required":["tableBucketARN"],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"uri",
+          "locationName":"tableBucketARN"
+        }
+      }
+    },
+    "GetTableBucketMetricsConfigurationResponse":{
+      "type":"structure",
+      "required":["tableBucketARN"],
+      "members":{
+        "tableBucketARN":{"shape":"TableBucketARN"},
+        "id":{"shape":"String"}
       }
     },
     "GetTableBucketPolicyRequest":{
@@ -1566,6 +1651,17 @@
           "locationName":"type"
         },
         "value":{"shape":"TableBucketMaintenanceConfigurationValue"}
+      }
+    },
+    "PutTableBucketMetricsConfigurationRequest":{
+      "type":"structure",
+      "required":["tableBucketARN"],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"uri",
+          "locationName":"tableBucketARN"
+        }
       }
     },
     "PutTableBucketPolicyRequest":{

@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - Updated Authentication Profile APIs to add support for automatic logout on user inactivity
+* `Aws\ElasticLoadBalancingv2` - This release expands ALB Authentication to support JWT verification and adds support for a new JWT validation action in listener rule.
+* `Aws\EC2` - Adds complete AMI ancestry tracing from immediate parent through each preceding generation back to the root AMI
+* `Aws\DatabaseMigrationService` - Added support of SQL statements creation, metadata model discovery and selection rules transformation.
+* `Aws\S3Tables` - Adds support for request metrics metrics APIs for S3 Tables
+* `Aws\PrometheusService` - Add VPC source configuration support enabling Amazon Managed Service for Prometheus Collector to collect metrics from MSK clusters.
+* `Aws\Redshift` - Added GetIdentityCenterAuthToken API to retrieve encrypted authentication tokens for Identity Center integrated applications. This API enables programmatic access to secure Identity Center tokens with proper error handling and parameter validation across supported SDK languages.
+* `Aws\SageMaker` - Add support for trn2.3xlarge instance type for SageMaker Hyperpod
+
 ## 3.359.10 - 2025-11-11
 
 * `Aws\RTBFabric` - Added LogSettings and LinkAttribute fields to external links

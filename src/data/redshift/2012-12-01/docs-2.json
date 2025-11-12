@@ -102,6 +102,7 @@
     "FailoverPrimaryCompute": "<p>Fails over the primary compute unit of the specified Multi-AZ cluster to another Availability Zone.</p>",
     "GetClusterCredentials": "<p>Returns a database user name and temporary password with temporary authorization to log on to an Amazon Redshift database. The action returns the database user name prefixed with <code>IAM:</code> if <code>AutoCreate</code> is <code>False</code> or <code>IAMA:</code> if <code>AutoCreate</code> is <code>True</code>. You can optionally specify one or more database user groups that the user will join at log on. By default, the temporary credentials expire in 900 seconds. You can optionally specify a duration between 900 seconds (15 minutes) and 3600 seconds (60 minutes). For more information, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/generating-user-credentials.html\">Using IAM Authentication to Generate Database User Credentials</a> in the Amazon Redshift Cluster Management Guide.</p> <p>The Identity and Access Management (IAM) user or role that runs GetClusterCredentials must have an IAM policy attached that allows access to all necessary actions and resources. For more information about permissions, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/redshift-iam-access-control-identity-based.html#redshift-policy-resources.getclustercredentials-resources\">Resource Policies for GetClusterCredentials</a> in the Amazon Redshift Cluster Management Guide.</p> <p>If the <code>DbGroups</code> parameter is specified, the IAM policy must allow the <code>redshift:JoinGroup</code> action with access to the listed <code>dbgroups</code>. </p> <p>In addition, if the <code>AutoCreate</code> parameter is set to <code>True</code>, then the policy must include the <code>redshift:CreateClusterUser</code> permission.</p> <p>If the <code>DbName</code> parameter is specified, the IAM policy must allow access to the resource <code>dbname</code> for the specified database name. </p>",
     "GetClusterCredentialsWithIAM": "<p>Returns a database user name and temporary password with temporary authorization to log in to an Amazon Redshift database. The database user is mapped 1:1 to the source Identity and Access Management (IAM) identity. For more information about IAM identities, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html\">IAM Identities (users, user groups, and roles)</a> in the Amazon Web Services Identity and Access Management User Guide.</p> <p>The Identity and Access Management (IAM) identity that runs this operation must have an IAM policy attached that allows access to all necessary actions and resources. For more information about permissions, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/redshift-iam-access-control-identity-based.html\">Using identity-based policies (IAM policies)</a> in the Amazon Redshift Cluster Management Guide. </p>",
+    "GetIdentityCenterAuthToken": "<p>Generates an encrypted authentication token that propagates the caller's Amazon Web Services IAM Identity Center identity to Amazon Redshift clusters. This API extracts the Amazon Web Services IAM Identity Center identity from enhanced credentials and creates a secure token that Amazon Redshift drivers can use for authentication.</p> <p>The token is encrypted using Key Management Service (KMS) and can only be decrypted by the specified Amazon Redshift clusters. The token contains the caller's Amazon Web Services IAM Identity Center identity information and is valid for a limited time period.</p> <p>This API is exclusively for use with Amazon Web Services IAM Identity Center enhanced credentials. If the caller is not using enhanced credentials with embedded Amazon Web Services IAM Identity Center identity, the API will return an error.</p>",
     "GetReservedNodeExchangeConfigurationOptions": "<p>Gets the configuration options for the reserved-node exchange. These options include information about the source reserved node and target reserved node offering. Details include the node type, the price, the node count, and the offering type.</p>",
     "GetReservedNodeExchangeOfferings": "<p>Returns an array of DC2 ReservedNodeOfferings that matches the payment type, term, and usage price of the given DC1 reserved node.</p>",
     "GetResourcePolicy": "<p>Get the resource policy for a specified resource.</p>",
@@ -560,6 +561,12 @@
       "base": null,
       "refs": {
         "Cluster$IamRoles": "<p>A list of Identity and Access Management (IAM) roles that can be used by the cluster to access other Amazon Web Services services.</p>"
+      }
+    },
+    "ClusterIdentifierList": {
+      "base": null,
+      "refs": {
+        "GetIdentityCenterAuthTokenRequest$ClusterIds": "<p>A list of cluster identifiers that the generated token can be used with. The token will be scoped to only allow authentication to the specified clusters.</p> <p>Constraints:</p> <ul> <li> <p> <code>ClusterIds</code> must contain at least 1 cluster identifier.</p> </li> <li> <p> <code>ClusterIds</code> can hold a maximum of 20 cluster identifiers.</p> </li> <li> <p>Cluster identifiers must be 1 to 63 characters in length.</p> </li> <li> <p>The characters accepted for cluster identifiers are the following:</p> <ul> <li> <p>Alphanumeric characters</p> </li> <li> <p>Hyphens</p> </li> </ul> </li> <li> <p>Cluster identifiers must start with a letter.</p> </li> <li> <p>Cluster identifiers can't end with a hyphen or contain two consecutive hyphens.</p> </li> </ul>"
       }
     },
     "ClusterList": {
@@ -1620,6 +1627,14 @@
       "base": null,
       "refs": {}
     },
+    "GetIdentityCenterAuthTokenRequest": {
+      "base": "<p>The request parameters for <code>GetIdentityCenterAuthToken</code>.</p>",
+      "refs": {}
+    },
+    "GetIdentityCenterAuthTokenResponse": {
+      "base": "<p>The response from GetIdentityCenterAuthToken containing the encrypted authentication token and expiration time.</p>",
+      "refs": {}
+    },
     "GetReservedNodeExchangeConfigurationOptionsInputMessage": {
       "base": null,
       "refs": {}
@@ -2653,6 +2668,10 @@
       "base": "<p>The maximum number of Redshift IAM Identity Center applications was exceeded.</p>",
       "refs": {}
     },
+    "RedshiftInvalidParameterFault": {
+      "base": "<p>The request contains one or more invalid parameters. This error occurs when required parameters are missing, parameter values are outside acceptable ranges, or parameter formats are incorrect.</p>",
+      "refs": {}
+    },
     "ReferenceLink": {
       "base": "<p>A link to an Amazon Redshift Advisor reference for more information about a recommendation.</p>",
       "refs": {
@@ -3043,6 +3062,7 @@
         "ClusterCredentials$DbPassword": "<p>A temporary password that authorizes the user name returned by <code>DbUser</code> to log on to the database <code>DbName</code>. </p>",
         "ClusterExtendedCredentials$DbPassword": "<p>A temporary password that you provide when you connect to a database.</p>",
         "CreateClusterMessage$MasterUserPassword": "<p>The password associated with the admin user account for the cluster that is being created.</p> <p>You can't use <code>MasterUserPassword</code> if <code>ManageMasterPassword</code> is <code>true</code>.</p> <p>Constraints:</p> <ul> <li> <p>Must be between 8 and 64 characters in length.</p> </li> <li> <p>Must contain at least one uppercase letter.</p> </li> <li> <p>Must contain at least one lowercase letter.</p> </li> <li> <p>Must contain one number.</p> </li> <li> <p>Can be any printable ASCII character (ASCII code 33-126) except <code>'</code> (single quote), <code>\"</code> (double quote), <code>\\</code>, <code>/</code>, or <code>@</code>.</p> </li> </ul>",
+        "GetIdentityCenterAuthTokenResponse$Token": "<p>The encrypted authentication token containing the caller's Amazon Web Services IAM Identity Center identity information. This token is encrypted using Key Management Service and can only be decrypted by the specified Amazon Redshift clusters. Use this token with Amazon Redshift drivers to authenticate using your Amazon Web Services IAM Identity Center identity.</p>",
         "ModifyClusterMessage$MasterUserPassword": "<p>The new password for the cluster admin user. This change is asynchronously applied as soon as possible. Between the time of the request and the completion of the request, the <code>MasterUserPassword</code> element exists in the <code>PendingModifiedValues</code> element of the operation response. </p> <p>You can't use <code>MasterUserPassword</code> if <code>ManageMasterPassword</code> is <code>true</code>.</p> <note> <p>Operations never return the password, so this operation provides a way to regain access to the admin user account for a cluster if the password is lost.</p> </note> <p>Default: Uses existing setting.</p> <p>Constraints:</p> <ul> <li> <p>Must be between 8 and 64 characters in length.</p> </li> <li> <p>Must contain at least one uppercase letter.</p> </li> <li> <p>Must contain at least one lowercase letter.</p> </li> <li> <p>Must contain one number.</p> </li> <li> <p>Can be any printable ASCII character (ASCII code 33-126) except <code>'</code> (single quote), <code>\"</code> (double quote), <code>\\</code>, <code>/</code>, or <code>@</code>.</p> </li> </ul>",
         "PendingModifiedValues$MasterUserPassword": "<p>The pending or in-progress change of the admin user password for the cluster.</p>"
       }
@@ -3299,6 +3319,7 @@
         "ClusterExtendedCredentials$DbUser": "<p>A database user name that you provide when you connect to a database. The database user is mapped 1:1 to the source IAM identity. </p>",
         "ClusterIamRole$IamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role, for example, <code>arn:aws:iam::123456789012:role/RedshiftCopyUnload</code>. </p>",
         "ClusterIamRole$ApplyStatus": "<p>A value that describes the status of the IAM role's association with an Amazon Redshift cluster.</p> <p>The following are possible statuses and descriptions.</p> <ul> <li> <p> <code>in-sync</code>: The role is available for use by the cluster.</p> </li> <li> <p> <code>adding</code>: The role is in the process of being associated with the cluster.</p> </li> <li> <p> <code>removing</code>: The role is in the process of being disassociated with the cluster.</p> </li> </ul>",
+        "ClusterIdentifierList$member": null,
         "ClusterNode$NodeRole": "<p>Whether the node is a leader node or a compute node.</p>",
         "ClusterNode$PrivateIPAddress": "<p>The private IP address of a node within a cluster.</p>",
         "ClusterNode$PublicIPAddress": "<p>The public IP address of a node within a cluster.</p>",
@@ -3969,6 +3990,7 @@
         "EndpointAuthorization$AuthorizeTime": "<p>The time (UTC) when the authorization was created.</p>",
         "Event$Date": "<p>The date and time of the event.</p>",
         "EventSubscription$SubscriptionCreationTime": "<p>The date and time the Amazon Redshift event notification subscription was created.</p>",
+        "GetIdentityCenterAuthTokenResponse$ExpirationTime": "<p>The time (UTC) when the token expires. After this timestamp, the token will no longer be valid for authentication.</p>",
         "InboundIntegration$CreateTime": "<p>The creation time of an inbound integration.</p>",
         "Integration$CreateTime": "<p>The time (UTC) when the integration was created.</p>",
         "LoggingStatus$LastSuccessfulDeliveryTime": "<p>The last time that logs were delivered.</p>",
