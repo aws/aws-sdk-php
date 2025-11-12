@@ -33,8 +33,8 @@ final class ResumableDownload
     /** @var int */
     private int $totalNumberOfParts;
 
-    /** @var string */
-    private string $temporaryFile;
+    /** @var string|null */
+    private ?string $temporaryFile;
 
     /** @var string */
     private string $eTag;
@@ -55,7 +55,7 @@ final class ResumableDownload
      * @param array $currentSnapshot The current progress snapshot
      * @param array $partsCompleted Map of completed part numbers (partNo => true)
      * @param int $totalNumberOfParts Total number of parts in the download
-     * @param string $temporaryFile Path to the temporary file being downloaded to
+     * @param string|null $temporaryFile Path to the temporary file being downloaded to
      * @param string $eTag ETag of the S3 object for consistency verification
      * @param int $objectSizeInBytes Total size of the object in bytes
      * @param int $fixedPartSize Size of each part in bytes
@@ -69,7 +69,7 @@ final class ResumableDownload
         array $currentSnapshot,
         array $partsCompleted,
         int $totalNumberOfParts,
-        string $temporaryFile,
+        ?string $temporaryFile,
         string $eTag,
         int $objectSizeInBytes,
         int $fixedPartSize,
@@ -297,9 +297,9 @@ final class ResumableDownload
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTemporaryFile(): string
+    public function getTemporaryFile(): ?string
     {
         return $this->temporaryFile;
     }

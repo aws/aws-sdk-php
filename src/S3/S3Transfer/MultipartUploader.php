@@ -4,6 +4,7 @@ namespace Aws\S3\S3Transfer;
 use Aws\HashingStream;
 use Aws\PhpHash;
 use Aws\ResultInterface;
+use Aws\S3\ApplyChecksumMiddleware;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
@@ -24,14 +25,6 @@ use Throwable;
  */
 final class MultipartUploader extends AbstractMultipartUploader
 {
-    static array $supportedAlgorithms = [
-        'ChecksumCRC32',
-        'ChecksumCRC32C',
-        'ChecksumCRC64NVME',
-        'ChecksumSHA1',
-        'ChecksumSHA256',
-    ];
-
     private const STREAM_WRAPPER_TYPE_PLAIN_FILE = 'plainfile';
     public const DEFAULT_CHECKSUM_CALCULATION_ALGORITHM = 'crc32';
     private const CHECKSUM_TYPE_FULL_OBJECT = 'FULL_OBJECT';
@@ -232,7 +225,9 @@ final class MultipartUploader extends AbstractMultipartUploader
     private function evaluateCustomChecksum(): void
     {
         // Evaluation for custom provided checksums
-        $checksumName = self::filterChecksum($this->requestArgs);
+        $checksumName = ApplyChecksumMiddleware::filterChecksum(
+            $this->requestArgs
+        );
         if ($checksumName !== null) {
             $this->requestChecksum = $this->requestArgs[$checksumName];
             $this->requestChecksumAlgorithm = str_replace(
@@ -427,23 +422,5 @@ final class MultipartUploader extends AbstractMultipartUploader
         return new HashingStream($stream, $hash, function ($result) use (&$data) {
             $data['ContentSHA256'] = bin2hex($result);
         });
-    }
-
-    /**
-     * Filters a provided checksum if one was provided.
-     *
-     * @param array $requestArgs
-     *
-     * @return string|null
-     */
-    private static function filterChecksum(array $requestArgs):? string
-    {
-        foreach (self::$supportedAlgorithms as $algorithm) {
-            if (isset($requestArgs[$algorithm])) {
-                return $algorithm;
-            }
-        }
-
-        return null;
     }
 }

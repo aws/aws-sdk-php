@@ -2,6 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Utils;
 
+use Aws\S3\ApplyChecksumMiddleware;
 use Aws\S3\S3Transfer\AbstractMultipartDownloader;
 use Aws\S3\S3Transfer\Exception\FileDownloadException;
 use Aws\S3\S3Transfer\Exception\S3TransferException;
@@ -206,7 +207,30 @@ class FileDownloadHandler extends DownloadHandler implements ResumableDownloadHa
             fseek($this->handle, $position);
 
             $body = $response['Body'];
-            $checksumContext = hash_init('sha256');
+            // In case body was already consumed by another process
+            if ($body->isSeekable()) {
+                $body->rewind();
+            }
+
+            // Try to validate a checksum when writting to disk
+            $checksumParameter = ApplyChecksumMiddleware::filterChecksum(
+                $response
+            );
+            $hashContext = null;
+            if ($checksumParameter !== null) {
+                $checksumAlgorithm = strtolower(
+                    str_replace(
+                        "Checksum",
+                        "",
+                        $checksumParameter
+                    )
+                );
+                $checksumAlgorithm = $checksumAlgorithm === 'crc32'
+                    ? 'crc32b'
+                    : $checksumAlgorithm;
+                $hashContext = hash_init($checksumAlgorithm);
+            }
+
             while (!$body->eof()) {
                 $chunk = $body->read(self::READ_BUFFER_SIZE);
 
@@ -214,16 +238,20 @@ class FileDownloadHandler extends DownloadHandler implements ResumableDownloadHa
                     throw new FileDownloadException("Failed to write data to temporary file.");
                 }
 
-                hash_update($checksumContext, $chunk);
+                if ($hashContext !== null) {
+                    hash_update($hashContext, $chunk);
+                }
             }
 
-            $finalChecksum = base64_encode(
-                hash_final($checksumContext, true)
-            );
-            if ($finalChecksum !== $response['ChecksumSHA256']) {
-                throw new FileDownloadException(
-                    "Checksum mismatch when writing part to temporary file."
+            if ($hashContext !== null) {
+                $calculatedChecksum = base64_encode(
+                    hash_final($hashContext, true)
                 );
+                if ($calculatedChecksum !== $response[$checksumParameter]) {
+                    throw new FileDownloadException(
+                        "Checksum mismatch when writing part to destination file."
+                    );
+                }
             }
 
             fflush($this->handle);
