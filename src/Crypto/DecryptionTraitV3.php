@@ -80,7 +80,7 @@ trait DecryptionTraitV3
             // PHP only supports one commiting algorithm suite
             $algorithmSuite = AlgorithmSuite::ALG_AES_256_GCM_HKDF_SHA512_COMMIT_KEY;
             $options['@CipherOptions'] = $options['@CipherOptions'] ?? [];
-            $options['@CipherOptions']['Iv'] = str_repeat("\0", 12);
+            $options['@CipherOptions']['Iv'] = str_repeat("\1", 12);
             $options['@CipherOptions']['TagLength'] = $algorithmSuite->getCipherTagLengthInBytes();
 
             //= ../specification/s3-encryption/data-format/content-metadata.md#v3-only

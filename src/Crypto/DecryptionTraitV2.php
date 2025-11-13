@@ -75,7 +75,7 @@ trait DecryptionTraitV2
             }
             $algorithmSuite = AlgorithmSuite::ALG_AES_256_GCM_HKDF_SHA512_COMMIT_KEY;
             $options['@CipherOptions'] = $options['@CipherOptions'] ?? [];
-            $options['@CipherOptions']['Iv'] = str_repeat("\0", 12);
+            $options['@CipherOptions']['Iv'] = str_repeat("\1", 12);
             $options['@CipherOptions']['TagLength'] = $algorithmSuite->getCipherTagLengthInBytes();
             $materialDescription = json_decode(
                 $envelope[MetadataEnvelope::ENCRYPTION_CONTEXT_V3],

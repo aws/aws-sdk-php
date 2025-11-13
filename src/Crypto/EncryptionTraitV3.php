@@ -217,8 +217,8 @@ trait EncryptionTraitV3
         //= ../specification/s3-encryption/key-derivation.md#hkdf-operation
         //# When encrypting or decrypting with ALG_AES_256_GCM_HKDF_SHA512_COMMIT_KEY,
         //# the IV used in the AES-GCM content encryption/decryption
-        //# MUST contain only zeros of the length defined in the algorithm suite.
-        $options['Iv'] = str_repeat("\0", $algorithmSuite->getIvLengthBytes());
+        //# MUST consist entirely of bytes with the value 0x01.
+        $options['Iv'] = str_repeat("\1", $algorithmSuite->getIvLengthBytes());
         $messageId = $provider->generateIv(
             $this->getCipherOpenSslName(
                 $algorithmSuite->getCipherName(),
@@ -442,7 +442,7 @@ trait EncryptionTraitV3
                 //= ../specification/s3-encryption/key-derivation.md#hkdf-operation
                 //= type=implication
                 //# The client MUST initialize the cipher, or call an AES-GCM encryption API,
-                //# with the derived encryption key, an IV containing only zeros,
+                //# with the derived encryption key, an IV containing only bytes with the value 0x01,
                 //# and the tag length defined in the Algorithm Suite when encrypting or
                 //# decrypting with ALG_AES_256_GCM_HKDF_SHA512_COMMIT_KEY.
                 $cipherTextStream = new $encryptClass(
