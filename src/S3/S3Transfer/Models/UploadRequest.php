@@ -14,6 +14,8 @@ final class UploadRequest extends TransferRequest
         'track_progress' => 'bool',
         'concurrency' => 'int',
         'request_checksum_calculation' => 'string',
+        'resume_enabled' => 'bool',
+        'resume_file_path' => 'string',
     ];
 
     /** @var StreamInterface|string  */
@@ -40,6 +42,11 @@ final class UploadRequest extends TransferRequest
      *   a default progress tracker implementation when $progressTracker is null.
      * - concurrency: (int, optional) To override default value for concurrency.
      * - request_checksum_calculation: (string, optional, defaulted to `when_supported`)
+     * - resume_enabled: (bool): To enable resuming a multipart download when a
+     *     failure occurs.
+     * - resume_file_path (string, optional): To override the default resume file
+     *     location to be generated. If specified the file name must end in `.resume`
+     *      otherwise it will be added automatically.
      * @param TransferListener[]|null $listeners
      * @param TransferListener|null $progressTracker
      *

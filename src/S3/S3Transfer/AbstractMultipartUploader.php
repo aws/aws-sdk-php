@@ -39,7 +39,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     protected string|null $uploadId;
 
     /** @var array */
-    protected array $parts;
+    protected array $partsCompleted;
 
     /** @var array */
     protected array $onCompletionCallbacks = [];
@@ -58,7 +58,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
      * - target_part_size_bytes: (int, optional)
      * - concurrency: (int, optional)
      * @param string|null $uploadId
-     * @param array $parts
+     * @param array $partsCompleted
      * @param TransferProgressSnapshot|null $currentSnapshot
      * @param TransferListenerNotifier|null $listenerNotifier
      */
@@ -67,7 +67,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         array $requestArgs,
         array $config = [],
         ?string $uploadId = null,
-        array $parts = [],
+        array $partsCompleted = [],
         ?TransferProgressSnapshot $currentSnapshot = null,
         ?TransferListenerNotifier $listenerNotifier = null,
     ) {
@@ -76,7 +76,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         $this->validateConfig($config);
         $this->config = $config;
         $this->uploadId = $uploadId;
-        $this->parts = $parts;
+        $this->partsCompleted = $partsCompleted;
         $this->currentSnapshot = $currentSnapshot;
         $this->listenerNotifier = $listenerNotifier;
     }
@@ -95,6 +95,24 @@ abstract class AbstractMultipartUploader implements PromisorInterface
      * @return PromiseInterface
      */
     abstract protected function processMultipartOperation(): PromiseInterface;
+
+    /**
+     * @param int $partSize
+     * @param array $requestArgs
+     * @param array $partData
+     *
+     * @return void
+     */
+    abstract protected function partCompleted(
+        int $partSize,
+        array $requestArgs,
+        array $partData
+    ): void;
+
+    /**
+     * @return PromiseInterface
+     */
+    abstract protected function abortMultipartOperation(): PromiseInterface;
 
     /**
      * @return int
@@ -144,9 +162,9 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     /**
      * @return array
      */
-    public function getParts(): array
+    public function getPartsCompleted(): array
     {
-        return $this->parts;
+        return $this->partsCompleted;
     }
 
     /**
@@ -181,39 +199,26 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     }
 
     /**
-     * @return PromiseInterface
-     */
-    protected function abortMultipartOperation(): PromiseInterface
-    {
-        $abortMultipartUploadArgs = $this->requestArgs;
-        $abortMultipartUploadArgs['UploadId'] = $this->uploadId;
-        $command = $this->s3Client->getCommand(
-            'AbortMultipartUpload',
-            $abortMultipartUploadArgs
-        );
-
-        return $this->s3Client->executeAsync($command);
-    }
-
-    /**
      * @return void
      */
     protected function sortParts(): void
     {
-        usort($this->parts, function ($partOne, $partTwo) {
-            return $partOne['PartNumber'] <=> $partTwo['PartNumber'];
+        usort($this->partsCompleted, function ($partOne, $partTwo) {
+            return $partOne['PartNumber']
+                <=> $partTwo['PartNumber'];
         });
     }
 
     /**
      * @param ResultInterface $result
      * @param CommandInterface $command
-     * @return void
+     *
+     * @return array
      */
     protected function collectPart(
         ResultInterface $result,
         CommandInterface $command
-    ): void
+    ): array
     {
         $checksumResult = match($command->getName()) {
             'UploadPart' => $result,
@@ -221,8 +226,9 @@ abstract class AbstractMultipartUploader implements PromisorInterface
             default => $result[$command->getName() . 'Result']
         };
 
+        $partNumber = $command['PartNumber'];
         $partData = [
-            'PartNumber' => $command['PartNumber'],
+            'PartNumber' => $partNumber,
             'ETag' => $checksumResult['ETag'],
         ];
 
@@ -231,7 +237,9 @@ abstract class AbstractMultipartUploader implements PromisorInterface
             $partData[$checksumMemberName] = $checksumResult[$checksumMemberName] ?? null;
         }
 
-        $this->parts[] = $partData;
+        $this->partsCompleted[$partNumber] = $partData;
+
+        return $partData;
     }
 
     /**
@@ -341,32 +349,6 @@ abstract class AbstractMultipartUploader implements PromisorInterface
                 $this->requestArgs,
             TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
             'reason' => $reason,
-        ]);
-    }
-
-    /**
-     * @param int $partSize
-     * @param array $requestArgs
-     * @return void
-     */
-    protected function partCompleted(
-        int $partSize,
-        array $requestArgs
-    ): void
-    {
-        $newSnapshot = new TransferProgressSnapshot(
-            $this->currentSnapshot->getIdentifier(),
-            $this->currentSnapshot->getTransferredBytes() + $partSize,
-            $this->currentSnapshot->getTotalBytes(),
-            $this->currentSnapshot->getResponse(),
-            $this->currentSnapshot->getReason(),
-        );
-
-        $this->currentSnapshot = $newSnapshot;
-
-        $this->listenerNotifier?->bytesTransferred([
-            TransferListener::REQUEST_ARGS_KEY => $requestArgs,
-            TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot
         ]);
     }
 

@@ -12,7 +12,10 @@ use Aws\S3\S3Transfer\Models\DownloadDirectoryResult;
 use Aws\S3\S3Transfer\Models\DownloadFileRequest;
 use Aws\S3\S3Transfer\Models\DownloadRequest;
 use Aws\S3\S3Transfer\Models\ResumableDownload;
+use Aws\S3\S3Transfer\Models\ResumableTransfer;
+use Aws\S3\S3Transfer\Models\ResumableUpload;
 use Aws\S3\S3Transfer\Models\ResumeDownloadRequest;
+use Aws\S3\S3Transfer\Models\ResumeUploadRequest;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\UploadDirectoryResult;
@@ -369,8 +372,13 @@ final class S3TransferManager
     ): PromiseInterface
     {
         $resumableDownload = $resumeDownloadRequest->getResumableDownload();
-        if (is_string($resumableDownload)
-            && $this->isResumeFile($resumableDownload)) {
+        if (is_string($resumableDownload)) {
+            if (!ResumableTransfer::isResumeFile($resumableDownload)) {
+                throw new S3TransferException(
+                    "Resume file `$resumableDownload` is not a valid resumable file."
+                );
+            }
+
             $resumableDownload = ResumableDownload::fromFile($resumableDownload);
         }
 
@@ -452,40 +460,75 @@ final class S3TransferManager
     }
 
     /**
-     * Check if a file path is a valid resume file.
+     * @param ResumeUploadRequest $resumeUploadRequest
      *
-     * @param string $filePath
-     * @return bool
+     * @return PromiseInterface
      */
-    private function isResumeFile(string $filePath): bool
+    public function resumeUpload(
+        ResumeUploadRequest $resumeUploadRequest
+    ): PromiseInterface
     {
-        // Check file extension
-        if (!str_ends_with($filePath, '.resume')) {
-            return false;
-        }
-
-        // Check if file exists and is readable
-        if (!file_exists($filePath) || !is_readable($filePath)) {
-            return false;
-        }
-
-        // Validate file content by attempting to parse it
-        try {
-            $json = file_get_contents($filePath);
-            if ($json === false) {
-                return false;
+        $resumableUpload = $resumeUploadRequest->getResumableUpload();
+        if (is_string($resumableUpload)) {
+            if (!ResumableTransfer::isResumeFile($resumableUpload)) {
+                throw new S3TransferException(
+                    "Resume file `$resumableUpload` is not a valid resumable file."
+                );
             }
 
-            $data = json_decode($json, true);
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                return false;
-            }
-
-            // Check for required version field
-            return isset($data['version']) && is_array($data);
-        } catch (\Exception $e) {
-            return false;
+            $resumableUpload = ResumableUpload::fromFile($resumableUpload);
         }
+
+        // Verify that source file still exists
+        if (!file_exists($resumableUpload->getSource())) {
+            throw new S3TransferException(
+                "Cannot resume upload: source file does not exist: "
+                . $resumableUpload->getSource()
+            );
+        }
+
+        // Verify upload still exists in S3 by checking uploadId
+        $uploads = $this->s3Client->listMultipartUploads([
+            'Bucket' => $resumableUpload->getBucket(),
+            'Prefix' => $resumableUpload->getKey(),
+        ]);
+
+        $uploadExists = false;
+        foreach ($uploads['Uploads'] ?? [] as $upload) {
+            if ($upload['UploadId'] === $resumableUpload->getUploadId()
+                && $upload['Key'] === $resumableUpload->getKey()) {
+                $uploadExists = true;
+                break;
+            }
+        }
+
+        if (!$uploadExists) {
+            throw new S3TransferException(
+                "Cannot resume upload: multipart upload no longer exists (UploadId: "
+                . $resumableUpload->getUploadId() . ")"
+            );
+        }
+
+        $config = $resumableUpload->getConfig();
+        $progressTracker = $resumeUploadRequest->getProgressTracker();
+        $listeners = $resumeUploadRequest->getListeners();
+
+        if ($progressTracker === null
+            && ($config['track_progress'] ?? $this->config->isTrackProgress())) {
+            $progressTracker = new SingleProgressTracker();
+            $listeners[] = $progressTracker;
+        }
+
+        $listenerNotifier = new TransferListenerNotifier($listeners);
+
+        return (new MultipartUploader(
+            $this->s3Client,
+            $resumableUpload->getRequestArgs(),
+            $resumableUpload->getSource(),
+            $config,
+            listenerNotifier: $listenerNotifier,
+            resumableUpload: $resumableUpload,
+        ))->promise();
     }
 
     /**

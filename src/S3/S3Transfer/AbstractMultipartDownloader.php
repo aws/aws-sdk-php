@@ -74,7 +74,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
      * @param array $downloadRequestArgs
      * @param array $config
      * @param ?DownloadHandler $downloadHandler
-     * @param array $completedParts
+     * @param array $partsCompleted
      * @param int $objectPartsCount
      * @param int $objectSizeInBytes
      * @param string|null $eTag
@@ -87,7 +87,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
         array $downloadRequestArgs,
         array $config = [],
         ?DownloadHandler $downloadHandler = null,
-        array $completedParts = [],
+        array $partsCompleted = [],
         int $objectPartsCount = 0,
         int $objectSizeInBytes = 0,
         ?string $eTag = null,
@@ -112,7 +112,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
                 );
             }
         } else {
-            $this->partsCompleted = $completedParts;
+            $this->partsCompleted = $partsCompleted;
             $this->objectPartsCount = $objectPartsCount;
             $this->objectSizeInBytes = $objectSizeInBytes;
             $this->eTag = $eTag;
@@ -541,24 +541,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
 
         // Delete resume file on successful completion
         if ($this->config['resume_enabled'] ?? false) {
-            $this->deleteResumeFile();
-        }
-    }
-
-    /**
-     * Delete the resume file.
-     *
-     * @return void
-     */
-    private function deleteResumeFile(): void
-    {
-        if ($this->resumableDownload === null) {
-            return;
-        }
-
-        $resumeFilePath = $this->resumableDownload->getResumeFilePath();
-        if (file_exists($resumeFilePath)) {
-            unlink($resumeFilePath);
+            $this->resumableDownload?->deleteResumeFile();
         }
     }
 
@@ -601,15 +584,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
         }
 
         try {
-
-            // Ensure directory exists
-            $resumeFilePath = $this->resumableDownload->getResumeFilePath();
-            $resumeDir = dirname($resumeFilePath);
-            if (!is_dir($resumeDir) && !mkdir($resumeDir, 0755, true)) {
-                throw new S3TransferException("Failed to create resume directory: $resumeDir");
-            }
-
-            $this->resumableDownload->toFile($resumeFilePath);
+            $this->resumableDownload->toFile();
         } catch (\Exception $e) {
             throw new S3TransferException(
                 "Unable to persists resumable download state due to: " . $e->getMessage(),

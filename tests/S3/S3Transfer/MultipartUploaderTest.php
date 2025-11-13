@@ -107,7 +107,7 @@ class MultipartUploaderTest extends TestCase
             $snapshot = $multipartUploader->getCurrentSnapshot();
 
             $this->assertInstanceOf(UploadResult::class, $response);
-            $this->assertCount($expected['parts'], $multipartUploader->getParts());
+            $this->assertCount($expected['parts'], $multipartUploader->getPartsCompleted());
             $this->assertEquals($expected['bytesUploaded'], $snapshot->getTransferredBytes());
             $this->assertEquals($expected['bytesUploaded'], $snapshot->getTotalBytes());
         } finally {

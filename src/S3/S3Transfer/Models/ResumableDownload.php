@@ -8,24 +8,10 @@ use Aws\S3\S3Transfer\Exception\S3TransferException;
  * Represents the state of a resumable multipart download.
  * This class can be serialized to/from JSON to persist download progress.
  */
-final class ResumableDownload
+final class ResumableDownload extends ResumableTransfer
 {
-    private const VERSION = '1.0';
-
-    /** @var string */
-    private string $resumeFilePath;
-
-    /** @var array */
-    private array $requestArgs;
-
-    /** @var array */
-    private array $config;
-
     /** @var array */
     private array $initialRequestResult;
-
-    /** @var array */
-    private array $currentSnapshot;
 
     /** @var array */
     private array $partsCompleted;
@@ -65,8 +51,8 @@ final class ResumableDownload
         string $resumeFilePath,
         array $requestArgs,
         array $config,
-        array $initialRequestResult,
         array $currentSnapshot,
+        array $initialRequestResult,
         array $partsCompleted,
         int $totalNumberOfParts,
         ?string $temporaryFile,
@@ -75,15 +61,13 @@ final class ResumableDownload
         int $fixedPartSize,
         string $destination
     ) {
-        // Resume files must end in .resume
-        if (!str_ends_with($resumeFilePath, '.resume')) {
-            $resumeFilePath .= '.resume';
-        }
-        $this->resumeFilePath = $resumeFilePath;
-        $this->requestArgs = $requestArgs;
-        $this->config = $config;
+        parent::__construct(
+            $resumeFilePath,
+            $requestArgs,
+            $config,
+            $currentSnapshot,
+        );
         $this->initialRequestResult = $initialRequestResult;
-        $this->currentSnapshot = $currentSnapshot;
         $this->partsCompleted = $partsCompleted;
         $this->totalNumberOfParts = $totalNumberOfParts;
         $this->temporaryFile = $temporaryFile;
@@ -177,8 +161,8 @@ final class ResumableDownload
             $data['resumeFilePath'],
             $data['requestArgs'],
             $data['config'],
-            $data['initialRequestResult'],
             $data['currentSnapshot'],
+            $data['initialRequestResult'],
             $data['partsCompleted'],
             $data['totalNumberOfParts'],
             $data['temporaryFile'],
@@ -190,11 +174,9 @@ final class ResumableDownload
     }
 
     /**
-     * Load a resumable download state from a file.
+     * @param string $filePath
      *
-     * @param string $filePath Path to the resume file
      * @return self
-     * @throws S3TransferException If the file cannot be read or is invalid
      */
     public static function fromFile(string $filePath): self
     {
@@ -203,40 +185,43 @@ final class ResumableDownload
                 "Resume file does not exist: $filePath"
             );
         }
-
-        if (!is_readable($filePath)) {
-            throw new S3TransferException(
-                "Resume file is not readable: $filePath"
-            );
-        }
-
-        $json = file_get_contents($filePath);
-        if ($json === false) {
+        $content = file_get_contents($filePath);
+        if ($content === false) {
             throw new S3TransferException(
                 "Failed to read resume file: $filePath"
             );
         }
 
-        return self::fromJson($json);
-    }
-
-    /**
-     * Save the resumable download state to a file.
-     * When a file path is not provided by default it will use
-     * the `resumeFilePath` property.
-     *
-     * @param string|null $filePath Path where the resume file should be saved
-     */
-    public function toFile(?string $filePath = null): void
-    {
-        $saveFileToPath = $filePath ?? $this->resumeFilePath;
-        $json = $this->toJson();
-        $result = file_put_contents($saveFileToPath, $json, LOCK_EX);
-        if ($result === false) {
+        $fileData = json_decode($content, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
             throw new S3TransferException(
-                "Failed to write resume file: $saveFileToPath"
+                'Failed to parse resume file: ' . json_last_error_msg()
             );
         }
+
+        // Validate signature if present
+        if (isset($fileData['signature'], $fileData['data'])) {
+            $expectedSignature = hash(
+                self::SIGNATURE_CHECKSUM_ALGORITHM,
+                json_encode(
+                    $fileData['data'],
+                    JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+                )
+            );
+
+            if (!hash_equals($fileData['signature'], $expectedSignature)) {
+                throw new S3TransferException(
+                    'Resume file integrity check failed: signature mismatch'
+                );
+            }
+
+            $json = json_encode($fileData['data']);
+        } else {
+            // Legacy format without signature
+            $json = $content;
+        }
+
+        return self::fromJson($json);
     }
 
     /**
@@ -302,22 +287,6 @@ final class ResumableDownload
     public function getTemporaryFile(): ?string
     {
         return $this->temporaryFile;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBucket(): string
-    {
-        return $this->requestArgs['Bucket'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getKey(): string
-    {
-        return $this->requestArgs['Key'];
     }
 
     /**
