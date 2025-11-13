@@ -61,6 +61,8 @@ class ClientResolver
         __CLASS__,
         '_resolve_from_env_ini'
     ];
+    private const ANONYMOUS_SIGNATURE = 'anonymous';
+    private const DPOP_SIGNATURE = 'dpop';
 
     /** @var array Map of types to a corresponding function */
     private static $typeMap = [
@@ -668,7 +670,10 @@ class ClientResolver
             $args['credentials'] = CredentialProvider::fromCredentials(
                 new Credentials('', '')
             );
-            $args['config']['signature_version'] = 'anonymous';
+            if ($args['config']['signature_version'] !== self::DPOP_SIGNATURE) {
+                $args['config']['signature_version'] = self::ANONYMOUS_SIGNATURE;
+            }
+
             $args['config']['configured_signature_version'] = true;
         } elseif ($value instanceof CacheInterface) {
             $args['credentials'] = CredentialProvider::defaultProvider($args);

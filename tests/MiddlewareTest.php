@@ -14,6 +14,7 @@ use Aws\Middleware;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\ResultInterface;
+use Aws\Signature\DpopSignature;
 use Aws\Signature\SignatureV4;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
@@ -108,9 +109,27 @@ class MiddlewareTest extends TestCase
         $this->assertTrue($req->hasHeader('Authorization'));
     }
 
-    public function TestOverridesAuthScheme()
+    public function testSignerRejectsDpopWithoutValidKey()
     {
-
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage(
+            'A valid DPoP key must be present for DPoP signatures'
+        );
+        $list = new HandlerList();
+        $mock = function ($command, $request) use (&$req) {
+            $req = $request;
+            return Promise\Create::promiseFor(
+                new Result(['@metadata' => ['statusCode' => 200]])
+            );
+        };
+        $list->setHandler($mock);
+        // Equivalent to `'credentials' => false`
+        $creds = CredentialProvider::fromCredentials(new Credentials('', ''));
+        $signature = new DpopSignature('signin');
+        $list->appendSign(Middleware::signer($creds, Aws\constantly($signature)));
+        $handler = $list->resolve();
+        $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
+        Promise\Utils::queue()->run();
     }
 
     public function testBuildsRequests()
