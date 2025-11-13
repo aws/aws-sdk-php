@@ -718,7 +718,7 @@ final class S3TransferManager
      * @param array $config
      * @param DownloadHandler $downloadHandler
      * @param TransferListenerNotifier|null $listenerNotifier
-     *
+     * @param ResumableDownload|null $resumableDownload
      * @return PromiseInterface
      */
     private function tryMultipartDownload(

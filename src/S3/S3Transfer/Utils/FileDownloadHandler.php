@@ -119,6 +119,8 @@ class FileDownloadHandler extends DownloadHandler implements ResumableDownloadHa
 
     /**
      * @param array $context
+     *
+     * @return bool
      */
     public function bytesTransferred(array $context): bool
     {

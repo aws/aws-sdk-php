@@ -15,6 +15,10 @@ use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryResult;
 use Aws\S3\S3Transfer\Models\DownloadRequest;
 use Aws\S3\S3Transfer\Models\DownloadResult;
+use Aws\S3\S3Transfer\Models\ResumableDownload;
+use Aws\S3\S3Transfer\Models\ResumableUpload;
+use Aws\S3\S3Transfer\Models\ResumeDownloadRequest;
+use Aws\S3\S3Transfer\Models\ResumeUploadRequest;
 use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\UploadDirectoryResult;
 use Aws\S3\S3Transfer\Models\UploadRequest;
@@ -76,6 +80,22 @@ EOF,
     </Contents>
 EOF
     ];
+
+    /** @var string */
+    private string $tempDir;
+
+    protected function setUp(): void
+    {
+        $this->tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 's3-transfer-manager-resume-test/';
+        if (!is_dir($this->tempDir)) {
+            mkdir($this->tempDir, 0777, true);
+        }
+    }
+
+    protected function tearDown(): void
+    {
+        TestsUtility::cleanUpDir($this->tempDir);
+    }
 
     /**
      * @return void
@@ -3807,5 +3827,352 @@ EOF
         }
 
         return $client;
+    }
+
+    /**
+     * @return void
+     */
+    public function testResumeDownloadFailsWithInvalidResumeFile(): void
+    {
+        $invalidResumeFile = $this->tempDir . 'invalid.resume';
+        file_put_contents($invalidResumeFile, 'invalid json content');
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeDownloadRequest($invalidResumeFile);
+
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage(
+            "Resume file `$invalidResumeFile` is not a valid resumable file."
+        );
+        $manager->resumeDownload($request)->wait();
+    }
+
+    /**
+     * @return void
+     */
+    public function testResumeDownloadFailsWhenTemporaryFileNoLongerExists(): void
+    {
+        $destination = $this->tempDir . 'download.txt';
+        $tempFile = $this->tempDir . 'temp.s3tmp.12345678';
+        $resumeFile = $this->tempDir . 'test.resume';
+
+        $resumable = new ResumableDownload(
+            $resumeFile,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            ['target_part_size_bytes' => 5242880],
+            ['transferred_bytes' => 500, 'total_bytes' => 1000],
+            ['ETag' => 'test-etag', 'ContentLength' => 1000],
+            [1 => true],
+            2,
+            $tempFile,
+            'test-etag',
+            1000,
+            500,
+            $destination
+        );
+        $resumable->toFile();
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeDownloadRequest($resumeFile);
+
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage(
+            "Cannot resume download: temporary file does not exist: " . $tempFile
+        );
+        $manager->resumeDownload($request)->wait();
+    }
+
+    /**
+     * @return void
+     */
+    public function testResumeUploadFailsWithInvalidResumeFile(): void
+    {
+        $invalidResumeFile = $this->tempDir . 'invalid.resume';
+        file_put_contents($invalidResumeFile, 'invalid json content');
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeUploadRequest($invalidResumeFile);
+
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage(
+            "Resume file `$invalidResumeFile` is not a valid resumable file."
+        );
+        $manager->resumeUpload($request)->wait();
+    }
+
+    /**
+     * @return void
+     */
+    public function testResumeUploadFailsWhenSourceFileNoLongerExists(): void
+    {
+        $sourceFile = $this->tempDir . 'upload.txt';
+        $resumeFile = $this->tempDir . 'test.resume';
+
+        $resumable = new ResumableUpload(
+            $resumeFile,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            ['target_part_size_bytes' => 5242880],
+            ['transferred_bytes' => 500, 'total_bytes' => 1000],
+            'upload-id-123',
+            [1 => ['PartNumber' => 1, 'ETag' => 'etag1']],
+            $sourceFile,
+            1000,
+            500,
+            false
+        );
+        $resumable->toFile();
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeUploadRequest($resumeFile);
+
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage(
+            "Cannot resume upload: source file does not exist: " . $sourceFile
+        );
+        $manager->resumeUpload($request)->wait();
+    }
+
+    /**
+     * @return void
+     */
+    public function testResumeUploadFailsWhenUploadIdNotFoundInS3(): void
+    {
+        $sourceFile = $this->tempDir . 'upload.txt';
+        file_put_contents($sourceFile, str_repeat('a', 1000));
+        $resumeFile = $this->tempDir . 'test.resume';
+        $uploadId = 'test-upload-id-123';
+        $resumable = new ResumableUpload(
+            $resumeFile,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            ['target_part_size_bytes' => 500],
+            ['transferred_bytes' => 500, 'total_bytes' => 1000],
+            $uploadId,
+            [1 => ['PartNumber' => 1, 'ETag' => 'etag1']],
+            $sourceFile,
+            1000,
+            500,
+            false
+        );
+        $resumable->toFile();
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockClient->method('executeAsync')
+            ->willReturnCallback(function ($command) {
+                if ($command->getName() === 'ListMultipartUploads') {
+                    return Create::promiseFor(new Result(['Uploads' => []]));
+                }
+                return Create::promiseFor(new Result([]));
+            });
+
+        $mockClient->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeUploadRequest($resumeFile);
+
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage(
+            "Cannot resume upload: multipart upload no longer exists (UploadId: " . $uploadId. ")"
+        );
+        $manager->resumeUpload($request)->wait();
+    }
+
+    public function testResumeDownloadFailsWhenETagNoLongerMatches(): void
+    {
+        $destination = $this->tempDir . 'download.txt';
+        $tempFile = $this->tempDir . 'temp.s3tmp.12345678';
+        file_put_contents($tempFile, str_repeat("\0", 1000));
+        $resumeFile = $this->tempDir . 'test.resume';
+
+        $resumable = new ResumableDownload(
+            $resumeFile,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            ['target_part_size_bytes' => 500],
+            ['transferred_bytes' => 500, 'total_bytes' => 1000],
+            ['ETag' => 'old-etag', 'ContentLength' => 500],
+            [1 => true],
+            2,
+            $tempFile,
+            'old-etag',
+            1000,
+            500,
+            $destination
+        );
+        $resumable->toFile();
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['__call'])
+            ->getMock();
+
+        $mockClient->method('__call')
+            ->willReturnCallback(function ($name, $args) {
+                if ($name === 'headObject') {
+                    return new Result(['ETag' => 'new-etag']);
+                }
+                return new Result([]);
+            });
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeDownloadRequest($resumeFile);
+
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage('ETag mismatch');
+        $manager->resumeDownload($request)->wait();
+    }
+
+    /**
+     * @return void
+     */
+    public function testSuccessfullyResumesFailedDownload(): void
+    {
+        $destination = $this->tempDir . 'download.txt';
+        $tempFile = $this->tempDir . 'temp.s3tmp.12345678';
+        file_put_contents($tempFile, str_repeat('a', 500) . str_repeat("\0", 500));
+        $resumeFile = $this->tempDir . 'test.resume';
+
+        $resumable = new ResumableDownload(
+            $resumeFile,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            [
+                'target_part_size_bytes' => 500,
+                'resume_enabled' => true,
+                'multipart_download_type' => 'ranged'
+            ],
+            ['transferred_bytes' => 500, 'total_bytes' => 1000, 'identifier' => 'test-key'],
+            ['ETag' => 'test-etag', 'ContentLength' => 500],
+            [1 => true],
+            2,
+            $tempFile,
+            'test-etag',
+            1000,
+            500,
+            $destination
+        );
+        $resumable->toFile();
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['__call', 'getCommand', 'executeAsync'])
+            ->getMock();
+
+        $mockClient->method('__call')
+            ->willReturnCallback(function ($name, $args) {
+                if ($name === 'headObject') {
+                    return new Result(['ETag' => 'test-etag']);
+                }
+                return new Result([]);
+            });
+
+        $mockClient->method('executeAsync')
+            ->willReturnCallback(function ($command) {
+                if ($command->getName() === 'GetObject') {
+                    return Create::promiseFor(new Result([
+                        'Body' => Utils::streamFor(str_repeat('b', 500)),
+                        'ContentRange' => 'bytes 500-999/1000',
+                        'ContentLength' => 500
+                    ]));
+                }
+                return Create::promiseFor(new Result([]));
+            });
+
+        $mockClient->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeDownloadRequest($resumeFile);
+
+        $manager->resumeDownload($request)->wait();
+        $this->assertFileExists($destination);
+        $this->assertEquals(
+            str_repeat('a', 500).str_repeat('b', 500),
+            file_get_contents($destination)
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testSuccessfullyResumesFailedUpload(): void
+    {
+        $sourceFile = $this->tempDir . 'upload.txt';
+        file_put_contents($sourceFile, str_repeat('a', 10485760));
+        $resumeFile = $this->tempDir . 'test.resume';
+
+        $resumable = new ResumableUpload(
+            $resumeFile,
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            ['target_part_size_bytes' => 5242880, 'resume_enabled' => true],
+            ['transferred_bytes' => 5242880, 'total_bytes' => 10485760, 'identifier' => 'test-key'],
+            'test-upload-id',
+            [1 => ['PartNumber' => 1, 'ETag' => 'etag1']],
+            $sourceFile,
+            10485760,
+            5242880,
+            false
+        );
+        $resumable->toFile();
+
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['__call', 'getCommand', 'executeAsync'])
+            ->getMock();
+
+        $mockClient->method('__call')
+            ->willReturnCallback(function ($name, $args) {
+                if ($name === 'listMultipartUploads') {
+                    return new Result([
+                        'Uploads' => [
+                            ['UploadId' => 'test-upload-id', 'Key' => 'test-key']
+                        ]
+                    ]);
+                }
+                return new Result([]);
+            });
+
+        $mockClient->method('executeAsync')
+            ->willReturnCallback(function ($command) {
+                if ($command->getName() === 'UploadPart') {
+                    return Create::promiseFor(new Result(['ETag' => 'etag2']));
+                }
+                if ($command->getName() === 'CompleteMultipartUpload') {
+                    return Create::promiseFor(new Result(['Location' => 's3://test-bucket/test-key']));
+                }
+                return Create::promiseFor(new Result([]));
+            });
+
+        $mockClient->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+
+        $manager = new S3TransferManager($mockClient);
+        $request = new ResumeUploadRequest($resumeFile);
+
+        $manager->resumeUpload($request)->wait();
+        $this->assertFileDoesNotExist($resumeFile);
     }
 }
