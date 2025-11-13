@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.359.12 - 2025-11-13
 
 * `Aws\EC2` - Added support for new accelerator types ("media") and accelerator names ("L4", "L40s", "GAUDI_HL_205", "INFERENTIA2", "TRAINIUM", "TRAINIUM2", "U30") in Attributes Based Instance Type Selection for launched instance types.
 * `Aws\IoTWireless` - Integration of Device Location with Amazon Sidewalk network for Amazon Sidewalk enabled devices
