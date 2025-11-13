@@ -707,7 +707,6 @@ final class S3TransferManager
                 return new DownloadDirectoryResult(
                     $objectsDownloaded,
                     $objectsFailed,
-                    $reason
                 );
             });
     }

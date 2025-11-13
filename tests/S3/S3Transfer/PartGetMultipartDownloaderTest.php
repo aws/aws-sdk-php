@@ -126,47 +126,6 @@ class PartGetMultipartDownloaderTest extends TestCase
     }
 
     /**
-     * Tests nextCommand method increments part number correctly.
-     *
-     * @return void
-     */
-    public function testNextCommandIncrementsPartNumber(): void
-    {
-        $mockClient = $this->getMockBuilder(S3Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        
-        $mockClient->method('getCommand')
-            ->willReturnCallback(function ($commandName, $args) {
-                return new Command($commandName, $args);
-            });
-
-        $downloader = new PartGetMultipartDownloader(
-            $mockClient,
-            [
-                'Bucket' => 'TestBucket',
-                'Key' => 'TestKey',
-            ],
-            [],
-            new StreamDownloadHandler()
-        );
-
-        // Use reflection to test the protected nextCommand method
-        $reflection = new \ReflectionClass($downloader);
-        $nextCommandMethod = $reflection->getMethod('nextCommand');
-
-        // First call should set part number to 1
-        $command1 = $nextCommandMethod->invoke($downloader);
-        $this->assertEquals(1, $command1['PartNumber']);
-        $this->assertEquals(1, $downloader->getCurrentPartNo());
-
-        // Second call should increment to 2
-        $command2 = $nextCommandMethod->invoke($downloader);
-        $this->assertEquals(2, $command2['PartNumber']);
-        $this->assertEquals(2, $downloader->getCurrentPartNo());
-    }
-
-    /**
      * Tests computeObjectDimensions method correctly calculates object size.
      *
      * @return void

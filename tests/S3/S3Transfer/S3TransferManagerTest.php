@@ -470,6 +470,8 @@ EOF
                 $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
                 $this->assertEquals($expectedIncrementalPartSize, $snapshot->getTransferredBytes());
                 $expectedIncrementalPartSize += $expectedPartSize;
+
+                return true;
             });
         $transferListener->expects($this->exactly($expectedPartCount))
             ->method('bytesTransferred');
@@ -1433,6 +1435,8 @@ EOF
                     /** @var TransferProgressSnapshot $snapshot */
                     $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
                     $objectKeys[$snapshot->getIdentifier()] = true;
+
+                    return true;
                 });
             $manager->uploadDirectory(
                 new UploadDirectoryRequest(
@@ -1543,6 +1547,8 @@ EOF
                 return Create::promiseFor(new Result([
                     'Body' => Utils::streamFor(),
                     'PartsCount' => 1,
+                    'ContentLength' => random_int(0, 100),
+                    'ContentRange' => 'bytes 0-1/1',
                     '@metadata' => []
                 ]));
             },
@@ -1578,6 +1584,7 @@ EOF
                 return Create::promiseFor(new Result([
                     'Body' => Utils::streamFor(),
                     'PartsCount' => 1,
+                    'ContentLength' => random_int(0, 100),
                     '@metadata' => []
                 ]));
             },
@@ -1631,6 +1638,7 @@ EOF
                     return Create::promiseFor(new Result([
                         'Body' => Utils::streamFor(),
                         'PartsCount' => 1,
+                        'ContentLength' => random_int(0, 100),
                         '@metadata' => []
                     ]));
                 }
@@ -1748,6 +1756,7 @@ EOF
                 return Create::promiseFor(new Result([
                     'Body' => Utils::streamFor(),
                     'PartsCount' => 1,
+                    'ContentLength' => random_int(0, 100),
                     '@metadata' => []
                 ]));
             }
@@ -1818,6 +1827,7 @@ EOF
                     'Body' => Utils::streamFor(),
                     'ContentRange' => "0-$objectSize/$objectSize",
                     'ETag' => 'TestEtag',
+                    'ContentLength' => random_int(0, 100),
                     '@metadata' => []
                 ]));
             }
@@ -2191,6 +2201,7 @@ EOF
                     return Create::promiseFor(new Result([
                         'Body' => Utils::streamFor(),
                         'PartsCount' => 1,
+                        'ContentLength' => random_int(1, 100),
                         '@metadata' => []
                     ]));
                 }
@@ -2278,6 +2289,7 @@ EOF
                     return Create::promiseFor(new Result([
                         'Body' => Utils::streamFor(),
                         'PartsCount' => 1,
+                        'ContentLength' => random_int(1, 100),
                         '@metadata' => []
                     ]));
                 },
@@ -2493,6 +2505,7 @@ EOF
                     return Create::promiseFor(new Result([
                         'Body' => Utils::streamFor(),
                         'PartsCount' => 1,
+                        'ContentLength' => random_int(1, 100),
                         '@metadata' => []
                     ]));
                 },
@@ -2579,6 +2592,8 @@ EOF
                             "Test file " . $command['Key']
                         ),
                         'PartsCount' => 1,
+                        'ContentLength' => random_int(1, 100),
+                        'ContentRange' => 'bytes 0-1/1',
                         '@metadata' => []
                     ]));
                 },
@@ -2703,11 +2718,14 @@ EOF
                         ]));
                     }
 
+                    $body = Utils::streamFor(
+                        "Test file " . $command['Key']
+                    );
                     return Create::promiseFor(new Result([
-                        'Body' => Utils::streamFor(
-                            "Test file " . $command['Key']
-                        ),
+                        'Body' => $body,
                         'PartsCount' => 1,
+                        'ContentLength' => $body->getSize(),
+                        'ContentRange' => 'bytes 0-' . $body->getSize() . "/" . $body->getSize(),
                         '@metadata' => []
                     ]));
                 },
@@ -3125,6 +3143,8 @@ EOF
                                 ];
                                 $this->totalBytesReceived = $snapshot->getTransferredBytes();
                                 $this->totalPartsReceived++;
+
+                                return true;
                             }
                         }
                     ]

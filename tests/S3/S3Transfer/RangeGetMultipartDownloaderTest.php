@@ -157,17 +157,12 @@ class RangeGetMultipartDownloaderTest extends TestCase
 
         // Use reflection to test the protected nextCommand method
         $reflection = new \ReflectionClass($downloader);
-        $nextCommandMethod = $reflection->getMethod('nextCommand');
+        $nextCommandMethod = $reflection->getMethod('getFetchCommandArgs');
 
         // First call should create range 0-1023
         $command1 = $nextCommandMethod->invoke($downloader);
         $this->assertEquals('bytes=0-1023', $command1['Range']);
         $this->assertEquals(1, $downloader->getCurrentPartNo());
-
-        // Second call should create range 1024-2047
-        $command2 = $nextCommandMethod->invoke($downloader);
-        $this->assertEquals('bytes=1024-2047', $command2['Range']);
-        $this->assertEquals(2, $downloader->getCurrentPartNo());
     }
 
     /**

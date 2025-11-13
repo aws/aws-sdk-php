@@ -452,10 +452,8 @@ EOF;
                 'concurrency' => 1,
                 'request_checksum_calculation' => 'when_supported'
             ],
+            $listenerNotifier,
             null,
-            [],
-            null,
-            $listenerNotifier
         );
 
         $response = $multipartUploader->promise()->wait();
@@ -765,10 +763,8 @@ EOF;
                 'concurrency' => 1,
                 'request_checksum_calculation' => 'when_supported'
             ],
+            $listenerNotifier,
             null,
-            [],
-            null,
-            $listenerNotifier
         );
 
         $multipartUploader->promise()->wait();
@@ -816,10 +812,8 @@ EOF;
                 'target_part_size_bytes' => 5242880, // 5MB
                 'concurrency' => 1,
             ],
+            $listenerNotifier,
             null,
-            [],
-            null,
-            $listenerNotifier
         );
 
         $response = $multipartUploader->promise()->wait();
