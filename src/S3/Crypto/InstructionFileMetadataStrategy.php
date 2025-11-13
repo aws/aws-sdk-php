@@ -49,9 +49,58 @@ class InstructionFileMetadataStrategy implements MetadataStrategyInterface
      */
     public function save(MetadataEnvelope $envelope, array $args)
     {
+        //= ../specification/s3-encryption/data-format/metadata-strategy.md#instruction-file
+        //# The S3EC MUST support writing some or all (depending on format) content metadata to an Instruction File.
+
+        //= ../specification/s3-encryption/data-format/metadata-strategy.md#v1-v2-instruction-files
+        //# In the V1/V2 message format, all of the content metadata MUST be stored in the Instruction File.
+        
+        //= ../specification/s3-encryption/data-format/content-metadata.md#content-metadata-mapkeys
+        //= type=implication
+        //# In the V3 format, the mapkeys "x-amz-c", "x-amz-d", and "x-amz-i" MUST be stored exclusively in the Object Metadata.
+        if (MetadataEnvelope::isV3Envelope($envelope)) {
+            //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+            //# - The V3 message format MUST store the mapkey "x-amz-c" and its value in the Object Metadata when writing with an Instruction File.
+            $args['Metadata'][MetadataEnvelope::CONTENT_CIPHER_V3] = $envelope[MetadataEnvelope::CONTENT_CIPHER_V3];
+            //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+            //# - The V3 message format MUST store the mapkey "x-amz-d" and its value in the Object Metadata when writing with an Instruction File.
+            $args['Metadata'][MetadataEnvelope::KEY_COMMITMENT_V3] = $envelope[MetadataEnvelope::KEY_COMMITMENT_V3];
+            //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+            //# - The V3 message format MUST store the mapkey "x-amz-i" and its value in the Object Metadata when writing with an Instruction File.
+            $args['Metadata'][MetadataEnvelope::MESSAGE_ID_V3] = $envelope[MetadataEnvelope::MESSAGE_ID_V3];
+            
+            //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+            //# - The V3 message format MUST NOT store the mapkey "x-amz-c" and its value in the Instruction File.
+            unset($envelope[MetadataEnvelope::CONTENT_CIPHER_V3]);
+            //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+            //# - The V3 message format MUST NOT store the mapkey "x-amz-d" and its value in the Instruction File.
+            unset($envelope[MetadataEnvelope::KEY_COMMITMENT_V3]);
+            //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+            //# - The V3 message format MUST NOT store the mapkey "x-amz-i" and its value in the Instruction File.
+            unset($envelope[MetadataEnvelope::MESSAGE_ID_V3]);
+            if (
+                //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+                //# - The V3 message format MUST store the mapkey "x-amz-3" and its value in the Instruction File.
+                !isset($envelope[MetadataEnvelope::ENCRYPTED_DATA_KEY_V3])
+                //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+                //# - The V3 message format MUST store the mapkey "x-amz-w" and its value in the Instruction File.
+                || !isset($envelope[MetadataEnvelope::ENCRYPTED_DATA_KEY_ALGORITHM_V3])
+                //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+                //# - The V3 message format MUST store the mapkey "x-amz-t" and its value (when present in the content metadata) in the Instruction File.
+                || !isset($envelope[MetadataEnvelope::ENCRYPTION_CONTEXT_V3])
+            ) {
+                throw new \InvalidArgumentException('Invalid V3 Envelope');
+            }
+        }
+        
+        //= ../specification/s3-encryption/data-format/metadata-strategy.md#instruction-file
+        //# The serialized JSON string MUST be the only contents of the Instruction File.
         $this->client->putObject([
             'Bucket' => $args['Bucket'],
             'Key' => $args['Key'] . $this->suffix,
+            //= ../specification/s3-encryption/data-format/metadata-strategy.md#instruction-file
+            //= type=implication
+            //# The content metadata stored in the Instruction File MUST be serialized to a JSON string.
             'Body' => json_encode($envelope)
         ]);
 

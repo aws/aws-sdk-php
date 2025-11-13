@@ -13,63 +13,81 @@ trait UsesMetadataEnvelopeTrait
                 1
             ],
             [
-                MetadataEnvelope::ENCRYPTED_DATA_KEY_V3,
+                MetadataEnvelope::IV_HEADER,
                 2
             ],
             [
-                MetadataEnvelope::IV_HEADER,
+                MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER,
                 3
             ],
             [
-                MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER,
+                MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER,
                 4
             ],
             [
-                MetadataEnvelope::MAT_DESC_V3,
+                MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER,
                 5
             ],
             [
-                MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER,
+                MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER,
                 6
             ],
             [
-                MetadataEnvelope::ENCRYPTED_DATA_KEY_ALGORITHM_V3,
+                MetadataEnvelope::UNENCRYPTED_CONTENT_LENGTH_HEADER,
                 7
             ],
+        ];
+    }
+
+    public function getIndividualV3MetadataFields(): array
+    {
+        return [
             [
-                MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER,
-                8
+                MetadataEnvelope::ENCRYPTED_DATA_KEY_V3,
+               1 
             ],
             [
-                MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER,
-                9
+                MetadataEnvelope::MAT_DESC_V3,
+                2
+            ],
+            [
+                MetadataEnvelope::ENCRYPTED_DATA_KEY_ALGORITHM_V3,
+                3
             ],
             [
                 MetadataEnvelope::CONTENT_CIPHER_V3,
-                10
-            ],
-            [
-                MetadataEnvelope::UNENCRYPTED_CONTENT_LENGTH_HEADER,
-                11
+                4
             ],
             [
                 MetadataEnvelope::ENCRYPTION_CONTEXT_V3,
-                12
+                5
             ],
             [
                 MetadataEnvelope::KEY_COMMITMENT_V3,
-                13
+                6
             ],
             [
                 MetadataEnvelope::MESSAGE_ID_V3,
-                14
+                7
             ]
         ];
+
     }
 
     public function getCondensedFields(): array
     {
         $individualMetadataFields = $this->getIndividualMetadataFields();
+        $fields = [];
+        foreach ($individualMetadataFields as $fieldInfo) {
+            $fields[$fieldInfo[0]] = $fieldInfo[1];
+        }
+
+        return $fields;
+    }
+
+    public function getCondensedV3Fields(): array
+    {
+        $individualMetadataFields = $this->getIndividualV3MetadataFields();
         $fields = [];
         foreach ($individualMetadataFields as $fieldInfo) {
             $fields[$fieldInfo[0]] = $fieldInfo[1];
@@ -99,6 +117,14 @@ trait UsesMetadataEnvelopeTrait
         ];
     }
 
+    public function getV3MetadataFields(): array
+    {
+        $fields = $this->getCondensedV3Fields();
+        return [
+            [$fields]
+        ];
+    }
+
     public function getMetadataResult(): array
     {
         $fields = $this->getCondensedFields();
@@ -122,6 +148,15 @@ trait UsesMetadataEnvelopeTrait
             $envelope[$field] = $value;
         }
 
+        return $envelope;
+    }
+
+    public function getV3InstructionFileFields($fields): MetadataEnvelope
+    {
+       $envelope = $this->getMetadataEnvelope($fields);
+        unset($envelope[MetadataEnvelope::CONTENT_CIPHER_V3]);
+        unset($envelope[MetadataEnvelope::KEY_COMMITMENT_V3]);
+        unset($envelope[MetadataEnvelope::MESSAGE_ID_V3]);
         return $envelope;
     }
 

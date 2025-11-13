@@ -27,7 +27,7 @@ interface MaterialsProviderInterfaceV3
      *                             for use decrypting other data.
      * @param array $materialDescription Material Description for use in
      *                                    decrypting the CEK.
-     * @param array $options Options for use in decrypting the CEK.
+     * @param AlgorithmSuite $algorithmSuite AlgorithmSuite for use in decrypting the CEK.
      *
      * @return string
      */

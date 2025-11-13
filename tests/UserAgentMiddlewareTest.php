@@ -546,7 +546,8 @@ class UserAgentMiddlewareTest extends TestCase
             'Bucket' => 'foo',
             'Key' => 'foo',
             '@MaterialsProvider' => $materialProvider,
-            '@SecurityProfile' => 'V2'
+            '@SecurityProfile' => 'V2',
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT'
         ]);
     }
 

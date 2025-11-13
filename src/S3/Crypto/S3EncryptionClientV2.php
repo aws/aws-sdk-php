@@ -326,6 +326,8 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
         $provider = $this->getMaterialsProvider($args);
         unset($args['@MaterialsProvider']);
 
+        $keyCommitmentPolicy = $this->getKeyCommitmentPolicy($args);
+
         $instructionFileSuffix = $this->getInstructionFileSuffix($args);
         unset($args['@InstructionFileSuffix']);
 
@@ -346,9 +348,9 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
             $this->legacyWarningCount++;
             trigger_error(
                 "This S3 Encryption Client operation is configured to"
-                    . " read encrypted data with legacy encryption modes. If you"
-                    . " don't have objects encrypted with these legacy modes,"
-                    . " you should disable support for them to enhance security. ",
+                . " read encrypted data with legacy encryption modes. If you"
+                . " don't have objects encrypted with these legacy modes,"
+                . " you should disable support for them to enhance security. ",
                 E_USER_WARNING
             );
         }

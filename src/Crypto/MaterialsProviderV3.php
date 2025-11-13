@@ -4,8 +4,7 @@ namespace Aws\Crypto;
 abstract class MaterialsProviderV3 implements MaterialsProviderInterfaceV3
 {
     private static array $supportedKeySizes = [
-        128 => true,
-        256 => true,
+        256 => true
     ];
 
     /**
@@ -67,6 +66,16 @@ abstract class MaterialsProviderV3 implements MaterialsProviderInterfaceV3
      */
     public function generateIv(string $openSslName): string
     {
+        if ($openSslName === "aes-96-gcm") {
+            return openssl_random_pseudo_bytes(12);
+        }
+
+        if ($openSslName === "aes-224-gcm") {
+            $messageId = openssl_random_pseudo_bytes(28);
+            
+            return $messageId;
+        }
+
         return openssl_random_pseudo_bytes(
             openssl_cipher_iv_length($openSslName)
         );

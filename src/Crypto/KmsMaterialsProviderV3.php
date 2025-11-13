@@ -44,7 +44,7 @@ class KmsMaterialsProviderV3 extends MaterialsProviderV3 implements MaterialsPro
         string $encryptedCek,
         array $materialDescription,
         array $options
-    ): string
+    ): string 
     {
         $options = array_change_key_case($options);
         $encryptionContext = null;

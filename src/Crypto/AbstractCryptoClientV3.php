@@ -11,18 +11,33 @@ use GuzzleHttp\Psr7\Stream;
  */
 abstract class AbstractCryptoClientV3
 {
+    const SUPPORTED_SECURITY_PROFILES = ['V3', 'V3_AND_LEGACY'];
+
+    const LEGACY_SECURITY_PROFILES = ['V3_AND_LEGACY'];
+
+    const KEY_COMMITMENT_POLICIES = [
+        'FORBID_ENCRYPT_ALLOW_DECRYPT',
+        'REQUIRE_ENCRYPT_ALLOW_DECRYPT',
+        'REQUIRE_ENCRYPT_REQUIRE_DECRYPT'
+    ];
+
     public static array $supportedCiphers = ['gcm'];
 
     public static array $supportedKeyWraps = [
         KmsMaterialsProviderV3::WRAP_ALGORITHM_NAME
     ];
 
-    public static array $supportedSecurityProfiles = ['V2', 'V2_AND_LEGACY'];
-
-    public static array $legacySecurityProfiles = ['V2_AND_LEGACY'];
-
-    // Here wwe may want to add the commitment policy stuff or
-    // we update the above to replace V2 with V3? ie. V3_AND_LEGACY
+    /**
+     * Returns if the passed policy name is supported for encryption by the SDK.
+     *
+     * @param string $policy The name of a key commitment policy to verify is registered.
+     *
+     * @return bool If the key commitment policy passed is in our supported list.
+     */
+    public static function isSupportedKeyCommitmentPolicy(string $policy): bool
+    {
+        return in_array($policy, AbstractCryptoClientV3::KEY_COMMITMENT_POLICIES, strict: true);
+    }
 
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
@@ -89,7 +104,9 @@ abstract class AbstractCryptoClientV3
      *
      * @param Stream $plaintext Plain-text data to be encrypted using the
      *                          materials, algorithm, and data provided.
-     * @param array $options Options for use in encryption.
+     * @param AlgorithmSuite $algorithmSuite AlgorithmSuite for use in encryption.
+     * @param array $options    Options for use in encryption, including cipher
+     *                          options, and encryption context.
      * @param MaterialsProviderV3 $provider A provider to supply and encrypt
      *                                      materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
@@ -101,6 +118,7 @@ abstract class AbstractCryptoClientV3
      */
     abstract public function encrypt(
         Stream $plaintext,
+        AlgorithmSuite $algorithmSuite,
         array $options,
         MaterialsProviderV3 $provider,
         MetadataEnvelope $envelope
@@ -116,6 +134,7 @@ abstract class AbstractCryptoClientV3
      *                                             materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be read from.
+     * @param string $commitmentPolicy Commitment Policy to use for decrypting objects.
      * @param array $options Options used for decryption.
      *
      * @return AesStreamInterface
@@ -126,6 +145,7 @@ abstract class AbstractCryptoClientV3
         string $cipherText,
         MaterialsProviderInterfaceV3 $provider,
         MetadataEnvelope $envelope,
+        string $commitmentPolicy,
         array $options = []
     ): AesStreamInterface;
 }

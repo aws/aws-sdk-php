@@ -4,6 +4,7 @@ namespace Aws\Test\S3\Crypto;
 use Aws\S3\Crypto\InstructionFileMetadataStrategy;
 use Aws\Result;
 use Aws\S3\S3Client;
+use Aws\Crypto\MetadataEnvelope;
 use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
@@ -31,13 +32,81 @@ class InstructionFileMetadataStrategyTest extends TestCase
         $this->addMockResults($client, [
             new Result(['ObjectURL' => 'file_url'])
         ]);
-
+        //= ../specification/s3-encryption/data-format/metadata-strategy.md#instruction-file
+        //= type=test
+        //# The S3EC MUST support writing some or all (depending on format) content metadata to an Instruction File.
         $updatedArgs = $strategy->save(
             $this->getMetadataEnvelope($fields),
             $args
         );
         $this->assertNotEmpty($updatedArgs);
         $this->assertCount(0, $updatedArgs['Metadata']);
+    }
+
+    /**
+     * Tests that only required data gets saved to the instruction file
+     * and other data is left to the object metadata headers
+     * @dataProvider getV3MetadataFields
+     */
+    public function testSaveV3MetadataEnvelope($fields): void
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', []);
+        $strategy = new InstructionFileMetadataStrategy($client);
+        $metadata = $this->getV3InstructionFileFields($fields);
+        $args = [
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            'Metadata' => []
+        ];
+        $this->addMockResults($client, [
+            new Result(['Body' => json_encode($metadata)])
+        ]);
+        $envelope = $this->getMetadataEnvelope($fields);
+
+        $updatedArgs = $strategy->save(
+            $envelope,
+            $args
+        );
+        $this->assertNotEmpty($updatedArgs["Metadata"]);
+        //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+        //= type=test
+        //# - The V3 message format MUST store the mapkey "x-amz-c" and its value in the Object Metadata when writing with an Instruction File.
+        $this->assertArrayHasKey(MetadataEnvelope::CONTENT_CIPHER_V3, $updatedArgs['Metadata']);
+        //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+        //= type=test
+        //# - The V3 message format MUST NOT store the mapkey "x-amz-c" and its value in the Instruction File.
+        $this->assertArrayNotHasKey(MetadataEnvelope::CONTENT_CIPHER_V3, $envelope);
+        //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+        //= type=test
+        //# - The V3 message format MUST store the mapkey "x-amz-d" and its value in the Object Metadata when writing with an Instruction File.
+        $this->assertArrayHasKey(MetadataEnvelope::KEY_COMMITMENT_V3, $updatedArgs['Metadata']);
+        //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+        //= type=test
+        //# - The V3 message format MUST NOT store the mapkey "x-amz-d" and its value in the Instruction File.
+        $this->assertArrayNotHasKey(MetadataEnvelope::KEY_COMMITMENT_V3, $envelope);
+        //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+        //= type=test
+        //# - The V3 message format MUST store the mapkey "x-amz-i" and its value in the Object Metadata when writing with an Instruction File.
+        $this->assertArrayHasKey(MetadataEnvelope::MESSAGE_ID_V3, $updatedArgs['Metadata']);
+        //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+        //= type=test
+        //# - The V3 message format MUST NOT store the mapkey "x-amz-i" and its value in the Instruction File.
+        $this->assertArrayNotHasKey(MetadataEnvelope::MESSAGE_ID_V3, $envelope);
+
+        //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+        //= type=test
+        //# - The V3 message format MUST store the mapkey "x-amz-3" and its value in the Instruction File.
+        $this->assertArrayHasKey(MetadataEnvelope::ENCRYPTED_DATA_KEY_V3, $envelope);
+        //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+        //= type=test
+        //# - The V3 message format MUST store the mapkey "x-amz-w" and its value in the Instruction File.
+        $this->assertArrayHasKey(MetadataEnvelope::ENCRYPTED_DATA_KEY_ALGORITHM_V3, $envelope);
+        //= ../specification/s3-encryption/data-format/metadata-strategy.md#v3-instruction-files
+        //= type=test
+        //# - The V3 message format MUST store the mapkey "x-amz-t" and its value (when present in the content metadata) in the Instruction File.
+        $this->assertArrayHasKey(MetadataEnvelope::ENCRYPTION_CONTEXT_V3, $envelope);
+
     }
 
     /**
@@ -49,9 +118,17 @@ class InstructionFileMetadataStrategyTest extends TestCase
         $client = $this->getTestClient('S3', []);
         $strategy = new InstructionFileMetadataStrategy($client);
         $this->addMockResults($client, [
+            //= ../specification/s3-encryption/data-format/metadata-strategy.md#instruction-file
+            //= type=test
+            //# The serialized JSON string MUST be the only contents of the Instruction File.
             new Result(['Body' => json_encode($metadata)])
         ]);
         $envelope = $strategy->load($args);
+
+        //= ../specification/s3-encryption/data-format/metadata-strategy.md#v1-v2-instruction-files
+        //= type=test
+        //# In the V1/V2 message format, all of the content metadata MUST be stored in the Instruction File.
+        $this->assertTrue(MetadataEnvelope::isV2Envelope($envelope));
 
         foreach ($envelope as $field => $value) {
             $this->assertEquals($value, $metadata[$field]);
