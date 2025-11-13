@@ -23,7 +23,7 @@
     "DeregisterType": "<p>Marks an extension or extension version as <code>DEPRECATED</code> in the CloudFormation registry, removing it from active use. Deprecated extensions or extension versions cannot be used in CloudFormation operations.</p> <p>To deregister an entire extension, you must individually deregister all active versions of that extension. If an extension has only a single active version, deregistering that version results in the extension itself being deregistered and marked as deprecated in the registry.</p> <p>You can't deregister the default version of an extension if there are other active version of that extension. If you do deregister the default version of an extension, the extension type itself is deregistered as well and marked as deprecated.</p> <p>To view the deprecation status of an extension or extension version, use <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_DescribeType.html\">DescribeType</a>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry-private-deregister-extension.html\">Remove third-party private extensions from your account</a> in the <i>CloudFormation User Guide</i>.</p>",
     "DescribeAccountLimits": "<p>Retrieves your account's CloudFormation limits, such as the maximum number of stacks that you can create in your account. For more information about account limits, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html\">Understand CloudFormation quotas</a> in the <i>CloudFormation User Guide</i>.</p>",
     "DescribeChangeSet": "<p>Returns the inputs for the change set and a list of changes that CloudFormation will make if you execute the change set. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-changesets.html\">Update CloudFormation stacks using change sets</a> in the <i>CloudFormation User Guide</i>.</p>",
-    "DescribeChangeSetHooks": "<p>Returns hook-related information for the change set and a list of changes that CloudFormation makes when you run the change set.</p>",
+    "DescribeChangeSetHooks": "<p>Returns Hook-related information for the change set and a list of changes that CloudFormation makes when you run the change set.</p>",
     "DescribeGeneratedTemplate": "<p>Describes a generated template. The output includes details about the progress of the creation of a generated template started by a <code>CreateGeneratedTemplate</code> API action or the update of a generated template started with an <code>UpdateGeneratedTemplate</code> API action.</p>",
     "DescribeOrganizationsAccess": "<p>Retrieves information about the account's <code>OrganizationAccess</code> status. This API can be called either by the management account or the delegated administrator by using the <code>CallAs</code> parameter. This API can also be called without the <code>CallAs</code> parameter by the management account.</p>",
     "DescribePublisher": "<p>Returns information about a CloudFormation extension publisher.</p> <p>If you don't supply a <code>PublisherId</code>, and you have registered as an extension publisher, <code>DescribePublisher</code> returns information about your own publisher account.</p> <p>For more information about registering as a publisher, see:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_RegisterPublisher.html\">RegisterPublisher</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/publish-extension.html\">Publishing extensions to make them available for public use</a> in the <i>CloudFormation Command Line Interface (CLI) User Guide</i> </p> </li> </ul>",
@@ -47,6 +47,7 @@
     "ExecuteChangeSet": "<p>Updates a stack using the input information that was provided when the specified change set was created. After the call successfully completes, CloudFormation starts updating the stack. Use the <a>DescribeStacks</a> action to view the status of the update.</p> <p>When you execute a change set, CloudFormation deletes all other change sets associated with the stack because they aren't valid for the updated stack.</p> <p>If a stack policy is associated with the stack, CloudFormation enforces the policy during the update. You can't specify a temporary stack policy that overrides the current policy.</p> <p>To create a change set for the entire stack hierarchy, <code>IncludeNestedStacks</code> must have been set to <code>True</code>.</p>",
     "ExecuteStackRefactor": "<p>Executes the stack refactor operation.</p>",
     "GetGeneratedTemplate": "<p>Retrieves a generated template. If the template is in an <code>InProgress</code> or <code>Pending</code> status then the template returned will be the template when the template was last in a <code>Complete</code> status. If the template has not yet been in a <code>Complete</code> status then an empty template will be returned.</p>",
+    "GetHookResult": "<p>Retrieves detailed information and remediation guidance for a Hook invocation result.</p>",
     "GetStackPolicy": "<p>Returns the stack policy for a specified stack. If a stack doesn't have a policy, a null value is returned.</p>",
     "GetTemplate": "<p>Returns the template body for a specified stack. You can get the template for running or deleted stacks.</p> <p>For deleted stacks, <code>GetTemplate</code> returns the template for up to 90 days after the stack has been deleted.</p> <note> <p>If the template doesn't exist, a <code>ValidationError</code> is returned.</p> </note>",
     "GetTemplateSummary": "<p>Returns information about a new or existing template. The <code>GetTemplateSummary</code> action is useful for viewing parameter information, such as default parameter values and parameter types, before you create or update a stack or StackSet.</p> <p>You can use the <code>GetTemplateSummary</code> action when you submit a template, or you can get template information for a StackSet, or a running or deleted stack.</p> <p>For deleted stacks, <code>GetTemplateSummary</code> returns the template information for up to 90 days after the stack has been deleted. If the template doesn't exist, a <code>ValidationError</code> is returned.</p>",
@@ -206,6 +207,42 @@
       "base": "<p>The resource with the name requested already exists.</p>",
       "refs": {}
     },
+    "Annotation": {
+      "base": "<p>The <code>Annotation</code> data type.</p> <p>A <code>GetHookResult</code> call returns detailed information and remediation guidance from Control Tower, Guard, Lambda, or custom Hooks for a Hook invocation result.</p>",
+      "refs": {
+        "AnnotationList$member": null
+      }
+    },
+    "AnnotationList": {
+      "base": null,
+      "refs": {
+        "GetHookResultOutput$Annotations": "<p>A list of objects with additional information and guidance that can help you resolve a failed Hook invocation.</p>"
+      }
+    },
+    "AnnotationName": {
+      "base": null,
+      "refs": {
+        "Annotation$AnnotationName": "<p>An identifier for the evaluation logic that was used when invoking the Hook. For Control Tower, this is the control ID. For Guard, this is the rule ID. For Lambda and custom Hooks, this is a user-defined identifier.</p>"
+      }
+    },
+    "AnnotationRemediationLink": {
+      "base": null,
+      "refs": {
+        "Annotation$RemediationLink": "<p>A URL that you can access for additional remediation guidance.</p>"
+      }
+    },
+    "AnnotationSeverityLevel": {
+      "base": null,
+      "refs": {
+        "Annotation$SeverityLevel": "<p>The relative risk associated with any violations of this type.</p>"
+      }
+    },
+    "AnnotationStatus": {
+      "base": null,
+      "refs": {
+        "Annotation$Status": "<p>The status of the Hook invocation from the downstream service.</p>"
+      }
+    },
     "Arn": {
       "base": null,
       "refs": {
@@ -321,7 +358,7 @@
     "Capabilities": {
       "base": null,
       "refs": {
-        "CreateChangeSetInput$Capabilities": "<p>In some cases, you must explicitly acknowledge that your stack template contains certain capabilities in order for CloudFormation to create the stack.</p> <ul> <li> <p> <code>CAPABILITY_IAM</code> and <code>CAPABILITY_NAMED_IAM</code> </p> <p>Some stack templates might include resources that can affect permissions in your Amazon Web Services account; for example, by creating new IAM users. For those stacks, you must explicitly acknowledge this by specifying one of these capabilities.</p> <p>The following IAM resources require you to specify either the <code>CAPABILITY_IAM</code> or <code>CAPABILITY_NAMED_IAM</code> capability.</p> <ul> <li> <p>If you have IAM resources, you can specify either capability.</p> </li> <li> <p>If you have IAM resources with custom names, you <i>must</i> specify <code>CAPABILITY_NAMED_IAM</code>.</p> </li> <li> <p>If you don't specify either of these capabilities, CloudFormation returns an <code>InsufficientCapabilities</code> error.</p> </li> </ul> <p>If your stack template contains these resources, we suggest that you review all permissions associated with them and edit their permissions if necessary.</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-accesskey.html\"> AWS::IAM::AccessKey</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-group.html\"> AWS::IAM::Group</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-instanceprofile.html\">AWS::IAM::InstanceProfile</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-managedpolicy.html\"> AWS::IAM::ManagedPolicy</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-policy.html\"> AWS::IAM::Policy</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-role.html\"> AWS::IAM::Role</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-user.html\"> AWS::IAM::User</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-usertogroupaddition.html\">AWS::IAM::UserToGroupAddition</a> </p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/control-access-with-iam.html#using-iam-capabilities\">Acknowledging IAM resources in CloudFormation templates</a>.</p> </li> <li> <p> <code>CAPABILITY_AUTO_EXPAND</code> </p> <p>Some template contain macros. Macros perform custom processing on templates; this can include simple actions like find-and-replace operations, all the way to extensive transformations of entire templates. Because of this, users typically create a change set from the processed template, so that they can review the changes resulting from the macros before actually creating the stack. If your stack template contains one or more macros, and you choose to create a stack directly from the processed template, without first reviewing the resulting changes in a change set, you must acknowledge this capability. This includes the <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-aws-include.html\">AWS::Include</a> and <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-aws-serverless.html\">AWS::Serverless</a> transforms, which are macros hosted by CloudFormation.</p> <note> <p>This capacity doesn't apply to creating change sets, and specifying it when creating change sets has no effect.</p> <p>If you want to create a stack from a stack template that contains macros <i>and</i> nested stacks, you must create or update the stack directly from the template using the <a>CreateStack</a> or <a>UpdateStack</a> action, and specifying this capability.</p> </note> <p>For more information about macros, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-macros.html\">Perform custom processing on CloudFormation templates with template macros</a>.</p> </li> </ul> <note> <p>Only one of the <code>Capabilities</code> and <code>ResourceType</code> parameters can be specified.</p> </note>",
+        "CreateChangeSetInput$Capabilities": "<p>In some cases, you must explicitly acknowledge that your stack template contains certain capabilities in order for CloudFormation to create the stack.</p> <ul> <li> <p> <code>CAPABILITY_IAM</code> and <code>CAPABILITY_NAMED_IAM</code> </p> <p>Some stack templates might include resources that can affect permissions in your Amazon Web Services account, for example, by creating new IAM users. For those stacks, you must explicitly acknowledge this by specifying one of these capabilities.</p> <p>The following IAM resources require you to specify either the <code>CAPABILITY_IAM</code> or <code>CAPABILITY_NAMED_IAM</code> capability.</p> <ul> <li> <p>If you have IAM resources, you can specify either capability.</p> </li> <li> <p>If you have IAM resources with custom names, you <i>must</i> specify <code>CAPABILITY_NAMED_IAM</code>.</p> </li> <li> <p>If you don't specify either of these capabilities, CloudFormation returns an <code>InsufficientCapabilities</code> error.</p> </li> </ul> <p>If your stack template contains these resources, we suggest that you review all permissions associated with them and edit their permissions if necessary.</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-accesskey.html\"> AWS::IAM::AccessKey</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-group.html\"> AWS::IAM::Group</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-instanceprofile.html\">AWS::IAM::InstanceProfile</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-managedpolicy.html\"> AWS::IAM::ManagedPolicy</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-policy.html\"> AWS::IAM::Policy</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-role.html\"> AWS::IAM::Role</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-user.html\"> AWS::IAM::User</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-usertogroupaddition.html\">AWS::IAM::UserToGroupAddition</a> </p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/control-access-with-iam.html#using-iam-capabilities\">Acknowledging IAM resources in CloudFormation templates</a>.</p> </li> <li> <p> <code>CAPABILITY_AUTO_EXPAND</code> </p> <p>Some template contain macros. Macros perform custom processing on templates; this can include simple actions like find-and-replace operations, all the way to extensive transformations of entire templates. Because of this, users typically create a change set from the processed template, so that they can review the changes resulting from the macros before actually creating the stack. If your stack template contains one or more macros, and you choose to create a stack directly from the processed template, without first reviewing the resulting changes in a change set, you must acknowledge this capability. This includes the <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-aws-include.html\">AWS::Include</a> and <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-aws-serverless.html\">AWS::Serverless</a> transforms, which are macros hosted by CloudFormation.</p> <note> <p>This capacity doesn't apply to creating change sets, and specifying it when creating change sets has no effect.</p> <p>If you want to create a stack from a stack template that contains macros <i>and</i> nested stacks, you must create or update the stack directly from the template using the <a>CreateStack</a> or <a>UpdateStack</a> action, and specifying this capability.</p> </note> <p>For more information about macros, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-macros.html\">Perform custom processing on CloudFormation templates with template macros</a>.</p> </li> </ul> <note> <p>Only one of the <code>Capabilities</code> and <code>ResourceType</code> parameters can be specified.</p> </note>",
         "CreateStackInput$Capabilities": "<p>In some cases, you must explicitly acknowledge that your stack template contains certain capabilities in order for CloudFormation to create the stack.</p> <ul> <li> <p> <code>CAPABILITY_IAM</code> and <code>CAPABILITY_NAMED_IAM</code> </p> <p>Some stack templates might include resources that can affect permissions in your Amazon Web Services account; for example, by creating new IAM users. For those stacks, you must explicitly acknowledge this by specifying one of these capabilities.</p> <p>The following IAM resources require you to specify either the <code>CAPABILITY_IAM</code> or <code>CAPABILITY_NAMED_IAM</code> capability.</p> <ul> <li> <p>If you have IAM resources, you can specify either capability.</p> </li> <li> <p>If you have IAM resources with custom names, you <i>must</i> specify <code>CAPABILITY_NAMED_IAM</code>.</p> </li> <li> <p>If you don't specify either of these capabilities, CloudFormation returns an <code>InsufficientCapabilities</code> error.</p> </li> </ul> <p>If your stack template contains these resources, we recommend that you review all permissions associated with them and edit their permissions if necessary.</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-accesskey.html\">AWS::IAM::AccessKey</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-group.html\">AWS::IAM::Group</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-instanceprofile.html\">AWS::IAM::InstanceProfile</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-managedpolicy.html\"> AWS::IAM::ManagedPolicy</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-policy.html\">AWS::IAM::Policy</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-role.html\">AWS::IAM::Role</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-user.html\">AWS::IAM::User</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-usertogroupaddition.html\">AWS::IAM::UserToGroupAddition</a> </p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/control-access-with-iam.html#using-iam-capabilities\">Acknowledging IAM resources in CloudFormation templates</a>.</p> </li> <li> <p> <code>CAPABILITY_AUTO_EXPAND</code> </p> <p>Some template contain macros. Macros perform custom processing on templates; this can include simple actions like find-and-replace operations, all the way to extensive transformations of entire templates. Because of this, users typically create a change set from the processed template, so that they can review the changes resulting from the macros before actually creating the stack. If your stack template contains one or more macros, and you choose to create a stack directly from the processed template, without first reviewing the resulting changes in a change set, you must acknowledge this capability. This includes the <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-aws-include.html\">AWS::Include</a> and <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-aws-serverless.html\">AWS::Serverless</a> transforms, which are macros hosted by CloudFormation.</p> <p>If you want to create a stack from a stack template that contains macros <i>and</i> nested stacks, you must create the stack directly from the template using this capability.</p> <important> <p>You should only create stacks directly from a stack template that contains macros if you know what processing the macro performs.</p> <p>Each macro relies on an underlying Lambda service function for processing stack templates. Be aware that the Lambda function owner can update the function operation without CloudFormation being notified.</p> </important> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-macros.html\">Perform custom processing on CloudFormation templates with template macros</a>.</p> </li> </ul> <note> <p>Only one of the <code>Capabilities</code> and <code>ResourceType</code> parameters can be specified.</p> </note>",
         "CreateStackSetInput$Capabilities": "<p>In some cases, you must explicitly acknowledge that your StackSet template contains certain capabilities in order for CloudFormation to create the StackSet and related stack instances.</p> <ul> <li> <p> <code>CAPABILITY_IAM</code> and <code>CAPABILITY_NAMED_IAM</code> </p> <p>Some stack templates might include resources that can affect permissions in your Amazon Web Services account; for example, by creating new IAM users. For those StackSets, you must explicitly acknowledge this by specifying one of these capabilities.</p> <p>The following IAM resources require you to specify either the <code>CAPABILITY_IAM</code> or <code>CAPABILITY_NAMED_IAM</code> capability.</p> <ul> <li> <p>If you have IAM resources, you can specify either capability.</p> </li> <li> <p>If you have IAM resources with custom names, you <i>must</i> specify <code>CAPABILITY_NAMED_IAM</code>.</p> </li> <li> <p>If you don't specify either of these capabilities, CloudFormation returns an <code>InsufficientCapabilities</code> error.</p> </li> </ul> <p>If your stack template contains these resources, we recommend that you review all permissions associated with them and edit their permissions if necessary.</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-accesskey.html\">AWS::IAM::AccessKey</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-group.html\">AWS::IAM::Group</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-instanceprofile.html\">AWS::IAM::InstanceProfile</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-policy.html\">AWS::IAM::Policy</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-role.html\">AWS::IAM::Role</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-user.html\">AWS::IAM::User</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-iam-usertogroupaddition.html\">AWS::IAM::UserToGroupAddition</a> </p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/control-access-with-iam.html#using-iam-capabilities\">Acknowledging IAM resources in CloudFormation templates</a>.</p> </li> <li> <p> <code>CAPABILITY_AUTO_EXPAND</code> </p> <p>Some templates reference macros. If your StackSet template references one or more macros, you must create the StackSet directly from the processed template, without first reviewing the resulting changes in a change set. To create the StackSet directly, you must acknowledge this capability. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-macros.html\">Perform custom processing on CloudFormation templates with template macros</a>.</p> <important> <p>StackSets with service-managed permissions don't currently support the use of macros in templates. (This includes the <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-aws-include.html\">AWS::Include</a> and <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-aws-serverless.html\">AWS::Serverless</a> transforms, which are macros hosted by CloudFormation.) Even if you specify this capability for a StackSet with service-managed permissions, if you reference a macro in your template the StackSet operation will fail.</p> </important> </li> </ul>",
         "DescribeChangeSetOutput$Capabilities": "<p>If you execute the change set, the list of capabilities that were explicitly acknowledged when the change set was created.</p>",
@@ -398,7 +435,7 @@
     "ChangeSetHooksStatus": {
       "base": null,
       "refs": {
-        "DescribeChangeSetHooksOutput$Status": "<p>Provides the status of the change set hook.</p>"
+        "DescribeChangeSetHooksOutput$Status": "<p>Provides the status of the change set Hook.</p>"
       }
     },
     "ChangeSetId": {
@@ -1138,6 +1175,14 @@
       "base": null,
       "refs": {}
     },
+    "GetHookResultInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetHookResultOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GetStackPolicyInput": {
       "base": "<p>The input for the <a>GetStackPolicy</a> action.</p>",
       "refs": {}
@@ -1172,6 +1217,7 @@
       "base": null,
       "refs": {
         "ChangeSetHook$FailureMode": "<p>Specify the Hook failure mode for non-compliant resources in the followings ways.</p> <ul> <li> <p> <code>FAIL</code> Stops provisioning resources.</p> </li> <li> <p> <code>WARN</code> Allows provisioning to continue with a warning message.</p> </li> </ul>",
+        "GetHookResultOutput$FailureMode": "<p>The failure mode of the invocation.</p>",
         "HookResultSummary$FailureMode": "<p>The failure mode of the invocation.</p>",
         "StackEvent$HookFailureMode": "<p>Specify the Hook failure mode for non-compliant resources in the followings ways.</p> <ul> <li> <p> <code>FAIL</code> Stops provisioning resources.</p> </li> <li> <p> <code>WARN</code> Allows provisioning to continue with a warning message.</p> </li> </ul>"
       }
@@ -1185,6 +1231,8 @@
     "HookInvocationId": {
       "base": null,
       "refs": {
+        "GetHookResultInput$HookResultId": "<p>The unique identifier (ID) of the Hook invocation result that you want details about. You can get the ID from the <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ListHookResults.html\">ListHookResults</a> operation.</p>",
+        "GetHookResultOutput$HookResultId": "<p>The unique identifier of the Hook result.</p>",
         "HookResultSummary$HookResultId": "<p>The unique identifier for this Hook invocation result.</p>",
         "StackEvent$HookInvocationId": "<p>The unique identifier of the Hook invocation.</p>"
       }
@@ -1193,6 +1241,7 @@
       "base": null,
       "refs": {
         "ChangeSetHook$InvocationPoint": "<p>The specific point in the provisioning process where the Hook is invoked.</p>",
+        "GetHookResultOutput$InvocationPoint": "<p>The specific point in the provisioning process where the Hook is invoked.</p>",
         "HookResultSummary$InvocationPoint": "<p>The specific point in the provisioning process where the Hook is invoked.</p>",
         "StackEvent$HookInvocationPoint": "<p>The specific point in the provisioning process where the Hook is invoked.</p>"
       }
@@ -1201,7 +1250,7 @@
       "base": null,
       "refs": {
         "HookResultSummary$TargetId": "<p>The unique identifier of the Hook invocation target.</p>",
-        "HookResultSummary$HookExecutionTarget": "<p>The ARN of the target stack or request token of the Cloud Control API operation.</p> <p>Only shown in responses when the request does not specify <code>TargetType</code> and <code>TargetId</code> filters.</p>",
+        "HookResultSummary$HookExecutionTarget": "<p>The Amazon Resource Name (ARN) of the target stack or request token of the Cloud Control API operation.</p> <p>Only shown in responses when the request does not specify <code>TargetType</code> and <code>TargetId</code> filters.</p>",
         "ListHookResultsInput$TargetId": "<p>Filters results by the unique identifier of the target the Hook was invoked against.</p> <p>For change sets, this is the change set ARN. When the target is a Cloud Control API operation, this value must be the <code>HookRequestToken</code> returned by the Cloud Control API request. For more information on the <code>HookRequestToken</code>, see <a href=\"https://docs.aws.amazon.com/cloudcontrolapi/latest/APIReference/API_ProgressEvent.html\">ProgressEvent</a>.</p> <p>Required when <code>TargetType</code> is specified and cannot be used otherwise.</p>",
         "ListHookResultsOutput$TargetId": "<p>The unique identifier of the Hook invocation target.</p>"
       }
@@ -1217,7 +1266,7 @@
       }
     },
     "HookResultSummary": {
-      "base": "<p>Describes a Hook invocation, its status, and the reason for its status.</p>",
+      "base": "<p>A <code>ListHookResults</code> call returns a summary of a Hook invocation.</p>",
       "refs": {
         "HookResultSummaries$member": null
       }
@@ -1225,6 +1274,7 @@
     "HookStatus": {
       "base": null,
       "refs": {
+        "GetHookResultOutput$Status": "<p>The status of the Hook invocation. The following statuses are possible:</p> <ul> <li> <p> <code>HOOK_IN_PROGRESS</code>: The Hook is currently running.</p> </li> <li> <p> <code>HOOK_COMPLETE_SUCCEEDED</code>: The Hook completed successfully.</p> </li> <li> <p> <code>HOOK_COMPLETE_FAILED</code>: The Hook completed but failed validation.</p> </li> <li> <p> <code>HOOK_FAILED</code>: The Hook encountered an error during execution.</p> </li> </ul>",
         "HookResultSummary$Status": "<p>The status of the Hook invocation. The following statuses are possible:</p> <ul> <li> <p> <code>HOOK_IN_PROGRESS</code>: The Hook is currently running.</p> </li> <li> <p> <code>HOOK_COMPLETE_SUCCEEDED</code>: The Hook completed successfully.</p> </li> <li> <p> <code>HOOK_COMPLETE_FAILED</code>: The Hook completed but failed validation.</p> </li> <li> <p> <code>HOOK_FAILED</code>: The Hook encountered an error during execution.</p> </li> </ul>",
         "ListHookResultsInput$Status": "<p>Filters results by the status of Hook invocations. Can only be used in combination with <code>TypeArn</code>. Valid values are:</p> <ul> <li> <p> <code>HOOK_IN_PROGRESS</code>: The Hook is currently running.</p> </li> <li> <p> <code>HOOK_COMPLETE_SUCCEEDED</code>: The Hook completed successfully.</p> </li> <li> <p> <code>HOOK_COMPLETE_FAILED</code>: The Hook completed but failed validation.</p> </li> <li> <p> <code>HOOK_FAILED</code>: The Hook encountered an error during execution.</p> </li> </ul>",
         "StackEvent$HookStatus": "<p>Provides the status of the change set Hook.</p>"
@@ -1233,20 +1283,41 @@
     "HookStatusReason": {
       "base": null,
       "refs": {
+        "GetHookResultOutput$HookStatusReason": "<p>A message that provides additional details about the Hook invocation status.</p>",
         "HookResultSummary$HookStatusReason": "<p>A description of the Hook results status. For example, if the Hook result is in a failed state, this may contain additional information for the failed state.</p>",
         "StackEvent$HookStatusReason": "<p>Provides the reason for the Hook status.</p>"
+      }
+    },
+    "HookTarget": {
+      "base": "<p>The <code>HookTarget</code> data type.</p>",
+      "refs": {
+        "GetHookResultOutput$Target": "<p>Information about the target of the Hook invocation.</p>"
+      }
+    },
+    "HookTargetAction": {
+      "base": null,
+      "refs": {
+        "HookTarget$Action": "<p>The action that invoked the Hook.</p>"
+      }
+    },
+    "HookTargetId": {
+      "base": null,
+      "refs": {
+        "HookTarget$TargetId": "<p>The unique identifier of the Hook invocation target.</p>"
       }
     },
     "HookTargetType": {
       "base": null,
       "refs": {
-        "ChangeSetHookTargetDetails$TargetType": "<p>The name of the type.</p>"
+        "ChangeSetHookTargetDetails$TargetType": "<p>The Hook target type.</p>",
+        "HookTarget$TargetType": "<p>The target type.</p>"
       }
     },
     "HookTargetTypeName": {
       "base": null,
       "refs": {
-        "ChangeSetHookResourceTargetDetails$ResourceType": "<p>The type of CloudFormation resource, such as <code>AWS::S3::Bucket</code>.</p>"
+        "ChangeSetHookResourceTargetDetails$ResourceType": "<p>The type of CloudFormation resource, such as <code>AWS::S3::Bucket</code>.</p>",
+        "HookTarget$TargetTypeName": "<p>The target name, for example, <code>AWS::S3::Bucket</code>.</p>"
       }
     },
     "HookType": {
@@ -1258,6 +1329,7 @@
     "HookTypeArn": {
       "base": null,
       "refs": {
+        "GetHookResultOutput$TypeArn": "<p>The Amazon Resource Name (ARN) of the Hook.</p>",
         "HookResultSummary$TypeArn": "<p>The ARN of the Hook that was invoked.</p>",
         "ListHookResultsInput$TypeArn": "<p>Filters results by the ARN of the Hook. Can be used alone or in combination with <code>Status</code>.</p>"
       }
@@ -1266,6 +1338,7 @@
       "base": null,
       "refs": {
         "ChangeSetHook$TypeConfigurationVersionId": "<p>The version ID of the type configuration.</p>",
+        "GetHookResultOutput$TypeConfigurationVersionId": "<p>The version identifier of the Hook configuration data that was used during invocation.</p>",
         "HookResultSummary$TypeConfigurationVersionId": "<p>The version of the Hook configuration.</p>"
       }
     },
@@ -1273,6 +1346,8 @@
       "base": null,
       "refs": {
         "ChangeSetHook$TypeName": "<p>The unique name for your Hook. Specifies a three-part namespace for your Hook, with a recommended pattern of <code>Organization::Service::Hook</code>.</p> <note> <p>The following organization namespaces are reserved and can't be used in your Hook type names:</p> <ul> <li> <p> <code>Alexa</code> </p> </li> <li> <p> <code>AMZN</code> </p> </li> <li> <p> <code>Amazon</code> </p> </li> <li> <p> <code>ASK</code> </p> </li> <li> <p> <code>AWS</code> </p> </li> <li> <p> <code>Custom</code> </p> </li> <li> <p> <code>Dev</code> </p> </li> </ul> </note>",
+        "GetHookResultOutput$TypeName": "<p>The name of the Hook that was invoked.</p>",
+        "GetHookResultOutput$OriginalTypeName": "<p>The original public type name of the Hook when an alias is used.</p> <p>For example, if you activate <code>AWS::Hooks::GuardHook</code> with alias <code>MyCompany::Custom::GuardHook</code>, then <code>TypeName</code> will be <code>MyCompany::Custom::GuardHook</code> and <code>OriginalTypeName</code> will be <code>AWS::Hooks::GuardHook</code>. </p>",
         "HookResultSummary$TypeName": "<p>The name of the Hook that was invoked.</p>"
       }
     },
@@ -1280,6 +1355,7 @@
       "base": null,
       "refs": {
         "ChangeSetHook$TypeVersionId": "<p>The version ID of the type specified.</p>",
+        "GetHookResultOutput$TypeVersionId": "<p>The version identifier of the Hook that was invoked.</p>",
         "HookResultSummary$TypeVersionId": "<p>The version of the Hook that was invoked.</p>"
       }
     },
@@ -1744,59 +1820,59 @@
     "NextToken": {
       "base": null,
       "refs": {
-        "DescribeAccountLimitsInput$NextToken": "<p>A string that identifies the next page of limits that you want to retrieve.</p>",
+        "DescribeAccountLimitsInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "DescribeAccountLimitsOutput$NextToken": "<p>If the output exceeds 1 MB in size, a string that identifies the next page of limits. If no additional page exists, this value is null.</p>",
-        "DescribeChangeSetHooksInput$NextToken": "<p>A string, provided by the <code>DescribeChangeSetHooks</code> response output, that identifies the next page of information that you want to retrieve.</p>",
+        "DescribeChangeSetHooksInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "DescribeChangeSetHooksOutput$NextToken": "<p>Pagination token, <code>null</code> or empty if no more results.</p>",
-        "DescribeChangeSetInput$NextToken": "<p>A string (provided by the <a>DescribeChangeSet</a> response output) that identifies the next page of information that you want to retrieve.</p>",
+        "DescribeChangeSetInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "DescribeChangeSetOutput$NextToken": "<p>If the output exceeds 1 MB, a string that identifies the next page of changes. If there is no additional page, this value is null.</p>",
-        "DescribeStackEventsInput$NextToken": "<p>A string that identifies the next page of events that you want to retrieve.</p>",
+        "DescribeStackEventsInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "DescribeStackEventsOutput$NextToken": "<p>If the output exceeds 1 MB in size, a string that identifies the next page of events. If no additional page exists, this value is null.</p>",
-        "DescribeStackResourceDriftsInput$NextToken": "<p>A string that identifies the next page of stack resource drift results.</p>",
+        "DescribeStackResourceDriftsInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "DescribeStackResourceDriftsOutput$NextToken": "<p>If the request doesn't return all the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call <code>DescribeStackResourceDrifts</code> again and assign that token to the request object's <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to <code>null</code>.</p>",
-        "DescribeStacksInput$NextToken": "<p>A string that identifies the next page of stacks that you want to retrieve.</p>",
+        "DescribeStacksInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "DescribeStacksOutput$NextToken": "<p>If the output exceeds 1 MB in size, a string that identifies the next page of stacks. If no additional page exists, this value is null.</p>",
-        "ListChangeSetsInput$NextToken": "<p>A string (provided by the <a>ListChangeSets</a> response output) that identifies the next page of change sets that you want to retrieve.</p>",
+        "ListChangeSetsInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListChangeSetsOutput$NextToken": "<p>If the output exceeds 1 MB, a string that identifies the next page of change sets. If there is no additional page, this value is <code>null</code>.</p>",
-        "ListExportsInput$NextToken": "<p>A string (provided by the <a>ListExports</a> response output) that identifies the next page of exported output values that you asked to retrieve.</p>",
+        "ListExportsInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListExportsOutput$NextToken": "<p>If the output exceeds 100 exported output values, a string that identifies the next page of exports. If there is no additional page, this value is null.</p>",
-        "ListGeneratedTemplatesInput$NextToken": "<p>A string that identifies the next page of resource scan results.</p>",
+        "ListGeneratedTemplatesInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListGeneratedTemplatesOutput$NextToken": "<p>If the request doesn't return all the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call <code>ListGeneratedTemplates</code> again and use that value for the <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to an empty string.</p>",
-        "ListHookResultsInput$NextToken": "<p>A string that identifies the next page of events that you want to retrieve.</p>",
+        "ListHookResultsInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListHookResultsOutput$NextToken": "<p>Pagination token, <code>null</code> or empty if no more results.</p>",
-        "ListImportsInput$NextToken": "<p>A string (provided by the <a>ListImports</a> response output) that identifies the next page of stacks that are importing the specified exported output value.</p>",
+        "ListImportsInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListImportsOutput$NextToken": "<p>A string that identifies the next page of exports. If there is no additional page, this value is null.</p>",
-        "ListResourceScanRelatedResourcesInput$NextToken": "<p>A string that identifies the next page of resource scan results.</p>",
+        "ListResourceScanRelatedResourcesInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListResourceScanRelatedResourcesOutput$NextToken": "<p>If the request doesn't return all the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call <code>ListResourceScanRelatedResources</code> again and use that value for the <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to an empty string.</p>",
-        "ListResourceScanResourcesInput$NextToken": "<p>A string that identifies the next page of resource scan results.</p>",
+        "ListResourceScanResourcesInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListResourceScanResourcesOutput$NextToken": "<p>If the request doesn't return all the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call <code>ListResourceScanResources</code> again and use that value for the <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to an empty string.</p>",
-        "ListResourceScansInput$NextToken": "<p>A string that identifies the next page of resource scan results.</p>",
+        "ListResourceScansInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListResourceScansOutput$NextToken": "<p>If the request doesn't return all the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call <code>ListResourceScans</code> again and use that value for the <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to an empty string.</p>",
-        "ListStackInstanceResourceDriftsInput$NextToken": "<p>If the previous paginated request didn't return all of the remaining results, the response object's <code>NextToken</code> parameter value is set to a token. To retrieve the next set of results, call this action again and assign that token to the request object's <code>NextToken</code> parameter. If there are no remaining results, the previous response object's <code>NextToken</code> parameter is set to <code>null</code>.</p>",
+        "ListStackInstanceResourceDriftsInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListStackInstanceResourceDriftsOutput$NextToken": "<p>If the previous paginated request didn't return all of the remaining results, the response object's <code>NextToken</code> parameter value is set to a token. To retrieve the next set of results, call this action again and assign that token to the request object's <code>NextToken</code> parameter. If there are no remaining results, the previous response object's <code>NextToken</code> parameter is set to <code>null</code>.</p>",
-        "ListStackInstancesInput$NextToken": "<p>If the previous request didn't return all the remaining results, the response's <code>NextToken</code> parameter value is set to a token. To retrieve the next set of results, call <code>ListStackInstances</code> again and assign that token to the request object's <code>NextToken</code> parameter. If there are no remaining results, the previous response object's <code>NextToken</code> parameter is set to <code>null</code>.</p>",
+        "ListStackInstancesInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListStackInstancesOutput$NextToken": "<p>If the request doesn't return all the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call <code>ListStackInstances</code> again and assign that token to the request object's <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to <code>null</code>.</p>",
-        "ListStackRefactorActionsInput$NextToken": "<p>If the request doesn't return all the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call this action again and assign that token to the request object's <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to <code>null</code>.</p>",
+        "ListStackRefactorActionsInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListStackRefactorActionsOutput$NextToken": "<p>If the request doesn't return all the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call this action again and assign that token to the request object's <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to <code>null</code>.</p>",
-        "ListStackRefactorsInput$NextToken": "<p>If the request doesn't return all the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call this action again and assign that token to the request object's <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to <code>null</code>.</p>",
+        "ListStackRefactorsInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListStackRefactorsOutput$NextToken": "<p>If the request doesn't return all the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call this action again and assign that token to the request object's <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to <code>null</code>.</p>",
-        "ListStackResourcesInput$NextToken": "<p>A string that identifies the next page of stack resources that you want to retrieve.</p>",
+        "ListStackResourcesInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListStackResourcesOutput$NextToken": "<p>If the output exceeds 1 MB, a string that identifies the next page of stack resources. If no additional page exists, this value is null.</p>",
-        "ListStackSetAutoDeploymentTargetsInput$NextToken": "<p>A string that identifies the next page of deployment targets that you want to retrieve.</p>",
+        "ListStackSetAutoDeploymentTargetsInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListStackSetAutoDeploymentTargetsOutput$NextToken": "<p>If the request doesn't return all the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ListStackSetAutoDeploymentTargets.html\">ListStackSetAutoDeploymentTargets</a> again and use that value for the <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to an empty string.</p>",
-        "ListStackSetOperationResultsInput$NextToken": "<p>If the previous request didn't return all the remaining results, the response object's <code>NextToken</code> parameter value is set to a token. To retrieve the next set of results, call <code>ListStackSetOperationResults</code> again and assign that token to the request object's <code>NextToken</code> parameter. If there are no remaining results, the previous response object's <code>NextToken</code> parameter is set to <code>null</code>.</p>",
+        "ListStackSetOperationResultsInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListStackSetOperationResultsOutput$NextToken": "<p>If the request doesn't return all results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call <code>ListOperationResults</code> again and assign that token to the request object's <code>NextToken</code> parameter. If there are no remaining results, <code>NextToken</code> is set to <code>null</code>.</p>",
-        "ListStackSetOperationsInput$NextToken": "<p>If the previous paginated request didn't return all of the remaining results, the response object's <code>NextToken</code> parameter value is set to a token. To retrieve the next set of results, call <code>ListStackSetOperations</code> again and assign that token to the request object's <code>NextToken</code> parameter. If there are no remaining results, the previous response object's <code>NextToken</code> parameter is set to <code>null</code>.</p>",
+        "ListStackSetOperationsInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListStackSetOperationsOutput$NextToken": "<p>If the request doesn't return all results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call <code>ListOperationResults</code> again and assign that token to the request object's <code>NextToken</code> parameter. If there are no remaining results, <code>NextToken</code> is set to <code>null</code>.</p>",
-        "ListStackSetsInput$NextToken": "<p>If the previous paginated request didn't return all the remaining results, the response object's <code>NextToken</code> parameter value is set to a token. To retrieve the next set of results, call <code>ListStackSets</code> again and assign that token to the request object's <code>NextToken</code> parameter. If there are no remaining results, the previous response object's <code>NextToken</code> parameter is set to <code>null</code>.</p>",
+        "ListStackSetsInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListStackSetsOutput$NextToken": "<p>If the request doesn't return all of the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call <code>ListStackInstances</code> again and assign that token to the request object's <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to <code>null</code>.</p>",
-        "ListStacksInput$NextToken": "<p>A string that identifies the next page of stacks that you want to retrieve.</p>",
+        "ListStacksInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListStacksOutput$NextToken": "<p>If the output exceeds 1 MB in size, a string that identifies the next page of stacks. If no additional page exists, this value is null.</p>",
-        "ListTypeRegistrationsInput$NextToken": "<p>If the previous paginated request didn't return all the remaining results, the response object's <code>NextToken</code> parameter value is set to a token. To retrieve the next set of results, call this action again and assign that token to the request object's <code>NextToken</code> parameter. If there are no remaining results, the previous response object's <code>NextToken</code> parameter is set to <code>null</code>.</p>",
+        "ListTypeRegistrationsInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListTypeRegistrationsOutput$NextToken": "<p>If the request doesn't return all the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call this action again and assign that token to the request object's <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to <code>null</code>.</p>",
-        "ListTypeVersionsInput$NextToken": "<p>If the previous paginated request didn't return all of the remaining results, the response object's <code>NextToken</code> parameter value is set to a token. To retrieve the next set of results, call this action again and assign that token to the request object's <code>NextToken</code> parameter. If there are no remaining results, the previous response object's <code>NextToken</code> parameter is set to <code>null</code>.</p>",
+        "ListTypeVersionsInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListTypeVersionsOutput$NextToken": "<p>If the request doesn't return all of the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call this action again and assign that token to the request object's <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to <code>null</code>.</p>",
-        "ListTypesInput$NextToken": "<p>If the previous paginated request didn't return all the remaining results, the response object's <code>NextToken</code> parameter value is set to a token. To retrieve the next set of results, call this action again and assign that token to the request object's <code>NextToken</code> parameter. If there are no remaining results, the previous response object's <code>NextToken</code> parameter is set to <code>null</code>.</p>",
+        "ListTypesInput$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListTypesOutput$NextToken": "<p>If the request doesn't return all the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call this action again and assign that token to the request object's <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to <code>null</code>.</p>"
       }
     },
@@ -1921,7 +1997,7 @@
       }
     },
     "Output": {
-      "base": "<p>The Output data type.</p>",
+      "base": "<p>The <code>Output</code> data type.</p>",
       "refs": {
         "Outputs$member": null
       }
@@ -1945,7 +2021,7 @@
       }
     },
     "Parameter": {
-      "base": "<p>The Parameter data type.</p>",
+      "base": "<p>The <code>Parameter</code> data type.</p>",
       "refs": {
         "Parameters$member": null
       }
@@ -1957,7 +2033,7 @@
       }
     },
     "ParameterDeclaration": {
-      "base": "<p>The ParameterDeclaration data type.</p>",
+      "base": "<p>The <code>ParameterDeclaration</code> data type.</p>",
       "refs": {
         "ParameterDeclarations$member": null
       }
@@ -2283,6 +2359,18 @@
         "ListResourceScanRelatedResourcesOutput$RelatedResources": "<p>List of up to <code>MaxResults</code> resources in the specified resource scan related to the specified resources.</p>"
       }
     },
+    "RemediationMessageRemediationMessage": {
+      "base": null,
+      "refs": {
+        "Annotation$RemediationMessage": "<p>Suggests what to change if your Hook returns a <code>FAILED</code> status. For example, \"Block public access to the bucket\".</p>"
+      }
+    },
+    "RemediationMessageStatusMessage": {
+      "base": null,
+      "refs": {
+        "Annotation$StatusMessage": "<p>The explanation for the specific status assigned to this Hook invocation. For example, \"Bucket does not block public access\".</p>"
+      }
+    },
     "Replacement": {
       "base": null,
       "refs": {
@@ -2597,11 +2685,11 @@
     "ResourceTypes": {
       "base": null,
       "refs": {
-        "CreateChangeSetInput$ResourceTypes": "<p>The template resource types that you have permissions to work with if you execute this change set, such as <code>AWS::EC2::Instance</code>, <code>AWS::EC2::*</code>, or <code>Custom::MyCustomInstance</code>.</p> <p>If the list of resource types doesn't include a resource type that you're updating, the stack update fails. By default, CloudFormation grants permissions to all resource types. IAM uses this parameter for condition keys in IAM policies for CloudFormation. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/control-access-with-iam.html\">Control access with Identity and Access Management</a> in the <i>CloudFormation User Guide</i>.</p> <note> <p>Only one of the <code>Capabilities</code> and <code>ResourceType</code> parameters can be specified.</p> </note>",
-        "CreateStackInput$ResourceTypes": "<p>The template resource types that you have permissions to work with for this create stack action, such as <code>AWS::EC2::Instance</code>, <code>AWS::EC2::*</code>, or <code>Custom::MyCustomInstance</code>. Use the following syntax to describe template resource types: <code>AWS::*</code> (for all Amazon Web Services resources), <code>Custom::*</code> (for all custom resources), <code>Custom::<i>logical_ID</i> </code> (for a specific custom resource), <code>AWS::<i>service_name</i>::*</code> (for all resources of a particular Amazon Web Services service), and <code>AWS::<i>service_name</i>::<i>resource_logical_ID</i> </code> (for a specific Amazon Web Services resource).</p> <p>If the list of resource types doesn't include a resource that you're creating, the stack creation fails. By default, CloudFormation grants permissions to all resource types. IAM uses this parameter for CloudFormation-specific condition keys in IAM policies. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/control-access-with-iam.html\">Control access with Identity and Access Management</a>.</p> <note> <p>Only one of the <code>Capabilities</code> and <code>ResourceType</code> parameters can be specified.</p> </note>",
+        "CreateChangeSetInput$ResourceTypes": "<p>Specifies which resource types you can work with, such as <code>AWS::EC2::Instance</code> or <code>Custom::MyCustomInstance</code>.</p> <p>If the list of resource types doesn't include a resource type that you're updating, the stack update fails. By default, CloudFormation grants permissions to all resource types. IAM uses this parameter for condition keys in IAM policies for CloudFormation. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/control-access-with-iam.html\">Control CloudFormation access with Identity and Access Management</a> in the <i>CloudFormation User Guide</i>.</p> <note> <p>Only one of the <code>Capabilities</code> and <code>ResourceType</code> parameters can be specified.</p> </note>",
+        "CreateStackInput$ResourceTypes": "<p>Specifies which resource types you can work with, such as <code>AWS::EC2::Instance</code> or <code>Custom::MyCustomInstance</code>.</p> <p>If the list of resource types doesn't include a resource that you're creating, the stack creation fails. By default, CloudFormation grants permissions to all resource types. IAM uses this parameter for CloudFormation-specific condition keys in IAM policies. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/control-access-with-iam.html\">Control CloudFormation access with Identity and Access Management</a>.</p> <note> <p>Only one of the <code>Capabilities</code> and <code>ResourceType</code> parameters can be specified.</p> </note>",
         "DescribeResourceScanOutput$ResourceTypes": "<p>The list of resource types for the specified scan. Resource types are only available for scans with a <code>Status</code> set to <code>COMPLETE</code> or <code>FAILED </code>.</p>",
         "GetTemplateSummaryOutput$ResourceTypes": "<p>A list of all the template resource types that are defined in the template, such as <code>AWS::EC2::Instance</code>, <code>AWS::Dynamo::Table</code>, and <code>Custom::MyCustomInstance</code>.</p>",
-        "UpdateStackInput$ResourceTypes": "<p>The template resource types that you have permissions to work with for this update stack action, such as <code>AWS::EC2::Instance</code>, <code>AWS::EC2::*</code>, or <code>Custom::MyCustomInstance</code>.</p> <p>If the list of resource types doesn't include a resource that you're updating, the stack update fails. By default, CloudFormation grants permissions to all resource types. IAM uses this parameter for CloudFormation-specific condition keys in IAM policies. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/control-access-with-iam.html\">Control access with Identity and Access Management</a>.</p> <note> <p>Only one of the <code>Capabilities</code> and <code>ResourceType</code> parameters can be specified.</p> </note>",
+        "UpdateStackInput$ResourceTypes": "<p>Specifies which resource types you can work with, such as <code>AWS::EC2::Instance</code> or <code>Custom::MyCustomInstance</code>.</p> <p>If the list of resource types doesn't include a resource that you're updating, the stack update fails. By default, CloudFormation grants permissions to all resource types. IAM uses this parameter for CloudFormation-specific condition keys in IAM policies. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/control-access-with-iam.html\">Control CloudFormation access with Identity and Access Management</a>.</p> <note> <p>Only one of the <code>Capabilities</code> and <code>ResourceType</code> parameters can be specified.</p> </note>",
         "Warnings$UnrecognizedResourceTypes": "<p>A list of all of the unrecognized resource types. This is only returned if the <code>TemplateSummaryConfig</code> parameter has the <code>TreatUnrecognizedResourceTypesAsWarning</code> configuration set to <code>True</code>.</p>"
       }
     },
@@ -2830,7 +2918,7 @@
       "refs": {}
     },
     "Stack": {
-      "base": "<p>The Stack data type.</p>",
+      "base": "<p>The <code>Stack</code> data type.</p>",
       "refs": {
         "Stacks$member": null
       }
@@ -2891,7 +2979,7 @@
       }
     },
     "StackEvent": {
-      "base": "<p>The StackEvent data type.</p>",
+      "base": "<p>The <code>StackEvent</code> data type.</p>",
       "refs": {
         "StackEvents$member": null
       }
@@ -3086,7 +3174,7 @@
       "base": null,
       "refs": {
         "CreateStackInput$StackPolicyBody": "<p>Structure that contains the stack policy body. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/protect-stack-resources.html\">Prevent updates to stack resources</a> in the <i>CloudFormation User Guide</i>. You can specify either the <code>StackPolicyBody</code> or the <code>StackPolicyURL</code> parameter, but not both.</p>",
-        "GetStackPolicyOutput$StackPolicyBody": "<p>Structure that contains the stack policy body. (For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/protect-stack-resources.html\">Prevent updates to stack resources</a> in the <i>CloudFormation User Guide</i>.)</p>",
+        "GetStackPolicyOutput$StackPolicyBody": "<p>Structure that contains the stack policy body. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/protect-stack-resources.html\">Prevent updates to stack resources</a> in the <i>CloudFormation User Guide</i>.</p>",
         "SetStackPolicyInput$StackPolicyBody": "<p>Structure that contains the stack policy body. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/protect-stack-resources.html\">Prevent updates to stack resources</a> in the <i>CloudFormation User Guide</i>. You can specify either the <code>StackPolicyBody</code> or the <code>StackPolicyURL</code> parameter, but not both.</p>",
         "UpdateStackInput$StackPolicyBody": "<p>Structure that contains a new stack policy body. You can specify either the <code>StackPolicyBody</code> or the <code>StackPolicyURL</code> parameter, but not both.</p> <p>You might update the stack policy, for example, in order to protect a new resource that you created during a stack update. If you don't specify a stack policy, the current policy that is associated with the stack is unchanged.</p>"
       }
@@ -3215,7 +3303,7 @@
       }
     },
     "StackResource": {
-      "base": "<p>The StackResource data type.</p>",
+      "base": "<p>The <code>StackResource</code> data type.</p>",
       "refs": {
         "StackResources$member": null
       }
@@ -3510,7 +3598,7 @@
       }
     },
     "StackSummary": {
-      "base": "<p>The StackSummary Data Type</p>",
+      "base": "<p>The <code>StackSummary</code> Data Type</p>",
       "refs": {
         "StackSummaries$member": null
       }
@@ -3603,7 +3691,7 @@
     "TemplateBody": {
       "base": null,
       "refs": {
-        "CreateChangeSetInput$TemplateBody": "<p>A structure that contains the body of the revised template, with a minimum length of 1 byte and a maximum length of 51,200 bytes. CloudFormation generates the change set by comparing this template with the template of the stack that you specified.</p> <p>Conditional: You must specify only <code>TemplateBody</code> or <code>TemplateURL</code>.</p>",
+        "CreateChangeSetInput$TemplateBody": "<p>A structure that contains the body of the revised template, with a minimum length of 1 byte and a maximum length of 51,200 bytes. CloudFormation generates the change set by comparing this template with the template of the stack that you specified.</p> <p>Conditional: You must specify only one of the following parameters: <code>TemplateBody</code>, <code>TemplateURL</code>, or set the <code>UsePreviousTemplate</code> to <code>true</code>.</p>",
         "CreateStackInput$TemplateBody": "<p>Structure that contains the template body with a minimum length of 1 byte and a maximum length of 51,200 bytes.</p> <p>Conditional: You must specify either <code>TemplateBody</code> or <code>TemplateURL</code>, but not both.</p>",
         "CreateStackSetInput$TemplateBody": "<p>The structure that contains the template body, with a minimum length of 1 byte and a maximum length of 51,200 bytes.</p> <p>Conditional: You must specify either the <code>TemplateBody</code> or the <code>TemplateURL</code> parameter, but not both.</p>",
         "EstimateTemplateCostInput$TemplateBody": "<p>Structure that contains the template body with a minimum length of 1 byte and a maximum length of 51,200 bytes.</p> <p>Conditional: You must pass <code>TemplateBody</code> or <code>TemplateURL</code>. If both are passed, only <code>TemplateBody</code> is used.</p>",
@@ -3638,7 +3726,7 @@
       }
     },
     "TemplateParameter": {
-      "base": "<p>The TemplateParameter data type.</p>",
+      "base": "<p>The <code>TemplateParameter</code> data type.</p>",
       "refs": {
         "TemplateParameters$member": null
       }
@@ -3690,7 +3778,7 @@
     "TemplateURL": {
       "base": null,
       "refs": {
-        "CreateChangeSetInput$TemplateURL": "<p>The URL of the file that contains the revised template. The URL must point to a template (max size: 1 MB) that's located in an Amazon S3 bucket or a Systems Manager document. CloudFormation generates the change set by comparing this template with the stack that you specified. The location for an Amazon S3 bucket must start with <code>https://</code>. URLs from S3 static websites are not supported.</p> <p>Conditional: You must specify only <code>TemplateBody</code> or <code>TemplateURL</code>.</p>",
+        "CreateChangeSetInput$TemplateURL": "<p>The URL of the file that contains the revised template. The URL must point to a template (max size: 1 MB) that's located in an Amazon S3 bucket or a Systems Manager document. CloudFormation generates the change set by comparing this template with the stack that you specified. The location for an Amazon S3 bucket must start with <code>https://</code>. URLs from S3 static websites are not supported.</p> <p>Conditional: You must specify only one of the following parameters: <code>TemplateBody</code>, <code>TemplateURL</code>, or set the <code>UsePreviousTemplate</code> to <code>true</code>.</p>",
         "CreateStackInput$TemplateURL": "<p>The URL of a file that contains the template body. The URL must point to a template (max size: 1 MB) that's located in an Amazon S3 bucket or a Systems Manager document. The location for an Amazon S3 bucket must start with <code>https://</code>. URLs from S3 static websites are not supported.</p> <p>Conditional: You must specify either the <code>TemplateBody</code> or the <code>TemplateURL</code> parameter, but not both.</p>",
         "CreateStackSetInput$TemplateURL": "<p>The URL of a file that contains the template body. The URL must point to a template (maximum size: 1 MB) that's located in an Amazon S3 bucket or a Systems Manager document. The location for an Amazon S3 bucket must start with <code>https://</code>. S3 static website URLs are not supported.</p> <p>Conditional: You must specify either the <code>TemplateBody</code> or the <code>TemplateURL</code> parameter, but not both.</p>",
         "EstimateTemplateCostInput$TemplateURL": "<p>The URL of a file that contains the template body. The URL must point to a template that's located in an Amazon S3 bucket or a Systems Manager document. The location for an Amazon S3 bucket must start with <code>https://</code>. URLs from S3 static websites are not supported.</p> <p>Conditional: You must pass <code>TemplateURL</code> or <code>TemplateBody</code>. If both are passed, only <code>TemplateBody</code> is used.</p>",
@@ -3741,6 +3829,7 @@
         "DescribeStackDriftDetectionStatusOutput$Timestamp": "<p>Time at which the stack drift detection operation was initiated.</p>",
         "DescribeTypeOutput$LastUpdated": "<p>When the specified extension version was registered. This applies only to:</p> <ul> <li> <p>Private extensions you have registered in your account. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_RegisterType.html\">RegisterType</a>.</p> </li> <li> <p>Public extensions you have activated in your account with auto-update specified. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ActivateType.html\">ActivateType</a>.</p> </li> </ul>",
         "DescribeTypeOutput$TimeCreated": "<p>When the specified private extension version was registered or activated in your account.</p>",
+        "GetHookResultOutput$InvokedAt": "<p>The timestamp when the Hook was invoked.</p>",
         "HookResultSummary$InvokedAt": "<p>The timestamp when the Hook was invoked.</p> <p>Only shown in responses when the request does not specify <code>TargetType</code> and <code>TargetId</code> filters.</p>",
         "ResourceScanSummary$StartTime": "<p>The time that the resource scan was started.</p>",
         "ResourceScanSummary$EndTime": "<p>The time that the resource scan was finished.</p>",
@@ -4038,8 +4127,8 @@
     "UsePreviousTemplate": {
       "base": null,
       "refs": {
-        "CreateChangeSetInput$UsePreviousTemplate": "<p>Whether to reuse the template that's associated with the stack to create the change set.</p>",
-        "UpdateStackInput$UsePreviousTemplate": "<p>Reuse the existing template that is associated with the stack that you are updating.</p> <p>Conditional: You must specify only one of the following parameters: <code>TemplateBody</code>, <code>TemplateURL</code>, or set the <code>UsePreviousTemplate</code> to <code>true</code>.</p>",
+        "CreateChangeSetInput$UsePreviousTemplate": "<p>Whether to reuse the template that's associated with the stack to create the change set.</p> <p>When using templates with the <code>AWS::LanguageExtensions</code> transform, provide the template instead of using <code>UsePreviousTemplate</code> to ensure new parameter values and Systems Manager parameter updates are applied correctly. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/transform-aws-languageextensions.html\">AWS::LanguageExtensions transform</a>.</p> <p>Conditional: You must specify only one of the following parameters: <code>TemplateBody</code>, <code>TemplateURL</code>, or set the <code>UsePreviousTemplate</code> to <code>true</code>.</p>",
+        "UpdateStackInput$UsePreviousTemplate": "<p>Reuse the existing template that is associated with the stack that you are updating.</p> <p>When using templates with the <code>AWS::LanguageExtensions</code> transform, provide the template instead of using <code>UsePreviousTemplate</code> to ensure new parameter values and Systems Manager parameter updates are applied correctly. For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/transform-aws-languageextensions.html\">AWS::LanguageExtensions transform</a>.</p> <p>Conditional: You must specify only one of the following parameters: <code>TemplateBody</code>, <code>TemplateURL</code>, or set the <code>UsePreviousTemplate</code> to <code>true</code>.</p>",
         "UpdateStackSetInput$UsePreviousTemplate": "<p>Use the existing template that's associated with the StackSet that you're updating.</p> <p>Conditional: You must specify only one of the following parameters: <code>TemplateBody</code> or <code>TemplateURL</code>—or set <code>UsePreviousTemplate</code> to true.</p>"
       }
     },

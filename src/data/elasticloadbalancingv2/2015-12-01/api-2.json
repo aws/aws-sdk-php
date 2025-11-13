@@ -2568,7 +2568,9 @@
         "TLS",
         "UDP",
         "TCP_UDP",
-        "GENEVE"
+        "GENEVE",
+        "QUIC",
+        "TCP_QUIC"
       ]
     },
     "ProtocolVersion":{"type":"string"},
@@ -2588,6 +2590,11 @@
     "QueryStringKeyValuePairList":{
       "type":"list",
       "member":{"shape":"QueryStringKeyValuePair"}
+    },
+    "QuicServerId":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "RedirectActionConfig":{
       "type":"structure",
@@ -3073,7 +3080,8 @@
       "members":{
         "Id":{"shape":"TargetId"},
         "Port":{"shape":"Port"},
-        "AvailabilityZone":{"shape":"ZoneName"}
+        "AvailabilityZone":{"shape":"ZoneName"},
+        "QuicServerId":{"shape":"QuicServerId"}
       }
     },
     "TargetDescriptions":{

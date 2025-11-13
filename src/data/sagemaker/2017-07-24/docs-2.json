@@ -932,6 +932,12 @@
         "TransformOutput$AssembleWith": "<p>Defines how to assemble the results of the transform job as a single S3 object. Choose a format that is most convenient to you. To concatenate the results in binary format, specify <code>None</code>. To add a newline character at the end of every transformed record, specify <code>Line</code>.</p>"
       }
     },
+    "AssignedGroupPatternsList": {
+      "base": null,
+      "refs": {
+        "PartnerAppConfig$AssignedGroupPatterns": "<p>A list of Amazon Web Services IAM Identity Center group patterns that can access the SageMaker Partner AI App. Group names support wildcard matching using <code>*</code>. An empty list indicates the app will not use Identity Center group features. All groups specified in <code>RoleGroupAssignments</code> must match patterns in this list.</p>"
+      }
+    },
     "AssociateTrialComponentRequest": {
       "base": null,
       "refs": {}
@@ -1574,6 +1580,12 @@
         "UltraServerSummary$AvailableSpareInstanceCount": "<p>The number of available spare instances in the UltraServers.</p>"
       }
     },
+    "AvailableUpgrade": {
+      "base": "<p>Contains information about an available upgrade for a SageMaker Partner AI App, including the version number and release notes.</p>",
+      "refs": {
+        "DescribePartnerAppResponse$AvailableUpgrade": "<p>A map of available minor version upgrades for the SageMaker Partner AI App. The key is the semantic version number, and the value is a list of release notes for that version. A null value indicates no upgrades are available.</p>"
+      }
+    },
     "AwsManagedHumanLoopRequestSource": {
       "base": null,
       "refs": {
@@ -1770,6 +1782,7 @@
         "CreateMlflowTrackingServerRequest$AutomaticModelRegistration": "<p>Whether to enable or disable automatic registration of new MLflow models to the SageMaker Model Registry. To enable automatic model registration, set this value to <code>True</code>. To disable automatic model registration, set this value to <code>False</code>. If not specified, <code>AutomaticModelRegistration</code> defaults to <code>False</code>.</p>",
         "CreateModelInput$EnableNetworkIsolation": "<p>Isolates the model container. No inbound or outbound network calls can be made to or from the model container.</p>",
         "CreatePartnerAppRequest$EnableIamSessionBasedIdentity": "<p>When set to <code>TRUE</code>, the SageMaker Partner AI App sets the Amazon Web Services IAM session name or the authenticated IAM user as the identity of the SageMaker Partner AI App user.</p>",
+        "CreatePartnerAppRequest$EnableAutoMinorVersionUpgrade": "<p>When set to <code>TRUE</code>, the SageMaker Partner AI App is automatically upgraded to the latest minor version during the next scheduled maintenance window, if one is available. Default is <code>FALSE</code>.</p>",
         "CreateTrainingJobRequest$EnableNetworkIsolation": "<p>Isolates the training container. No inbound or outbound network calls can be made, except for calls between peers within a training cluster for distributed training. If you enable network isolation for training jobs that are configured to use a VPC, SageMaker downloads and uploads customer data and model artifacts through the specified VPC, but the training container does not have network access.</p>",
         "CreateTrainingJobRequest$EnableInterContainerTrafficEncryption": "<p>To encrypt all communications between ML compute instances in distributed training, choose <code>True</code>. Encryption provides greater security for distributed training, but training might take longer. How long it takes depends on the amount of communication between compute instances, especially if you use a deep learning algorithm in distributed training. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/train-encrypt.html\">Protect Communications Between ML Compute Instances in a Distributed Training Job</a>.</p>",
         "CreateTrainingJobRequest$EnableManagedSpotTraining": "<p>To train models using managed spot training, choose <code>True</code>. Managed spot training provides a fully managed and scalable infrastructure for training machine learning models. this option is useful when training jobs can be interrupted and when there is flexibility when the training job is run. </p> <p>The complete and intermediate results of jobs are stored in an Amazon S3 bucket, and can be used as a starting point to train models incrementally. Amazon SageMaker provides metrics and logs in CloudWatch. They can be used to see when managed spot training jobs are running, interrupted, resumed, or completed. </p>",
@@ -1777,7 +1790,9 @@
         "DescribeEndpointConfigOutput$EnableNetworkIsolation": "<p>Indicates whether all model containers deployed to the endpoint are isolated. If they are, no inbound or outbound network calls can be made to or from the model containers.</p>",
         "DescribeMlflowTrackingServerResponse$AutomaticModelRegistration": "<p>Whether automatic registration of new MLflow models to the SageMaker Model Registry is enabled.</p>",
         "DescribeModelOutput$EnableNetworkIsolation": "<p>If <code>True</code>, no inbound or outbound network calls can be made to or from the model container.</p>",
+        "DescribePartnerAppRequest$IncludeAvailableUpgrade": "<p>When set to <code>TRUE</code>, the response includes available upgrade information for the SageMaker Partner AI App. Default is <code>FALSE</code>.</p>",
         "DescribePartnerAppResponse$EnableIamSessionBasedIdentity": "<p>When set to <code>TRUE</code>, the SageMaker Partner AI App sets the Amazon Web Services IAM session name or the authenticated IAM user as the identity of the SageMaker Partner AI App user.</p>",
+        "DescribePartnerAppResponse$EnableAutoMinorVersionUpgrade": "<p>Indicates whether the SageMaker Partner AI App is configured for automatic minor version upgrades during scheduled maintenance windows.</p>",
         "DescribeTrainingJobResponse$EnableNetworkIsolation": "<p>If you want to allow inbound or outbound network calls, except for calls between peers within a training cluster for distributed training, choose <code>True</code>. If you enable network isolation for training jobs that are configured to use a VPC, SageMaker downloads and uploads customer data and model artifacts through the specified VPC, but the training container does not have network access.</p>",
         "DescribeTrainingJobResponse$EnableInterContainerTrafficEncryption": "<p>To encrypt all communications between ML compute instances in distributed training, choose <code>True</code>. Encryption provides greater security for distributed training, but training might take longer. How long it takes depends on the amount of communication between compute instances, especially if you use a deep learning algorithms in distributed training.</p>",
         "DescribeTrainingJobResponse$EnableManagedSpotTraining": "<p>A Boolean indicating whether managed spot training is enabled (<code>True</code>) or not (<code>False</code>).</p>",
@@ -1809,7 +1824,8 @@
         "UpdateEndpointInput$RetainAllVariantProperties": "<p>When updating endpoint resources, enables or disables the retention of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_VariantProperty.html\">variant properties</a>, such as the instance count or the variant weight. To retain the variant properties of an endpoint when updating it, set <code>RetainAllVariantProperties</code> to <code>true</code>. To use the variant properties specified in a new <code>EndpointConfig</code> call when updating an endpoint, set <code>RetainAllVariantProperties</code> to <code>false</code>. The default is <code>false</code>.</p>",
         "UpdateEndpointInput$RetainDeploymentConfig": "<p>Specifies whether to reuse the last deployment configuration. The default value is false (the configuration is not reused).</p>",
         "UpdateMlflowTrackingServerRequest$AutomaticModelRegistration": "<p>Whether to enable or disable automatic registration of new MLflow models to the SageMaker Model Registry. To enable automatic model registration, set this value to <code>True</code>. To disable automatic model registration, set this value to <code>False</code>. If not specified, <code>AutomaticModelRegistration</code> defaults to <code>False</code> </p>",
-        "UpdatePartnerAppRequest$EnableIamSessionBasedIdentity": "<p>When set to <code>TRUE</code>, the SageMaker Partner AI App sets the Amazon Web Services IAM session name or the authenticated IAM user as the identity of the SageMaker Partner AI App user.</p>"
+        "UpdatePartnerAppRequest$EnableIamSessionBasedIdentity": "<p>When set to <code>TRUE</code>, the SageMaker Partner AI App sets the Amazon Web Services IAM session name or the authenticated IAM user as the identity of the SageMaker Partner AI App user.</p>",
+        "UpdatePartnerAppRequest$EnableAutoMinorVersionUpgrade": "<p>When set to <code>TRUE</code>, the SageMaker Partner AI App is automatically upgraded to the latest minor version during the next scheduled maintenance window, if one is available.</p>"
       }
     },
     "BooleanOperator": {
@@ -7329,6 +7345,19 @@
         "Groups$member": null
       }
     },
+    "GroupNamePattern": {
+      "base": null,
+      "refs": {
+        "AssignedGroupPatternsList$member": null,
+        "GroupPatternsList$member": null
+      }
+    },
+    "GroupPatternsList": {
+      "base": null,
+      "refs": {
+        "RoleGroupAssignment$GroupPatterns": "<p>A list of AWS IAM Identity Center group patterns that should be assigned to the specified role. Group patterns support wildcard matching using <code>*</code>.</p>"
+      }
+    },
     "GroupingAttributeName": {
       "base": null,
       "refs": {
@@ -10201,6 +10230,13 @@
         "UpdateImageVersionRequest$MLFramework": "<p>The machine learning framework vended in the image version.</p>"
       }
     },
+    "MajorMinorVersion": {
+      "base": null,
+      "refs": {
+        "AvailableUpgrade$Version": "<p>The semantic version number of the available upgrade for the SageMaker Partner AI App.</p>",
+        "UpdatePartnerAppRequest$AppVersion": "<p>The semantic version to upgrade the SageMaker Partner AI App to. Must be the same semantic version returned in the <code>AvailableUpgrade</code> field from <code>DescribePartnerApp</code>. Version skipping and downgrades are not supported.</p>"
+      }
+    },
     "ManagedInstanceScalingMaxInstanceCount": {
       "base": null,
       "refs": {
@@ -12174,6 +12210,7 @@
         "OptimizationJobEnvironmentVariables$key": null,
         "PartnerAppAdminUserList$member": null,
         "PartnerAppArguments$key": null,
+        "RoleGroupAssignment$RoleName": "<p>The name of the in-app role within the SageMaker Partner AI App. The specific roles available depend on the app type and version.</p>",
         "UltraServer$UltraServerId": "<p>The unique identifier for the UltraServer.</p>"
       }
     },
@@ -14374,6 +14411,12 @@
         "UpdateImageVersionRequest$ReleaseNotes": "<p>The maintainer description of the image version.</p>"
       }
     },
+    "ReleaseNotesList": {
+      "base": null,
+      "refs": {
+        "AvailableUpgrade$ReleaseNotes": "<p>A list of release notes describing the changes and improvements included in the available upgrade version.</p>"
+      }
+    },
     "RemoteDebugConfig": {
       "base": "<p>Configuration for remote debugging for the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingJob.html\">CreateTrainingJob</a> API. To learn more about the remote debugging functionality of SageMaker, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/train-remote-debugging.html\">Access a training container through Amazon Web Services Systems Manager (SSM) for remote debugging</a>.</p>",
       "refs": {
@@ -14813,6 +14856,18 @@
         "UpdateNotebookInstanceInput$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that SageMaker AI can assume to access the notebook instance. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-roles.html\">SageMaker AI Roles</a>. </p> <note> <p>To be able to pass this role to SageMaker AI, the caller of this API must have the <code>iam:PassRole</code> permission.</p> </note>",
         "UpdatePipelineRequest$RoleArn": "<p>The Amazon Resource Name (ARN) that the pipeline uses to execute.</p>",
         "UserSettings$ExecutionRole": "<p>The execution role for the user.</p> <p>SageMaker applies this setting only to private spaces that the user creates in the domain. SageMaker doesn't apply this setting to shared spaces.</p>"
+      }
+    },
+    "RoleGroupAssignment": {
+      "base": "<p>Defines the mapping between an in-app role and the AWS IAM Identity Center group patterns that should be assigned to that role within the SageMaker Partner AI App.</p>",
+      "refs": {
+        "RoleGroupAssignmentsList$member": null
+      }
+    },
+    "RoleGroupAssignmentsList": {
+      "base": null,
+      "refs": {
+        "PartnerAppConfig$RoleGroupAssignments": "<p>A map of in-app roles to Amazon Web Services IAM Identity Center group patterns. Groups assigned to specific roles receive those permissions, while groups in <code>AssignedGroupPatterns</code> but not in this map receive default in-app role depending on app type. Group patterns support wildcard matching using <code>*</code>. Currently supported by Fiddler version 1.3 and later with roles: <code>ORG_MEMBER</code> (default) and <code>ORG_ADMIN</code>.</p>"
       }
     },
     "RollingDeploymentPolicy": {
@@ -16127,6 +16182,7 @@
         "QualityCheckStepMetadata$CalculatedBaselineStatistics": "<p>The Amazon S3 URI of the newly calculated baseline statistics file.</p>",
         "QualityCheckStepMetadata$CalculatedBaselineConstraints": "<p>The Amazon S3 URI of the newly calculated baseline constraints file.</p>",
         "QualityCheckStepMetadata$ViolationReport": "<p>The Amazon S3 URI of violation report if violations are detected.</p>",
+        "ReleaseNotesList$member": null,
         "S3FileSystemConfig$MountPath": "<p>The file system path where the Amazon S3 storage location will be mounted within the Amazon SageMaker Studio environment.</p>"
       }
     },
@@ -16894,6 +16950,7 @@
         "DescribeOptimizationJobResponse$OptimizationEndTime": "<p>The time when the optimization job finished processing.</p>",
         "DescribePartnerAppResponse$CreationTime": "<p>The time that the SageMaker Partner AI App was created.</p>",
         "DescribePartnerAppResponse$LastModifiedTime": "<p>The time that the SageMaker Partner AI App was last modified.</p>",
+        "DescribePartnerAppResponse$CurrentVersionEolDate": "<p>The end-of-life date for the current version of the SageMaker Partner AI App.</p>",
         "DescribePipelineDefinitionForExecutionResponse$CreationTime": "<p>The time when the pipeline was created.</p>",
         "DescribePipelineExecutionResponse$CreationTime": "<p>The time when the pipeline execution was created.</p>",
         "DescribePipelineExecutionResponse$LastModifiedTime": "<p>The time when the pipeline execution was modified last.</p>",

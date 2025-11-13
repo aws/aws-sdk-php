@@ -677,6 +677,21 @@
         {"shape":"GeneratedTemplateNotFoundException"}
       ]
     },
+    "GetHookResult":{
+      "name":"GetHookResult",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetHookResultInput"},
+      "output":{
+        "shape":"GetHookResultOutput",
+        "resultWrapper":"GetHookResultResult"
+      },
+      "errors":[
+        {"shape":"HookResultNotFoundException"}
+      ]
+    },
     "GetStackPolicy":{
       "name":"GetStackPolicy",
       "http":{
@@ -1408,6 +1423,49 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "Annotation":{
+      "type":"structure",
+      "members":{
+        "AnnotationName":{"shape":"AnnotationName"},
+        "Status":{"shape":"AnnotationStatus"},
+        "StatusMessage":{"shape":"RemediationMessageStatusMessage"},
+        "RemediationMessage":{"shape":"RemediationMessageRemediationMessage"},
+        "RemediationLink":{"shape":"AnnotationRemediationLink"},
+        "SeverityLevel":{"shape":"AnnotationSeverityLevel"}
+      }
+    },
+    "AnnotationList":{
+      "type":"list",
+      "member":{"shape":"Annotation"}
+    },
+    "AnnotationName":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "AnnotationRemediationLink":{
+      "type":"string",
+      "max":5120,
+      "min":1
+    },
+    "AnnotationSeverityLevel":{
+      "type":"string",
+      "enum":[
+        "INFORMATIONAL",
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ]
+    },
+    "AnnotationStatus":{
+      "type":"string",
+      "enum":[
+        "PASSED",
+        "FAILED",
+        "SKIPPED"
+      ]
     },
     "Arn":{"type":"string"},
     "AttributeChangeType":{
@@ -2176,6 +2234,7 @@
     },
     "DescribeStackEventsInput":{
       "type":"structure",
+      "required":["StackName"],
       "members":{
         "StackName":{"shape":"StackName"},
         "NextToken":{"shape":"NextToken"}
@@ -2631,6 +2690,30 @@
         "TemplateBody":{"shape":"TemplateBody"}
       }
     },
+    "GetHookResultInput":{
+      "type":"structure",
+      "members":{
+        "HookResultId":{"shape":"HookInvocationId"}
+      }
+    },
+    "GetHookResultOutput":{
+      "type":"structure",
+      "members":{
+        "HookResultId":{"shape":"HookInvocationId"},
+        "InvocationPoint":{"shape":"HookInvocationPoint"},
+        "FailureMode":{"shape":"HookFailureMode"},
+        "TypeName":{"shape":"HookTypeName"},
+        "OriginalTypeName":{"shape":"HookTypeName"},
+        "TypeVersionId":{"shape":"HookTypeVersionId"},
+        "TypeConfigurationVersionId":{"shape":"HookTypeConfigurationVersionId"},
+        "TypeArn":{"shape":"HookTypeArn"},
+        "Status":{"shape":"HookStatus"},
+        "HookStatusReason":{"shape":"HookStatusReason"},
+        "InvokedAt":{"shape":"Timestamp"},
+        "Target":{"shape":"HookTarget"},
+        "Annotations":{"shape":"AnnotationList"}
+      }
+    },
     "GetStackPolicyInput":{
       "type":"structure",
       "required":["StackName"],
@@ -2782,6 +2865,36 @@
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "HookTarget":{
+      "type":"structure",
+      "required":[
+        "TargetType",
+        "TargetTypeName",
+        "TargetId",
+        "Action"
+      ],
+      "members":{
+        "TargetType":{"shape":"HookTargetType"},
+        "TargetTypeName":{"shape":"HookTargetTypeName"},
+        "TargetId":{"shape":"HookTargetId"},
+        "Action":{"shape":"HookTargetAction"}
+      }
+    },
+    "HookTargetAction":{
+      "type":"string",
+      "enum":[
+        "CREATE",
+        "UPDATE",
+        "DELETE",
+        "IMPORT"
+      ]
+    },
+    "HookTargetId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[^_]*"
     },
     "HookTargetType":{
       "type":"string",
@@ -3778,6 +3891,16 @@
     "RelatedResources":{
       "type":"list",
       "member":{"shape":"ScannedResource"}
+    },
+    "RemediationMessageRemediationMessage":{
+      "type":"string",
+      "max":16384,
+      "min":1
+    },
+    "RemediationMessageStatusMessage":{
+      "type":"string",
+      "max":16384,
+      "min":1
     },
     "Replacement":{
       "type":"string",

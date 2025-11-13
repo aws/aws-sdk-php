@@ -96,6 +96,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise executeStackRefactorAsync(array $args = [])
  * @method \Aws\Result getGeneratedTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getGeneratedTemplateAsync(array $args = [])
+ * @method \Aws\Result getHookResult(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getHookResultAsync(array $args = [])
  * @method \Aws\Result getStackPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getStackPolicyAsync(array $args = [])
  * @method \Aws\Result getTemplate(array $args = [])

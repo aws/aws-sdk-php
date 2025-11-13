@@ -4992,6 +4992,12 @@
         "Line"
       ]
     },
+    "AssignedGroupPatternsList":{
+      "type":"list",
+      "member":{"shape":"GroupNamePattern"},
+      "max":10,
+      "min":0
+    },
     "AssociateTrialComponentRequest":{
       "type":"structure",
       "required":[
@@ -5781,6 +5787,13 @@
       "type":"integer",
       "box":true,
       "min":0
+    },
+    "AvailableUpgrade":{
+      "type":"structure",
+      "members":{
+        "Version":{"shape":"MajorMinorVersion"},
+        "ReleaseNotes":{"shape":"ReleaseNotesList"}
+      }
     },
     "AwsManagedHumanLoopRequestSource":{
       "type":"string",
@@ -9254,6 +9267,10 @@
           "shape":"Boolean",
           "box":true
         },
+        "EnableAutoMinorVersionUpgrade":{
+          "shape":"Boolean",
+          "box":true
+        },
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -12366,7 +12383,11 @@
       "type":"structure",
       "required":["Arn"],
       "members":{
-        "Arn":{"shape":"PartnerAppArn"}
+        "Arn":{"shape":"PartnerAppArn"},
+        "IncludeAvailableUpgrade":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "DescribePartnerAppResponse":{
@@ -12390,7 +12411,13 @@
           "shape":"Boolean",
           "box":true
         },
-        "Error":{"shape":"ErrorInfo"}
+        "Error":{"shape":"ErrorInfo"},
+        "EnableAutoMinorVersionUpgrade":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "CurrentVersionEolDate":{"shape":"Timestamp"},
+        "AvailableUpgrade":{"shape":"AvailableUpgrade"}
       }
     },
     "DescribePipelineDefinitionForExecutionRequest":{
@@ -14872,6 +14899,18 @@
       "max":63,
       "min":1,
       "pattern":"[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+"
+    },
+    "GroupNamePattern":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\w+=,.@*-]+"
+    },
+    "GroupPatternsList":{
+      "type":"list",
+      "member":{"shape":"GroupNamePattern"},
+      "max":10,
+      "min":1
     },
     "GroupingAttributeName":{
       "type":"string",
@@ -19107,6 +19146,12 @@
       "min":1,
       "pattern":"[a-zA-Z]+ ?\\d+\\.\\d+(\\.\\d+)?"
     },
+    "MajorMinorVersion":{
+      "type":"string",
+      "max":64,
+      "min":0,
+      "pattern":"\\d+\\.\\d+"
+    },
     "ManagedInstanceScalingMaxInstanceCount":{
       "type":"integer",
       "box":true,
@@ -20036,7 +20081,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-package/[\\S]{1,2048}"
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-package/[\\S]{1,2048}"
     },
     "ModelPackageArnList":{
       "type":"list",
@@ -21757,7 +21802,9 @@
       "type":"structure",
       "members":{
         "AdminUsers":{"shape":"PartnerAppAdminUserList"},
-        "Arguments":{"shape":"PartnerAppArguments"}
+        "Arguments":{"shape":"PartnerAppArguments"},
+        "AssignedGroupPatterns":{"shape":"AssignedGroupPatternsList"},
+        "RoleGroupAssignments":{"shape":"RoleGroupAssignmentsList"}
       }
     },
     "PartnerAppMaintenanceConfig":{
@@ -23843,6 +23890,12 @@
       "min":1,
       "pattern":".*"
     },
+    "ReleaseNotesList":{
+      "type":"list",
+      "member":{"shape":"String1024"},
+      "max":10,
+      "min":0
+    },
     "RemoteDebugConfig":{
       "type":"structure",
       "members":{
@@ -24295,6 +24348,23 @@
       "max":2048,
       "min":20,
       "pattern":"arn:aws[a-z\\-]*:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+"
+    },
+    "RoleGroupAssignment":{
+      "type":"structure",
+      "required":[
+        "RoleName",
+        "GroupPatterns"
+      ],
+      "members":{
+        "RoleName":{"shape":"NonEmptyString256"},
+        "GroupPatterns":{"shape":"GroupPatternsList"}
+      }
+    },
+    "RoleGroupAssignmentsList":{
+      "type":"list",
+      "member":{"shape":"RoleGroupAssignment"},
+      "max":10,
+      "min":0
     },
     "RollingDeploymentPolicy":{
       "type":"structure",
@@ -28287,6 +28357,11 @@
           "shape":"Boolean",
           "box":true
         },
+        "EnableAutoMinorVersionUpgrade":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "AppVersion":{"shape":"MajorMinorVersion"},
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true

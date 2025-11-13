@@ -1558,6 +1558,12 @@
         "QueryStringConditionConfig$Values": "<p>The key/value pairs or values to find in the query string. The maximum length of each string is 128 characters. The comparison is case insensitive. The following wildcard characters are supported: * (matches 0 or more characters) and ? (matches exactly 1 character). To search for a literal '*' or '?' character in a query string, you must escape these characters in <code>Values</code> using a '\\' character.</p> <p>If you specify multiple key/value pairs or values, the condition is satisfied if one of them is found in the query string.</p>"
       }
     },
+    "QuicServerId": {
+      "base": null,
+      "refs": {
+        "TargetDescription$QuicServerId": "<p>The server ID for the targets. This value is required if the protocol is <code>QUIC</code> or <code>TCP_QUIC</code> and can't be used with other protocols.</p> <p>The ID consists of the <code>0x</code> prefix followed by 16 hexadecimal characters. Any letters must be lowercase. The value must be unique at the listener level. You can't modify the server ID for a registered target. You must deregister the target and then provide a new server ID when you register the target again.</p>"
+      }
+    },
     "RedirectActionConfig": {
       "base": "<p>Information about a redirect action.</p> <p>A URI consists of the following components: protocol://hostname:port/path?query. You must modify at least one of the following components to avoid a redirect loop: protocol, hostname, port, or path. Any components that you do not modify retain their original values.</p> <p>You can reuse URI components using the following reserved keywords:</p> <ul> <li> <p>#{protocol}</p> </li> <li> <p>#{host}</p> </li> <li> <p>#{port}</p> </li> <li> <p>#{path} (the leading \"/\" is removed)</p> </li> <li> <p>#{query}</p> </li> </ul> <p>For example, you can change the path to \"/new/#{path}\", the hostname to \"example.#{host}\", or the query to \"#{query}&amp;value=xyz\".</p>",
       "refs": {

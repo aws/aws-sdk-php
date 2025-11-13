@@ -1610,6 +1610,12 @@
         "IAM_Identity_Center"
       ]
     },
+    "BlockedCategories":{
+      "type":"list",
+      "member":{"shape":"Category"},
+      "max":100,
+      "min":1
+    },
     "BrowserPolicy":{
       "type":"string",
       "max":131072,
@@ -1625,7 +1631,8 @@
         "associatedPortalArns":{"shape":"ArnList"},
         "browserPolicy":{"shape":"BrowserPolicy"},
         "customerManagedKey":{"shape":"keyArn"},
-        "additionalEncryptionContext":{"shape":"EncryptionContextMap"}
+        "additionalEncryptionContext":{"shape":"EncryptionContextMap"},
+        "webContentFilteringPolicy":{"shape":"WebContentFilteringPolicy"}
       }
     },
     "BrowserSettingsList":{
@@ -1649,6 +1656,38 @@
       "min":1,
       "pattern":"[_\\-\\d\\w]+",
       "sensitive":true
+    },
+    "Category":{
+      "type":"string",
+      "enum":[
+        "Cults",
+        "Gambling",
+        "Nudity",
+        "Pornography",
+        "SexEducation",
+        "Tasteless",
+        "Violence",
+        "DownloadSites",
+        "ImageSharing",
+        "PeerToPeer",
+        "StreamingMediaAndDownloads",
+        "GenerativeAI",
+        "CriminalActivity",
+        "Hacking",
+        "HateAndIntolerance",
+        "IllegalDrug",
+        "IllegalSoftware",
+        "SchoolCheating",
+        "SelfHarm",
+        "Weapons",
+        "Chat",
+        "Games",
+        "InstantMessaging",
+        "ProfessionalNetwork",
+        "SocialNetworking",
+        "WebBasedEmail",
+        "ParkedDomains"
+      ]
     },
     "Certificate":{
       "type":"structure",
@@ -1770,7 +1809,6 @@
     },
     "CreateBrowserSettingsRequest":{
       "type":"structure",
-      "required":["browserPolicy"],
       "members":{
         "tags":{"shape":"TagList"},
         "customerManagedKey":{"shape":"keyArn"},
@@ -1779,7 +1817,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "webContentFilteringPolicy":{"shape":"WebContentFilteringPolicy"}
       }
     },
     "CreateBrowserSettingsResponse":{
@@ -2406,7 +2445,8 @@
         "SessionConnect",
         "SessionStart",
         "SessionDisconnect",
-        "SessionEnd"
+        "SessionEnd",
+        "UrlBlockByContentFilter"
       ]
     },
     "EventFilter":{
@@ -3757,7 +3797,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "webContentFilteringPolicy":{"shape":"WebContentFilteringPolicy"}
       }
     },
     "UpdateBrowserSettingsResponse":{
@@ -3988,6 +4029,17 @@
         "userSettings":{"shape":"UserSettings"}
       }
     },
+    "UrlPattern":{
+      "type":"string",
+      "pattern":"((([a-zA-Z][a-zA-Z0-9+.-]*):\\/\\/(\\*|[\\w%._\\-\\+~#=@]+)?(\\/[^@\\s]*)?(?:\\?([^*\\s]+(?:\\*?)))?)|(\\*|[\\w%._\\-\\+~#=@]+\\.[\\w%._\\-\\+~#=@]+)(?::(\\d{1,5}))?(\\/[^@\\s]*)?(?:\\?([^*\\s]+(?:\\*?)))?|(([a-zA-Z][a-zA-Z0-9+.-]*):(\\/\\/)?\\*))",
+      "sensitive":true
+    },
+    "UrlPatternList":{
+      "type":"list",
+      "member":{"shape":"UrlPattern"},
+      "max":1000,
+      "min":1
+    },
     "UserAccessLoggingSettings":{
       "type":"structure",
       "required":["userAccessLoggingSettingsArn"],
@@ -4106,6 +4158,14 @@
       "max":255,
       "min":1,
       "pattern":"vpc-[0-9a-z]*"
+    },
+    "WebContentFilteringPolicy":{
+      "type":"structure",
+      "members":{
+        "blockedCategories":{"shape":"BlockedCategories"},
+        "allowedUrls":{"shape":"UrlPatternList"},
+        "blockedUrls":{"shape":"UrlPatternList"}
+      }
     },
     "keyArn":{
       "type":"string",

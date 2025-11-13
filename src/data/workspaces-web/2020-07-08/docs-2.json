@@ -317,6 +317,12 @@
         "UpdatePortalRequest$authenticationType": "<p>The type of authentication integration points used when signing into the web portal. Defaults to <code>Standard</code>.</p> <p> <code>Standard</code> web portals are authenticated directly through your identity provider. You need to call <code>CreateIdentityProvider</code> to integrate your identity provider with your web portal. User and group access to your web portal is controlled through your identity provider.</p> <p> <code>IAM Identity Center</code> web portals are authenticated through IAM Identity Center. Identity sources (including external identity provider integration), plus user and group access to your web portal, can be configured in the IAM Identity Center.</p>"
       }
     },
+    "BlockedCategories": {
+      "base": null,
+      "refs": {
+        "WebContentFilteringPolicy$blockedCategories": "<p>Categories of websites that are blocked on the end user’s browsers.</p>"
+      }
+    },
     "BrowserPolicy": {
       "base": null,
       "refs": {
@@ -355,6 +361,12 @@
       "base": null,
       "refs": {
         "InlineRedactionPattern$builtInPatternId": "<p>The built-in pattern from the list of preconfigured patterns. Either a customPattern or builtInPatternId is required.</p>"
+      }
+    },
+    "Category": {
+      "base": null,
+      "refs": {
+        "BlockedCategories$member": null
       }
     },
     "Certificate": {
@@ -1996,6 +2008,19 @@
       "refs": {
       }
     },
+    "UrlPattern": {
+      "base": null,
+      "refs": {
+        "UrlPatternList$member": null
+      }
+    },
+    "UrlPatternList": {
+      "base": null,
+      "refs": {
+        "WebContentFilteringPolicy$allowedUrls": "<p>URLs and domains that are always accessible to end users.</p>",
+        "WebContentFilteringPolicy$blockedUrls": "<p>URLs and domains that end users cannot access.</p>"
+      }
+    },
     "UserAccessLoggingSettings": {
       "base": "<p>A user access logging settings resource that can be associated with a web portal.</p>",
       "refs": {
@@ -2078,6 +2103,14 @@
         "NetworkSettings$vpcId": "<p>The VPC that streaming instances will connect to.</p>",
         "NetworkSettingsSummary$vpcId": "<p>The VPC ID of the network settings.</p>",
         "UpdateNetworkSettingsRequest$vpcId": "<p>The VPC that streaming instances will connect to.</p>"
+      }
+    },
+    "WebContentFilteringPolicy": {
+      "base": "<p>The policy that specifies which URLs end users are allowed to access or which URLs or domain categories they are restricted from accessing for enhanced security.</p>",
+      "refs": {
+        "BrowserSettings$webContentFilteringPolicy": "<p>The policy that specifies which URLs end users are allowed to access or which URLs or domain categories they are restricted from accessing for enhanced security.</p>",
+        "CreateBrowserSettingsRequest$webContentFilteringPolicy": "<p>The policy that specifies which URLs end users are allowed to access or which URLs or domain categories they are restricted from accessing for enhanced security.</p>",
+        "UpdateBrowserSettingsRequest$webContentFilteringPolicy": "<p>The policy that specifies which URLs end users are allowed to access or which URLs or domain categories they are restricted from accessing for enhanced security.</p>"
       }
     },
     "keyArn": {

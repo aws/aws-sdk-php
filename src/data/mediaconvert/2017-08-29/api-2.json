@@ -3232,6 +3232,13 @@
         "AUDIO_ONLY_VARIANT_STREAM"
       ]
     },
+    "CmfcC2paManifest": {
+      "type": "string",
+      "enum": [
+        "INCLUDE",
+        "EXCLUDE"
+      ]
+    },
     "CmfcDescriptiveVideoServiceFlag": {
       "type": "string",
       "enum": [
@@ -3293,6 +3300,14 @@
           "shape": "CmfcAudioTrackType",
           "locationName": "audioTrackType"
         },
+        "C2paManifest": {
+          "shape": "CmfcC2paManifest",
+          "locationName": "c2paManifest"
+        },
+        "CertificateSecret": {
+          "shape": "__stringMin1Max2048PatternArnAZSecretsmanagerWD12SecretAZAZ09",
+          "locationName": "certificateSecret"
+        },
         "DescriptiveVideoServiceFlag": {
           "shape": "CmfcDescriptiveVideoServiceFlag",
           "locationName": "descriptiveVideoServiceFlag"
@@ -3316,6 +3331,10 @@
         "Scte35Source": {
           "shape": "CmfcScte35Source",
           "locationName": "scte35Source"
+        },
+        "SigningKmsKey": {
+          "shape": "__stringMin1PatternArnAwsUsGovCnKmsAZ26EastWestCentralNorthSouthEastWest1912D12KeyAFAF098AFAF094AFAF094AFAF094AFAF0912MrkAFAF0932",
+          "locationName": "signingKmsKey"
         },
         "TimedMetadata": {
           "shape": "CmfcTimedMetadata",
@@ -5371,6 +5390,13 @@
         }
       }
     },
+    "FrameControl": {
+      "type": "string",
+      "enum": [
+        "NEAREST_IDRFRAME",
+        "NEAREST_IFRAME"
+      ]
+    },
     "FrameMetricType": {
       "type": "string",
       "enum": [
@@ -7374,7 +7400,7 @@
           "locationName": "channels"
         },
         "Duration": {
-          "shape": "__integerMin50Max86400000",
+          "shape": "__integerMin1Max86400000",
           "locationName": "duration"
         },
         "FramerateDenominator": {
@@ -9114,6 +9140,13 @@
         "MATCH_VIDEO_DURATION"
       ]
     },
+    "MpdC2paManifest": {
+      "type": "string",
+      "enum": [
+        "INCLUDE",
+        "EXCLUDE"
+      ]
+    },
     "MpdCaptionContainerType": {
       "type": "string",
       "enum": [
@@ -9160,9 +9193,17 @@
           "shape": "MpdAudioDuration",
           "locationName": "audioDuration"
         },
+        "C2paManifest": {
+          "shape": "MpdC2paManifest",
+          "locationName": "c2paManifest"
+        },
         "CaptionContainerType": {
           "shape": "MpdCaptionContainerType",
           "locationName": "captionContainerType"
+        },
+        "CertificateSecret": {
+          "shape": "__stringMin1Max2048PatternArnAZSecretsmanagerWD12SecretAZAZ09",
+          "locationName": "certificateSecret"
         },
         "KlvMetadata": {
           "shape": "MpdKlvMetadata",
@@ -9179,6 +9220,10 @@
         "Scte35Source": {
           "shape": "MpdScte35Source",
           "locationName": "scte35Source"
+        },
+        "SigningKmsKey": {
+          "shape": "__stringMin1PatternArnAwsUsGovCnKmsAZ26EastWestCentralNorthSouthEastWest1912D12KeyAFAF098AFAF094AFAF094AFAF094AFAF0912MrkAFAF0932",
+          "locationName": "signingKmsKey"
         },
         "TimedMetadata": {
           "shape": "MpdTimedMetadata",
@@ -10054,6 +10099,10 @@
     "PassthroughSettings": {
       "type": "structure",
       "members": {
+        "FrameControl": {
+          "shape": "FrameControl",
+          "locationName": "frameControl"
+        },
         "VideoSelectorMode": {
           "shape": "VideoSelectorMode",
           "locationName": "videoSelectorMode"
@@ -13097,6 +13146,11 @@
       "min": 1,
       "max": 8
     },
+    "__integerMin1Max86400000": {
+      "type": "integer",
+      "min": 1,
+      "max": 86400000
+    },
     "__integerMin2000Max30000": {
       "type": "integer",
       "min": 2000,
@@ -13186,11 +13240,6 @@
       "type": "integer",
       "min": 4,
       "max": 12
-    },
-    "__integerMin50Max86400000": {
-      "type": "integer",
-      "min": 50,
-      "max": 86400000
     },
     "__integerMin6000Max1024000": {
       "type": "integer",

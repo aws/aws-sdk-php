@@ -28,7 +28,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCommonControls":{
       "name":"ListCommonControls",
@@ -44,7 +45,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListControlMappings":{
       "name":"ListControlMappings",
@@ -60,7 +62,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListControls":{
       "name":"ListControls",
@@ -76,7 +79,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDomains":{
       "name":"ListDomains",
@@ -92,7 +96,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListObjectives":{
       "name":"ListObjectives",
@@ -108,7 +113,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     }
   },
   "shapes":{
@@ -256,6 +262,14 @@
     "ControlParameters":{
       "type":"list",
       "member":{"shape":"ControlParameter"}
+    },
+    "ControlRelationType":{
+      "type":"string",
+      "enum":[
+        "COMPLEMENTARY",
+        "ALTERNATIVE",
+        "MUTUALLY_EXCLUSIVE"
+      ]
     },
     "ControlScope":{
       "type":"string",
@@ -576,7 +590,8 @@
       "type":"structure",
       "members":{
         "Framework":{"shape":"FrameworkMappingDetails"},
-        "CommonControl":{"shape":"CommonControlMappingDetails"}
+        "CommonControl":{"shape":"CommonControlMappingDetails"},
+        "RelatedControl":{"shape":"RelatedControlMappingDetails"}
       },
       "union":true
     },
@@ -584,7 +599,8 @@
       "type":"string",
       "enum":[
         "FRAMEWORK",
-        "COMMON_CONTROL"
+        "COMMON_CONTROL",
+        "RELATED_CONTROL"
       ]
     },
     "MappingTypeFilterList":{
@@ -683,6 +699,14 @@
       "members":{
         "Scope":{"shape":"ControlScope"},
         "DeployableRegions":{"shape":"DeployableRegions"}
+      }
+    },
+    "RelatedControlMappingDetails":{
+      "type":"structure",
+      "required":["RelationType"],
+      "members":{
+        "ControlArn":{"shape":"ControlArn"},
+        "RelationType":{"shape":"ControlRelationType"}
       }
     },
     "ResourceNotFoundException":{
