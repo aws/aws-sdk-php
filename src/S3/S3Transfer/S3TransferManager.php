@@ -325,8 +325,6 @@ final class S3TransferManager
      */
     public function download(DownloadRequest $downloadRequest): PromiseInterface
     {
-        $source = $downloadRequest->getSource();
-
         $sourceArgs = $downloadRequest->normalizeSourceAsArray();
         $getObjectRequestArgs = $downloadRequest->getObjectRequestArgs();
 
