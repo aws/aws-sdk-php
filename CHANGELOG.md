@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.359.13 - 2025-11-14
 
 * `Aws\imagebuilder` - EC2 Image Builder now supports invoking Lambda functions and executing Step Functions state machine through image workflows.
 * `Aws\MediaLive` - Removed all the value constraint (min/max) for the shape definitions (e.g. integerMin0Max3600) on the C2j models to get rid of the need to request an exemption from the SDK team whenever a shape definition (e.g. integerMin0Max3600) is changed.
