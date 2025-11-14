@@ -191,7 +191,7 @@ trait EncryptionTraitV3
             json_encode($materialsDescription);
         if (!empty($cipherOptions['Tag'])) {
             $envelope[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER] =
-                (string) strlen($cipherOptions['Tag']) * 8;
+                (string) (strlen($cipherOptions['Tag']) * 8);
         }
         if (!MetadataEnvelope::isV2Envelope($envelope)) {
             throw new CryptoException("Error while writing metadata envelope."

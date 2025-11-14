@@ -133,7 +133,7 @@ trait EncryptionTraitV2
             json_encode($materialsDescription);
         if (!empty($cipherOptions['Tag'])) {
             $envelope[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER] =
-                (string) strlen($cipherOptions['Tag']) * 8;
+                (string) (strlen($cipherOptions['Tag']) * 8);
         }
 
         return $encryptingStream;
