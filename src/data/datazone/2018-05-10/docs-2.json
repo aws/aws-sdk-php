@@ -234,7 +234,8 @@
     "AcceptedAssetScopes": {
       "base": null,
       "refs": {
-        "AcceptSubscriptionRequestInput$assetScopes": "<p>The asset scopes of the accept subscription request.</p>"
+        "AcceptSubscriptionRequestInput$assetScopes": "<p>The asset scopes of the accept subscription request.</p>",
+        "CreateSubscriptionRequestInput$assetScopes": "<p>The asset scopes of the subscription request.</p>"
       }
     },
     "AccessDeniedException": {
@@ -510,6 +511,7 @@
         "AssetFilterSummary$assetId": "<p>The ID of the data asset.</p>",
         "AssetListing$assetId": "<p>The identifier of an asset published in an Amazon DataZone catalog. </p>",
         "AssetListingItem$entityId": "<p>The identifier of the inventory asset.</p>",
+        "AssetPermission$assetId": "<p>The asset ID as part of the asset permissions.</p>",
         "AssetRevision$id": "<p>The identifier of the inventory asset revision.</p>",
         "AssetScope$assetId": "<p>The asset ID of the asset scope.</p>",
         "AssetTargetNameMap$assetId": "<p>The identifier of the inventory asset.</p>",
@@ -621,6 +623,19 @@
         "CreateAssetRevisionInput$name": "<p>Te revised name of the asset.</p>",
         "CreateAssetRevisionOutput$name": "<p>The revised name of the asset.</p>",
         "GetAssetOutput$name": "<p>The name of the asset.</p>"
+      }
+    },
+    "AssetPermission": {
+      "base": "<p>The asset permissions.</p>",
+      "refs": {
+        "AssetPermissions$member": null
+      }
+    },
+    "AssetPermissions": {
+      "base": null,
+      "refs": {
+        "AcceptSubscriptionRequestInput$assetPermissions": "<p>The asset permissions of the accept subscription request.</p>",
+        "CreateSubscriptionRequestInput$assetPermissions": "<p>The asset permissions of the subscription request.</p>"
       }
     },
     "AssetRevision": {
@@ -3223,11 +3238,13 @@
         "CreateEnvironmentActionOutput$environmentId": "<p>The ID of the environment in which the environment is created.</p>",
         "CreateEnvironmentOutput$id": "<p>The ID of this Amazon DataZone environment.</p>",
         "CreateSubscriptionGrantInput$environmentIdentifier": "<p>The ID of the environment in which the subscription grant is created.</p>",
+        "CreateSubscriptionGrantOutput$environmentId": "<p>The environment ID for which subscription grant is created.</p>",
         "CreateSubscriptionTargetInput$environmentIdentifier": "<p>The ID of the environment in which subscription target is created.</p>",
         "CreateSubscriptionTargetOutput$environmentId": "<p>The ID of the environment in which the subscription target was created.</p>",
         "DeleteDataSourceOutput$environmentId": "<p>The ID of the environemnt associated with this data source.</p>",
         "DeleteEnvironmentActionInput$environmentIdentifier": "<p>The ID of the environment where an environment action is deleted.</p>",
         "DeleteEnvironmentInput$identifier": "<p>The identifier of the environment that is to be deleted.</p>",
+        "DeleteSubscriptionGrantOutput$environmentId": "<p>The ID of the environment in which the subscription grant is deleted.</p>",
         "DeleteSubscriptionTargetInput$environmentIdentifier": "<p>The ID of the Amazon DataZone environment in which the subscription target is deleted.</p>",
         "DisassociateEnvironmentRoleInput$environmentIdentifier": "<p>The ID of the environment.</p>",
         "EnvironmentActionSummary$environmentId": "<p>The environment ID of the environment action.</p>",
@@ -3240,12 +3257,14 @@
         "GetEnvironmentCredentialsInput$environmentIdentifier": "<p>The ID of the environment whose credentials this operation gets.</p>",
         "GetEnvironmentInput$identifier": "<p>The ID of the Amazon DataZone environment.</p>",
         "GetEnvironmentOutput$id": "<p>The ID of the environment.</p>",
+        "GetSubscriptionGrantOutput$environmentId": "<p>The environment ID of the subscription grant.</p>",
         "GetSubscriptionTargetInput$environmentIdentifier": "<p>The ID of the environment associated with the subscription target.</p>",
         "GetSubscriptionTargetOutput$environmentId": "<p>The ID of the environment associated with the subscription target.</p>",
         "ListConnectionsInput$environmentIdentifier": "<p>The ID of the environment where you want to list connections.</p>",
         "ListEnvironmentActionsInput$environmentIdentifier": "<p>The ID of the envrironment whose environment actions are listed.</p>",
         "ListSubscriptionGrantsInput$environmentId": "<p>The identifier of the Amazon DataZone environment.</p>",
         "ListSubscriptionTargetsInput$environmentIdentifier": "<p>The identifier of the environment where you want to list subscription targets.</p>",
+        "SubscriptionGrantSummary$environmentId": "<p>The environment ID of the subscription grant.</p>",
         "SubscriptionTargetSummary$environmentId": "<p>The identifier of the environment of the subscription target.</p>",
         "UpdateConnectionOutput$environmentId": "<p>The ID of the environment where a connection is to be updated.</p>",
         "UpdateDataSourceOutput$environmentId": "<p>The identifier of the environment in which a data source is to be updated.</p>",
@@ -3253,6 +3272,7 @@
         "UpdateEnvironmentActionOutput$environmentId": "<p>The environment ID of the environment action.</p>",
         "UpdateEnvironmentInput$identifier": "<p>The identifier of the environment that is to be updated.</p>",
         "UpdateEnvironmentOutput$id": "<p>The identifier of the environment that is to be updated.</p>",
+        "UpdateSubscriptionGrantStatusOutput$environmentId": "<p>The ID of the environment in which the subscription grant is updated.</p>",
         "UpdateSubscriptionTargetInput$environmentIdentifier": "<p>The identifier of the environment in which a subscription target is to be updated.</p>",
         "UpdateSubscriptionTargetOutput$environmentId": "<p>The identifier of the environment in which a subscription target is to be updated.</p>"
       }
@@ -3504,7 +3524,7 @@
     "FirstName": {
       "base": null,
       "refs": {
-        "SsoUserProfileDetails$firstName": "<p>The first name included in the single sign-on details of the user profile.</p>"
+        "SsoUserProfileDetails$firstName": "<p>The first name as part of the SSO user profile detail.</p>"
       }
     },
     "Float": {
@@ -4361,6 +4381,11 @@
         "CreateGroupProfileOutput$id": "<p>The identifier of the group profile.</p>",
         "GetGroupProfileOutput$id": "<p>The identifier of the group profile.</p>",
         "GroupProfileSummary$id": "<p>The ID of a group profile.</p>",
+        "ListSubscriptionGrantsInput$owningGroupId": "<p>The ID of the owning group.</p>",
+        "ListSubscriptionRequestsInput$owningGroupId": "<p>The ID of the owning group.</p>",
+        "ListSubscriptionsInput$owningGroupId": "<p>The ID of the owning group.</p>",
+        "SubscribedGroup$id": "<p>The ID of the subscribed group.</p>",
+        "SubscribedGroupInput$identifier": "<p>The ID of the subscribed group.</p>",
         "UpdateGroupProfileOutput$id": "<p>The identifier of the group profile that is updated.</p>"
       }
     },
@@ -4370,6 +4395,7 @@
         "CreateGroupProfileOutput$groupName": "<p>The name of the group for which group profile is created.</p>",
         "GetGroupProfileOutput$groupName": "<p>The name of the group for which the specified group profile exists.</p>",
         "GroupProfileSummary$groupName": "<p>The group name of a group profile.</p>",
+        "SubscribedGroup$name": "<p>The name of the subscribed group.</p>",
         "UpdateGroupProfileOutput$groupName": "<p>The name of the group profile that is updated.</p>"
       }
     },
@@ -4461,9 +4487,9 @@
       }
     },
     "IamUserProfileDetails": {
-      "base": "<p>The details of an IAM user profile in Amazon DataZone.</p>",
+      "base": "<p/>",
       "refs": {
-        "UserProfileDetails$iam": "<p>The IAM details included in the user profile details.</p>"
+        "UserProfileDetails$iam": "<p>The IAM details of the user profile.</p>"
       }
     },
     "Import": {
@@ -4619,7 +4645,7 @@
     "LastName": {
       "base": null,
       "refs": {
-        "SsoUserProfileDetails$lastName": "<p>The last name included in the single sign-on details of the user profile.</p>"
+        "SsoUserProfileDetails$lastName": "<p>The last name as part of the SSO user profile detail.</p>"
       }
     },
     "LessThanExpression": {
@@ -5669,6 +5695,14 @@
       "base": null,
       "refs": {
         "UsernamePassword$password": "<p>The password of a connection.</p>"
+      }
+    },
+    "Permissions": {
+      "base": "<p>The asset permissions.</p>",
+      "refs": {
+        "AssetPermission$permissions": "<p>The details as part of the asset permissions.</p>",
+        "SubscribedAsset$permissions": "<p>The asset permissions.</p>",
+        "SubscribedAssetListing$permissions": "<p>The asset permissions.</p>"
       }
     },
     "PhysicalConnectionRequirements": {
@@ -6728,6 +6762,18 @@
         "LakeFormationConfiguration$locationRegistrationExcludeS3Locations": "<p>Specifies certain Amazon S3 locations if you do not want Amazon DataZone to automatically register them in hybrid mode. </p>"
       }
     },
+    "S3Permission": {
+      "base": null,
+      "refs": {
+        "S3Permissions$member": null
+      }
+    },
+    "S3Permissions": {
+      "base": "<p>S3 permissions as a simple enum list.</p>",
+      "refs": {
+        "Permissions$s3": "<p>The S3 details of the asset permissions.</p>"
+      }
+    },
     "S3PropertiesInput": {
       "base": "<p>The Amazon S3 properties of a connection.</p>",
       "refs": {
@@ -7230,9 +7276,9 @@
       }
     },
     "SsoUserProfileDetails": {
-      "base": "<p>The single sign-on details of the user profile.</p>",
+      "base": "<p>The SSO user profile detail.</p>",
       "refs": {
-        "UserProfileDetails$sso": "<p>The single sign-on details included in the user profile details.</p>"
+        "UserProfileDetails$sso": "<p>The SSO details of the user profile.</p>"
       }
     },
     "StartDataSourceRunInput": {
@@ -7408,8 +7454,8 @@
         "HyperPodPropertiesOutput$clusterArn": "<p>The cluster ARN of the hyper pod properties.</p>",
         "HyperPodPropertiesOutput$clusterName": "<p>The cluster name the hyper pod properties.</p>",
         "IamPropertiesOutput$environmentId": "<p>The environment ID of the connection.</p>",
-        "IamUserProfileDetails$arn": "<p>The ARN of an IAM user profile in Amazon DataZone.</p>",
-        "IamUserProfileDetails$principalId": "<p>Principal ID of the IAM user.</p>",
+        "IamUserProfileDetails$arn": "<p>The ARN of the IAM user.</p>",
+        "IamUserProfileDetails$principalId": "<p>The principal ID as part of the IAM user profile details.</p>",
         "InExpression$columnName": "<p>The name of the column.</p>",
         "IsNotNullExpression$columnName": "<p>The name of the column.</p>",
         "IsNullExpression$columnName": "<p>The name of the column.</p>",
@@ -7591,6 +7637,18 @@
         "UpdateSubscriptionGrantStatusOutput$assets": "<p>The details of the asset for which the subscription grant is created.</p>"
       }
     },
+    "SubscribedGroup": {
+      "base": "<p>The group that subscribes to the asset.</p>",
+      "refs": {
+        "SubscribedPrincipal$group": "<p>The subscribed group.</p>"
+      }
+    },
+    "SubscribedGroupInput": {
+      "base": "<p>The details of the subscribed group.</p>",
+      "refs": {
+        "SubscribedPrincipalInput$group": "<p>The subscribed group.</p>"
+      }
+    },
     "SubscribedListing": {
       "base": "<p>The details of the published asset for which the subscription grant is created.</p>",
       "refs": {
@@ -7667,6 +7725,18 @@
       "base": "<p>The project that is to be given a subscription grant.</p>",
       "refs": {
         "SubscribedPrincipalInput$project": "<p>The project that is to be given a subscription grant.</p>"
+      }
+    },
+    "SubscribedUser": {
+      "base": "<p>The subscribed user.</p>",
+      "refs": {
+        "SubscribedPrincipal$user": "<p>The subscribed user.</p>"
+      }
+    },
+    "SubscribedUserInput": {
+      "base": "<p>The subscribed user.</p>",
+      "refs": {
+        "SubscribedPrincipalInput$user": "<p>The subscribed user.</p>"
       }
     },
     "SubscriptionGrantId": {
@@ -8568,11 +8638,12 @@
       }
     },
     "UserProfileDetails": {
-      "base": "<p>The details of the user profile in Amazon DataZone.</p>",
+      "base": "<p>The user profile details.</p>",
       "refs": {
-        "CreateUserProfileOutput$details": null,
-        "GetUserProfileOutput$details": null,
-        "UpdateUserProfileOutput$details": null,
+        "CreateUserProfileOutput$details": "<p>The user profile details.</p>",
+        "GetUserProfileOutput$details": "<p>The user profile details.</p>",
+        "SubscribedUser$details": "<p>The subscribed user details.</p>",
+        "UpdateUserProfileOutput$details": "<p>The results of the UpdateUserProfile action.</p>",
         "UserProfileSummary$details": "<p>The details of the user profile.</p>"
       }
     },
@@ -8581,6 +8652,11 @@
       "refs": {
         "CreateUserProfileOutput$id": "<p>The identifier of the user profile.</p>",
         "GetUserProfileOutput$id": "<p>The identifier of the user profile.</p>",
+        "ListSubscriptionGrantsInput$owningUserId": "<p>The ID of the owning user.</p>",
+        "ListSubscriptionRequestsInput$owningUserId": "<p>The ID of the owning user.</p>",
+        "ListSubscriptionsInput$owningUserId": "<p>The ID of the owning user.</p>",
+        "SubscribedUser$id": "<p>The ID of the subscribed user.</p>",
+        "SubscribedUserInput$identifier": "<p>The ID of the subscribed user.</p>",
         "UpdateUserProfileOutput$id": "<p>The identifier of the user profile.</p>",
         "UserProfileSummary$id": "<p>The ID of the user profile.</p>"
       }
@@ -8588,7 +8664,7 @@
     "UserProfileName": {
       "base": null,
       "refs": {
-        "SsoUserProfileDetails$username": "<p>The username included in the single sign-on details of the user profile.</p>"
+        "SsoUserProfileDetails$username": "<p>The username as part of the SSO user profile detail. </p>"
       }
     },
     "UserProfileStatus": {

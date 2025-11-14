@@ -48,6 +48,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"UnauthorizedException"}
@@ -686,6 +687,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"UnauthorizedException"}
@@ -3299,6 +3301,7 @@
         "identifier"
       ],
       "members":{
+        "assetPermissions":{"shape":"AssetPermissions"},
         "assetScopes":{"shape":"AcceptedAssetScopes"},
         "decisionComment":{"shape":"DecisionComment"},
         "domainIdentifier":{
@@ -3816,6 +3819,21 @@
       "max":256,
       "min":1,
       "sensitive":true
+    },
+    "AssetPermission":{
+      "type":"structure",
+      "required":[
+        "assetId",
+        "permissions"
+      ],
+      "members":{
+        "assetId":{"shape":"AssetId"},
+        "permissions":{"shape":"Permissions"}
+      }
+    },
+    "AssetPermissions":{
+      "type":"list",
+      "member":{"shape":"AssetPermission"}
     },
     "AssetRevision":{
       "type":"structure",
@@ -5713,6 +5731,7 @@
         "createdAt":{"shape":"CreatedAt"},
         "createdBy":{"shape":"CreatedBy"},
         "domainId":{"shape":"DomainId"},
+        "environmentId":{"shape":"EnvironmentId"},
         "grantedEntity":{"shape":"GrantedEntity"},
         "id":{"shape":"SubscriptionGrantId"},
         "status":{"shape":"SubscriptionGrantOverallStatus"},
@@ -5735,6 +5754,8 @@
         "subscribedPrincipals"
       ],
       "members":{
+        "assetPermissions":{"shape":"AssetPermissions"},
+        "assetScopes":{"shape":"AcceptedAssetScopes"},
         "clientToken":{
           "shape":"String",
           "idempotencyToken":true
@@ -6873,6 +6894,7 @@
         "createdAt":{"shape":"CreatedAt"},
         "createdBy":{"shape":"CreatedBy"},
         "domainId":{"shape":"DomainId"},
+        "environmentId":{"shape":"EnvironmentId"},
         "grantedEntity":{"shape":"GrantedEntity"},
         "id":{"shape":"SubscriptionGrantId"},
         "status":{"shape":"SubscriptionGrantOverallStatus"},
@@ -9181,6 +9203,7 @@
         "createdAt":{"shape":"CreatedAt"},
         "createdBy":{"shape":"CreatedBy"},
         "domainId":{"shape":"DomainId"},
+        "environmentId":{"shape":"EnvironmentId"},
         "grantedEntity":{"shape":"GrantedEntity"},
         "id":{"shape":"SubscriptionGrantId"},
         "status":{"shape":"SubscriptionGrantOverallStatus"},
@@ -11550,13 +11573,25 @@
           "location":"querystring",
           "locationName":"nextToken"
         },
+        "owningGroupId":{
+          "shape":"GroupProfileId",
+          "location":"querystring",
+          "locationName":"owningGroupId"
+        },
         "owningProjectId":{
           "shape":"ProjectId",
           "location":"querystring",
           "locationName":"owningProjectId"
         },
+        "owningUserId":{
+          "shape":"UserProfileId",
+          "location":"querystring",
+          "locationName":"owningUserId"
+        },
         "sortBy":{
           "shape":"SortKey",
+          "deprecated":true,
+          "deprecatedMessage":"Results are always sorted by updatedAt",
           "location":"querystring",
           "locationName":"sortBy"
         },
@@ -11614,13 +11649,25 @@
           "location":"querystring",
           "locationName":"nextToken"
         },
+        "owningGroupId":{
+          "shape":"GroupProfileId",
+          "location":"querystring",
+          "locationName":"owningGroupId"
+        },
         "owningProjectId":{
           "shape":"ProjectId",
           "location":"querystring",
           "locationName":"owningProjectId"
         },
+        "owningUserId":{
+          "shape":"UserProfileId",
+          "location":"querystring",
+          "locationName":"owningUserId"
+        },
         "sortBy":{
           "shape":"SortKey",
+          "deprecated":true,
+          "deprecatedMessage":"Results are always sorted by updatedAt",
           "location":"querystring",
           "locationName":"sortBy"
         },
@@ -11720,13 +11767,25 @@
           "location":"querystring",
           "locationName":"nextToken"
         },
+        "owningGroupId":{
+          "shape":"GroupProfileId",
+          "location":"querystring",
+          "locationName":"owningGroupId"
+        },
         "owningProjectId":{
           "shape":"ProjectId",
           "location":"querystring",
           "locationName":"owningProjectId"
         },
+        "owningUserId":{
+          "shape":"UserProfileId",
+          "location":"querystring",
+          "locationName":"owningUserId"
+        },
         "sortBy":{
           "shape":"SortKey",
+          "deprecated":true,
+          "deprecatedMessage":"Results are always sorted by updatedAt",
           "location":"querystring",
           "locationName":"sortBy"
         },
@@ -12396,6 +12455,13 @@
       "max":64,
       "min":0,
       "sensitive":true
+    },
+    "Permissions":{
+      "type":"structure",
+      "members":{
+        "s3":{"shape":"S3Permissions"}
+      },
+      "union":true
     },
     "PhysicalConnectionRequirements":{
       "type":"structure",
@@ -13554,6 +13620,17 @@
       "max":20,
       "min":0
     },
+    "S3Permission":{
+      "type":"string",
+      "enum":[
+        "READ",
+        "WRITE"
+      ]
+    },
+    "S3Permissions":{
+      "type":"list",
+      "member":{"shape":"S3Permission"}
+    },
     "S3PropertiesInput":{
       "type":"structure",
       "required":["s3Uri"],
@@ -14295,6 +14372,7 @@
         "failureCause":{"shape":"FailureCause"},
         "failureTimestamp":{"shape":"Timestamp"},
         "grantedTimestamp":{"shape":"Timestamp"},
+        "permissions":{"shape":"Permissions"},
         "status":{"shape":"SubscriptionGrantStatus"},
         "targetName":{"shape":"String"}
       }
@@ -14307,12 +14385,26 @@
         "entityRevision":{"shape":"Revision"},
         "entityType":{"shape":"TypeName"},
         "forms":{"shape":"Forms"},
-        "glossaryTerms":{"shape":"DetailedGlossaryTerms"}
+        "glossaryTerms":{"shape":"DetailedGlossaryTerms"},
+        "permissions":{"shape":"Permissions"}
       }
     },
     "SubscribedAssets":{
       "type":"list",
       "member":{"shape":"SubscribedAsset"}
+    },
+    "SubscribedGroup":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"GroupProfileId"},
+        "name":{"shape":"GroupProfileName"}
+      }
+    },
+    "SubscribedGroupInput":{
+      "type":"structure",
+      "members":{
+        "identifier":{"shape":"GroupProfileId"}
+      }
     },
     "SubscribedListing":{
       "type":"structure",
@@ -14357,14 +14449,18 @@
     "SubscribedPrincipal":{
       "type":"structure",
       "members":{
-        "project":{"shape":"SubscribedProject"}
+        "group":{"shape":"SubscribedGroup"},
+        "project":{"shape":"SubscribedProject"},
+        "user":{"shape":"SubscribedUser"}
       },
       "union":true
     },
     "SubscribedPrincipalInput":{
       "type":"structure",
       "members":{
-        "project":{"shape":"SubscribedProjectInput"}
+        "group":{"shape":"SubscribedGroupInput"},
+        "project":{"shape":"SubscribedProjectInput"},
+        "user":{"shape":"SubscribedUserInput"}
       },
       "union":true
     },
@@ -14396,6 +14492,19 @@
       "type":"structure",
       "members":{
         "identifier":{"shape":"ProjectId"}
+      }
+    },
+    "SubscribedUser":{
+      "type":"structure",
+      "members":{
+        "details":{"shape":"UserProfileDetails"},
+        "id":{"shape":"UserProfileId"}
+      }
+    },
+    "SubscribedUserInput":{
+      "type":"structure",
+      "members":{
+        "identifier":{"shape":"UserProfileId"}
       }
     },
     "SubscriptionGrantId":{
@@ -14444,6 +14553,7 @@
         "createdAt":{"shape":"CreatedAt"},
         "createdBy":{"shape":"CreatedBy"},
         "domainId":{"shape":"DomainId"},
+        "environmentId":{"shape":"EnvironmentId"},
         "grantedEntity":{"shape":"GrantedEntity"},
         "id":{"shape":"SubscriptionGrantId"},
         "status":{"shape":"SubscriptionGrantOverallStatus"},
@@ -15806,6 +15916,7 @@
         "createdAt":{"shape":"CreatedAt"},
         "createdBy":{"shape":"CreatedBy"},
         "domainId":{"shape":"DomainId"},
+        "environmentId":{"shape":"EnvironmentId"},
         "grantedEntity":{"shape":"GrantedEntity"},
         "id":{"shape":"SubscriptionGrantId"},
         "status":{"shape":"SubscriptionGrantOverallStatus"},
