@@ -16,6 +16,15 @@ final class StreamDownloadHandler extends DownloadHandler
      */
     public function __construct(?StreamInterface $stream = null)
     {
+        if (is_null($stream)) {
+            $stream = Utils::streamFor(
+                fopen('php://temp', 'r+')
+            );
+        } else {
+            // Position at the end
+            $stream->seek($stream->getSize());
+        }
+
         $this->stream = $stream;
     }
 
@@ -28,30 +37,21 @@ final class StreamDownloadHandler extends DownloadHandler
     }
 
     /**
-     * @param array $context
-     *
-     * @return void
-     */
-    public function transferInitiated(array $context): void
-    {
-        if (is_null($this->stream)) {
-            $this->stream = Utils::streamFor(
-                fopen('php://temp', 'w+')
-            );
-        } else {
-            $this->stream->seek($this->stream->getSize());
-        }
-    }
-
-    /**
      * @inheritDoc
      */
     public function bytesTransferred(array $context): bool
     {
         $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
         $response = $snapshot->getResponse();
+        $partBody = $response['Body'];
+
+        if ($partBody->isSeekable()) {
+            // In case body was already consumed by another process
+            $partBody->rewind();
+        }
+
         Utils::copyToStream(
-            $response['Body'],
+            $partBody,
             $this->stream
         );
 

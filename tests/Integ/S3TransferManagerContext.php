@@ -1106,7 +1106,17 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         )->wait();
 
         Assert::assertFileDoesNotExist($resumeFilePath);
+    }
 
+    /**
+     * @Then /^The file (.*) in s3 should match the local file$/
+     */
+    public function theFileInSshouldMatchTheLocalFile($file): void
+    {
+        $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
+        $s3TransferManager = new S3TransferManager(
+            self::getSdk()->createS3()
+        );
         $result = $s3TransferManager->download(
             new DownloadRequest(
                 source: [
@@ -1118,9 +1128,27 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
 
         $dataResult = $result->getDownloadDataResult();
 
+        // Make sure sizes are equals
         Assert::assertEquals(
-            file_get_contents($fullFilePath),
-            $dataResult->getContents(),
+            filesize($fullFilePath),
+            $dataResult->getSize(),
         );
+
+        // Make sure contents are equals
+        $handle = fopen($fullFilePath, "r");
+        try {
+            $chunkSize = 8192;
+            while (!feof($handle)) {
+                $fileChunk = fread($handle, $chunkSize);
+                $streamChunk = $dataResult->read($chunkSize);
+
+                Assert::assertEquals(
+                    $fileChunk,
+                    $streamChunk,
+                );
+            }
+        } finally {
+            fclose($handle);
+        }
     }
 }

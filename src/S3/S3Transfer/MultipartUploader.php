@@ -131,11 +131,6 @@ final class MultipartUploader extends AbstractMultipartUploader
      */
     protected function createMultipartOperation(): PromiseInterface
     {
-        if ($this->isResuming && $this->uploadId !== null) {
-            // Not need to initialize multipart
-            return Create::promiseFor("");
-        }
-
         $createMultipartUploadArgs = $this->requestArgs;
         if ($this->requestChecksum !== null) {
             $createMultipartUploadArgs['ChecksumType'] = self::CHECKSUM_TYPE_FULL_OBJECT;
@@ -156,6 +151,11 @@ final class MultipartUploader extends AbstractMultipartUploader
                     )
                 );
             }
+        }
+
+        if ($this->isResuming && $this->uploadId !== null) {
+            // Not need to initialize multipart
+            return Create::promiseFor("");
         }
 
         $this->operationInitiated($createMultipartUploadArgs);
