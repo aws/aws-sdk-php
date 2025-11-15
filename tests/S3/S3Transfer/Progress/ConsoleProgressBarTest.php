@@ -5,7 +5,7 @@ namespace Aws\Test\S3\S3Transfer\Progress;
 use Aws\S3\S3Transfer\Progress\ColoredTransferProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\ConsoleProgressBar;
 use Aws\S3\S3Transfer\Progress\PlainProgressBarFormat;
-use Aws\S3\S3Transfer\Progress\ProgressBarFormat;
+use Aws\S3\S3Transfer\Progress\AbstractProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\TransferProgressBarFormat;
 use PHPUnit\Framework\TestCase;
 
@@ -91,7 +91,7 @@ class ConsoleProgressBarTest extends TestCase
      * @param string $progressBarChar
      * @param int $progressBarWidth
      * @param int $percentCompleted
-     * @param ProgressBarFormatTest $progressBarFormat
+     * @param AbstractProgressBarFormatTest $progressBarFormat
      * @param array $progressBarFormatArgs
      * @param string $expectedOutput
      *
@@ -100,12 +100,12 @@ class ConsoleProgressBarTest extends TestCase
      *
      */
     public function testProgressBarRendering(
-        string $progressBarChar,
-        int $progressBarWidth,
-        int $percentCompleted,
-        ProgressBarFormat $progressBarFormat,
-        array $progressBarFormatArgs,
-        string $expectedOutput
+        string                    $progressBarChar,
+        int                       $progressBarWidth,
+        int                       $percentCompleted,
+        AbstractProgressBarFormat $progressBarFormat,
+        array                     $progressBarFormatArgs,
+        string                    $expectedOutput
     ): void
     {
         $progressBarFormat->setArgs($progressBarFormatArgs);

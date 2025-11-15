@@ -3,9 +3,9 @@
 namespace Aws\S3\S3Transfer\Utils;
 
 use Aws\S3\S3Transfer\Exception\FileDownloadException;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 
-final class FileDownloadHandler extends DownloadHandler
+final class FileDownloadHandler extends AbstractDownloadHandler
 {
     private const IDENTIFIER_LENGTH = 8;
     private const TEMP_INFIX = '.s3tmp.';
@@ -92,7 +92,7 @@ final class FileDownloadHandler extends DownloadHandler
      */
     public function bytesTransferred(array $context): void
     {
-        $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+        $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         $response = $snapshot->getResponse();
         file_put_contents(
             $this->temporaryDestination,

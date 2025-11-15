@@ -21,7 +21,7 @@ use Aws\S3\S3Transfer\Models\UploadRequest;
 use Aws\S3\S3Transfer\Models\UploadResult;
 use Aws\S3\S3Transfer\AbstractMultipartDownloader;
 use Aws\S3\S3Transfer\MultipartUploader;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Aws\S3\S3Transfer\S3TransferManager;
 use Aws\Test\TestsUtility;
@@ -248,7 +248,7 @@ EOF
         $manager = new S3TransferManager(
             $client,
         );
-        $transferListener = $this->createMock(TransferListener::class);
+        $transferListener = $this->createMock(AbstractTransferListener::class);
         $expectedPartCount = 2;
         $transferListener->expects($this->exactly($expectedPartCount))
             ->method('bytesTransferred');
@@ -281,7 +281,7 @@ EOF
         $manager = new S3TransferManager(
             $client,
         );
-        $transferListener = $this->createMock(TransferListener::class);
+        $transferListener = $this->createMock(AbstractTransferListener::class);
         $transferListener->expects($this->once())
             ->method('bytesTransferred');
         $manager->upload(
@@ -313,7 +313,7 @@ EOF
             $client,
         );
         $expectedPartCount = 2;
-        $transferListener = $this->createMock(TransferListener::class);
+        $transferListener = $this->createMock(AbstractTransferListener::class);
         $transferListener->expects($this->exactly($expectedPartCount))
             ->method('bytesTransferred');
         $manager->upload(
@@ -359,14 +359,14 @@ EOF
         $manager = new S3TransferManager(
             $client,
         );
-        $transferListener = $this->createMock(TransferListener::class);
+        $transferListener = $this->createMock(AbstractTransferListener::class);
         $transferListener->expects($this->exactly($expectedPartCount))
             ->method('bytesTransferred');
         $expectedIncrementalPartSize = $expectedPartSize;
         $transferListener->method('bytesTransferred')
             -> willReturnCallback(function ($context) use ($expectedPartSize, &$expectedIncrementalPartSize) {
                 /** @var TransferProgressSnapshot $snapshot */
-                $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+                $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
                 $this->assertEquals($expectedIncrementalPartSize, $snapshot->getTransferredBytes());
                 $expectedIncrementalPartSize += $expectedPartSize;
             });
@@ -424,7 +424,7 @@ EOF
             $client,
         );
         $expectedPartCount = 2;
-        $transferListener = $this->createMock(TransferListener::class);
+        $transferListener = $this->createMock(AbstractTransferListener::class);
         $transferListener->expects($this->exactly($expectedPartCount))
             ->method('bytesTransferred');
         $manager->upload(
@@ -457,7 +457,7 @@ EOF
         );
         $expectedPartCount = 2;
         $expectedPartSize = 6 * 1024 * 1024; // 6 MBs
-        $transferListener = $this->getMockBuilder(TransferListener::class)
+        $transferListener = $this->getMockBuilder(AbstractTransferListener::class)
         ->onlyMethods(['bytesTransferred'])
         ->getMock();
         $expectedIncrementalPartSize = $expectedPartSize;
@@ -467,7 +467,7 @@ EOF
                 &$expectedIncrementalPartSize
             ) {
                 /** @var TransferProgressSnapshot $snapshot */
-                $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+                $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
                 $this->assertEquals($expectedIncrementalPartSize, $snapshot->getTransferredBytes());
                 $expectedIncrementalPartSize += $expectedPartSize;
             });
@@ -1421,7 +1421,7 @@ EOF
             $manager = new S3TransferManager(
                 $client
             );
-            $transferListener = $this->getMockBuilder(TransferListener::class)
+            $transferListener = $this->getMockBuilder(AbstractTransferListener::class)
                 ->disableOriginalConstructor()
                 ->getMock();
             $transferListener->expects($this->exactly(count($files)))
@@ -1431,7 +1431,7 @@ EOF
             $transferListener->method('bytesTransferred')
                 ->willReturnCallback(function(array $context) use (&$objectKeys) {
                     /** @var TransferProgressSnapshot $snapshot */
-                    $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+                    $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
                     $objectKeys[$snapshot->getIdentifier()] = true;
                 });
             $manager->uploadDirectory(
@@ -2947,7 +2947,7 @@ EOF
                     config: $config,
                     listeners: [
                         new class($totalBytesReceived, $totalPartsReceived)
-                            extends TransferListener {
+                            extends AbstractTransferListener {
                             private int $totalBytesReceived;
                             private int $totalPartsReceived;
 
@@ -2967,7 +2967,7 @@ EOF
                              */
                             public function bytesTransferred(array $context): void {
                                 $snapshot = $context[
-                                TransferListener::PROGRESS_SNAPSHOT_KEY
+                                AbstractTransferListener::PROGRESS_SNAPSHOT_KEY
                                 ];
                                 $this->totalBytesReceived = $snapshot->getTransferredBytes();
                                 $this->totalPartsReceived++;
@@ -3103,7 +3103,7 @@ EOF
                     ),
                     listeners: [
                         new class($totalBytesReceived, $totalPartsReceived)
-                            extends TransferListener {
+                            extends AbstractTransferListener {
                             private int $totalBytesReceived;
                             private int $totalPartsReceived;
 
@@ -3123,7 +3123,7 @@ EOF
                              */
                             public function bytesTransferred(array $context): void {
                                 $snapshot = $context[
-                                TransferListener::PROGRESS_SNAPSHOT_KEY
+                                AbstractTransferListener::PROGRESS_SNAPSHOT_KEY
                                 ];
                                 $this->totalBytesReceived = $snapshot->getTransferredBytes();
                                 $this->totalPartsReceived++;

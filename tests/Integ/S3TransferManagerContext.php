@@ -13,7 +13,7 @@ use Aws\S3\S3Transfer\Models\ResumeUploadRequest;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\UploadRequest;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Aws\S3\S3Transfer\S3TransferManager;
 use Aws\Test\TestsUtility;
@@ -670,7 +670,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         $s3TransferManager = new S3TransferManager(
             self::getSdk()->createS3()
         );
-        $transferListener = new class((int)$partNumberFail) extends TransferListener {
+        $transferListener = new class((int)$partNumberFail) extends AbstractTransferListener {
             private int $partNumber;
             private int $partNumberFail;
 
@@ -693,7 +693,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         // To make sure transferFail is called
         $testCase = new class extends TestCase {};
         $transferListener2 = $testCase->getMockBuilder(
-            TransferListener::class
+            AbstractTransferListener::class
         )->getMock();
         $transferListener2->expects($testCase->once())->method('transferInitiated');
         $transferListener2->expects($testCase->once())->method('transferFail');

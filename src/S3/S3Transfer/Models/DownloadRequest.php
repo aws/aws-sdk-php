@@ -3,9 +3,9 @@
 namespace Aws\S3\S3Transfer\Models;
 
 use Aws\S3\S3Transfer\Exception\S3TransferException;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\S3TransferManager;
-use Aws\S3\S3Transfer\Utils\DownloadHandler;
+use Aws\S3\S3Transfer\Utils\AbstractDownloadHandler;
 use Aws\S3\S3Transfer\Utils\FileDownloadHandler;
 use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 
@@ -23,8 +23,8 @@ final class DownloadRequest extends TransferRequest
     /** @var array */
     private array $downloadRequestArgs;
 
-    /** @var DownloadHandler|null */
-    private ?DownloadHandler $downloadHandler;
+    /** @var AbstractDownloadHandler|null */
+    private ?AbstractDownloadHandler $downloadHandler;
 
     /**
      * @param string|array|null $source The object to be downloaded from S3.
@@ -45,17 +45,17 @@ final class DownloadRequest extends TransferRequest
      *    in a range multipart download. If this parameter is not provided
      *    then it fallbacks to the transfer manager `target_part_size_bytes`
      *    config value.
-     * @param DownloadHandler|null $downloadHandler
-     * @param TransferListener[]|null $listeners
-     * @param TransferListener|null $progressTracker
+     * @param AbstractDownloadHandler|null $downloadHandler
+     * @param AbstractTransferListener[]|null $listeners
+     * @param AbstractTransferListener|null $progressTracker
      */
     public function __construct(
-        string|array|null $source,
-        array $downloadRequestArgs = [],
-        array $config = [],
-        ?DownloadHandler $downloadHandler = null,
-        array $listeners = [],
-        ?TransferListener $progressTracker = null
+        string|array|null        $source,
+        array                    $downloadRequestArgs = [],
+        array                    $config = [],
+        ?AbstractDownloadHandler $downloadHandler = null,
+        array                    $listeners = [],
+        ?AbstractTransferListener $progressTracker = null
     ) {
         parent::__construct($listeners, $progressTracker, $config);
         $this->source = $source;
@@ -105,9 +105,9 @@ final class DownloadRequest extends TransferRequest
     }
 
     /**
-     * @return DownloadHandler
+     * @return AbstractDownloadHandler
      */
-    public function getDownloadHandler(): DownloadHandler
+    public function getDownloadHandler(): AbstractDownloadHandler
     {
         return $this->downloadHandler;
     }

@@ -7,7 +7,7 @@ use Aws\S3\S3Transfer\Progress\MultiProgressTracker;
 use Aws\S3\S3Transfer\Progress\PlainProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\ProgressBarFactoryInterface;
 use Aws\S3\S3Transfer\Progress\SingleProgressTracker;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Closure;
 use PHPUnit\Framework\TestCase;
@@ -160,16 +160,16 @@ class MultiProgressTrackerTest extends TestCase
                 'event_invoker' => function (MultiProgressTracker $tracker): void
                 {
                     $tracker->transferInitiated([
-                        TransferListener::REQUEST_ARGS_KEY => [],
-                        TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                        AbstractTransferListener::REQUEST_ARGS_KEY => [],
+                        AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                             'Foo',
                             0,
                             1024
                         )
                     ]);
                     $tracker->bytesTransferred([
-                        TransferListener::REQUEST_ARGS_KEY => [],
-                        TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                        AbstractTransferListener::REQUEST_ARGS_KEY => [],
+                        AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                             'Foo',
                             512,
                             1024
@@ -203,26 +203,26 @@ class MultiProgressTrackerTest extends TestCase
                 {
                     $events = [
                         'transfer_initiated' => [
-                            TransferListener::REQUEST_ARGS_KEY => [],
+                            AbstractTransferListener::REQUEST_ARGS_KEY => [],
                             'total_bytes' => 1024
                         ],
                         'transfer_progress_1' => [
-                            TransferListener::REQUEST_ARGS_KEY => [],
+                            AbstractTransferListener::REQUEST_ARGS_KEY => [],
                             'total_bytes' => 1024,
                             'bytes_transferred' => 342,
                         ],
                         'transfer_progress_2' => [
-                            TransferListener::REQUEST_ARGS_KEY => [],
+                            AbstractTransferListener::REQUEST_ARGS_KEY => [],
                             'total_bytes' => 1024,
                             'bytes_transferred' => 684,
                         ],
                         'transfer_progress_3' => [
-                            TransferListener::REQUEST_ARGS_KEY => [],
+                            AbstractTransferListener::REQUEST_ARGS_KEY => [],
                             'total_bytes' => 1024,
                             'bytes_transferred' => 1024,
                         ],
                         'transfer_complete' => [
-                            TransferListener::REQUEST_ARGS_KEY => [],
+                            AbstractTransferListener::REQUEST_ARGS_KEY => [],
                             'total_bytes' => 1024,
                             'bytes_transferred' => 1024,
                         ]
@@ -231,8 +231,8 @@ class MultiProgressTrackerTest extends TestCase
                         if ($eventName === 'transfer_initiated') {
                             for ($i = 0; $i < 3; $i++) {
                                 $progressTracker->transferInitiated([
-                                    TransferListener::REQUEST_ARGS_KEY => $event[TransferListener::REQUEST_ARGS_KEY],
-                                    TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                                    AbstractTransferListener::REQUEST_ARGS_KEY => $event[AbstractTransferListener::REQUEST_ARGS_KEY],
+                                    AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                                         "FooObject_$i",
                                         0,
                                         $event['total_bytes'],
@@ -242,8 +242,8 @@ class MultiProgressTrackerTest extends TestCase
                         } elseif (str_starts_with($eventName, 'transfer_progress')) {
                             for ($i = 0; $i < 3; $i++) {
                                 $progressTracker->bytesTransferred([
-                                    TransferListener::REQUEST_ARGS_KEY => $event[TransferListener::REQUEST_ARGS_KEY],
-                                    TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                                    AbstractTransferListener::REQUEST_ARGS_KEY => $event[AbstractTransferListener::REQUEST_ARGS_KEY],
+                                    AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                                         "FooObject_$i",
                                         $event['bytes_transferred'],
                                         $event['total_bytes'],
@@ -253,8 +253,8 @@ class MultiProgressTrackerTest extends TestCase
                         } elseif ($eventName === 'transfer_complete') {
                             for ($i = 0; $i < 3; $i++) {
                                 $progressTracker->transferComplete([
-                                    TransferListener::REQUEST_ARGS_KEY => $event[TransferListener::REQUEST_ARGS_KEY],
-                                    TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                                    AbstractTransferListener::REQUEST_ARGS_KEY => $event[AbstractTransferListener::REQUEST_ARGS_KEY],
+                                    AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                                         "FooObject_$i",
                                         $event['bytes_transferred'],
                                         $event['total_bytes'],
@@ -413,31 +413,31 @@ class MultiProgressTrackerTest extends TestCase
                 {
                     $events = [
                         'transfer_initiated' => [
-                            TransferListener::REQUEST_ARGS_KEY => [],
+                            AbstractTransferListener::REQUEST_ARGS_KEY => [],
                             'total_bytes' => 1024
                         ],
                         'transfer_progress_1' => [
-                            TransferListener::REQUEST_ARGS_KEY => [],
+                            AbstractTransferListener::REQUEST_ARGS_KEY => [],
                             'total_bytes' => 1024,
                             'bytes_transferred' => 342,
                         ],
                         'transfer_progress_2' => [
-                            TransferListener::REQUEST_ARGS_KEY => [],
+                            AbstractTransferListener::REQUEST_ARGS_KEY => [],
                             'total_bytes' => 1024,
                             'bytes_transferred' => 684,
                         ],
                         'transfer_progress_3' => [
-                            TransferListener::REQUEST_ARGS_KEY => [],
+                            AbstractTransferListener::REQUEST_ARGS_KEY => [],
                             'total_bytes' => 1024,
                             'bytes_transferred' => 1024,
                         ],
                         'transfer_complete' => [
-                            TransferListener::REQUEST_ARGS_KEY => [],
+                            AbstractTransferListener::REQUEST_ARGS_KEY => [],
                             'total_bytes' => 1024,
                             'bytes_transferred' => 1024,
                         ],
                         'transfer_fail' => [
-                            TransferListener::REQUEST_ARGS_KEY => [],
+                            AbstractTransferListener::REQUEST_ARGS_KEY => [],
                             'total_bytes' => 1024,
                             'bytes_transferred' => 0,
                             'reason' => 'Transfer failed'
@@ -447,8 +447,8 @@ class MultiProgressTrackerTest extends TestCase
                         if ($eventName === 'transfer_initiated') {
                             for ($i = 0; $i < 5; $i++) {
                                 $progressTracker->transferInitiated([
-                                    TransferListener::REQUEST_ARGS_KEY => $event[TransferListener::REQUEST_ARGS_KEY],
-                                    TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                                    AbstractTransferListener::REQUEST_ARGS_KEY => $event[AbstractTransferListener::REQUEST_ARGS_KEY],
+                                    AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                                         "FooObject_$i",
                                         0,
                                         $event['total_bytes'],
@@ -458,8 +458,8 @@ class MultiProgressTrackerTest extends TestCase
                         } elseif (str_starts_with($eventName, 'transfer_progress')) {
                             for ($i = 0; $i < 3; $i++) {
                                 $progressTracker->bytesTransferred([
-                                    TransferListener::REQUEST_ARGS_KEY => $event[TransferListener::REQUEST_ARGS_KEY],
-                                    TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                                    AbstractTransferListener::REQUEST_ARGS_KEY => $event[AbstractTransferListener::REQUEST_ARGS_KEY],
+                                    AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                                         "FooObject_$i",
                                         $event['bytes_transferred'],
                                         $event['total_bytes'],
@@ -469,8 +469,8 @@ class MultiProgressTrackerTest extends TestCase
                         } elseif ($eventName === 'transfer_complete') {
                             for ($i = 0; $i < 3; $i++) {
                                 $progressTracker->transferComplete([
-                                    TransferListener::REQUEST_ARGS_KEY => $event[TransferListener::REQUEST_ARGS_KEY],
-                                    TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                                    AbstractTransferListener::REQUEST_ARGS_KEY => $event[AbstractTransferListener::REQUEST_ARGS_KEY],
+                                    AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                                         "FooObject_$i",
                                         $event['bytes_transferred'],
                                         $event['total_bytes'],
@@ -481,8 +481,8 @@ class MultiProgressTrackerTest extends TestCase
                             // Just two of them will fail
                             for ($i = 3; $i < 5; $i++) {
                                 $progressTracker->transferFail([
-                                    TransferListener::REQUEST_ARGS_KEY => $event[TransferListener::REQUEST_ARGS_KEY],
-                                    TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                                    AbstractTransferListener::REQUEST_ARGS_KEY => $event[AbstractTransferListener::REQUEST_ARGS_KEY],
+                                    AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                                         "FooObject_$i",
                                         0,
                                         $event['total_bytes'],

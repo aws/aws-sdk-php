@@ -5,7 +5,7 @@ namespace Aws\S3\S3Transfer\Progress;
 /**
  * Defines a progress bar format.
  */
-abstract class ProgressBarFormat
+abstract class AbstractProgressBarFormat
 {
     /** @var array */
     private array $args;

@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
 
@@ -40,8 +40,8 @@ final class UploadRequest extends TransferRequest
      *   a default progress tracker implementation when $progressTracker is null.
      * - concurrency: (int, optional) To override default value for concurrency.
      * - request_checksum_calculation: (string, optional, defaulted to `when_supported`)
-     * @param TransferListener[]|null $listeners
-     * @param TransferListener|null $progressTracker
+     * @param AbstractTransferListener[]|null $listeners
+     * @param AbstractTransferListener|null $progressTracker
      *
      */
     public function __construct(
@@ -49,7 +49,7 @@ final class UploadRequest extends TransferRequest
         array $uploadRequestArgs,
         array $config = [],
         array $listeners = [],
-        ?TransferListener $progressTracker  = null
+        ?AbstractTransferListener $progressTracker  = null
     ) {
         parent::__construct($listeners, $progressTracker, $config);
         $this->source = $source;

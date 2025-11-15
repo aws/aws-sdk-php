@@ -3,7 +3,7 @@
 namespace Aws\S3\S3Transfer\Models;
 
 use Aws\Arn\ArnParser;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use InvalidArgumentException;
 
 final class DownloadDirectoryRequest extends TransferRequest
@@ -68,9 +68,9 @@ final class DownloadDirectoryRequest extends TransferRequest
      *    - MaxKeys: (int) Sets the maximum number of keys returned in the response.
      *    - Prefix: (string) To limit the response to keys that begin with the
      *      specified prefix.
-     * @param TransferListener[] $listeners The listeners for watching
+     * @param AbstractTransferListener[] $listeners The listeners for watching
      * transfer events. Each listener will be cloned per file upload.
-     * @param TransferListener|null $progressTracker Ideally the progress
+     * @param AbstractTransferListener|null $progressTracker Ideally the progress
      * tracker implementation provided here should be able to track multiple
      * transfers at once. Please see MultiProgressTracker implementation.
      */
@@ -80,7 +80,7 @@ final class DownloadDirectoryRequest extends TransferRequest
         array $downloadRequestArgs = [],
         array $config = [],
         array $listeners = [],
-        ?TransferListener $progressTracker = null
+        ?AbstractTransferListener $progressTracker = null
     ) {
         parent::__construct($listeners, $progressTracker, $config);
         if (ArnParser::isArn($sourceBucket)) {

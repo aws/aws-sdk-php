@@ -8,7 +8,7 @@ use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use GuzzleHttp\Promise\Coroutine;
@@ -272,8 +272,8 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         }
 
         $this->listenerNotifier?->transferInitiated([
-            TransferListener::REQUEST_ARGS_KEY => $requestArgs,
-            TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot
+            AbstractTransferListener::REQUEST_ARGS_KEY => $requestArgs,
+            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot
         ]);
     }
 
@@ -294,9 +294,9 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         $this->currentSnapshot = $newSnapshot;
 
         $this->listenerNotifier?->transferComplete([
-            TransferListener::REQUEST_ARGS_KEY =>
+            AbstractTransferListener::REQUEST_ARGS_KEY =>
                 $this->requestArgs,
-            TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot
+            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot
         ]);
     }
 
@@ -337,9 +337,9 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         }
 
         $this->listenerNotifier?->transferFail([
-            TransferListener::REQUEST_ARGS_KEY =>
+            AbstractTransferListener::REQUEST_ARGS_KEY =>
                 $this->requestArgs,
-            TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
+            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
             'reason' => $reason,
         ]);
     }
@@ -365,8 +365,8 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         $this->currentSnapshot = $newSnapshot;
 
         $this->listenerNotifier?->bytesTransferred([
-            TransferListener::REQUEST_ARGS_KEY => $requestArgs,
-            TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot
+            AbstractTransferListener::REQUEST_ARGS_KEY => $requestArgs,
+            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot
         ]);
     }
 

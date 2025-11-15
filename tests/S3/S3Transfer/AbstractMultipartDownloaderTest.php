@@ -9,10 +9,10 @@ use Aws\S3\S3Transfer\Models\DownloadResult;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\AbstractMultipartDownloader;
 use Aws\S3\S3Transfer\PartGetMultipartDownloader;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\RangeGetMultipartDownloader;
-use Aws\S3\S3Transfer\Utils\DownloadHandler;
+use Aws\S3\S3Transfer\Utils\AbstractDownloadHandler;
 use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Utils;
@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Tests MultipartDownloader abstract class implementation.
  */
-class MultipartDownloaderTest extends TestCase
+class AbstractMultipartDownloaderTest extends TestCase
 {
     /**
      * Tests chooseDownloaderClass factory method.
@@ -69,9 +69,9 @@ class MultipartDownloaderTest extends TestCase
      */
     public function testTransferListenerNotifierNotifiesListenersOnSuccess(): void
     {
-        $listener1 = $this->getMockBuilder(TransferListener::class)->getMock();
-        $listener2 = $this->getMockBuilder(TransferListener::class)->getMock();
-        $listener3 = $this->getMockBuilder(TransferListener::class)->getMock();
+        $listener1 = $this->getMockBuilder(AbstractTransferListener::class)->getMock();
+        $listener2 = $this->getMockBuilder(AbstractTransferListener::class)->getMock();
+        $listener3 = $this->getMockBuilder(AbstractTransferListener::class)->getMock();
 
         $listener1->expects($this->once())->method('transferInitiated');
         $listener1->expects($this->atLeastOnce())->method('bytesTransferred');
@@ -135,8 +135,8 @@ class MultipartDownloaderTest extends TestCase
      */
     public function testTransferListenerNotifierNotifiesListenersOnFailure(): void
     {
-        $listener1 = $this->getMockBuilder(TransferListener::class)->getMock();
-        $listener2 = $this->getMockBuilder(TransferListener::class)->getMock();
+        $listener1 = $this->getMockBuilder(AbstractTransferListener::class)->getMock();
+        $listener2 = $this->getMockBuilder(AbstractTransferListener::class)->getMock();
 
         $listener1->expects($this->once())->method('transferInitiated');
         $listener1->expects($this->once())->method('transferFail');

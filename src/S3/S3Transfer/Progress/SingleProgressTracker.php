@@ -7,7 +7,7 @@ use Aws\S3\S3Transfer\Exception\ProgressTrackerException;
 /**
  * To track single object transfers.
  */
-final class SingleProgressTracker extends TransferListener
+final class SingleProgressTracker extends AbstractTransferListener
     implements ProgressTrackerInterface
 {
     /** @var ProgressBarInterface */
@@ -96,7 +96,7 @@ final class SingleProgressTracker extends TransferListener
      */
     public function transferInitiated(array $context): void
     {
-        $this->currentSnapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+        $this->currentSnapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressFormat = $this->progressBar->getProgressBarFormat();
         // Probably a common argument
         $progressFormat->setArg(
@@ -114,7 +114,7 @@ final class SingleProgressTracker extends TransferListener
      */
     public function bytesTransferred(array $context): void
     {
-        $this->currentSnapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+        $this->currentSnapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressFormat = $this->progressBar->getProgressBarFormat();
         if ($progressFormat instanceof ColoredTransferProgressBarFormat) {
             $progressFormat->setArg(
@@ -133,7 +133,7 @@ final class SingleProgressTracker extends TransferListener
      */
     public function transferComplete(array $context): void
     {
-        $this->currentSnapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+        $this->currentSnapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressFormat = $this->progressBar->getProgressBarFormat();
         if ($progressFormat instanceof ColoredTransferProgressBarFormat) {
             $progressFormat->setArg(
@@ -154,7 +154,7 @@ final class SingleProgressTracker extends TransferListener
      */
     public function transferFail(array $context): void
     {
-        $this->currentSnapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+        $this->currentSnapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressFormat = $this->progressBar->getProgressBarFormat();
         if ($progressFormat instanceof ColoredTransferProgressBarFormat) {
             $progressFormat->setArg(
@@ -163,7 +163,7 @@ final class SingleProgressTracker extends TransferListener
             );
             $progressFormat->setArg(
                 'message',
-                $context[TransferListener::REASON_KEY]
+                $context[AbstractTransferListener::REASON_KEY]
             );
         }
 

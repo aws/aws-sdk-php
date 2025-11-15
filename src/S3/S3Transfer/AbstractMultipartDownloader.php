@@ -7,10 +7,10 @@ use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadResult;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
-use Aws\S3\S3Transfer\Utils\DownloadHandler;
+use Aws\S3\S3Transfer\Utils\AbstractDownloadHandler;
 use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 use GuzzleHttp\Promise\Coroutine;
 use GuzzleHttp\Promise\Create;
@@ -30,8 +30,8 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
     /** @var array */
     protected readonly array $config;
 
-    /** @var DownloadHandler */
-    private DownloadHandler $downloadHandler;
+    /** @var AbstractDownloadHandler */
+    private AbstractDownloadHandler $downloadHandler;
 
     /** @var int */
     protected int $currentPartNo;
@@ -55,7 +55,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
      * @param S3ClientInterface $s3Client
      * @param array $downloadRequestArgs
      * @param array $config
-     * @param ?DownloadHandler $downloadHandler
+     * @param ?AbstractDownloadHandler $downloadHandler
      * @param int $currentPartNo
      * @param int $objectPartsCount
      * @param int $objectSizeInBytes
@@ -65,15 +65,15 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
      */
     public function __construct(
         protected readonly S3ClientInterface $s3Client,
-        array $downloadRequestArgs,
-        array $config = [],
-        ?DownloadHandler $downloadHandler = null,
-        int $currentPartNo = 0,
-        int $objectPartsCount = 0,
-        int $objectSizeInBytes = 0,
-        ?string $eTag = null,
-        ?TransferProgressSnapshot $currentSnapshot = null,
-        ?TransferListenerNotifier $listenerNotifier  = null
+        array                                $downloadRequestArgs,
+        array                                $config = [],
+        ?AbstractDownloadHandler             $downloadHandler = null,
+        int                                  $currentPartNo = 0,
+        int                                  $objectPartsCount = 0,
+        int                                  $objectSizeInBytes = 0,
+        ?string                              $eTag = null,
+        ?TransferProgressSnapshot            $currentSnapshot = null,
+        ?TransferListenerNotifier            $listenerNotifier  = null
     ) {
         $this->downloadRequestArgs = $downloadRequestArgs;
         $this->validateConfig($config);
@@ -323,8 +323,8 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
        }
 
         $this->listenerNotifier?->transferInitiated([
-            TransferListener::REQUEST_ARGS_KEY => $commandArgs,
-            TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
+            AbstractTransferListener::REQUEST_ARGS_KEY => $commandArgs,
+            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
         ]);
     }
 
@@ -351,8 +351,8 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
         );
 
         $this->listenerNotifier?->transferFail([
-            TransferListener::REQUEST_ARGS_KEY => $this->downloadRequestArgs,
-            TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
+            AbstractTransferListener::REQUEST_ARGS_KEY => $this->downloadRequestArgs,
+            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
             'reason' => $reason,
         ]);
     }
@@ -383,8 +383,8 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
         );
         $this->currentSnapshot = $newSnapshot;
         $this->listenerNotifier?->bytesTransferred([
-            TransferListener::REQUEST_ARGS_KEY => $requestArgs,
-            TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
+            AbstractTransferListener::REQUEST_ARGS_KEY => $requestArgs,
+            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
         ]);
     }
 
@@ -417,8 +417,8 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
         );
         $this->currentSnapshot = $newSnapshot;
         $this->listenerNotifier?->transferComplete([
-            TransferListener::REQUEST_ARGS_KEY => $this->downloadRequestArgs,
-            TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
+            AbstractTransferListener::REQUEST_ARGS_KEY => $this->downloadRequestArgs,
+            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
         ]);
     }
 

@@ -11,7 +11,7 @@ use Aws\S3\S3Transfer\AbstractMultipartUploader;
 use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\UploadResult;
 use Aws\S3\S3Transfer\MultipartUploader;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\Test\TestsUtility;
 use Generator;
@@ -398,9 +398,9 @@ EOF;
      */
     public function testTransferListenerNotifierNotifiesListenersOnSuccess(): void
     {
-        $listener1 = $this->getMockBuilder(TransferListener::class)->getMock();
-        $listener2 = $this->getMockBuilder(TransferListener::class)->getMock();
-        $listener3 = $this->getMockBuilder(TransferListener::class)->getMock();
+        $listener1 = $this->getMockBuilder(AbstractTransferListener::class)->getMock();
+        $listener2 = $this->getMockBuilder(AbstractTransferListener::class)->getMock();
+        $listener3 = $this->getMockBuilder(AbstractTransferListener::class)->getMock();
 
         $listener1->expects($this->once())->method('transferInitiated');
         $listener1->expects($this->atLeastOnce())->method('bytesTransferred');
@@ -720,8 +720,8 @@ EOF;
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Upload failed');
 
-        $listener1 = $this->getMockBuilder(TransferListener::class)->getMock();
-        $listener2 = $this->getMockBuilder(TransferListener::class)->getMock();
+        $listener1 = $this->getMockBuilder(AbstractTransferListener::class)->getMock();
+        $listener2 = $this->getMockBuilder(AbstractTransferListener::class)->getMock();
 
         $listener1->expects($this->once())->method('transferInitiated');
         $listener1->expects($this->once())->method('transferFail');

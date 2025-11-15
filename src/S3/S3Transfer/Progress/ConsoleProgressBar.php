@@ -17,20 +17,20 @@ final class ConsoleProgressBar implements ProgressBarInterface
     /** @var int */
     private int $percentCompleted;
 
-    /** @var ProgressBarFormat */
-    private ProgressBarFormat $progressBarFormat;
+    /** @var AbstractProgressBarFormat */
+    private AbstractProgressBarFormat $progressBarFormat;
 
     /**
      * @param string $progressBarChar
      * @param int $progressBarWidth
      * @param int $percentCompleted
-     * @param ProgressBarFormat $progressBarFormat
+     * @param AbstractProgressBarFormat $progressBarFormat
      */
     public function __construct(
-        string $progressBarChar = self::DEFAULT_PROGRESS_BAR_CHAR,
-        int $progressBarWidth = self::DEFAULT_PROGRESS_BAR_WIDTH,
-        int $percentCompleted = 0,
-        ProgressBarFormat $progressBarFormat = new ColoredTransferProgressBarFormat(),
+        string                    $progressBarChar = self::DEFAULT_PROGRESS_BAR_CHAR,
+        int                       $progressBarWidth = self::DEFAULT_PROGRESS_BAR_WIDTH,
+        int                       $percentCompleted = 0,
+        AbstractProgressBarFormat $progressBarFormat = new ColoredTransferProgressBarFormat(),
     ) {
         $this->progressBarChar = $progressBarChar;
         $this->progressBarWidth = min(
@@ -66,9 +66,9 @@ final class ConsoleProgressBar implements ProgressBarInterface
     }
 
     /**
-     * @return ProgressBarFormat
+     * @return AbstractProgressBarFormat
      */
-    public function getProgressBarFormat(): ProgressBarFormat
+    public function getProgressBarFormat(): AbstractProgressBarFormat
     {
         return $this->progressBarFormat;
     }

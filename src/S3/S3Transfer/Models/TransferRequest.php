@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use InvalidArgumentException;
 
 abstract class TransferRequest
@@ -14,21 +14,21 @@ abstract class TransferRequest
     /** @var array  */
     protected array $listeners;
 
-    /** @var TransferListener|null  */
-    protected ?TransferListener $progressTracker;
+    /** @var AbstractTransferListener|null  */
+    protected ?AbstractTransferListener $progressTracker;
 
     /** @var array */
     protected array $config;
 
     /**
      * @param array $listeners
-     * @param TransferListener|null $progressTracker
+     * @param AbstractTransferListener|null $progressTracker
      * @param array $config
      */
     public function __construct(
-        array $listeners,
-        ?TransferListener $progressTracker,
-        array $config
+        array                     $listeners,
+        ?AbstractTransferListener $progressTracker,
+        array                     $config
     ) {
         $this->listeners = $listeners;
         $this->progressTracker = $progressTracker;
@@ -48,9 +48,9 @@ abstract class TransferRequest
     /**
      * Get the progress tracker.
      *
-     * @return TransferListener|null
+     * @return AbstractTransferListener|null
      */
-    public function getProgressTracker(): ?TransferListener
+    public function getProgressTracker(): ?AbstractTransferListener
     {
         return $this->progressTracker;
     }
