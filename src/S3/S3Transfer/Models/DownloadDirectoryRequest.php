@@ -6,7 +6,7 @@ use Aws\Arn\ArnParser;
 use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use InvalidArgumentException;
 
-final class DownloadDirectoryRequest extends TransferRequest
+final class DownloadDirectoryRequest extends AbstractTransferRequest
 {
     public static array $configKeys = [
         's3_prefix' => 'string',

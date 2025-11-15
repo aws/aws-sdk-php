@@ -9,7 +9,7 @@ use Aws\S3\S3Transfer\Utils\AbstractDownloadHandler;
 use Aws\S3\S3Transfer\Utils\FileDownloadHandler;
 use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 
-final class DownloadRequest extends TransferRequest
+final class DownloadRequest extends AbstractTransferRequest
 {
     public static array $configKeys = [
         'response_checksum_validation' => 'string',

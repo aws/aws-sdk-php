@@ -6,7 +6,7 @@ use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
 
-final class UploadRequest extends TransferRequest
+final class UploadRequest extends AbstractTransferRequest
 {
     public static array $configKeys = [
         'multipart_upload_threshold_bytes' => 'int',

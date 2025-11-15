@@ -6,7 +6,7 @@ use Aws\Arn\ArnParser;
 use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use InvalidArgumentException;
 
-final class UploadDirectoryRequest extends TransferRequest
+final class UploadDirectoryRequest extends AbstractTransferRequest
 {
     public static array $configKeys = [
         'follow_symbolic_links' => 'bool',
