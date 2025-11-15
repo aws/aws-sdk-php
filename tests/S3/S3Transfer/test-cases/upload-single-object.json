@@ -1,0 +1,746 @@
+[
+  {
+    "summary": "Test upload with single object upload (object size < multipart threshold)",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "requestChecksumCalculation": "WHEN_SUPPORTED"
+    },
+    "uploadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "contentLength": 10485760,
+      "checksumAlgorithm": "CRC32",
+      "metadata": {
+        "contentType": "application/octet-stream"
+      }
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "PutObject",
+          "contentLength": 10485760
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\"",
+            "ChecksumAlgorithm": "CRC32",
+            "ChecksumCRC32": "abcdef12"
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "uploadType": "single_object",
+        "totalBytes": 10485760
+      }
+    ]
+  },
+  {
+    "summary": "Test upload with multipart upload (object size > multipart threshold)",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "requestChecksumCalculation": "WHEN_SUPPORTED"
+    },
+    "uploadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "contentLength": 25165824,
+      "checksumAlgorithm": "CRC32",
+      "metadata": {
+        "contentType": "application/octet-stream"
+      }
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "CreateMultipartUpload",
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "UploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+            "Bucket": "example-bucket",
+            "Key": "example-object"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "UploadPart",
+          "partNumber": 1,
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "contentLength": 8388608,
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"a54357aff0632cce46d942af68356b38\"",
+            "ChecksumCRC32": "abcdef12"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "UploadPart",
+          "partNumber": 2,
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "contentLength": 8388608,
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"0c78aef83f66abc1fa1e8477f296d394\"",
+            "ChecksumCRC32": "12345678"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "UploadPart",
+          "partNumber": 3,
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "contentLength": 8388608,
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"b54357aff0632cce46d942af68356b38\"",
+            "ChecksumCRC32": "87654321"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "CompleteMultipartUpload",
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "multipartUpload": {
+            "Parts": [
+              {
+                "PartNumber": 1,
+                "ETag": "\"a54357aff0632cce46d942af68356b38\"",
+                "ChecksumCRC32": "abcdef12"
+              },
+              {
+                "PartNumber": 2,
+                "ETag": "\"0c78aef83f66abc1fa1e8477f296d394\"",
+                "ChecksumCRC32": "12345678"
+              },
+              {
+                "PartNumber": 3,
+                "ETag": "\"b54357aff0632cce46d942af68356b38\"",
+                "ChecksumCRC32": "87654321"
+              }
+            ]
+          },
+          "checksumAlgorithm": "CRC32",
+          "mpuObjectSize": 25165824
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\"",
+            "Bucket": "example-bucket",
+            "Key": "example-object",
+            "Location": "https://example-bucket.s3.amazonaws.com/example-object"
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "uploadType": "multipart",
+        "totalBytes": 25165824,
+        "partCount": 3,
+        "checksumAlgorithm": "CRC32"
+      }
+    ]
+  },
+  {
+    "summary": "Test upload with multipart upload and uneven last part",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "requestChecksumCalculation": "WHEN_SUPPORTED"
+    },
+    "uploadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "contentLength": 10485760,
+      "checksumAlgorithm": "CRC32",
+      "metadata": {
+        "contentType": "application/octet-stream"
+      }
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "CreateMultipartUpload",
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "UploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+            "Bucket": "example-bucket",
+            "Key": "example-object"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "UploadPart",
+          "partNumber": 1,
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "contentLength": 8388608,
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"a54357aff0632cce46d942af68356b38\"",
+            "ChecksumCRC32": "abcdef12"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "UploadPart",
+          "partNumber": 2,
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "contentLength": 2097152,
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"0c78aef83f66abc1fa1e8477f296d394\"",
+            "ChecksumCRC32": "12345678"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "CompleteMultipartUpload",
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "multipartUpload": {
+            "Parts": [
+              {
+                "PartNumber": 1,
+                "ETag": "\"a54357aff0632cce46d942af68356b38\"",
+                "ChecksumCRC32": "abcdef12"
+              },
+              {
+                "PartNumber": 2,
+                "ETag": "\"0c78aef83f66abc1fa1e8477f296d394\"",
+                "ChecksumCRC32": "12345678"
+              }
+            ]
+          },
+          "checksumAlgorithm": "CRC32",
+          "mpuObjectSize": 10485760
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\"",
+            "Bucket": "example-bucket",
+            "Key": "example-object"
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "uploadType": "multipart",
+        "totalBytes": 10485760,
+        "partCount": 2,
+        "lastPartSize": 2097152,
+        "checksumAlgorithm": "CRC32"
+      }
+    ]
+  },
+  {
+    "summary": "Test upload with multipart upload and full object checksum",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "requestChecksumCalculation": "WHEN_SUPPORTED"
+    },
+    "uploadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "contentLength": 16777216,
+      "checksumAlgorithm": "CRC32",
+      "checksumCRC32": "fedcba98",
+      "metadata": {
+        "contentType": "application/octet-stream"
+      }
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "CreateMultipartUpload",
+          "checksumAlgorithm": "CRC32",
+          "checksumType": "FULL_OBJECT"
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "UploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+            "Bucket": "example-bucket",
+            "Key": "example-object"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "UploadPart",
+          "partNumber": 1,
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "contentLength": 8388608,
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"a54357aff0632cce46d942af68356b38\"",
+            "ChecksumCRC32": "abcdef12"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "UploadPart",
+          "partNumber": 2,
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "contentLength": 8388608,
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"0c78aef83f66abc1fa1e8477f296d394\"",
+            "ChecksumCRC32": "12345678"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "CompleteMultipartUpload",
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "multipartUpload": {
+            "Parts": [
+              {
+                "PartNumber": 1,
+                "ETag": "\"a54357aff0632cce46d942af68356b38\"",
+                "ChecksumCRC32": "abcdef12"
+              },
+              {
+                "PartNumber": 2,
+                "ETag": "\"0c78aef83f66abc1fa1e8477f296d394\"",
+                "ChecksumCRC32": "12345678"
+              }
+            ]
+          },
+          "checksumAlgorithm": "CRC32",
+          "checksumType": "FULL_OBJECT",
+          "checksumCRC32": "fedcba98",
+          "mpuObjectSize": 16777216
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\"",
+            "Bucket": "example-bucket",
+            "Key": "example-object",
+            "Location": "https://example-bucket.s3.amazonaws.com/example-object",
+            "ChecksumCRC32": "fedcba98"
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "uploadType": "multipart",
+        "totalBytes": 16777216,
+        "partCount": 2,
+        "checksumAlgorithm": "CRC32",
+        "checksumType": "FULL_OBJECT"
+      }
+    ]
+  },
+  {
+    "summary": "Test upload with single object upload and checksum calculation",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "requestChecksumCalculation": "WHEN_SUPPORTED"
+    },
+    "uploadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "contentLength": 10485760,
+      "checksumAlgorithm": "CRC32",
+      "metadata": {
+        "contentType": "application/octet-stream"
+      }
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "PutObject",
+          "contentLength": 10485760,
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\"",
+            "ChecksumCRC32": "abcdef12"
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "uploadType": "single_object",
+        "totalBytes": 10485760,
+        "checksumAlgorithm": "CRC32"
+      }
+    ]
+  },
+  {
+    "summary": "Test upload with multipart upload - error handling when part upload fails",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "requestChecksumCalculation": "WHEN_SUPPORTED"
+    },
+    "uploadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "contentLength": 25165824,
+      "checksumAlgorithm": "CRC32",
+      "metadata": {
+        "contentType": "application/octet-stream"
+      }
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "CreateMultipartUpload",
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "UploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+            "Bucket": "example-bucket",
+            "Key": "example-object"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "UploadPart",
+          "partNumber": 1,
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "contentLength": 8388608,
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"a54357aff0632cce46d942af68356b38\"",
+            "ChecksumCRC32": "abcdef12"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "UploadPart",
+          "partNumber": 2,
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "contentLength": 8388608,
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 500,
+          "errorCode": "InternalServerError",
+          "errorMessage": "Internal Server Error"
+        }
+      },
+      {
+        "request": {
+          "operation": "AbortMultipartUpload",
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA"
+        },
+        "response": {
+          "status": 204
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "error",
+        "errorCode": "InternalServerError",
+        "errorMessage": "Internal Server Error",
+        "abortedMultipartUpload": true
+      }
+    ]
+  },
+  {
+    "summary": "Test upload with multipart upload - error handling when CompleteMultipartUpload fails",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "requestChecksumCalculation": "WHEN_SUPPORTED"
+    },
+    "uploadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "contentLength": 16777216,
+      "checksumAlgorithm": "CRC32",
+      "metadata": {
+        "contentType": "application/octet-stream"
+      }
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "CreateMultipartUpload",
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "UploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+            "Bucket": "example-bucket",
+            "Key": "example-object"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "UploadPart",
+          "partNumber": 1,
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "contentLength": 8388608,
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"a54357aff0632cce46d942af68356b38\"",
+            "ChecksumCRC32": "abcdef12"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "UploadPart",
+          "partNumber": 2,
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "contentLength": 8388608,
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"0c78aef83f66abc1fa1e8477f296d394\"",
+            "ChecksumCRC32": "12345678"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "CompleteMultipartUpload",
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "multipartUpload": {
+            "Parts": [
+              {
+                "PartNumber": 1,
+                "ETag": "\"a54357aff0632cce46d942af68356b38\"",
+                "ChecksumCRC32": "abcdef12"
+              },
+              {
+                "PartNumber": 2,
+                "ETag": "\"0c78aef83f66abc1fa1e8477f296d394\"",
+                "ChecksumCRC32": "12345678"
+              }
+            ]
+          },
+          "checksumAlgorithm": "CRC32",
+          "mpuObjectSize": 16777216
+        },
+        "response": {
+          "status": 500,
+          "errorCode": "InternalServerError",
+          "errorMessage": "Internal Server Error"
+        }
+      },
+      {
+        "request": {
+          "operation": "AbortMultipartUpload",
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA"
+        },
+        "response": {
+          "status": 204
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "error",
+        "errorCode": "InternalServerError",
+        "errorMessage": "Internal Server Error",
+        "abortedMultipartUpload": true
+      }
+    ]
+  },
+  {
+    "summary": "Test upload with multipart upload - validation failure when part count mismatch",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "requestChecksumCalculation": "WHEN_SUPPORTED"
+    },
+    "uploadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "contentLength": 25165824,
+      "checksumAlgorithm": "CRC32",
+      "metadata": {
+        "contentType": "application/octet-stream"
+      }
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "CreateMultipartUpload",
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "UploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+            "Bucket": "example-bucket",
+            "Key": "example-object"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "UploadPart",
+          "partNumber": 1,
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "contentLength": 8388608,
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"a54357aff0632cce46d942af68356b38\"",
+            "ChecksumCRC32": "abcdef12"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "AbortMultipartUpload",
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA"
+        },
+        "response": {
+          "status": 204
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "error",
+        "errorCode": "ValidationError",
+        "errorMessage": "Expected 3 parts but only received 1",
+        "abortedMultipartUpload": true
+      }
+    ]
+  },
+  {
+    "summary": "Test upload with multipart upload - validation failure when part size mismatch",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "requestChecksumCalculation": "WHEN_SUPPORTED"
+    },
+    "uploadRequest": {
+      "bucket": "example-bucket",
+      "key": "example-object",
+      "contentLength": 16777216,
+      "checksumAlgorithm": "CRC32",
+      "metadata": {
+        "contentType": "application/octet-stream"
+      }
+    },
+    "expectations": [
+      {
+        "request": {
+          "operation": "CreateMultipartUpload",
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "UploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+            "Bucket": "example-bucket",
+            "Key": "example-object"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "UploadPart",
+          "partNumber": 1,
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA",
+          "contentLength": 4194304,
+          "checksumAlgorithm": "CRC32"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"a54357aff0632cce46d942af68356b38\"",
+            "ChecksumCRC32": "abcdef12"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "AbortMultipartUpload",
+          "uploadId": "VXBsb2FkIElEIGZvciA2aWWpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA"
+        },
+        "response": {
+          "status": 204
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "error",
+        "errorCode": "ValidationError",
+        "errorMessage": "Part size mismatch: expected 8388608 bytes but got 4194304 bytes for part 1",
+        "abortedMultipartUpload": true
+      }
+    ]
+  }
+]

@@ -31,7 +31,6 @@ use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
-use function Aws\dir_iterator;
 
 /**
  * @covers \Aws\UserAgentMiddleware
@@ -94,23 +93,8 @@ class UserAgentMiddlewareTest extends TestCase
                 putenv("$key=$envValue");
             }
         }
-
-        if (is_dir($this->tempDir)) {
-            $it = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($this->tempDir, \FilesystemIterator::SKIP_DOTS),
-                \RecursiveIteratorIterator::CHILD_FIRST
-            );
-
-            foreach ($it as $file) {
-                if ($file->isDir() && !is_link($file->getPathname())) {
-                    @rmdir($file->getPathname());
-                } else {
-                    @unlink($file->getPathname());
-                }
-            }
-
-            @rmdir($this->tempDir);
-        }
+      
+        TestsUtility::cleanUpDir($this->tempDir);
     }
 
     /**
@@ -1179,35 +1163,6 @@ EOF;
         $s3Client->listBuckets();
     }
 
-    /**
-     * Helper method to clean up temporary dirs.
-     *
-     * @param $dirPath
-     *
-     * @return void
-     */
-    private function cleanUpDir($dirPath): void
-    {
-        if (!is_dir($dirPath)) {
-            return;
-        }
-
-        $files = dir_iterator($dirPath);
-        foreach ($files as $file) {
-            if (in_array($file, ['.', '..'])) {
-                continue;
-            }
-
-            $filePath  = $dirPath . '/' . $file;
-            if (is_file($filePath) || !is_dir($filePath)) {
-                unlink($filePath);
-            } elseif (is_dir($filePath)) {
-                $this->cleanUpDir($filePath);
-            }
-        }
-
-        rmdir($dirPath);
-    }
 
     /**
      * Test user agent captures metric for credentials resolved from
