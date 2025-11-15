@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Progress;
 
-class TransferListenerNotifier extends TransferListener
+final class TransferListenerNotifier extends TransferListener
 {
     /** @var TransferListener[] */
     private array $listeners;

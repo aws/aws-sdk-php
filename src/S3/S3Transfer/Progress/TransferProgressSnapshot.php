@@ -4,7 +4,7 @@ namespace Aws\S3\S3Transfer\Progress;
 
 use Throwable;
 
-class TransferProgressSnapshot
+final class TransferProgressSnapshot
 {
     /** @var string */
     private string $identifier;

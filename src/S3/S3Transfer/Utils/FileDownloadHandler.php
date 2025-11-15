@@ -5,7 +5,7 @@ namespace Aws\S3\S3Transfer\Utils;
 use Aws\S3\S3Transfer\Exception\FileDownloadException;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 
-class FileDownloadHandler extends DownloadHandler
+final class FileDownloadHandler extends DownloadHandler
 {
     private const IDENTIFIER_LENGTH = 8;
     private const TEMP_INFIX = '.s3tmp.';

@@ -9,7 +9,7 @@ use Aws\ResultInterface;
 /**
  * Multipart downloader using the part get approach.
  */
-class PartGetMultipartDownloader extends AbstractMultipartDownloader
+final class PartGetMultipartDownloader extends AbstractMultipartDownloader
 {
     /**
      * @inheritDoc

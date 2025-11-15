@@ -6,7 +6,7 @@ use Aws\CommandInterface;
 use Aws\Result;
 use Aws\ResultInterface;
 
-class RangeGetMultipartDownloader extends AbstractMultipartDownloader
+final class RangeGetMultipartDownloader extends AbstractMultipartDownloader
 {
     /**
      * @inheritDoc

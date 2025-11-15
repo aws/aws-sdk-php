@@ -2,4 +2,4 @@
 
 namespace Aws\S3\S3Transfer\Exception;
 
-class ProgressTrackerException extends \RuntimeException {}
+final class ProgressTrackerException extends \RuntimeException {}

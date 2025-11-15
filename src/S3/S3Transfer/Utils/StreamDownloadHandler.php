@@ -6,7 +6,7 @@ use Aws\S3\S3Transfer\Progress\TransferListener;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;
 
-class StreamDownloadHandler extends DownloadHandler
+final class StreamDownloadHandler extends DownloadHandler
 {
     /** @var StreamInterface|null */
     private ?StreamInterface $stream;

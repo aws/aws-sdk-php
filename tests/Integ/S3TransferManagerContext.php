@@ -3,10 +3,13 @@
 namespace Aws\Test\Integ;
 
 use Aws\S3\ApplyChecksumMiddleware;
+use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\DownloadFileRequest;
 use Aws\S3\S3Transfer\Models\DownloadRequest;
 use Aws\S3\S3Transfer\Models\DownloadResult;
+use Aws\S3\S3Transfer\Models\ResumeDownloadRequest;
+use Aws\S3\S3Transfer\Models\ResumeUploadRequest;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\UploadRequest;
@@ -456,37 +459,49 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         $numfile
     ): void
     {
-        $fullDirectoryPath = self::$tempDir . DIRECTORY_SEPARATOR . $directory;
-        if (!is_dir($fullDirectoryPath)) {
-            mkdir($fullDirectoryPath, 0777, true);
-        }
-
         $count = (int)$numfile;
-        for ($i = 0; $i < $count - 1; $i++) {
-            $fullFilePath = $fullDirectoryPath . DIRECTORY_SEPARATOR . "file" . ($i + 1) . ".txt";
-            file_put_contents($fullFilePath, "This is a test file content #" . ($i + 1));
+        $filesDirectory = self::$tempDir . DIRECTORY_SEPARATOR . $directory;
+        if (!is_dir($filesDirectory)) {
+            mkdir($filesDirectory, 0777, true);
         }
 
-        // Create one large file for multipart upload testing
-        if ($count > 0) {
-            $fullFilePath = $fullDirectoryPath . DIRECTORY_SEPARATOR . "file" . $count . ".txt";
-            file_put_contents($fullFilePath, str_repeat('*', 1024 * 1024 * 15));
+        for ($i = 0; $i < $count; $i++) {
+            $fullFilePath = $filesDirectory . "file" . ($i + 1) . ".txt";
+            // Half files single upload and half multipart uploads
+            if ($i > $count / 2) {
+                file_put_contents(
+                    $fullFilePath,
+                    random_bytes(
+                        random_int(1024 * 5, 1024 * 20)
+                    )
+                );
+            } else {
+                file_put_contents(
+                    $fullFilePath,
+                    random_bytes(
+                        random_int(1024, 1024 * 5)
+                    )
+                );
+            }
         }
     }
 
     /**
-     * @When /^I upload this directory (.*)$/
-     */
+     * @When /^I upload this directory (.*) to s3$/
+    */
     public function iUploadThisDirectory($directory): void
     {
-        $fullDirectoryPath = self::$tempDir . DIRECTORY_SEPARATOR . $directory;
         $s3TransferManager = new S3TransferManager(
             self::getSdk()->createS3(),
         );
         $s3TransferManager->uploadDirectory(
             new UploadDirectoryRequest(
-                $fullDirectoryPath,
+                self::$tempDir,
                 self::getResourceName(),
+                [],
+                [
+                    'recursive' => true,
+                ]
             )
         )->wait();
     }
@@ -500,51 +515,45 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
     ): void
     {
         $s3Client = self::getSdk()->createS3();
-        $localDirectoryPath = self::$tempDir . DIRECTORY_SEPARATOR . $directory;
-        $localFiles = array_diff(
-            scandir($localDirectoryPath),
-            ['..', '.']
-        );
-        $uploadedCount = 0;
+        $listObjectsResult = $s3Client->listObjectsV2([
+            'Bucket' => self::getResourceName(),
+            'Prefix' => $directory,
+        ]);
 
-        foreach ($localFiles as $fileName) {
-            $localFilePath = $localDirectoryPath . DIRECTORY_SEPARATOR . $fileName;
+        // Make sure request was successful
+        Assert::assertEquals($listObjectsResult['@metadata']['statusCode'], 200);
 
-            if (!is_file($localFilePath)) {
-                continue;
-            }
-
-            $s3Key = $directory . DIRECTORY_SEPARATOR . $fileName;
-
-            try {
-                // Verify the object exists in S3
-                $response = $s3Client->getObject([
-                    'Bucket' => self::getResourceName(),
-                    'Key' => $s3Key,
-                ]);
-
-                Assert::assertEquals(200, $response['@metadata']['statusCode']);
-
-                $localContent = file_get_contents($localFilePath);
-                $s3Content = $response['Body']->getContents();
-
-                Assert::assertEquals(
-                    $localContent,
-                    $s3Content,
-                    "Content mismatch for file: {$fileName}"
-                );
-
-                $uploadedCount++;
-            } catch (\Exception $e) {
-                Assert::fail("Failed to verify S3 object {$s3Key}: " . $e->getMessage());
-            }
-        }
-
+        // Make sure objects count from list objects match expected
         Assert::assertEquals(
-            (int)$numfile,
-            $uploadedCount,
-            "Expected {$numfile} files but found {$uploadedCount} uploaded files"
+            $numfile,
+            $listObjectsResult['KeyCount']
         );
+
+        // Now lets validate file content
+        foreach ($listObjectsResult['Contents'] as $object) {
+            $s3Key = $object['Key'];
+            $filePath = self::$tempDir . DIRECTORY_SEPARATOR . $s3Key;
+            Assert::assertFileExists($filePath);
+            $fileContent = file_get_contents($filePath);
+
+            // Get object from s3 to validate its content
+            $getObjectResult = $s3Client->getObject([
+                'Bucket' => self::getResourceName(),
+                'Key' => $s3Key,
+            ]);
+
+            // Validate the request was successful
+            Assert::assertEquals(
+                @$getObjectResult['@metadata']['statusCode'],
+                200
+            );
+
+            // Validate file content against s3 object
+            Assert::assertEquals(
+                $fileContent,
+                $getObjectResult['Body']->getContents()
+            );
+        }
     }
 
     /**
@@ -713,6 +722,8 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
                 "Transfer failed at part number {$partNumberFail} failed",
                 $exception->getMessage(),
             );
+        } catch (\Exception $e) {
+            Assert::fail("Unexpected exception type: " . get_class($e) . " - " . $e->getMessage());
         }
     }
 
@@ -768,7 +779,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
                 [
                     'Bucket' => self::getResourceName(),
                     'Key' => $file,
-                    'ChecksumAlgorithm' => $algorithm,
+                    'ChecksumAlgorithm' => strtoupper($algorithm),
                 ],
                 [
                     'multipart_upload_threshold_bytes' => 1024 * 1024 * 5,
@@ -788,7 +799,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         $s3TransferManager = new S3TransferManager(
             self::getSdk()->createS3()
         );
-        $result = $s3TransferManager->download(
+        $downloadResult = $s3TransferManager->download(
             new DownloadRequest(
                 source: [
                     'Bucket' => self::getResourceName(),
@@ -799,9 +810,10 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
                 ]
             )
         )->wait();
+
         Assert::assertEqualsIgnoringCase(
             $algorithm,
-            $result['ChecksumValidated'],
+            $downloadResult['ChecksumValidated'],
         );
     }
 
@@ -842,27 +854,34 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         $file
     ): void
     {
-        $s3TransferManager = new S3TransferManager(
-            self::getSdk()->createS3()
+        $s3Client = self::getSdk()->createS3();
+        $getObjectAttributesResult = $s3Client->getObjectAttributes([
+            'Bucket' => self::getResourceName(),
+            'Key' => $file,
+            'ObjectAttributes' => [
+                'Checksum'
+            ]
+        ]);
+
+        // Assert the request was successful
+        Assert::assertEquals(
+            200,
+            $getObjectAttributesResult['@metadata']['statusCode']
         );
-        $result = $s3TransferManager->download(
-            new DownloadRequest(
-                source: [
-                    'Bucket' => self::getResourceName(),
-                    'Key' => $file,
-                ],
-                config: [
-                    'response_checksum_validation' => 'when_supported'
-                ]
-            )
-        )->wait();
-        Assert::assertEqualsIgnoringCase(
-            $algorithm,
-            $result['ChecksumValidated'],
+
+        // Assert checksum matches to provided one
+        $checksumAttributes = $getObjectAttributesResult['Checksum'];
+        Assert::assertArrayHasKey(
+            "Checksum".strtoupper($algorithm),
+            $checksumAttributes,
         );
         Assert::assertEquals(
             $checksum,
-            $result['Checksum'.strtoupper($algorithm)],
+            $checksumAttributes['Checksum'.strtoupper($algorithm)],
+        );
+        Assert::assertEquals(
+            'FULL_OBJECT',
+            $checksumAttributes['ChecksumType'],
         );
     }
 }

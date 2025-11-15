@@ -32,7 +32,7 @@ use Throwable;
 use function Aws\filter;
 use function Aws\map;
 
-class S3TransferManager
+final class S3TransferManager
 {
     /** @var S3Client  */
     private S3ClientInterface $s3Client;
