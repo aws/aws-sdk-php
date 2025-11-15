@@ -44,8 +44,13 @@ final class StreamDownloadHandler extends AbstractDownloadHandler
     {
         $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         $response = $snapshot->getResponse();
+        $partBody = $response['Body'];
+        if ($partBody->isSeekable()) {
+            $partBody->rewind();
+        }
+
         Utils::copyToStream(
-            $response['Body'],
+            $partBody,
             $this->stream
         );
     }

@@ -94,9 +94,14 @@ final class FileDownloadHandler extends AbstractDownloadHandler
     {
         $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         $response = $snapshot->getResponse();
+        $partBody = $response['Body'];
+        if ($partBody->isSeekable()) {
+            $partBody->rewind();
+        }
+
         file_put_contents(
             $this->temporaryDestination,
-            $response['Body'],
+            $partBody,
             FILE_APPEND
         );
     }
