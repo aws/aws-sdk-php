@@ -137,6 +137,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listThreatIntelSetsAsync(array $args = [])
  * @method \Aws\Result listTrustedEntitySets(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTrustedEntitySetsAsync(array $args = [])
+ * @method \Aws\Result sendObjectMalwareScan(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise sendObjectMalwareScanAsync(array $args = [])
  * @method \Aws\Result startMalwareScan(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startMalwareScanAsync(array $args = [])
  * @method \Aws\Result startMonitoringMembers(array $args = [])

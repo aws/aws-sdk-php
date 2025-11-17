@@ -353,6 +353,7 @@
         "S3Settings$AddTrailingPaddingCharacter": "<p>Use the S3 target endpoint setting <code>AddTrailingPaddingCharacter</code> to add padding on string data. The default value is <code>false</code>.</p>",
         "S3Settings$GlueCatalogGeneration": "<p>When true, allows Glue to catalog your S3 bucket. Creating an Glue catalog lets you use Athena to query your data.</p>",
         "StartMetadataModelExportToTargetMessage$OverwriteExtensionPack": "<p>Whether to overwrite the migration project extension pack. An extension pack is an add-on module that emulates functions present in a source database that are required when converting objects to the target database.</p>",
+        "SybaseAseDataProviderSettings$EncryptPassword": "<p>Specifies whether to encrypt the password when connecting to the Sybase ASE database. When set to true, the connection password is encrypted during transmission. Default is true.</p>",
         "TableStatistics$FullLoadReloaded": "<p>A value that indicates if the table was reloaded (<code>true</code>) or loaded as part of a new full load operation (<code>false</code>).</p>",
         "TimestreamSettings$CdcInsertsAndUpdates": "<p>Set this attribute to <code>true</code> to specify that DMS only applies inserts and updates, and not deletes. Amazon Timestream does not allow deleting records, so if this value is <code>false</code>, DMS nulls out the corresponding record in the Timestream database rather than deleting it.</p>",
         "TimestreamSettings$EnableMagneticStoreWrites": "<p>Set this attribute to <code>true</code> to enable memory store writes. When this value is <code>false</code>, DMS does not write records that are older in days than the value specified in <code>MagneticDuration</code>, because Amazon Timestream does not allow memory writes by default. For more information, see <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/storage.html\">Storage</a> in the <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/\">Amazon Timestream Developer Guide</a>.</p>",
@@ -1218,7 +1219,8 @@
         "MongoDbDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the MongoDB data provider. The default value is <code>none</code>.</p>",
         "MySqlDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the MySQL data provider. The default value is <code>none</code>.</p>",
         "OracleDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the Oracle data provider. The default value is <code>none</code>.</p>",
-        "PostgreSqlDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the PostgreSQL data provider. The default value is <code>none</code>.</p>"
+        "PostgreSqlDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the PostgreSQL data provider. The default value is <code>none</code>.</p>",
+        "SybaseAseDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the SAP ASE data provider. The default value is <code>none</code>.</p>"
       }
     },
     "DmsTransferSettings": {
@@ -1246,6 +1248,7 @@
     "DoubleOptional": {
       "base": null,
       "refs": {
+        "Progress$ProgressPercent": "<p>The percent complete for the current step of the schema conversion operation.</p>",
         "RdsConfiguration$InstanceVcpu": "<p>Describes the number of virtual CPUs (vCPU) on the recommended Amazon RDS DB instance that meets your requirements.</p>",
         "RdsConfiguration$InstanceMemory": "<p>Describes the memory on the recommended Amazon RDS DB instance that meets your requirements.</p>",
         "RdsRequirements$InstanceVcpu": "<p>The required number of virtual CPUs (vCPU) on the Amazon RDS DB instance.</p>",
@@ -1779,6 +1782,7 @@
         "S3Settings$CdcMinFileSize": "<p>Minimum file size, defined in kilobytes, to reach for a file output to Amazon S3.</p> <p>When <code>CdcMinFileSize</code> and <code>CdcMaxBatchInterval</code> are both specified, the file write is triggered by whichever parameter condition is met first within an DMS CloudFormation template.</p> <p>The default value is 32 MB.</p>",
         "S3Settings$IgnoreHeaderRows": "<p>When this value is set to 1, DMS ignores the first row header in a .csv file. A value of 1 turns on the feature; a value of 0 turns off the feature.</p> <p>The default is 0.</p>",
         "S3Settings$MaxFileSize": "<p>A value that specifies the maximum size (in KB) of any .csv file to be created while migrating to an S3 target during full load.</p> <p>The default value is 1,048,576 KB (1 GB). Valid values include 1 to 1,048,576.</p>",
+        "SybaseAseDataProviderSettings$Port": "<p>The port value for the SAP ASE data provider.</p>",
         "SybaseSettings$Port": "<p>Endpoint TCP port. The default is 5000.</p>",
         "TimestreamSettings$MemoryDuration": "<p>Set this attribute to specify the length of time to store all of the tables in memory that are migrated into Amazon Timestream from the source database. Time is measured in units of hours. When Timestream data comes in, it first resides in memory for the specified duration, which allows quick access to it.</p>",
         "TimestreamSettings$MagneticDuration": "<p>Set this attribute to specify the default magnetic duration applied to the Amazon Timestream tables in days. This is the number of days that records remain in magnetic store before being discarded. For more information, see <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/storage.html\">Storage</a> in the <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/\">Amazon Timestream Developer Guide</a>.</p>"
@@ -1923,6 +1927,7 @@
         "AccountQuota$Used": "<p>The amount currently used toward the quota maximum.</p>",
         "AccountQuota$Max": "<p>The maximum allowed value for the quota.</p>",
         "DataMigrationStatistics$ElapsedTimeMillis": "<p>The elapsed duration of the data migration run.</p>",
+        "Progress$TotalObjects": "<p>The number of objects in this schema conversion operation.</p>",
         "ReplicationInstanceTaskLog$ReplicationInstanceTaskLogSize": "<p>The size, in bytes, of the replication task log.</p>",
         "ReplicationStats$ElapsedTimeMillis": "<p>The elapsed time of the replication, in milliseconds.</p>",
         "ReplicationTaskStats$ElapsedTimeMillis": "<p>The elapsed time of the task, in milliseconds.</p>",
@@ -2319,6 +2324,18 @@
       "base": null,
       "refs": {
         "Replication$PremigrationAssessmentStatuses": "<p>The status output of premigration assessment in describe-replications.</p>"
+      }
+    },
+    "ProcessedObject": {
+      "base": "<p>The database object that the schema conversion operation currently uses.</p>",
+      "refs": {
+        "Progress$ProcessedObject": "<p>The name of the database object that the schema conversion operation currently uses.</p>"
+      }
+    },
+    "Progress": {
+      "base": "<p>Provides information about the progress of the schema conversion operation.</p>",
+      "refs": {
+        "SchemaConversionRequest$Progress": null
       }
     },
     "ProvisionData": {
@@ -3069,7 +3086,7 @@
         "CreateDataMigrationMessage$ServiceAccessRoleArn": "<p>The Amazon Resource Name (ARN) for the service access role that you want to use to create the data migration.</p>",
         "CreateDataProviderMessage$DataProviderName": "<p>A user-friendly name for the data provider.</p>",
         "CreateDataProviderMessage$Description": "<p>A user-friendly description of the data provider.</p>",
-        "CreateDataProviderMessage$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, <code>db2</code>, <code>db2-zos</code> and <code>docdb</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
+        "CreateDataProviderMessage$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, <code>db2</code>, <code>db2-zos</code>, <code>docdb</code>, and <code>sybase</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
         "CreateEndpointMessage$EndpointIdentifier": "<p>The database endpoint identifier. Identifiers must begin with a letter and must contain only ASCII letters, digits, and hyphens. They can't end with a hyphen, or contain two consecutive hyphens.</p>",
         "CreateEndpointMessage$EngineName": "<p>The type of engine for the endpoint. Valid values, depending on the <code>EndpointType</code> value, include <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"mariadb\"</code>, <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"opensearch\"</code>, <code>\"redshift\"</code>, <code>\"s3\"</code>, <code>\"db2\"</code>, <code>\"db2-zos\"</code>, <code>\"azuredb\"</code>, <code>\"sybase\"</code>, <code>\"dynamodb\"</code>, <code>\"mongodb\"</code>, <code>\"kinesis\"</code>, <code>\"kafka\"</code>, <code>\"elasticsearch\"</code>, <code>\"docdb\"</code>, <code>\"sqlserver\"</code>, <code>\"neptune\"</code>, <code>\"babelfish\"</code>, <code>redshift-serverless</code>, <code>aurora-serverless</code>, <code>aurora-postgresql-serverless</code>, <code>gcp-mysql</code>, <code>azure-sql-managed-instance</code>, <code>redis</code>, <code>dms-transfer</code>.</p>",
         "CreateEndpointMessage$Username": "<p>The user name to be used to log in to the endpoint database.</p>",
@@ -3142,7 +3159,7 @@
         "DataProvider$DataProviderName": "<p>The name of the data provider.</p>",
         "DataProvider$DataProviderArn": "<p>The Amazon Resource Name (ARN) string that uniquely identifies the data provider.</p>",
         "DataProvider$Description": "<p>A description of the data provider. Descriptions can have up to 31 characters. A description can contain only ASCII letters, digits, and hyphens ('-'). Also, it can't end with a hyphen or contain two consecutive hyphens, and can only begin with a letter.</p>",
-        "DataProvider$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, <code>db2</code>, <code>db2-zos</code> and <code>docdb</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
+        "DataProvider$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, <code>db2</code>, <code>db2-zos</code>, <code>docdb</code>, and <code>sybase</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
         "DataProviderDescriptor$SecretsManagerSecretId": "<p>The identifier of the Amazon Web Services Secrets Manager Secret used to store access credentials for the data provider.</p>",
         "DataProviderDescriptor$SecretsManagerAccessRoleArn": "<p>The ARN of the role used to access Amazon Web Services Secrets Manager.</p>",
         "DataProviderDescriptor$DataProviderName": "<p>The user-friendly name of the data provider.</p>",
@@ -3432,7 +3449,7 @@
         "ModifyDataProviderMessage$DataProviderIdentifier": "<p>The identifier of the data provider. Identifiers must begin with a letter and must contain only ASCII letters, digits, and hyphens. They can't end with a hyphen, or contain two consecutive hyphens.</p>",
         "ModifyDataProviderMessage$DataProviderName": "<p>The name of the data provider.</p>",
         "ModifyDataProviderMessage$Description": "<p>A user-friendly description of the data provider.</p>",
-        "ModifyDataProviderMessage$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, <code>db2</code>, <code>db2-zos</code> and <code>docdb</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
+        "ModifyDataProviderMessage$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, <code>db2</code>, <code>db2-zos</code>, <code>docdb</code>, and <code>sybase</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
         "ModifyEndpointMessage$EndpointArn": "<p>The Amazon Resource Name (ARN) string that uniquely identifies the endpoint.</p>",
         "ModifyEndpointMessage$EndpointIdentifier": "<p>The database endpoint identifier. Identifiers must begin with a letter and must contain only ASCII letters, digits, and hyphens. They can't end with a hyphen or contain two consecutive hyphens.</p>",
         "ModifyEndpointMessage$EngineName": "<p>The database engine name. Valid values, depending on the EndpointType, include <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"mariadb\"</code>, <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"redshift\"</code>, <code>\"s3\"</code>, <code>\"db2\"</code>, <code>\"db2-zos\"</code>, <code>\"azuredb\"</code>, <code>\"sybase\"</code>, <code>\"dynamodb\"</code>, <code>\"mongodb\"</code>, <code>\"kinesis\"</code>, <code>\"kafka\"</code>, <code>\"elasticsearch\"</code>, <code>\"documentdb\"</code>, <code>\"sqlserver\"</code>, <code>\"neptune\"</code>, and <code>\"babelfish\"</code>.</p>",
@@ -3560,6 +3577,10 @@
         "PremigrationAssessmentStatus$ResultLocationFolder": "<p>The folder within an Amazon S3 bucket where you want Database Migration Service to store the results of this assessment run.</p>",
         "PremigrationAssessmentStatus$ResultEncryptionMode": "<p>The supported values are <code>SSE_KMS</code> and <code>SSE_S3</code>. If these values are not provided, then the files are not encrypted at rest. For more information, see <a href=\"https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html#CHAP_Target.S3.KMSKeys\">Creating Amazon Web Services KMS keys to encrypt Amazon S3 target objects</a>.</p>",
         "PremigrationAssessmentStatus$ResultKmsKeyArn": "<p>The ARN of a custom KMS encryption key that you specify when you set <code>ResultEncryptionMode</code> to <code>SSE_KMS</code>.</p>",
+        "ProcessedObject$Name": "<p>The name of the database object.</p>",
+        "ProcessedObject$Type": "<p>The type of the database object. For example, a table, view, procedure, and so on.</p>",
+        "ProcessedObject$EndpointType": "<p>The type of the data provider. This parameter can store one of the following values: <code>\"SOURCE\"</code> or <code>\"TARGET\"</code>.</p>",
+        "Progress$ProgressStep": "<p>The step of the schema conversion operation. This parameter can store one of the following values:</p> <ul> <li> <p> <code>IN_PROGRESS</code> – The operation is running.</p> </li> <li> <p> <code>LOADING_METADATA</code> – Loads metadata from the source database.</p> </li> <li> <p> <code>COUNTING_OBJECTS</code> – Determines the number of objects involved in the operation.</p> </li> <li> <p> <code>ANALYZING</code> – Analyzes the source database objects.</p> </li> <li> <p> <code>CONVERTING</code> – Converts the source database objects to a format compatible with the target database.</p> </li> <li> <p> <code>APPLYING</code> – Applies the converted code to the target database.</p> </li> <li> <p> <code>FINISHED</code> – The operation completed successfully.</p> </li> </ul>",
         "ProvisionData$ProvisionState": "<p>The current provisioning state </p>",
         "ProvisionData$ReasonForNewProvisioningData": "<p>A message describing the reason that DMS provisioned new resources for the serverless replication.</p>",
         "PublicIpAddressList$member": null,
@@ -3764,6 +3785,9 @@
         "SupportedEndpointType$EngineName": "<p>The database engine name. Valid values, depending on the EndpointType, include <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"mariadb\"</code>, <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"redshift\"</code>, <code>\"s3\"</code>, <code>\"db2\"</code>, <code>\"db2-zos\"</code>, <code>\"azuredb\"</code>, <code>\"sybase\"</code>, <code>\"dynamodb\"</code>, <code>\"mongodb\"</code>, <code>\"kinesis\"</code>, <code>\"kafka\"</code>, <code>\"elasticsearch\"</code>, <code>\"documentdb\"</code>, <code>\"sqlserver\"</code>, <code>\"neptune\"</code>, and <code>\"babelfish\"</code>.</p>",
         "SupportedEndpointType$ReplicationInstanceEngineMinimumVersion": "<p>The earliest DMS engine version that supports this endpoint engine. Note that endpoint engines released with DMS versions earlier than 3.1.1 do not return a value for this parameter.</p>",
         "SupportedEndpointType$EngineDisplayName": "<p>The expanded name for the engine name. For example, if the <code>EngineName</code> parameter is \"aurora\", this value would be \"Amazon Aurora MySQL\".</p>",
+        "SybaseAseDataProviderSettings$ServerName": "<p>The name of the SAP ASE server.</p>",
+        "SybaseAseDataProviderSettings$DatabaseName": "<p>The database name on the SAP ASE data provider.</p>",
+        "SybaseAseDataProviderSettings$CertificateArn": "<p>The Amazon Resource Name (ARN) of the certificate used for SSL connection.</p>",
         "SybaseSettings$DatabaseName": "<p>Database name for the endpoint.</p>",
         "SybaseSettings$ServerName": "<p>Fully qualified domain name of the endpoint.</p>",
         "SybaseSettings$Username": "<p>Endpoint connection user name.</p>",
@@ -3835,6 +3859,12 @@
       "base": null,
       "refs": {
         "DescribeEndpointTypesResponse$SupportedEndpointTypes": "<p>The types of endpoints that are supported.</p>"
+      }
+    },
+    "SybaseAseDataProviderSettings": {
+      "base": "<p>Provides information that defines an SAP ASE data provider.</p>",
+      "refs": {
+        "DataProviderSettings$SybaseAseSettings": null
       }
     },
     "SybaseSettings": {

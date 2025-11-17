@@ -2399,6 +2399,7 @@
         "PostgreSqlSettings":{"shape":"PostgreSqlDataProviderSettings"},
         "MySqlSettings":{"shape":"MySqlDataProviderSettings"},
         "OracleSettings":{"shape":"OracleDataProviderSettings"},
+        "SybaseAseSettings":{"shape":"SybaseAseDataProviderSettings"},
         "MicrosoftSqlServerSettings":{"shape":"MicrosoftSqlServerDataProviderSettings"},
         "DocDbSettings":{"shape":"DocDbDataProviderSettings"},
         "MariaDbSettings":{"shape":"MariaDbDataProviderSettings"},
@@ -4745,6 +4746,23 @@
       "type":"list",
       "member":{"shape":"PremigrationAssessmentStatus"}
     },
+    "ProcessedObject":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"String"},
+        "Type":{"shape":"String"},
+        "EndpointType":{"shape":"String"}
+      }
+    },
+    "Progress":{
+      "type":"structure",
+      "members":{
+        "ProgressPercent":{"shape":"DoubleOptional"},
+        "TotalObjects":{"shape":"Long"},
+        "ProgressStep":{"shape":"String"},
+        "ProcessedObject":{"shape":"ProcessedObject"}
+      }
+    },
     "ProvisionData":{
       "type":"structure",
       "members":{
@@ -5437,7 +5455,8 @@
         "RequestIdentifier":{"shape":"String"},
         "MigrationProjectArn":{"shape":"String"},
         "Error":{"shape":"ErrorDetails"},
-        "ExportSqlDetails":{"shape":"ExportSqlDetails"}
+        "ExportSqlDetails":{"shape":"ExportSqlDetails"},
+        "Progress":{"shape":"Progress"}
       }
     },
     "SchemaConversionRequestList":{
@@ -5879,6 +5898,17 @@
     "SupportedEndpointTypeList":{
       "type":"list",
       "member":{"shape":"SupportedEndpointType"}
+    },
+    "SybaseAseDataProviderSettings":{
+      "type":"structure",
+      "members":{
+        "ServerName":{"shape":"String"},
+        "Port":{"shape":"IntegerOptional"},
+        "DatabaseName":{"shape":"String"},
+        "SslMode":{"shape":"DmsSslModeValue"},
+        "EncryptPassword":{"shape":"BooleanOptional"},
+        "CertificateArn":{"shape":"String"}
+      }
     },
     "SybaseSettings":{
       "type":"structure",

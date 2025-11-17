@@ -2244,7 +2244,8 @@
       "enum":[
         "BUILD_LOG",
         "QUALITY_REPORT",
-        "POLICY_DEFINITION"
+        "POLICY_DEFINITION",
+        "GENERATED_TEST_CASES"
       ]
     },
     "AutomatedReasoningPolicyBuildResultAssets":{
@@ -2252,7 +2253,8 @@
       "members":{
         "policyDefinition":{"shape":"AutomatedReasoningPolicyDefinition"},
         "qualityReport":{"shape":"AutomatedReasoningPolicyDefinitionQualityReport"},
-        "buildLog":{"shape":"AutomatedReasoningPolicyBuildLog"}
+        "buildLog":{"shape":"AutomatedReasoningPolicyBuildLog"},
+        "generatedTestCases":{"shape":"AutomatedReasoningPolicyGeneratedTestCases"}
       },
       "union":true
     },
@@ -2671,6 +2673,30 @@
       "min":0
     },
     "AutomatedReasoningPolicyFormatVersion":{"type":"string"},
+    "AutomatedReasoningPolicyGeneratedTestCase":{
+      "type":"structure",
+      "required":[
+        "queryContent",
+        "guardContent",
+        "expectedAggregatedFindingsResult"
+      ],
+      "members":{
+        "queryContent":{"shape":"AutomatedReasoningPolicyTestQueryContent"},
+        "guardContent":{"shape":"AutomatedReasoningPolicyTestGuardContent"},
+        "expectedAggregatedFindingsResult":{"shape":"AutomatedReasoningCheckResult"}
+      }
+    },
+    "AutomatedReasoningPolicyGeneratedTestCaseList":{
+      "type":"list",
+      "member":{"shape":"AutomatedReasoningPolicyGeneratedTestCase"}
+    },
+    "AutomatedReasoningPolicyGeneratedTestCases":{
+      "type":"structure",
+      "required":["generatedTestCases"],
+      "members":{
+        "generatedTestCases":{"shape":"AutomatedReasoningPolicyGeneratedTestCaseList"}
+      }
+    },
     "AutomatedReasoningPolicyHash":{
       "type":"string",
       "max":128,

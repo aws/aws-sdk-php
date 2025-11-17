@@ -2557,6 +2557,13 @@
       "enum":["UtteranceTimestamp"]
     },
     "AnswerField":{"type":"string"},
+    "AssistedNluMode":{
+      "type":"string",
+      "enum":[
+        "Primary",
+        "Fallback"
+      ]
+    },
     "AssociatedTranscript":{
       "type":"structure",
       "members":{
@@ -7203,7 +7210,8 @@
       "type":"structure",
       "required":["enabled"],
       "members":{
-        "enabled":{"shape":"Enabled"}
+        "enabled":{"shape":"Enabled"},
+        "assistedNluMode":{"shape":"AssistedNluMode"}
       }
     },
     "NonEmptyString":{

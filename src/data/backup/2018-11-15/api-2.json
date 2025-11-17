@@ -1781,6 +1781,7 @@
       "members":{
         "RuleName":{"shape":"BackupRuleName"},
         "TargetBackupVaultName":{"shape":"BackupVaultName"},
+        "TargetLogicallyAirGappedBackupVaultArn":{"shape":"ARN"},
         "ScheduleExpression":{"shape":"CronExpression"},
         "StartWindowMinutes":{"shape":"WindowMinutes"},
         "CompletionWindowMinutes":{"shape":"WindowMinutes"},
@@ -1802,6 +1803,7 @@
       "members":{
         "RuleName":{"shape":"BackupRuleName"},
         "TargetBackupVaultName":{"shape":"BackupVaultName"},
+        "TargetLogicallyAirGappedBackupVaultArn":{"shape":"ARN"},
         "ScheduleExpression":{"shape":"CronExpression"},
         "StartWindowMinutes":{"shape":"WindowMinutes"},
         "CompletionWindowMinutes":{"shape":"WindowMinutes"},
@@ -2059,6 +2061,7 @@
         "BackupSizeInBytes":{"shape":"Long"},
         "IamRoleArn":{"shape":"IAMRoleArn"},
         "CreatedBy":{"shape":"RecoveryPointCreator"},
+        "CreatedByBackupJobId":{"shape":"string"},
         "ResourceType":{"shape":"ResourceType"},
         "ParentJobId":{"shape":"string"},
         "IsParent":{"shape":"boolean"},
@@ -3456,8 +3459,13 @@
       "members":{
         "MoveToColdStorageAfterDays":{"shape":"Long"},
         "DeleteAfterDays":{"shape":"Long"},
-        "OptInToArchiveForSupportedResources":{"shape":"Boolean"}
+        "OptInToArchiveForSupportedResources":{"shape":"Boolean"},
+        "DeleteAfterEvent":{"shape":"LifecycleDeleteAfterEvent"}
       }
+    },
+    "LifecycleDeleteAfterEvent":{
+      "type":"string",
+      "enum":["DELETE_AFTER_COPY"]
     },
     "LimitExceededException":{
       "type":"structure",
@@ -3846,6 +3854,11 @@
           "shape":"string",
           "location":"querystring",
           "locationName":"messageCategory"
+        },
+        "BySourceRecoveryPointArn":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"sourceRecoveryPointArn"
         }
       }
     },
@@ -5173,6 +5186,7 @@
       ],
       "members":{
         "BackupVaultName":{"shape":"BackupVaultName"},
+        "LogicallyAirGappedBackupVaultArn":{"shape":"ARN"},
         "ResourceArn":{"shape":"ARN"},
         "IamRoleArn":{"shape":"IAMRoleArn"},
         "IdempotencyToken":{

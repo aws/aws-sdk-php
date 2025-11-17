@@ -13,6 +13,7 @@
     "CancelServiceSoftwareUpdate": "<p>Cancels a scheduled service software update for an Amazon OpenSearch Service domain. You can only perform this operation before the <code>AutomatedUpdateDate</code> and when the domain's <code>UpdateStatus</code> is <code>PENDING_UPDATE</code>. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
     "CreateApplication": "<p>Creates an OpenSearch UI application. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/application.html\">Using the OpenSearch user interface in Amazon OpenSearch Service</a>.</p>",
     "CreateDomain": "<p>Creates an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/createupdatedomains.html\">Creating and managing Amazon OpenSearch Service domains</a>.</p>",
+    "CreateIndex": "<p>Creates an OpenSearch index with optional automatic semantic enrichment for specified text fields. Automatic semantic enrichment enables semantic search capabilities without requiring machine learning expertise, improving search relevance by up to 20% by understanding search intent and contextual meaning beyond keyword matching. The semantic enrichment process has zero impact on search latency as sparse encodings are stored directly within the index during indexing. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/opensearch-semantic-enrichment.html\">Automatic semantic enrichment</a>.</p>",
     "CreateOutboundConnection": "<p>Creates a new cross-cluster search connection from a source Amazon OpenSearch Service domain to a destination domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
     "CreatePackage": "<p>Creates a package for use with Amazon OpenSearch Service domains. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "CreateVpcEndpoint": "<p>Creates an Amazon OpenSearch Service-managed VPC endpoint.</p>",
@@ -21,6 +22,7 @@
     "DeleteDirectQueryDataSource": "<p> Deletes a previously configured direct query data source from Amazon OpenSearch Service. </p>",
     "DeleteDomain": "<p>Deletes an Amazon OpenSearch Service domain and all of its data. You can't recover a domain after you delete it.</p>",
     "DeleteInboundConnection": "<p>Allows the destination Amazon OpenSearch Service domain owner to delete an existing inbound cross-cluster search connection. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
+    "DeleteIndex": "<p>Deletes an OpenSearch index. This operation permanently removes the index and cannot be undone.</p>",
     "DeleteOutboundConnection": "<p>Allows the source Amazon OpenSearch Service domain owner to delete an existing outbound cross-cluster search connection. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
     "DeletePackage": "<p>Deletes an Amazon OpenSearch Service package. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "DeleteVpcEndpoint": "<p>Deletes an Amazon OpenSearch Service-managed interface VPC endpoint.</p>",
@@ -40,13 +42,14 @@
     "DescribeReservedInstances": "<p>Describes the Amazon OpenSearch Service instances that you have reserved in a given Region. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/ri.html\">Reserved Instances in Amazon OpenSearch Service</a>.</p>",
     "DescribeVpcEndpoints": "<p>Describes one or more Amazon OpenSearch Service-managed VPC endpoints.</p>",
     "DissociatePackage": "<p>Removes a package from the specified Amazon OpenSearch Service domain. The package can't be in use with any OpenSearch index for the dissociation to succeed. The package is still available in OpenSearch Service for association later. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
-    "DissociatePackages": "<p>Dissociates multiple packages from a domain simulatneously.</p>",
+    "DissociatePackages": "<p>Dissociates multiple packages from a domain simultaneously.</p>",
     "GetApplication": "<p>Retrieves the configuration and status of an existing OpenSearch application.</p>",
     "GetCompatibleVersions": "<p>Returns a map of OpenSearch or Elasticsearch versions and the versions you can upgrade them to.</p>",
     "GetDataSource": "<p>Retrieves information about a direct query data source.</p>",
     "GetDefaultApplicationSetting": "<p>Gets the ARN of the current default application.</p> <p> If the default application isn't set, the operation returns a resource not found error.</p>",
     "GetDirectQueryDataSource": "<p> Returns detailed configuration information for a specific direct query data source in Amazon OpenSearch Service. </p>",
     "GetDomainMaintenanceStatus": "<p>The status of the maintenance action.</p>",
+    "GetIndex": "<p>Retrieves information about an OpenSearch index including its schema and semantic enrichment configuration. Use this operation to view the current index structure and semantic search settings.</p>",
     "GetPackageVersionHistory": "<p>Returns a list of Amazon OpenSearch Service package versions, along with their creation time, commit message, and plugin properties (if the package is a zip plugin package). For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "GetUpgradeHistory": "<p>Retrieves the complete history of the last 10 upgrades performed on an Amazon OpenSearch Service domain.</p>",
     "GetUpgradeStatus": "<p>Returns the most recent status of the last upgrade or upgrade eligibility check performed on an Amazon OpenSearch Service domain.</p>",
@@ -75,6 +78,7 @@
     "UpdateDataSource": "<p>Updates a direct-query data source. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-creating.html\">Working with Amazon OpenSearch Service data source integrations with Amazon S3</a>.</p>",
     "UpdateDirectQueryDataSource": "<p> Updates the configuration or properties of an existing direct query data source in Amazon OpenSearch Service. </p>",
     "UpdateDomainConfig": "<p>Modifies the cluster configuration of the specified Amazon OpenSearch Service domain.</p>",
+    "UpdateIndex": "<p>Updates an existing OpenSearch index schema and semantic enrichment configuration. This operation allows modification of field mappings and semantic search settings for text fields. Changes to semantic enrichment configuration will apply to newly ingested documents.</p>",
     "UpdatePackage": "<p>Updates a package for use with Amazon OpenSearch Service domains. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "UpdatePackageScope": "<p>Updates the scope of a package. Scope of the package defines users who can view and associate a package.</p>",
     "UpdateScheduledAction": "<p>Reschedules a planned domain configuration change for a later time. This change can be a scheduled <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">service software update</a> or a <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html#auto-tune-types\">blue/green Auto-Tune enhancement</a>.</p>",
@@ -111,7 +115,7 @@
         "DataSource$dataSourceArn": null,
         "DirectQueryOpenSearchARNList$member": null,
         "DomainEndpointOptions$CustomEndpointCertificateArn": "<p>The ARN for your security certificate, managed in Amazon Web Services Certificate Manager (ACM).</p>",
-        "DomainStatus$ARN": "<p>The Amazon Resource Name (ARN) of the domain. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html\">IAM identifiers </a> in the <i>AWS Identity and Access Management User Guide</i>.</p>",
+        "DomainStatus$ARN": "<p>The Amazon Resource Name (ARN) of the domain. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html\">IAM identifiers </a> in the <i>Amazon Web Services Identity and Access Management User Guide</i>.</p>",
         "GetApplicationResponse$arn": null,
         "GetDefaultApplicationSettingResponse$applicationArn": null,
         "IamIdentityCenterOptions$iamIdentityCenterInstanceArn": null,
@@ -253,7 +257,7 @@
       }
     },
     "AppConfig": {
-      "base": "<p>Configuration settings for an OpenSearch application. For more information, see see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/application.html\">Using the OpenSearch user interface in Amazon OpenSearch Service</a>.</p>",
+      "base": "<p>Configuration settings for an OpenSearch application. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/application.html\">Using the OpenSearch user interface in Amazon OpenSearch Service</a>.</p>",
       "refs": {
         "AppConfigs$member": null
       }
@@ -754,6 +758,14 @@
       "base": "<p>The result of a <code>CreateDomain</code> operation. Contains the status of the newly created domain.</p>",
       "refs": {}
     },
+    "CreateIndexRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateIndexResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateOutboundConnectionRequest": {
       "base": "<p>Container for the parameters to the <code>CreateOutboundConnection</code> operation.</p>",
       "refs": {}
@@ -891,6 +903,14 @@
     },
     "DeleteInboundConnectionResponse": {
       "base": "<p>The results of a <code>DeleteInboundConnection</code> operation. Contains details about the deleted inbound connection.</p>",
+      "refs": {}
+    },
+    "DeleteIndexRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteIndexResponse": {
+      "base": null,
       "refs": {}
     },
     "DeleteOutboundConnectionRequest": {
@@ -1268,8 +1288,10 @@
         "CancelDomainConfigChangeRequest$DomainName": null,
         "CancelServiceSoftwareUpdateRequest$DomainName": "<p>Name of the OpenSearch Service domain that you want to cancel the service software update on.</p>",
         "CreateDomainRequest$DomainName": "<p>Name of the OpenSearch Service domain to create. Domain names are unique across the domains owned by an account within an Amazon Web Services Region.</p>",
+        "CreateIndexRequest$DomainName": null,
         "DeleteDataSourceRequest$DomainName": "<p>The name of the domain.</p>",
         "DeleteDomainRequest$DomainName": "<p>The name of the domain you want to permanently delete.</p>",
+        "DeleteIndexRequest$DomainName": null,
         "DescribeDomainAutoTunesRequest$DomainName": "<p>Name of the domain that you want Auto-Tune details about.</p>",
         "DescribeDomainChangeProgressRequest$DomainName": "<p>The name of the domain to get progress information for.</p>",
         "DescribeDomainConfigRequest$DomainName": "<p>Name of the OpenSearch Service domain configuration that you want to describe.</p>",
@@ -1288,6 +1310,7 @@
         "GetCompatibleVersionsRequest$DomainName": "<p>The name of an existing domain. Provide this parameter to limit the results to a single domain.</p>",
         "GetDataSourceRequest$DomainName": "<p>The name of the domain.</p>",
         "GetDomainMaintenanceStatusRequest$DomainName": "<p>The name of the domain.</p>",
+        "GetIndexRequest$DomainName": null,
         "GetUpgradeHistoryRequest$DomainName": "<p>The name of an existing domain.</p>",
         "GetUpgradeStatusRequest$DomainName": "<p>The domain of the domain to get upgrade status information for.</p>",
         "ListDataSourcesRequest$DomainName": "<p>The name of the domain.</p>",
@@ -1302,6 +1325,7 @@
         "StartServiceSoftwareUpdateRequest$DomainName": "<p>The name of the domain that you want to update to the latest service software.</p>",
         "UpdateDataSourceRequest$DomainName": "<p>The name of the domain.</p>",
         "UpdateDomainConfigRequest$DomainName": "<p>The name of the domain that you're updating.</p>",
+        "UpdateIndexRequest$DomainName": null,
         "UpdateScheduledActionRequest$DomainName": "<p>The name of the domain to reschedule an action for.</p>",
         "UpgradeDomainRequest$DomainName": "<p>Name of the OpenSearch Service domain that you want to upgrade.</p>",
         "UpgradeDomainResponse$DomainName": "<p>The name of the domain that was upgraded.</p>"
@@ -1606,6 +1630,14 @@
       "base": "<p>The result of a <code>GetDomainMaintenanceStatus</code> request that information about the requested action.</p>",
       "refs": {}
     },
+    "GetIndexRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetIndexResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetPackageVersionHistoryRequest": {
       "base": "<p>Container for the request parameters to the <code>GetPackageVersionHistory</code> operation.</p>",
       "refs": {}
@@ -1773,6 +1805,31 @@
       "base": null,
       "refs": {
         "DescribeInboundConnectionsResponse$Connections": "<p>List of inbound connections.</p>"
+      }
+    },
+    "IndexName": {
+      "base": "Name of OpenSearch index to be created/updated/retrieved/deleted for customer's domain",
+      "refs": {
+        "CreateIndexRequest$IndexName": "<p>The name of the index to create. Must be between 1 and 255 characters and follow OpenSearch naming conventions.</p>",
+        "DeleteIndexRequest$IndexName": "<p>The name of the index to delete.</p>",
+        "GetIndexRequest$IndexName": "<p>The name of the index to retrieve information about.</p>",
+        "UpdateIndexRequest$IndexName": "<p>The name of the index to update.</p>"
+      }
+    },
+    "IndexSchema": {
+      "base": null,
+      "refs": {
+        "CreateIndexRequest$IndexSchema": "<p>The JSON schema defining index mappings, settings, and semantic enrichment configuration. The schema specifies which text fields should be automatically enriched for semantic search capabilities and includes OpenSearch index configuration parameters.</p>",
+        "GetIndexResponse$IndexSchema": "<p>The JSON schema of the index including mappings, settings, and semantic enrichment configuration.</p>",
+        "UpdateIndexRequest$IndexSchema": "<p>The updated JSON schema for the index including any changes to mappings, settings, and semantic enrichment configuration.</p>"
+      }
+    },
+    "IndexStatus": {
+      "base": null,
+      "refs": {
+        "CreateIndexResponse$Status": "<p>The status of the index creation operation.</p>",
+        "DeleteIndexResponse$Status": "<p>The status of the index deletion operation.</p>",
+        "UpdateIndexResponse$Status": "<p>The status of the index update operation.</p>"
       }
     },
     "InitiatedBy": {
@@ -3209,6 +3266,10 @@
         "Tag$Value": "<p>The value assigned to the corresponding tag key. Tag values can be null and don't have to be unique in a tag set. For example, you can have a key value pair in a tag set of <code>project : Trinity</code> and <code>cost-center : Trinity</code> </p>"
       }
     },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling. Reduce the frequency of your requests and try again.</p>",
+      "refs": {}
+    },
     "TimeUnit": {
       "base": "<p>The unit of a maintenance schedule duration. Valid value is <code>HOUR</code>.</p>",
       "refs": {
@@ -3276,6 +3337,14 @@
     },
     "UpdateDomainConfigResponse": {
       "base": "<p>The results of an <code>UpdateDomain</code> request. Contains the status of the domain being updated.</p>",
+      "refs": {}
+    },
+    "UpdateIndexRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateIndexResponse": {
+      "base": null,
       "refs": {}
     },
     "UpdatePackageRequest": {

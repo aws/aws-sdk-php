@@ -68,6 +68,7 @@
     "ListThreatEntitySets": "<p>Lists the threat entity sets associated with the specified GuardDuty detector ID. If you use this operation from a member account, the threat entity sets that are returned as a response, belong to the administrator account.</p>",
     "ListThreatIntelSets": "<p>Lists the ThreatIntelSets of the GuardDuty service specified by the detector ID. If you use this operation from a member account, the ThreatIntelSets associated with the administrator account are returned.</p>",
     "ListTrustedEntitySets": "<p>Lists the trusted entity sets associated with the specified GuardDuty detector ID. If you use this operation from a member account, the trusted entity sets that are returned as a response, belong to the administrator account.</p>",
+    "SendObjectMalwareScan": "<p>Initiates a malware scan for a specific S3 object. This API allows you to perform on-demand malware scanning of individual objects in S3 buckets that have Malware Protection for S3 enabled.</p> <p>When you use this API, the Amazon Web Services service terms for GuardDuty Malware Protection apply. For more information, see <a href=\"http://aws.amazon.com/service-terms/#87._Amazon_GuardDuty\">Amazon Web Services service terms for GuardDuty Malware Protection</a>.</p>",
     "StartMalwareScan": "<p>Initiates the malware scan. Invoking this API will automatically create the <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/slr-permissions-malware-protection.html\">Service-linked role</a> in the corresponding account.</p> <p>When the malware scan starts, you can use the associated scan ID to track the status of the scan. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DescribeMalwareScans.html\">DescribeMalwareScans</a>.</p>",
     "StartMonitoringMembers": "<p>Turns on GuardDuty monitoring of the specified member accounts. Use this operation to restart monitoring of accounts that you stopped monitoring with the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_StopMonitoringMembers.html\">StopMonitoringMembers</a> operation.</p>",
     "StopMonitoringMembers": "<p>Stops GuardDuty monitoring for the specified member accounts. Use the <code>StartMonitoringMembers</code> operation to restart monitoring for those accounts.</p> <p>With <code>autoEnableOrganizationMembers</code> configuration for your organization set to <code>ALL</code>, you'll receive an error if you attempt to stop monitoring the member accounts in your organization.</p>",
@@ -3052,6 +3053,12 @@
         "S3BucketDetail$S3ObjectDetails": "<p>Information about the S3 object that was scanned.</p>"
       }
     },
+    "S3ObjectForSendObjectMalwareScan": {
+      "base": "<p>The S3 object path to initiate a scan, including bucket name, object key, and optional version ID.</p>",
+      "refs": {
+        "SendObjectMalwareScanRequest$S3Object": "<p>The S3 object information for the object you want to scan. The bucket must have a Malware Protection plan configured to use this API.</p>"
+      }
+    },
     "S3ObjectUids": {
       "base": null,
       "refs": {
@@ -3188,6 +3195,14 @@
         "NetworkInterface$SecurityGroups": "<p>The security groups associated with the EC2 instance.</p>",
         "VpcConfig$SecurityGroups": "<p>The identifier of the security group attached to the Lambda function.</p>"
       }
+    },
+    "SendObjectMalwareScanRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SendObjectMalwareScanResponse": {
+      "base": null,
+      "refs": {}
     },
     "SensitiveString": {
       "base": null,
@@ -3675,6 +3690,9 @@
         "S3ObjectDetail$ETag": "<p>The entity tag is a hash of the S3 object. The ETag reflects changes only to the contents of an object, and not its metadata.</p>",
         "S3ObjectDetail$Hash": "<p>Hash of the threat detected in this finding.</p>",
         "S3ObjectDetail$VersionId": "<p>Version ID of the object.</p>",
+        "S3ObjectForSendObjectMalwareScan$Bucket": "<p>The name of the S3 bucket containing the object to scan. The bucket must have GuardDuty Malware Protection enabled.</p>",
+        "S3ObjectForSendObjectMalwareScan$Key": "<p>The key (name) of the S3 object to scan for malware. This must be the full key path of the object within the bucket.</p>",
+        "S3ObjectForSendObjectMalwareScan$VersionId": "<p>The version ID of the S3 object to scan. If not specified, the latest version of the object is scanned.</p>",
         "S3ObjectUids$member": null,
         "ScanFilePath$FilePath": "<p>The file path of the infected file.</p>",
         "ScanFilePath$VolumeArn": "<p>EBS volume ARN details of the infected file.</p>",

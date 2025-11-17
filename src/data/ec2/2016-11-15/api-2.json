@@ -2797,6 +2797,24 @@
       "input":{"shape":"DescribeInstanceImageMetadataRequest"},
       "output":{"shape":"DescribeInstanceImageMetadataResult"}
     },
+    "DescribeInstanceSqlHaHistoryStates":{
+      "name":"DescribeInstanceSqlHaHistoryStates",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeInstanceSqlHaHistoryStatesRequest"},
+      "output":{"shape":"DescribeInstanceSqlHaHistoryStatesResult"}
+    },
+    "DescribeInstanceSqlHaStates":{
+      "name":"DescribeInstanceSqlHaStates",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeInstanceSqlHaStatesRequest"},
+      "output":{"shape":"DescribeInstanceSqlHaStatesResult"}
+    },
     "DescribeInstanceStatus":{
       "name":"DescribeInstanceStatus",
       "http":{
@@ -3973,6 +3991,15 @@
       "input":{"shape":"DisableImageDeregistrationProtectionRequest"},
       "output":{"shape":"DisableImageDeregistrationProtectionResult"}
     },
+    "DisableInstanceSqlHaStandbyDetections":{
+      "name":"DisableInstanceSqlHaStandbyDetections",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisableInstanceSqlHaStandbyDetectionsRequest"},
+      "output":{"shape":"DisableInstanceSqlHaStandbyDetectionsResult"}
+    },
     "DisableIpamOrganizationAdminAccount":{
       "name":"DisableIpamOrganizationAdminAccount",
       "http":{
@@ -4302,6 +4329,15 @@
       },
       "input":{"shape":"EnableImageDeregistrationProtectionRequest"},
       "output":{"shape":"EnableImageDeregistrationProtectionResult"}
+    },
+    "EnableInstanceSqlHaStandbyDetections":{
+      "name":"EnableInstanceSqlHaStandbyDetections",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableInstanceSqlHaStandbyDetectionsRequest"},
+      "output":{"shape":"EnableInstanceSqlHaStandbyDetectionsResult"}
     },
     "EnableIpamOrganizationAdminAccount":{
       "name":"EnableIpamOrganizationAdminAccount",
@@ -19580,6 +19616,71 @@
         }
       }
     },
+    "DescribeInstanceSqlHaHistoryStatesRequest":{
+      "type":"structure",
+      "members":{
+        "InstanceIds":{
+          "shape":"InstanceIdStringList",
+          "locationName":"InstanceId"
+        },
+        "StartTime":{"shape":"MillisecondDateTime"},
+        "EndTime":{"shape":"MillisecondDateTime"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"DescribeInstanceSqlHaStatesRequestMaxResultsInteger"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeInstanceSqlHaHistoryStatesResult":{
+      "type":"structure",
+      "members":{
+        "Instances":{
+          "shape":"RegisteredInstanceList",
+          "locationName":"instanceSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeInstanceSqlHaStatesRequest":{
+      "type":"structure",
+      "members":{
+        "InstanceIds":{
+          "shape":"InstanceIdStringList",
+          "locationName":"InstanceId"
+        },
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"DescribeInstanceSqlHaStatesRequestMaxResultsInteger"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeInstanceSqlHaStatesRequestMaxResultsInteger":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "DescribeInstanceSqlHaStatesResult":{
+      "type":"structure",
+      "members":{
+        "Instances":{
+          "shape":"RegisteredInstanceList",
+          "locationName":"instanceSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
     "DescribeInstanceStatusRequest":{
       "type":"structure",
       "members":{
@@ -23839,6 +23940,26 @@
         }
       }
     },
+    "DisableInstanceSqlHaStandbyDetectionsRequest":{
+      "type":"structure",
+      "required":["InstanceIds"],
+      "members":{
+        "InstanceIds":{
+          "shape":"InstanceIdUpdateStringList",
+          "locationName":"InstanceId"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DisableInstanceSqlHaStandbyDetectionsResult":{
+      "type":"structure",
+      "members":{
+        "Instances":{
+          "shape":"RegisteredInstanceList",
+          "locationName":"instanceSet"
+        }
+      }
+    },
     "DisableIpamOrganizationAdminAccountRequest":{
       "type":"structure",
       "required":["DelegatedAdminAccountId"],
@@ -25564,6 +25685,27 @@
         "Return":{
           "shape":"Boolean",
           "locationName":"return"
+        }
+      }
+    },
+    "EnableInstanceSqlHaStandbyDetectionsRequest":{
+      "type":"structure",
+      "required":["InstanceIds"],
+      "members":{
+        "InstanceIds":{
+          "shape":"InstanceIdUpdateStringList",
+          "locationName":"InstanceId"
+        },
+        "SqlServerCredentials":{"shape":"SecretArn"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "EnableInstanceSqlHaStandbyDetectionsResult":{
+      "type":"structure",
+      "members":{
+        "Instances":{
+          "shape":"RegisteredInstanceList",
+          "locationName":"instanceSet"
         }
       }
     },
@@ -29329,6 +29471,15 @@
         "locationName":"GroupName"
       }
     },
+    "HaStatus":{
+      "type":"string",
+      "enum":[
+        "processing",
+        "active",
+        "standby",
+        "invalid"
+      ]
+    },
     "HibernationFlag":{"type":"boolean"},
     "HibernationOptions":{
       "type":"structure",
@@ -32002,6 +32153,15 @@
         "shape":"InstanceId",
         "locationName":"InstanceId"
       }
+    },
+    "InstanceIdUpdateStringList":{
+      "type":"list",
+      "member":{
+        "shape":"InstanceId",
+        "locationName":"item"
+      },
+      "max":30,
+      "min":1
     },
     "InstanceIdWithVolumeResolver":{"type":"string"},
     "InstanceIdsSet":{
@@ -44548,6 +44708,46 @@
         }
       }
     },
+    "RegisteredInstance":{
+      "type":"structure",
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "locationName":"instanceId"
+        },
+        "SqlServerLicenseUsage":{
+          "shape":"SqlServerLicenseUsage",
+          "locationName":"sqlServerLicenseUsage"
+        },
+        "HaStatus":{
+          "shape":"HaStatus",
+          "locationName":"haStatus"
+        },
+        "ProcessingStatus":{
+          "shape":"String",
+          "locationName":"processingStatus"
+        },
+        "LastUpdatedTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"lastUpdatedTime"
+        },
+        "SqlServerCredentials":{
+          "shape":"String",
+          "locationName":"sqlServerCredentials"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "RegisteredInstanceList":{
+      "type":"list",
+      "member":{
+        "shape":"RegisteredInstance",
+        "locationName":"item"
+      }
+    },
     "RejectCapacityReservationBillingOwnershipRequest":{
       "type":"structure",
       "required":["CapacityReservationId"],
@@ -48110,6 +48310,10 @@
         }
       }
     },
+    "SecretArn":{
+      "type":"string",
+      "pattern":"^(?=.{20,2048}$)arn:aws[a-z-]*:secretsmanager:[a-z0-9-]+:\\d{12}:secret:[a-zA-Z0-9/_+=.@-]+"
+    },
     "SecurityGroup":{
       "type":"structure",
       "members":{
@@ -49845,6 +50049,13 @@
       "enum":[
         "host",
         "rack"
+      ]
+    },
+    "SqlServerLicenseUsage":{
+      "type":"string",
+      "enum":[
+        "full",
+        "waived"
       ]
     },
     "StaleIpPermission":{

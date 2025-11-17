@@ -844,6 +844,12 @@
         "ExactResponseFields$answerField": "<p>The name of the field that contains the answer to the query made to the OpenSearch Service database.</p>"
       }
     },
+    "AssistedNluMode": {
+      "base": "<p>Defines the operational mode for Assisted Natural Language Understanding. This enum determines how the enhanced NLU capabilities integrate with standard intent recognition.</p>",
+      "refs": {
+        "NluImprovementSpecification$assistedNluMode": "<p>Specifies the mode for Assisted NLU operation. Use <code>Primary</code> to make Assisted NLU the primary intent recognition method, or <code>Fallback</code> to use it only when standard NLU confidence is low.</p>"
+      }
+    },
     "AssociatedTranscript": {
       "base": "<p>The object containing information that associates the recommended intent/slot type with a conversation.</p>",
       "refs": {
@@ -2527,7 +2533,7 @@
     "Enabled": {
       "base": null,
       "refs": {
-        "NluImprovementSpecification$enabled": "<p>Specifies whether the assisted nlu feature is enabled.</p>",
+        "NluImprovementSpecification$enabled": "<p>Determines whether the Assisted NLU feature is enabled for the bot. When set to <code>true</code>, Amazon Lex uses advanced models to improve intent recognition and slot resolution, with the default being <code>false</code>.</p>",
         "SlotResolutionImprovementSpecification$enabled": "<p>Specifies whether assisted slot resolution is turned on or off.</p>"
       }
     },
@@ -4075,9 +4081,9 @@
       }
     },
     "NluImprovementSpecification": {
-      "base": "<p>Specifies whether the assisted nlu feature is turned on or off.</p>",
+      "base": "<p>Configures the Assisted Natural Language Understanding (NLU) feature for your bot. This specification determines whether enhanced intent recognition and utterance understanding capabilities are active.</p>",
       "refs": {
-        "RuntimeSettings$nluImprovement": "<p>An object containing specifications for the assisted nlu feature.</p>"
+        "RuntimeSettings$nluImprovement": "<p>An object containing specifications for the Assisted NLU feature within the bot's runtime settings. These settings determine how the bot processes and interprets user utterances during conversations.</p>"
       }
     },
     "NonEmptyString": {

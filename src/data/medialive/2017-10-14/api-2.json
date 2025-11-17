@@ -9429,6 +9429,10 @@
         "Rec709Settings": {
           "shape": "Rec709Settings",
           "locationName": "rec709Settings"
+        },
+        "Hlg2020Settings": {
+          "shape": "Hlg2020Settings",
+          "locationName": "hlg2020Settings"
         }
       }
     },
@@ -21729,6 +21733,14 @@
         "MinBitrate": {
           "shape": "__integerMin0Max8000000",
           "locationName": "minBitrate"
+        },
+        "SpatialAq": {
+          "shape": "Av1SpatialAq",
+          "locationName": "spatialAq"
+        },
+        "TemporalAq": {
+          "shape": "Av1TemporalAq",
+          "locationName": "temporalAq"
         }
       },
       "required": [
@@ -25012,6 +25024,24 @@
       "member": {
         "shape": "MultiplexAlert"
       }
+    },
+    "Av1SpatialAq": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "Av1TemporalAq": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "Hlg2020Settings": {
+      "type": "structure",
+      "members": {}
     }
   }
 }

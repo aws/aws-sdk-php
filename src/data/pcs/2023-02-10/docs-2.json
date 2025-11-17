@@ -374,6 +374,18 @@
       "base": "<p>PCS can't process your request right now. Try again later.</p>",
       "refs": {}
     },
+    "JwtAuth": {
+      "base": "<p>The JWT authentication configuration for Slurm REST API access.</p>",
+      "refs": {
+        "ClusterSlurmConfiguration$jwtAuth": "<p>The JWT authentication configuration for Slurm REST API access.</p>"
+      }
+    },
+    "JwtKey": {
+      "base": "<p>The JWT key stored in AWS Secrets Manager for Slurm REST API authentication.</p>",
+      "refs": {
+        "JwtAuth$jwtKey": "<p>The JWT key for Slurm REST API authentication.</p>"
+      }
+    },
     "ListClustersRequest": {
       "base": null,
       "refs": {}
@@ -649,6 +661,26 @@
         "UpdateQueueSlurmConfigurationRequest$slurmCustomSettings": "<p>Additional Slurm-specific configuration that directly maps to Slurm settings.</p>"
       }
     },
+    "SlurmRest": {
+      "base": "<p>The Slurm REST API configuration includes settings for enabling and configuring the Slurm REST API. It's a property of the <b>ClusterSlurmConfiguration</b> object.</p>",
+      "refs": {
+        "ClusterSlurmConfiguration$slurmRest": "<p>The Slurm REST API configuration for the cluster.</p>"
+      }
+    },
+    "SlurmRestMode": {
+      "base": null,
+      "refs": {
+        "SlurmRest$mode": "<p>The default value for <code>mode</code> is <code>STANDARD</code>. A value of <code>STANDARD</code> means the Slurm REST API is enabled.</p>",
+        "SlurmRestRequest$mode": "<p>The default value for <code>mode</code> is <code>STANDARD</code>. A value of <code>STANDARD</code> means the Slurm REST API is enabled.</p>",
+        "UpdateSlurmRestRequest$mode": "<p>The default value for <code>mode</code> is <code>STANDARD</code>. A value of <code>STANDARD</code> means the Slurm REST API is enabled.</p>"
+      }
+    },
+    "SlurmRestRequest": {
+      "base": "<p>The Slurm REST API configuration includes settings for enabling and configuring the Slurm REST API. It's a property of the <b>ClusterSlurmConfiguration</b> object.</p>",
+      "refs": {
+        "ClusterSlurmConfigurationRequest$slurmRest": "<p>The Slurm REST API configuration for the cluster.</p>"
+      }
+    },
     "SpotAllocationStrategy": {
       "base": null,
       "refs": {
@@ -693,6 +725,8 @@
         "ErrorInfo$message": "<p>The detailed error information.</p>",
         "InstanceConfig$instanceType": "<p>The EC2 instance type that PCS can provision in the compute node group.</p> <p> Example: <code>t2.xlarge</code> </p>",
         "InternalServerException$message": null,
+        "JwtKey$secretArn": "<p>The Amazon Resource Name (ARN) of the AWS Secrets Manager secret containing the JWT key.</p>",
+        "JwtKey$secretVersion": "<p>The version of the AWS Secrets Manager secret containing the JWT key.</p>",
         "ListClustersRequest$nextToken": "<p>The value of <code>nextToken</code> is a unique pagination token for each page of results returned. If <code>nextToken</code> is returned, there are more results available. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token returns an <code>HTTP 400 InvalidToken</code> error.</p>",
         "ListClustersResponse$nextToken": "<p>The value of <code>nextToken</code> is a unique pagination token for each page of results returned. If <code>nextToken</code> is returned, there are more results available. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token returns an <code>HTTP 400 InvalidToken</code> error.</p>",
         "ListComputeNodeGroupsRequest$nextToken": "<p>The value of <code>nextToken</code> is a unique pagination token for each page of results returned. If <code>nextToken</code> is returned, there are more results available. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token returns an <code>HTTP 400 InvalidToken</code> error.</p>",
@@ -783,6 +817,10 @@
       "base": null,
       "refs": {}
     },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
     "TagValue": {
       "base": null,
       "refs": {
@@ -795,6 +833,10 @@
       "refs": {}
     },
     "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
       "base": null,
       "refs": {}
     },
@@ -856,6 +898,12 @@
       "base": "<p>Additional options related to the Slurm scheduler.</p>",
       "refs": {
         "UpdateQueueRequest$slurmConfiguration": "<p>Additional options related to the Slurm scheduler.</p>"
+      }
+    },
+    "UpdateSlurmRestRequest": {
+      "base": "<p>The Slurm REST API configuration includes settings for enabling and configuring the Slurm REST API.</p>",
+      "refs": {
+        "UpdateClusterSlurmConfigurationRequest$slurmRest": "<p>The Slurm REST API configuration for the cluster.</p>"
       }
     },
     "ValidationException": {

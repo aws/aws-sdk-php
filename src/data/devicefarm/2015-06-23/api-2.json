@@ -1290,11 +1290,6 @@
       },
       "exception":true
     },
-    "ClientId":{
-      "type":"string",
-      "max":64,
-      "min":0
-    },
     "ContentType":{
       "type":"string",
       "max":64,
@@ -1412,14 +1407,14 @@
         "deviceArn":{"shape":"AmazonResourceName"},
         "appArn":{"shape":"AmazonResourceName"},
         "instanceArn":{"shape":"AmazonResourceName"},
-        "sshPublicKey":{"shape":"SshPublicKey"},
-        "remoteDebugEnabled":{"shape":"Boolean"},
-        "remoteRecordEnabled":{"shape":"Boolean"},
-        "remoteRecordAppArn":{"shape":"AmazonResourceName"},
         "name":{"shape":"Name"},
-        "clientId":{"shape":"ClientId"},
         "configuration":{"shape":"CreateRemoteAccessSessionConfiguration"},
-        "interactionMode":{"shape":"InteractionMode"},
+        "interactionMode":{
+          "shape":"InteractionMode",
+          "deprecated":true,
+          "deprecatedMessage":"Changing the interactive mode of Remote Access sessions is no longer available.",
+          "deprecatedSince":"2019-09-09"
+        },
         "skipAppResign":{"shape":"Boolean"}
       }
     },
@@ -1633,7 +1628,12 @@
         "carrier":{"shape":"String"},
         "radio":{"shape":"String"},
         "remoteAccessEnabled":{"shape":"Boolean"},
-        "remoteDebugEnabled":{"shape":"Boolean"},
+        "remoteDebugEnabled":{
+          "shape":"Boolean",
+          "deprecated":true,
+          "deprecatedMessage":"Direct Device Access is no longer available.",
+          "deprecatedSince":"2019-09-09"
+        },
         "fleetType":{"shape":"String"},
         "fleetName":{"shape":"String"},
         "instances":{"shape":"DeviceInstances"},
@@ -2120,10 +2120,6 @@
       "members":{
         "vpceConfiguration":{"shape":"VPCEConfiguration"}
       }
-    },
-    "HostAddress":{
-      "type":"string",
-      "max":1024
     },
     "IdempotencyException":{
       "type":"structure",
@@ -2876,6 +2872,13 @@
       "type":"list",
       "member":{"shape":"RecurringCharge"}
     },
+    "RemoteAccessEndpoints":{
+      "type":"structure",
+      "members":{
+        "remoteDriverEndpoint":{"shape":"SensitiveURL"},
+        "interactiveEndpoint":{"shape":"SensitiveURL"}
+      }
+    },
     "RemoteAccessSession":{
       "type":"structure",
       "members":{
@@ -2889,20 +2892,26 @@
         "stopped":{"shape":"DateTime"},
         "device":{"shape":"Device"},
         "instanceArn":{"shape":"AmazonResourceName"},
-        "remoteDebugEnabled":{"shape":"Boolean"},
-        "remoteRecordEnabled":{"shape":"Boolean"},
-        "remoteRecordAppArn":{"shape":"AmazonResourceName"},
-        "hostAddress":{"shape":"HostAddress"},
-        "clientId":{"shape":"ClientId"},
         "billingMethod":{"shape":"BillingMethod"},
         "deviceMinutes":{"shape":"DeviceMinutes"},
-        "endpoint":{"shape":"String"},
+        "endpoint":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"This field is deprecated, and is replaced by the new endpoints.interactiveEndpoint field.",
+          "deprecatedSince":"2025-11-17"
+        },
         "deviceUdid":{"shape":"String"},
-        "interactionMode":{"shape":"InteractionMode"},
+        "interactionMode":{
+          "shape":"InteractionMode",
+          "deprecated":true,
+          "deprecatedMessage":"Changing the interactive mode of Remote Access sessions is no longer available.",
+          "deprecatedSince":"2019-09-09"
+        },
         "skipAppResign":{"shape":"SkipAppResign"},
         "vpcConfig":{"shape":"VpcConfig"},
         "deviceProxy":{"shape":"DeviceProxy"},
-        "appUpload":{"shape":"AmazonResourceName"}
+        "appUpload":{"shape":"AmazonResourceName"},
+        "endpoints":{"shape":"RemoteAccessEndpoints"}
       }
     },
     "RemoteAccessSessions":{
@@ -3119,7 +3128,7 @@
     },
     "SensitiveURL":{
       "type":"string",
-      "max":2048,
+      "max":4096,
       "min":0,
       "sensitive":true
     },
@@ -3136,11 +3145,6 @@
       "min":0
     },
     "SkipAppResign":{"type":"boolean"},
-    "SshPublicKey":{
-      "type":"string",
-      "max":8192,
-      "min":0
-    },
     "StopJobRequest":{
       "type":"structure",
       "required":["arn"],

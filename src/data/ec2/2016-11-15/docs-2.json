@@ -314,6 +314,8 @@
     "DescribeInstanceEventNotificationAttributes": "<p>Describes the tag keys that are registered to appear in scheduled event notifications for resources in the current Region.</p>",
     "DescribeInstanceEventWindows": "<p>Describes the specified event windows or all event windows.</p> <p>If you specify event window IDs, the output includes information for only the specified event windows. If you specify filters, the output includes information for only those event windows that meet the filter criteria. If you do not specify event windows IDs or filters, the output includes information for all event windows, which can affect performance. We recommend that you use pagination to ensure that the operation returns quickly and successfully. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/event-windows.html\">Define event windows for scheduled events</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DescribeInstanceImageMetadata": "<p>Describes the AMI that was used to launch an instance, even if the AMI is deprecated, deregistered, made private (no longer public or shared with your account), or not allowed.</p> <p>If you specify instance IDs, the output includes information for only the specified instances. If you specify filters, the output includes information for only those instances that meet the filter criteria. If you do not specify instance IDs or filters, the output includes information for all instances, which can affect performance.</p> <p>If you specify an instance ID that is not valid, an instance that doesn't exist, or an instance that you do not own, an error (<code>InvalidInstanceID.NotFound</code>) is returned.</p> <p>Recently terminated instances might appear in the returned results. This interval is usually less than one hour.</p> <p>In the rare case where an Availability Zone is experiencing a service disruption and you specify instance IDs that are in the affected Availability Zone, or do not specify any instance IDs at all, the call fails. If you specify only instance IDs that are in an unaffected Availability Zone, the call works normally.</p> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
+    "DescribeInstanceSqlHaHistoryStates": "<p>Describes the historical SQL Server High Availability states for Amazon EC2 instances that are enabled for Amazon EC2 High Availability for SQL Server monitoring.</p>",
+    "DescribeInstanceSqlHaStates": "<p>Describes the SQL Server High Availability states for Amazon EC2 instances that are enabled for Amazon EC2 High Availability for SQL Server monitoring.</p>",
     "DescribeInstanceStatus": "<p>Describes the status of the specified instances or all of your instances. By default, only running instances are described, unless you specifically indicate to return the status of all instances.</p> <p>Instance status includes the following components:</p> <ul> <li> <p> <b>Status checks</b> - Amazon EC2 performs status checks on running EC2 instances to identify hardware and software issues. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html\">Status checks for your instances</a> and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstances.html\">Troubleshoot instances with failed status checks</a> in the <i>Amazon EC2 User Guide</i>.</p> </li> <li> <p> <b>Scheduled events</b> - Amazon EC2 can schedule events (such as reboot, stop, or terminate) for your instances related to hardware issues, software updates, or system maintenance. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-instances-status-check_sched.html\">Scheduled events for your instances</a> in the <i>Amazon EC2 User Guide</i>.</p> </li> <li> <p> <b>Instance state</b> - You can manage your instances from the moment you launch them through their termination. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html\">Instance lifecycle</a> in the <i>Amazon EC2 User Guide</i>.</p> </li> </ul> <p>The Amazon EC2 API follows an eventual consistency model. This means that the result of an API command you run that creates or modifies resources might not be immediately available to all subsequent commands you run. For guidance on how to manage eventual consistency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/eventual-consistency.html\">Eventual consistency in the Amazon EC2 API</a> in the <i>Amazon EC2 Developer Guide</i>.</p> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
     "DescribeInstanceTopology": "<p>Describes a tree-based hierarchy that represents the physical host placement of your EC2 instances within an Availability Zone or Local Zone. You can use this information to determine the relative proximity of your EC2 instances within the Amazon Web Services network to support your tightly coupled workloads.</p> <p>Instance topology is supported for specific instance types only. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-topology-prerequisites.html\">Prerequisites for Amazon EC2 instance topology</a> in the <i>Amazon EC2 User Guide</i>.</p> <note> <p>The Amazon EC2 API follows an eventual consistency model due to the distributed nature of the system supporting it. As a result, when you call the DescribeInstanceTopology API command immediately after launching instances, the response might return a <code>null</code> value for <code>capacityBlockId</code> because the data might not have fully propagated across all subsystems. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/eventual-consistency.html\">Eventual consistency in the Amazon EC2 API</a> in the <i>Amazon EC2 Developer Guide</i>.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-topology.html\">Amazon EC2 topology</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DescribeInstanceTypeOfferings": "<p>Lists the instance types that are offered for the specified location. If no location is specified, the default is to list the instance types that are offered in the current Region.</p>",
@@ -445,6 +447,7 @@
     "DisableImageBlockPublicAccess": "<p>Disables <i>block public access for AMIs</i> at the account level in the specified Amazon Web Services Region. This removes the <i>block public access</i> restriction from your account. With the restriction removed, you can publicly share your AMIs in the specified Amazon Web Services Region.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-public-access-to-amis.html\">Block public access to your AMIs</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DisableImageDeprecation": "<p>Cancels the deprecation of the specified AMI.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-deprecate.html\">Deprecate an Amazon EC2 AMI</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DisableImageDeregistrationProtection": "<p>Disables deregistration protection for an AMI. When deregistration protection is disabled, the AMI can be deregistered.</p> <p>If you chose to include a 24-hour cooldown period when you enabled deregistration protection for the AMI, then, when you disable deregistration protection, you won’t immediately be able to deregister the AMI.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-deregistration-protection.html\">Protect an Amazon EC2 AMI from deregistration</a> in the <i>Amazon EC2 User Guide</i>.</p>",
+    "DisableInstanceSqlHaStandbyDetections": "<p>Disable Amazon EC2 instances running in an SQL Server High Availability cluster from SQL Server High Availability instance standby detection monitoring. Once disabled, Amazon Web Services no longer monitors the metadata for the instances to determine whether they are active or standby nodes in the SQL Server High Availability cluster.</p>",
     "DisableIpamOrganizationAdminAccount": "<p>Disable the IPAM account. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/enable-integ-ipam.html\">Enable integration with Organizations</a> in the <i>Amazon VPC IPAM User Guide</i>. </p>",
     "DisableRouteServerPropagation": "<p>Disables route propagation from a route server to a specified route table.</p> <p>When enabled, route server propagation installs the routes in the FIB on the route table you've specified. Route server supports IPv4 and IPv6 route propagation.</p> <p>Amazon VPC Route Server simplifies routing for traffic between workloads that are deployed within a VPC and its internet gateways. With this feature, VPC Route Server dynamically updates VPC and internet gateway route tables with your preferred IPv4 or IPv6 routes to achieve routing fault tolerance for those workloads. This enables you to automatically reroute traffic within a VPC, which increases the manageability of VPC routing and interoperability with third-party workloads.</p> <p>Route server supports the follow route table types:</p> <ul> <li> <p>VPC route tables not associated with subnets</p> </li> <li> <p>Subnet route tables</p> </li> <li> <p>Internet gateway route tables</p> </li> </ul> <p>Route server does not support route tables associated with virtual private gateways. To propagate routes into a transit gateway route table, use <a href=\"https://docs.aws.amazon.com/vpc/latest/tgw/tgw-connect.html\">Transit Gateway Connect</a>.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/dynamic-routing-route-server.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "DisableSerialConsoleAccess": "<p>Disables access to the EC2 serial console of all instances for your account. By default, access to the EC2 serial console is disabled for your account. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configure-access-to-serial-console.html#serial-console-account-access\">Manage account access to the EC2 serial console</a> in the <i>Amazon EC2 User Guide</i>.</p>",
@@ -482,6 +485,7 @@
     "EnableImageBlockPublicAccess": "<p>Enables <i>block public access for AMIs</i> at the account level in the specified Amazon Web Services Region. This prevents the public sharing of your AMIs. However, if you already have public AMIs, they will remain publicly available.</p> <p>The API can take up to 10 minutes to configure this setting. During this time, if you run <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_GetImageBlockPublicAccessState.html\">GetImageBlockPublicAccessState</a>, the response will be <code>unblocked</code>. When the API has completed the configuration, the response will be <code>block-new-sharing</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-public-access-to-amis.html\">Block public access to your AMIs</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "EnableImageDeprecation": "<p>Enables deprecation of the specified AMI at the specified date and time.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-deprecate.html\">Deprecate an AMI</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "EnableImageDeregistrationProtection": "<p>Enables deregistration protection for an AMI. When deregistration protection is enabled, the AMI can't be deregistered.</p> <p>To allow the AMI to be deregistered, you must first disable deregistration protection.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-deregistration-protection.html\">Protect an Amazon EC2 AMI from deregistration</a> in the <i>Amazon EC2 User Guide</i>.</p>",
+    "EnableInstanceSqlHaStandbyDetections": "<p>Enable Amazon EC2 instances running in an SQL Server High Availability cluster for SQL Server High Availability instance standby detection monitoring. Once enabled, Amazon Web Services monitors the metadata for the instances to determine whether they are active or standby nodes in the SQL Server High Availability cluster. If the instances are determined to be standby failover nodes, Amazon Web Services automatically applies SQL Server licensing fee waiver for those instances.</p> <p>To register an instance, it must be running a Windows SQL Server license-included AMI and have the Amazon Web Services Systems Manager agent installed and running. Only Windows Server 2019 and later and SQL Server (Standard and Enterprise editions) 2017 and later are supported. For more information, see <a href=\"https://docs.aws.amazon.com/sql-server-ec2/latest/userguide/prerequisites-and-requirements.html\"> Prerequisites for using SQL Server High Availability instance standby detection</a>.</p>",
     "EnableIpamOrganizationAdminAccount": "<p>Enable an Organizations member account as the IPAM admin account. You cannot select the Organizations management account as the IPAM admin account. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/enable-integ-ipam.html\">Enable integration with Organizations</a> in the <i>Amazon VPC IPAM User Guide</i>. </p>",
     "EnableReachabilityAnalyzerOrganizationSharing": "<p>Establishes a trust relationship between Reachability Analyzer and Organizations. This operation must be performed by the management account for the organization.</p> <p>After you establish a trust relationship, a user in the management account or a delegated administrator account can run a cross-account analysis using resources from the member accounts.</p>",
     "EnableRouteServerPropagation": "<p>Defines which route tables the route server can update with routes.</p> <p>When enabled, route server propagation installs the routes in the FIB on the route table you've specified. Route server supports IPv4 and IPv6 route propagation.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/dynamic-routing-route-server.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
@@ -2628,6 +2632,8 @@
         "DescribeInstanceEventNotificationAttributesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeInstanceEventWindowsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeInstanceImageMetadataRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeInstanceSqlHaHistoryStatesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeInstanceSqlHaStatesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeInstanceStatusRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeInstanceStatusRequest$IncludeAllInstances": "<p>When <code>true</code>, includes the health status for all instances. When <code>false</code>, includes the health status for running instances only.</p> <p>Default: <code>false</code> </p>",
         "DescribeInstanceTopologyRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2772,6 +2778,7 @@
         "DisableImageDeregistrationProtectionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableImageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableImageResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
+        "DisableInstanceSqlHaStandbyDetectionsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableIpamOrganizationAdminAccountRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableIpamOrganizationAdminAccountResult$Success": "<p>The result of disabling the IPAM account.</p>",
         "DisableRouteServerPropagationRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2833,6 +2840,7 @@
         "EnableImageDeregistrationProtectionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableImageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableImageResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
+        "EnableInstanceSqlHaStandbyDetectionsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableIpamOrganizationAdminAccountRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableIpamOrganizationAdminAccountResult$Success": "<p>The result of enabling the IPAM account.</p>",
         "EnableReachabilityAnalyzerOrganizationSharingRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -8052,6 +8060,33 @@
       "refs": {
       }
     },
+    "DescribeInstanceSqlHaHistoryStatesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeInstanceSqlHaHistoryStatesResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeInstanceSqlHaStatesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeInstanceSqlHaStatesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "DescribeInstanceSqlHaHistoryStatesRequest$MaxResults": "<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned <code>nextToken</code> value.</p>",
+        "DescribeInstanceSqlHaStatesRequest$MaxResults": "<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned <code>nextToken</code> value.</p>"
+      }
+    },
+    "DescribeInstanceSqlHaStatesResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeInstanceStatusRequest": {
       "base": null,
       "refs": {
@@ -9728,6 +9763,16 @@
       "refs": {
       }
     },
+    "DisableInstanceSqlHaStandbyDetectionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisableInstanceSqlHaStandbyDetectionsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DisableIpamOrganizationAdminAccountRequest": {
       "base": null,
       "refs": {
@@ -10655,6 +10700,16 @@
       "refs": {
       }
     },
+    "EnableInstanceSqlHaStandbyDetectionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EnableInstanceSqlHaStandbyDetectionsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "EnableIpamOrganizationAdminAccountRequest": {
       "base": null,
       "refs": {
@@ -11160,6 +11215,8 @@
         "DescribeInstanceCreditSpecificationsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>instance-id</code> - The ID of the instance.</p> </li> </ul>",
         "DescribeInstanceEventWindowsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>dedicated-host-id</code> - The event windows associated with the specified Dedicated Host ID.</p> </li> <li> <p> <code>event-window-name</code> - The event windows associated with the specified names. </p> </li> <li> <p> <code>instance-id</code> - The event windows associated with the specified instance ID.</p> </li> <li> <p> <code>instance-tag</code> - The event windows associated with the specified tag and value.</p> </li> <li> <p> <code>instance-tag-key</code> - The event windows associated with the specified tag key, regardless of the value.</p> </li> <li> <p> <code>instance-tag-value</code> - The event windows associated with the specified tag value, regardless of the key.</p> </li> <li> <p> <code>tag:&lt;key&gt;</code> - The key/value combination of a tag assigned to the event window. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>CMX</code>, specify <code>tag:Owner</code> for the filter name and <code>CMX</code> for the filter value. </p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the event window. Use this filter to find all event windows that have a tag with a specific key, regardless of the tag value. </p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the event window. Use this filter to find all event windows that have a tag with a specific value, regardless of the tag key. </p> </li> </ul>",
         "DescribeInstanceImageMetadataRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>availability-zone</code> - The name of the Availability Zone (for example, <code>us-west-2a</code>) or Local Zone (for example, <code>us-west-2-lax-1b</code>) of the instance.</p> </li> <li> <p> <code>instance-id</code> - The ID of the instance.</p> </li> <li> <p> <code>image-allowed</code> - A Boolean that indicates whether the image meets the criteria specified for Allowed AMIs.</p> </li> <li> <p> <code>instance-state-name</code> - The state of the instance (<code>pending</code> | <code>running</code> | <code>shutting-down</code> | <code>terminated</code> | <code>stopping</code> | <code>stopped</code>).</p> </li> <li> <p> <code>instance-type</code> - The type of instance (for example, <code>t3.micro</code>).</p> </li> <li> <p> <code>launch-time</code> - The time when the instance was launched, in the ISO 8601 format in the UTC time zone (YYYY-MM-DDThh:mm:ss.sssZ), for example, <code>2023-09-29T11:04:43.305Z</code>. You can use a wildcard (<code>*</code>), for example, <code>2023-09-29T*</code>, which matches an entire day.</p> </li> <li> <p> <code>owner-alias</code> - The owner alias (<code>amazon</code> | <code>aws-marketplace</code> | <code>aws-backup-vault</code>). The valid aliases are defined in an Amazon-maintained list. This is not the Amazon Web Services account alias that can be set using the IAM console. We recommend that you use the <code>Owner</code> request parameter instead of this filter.</p> </li> <li> <p> <code>owner-id</code> - The Amazon Web Services account ID of the owner. We recommend that you use the <code>Owner</code> request parameter instead of this filter.</p> </li> <li> <p> <code>tag:&lt;key&gt;</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>zone-id</code> - The ID of the Availability Zone (for example, <code>usw2-az2</code>) or Local Zone (for example, <code>usw2-lax1-az1</code>) of the instance.</p> </li> </ul>",
+        "DescribeInstanceSqlHaHistoryStatesRequest$Filters": "<p>One or more filters to apply to the results. Supported filters include:</p> <ul> <li> <p> <code>tag:&lt;key&gt;</code> - The tag key and value pair assigned to the instance. For example, to find all instances tagged with <code>Owner:TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The tag key assigned to the instance.</p> </li> <li> <p> <code>haStatus</code> - The SQL Server High Availability status of the SQL Server High Availability instance (<code>processing</code> | <code>active</code> | <code>standby</code> | <code>invalid</code>).</p> </li> <li> <p> <code>sqlServerLicenseUsage</code> - The license type for the SQL Server license (<code>full</code> | <code>waived</code>).</p> </li> </ul>",
+        "DescribeInstanceSqlHaStatesRequest$Filters": "<p>One or more filters to apply to the results. Supported filters include:</p> <ul> <li> <p> <code>tag:&lt;key&gt;</code> - The tag key and value pair assigned to the instance. For example, to find all instances tagged with <code>Owner:TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The tag key assigned to the instance.</p> </li> <li> <p> <code>haStatus</code> - The SQL Server High Availability status of the SQL Server High Availability instance (<code>processing</code> | <code>active</code> | <code>standby</code> | <code>invalid</code>).</p> </li> <li> <p> <code>sqlServerLicenseUsage</code> - The license type for the SQL Server license (<code>full</code> | <code>waived</code>).</p> </li> </ul>",
         "DescribeInstanceStatusRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>availability-zone</code> - The Availability Zone of the instance.</p> </li> <li> <p> <code>availability-zone-id</code> - The ID of the Availability Zone of the instance.</p> </li> <li> <p> <code>event.code</code> - The code for the scheduled event (<code>instance-reboot</code> | <code>system-reboot</code> | <code>system-maintenance</code> | <code>instance-retirement</code> | <code>instance-stop</code>).</p> </li> <li> <p> <code>event.description</code> - A description of the event.</p> </li> <li> <p> <code>event.instance-event-id</code> - The ID of the event whose date and time you are modifying.</p> </li> <li> <p> <code>event.not-after</code> - The latest end time for the scheduled event (for example, <code>2014-09-15T17:15:20.000Z</code>).</p> </li> <li> <p> <code>event.not-before</code> - The earliest start time for the scheduled event (for example, <code>2014-09-15T17:15:20.000Z</code>).</p> </li> <li> <p> <code>event.not-before-deadline</code> - The deadline for starting the event (for example, <code>2014-09-15T17:15:20.000Z</code>).</p> </li> <li> <p> <code>instance-state-code</code> - The code for the instance state, as a 16-bit unsigned integer. The high byte is used for internal purposes and should be ignored. The low byte is set based on the state represented. The valid values are 0 (pending), 16 (running), 32 (shutting-down), 48 (terminated), 64 (stopping), and 80 (stopped).</p> </li> <li> <p> <code>instance-state-name</code> - The state of the instance (<code>pending</code> | <code>running</code> | <code>shutting-down</code> | <code>terminated</code> | <code>stopping</code> | <code>stopped</code>).</p> </li> <li> <p> <code>instance-status.reachability</code> - Filters on instance status where the name is <code>reachability</code> (<code>passed</code> | <code>failed</code> | <code>initializing</code> | <code>insufficient-data</code>).</p> </li> <li> <p> <code>instance-status.status</code> - The status of the instance (<code>ok</code> | <code>impaired</code> | <code>initializing</code> | <code>insufficient-data</code> | <code>not-applicable</code>).</p> </li> <li> <p> <code>operator.managed</code> - A Boolean that indicates whether this is a managed instance.</p> </li> <li> <p> <code>operator.principal</code> - The principal that manages the instance. Only valid for managed instances, where <code>managed</code> is <code>true</code>.</p> </li> <li> <p> <code>system-status.reachability</code> - Filters on system status where the name is <code>reachability</code> (<code>passed</code> | <code>failed</code> | <code>initializing</code> | <code>insufficient-data</code>).</p> </li> <li> <p> <code>system-status.status</code> - The system status of the instance (<code>ok</code> | <code>impaired</code> | <code>initializing</code> | <code>insufficient-data</code> | <code>not-applicable</code>).</p> </li> <li> <p> <code>attached-ebs-status.status</code> - The status of the attached EBS volume for the instance (<code>ok</code> | <code>impaired</code> | <code>initializing</code> | <code>insufficient-data</code> | <code>not-applicable</code>).</p> </li> </ul>",
         "DescribeInstanceTopologyRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>availability-zone</code> - The name of the Availability Zone (for example, <code>us-west-2a</code>) or Local Zone (for example, <code>us-west-2-lax-1b</code>) that the instance is in.</p> </li> <li> <p> <code>instance-type</code> - The instance type (for example, <code>p4d.24xlarge</code>) or instance family (for example, <code>p4d*</code>). You can use the <code>*</code> wildcard to match zero or more characters, or the <code>?</code> wildcard to match zero or one character.</p> </li> <li> <p> <code>zone-id</code> - The ID of the Availability Zone (for example, <code>usw2-az2</code>) or Local Zone (for example, <code>usw2-lax1-az1</code>) that the instance is in.</p> </li> </ul>",
         "DescribeInstanceTypeOfferingsRequest$Filters": "<p>One or more filters. Filter names and values are case-sensitive.</p> <ul> <li> <p> <code>instance-type</code> - The instance type. For a list of possible values, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_Instance.html\">Instance</a>.</p> </li> <li> <p> <code>location</code> - The location. For a list of possible identifiers, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html\">Regions and Zones</a>.</p> </li> </ul>",
@@ -12508,6 +12565,12 @@
         "ModifySnapshotAttributeRequest$GroupNames": "<p>The group to modify for the snapshot.</p>"
       }
     },
+    "HaStatus": {
+      "base": null,
+      "refs": {
+        "RegisteredInstance$HaStatus": "<p>The SQL Server High Availability status of the instance. Valid values are:</p> <ul> <li> <p> <code>processing</code> - The SQL Server High Availability status for the SQL Server High Availability instance is being updated.</p> </li> <li> <p> <code>active</code> - The SQL Server High Availability instance is an active node in an SQL Server High Availability cluster.</p> </li> <li> <p> <code>standby</code> - The SQL Server High Availability instance is a standby failover node in an SQL Server High Availability cluster.</p> </li> <li> <p> <code>invalid</code> - An error occurred due to misconfigured permissions, or unable to dertemine SQL Server High Availability status for the SQL Server High Availability instance.</p> </li> </ul>"
+      }
+    },
     "HibernationFlag": {
       "base": null,
       "refs": {
@@ -13734,6 +13797,7 @@
         "InstanceIdList$member": null,
         "InstanceIdSet$member": null,
         "InstanceIdStringList$member": null,
+        "InstanceIdUpdateStringList$member": null,
         "InstanceIdsSet$member": null,
         "InstanceImageMetadata$InstanceId": "<p>The ID of the instance.</p>",
         "MacModificationTask$InstanceId": "<p>The ID of the Amazon EC2 Mac instance.</p>",
@@ -13748,6 +13812,7 @@
         "ModifyInstanceNetworkPerformanceResult$InstanceId": "<p>The instance ID that was updated.</p>",
         "ModifyInstancePlacementRequest$InstanceId": "<p>The ID of the instance that you are modifying.</p>",
         "ModifyPrivateDnsNameOptionsRequest$InstanceId": "<p>The ID of the instance.</p>",
+        "RegisteredInstance$InstanceId": "<p>The ID of the SQL Server High Availability instance.</p>",
         "ReplaceRouteRequest$InstanceId": "<p>The ID of a NAT instance in your VPC.</p>",
         "ResetInstanceAttributeRequest$InstanceId": "<p>The ID of the instance.</p>",
         "SendDiagnosticInterruptRequest$InstanceId": "<p>The ID of the instance.</p>",
@@ -13780,6 +13845,8 @@
         "DescribeClassicLinkInstancesRequest$InstanceIds": "<p>The instance IDs. Must be instances linked to a VPC through ClassicLink.</p>",
         "DescribeInstanceCreditSpecificationsRequest$InstanceIds": "<p>The instance IDs.</p> <p>Default: Describes all your instances.</p> <p>Constraints: Maximum 1000 explicitly specified instance IDs.</p>",
         "DescribeInstanceImageMetadataRequest$InstanceIds": "<p>The instance IDs.</p> <p>If you don't specify an instance ID or filters, the output includes information for all instances.</p>",
+        "DescribeInstanceSqlHaHistoryStatesRequest$InstanceIds": "<p>The IDs of the SQL Server High Availability instances to describe. If omitted, the API returns historical states for all SQL Server High Availability instances.</p>",
+        "DescribeInstanceSqlHaStatesRequest$InstanceIds": "<p>The IDs of the SQL Server High Availability instances to describe. If omitted, the API returns SQL Server High Availability states for all SQL Server High Availability instances.</p>",
         "DescribeInstanceStatusRequest$InstanceIds": "<p>The instance IDs.</p> <p>Default: Describes all your instances.</p> <p>Constraints: Maximum 100 explicitly specified instance IDs.</p>",
         "DescribeInstancesRequest$InstanceIds": "<p>The instance IDs.</p> <p>Default: Describes all your instances.</p>",
         "MonitorInstancesRequest$InstanceIds": "<p>The IDs of the instances.</p>",
@@ -13789,6 +13856,13 @@
         "StopInstancesRequest$InstanceIds": "<p>The IDs of the instances.</p>",
         "TerminateInstancesRequest$InstanceIds": "<p>The IDs of the instances.</p> <p>Constraints: Up to 1000 instance IDs. We recommend breaking up this request into smaller batches.</p>",
         "UnmonitorInstancesRequest$InstanceIds": "<p>The IDs of the instances.</p>"
+      }
+    },
+    "InstanceIdUpdateStringList": {
+      "base": null,
+      "refs": {
+        "DisableInstanceSqlHaStandbyDetectionsRequest$InstanceIds": "<p>The IDs of the instances to disable from SQL Server High Availability standby detection monitoring.</p>",
+        "EnableInstanceSqlHaStandbyDetectionsRequest$InstanceIds": "<p>The IDs of the instances to enable for SQL Server High Availability standby detection monitoring.</p>"
       }
     },
     "InstanceIdWithVolumeResolver": {
@@ -17464,6 +17538,8 @@
         "DescribeFastSnapshotRestoreSuccessItem$EnabledTime": "<p>The time at which fast snapshot restores entered the <code>enabled</code> state.</p>",
         "DescribeFastSnapshotRestoreSuccessItem$DisablingTime": "<p>The time at which fast snapshot restores entered the <code>disabling</code> state.</p>",
         "DescribeFastSnapshotRestoreSuccessItem$DisabledTime": "<p>The time at which fast snapshot restores entered the <code>disabled</code> state.</p>",
+        "DescribeInstanceSqlHaHistoryStatesRequest$StartTime": "<p>The start data and time of the period for which to get the historical SQL Server High Availability states. If omitted, the API returns all available historical states.</p> <p>Timezone: UTC</p> <p>Format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code> </p>",
+        "DescribeInstanceSqlHaHistoryStatesRequest$EndTime": "<p>The end data and time of the period for which to get historical SQL Server High Availability states. If omitted, the API returns historical states up to the current date and time.</p> <p>Timezone: UTC</p> <p>Format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code> </p>",
         "DescribeNetworkInsightsAccessScopeAnalysesRequest$AnalysisStartTimeBegin": "<p>Filters the results based on the start time. The analysis must have started on or after this time.</p>",
         "DescribeNetworkInsightsAccessScopeAnalysesRequest$AnalysisStartTimeEnd": "<p>Filters the results based on the start time. The analysis must have started on or before this time.</p>",
         "DescribeNetworkInsightsAnalysesRequest$AnalysisStartTime": "<p>The time when the network insights analyses started.</p>",
@@ -17537,6 +17613,7 @@
         "NetworkInsightsAccessScopeAnalysis$EndDate": "<p>The analysis end date.</p>",
         "NetworkInsightsAnalysis$StartDate": "<p>The time the analysis started.</p>",
         "NetworkInsightsPath$CreatedDate": "<p>The time stamp when the path was created.</p>",
+        "RegisteredInstance$LastUpdatedTime": "<p>The date and time when the instance's SQL Server High Availability status was last updated, in the ISO 8601 format in the UTC time zone (<code>YYYY-MM-DDThh:mm:ss.sssZ</code>).</p>",
         "RestoreSnapshotFromRecycleBinResult$StartTime": "<p>The time stamp when the snapshot was initiated.</p>",
         "RestoreSnapshotTierResult$RestoreStartTime": "<p>The date and time when the snapshot restore process started.</p>",
         "Snapshot$RestoreExpiryTime": "<p>Only for archived snapshots that are temporarily restored. Indicates the date and time when a temporarily restored snapshot will be automatically re-archived.</p>",
@@ -19050,6 +19127,10 @@
         "DescribeIamInstanceProfileAssociationsResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "DescribeInstanceConnectEndpointsRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
         "DescribeInstanceConnectEndpointsResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "DescribeInstanceSqlHaHistoryStatesRequest$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
+        "DescribeInstanceSqlHaHistoryStatesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "DescribeInstanceSqlHaStatesRequest$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
+        "DescribeInstanceSqlHaStatesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeInstanceTypeOfferingsRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
         "DescribeInstanceTypeOfferingsResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "DescribeInstanceTypesRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
@@ -20517,6 +20598,21 @@
     "RegisterTransitGatewayMulticastGroupSourcesResult": {
       "base": null,
       "refs": {
+      }
+    },
+    "RegisteredInstance": {
+      "base": "<p>Describes an Amazon EC2 instance that is enabled for SQL Server High Availability standby detection monitoring.</p>",
+      "refs": {
+        "RegisteredInstanceList$member": null
+      }
+    },
+    "RegisteredInstanceList": {
+      "base": null,
+      "refs": {
+        "DescribeInstanceSqlHaHistoryStatesResult$Instances": "<p>Information about the historical SQL Server High Availability states of the SQL Server High Availability instances.</p>",
+        "DescribeInstanceSqlHaStatesResult$Instances": "<p>Information about the SQL Server High Availability instances.</p>",
+        "DisableInstanceSqlHaStandbyDetectionsResult$Instances": "<p>Information about the instances that were disabled from SQL Server High Availability standby detection monitoring.</p>",
+        "EnableInstanceSqlHaStandbyDetectionsResult$Instances": "<p>Information about the instances that were enabled for SQL Server High Availability standby detection monitoring.</p>"
       }
     },
     "RejectCapacityReservationBillingOwnershipRequest": {
@@ -22088,6 +22184,12 @@
       "refs": {
       }
     },
+    "SecretArn": {
+      "base": null,
+      "refs": {
+        "EnableInstanceSqlHaStandbyDetectionsRequest$SqlServerCredentials": "<p>The ARN of the Secrets Manager secret containing the SQL Server access credentials. The specified secret must contain valid SQL Server credentials for the specified instances. If not specified, deafult local user credentials will be used by the Amazon Web Services Systems Manager agent. To enable instances with different credentials, you must make separate requests.</p>"
+      }
+    },
     "SecurityGroup": {
       "base": "<p>Describes a security group.</p>",
       "refs": {
@@ -22843,6 +22945,12 @@
       "refs": {
         "CreatePlacementGroupRequest$SpreadLevel": "<p>Determines how placement groups spread instances. </p> <ul> <li> <p>Host – You can use <code>host</code> only with Outpost placement groups.</p> </li> <li> <p>Rack – No usage restrictions.</p> </li> </ul>",
         "PlacementGroup$SpreadLevel": "<p>The spread level for the placement group. <i>Only</i> Outpost placement groups can be spread across hosts.</p>"
+      }
+    },
+    "SqlServerLicenseUsage": {
+      "base": null,
+      "refs": {
+        "RegisteredInstance$SqlServerLicenseUsage": "<p>The license type for the SQL Server license. Valid values include:</p> <ul> <li> <p> <code>full</code> - The SQL Server High Availability instance is using a full SQL Server license.</p> </li> <li> <p> <code>waived</code> - The SQL Server High Availability instance is waived from the SQL Server license.</p> </li> </ul>"
       }
     },
     "StaleIpPermission": {
@@ -24835,6 +24943,8 @@
         "RegisterImageResult$ImageId": "<p>The ID of the newly registered AMI.</p>",
         "RegisterTransitGatewayMulticastGroupMembersRequest$GroupIpAddress": "<p>The IP address assigned to the transit gateway multicast group.</p>",
         "RegisterTransitGatewayMulticastGroupSourcesRequest$GroupIpAddress": "<p>The IP address assigned to the transit gateway multicast group.</p>",
+        "RegisteredInstance$ProcessingStatus": "<p>A brief description of the SQL Server High Availability status. If the instance is in the <code>invalid</code> High Availability status, this parameter includes the error message.</p>",
+        "RegisteredInstance$SqlServerCredentials": "<p>The ARN of the Secrets Manager secret containing the SQL Server access credentials for the SQL Server High Availability instance. If not specified, deafult local user credentials will be used by the Amazon Web Services Systems Manager agent.</p>",
         "ReleaseAddressRequest$PublicIp": "<p>Deprecated.</p>",
         "ReleaseAddressRequest$NetworkBorderGroup": "<p>The set of Availability Zones, Local Zones, or Wavelength Zones from which Amazon Web Services advertises IP addresses.</p> <p>If you provide an incorrect network border group, you receive an <code>InvalidAddress.NotFound</code> error.</p>",
         "ReleaseIpamPoolAllocationRequest$Cidr": "<p>The CIDR of the allocation you want to release.</p>",
@@ -25846,6 +25956,7 @@
         "OutpostLag$Tags": "<p>The tags associated with the Outpost LAG.</p>",
         "PlacementGroup$Tags": "<p>Any tags applied to the placement group.</p>",
         "PublicIpv4Pool$Tags": "<p>Any tags for the address pool.</p>",
+        "RegisteredInstance$Tags": "<p>The tags assigned to the SQL Server High Availability instance.</p>",
         "ReplaceRootVolumeTask$Tags": "<p>The tags assigned to the task.</p>",
         "ReservedInstances$Tags": "<p>Any tags assigned to the resource.</p>",
         "ReservedInstancesListing$Tags": "<p>Any tags assigned to the resource.</p>",

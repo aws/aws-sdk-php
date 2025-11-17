@@ -68,6 +68,7 @@
     "DeleteDevEndpoint": "<p>Deletes a specified development endpoint.</p>",
     "DeleteGlueIdentityCenterConfiguration": "<p>Deletes the existing Glue Identity Center configuration, removing the integration between Glue and Amazon Web Services IAM Identity Center.</p>",
     "DeleteIntegration": "<p>Deletes the specified Zero-ETL integration.</p>",
+    "DeleteIntegrationResourceProperty": "<p>This API is used for deleting the <code>ResourceProperty</code> of the Glue connection (for the source) or Glue database ARN (for the target).</p>",
     "DeleteIntegrationTableProperties": "<p>Deletes the table properties that have been created for the tables that need to be replicated.</p>",
     "DeleteJob": "<p>Deletes a specified job definition. If the job definition is not found, no exception is thrown.</p>",
     "DeleteMLTransform": "<p>Deletes an Glue machine learning transform. Machine learning transforms are a special type of transform that use machine learning to learn the details of the transformation to be performed by learning from examples provided by humans. These transformations are then saved by Glue. If you no longer need a transform, you can delete it by calling <code>DeleteMLTransforms</code>. However, any Glue jobs that still reference the deleted transform will no longer succeed.</p>",
@@ -183,6 +184,7 @@
     "ListDataQualityStatistics": "<p>Retrieves a list of data quality statistics.</p>",
     "ListDevEndpoints": "<p>Retrieves the names of all <code>DevEndpoint</code> resources in this Amazon Web Services account, or the resources with the specified tag. This operation allows you to see which resources are available in your account, and their names.</p> <p>This operation takes the optional <code>Tags</code> field, which you can use as a filter on the response so that tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag are retrieved.</p>",
     "ListEntities": "<p>Returns the available entities supported by the connection type. </p>",
+    "ListIntegrationResourceProperties": "<p>List integration resource properties for a single customer. It supports the filters, maxRecords and markers.</p>",
     "ListJobs": "<p>Retrieves the names of all job resources in this Amazon Web Services account, or the resources with the specified tag. This operation allows you to see which resources are available in your account, and their names.</p> <p>This operation takes the optional <code>Tags</code> field, which you can use as a filter on the response so that tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag are retrieved.</p>",
     "ListMLTransforms": "<p> Retrieves a sortable, filterable list of existing Glue machine learning transforms in this Amazon Web Services account, or the resources with the specified tag. This operation takes the optional <code>Tags</code> field, which you can use as a filter of the responses so that tagged resources can be retrieved as a group. If you choose to use tag filtering, only resources with the tags are retrieved. </p>",
     "ListRegistries": "<p>Returns a list of registries that you have created, with minimal registry information. Registries in the <code>Deleting</code> status will not be included in the results. Empty results will be returned if there are no registries available.</p>",
@@ -3220,6 +3222,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteIntegrationResourcePropertyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteIntegrationResourcePropertyResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteIntegrationResponse": {
       "base": null,
       "refs": {}
@@ -5816,8 +5826,8 @@
         "CreateIntegrationResponse$IntegrationConfig": "<p>The configuration settings.</p>",
         "InboundIntegration$IntegrationConfig": "<p>Properties associated with the integration.</p>",
         "Integration$IntegrationConfig": "<p>Properties associated with the integration.</p>",
-        "ModifyIntegrationRequest$IntegrationConfig": null,
-        "ModifyIntegrationResponse$IntegrationConfig": null
+        "ModifyIntegrationRequest$IntegrationConfig": "<p>The configuration settings for the integration. Currently, only the RefreshInterval can be modified. </p>",
+        "ModifyIntegrationResponse$IntegrationConfig": "<p>The updated configuration settings for the integration.</p>"
       }
     },
     "IntegrationConflictOperationFault": {
@@ -5886,7 +5896,8 @@
       "base": null,
       "refs": {
         "DescribeInboundIntegrationsRequest$MaxRecords": "<p>The total number of items to return in the output.</p>",
-        "DescribeIntegrationsRequest$MaxRecords": "<p>The total number of items to return in the output.</p>"
+        "DescribeIntegrationsRequest$MaxRecords": "<p>The total number of items to return in the output.</p>",
+        "ListIntegrationResourcePropertiesRequest$MaxRecords": "<p>This is total number of items to be evaluated.</p>"
       }
     },
     "IntegrationNotFoundFault": {
@@ -5908,6 +5919,36 @@
     "IntegrationQuotaExceededFault": {
       "base": "<p>The data processed through your integration exceeded your quota.</p>",
       "refs": {}
+    },
+    "IntegrationResourceProperty": {
+      "base": "<p>A structure representing an integration resource property.</p>",
+      "refs": {
+        "IntegrationResourcePropertyList$member": null
+      }
+    },
+    "IntegrationResourcePropertyFilter": {
+      "base": "<p>A filter for integration resource properties.</p>",
+      "refs": {
+        "IntegrationResourcePropertyFilterList$member": null
+      }
+    },
+    "IntegrationResourcePropertyFilterList": {
+      "base": null,
+      "refs": {
+        "ListIntegrationResourcePropertiesRequest$Filters": "<p>A list of filters, supported filter Key is <code>SourceArn</code> and <code>TargetArn</code>.</p>"
+      }
+    },
+    "IntegrationResourcePropertyFilterValues": {
+      "base": null,
+      "refs": {
+        "IntegrationResourcePropertyFilter$Values": "<p>A list of filter values.</p>"
+      }
+    },
+    "IntegrationResourcePropertyList": {
+      "base": null,
+      "refs": {
+        "ListIntegrationResourcePropertiesResponse$IntegrationResourcePropertyList": "<p>A list of integration resource property meeting the filter criteria.</p>"
+      }
     },
     "IntegrationSourcePropertiesMap": {
       "base": null,
@@ -5938,6 +5979,7 @@
       "base": null,
       "refs": {
         "CreateIntegrationRequest$Tags": "<p>Metadata assigned to the resource consisting of a list of key-value pairs.</p>",
+        "CreateIntegrationResourcePropertyRequest$Tags": "<p>Metadata assigned to the resource consisting of a list of key-value pairs.</p>",
         "CreateIntegrationResponse$Tags": "<p>Metadata assigned to the resource consisting of a list of key-value pairs.</p>",
         "DeleteIntegrationResponse$Tags": "<p>Metadata assigned to the resource consisting of a list of key-value pairs.</p>",
         "Integration$Tags": "<p>Metadata assigned to the resource consisting of a list of key-value pairs.</p>",
@@ -6450,6 +6492,14 @@
       "refs": {}
     },
     "ListEntitiesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIntegrationResourcePropertiesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListIntegrationResourcePropertiesResponse": {
       "base": null,
       "refs": {}
     },
@@ -9578,6 +9628,7 @@
         "CreateIntegrationResourcePropertyRequest$SourceProcessingProperties": "<p>The resource properties associated with the integration source.</p>",
         "CreateIntegrationResourcePropertyResponse$SourceProcessingProperties": "<p>The resource properties associated with the integration source.</p>",
         "GetIntegrationResourcePropertyResponse$SourceProcessingProperties": "<p>The resource properties associated with the integration source.</p>",
+        "IntegrationResourceProperty$SourceProcessingProperties": "<p>The resource properties associated with the integration source.</p>",
         "UpdateIntegrationResourcePropertyRequest$SourceProcessingProperties": "<p>The resource properties associated with the integration source.</p>",
         "UpdateIntegrationResourcePropertyResponse$SourceProcessingProperties": "<p>The resource properties associated with the integration source.</p>"
       }
@@ -9941,58 +9992,46 @@
         "Property$DefaultValue": "<p>The default value for the property.</p>"
       }
     },
+    "String1024": {
+      "base": null,
+      "refs": {
+        "ListIntegrationResourcePropertiesRequest$Marker": "<p>This is the pagination token for next page, initial value is <code>null</code>.</p>",
+        "ListIntegrationResourcePropertiesResponse$Marker": "<p>This is the pagination token for the next page.</p>"
+      }
+    },
     "String128": {
       "base": null,
       "refs": {
         "CreateIntegrationRequest$IntegrationName": "<p>A unique name for an integration in Glue.</p>",
-        "CreateIntegrationRequest$SourceArn": "<p>The ARN of the source resource for the integration.</p>",
-        "CreateIntegrationRequest$TargetArn": "<p>The ARN of the target resource for the integration.</p>",
-        "CreateIntegrationResourcePropertyRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
-        "CreateIntegrationResourcePropertyResponse$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
-        "CreateIntegrationResponse$SourceArn": "<p>The ARN of the source resource for the integration.</p>",
-        "CreateIntegrationResponse$TargetArn": "<p>The ARN of the target resource for the integration.</p>",
         "CreateIntegrationResponse$IntegrationName": "<p>A unique name for an integration in Glue.</p>",
         "CreateIntegrationResponse$IntegrationArn": "<p>The Amazon Resource Name (ARN) for the created integration.</p>",
-        "CreateIntegrationTablePropertiesRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the target table for which to create integration table properties. Currently, this API only supports creating integration table properties for target tables, and the provided ARN should be the ARN of the target table in the Glue Data Catalog. Support for creating integration table properties for source connections (using the connection ARN) is not yet implemented and will be added in a future release. </p>",
         "CreateIntegrationTablePropertiesRequest$TableName": "<p>The name of the table to be replicated.</p>",
         "DeleteIntegrationRequest$IntegrationIdentifier": "<p>The Amazon Resource Name (ARN) for the integration.</p>",
-        "DeleteIntegrationResponse$SourceArn": "<p>The ARN of the source for the integration.</p>",
-        "DeleteIntegrationResponse$TargetArn": "<p>The ARN of the target for the integration.</p>",
         "DeleteIntegrationResponse$IntegrationName": "<p>A unique name for an integration in Glue.</p>",
         "DeleteIntegrationResponse$IntegrationArn": "<p>The Amazon Resource Name (ARN) for the integration.</p>",
-        "DeleteIntegrationTablePropertiesRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
         "DeleteIntegrationTablePropertiesRequest$TableName": "<p>The name of the table to be replicated.</p>",
         "DescribeInboundIntegrationsRequest$IntegrationArn": "<p>The Amazon Resource Name (ARN) of the integration.</p>",
         "DescribeInboundIntegrationsRequest$Marker": "<p>A token to specify where to start paginating. This is the marker from a previously truncated response.</p>",
-        "DescribeInboundIntegrationsRequest$TargetArn": "<p>The Amazon Resource Name (ARN) of the target resource in the integration.</p>",
         "DescribeInboundIntegrationsResponse$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request.</p>",
         "DescribeIntegrationsRequest$IntegrationIdentifier": "<p>The Amazon Resource Name (ARN) for the integration.</p>",
         "DescribeIntegrationsRequest$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request.</p>",
         "DescribeIntegrationsResponse$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request.</p>",
-        "GetIntegrationResourcePropertyRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
-        "GetIntegrationResourcePropertyResponse$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
-        "GetIntegrationTablePropertiesRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the target table for which to retrieve integration table properties. Currently, this API only supports retrieving properties for target tables, and the provided ARN should be the ARN of the target table in the Glue Data Catalog. Support for retrieving integration table properties for source connections (using the connection ARN) is not yet implemented and will be added in a future release. </p>",
         "GetIntegrationTablePropertiesRequest$TableName": "<p>The name of the table to be replicated.</p>",
-        "GetIntegrationTablePropertiesResponse$ResourceArn": "<p>The Amazon Resource Name (ARN) of the target table for which to retrieve integration table properties. Currently, this API only supports retrieving properties for target tables, and the provided ARN should be the ARN of the target table in the Glue Data Catalog. Support for retrieving integration table properties for source connections (using the connection ARN) is not yet implemented and will be added in a future release. </p>",
         "GetIntegrationTablePropertiesResponse$TableName": "<p>The name of the table to be replicated.</p>",
-        "InboundIntegration$SourceArn": "<p>The ARN of the source resource for the integration.</p>",
-        "InboundIntegration$TargetArn": "<p>The ARN of the target resource for the integration.</p>",
         "InboundIntegration$IntegrationArn": "<p>The ARN of the zero-ETL integration.</p>",
-        "Integration$SourceArn": "<p>The ARN for the source of the integration.</p>",
-        "Integration$TargetArn": "<p>The ARN for the target of the integration.</p>",
         "Integration$IntegrationName": "<p>A unique name for the integration.</p>",
         "Integration$IntegrationArn": "<p>The Amazon Resource Name (ARN) for the integration.</p>",
-        "IntegrationConfig$RefreshInterval": "<p>Specifies the frequency at which CDC (Change Data Capture) pulls or incremental loads should occur. This parameter provides flexibility to align the refresh rate with your specific data update patterns, system load considerations, and performance optimization goals. Time increment can be set from 15 minutes to 8640 minutes (six days). Currently supports creation of <code>RefreshInterval</code> only.</p>",
+        "IntegrationConfig$RefreshInterval": "<p>Specifies the frequency at which CDC (Change Data Capture) pulls or incremental loads should occur. This parameter provides flexibility to align the refresh rate with your specific data update patterns, system load considerations, and performance optimization goals. Time increment can be set from 15 minutes to 8640 minutes (six days).</p>",
         "IntegrationError$ErrorCode": "<p>The code associated with this error.</p>",
         "IntegrationFilter$Name": "<p>The name of the filter.</p>",
         "IntegrationFilterValues$member": null,
         "IntegrationPartition$FieldName": "<p>The field name used to partition data on the target. Avoid using columns that have unique values for each row (for example, `LastModifiedTimestamp`, `SystemModTimeStamp`) as the partition column. These columns are not suitable for partitioning because they create a large number of small partitions, which can lead to performance issues.</p>",
         "IntegrationPartition$FunctionSpec": "<p>Specifies the function used to partition data on the target. The accepted values for this parameter are:</p> <ul> <li> <p> <code>identity</code> - Uses source values directly without transformation</p> </li> <li> <p> <code>year</code> - Extracts the year from timestamp values (e.g., 2023)</p> </li> <li> <p> <code>month</code> - Extracts the month from timestamp values (e.g., 2023-01)</p> </li> <li> <p> <code>day</code> - Extracts the day from timestamp values (e.g., 2023-01-15)</p> </li> <li> <p> <code>hour</code> - Extracts the hour from timestamp values (e.g., 2023-01-15-14)</p> </li> </ul>",
         "IntegrationPartition$ConversionSpec": "<p>Specifies the timestamp format of the source data. Valid values are:</p> <ul> <li> <p> <code>epoch_sec</code> - Unix epoch timestamp in seconds</p> </li> <li> <p> <code>epoch_milli</code> - Unix epoch timestamp in milliseconds</p> </li> <li> <p> <code>iso</code> - ISO 8601 formatted timestamp</p> </li> </ul> <note> <p> Only specify <code>ConversionSpec</code> when using timestamp-based partition functions (year, month, day, or hour). Glue Zero-ETL uses this parameter to correctly transform source data into timestamp format before partitioning. </p> <p> Do not use high-cardinality columns with the <code>identity</code> partition function. High-cardinality columns include: </p> <ul> <li> <p>Primary keys</p> </li> <li> <p>Timestamp fields (such as <code>LastModifiedTimestamp</code>, <code>CreatedDate</code>)</p> </li> <li> <p>System-generated timestamps</p> </li> </ul> <p> Using high-cardinality columns with identity partitioning creates many small partitions, which can significantly degrade ingestion performance. </p> </note>",
+        "IntegrationResourcePropertyFilter$Name": "<p>The name of the filter. Supported filter keys are <code>SourceArn</code> and <code>TargetArn</code>.</p>",
+        "IntegrationResourcePropertyFilterValues$member": null,
         "ModifyIntegrationRequest$IntegrationIdentifier": "<p>The Amazon Resource Name (ARN) for the integration.</p>",
         "ModifyIntegrationRequest$IntegrationName": "<p>A unique name for an integration in Glue.</p>",
-        "ModifyIntegrationResponse$SourceArn": "<p>The ARN of the source for the integration.</p>",
-        "ModifyIntegrationResponse$TargetArn": "<p>The ARN of the target for the integration.</p>",
         "ModifyIntegrationResponse$IntegrationName": "<p>A unique name for an integration in Glue.</p>",
         "ModifyIntegrationResponse$IntegrationArn": "<p>The Amazon Resource Name (ARN) for the integration.</p>",
         "PrimaryKeyList$member": null,
@@ -10003,9 +10042,6 @@
         "TargetProcessingProperties$RoleArn": "<p>The IAM role to access the Glue database.</p>",
         "TargetProcessingProperties$ConnectionName": "<p>The Glue network connection to configure the Glue job running in the customer VPC.</p>",
         "TargetTableConfig$TargetTableName": "<p>The optional name of a target table.</p>",
-        "UpdateIntegrationResourcePropertyRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
-        "UpdateIntegrationResourcePropertyResponse$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
-        "UpdateIntegrationTablePropertiesRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
         "UpdateIntegrationTablePropertiesRequest$TableName": "<p>The name of the table to be replicated.</p>"
       }
     },
@@ -10026,6 +10062,41 @@
         "ModifyIntegrationResponse$DataFilter": "<p>Selects source tables for the integration using Maxwell filter syntax.</p>",
         "TargetProcessingProperties$KmsArn": "<p>The ARN of the KMS key used for encryption.</p>",
         "TargetProcessingProperties$EventBusArn": "<p>The ARN of an Eventbridge event bus to receive the integration status notification.</p>"
+      }
+    },
+    "String512": {
+      "base": null,
+      "refs": {
+        "CreateIntegrationRequest$SourceArn": "<p>The ARN of the source resource for the integration.</p>",
+        "CreateIntegrationRequest$TargetArn": "<p>The ARN of the target resource for the integration.</p>",
+        "CreateIntegrationResourcePropertyRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "CreateIntegrationResourcePropertyResponse$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "CreateIntegrationResourcePropertyResponse$ResourcePropertyArn": "<p>The resource ARN created through this create API. The format is something like arn:aws:glue:&lt;region&gt;:&lt;account_id&gt;:integrationresourceproperty/*</p>",
+        "CreateIntegrationResponse$SourceArn": "<p>The ARN of the source resource for the integration.</p>",
+        "CreateIntegrationResponse$TargetArn": "<p>The ARN of the target resource for the integration.</p>",
+        "CreateIntegrationTablePropertiesRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the target table for which to create integration table properties. Currently, this API only supports creating integration table properties for target tables, and the provided ARN should be the ARN of the target table in the Glue Data Catalog. Support for creating integration table properties for source connections (using the connection ARN) is not yet implemented and will be added in a future release. </p>",
+        "DeleteIntegrationResourcePropertyRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "DeleteIntegrationResponse$SourceArn": "<p>The ARN of the source for the integration.</p>",
+        "DeleteIntegrationResponse$TargetArn": "<p>The ARN of the target for the integration.</p>",
+        "DeleteIntegrationTablePropertiesRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "DescribeInboundIntegrationsRequest$TargetArn": "<p>The Amazon Resource Name (ARN) of the target resource in the integration.</p>",
+        "GetIntegrationResourcePropertyRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "GetIntegrationResourcePropertyResponse$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "GetIntegrationResourcePropertyResponse$ResourcePropertyArn": "<p>The resource ARN created through this create API. The format is something like arn:aws:glue:&lt;region&gt;:&lt;account_id&gt;:integrationresourceproperty/*</p>",
+        "GetIntegrationTablePropertiesRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the target table for which to retrieve integration table properties. Currently, this API only supports retrieving properties for target tables, and the provided ARN should be the ARN of the target table in the Glue Data Catalog. Support for retrieving integration table properties for source connections (using the connection ARN) is not yet implemented and will be added in a future release. </p>",
+        "GetIntegrationTablePropertiesResponse$ResourceArn": "<p>The Amazon Resource Name (ARN) of the target table for which to retrieve integration table properties. Currently, this API only supports retrieving properties for target tables, and the provided ARN should be the ARN of the target table in the Glue Data Catalog. Support for retrieving integration table properties for source connections (using the connection ARN) is not yet implemented and will be added in a future release. </p>",
+        "InboundIntegration$SourceArn": "<p>The ARN of the source resource for the integration.</p>",
+        "InboundIntegration$TargetArn": "<p>The ARN of the target resource for the integration.</p>",
+        "Integration$SourceArn": "<p>The ARN for the source of the integration.</p>",
+        "Integration$TargetArn": "<p>The ARN for the target of the integration.</p>",
+        "IntegrationResourceProperty$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "IntegrationResourceProperty$ResourcePropertyArn": "<p>The resource ARN created through this create API. The format is something like arn:aws:glue:&lt;region&gt;:&lt;account_id&gt;:integrationresourceproperty/*</p>",
+        "ModifyIntegrationResponse$SourceArn": "<p>The ARN of the source for the integration.</p>",
+        "ModifyIntegrationResponse$TargetArn": "<p>The ARN of the target for the integration.</p>",
+        "UpdateIntegrationResourcePropertyRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "UpdateIntegrationResourcePropertyResponse$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>",
+        "UpdateIntegrationResourcePropertyResponse$ResourcePropertyArn": "<p>The resource ARN created through this create API. The format is something like arn:aws:glue:&lt;region&gt;:&lt;account_id&gt;:integrationresourceproperty/*</p>",
+        "UpdateIntegrationTablePropertiesRequest$ResourceArn": "<p>The connection ARN of the source, or the database ARN of the target.</p>"
       }
     },
     "StringColumnStatisticsData": {
@@ -10312,6 +10383,7 @@
         "CreateIntegrationResourcePropertyRequest$TargetProcessingProperties": "<p>The resource properties associated with the integration target.</p>",
         "CreateIntegrationResourcePropertyResponse$TargetProcessingProperties": "<p>The resource properties associated with the integration target.</p>",
         "GetIntegrationResourcePropertyResponse$TargetProcessingProperties": "<p>The resource properties associated with the integration target.</p>",
+        "IntegrationResourceProperty$TargetProcessingProperties": "<p>The resource properties associated with the integration target.</p>",
         "UpdateIntegrationResourcePropertyRequest$TargetProcessingProperties": "<p>The resource properties associated with the integration target.</p>",
         "UpdateIntegrationResourcePropertyResponse$TargetProcessingProperties": "<p>The resource properties associated with the integration target.</p>"
       }

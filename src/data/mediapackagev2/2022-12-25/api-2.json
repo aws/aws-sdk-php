@@ -2541,7 +2541,8 @@
     "Scte":{
       "type":"structure",
       "members":{
-        "ScteFilter":{"shape":"ScteFilterList"}
+        "ScteFilter":{"shape":"ScteFilterList"},
+        "ScteInSegments":{"shape":"ScteInSegments"}
       }
     },
     "ScteDash":{
@@ -2575,6 +2576,13 @@
       "members":{
         "AdMarkerHls":{"shape":"AdMarkerHls"}
       }
+    },
+    "ScteInSegments":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "ALL"
+      ]
     },
     "Segment":{
       "type":"structure",

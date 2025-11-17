@@ -952,6 +952,21 @@
         {"shape":"InternalServerErrorException"}
       ]
     },
+    "SendObjectMalwareScan":{
+      "name":"SendObjectMalwareScan",
+      "http":{
+        "method":"POST",
+        "requestUri":"/object-malware-scan/send",
+        "responseCode":200
+      },
+      "input":{"shape":"SendObjectMalwareScanRequest"},
+      "output":{"shape":"SendObjectMalwareScanResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerErrorException"}
+      ]
+    },
     "StartMalwareScan":{
       "name":"StartMalwareScan",
       "http":{
@@ -8065,6 +8080,23 @@
       "type":"list",
       "member":{"shape":"S3ObjectDetail"}
     },
+    "S3ObjectForSendObjectMalwareScan":{
+      "type":"structure",
+      "members":{
+        "Bucket":{
+          "shape":"String",
+          "locationName":"bucket"
+        },
+        "Key":{
+          "shape":"String",
+          "locationName":"key"
+        },
+        "VersionId":{
+          "shape":"String",
+          "locationName":"versionId"
+        }
+      }
+    },
     "S3ObjectUids":{
       "type":"list",
       "member":{"shape":"String"}
@@ -8347,6 +8379,19 @@
     "SecurityGroups":{
       "type":"list",
       "member":{"shape":"SecurityGroup"}
+    },
+    "SendObjectMalwareScanRequest":{
+      "type":"structure",
+      "members":{
+        "S3Object":{
+          "shape":"S3ObjectForSendObjectMalwareScan",
+          "locationName":"s3Object"
+        }
+      }
+    },
+    "SendObjectMalwareScanResponse":{
+      "type":"structure",
+      "members":{}
     },
     "SensitiveString":{
       "type":"string",

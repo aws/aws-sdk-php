@@ -7251,16 +7251,19 @@
     "H265GopBReference": {
       "base": "H265 Gop BReference",
       "refs": {
+        "H265Settings$GopBReference": "Allows the encoder to use a B-Frame as a reference frame as well.\nENABLED: B-frames will also serve as reference frames.\nDISABLED: B-frames won't be reference frames.\nMust be DISABLED if resolution is greater than 1080p or when using tiled hevc encoding."
       }
     },
     "H265SubGopLength": {
       "base": "H265 Sub Gop Length",
       "refs": {
+        "H265Settings$SubgopLength": "Sets the number of B-frames in each sub-GOP.\nFIXED: Use the value in Num B-frames.\nDYNAMIC: Optimizes the number of B-frames in each sub-GOP to improve visual quality.\nMust be FIXED if resolution is greater than 1080p or when using tiled hevc encoding."
       }
     },
     "__integerMin0Max3": {
       "base": null,
       "refs": {
+        "H265Settings$GopNumBFrames": "Sets the number of B-frames between reference frames.\nSet to 2 if resolution is greater than 1080p or when using tiled hevc encoding."
       }
     },
     "__integerMin0Max40000000": {
@@ -7342,6 +7345,24 @@
       "base": null,
       "refs": {
         "ListMultiplexAlertsResultModel$Alerts": "The alerts found for this multiplex"
+      }
+    },
+    "Av1SpatialAq": {
+      "base": "Av1 Spatial Aq",
+      "refs": {
+        "Av1Settings$SpatialAq": "Spatial AQ makes adjustments within each frame based on spatial variation of content complexity. Enabled: MediaLive will determine the appropriate level of spatial AQ to apply. Disabled: No spatial AQ. For more information, see the topic about video adaptive quantization in the MediaLive user guide."
+      }
+    },
+    "Av1TemporalAq": {
+      "base": "Av1 Temporal Aq",
+      "refs": {
+        "Av1Settings$TemporalAq": "Temporal AQ makes adjustments within each frame based on variations in content complexity over time. Enabled: MediaLive will determine the appropriate level of temporal AQ to apply. Disabled: No temporal AQ. For more information, see the topic about video adaptive quantization in the MediaLive user guide."
+      }
+    },
+    "Hlg2020Settings": {
+      "base": "Hlg2020 Settings",
+      "refs": {
+        "H265ColorSpaceSettings$Hlg2020Settings": null
       }
     }
   },
