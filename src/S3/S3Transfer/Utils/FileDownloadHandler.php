@@ -90,7 +90,7 @@ final class FileDownloadHandler extends AbstractDownloadHandler
      *
      * @return void
      */
-    public function bytesTransferred(array $context): void
+    public function bytesTransferred(array $context): bool
     {
         $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         $response = $snapshot->getResponse();
@@ -104,6 +104,8 @@ final class FileDownloadHandler extends AbstractDownloadHandler
             $partBody,
             FILE_APPEND
         );
+
+        return true;
     }
 
     /**

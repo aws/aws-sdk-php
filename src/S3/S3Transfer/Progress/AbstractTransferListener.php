@@ -24,9 +24,11 @@ abstract class AbstractTransferListener
      *   as part of the operation that originated the bytes transferred event.
      * - progress_snapshot: (TransferProgressSnapshot) The transfer snapshot holder.
      *
-     * @return void
+     * @return bool
      */
-    public function bytesTransferred(array $context): void {}
+    public function bytesTransferred(array $context): bool {
+        return true;
+    }
 
     /**
      * @param array $context

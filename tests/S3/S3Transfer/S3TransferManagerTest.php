@@ -2965,12 +2965,14 @@ EOF
                              *
                              * @return void
                              */
-                            public function bytesTransferred(array $context): void {
+                            public function bytesTransferred(array $context): bool {
                                 $snapshot = $context[
                                 AbstractTransferListener::PROGRESS_SNAPSHOT_KEY
                                 ];
                                 $this->totalBytesReceived = $snapshot->getTransferredBytes();
                                 $this->totalPartsReceived++;
+
+                                return true;
                             }
                         }
                     ]
@@ -3121,12 +3123,14 @@ EOF
                              *
                              * @return void
                              */
-                            public function bytesTransferred(array $context): void {
+                            public function bytesTransferred(array $context): bool {
                                 $snapshot = $context[
                                 AbstractTransferListener::PROGRESS_SNAPSHOT_KEY
                                 ];
                                 $this->totalBytesReceived = $snapshot->getTransferredBytes();
                                 $this->totalPartsReceived++;
+
+                                return true;
                             }
                         }
                     ]

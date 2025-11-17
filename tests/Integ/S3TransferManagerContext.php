@@ -666,6 +666,10 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         $partNumberFail
     ): void
     {
+        // Disable warning from error_log
+        $currentLogIni = ini_get('error_log');
+        ini_set('error_log', '0');
+
         $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
         $s3TransferManager = new S3TransferManager(
             self::getSdk()->createS3()
@@ -679,14 +683,16 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
                 $this->partNumber = 0;
             }
 
-            public function bytesTransferred(array $context): void
+            public function bytesTransferred(array $context): bool
             {
                 $this->partNumber++;
                 if ($this->partNumber === $this->partNumberFail) {
-                    throw new \RuntimeException(
+                    throw new S3TransferException(
                         "Transfer failed at part number {$this->partNumber} failed"
                     );
                 }
+
+                return true;
             }
         };
 
@@ -715,15 +721,18 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
             )->wait();
 
             // If we reach here, the test should fail because exception was expected
-            Assert::fail("Expected RuntimeException was not thrown");
+            Assert::fail("Expected `S3TransferException` was not thrown");
 
-        } catch (\RuntimeException $exception) {
+        } catch (S3TransferException $exception) {
             Assert::assertEquals(
                 "Transfer failed at part number {$partNumberFail} failed",
                 $exception->getMessage(),
             );
         } catch (\Exception $e) {
             Assert::fail("Unexpected exception type: " . get_class($e) . " - " . $e->getMessage());
+        } finally {
+            // Restore error logging
+            ini_set('error_log', $currentLogIni);
         }
     }
 

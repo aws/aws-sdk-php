@@ -65,15 +65,15 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
      */
     public function __construct(
         protected readonly S3ClientInterface $s3Client,
-        array                                $downloadRequestArgs,
-        array                                $config = [],
-        ?AbstractDownloadHandler             $downloadHandler = null,
-        int                                  $currentPartNo = 0,
-        int                                  $objectPartsCount = 0,
-        int                                  $objectSizeInBytes = 0,
-        ?string                              $eTag = null,
-        ?TransferProgressSnapshot            $currentSnapshot = null,
-        ?TransferListenerNotifier            $listenerNotifier  = null
+        array $downloadRequestArgs,
+        array $config = [],
+        ?AbstractDownloadHandler $downloadHandler = null,
+        int $currentPartNo = 0,
+        int $objectPartsCount = 0,
+        int $objectSizeInBytes = 0,
+        ?string $eTag = null,
+        ?TransferProgressSnapshot $currentSnapshot = null,
+        ?TransferListenerNotifier $listenerNotifier  = null
     ) {
         $this->downloadRequestArgs = $downloadRequestArgs;
         $this->validateConfig($config);

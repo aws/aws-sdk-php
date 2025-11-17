@@ -36,11 +36,9 @@ final class StreamDownloadHandler extends AbstractDownloadHandler
     }
 
     /**
-     * @param array $context
-     *
-     * @return void
+     * @inheritDoc
      */
-    public function bytesTransferred(array $context): void
+    public function bytesTransferred(array $context): bool
     {
         $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         $response = $snapshot->getResponse();
@@ -53,6 +51,8 @@ final class StreamDownloadHandler extends AbstractDownloadHandler
             $partBody,
             $this->stream
         );
+
+        return true;
     }
 
     /**

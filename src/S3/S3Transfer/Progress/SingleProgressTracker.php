@@ -109,10 +109,8 @@ final class SingleProgressTracker extends AbstractTransferListener
 
     /**
      * @inheritDoc
-     *
-     * @return void
      */
-    public function bytesTransferred(array $context): void
+    public function bytesTransferred(array $context): bool
     {
         $this->currentSnapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressFormat = $this->progressBar->getProgressBarFormat();
@@ -124,6 +122,8 @@ final class SingleProgressTracker extends AbstractTransferListener
         }
 
         $this->updateProgressBar();
+
+        return true;
     }
 
     /**

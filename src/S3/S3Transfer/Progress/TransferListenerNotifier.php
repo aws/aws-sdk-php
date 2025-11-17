@@ -46,14 +46,16 @@ final class TransferListenerNotifier extends AbstractTransferListener
 
     /**
      * @inheritDoc
-     *
-     * @return void
      */
-    public function bytesTransferred(array $context): void
+    public function bytesTransferred(array $context): bool
     {
         foreach ($this->listeners as $listener) {
-            $listener->bytesTransferred($context);
+            if (!$listener->bytesTransferred($context)) {
+                return false;
+            }
         }
+
+        return true;
     }
 
     /**
