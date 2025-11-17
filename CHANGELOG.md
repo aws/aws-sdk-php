@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.360.0 - 2025-11-17
 
 * `Aws\Glue` - Amazon Glue Releasing 2 the new API ListIntegrationResourceProperties and DeleteIntegrationResourceProperty along with minor improvement on existing API(s).
 * `Aws\MediaPackageV2` - Add support for SCTE messages in Segment file output
