@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.360.1 - 2025-11-18
 
 * `Aws\AutoScaling` - This release adds the new LaunchInstances API, which can launch instances synchronously in an AutoScaling group. The API also returns instances info and launch error back immediately.
 * `Aws\BedrockRuntime` - Amazon Bedrock Runtime Service Tier Support Launch
