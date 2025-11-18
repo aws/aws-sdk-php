@@ -134,4 +134,52 @@ class InstructionFileMetadataStrategyTest extends TestCase
             $this->assertEquals($value, $metadata[$field]);
         }
     }
+
+    /**
+     * @dataProvider getV3FieldsForInstructionFile
+     */
+    public function testLoadV3FromInstructionFileAndMetadata($args, $instructionFile): void
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', []);
+        $strategy = new InstructionFileMetadataStrategy($client);
+        $this->addMockResults($client, [
+            //= ../specification/s3-encryption/data-format/metadata-strategy.md#instruction-file
+            //= type=test
+            //# The serialized JSON string MUST be the only contents of the Instruction File.
+            new Result(['Body' => json_encode($instructionFile)])
+        ]);
+        $envelope = $strategy->load($args);
+
+        $this->assertTrue(MetadataEnvelope::isV3Envelope($envelope));
+
+        foreach ($envelope as $field => $value) {
+            // to assert we have loaded it properly and assert, some fields are present in metadata
+            // and the others are in the args/
+            if (!empty($instructionFile[$field])) {
+                $this->assertEquals($value, $instructionFile[$field]);
+            } else {
+                // if it is not in the instruction file it was stored in the metadata
+                $this->assertEquals($value, $args['Metadata'][$field]);
+            }
+        }
+    }
+
+    /**
+     * @dataProvider getV3MetadataResult
+     */
+    public function testLoadV3FromInstructionFileAndMetadataCorruptInstructionFile($args, $instructionFile)
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', []);
+        $strategy = new InstructionFileMetadataStrategy($client);
+        $this->addMockResults($client, [
+            new Result(['Body' => json_encode($instructionFile)])
+        ]);
+        // We expect to fail because all keys were found in the instruction file when only a subset
+        // are allowed to be stored in the instruction file.
+        $this->expectException(\Aws\Exception\CryptoException::class);
+        $this->expectExceptionMessage("One or more reserved keys found in Instruction file when they should not be present.");
+        $envelope = $strategy->load($args);
+    }
 }

@@ -656,7 +656,6 @@ class EncryptionDecryptionTraitV3Test extends TestCase
             $provider,
             $envelope
         );
-        error_log("IV Length: " . $ivLength );
 
         //= ../specification/s3-encryption/encryption.md#content-encryption
         //= type=test

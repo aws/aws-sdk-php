@@ -3,6 +3,7 @@ namespace Aws\S3\Crypto;
 
 use \Aws\Crypto\MetadataStrategyInterface;
 use \Aws\Crypto\MetadataEnvelope;
+use Aws\Exception\CryptoException;
 use \Aws\S3\S3Client;
 
 /**
@@ -130,7 +131,14 @@ class InstructionFileMetadataStrategy implements MetadataStrategyInterface
 
         foreach ($constantValues as $constant) {
             if (!empty($metadataHeaders[$constant])) {
-                $envelope[$constant] = $metadataHeaders[$constant];
+                // check for a duplicate
+                if (empty($envelope[$constant])) {
+                    $envelope[$constant] = $metadataHeaders[$constant];
+                } else {
+                    throw new CryptoException("Duplicate keys are not allowed"
+                        . " in Instruction Files. "
+                    );
+                }
             }
         }
 
@@ -141,6 +149,16 @@ class InstructionFileMetadataStrategy implements MetadataStrategyInterface
         //# In the V3 format, the mapkeys "x-amz-c", "x-amz-d", and "x-amz-i" 
         //# MUST be stored exclusively in the Object Metadata
         if (!empty($envelope[MetadataEnvelope::ENCRYPTED_DATA_KEY_V3])) {
+            // before loading the rest of the v3 metadata, we must check that:
+            //  1. the following values are not already present in the envelope, if they are
+            //      the instruction file is not correct.
+            if (!empty($envelope[MetadataEnvelope::CONTENT_CIPHER_V3])
+                || !empty($envelope[MetadataEnvelope::KEY_COMMITMENT_V3])
+                || !empty($envelope[MetadataEnvelope::MESSAGE_ID_V3]) 
+            ) {
+                throw new CryptoException("One or more reserved keys found in"
+                    . " Instruction file when they should not be present.");
+            }
             // this data is stored in the original object's metadata
             // V3 added x-amz-c, x-amz-d, x-amz-i, x-amz-3, x-amz-w, x-amz-m, x-amz-t
             // x-amz-c, x-amz-d, x-amz-i are strictly stored on the object metadata
@@ -148,6 +166,11 @@ class InstructionFileMetadataStrategy implements MetadataStrategyInterface
             $envelope[MetadataEnvelope::CONTENT_CIPHER_V3] = $args['Metadata'][MetadataEnvelope::CONTENT_CIPHER_V3];
             $envelope[MetadataEnvelope::KEY_COMMITMENT_V3] = $args['Metadata'][MetadataEnvelope::KEY_COMMITMENT_V3];
             $envelope[MetadataEnvelope::MESSAGE_ID_V3] = $args['Metadata'][MetadataEnvelope::MESSAGE_ID_V3];
+
+            if (!MetadataEnvelope::isV3Envelope($envelope)) {
+                throw new CryptoException("Expected a V3 envelope but was unable to"
+                    . " constuct one.");
+            }
         }
 
         return $envelope;
