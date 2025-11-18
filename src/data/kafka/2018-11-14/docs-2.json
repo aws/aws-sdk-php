@@ -20,6 +20,8 @@
     "DescribeConfiguration" : "<p>Returns a description of this MSK configuration.</p>",
     "DescribeConfigurationRevision" : "<p>Returns a description of this revision of the configuration.</p>",
     "DescribeReplicator" : "<p>Returns a description of the Kafka Replicator whose Amazon Resource Name (ARN) is specified in the request.</p>",
+    "DescribeTopic": "<p>Returns topic details of this topic on a MSK cluster.</p>",
+    "DescribeTopicPartitions": "<p>Returns partition details of this topic on a MSK cluster.</p>",
     "DescribeVpcConnection" : "<p>Displays information about the specified Amazon MSK VPC connection.</p>",
     "BatchDisassociateScramSecret" : "<p>Disassociates one or more Scram Secrets from an Amazon MSK cluster.</p>",
     "GetBootstrapBrokers" : "<p>A list of brokers that a client application can use to bootstrap. This list doesn't necessarily include all of the brokers in the cluster. The following Python 3.6 example shows how you can use the Amazon Resource Name (ARN) of a cluster to get its bootstrap brokers. If you don't know the ARN of your cluster, you can use the <code>ListClusters</code> operation to get the ARNs of all the clusters in this account and Region.</p>",
@@ -38,6 +40,7 @@
     "ListScramSecrets" : "<p>Returns a list of the Scram Secrets associated with an Amazon MSK cluster.</p>",
     "ListTagsForResource" : "<p>Returns a list of the tags associated with the specified resource.</p>",
     "ListVpcConnections" : "<p>Displays a list of Amazon MSK VPC connections.</p>",
+    "ListTopics": "<p>List topics in a MSK cluster.</p>",
     "PutClusterPolicy" : "<p>Creates or updates the specified MSK cluster policy. If updating the policy, the currentVersion field is required in the request payload.</p>",
     "RebootBroker" : "<p>Executes a reboot on a broker.</p>",
     "RejectClientVpcConnections" : "<p>Rejects a client VPC connection.</p>",
@@ -439,6 +442,34 @@
       "base" : "<p>Response body for DescribeConfigurationRevision.</p>",
       "refs" : { }
     },
+    "DescribeTopicRequest" : {
+      "base" : "<p>Request body for DescribeTopic.</p>",
+      "refs" : { }
+    },
+    "DescribeTopicResponse" : {
+      "base" : "<p>The response containing details for a topic.</p>",
+      "refs" : { }
+    },
+    "DescribeTopicPartitionsRequest" : {
+      "base" : "<p>Request body for DescribeTopicPartitions.</p>",
+      "refs" : { }
+    },
+    "DescribeTopicPartitionsResponse" : {
+      "base" : "<p>The response containing partitions details for a topic.</p>",
+      "refs" : { }
+    },
+    "TopicPartitionInfo" : {
+      "base" : "<p>Contains information about a topic partition.</p>",
+      "refs" : {
+        "__listOfTopicPartitionInfo$member" : null
+      }
+    },
+    "TopicInfo" : {
+      "base" : "<p>Includes identification info about the topic.</p>",
+      "refs" : {
+        "__listOfTopicInfo$member" : null
+      }
+    },
     "DescribeReplicatorResponse" : {
       "base" : "<p>Response body for DescribeReplicator.</p>",
       "refs" : { }
@@ -634,6 +665,14 @@
     },
     "ListClientVpcConnectionsResponse" : {
       "base" : "<p>The response contains an array of client VPC connections and a next token if the response is truncated.</p>",
+      "refs" : { }
+    },
+    "ListTopicsRequest" : {
+      "base" : "<p>Request body for ListTopics.</p>",
+      "refs" : { }
+    },
+    "ListTopicsResponse" : {
+      "base" : "<p>The response contains an array of topics on a MSK Cluster.</p>",
       "refs" : { }
     },
     "ListVpcConnectionsRequest" : {

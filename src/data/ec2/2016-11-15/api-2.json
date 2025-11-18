@@ -1394,6 +1394,15 @@
       "input":{"shape":"CreateVpcPeeringConnectionRequest"},
       "output":{"shape":"CreateVpcPeeringConnectionResult"}
     },
+    "CreateVpnConcentrator":{
+      "name":"CreateVpnConcentrator",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateVpnConcentratorRequest"},
+      "output":{"shape":"CreateVpnConcentratorResult"}
+    },
     "CreateVpnConnection":{
       "name":"CreateVpnConnection",
       "http":{
@@ -2142,6 +2151,15 @@
       },
       "input":{"shape":"DeleteVpcPeeringConnectionRequest"},
       "output":{"shape":"DeleteVpcPeeringConnectionResult"}
+    },
+    "DeleteVpnConcentrator":{
+      "name":"DeleteVpnConcentrator",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteVpnConcentratorRequest"},
+      "output":{"shape":"DeleteVpnConcentratorResult"}
     },
     "DeleteVpnConnection":{
       "name":"DeleteVpnConnection",
@@ -3822,6 +3840,15 @@
       },
       "input":{"shape":"DescribeVpcsRequest"},
       "output":{"shape":"DescribeVpcsResult"}
+    },
+    "DescribeVpnConcentrators":{
+      "name":"DescribeVpnConcentrators",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeVpnConcentratorsRequest"},
+      "output":{"shape":"DescribeVpnConcentratorsResult"}
     },
     "DescribeVpnConnections":{
       "name":"DescribeVpnConnections",
@@ -15387,6 +15414,28 @@
         }
       }
     },
+    "CreateVpnConcentratorRequest":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"VpnConcentratorType"},
+        "TransitGatewayId":{"shape":"TransitGatewayId"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "CreateVpnConcentratorResult":{
+      "type":"structure",
+      "members":{
+        "VpnConcentrator":{
+          "shape":"VpnConcentrator",
+          "locationName":"vpnConcentrator"
+        }
+      }
+    },
     "CreateVpnConnectionRequest":{
       "type":"structure",
       "required":[
@@ -15398,6 +15447,7 @@
         "Type":{"shape":"String"},
         "VpnGatewayId":{"shape":"VpnGatewayId"},
         "TransitGatewayId":{"shape":"TransitGatewayId"},
+        "VpnConcentratorId":{"shape":"VpnConcentratorId"},
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
@@ -17339,6 +17389,23 @@
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
+        }
+      }
+    },
+    "DeleteVpnConcentratorRequest":{
+      "type":"structure",
+      "required":["VpnConcentratorId"],
+      "members":{
+        "VpnConcentratorId":{"shape":"VpnConcentratorId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DeleteVpnConcentratorResult":{
+      "type":"structure",
+      "members":{
+        "Return":{
+          "shape":"Boolean",
+          "locationName":"return"
         }
       }
     },
@@ -23248,6 +23315,35 @@
         "Vpcs":{
           "shape":"VpcList",
           "locationName":"vpcSet"
+        }
+      }
+    },
+    "DescribeVpnConcentratorsRequest":{
+      "type":"structure",
+      "members":{
+        "VpnConcentratorIds":{
+          "shape":"VpnConcentratorIdStringList",
+          "locationName":"VpnConcentratorId"
+        },
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"GVCDMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeVpnConcentratorsResult":{
+      "type":"structure",
+      "members":{
+        "VpnConcentrators":{
+          "shape":"VpnConcentratorList",
+          "locationName":"vpnConcentratorSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
         }
       }
     },
@@ -46417,7 +46513,8 @@
         "mac-modification-task",
         "ipam-prefix-list-resolver",
         "ipam-prefix-list-resolver-target",
-        "capacity-manager-data-export"
+        "capacity-manager-data-export",
+        "vpn-concentrator"
       ]
     },
     "ResourceTypeOption":{
@@ -51771,6 +51868,7 @@
       "enum":[
         "vpc",
         "vpn",
+        "vpn-concentrator",
         "direct-connect-gateway",
         "connect",
         "peering",
@@ -55847,6 +55945,54 @@
       "type":"string",
       "enum":["default"]
     },
+    "VpnConcentrator":{
+      "type":"structure",
+      "members":{
+        "VpnConcentratorId":{
+          "shape":"String",
+          "locationName":"vpnConcentratorId"
+        },
+        "State":{
+          "shape":"String",
+          "locationName":"state"
+        },
+        "TransitGatewayId":{
+          "shape":"String",
+          "locationName":"transitGatewayId"
+        },
+        "TransitGatewayAttachmentId":{
+          "shape":"String",
+          "locationName":"transitGatewayAttachmentId"
+        },
+        "Type":{
+          "shape":"String",
+          "locationName":"type"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "VpnConcentratorId":{"type":"string"},
+    "VpnConcentratorIdStringList":{
+      "type":"list",
+      "member":{
+        "shape":"VpnConcentratorId",
+        "locationName":"VpnConcentratorId"
+      }
+    },
+    "VpnConcentratorList":{
+      "type":"list",
+      "member":{
+        "shape":"VpnConcentrator",
+        "locationName":"item"
+      }
+    },
+    "VpnConcentratorType":{
+      "type":"string",
+      "enum":["ipsec.1"]
+    },
     "VpnConnection":{
       "type":"structure",
       "members":{
@@ -55857,6 +56003,10 @@
         "TransitGatewayId":{
           "shape":"String",
           "locationName":"transitGatewayId"
+        },
+        "VpnConcentratorId":{
+          "shape":"String",
+          "locationName":"vpnConcentratorId"
         },
         "CoreNetworkArn":{
           "shape":"String",

@@ -744,6 +744,22 @@
         {"shape":"ResourceContentionFault"}
       ]
     },
+    "LaunchInstances":{
+      "name":"LaunchInstances",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"LaunchInstancesRequest"},
+      "output":{
+        "shape":"LaunchInstancesResult",
+        "resultWrapper":"LaunchInstancesResult"
+      },
+      "errors":[
+        {"shape":"ResourceContentionFault"},
+        {"shape":"IdempotentParameterMismatchError"}
+      ]
+    },
     "PutLifecycleHook":{
       "name":"PutLifecycleHook",
       "http":{
@@ -1330,6 +1346,11 @@
         "CapacityDistributionStrategy":{"shape":"CapacityDistributionStrategy"}
       }
     },
+    "AvailabilityZoneIdsLimit1":{
+      "type":"list",
+      "member":{"shape":"XmlStringMaxLen255"},
+      "max":1
+    },
     "AvailabilityZoneImpairmentPolicy":{
       "type":"structure",
       "members":{
@@ -1340,6 +1361,11 @@
     "AvailabilityZones":{
       "type":"list",
       "member":{"shape":"XmlStringMaxLen255"}
+    },
+    "AvailabilityZonesLimit1":{
+      "type":"list",
+      "member":{"shape":"XmlStringMaxLen255"},
+      "max":1
     },
     "BakeTime":{
       "type":"integer",
@@ -1522,6 +1548,12 @@
     "ClassicLinkVPCSecurityGroups":{
       "type":"list",
       "member":{"shape":"XmlStringMaxLen255"}
+    },
+    "ClientToken":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z0-9\\-_\\/]+"
     },
     "CompleteLifecycleActionAnswer":{
       "type":"structure",
@@ -2152,6 +2184,18 @@
     "HealthCheckGracePeriod":{"type":"integer"},
     "HeartbeatTimeout":{"type":"integer"},
     "HonorCooldown":{"type":"boolean"},
+    "IdempotentParameterMismatchError":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"XmlStringMaxLen255"}
+      },
+      "error":{
+        "code":"IdempotentParameterMismatch",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "ImpairedZoneHealthCheckBehavior":{
       "type":"string",
       "enum":[
@@ -2181,6 +2225,21 @@
         "ProtectedFromScaleIn":{"shape":"InstanceProtected"},
         "WeightedCapacity":{"shape":"XmlStringMaxLen32"}
       }
+    },
+    "InstanceCollection":{
+      "type":"structure",
+      "members":{
+        "InstanceType":{"shape":"XmlStringMaxLen255"},
+        "MarketType":{"shape":"XmlStringMaxLen64"},
+        "SubnetId":{"shape":"XmlStringMaxLen255"},
+        "AvailabilityZone":{"shape":"XmlStringMaxLen255"},
+        "AvailabilityZoneId":{"shape":"XmlStringMaxLen255"},
+        "InstanceIds":{"shape":"InstanceIds"}
+      }
+    },
+    "InstanceCollections":{
+      "type":"list",
+      "member":{"shape":"InstanceCollection"}
     },
     "InstanceGeneration":{
       "type":"string",
@@ -2474,6 +2533,51 @@
       "members":{
         "LaunchConfigurations":{"shape":"LaunchConfigurations"},
         "NextToken":{"shape":"XmlString"}
+      }
+    },
+    "LaunchInstancesError":{
+      "type":"structure",
+      "members":{
+        "InstanceType":{"shape":"XmlStringMaxLen255"},
+        "MarketType":{"shape":"XmlStringMaxLen64"},
+        "SubnetId":{"shape":"XmlStringMaxLen255"},
+        "AvailabilityZone":{"shape":"XmlStringMaxLen255"},
+        "AvailabilityZoneId":{"shape":"XmlStringMaxLen255"},
+        "ErrorCode":{"shape":"XmlStringMaxLen64"},
+        "ErrorMessage":{"shape":"XmlString"}
+      }
+    },
+    "LaunchInstancesErrors":{
+      "type":"list",
+      "member":{"shape":"LaunchInstancesError"}
+    },
+    "LaunchInstancesRequest":{
+      "type":"structure",
+      "required":[
+        "AutoScalingGroupName",
+        "RequestedCapacity",
+        "ClientToken"
+      ],
+      "members":{
+        "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"},
+        "RequestedCapacity":{"shape":"RequestedCapacity"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "AvailabilityZones":{"shape":"AvailabilityZonesLimit1"},
+        "AvailabilityZoneIds":{"shape":"AvailabilityZoneIdsLimit1"},
+        "SubnetIds":{"shape":"SubnetIdsLimit1"},
+        "RetryStrategy":{"shape":"RetryStrategy"}
+      }
+    },
+    "LaunchInstancesResult":{
+      "type":"structure",
+      "members":{
+        "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"},
+        "ClientToken":{"shape":"ClientToken"},
+        "Instances":{"shape":"InstanceCollections"},
+        "Errors":{"shape":"LaunchInstancesErrors"}
       }
     },
     "LaunchTemplate":{
@@ -3192,6 +3296,10 @@
       "type":"string",
       "enum":["Rolling"]
     },
+    "RequestedCapacity":{
+      "type":"integer",
+      "min":1
+    },
     "ResourceContentionFault":{
       "type":"structure",
       "members":{
@@ -3221,6 +3329,13 @@
       "max":1600,
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
+    "RetryStrategy":{
+      "type":"string",
+      "enum":[
+        "retry-with-group-configuration",
+        "none"
+      ]
     },
     "ReturnData":{"type":"boolean"},
     "ReuseOnScaleIn":{"type":"boolean"},
@@ -3473,6 +3588,11 @@
       "member":{"shape":"StepAdjustment"}
     },
     "String":{"type":"string"},
+    "SubnetIdsLimit1":{
+      "type":"list",
+      "member":{"shape":"XmlStringMaxLen255"},
+      "max":1
+    },
     "SuspendedProcess":{
       "type":"structure",
       "members":{

@@ -354,6 +354,18 @@
         {"shape":"ChangeSetNotFoundException"}
       ]
     },
+    "DescribeEvents":{
+      "name":"DescribeEvents",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeEventsInput"},
+      "output":{
+        "shape":"DescribeEventsOutput",
+        "resultWrapper":"DescribeEventsResult"
+      }
+    },
     "DescribeGeneratedTemplate":{
       "name":"DescribeGeneratedTemplate",
       "http":{
@@ -1409,6 +1421,10 @@
     },
     "AfterContext":{"type":"string"},
     "AfterValue":{"type":"string"},
+    "AfterValueFrom":{
+      "type":"string",
+      "enum":["TEMPLATE"]
+    },
     "AllowedValue":{"type":"string"},
     "AllowedValues":{
       "type":"list",
@@ -1473,7 +1489,8 @@
       "enum":[
         "Add",
         "Remove",
-        "Modify"
+        "Modify",
+        "SyncWithActual"
       ]
     },
     "AutoDeployment":{
@@ -1512,8 +1529,23 @@
         "TypeConfigurations":{"shape":"TypeConfigurationDetailsList"}
       }
     },
+    "BeaconStackOperationStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    },
     "BeforeContext":{"type":"string"},
     "BeforeValue":{"type":"string"},
+    "BeforeValueFrom":{
+      "type":"string",
+      "enum":[
+        "PREVIOUS_DEPLOYMENT_STATE",
+        "ACTUAL_STATE"
+      ]
+    },
     "BoxedInteger":{
       "type":"integer",
       "box":true
@@ -1589,7 +1621,8 @@
         "Modify",
         "Remove",
         "Import",
-        "Dynamic"
+        "Dynamic",
+        "SyncWithActual"
       ]
     },
     "ChangeSetHook":{
@@ -1708,7 +1741,8 @@
         "ParameterReference",
         "ResourceAttribute",
         "DirectModification",
-        "Automatic"
+        "Automatic",
+        "NoModification"
       ]
     },
     "ChangeType":{
@@ -1798,7 +1832,8 @@
         "ResourcesToImport":{"shape":"ResourcesToImport"},
         "IncludeNestedStacks":{"shape":"IncludeNestedStacks"},
         "OnStackFailure":{"shape":"OnStackFailure"},
-        "ImportExistingResources":{"shape":"ImportExistingResources"}
+        "ImportExistingResources":{"shape":"ImportExistingResources"},
+        "DeploymentMode":{"shape":"DeploymentMode"}
       }
     },
     "CreateChangeSetOutput":{
@@ -1877,7 +1912,8 @@
     "CreateStackOutput":{
       "type":"structure",
       "members":{
-        "StackId":{"shape":"StackId"}
+        "StackId":{"shape":"StackId"},
+        "OperationId":{"shape":"OperationId"}
       }
     },
     "CreateStackRefactorInput":{
@@ -2035,6 +2071,10 @@
       ]
     },
     "DeletionTime":{"type":"timestamp"},
+    "DeploymentMode":{
+      "type":"string",
+      "enum":["REVERT_DRIFT"]
+    },
     "DeploymentTargets":{
       "type":"structure",
       "members":{
@@ -2122,6 +2162,7 @@
         "ExecutionStatus":{"shape":"ExecutionStatus"},
         "Status":{"shape":"ChangeSetStatus"},
         "StatusReason":{"shape":"ChangeSetStatusReason"},
+        "StackDriftStatus":{"shape":"StackDriftStatus"},
         "NotificationARNs":{"shape":"NotificationARNs"},
         "RollbackConfiguration":{"shape":"RollbackConfiguration"},
         "Capabilities":{"shape":"Capabilities"},
@@ -2132,7 +2173,25 @@
         "ParentChangeSetId":{"shape":"ChangeSetId"},
         "RootChangeSetId":{"shape":"ChangeSetId"},
         "OnStackFailure":{"shape":"OnStackFailure"},
-        "ImportExistingResources":{"shape":"ImportExistingResources"}
+        "ImportExistingResources":{"shape":"ImportExistingResources"},
+        "DeploymentMode":{"shape":"DeploymentMode"}
+      }
+    },
+    "DescribeEventsInput":{
+      "type":"structure",
+      "members":{
+        "StackName":{"shape":"StackNameOrId"},
+        "ChangeSetName":{"shape":"ChangeSetNameOrId"},
+        "OperationId":{"shape":"OperationId"},
+        "Filters":{"shape":"EventFilter"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeEventsOutput":{
+      "type":"structure",
+      "members":{
+        "OperationEvents":{"shape":"OperationEvents"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "DescribeGeneratedTemplateInput":{
@@ -2514,6 +2573,13 @@
       ]
     },
     "DisableRollback":{"type":"boolean"},
+    "DriftIgnoredReason":{
+      "type":"string",
+      "enum":[
+        "MANAGED_BY_AWS",
+        "WRITE_ONLY_PROPERTY"
+      ]
+    },
     "DriftedStackInstancesCount":{
       "type":"integer",
       "min":0
@@ -2551,7 +2617,23 @@
         "Dynamic"
       ]
     },
+    "EventFilter":{
+      "type":"structure",
+      "members":{
+        "FailedEvents":{"shape":"FailedEventsFilter"}
+      }
+    },
     "EventId":{"type":"string"},
+    "EventType":{
+      "type":"string",
+      "enum":[
+        "STACK_EVENT",
+        "PROGRESS_EVENT",
+        "VALIDATION_ERROR",
+        "PROVISIONING_ERROR",
+        "HOOK_INVOCATION_ERROR"
+      ]
+    },
     "ExecuteChangeSetInput":{
       "type":"structure",
       "required":["ChangeSetName"],
@@ -2606,6 +2688,7 @@
       "type":"list",
       "member":{"shape":"Export"}
     },
+    "FailedEventsFilter":{"type":"boolean"},
     "FailedStackInstancesCount":{
       "type":"integer",
       "min":0
@@ -3035,6 +3118,10 @@
     "JazzResourceIdentifierPropertyKey":{"type":"string"},
     "JazzResourceIdentifierPropertyValue":{"type":"string"},
     "Key":{"type":"string"},
+    "LastOperations":{
+      "type":"list",
+      "member":{"shape":"OperationEntry"}
+    },
     "LastUpdatedTime":{"type":"timestamp"},
     "LimitExceededException":{
       "type":"structure",
@@ -3424,6 +3511,14 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "LiveResourceDrift":{
+      "type":"structure",
+      "members":{
+        "PreviousValue":{"shape":"ResourceDriftPreviousValue"},
+        "ActualValue":{"shape":"ResourceDriftActualValue"},
+        "DriftDetectionTimestamp":{"shape":"Timestamp"}
+      }
+    },
     "LogGroupName":{
       "type":"string",
       "max":512,
@@ -3531,6 +3626,50 @@
         "DELETE"
       ]
     },
+    "OperationEntry":{
+      "type":"structure",
+      "members":{
+        "OperationType":{"shape":"OperationType"},
+        "OperationId":{"shape":"OperationId"}
+      }
+    },
+    "OperationEvent":{
+      "type":"structure",
+      "members":{
+        "EventId":{"shape":"EventId"},
+        "StackId":{"shape":"StackId"},
+        "OperationId":{"shape":"OperationId"},
+        "OperationType":{"shape":"OperationType"},
+        "OperationStatus":{"shape":"BeaconStackOperationStatus"},
+        "EventType":{"shape":"EventType"},
+        "LogicalResourceId":{"shape":"LogicalResourceId"},
+        "PhysicalResourceId":{"shape":"PhysicalResourceId"},
+        "ResourceType":{"shape":"ResourceType"},
+        "Timestamp":{"shape":"Timestamp"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "ResourceStatus":{"shape":"ResourceStatus"},
+        "ResourceStatusReason":{"shape":"ResourceStatusReason"},
+        "ResourceProperties":{"shape":"ResourceProperties"},
+        "ClientRequestToken":{"shape":"ClientRequestToken"},
+        "HookType":{"shape":"HookType"},
+        "HookStatus":{"shape":"HookStatus"},
+        "HookStatusReason":{"shape":"HookStatusReason"},
+        "HookInvocationPoint":{"shape":"HookInvocationPoint"},
+        "HookFailureMode":{"shape":"HookFailureMode"},
+        "DetailedStatus":{"shape":"DetailedStatus"},
+        "ValidationFailureMode":{"shape":"HookFailureMode"},
+        "ValidationName":{"shape":"ValidationName"},
+        "ValidationStatus":{"shape":"ValidationStatus"},
+        "ValidationStatusReason":{"shape":"ValidationStatusReason"},
+        "ValidationPath":{"shape":"ValidationPath"}
+      }
+    },
+    "OperationEvents":{
+      "type":"list",
+      "member":{"shape":"OperationEvent"}
+    },
+    "OperationId":{"type":"string"},
     "OperationIdAlreadyExistsException":{
       "type":"structure",
       "members":{},
@@ -3601,6 +3740,17 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "OperationType":{
+      "type":"string",
+      "enum":[
+        "CREATE_STACK",
+        "UPDATE_STACK",
+        "DELETE_STACK",
+        "CONTINUE_ROLLBACK",
+        "ROLLBACK",
+        "CREATE_CHANGESET"
+      ]
     },
     "OptionalSecureUrl":{
       "type":"string",
@@ -3710,6 +3860,7 @@
         "ReplaceAndSnapshot"
       ]
     },
+    "PreviousDeploymentContext":{"type":"string"},
     "PrivateTypeArn":{
       "type":"string",
       "max":1024,
@@ -3960,11 +4111,14 @@
         "ResourceType":{"shape":"ResourceType"},
         "Replacement":{"shape":"Replacement"},
         "Scope":{"shape":"Scope"},
+        "ResourceDriftStatus":{"shape":"StackResourceDriftStatus"},
+        "ResourceDriftIgnoredAttributes":{"shape":"ResourceDriftIgnoredAttributes"},
         "Details":{"shape":"ResourceChangeDetails"},
         "ChangeSetId":{"shape":"ChangeSetId"},
         "ModuleInfo":{"shape":"ModuleInfo"},
         "BeforeContext":{"shape":"BeforeContext"},
-        "AfterContext":{"shape":"AfterContext"}
+        "AfterContext":{"shape":"AfterContext"},
+        "PreviousDeploymentContext":{"shape":"PreviousDeploymentContext"}
       }
     },
     "ResourceChangeDetail":{
@@ -4015,6 +4169,19 @@
       "max":500,
       "min":1
     },
+    "ResourceDriftActualValue":{"type":"string"},
+    "ResourceDriftIgnoredAttribute":{
+      "type":"structure",
+      "members":{
+        "Path":{"shape":"ResourcePropertyPath"},
+        "Reason":{"shape":"DriftIgnoredReason"}
+      }
+    },
+    "ResourceDriftIgnoredAttributes":{
+      "type":"list",
+      "member":{"shape":"ResourceDriftIgnoredAttribute"}
+    },
+    "ResourceDriftPreviousValue":{"type":"string"},
     "ResourceIdentifier":{"type":"string"},
     "ResourceIdentifierProperties":{
       "type":"map",
@@ -4198,6 +4365,9 @@
         "Path":{"shape":"ResourcePropertyPath"},
         "BeforeValue":{"shape":"BeforeValue"},
         "AfterValue":{"shape":"AfterValue"},
+        "BeforeValueFrom":{"shape":"BeforeValueFrom"},
+        "AfterValueFrom":{"shape":"AfterValueFrom"},
+        "Drift":{"shape":"LiveResourceDrift"},
         "AttributeChangeType":{"shape":"AttributeChangeType"}
       }
     },
@@ -4304,7 +4474,8 @@
     "RollbackStackOutput":{
       "type":"structure",
       "members":{
-        "StackId":{"shape":"StackId"}
+        "StackId":{"shape":"StackId"},
+        "OperationId":{"shape":"OperationId"}
       }
     },
     "RollbackTrigger":{
@@ -4470,7 +4641,8 @@
         "DriftInformation":{"shape":"StackDriftInformation"},
         "RetainExceptOnCreate":{"shape":"RetainExceptOnCreate"},
         "DeletionMode":{"shape":"DeletionMode"},
-        "DetailedStatus":{"shape":"DetailedStatus"}
+        "DetailedStatus":{"shape":"DetailedStatus"},
+        "LastOperations":{"shape":"LastOperations"}
       }
     },
     "StackDefinition":{
@@ -4536,6 +4708,7 @@
         "StackId":{"shape":"StackId"},
         "EventId":{"shape":"EventId"},
         "StackName":{"shape":"StackName"},
+        "OperationId":{"shape":"OperationId"},
         "LogicalResourceId":{"shape":"LogicalResourceId"},
         "PhysicalResourceId":{"shape":"PhysicalResourceId"},
         "ResourceType":{"shape":"ResourceType"},
@@ -4929,7 +5102,8 @@
         "MODIFIED",
         "DELETED",
         "NOT_CHECKED",
-        "UNKNOWN"
+        "UNKNOWN",
+        "UNSUPPORTED"
       ]
     },
     "StackResourceDriftStatusFilters":{
@@ -5241,7 +5415,8 @@
         "StackStatusReason":{"shape":"StackStatusReason"},
         "ParentId":{"shape":"StackId"},
         "RootId":{"shape":"StackId"},
-        "DriftInformation":{"shape":"StackDriftInformationSummary"}
+        "DriftInformation":{"shape":"StackDriftInformationSummary"},
+        "LastOperations":{"shape":"LastOperations"}
       }
     },
     "Stacks":{
@@ -5703,7 +5878,8 @@
     "UpdateStackOutput":{
       "type":"structure",
       "members":{
-        "StackId":{"shape":"StackId"}
+        "StackId":{"shape":"StackId"},
+        "OperationId":{"shape":"OperationId"}
       }
     },
     "UpdateStackSetInput":{
@@ -5777,6 +5953,16 @@
         "DeclaredTransforms":{"shape":"TransformsList"}
       }
     },
+    "ValidationName":{"type":"string"},
+    "ValidationPath":{"type":"string"},
+    "ValidationStatus":{
+      "type":"string",
+      "enum":[
+        "FAILED",
+        "SKIPPED"
+      ]
+    },
+    "ValidationStatusReason":{"type":"string"},
     "Value":{"type":"string"},
     "Version":{"type":"string"},
     "VersionBump":{

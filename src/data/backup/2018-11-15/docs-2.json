@@ -14,6 +14,7 @@
     "CreateRestoreAccessBackupVault": "<p>Creates a restore access backup vault that provides temporary access to recovery points in a logically air-gapped backup vault, subject to MPA approval.</p>",
     "CreateRestoreTestingPlan": "<p>Creates a restore testing plan.</p> <p>The first of two steps to create a restore testing plan. After this request is successful, finish the procedure using CreateRestoreTestingSelection.</p>",
     "CreateRestoreTestingSelection": "<p>This request can be sent after CreateRestoreTestingPlan request returns successfully. This is the second part of creating a resource testing plan, and it must be completed sequentially.</p> <p>This consists of <code>RestoreTestingSelectionName</code>, <code>ProtectedResourceType</code>, and one of the following:</p> <ul> <li> <p> <code>ProtectedResourceArns</code> </p> </li> <li> <p> <code>ProtectedResourceConditions</code> </p> </li> </ul> <p>Each protected resource type can have one single value.</p> <p>A restore testing selection can include a wildcard value (\"*\") for <code>ProtectedResourceArns</code> along with <code>ProtectedResourceConditions</code>. Alternatively, you can include up to 30 specific protected resource ARNs in <code>ProtectedResourceArns</code>.</p> <p>Cannot select by both protected resource types AND specific ARNs. Request will fail if both are included.</p>",
+    "CreateTieringConfiguration": "<p>Creates a tiering configuration.</p> <p>A tiering configuration enables automatic movement of backup data to a lower-cost storage tier based on the age of backed-up objects in the backup vault.</p> <p>Each vault can only have one vault-specific tiering configuration, in addition to any global configuration that applies to all vaults.</p>",
     "DeleteBackupPlan": "<p>Deletes a backup plan. A backup plan can only be deleted after all associated selections of resources have been deleted. Deleting a backup plan deletes the current version of a backup plan. Previous versions, if any, will still exist.</p>",
     "DeleteBackupSelection": "<p>Deletes the resource selection associated with a backup plan that is specified by the <code>SelectionId</code>.</p>",
     "DeleteBackupVault": "<p>Deletes the backup vault identified by its name. A vault can be deleted only if it is empty.</p>",
@@ -25,6 +26,7 @@
     "DeleteReportPlan": "<p>Deletes the report plan specified by a report plan name.</p>",
     "DeleteRestoreTestingPlan": "<p>This request deletes the specified restore testing plan.</p> <p>Deletion can only successfully occur if all associated restore testing selections are deleted first.</p>",
     "DeleteRestoreTestingSelection": "<p>Input the Restore Testing Plan name and Restore Testing Selection name.</p> <p>All testing selections associated with a restore testing plan must be deleted before the restore testing plan can be deleted.</p>",
+    "DeleteTieringConfiguration": "<p>Deletes the tiering configuration specified by a tiering configuration name.</p>",
     "DescribeBackupJob": "<p>Returns backup job details for the specified <code>BackupJobId</code>.</p>",
     "DescribeBackupVault": "<p>Returns metadata about a backup vault specified by its name.</p>",
     "DescribeCopyJob": "<p>Returns metadata associated with creating a copy of a resource.</p>",
@@ -54,6 +56,7 @@
     "GetRestoreTestingPlan": "<p>Returns <code>RestoreTestingPlan</code> details for the specified <code>RestoreTestingPlanName</code>. The details are the body of a restore testing plan in JSON format, in addition to plan metadata.</p>",
     "GetRestoreTestingSelection": "<p>Returns RestoreTestingSelection, which displays resources and elements of the restore testing plan.</p>",
     "GetSupportedResourceTypes": "<p>Returns the Amazon Web Services resource types supported by Backup.</p>",
+    "GetTieringConfiguration": "<p>Returns <code>TieringConfiguration</code> details for the specified <code>TieringConfigurationName</code>. The details are the body of a tiering configuration in JSON format, in addition to configuration metadata.</p>",
     "ListBackupJobSummaries": "<p>This is a request for a summary of backup jobs created or running within the most recent 30 days. You can include parameters AccountID, State, ResourceType, MessageCategory, AggregationPeriod, MaxResults, or NextToken to filter results.</p> <p>This request returns a summary that contains Region, Account, State, ResourceType, MessageCategory, StartTime, EndTime, and Count of included jobs.</p>",
     "ListBackupJobs": "<p>Returns a list of existing backup jobs for an authenticated account for the last 30 days. For a longer period of time, consider using these <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/monitoring.html\">monitoring tools</a>.</p>",
     "ListBackupPlanTemplates": "<p>Lists the backup plan templates.</p>",
@@ -80,6 +83,7 @@
     "ListRestoreTestingPlans": "<p>Returns a list of restore testing plans.</p>",
     "ListRestoreTestingSelections": "<p>Returns a list of restore testing selections. Can be filtered by <code>MaxResults</code> and <code>RestoreTestingPlanName</code>.</p>",
     "ListTags": "<p>Returns the tags assigned to the resource, such as a target recovery point, backup plan, or backup vault.</p> <p>This operation returns results depending on the resource type used in the value for <code>resourceArn</code>. For example, recovery points of Amazon DynamoDB with Advanced Settings have an ARN (Amazon Resource Name) that begins with <code>arn:aws:backup</code>. Recovery points (backups) of DynamoDB without Advanced Settings enabled have an ARN that begins with <code>arn:aws:dynamodb</code>.</p> <p>When this operation is called and when you include values of <code>resourceArn</code> that have an ARN other than <code>arn:aws:backup</code>, it may return one of the exceptions listed below. To prevent this exception, include only values representing resource types that are fully managed by Backup. These have an ARN that begins <code>arn:aws:backup</code> and they are noted in the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource\">Feature availability by resource</a> table.</p>",
+    "ListTieringConfigurations": "<p>Returns a list of tiering configurations.</p>",
     "PutBackupVaultAccessPolicy": "<p>Sets a resource-based policy that is used to manage access permissions on the target backup vault. Requires a backup vault name and an access policy document in JSON format.</p>",
     "PutBackupVaultLockConfiguration": "<p>Applies Backup Vault Lock to a backup vault, preventing attempts to delete any recovery point stored in or created in a backup vault. Vault Lock also prevents attempts to update the lifecycle policy that controls the retention period of any recovery point currently stored in a backup vault. If specified, Vault Lock enforces a minimum and maximum retention period for future backup and copy jobs that target a backup vault.</p> <note> <p>Backup Vault Lock has been assessed by Cohasset Associates for use in environments that are subject to SEC 17a-4, CFTC, and FINRA regulations. For more information about how Backup Vault Lock relates to these regulations, see the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/samples/cohassetreport.zip\">Cohasset Associates Compliance Assessment.</a> </p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/vault-lock.html\">Backup Vault Lock</a>.</p>",
     "PutBackupVaultNotifications": "<p>Turns on notifications on a backup vault for the specified topic and events.</p>",
@@ -100,7 +104,8 @@
     "UpdateRegionSettings": "<p>Updates the current service opt-in settings for the Region.</p> <p>Use the <code>DescribeRegionSettings</code> API to determine the resource types that are supported.</p>",
     "UpdateReportPlan": "<p>Updates the specified report plan.</p>",
     "UpdateRestoreTestingPlan": "<p>This request will send changes to your specified restore testing plan. <code>RestoreTestingPlanName</code> cannot be updated after it is created.</p> <p> <code>RecoveryPointSelection</code> can contain:</p> <ul> <li> <p> <code>Algorithm</code> </p> </li> <li> <p> <code>ExcludeVaults</code> </p> </li> <li> <p> <code>IncludeVaults</code> </p> </li> <li> <p> <code>RecoveryPointTypes</code> </p> </li> <li> <p> <code>SelectionWindowDays</code> </p> </li> </ul>",
-    "UpdateRestoreTestingSelection": "<p>Updates the specified restore testing selection.</p> <p>Most elements except the <code>RestoreTestingSelectionName</code> can be updated with this request.</p> <p>You can use either protected resource ARNs or conditions, but not both.</p>"
+    "UpdateRestoreTestingSelection": "<p>Updates the specified restore testing selection.</p> <p>Most elements except the <code>RestoreTestingSelectionName</code> can be updated with this request.</p> <p>You can use either protected resource ARNs or conditions, but not both.</p>",
+    "UpdateTieringConfiguration": "<p>This request will send changes to your specified tiering configuration. <code>TieringConfigurationName</code> cannot be updated after it is created.</p> <p> <code>ResourceSelection</code> can contain:</p> <ul> <li> <p> <code>Resources</code> </p> </li> <li> <p> <code>TieringDownSettingsInDays</code> </p> </li> <li> <p> <code>ResourceType</code> </p> </li> </ul>"
   },
   "shapes": {
     "ARN": {
@@ -133,6 +138,7 @@
         "CreateReportPlanOutput$ReportPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>",
         "CreateRestoreAccessBackupVaultInput$SourceBackupVaultArn": "<p>The ARN of the source backup vault containing the recovery points to which temporary access is requested.</p>",
         "CreateRestoreAccessBackupVaultOutput$RestoreAccessBackupVaultArn": "<p>The ARN that uniquely identifies the created restore access backup vault.</p>",
+        "CreateTieringConfigurationOutput$TieringConfigurationArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies the created tiering configuration.</p>",
         "DeleteBackupPlanOutput$BackupPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup plan; for example, <code>arn:aws:backup:us-east-1:123456789012:plan:8F81F553-3A74-4A3F-B93D-B3360DC80C50</code>.</p>",
         "DeleteRecoveryPointInput$RecoveryPointArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
         "DescribeBackupJobOutput$BackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
@@ -224,6 +230,8 @@
         "StartCopyJobInput$DestinationBackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a destination backup vault to copy to; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
         "StartRestoreJobInput$RecoveryPointArn": "<p>An ARN that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
         "TagResourceInput$ResourceArn": "<p>The ARN that uniquely identifies the resource.</p>",
+        "TieringConfiguration$TieringConfigurationArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies the tiering configuration.</p>",
+        "TieringConfigurationsListMember$TieringConfigurationArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies the tiering configuration.</p>",
         "UntagResourceInput$ResourceArn": "<p>An ARN that uniquely identifies a resource. The format of the ARN depends on the type of the tagged resource.</p> <p>ARNs that do not include <code>backup</code> are incompatible with tagging. <code>TagResource</code> and <code>UntagResource</code> with invalid ARNs will result in an error. Acceptable ARN content can include <code>arn:aws:backup:us-east</code>. Invalid ARN content may look like <code>arn:aws:ec2:us-east</code>.</p>",
         "UpdateBackupPlanOutput$BackupPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup plan; for example, <code>arn:aws:backup:us-east-1:123456789012:plan:8F81F553-3A74-4A3F-B93D-B3360DC80C50</code>.</p>",
         "UpdateFrameworkOutput$FrameworkArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>",
@@ -232,7 +240,8 @@
         "UpdateRecoveryPointLifecycleInput$RecoveryPointArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
         "UpdateRecoveryPointLifecycleOutput$BackupVaultArn": "<p>An ARN that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
         "UpdateRecoveryPointLifecycleOutput$RecoveryPointArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
-        "UpdateReportPlanOutput$ReportPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>"
+        "UpdateReportPlanOutput$ReportPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>",
+        "UpdateTieringConfigurationOutput$TieringConfigurationArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies the updated tiering configuration.</p>"
       }
     },
     "AccountId": {
@@ -542,6 +551,15 @@
         "UpdateRecoveryPointLifecycleInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p>"
       }
     },
+    "BackupVaultNameOrWildcard": {
+      "base": null,
+      "refs": {
+        "TieringConfiguration$BackupVaultName": "<p>The name of the backup vault where the tiering configuration applies. Use <code>*</code> to apply to all backup vaults.</p>",
+        "TieringConfigurationInputForCreate$BackupVaultName": "<p>The name of the backup vault where the tiering configuration applies. Use <code>*</code> to apply to all backup vaults.</p>",
+        "TieringConfigurationInputForUpdate$BackupVaultName": "<p>The name of the backup vault where the tiering configuration applies. Use <code>*</code> to apply to all backup vaults.</p>",
+        "TieringConfigurationsListMember$BackupVaultName": "<p>The name of the backup vault where the tiering configuration applies. Use <code>*</code> to apply to all backup vaults.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
@@ -789,6 +807,21 @@
       "base": null,
       "refs": {}
     },
+    "CreateTieringConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateTieringConfigurationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatorRequestId": {
+      "base": null,
+      "refs": {
+        "CreateTieringConfigurationInput$CreatorRequestId": "<p>This is a unique string that identifies the request and allows failed requests to be retried without the risk of running the operation twice. This parameter is optional. If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.</p>",
+        "TieringConfiguration$CreatorRequestId": "<p>This is a unique string that identifies the request and allows failed requests to be retried without the risk of running the operation twice.</p>"
+      }
+    },
     "CronExpression": {
       "base": null,
       "refs": {
@@ -847,6 +880,14 @@
       "refs": {}
     },
     "DeleteRestoreTestingSelectionInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTieringConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteTieringConfigurationOutput": {
       "base": null,
       "refs": {}
     },
@@ -1131,6 +1172,14 @@
       "refs": {}
     },
     "GetSupportedResourceTypesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTieringConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTieringConfigurationOutput": {
       "base": null,
       "refs": {}
     },
@@ -1540,6 +1589,14 @@
       "base": null,
       "refs": {}
     },
+    "ListTieringConfigurationsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTieringConfigurationsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "Long": {
       "base": null,
       "refs": {
@@ -1606,7 +1663,8 @@
         "ListRestoreJobSummariesInput$MaxResults": "<p>This parameter sets the maximum number of items to be returned.</p> <p>The value is an integer. Range of accepted values is from 1 to 500.</p>",
         "ListRestoreJobsByProtectedResourceInput$MaxResults": "<p>The maximum number of items to be returned.</p>",
         "ListRestoreJobsInput$MaxResults": "<p>The maximum number of items to be returned.</p>",
-        "ListTagsInput$MaxResults": "<p>The maximum number of items to be returned.</p>"
+        "ListTagsInput$MaxResults": "<p>The maximum number of items to be returned.</p>",
+        "ListTieringConfigurationsInput$MaxResults": "<p>The maximum number of items to be returned.</p>"
       }
     },
     "MaxScheduledRunsPreview": {
@@ -1870,7 +1928,8 @@
       "base": null,
       "refs": {
         "BackupSelection$Resources": "<p>The Amazon Resource Names (ARNs) of the resources to assign to a backup plan. The maximum number of ARNs is 500 without wildcards, or 30 ARNs with wildcards.</p> <p>If you need to assign many resources to a backup plan, consider a different resource selection strategy, such as assigning all resources of a resource type or refining your resource selection using tags.</p> <p>If you specify multiple ARNs, the resources much match any of the ARNs (OR logic).</p>",
-        "BackupSelection$NotResources": "<p>The Amazon Resource Names (ARNs) of the resources to exclude from a backup plan. The maximum number of ARNs is 500 without wildcards, or 30 ARNs with wildcards.</p> <p>If you need to exclude many resources from a backup plan, consider a different resource selection strategy, such as assigning only one or a few resource types or refining your resource selection using tags.</p>"
+        "BackupSelection$NotResources": "<p>The Amazon Resource Names (ARNs) of the resources to exclude from a backup plan. The maximum number of ARNs is 500 without wildcards, or 30 ARNs with wildcards.</p> <p>If you need to exclude many resources from a backup plan, consider a different resource selection strategy, such as assigning only one or a few resource types or refining your resource selection using tags.</p>",
+        "ResourceSelection$Resources": "<p>An array of strings that either contains ARNs of the associated resources or contains a wildcard <code>*</code> to specify all resources. You can specify up to 100 specific resources per tiering configuration.</p>"
       }
     },
     "ResourceIdentifiers": {
@@ -1882,6 +1941,20 @@
     "ResourceNotFoundException": {
       "base": "<p>A resource that is required for the action doesn't exist.</p>",
       "refs": {}
+    },
+    "ResourceSelection": {
+      "base": "<p>This contains metadata about resource selection for tiering configurations.</p> <p>You can specify up to 5 different resource selections per tiering configuration. Data moved to lower-cost tier remains there until deletion (one-way transition).</p>",
+      "refs": {
+        "ResourceSelections$member": null
+      }
+    },
+    "ResourceSelections": {
+      "base": null,
+      "refs": {
+        "TieringConfiguration$ResourceSelection": "<p>An array of resource selection objects that specify which resources are included in the tiering configuration and their tiering settings.</p>",
+        "TieringConfigurationInputForCreate$ResourceSelection": "<p>An array of resource selection objects that specify which resources are included in the tiering configuration and their tiering settings.</p>",
+        "TieringConfigurationInputForUpdate$ResourceSelection": "<p>An array of resource selection objects that specify which resources are included in the tiering configuration and their tiering settings.</p>"
+      }
     },
     "ResourceType": {
       "base": null,
@@ -1908,6 +1981,7 @@
         "ProtectedResource$ResourceType": "<p>The type of Amazon Web Services resource; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database. For Windows Volume Shadow Copy Service (VSS) backups, the only supported resource type is Amazon EC2.</p>",
         "RecoveryPointByBackupVault$ResourceType": "<p>The type of Amazon Web Services resource saved as a recovery point; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database. For Windows Volume Shadow Copy Service (VSS) backups, the only supported resource type is Amazon EC2.</p>",
         "RecoveryPointMember$ResourceType": "<p>The Amazon Web Services resource type that is saved as a recovery point.</p>",
+        "ResourceSelection$ResourceType": "<p>The type of Amazon Web Services resource; for example, <code>S3</code> for Amazon S3. For tiering configurations, this is currently limited to <code>S3</code>.</p>",
         "ResourceTypeManagementPreference$key": null,
         "ResourceTypeOptInPreference$key": null,
         "ResourceTypes$member": null,
@@ -2289,9 +2363,58 @@
         "CreateLegalHoldInput$Tags": "<p>Optional tags to include. A tag is a key-value pair you can use to manage, filter, and search for your resources. Allowed characters include UTF-8 letters, numbers, spaces, and the following characters: + - = . _ : /. </p>",
         "CreateLogicallyAirGappedBackupVaultInput$BackupVaultTags": "<p>The tags to assign to the vault.</p>",
         "CreateRestoreAccessBackupVaultInput$BackupVaultTags": "<p>Optional tags to assign to the restore access backup vault.</p>",
+        "CreateTieringConfigurationInput$TieringConfigurationTags": "<p>The tags to assign to the tiering configuration.</p>",
         "ListTagsOutput$Tags": "<p>Information about the tags.</p>",
         "StartBackupJobInput$RecoveryPointTags": "<p>The tags to assign to the resources.</p>",
         "TagResourceInput$Tags": "<p>Key-value pairs that are used to help organize your resources. You can assign your own metadata to the resources you create. For clarity, this is the structure to assign tags: <code>[{\"Key\":\"string\",\"Value\":\"string\"}]</code>.</p>"
+      }
+    },
+    "TieringConfiguration": {
+      "base": "<p>This contains metadata about a tiering configuration.</p>",
+      "refs": {
+        "GetTieringConfigurationOutput$TieringConfiguration": "<p>Specifies the body of a tiering configuration. Includes <code>TieringConfigurationName</code>.</p>"
+      }
+    },
+    "TieringConfigurationInputForCreate": {
+      "base": "<p>This contains metadata about a tiering configuration for create operations.</p>",
+      "refs": {
+        "CreateTieringConfigurationInput$TieringConfiguration": "<p>A tiering configuration must contain a unique <code>TieringConfigurationName</code> string you create and must contain a <code>BackupVaultName</code> and <code>ResourceSelection</code>. You may optionally include a <code>CreatorRequestId</code> string.</p> <p>The <code>TieringConfigurationName</code> is a unique string that is the name of the tiering configuration. This cannot be changed after creation, and it must consist of only alphanumeric characters and underscores.</p>"
+      }
+    },
+    "TieringConfigurationInputForUpdate": {
+      "base": "<p>This contains metadata about a tiering configuration for update operations.</p>",
+      "refs": {
+        "UpdateTieringConfigurationInput$TieringConfiguration": "<p>Specifies the body of a tiering configuration.</p>"
+      }
+    },
+    "TieringConfigurationName": {
+      "base": null,
+      "refs": {
+        "DeleteTieringConfigurationInput$TieringConfigurationName": "<p>The unique name of a tiering configuration.</p>",
+        "GetTieringConfigurationInput$TieringConfigurationName": "<p>The unique name of a tiering configuration.</p>",
+        "TieringConfiguration$TieringConfigurationName": "<p>The unique name of the tiering configuration. This cannot be changed after creation, and it must consist of only alphanumeric characters and underscores.</p>",
+        "TieringConfigurationInputForCreate$TieringConfigurationName": "<p>The unique name of the tiering configuration. This cannot be changed after creation, and it must consist of only alphanumeric characters and underscores.</p>",
+        "TieringConfigurationsListMember$TieringConfigurationName": "<p>The unique name of the tiering configuration.</p>",
+        "UpdateTieringConfigurationInput$TieringConfigurationName": "<p>The name of a tiering configuration to update.</p>",
+        "UpdateTieringConfigurationOutput$TieringConfigurationName": "<p>This unique string is the name of the tiering configuration.</p>"
+      }
+    },
+    "TieringConfigurationsList": {
+      "base": "<p>A list of tiering configurations.</p>",
+      "refs": {
+        "ListTieringConfigurationsOutput$TieringConfigurations": "<p>An array of tiering configurations returned by the <code>ListTieringConfigurations</code> call.</p>"
+      }
+    },
+    "TieringConfigurationsListMember": {
+      "base": "<p>This contains metadata about a tiering configuration returned in a list.</p>",
+      "refs": {
+        "TieringConfigurationsList$member": null
+      }
+    },
+    "TieringDownSettingsInDays": {
+      "base": null,
+      "refs": {
+        "ResourceSelection$TieringDownSettingsInDays": "<p>The number of days after creation within a backup vault that an object can transition to the low cost warm storage tier. Must be a positive integer between 60 and 36500 days.</p>"
       }
     },
     "Timestamp": {
@@ -2385,6 +2508,14 @@
       "refs": {}
     },
     "UpdateRestoreTestingSelectionOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTieringConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTieringConfigurationOutput": {
       "base": null,
       "refs": {}
     },
@@ -2536,6 +2667,7 @@
         "CreateLogicallyAirGappedBackupVaultInput$CreatorRequestId": "<p>The ID of the creation request.</p> <p>This parameter is optional. If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.</p>",
         "CreateReportPlanInput$IdempotencyToken": "<p>A customer-chosen string that you can use to distinguish between otherwise identical calls to <code>CreateReportPlanInput</code>. Retrying a successful request with the same idempotency token results in a success message with no action taken.</p>",
         "CreateRestoreAccessBackupVaultInput$CreatorRequestId": "<p>A unique string that identifies the request and allows failed requests to be retried without the risk of executing the operation twice.</p>",
+        "CreateTieringConfigurationOutput$TieringConfigurationName": "<p>This unique string is the name of the tiering configuration.</p> <p>The name cannot be changed after creation. The name consists of only alphanumeric characters and underscores. Maximum length is 200.</p>",
         "DeleteBackupPlanInput$BackupPlanId": "<p>Uniquely identifies a backup plan.</p>",
         "DeleteBackupPlanOutput$BackupPlanId": "<p>Uniquely identifies a backup plan.</p>",
         "DeleteBackupPlanOutput$VersionId": "<p>Unique, randomly generated, Unicode, UTF-8 encoded strings that are at most 1,024 bytes long. Version IDs cannot be edited.</p>",
@@ -2683,6 +2815,8 @@
         "ListRestoreJobsOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "ListTagsInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "ListTagsOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListTieringConfigurationsInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListTieringConfigurationsOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "MissingParameterValueException$Code": null,
         "MissingParameterValueException$Message": null,
         "MissingParameterValueException$Type": "<p/>",
@@ -2799,6 +2933,7 @@
         "CreateLogicallyAirGappedBackupVaultOutput$CreationDate": "<p>The date and time when the vault was created.</p> <p>This value is in Unix format, Coordinated Universal Time (UTC), and accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "CreateReportPlanOutput$CreationTime": "<p>The date and time a backup vault is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "CreateRestoreAccessBackupVaultOutput$CreationDate": "<p>&gt;The date and time when the restore access backup vault was created, in Unix format and Coordinated Universal Time </p>",
+        "CreateTieringConfigurationOutput$CreationTime": "<p>The date and time a tiering configuration was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>",
         "DateRange$FromDate": "<p>This value is the beginning date, inclusive.</p> <p>The date and time are in Unix format and Coordinated Universal Time (UTC), and it is accurate to milliseconds (milliseconds are optional).</p>",
         "DateRange$ToDate": "<p>This value is the end date, inclusive.</p> <p>The date and time are in Unix format and Coordinated Universal Time (UTC), and it is accurate to milliseconds (milliseconds are optional).</p>",
         "DeleteBackupPlanOutput$DeletionDate": "<p>The date and time a backup plan is deleted, in Unix format and Coordinated Universal Time (UTC). The value of <code>DeletionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
@@ -2881,9 +3016,15 @@
         "ScheduledPlanExecutionMember$ExecutionTime": "<p>The timestamp when the backup is scheduled to run, in Unix format and Coordinated Universal Time (UTC). The value is accurate to milliseconds.</p>",
         "StartBackupJobOutput$CreationDate": "<p>The date and time that a backup job is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "StartCopyJobOutput$CreationDate": "<p>The date and time that a copy job is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "TieringConfiguration$CreationTime": "<p>The date and time a tiering configuration was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>",
+        "TieringConfiguration$LastUpdatedTime": "<p>The date and time a tiering configuration was updated, in Unix format and Coordinated Universal Time (UTC). The value of <code>LastUpdatedTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>",
+        "TieringConfigurationsListMember$CreationTime": "<p>The date and time a tiering configuration was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>",
+        "TieringConfigurationsListMember$LastUpdatedTime": "<p>The date and time a tiering configuration was updated, in Unix format and Coordinated Universal Time (UTC). The value of <code>LastUpdatedTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>",
         "UpdateBackupPlanOutput$CreationDate": "<p>The date and time a backup plan is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "UpdateFrameworkOutput$CreationTime": "<p>The date and time that a framework is created, in ISO 8601 representation. The value of <code>CreationTime</code> is accurate to milliseconds. For example, 2020-07-10T15:00:00.000-08:00 represents the 10th of July 2020 at 3:00 PM 8 hours behind UTC.</p>",
-        "UpdateReportPlanOutput$CreationTime": "<p>The date and time that a report plan is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>"
+        "UpdateReportPlanOutput$CreationTime": "<p>The date and time that a report plan is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "UpdateTieringConfigurationOutput$CreationTime": "<p>The date and time a tiering configuration was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>",
+        "UpdateTieringConfigurationOutput$LastUpdatedTime": "<p>The date and time a tiering configuration was updated, in Unix format and Coordinated Universal Time (UTC). The value of <code>LastUpdatedTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>"
       }
     }
   }

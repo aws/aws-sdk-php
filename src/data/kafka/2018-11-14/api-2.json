@@ -596,6 +596,68 @@
         }
       ]
     },
+    "DescribeTopic": {
+      "name": "DescribeTopic",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/clusters/{clusterArn}/topics/{topicName}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeTopicRequest"
+      },
+      "output": {
+        "shape": "DescribeTopicResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        }
+      ]
+    },
+    "DescribeTopicPartitions": {
+      "name": "DescribeTopicPartitions",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/clusters/{clusterArn}/topics/{topicName}/partitions",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeTopicPartitionsRequest"
+      },
+      "output": {
+        "shape": "DescribeTopicPartitionsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        }
+      ]
+    },
     "DescribeVpcConnection": {
       "name": "DescribeVpcConnection",
       "http": {
@@ -1119,6 +1181,37 @@
       },
       "output": {
         "shape": "ListVpcConnectionsResponse"
+      },
+      "errors": [
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
+    },
+    "ListTopics": {
+      "name": "ListTopics",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/clusters/{clusterArn}/topics",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListTopicsRequest"
+      },
+      "output": {
+        "shape": "ListTopicsResponse"
       },
       "errors": [
         {
@@ -3066,6 +3159,118 @@
         }
       }
     },
+    "DescribeTopicRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "TopicName": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "topicName"
+        }
+      },
+      "required": [
+        "ClusterArn",
+        "TopicName"
+      ]
+    },
+    "DescribeTopicPartitionsRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "TopicName": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "topicName"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        }
+      },
+      "required": [
+        "ClusterArn",
+        "TopicName"
+      ]
+    },
+    "DescribeTopicResponse": {
+      "type": "structure",
+      "members": {
+        "TopicArn": {
+          "shape": "__string",
+          "locationName": "topicArn"
+        },
+        "TopicName": {
+          "shape": "__string",
+          "locationName": "topicName"
+        },
+        "ReplicationFactor": {
+          "shape": "__integer",
+          "locationName": "replicationFactor"
+        },
+        "PartitionCount": {
+          "shape": "__integer",
+          "locationName": "partitionCount"
+        },
+        "Configs": {
+          "shape": "__string",
+          "locationName": "configs"
+        },
+        "Status": {
+          "shape": "TopicState",
+          "locationName": "status"
+        }
+      }
+    },
+    "DescribeTopicPartitionsResponse": {
+      "type": "structure",
+      "members": {
+        "Partitions": {
+          "shape": "__listOfTopicPartitionInfo",
+          "locationName": "partitions"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "TopicPartitionInfo": {
+      "type": "structure",
+      "documentation": "<p>Contains information about a topic partition.</p>",
+      "members": {
+        "Partition": {
+          "shape": "__integer",
+          "locationName": "partition"
+        },
+        "Leader": {
+          "shape": "__integer",
+          "locationName": "leader"
+        },
+        "Replicas": {
+          "shape": "__listOf__integer",
+          "locationName": "replicas"
+        },
+        "Isr": {
+          "shape": "__listOf__integer",
+          "locationName": "isr"
+        }
+      }
+    },
     "DescribeReplicatorRequest": {
       "type": "structure",
       "members": {
@@ -4376,6 +4581,47 @@
         }
       }
     },
+    "ListTopicsRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterArn"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        },
+        "TopicNameFilter": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "topicNameFilter"
+        }
+      },
+      "required": [
+        "ClusterArn"
+      ]
+    },
+    "ListTopicsResponse": {
+      "type": "structure",
+      "members": {
+        "Topics": {
+          "shape": "__listOfTopicInfo",
+          "locationName": "topics"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
     "ListReplicatorsRequest": {
       "type": "structure",
       "members": {
@@ -4956,6 +5202,31 @@
         "Enabled": {
           "shape": "__boolean",
           "locationName": "enabled"
+        }
+      }
+    },
+    "TopicInfo": {
+      "type": "structure",
+      "members": {
+        "TopicArn": {
+          "shape": "__string",
+          "locationName": "topicArn"
+        },
+        "TopicName": {
+          "shape": "__string",
+          "locationName": "topicName"
+        },
+        "ReplicationFactor": {
+          "shape": "__integer",
+          "locationName": "replicationFactor"
+        },
+        "PartitionCount": {
+          "shape": "__integer",
+          "locationName": "partitionCount"
+        },
+        "OutOfSyncReplicaCount": {
+          "shape": "__integer",
+          "locationName": "outOfSyncReplicaCount"
         }
       }
     },
@@ -5689,6 +5960,15 @@
         }
       }
     },
+    "TopicState": {
+      "type": "string",
+      "enum": [
+        "CREATING",
+        "UPDATING",
+        "DELETING",
+        "ACTIVE"
+      ]
+    },
     "VpcConnectionState": {
       "type": "string",
       "enum": [
@@ -5823,6 +6103,10 @@
       "min": 1,
       "max": 16384
     },
+    "__integerMin1": {
+      "type": "integer",
+      "min": 1
+    },
     "__listOfBrokerEBSVolumeInfo": {
       "type": "list",
       "member": {
@@ -5943,6 +6227,18 @@
         "shape": "ReplicatorSummary"
       }
     },
+    "__listOfTopicInfo": {
+      "type": "list",
+      "member": {
+        "shape": "TopicInfo"
+      }
+    },
+    "__listOfTopicPartitionInfo": {
+      "type": "list",
+      "member": {
+        "shape": "TopicPartitionInfo"
+      }
+    },
     "__listOfVpcConnection": {
       "type": "list",
       "member": {
@@ -5965,6 +6261,12 @@
       "type": "list",
       "member": {
         "shape": "__string"
+      }
+    },
+    "__listOf__integer": {
+      "type": "list",
+      "member": {
+        "shape": "__integer"
       }
     },
     "__listOf__stringMax249": {

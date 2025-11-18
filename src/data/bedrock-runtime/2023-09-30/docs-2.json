@@ -409,6 +409,7 @@
         "ConverseRequest$additionalModelRequestFields": "<p>Additional inference parameters that the model supports, beyond the base set of inference parameters that <code>Converse</code> and <code>ConverseStream</code> support in the <code>inferenceConfig</code> field. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Model parameters</a>.</p>",
         "ConverseResponse$additionalModelResponseFields": "<p>Additional fields in the response that are unique to the model. </p>",
         "ConverseStreamRequest$additionalModelRequestFields": "<p>Additional inference parameters that the model supports, beyond the base set of inference parameters that <code>Converse</code> and <code>ConverseStream</code> support in the <code>inferenceConfig</code> field. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Model parameters</a>.</p>",
+        "ConverseTokensRequest$additionalModelRequestFields": "<p>The additionalModelRequestFields of Converse input request to count tokens for. Use this field when you want to pass additional parameters that the model supports.</p>",
         "MessageStopEvent$additionalModelResponseFields": "<p>The additional model response fields.</p>",
         "ToolInputSchema$json": "<p>The JSON schema for the tool. For more information, see <a href=\"https://json-schema.org/understanding-json-schema/reference\">JSON Schema Reference</a>.</p>",
         "ToolResultContentBlock$json": "<p>A tool result that is JSON format data. </p>",
@@ -1648,6 +1649,25 @@
       "base": "<p>Your request exceeds the service quota for your account. You can view your quotas at <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/gs-request-quota.html\">Viewing service quotas</a>. You can resubmit your request later.</p>",
       "refs": {}
     },
+    "ServiceTier": {
+      "base": "<p>Specifies the processing tier configuration used for serving the request.</p>",
+      "refs": {
+        "ConverseRequest$serviceTier": "<p>Specifies the processing tier configuration used for serving the request.</p>",
+        "ConverseResponse$serviceTier": "<p>Specifies the processing tier configuration used for serving the request.</p>",
+        "ConverseStreamMetadataEvent$serviceTier": "<p>Specifies the processing tier configuration used for serving the request.</p>",
+        "ConverseStreamRequest$serviceTier": "<p>Specifies the processing tier configuration used for serving the request.</p>"
+      }
+    },
+    "ServiceTierType": {
+      "base": null,
+      "refs": {
+        "InvokeModelRequest$serviceTier": "<p>Specifies the processing tier type used for serving the request.</p>",
+        "InvokeModelResponse$serviceTier": "<p>Specifies the processing tier type used for serving the request.</p>",
+        "InvokeModelWithResponseStreamRequest$serviceTier": "<p>Specifies the processing tier type used for serving the request.</p>",
+        "InvokeModelWithResponseStreamResponse$serviceTier": "<p>Specifies the processing tier type used for serving the request.</p>",
+        "ServiceTier$type": "<p>Specifies the processing tier type used for serving the request.</p>"
+      }
+    },
     "ServiceUnavailableException": {
       "base": "<p>The service isn't currently available. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-service-unavailable\">ServiceUnavailable</a> in the Amazon Bedrock User Guide</p>",
       "refs": {
@@ -1867,7 +1887,8 @@
       "base": "<p>Configuration information for the tools that you pass to a model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Tool use (function calling)</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "ConverseRequest$toolConfig": "<p>Configuration information for the tools that the model can use when generating a response. </p> <p>For information about models that support tool use, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html#conversation-inference-supported-models-features\">Supported models and model features</a>.</p>",
-        "ConverseStreamRequest$toolConfig": "<p>Configuration information for the tools that the model can use when generating a response.</p> <p>For information about models that support streaming tool use, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html#conversation-inference-supported-models-features\">Supported models and model features</a>.</p>"
+        "ConverseStreamRequest$toolConfig": "<p>Configuration information for the tools that the model can use when generating a response.</p> <p>For information about models that support streaming tool use, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html#conversation-inference-supported-models-features\">Supported models and model features</a>.</p>",
+        "ConverseTokensRequest$toolConfig": "<p>The toolConfig of Converse input request to count tokens for. Configuration information for the tools that the model can use when generating a response.</p>"
       }
     },
     "ToolConfigurationToolsList": {

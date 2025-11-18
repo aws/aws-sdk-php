@@ -15,6 +15,19 @@
     "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "AcceptDelegationRequest":{
+      "name":"AcceptDelegationRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AcceptDelegationRequestRequest"},
+      "errors":[
+        {"shape":"NoSuchEntityException"},
+        {"shape":"ServiceFailureException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
     "AddClientIDToOpenIDConnectProvider":{
       "name":"AddClientIDToOpenIDConnectProvider",
       "http":{
@@ -56,6 +69,20 @@
         {"shape":"NoSuchEntityException"},
         {"shape":"LimitExceededException"},
         {"shape":"ServiceFailureException"}
+      ]
+    },
+    "AssociateDelegationRequest":{
+      "name":"AssociateDelegationRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateDelegationRequestRequest"},
+      "errors":[
+        {"shape":"NoSuchEntityException"},
+        {"shape":"ServiceFailureException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"InvalidInputException"}
       ]
     },
     "AttachGroupPolicy":{
@@ -1013,6 +1040,22 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "GetDelegationRequest":{
+      "name":"GetDelegationRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDelegationRequestRequest"},
+      "output":{
+        "shape":"GetDelegationRequestResponse",
+        "resultWrapper":"GetDelegationRequestResult"
+      },
+      "errors":[
+        {"shape":"NoSuchEntityException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "GetGroup":{
       "name":"GetGroup",
       "http":{
@@ -1041,6 +1084,23 @@
         "resultWrapper":"GetGroupPolicyResult"
       },
       "errors":[
+        {"shape":"NoSuchEntityException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "GetHumanReadableSummary":{
+      "name":"GetHumanReadableSummary",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetHumanReadableSummaryRequest"},
+      "output":{
+        "shape":"GetHumanReadableSummaryResponse",
+        "resultWrapper":"GetHumanReadableSummaryResult"
+      },
+      "errors":[
+        {"shape":"InvalidInputException"},
         {"shape":"NoSuchEntityException"},
         {"shape":"ServiceFailureException"}
       ]
@@ -1401,6 +1461,23 @@
         {"shape":"NoSuchEntityException"},
         {"shape":"InvalidInputException"},
         {"shape":"ServiceFailureException"}
+      ]
+    },
+    "ListDelegationRequests":{
+      "name":"ListDelegationRequests",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDelegationRequestsRequest"},
+      "output":{
+        "shape":"ListDelegationRequestsResponse",
+        "resultWrapper":"ListDelegationRequestsResult"
+      },
+      "errors":[
+        {"shape":"NoSuchEntityException"},
+        {"shape":"ServiceFailureException"},
+        {"shape":"InvalidInputException"}
       ]
     },
     "ListEntitiesForPolicy":{
@@ -1950,6 +2027,20 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "RejectDelegationRequest":{
+      "name":"RejectDelegationRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RejectDelegationRequestRequest"},
+      "errors":[
+        {"shape":"NoSuchEntityException"},
+        {"shape":"ServiceFailureException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"InvalidInputException"}
+      ]
+    },
     "RemoveClientIDFromOpenIDConnectProvider":{
       "name":"RemoveClientIDFromOpenIDConnectProvider",
       "http":{
@@ -2019,6 +2110,20 @@
         {"shape":"LimitExceededException"},
         {"shape":"ServiceFailureException"},
         {"shape":"ConcurrentModificationException"}
+      ]
+    },
+    "SendDelegationToken":{
+      "name":"SendDelegationToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SendDelegationTokenRequest"},
+      "errors":[
+        {"shape":"NoSuchEntityException"},
+        {"shape":"ServiceFailureException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"InvalidInputException"}
       ]
     },
     "SetDefaultPolicyVersion":{
@@ -2352,6 +2457,20 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "UpdateDelegationRequest":{
+      "name":"UpdateDelegationRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateDelegationRequestRequest"},
+      "errors":[
+        {"shape":"NoSuchEntityException"},
+        {"shape":"ServiceFailureException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"InvalidInputException"}
+      ]
+    },
     "UpdateGroup":{
       "name":"UpdateGroup",
       "http":{
@@ -2579,6 +2698,13 @@
     }
   },
   "shapes":{
+    "AcceptDelegationRequestRequest":{
+      "type":"structure",
+      "required":["DelegationRequestId"],
+      "members":{
+        "DelegationRequestId":{"shape":"delegationRequestIdType"}
+      }
+    },
     "AccessAdvisorUsageGranularityType":{
       "type":"string",
       "enum":[
@@ -2692,6 +2818,13 @@
     "ArnListType":{
       "type":"list",
       "member":{"shape":"arnType"}
+    },
+    "AssociateDelegationRequestRequest":{
+      "type":"structure",
+      "required":["DelegationRequestId"],
+      "members":{
+        "DelegationRequestId":{"shape":"delegationRequestIdType"}
+      }
     },
     "AttachGroupPolicyRequest":{
       "type":"structure",
@@ -3141,6 +3274,30 @@
       "members":{
         "PolicyTemplateArn":{"shape":"arnType"},
         "Parameters":{"shape":"policyParameterListType"}
+      }
+    },
+    "DelegationRequest":{
+      "type":"structure",
+      "members":{
+        "DelegationRequestId":{"shape":"delegationRequestIdType"},
+        "OwnerAccountId":{"shape":"accountIdType"},
+        "Description":{"shape":"delegationRequestDescriptionType"},
+        "RequestMessage":{"shape":"requestMessageType"},
+        "Permissions":{"shape":"DelegationPermission"},
+        "PermissionPolicy":{"shape":"permissionType"},
+        "RolePermissionRestrictionArns":{"shape":"rolePermissionRestrictionArnListType"},
+        "OwnerId":{"shape":"ownerIdType"},
+        "ApproverId":{"shape":"arnType"},
+        "State":{"shape":"stateType"},
+        "RequestorId":{"shape":"accountIdType"},
+        "RequestorName":{"shape":"requestorNameType"},
+        "CreateDate":{"shape":"dateType"},
+        "SessionDuration":{"shape":"sessionDurationType"},
+        "RedirectUrl":{"shape":"redirectUrlType"},
+        "Notes":{"shape":"notesType"},
+        "RejectionReason":{"shape":"notesType"},
+        "OnlySendByOwner":{"shape":"booleanType"},
+        "UpdatedTime":{"shape":"dateType"}
       }
     },
     "DeleteAccessKeyRequest":{
@@ -3697,6 +3854,22 @@
         "GeneratedTime":{"shape":"dateType"}
       }
     },
+    "GetDelegationRequestRequest":{
+      "type":"structure",
+      "required":["DelegationRequestId"],
+      "members":{
+        "DelegationRequestId":{"shape":"delegationRequestIdType"},
+        "DelegationPermissionCheck":{"shape":"booleanType"}
+      }
+    },
+    "GetDelegationRequestResponse":{
+      "type":"structure",
+      "members":{
+        "DelegationRequest":{"shape":"DelegationRequest"},
+        "PermissionCheckStatus":{"shape":"permissionCheckStatusType"},
+        "PermissionCheckResult":{"shape":"permissionCheckResultType"}
+      }
+    },
     "GetGroupPolicyRequest":{
       "type":"structure",
       "required":[
@@ -3741,6 +3914,22 @@
         "Users":{"shape":"userListType"},
         "IsTruncated":{"shape":"booleanType"},
         "Marker":{"shape":"responseMarkerType"}
+      }
+    },
+    "GetHumanReadableSummaryRequest":{
+      "type":"structure",
+      "required":["EntityArn"],
+      "members":{
+        "EntityArn":{"shape":"arnType"},
+        "Locale":{"shape":"localeType"}
+      }
+    },
+    "GetHumanReadableSummaryResponse":{
+      "type":"structure",
+      "members":{
+        "SummaryContent":{"shape":"summaryContentType"},
+        "Locale":{"shape":"localeType"},
+        "SummaryState":{"shape":"summaryStateType"}
       }
     },
     "GetInstanceProfileRequest":{
@@ -4283,6 +4472,22 @@
         "AttachedPolicies":{"shape":"attachedPoliciesListType"},
         "IsTruncated":{"shape":"booleanType"},
         "Marker":{"shape":"responseMarkerType"}
+      }
+    },
+    "ListDelegationRequestsRequest":{
+      "type":"structure",
+      "members":{
+        "OwnerId":{"shape":"ownerIdType"},
+        "Marker":{"shape":"markerType"},
+        "MaxItems":{"shape":"maxItemsType"}
+      }
+    },
+    "ListDelegationRequestsResponse":{
+      "type":"structure",
+      "members":{
+        "DelegationRequests":{"shape":"delegationRequestsListType"},
+        "Marker":{"shape":"markerType"},
+        "isTruncated":{"shape":"booleanType"}
       }
     },
     "ListEntitiesForPolicyRequest":{
@@ -5196,6 +5401,14 @@
       "max":100,
       "min":1
     },
+    "RejectDelegationRequestRequest":{
+      "type":"structure",
+      "required":["DelegationRequestId"],
+      "members":{
+        "DelegationRequestId":{"shape":"delegationRequestIdType"},
+        "Notes":{"shape":"notesType"}
+      }
+    },
     "RemoveClientIDFromOpenIDConnectProviderRequest":{
       "type":"structure",
       "required":[
@@ -5440,6 +5653,13 @@
         "SSHPublicKeyId":{"shape":"publicKeyIdType"},
         "Status":{"shape":"statusType"},
         "UploadDate":{"shape":"dateType"}
+      }
+    },
+    "SendDelegationTokenRequest":{
+      "type":"structure",
+      "required":["DelegationRequestId"],
+      "members":{
+        "DelegationRequestId":{"shape":"delegationRequestIdType"}
       }
     },
     "ServerCertificate":{
@@ -5927,6 +6147,14 @@
         "PolicyDocument":{"shape":"policyDocumentType"}
       }
     },
+    "UpdateDelegationRequestRequest":{
+      "type":"structure",
+      "required":["DelegationRequestId"],
+      "members":{
+        "DelegationRequestId":{"shape":"delegationRequestIdType"},
+        "Notes":{"shape":"notesType"}
+      }
+    },
     "UpdateGroupRequest":{
       "type":"structure",
       "required":["GroupName"],
@@ -6290,6 +6518,10 @@
       "min":16,
       "pattern":"[\\w-]+"
     },
+    "delegationRequestsListType":{
+      "type":"list",
+      "member":{"shape":"DelegationRequest"}
+    },
     "deleteConflictMessage":{"type":"string"},
     "duplicateCertificateMessage":{"type":"string"},
     "duplicateSSHPublicKeyMessage":{"type":"string"},
@@ -6388,6 +6620,11 @@
       "type":"list",
       "member":{"shape":"ListPoliciesGrantingServiceAccessEntry"}
     },
+    "localeType":{
+      "type":"string",
+      "max":12,
+      "min":2
+    },
     "malformedCertificateMessage":{"type":"string"},
     "malformedPolicyDocumentMessage":{"type":"string"},
     "markerType":{
@@ -6417,10 +6654,16 @@
       "min":6
     },
     "noSuchEntityMessage":{"type":"string"},
+    "notesType":{
+      "type":"string",
+      "max":500,
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*"
+    },
     "notificationChannelType":{
       "type":"string",
       "max":400,
-      "min":2
+      "min":2,
+      "pattern":"^[a-zA-Z0-9:_.-]+$"
     },
     "openIdIdpCommunicationErrorExceptionMessage":{"type":"string"},
     "organizationsEntityPathType":{
@@ -6432,6 +6675,12 @@
     "organizationsPolicyIdType":{
       "type":"string",
       "pattern":"^p-[0-9a-zA-Z_]{8,128}$"
+    },
+    "ownerIdType":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^[a-zA-Z0-9:/+=,.@_-]+$"
     },
     "passwordPolicyViolationMessage":{"type":"string"},
     "passwordReusePreventionType":{
@@ -6459,6 +6708,23 @@
       "min":1,
       "pattern":"(\\u002F)|(\\u002F[\\u0021-\\u007E]+\\u002F)"
     },
+    "permissionCheckResultType":{
+      "type":"string",
+      "enum":[
+        "ALLOWED",
+        "DENIED",
+        "UNSURE"
+      ]
+    },
+    "permissionCheckStatusType":{
+      "type":"string",
+      "enum":[
+        "COMPLETE",
+        "IN_PROGRESS",
+        "FAILED"
+      ]
+    },
+    "permissionType":{"type":"string"},
     "policyDescriptionType":{
       "type":"string",
       "max":1000
@@ -6513,9 +6779,13 @@
     "policyParameterNameType":{
       "type":"string",
       "max":256,
-      "min":5
+      "min":5,
+      "pattern":"[ -~]+"
     },
-    "policyParameterValueType":{"type":"string"},
+    "policyParameterValueType":{
+      "type":"string",
+      "pattern":"[ -~]+"
+    },
     "policyParameterValuesListType":{
       "type":"list",
       "member":{"shape":"policyParameterValueType"}
@@ -6593,10 +6863,16 @@
       "max":200,
       "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*"
     },
+    "requestorNameType":{
+      "type":"string",
+      "max":30,
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*"
+    },
     "requestorWorkflowIdType":{
       "type":"string",
       "max":400,
-      "min":5
+      "min":5,
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]+"
     },
     "responseMarkerType":{"type":"string"},
     "roleDescriptionType":{
@@ -6622,6 +6898,10 @@
       "max":64,
       "min":1,
       "pattern":"[\\w+=,.@-]+"
+    },
+    "rolePermissionRestrictionArnListType":{
+      "type":"list",
+      "member":{"shape":"arnType"}
     },
     "serialNumberType":{
       "type":"string",
@@ -6684,7 +6964,7 @@
     "sessionDurationType":{
       "type":"integer",
       "max":43200,
-      "min":3600
+      "min":300
     },
     "sortKeyType":{
       "type":"string",
@@ -6693,6 +6973,18 @@
         "SERVICE_NAMESPACE_DESCENDING",
         "LAST_AUTHENTICATED_TIME_ASCENDING",
         "LAST_AUTHENTICATED_TIME_DESCENDING"
+      ]
+    },
+    "stateType":{
+      "type":"string",
+      "enum":[
+        "UNASSIGNED",
+        "ASSIGNED",
+        "PENDING_APPROVAL",
+        "FINALIZED",
+        "ACCEPTED",
+        "REJECTED",
+        "EXPIRED"
       ]
     },
     "statusType":{
@@ -6704,6 +6996,11 @@
       ]
     },
     "stringType":{"type":"string"},
+    "summaryContentType":{
+      "type":"string",
+      "max":10000,
+      "min":0
+    },
     "summaryKeyType":{
       "type":"string",
       "enum":[
@@ -6747,6 +7044,15 @@
       "type":"map",
       "key":{"shape":"summaryKeyType"},
       "value":{"shape":"summaryValueType"}
+    },
+    "summaryStateType":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "NOT_AVAILABLE",
+        "NOT_SUPPORTED",
+        "FAILED"
+      ]
     },
     "summaryValueType":{"type":"integer"},
     "tagKeyListType":{

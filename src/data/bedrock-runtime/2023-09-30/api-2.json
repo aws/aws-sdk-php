@@ -940,6 +940,9 @@
                 },
                 "performanceConfig": {
                     "shape": "PerformanceConfiguration"
+                },
+                "serviceTier": {
+                    "shape": "ServiceTier"
                 }
             }
         },
@@ -985,6 +988,9 @@
                 },
                 "performanceConfig": {
                     "shape": "PerformanceConfiguration"
+                },
+                "serviceTier": {
+                    "shape": "ServiceTier"
                 }
             }
         },
@@ -1006,6 +1012,9 @@
                 },
                 "performanceConfig": {
                     "shape": "PerformanceConfiguration"
+                },
+                "serviceTier": {
+                    "shape": "ServiceTier"
                 }
             },
             "event": true
@@ -1100,6 +1109,9 @@
                 },
                 "performanceConfig": {
                     "shape": "PerformanceConfiguration"
+                },
+                "serviceTier": {
+                    "shape": "ServiceTier"
                 }
             }
         },
@@ -1144,6 +1156,12 @@
                 },
                 "system": {
                     "shape": "SystemContentBlocks"
+                },
+                "toolConfig": {
+                    "shape": "ToolConfiguration"
+                },
+                "additionalModelRequestFields": {
+                    "shape": "Document"
                 }
             }
         },
@@ -2711,6 +2729,11 @@
                     "shape": "PerformanceConfigLatency",
                     "location": "header",
                     "locationName": "X-Amzn-Bedrock-PerformanceConfig-Latency"
+                },
+                "serviceTier": {
+                    "shape": "ServiceTierType",
+                    "location": "header",
+                    "locationName": "X-Amzn-Bedrock-Service-Tier"
                 }
             },
             "payload": "body"
@@ -2734,6 +2757,11 @@
                     "shape": "PerformanceConfigLatency",
                     "location": "header",
                     "locationName": "X-Amzn-Bedrock-PerformanceConfig-Latency"
+                },
+                "serviceTier": {
+                    "shape": "ServiceTierType",
+                    "location": "header",
+                    "locationName": "X-Amzn-Bedrock-Service-Tier"
                 }
             },
             "payload": "body"
@@ -2858,6 +2886,11 @@
                     "shape": "PerformanceConfigLatency",
                     "location": "header",
                     "locationName": "X-Amzn-Bedrock-PerformanceConfig-Latency"
+                },
+                "serviceTier": {
+                    "shape": "ServiceTierType",
+                    "location": "header",
+                    "locationName": "X-Amzn-Bedrock-Service-Tier"
                 }
             },
             "payload": "body"
@@ -2881,6 +2914,11 @@
                     "shape": "PerformanceConfigLatency",
                     "location": "header",
                     "locationName": "X-Amzn-Bedrock-PerformanceConfig-Latency"
+                },
+                "serviceTier": {
+                    "shape": "ServiceTierType",
+                    "location": "header",
+                    "locationName": "X-Amzn-Bedrock-Service-Tier"
                 }
             },
             "payload": "body"
@@ -3303,6 +3341,25 @@
                 "senderFault": true
             },
             "exception": true
+        },
+        "ServiceTier": {
+            "type": "structure",
+            "required": [
+                "type"
+            ],
+            "members": {
+                "type": {
+                    "shape": "ServiceTierType"
+                }
+            }
+        },
+        "ServiceTierType": {
+            "type": "string",
+            "enum": [
+                "priority",
+                "default",
+                "flex"
+            ]
         },
         "ServiceUnavailableException": {
             "type": "structure",

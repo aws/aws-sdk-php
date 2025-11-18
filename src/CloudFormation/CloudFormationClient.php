@@ -50,6 +50,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeChangeSetAsync(array $args = [])
  * @method \Aws\Result describeChangeSetHooks(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeChangeSetHooksAsync(array $args = [])
+ * @method \Aws\Result describeEvents(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeEventsAsync(array $args = [])
  * @method \Aws\Result describeGeneratedTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeGeneratedTemplateAsync(array $args = [])
  * @method \Aws\Result describeOrganizationsAccess(array $args = [])

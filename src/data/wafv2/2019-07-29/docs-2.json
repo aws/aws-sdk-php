@@ -658,6 +658,18 @@
       "base": null,
       "refs": {}
     },
+    "DisallowedFeature": {
+      "base": "<p>A WAF feature that is not supported by the CloudFront pricing plan associated with the web ACL.</p>",
+      "refs": {
+        "DisallowedFeatures$member": null
+      }
+    },
+    "DisallowedFeatures": {
+      "base": null,
+      "refs": {
+        "WAFFeatureNotIncludedInPricingPlanException$DisallowedFeatures": "<p>The names of the disallowed WAF features.</p>"
+      }
+    },
     "DisassociateWebACLRequest": {
       "base": null,
       "refs": {}
@@ -796,6 +808,7 @@
         "WAFConfigurationWarningException$Message": null,
         "WAFDuplicateItemException$Message": null,
         "WAFExpiredManagedRuleGroupVersionException$Message": null,
+        "WAFFeatureNotIncludedInPricingPlanException$Message": null,
         "WAFInternalErrorException$Message": null,
         "WAFInvalidOperationException$Message": null,
         "WAFInvalidParameterException$message": null,
@@ -1815,6 +1828,12 @@
         "ByteMatchStatement$PositionalConstraint": "<p>The area within the portion of the web request that you want WAF to search for <code>SearchString</code>. Valid values include the following:</p> <p> <b>CONTAINS</b> </p> <p>The specified part of the web request must include the value of <code>SearchString</code>, but the location doesn't matter.</p> <p> <b>CONTAINS_WORD</b> </p> <p>The specified part of the web request must include the value of <code>SearchString</code>, and <code>SearchString</code> must contain only alphanumeric characters or underscore (A-Z, a-z, 0-9, or _). In addition, <code>SearchString</code> must be a word, which means that both of the following are true:</p> <ul> <li> <p> <code>SearchString</code> is at the beginning of the specified part of the web request or is preceded by a character other than an alphanumeric character or underscore (_). Examples include the value of a header and <code>;BadBot</code>.</p> </li> <li> <p> <code>SearchString</code> is at the end of the specified part of the web request or is followed by a character other than an alphanumeric character or underscore (_), for example, <code>BadBot;</code> and <code>-BadBot;</code>.</p> </li> </ul> <p> <b>EXACTLY</b> </p> <p>The value of the specified part of the web request must exactly match the value of <code>SearchString</code>.</p> <p> <b>STARTS_WITH</b> </p> <p>The value of <code>SearchString</code> must appear at the beginning of the specified part of the web request.</p> <p> <b>ENDS_WITH</b> </p> <p>The value of <code>SearchString</code> must appear at the end of the specified part of the web request.</p>"
       }
     },
+    "PricingPlanFeatureName": {
+      "base": null,
+      "refs": {
+        "DisallowedFeature$Feature": "<p>The name of the disallowed WAF feature.</p>"
+      }
+    },
     "ProductDescription": {
       "base": null,
       "refs": {
@@ -2089,6 +2108,12 @@
       "base": "<p>The criteria for inspecting account creation requests, used by the ACFP rule group to validate and track account creation attempts. </p> <p>This is part of the <code>AWSManagedRulesACFPRuleSet</code> configuration in <code>ManagedRuleGroupConfig</code>.</p> <p>In these settings, you specify how your application accepts account creation attempts by providing the request payload type and the names of the fields within the request body where the username, password, email, and primary address and phone number fields are provided. </p>",
       "refs": {
         "AWSManagedRulesACFPRuleSet$RequestInspection": "<p>The criteria for inspecting account creation requests, used by the ACFP rule group to validate and track account creation attempts. </p>"
+      }
+    },
+    "RequiredPricingPlanName": {
+      "base": null,
+      "refs": {
+        "DisallowedFeature$RequiredPricingPlan": "<p>The name of the CloudFront pricing plan required to use the WAF feature.</p>"
       }
     },
     "ResourceArn": {
@@ -2802,6 +2827,10 @@
     },
     "WAFExpiredManagedRuleGroupVersionException": {
       "base": "<p>The operation failed because the specified version for the managed rule group has expired. You can retrieve the available versions for the managed rule group by calling <a>ListAvailableManagedRuleGroupVersions</a>.</p>",
+      "refs": {}
+    },
+    "WAFFeatureNotIncludedInPricingPlanException": {
+      "base": "<p>The operation failed because the specified WAF feature isn't supported by the CloudFront pricing plan associated with the web ACL.</p>",
       "refs": {}
     },
     "WAFInternalErrorException": {

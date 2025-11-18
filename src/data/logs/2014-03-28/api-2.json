@@ -122,6 +122,24 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "CreateScheduledQuery":{
+      "name":"CreateScheduledQuery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateScheduledQueryRequest"},
+      "output":{"shape":"CreateScheduledQueryResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DeleteAccountPolicy":{
       "name":"DeleteAccountPolicy",
       "http":{
@@ -353,6 +371,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"OperationAbortedException"},
         {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "DeleteScheduledQuery":{
+      "name":"DeleteScheduledQuery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteScheduledQueryRequest"},
+      "output":{"shape":"DeleteScheduledQueryResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "DeleteSubscriptionFilter":{
@@ -821,6 +855,38 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "GetScheduledQuery":{
+      "name":"GetScheduledQuery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetScheduledQueryRequest"},
+      "output":{"shape":"GetScheduledQueryResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetScheduledQueryHistory":{
+      "name":"GetScheduledQueryHistory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetScheduledQueryHistoryRequest"},
+      "output":{"shape":"GetScheduledQueryHistoryResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetTransformer":{
       "name":"GetTransformer",
       "http":{
@@ -905,6 +971,21 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "ListScheduledQueries":{
+      "name":"ListScheduledQueries",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListScheduledQueriesRequest"},
+      "output":{"shape":"ListScheduledQueriesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "ListTagsForResource":{
@@ -1356,6 +1437,22 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"OperationAbortedException"}
       ]
+    },
+    "UpdateScheduledQuery":{
+      "name":"UpdateScheduledQuery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateScheduledQueryRequest"},
+      "output":{"shape":"UpdateScheduledQueryResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
     }
   },
   "shapes":{
@@ -1397,6 +1494,15 @@
       }
     },
     "AccountPolicyDocument":{"type":"string"},
+    "ActionStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "CLIENT_ERROR",
+        "FAILED",
+        "COMPLETE"
+      ]
+    },
     "AddKeyEntries":{
       "type":"list",
       "member":{"shape":"AddKeyEntry"},
@@ -1723,6 +1829,39 @@
         "logStreamName":{"shape":"LogStreamName"}
       }
     },
+    "CreateScheduledQueryRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "queryLanguage",
+        "queryString",
+        "scheduleExpression",
+        "executionRoleArn"
+      ],
+      "members":{
+        "name":{"shape":"ScheduledQueryName"},
+        "description":{"shape":"ScheduledQueryDescription"},
+        "queryLanguage":{"shape":"QueryLanguage"},
+        "queryString":{"shape":"QueryString"},
+        "logGroupIdentifiers":{"shape":"ScheduledQueryLogGroupIdentifiers"},
+        "scheduleExpression":{"shape":"ScheduleExpression"},
+        "timezone":{"shape":"ScheduleTimezone"},
+        "startTimeOffset":{"shape":"StartTimeOffset"},
+        "destinationConfiguration":{"shape":"DestinationConfiguration"},
+        "scheduleStartTime":{"shape":"Timestamp"},
+        "scheduleEndTime":{"shape":"Timestamp"},
+        "executionRoleArn":{"shape":"RoleArn"},
+        "state":{"shape":"ScheduledQueryState"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "CreateScheduledQueryResponse":{
+      "type":"structure",
+      "members":{
+        "scheduledQueryArn":{"shape":"Arn"},
+        "state":{"shape":"ScheduledQueryState"}
+      }
+    },
     "DashboardViewerPrincipals":{
       "type":"list",
       "member":{"shape":"Arn"}
@@ -1910,6 +2049,17 @@
       "members":{
         "logGroupName":{"shape":"LogGroupName"}
       }
+    },
+    "DeleteScheduledQueryRequest":{
+      "type":"structure",
+      "required":["identifier"],
+      "members":{
+        "identifier":{"shape":"ScheduledQueryIdentifier"}
+      }
+    },
+    "DeleteScheduledQueryResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteSubscriptionFilterRequest":{
       "type":"structure",
@@ -2347,6 +2497,13 @@
       "type":"string",
       "min":1
     },
+    "DestinationConfiguration":{
+      "type":"structure",
+      "required":["s3Configuration"],
+      "members":{
+        "s3Configuration":{"shape":"S3Configuration"}
+      }
+    },
     "DestinationField":{
       "type":"string",
       "max":128,
@@ -2500,6 +2657,20 @@
       "type":"integer",
       "max":10000,
       "min":1
+    },
+    "ExecutionStatus":{
+      "type":"string",
+      "enum":[
+        "Running",
+        "InvalidQuery",
+        "Complete",
+        "Failed",
+        "Timeout"
+      ]
+    },
+    "ExecutionStatusList":{
+      "type":"list",
+      "member":{"shape":"ExecutionStatus"}
     },
     "ExpectedRevisionId":{
       "type":"string",
@@ -2876,6 +3047,66 @@
         "encryptionKey":{"shape":"EncryptionKey"}
       }
     },
+    "GetScheduledQueryHistoryMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "GetScheduledQueryHistoryRequest":{
+      "type":"structure",
+      "required":[
+        "identifier",
+        "startTime",
+        "endTime"
+      ],
+      "members":{
+        "identifier":{"shape":"ScheduledQueryIdentifier"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "executionStatuses":{"shape":"ExecutionStatusList"},
+        "maxResults":{"shape":"GetScheduledQueryHistoryMaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetScheduledQueryHistoryResponse":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"ScheduledQueryName"},
+        "scheduledQueryArn":{"shape":"Arn"},
+        "triggerHistory":{"shape":"TriggerHistoryRecordList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetScheduledQueryRequest":{
+      "type":"structure",
+      "required":["identifier"],
+      "members":{
+        "identifier":{"shape":"ScheduledQueryIdentifier"}
+      }
+    },
+    "GetScheduledQueryResponse":{
+      "type":"structure",
+      "members":{
+        "scheduledQueryArn":{"shape":"Arn"},
+        "name":{"shape":"ScheduledQueryName"},
+        "description":{"shape":"ScheduledQueryDescription"},
+        "queryLanguage":{"shape":"QueryLanguage"},
+        "queryString":{"shape":"QueryString"},
+        "logGroupIdentifiers":{"shape":"ScheduledQueryLogGroupIdentifiers"},
+        "scheduleExpression":{"shape":"ScheduleExpression"},
+        "timezone":{"shape":"ScheduleTimezone"},
+        "startTimeOffset":{"shape":"StartTimeOffset"},
+        "destinationConfiguration":{"shape":"DestinationConfiguration"},
+        "state":{"shape":"ScheduledQueryState"},
+        "lastTriggeredTime":{"shape":"Timestamp"},
+        "lastExecutionStatus":{"shape":"ExecutionStatus"},
+        "scheduleStartTime":{"shape":"Timestamp"},
+        "scheduleEndTime":{"shape":"Timestamp"},
+        "executionRoleArn":{"shape":"RoleArn"},
+        "creationTime":{"shape":"Timestamp"},
+        "lastUpdatedTime":{"shape":"Timestamp"}
+      }
+    },
     "GetTransformerRequest":{
       "type":"structure",
       "required":["logGroupIdentifier"],
@@ -3016,6 +3247,12 @@
       "enum":["OPENSEARCH"]
     },
     "Interleaved":{"type":"boolean"},
+    "InternalServerException":{
+      "type":"structure",
+      "members":{},
+      "exception":true,
+      "fault":true
+    },
     "InternalStreamingException":{
       "type":"structure",
       "members":{
@@ -3162,6 +3399,26 @@
       "members":{
         "logGroups":{"shape":"LogGroupSummaries"},
         "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListScheduledQueriesMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "ListScheduledQueriesRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"ListScheduledQueriesMaxResults"},
+        "nextToken":{"shape":"NextToken"},
+        "state":{"shape":"ScheduledQueryState"}
+      }
+    },
+    "ListScheduledQueriesResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "scheduledQueries":{"shape":"ScheduledQuerySummaryList"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -4413,6 +4670,17 @@
       "type":"string",
       "min":1
     },
+    "S3Configuration":{
+      "type":"structure",
+      "required":[
+        "destinationIdentifier",
+        "roleArn"
+      ],
+      "members":{
+        "destinationIdentifier":{"shape":"S3Uri"},
+        "roleArn":{"shape":"RoleArn"}
+      }
+    },
     "S3DeliveryConfiguration":{
       "type":"structure",
       "members":{
@@ -4422,6 +4690,83 @@
           "box":true
         }
       }
+    },
+    "S3Uri":{
+      "type":"string",
+      "max":1024,
+      "pattern":"s3://[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9](/.*)?"
+    },
+    "ScheduleExpression":{
+      "type":"string",
+      "max":256
+    },
+    "ScheduleTimezone":{
+      "type":"string",
+      "min":1
+    },
+    "ScheduledQueryDescription":{
+      "type":"string",
+      "max":1024
+    },
+    "ScheduledQueryDestination":{
+      "type":"structure",
+      "members":{
+        "destinationType":{"shape":"ScheduledQueryDestinationType"},
+        "destinationIdentifier":{"shape":"String"},
+        "status":{"shape":"ActionStatus"},
+        "processedIdentifier":{"shape":"String"},
+        "errorMessage":{"shape":"String"}
+      }
+    },
+    "ScheduledQueryDestinationList":{
+      "type":"list",
+      "member":{"shape":"ScheduledQueryDestination"}
+    },
+    "ScheduledQueryDestinationType":{
+      "type":"string",
+      "enum":["S3"]
+    },
+    "ScheduledQueryIdentifier":{
+      "type":"string",
+      "pattern":"[\\w#+=/:,.@-]*"
+    },
+    "ScheduledQueryLogGroupIdentifiers":{
+      "type":"list",
+      "member":{"shape":"LogGroupIdentifier"},
+      "max":50,
+      "min":1
+    },
+    "ScheduledQueryName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_\\-/.#]+$"
+    },
+    "ScheduledQueryState":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "ScheduledQuerySummary":{
+      "type":"structure",
+      "members":{
+        "scheduledQueryArn":{"shape":"Arn"},
+        "name":{"shape":"ScheduledQueryName"},
+        "state":{"shape":"ScheduledQueryState"},
+        "lastTriggeredTime":{"shape":"Timestamp"},
+        "lastExecutionStatus":{"shape":"ExecutionStatus"},
+        "scheduleExpression":{"shape":"ScheduleExpression"},
+        "timezone":{"shape":"ScheduleTimezone"},
+        "destinationConfiguration":{"shape":"DestinationConfiguration"},
+        "creationTime":{"shape":"Timestamp"},
+        "lastUpdatedTime":{"shape":"Timestamp"}
+      }
+    },
+    "ScheduledQuerySummaryList":{
+      "type":"list",
+      "member":{"shape":"ScheduledQuerySummary"}
     },
     "Scope":{
       "type":"string",
@@ -4606,6 +4951,7 @@
         "queryId":{"shape":"QueryId"}
       }
     },
+    "StartTimeOffset":{"type":"long"},
     "State":{
       "type":"string",
       "enum":[
@@ -4632,6 +4978,7 @@
       "type":"long",
       "min":0
     },
+    "String":{"type":"string"},
     "SubscriptionFilter":{
       "type":"structure",
       "members":{
@@ -4867,6 +5214,20 @@
       "type":"list",
       "member":{"shape":"TransformedLogRecord"}
     },
+    "TriggerHistoryRecord":{
+      "type":"structure",
+      "members":{
+        "queryId":{"shape":"QueryId"},
+        "executionStatus":{"shape":"ExecutionStatus"},
+        "triggeredTimestamp":{"shape":"Timestamp"},
+        "errorMessage":{"shape":"String"},
+        "destinations":{"shape":"ScheduledQueryDestinationList"}
+      }
+    },
+    "TriggerHistoryRecordList":{
+      "type":"list",
+      "member":{"shape":"TriggerHistoryRecord"}
+    },
     "TrimString":{
       "type":"structure",
       "required":["withKeys"],
@@ -4981,6 +5342,54 @@
         "filterPattern":{"shape":"FilterPattern"},
         "anomalyVisibilityTime":{"shape":"AnomalyVisibilityTime"},
         "enabled":{"shape":"Boolean"}
+      }
+    },
+    "UpdateScheduledQueryRequest":{
+      "type":"structure",
+      "required":[
+        "identifier",
+        "queryLanguage",
+        "queryString",
+        "scheduleExpression",
+        "executionRoleArn"
+      ],
+      "members":{
+        "identifier":{"shape":"ScheduledQueryIdentifier"},
+        "description":{"shape":"ScheduledQueryDescription"},
+        "queryLanguage":{"shape":"QueryLanguage"},
+        "queryString":{"shape":"QueryString"},
+        "logGroupIdentifiers":{"shape":"ScheduledQueryLogGroupIdentifiers"},
+        "scheduleExpression":{"shape":"ScheduleExpression"},
+        "timezone":{"shape":"ScheduleTimezone"},
+        "startTimeOffset":{"shape":"StartTimeOffset"},
+        "destinationConfiguration":{"shape":"DestinationConfiguration"},
+        "scheduleStartTime":{"shape":"Timestamp"},
+        "scheduleEndTime":{"shape":"Timestamp"},
+        "executionRoleArn":{"shape":"RoleArn"},
+        "state":{"shape":"ScheduledQueryState"}
+      }
+    },
+    "UpdateScheduledQueryResponse":{
+      "type":"structure",
+      "members":{
+        "scheduledQueryArn":{"shape":"Arn"},
+        "name":{"shape":"ScheduledQueryName"},
+        "description":{"shape":"ScheduledQueryDescription"},
+        "queryLanguage":{"shape":"QueryLanguage"},
+        "queryString":{"shape":"QueryString"},
+        "logGroupIdentifiers":{"shape":"ScheduledQueryLogGroupIdentifiers"},
+        "scheduleExpression":{"shape":"ScheduleExpression"},
+        "timezone":{"shape":"ScheduleTimezone"},
+        "startTimeOffset":{"shape":"StartTimeOffset"},
+        "destinationConfiguration":{"shape":"DestinationConfiguration"},
+        "state":{"shape":"ScheduledQueryState"},
+        "lastTriggeredTime":{"shape":"Timestamp"},
+        "lastExecutionStatus":{"shape":"ExecutionStatus"},
+        "scheduleStartTime":{"shape":"Timestamp"},
+        "scheduleEndTime":{"shape":"Timestamp"},
+        "executionRoleArn":{"shape":"RoleArn"},
+        "creationTime":{"shape":"Timestamp"},
+        "lastUpdatedTime":{"shape":"Timestamp"}
       }
     },
     "UpperCaseString":{

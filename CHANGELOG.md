@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - This release adds the new LaunchInstances API, which can launch instances synchronously in an AutoScaling group. The API also returns instances info and launch error back immediately.
+* `Aws\BedrockRuntime` - Amazon Bedrock Runtime Service Tier Support Launch
+* `Aws\EC2` - AWS Site-to-Site VPN now supports VPN Concentrator, a new feature that enables customers to connect multiple low-bandwidth sites connections through a single attachment, simplifying multi-site connectivity for distributed enterprises.
+* `Aws\ResourceGroupsTaggingAPI` - Add support for new ListRequiredTags API used to retrieve the required tags specified in a customer's effective tag policy.
+* `Aws\IAM` - Added the AssociateDelegationRequest, GetDelegationRequest, AcceptDelegationRequest, RejectDelegatonRequest, ListDelegationRequests, UpdateDelegationRequest, SendDelegationToken and GetHumanReadableSummary APIs for the IAM temporary delegation feature.
+* `Aws\Backup` - AWS Backup now supports a low-cost warm storage tier for Amazon S3 backup data.
+* `Aws\Kafka` - Amazon MSK adds three new APIs, ListTopics, DescribeTopic, and DescribeTopicPartitions for viewing Kafka topics in your MSK clusters.
+* `Aws\CloudFormation` - New CloudFormation DescribeEvents API with operation ID tracking and failure filtering capabilities to quickly identify root causes of deployment failures. Also, a DeploymentMode parameter for the CreateChangeSet API that enables creation of drift-aware change sets for safe drift management.
+* `Aws\StorageGateway` - Adds support for European Sovereign Cloud ARNs in Storage Gateway API parameters.
+* `Aws\WAFV2` - AssociateWebACL, UpdateWebACL and PutLoggingConfiguration will now throw WAFFeatureNotIncludedInPricingPlanException when the request contains a feature that is not included in the CloudFront pricing plan of the WebACL.
+* `Aws\CloudWatchLogs` - CloudWatch Logs updates: Added capability to setup a recurring schedule for log insights queries. Logs introduced Scheduled Queries (managed through Create/Update/Get/Delete/List/History Scheduled Query APIs). For more information, see CloudWatch Logs API documentation.
+* `Aws\Connect` - This release added support for ring timer configuration for campaign calls.
+
 ## 3.360.0 - 2025-11-17
 
 * `Aws\Glue` - Amazon Glue Releasing 2 the new API ListIntegrationResourceProperties and DeleteIntegrationResourceProperty along with minor improvement on existing API(s).

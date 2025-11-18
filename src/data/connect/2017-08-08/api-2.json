@@ -6300,6 +6300,7 @@
         "LastUpdateTimestamp":{"shape":"timestamp"},
         "LastPausedTimestamp":{"shape":"timestamp"},
         "LastResumedTimestamp":{"shape":"timestamp"},
+        "RingStartTimestamp":{"shape":"timestamp"},
         "TotalPauseCount":{"shape":"TotalPauseCount"},
         "TotalPauseDurationInSeconds":{"shape":"TotalPauseDurationInSeconds"},
         "ScheduledTimestamp":{"shape":"timestamp"},
@@ -16286,6 +16287,11 @@
       "type":"structure",
       "members":{}
     },
+    "RingTimeoutInSeconds":{
+      "type":"integer",
+      "max":60,
+      "min":15
+    },
     "RoutingCriteria":{
       "type":"structure",
       "members":{
@@ -17922,7 +17928,8 @@
         "AnswerMachineDetectionConfig":{"shape":"AnswerMachineDetectionConfig"},
         "CampaignId":{"shape":"CampaignId"},
         "TrafficType":{"shape":"TrafficType"},
-        "OutboundStrategy":{"shape":"OutboundStrategy"}
+        "OutboundStrategy":{"shape":"OutboundStrategy"},
+        "RingTimeoutInSeconds":{"shape":"RingTimeoutInSeconds"}
       }
     },
     "StartOutboundVoiceContactResponse":{

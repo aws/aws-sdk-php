@@ -156,6 +156,7 @@
     "CreateVpcEndpointConnectionNotification": "<p>Creates a connection notification for a specified VPC endpoint or VPC endpoint service. A connection notification notifies you of specific endpoint events. You must create an SNS topic to receive notifications. For more information, see <a href=\"https://docs.aws.amazon.com/sns/latest/dg/CreateTopic.html\">Creating an Amazon SNS topic</a> in the <i>Amazon SNS Developer Guide</i>.</p> <p>You can create a connection notification for interface endpoints only.</p>",
     "CreateVpcEndpointServiceConfiguration": "<p>Creates a VPC endpoint service to which service consumers (Amazon Web Services accounts, users, and IAM roles) can connect.</p> <p>Before you create an endpoint service, you must create one of the following for your service:</p> <ul> <li> <p>A <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/network/\">Network Load Balancer</a>. Service consumers connect to your service using an interface endpoint.</p> </li> <li> <p>A <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/\">Gateway Load Balancer</a>. Service consumers connect to your service using a Gateway Load Balancer endpoint.</p> </li> </ul> <p>If you set the private DNS name, you must prove that you own the private DNS domain name.</p> <p>For more information, see the <a href=\"https://docs.aws.amazon.com/vpc/latest/privatelink/\">Amazon Web Services PrivateLink Guide</a>.</p>",
     "CreateVpcPeeringConnection": "<p>Requests a VPC peering connection between two VPCs: a requester VPC that you own and an accepter VPC with which to create the connection. The accepter VPC can belong to another Amazon Web Services account and can be in a different Region to the requester VPC. The requester VPC and accepter VPC cannot have overlapping CIDR blocks.</p> <note> <p>Limitations and rules apply to a VPC peering connection. For more information, see the <a href=\"https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-basics.html#vpc-peering-limitations\">VPC peering limitations</a> in the <i>VPC Peering Guide</i>.</p> </note> <p>The owner of the accepter VPC must accept the peering request to activate the peering connection. The VPC peering connection request expires after 7 days, after which it cannot be accepted or rejected.</p> <p>If you create a VPC peering connection request between VPCs with overlapping CIDR blocks, the VPC peering connection has a status of <code>failed</code>.</p>",
+    "CreateVpnConcentrator": "<p>Creates a VPN concentrator that aggregates multiple VPN connections to a transit gateway.</p>",
     "CreateVpnConnection": "<p>Creates a VPN connection between an existing virtual private gateway or transit gateway and a customer gateway. The supported connection type is <code>ipsec.1</code>.</p> <p>The response includes information that you need to give to your network administrator to configure your customer gateway.</p> <important> <p>We strongly recommend that you use HTTPS when calling this operation because the response contains sensitive cryptographic information for configuring your customer gateway device.</p> </important> <p>If you decide to shut down your VPN connection for any reason and later create a new VPN connection, you must reconfigure your customer gateway with the new information returned from this call.</p> <p>This is an idempotent operation. If you perform the operation more than once, Amazon EC2 doesn't return an error.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html\">Amazon Web Services Site-to-Site VPN</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p>",
     "CreateVpnConnectionRoute": "<p>Creates a static route associated with a VPN connection between an existing virtual private gateway and a VPN customer gateway. The static route allows traffic to be routed from the virtual private gateway to the VPN customer gateway.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html\">Amazon Web Services Site-to-Site VPN</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p>",
     "CreateVpnGateway": "<p>Creates a virtual private gateway. A virtual private gateway is the endpoint on the VPC side of your VPN connection. You can create a virtual private gateway before creating the VPC itself.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html\">Amazon Web Services Site-to-Site VPN</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p>",
@@ -241,6 +242,7 @@
     "DeleteVpcEndpointServiceConfigurations": "<p>Deletes the specified VPC endpoint service configurations. Before you can delete an endpoint service configuration, you must reject any <code>Available</code> or <code>PendingAcceptance</code> interface endpoint connections that are attached to the service.</p>",
     "DeleteVpcEndpoints": "<p>Deletes the specified VPC endpoints.</p> <p>When you delete a gateway endpoint, we delete the endpoint routes in the route tables for the endpoint.</p> <p>When you delete a Gateway Load Balancer endpoint, we delete its endpoint network interfaces. You can only delete Gateway Load Balancer endpoints when the routes that are associated with the endpoint are deleted.</p> <p>When you delete an interface endpoint, we delete its endpoint network interfaces.</p>",
     "DeleteVpcPeeringConnection": "<p>Deletes a VPC peering connection. Either the owner of the requester VPC or the owner of the accepter VPC can delete the VPC peering connection if it's in the <code>active</code> state. The owner of the requester VPC can delete a VPC peering connection in the <code>pending-acceptance</code> state. You cannot delete a VPC peering connection that's in the <code>failed</code> or <code>rejected</code> state.</p>",
+    "DeleteVpnConcentrator": "<p>Deletes the specified VPN concentrator.</p>",
     "DeleteVpnConnection": "<p>Deletes the specified VPN connection.</p> <p>If you're deleting the VPC and its associated components, we recommend that you detach the virtual private gateway from the VPC and delete the VPC before deleting the VPN connection. If you believe that the tunnel credentials for your VPN connection have been compromised, you can delete the VPN connection and create a new one that has new keys, without needing to delete the VPC or virtual private gateway. If you create a new VPN connection, you must reconfigure the customer gateway device using the new configuration information returned with the new VPN connection ID.</p> <p>For certificate-based authentication, delete all Certificate Manager (ACM) private certificates used for the Amazon Web Services-side tunnel endpoints for the VPN connection before deleting the VPN connection.</p>",
     "DeleteVpnConnectionRoute": "<p>Deletes the specified static route associated with a VPN connection between an existing virtual private gateway and a VPN customer gateway. The static route allows traffic to be routed from the virtual private gateway to the VPN customer gateway.</p>",
     "DeleteVpnGateway": "<p>Deletes the specified virtual private gateway. You must first detach the virtual private gateway from the VPC. Note that you don't need to delete the virtual private gateway if you plan to delete and recreate the VPN connection between your VPC and your network.</p>",
@@ -428,6 +430,7 @@
     "DescribeVpcEndpoints": "<p>Describes your VPC endpoints. The default is to describe all your VPC endpoints. Alternatively, you can specify specific VPC endpoint IDs or filter the results to include only the VPC endpoints that match specific criteria.</p>",
     "DescribeVpcPeeringConnections": "<p>Describes your VPC peering connections. The default is to describe all your VPC peering connections. Alternatively, you can specify specific VPC peering connection IDs or filter the results to include only the VPC peering connections that match specific criteria.</p>",
     "DescribeVpcs": "<p>Describes your VPCs. The default is to describe all your VPCs. Alternatively, you can specify specific VPC IDs or filter the results to include only the VPCs that match specific criteria.</p>",
+    "DescribeVpnConcentrators": "<p>Describes one or more of your VPN concentrators.</p>",
     "DescribeVpnConnections": "<p>Describes one or more of your VPN connections.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html\">Amazon Web Services Site-to-Site VPN</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p>",
     "DescribeVpnGateways": "<p>Describes one or more of your virtual private gateways.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html\">Amazon Web Services Site-to-Site VPN</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p>",
     "DetachClassicLinkVpc": "<note> <p>This action is deprecated.</p> </note> <p>Unlinks (detaches) a linked EC2-Classic instance from a VPC. After the instance has been unlinked, the VPC security groups are no longer associated with it. An instance is automatically unlinked from a VPC when it's stopped.</p>",
@@ -2461,6 +2464,7 @@
         "CreateVpcPeeringConnectionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateVpcRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateVpcRequest$AmazonProvidedIpv6CidrBlock": "<p>Requests an Amazon-provided IPv6 CIDR block with a /56 prefix length for the VPC. You cannot specify the range of IP addresses, or the size of the CIDR block.</p>",
+        "CreateVpnConcentratorRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateVpnConnectionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateVpnGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteCapacityManagerDataExportRequest$DryRun": "<p> Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>. </p>",
@@ -2559,6 +2563,8 @@
         "DeleteVpcPeeringConnectionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteVpcPeeringConnectionResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "DeleteVpcRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteVpnConcentratorRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteVpnConcentratorResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "DeleteVpnConnectionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteVpnGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeprovisionByoipCidrRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2746,6 +2752,7 @@
         "DescribeVpcEndpointsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeVpcPeeringConnectionsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeVpcsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeVpnConcentratorsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeVpnConnectionsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeVpnGatewaysRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DestinationOptionsRequest$HiveCompatiblePartitions": "<p>Indicates whether to use Hive-compatible prefixes for flow logs stored in Amazon S3. The default is <code>false</code>.</p>",
@@ -5887,6 +5894,16 @@
       "refs": {
       }
     },
+    "CreateVpnConcentratorRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateVpnConcentratorResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateVpnConnectionRequest": {
       "base": "<p>Contains the parameters for CreateVpnConnection.</p>",
       "refs": {
@@ -7068,6 +7085,16 @@
       }
     },
     "DeleteVpcRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteVpnConcentratorRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteVpnConcentratorResult": {
       "base": null,
       "refs": {
       }
@@ -9442,6 +9469,16 @@
       "refs": {
       }
     },
+    "DescribeVpnConcentratorsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeVpnConcentratorsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeVpnConnectionsRequest": {
       "base": "<p>Contains the parameters for DescribeVpnConnections.</p>",
       "refs": {
@@ -11315,6 +11352,7 @@
         "DescribeVpcEndpointsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>ip-address-type</code> - The IP address type (<code>ipv4</code> | <code>ipv6</code>).</p> </li> <li> <p> <code>service-name</code> - The name of the service.</p> </li> <li> <p> <code>service-region</code> - The Region of the service.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC in which the endpoint resides.</p> </li> <li> <p> <code>vpc-endpoint-id</code> - The ID of the endpoint.</p> </li> <li> <p> <code>vpc-endpoint-state</code> - The state of the endpoint (<code>pendingAcceptance</code> | <code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code> | <code>rejected</code> | <code>failed</code>).</p> </li> <li> <p> <code>vpc-endpoint-type</code> - The type of VPC endpoint (<code>Interface</code> | <code>Gateway</code> | <code>GatewayLoadBalancer</code> | <code>Resource</code> | <code>ServiceNetwork</code>).</p> </li> </ul>",
         "DescribeVpcPeeringConnectionsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>accepter-vpc-info.cidr-block</code> - The IPv4 CIDR block of the accepter VPC.</p> </li> <li> <p> <code>accepter-vpc-info.owner-id</code> - The ID of the Amazon Web Services account that owns the accepter VPC.</p> </li> <li> <p> <code>accepter-vpc-info.vpc-id</code> - The ID of the accepter VPC.</p> </li> <li> <p> <code>expiration-time</code> - The expiration date and time for the VPC peering connection.</p> </li> <li> <p> <code>requester-vpc-info.cidr-block</code> - The IPv4 CIDR block of the requester's VPC.</p> </li> <li> <p> <code>requester-vpc-info.owner-id</code> - The ID of the Amazon Web Services account that owns the requester VPC.</p> </li> <li> <p> <code>requester-vpc-info.vpc-id</code> - The ID of the requester VPC.</p> </li> <li> <p> <code>status-code</code> - The status of the VPC peering connection (<code>pending-acceptance</code> | <code>failed</code> | <code>expired</code> | <code>provisioning</code> | <code>active</code> | <code>deleting</code> | <code>deleted</code> | <code>rejected</code>).</p> </li> <li> <p> <code>status-message</code> - A message that provides more information about the status of the VPC peering connection, if applicable.</p> </li> <li> <p> <code>tag</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-peering-connection-id</code> - The ID of the VPC peering connection.</p> </li> </ul>",
         "DescribeVpcsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>cidr</code> - The primary IPv4 CIDR block of the VPC. The CIDR block you specify must exactly match the VPC's CIDR block for information to be returned for the VPC. Must contain the slash followed by one or two digits (for example, <code>/28</code>).</p> </li> <li> <p> <code>cidr-block-association.cidr-block</code> - An IPv4 CIDR block associated with the VPC.</p> </li> <li> <p> <code>cidr-block-association.association-id</code> - The association ID for an IPv4 CIDR block associated with the VPC.</p> </li> <li> <p> <code>cidr-block-association.state</code> - The state of an IPv4 CIDR block associated with the VPC.</p> </li> <li> <p> <code>dhcp-options-id</code> - The ID of a set of DHCP options.</p> </li> <li> <p> <code>ipv6-cidr-block-association.ipv6-cidr-block</code> - An IPv6 CIDR block associated with the VPC.</p> </li> <li> <p> <code>ipv6-cidr-block-association.ipv6-pool</code> - The ID of the IPv6 address pool from which the IPv6 CIDR block is allocated.</p> </li> <li> <p> <code>ipv6-cidr-block-association.association-id</code> - The association ID for an IPv6 CIDR block associated with the VPC.</p> </li> <li> <p> <code>ipv6-cidr-block-association.state</code> - The state of an IPv6 CIDR block associated with the VPC.</p> </li> <li> <p> <code>is-default</code> - Indicates whether the VPC is the default VPC.</p> </li> <li> <p> <code>owner-id</code> - The ID of the Amazon Web Services account that owns the VPC.</p> </li> <li> <p> <code>state</code> - The state of the VPC (<code>pending</code> | <code>available</code>).</p> </li> <li> <p> <code>tag</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC.</p> </li> </ul>",
+        "DescribeVpnConcentratorsRequest$Filters": "<p>One or more filters to limit the results.</p>",
         "DescribeVpnConnectionsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>customer-gateway-configuration</code> - The configuration information for the customer gateway.</p> </li> <li> <p> <code>customer-gateway-id</code> - The ID of a customer gateway associated with the VPN connection.</p> </li> <li> <p> <code>state</code> - The state of the VPN connection (<code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code>).</p> </li> <li> <p> <code>option.static-routes-only</code> - Indicates whether the connection has static routes only. Used for devices that do not support Border Gateway Protocol (BGP).</p> </li> <li> <p> <code>route.destination-cidr-block</code> - The destination CIDR block. This corresponds to the subnet used in a customer data center.</p> </li> <li> <p> <code>bgp-asn</code> - The BGP Autonomous System Number (ASN) associated with a BGP device.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>type</code> - The type of VPN connection. Currently the only supported type is <code>ipsec.1</code>.</p> </li> <li> <p> <code>vpn-connection-id</code> - The ID of the VPN connection.</p> </li> <li> <p> <code>vpn-gateway-id</code> - The ID of a virtual private gateway associated with the VPN connection.</p> </li> <li> <p> <code>transit-gateway-id</code> - The ID of a transit gateway associated with the VPN connection.</p> </li> </ul>",
         "DescribeVpnGatewaysRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>amazon-side-asn</code> - The Autonomous System Number (ASN) for the Amazon side of the gateway.</p> </li> <li> <p> <code>attachment.state</code> - The current state of the attachment between the gateway and the VPC (<code>attaching</code> | <code>attached</code> | <code>detaching</code> | <code>detached</code>).</p> </li> <li> <p> <code>attachment.vpc-id</code> - The ID of an attached VPC.</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone for the virtual private gateway (if applicable).</p> </li> <li> <p> <code>state</code> - The state of the virtual private gateway (<code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>type</code> - The type of virtual private gateway. Currently the only supported type is <code>ipsec.1</code>.</p> </li> <li> <p> <code>vpn-gateway-id</code> - The ID of the virtual private gateway.</p> </li> </ul>",
         "ExportTransitGatewayRoutesRequest$Filters": "<p>One or more filters. The possible values are:</p> <ul> <li> <p> <code>attachment.transit-gateway-attachment-id</code> - The id of the transit gateway attachment.</p> </li> <li> <p> <code>attachment.resource-id</code> - The resource id of the transit gateway attachment.</p> </li> <li> <p> <code>route-search.exact-match</code> - The exact match of the specified filter.</p> </li> <li> <p> <code>route-search.longest-prefix-match</code> - The longest prefix that matches the route.</p> </li> <li> <p> <code>route-search.subnet-of-match</code> - The routes with a subnet that match the specified CIDR filter.</p> </li> <li> <p> <code>route-search.supernet-of-match</code> - The routes with a CIDR that encompass the CIDR filter. For example, if you have 10.0.1.0/29 and 10.0.1.0/31 routes in your route table and you specify supernet-of-match as 10.0.1.0/30, then the result returns 10.0.1.0/29.</p> </li> <li> <p> <code>state</code> - The state of the route (<code>active</code> | <code>blackhole</code>).</p> </li> <li> <p> <code>transit-gateway-route-destination-cidr-block</code> - The CIDR range.</p> </li> <li> <p> <code>type</code> - The type of route (<code>propagated</code> | <code>static</code>).</p> </li> </ul>",
@@ -11760,6 +11798,7 @@
     "GVCDMaxResults": {
       "base": null,
       "refs": {
+        "DescribeVpnConcentratorsRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
         "GetVpnConnectionDeviceTypesRequest$MaxResults": "<p>The maximum number of results returned by <code>GetVpnConnectionDeviceTypes</code> in paginated output. When this parameter is used, <code>GetVpnConnectionDeviceTypes</code> only returns <code>MaxResults</code> results in a single page along with a <code>NextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>GetVpnConnectionDeviceTypes</code> request with the returned <code>NextToken</code> value. This value can be between 200 and 1000. If this parameter is not used, then <code>GetVpnConnectionDeviceTypes</code> returns all results.</p>"
       }
     },
@@ -19176,6 +19215,8 @@
         "DescribeVerifiedAccessInstancesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeVerifiedAccessTrustProvidersRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribeVerifiedAccessTrustProvidersResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "DescribeVpnConcentratorsRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "DescribeVpnConcentratorsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "GetAssociatedIpv6PoolCidrsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "GetCapacityManagerMetricDataRequest$NextToken": "<p> The token for the next page of results. Use this value in a subsequent call to retrieve additional data points. </p>",
         "GetCapacityManagerMetricDataResult$NextToken": "<p> The token to use to retrieve the next page of results. This value is null when there are no more results to return. </p>",
@@ -25561,8 +25602,14 @@
         "VpcPeeringConnectionVpcInfo$OwnerId": "<p>The ID of the Amazon Web Services account that owns the VPC.</p>",
         "VpcPeeringConnectionVpcInfo$VpcId": "<p>The ID of the VPC.</p>",
         "VpcPeeringConnectionVpcInfo$Region": "<p>The Region in which the VPC is located.</p>",
+        "VpnConcentrator$VpnConcentratorId": "<p>The ID of the VPN concentrator.</p>",
+        "VpnConcentrator$State": "<p>The current state of the VPN concentrator.</p>",
+        "VpnConcentrator$TransitGatewayId": "<p>The ID of the transit gateway associated with the VPN concentrator.</p>",
+        "VpnConcentrator$TransitGatewayAttachmentId": "<p>The ID of the transit gateway attachment for the VPN concentrator.</p>",
+        "VpnConcentrator$Type": "<p>The type of VPN concentrator.</p>",
         "VpnConnection$Category": "<p>The category of the VPN connection. A value of <code>VPN</code> indicates an Amazon Web Services VPN connection. A value of <code>VPN-Classic</code> indicates an Amazon Web Services Classic VPN connection.</p>",
         "VpnConnection$TransitGatewayId": "<p>The ID of the transit gateway associated with the VPN connection.</p>",
+        "VpnConnection$VpnConcentratorId": "<p>The ID of the VPN concentrator associated with the VPN connection.</p>",
         "VpnConnection$CoreNetworkArn": "<p>The ARN of the core network.</p>",
         "VpnConnection$CoreNetworkAttachmentArn": "<p>The ARN of the core network attachment.</p>",
         "VpnConnection$PreSharedKeyArn": "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret storing the pre-shared key(s) for the VPN connection.</p>",
@@ -26007,6 +26054,7 @@
         "VpcEndpointAssociation$Tags": "<p>The tags to apply to the VPC endpoint association.</p>",
         "VpcEndpointConnection$Tags": "<p>The tags.</p>",
         "VpcPeeringConnection$Tags": "<p>Any tags assigned to the resource.</p>",
+        "VpnConcentrator$Tags": "<p>Any tags assigned to the VPN concentrator.</p>",
         "VpnConnection$Tags": "<p>Any tags assigned to the VPN connection.</p>",
         "VpnGateway$Tags": "<p>Any tags assigned to the virtual private gateway.</p>"
       }
@@ -26106,6 +26154,7 @@
         "CreateVpcEndpointServiceConfigurationRequest$TagSpecifications": "<p>The tags to associate with the service.</p>",
         "CreateVpcPeeringConnectionRequest$TagSpecifications": "<p>The tags to assign to the peering connection.</p>",
         "CreateVpcRequest$TagSpecifications": "<p>The tags to assign to the VPC.</p>",
+        "CreateVpnConcentratorRequest$TagSpecifications": "<p>The tags to apply to the VPN concentrator during creation.</p>",
         "CreateVpnConnectionRequest$TagSpecifications": "<p>The tags to apply to the VPN connection.</p>",
         "CreateVpnGatewayRequest$TagSpecifications": "<p>The tags to apply to the virtual private gateway.</p>",
         "ExportImageRequest$TagSpecifications": "<p>The tags to apply to the export image task during creation.</p>",
@@ -26811,6 +26860,7 @@
         "CreateTransitGatewayPolicyTableRequest$TransitGatewayId": "<p>The ID of the transit gateway used for the policy table.</p>",
         "CreateTransitGatewayRouteTableRequest$TransitGatewayId": "<p>The ID of the transit gateway.</p>",
         "CreateTransitGatewayVpcAttachmentRequest$TransitGatewayId": "<p>The ID of the transit gateway.</p>",
+        "CreateVpnConcentratorRequest$TransitGatewayId": "<p>The ID of the transit gateway to attach the VPN concentrator to.</p>",
         "CreateVpnConnectionRequest$TransitGatewayId": "<p>The ID of the transit gateway. If you specify a transit gateway, you cannot specify a virtual private gateway.</p>",
         "DeleteTransitGatewayRequest$TransitGatewayId": "<p>The ID of the transit gateway.</p>",
         "GetVpnTunnelReplacementStatusResult$TransitGatewayId": "<p>The ID of the transit gateway associated with the VPN connection.</p>",
@@ -28861,6 +28911,39 @@
       "base": null,
       "refs": {
         "ModifyVpcTenancyRequest$InstanceTenancy": "<p>The instance tenancy attribute for the VPC. </p>"
+      }
+    },
+    "VpnConcentrator": {
+      "base": "<p>Describes a VPN concentrator.</p>",
+      "refs": {
+        "CreateVpnConcentratorResult$VpnConcentrator": "<p>Information about the VPN concentrator.</p>",
+        "VpnConcentratorList$member": null
+      }
+    },
+    "VpnConcentratorId": {
+      "base": null,
+      "refs": {
+        "CreateVpnConnectionRequest$VpnConcentratorId": "<p>The ID of the VPN concentrator to associate with the VPN connection.</p>",
+        "DeleteVpnConcentratorRequest$VpnConcentratorId": "<p>The ID of the VPN concentrator to delete.</p>",
+        "VpnConcentratorIdStringList$member": null
+      }
+    },
+    "VpnConcentratorIdStringList": {
+      "base": null,
+      "refs": {
+        "DescribeVpnConcentratorsRequest$VpnConcentratorIds": "<p>One or more VPN concentrator IDs.</p>"
+      }
+    },
+    "VpnConcentratorList": {
+      "base": null,
+      "refs": {
+        "DescribeVpnConcentratorsResult$VpnConcentrators": "<p>Information about the VPN concentrators.</p>"
+      }
+    },
+    "VpnConcentratorType": {
+      "base": null,
+      "refs": {
+        "CreateVpnConcentratorRequest$Type": "<p>The type of VPN concentrator to create.</p>"
       }
     },
     "VpnConnection": {

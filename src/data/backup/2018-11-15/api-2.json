@@ -223,6 +223,24 @@
       ],
       "idempotent":true
     },
+    "CreateTieringConfiguration":{
+      "name":"CreateTieringConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/tiering-configurations"
+      },
+      "input":{"shape":"CreateTieringConfigurationInput"},
+      "output":{"shape":"CreateTieringConfigurationOutput"},
+      "errors":[
+        {"shape":"AlreadyExistsException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "DeleteBackupPlan":{
       "name":"DeleteBackupPlan",
       "http":{
@@ -387,6 +405,22 @@
       "input":{"shape":"DeleteRestoreTestingSelectionInput"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteTieringConfiguration":{
+      "name":"DeleteTieringConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/tiering-configurations/{tieringConfigurationName}"
+      },
+      "input":{"shape":"DeleteTieringConfigurationInput"},
+      "output":{"shape":"DeleteTieringConfigurationOutput"},
+      "errors":[
+        {"shape":"MissingParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
         {"shape":"ServiceUnavailableException"}
       ],
       "idempotent":true
@@ -834,6 +868,22 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "GetTieringConfiguration":{
+      "name":"GetTieringConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/tiering-configurations/{tieringConfigurationName}"
+      },
+      "input":{"shape":"GetTieringConfigurationInput"},
+      "output":{"shape":"GetTieringConfigurationOutput"},
+      "errors":[
+        {"shape":"MissingParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "ListBackupJobSummaries":{
       "name":"ListBackupJobSummaries",
       "http":{
@@ -1214,6 +1264,20 @@
       ],
       "idempotent":true
     },
+    "ListTieringConfigurations":{
+      "name":"ListTieringConfigurations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/tiering-configurations/"
+      },
+      "input":{"shape":"ListTieringConfigurationsInput"},
+      "output":{"shape":"ListTieringConfigurationsOutput"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "PutBackupVaultAccessPolicy":{
       "name":"PutBackupVaultAccessPolicy",
       "http":{
@@ -1552,6 +1616,25 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"MissingParameterValueException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateTieringConfiguration":{
+      "name":"UpdateTieringConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/tiering-configurations/{tieringConfigurationName}"
+      },
+      "input":{"shape":"UpdateTieringConfigurationInput"},
+      "output":{"shape":"UpdateTieringConfigurationOutput"},
+      "errors":[
+        {"shape":"AlreadyExistsException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"MissingParameterValueException"},
         {"shape":"ServiceUnavailableException"}
       ],
       "idempotent":true
@@ -1916,6 +1999,10 @@
     "BackupVaultName":{
       "type":"string",
       "pattern":"^[a-zA-Z0-9\\-\\_]{2,50}$"
+    },
+    "BackupVaultNameOrWildcard":{
+      "type":"string",
+      "pattern":"^(\\*|[a-zA-Z0-9\\-\\_]{2,50})$"
     },
     "Boolean":{"type":"boolean"},
     "CalculatedLifecycle":{
@@ -2386,6 +2473,27 @@
         "RestoreTestingSelectionName":{"shape":"String"}
       }
     },
+    "CreateTieringConfigurationInput":{
+      "type":"structure",
+      "required":["TieringConfiguration"],
+      "members":{
+        "TieringConfiguration":{"shape":"TieringConfigurationInputForCreate"},
+        "TieringConfigurationTags":{"shape":"Tags"},
+        "CreatorRequestId":{
+          "shape":"CreatorRequestId",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateTieringConfigurationOutput":{
+      "type":"structure",
+      "members":{
+        "TieringConfigurationArn":{"shape":"ARN"},
+        "TieringConfigurationName":{"shape":"string"},
+        "CreationTime":{"shape":"timestamp"}
+      }
+    },
+    "CreatorRequestId":{"type":"string"},
     "CronExpression":{"type":"string"},
     "DateRange":{
       "type":"structure",
@@ -2551,6 +2659,21 @@
           "locationName":"RestoreTestingSelectionName"
         }
       }
+    },
+    "DeleteTieringConfigurationInput":{
+      "type":"structure",
+      "required":["TieringConfigurationName"],
+      "members":{
+        "TieringConfigurationName":{
+          "shape":"TieringConfigurationName",
+          "location":"uri",
+          "locationName":"tieringConfigurationName"
+        }
+      }
+    },
+    "DeleteTieringConfigurationOutput":{
+      "type":"structure",
+      "members":{}
     },
     "DependencyFailureException":{
       "type":"structure",
@@ -3308,6 +3431,23 @@
       "type":"structure",
       "members":{
         "ResourceTypes":{"shape":"ResourceTypes"}
+      }
+    },
+    "GetTieringConfigurationInput":{
+      "type":"structure",
+      "required":["TieringConfigurationName"],
+      "members":{
+        "TieringConfigurationName":{
+          "shape":"TieringConfigurationName",
+          "location":"uri",
+          "locationName":"tieringConfigurationName"
+        }
+      }
+    },
+    "GetTieringConfigurationOutput":{
+      "type":"structure",
+      "members":{
+        "TieringConfiguration":{"shape":"TieringConfiguration"}
       }
     },
     "GlobalSettings":{
@@ -4480,6 +4620,28 @@
         "Tags":{"shape":"Tags"}
       }
     },
+    "ListTieringConfigurationsInput":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListTieringConfigurationsOutput":{
+      "type":"structure",
+      "members":{
+        "TieringConfigurations":{"shape":"TieringConfigurationsList"},
+        "NextToken":{"shape":"string"}
+      }
+    },
     "Long":{"type":"long"},
     "MaxFrameworkInputs":{
       "type":"integer",
@@ -4816,6 +4978,23 @@
         "Context":{"shape":"string"}
       },
       "exception":true
+    },
+    "ResourceSelection":{
+      "type":"structure",
+      "required":[
+        "Resources",
+        "TieringDownSettingsInDays",
+        "ResourceType"
+      ],
+      "members":{
+        "Resources":{"shape":"ResourceArns"},
+        "TieringDownSettingsInDays":{"shape":"TieringDownSettingsInDays"},
+        "ResourceType":{"shape":"ResourceType"}
+      }
+    },
+    "ResourceSelections":{
+      "type":"list",
+      "member":{"shape":"ResourceSelection"}
     },
     "ResourceType":{
       "type":"string",
@@ -5331,6 +5510,70 @@
       "value":{"shape":"TagValue"},
       "sensitive":true
     },
+    "TieringConfiguration":{
+      "type":"structure",
+      "required":[
+        "TieringConfigurationName",
+        "BackupVaultName",
+        "ResourceSelection"
+      ],
+      "members":{
+        "TieringConfigurationName":{"shape":"TieringConfigurationName"},
+        "TieringConfigurationArn":{"shape":"ARN"},
+        "BackupVaultName":{"shape":"BackupVaultNameOrWildcard"},
+        "ResourceSelection":{"shape":"ResourceSelections"},
+        "CreatorRequestId":{"shape":"CreatorRequestId"},
+        "CreationTime":{"shape":"timestamp"},
+        "LastUpdatedTime":{"shape":"timestamp"}
+      }
+    },
+    "TieringConfigurationInputForCreate":{
+      "type":"structure",
+      "required":[
+        "TieringConfigurationName",
+        "BackupVaultName",
+        "ResourceSelection"
+      ],
+      "members":{
+        "TieringConfigurationName":{"shape":"TieringConfigurationName"},
+        "BackupVaultName":{"shape":"BackupVaultNameOrWildcard"},
+        "ResourceSelection":{"shape":"ResourceSelections"}
+      }
+    },
+    "TieringConfigurationInputForUpdate":{
+      "type":"structure",
+      "required":[
+        "ResourceSelection",
+        "BackupVaultName"
+      ],
+      "members":{
+        "ResourceSelection":{"shape":"ResourceSelections"},
+        "BackupVaultName":{"shape":"BackupVaultNameOrWildcard"}
+      }
+    },
+    "TieringConfigurationName":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9_]{1,200}$"
+    },
+    "TieringConfigurationsList":{
+      "type":"list",
+      "member":{"shape":"TieringConfigurationsListMember"}
+    },
+    "TieringConfigurationsListMember":{
+      "type":"structure",
+      "members":{
+        "TieringConfigurationArn":{"shape":"ARN"},
+        "TieringConfigurationName":{"shape":"TieringConfigurationName"},
+        "BackupVaultName":{"shape":"BackupVaultNameOrWildcard"},
+        "CreationTime":{"shape":"timestamp"},
+        "LastUpdatedTime":{"shape":"timestamp"}
+      }
+    },
+    "TieringDownSettingsInDays":{
+      "type":"integer",
+      "max":36500,
+      "min":60
+    },
     "Timestamp":{"type":"timestamp"},
     "Timezone":{"type":"string"},
     "UntagResourceInput":{
@@ -5563,6 +5806,30 @@
         "RestoreTestingPlanName":{"shape":"String"},
         "RestoreTestingSelectionName":{"shape":"String"},
         "UpdateTime":{"shape":"Timestamp"}
+      }
+    },
+    "UpdateTieringConfigurationInput":{
+      "type":"structure",
+      "required":[
+        "TieringConfigurationName",
+        "TieringConfiguration"
+      ],
+      "members":{
+        "TieringConfigurationName":{
+          "shape":"TieringConfigurationName",
+          "location":"uri",
+          "locationName":"tieringConfigurationName"
+        },
+        "TieringConfiguration":{"shape":"TieringConfigurationInputForUpdate"}
+      }
+    },
+    "UpdateTieringConfigurationOutput":{
+      "type":"structure",
+      "members":{
+        "TieringConfigurationArn":{"shape":"ARN"},
+        "TieringConfigurationName":{"shape":"TieringConfigurationName"},
+        "CreationTime":{"shape":"timestamp"},
+        "LastUpdatedTime":{"shape":"timestamp"}
       }
     },
     "VaultNames":{
