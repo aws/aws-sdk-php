@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.361.0 - 2025-11-19
 
 * `Aws\Route53` - Add dual-stack endpoint support for Route53
 * `Aws\CloudWatchRUM` - CloudWatch RUM now supports mobile application monitoring for Android and iOS platforms
