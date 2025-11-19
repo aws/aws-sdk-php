@@ -25,7 +25,7 @@
         "BatchGetInvoiceProfileRequest$AccountIds": "<p>Retrieves the corresponding invoice profile data for these account IDs. </p>",
         "Filters$InvoiceReceivers": "<p> You can specify a list of Amazon Web Services account IDs inside filters to return invoice units that match only the specified accounts. If multiple accounts are provided, the result is an <code>OR</code> condition (match any) of the specified accounts. This filter only matches the specified accounts on the invoice receivers of the invoice units. </p>",
         "Filters$Accounts": "<p> You can specify a list of Amazon Web Services account IDs inside filters to return invoice units that match only the specified accounts. If multiple accounts are provided, the result is an <code>OR</code> condition (match any) of the specified accounts. The specified account IDs are matched with either the receiver or the linked accounts in the rules. </p>",
-        "InvoiceUnitRule$LinkedAccounts": "<p>The list of <code>LINKED_ACCOUNT</code> IDs where charges are included within the invoice unit. </p>"
+        "Filters$BillSourceAccounts": "<p> A list of Amazon Web Services account account IDs used to filter invoice units. These are payer accounts from other Organizations that have delegated their billing responsibility to the receiver account through the billing transfer feature. </p>"
       }
     },
     "AccountIdString": {
@@ -36,7 +36,8 @@
         "GetInvoiceUnitResponse$InvoiceReceiver": "<p> The Amazon Web Services account ID chosen to be the receiver of an invoice unit. All invoices generated for that invoice unit will be sent to this account ID. </p>",
         "InvoiceProfile$AccountId": "<p> The account ID the invoice profile is generated for. </p>",
         "InvoiceSummary$AccountId": "<p> The Amazon Web Services account ID. </p>",
-        "InvoiceUnit$InvoiceReceiver": "<p>The account that receives invoices related to the invoice unit. </p>"
+        "InvoiceUnit$InvoiceReceiver": "<p>The account that receives invoices related to the invoice unit. </p>",
+        "RuleAccountIdList$member": null
       }
     },
     "AmountBreakdown": {
@@ -449,6 +450,13 @@
       "base": null,
       "refs": {
         "ResourceTag$Value": "<p> The specific value of the resource tag. </p>"
+      }
+    },
+    "RuleAccountIdList": {
+      "base": null,
+      "refs": {
+        "InvoiceUnitRule$LinkedAccounts": "<p>The list of <code>LINKED_ACCOUNT</code> IDs where charges are included within the invoice unit. </p>",
+        "InvoiceUnitRule$BillSourceAccounts": "<p> A list of Amazon Web Services account account IDs that have delegated their billing responsibility to the receiver account through transfer billing. Unlike linked accounts, these bill source accounts can be payer accounts from other organizations that have authorized billing transfer to this account. </p>"
       }
     },
     "SensitiveBasicStringWithoutSpace": {

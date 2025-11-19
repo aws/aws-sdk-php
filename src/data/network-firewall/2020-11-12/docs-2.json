@@ -1130,6 +1130,12 @@
       "base": null,
       "refs": {}
     },
+    "ListingName": {
+      "base": null,
+      "refs": {
+        "DescribeRuleGroupMetadataResponse$ListingName": "<p>The display name of the product listing for this rule group.</p>"
+      }
+    },
     "LogDestinationConfig": {
       "base": "<p>Defines where Network Firewall sends logs for the firewall for one log type. This is used in <a>LoggingConfiguration</a>. You can send each type of log to an Amazon S3 bucket, a CloudWatch log group, or a Firehose delivery stream.</p> <p>Network Firewall generates logs for stateful rule groups. You can save alert, flow, and TLS log types. </p>",
       "refs": {
@@ -1312,6 +1318,12 @@
         "StatefulRuleGroupReference$Priority": "<p>An integer setting that indicates the order in which to run the stateful rule groups in a single <a>FirewallPolicy</a>. This setting only applies to firewall policies that specify the <code>STRICT_ORDER</code> rule order in the stateful engine options settings.</p> <p>Network Firewall evalutes each stateful rule group against a packet starting with the group that has the lowest priority setting. You must ensure that the priority settings are unique within each policy.</p> <p>You can change the priority settings of your rule groups at any time. To make it easier to insert rule groups later, number them so there's a wide range in between, for example use 100, 200, and so on. </p>",
         "StatelessRule$Priority": "<p>Indicates the order in which to run this rule relative to all of the rules that are defined for a stateless rule group. Network Firewall evaluates the rules in a rule group starting with the lowest priority setting. You must ensure that the priority settings are unique for the rule group. </p> <p>Each stateless rule group uses exactly one <code>StatelessRulesAndCustomActions</code> object, and each <code>StatelessRulesAndCustomActions</code> contains exactly one <code>StatelessRules</code> object. To ensure unique priority settings for your rule groups, set unique priorities for the stateless rules that you define inside any single <code>StatelessRules</code> object.</p> <p>You can change the priority settings of your rules at any time. To make it easier to insert rules later, number them so there's a wide range in between, for example use 100, 200, and so on. </p>",
         "StatelessRuleGroupReference$Priority": "<p>An integer setting that indicates the order in which to run the stateless rule groups in a single <a>FirewallPolicy</a>. Network Firewall applies each stateless rule group to a packet starting with the group that has the lowest priority setting. You must ensure that the priority settings are unique within each policy.</p>"
+      }
+    },
+    "ProductId": {
+      "base": null,
+      "refs": {
+        "DescribeRuleGroupMetadataResponse$ProductId": "<p>The unique identifier for the product listing associated with this rule group.</p>"
       }
     },
     "ProtocolNumber": {
@@ -1964,6 +1976,12 @@
         "Firewall$SubnetMappings": "<p>The primary public subnets that Network Firewall is using for the firewall. Network Firewall creates a firewall endpoint in each subnet. Create a subnet mapping for each Availability Zone where you want to use the firewall.</p> <p>These subnets are all defined for a single, primary VPC, and each must belong to a different Availability Zone. Each of these subnets establishes the availability of the firewall in its Availability Zone. </p> <p>In addition to these subnets, you can define other endpoints for the firewall in <code>VpcEndpointAssociation</code> resources. You can define these additional endpoints for any VPC, and for any of the Availability Zones where the firewall resource already has a subnet mapping. VPC endpoint associations give you the ability to protect multiple VPCs using a single firewall, and to define multiple firewall endpoints for a VPC in a single Availability Zone. </p>"
       }
     },
+    "SubscriptionStatus": {
+      "base": null,
+      "refs": {
+        "ListRuleGroupsRequest$SubscriptionStatus": "<p>Filters the results to show only rule groups with the specified subscription status. Use this to find subscribed or unsubscribed rule groups.</p>"
+      }
+    },
     "Summary": {
       "base": "<p>A complex type containing summaries of security protections provided by a rule group.</p> <p>Network Firewall extracts this information from selected fields in the rule group's Suricata rules, based on your <a>SummaryConfiguration</a> settings.</p>",
       "refs": {
@@ -2348,6 +2366,13 @@
       "refs": {
         "IPSet$Definition": "<p>The list of IP addresses and address ranges, in CIDR notation. </p>",
         "PortSet$Definition": "<p>The set of port ranges. </p>"
+      }
+    },
+    "VendorName": {
+      "base": null,
+      "refs": {
+        "DescribeRuleGroupMetadataResponse$VendorName": "<p>The name of the Amazon Web Services Marketplace vendor that provides this rule group.</p>",
+        "RuleGroupMetadata$VendorName": "<p>The name of the Amazon Web Services Marketplace seller that provides this rule group.</p>"
       }
     },
     "VpcEndpointAssociation": {

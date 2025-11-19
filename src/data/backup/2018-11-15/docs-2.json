@@ -38,6 +38,7 @@
     "DescribeReportJob": "<p>Returns the details associated with creating a report as specified by its <code>ReportJobId</code>.</p>",
     "DescribeReportPlan": "<p>Returns a list of all report plans for an Amazon Web Services account and Amazon Web Services Region.</p>",
     "DescribeRestoreJob": "<p>Returns metadata associated with a restore job that is specified by a job ID.</p>",
+    "DescribeScanJob": "<p>Returns scan job details for the specified ScanJobID.</p>",
     "DisassociateBackupVaultMpaApprovalTeam": "<p>Removes the association between an MPA approval team and a backup vault, disabling the MPA approval workflow for restore operations.</p>",
     "DisassociateRecoveryPoint": "<p>Deletes the specified continuous backup recovery point from Backup and releases control of that continuous backup to the source service, such as Amazon RDS. The source service will continue to create and retain continuous backups using the lifecycle that you specified in your original backup plan.</p> <p>Does not support snapshot backup recovery points.</p>",
     "DisassociateRecoveryPointFromParent": "<p>This action to a specific child (nested) recovery point removes the relationship between the specified recovery point and its parent (composite) recovery point.</p>",
@@ -82,6 +83,8 @@
     "ListRestoreJobsByProtectedResource": "<p>This returns restore jobs that contain the specified protected resource.</p> <p>You must include <code>ResourceArn</code>. You can optionally include <code>NextToken</code>, <code>ByStatus</code>, <code>MaxResults</code>, <code>ByRecoveryPointCreationDateAfter</code> , and <code>ByRecoveryPointCreationDateBefore</code>.</p>",
     "ListRestoreTestingPlans": "<p>Returns a list of restore testing plans.</p>",
     "ListRestoreTestingSelections": "<p>Returns a list of restore testing selections. Can be filtered by <code>MaxResults</code> and <code>RestoreTestingPlanName</code>.</p>",
+    "ListScanJobSummaries": "<p>This is a request for a summary of scan jobs created or running within the most recent 30 days.</p>",
+    "ListScanJobs": "<p>Returns a list of existing scan jobs for an authenticated account for the last 30 days.</p>",
     "ListTags": "<p>Returns the tags assigned to the resource, such as a target recovery point, backup plan, or backup vault.</p> <p>This operation returns results depending on the resource type used in the value for <code>resourceArn</code>. For example, recovery points of Amazon DynamoDB with Advanced Settings have an ARN (Amazon Resource Name) that begins with <code>arn:aws:backup</code>. Recovery points (backups) of DynamoDB without Advanced Settings enabled have an ARN that begins with <code>arn:aws:dynamodb</code>.</p> <p>When this operation is called and when you include values of <code>resourceArn</code> that have an ARN other than <code>arn:aws:backup</code>, it may return one of the exceptions listed below. To prevent this exception, include only values representing resource types that are fully managed by Backup. These have an ARN that begins <code>arn:aws:backup</code> and they are noted in the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource\">Feature availability by resource</a> table.</p>",
     "ListTieringConfigurations": "<p>Returns a list of tiering configurations.</p>",
     "PutBackupVaultAccessPolicy": "<p>Sets a resource-based policy that is used to manage access permissions on the target backup vault. Requires a backup vault name and an access policy document in JSON format.</p>",
@@ -93,6 +96,7 @@
     "StartCopyJob": "<p>Starts a job to create a one-time copy of the specified resource.</p> <p>Does not support continuous backups.</p> <p>See <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/recov-point-create-a-copy.html#backup-copy-retry\">Copy job retry</a> for information on how Backup retries copy job operations.</p>",
     "StartReportJob": "<p>Starts an on-demand report job for the specified report plan.</p>",
     "StartRestoreJob": "<p>Recovers the saved resource identified by an Amazon Resource Name (ARN).</p>",
+    "StartScanJob": "<p>Starts scanning jobs for specific resources.</p>",
     "StopBackupJob": "<p>Attempts to cancel a job to create a one-time backup of a resource.</p> <p>This action is not supported for the following services:</p> <ul> <li> <p>Amazon Aurora</p> </li> <li> <p>Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p>Amazon FSx for Lustre</p> </li> <li> <p>Amazon FSx for NetApp ONTAP</p> </li> <li> <p>Amazon FSx for OpenZFS</p> </li> <li> <p>Amazon FSx for Windows File Server</p> </li> <li> <p>Amazon Neptune</p> </li> <li> <p>SAP HANA databases on Amazon EC2 instances</p> </li> <li> <p>Amazon RDS</p> </li> </ul>",
     "TagResource": "<p>Assigns a set of key-value pairs to a resource.</p>",
     "UntagResource": "<p>Removes a set of key-value pairs from a recovery point, backup plan, or backup vault identified by an Amazon Resource Name (ARN)</p> <p>This API is not supported for recovery points for resource types including Aurora, Amazon DocumentDB. Amazon EBS, Amazon FSx, Neptune, and Amazon RDS.</p>",
@@ -263,8 +267,10 @@
         "ListRecoveryPointsByBackupVaultInput$BackupVaultAccountId": "<p>This parameter will sort the list of recovery points by account ID.</p>",
         "ListRestoreJobSummariesInput$AccountId": "<p>Returns the job count for the specified account.</p> <p>If the request is sent from a member account or an account not part of Amazon Web Services Organizations, jobs within requestor's account will be returned.</p> <p>Root, admin, and delegated administrator accounts can use the value ANY to return job counts from every account in the organization.</p> <p> <code>AGGREGATE_ALL</code> aggregates job counts from all accounts within the authenticated organization, then returns the sum.</p>",
         "ListRestoreJobsInput$ByAccountId": "<p>The account ID to list the jobs from. Returns only restore jobs associated with the specified account ID.</p>",
+        "ListScanJobSummariesInput$AccountId": "<p>Returns the job count for the specified account.</p> <p>If the request is sent from a member account or an account not part of Amazon Web Services Organizations, jobs within requestor's account will be returned.</p> <p>Root, admin, and delegated administrator accounts can use the value <code>ANY</code> to return job counts from every account in the organization.</p> <p> <code>AGGREGATE_ALL</code> aggregates job counts from all accounts within the authenticated organization, then returns the sum.</p>",
         "RestoreJobSummary$AccountId": "<p>The account ID that owns the jobs within the summary.</p>",
-        "RestoreJobsListMember$AccountId": "<p>The account ID that owns the restore job.</p>"
+        "RestoreJobsListMember$AccountId": "<p>The account ID that owns the restore job.</p>",
+        "ScanJobSummary$AccountId": "<p>The account ID that owns the scan jobs included in this summary.</p>"
       }
     },
     "AdvancedBackupSetting": {
@@ -284,12 +290,20 @@
         "UpdateBackupPlanOutput$AdvancedBackupSettings": "<p>Contains a list of <code>BackupOptions</code> for each resource type.</p>"
       }
     },
+    "AggregatedScanResult": {
+      "base": "<p>Contains aggregated scan results across multiple scan operations, providing a summary of scan status and findings.</p>",
+      "refs": {
+        "RecoveryPointByBackupVault$AggregatedScanResult": "<p>Contains the latest scanning results against the recovery point and currently include <code>FailedScan</code>, <code>Findings</code>, <code>LastComputed</code>.</p>",
+        "RecoveryPointByResource$AggregatedScanResult": "<p>Contains the latest scanning results against the recovery point and currently include <code>FailedScan</code>, <code>Findings</code>, <code>LastComputed</code>.</p>"
+      }
+    },
     "AggregationPeriod": {
       "base": null,
       "refs": {
         "ListBackupJobSummariesInput$AggregationPeriod": "<p>The period for the returned results.</p> <ul> <li> <p> <code>ONE_DAY</code> - The daily job count for the prior 14 days.</p> </li> <li> <p> <code>SEVEN_DAYS</code> - The aggregated job count for the prior 7 days.</p> </li> <li> <p> <code>FOURTEEN_DAYS</code> - The aggregated job count for prior 14 days.</p> </li> </ul>",
         "ListCopyJobSummariesInput$AggregationPeriod": "<p>The period for the returned results.</p> <ul> <li> <p> <code>ONE_DAY</code> - The daily job count for the prior 14 days.</p> </li> <li> <p> <code>SEVEN_DAYS</code> - The aggregated job count for the prior 7 days.</p> </li> <li> <p> <code>FOURTEEN_DAYS</code> - The aggregated job count for prior 14 days.</p> </li> </ul>",
-        "ListRestoreJobSummariesInput$AggregationPeriod": "<p>The period for the returned results.</p> <ul> <li> <p> <code>ONE_DAY</code> - The daily job count for the prior 14 days.</p> </li> <li> <p> <code>SEVEN_DAYS</code> - The aggregated job count for the prior 7 days.</p> </li> <li> <p> <code>FOURTEEN_DAYS</code> - The aggregated job count for prior 14 days.</p> </li> </ul>"
+        "ListRestoreJobSummariesInput$AggregationPeriod": "<p>The period for the returned results.</p> <ul> <li> <p> <code>ONE_DAY</code> - The daily job count for the prior 14 days.</p> </li> <li> <p> <code>SEVEN_DAYS</code> - The aggregated job count for the prior 7 days.</p> </li> <li> <p> <code>FOURTEEN_DAYS</code> - The aggregated job count for prior 14 days.</p> </li> </ul>",
+        "ListScanJobSummariesInput$AggregationPeriod": "<p>The period for the returned results.</p> <ul> <li> <p> <code>ONE_DAY</code>The daily job count for the prior 1 day.</p> </li> <li> <p> <code>SEVEN_DAYS</code>The daily job count for the prior 7 days.</p> </li> <li> <p> <code>FOURTEEN_DAYS</code>The daily job count for the prior 14 days.</p> </li> </ul>"
       }
     },
     "AlreadyExistsException": {
@@ -563,6 +577,7 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "AggregatedScanResult$FailedScan": "<p>A Boolean value indicating whether any of the aggregated scans failed.</p>",
         "BackupRule$EnableContinuousBackup": "<p>Specifies whether Backup creates continuous backups. True causes Backup to create continuous backups capable of point-in-time restore (PITR). False (or not specified) causes Backup to create snapshot backups.</p>",
         "BackupRuleInput$EnableContinuousBackup": "<p>Specifies whether Backup creates continuous backups. True causes Backup to create continuous backups capable of point-in-time restore (PITR). False (or not specified) causes Backup to create snapshot backups.</p>",
         "BackupVaultListMember$Locked": "<p>A Boolean value that indicates whether Backup Vault Lock applies to the selected backup vault. If <code>true</code>, Vault Lock prevents delete and update operations on the recovery points in the selected vault.</p>",
@@ -983,6 +998,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeScanJobInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeScanJobOutput": {
+      "base": null,
+      "refs": {}
+    },
     "DisassociateBackupVaultMpaApprovalTeamInput": {
       "base": null,
       "refs": {}
@@ -1221,6 +1244,7 @@
         "DescribeRestoreJobOutput$IamRoleArn": "<p>Specifies the IAM role ARN used to create the target recovery point; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
         "RecoveryPointByBackupVault$IamRoleArn": "<p>Specifies the IAM role ARN used to create the target recovery point; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
         "RestoreJobsListMember$IamRoleArn": "<p>The IAM role ARN used to create the target recovery point; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
+        "ScanSetting$ScannerRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the scanner uses to access resources; for example, <code>arn:aws:iam::123456789012:role/ScannerRole</code>.</p>",
         "StartBackupJobInput$IamRoleArn": "<p>Specifies the IAM role ARN used to create the target recovery point; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
         "StartCopyJobInput$IamRoleArn": "<p>Specifies the IAM role ARN used to copy the target recovery point; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
         "StartRestoreJobInput$IamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that Backup uses to create the target resource; for example: <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
@@ -1581,6 +1605,28 @@
       "base": null,
       "refs": {}
     },
+    "ListScanJobSummariesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListScanJobSummariesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListScanJobsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListScanJobsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListScanJobsInput$MaxResults": "<p>The maximum number of items to be returned.</p> <p>Valid Range: Minimum value of 1. Maximum value of 1000.</p>"
+      }
+    },
+    "ListScanJobsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsInput": {
       "base": null,
       "refs": {}
@@ -1632,6 +1678,20 @@
         "RestoreJobsListMember$ExpectedCompletionTimeMinutes": "<p>The amount of time in minutes that a job restoring a recovery point is expected to take.</p>"
       }
     },
+    "MalwareScanner": {
+      "base": null,
+      "refs": {
+        "DescribeScanJobOutput$MalwareScanner": "<p>The scanning engine used for the corresponding scan job. Currently only <code>GUARDUTY</code> is supported.</p>",
+        "ListScanJobSummariesInput$MalwareScanner": "<p>Returns only the scan jobs for the specified malware scanner. Currently the only MalwareScanner is <code>GUARDDUTY</code>. But the field also supports <code>ANY</code>, and <code>AGGREGATE_ALL</code>.</p>",
+        "ListScanJobsInput$ByMalwareScanner": "<p>Returns only the scan jobs for the specified malware scanner. Currently only supports <code>GUARDDUTY</code>.</p>",
+        "ScanAction$MalwareScanner": "<p>The malware scanner to use for the scan action. Currently only <code>GUARDDUTY</code> is supported.</p>",
+        "ScanJob$MalwareScanner": "<p>The scanning engine used for the scan job. Currently only <code>GUARDDUTY</code> is supported.</p>",
+        "ScanJobSummary$MalwareScanner": "<p>Specifies the malware scanner used during the scan job. Currently only supports <code>GUARDDUTY</code>.</p>",
+        "ScanResult$MalwareScanner": "<p>The malware scanner used to perform the scan. Currently only <code>GUARDDUTY</code> is supported.</p>",
+        "ScanSetting$MalwareScanner": "<p>The malware scanner to use for scanning. Currently only <code>GUARDDUTY</code> is supported.</p>",
+        "StartScanJobInput$MalwareScanner": "<p>Specifies the malware scanner used during the scan job. Currently only supports <code>GUARDDUTY</code>.</p>"
+      }
+    },
     "MaxFrameworkInputs": {
       "base": null,
       "refs": {
@@ -1663,6 +1723,7 @@
         "ListRestoreJobSummariesInput$MaxResults": "<p>This parameter sets the maximum number of items to be returned.</p> <p>The value is an integer. Range of accepted values is from 1 to 500.</p>",
         "ListRestoreJobsByProtectedResourceInput$MaxResults": "<p>The maximum number of items to be returned.</p>",
         "ListRestoreJobsInput$MaxResults": "<p>The maximum number of items to be returned.</p>",
+        "ListScanJobSummariesInput$MaxResults": "<p>The maximum number of items to be returned.</p> <p>The value is an integer. Range of accepted values is from 1 to 500.</p>",
         "ListTagsInput$MaxResults": "<p>The maximum number of items to be returned.</p>",
         "ListTieringConfigurationsInput$MaxResults": "<p>The maximum number of items to be returned.</p>"
       }
@@ -1834,7 +1895,8 @@
       "refs": {
         "BackupJobSummary$Region": "<p>The Amazon Web Services Regions within the job summary.</p>",
         "CopyJobSummary$Region": "<p>The Amazon Web Services Regions within the job summary.</p>",
-        "RestoreJobSummary$Region": "<p>The Amazon Web Services Regions within the job summary.</p>"
+        "RestoreJobSummary$Region": "<p>The Amazon Web Services Regions within the job summary.</p>",
+        "ScanJobSummary$Region": "<p>The Amazon Web Services Region where the scan jobs were executed.</p>"
       }
     },
     "ReportDeliveryChannel": {
@@ -1910,7 +1972,7 @@
     "ReportSetting": {
       "base": "<p>Contains detailed information about a report setting.</p>",
       "refs": {
-        "CreateReportPlanInput$ReportSetting": "<p>Identifies the report template for the report. Reports are built using a report template. The report templates are:</p> <p> <code>RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT</code> </p> <p>If the report template is <code>RESOURCE_COMPLIANCE_REPORT</code> or <code>CONTROL_COMPLIANCE_REPORT</code>, this API resource also describes the report coverage by Amazon Web Services Regions and frameworks.</p>",
+        "CreateReportPlanInput$ReportSetting": "<p>Identifies the report template for the report. Reports are built using a report template. The report templates are:</p> <p> <code>RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT | SCAN_JOB_REPORT </code> </p> <p>If the report template is <code>RESOURCE_COMPLIANCE_REPORT</code> or <code>CONTROL_COMPLIANCE_REPORT</code>, this API resource also describes the report coverage by Amazon Web Services Regions and frameworks.</p>",
         "ReportPlan$ReportSetting": "<p>Identifies the report template for the report. Reports are built using a report template. The report templates are:</p> <p> <code>RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT</code> </p> <p>If the report template is <code>RESOURCE_COMPLIANCE_REPORT</code> or <code>CONTROL_COMPLIANCE_REPORT</code>, this API resource also describes the report coverage by Amazon Web Services Regions and frameworks.</p>",
         "UpdateReportPlanInput$ReportSetting": "<p>The report template for the report. Reports are built using a report template. The report templates are:</p> <p> <code>RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT</code> </p> <p>If the report template is <code>RESOURCE_COMPLIANCE_REPORT</code> or <code>CONTROL_COMPLIANCE_REPORT</code>, this API resource also describes the report coverage by Amazon Web Services Regions and frameworks.</p>"
       }
@@ -1978,6 +2040,7 @@
         "ListRecoveryPointsByBackupVaultInput$ByResourceType": "<p>Returns only recovery points that match the specified resource type(s):</p> <ul> <li> <p> <code>Aurora</code> for Amazon Aurora</p> </li> <li> <p> <code>CloudFormation</code> for CloudFormation</p> </li> <li> <p> <code>DocumentDB</code> for Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p> <code>DynamoDB</code> for Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> for Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> for Amazon FSx</p> </li> <li> <p> <code>Neptune</code> for Amazon Neptune</p> </li> <li> <p> <code>RDS</code> for Amazon Relational Database Service</p> </li> <li> <p> <code>Redshift</code> for Amazon Redshift</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> <li> <p> <code>SAP HANA on Amazon EC2</code> for SAP HANA databases on Amazon Elastic Compute Cloud instances</p> </li> <li> <p> <code>Storage Gateway</code> for Storage Gateway</p> </li> <li> <p> <code>Timestream</code> for Amazon Timestream</p> </li> <li> <p> <code>VirtualMachine</code> for VMware virtual machines</p> </li> </ul>",
         "ListRestoreJobSummariesInput$ResourceType": "<p>Returns the job count for the specified resource type. Use request <code>GetSupportedResourceTypes</code> to obtain strings for supported resource types.</p> <p>The the value ANY returns count of all resource types.</p> <p> <code>AGGREGATE_ALL</code> aggregates job counts for all resource types and returns the sum.</p> <p>The type of Amazon Web Services resource to be backed up; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database.</p>",
         "ListRestoreJobsInput$ByResourceType": "<p>Include this parameter to return only restore jobs for the specified resources:</p> <ul> <li> <p> <code>Aurora</code> for Amazon Aurora</p> </li> <li> <p> <code>CloudFormation</code> for CloudFormation</p> </li> <li> <p> <code>DocumentDB</code> for Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p> <code>DynamoDB</code> for Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> for Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> for Amazon FSx</p> </li> <li> <p> <code>Neptune</code> for Amazon Neptune</p> </li> <li> <p> <code>RDS</code> for Amazon Relational Database Service</p> </li> <li> <p> <code>Redshift</code> for Amazon Redshift</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> <li> <p> <code>SAP HANA on Amazon EC2</code> for SAP HANA databases on Amazon Elastic Compute Cloud instances</p> </li> <li> <p> <code>Storage Gateway</code> for Storage Gateway</p> </li> <li> <p> <code>Timestream</code> for Amazon Timestream</p> </li> <li> <p> <code>VirtualMachine</code> for VMware virtual machines</p> </li> </ul>",
+        "ListScanJobSummariesInput$ResourceType": "<p>Returns the job count for the specified resource type. Use request <code>GetSupportedResourceTypes</code> to obtain strings for supported resource types.</p> <p>The the value <code>ANY</code> returns count of all resource types.</p> <p> <code>AGGREGATE_ALL</code> aggregates job counts for all resource types and returns the sum.</p>",
         "ProtectedResource$ResourceType": "<p>The type of Amazon Web Services resource; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database. For Windows Volume Shadow Copy Service (VSS) backups, the only supported resource type is Amazon EC2.</p>",
         "RecoveryPointByBackupVault$ResourceType": "<p>The type of Amazon Web Services resource saved as a recovery point; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database. For Windows Volume Shadow Copy Service (VSS) backups, the only supported resource type is Amazon EC2.</p>",
         "RecoveryPointMember$ResourceType": "<p>The Amazon Web Services resource type that is saved as a recovery point.</p>",
@@ -1987,6 +2050,7 @@
         "ResourceTypes$member": null,
         "RestoreJobSummary$ResourceType": "<p>This value is the job count for the specified resource type. The request <code>GetSupportedResourceTypes</code> returns strings for supported resource types.</p>",
         "RestoreJobsListMember$ResourceType": "<p>The resource type of the listed restore jobs; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database. For Windows Volume Shadow Copy Service (VSS) backups, the only supported resource type is Amazon EC2.</p>",
+        "ScanJobSummary$ResourceType": "<p>The type of Amazon Web Services resource for the scan jobs included in this summary.</p>",
         "StartRestoreJobInput$ResourceType": "<p>Starts a job to restore a recovery point for one of the following resources:</p> <ul> <li> <p> <code>Aurora</code> - Amazon Aurora</p> </li> <li> <p> <code>DocumentDB</code> - Amazon DocumentDB</p> </li> <li> <p> <code>CloudFormation</code> - CloudFormation</p> </li> <li> <p> <code>DynamoDB</code> - Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> - Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> - Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> - Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> - Amazon FSx</p> </li> <li> <p> <code>Neptune</code> - Amazon Neptune</p> </li> <li> <p> <code>RDS</code> - Amazon Relational Database Service</p> </li> <li> <p> <code>Redshift</code> - Amazon Redshift</p> </li> <li> <p> <code>Storage Gateway</code> - Storage Gateway</p> </li> <li> <p> <code>S3</code> - Amazon Simple Storage Service</p> </li> <li> <p> <code>Timestream</code> - Amazon Timestream</p> </li> <li> <p> <code>VirtualMachine</code> - Virtual machines</p> </li> </ul>"
       }
     },
@@ -2014,7 +2078,8 @@
       "base": null,
       "refs": {
         "GetSupportedResourceTypesOutput$ResourceTypes": "<p>Contains a string with the supported Amazon Web Services resource types:</p> <ul> <li> <p> <code>Aurora</code> for Amazon Aurora</p> </li> <li> <p> <code>CloudFormation</code> for CloudFormation</p> </li> <li> <p> <code>DocumentDB</code> for Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p> <code>DynamoDB</code> for Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> for Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> for Amazon FSx</p> </li> <li> <p> <code>Neptune</code> for Amazon Neptune</p> </li> <li> <p> <code>RDS</code> for Amazon Relational Database Service</p> </li> <li> <p> <code>Redshift</code> for Amazon Redshift</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> <li> <p> <code>SAP HANA on Amazon EC2</code> for SAP HANA databases on Amazon Elastic Compute Cloud instances</p> </li> <li> <p> <code>Storage Gateway</code> for Storage Gateway</p> </li> <li> <p> <code>Timestream</code> for Amazon Timestream</p> </li> <li> <p> <code>VirtualMachine</code> for VMware virtual machines</p> </li> </ul>",
-        "IndexAction$ResourceTypes": "<p>0 or 1 index action will be accepted for each BackupRule.</p> <p>Valid values:</p> <ul> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> </ul>"
+        "IndexAction$ResourceTypes": "<p>0 or 1 index action will be accepted for each BackupRule.</p> <p>Valid values:</p> <ul> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> </ul>",
+        "ScanSetting$ResourceTypes": "<p>An array of resource types to be scanned for malware.</p>"
       }
     },
     "RestoreAccessBackupVaultList": {
@@ -2198,6 +2263,143 @@
         "ScheduledPlanExecutionMember$RuleExecutionType": "<p>The type of backup rule execution. Valid values are <code>CONTINUOUS</code> (point-in-time recovery), <code>SNAPSHOTS</code> (snapshot backups), or <code>CONTINUOUS_AND_SNAPSHOTS</code> (both types combined).</p>"
       }
     },
+    "ScanAction": {
+      "base": "<p>Defines a scanning action that specifies the malware scanner and scan mode to use.</p>",
+      "refs": {
+        "ScanActions$member": null
+      }
+    },
+    "ScanActions": {
+      "base": null,
+      "refs": {
+        "BackupRule$ScanActions": "<p>Contains your scanning configuration for the backup rule and includes the malware scanner, and scan mode of either full or incremental.</p>",
+        "BackupRuleInput$ScanActions": "<p>Contains your scanning configuration for the backup rule and includes the malware scanner, and scan mode of either full or incremental.</p>"
+      }
+    },
+    "ScanFinding": {
+      "base": null,
+      "refs": {
+        "ScanFindings$member": null
+      }
+    },
+    "ScanFindings": {
+      "base": null,
+      "refs": {
+        "AggregatedScanResult$Findings": "<p>An array of findings discovered across all aggregated scans.</p>",
+        "ScanResult$Findings": "<p>An array of findings discovered during the scan.</p>"
+      }
+    },
+    "ScanJob": {
+      "base": "<p>Contains metadata about a scan job, including information about the scanning process, results, and associated resources.</p>",
+      "refs": {
+        "ScanJobs$member": null
+      }
+    },
+    "ScanJobCreator": {
+      "base": "<p>Contains identifying information about the creation of a scan job, including the backup plan and rule that initiated the scan.</p>",
+      "refs": {
+        "DescribeScanJobOutput$CreatedBy": null,
+        "ScanJob$CreatedBy": "<p>Contains identifying information about the creation of a scan job.</p>"
+      }
+    },
+    "ScanJobState": {
+      "base": null,
+      "refs": {
+        "ScanResult$ScanJobState": "<p>The final state of the scan job.</p> <p>Valid values: <code>COMPLETED</code> | <code>FAILED</code> | <code>CANCELED</code>.</p>"
+      }
+    },
+    "ScanJobStatus": {
+      "base": null,
+      "refs": {
+        "ListScanJobSummariesInput$State": "<p>Returns only the scan jobs for the specified scanning job state.</p>",
+        "ScanJobSummary$State": "<p>The state of the scan jobs included in this summary.</p> <p>Valid values: <code>CREATED</code> | <code>RUNNING</code> | <code>COMPLETED</code> | <code>COMPLETED_WITH_ISSUES</code> | <code>FAILED</code> | <code>CANCELED</code>.</p>"
+      }
+    },
+    "ScanJobSummary": {
+      "base": "<p>Contains summary information about scan jobs, including counts and metadata for a specific time period and criteria.</p>",
+      "refs": {
+        "ScanJobSummaryList$member": null
+      }
+    },
+    "ScanJobSummaryList": {
+      "base": null,
+      "refs": {
+        "ListScanJobSummariesOutput$ScanJobSummaries": "<p>The summary information.</p>"
+      }
+    },
+    "ScanJobs": {
+      "base": null,
+      "refs": {
+        "ListScanJobsOutput$ScanJobs": "<p>An array of structures containing metadata about your scan jobs returned in JSON format.</p>"
+      }
+    },
+    "ScanMode": {
+      "base": null,
+      "refs": {
+        "DescribeScanJobOutput$ScanMode": "<p>Specifies the scan type used for the scan job.</p>",
+        "ScanAction$ScanMode": "<p>The scanning mode to use for the scan action.</p> <p>Valid values: <code>FULL_SCAN</code> | <code>INCREMENTAL_SCAN</code>.</p>",
+        "ScanJob$ScanMode": "<p>Specifies the scan type use for the scan job.</p> <p>Includes:</p> <p> <code>FULL_SCAN</code> will scan the entire data lineage within the backup.</p> <p> <code>INCREMENTAL_SCAN</code> will scan the data difference between the target recovery point and base recovery point ARN.</p>",
+        "StartScanJobInput$ScanMode": "<p>Specifies the scan type use for the scan job.</p> <p>Includes:</p> <ul> <li> <p> <code>FULL_SCAN</code> will scan the entire data lineage within the backup.</p> </li> <li> <p> <code>INCREMENTAL_SCAN</code> will scan the data difference between the target recovery point and base recovery point ARN.</p> </li> </ul>"
+      }
+    },
+    "ScanResourceType": {
+      "base": null,
+      "refs": {
+        "DescribeScanJobOutput$ResourceType": "<p>The type of Amazon Web Services Resource to be backed up; for example, an Amazon Elastic Block Store (Amazon EBS) volume.</p> <p>Pattern: <code>^[a-zA-Z0-9\\-\\_\\.]{1,50}$</code> </p>",
+        "ListScanJobsInput$ByResourceType": "<p>Returns restore testing selections by the specified restore testing plan name.</p> <ul> <li> <p> <code>EBS</code>for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code>for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>S3</code>for Amazon Simple Storage Service (Amazon S3)</p> </li> </ul> <p>Pattern: <code>^[a-zA-Z0-9\\-\\_\\.]{1,50}$</code> </p>",
+        "ScanJob$ResourceType": "<p>The type of Amazon Web Services resource being scanned; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database.</p>"
+      }
+    },
+    "ScanResult": {
+      "base": "<p>Contains the results of a security scan, including scanner information, scan state, and any findings discovered.</p>",
+      "refs": {
+        "ScanResults$member": null
+      }
+    },
+    "ScanResultInfo": {
+      "base": "<p>Contains information about the results of a scan job.</p>",
+      "refs": {
+        "DescribeScanJobOutput$ScanResult": "<p> Contains the <code>ScanResultsStatus</code> for the scanning job and returns <code>THREATS_FOUND</code> or <code>NO_THREATS_FOUND</code> for completed jobs.</p>",
+        "ScanJob$ScanResult": "<p>Contains the scan results information, including the status of threats found during scanning.</p>"
+      }
+    },
+    "ScanResultStatus": {
+      "base": null,
+      "refs": {
+        "ListScanJobSummariesInput$ScanResultStatus": "<p>Returns only the scan jobs for the specified scan results.</p>",
+        "ListScanJobsInput$ByScanResultStatus": "<p>Returns only the scan jobs for the specified scan results:</p> <ul> <li> <p> <code>THREATS_FOUND</code> </p> </li> <li> <p> <code>NO_THREATS_FOUND</code> </p> </li> </ul>",
+        "ScanJobSummary$ScanResultStatus": "<p>The scan result status for the scan jobs included in this summary.</p> <p>Valid values: <code>THREATS_FOUND</code> | <code>NO_THREATS_FOUND</code>.</p>",
+        "ScanResultInfo$ScanResultStatus": "<p>The status of the scan results.</p> <p>Valid values: <code>THREATS_FOUND</code> | <code>NO_THREATS_FOUND</code>.</p>"
+      }
+    },
+    "ScanResults": {
+      "base": null,
+      "refs": {
+        "DescribeRecoveryPointOutput$ScanResults": "<p>Contains the latest scanning results against the recovery point and currently include <code>MalwareScanner</code>, <code>ScanJobState</code>, <code>Findings</code>, and <code>LastScanTimestamp</code> </p>"
+      }
+    },
+    "ScanSetting": {
+      "base": "<p>Contains configuration settings for malware scanning, including the scanner type, target resource types, and scanner role.</p>",
+      "refs": {
+        "ScanSettings$member": null
+      }
+    },
+    "ScanSettings": {
+      "base": null,
+      "refs": {
+        "BackupPlan$ScanSettings": "<p>Contains your scanning configuration for the backup plan and includes the Malware scanner, your selected resources, and scanner role.</p>",
+        "BackupPlanInput$ScanSettings": "<p>Contains your scanning configuration for the backup rule and includes the malware scanner, and scan mode of either full or incremental.</p>",
+        "UpdateBackupPlanOutput$ScanSettings": "<p>Contains your scanning configuration for the backup plan and includes the Malware scanner, your selected resources, and scanner role.</p>"
+      }
+    },
+    "ScanState": {
+      "base": null,
+      "refs": {
+        "DescribeScanJobOutput$State": "<p>The current state of a scan job.</p>",
+        "ListScanJobsInput$ByState": "<p>Returns only the scan jobs for the specified scanning job state.</p>",
+        "ScanJob$State": "<p>The current state of the scan job.</p> <p>Valid values: <code>CREATED</code> | <code>RUNNING</code> | <code>COMPLETED</code> | <code>COMPLETED_WITH_ISSUES</code> | <code>FAILED</code> | <code>CANCELED</code>.</p>"
+      }
+    },
     "ScheduledPlanExecutionMember": {
       "base": "<p>Contains information about a scheduled backup plan execution, including the execution time, rule type, and associated rule identifier.</p>",
       "refs": {
@@ -2255,6 +2457,14 @@
       "base": null,
       "refs": {}
     },
+    "StartScanJobInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartScanJobOutput": {
+      "base": null,
+      "refs": {}
+    },
     "StopBackupJobInput": {
       "base": null,
       "refs": {}
@@ -2279,6 +2489,19 @@
         "DeleteRestoreTestingPlanInput$RestoreTestingPlanName": "<p>Required unique name of the restore testing plan you wish to delete.</p>",
         "DeleteRestoreTestingSelectionInput$RestoreTestingPlanName": "<p>Required unique name of the restore testing plan that contains the restore testing selection you wish to delete.</p>",
         "DeleteRestoreTestingSelectionInput$RestoreTestingSelectionName": "<p>Required unique name of the restore testing selection you wish to delete.</p>",
+        "DescribeScanJobInput$ScanJobId": "<p>Uniquely identifies a request to Backup to scan a resource.</p>",
+        "DescribeScanJobOutput$AccountId": "<p>Returns the account ID that owns the scan job.</p> <p>Pattern: <code>^[0-9]{12}$</code> </p>",
+        "DescribeScanJobOutput$BackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code> </p>",
+        "DescribeScanJobOutput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p> <p>Pattern: <code>^[a-zA-Z0-9\\-\\_\\.]{2,50}$</code> </p>",
+        "DescribeScanJobOutput$IamRoleArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup vault; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
+        "DescribeScanJobOutput$RecoveryPointArn": "<p>An ARN that uniquely identifies the target recovery point for scanning.; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
+        "DescribeScanJobOutput$ResourceArn": "<p>An ARN that uniquely identifies the source resource of the corresponding recovery point ARN.</p>",
+        "DescribeScanJobOutput$ResourceName": "<p>The non-unique name of the resource that belongs to the specified backup.</p>",
+        "DescribeScanJobOutput$ScanBaseRecoveryPointArn": "<p>An ARN that uniquely identifies the base recovery point for scanning. This field will only be populated when an incremental scan job has taken place.</p>",
+        "DescribeScanJobOutput$ScanId": "<p>The scan ID generated by Amazon GuardDuty for the corresponding Scan Job ID request from Backup.</p>",
+        "DescribeScanJobOutput$ScanJobId": "<p>The scan job ID that uniquely identified the request to Backup.</p>",
+        "DescribeScanJobOutput$ScannerRoleArn": "<p>Specifies the scanner IAM role ARN used to for the scan job.</p>",
+        "DescribeScanJobOutput$StatusMessage": "<p>A detailed message explaining the status of the job to back up a resource.</p>",
         "GetRestoreTestingInferredMetadataInput$BackupVaultAccountId": "<p>The account ID of the specified backup vault.</p>",
         "GetRestoreTestingInferredMetadataInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web ServicesRegion where they are created. They consist of letters, numbers, and hyphens.</p>",
         "GetRestoreTestingInferredMetadataInput$RecoveryPointArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>. </p>",
@@ -2292,6 +2515,12 @@
         "ListRestoreTestingSelectionsInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the nexttoken.</p>",
         "ListRestoreTestingSelectionsInput$RestoreTestingPlanName": "<p>Returns restore testing selections by the specified restore testing plan name.</p>",
         "ListRestoreTestingSelectionsOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the nexttoken.</p>",
+        "ListScanJobsInput$ByAccountId": "<p>The account ID to list the jobs from. Returns only backup jobs associated with the specified account ID.</p> <p>If used from an Amazon Web Services Organizations management account, passing <code>*</code> returns all jobs across the organization.</p> <p>Pattern: <code>^[0-9]{12}$</code> </p>",
+        "ListScanJobsInput$ByBackupVaultName": "<p>Returns only scan jobs that will be stored in the specified backup vault. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p> <p>Pattern: <code>^[a-zA-Z0-9\\-\\_\\.]{2,50}$</code> </p>",
+        "ListScanJobsInput$ByRecoveryPointArn": "<p>Returns only the scan jobs that are ran against the specified recovery point.</p>",
+        "ListScanJobsInput$ByResourceArn": "<p>Returns only scan jobs that match the specified resource Amazon Resource Name (ARN).</p>",
+        "ListScanJobsInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListScanJobsOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "RestoreTestingPlanForCreate$RestoreTestingPlanName": "<p>The RestoreTestingPlanName is a unique string that is the name of the restore testing plan. This cannot be changed after creation, and it must consist of only alphanumeric characters and underscores.</p>",
         "RestoreTestingPlanForCreate$ScheduleExpression": "<p>A CRON expression in specified timezone when a restore testing plan is executed. When no CRON expression is provided, Backup will use the default expression <code>cron(0 5 ? * * *)</code>.</p>",
         "RestoreTestingPlanForCreate$ScheduleExpressionTimezone": "<p>Optional. This is the timezone in which the schedule expression is set. By default, ScheduleExpressions are in UTC. You can modify this to a specified timezone.</p>",
@@ -2319,8 +2548,31 @@
         "RestoreTestingSelectionForList$RestoreTestingPlanName": "<p>Unique string that is the name of the restore testing plan.</p> <p>The name cannot be changed after creation. The name must consist of only alphanumeric characters and underscores. Maximum length is 50.</p>",
         "RestoreTestingSelectionForList$RestoreTestingSelectionName": "<p>Unique name of a restore testing selection.</p> <p>The name consists of only alphanumeric characters and underscores. Maximum length is 50.</p>",
         "RestoreTestingSelectionForUpdate$IamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that Backup uses to create the target resource; for example: <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
+        "ScanJob$AccountId": "<p>The account ID that owns the scan job.</p>",
+        "ScanJob$BackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
+        "ScanJob$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p>",
+        "ScanJob$IamRoleArn": "<p>Specifies the IAM role ARN used to create the scan job; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
+        "ScanJob$RecoveryPointArn": "<p>An ARN that uniquely identifies the recovery point being scanned; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
+        "ScanJob$ResourceArn": "<p>An ARN that uniquely identifies the source resource of the recovery point being scanned.</p>",
+        "ScanJob$ResourceName": "<p>The non-unique name of the resource that belongs to the specified backup.</p>",
+        "ScanJob$ScanBaseRecoveryPointArn": "<p>An ARN that uniquely identifies the base recovery point for scanning. This field is populated when an incremental scan job has taken place.</p>",
+        "ScanJob$ScanId": "<p>The scan ID generated by the malware scanner for the corresponding scan job.</p>",
+        "ScanJob$ScanJobId": "<p>The unique identifier that identifies the scan job request to Backup.</p>",
+        "ScanJob$ScannerRoleArn": "<p>Specifies the scanner IAM role ARN used for the scan job.</p>",
+        "ScanJob$StatusMessage": "<p>A detailed message explaining the status of the scan job.</p>",
+        "ScanJobCreator$BackupPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup plan; for example, <code>arn:aws:backup:us-east-1:123456789012:plan:8F81F553-3A74-4A3F-B93D-B3360DC80C50</code>.</p>",
+        "ScanJobCreator$BackupPlanId": "<p>The ID of the backup plan.</p>",
+        "ScanJobCreator$BackupPlanVersion": "<p>Unique, randomly generated, Unicode, UTF-8 encoded strings that are at most 1,024 bytes long. Version IDs cannot be edited.</p>",
+        "ScanJobCreator$BackupRuleId": "<p>Uniquely identifies the backup rule that initiated the scan job.</p>",
         "SensitiveStringMap$key": null,
         "SensitiveStringMap$value": null,
+        "StartScanJobInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p> <p>Pattern: <code>^[a-zA-Z0-9\\-\\_]{2,50}$</code> </p>",
+        "StartScanJobInput$IamRoleArn": "<p>Specifies the IAM role ARN used to create the target recovery point; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
+        "StartScanJobInput$IdempotencyToken": "<p>A customer-chosen string that you can use to distinguish between otherwise identical calls to <code>StartScanJob</code>. Retrying a successful request with the same idempotency token results in a success message with no action taken.</p>",
+        "StartScanJobInput$RecoveryPointArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a recovery point. This is your target recovery point for a full scan. If you are running an incremental scan, this will be your a recovery point which has been created after your base recovery point selection.</p>",
+        "StartScanJobInput$ScanBaseRecoveryPointArn": "<p>An ARN that uniquely identifies the base recovery point to be used for incremental scanning.</p>",
+        "StartScanJobInput$ScannerRoleArn": "<p>Specified the IAM scanner role ARN.</p>",
+        "StartScanJobOutput$ScanJobId": "<p>Uniquely identifies a request to Backup to back up a resource.</p>",
         "UpdateRestoreTestingPlanInput$RestoreTestingPlanName": "<p>The name of the restore testing plan name.</p>",
         "UpdateRestoreTestingPlanOutput$RestoreTestingPlanArn": "<p>Unique ARN (Amazon Resource Name) of the restore testing plan.</p>",
         "UpdateRestoreTestingPlanOutput$RestoreTestingPlanName": "<p>The name cannot be changed after creation. The name consists of only alphanumeric characters and underscores. Maximum length is 50.</p>",
@@ -2422,6 +2674,10 @@
       "refs": {
         "CreateRestoreTestingPlanOutput$CreationTime": "<p>The date and time a restore testing plan was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087AM.</p>",
         "CreateRestoreTestingSelectionOutput$CreationTime": "<p>The time that the resource testing selection was created.</p>",
+        "DescribeScanJobOutput$CompletionDate": "<p>The date and time that a backup index finished creation, in Unix format and Coordinated Universal Time (UTC). The value of <code>CompletionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "DescribeScanJobOutput$CreationDate": "<p>The date and time that a backup index finished creation, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "ListScanJobsInput$ByCompleteAfter": "<p>Returns only scan jobs completed after a date expressed in Unix format and Coordinated Universal Time (UTC).</p>",
+        "ListScanJobsInput$ByCompleteBefore": "<p>Returns only backup jobs completed before a date expressed in Unix format and Coordinated Universal Time (UTC).</p>",
         "RestoreTestingPlanForGet$CreationTime": "<p>The date and time that a restore testing plan was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "RestoreTestingPlanForGet$LastExecutionTime": "<p>The last time a restore test was run with the specified restore testing plan. A date and time, in Unix format and Coordinated Universal Time (UTC). The value of <code>LastExecutionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "RestoreTestingPlanForGet$LastUpdateTime": "<p>The date and time that the restore testing plan was updated. This update is in Unix format and Coordinated Universal Time (UTC). The value of <code>LastUpdateTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
@@ -2430,6 +2686,9 @@
         "RestoreTestingPlanForList$LastUpdateTime": "<p>The date and time that the restore testing plan was updated. This update is in Unix format and Coordinated Universal Time (UTC). The value of <code>LastUpdateTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "RestoreTestingSelectionForGet$CreationTime": "<p>The date and time that a restore testing selection was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 201812:11:30.087 AM.</p>",
         "RestoreTestingSelectionForList$CreationTime": "<p>The date and time that a restore testing selection was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationTime</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26,2018 12:11:30.087 AM.</p>",
+        "ScanJob$CompletionDate": "<p>The date and time that a scan job is completed, in Unix format and Coordinated Universal Time (UTC). The value of <code>CompletionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "ScanJob$CreationDate": "<p>The date and time that a scan job is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "StartScanJobOutput$CreationDate": "<p>The date and time that a backup job is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "UpdateRestoreTestingPlanOutput$CreationTime": "<p>The time the resource testing plan was created.</p>",
         "UpdateRestoreTestingPlanOutput$UpdateTime": "<p>The time the update completed for the restore testing plan.</p>",
         "UpdateRestoreTestingSelectionOutput$CreationTime": "<p>The time the resource testing selection was updated successfully.</p>",
@@ -2595,7 +2854,8 @@
         "RestoreTestingSelectionForCreate$ValidationWindowHours": "<p>This is amount of hours (0 to 168) available to run a validation script on the data. The data will be deleted upon the completion of the validation script or the end of the specified retention period, whichever comes first.</p>",
         "RestoreTestingSelectionForGet$ValidationWindowHours": "<p>This is amount of hours (1 to 168) available to run a validation script on the data. The data will be deleted upon the completion of the validation script or the end of the specified retention period, whichever comes first.</p>",
         "RestoreTestingSelectionForList$ValidationWindowHours": "<p>This value represents the time, in hours, data is retained after a restore test so that optional validation can be completed.</p> <p>Accepted value is an integer between 0 and 168 (the hourly equivalent of seven days).</p>",
-        "RestoreTestingSelectionForUpdate$ValidationWindowHours": "<p>This value represents the time, in hours, data is retained after a restore test so that optional validation can be completed.</p> <p>Accepted value is an integer between 0 and 168 (the hourly equivalent of seven days).</p>"
+        "RestoreTestingSelectionForUpdate$ValidationWindowHours": "<p>This value represents the time, in hours, data is retained after a restore test so that optional validation can be completed.</p> <p>Accepted value is an integer between 0 and 168 (the hourly equivalent of seven days).</p>",
+        "ScanJobSummary$Count": "<p>The number of scan jobs that match the specified criteria.</p>"
       }
     },
     "long": {
@@ -2798,7 +3058,7 @@
         "ListRecoveryPointsByLegalHoldOutput$NextToken": "<p>The next item following a partial list of returned resources.</p>",
         "ListRecoveryPointsByResourceInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "ListRecoveryPointsByResourceOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
-        "ListReportJobsInput$ByStatus": "<p>Returns only report jobs that are in the specified status. The statuses are:</p> <p> <code>CREATED | RUNNING | COMPLETED | FAILED</code> </p>",
+        "ListReportJobsInput$ByStatus": "<p>Returns only report jobs that are in the specified status. The statuses are:</p> <p> <code>CREATED | RUNNING | COMPLETED | FAILED | COMPLETED_WITH_ISSUES</code> </p> <p> Please note that only scanning jobs finish with state completed with issues. For backup jobs this is a console interpretation of a job that finishes in completed state and has a status message.</p>",
         "ListReportJobsInput$NextToken": "<p>An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.</p>",
         "ListReportJobsOutput$NextToken": "<p>An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.</p>",
         "ListReportPlansInput$NextToken": "<p>An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.</p>",
@@ -2813,6 +3073,9 @@
         "ListRestoreJobsInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "ListRestoreJobsInput$ByParentJobId": "<p>This is a filter to list child (nested) restore jobs based on parent restore job ID.</p>",
         "ListRestoreJobsOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListScanJobSummariesInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListScanJobSummariesOutput$AggregationPeriod": "<p>The period for the returned results.</p> <ul> <li> <p> <code>ONE_DAY</code>The daily job count for the prior 1 day.</p> </li> <li> <p> <code>SEVEN_DAYS</code>The daily job count for the prior 7 days.</p> </li> <li> <p> <code>FOURTEEN_DAYS</code>The daily job count for the prior 14 days.</p> </li> </ul> <p>Valid Values: <code>'ONE_DAY'</code> | <code>'SEVEN_DAYS'</code> | <code>'FOURTEEN_DAYS'</code> </p>",
+        "ListScanJobSummariesOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "ListTagsInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "ListTagsOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "ListTieringConfigurationsInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
@@ -2844,7 +3107,7 @@
         "ReportJob$Status": "<p>The status of a report job. The statuses are:</p> <p> <code>CREATED | RUNNING | COMPLETED | FAILED</code> </p> <p> <code>COMPLETED</code> means that the report is available for your review at your designated destination. If the status is <code>FAILED</code>, review the <code>StatusMessage</code> for the reason.</p>",
         "ReportJob$StatusMessage": "<p>A message explaining the status of the report job.</p>",
         "ReportPlan$DeploymentStatus": "<p>The deployment status of a report plan. The statuses are:</p> <p> <code>CREATE_IN_PROGRESS | UPDATE_IN_PROGRESS | DELETE_IN_PROGRESS | COMPLETED</code> </p>",
-        "ReportSetting$ReportTemplate": "<p>Identifies the report template for the report. Reports are built using a report template. The report templates are:</p> <p> <code>RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT</code> </p>",
+        "ReportSetting$ReportTemplate": "<p>Identifies the report template for the report. Reports are built using a report template. The report templates are:</p> <p> <code>RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT | SCAN_JOB_REPORT</code> </p>",
         "ResourceIdentifiers$member": null,
         "ResourceNotFoundException$Code": null,
         "ResourceNotFoundException$Message": null,
@@ -2907,6 +3170,7 @@
     "timestamp": {
       "base": null,
       "refs": {
+        "AggregatedScanResult$LastComputed": "<p>The timestamp when the aggregated scan result was last computed, in Unix format and Coordinated Universal Time (UTC).</p>",
         "BackupJob$CreationDate": "<p>The date and time a backup job is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "BackupJob$CompletionDate": "<p>The date and time a job to create a backup job is completed, in Unix format and Coordinated Universal Time (UTC). The value of <code>CompletionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "BackupJob$ExpectedCompletionDate": "<p>The date and time a job to back up resources is expected to be completed, in Unix format and Coordinated Universal Time (UTC). The value of <code>ExpectedCompletionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
@@ -3013,6 +3277,9 @@
         "RestoreJobsListMember$CreationDate": "<p>The date and time a restore job is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "RestoreJobsListMember$CompletionDate": "<p>The date and time a job to restore a recovery point is completed, in Unix format and Coordinated Universal Time (UTC). The value of <code>CompletionDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "RestoreJobsListMember$RecoveryPointCreationDate": "<p>The date on which a recovery point was created.</p>",
+        "ScanJobSummary$StartTime": "<p>The value of time in number format of a job start time.</p> <p>This value is the time in Unix format, Coordinated Universal Time (UTC), and accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "ScanJobSummary$EndTime": "<p>The value of time in number format of a job end time.</p> <p>This value is the time in Unix format, Coordinated Universal Time (UTC), and accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "ScanResult$LastScanTimestamp": "<p>The timestamp of when the last scan was performed, in Unix format and Coordinated Universal Time (UTC).</p>",
         "ScheduledPlanExecutionMember$ExecutionTime": "<p>The timestamp when the backup is scheduled to run, in Unix format and Coordinated Universal Time (UTC). The value is accurate to milliseconds.</p>",
         "StartBackupJobOutput$CreationDate": "<p>The date and time that a backup job is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "StartCopyJobOutput$CreationDate": "<p>The date and time that a copy job is created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",

@@ -623,6 +623,9 @@
                 "title": {
                     "shape": "String"
                 },
+                "source": {
+                    "shape": "String"
+                },
                 "sourceContent": {
                     "shape": "CitationSourceContentList"
                 },
@@ -660,6 +663,9 @@
                 },
                 "documentChunk": {
                     "shape": "DocumentChunkLocation"
+                },
+                "searchResultLocation": {
+                    "shape": "SearchResultLocation"
                 }
             },
             "union": true
@@ -727,6 +733,9 @@
                 "title": {
                     "shape": "String"
                 },
+                "source": {
+                    "shape": "String"
+                },
                 "sourceContent": {
                     "shape": "CitationSourceContentListDelta"
                 },
@@ -780,6 +789,9 @@
                 },
                 "citationsContent": {
                     "shape": "CitationsContentBlock"
+                },
+                "searchResult": {
+                    "shape": "SearchResultBlock"
                 }
             },
             "union": true
@@ -3329,6 +3341,74 @@
             "min": 1,
             "pattern": "s3:\/\/[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9](\/.*)?"
         },
+        "SearchResultBlock": {
+            "type": "structure",
+            "required": [
+                "source",
+                "title",
+                "content"
+            ],
+            "members": {
+                "source": {
+                    "shape": "String"
+                },
+                "title": {
+                    "shape": "String"
+                },
+                "content": {
+                    "shape": "SearchResultContentBlocks"
+                },
+                "citations": {
+                    "shape": "CitationsConfig"
+                }
+            }
+        },
+        "SearchResultContentBlock": {
+            "type": "structure",
+            "required": [
+                "text"
+            ],
+            "members": {
+                "text": {
+                    "shape": "String"
+                }
+            }
+        },
+        "SearchResultContentBlocks": {
+            "type": "list",
+            "member": {
+                "shape": "SearchResultContentBlock"
+            }
+        },
+        "SearchResultLocation": {
+            "type": "structure",
+            "members": {
+                "searchResultIndex": {
+                    "shape": "SearchResultLocationSearchResultIndexInteger"
+                },
+                "start": {
+                    "shape": "SearchResultLocationStartInteger"
+                },
+                "end": {
+                    "shape": "SearchResultLocationEndInteger"
+                }
+            }
+        },
+        "SearchResultLocationEndInteger": {
+            "type": "integer",
+            "box": true,
+            "min": 0
+        },
+        "SearchResultLocationSearchResultIndexInteger": {
+            "type": "integer",
+            "box": true,
+            "min": 0
+        },
+        "SearchResultLocationStartInteger": {
+            "type": "integer",
+            "box": true,
+            "min": 0
+        },
         "ServiceQuotaExceededException": {
             "type": "structure",
             "members": {
@@ -3734,6 +3814,9 @@
                 },
                 "video": {
                     "shape": "VideoBlock"
+                },
+                "searchResult": {
+                    "shape": "SearchResultBlock"
                 }
             },
             "union": true

@@ -8,12 +8,21 @@
     "AddFlowOutputs": "<p> Adds outputs to an existing flow. You can create up to 50 outputs per flow.</p>",
     "AddFlowSources": "<p> Adds sources to a flow.</p>",
     "AddFlowVpcInterfaces": "<p> Adds VPC interfaces to a flow.</p>",
+    "BatchGetRouterInput": "<p>Retrieves information about multiple router inputs in AWS Elemental MediaConnect.</p>",
+    "BatchGetRouterNetworkInterface": "<p>Retrieves information about multiple router network interfaces in AWS Elemental MediaConnect.</p>",
+    "BatchGetRouterOutput": "<p>Retrieves information about multiple router outputs in AWS Elemental MediaConnect.</p>",
     "CreateBridge": "<p> Creates a new bridge. The request must include one source.</p>",
     "CreateFlow": "<p> Creates a new flow. The request must include one source. The request optionally can include outputs (up to 50) and entitlements (up to 50).</p>",
     "CreateGateway": "<p> Creates a new gateway. The request must include at least one network (up to four).</p>",
+    "CreateRouterInput": "<p>Creates a new router input in AWS Elemental MediaConnect.</p>",
+    "CreateRouterNetworkInterface": "<p>Creates a new router network interface in AWS Elemental MediaConnect.</p>",
+    "CreateRouterOutput": "<p>Creates a new router output in AWS Elemental MediaConnect.</p>",
     "DeleteBridge": "<p> Deletes a bridge. Before you can delete a bridge, you must stop the bridge.</p>",
     "DeleteFlow": "<p> Deletes a flow. Before you can delete a flow, you must stop the flow.</p>",
     "DeleteGateway": "<p> Deletes a gateway. Before you can delete a gateway, you must deregister its instances and delete its bridges.</p>",
+    "DeleteRouterInput": "<p>Deletes a router input from AWS Elemental MediaConnect.</p>",
+    "DeleteRouterNetworkInterface": "<p>Deletes a router network interface from AWS Elemental MediaConnect.</p>",
+    "DeleteRouterOutput": "<p>Deletes a router output from AWS Elemental MediaConnect.</p>",
     "DeregisterGatewayInstance": "<p> Deregisters an instance. Before you deregister an instance, all bridges running on the instance must be stopped. If you want to deregister an instance without stopping the bridges, you must use the --force option.</p>",
     "DescribeBridge": "<p> Displays the details of a bridge.</p>",
     "DescribeFlow": "<p> Displays the details of a flow. The response includes the flow Amazon Resource Name (ARN), name, and Availability Zone, as well as details about the source, outputs, and entitlements.</p>",
@@ -23,6 +32,11 @@
     "DescribeGatewayInstance": "<p> Displays the details of an instance. </p>",
     "DescribeOffering": "<p> Displays the details of an offering. The response includes the offering description, duration, outbound bandwidth, price, and Amazon Resource Name (ARN).</p>",
     "DescribeReservation": "<p> Displays the details of a reservation. The response includes the reservation name, state, start date and time, and the details of the offering that make up the rest of the reservation (such as price, duration, and outbound bandwidth).</p>",
+    "GetRouterInput": "<p>Retrieves information about a specific router input in AWS Elemental MediaConnect.</p>",
+    "GetRouterInputSourceMetadata": "<p>Retrieves detailed metadata information about a specific router input source, including stream details and connection state.</p>",
+    "GetRouterInputThumbnail": "<p>Retrieves the thumbnail for a router input in AWS Elemental MediaConnect.</p>",
+    "GetRouterNetworkInterface": "<p>Retrieves information about a specific router network interface in AWS Elemental MediaConnect.</p>",
+    "GetRouterOutput": "<p>Retrieves information about a specific router output in AWS Elemental MediaConnect.</p>",
     "GrantFlowEntitlements": "<p> Grants entitlements to an existing flow.</p>",
     "ListBridges": "<p> Displays a list of bridges that are associated with this account and an optionally specified Amazon Resource Name (ARN). This request returns a paginated result.</p>",
     "ListEntitlements": "<p> Displays a list of all entitlements that have been granted to this account. This request returns 20 results per page.</p>",
@@ -31,7 +45,11 @@
     "ListGateways": "<p> Displays a list of gateways that are associated with this account. This request returns a paginated result.</p>",
     "ListOfferings": "<p> Displays a list of all offerings that are available to this account in the current Amazon Web Services Region. If you have an active reservation (which means you've purchased an offering that has already started and hasn't expired yet), your account isn't eligible for other offerings.</p>",
     "ListReservations": "<p> Displays a list of all reservations that have been purchased by this account in the current Amazon Web Services Region. This list includes all reservations in all states (such as active and expired).</p>",
-    "ListTagsForResource": "<p> List all tags on a MediaConnect resource.</p>",
+    "ListRouterInputs": "<p>Retrieves a list of router inputs in AWS Elemental MediaConnect.</p>",
+    "ListRouterNetworkInterfaces": "<p>Retrieves a list of router network interfaces in AWS Elemental MediaConnect.</p>",
+    "ListRouterOutputs": "<p>Retrieves a list of router outputs in AWS Elemental MediaConnect.</p>",
+    "ListTagsForGlobalResource": "<p>Lists the tags associated with a global resource in AWS Elemental MediaConnect. The API supports the following global resources: router inputs, router outputs and router network interfaces. </p>",
+    "ListTagsForResource": "<p> List all tags on a MediaConnect resource in the current region.</p>",
     "PurchaseOffering": "<p> Submits a request to purchase an offering. If you already have an active reservation, you can't purchase another offering.</p>",
     "RemoveBridgeOutput": "<p> Removes an output from a bridge.</p>",
     "RemoveBridgeSource": "<p> Removes a source from a bridge.</p>",
@@ -39,11 +57,20 @@
     "RemoveFlowOutput": "<p> Removes an output from an existing flow. This request can be made only on an output that does not have an entitlement associated with it. If the output has an entitlement, you must revoke the entitlement instead. When an entitlement is revoked from a flow, the service automatically removes the associated output.</p>",
     "RemoveFlowSource": "<p> Removes a source from an existing flow. This request can be made only if there is more than one source on the flow. </p>",
     "RemoveFlowVpcInterface": "<p> Removes a VPC Interface from an existing flow. This request can be made only on a VPC interface that does not have a Source or Output associated with it. If the VPC interface is referenced by a Source or Output, you must first delete or update the Source or Output to no longer reference the VPC interface.</p>",
+    "RestartRouterInput": "<p>Restarts a router input. This operation can be used to recover from errors or refresh the input state.</p>",
+    "RestartRouterOutput": "<p>Restarts a router output. This operation can be used to recover from errors or refresh the output state.</p>",
     "RevokeFlowEntitlement": "<p> Revokes an entitlement from a flow. Once an entitlement is revoked, the content becomes unavailable to the subscriber and the associated output is removed.</p>",
     "StartFlow": "<p> Starts a flow.</p>",
+    "StartRouterInput": "<p>Starts a router input in AWS Elemental MediaConnect.</p>",
+    "StartRouterOutput": "<p>Starts a router output in AWS Elemental MediaConnect.</p>",
     "StopFlow": "<p> Stops a flow.</p>",
-    "TagResource": "<p> Associates the specified tags to a resource with the specified <code>resourceArn</code>. If existing tags on a resource are not specified in the request parameters, they are not changed. When a resource is deleted, the tags associated with that resource are deleted as well.</p>",
-    "UntagResource": "<p> Deletes specified tags from a resource.</p>",
+    "StopRouterInput": "<p>Stops a router input in AWS Elemental MediaConnect.</p>",
+    "StopRouterOutput": "<p>Stops a router output in AWS Elemental MediaConnect.</p>",
+    "TagGlobalResource": "<p>Adds tags to a global resource in AWS Elemental MediaConnect. The API supports the following global resources: router inputs, router outputs and router network interfaces. </p>",
+    "TagResource": "<p> Associates the specified tags to a resource with the specified <code>resourceArn</code> in the current region. If existing tags on a resource are not specified in the request parameters, they are not changed. When a resource is deleted, the tags associated with that resource are deleted as well.</p>",
+    "TakeRouterInput": "<p>Associates a router input with a router output in AWS Elemental MediaConnect.</p>",
+    "UntagGlobalResource": "<p>Removes tags from a global resource in AWS Elemental MediaConnect. The API supports the following global resources: router inputs, router outputs and router network interfaces. </p>",
+    "UntagResource": "<p> Deletes specified tags from a resource in the current region.</p>",
     "UpdateBridge": "<p> Updates the bridge.</p>",
     "UpdateBridgeOutput": "<p> Updates an existing bridge output.</p>",
     "UpdateBridgeSource": "<p> Updates an existing bridge source.</p>",
@@ -53,7 +80,10 @@
     "UpdateFlowMediaStream": "<p> Updates an existing media stream.</p>",
     "UpdateFlowOutput": "<p> Updates an existing flow output.</p>",
     "UpdateFlowSource": "<p> Updates the source of a flow.</p>",
-    "UpdateGatewayInstance": "<p>Updates an existing gateway instance. </p>"
+    "UpdateGatewayInstance": "<p>Updates an existing gateway instance. </p>",
+    "UpdateRouterInput": "<p>Updates the configuration of an existing router input in AWS Elemental MediaConnect.</p>",
+    "UpdateRouterNetworkInterface": "<p>Updates the configuration of an existing router network interface in AWS Elemental MediaConnect.</p>",
+    "UpdateRouterOutput": "<p>Updates the configuration of an existing router output in AWS Elemental MediaConnect.</p>"
   },
   "shapes": {
     "AddBridgeFlowSourceRequest": {
@@ -217,14 +247,106 @@
         "__listOfAudioMonitoringSetting$member": null
       }
     },
+    "AutomaticEncryptionKeyConfiguration": {
+      "base": "<p>Configuration settings for automatic encryption key management, where MediaConnect handles key creation and rotation.</p>",
+      "refs": {
+        "FlowTransitEncryptionKeyConfiguration$Automatic": null,
+        "MediaLiveTransitEncryptionKeyConfiguration$Automatic": null,
+        "RouterInputTransitEncryptionKeyConfiguration$Automatic": null
+      }
+    },
     "BadRequestException": {
       "base": "<p>This exception is thrown if the request contains a semantic error. The precise meaning depends on the API, and is documented in the error message. </p>",
+      "refs": {}
+    },
+    "BatchGetRouterInputError": {
+      "base": "<p>An error that occurred when retrieving multiple router inputs in the BatchGetRouterInput operation, including the ARN, error code, and error message.</p>",
+      "refs": {
+        "BatchGetRouterInputErrorList$member": null
+      }
+    },
+    "BatchGetRouterInputErrorList": {
+      "base": null,
+      "refs": {
+        "BatchGetRouterInputResponse$Errors": "<p>An array of errors that occurred when retrieving the requested router inputs.</p>"
+      }
+    },
+    "BatchGetRouterInputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetRouterInputRequestArnsList": {
+      "base": null,
+      "refs": {
+        "BatchGetRouterInputRequest$Arns": "<p>The Amazon Resource Names (ARNs) of the router inputs you want to retrieve information about.</p>"
+      }
+    },
+    "BatchGetRouterInputResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetRouterNetworkInterfaceError": {
+      "base": "<p>An error that occurred when retrieving multiple router network interfaces in the BatchGetRouterNetworkInterface operation, including the ARN, error code, and error message.</p>",
+      "refs": {
+        "BatchGetRouterNetworkInterfaceErrorList$member": null
+      }
+    },
+    "BatchGetRouterNetworkInterfaceErrorList": {
+      "base": null,
+      "refs": {
+        "BatchGetRouterNetworkInterfaceResponse$Errors": "<p>An array of errors that occurred when retrieving the requested router network interfaces.</p>"
+      }
+    },
+    "BatchGetRouterNetworkInterfaceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetRouterNetworkInterfaceRequestArnsList": {
+      "base": null,
+      "refs": {
+        "BatchGetRouterNetworkInterfaceRequest$Arns": "<p>The Amazon Resource Names (ARNs) of the router network interfaces you want to retrieve information about.</p>"
+      }
+    },
+    "BatchGetRouterNetworkInterfaceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetRouterOutputError": {
+      "base": "<p>An error that occurred when retrieving multiple router outputs in the BatchGetRouterOutput operation, including the ARN, error code, and error message.</p>",
+      "refs": {
+        "BatchGetRouterOutputErrorList$member": null
+      }
+    },
+    "BatchGetRouterOutputErrorList": {
+      "base": null,
+      "refs": {
+        "BatchGetRouterOutputResponse$Errors": "<p>An array of errors that occurred when retrieving the requested router outputs.</p>"
+      }
+    },
+    "BatchGetRouterOutputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetRouterOutputRequestArnsList": {
+      "base": null,
+      "refs": {
+        "BatchGetRouterOutputRequest$Arns": "<p>The Amazon Resource Names (ARNs) of the router outputs you want to retrieve information about.</p>"
+      }
+    },
+    "BatchGetRouterOutputResponse": {
+      "base": null,
       "refs": {}
     },
     "BlackFrames": {
       "base": "<p> Configures settings for the <code>BlackFrames</code> metric.</p>",
       "refs": {
         "VideoMonitoringSetting$BlackFrames": "<p>Detects video frames that are black. </p>"
+      }
+    },
+    "Blob": {
+      "base": null,
+      "refs": {
+        "RouterInputThumbnailDetails$Thumbnail": "<p>The thumbnail image, encoded as a Base64-encoded binary data object.</p>"
       }
     },
     "Boolean": {
@@ -359,6 +481,60 @@
       "base": null,
       "refs": {}
     },
+    "CreateRouterInputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRouterInputRequestNameString": {
+      "base": null,
+      "refs": {
+        "CreateRouterInputRequest$Name": "<p>The name of the router input.</p>"
+      }
+    },
+    "CreateRouterInputResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRouterNetworkInterfaceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRouterNetworkInterfaceRequestNameString": {
+      "base": null,
+      "refs": {
+        "CreateRouterNetworkInterfaceRequest$Name": "<p>The name of the router network interface.</p>"
+      }
+    },
+    "CreateRouterNetworkInterfaceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRouterOutputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRouterOutputRequestNameString": {
+      "base": null,
+      "refs": {
+        "CreateRouterOutputRequest$Name": "<p>The name of the router output.</p>"
+      }
+    },
+    "CreateRouterOutputResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Day": {
+      "base": null,
+      "refs": {
+        "PreferredDayTimeMaintenanceConfiguration$Day": "<p>The preferred day for maintenance operations.</p>"
+      }
+    },
+    "DefaultMaintenanceConfiguration": {
+      "base": "<p>Configuration settings for default maintenance scheduling.</p>",
+      "refs": {
+        "MaintenanceConfiguration$Default": "<p>Default maintenance configuration settings.</p>"
+      }
+    },
     "DeleteBridgeRequest": {
       "base": null,
       "refs": {}
@@ -398,6 +574,30 @@
       }
     },
     "DeleteGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRouterInputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRouterInputResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRouterNetworkInterfaceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRouterNetworkInterfaceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRouterOutputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRouterOutputResponse": {
       "base": null,
       "refs": {}
     },
@@ -605,11 +805,54 @@
         "Flow$SourceFailoverConfig": "<p> The settings for the source failover. </p>"
       }
     },
+    "FailoverInputSourcePriorityMode": {
+      "base": null,
+      "refs": {
+        "FailoverRouterInputConfiguration$SourcePriorityMode": "<p>The mode for determining source priority in failover configurations.</p>"
+      }
+    },
     "FailoverMode": {
       "base": null,
       "refs": {
         "FailoverConfig$FailoverMode": "<p> The type of failover you choose for this flow. MERGE combines the source streams into a single stream, allowing graceful recovery from any single-source loss. FAILOVER allows switching between different streams.</p>",
         "UpdateFailoverConfig$FailoverMode": "<p> The type of failover you choose for this flow. MERGE combines the source streams into a single stream, allowing graceful recovery from any single-source loss. FAILOVER allows switching between different streams.</p>"
+      }
+    },
+    "FailoverRouterInputConfiguration": {
+      "base": "<p>Configuration settings for a failover router input that allows switching between two input sources.</p>",
+      "refs": {
+        "RouterInputConfiguration$Failover": null
+      }
+    },
+    "FailoverRouterInputConfigurationPrimarySourceIndexInteger": {
+      "base": null,
+      "refs": {
+        "FailoverRouterInputConfiguration$PrimarySourceIndex": "<p>The index (0 or 1) that specifies which source in the protocol configurations list is currently active. Used to control which of the two failover sources is currently selected. This field is ignored when sourcePriorityMode is set to NO_PRIORITY</p>"
+      }
+    },
+    "FailoverRouterInputIndexedStreamDetails": {
+      "base": "<p>Configuration details for an indexed stream in a failover router input setup.</p>",
+      "refs": {
+        "FailoverRouterInputStreamDetails$SourceIndexZeroStreamDetails": "<p>Configuration details for the primary source (index 0) in the failover setup.</p>",
+        "FailoverRouterInputStreamDetails$SourceIndexOneStreamDetails": "<p>Configuration details for the secondary source (index 1) in the failover setup.</p>"
+      }
+    },
+    "FailoverRouterInputProtocolConfiguration": {
+      "base": "<p>Protocol configuration settings for failover router inputs.</p>",
+      "refs": {
+        "FailoverRouterInputProtocolConfigurationList$member": null
+      }
+    },
+    "FailoverRouterInputProtocolConfigurationList": {
+      "base": null,
+      "refs": {
+        "FailoverRouterInputConfiguration$ProtocolConfigurations": "<p>A list of exactly two protocol configurations for the failover input sources. Both must use the same protocol type.</p>"
+      }
+    },
+    "FailoverRouterInputStreamDetails": {
+      "base": "<p>Configuration details for a failover router input that can automatically switch between two sources.</p>",
+      "refs": {
+        "RouterInputStreamDetails$Failover": null
       }
     },
     "Flow": {
@@ -624,7 +867,15 @@
       "base": null,
       "refs": {
         "DescribeFlowSourceMetadataRequest$FlowArn": "<p> The Amazon Resource Name (ARN) of the flow.</p>",
-        "DescribeFlowSourceThumbnailRequest$FlowArn": "<p> The Amazon Resource Name (ARN) of the flow.</p>"
+        "DescribeFlowSourceThumbnailRequest$FlowArn": "<p> The Amazon Resource Name (ARN) of the flow.</p>",
+        "MediaConnectFlowRouterInputConfiguration$FlowArn": "<p>The ARN of the flow to connect to.</p>",
+        "MediaConnectFlowRouterOutputConfiguration$FlowArn": "<p>The ARN of the flow to connect to this router output.</p>"
+      }
+    },
+    "FlowOutputArn": {
+      "base": null,
+      "refs": {
+        "MediaConnectFlowRouterInputConfiguration$FlowOutputArn": "<p>The ARN of the flow output to connect to this router input.</p>"
       }
     },
     "FlowSize": {
@@ -633,6 +884,37 @@
         "CreateFlowRequest$FlowSize": "<p> Determines the processing capacity and feature set of the flow. Set this optional parameter to <code>LARGE</code> if you want to enable NDI outputs on the flow. </p>",
         "Flow$FlowSize": "<p> Determines the processing capacity and feature set of the flow. Set this optional parameter to LARGE if you want to enable NDI outputs on the flow. </p>",
         "UpdateFlowRequest$FlowSize": "<p> Determines the processing capacity and feature set of the flow. </p>"
+      }
+    },
+    "FlowSourceArn": {
+      "base": null,
+      "refs": {
+        "MediaConnectFlowRouterOutputConfiguration$FlowSourceArn": "<p>The ARN of the flow source to connect to this router output.</p>"
+      }
+    },
+    "FlowTransitEncryption": {
+      "base": "<p>The configuration that defines how content is encrypted during transit between the MediaConnect router and a MediaConnect flow.</p>",
+      "refs": {
+        "AddOutputRequest$RouterIntegrationTransitEncryption": null,
+        "MediaConnectFlowRouterInputConfiguration$SourceTransitDecryption": "<p>The decryption configuration for the flow source when connected to this router input.</p>",
+        "MediaConnectFlowRouterOutputConfiguration$DestinationTransitEncryption": "<p>The encryption configuration for the flow destination when connected to this router output.</p>",
+        "Output$RouterIntegrationTransitEncryption": "<p>The encryption configuration for the output when router integration is enabled.</p>",
+        "SetSourceRequest$RouterIntegrationTransitDecryption": "<p>The decryption configuration for the flow source when router integration is enabled. Specifies how the source content should be decrypted when router integration is used.</p>",
+        "Source$RouterIntegrationTransitDecryption": "<p>The decryption configuration for the flow source when router integration is enabled.</p>",
+        "UpdateFlowOutputRequest$RouterIntegrationTransitEncryption": null,
+        "UpdateFlowSourceRequest$RouterIntegrationTransitDecryption": "<p>The encryption configuration for the flow source when router integration is enabled.</p>"
+      }
+    },
+    "FlowTransitEncryptionKeyConfiguration": {
+      "base": "<p>Configuration settings for flow transit encryption keys.</p>",
+      "refs": {
+        "FlowTransitEncryption$EncryptionKeyConfiguration": "<p>The configuration details for the encryption key.</p>"
+      }
+    },
+    "FlowTransitEncryptionKeyType": {
+      "base": null,
+      "refs": {
+        "FlowTransitEncryption$EncryptionKeyType": "<p>The type of encryption key to use for flow transit encryption.</p>"
       }
     },
     "Fmtp": {
@@ -650,6 +932,13 @@
     "ForbiddenException": {
       "base": "<p>You do not have sufficient access to perform this action. </p>",
       "refs": {}
+    },
+    "ForwardErrorCorrectionState": {
+      "base": null,
+      "refs": {
+        "RtpRouterInputConfiguration$ForwardErrorCorrection": "<p>The state of forward error correction for the RTP protocol in the router input configuration.</p>",
+        "RtpRouterOutputConfiguration$ForwardErrorCorrection": "<p>The state of forward error correction for the RTP protocol in the router output configuration.</p>"
+      }
     },
     "FrameResolution": {
       "base": "<p> The frame resolution used by the video stream.</p>",
@@ -694,6 +983,46 @@
         "Gateway$GatewayState": "<p> The current status of the gateway.</p>",
         "ListedGateway$GatewayState": "<p> The status of the gateway.</p>"
       }
+    },
+    "GetRouterInputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRouterInputResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRouterInputSourceMetadataRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRouterInputSourceMetadataResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRouterInputThumbnailRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRouterInputThumbnailResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRouterNetworkInterfaceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRouterNetworkInterfaceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRouterOutputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRouterOutputResponse": {
+      "base": null,
+      "refs": {}
     },
     "GrantEntitlementRequest": {
       "base": "<p> The entitlements that you want to grant on a flow.</p>",
@@ -771,6 +1100,7 @@
         "EgressGatewayBridge$MaxBitrate": "<p> The maximum expected bitrate (in bps) of the egress bridge.</p>",
         "Entitlement$DataTransferSubscriberFeePercent": "<p> Percentage from 0-100 of the data transfer cost to be billed to the subscriber.</p>",
         "FailoverConfig$RecoveryWindow": "<p> Search window time to look for dash-7 packets.</p>",
+        "FailoverRouterInputIndexedStreamDetails$SourceIndex": "<p>The index number (0 or 1) assigned to this source in the failover configuration.</p>",
         "FrameResolution$FrameHeight": "<p> The number of pixels in the height of the video frame.</p>",
         "FrameResolution$FrameWidth": "<p> The number of pixels in the width of the video frame.</p>",
         "FrozenFrames$ThresholdSeconds": "<p> Specifies the number of consecutive seconds of a static image that triggers an event or alert.</p>",
@@ -781,15 +1111,25 @@
         "InputConfiguration$InputPort": "<p> The port that the flow listens on for an incoming media stream.</p>",
         "InputConfigurationRequest$InputPort": "<p> The port that you want the flow to listen on for an incoming media stream.</p>",
         "ListedEntitlement$DataTransferSubscriberFeePercent": "<p> Percentage from 0-100 of the data transfer cost to be billed to the subscriber.</p>",
+        "ListedRouterInput$RoutedOutputs": "<p>The number of router outputs that are associated with this router input.</p>",
+        "ListedRouterInput$MessageCount": "<p>The number of messages associated with the router input.</p>",
+        "ListedRouterNetworkInterface$AssociatedOutputCount": "<p>The number of router outputs associated with the network interface.</p>",
+        "ListedRouterNetworkInterface$AssociatedInputCount": "<p>The number of router inputs associated with the network interface.</p>",
+        "ListedRouterOutput$MessageCount": "<p>The number of messages associated with the router output.</p>",
         "MediaStream$ClockRate": "<p> The sample rate for the stream. This value is measured in Hz.</p>",
         "MediaStream$Fmt": "<p> The format type number (sometimes referred to as RTP payload type) of the media stream. MediaConnect assigns this value to the media stream. For ST 2110 JPEG XS outputs, you need to provide this value to the receiver.</p>",
         "MediaStream$MediaStreamId": "<p> A unique identifier for the media stream. </p>",
+        "MergeRouterInputIndexedStreamDetails$SourceIndex": "<p>The index number (0 or 1) assigned to this source in the merge configuration.</p>",
         "NdiDiscoveryServerConfig$DiscoveryServerPort": "<p>The port for the NDI discovery server. Defaults to 5959 if a custom port isn't specified. </p>",
         "Offering$Duration": "<p> The length of time that your reservation would be active.</p>",
         "Output$DataTransferSubscriberFeePercent": "<p> Percentage from 0-100 of the data transfer cost to be billed to the subscriber.</p>",
         "Output$Port": "<p> The port to use when content is distributed to this output.</p>",
         "Reservation$Duration": "<p> The length of time that this reservation is active. MediaConnect defines this value in the offering.</p>",
         "ResourceSpecification$ReservedBitrate": "<p> The amount of outbound bandwidth that is discounted in the offering.</p>",
+        "RouterInput$RoutedOutputs": "<p>The number of router outputs associated with the router input.</p>",
+        "RouterInput$MaximumRoutedOutputs": "<p>The maximum number of outputs that can be simultaneously routed to this input.</p>",
+        "RouterNetworkInterface$AssociatedOutputCount": "<p>The number of router outputs associated with the network interface.</p>",
+        "RouterNetworkInterface$AssociatedInputCount": "<p>The number of router inputs associated with the network interface.</p>",
         "SetSourceRequest$IngestPort": "<p> The port that the flow will be listening on for incoming content.</p>",
         "SetSourceRequest$MaxBitrate": "<p> The smoothing max bitrate (in bps) for RIST, RTP, and RTP-FEC streams.</p>",
         "SetSourceRequest$MaxLatency": "<p> The maximum latency in milliseconds. This parameter applies only to RIST-based and Zixi-based streams.</p>",
@@ -921,6 +1261,56 @@
       "base": null,
       "refs": {}
     },
+    "ListRouterInputsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRouterInputsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRouterInputsRequest$MaxResults": "<p>The maximum number of router inputs to return in the response.</p>"
+      }
+    },
+    "ListRouterInputsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRouterNetworkInterfacesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRouterNetworkInterfacesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRouterNetworkInterfacesRequest$MaxResults": "<p>The maximum number of router network interfaces to return in the response.</p>"
+      }
+    },
+    "ListRouterNetworkInterfacesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRouterOutputsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRouterOutputsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRouterOutputsRequest$MaxResults": "<p>The maximum number of router outputs to return in the response.</p>"
+      }
+    },
+    "ListRouterOutputsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForGlobalResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForGlobalResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsForResourceRequest": {
       "base": null,
       "refs": {}
@@ -959,11 +1349,72 @@
         "__listOfListedGatewayInstance$member": null
       }
     },
+    "ListedRouterInput": {
+      "base": "<p>A summary of a router input, including its name, type, ARN, ID, state, and other key details. This structure is used in the response of the ListRouterInputs operation.</p>",
+      "refs": {
+        "ListedRouterInputList$member": null
+      }
+    },
+    "ListedRouterInputList": {
+      "base": null,
+      "refs": {
+        "ListRouterInputsResponse$RouterInputs": "<p>The summary information for the retrieved router inputs.</p>"
+      }
+    },
+    "ListedRouterNetworkInterface": {
+      "base": "<p>A summary of a router network interface, including its name, type, ARN, ID, associated input/output counts, state, and other key details. This structure is used in the response of the ListRouterNetworkInterfaces operation.</p>",
+      "refs": {
+        "ListedRouterNetworkInterfaceList$member": null
+      }
+    },
+    "ListedRouterNetworkInterfaceList": {
+      "base": null,
+      "refs": {
+        "ListRouterNetworkInterfacesResponse$RouterNetworkInterfaces": "<p>The summary information for the retrieved router network interfaces.</p>"
+      }
+    },
+    "ListedRouterOutput": {
+      "base": "<p>A summary of a router output, including its name, type, ARN, ID, state, routed state, and other key details. This structure is used in the response of the ListRouterOutputs operation.</p>",
+      "refs": {
+        "ListedRouterOutputList$member": null
+      }
+    },
+    "ListedRouterOutputList": {
+      "base": null,
+      "refs": {
+        "ListRouterOutputsResponse$RouterOutputs": "<p>The summary information for the retrieved router outputs.</p>"
+      }
+    },
+    "Long": {
+      "base": null,
+      "refs": {
+        "CreateRouterInputRequest$MaximumBitrate": "<p>The maximum bitrate for the router input.</p>",
+        "CreateRouterOutputRequest$MaximumBitrate": "<p>The maximum bitrate for the router output.</p>",
+        "ListedRouterInput$MaximumBitrate": "<p>The maximum bitrate of the router input.</p>",
+        "ListedRouterOutput$MaximumBitrate": "<p>The maximum bitrate of the router output.</p>",
+        "MergeRouterInputConfiguration$MergeRecoveryWindowMilliseconds": "<p>The time window in milliseconds for merging the two input sources.</p>",
+        "RouterInput$MaximumBitrate": "<p>The maximum bitrate for the router input.</p>",
+        "RouterOutput$MaximumBitrate": "<p>The maximum bitrate for the router output.</p>",
+        "UpdateRouterInputRequest$MaximumBitrate": "<p>The updated maximum bitrate for the router input.</p>",
+        "UpdateRouterOutputRequest$MaximumBitrate": "<p>The updated maximum bitrate for the router output.</p>"
+      }
+    },
     "Maintenance": {
       "base": "<p> The maintenance setting of a flow.</p>",
       "refs": {
         "Flow$Maintenance": "<p> The maintenance settings for the flow. </p>",
         "ListedFlow$Maintenance": "<p> The maintenance settings for the flow. </p>"
+      }
+    },
+    "MaintenanceConfiguration": {
+      "base": "<p>The configuration settings for maintenance operations, including preferred maintenance windows and schedules.</p>",
+      "refs": {
+        "CreateRouterInputRequest$MaintenanceConfiguration": "<p>The maintenance configuration settings for the router input, including preferred maintenance windows and schedules.</p>",
+        "CreateRouterOutputRequest$MaintenanceConfiguration": "<p>The maintenance configuration settings for the router output, including preferred maintenance windows and schedules.</p>",
+        "RouterInput$MaintenanceConfiguration": "<p>The maintenance configuration settings applied to this router input.</p>",
+        "RouterOutput$MaintenanceConfiguration": "<p>The maintenance configuration settings applied to this router output.</p>",
+        "UpdateRouterInputRequest$MaintenanceConfiguration": "<p>The updated maintenance configuration settings for the router input, including any changes to preferred maintenance windows and schedules.</p>",
+        "UpdateRouterOutputRequest$MaintenanceConfiguration": "<p>The updated maintenance configuration settings for the router output, including any changes to preferred maintenance windows and schedules.</p>"
       }
     },
     "MaintenanceDay": {
@@ -972,6 +1423,35 @@
         "AddMaintenance$MaintenanceDay": "<p> A day of a week when the maintenance will happen. </p>",
         "Maintenance$MaintenanceDay": "<p> A day of a week when the maintenance will happen. Use Monday/Tuesday/Wednesday/Thursday/Friday/Saturday/Sunday.</p>",
         "UpdateMaintenance$MaintenanceDay": "<p> A day of a week when the maintenance will happen.</p>"
+      }
+    },
+    "MaintenanceSchedule": {
+      "base": "<p>The details of the maintenance schedule.</p>",
+      "refs": {
+        "ListedRouterInput$MaintenanceSchedule": "<p>The details of the maintenance schedule for the listed router input.</p>",
+        "ListedRouterOutput$MaintenanceSchedule": "<p>The details of the maintenance schedule for the listed router output.</p>",
+        "RouterInput$MaintenanceSchedule": "<p>The current maintenance schedule details for this router input.</p>",
+        "RouterOutput$MaintenanceSchedule": "<p>The current maintenance schedule details for this router output.</p>",
+        "StartRouterInputResponse$MaintenanceSchedule": "<p>The details of the maintenance schedule for the router input.</p>",
+        "StartRouterOutputResponse$MaintenanceSchedule": "<p>The details of the maintenance schedule for the router output.</p>"
+      }
+    },
+    "MaintenanceScheduleType": {
+      "base": null,
+      "refs": {
+        "ListedRouterInput$MaintenanceScheduleType": "<p>The type of maintenance schedule currently associated with the listed router input.</p>",
+        "ListedRouterOutput$MaintenanceScheduleType": "<p>The type of maintenance schedule currently associated with the listed router output.</p>",
+        "RouterInput$MaintenanceScheduleType": "<p>The type of maintenance schedule currently in effect for this router input.</p>",
+        "RouterOutput$MaintenanceScheduleType": "<p>The type of maintenance schedule currently in effect for this router output.</p>",
+        "StartRouterInputResponse$MaintenanceScheduleType": "<p>The type of maintenance schedule associated with the router input.</p>",
+        "StartRouterOutputResponse$MaintenanceScheduleType": "<p>The type of maintenance schedule associated with the router output.</p>"
+      }
+    },
+    "MaintenanceType": {
+      "base": null,
+      "refs": {
+        "RouterInput$MaintenanceType": "<p>The type of maintenance configuration applied to this router input.</p>",
+        "RouterOutput$MaintenanceType": "<p>The type of maintenance configuration applied to this router output.</p>"
       }
     },
     "MaxResults": {
@@ -984,6 +1464,72 @@
         "ListGatewaysRequest$MaxResults": "<p> The maximum number of results to return per API request. </p> <p>For example, you submit a <code>ListGateways</code> request with <code>MaxResults</code> set at 5. Although 20 items match your request, the service returns no more than the first 5 items. (The service also returns a <code>NextToken</code> value that you can use to fetch the next batch of results.) </p> <p>The service might return fewer results than the <code>MaxResults</code> value. If <code>MaxResults</code> is not included in the request, the service defaults to pagination with a maximum of 10 results per page.</p>",
         "ListOfferingsRequest$MaxResults": "<p> The maximum number of results to return per API request. </p> <p>For example, you submit a <code>ListOfferings</code> request with <code>MaxResults</code> set at 5. Although 20 items match your request, the service returns no more than the first 5 items. (The service also returns a <code>NextToken</code> value that you can use to fetch the next batch of results.) </p> <p>The service might return fewer results than the <code>MaxResults</code> value. If <code>MaxResults</code> is not included in the request, the service defaults to pagination with a maximum of 10 results per page.</p>",
         "ListReservationsRequest$MaxResults": "<p> The maximum number of results to return per API request. </p> <p>For example, you submit a <code>ListReservations</code> request with <code>MaxResults</code> set at 5. Although 20 items match your request, the service returns no more than the first 5 items. (The service also returns a NextToken value that you can use to fetch the next batch of results.) </p> <p>The service might return fewer results than the <code>MaxResults</code> value. If <code>MaxResults</code> is not included in the request, the service defaults to pagination with a maximum of 10 results per page.</p>"
+      }
+    },
+    "MediaConnectFlowRouterInputConfiguration": {
+      "base": "<p>Configuration settings for connecting a router input to a flow output.</p>",
+      "refs": {
+        "RouterInputConfiguration$MediaConnectFlow": null
+      }
+    },
+    "MediaConnectFlowRouterInputStreamDetails": {
+      "base": "<p>Configuration details for a MediaConnect flow when used as a router input source.</p>",
+      "refs": {
+        "RouterInputStreamDetails$MediaConnectFlow": null
+      }
+    },
+    "MediaConnectFlowRouterOutputConfiguration": {
+      "base": "<p>Configuration settings for connecting a router output to a MediaConnect flow source.</p>",
+      "refs": {
+        "RouterOutputConfiguration$MediaConnectFlow": null
+      }
+    },
+    "MediaConnectFlowRouterOutputStreamDetails": {
+      "base": "<p>Configuration details for a MediaConnect flow when used as a router output destination.</p>",
+      "refs": {
+        "RouterOutputStreamDetails$MediaConnectFlow": null
+      }
+    },
+    "MediaLiveInputArn": {
+      "base": null,
+      "refs": {
+        "MediaLiveInputRouterOutputConfiguration$MediaLiveInputArn": "<p>The ARN of the MediaLive input to connect to this router output.</p>"
+      }
+    },
+    "MediaLiveInputPipelineId": {
+      "base": null,
+      "refs": {
+        "MediaLiveInputRouterOutputConfiguration$MediaLivePipelineId": "<p>The index of the MediaLive pipeline to connect to this router output.</p>"
+      }
+    },
+    "MediaLiveInputRouterOutputConfiguration": {
+      "base": "<p>Configuration settings for connecting a router output to a MediaLive input.</p>",
+      "refs": {
+        "RouterOutputConfiguration$MediaLiveInput": null
+      }
+    },
+    "MediaLiveInputRouterOutputStreamDetails": {
+      "base": "<p>Configuration details for a MediaLive input when used as a router output destination.</p>",
+      "refs": {
+        "RouterOutputStreamDetails$MediaLiveInput": null
+      }
+    },
+    "MediaLiveTransitEncryption": {
+      "base": "<p>The encryption configuration that defines how content is encrypted during transit between MediaConnect Router and MediaLive. This configuration determines whether encryption keys are automatically managed by the service or manually managed through AWS Secrets Manager.</p>",
+      "refs": {
+        "MediaLiveInputRouterOutputConfiguration$DestinationTransitEncryption": "<p>The encryption configuration for the MediaLive input when connected to this router output.</p>"
+      }
+    },
+    "MediaLiveTransitEncryptionKeyConfiguration": {
+      "base": "<p>Configuration settings for the MediaLive transit encryption key.</p>",
+      "refs": {
+        "MediaLiveTransitEncryption$EncryptionKeyConfiguration": "<p>The configuration details for the MediaLive encryption key.</p>"
+      }
+    },
+    "MediaLiveTransitEncryptionKeyType": {
+      "base": null,
+      "refs": {
+        "MediaLiveTransitEncryption$EncryptionKeyType": "<p>The type of encryption key to use for MediaLive transit encryption.</p>"
       }
     },
     "MediaStream": {
@@ -1036,6 +1582,37 @@
         "AddMediaStreamRequest$MediaStreamType": "<p> The type of media stream.</p>",
         "MediaStream$MediaStreamType": "<p> The type of media stream. </p>",
         "UpdateFlowMediaStreamRequest$MediaStreamType": "<p>The type of media stream. </p>"
+      }
+    },
+    "MergeRouterInputConfiguration": {
+      "base": "<p>Configuration settings for a merge router input that combines two input sources.</p>",
+      "refs": {
+        "RouterInputConfiguration$Merge": null
+      }
+    },
+    "MergeRouterInputIndexedStreamDetails": {
+      "base": "<p>Configuration details for an indexed stream in a merge router input setup.</p>",
+      "refs": {
+        "MergeRouterInputStreamDetails$SourceIndexZeroStreamDetails": "<p>Configuration details for the first source (index 0) in the merge setup.</p>",
+        "MergeRouterInputStreamDetails$SourceIndexOneStreamDetails": "<p>Configuration details for the second source (index 1) in the merge setup.</p>"
+      }
+    },
+    "MergeRouterInputProtocolConfiguration": {
+      "base": "<p>Protocol configuration settings for merge router inputs.</p>",
+      "refs": {
+        "MergeRouterInputProtocolConfigurationList$member": null
+      }
+    },
+    "MergeRouterInputProtocolConfigurationList": {
+      "base": null,
+      "refs": {
+        "MergeRouterInputConfiguration$ProtocolConfigurations": "<p>A list of exactly two protocol configurations for the merge input sources. Both must use the same protocol type.</p>"
+      }
+    },
+    "MergeRouterInputStreamDetails": {
+      "base": "<p>Configuration details for a merge router input that combines two input sources.</p>",
+      "refs": {
+        "RouterInputStreamDetails$Merge": null
       }
     },
     "MessageDetail": {
@@ -1125,6 +1702,12 @@
         "UpdateFlowOutputRequest$OutputStatus": "<p> An indication of whether the output should transmit data or not. If you don't specify the <code>outputStatus</code> field in your request, MediaConnect leaves the value unchanged.</p>"
       }
     },
+    "PreferredDayTimeMaintenanceConfiguration": {
+      "base": "<p>Configuration for preferred day and time maintenance settings.</p>",
+      "refs": {
+        "MaintenanceConfiguration$PreferredDayTime": "<p>Preferred day and time maintenance configuration settings.</p>"
+      }
+    },
     "PriceUnits": {
       "base": null,
       "refs": {
@@ -1146,6 +1729,24 @@
         "UpdateBridgeNetworkSourceRequest$Protocol": "<p>The network source protocol. </p> <note> <p>Elemental MediaConnect no longer supports the Fujitsu QoS protocol. This reference is maintained for legacy purposes only.</p> </note>",
         "UpdateFlowOutputRequest$Protocol": "<p> The protocol to use for the output.</p> <note> <p>Elemental MediaConnect no longer supports the Fujitsu QoS protocol. This reference is maintained for legacy purposes only.</p> </note>",
         "UpdateFlowSourceRequest$Protocol": "<p>The protocol that the source uses to deliver the content to MediaConnect. </p> <note> <p>Elemental MediaConnect no longer supports the Fujitsu QoS protocol. This reference is maintained for legacy purposes only.</p> </note>"
+      }
+    },
+    "PublicRouterNetworkInterfaceConfiguration": {
+      "base": "<p>The configuration settings for a public router network interface, including the list of allowed CIDR blocks.</p>",
+      "refs": {
+        "RouterNetworkInterfaceConfiguration$Public": null
+      }
+    },
+    "PublicRouterNetworkInterfaceConfigurationAllowRulesList": {
+      "base": null,
+      "refs": {
+        "PublicRouterNetworkInterfaceConfiguration$AllowRules": "<p>The list of allowed CIDR blocks for the public router network interface.</p>"
+      }
+    },
+    "PublicRouterNetworkInterfaceRule": {
+      "base": "<p>A rule that allows a specific CIDR block to access the public router network interface.</p>",
+      "refs": {
+        "PublicRouterNetworkInterfaceConfigurationAllowRulesList$member": null
       }
     },
     "PurchaseOfferingRequest": {
@@ -1292,6 +1893,22 @@
         "ResourceSpecification$ResourceType": "<p> The type of resource and the unit that is being billed for.</p>"
       }
     },
+    "RestartRouterInputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RestartRouterInputResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "RestartRouterOutputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RestartRouterOutputResponse": {
+      "base": null,
+      "refs": {}
+    },
     "RevokeFlowEntitlementRequest": {
       "base": null,
       "refs": {}
@@ -1312,11 +1929,507 @@
       "base": null,
       "refs": {}
     },
+    "RistRouterInputConfiguration": {
+      "base": "<p>The configuration settings for a router input using the RIST (Reliable Internet Stream Transport) protocol, including the port and recovery latency.</p>",
+      "refs": {
+        "FailoverRouterInputProtocolConfiguration$Rist": null,
+        "MergeRouterInputProtocolConfiguration$Rist": null,
+        "RouterInputProtocolConfiguration$Rist": null
+      }
+    },
+    "RistRouterInputConfigurationPortInteger": {
+      "base": null,
+      "refs": {
+        "RistRouterInputConfiguration$Port": "<p>The port number used for the RIST protocol in the router input configuration.</p>"
+      }
+    },
+    "RistRouterInputConfigurationRecoveryLatencyMillisecondsLong": {
+      "base": null,
+      "refs": {
+        "RistRouterInputConfiguration$RecoveryLatencyMilliseconds": "<p>The recovery latency in milliseconds for the RIST protocol in the router input configuration.</p>"
+      }
+    },
+    "RistRouterOutputConfiguration": {
+      "base": "<p>The configuration settings for a router output using the RIST (Reliable Internet Stream Transport) protocol, including the destination address and port.</p>",
+      "refs": {
+        "RouterOutputProtocolConfiguration$Rist": null
+      }
+    },
+    "RistRouterOutputConfigurationDestinationPortInteger": {
+      "base": null,
+      "refs": {
+        "RistRouterOutputConfiguration$DestinationPort": "<p>The destination port number for the RIST protocol in the router output configuration.</p>"
+      }
+    },
+    "RoleArn": {
+      "base": null,
+      "refs": {
+        "SecretsManagerEncryptionKeyConfiguration$RoleArn": "<p>The ARN of the IAM role assumed by MediaConnect to access the AWS Secrets Manager secret.</p>"
+      }
+    },
+    "RouterInput": {
+      "base": "<p>A router input in AWS Elemental MediaConnect. A router input is a source of media content that can be routed to one or more router outputs.</p>",
+      "refs": {
+        "CreateRouterInputResponse$RouterInput": "<p>The newly-created router input.</p>",
+        "GetRouterInputResponse$RouterInput": "<p>The details of the requested router input, including its configuration, state, and other attributes.</p>",
+        "RouterInputList$member": null,
+        "UpdateRouterInputResponse$RouterInput": "<p>The updated router input.</p>"
+      }
+    },
+    "RouterInputArn": {
+      "base": null,
+      "refs": {
+        "BatchGetRouterInputError$Arn": "<p>The Amazon Resource Name (ARN) of the router input for which the error occurred.</p>",
+        "BatchGetRouterInputRequestArnsList$member": null,
+        "DeleteRouterInputRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router input that you want to delete.</p>",
+        "DeleteRouterInputResponse$Arn": "<p>The ARN of the deleted router input.</p>",
+        "GetRouterInputRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router input to retrieve information about.</p>",
+        "GetRouterInputSourceMetadataRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router input to retrieve metadata for.</p>",
+        "GetRouterInputSourceMetadataResponse$Arn": "<p>The Amazon Resource Name (ARN) of the router input.</p>",
+        "GetRouterInputThumbnailRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router input that you want to see a thumbnail of.</p>",
+        "GetRouterInputThumbnailResponse$Arn": "<p>The ARN of the router input.</p>",
+        "ListedRouterInput$Arn": "<p>The Amazon Resource Name (ARN) of the router input.</p>",
+        "ListedRouterOutput$RoutedInputArn": "<p>The ARN of the router input associated with the output.</p>",
+        "RestartRouterInputRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router input that you want to restart.</p>",
+        "RestartRouterInputResponse$Arn": "<p>The ARN of the router input that was restarted.</p>",
+        "RouterInput$Arn": "<p>The Amazon Resource Name (ARN) of the router input.</p>",
+        "RouterInputArnList$member": null,
+        "RouterOutput$RoutedInputArn": "<p>The Amazon Resource Name (ARN) of the router input associated with the output.</p>",
+        "StartRouterInputRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router input that you want to start.</p>",
+        "StartRouterInputResponse$Arn": "<p>The ARN of the router input that was started.</p>",
+        "StopRouterInputRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router input that you want to stop.</p>",
+        "StopRouterInputResponse$Arn": "<p>The ARN of the router input that was stopped.</p>",
+        "TakeRouterInputRequest$RouterInputArn": "<p>The Amazon Resource Name (ARN) of the router input that you want to associate with a router output.</p>",
+        "TakeRouterInputResponse$RouterInputArn": "<p>The ARN of the associated router input.</p>",
+        "UpdateRouterInputRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router input that you want to update.</p>"
+      }
+    },
+    "RouterInputArnList": {
+      "base": null,
+      "refs": {
+        "RouterOutputFilter$RoutedInputArns": "<p>The ARNs of the router inputs associated with the router outputs to include in the filter.</p>"
+      }
+    },
+    "RouterInputConfiguration": {
+      "base": "<p>The configuration settings for a router input.</p>",
+      "refs": {
+        "CreateRouterInputRequest$Configuration": "<p>The configuration settings for the router input, which can include the protocol, network interface, and other details.</p>",
+        "RouterInput$Configuration": null,
+        "UpdateRouterInputRequest$Configuration": "<p>The updated configuration settings for the router input. Changing the type of the configuration is not supported.</p>"
+      }
+    },
+    "RouterInputFilter": {
+      "base": "<p>A filter that can be used to retrieve a list of router inputs.</p>",
+      "refs": {
+        "RouterInputFilterList$member": null
+      }
+    },
+    "RouterInputFilterList": {
+      "base": null,
+      "refs": {
+        "ListRouterInputsRequest$Filters": "<p>The filters to apply when retrieving the list of router inputs.</p>"
+      }
+    },
+    "RouterInputList": {
+      "base": null,
+      "refs": {
+        "BatchGetRouterInputResponse$RouterInputs": "<p>An array of router inputs that were successfully retrieved.</p>"
+      }
+    },
+    "RouterInputMessage": {
+      "base": "<p>A message associated with a router input, including a code and a message.</p>",
+      "refs": {
+        "RouterInputMessages$member": null
+      }
+    },
+    "RouterInputMessages": {
+      "base": null,
+      "refs": {
+        "RouterInput$Messages": "<p>The messages associated with the router input.</p>",
+        "RouterInputSourceMetadataDetails$SourceMetadataMessages": "<p>Collection of metadata messages associated with the router input source.</p>",
+        "RouterInputThumbnailDetails$ThumbnailMessages": "<p>The messages associated with the router input thumbnail.</p>"
+      }
+    },
+    "RouterInputMetadata": {
+      "base": "<p>Metadata information associated with the router input, including stream details and connection state.</p>",
+      "refs": {
+        "RouterInputSourceMetadataDetails$RouterInputMetadata": "<p>Metadata information specific to the router input configuration and state.</p>"
+      }
+    },
+    "RouterInputProtocol": {
+      "base": null,
+      "refs": {
+        "StandardRouterInputConfiguration$Protocol": "<p>The protocol used by the standard router input.</p>"
+      }
+    },
+    "RouterInputProtocolConfiguration": {
+      "base": "<p>The protocol configuration settings for a router input.</p>",
+      "refs": {
+        "StandardRouterInputConfiguration$ProtocolConfiguration": "<p>The configuration settings for the protocol used by the standard router input.</p>"
+      }
+    },
+    "RouterInputServiceQuotaExceededException": {
+      "base": "<p>The request to create a new router input would exceed the service quotas for the account. </p>",
+      "refs": {}
+    },
+    "RouterInputSourceMetadataDetails": {
+      "base": "<p>Detailed metadata information about a router input source.</p>",
+      "refs": {
+        "GetRouterInputSourceMetadataResponse$SourceMetadataDetails": "<p>Detailed metadata information about the router input source, including connection state, timestamps, and stream configuration.</p>"
+      }
+    },
+    "RouterInputState": {
+      "base": null,
+      "refs": {
+        "DeleteRouterInputResponse$State": "<p>The current state of the deleted router input, indicating where it is in the deletion process.</p>",
+        "ListedRouterInput$State": "<p>The overall state of the router input.</p>",
+        "RestartRouterInputResponse$State": "<p>The current state of the router input after the restart operation.</p>",
+        "RouterInput$State": "<p>The current state of the router input.</p>",
+        "StartRouterInputResponse$State": "<p>The current state of the router input after being started.</p>",
+        "StopRouterInputResponse$State": "<p>The current state of the router input after being stopped.</p>"
+      }
+    },
+    "RouterInputStreamDetails": {
+      "base": "<p>Configuration details for the router input stream.</p>",
+      "refs": {
+        "RouterInput$StreamDetails": null
+      }
+    },
+    "RouterInputThumbnailDetails": {
+      "base": "<p>The details of a thumbnail associated with a router input, including the thumbnail messages, the thumbnail image, the timecode, and the timestamp.</p>",
+      "refs": {
+        "GetRouterInputThumbnailResponse$ThumbnailDetails": "<p>The details of the thumbnail associated with the router input, including the thumbnail image, timecode, timestamp, and any associated error messages.</p>"
+      }
+    },
+    "RouterInputTier": {
+      "base": null,
+      "refs": {
+        "CreateRouterInputRequest$Tier": "<p>The tier level for the router input.</p>",
+        "RouterInput$Tier": "<p>The tier level of the router input.</p>",
+        "UpdateRouterInputRequest$Tier": "<p>The updated tier level for the router input.</p>"
+      }
+    },
+    "RouterInputTransitEncryption": {
+      "base": "<p>The transit encryption settings for a router input.</p>",
+      "refs": {
+        "CreateRouterInputRequest$TransitEncryption": "<p>The transit encryption settings for the router input.</p>",
+        "RouterInput$TransitEncryption": null,
+        "UpdateRouterInputRequest$TransitEncryption": "<p>The updated transit encryption settings for the router input.</p>"
+      }
+    },
+    "RouterInputTransitEncryptionKeyConfiguration": {
+      "base": "<p>Defines the configuration settings for transit encryption keys.</p>",
+      "refs": {
+        "RouterInputTransitEncryption$EncryptionKeyConfiguration": "<p>Contains the configuration details for the encryption key used in transit encryption, including the key source and associated parameters.</p>"
+      }
+    },
+    "RouterInputTransitEncryptionKeyType": {
+      "base": null,
+      "refs": {
+        "RouterInputTransitEncryption$EncryptionKeyType": "<p>Specifies the type of encryption key to use for transit encryption.</p>"
+      }
+    },
+    "RouterInputType": {
+      "base": null,
+      "refs": {
+        "ListedRouterInput$InputType": "<p>The type of the router input.</p>",
+        "RouterInput$InputType": "<p>The type of the router input.</p>",
+        "RouterInputTypeList$member": null
+      }
+    },
+    "RouterInputTypeList": {
+      "base": null,
+      "refs": {
+        "RouterInputFilter$InputTypes": "<p>The types of router inputs to include in the filter.</p>"
+      }
+    },
+    "RouterNetworkInterface": {
+      "base": "<p>A router network interface in AWS Elemental MediaConnect. A router network interface is a network interface that can be associated with one or more router inputs and outputs.</p>",
+      "refs": {
+        "CreateRouterNetworkInterfaceResponse$RouterNetworkInterface": "<p>The newly-created router network interface.</p>",
+        "GetRouterNetworkInterfaceResponse$RouterNetworkInterface": "<p>The details of the requested router network interface, including its configuration and other attributes.</p>",
+        "RouterNetworkInterfaceList$member": null,
+        "UpdateRouterNetworkInterfaceResponse$RouterNetworkInterface": "<p>The updated router network interface.</p>"
+      }
+    },
+    "RouterNetworkInterfaceArn": {
+      "base": null,
+      "refs": {
+        "BatchGetRouterNetworkInterfaceError$Arn": "<p>The Amazon Resource Name (ARN) of the router network interface for which the error occurred.</p>",
+        "BatchGetRouterNetworkInterfaceRequestArnsList$member": null,
+        "DeleteRouterNetworkInterfaceRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router network interface that you want to delete.</p>",
+        "DeleteRouterNetworkInterfaceResponse$Arn": "<p>The ARN of the deleted router network interface.</p>",
+        "FailoverRouterInputConfiguration$NetworkInterfaceArn": "<p>The ARN of the network interface to use for this failover router input.</p>",
+        "GetRouterNetworkInterfaceRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router network interface that you want to retrieve information about.</p>",
+        "ListedRouterInput$NetworkInterfaceArn": "<p>The ARN of the network interface associated with the router input.</p>",
+        "ListedRouterNetworkInterface$Arn": "<p>The Amazon Resource Name (ARN) of the router network interface.</p>",
+        "ListedRouterOutput$NetworkInterfaceArn": "<p>The ARN of the network interface associated with the router output.</p>",
+        "MergeRouterInputConfiguration$NetworkInterfaceArn": "<p>The ARN of the network interface to use for this merge router input.</p>",
+        "RouterNetworkInterface$Arn": "<p>The Amazon Resource Name (ARN) of the router network interface.</p>",
+        "RouterNetworkInterfaceArnList$member": null,
+        "StandardRouterInputConfiguration$NetworkInterfaceArn": "<p>The Amazon Resource Name (ARN) of the network interface associated with the standard router input.</p>",
+        "StandardRouterOutputConfiguration$NetworkInterfaceArn": "<p>The Amazon Resource Name (ARN) of the network interface associated with the standard router output.</p>",
+        "UpdateRouterNetworkInterfaceRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router network interface that you want to update.</p>"
+      }
+    },
+    "RouterNetworkInterfaceArnList": {
+      "base": null,
+      "refs": {
+        "RouterInputFilter$NetworkInterfaceArns": "<p>The Amazon Resource Names (ARNs) of the network interfaces associated with the router inputs to include in the filter.</p>",
+        "RouterOutputFilter$NetworkInterfaceArns": "<p>The Amazon Resource Names (ARNs) of the network interfaces associated with the router outputs to include in the filter.</p>"
+      }
+    },
+    "RouterNetworkInterfaceConfiguration": {
+      "base": "<p>The configuration settings for a router network interface.</p>",
+      "refs": {
+        "CreateRouterNetworkInterfaceRequest$Configuration": "<p>The configuration settings for the router network interface.</p>",
+        "RouterNetworkInterface$Configuration": null,
+        "UpdateRouterNetworkInterfaceRequest$Configuration": "<p>The updated configuration settings for the router network interface. Changing the type of the configuration is not supported.</p>"
+      }
+    },
+    "RouterNetworkInterfaceFilter": {
+      "base": "<p>A filter that can be used to retrieve a list of router network interfaces.</p>",
+      "refs": {
+        "RouterNetworkInterfaceFilterList$member": null
+      }
+    },
+    "RouterNetworkInterfaceFilterList": {
+      "base": null,
+      "refs": {
+        "ListRouterNetworkInterfacesRequest$Filters": "<p>The filters to apply when retrieving the list of router network interfaces.</p>"
+      }
+    },
+    "RouterNetworkInterfaceList": {
+      "base": null,
+      "refs": {
+        "BatchGetRouterNetworkInterfaceResponse$RouterNetworkInterfaces": "<p>An array of router network interfaces that were successfully retrieved.</p>"
+      }
+    },
+    "RouterNetworkInterfaceServiceQuotaExceededException": {
+      "base": "<p>The request to create a new router network interface would exceed the service quotas (limits) set for the account. </p>",
+      "refs": {}
+    },
+    "RouterNetworkInterfaceState": {
+      "base": null,
+      "refs": {
+        "DeleteRouterNetworkInterfaceResponse$State": "<p>The current state of the deleted router network interface, indicating where it is in the deletion process.</p>",
+        "ListedRouterNetworkInterface$State": "<p>The current state of the router network interface.</p>",
+        "RouterNetworkInterface$State": "<p>The current state of the router network interface.</p>"
+      }
+    },
+    "RouterNetworkInterfaceType": {
+      "base": null,
+      "refs": {
+        "ListedRouterNetworkInterface$NetworkInterfaceType": "<p>The type of the router network interface.</p>",
+        "RouterNetworkInterface$NetworkInterfaceType": "<p>The type of the router network interface.</p>",
+        "RouterNetworkInterfaceTypeList$member": null
+      }
+    },
+    "RouterNetworkInterfaceTypeList": {
+      "base": null,
+      "refs": {
+        "RouterNetworkInterfaceFilter$NetworkInterfaceTypes": "<p>The types of router network interfaces to include in the filter.</p>"
+      }
+    },
+    "RouterOutput": {
+      "base": "<p>A router output in AWS Elemental MediaConnect. A router output is a destination for media content that can receive input from one or more router inputs.</p>",
+      "refs": {
+        "CreateRouterOutputResponse$RouterOutput": "<p>The newly-created router output.</p>",
+        "GetRouterOutputResponse$RouterOutput": "<p>The details of the requested router output, including its configuration, state, and other attributes.</p>",
+        "RouterOutputList$member": null,
+        "UpdateRouterOutputResponse$RouterOutput": "<p>The updated router output.</p>"
+      }
+    },
+    "RouterOutputArn": {
+      "base": null,
+      "refs": {
+        "BatchGetRouterOutputError$Arn": "<p>The Amazon Resource Name (ARN) of the router output for which the error occurred.</p>",
+        "BatchGetRouterOutputRequestArnsList$member": null,
+        "DeleteRouterOutputRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router output that you want to delete.</p>",
+        "DeleteRouterOutputResponse$Arn": "<p>The ARN of the deleted router output.</p>",
+        "GetRouterOutputRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router output that you want to retrieve information about.</p>",
+        "ListedRouterOutput$Arn": "<p>The Amazon Resource Name (ARN) of the router output.</p>",
+        "RestartRouterOutputRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router output that you want to restart.</p>",
+        "RestartRouterOutputResponse$Arn": "<p>The ARN of the router output that was restarted.</p>",
+        "RouterOutput$Arn": "<p>The Amazon Resource Name (ARN) of the router output.</p>",
+        "StartRouterOutputRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router output that you want to start.</p>",
+        "StartRouterOutputResponse$Arn": "<p>The Amazon Resource Name (ARN) of the router output that was started.</p>",
+        "StopRouterOutputRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router output that you want to stop.</p>",
+        "StopRouterOutputResponse$Arn": "<p>The ARN of the router output that was stopped.</p>",
+        "TakeRouterInputRequest$RouterOutputArn": "<p>The Amazon Resource Name (ARN) of the router output that you want to associate with a router input.</p>",
+        "TakeRouterInputResponse$RouterOutputArn": "<p>The ARN of the associated router output.</p>",
+        "UpdateRouterOutputRequest$Arn": "<p>The Amazon Resource Name (ARN) of the router output that you want to update.</p>"
+      }
+    },
+    "RouterOutputConfiguration": {
+      "base": "<p>The configuration settings for a router output.</p>",
+      "refs": {
+        "CreateRouterOutputRequest$Configuration": "<p>The configuration settings for the router output.</p>",
+        "RouterOutput$Configuration": null,
+        "UpdateRouterOutputRequest$Configuration": "<p>The updated configuration settings for the router output. Changing the type of the configuration is not supported.</p>"
+      }
+    },
+    "RouterOutputFilter": {
+      "base": "<p>A filter that can be used to retrieve a list of router outputs.</p>",
+      "refs": {
+        "RouterOutputFilterList$member": null
+      }
+    },
+    "RouterOutputFilterList": {
+      "base": null,
+      "refs": {
+        "ListRouterOutputsRequest$Filters": "<p>The filters to apply when retrieving the list of router outputs.</p>"
+      }
+    },
+    "RouterOutputList": {
+      "base": null,
+      "refs": {
+        "BatchGetRouterOutputResponse$RouterOutputs": "<p>An array of router outputs that were successfully retrieved.</p>"
+      }
+    },
+    "RouterOutputMessage": {
+      "base": "<p>A message associated with a router output.</p>",
+      "refs": {
+        "RouterOutputMessages$member": null
+      }
+    },
+    "RouterOutputMessages": {
+      "base": null,
+      "refs": {
+        "RouterOutput$Messages": "<p>The messages associated with the router output.</p>"
+      }
+    },
+    "RouterOutputProtocol": {
+      "base": null,
+      "refs": {
+        "StandardRouterOutputConfiguration$Protocol": "<p>The protocol used by the standard router output.</p>"
+      }
+    },
+    "RouterOutputProtocolConfiguration": {
+      "base": "<p>The protocol configuration settings for a router output.</p>",
+      "refs": {
+        "StandardRouterOutputConfiguration$ProtocolConfiguration": "<p>The configuration settings for the protocol used by the standard router output.</p>"
+      }
+    },
+    "RouterOutputRoutedState": {
+      "base": null,
+      "refs": {
+        "ListedRouterOutput$RoutedState": "<p>The current state of the association between the router output and its input.</p>",
+        "RouterOutput$RoutedState": "<p>The current state of the association between the router output and its input.</p>",
+        "TakeRouterInputResponse$RoutedState": "<p>The state of the association between the router input and output.</p>"
+      }
+    },
+    "RouterOutputServiceQuotaExceededException": {
+      "base": "<p>The request to create a new router output would exceed the service quotas (limits) set for the account. </p>",
+      "refs": {}
+    },
+    "RouterOutputState": {
+      "base": null,
+      "refs": {
+        "DeleteRouterOutputResponse$State": "<p>The current state of the deleted router output, indicating where it is in the deletion process.</p>",
+        "ListedRouterOutput$State": "<p>The overall state of the router output.</p>",
+        "RestartRouterOutputResponse$State": "<p>The current state of the router output after the restart operation.</p>",
+        "RouterOutput$State": "<p>The overall state of the router output.</p>",
+        "StartRouterOutputResponse$State": "<p>The current state of the router output after being started.</p>",
+        "StopRouterOutputResponse$State": "<p>The current state of the router output after being stopped.</p>"
+      }
+    },
+    "RouterOutputStreamDetails": {
+      "base": "<p>Information about the router output's stream, including connection state and destination details. The specific details provided vary based on the router output type.</p>",
+      "refs": {
+        "RouterOutput$StreamDetails": null
+      }
+    },
+    "RouterOutputTier": {
+      "base": null,
+      "refs": {
+        "CreateRouterOutputRequest$Tier": "<p>The tier level for the router output.</p>",
+        "RouterOutput$Tier": "<p>The tier level of the router output.</p>",
+        "UpdateRouterOutputRequest$Tier": "<p>The updated tier level for the router output.</p>"
+      }
+    },
+    "RouterOutputType": {
+      "base": null,
+      "refs": {
+        "ListedRouterOutput$OutputType": "<p>The type of the router output.</p>",
+        "RouterOutput$OutputType": "<p>The type of the router output.</p>",
+        "RouterOutputTypeList$member": null
+      }
+    },
+    "RouterOutputTypeList": {
+      "base": null,
+      "refs": {
+        "RouterOutputFilter$OutputTypes": "<p>The types of router outputs to include in the filter.</p>"
+      }
+    },
+    "RoutingScope": {
+      "base": null,
+      "refs": {
+        "CreateRouterInputRequest$RoutingScope": "<p>Specifies whether the router input can be assigned to outputs in different Regions. REGIONAL (default) - connects only to outputs in same Region. GLOBAL - connects to outputs in any Region.</p>",
+        "CreateRouterOutputRequest$RoutingScope": "<p>Specifies whether the router output can take inputs that are in different Regions. REGIONAL (default) - can only take inputs from same Region. GLOBAL - can take inputs from any Region.</p>",
+        "ListedRouterInput$RoutingScope": "<p>Indicates whether the router input is configured for Regional or global routing.</p>",
+        "ListedRouterOutput$RoutingScope": "<p>Indicates whether the router output is configured for Regional or global routing.</p>",
+        "RouterInput$RoutingScope": "<p>Indicates whether the router input is configured for Regional or global routing.</p>",
+        "RouterOutput$RoutingScope": "<p>Indicates whether the router output is configured for Regional or global routing.</p>",
+        "RoutingScopeList$member": null,
+        "UpdateRouterInputRequest$RoutingScope": "<p>Specifies whether the router input can be assigned to outputs in different Regions. REGIONAL (default) - can be assigned only to outputs in the same Region. GLOBAL - can be assigned to outputs in any Region.</p>",
+        "UpdateRouterOutputRequest$RoutingScope": "<p>Specifies whether the router output can take inputs that are in different Regions. REGIONAL (default) - can only take inputs from same Region. GLOBAL - can take inputs from any Region.</p>"
+      }
+    },
+    "RoutingScopeList": {
+      "base": null,
+      "refs": {
+        "RouterInputFilter$RoutingScopes": "<p>Filter criteria to list router inputs based on their routing scope (REGIONAL or GLOBAL).</p>",
+        "RouterOutputFilter$RoutingScopes": "<p>Filter criteria to list router outputs based on their routing scope.</p>"
+      }
+    },
+    "RtpRouterInputConfiguration": {
+      "base": "<p>The configuration settings for a Router Input using the RTP (Real-Time Transport Protocol) protocol, including the port and forward error correction state.</p>",
+      "refs": {
+        "FailoverRouterInputProtocolConfiguration$Rtp": null,
+        "MergeRouterInputProtocolConfiguration$Rtp": null,
+        "RouterInputProtocolConfiguration$Rtp": null
+      }
+    },
+    "RtpRouterInputConfigurationPortInteger": {
+      "base": null,
+      "refs": {
+        "RtpRouterInputConfiguration$Port": "<p>The port number used for the RTP protocol in the router input configuration.</p>"
+      }
+    },
+    "RtpRouterOutputConfiguration": {
+      "base": "<p>The configuration settings for a router output using the RTP (Real-Time Transport Protocol) protocol, including the destination address and port, and forward error correction state.</p>",
+      "refs": {
+        "RouterOutputProtocolConfiguration$Rtp": null
+      }
+    },
+    "RtpRouterOutputConfigurationDestinationPortInteger": {
+      "base": null,
+      "refs": {
+        "RtpRouterOutputConfiguration$DestinationPort": "<p>The destination port number for the RTP protocol in the router output configuration.</p>"
+      }
+    },
     "ScanMode": {
       "base": null,
       "refs": {
         "Fmtp$ScanMode": "<p>The type of compression that was used to smooth the video’s appearance. </p>",
         "FmtpRequest$ScanMode": "<p> The type of compression that was used to smooth the video’s appearance.</p>"
+      }
+    },
+    "SecretArn": {
+      "base": null,
+      "refs": {
+        "SecretsManagerEncryptionKeyConfiguration$SecretArn": "<p>The ARN of the AWS Secrets Manager secret used for transit encryption.</p>"
+      }
+    },
+    "SecretsManagerEncryptionKeyConfiguration": {
+      "base": "<p>The configuration settings for transit encryption using AWS Secrets Manager, including the secret ARN and role ARN.</p>",
+      "refs": {
+        "FlowTransitEncryptionKeyConfiguration$SecretsManager": null,
+        "MediaLiveTransitEncryptionKeyConfiguration$SecretsManager": null,
+        "RouterInputTransitEncryptionKeyConfiguration$SecretsManager": null,
+        "SrtDecryptionConfiguration$EncryptionKey": "<p>Specifies the encryption key configuration used for decrypting SRT streams, including the key source and associated credentials.</p>",
+        "SrtEncryptionConfiguration$EncryptionKey": "<p>Specifies the encryption key configuration used for encrypting SRT streams, including the key source and associated credentials.</p>"
       }
     },
     "ServiceUnavailableException": {
@@ -1375,6 +2488,118 @@
         "ListedFlow$SourceType": "<p> The type of source. This value is either owned (originated somewhere other than an MediaConnect flow owned by another Amazon Web Services account) or entitled (originated at a MediaConnect flow owned by another Amazon Web Services account).</p>"
       }
     },
+    "SrtCallerRouterInputConfiguration": {
+      "base": "<p>The configuration settings for a router input using the SRT (Secure Reliable Transport) protocol in caller mode, including the source address and port, minimum latency, stream ID, and decryption key configuration.</p>",
+      "refs": {
+        "FailoverRouterInputProtocolConfiguration$SrtCaller": null,
+        "RouterInputProtocolConfiguration$SrtCaller": null
+      }
+    },
+    "SrtCallerRouterInputConfigurationMinimumLatencyMillisecondsLong": {
+      "base": null,
+      "refs": {
+        "SrtCallerRouterInputConfiguration$MinimumLatencyMilliseconds": "<p>The minimum latency in milliseconds for the SRT protocol in caller mode.</p>"
+      }
+    },
+    "SrtCallerRouterInputConfigurationSourcePortInteger": {
+      "base": null,
+      "refs": {
+        "SrtCallerRouterInputConfiguration$SourcePort": "<p>The source port number for the SRT protocol in caller mode.</p>"
+      }
+    },
+    "SrtCallerRouterOutputConfiguration": {
+      "base": "<p>The configuration settings for a router output using the SRT (Secure Reliable Transport) protocol in caller mode, including the destination address and port, minimum latency, stream ID, and encryption key configuration.</p>",
+      "refs": {
+        "RouterOutputProtocolConfiguration$SrtCaller": null
+      }
+    },
+    "SrtCallerRouterOutputConfigurationDestinationPortInteger": {
+      "base": null,
+      "refs": {
+        "SrtCallerRouterOutputConfiguration$DestinationPort": "<p>The destination port number for the SRT protocol in caller mode.</p>"
+      }
+    },
+    "SrtCallerRouterOutputConfigurationMinimumLatencyMillisecondsLong": {
+      "base": null,
+      "refs": {
+        "SrtCallerRouterOutputConfiguration$MinimumLatencyMilliseconds": "<p>The minimum latency in milliseconds for the SRT protocol in caller mode.</p>"
+      }
+    },
+    "SrtDecryptionConfiguration": {
+      "base": "<p>Contains the configuration settings for decrypting SRT streams, including the encryption key details and decryption parameters.</p>",
+      "refs": {
+        "SrtCallerRouterInputConfiguration$DecryptionConfiguration": "<p>Specifies the decryption settings for an SRT caller input, including the encryption key configuration and associated parameters.</p>",
+        "SrtListenerRouterInputConfiguration$DecryptionConfiguration": "<p>Specifies the decryption settings for an SRT listener input, including the encryption key configuration and associated parameters.</p>"
+      }
+    },
+    "SrtEncryptionConfiguration": {
+      "base": "<p>Contains the configuration settings for encrypting SRT streams, including the encryption key details and encryption parameters.</p>",
+      "refs": {
+        "SrtCallerRouterOutputConfiguration$EncryptionConfiguration": "<p>Defines the encryption settings for an SRT caller output, including the encryption key configuration and associated parameters.</p>",
+        "SrtListenerRouterOutputConfiguration$EncryptionConfiguration": "<p>Defines the encryption settings for an SRT listener output, including the encryption key configuration and associated parameters.</p>"
+      }
+    },
+    "SrtListenerRouterInputConfiguration": {
+      "base": "<p>The configuration settings for a router input using the SRT (Secure Reliable Transport) protocol in listener mode, including the port, minimum latency, and decryption key configuration.</p>",
+      "refs": {
+        "FailoverRouterInputProtocolConfiguration$SrtListener": null,
+        "RouterInputProtocolConfiguration$SrtListener": null
+      }
+    },
+    "SrtListenerRouterInputConfigurationMinimumLatencyMillisecondsLong": {
+      "base": null,
+      "refs": {
+        "SrtListenerRouterInputConfiguration$MinimumLatencyMilliseconds": "<p>The minimum latency in milliseconds for the SRT protocol in listener mode.</p>"
+      }
+    },
+    "SrtListenerRouterInputConfigurationPortInteger": {
+      "base": null,
+      "refs": {
+        "SrtListenerRouterInputConfiguration$Port": "<p>The port number for the SRT protocol in listener mode.</p>"
+      }
+    },
+    "SrtListenerRouterOutputConfiguration": {
+      "base": "<p>The configuration settings for a router output using the SRT (Secure Reliable Transport) protocol in listener mode, including the port, minimum latency, and encryption key configuration.</p>",
+      "refs": {
+        "RouterOutputProtocolConfiguration$SrtListener": null
+      }
+    },
+    "SrtListenerRouterOutputConfigurationMinimumLatencyMillisecondsLong": {
+      "base": null,
+      "refs": {
+        "SrtListenerRouterOutputConfiguration$MinimumLatencyMilliseconds": "<p>The minimum latency in milliseconds for the SRT protocol in listener mode.</p>"
+      }
+    },
+    "SrtListenerRouterOutputConfigurationPortInteger": {
+      "base": null,
+      "refs": {
+        "SrtListenerRouterOutputConfiguration$Port": "<p>The port number for the SRT protocol in listener mode.</p>"
+      }
+    },
+    "StandardRouterInputConfiguration": {
+      "base": "<p>The configuration settings for a standard router input, including the protocol, protocol-specific configuration, network interface, and availability zone.</p>",
+      "refs": {
+        "RouterInputConfiguration$Standard": null
+      }
+    },
+    "StandardRouterInputStreamDetails": {
+      "base": "<p>Configuration details for a standard router input stream type.</p>",
+      "refs": {
+        "RouterInputStreamDetails$Standard": null
+      }
+    },
+    "StandardRouterOutputConfiguration": {
+      "base": "<p>The configuration settings for a standard router output, including the protocol, protocol-specific configuration, network interface, and availability zone.</p>",
+      "refs": {
+        "RouterOutputConfiguration$Standard": null
+      }
+    },
+    "StandardRouterOutputStreamDetails": {
+      "base": "<p>Configuration details for a standard router output stream type. Contains information about the destination IP address and connection state for basic output routing.</p>",
+      "refs": {
+        "RouterOutputStreamDetails$Standard": null
+      }
+    },
     "StartFlowRequest": {
       "base": null,
       "refs": {}
@@ -1389,14 +2614,36 @@
       "base": null,
       "refs": {}
     },
+    "StartRouterInputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartRouterInputResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartRouterOutputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartRouterOutputResponse": {
+      "base": null,
+      "refs": {}
+    },
     "State": {
       "base": null,
       "refs": {
+        "AddOutputRequest$RouterIntegrationState": "<p>Indicates whether to enable or disable router integration when creating a new flow output.</p>",
         "BlackFrames$State": "<p> Indicates whether the <code>BlackFrames</code> metric is enabled or disabled..</p>",
         "FailoverConfig$State": "<p>The state of source failover on the flow. If the state is inactive, the flow can have only one source. If the state is active, the flow can have one or two sources. </p>",
         "FrozenFrames$State": "<p>Indicates whether the <code>FrozenFrames</code> metric is enabled or disabled.</p>",
+        "Output$RouterIntegrationState": "<p>Indicates if router integration is enabled or disabled on the flow output.</p>",
+        "SetSourceRequest$RouterIntegrationState": "<p>Indicates whether to enable or disable router integration when setting a flow source.</p>",
         "SilentAudio$State": "<p>Indicates whether the <code>SilentAudio</code> metric is enabled or disabled. </p>",
-        "UpdateFailoverConfig$State": "<p>The state of source failover on the flow. If the state is inactive, the flow can have only one source. If the state is active, the flow can have one or two sources. </p>"
+        "Source$RouterIntegrationState": "<p>Indicates if router integration is enabled or disabled on the flow source.</p>",
+        "UpdateFailoverConfig$State": "<p>The state of source failover on the flow. If the state is inactive, the flow can have only one source. If the state is active, the flow can have one or two sources. </p>",
+        "UpdateFlowOutputRequest$RouterIntegrationState": "<p>Indicates whether to enable or disable router integration for this flow output.</p>",
+        "UpdateFlowSourceRequest$RouterIntegrationState": "<p>Indicates whether to enable or disable router integration for this flow source.</p>"
       }
     },
     "Status": {
@@ -1420,6 +2667,22 @@
       }
     },
     "StopFlowResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StopRouterInputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopRouterInputResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StopRouterOutputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopRouterOutputResponse": {
       "base": null,
       "refs": {}
     },
@@ -1451,6 +2714,12 @@
         "AddOutputRequest$StreamId": "<p> The stream ID that you want to use for this transport. This parameter applies only to Zixi and SRT caller-based streams.</p>",
         "AddOutputRequest$NdiProgramName": "<p> A suffix for the names of the NDI sources that the flow creates. If a custom name isn't specified, MediaConnect uses the output name. </p>",
         "BadRequestException$Message": null,
+        "BatchGetRouterInputError$Code": "<p>The error code associated with the error.</p>",
+        "BatchGetRouterInputError$Message": "<p>A message describing the error.</p>",
+        "BatchGetRouterNetworkInterfaceError$Code": "<p>The error code associated with the error.</p>",
+        "BatchGetRouterNetworkInterfaceError$Message": "<p>A message describing the error.</p>",
+        "BatchGetRouterOutputError$Code": "<p>The error code associated with the error.</p>",
+        "BatchGetRouterOutputError$Message": "<p>A message describing the error.</p>",
         "Bridge$BridgeArn": "<p> The Amazon Resource Number (ARN) of the bridge.</p>",
         "Bridge$Name": "<p> The name of the bridge.</p>",
         "Bridge$PlacementArn": "<p> The placement Amazon Resource Number (ARN) of the bridge.</p>",
@@ -1475,9 +2744,20 @@
         "CreateFlowRequest$Name": "<p> The name of the flow.</p>",
         "CreateGateway420Exception$Message": null,
         "CreateGatewayRequest$Name": "<p> The name of the gateway. This name can not be modified after the gateway is created.</p>",
+        "CreateRouterInputRequest$RegionName": "<p>The AWS Region for the router input. Defaults to the current region if not specified.</p>",
+        "CreateRouterInputRequest$AvailabilityZone": "<p>The Availability Zone where you want to create the router input. This must be a valid Availability Zone for the region specified by <code>regionName</code>, or the current region if no <code>regionName</code> is provided. </p>",
+        "CreateRouterInputRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>",
+        "CreateRouterNetworkInterfaceRequest$RegionName": "<p>The AWS Region for the router network interface. Defaults to the current region if not specified.</p>",
+        "CreateRouterNetworkInterfaceRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>",
+        "CreateRouterOutputRequest$RegionName": "<p>The AWS Region for the router output. Defaults to the current region if not specified.</p>",
+        "CreateRouterOutputRequest$AvailabilityZone": "<p>The Availability Zone where you want to create the router output. This must be a valid Availability Zone for the region specified by <code>regionName</code>, or the current region if no <code>regionName</code> is provided. </p>",
+        "CreateRouterOutputRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>",
         "DeleteBridgeResponse$BridgeArn": "<p> The ARN of the deleted bridge.</p>",
         "DeleteFlowResponse$FlowArn": "<p> The ARN of the flow that was deleted.</p>",
         "DeleteGatewayResponse$GatewayArn": "<p> The ARN of the gateway that was deleted.</p>",
+        "DeleteRouterInputResponse$Name": "<p>The name of the deleted router input.</p>",
+        "DeleteRouterNetworkInterfaceResponse$Name": "<p>The name of the deleted router network interface.</p>",
+        "DeleteRouterOutputResponse$Name": "<p>The name of the deleted router output.</p>",
         "DeregisterGatewayInstanceResponse$GatewayInstanceArn": "<p> The ARN of the instance.</p>",
         "DescribeFlowSourceMetadataResponse$FlowArn": "<p> The ARN of the flow that DescribeFlowSourceMetadata was performed on.</p>",
         "DestinationConfiguration$DestinationIp": "<p>The IP address where you want MediaConnect to send contents of the media stream.</p>",
@@ -1494,6 +2774,7 @@
         "Entitlement$Description": "<p> A description of the entitlement.</p>",
         "Entitlement$EntitlementArn": "<p> The ARN of the entitlement. </p>",
         "Entitlement$Name": "<p> The name of the entitlement. </p>",
+        "FailoverRouterInputIndexedStreamDetails$SourceIpAddress": "<p>The IP address of the source for this indexed stream.</p>",
         "Flow$AvailabilityZone": "<p> The Availability Zone that you want to create the flow in. These options are limited to the Availability Zones within the current Amazon Web Services Region.</p>",
         "Flow$Description": "<p> A description of the flow. This value is not used or seen outside of the current MediaConnect account.</p>",
         "Flow$EgressIp": "<p> The IP address from which video will be sent to output destinations.</p>",
@@ -1514,6 +2795,8 @@
         "GatewayInstance$InstanceId": "<p>The instance ID generated by the SSM install. This will begin with \"mi-\". </p>",
         "GatewayNetwork$CidrBlock": "<p>A unique IP address range to use for this network. These IP addresses should be in the form of a Classless Inter-Domain Routing (CIDR) block; for example, 10.0.0.0/16. </p>",
         "GatewayNetwork$Name": "<p>The name of the network. This name is used to reference the network and must be unique among networks in this gateway. </p>",
+        "GetRouterInputSourceMetadataResponse$Name": "<p>The name of the router input.</p>",
+        "GetRouterInputThumbnailResponse$Name": "<p>The name of the router input.</p>",
         "GrantEntitlementRequest$Description": "<p> A description of the entitlement. This description appears only on the MediaConnect console and will not be seen by the subscriber or end user. </p>",
         "GrantEntitlementRequest$Name": "<p> The name of the entitlement. This value must be unique within the current flow.</p>",
         "GrantFlowEntitlements420Exception$Message": null,
@@ -1539,6 +2822,13 @@
         "ListOfferingsResponse$NextToken": "<p> The token that identifies the batch of results that you want to see. </p> <p>For example, you submit a <code>ListOfferings</code> request with <code>MaxResults</code> set at 5. The service returns the first batch of results (up to 5) and a <code>NextToken</code> value. To see the next batch of results, you can submit the <code>ListOfferings</code> request a second time and specify the <code>NextToken</code> value.</p>",
         "ListReservationsRequest$NextToken": "<p> The token that identifies the batch of results that you want to see. </p> <p>For example, you submit a <code>ListReservations</code> request with <code>MaxResults</code> set at 5. The service returns the first batch of results (up to 5) and a <code>NextToken</code> value. To see the next batch of results, you can submit the <code>ListOfferings</code> request a second time and specify the <code>NextToken</code> value. </p>",
         "ListReservationsResponse$NextToken": "<p> The token that identifies the batch of results that you want to see. </p> <p>For example, you submit a <code>ListReservations</code> request with <code>MaxResults</code> set at 5. The service returns the first batch of results (up to 5) and a <code>NextToken</code> value. To see the next batch of results, you can submit the <code>ListReservations</code> request a second time and specify the <code>NextToken</code> value.</p>",
+        "ListRouterInputsRequest$NextToken": "<p>A token used to retrieve the next page of results.</p>",
+        "ListRouterInputsResponse$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
+        "ListRouterNetworkInterfacesRequest$NextToken": "<p>A token used to retrieve the next page of results.</p>",
+        "ListRouterNetworkInterfacesResponse$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
+        "ListRouterOutputsRequest$NextToken": "<p>A token used to retrieve the next page of results.</p>",
+        "ListRouterOutputsResponse$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
+        "ListTagsForGlobalResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the global resource whose tags you want to list.</p>",
         "ListTagsForResourceRequest$ResourceArn": "<p> The Amazon Resource Name (ARN) that identifies the MediaConnect resource for which to list the tags.</p>",
         "ListedBridge$BridgeArn": "<p> The ARN of the bridge.</p>",
         "ListedBridge$BridgeType": "<p> The type of the bridge.</p>",
@@ -1555,6 +2845,17 @@
         "ListedGatewayInstance$GatewayArn": "<p> The Amazon Resource Name (ARN) of the gateway.</p>",
         "ListedGatewayInstance$GatewayInstanceArn": "<p> The Amazon Resource Name (ARN) of the instance.</p>",
         "ListedGatewayInstance$InstanceId": "<p> The managed instance ID generated by the SSM install. This will begin with \"mi-\".</p>",
+        "ListedRouterInput$Name": "<p>The name of the router input.</p>",
+        "ListedRouterInput$Id": "<p>The unique identifier of the router input.</p>",
+        "ListedRouterInput$RegionName": "<p>The AWS Region where the router input is located.</p>",
+        "ListedRouterInput$AvailabilityZone": "<p>The Availability Zone of the router input.</p>",
+        "ListedRouterNetworkInterface$Name": "<p>The name of the router network interface.</p>",
+        "ListedRouterNetworkInterface$Id": "<p>The unique identifier of the router network interface.</p>",
+        "ListedRouterNetworkInterface$RegionName": "<p>The AWS Region where the router network interface is located.</p>",
+        "ListedRouterOutput$Name": "<p>The name of the router output.</p>",
+        "ListedRouterOutput$Id": "<p>The unique identifier of the router output.</p>",
+        "ListedRouterOutput$RegionName": "<p>The AWS Region where the router output is located.</p>",
+        "ListedRouterOutput$AvailabilityZone": "<p>The Availability Zone of the router output.</p>",
         "Maintenance$MaintenanceDeadline": "<p> The Maintenance has to be performed before this deadline in ISO UTC format. Example: 2021-01-30T08:30:00Z.</p>",
         "Maintenance$MaintenanceScheduledDate": "<p> A scheduled date in ISO UTC format when the maintenance will happen. Use YYYY-MM-DD format. Example: 2021-01-30.</p>",
         "Maintenance$MaintenanceStartHour": "<p> UTC time when the maintenance will happen. Use 24-hour HH:MM format. Minutes must be 00. Example: 13:00. The default value is 02:00.</p>",
@@ -1567,6 +2868,7 @@
         "MediaStreamOutputConfigurationRequest$MediaStreamName": "<p> The name of the media stream that is associated with the output.</p>",
         "MediaStreamSourceConfiguration$MediaStreamName": "<p>A name that helps you distinguish one media stream from another. </p>",
         "MediaStreamSourceConfigurationRequest$MediaStreamName": "<p>The name of the media stream. </p>",
+        "MergeRouterInputIndexedStreamDetails$SourceIpAddress": "<p>The IP address of the source for this indexed stream in the merge setup.</p>",
         "MessageDetail$Code": "<p> The error code.</p>",
         "MessageDetail$Message": "<p> The specific error message that MediaConnect returns to help you understand the reason that the request did not succeed.</p>",
         "MessageDetail$ResourceName": "<p> The name of the resource.</p>",
@@ -1588,6 +2890,9 @@
         "Output$OutputArn": "<p> The ARN of the output.</p>",
         "Output$BridgeArn": "<p> The ARN of the bridge added to this output.</p>",
         "Output$PeerIpAddress": "<p>The IP address of the device that is currently receiving content from this output.</p> <note> <ul> <li> <p>For outputs that use protocols where you specify the destination (such as SRT Caller or Zixi Push), this value matches the configured destination address.</p> </li> <li> <p>For outputs that use listener protocols (such as SRT Listener), this value shows the address of the connected receiver. </p> </li> <li> <p>Peer IP addresses aren't available for entitlements, managed MediaLive outputs, NDI outputs, and CDI/ST2110 outputs. </p> </li> <li> <p>The peer IP address might not be visible for flows that haven't been started yet, or flows that were started before May 2025. In these cases, restart your flow to see the peer IP address.</p> </li> </ul> </note>",
+        "Output$ConnectedRouterInputArn": "<p>The ARN of the router input that's connected to this flow output.</p>",
+        "PreferredDayTimeMaintenanceConfiguration$Time": "<p>The preferred time for maintenance operations.</p>",
+        "PublicRouterNetworkInterfaceRule$Cidr": "<p>The CIDR block that is allowed to access the public router network interface.</p>",
         "PurchaseOfferingRequest$OfferingArn": "<p> The Amazon Resource Name (ARN) of the offering.</p>",
         "PurchaseOfferingRequest$ReservationName": "<p> The name that you want to use for the reservation.</p>",
         "PurchaseOfferingRequest$Start": "<p> The date and time that you want the reservation to begin, in Coordinated Universal Time (UTC). </p> <p>You can specify any date and time between 12:00am on the first day of the current month to the current time on today's date, inclusive. Specify the start in a 24-hour notation. Use the following format: <code>YYYY-MM-DDTHH:mm:SSZ</code>, where <code>T</code> and <code>Z</code> are literal characters. For example, to specify 11:30pm on March 5, 2020, enter <code>2020-03-05T23:30:00Z</code>.</p>",
@@ -1615,8 +2920,33 @@
         "Reservation$ReservationArn": "<p> The Amazon Resource Name (ARN) that MediaConnect assigns to the reservation when you purchase an offering.</p>",
         "Reservation$ReservationName": "<p> The name that you assigned to the reservation when you purchased the offering.</p>",
         "Reservation$Start": "<p> The day and time that the reservation becomes active. You set this value when you purchase the offering.</p>",
+        "RestartRouterInputResponse$Name": "<p>The name of the router input that was restarted.</p>",
+        "RestartRouterOutputResponse$Name": "<p>The name of the router output that was restarted.</p>",
         "RevokeFlowEntitlementResponse$EntitlementArn": "<p> The ARN of the entitlement that was revoked.</p>",
         "RevokeFlowEntitlementResponse$FlowArn": "<p> The ARN of the flow that the entitlement was revoked from.</p>",
+        "RistRouterOutputConfiguration$DestinationAddress": "<p>The destination IP address for the RIST protocol in the router output configuration.</p>",
+        "RouterInput$Name": "<p>The name of the router input.</p>",
+        "RouterInput$Id": "<p>The unique identifier of the router input.</p>",
+        "RouterInput$RegionName": "<p>The AWS Region where the router input is located.</p>",
+        "RouterInput$AvailabilityZone": "<p>The Availability Zone of the router input.</p>",
+        "RouterInput$IpAddress": "<p>The IP address of the router input.</p>",
+        "RouterInputMessage$Code": "<p>The code associated with the router input message.</p>",
+        "RouterInputMessage$Message": "<p>The message text associated with the router input message.</p>",
+        "RouterInputServiceQuotaExceededException$Message": null,
+        "RouterInputThumbnailDetails$Timecode": "<p>The timecode associated with the thumbnail.</p>",
+        "RouterNetworkInterface$Name": "<p>The name of the router network interface.</p>",
+        "RouterNetworkInterface$Id": "<p>The unique identifier of the router network interface.</p>",
+        "RouterNetworkInterface$RegionName": "<p>The AWS Region where the router network interface is located.</p>",
+        "RouterNetworkInterfaceServiceQuotaExceededException$Message": null,
+        "RouterOutput$Name": "<p>The name of the router output.</p>",
+        "RouterOutput$Id": "<p>The unique identifier of the router output.</p>",
+        "RouterOutput$RegionName": "<p>The AWS Region where the router output is located.</p>",
+        "RouterOutput$AvailabilityZone": "<p>The Availability Zone of the router output.</p>",
+        "RouterOutput$IpAddress": "<p>The IP address of the router output.</p>",
+        "RouterOutputMessage$Code": "<p>The code associated with the router output message.</p>",
+        "RouterOutputMessage$Message": "<p>The message text associated with the router output message.</p>",
+        "RouterOutputServiceQuotaExceededException$Message": null,
+        "RtpRouterOutputConfiguration$DestinationAddress": "<p>The destination IP address for the RTP protocol in the router output configuration.</p>",
         "ServiceUnavailableException$Message": null,
         "SetSourceRequest$Description": "<p> A description for the source. This value is not used or seen outside of the current MediaConnect account.</p>",
         "SetSourceRequest$Name": "<p> The name of the source.</p>",
@@ -1634,10 +2964,25 @@
         "Source$VpcInterfaceName": "<p> The name of the VPC interface that is used for this source.</p>",
         "Source$WhitelistCidr": "<p> The range of IP addresses that should be allowed to contribute content to your source. These IP addresses should be in the form of a Classless Inter-Domain Routing (CIDR) block; for example, 10.0.0.0/16.</p>",
         "Source$PeerIpAddress": "<p>The IP address of the device that is currently sending content to this source. </p> <note> <ul> <li> <p>For sources that use protocols where you specify the origin (such as SRT Caller), this value matches the configured origin address. </p> </li> <li> <p>For sources that use listener protocols (such as SRT Listener or RTP), this value shows the address of the connected sender. </p> </li> <li> <p>Peer IP addresses aren't available for entitlements and CDI/ST2110 sources.</p> </li> <li> <p>The peer IP address might not be visible for flows that haven't been started yet, or flows that were started before May 2025. In these cases, restart your flow to see the peer IP address.</p> </li> </ul> </note>",
+        "Source$ConnectedRouterOutputArn": "<p>The ARN of the router output that's currently connected to this source.</p>",
         "SourcePriority$PrimarySource": "<p> The name of the source you choose as the primary source for this flow.</p>",
+        "SrtCallerRouterInputConfiguration$SourceAddress": "<p>The source IP address for the SRT protocol in caller mode.</p>",
+        "SrtCallerRouterInputConfiguration$StreamId": "<p>The stream ID for the SRT protocol in caller mode.</p>",
+        "SrtCallerRouterOutputConfiguration$DestinationAddress": "<p>The destination IP address for the SRT protocol in caller mode.</p>",
+        "SrtCallerRouterOutputConfiguration$StreamId": "<p>The stream ID for the SRT protocol in caller mode.</p>",
+        "StandardRouterInputStreamDetails$SourceIpAddress": "<p>The source IP address for the standard router input stream.</p>",
+        "StandardRouterOutputStreamDetails$DestinationIpAddress": "<p>The IP address where the output stream will be sent. This is the destination address that will receive the routed media content.</p>",
         "StartFlowResponse$FlowArn": "<p> The ARN of the flow that you started.</p>",
+        "StartRouterInputResponse$Name": "<p>The name of the router input that was started.</p>",
+        "StartRouterOutputResponse$Name": "<p>The name of the router output that was started.</p>",
         "StopFlowResponse$FlowArn": "<p> The ARN of the flow that you stopped.</p>",
+        "StopRouterInputResponse$Name": "<p>The name of the router input that was stopped.</p>",
+        "StopRouterOutputResponse$Name": "<p>The name of the router output that was stopped.</p>",
+        "StringList$member": null,
+        "TagGlobalResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the global resource to tag.</p>",
         "TagResourceRequest$ResourceArn": "<p> The Amazon Resource Name (ARN) that identifies the MediaConnect resource to which to add tags.</p>",
+        "TakeRouterInputResponse$RouterOutputName": "<p>The name of the associated router output.</p>",
+        "TakeRouterInputResponse$RouterInputName": "<p>The name of the associated router input.</p>",
         "ThumbnailDetails$FlowArn": "<p> The ARN of the flow that DescribeFlowSourceThumbnail was performed on.</p>",
         "ThumbnailDetails$Thumbnail": "<p>Thumbnail Base64 string. </p>",
         "ThumbnailDetails$Timecode": "<p> Timecode of thumbnail.</p>",
@@ -1651,6 +2996,7 @@
         "TransportStream$FrameRate": "<p> The frame rate used by the video stream.</p>",
         "TransportStream$StreamType": "<p> The Stream Type as it is reported in the Program Map Table.</p>",
         "TransportStreamProgram$ProgramName": "<p> The program name as it is reported in the Program Association Table.</p>",
+        "UntagGlobalResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the global resource to remove tags from.</p>",
         "UntagResourceRequest$ResourceArn": "<p> The Amazon Resource Name (ARN) of the resource that you want to untag. </p>",
         "UpdateBridgeNetworkOutputRequest$IpAddress": "<p>The network output IP Address. </p>",
         "UpdateBridgeNetworkOutputRequest$NetworkName": "<p>The network output's gateway network name. </p>",
@@ -1698,19 +3044,61 @@
         "VpcInterfaceRequest$Name": "<p>The name for the VPC interface. This name must be unique within the flow. </p>",
         "VpcInterfaceRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of the role that you created when you set up MediaConnect as a trusted service. </p>",
         "VpcInterfaceRequest$SubnetId": "<p> The subnet IDs that you want to use for your VPC interface. A range of IP addresses in your VPC. When you create your VPC, you specify a range of IPv4 addresses for the VPC in the form of a Classless Inter-Domain Routing (CIDR) block; for example, 10.0.0.0/16. This is the primary CIDR block for your VPC. When you create a subnet for your VPC, you specify the CIDR block for the subnet, which is a subset of the VPC CIDR block. The subnets that you use across all VPC interfaces on the flow must be in the same Availability Zone as the flow. </p>",
+        "VpcRouterNetworkInterfaceConfiguration$SubnetId": "<p>The ID of the subnet within the VPC to associate the router network interface with.</p>",
+        "VpcRouterNetworkInterfaceConfigurationSecurityGroupIdsList$member": null,
         "__listOfString$member": null,
         "__mapOfString$key": null,
         "__mapOfString$value": null
+      }
+    },
+    "StringList": {
+      "base": null,
+      "refs": {
+        "RouterInputFilter$RegionNames": "<p>The AWS Regions of the router inputs to include in the filter.</p>",
+        "RouterInputFilter$NameContains": "<p>The names of the router inputs to include in the filter.</p>",
+        "RouterNetworkInterfaceFilter$RegionNames": "<p>The AWS Regions of the router network interfaces to include in the filter.</p>",
+        "RouterNetworkInterfaceFilter$NameContains": "<p>The names of the router network interfaces to include in the filter.</p>",
+        "RouterOutputFilter$RegionNames": "<p>The AWS Regions of the router outputs to include in the filter.</p>",
+        "RouterOutputFilter$NameContains": "<p>The names of the router outputs to include in the filter.</p>"
       }
     },
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
         "DescribeFlowSourceMetadataResponse$Timestamp": "<p> The timestamp of the most recent change in metadata for this flow’s source.</p>",
-        "ThumbnailDetails$Timestamp": "<p> The timestamp of when thumbnail was generated.</p>"
+        "ListedRouterInput$CreatedAt": "<p>The timestamp when the router input was created.</p>",
+        "ListedRouterInput$UpdatedAt": "<p>The timestamp when the router input was last updated.</p>",
+        "ListedRouterNetworkInterface$CreatedAt": "<p>The timestamp when the network interface was created.</p>",
+        "ListedRouterNetworkInterface$UpdatedAt": "<p>The timestamp when the router network interface was last updated.</p>",
+        "ListedRouterOutput$CreatedAt": "<p>The timestamp when the router output was created.</p>",
+        "ListedRouterOutput$UpdatedAt": "<p>The timestamp when the router output was last updated.</p>",
+        "RouterInput$CreatedAt": "<p>The timestamp when the router input was created.</p>",
+        "RouterInput$UpdatedAt": "<p>The timestamp when the router input was last updated.</p>",
+        "RouterInputSourceMetadataDetails$Timestamp": "<p>The timestamp when the metadata was last updated.</p>",
+        "RouterInputThumbnailDetails$Timestamp": "<p>The timestamp associated with the thumbnail.</p>",
+        "RouterNetworkInterface$CreatedAt": "<p>The timestamp when the router network interface was created.</p>",
+        "RouterNetworkInterface$UpdatedAt": "<p>The timestamp when the router network interface was last updated.</p>",
+        "RouterOutput$CreatedAt": "<p>The timestamp when the router output was created.</p>",
+        "RouterOutput$UpdatedAt": "<p>The timestamp when the router output was last updated.</p>",
+        "ThumbnailDetails$Timestamp": "<p> The timestamp of when thumbnail was generated.</p>",
+        "WindowMaintenanceSchedule$Start": "<p>The start time of the maintenance window.</p>",
+        "WindowMaintenanceSchedule$End": "<p>The end time of the maintenance window.</p>",
+        "WindowMaintenanceSchedule$ScheduledTime": "<p>The date and time when the maintenance window is scheduled to occur.</p>"
       }
     },
+    "TagGlobalResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
     "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TakeRouterInputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TakeRouterInputResponse": {
       "base": null,
       "refs": {}
     },
@@ -1747,7 +3135,8 @@
     "TransportMediaInfo": {
       "base": "<p> The metadata of the transport stream in the current flow's source.</p>",
       "refs": {
-        "DescribeFlowSourceMetadataResponse$TransportMediaInfo": "<p> Information about the flow's transport media. </p>"
+        "DescribeFlowSourceMetadataResponse$TransportMediaInfo": "<p> Information about the flow's transport media. </p>",
+        "RouterInputMetadata$TransportStreamMediaInfo": null
       }
     },
     "TransportStream": {
@@ -1761,6 +3150,10 @@
       "refs": {
         "__listOfTransportStreamProgram$member": null
       }
+    },
+    "UntagGlobalResourceRequest": {
+      "base": null,
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
@@ -1999,6 +3392,48 @@
         "UpdateFlowRequest$Maintenance": "<p> The maintenance setting of the flow. </p>"
       }
     },
+    "UpdateRouterInputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRouterInputRequestNameString": {
+      "base": null,
+      "refs": {
+        "UpdateRouterInputRequest$Name": "<p>The updated name for the router input.</p>"
+      }
+    },
+    "UpdateRouterInputResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRouterNetworkInterfaceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRouterNetworkInterfaceRequestNameString": {
+      "base": null,
+      "refs": {
+        "UpdateRouterNetworkInterfaceRequest$Name": "<p>The updated name for the router network interface.</p>"
+      }
+    },
+    "UpdateRouterNetworkInterfaceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRouterOutputRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRouterOutputRequestNameString": {
+      "base": null,
+      "refs": {
+        "UpdateRouterOutputRequest$Name": "<p>The updated name for the router output.</p>"
+      }
+    },
+    "UpdateRouterOutputResponse": {
+      "base": null,
+      "refs": {}
+    },
     "VideoMonitoringSetting": {
       "base": "<p>Specifies the configuration for video stream metrics monitoring.</p>",
       "refs": {
@@ -2029,6 +3464,24 @@
       "base": "<p>The details of the VPC interfaces that you want to add to the flow. </p>",
       "refs": {
         "__listOfVpcInterfaceRequest$member": null
+      }
+    },
+    "VpcRouterNetworkInterfaceConfiguration": {
+      "base": "<p>The configuration settings for a router network interface within a VPC, including the security group IDs and subnet ID.</p>",
+      "refs": {
+        "RouterNetworkInterfaceConfiguration$Vpc": null
+      }
+    },
+    "VpcRouterNetworkInterfaceConfigurationSecurityGroupIdsList": {
+      "base": null,
+      "refs": {
+        "VpcRouterNetworkInterfaceConfiguration$SecurityGroupIds": "<p>The IDs of the security groups to associate with the router network interface within the VPC.</p>"
+      }
+    },
+    "WindowMaintenanceSchedule": {
+      "base": "<p>Defines a specific time window for maintenance operations.</p>",
+      "refs": {
+        "MaintenanceSchedule$Window": null
       }
     },
     "__listOfAddBridgeOutputRequest": {
@@ -2253,6 +3706,7 @@
         "Messages$Errors": "<p> A list of errors that might have been generated from processes on this flow.</p>",
         "RemoveFlowVpcInterfaceResponse$NonDeletedNetworkInterfaceIds": "<p> IDs of network interfaces associated with the removed VPC interface that MediaConnect was unable to remove.</p>",
         "Transport$CidrAllowList": "<p> The range of IP addresses that should be allowed to initiate output requests to this flow. These IP addresses should be in the form of a Classless Inter-Domain Routing (CIDR) block; for example, 10.0.0.0/16</p>",
+        "UntagGlobalResourceRequest$TagKeys": "<p>The keys of the tags to remove from the global resource.</p>",
         "UntagResourceRequest$TagKeys": "<p>The keys of the tags to be removed. </p>",
         "UpdateFlowEntitlementRequest$Subscribers": "<p> The Amazon Web Services account IDs that you want to share your content with. The receiving accounts (subscribers) will be allowed to create their own flow using your content as the source.</p>",
         "UpdateFlowOutputRequest$CidrAllowList": "<p> The range of IP addresses that should be allowed to initiate output requests to this flow. These IP addresses should be in the form of a Classless Inter-Domain Routing (CIDR) block; for example, 10.0.0.0/16.</p>",
@@ -2299,9 +3753,17 @@
         "AddMediaStreamRequest$MediaStreamTags": "<p> The key-value pairs that can be used to tag and organize the media stream. </p>",
         "AddOutputRequest$OutputTags": "<p> The key-value pairs that can be used to tag and organize the output. </p>",
         "CreateFlowRequest$FlowTags": "<p> The key-value pairs that can be used to tag and organize the flow. </p>",
+        "CreateRouterInputRequest$Tags": "<p>Key-value pairs that can be used to tag and organize this router input.</p>",
+        "CreateRouterNetworkInterfaceRequest$Tags": "<p>Key-value pairs that can be used to tag and organize this router network interface.</p>",
+        "CreateRouterOutputRequest$Tags": "<p>Key-value pairs that can be used to tag this router output.</p>",
         "GrantEntitlementRequest$EntitlementTags": "<p> The key-value pairs that can be used to tag and organize the entitlement. </p>",
+        "ListTagsForGlobalResourceResponse$Tags": "<p>A map of tag keys and values associated with the global resource.</p>",
         "ListTagsForResourceResponse$Tags": "<p> A map from tag keys to values. Tag keys can have a maximum character length of 128 characters, and tag values can have a maximum length of 256 characters.</p>",
+        "RouterInput$Tags": "<p>Key-value pairs that can be used to tag and organize this router input.</p>",
+        "RouterNetworkInterface$Tags": "<p>Key-value pairs that can be used to tag and organize this router network interface.</p>",
+        "RouterOutput$Tags": "<p>Key-value pairs that can be used to tag and organize this router output.</p>",
         "SetSourceRequest$SourceTags": "<p> The key-value pairs that can be used to tag and organize the source. </p>",
+        "TagGlobalResourceRequest$Tags": "<p>A map of tag keys and values to add to the global resource.</p>",
         "TagResourceRequest$Tags": "<p> A map from tag keys to values. Tag keys can have a maximum character length of 128 characters, and tag values can have a maximum length of 256 characters.</p>",
         "VpcInterfaceRequest$VpcInterfaceTags": "<p> The key-value pairs that can be used to tag and organize the VPC network interface. </p>"
       }

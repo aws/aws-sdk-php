@@ -26,8 +26,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You don't have sufficient permissions to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Alias": {
       "base": null,
@@ -102,6 +101,14 @@
         "UpdateRumMetricDefinitionRequest$AppMonitorName": "<p>The name of the CloudWatch RUM app monitor that sends these metrics.</p>"
       }
     },
+    "AppMonitorPlatform": {
+      "base": null,
+      "refs": {
+        "AppMonitor$Platform": "<p>The platform type for this app monitor. Valid values are <code>Web</code> for web applications , <code>Android</code> for Android applications, and <code>iOS</code> for IOS applications.</p>",
+        "AppMonitorSummary$Platform": "<p>The platform type for this app monitor. Valid values are <code>Web</code> for web applications, <code>Android</code> for Android applications, and <code>iOS</code> for IOS applications.</p>",
+        "CreateAppMonitorRequest$Platform": "<p>The platform type for the app monitor. Valid values are <code>Web</code> for web applications, <code>Android</code> for Android applications, and <code>iOS</code> for IOS applications. If you omit this parameter, the default is <code>Web</code>.</p>"
+      }
+    },
     "AppMonitorSummary": {
       "base": "<p>A structure that includes some data about app monitors and their settings.</p>",
       "refs": {
@@ -138,13 +145,11 @@
     },
     "BatchCreateRumMetricDefinitionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchCreateRumMetricDefinitionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDeleteRumMetricDefinitionsError": {
       "base": "<p>A structure that defines one error caused by a <a href=\"https://docs.aws.amazon.com/cloudwatchrum/latest/APIReference/API_BatchDeleteRumMetricsDefinitions.html\">BatchCreateRumMetricsDefinitions</a> operation.</p>",
@@ -160,23 +165,19 @@
     },
     "BatchDeleteRumMetricDefinitionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDeleteRumMetricDefinitionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetRumMetricDefinitionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetRumMetricDefinitionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Boolean": {
       "base": null,
@@ -190,18 +191,15 @@
     },
     "ConflictException": {
       "base": "<p>This operation attempted to create a resource that already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAppMonitorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAppMonitorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomEvents": {
       "base": "<p>A structure that contains information about custom events for this app monitor.</p>",
@@ -231,33 +229,27 @@
     },
     "DeleteAppMonitorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAppMonitorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRumMetricsDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRumMetricsDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeobfuscationConfiguration": {
       "base": "<p> A structure that contains the configuration for how an app monitor can deobfuscate stack traces. </p>",
@@ -337,33 +329,27 @@
     },
     "GetAppMonitorDataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAppMonitorDataResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAppMonitorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAppMonitorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ISOTimestampString": {
       "base": null,
@@ -396,13 +382,11 @@
     },
     "InternalServerException": {
       "base": "<p>Internal service exception.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidPolicyRevisionIdException": {
       "base": "<p>The policy revision ID that you provided doeesn't match the latest policy revision ID.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "JavaScriptSourceMaps": {
       "base": "<p> A structure that contains the configuration for how an app monitor can unminify JavaScript error stack traces using source maps. </p>",
@@ -413,44 +397,37 @@
     "JsonValue": {
       "base": null,
       "refs": {
-        "RumEvent$details": "<p>A string containing details about the event.</p>",
-        "RumEvent$metadata": "<p>Metadata about this event, which contains a JSON serialization of the identity of the user for this session. The user information comes from information such as the HTTP user-agent request header and document interface.</p>"
+        "RumEvent$metadata": "<p>Metadata about this event, which contains a JSON serialization of the identity of the user for this session. The user information comes from information such as the HTTP user-agent request header and document interface.</p>",
+        "RumEvent$details": "<p>A string containing details about the event.</p>"
       }
     },
     "ListAppMonitorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAppMonitorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRumMetricsDestinationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRumMetricsDestinationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MalformedPolicyDocumentException": {
       "base": "<p>The policy document that you specified is not formatted correctly.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxQueryResults": {
       "base": null,
@@ -556,8 +533,7 @@
     },
     "PolicyNotFoundException": {
       "base": "<p>The resource-based policy doesn't exist on this app monitor.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PolicyRevisionId": {
       "base": null,
@@ -571,23 +547,19 @@
     },
     "PolicySizeLimitExceededException": {
       "base": "<p>The policy document is too large. The limit is 4 KB.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRumEventsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRumEventsRequestBatchIdString": {
       "base": null,
@@ -603,18 +575,15 @@
     },
     "PutRumEventsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRumMetricsDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRumMetricsDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryFilter": {
       "base": "<p>A structure that defines a key and values that you can use to filter the results. The only performance events that are returned are those that have values matching the ones that you specify in one of your <code>QueryFilter</code> structures.</p> <p>For example, you could specify <code>Browser</code> as the <code>Name</code> and specify <code>Chrome,Firefox</code> as the <code>Values</code> to return events generated only from those browsers.</p> <p>Specifying <code>Invert</code> as the <code>Name</code> works as a \"not equal to\" filter. For example, specify <code>Invert</code> as the <code>Name</code> and specify <code>Chrome</code> as the value to return all events except events from user sessions with the Chrome browser.</p>",
@@ -655,8 +624,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>Resource not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RumEvent": {
       "base": "<p>A structure that contains the information for one performance event that RUM collects from a user session with your application.</p>",
@@ -678,8 +646,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>This request exceeds a service quota.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SessionSampleRate": {
       "base": null,
@@ -698,8 +665,8 @@
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
-        "AppMonitorDetails$id": "<p>The unique ID of the app monitor.</p>",
         "AppMonitorDetails$name": "<p>The name of the app monitor.</p>",
+        "AppMonitorDetails$id": "<p>The unique ID of the app monitor.</p>",
         "AppMonitorDetails$version": "<p>The version of the app monitor.</p>",
         "BatchCreateRumMetricDefinitionsError$ErrorCode": "<p>The error code.</p>",
         "BatchCreateRumMetricDefinitionsError$ErrorMessage": "<p>The error message for this metric definition.</p>",
@@ -730,8 +697,8 @@
         "RumEvent$type": "<p>The JSON schema that denotes the type of event this is, such as a page load or a new session.</p>",
         "ServiceQuotaExceededException$message": null,
         "ThrottlingException$message": null,
-        "ThrottlingException$quotaCode": "<p>The ID of the service quota that was exceeded.</p>",
         "ThrottlingException$serviceCode": "<p>The ID of the service that is associated with the error.</p>",
+        "ThrottlingException$quotaCode": "<p>The ID of the service quota that was exceeded.</p>",
         "ValidationException$message": null
       }
     },
@@ -759,13 +726,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -787,8 +752,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was throttled because of quota limits.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TimeRange": {
       "base": "<p>A structure that defines the time range that you want to retrieve results from.</p>",
@@ -818,33 +782,27 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAppMonitorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAppMonitorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRumMetricDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRumMetricDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Url": {
       "base": null,
@@ -872,8 +830,7 @@
     },
     "ValidationException": {
       "base": "<p>One of the arguments for the request is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValueKey": {
       "base": null,

@@ -1654,7 +1654,8 @@
         "Architectures":{"shape":"ArchitecturesList"},
         "EphemeralStorage":{"shape":"EphemeralStorage"},
         "SnapStart":{"shape":"SnapStart"},
-        "LoggingConfig":{"shape":"LoggingConfig"}
+        "LoggingConfig":{"shape":"LoggingConfig"},
+        "TenancyConfig":{"shape":"TenancyConfig"}
       }
     },
     "CreateFunctionUrlConfigRequest":{
@@ -2261,7 +2262,8 @@
         "EphemeralStorage":{"shape":"EphemeralStorage"},
         "SnapStart":{"shape":"SnapStartResponse"},
         "RuntimeVersionConfig":{"shape":"RuntimeVersionConfig"},
-        "LoggingConfig":{"shape":"LoggingConfig"}
+        "LoggingConfig":{"shape":"LoggingConfig"},
+        "TenancyConfig":{"shape":"TenancyConfig"}
       }
     },
     "FunctionEventInvokeConfig":{
@@ -2845,6 +2847,11 @@
           "shape":"Qualifier",
           "location":"querystring",
           "locationName":"Qualifier"
+        },
+        "TenantId":{
+          "shape":"TenantId",
+          "location":"header",
+          "locationName":"X-Amz-Tenant-Id"
         }
       },
       "payload":"Payload"
@@ -2965,7 +2972,12 @@
           "location":"querystring",
           "locationName":"Qualifier"
         },
-        "Payload":{"shape":"Blob"}
+        "Payload":{"shape":"Blob"},
+        "TenantId":{
+          "shape":"TenantId",
+          "location":"header",
+          "locationName":"X-Amz-Tenant-Id"
+        }
       },
       "payload":"Payload"
     },
@@ -4268,9 +4280,9 @@
         "java21",
         "python3.13",
         "nodejs22.x",
-        "java25",
         "nodejs24.x",
-        "python3.14"
+        "python3.14",
+        "java25"
       ]
     },
     "RuntimeVersionArn":{
@@ -4606,6 +4618,23 @@
       "max":1000,
       "min":84,
       "pattern":".*"
+    },
+    "TenancyConfig":{
+      "type":"structure",
+      "required":["TenantIsolationMode"],
+      "members":{
+        "TenantIsolationMode":{"shape":"TenantIsolationMode"}
+      }
+    },
+    "TenantId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\._:\\/=+\\-@ ]+"
+    },
+    "TenantIsolationMode":{
+      "type":"string",
+      "enum":["PER_TENANT"]
     },
     "ThrottleReason":{
       "type":"string",

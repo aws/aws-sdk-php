@@ -3686,6 +3686,12 @@
       },
       "exception":true
     },
+    "MappingVersion":{
+      "type":"string",
+      "max":10,
+      "min":1,
+      "pattern":"^\\d+\\.\\d+(\\.\\d+)?$"
+    },
     "MatchPattern":{
       "type":"string",
       "min":1
@@ -3798,7 +3804,10 @@
     },
     "OCSFVersion":{
       "type":"string",
-      "enum":["V1.1"]
+      "enum":[
+        "V1.1",
+        "V1.5"
+      ]
     },
     "OpenSearchApplication":{
       "type":"structure",
@@ -4023,7 +4032,8 @@
       "members":{
         "source":{"shape":"Source"},
         "eventSource":{"shape":"EventSource"},
-        "ocsfVersion":{"shape":"OCSFVersion"}
+        "ocsfVersion":{"shape":"OCSFVersion"},
+        "mappingVersion":{"shape":"MappingVersion"}
       }
     },
     "ParseVPC":{

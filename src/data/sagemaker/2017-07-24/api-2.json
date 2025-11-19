@@ -8512,7 +8512,8 @@
         "EnableNetworkIsolation":{
           "shape":"Boolean",
           "box":true
-        }
+        },
+        "MetricsConfig":{"shape":"MetricsConfig"}
       }
     },
     "CreateEndpointConfigOutput":{
@@ -11421,7 +11422,8 @@
         "EnableNetworkIsolation":{
           "shape":"Boolean",
           "box":true
-        }
+        },
+        "MetricsConfig":{"shape":"MetricsConfig"}
       }
     },
     "DescribeEndpointInput":{
@@ -11454,7 +11456,8 @@
         "AsyncInferenceConfig":{"shape":"AsyncInferenceConfig"},
         "PendingDeploymentSummary":{"shape":"PendingDeploymentSummary"},
         "ExplainerConfig":{"shape":"ExplainerConfig"},
-        "ShadowProductionVariants":{"shape":"ProductionVariantSummaryList"}
+        "ShadowProductionVariants":{"shape":"ProductionVariantSummaryList"},
+        "MetricsConfig":{"shape":"MetricsConfig"}
       }
     },
     "DescribeExperimentRequest":{
@@ -13706,6 +13709,10 @@
     },
     "EnableCaching":{"type":"boolean"},
     "EnableCapture":{"type":"boolean"},
+    "EnableEnhancedMetrics":{
+      "type":"boolean",
+      "box":true
+    },
     "EnableInfraCheck":{
       "type":"boolean",
       "box":true
@@ -19375,6 +19382,10 @@
       "min":1,
       "pattern":".+"
     },
+    "MetricPublishFrequencyInSeconds":{
+      "type":"integer",
+      "box":true
+    },
     "MetricRegex":{
       "type":"string",
       "max":500,
@@ -19398,6 +19409,13 @@
       "union":true
     },
     "MetricValue":{"type":"float"},
+    "MetricsConfig":{
+      "type":"structure",
+      "members":{
+        "EnableEnhancedMetrics":{"shape":"EnableEnhancedMetrics"},
+        "MetricPublishFrequencyInSeconds":{"shape":"MetricPublishFrequencyInSeconds"}
+      }
+    },
     "MetricsSource":{
       "type":"structure",
       "required":[
@@ -24154,7 +24172,6 @@
     },
     "ResourceConfig":{
       "type":"structure",
-      "required":["VolumeSizeInGB"],
       "members":{
         "InstanceType":{"shape":"TrainingInstanceType"},
         "InstanceCount":{
@@ -24162,7 +24179,7 @@
           "box":true
         },
         "VolumeSizeInGB":{
-          "shape":"VolumeSizeInGB",
+          "shape":"OptionalVolumeSizeInGB",
           "box":true
         },
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},

@@ -213,6 +213,7 @@
       "base": null,
       "refs": {
         "BlockPublicAccessConfiguration$BlockPublicSecurityGroupRules": "<p>Indicates whether Amazon EMR block public access is enabled (<code>true</code>) or disabled (<code>false</code>). By default, the value is <code>false</code> for accounts that have created Amazon EMR clusters before July 2019. For accounts created after this, the default is <code>true</code>.</p>",
+        "CloudWatchLogConfiguration$Enabled": "<p>Specifies if CloudWatch logging is enabled.</p>",
         "Cluster$AutoTerminate": "<p>Specifies whether the cluster should terminate after completing all steps.</p>",
         "Cluster$TerminationProtected": "<p>Indicates whether Amazon EMR will lock the cluster to prevent the Amazon EC2 instances from being terminated by an API call or user intervention, or in the event of a cluster error.</p>",
         "Cluster$VisibleToAllUsers": "<p>Indicates whether the cluster is visible to IAM principals in the Amazon Web Services account associated with the cluster. When <code>true</code>, IAM principals in the Amazon Web Services account can perform Amazon EMR cluster actions on the cluster that their IAM policies allow. When <code>false</code>, only the IAM principal that created the cluster and the Amazon Web Services account root user can perform Amazon EMR actions, regardless of IAM permissions policies attached to other IAM principals.</p> <p>The default value is <code>true</code> if a value is not provided when creating a cluster using the Amazon EMR API <a>RunJobFlow</a> command, the CLI <a href=\"https://docs.aws.amazon.com/cli/latest/reference/emr/create-cluster.html\">create-cluster</a> command, or the Amazon Web Services Management Console.</p>",
@@ -309,6 +310,12 @@
       "base": "<p>The definition of a CloudWatch metric alarm, which determines when an automatic scaling activity is triggered. When the defined alarm conditions are satisfied, scaling activity begins.</p>",
       "refs": {
         "ScalingTrigger$CloudWatchAlarmDefinition": "<p>The definition of a CloudWatch metric alarm. When the defined alarm conditions are met along with other trigger parameters, scaling activity begins.</p>"
+      }
+    },
+    "CloudWatchLogConfiguration": {
+      "base": "<p>Holds CloudWatch log configuration settings and metadata that specify settings like log files to monitor and where to send them.</p>",
+      "refs": {
+        "MonitoringConfiguration$CloudWatchLogConfiguration": "<p>CloudWatch log configuration settings and metadata that specify settings like log files to monitor and where to send them.</p>"
       }
     },
     "Cluster": {
@@ -1370,6 +1377,12 @@
       "base": null,
       "refs": {}
     },
+    "LogTypesMap": {
+      "base": null,
+      "refs": {
+        "CloudWatchLogConfiguration$LogTypes": "<p>A map of log types to file names for publishing logs to the standard output or standard error streams for CloudWatch. Valid log types include STEP_LOGS, SPARK_DRIVER, and SPARK_EXECUTOR. Valid file names for each type include STDOUT and STDERR.</p>"
+      }
+    },
     "Long": {
       "base": null,
       "refs": {
@@ -1455,6 +1468,13 @@
     "ModifyInstanceGroupsInput": {
       "base": "<p>Change the size of some instance groups.</p>",
       "refs": {}
+    },
+    "MonitoringConfiguration": {
+      "base": "<p>Contains CloudWatch log configuration metadata and settings.</p>",
+      "refs": {
+        "Cluster$MonitoringConfiguration": "<p>Contains Cloudwatch log configuration metadata and settings.</p>",
+        "RunJobFlowInput$MonitoringConfiguration": "<p>Contains CloudWatch log configuration metadata and settings.</p>"
+      }
     },
     "NewSupportedProductsList": {
       "base": null,
@@ -2105,7 +2125,7 @@
         "Instance$InstanceGroupId": "<p>The identifier of the instance group to which this instance belongs.</p>",
         "InstanceFleetStateChangeReason$Message": "<p>An explanatory message.</p>",
         "InstanceGroup$Name": "<p>The name of the instance group.</p>",
-        "InstanceGroup$BidPrice": "<p>If specified, indicates that the instance group uses Spot Instances. This is the maximum price you are willing to pay for Spot Instances. Specify <code>OnDemandPrice</code> to set the amount equal to the On-Demand price, or specify an amount in USD.</p>",
+        "InstanceGroup$BidPrice": "<p>The bid price for each Amazon EC2 Spot Instance type as defined by <code>InstanceType</code>. Expressed in USD. If neither <code>BidPrice</code> nor <code>BidPriceAsPercentageOfOnDemandPrice</code> is provided, <code>BidPriceAsPercentageOfOnDemandPrice</code> defaults to 100%.</p>",
         "InstanceGroupStateChangeReason$Message": "<p>The status change reason description.</p>",
         "InstanceStateChangeReason$Message": "<p>The status change reason description.</p>",
         "ListReleaseLabelsInput$NextToken": "<p>Specifies the next page of results. If <code>NextToken</code> is not specified, which is usually the case for the first request of ListReleaseLabels, the first page of results are determined by other filtering parameters or by the latest version. The <code>ListReleaseLabels</code> request fails if the identity (Amazon Web Services account ID) and all filtering parameters are different from the original request, or if the <code>NextToken</code> is expired or tampered with.</p>",
@@ -2304,6 +2324,9 @@
     "XmlString": {
       "base": null,
       "refs": {
+        "CloudWatchLogConfiguration$LogGroupName": "<p>The name of the CloudWatch log group where logs are published.</p>",
+        "CloudWatchLogConfiguration$LogStreamNamePrefix": "<p>The prefix of the log stream name.</p>",
+        "CloudWatchLogConfiguration$EncryptionKeyArn": "<p>The ARN of the encryption key used to encrypt the logs.</p>",
         "Cluster$SecurityConfiguration": "<p>The name of the security configuration applied to the cluster.</p>",
         "Cluster$AutoScalingRole": "<p>An IAM role for automatic scaling policies. The default role is <code>EMR_AutoScaling_DefaultRole</code>. The IAM role provides permissions that the automatic scaling feature requires to launch and terminate Amazon EC2 instances in an instance group.</p>",
         "CreateSecurityConfigurationInput$Name": "<p>The name of the security configuration.</p>",
@@ -2334,6 +2357,7 @@
         "KeyValue$Key": "<p>The unique identifier of a key-value pair.</p>",
         "KeyValue$Value": "<p>The value part of the identified key.</p>",
         "ListNotebookExecutionsInput$ExecutionEngineId": "<p>The unique ID of the execution engine.</p>",
+        "LogTypesMap$key": null,
         "NotebookExecution$NotebookParams": "<p>Input parameters in JSON format passed to the Amazon EMR Notebook at runtime for execution.</p>",
         "NotebookExecution$OutputNotebookURI": "<p>The location of the notebook execution's output file in Amazon S3.</p>",
         "NotebookExecution$LastStateChangeReason": "<p>The reason for the latest status change of the notebook execution.</p>",
@@ -2370,6 +2394,7 @@
         "DescribeJobFlowsInput$JobFlowIds": "<p>Return only job flows whose job flow ID is contained in this list.</p>",
         "HadoopJarStepConfig$Args": "<p>A list of command line arguments passed to the JAR file's main function when executed.</p>",
         "ListStepsInput$StepIds": "<p>The filter to limit the step list based on the identifier of the steps. You can specify a maximum of ten Step IDs. The character constraint applies to the overall length of the array.</p>",
+        "LogTypesMap$value": null,
         "ScriptBootstrapActionConfig$Args": "<p>A list of command line arguments to pass to the bootstrap action script.</p>",
         "SetKeepJobFlowAliveWhenNoStepsInput$JobFlowIds": "<p>A list of strings that uniquely identify the clusters to protect. This identifier is returned by <a href=\"https://docs.aws.amazon.com/emr/latest/APIReference/API_RunJobFlow.html\">RunJobFlow</a> and can also be obtained from <a href=\"https://docs.aws.amazon.com/emr/latest/APIReference/API_DescribeJobFlows.html\">DescribeJobFlows</a>.</p>",
         "SetTerminationProtectionInput$JobFlowIds": "<p> A list of strings that uniquely identify the clusters to protect. This identifier is returned by <a>RunJobFlow</a> and can also be obtained from <a>DescribeJobFlows</a> . </p>",
@@ -2428,17 +2453,17 @@
         "InstanceFleetModifyConfig$Context": "<p>Reserved.</p>",
         "InstanceGroup$CustomAmiId": "<p>The custom AMI ID to use for the provisioned instance group.</p>",
         "InstanceGroupConfig$Name": "<p>Friendly name given to the instance group.</p>",
-        "InstanceGroupConfig$BidPrice": "<p>If specified, indicates that the instance group uses Spot Instances. This is the maximum price you are willing to pay for Spot Instances. Specify <code>OnDemandPrice</code> to set the amount equal to the On-Demand price, or specify an amount in USD.</p>",
+        "InstanceGroupConfig$BidPrice": "<p>The bid price for each Amazon EC2 Spot Instance type as defined by <code>InstanceType</code>. Expressed in USD. If neither <code>BidPrice</code> nor <code>BidPriceAsPercentageOfOnDemandPrice</code> is provided, <code>BidPriceAsPercentageOfOnDemandPrice</code> defaults to 100%.</p>",
         "InstanceGroupConfig$CustomAmiId": "<p>The custom AMI ID to use for the provisioned instance group.</p>",
         "InstanceGroupDetail$InstanceGroupId": "<p>Unique identifier for the instance group.</p>",
         "InstanceGroupDetail$Name": "<p>Friendly name for the instance group.</p>",
-        "InstanceGroupDetail$BidPrice": "<p>If specified, indicates that the instance group uses Spot Instances. This is the maximum price you are willing to pay for Spot Instances. Specify <code>OnDemandPrice</code> to set the amount equal to the On-Demand price, or specify an amount in USD.</p>",
+        "InstanceGroupDetail$BidPrice": "<p>The bid price for each Amazon EC2 Spot Instance type as defined by <code>InstanceType</code>. Expressed in USD. If neither <code>BidPrice</code> nor <code>BidPriceAsPercentageOfOnDemandPrice</code> is provided, <code>BidPriceAsPercentageOfOnDemandPrice</code> defaults to 100%.</p>",
         "InstanceGroupDetail$CustomAmiId": "<p>The custom AMI ID to use for the provisioned instance group.</p>",
         "InstanceGroupIdsList$member": null,
         "InstanceGroupModifyConfig$InstanceGroupId": "<p>Unique ID of the instance group to modify.</p>",
         "InstanceTypeConfig$BidPrice": "<p>The bid price for each Amazon EC2 Spot Instance type as defined by <code>InstanceType</code>. Expressed in USD. If neither <code>BidPrice</code> nor <code>BidPriceAsPercentageOfOnDemandPrice</code> is provided, <code>BidPriceAsPercentageOfOnDemandPrice</code> defaults to 100%. </p>",
         "InstanceTypeConfig$CustomAmiId": "<p>The custom AMI ID to use for the instance type.</p>",
-        "InstanceTypeSpecification$BidPrice": "<p>The bid price for each Amazon EC2 Spot Instance type as defined by <code>InstanceType</code>. Expressed in USD.</p>",
+        "InstanceTypeSpecification$BidPrice": "<p>The bid price for each Amazon EC2 Spot Instance type as defined by <code>InstanceType</code>. Expressed in USD. If neither <code>BidPrice</code> nor <code>BidPriceAsPercentageOfOnDemandPrice</code> is provided, <code>BidPriceAsPercentageOfOnDemandPrice</code> defaults to 100%.</p>",
         "InstanceTypeSpecification$CustomAmiId": "<p>The custom AMI ID to use for the instance type.</p>",
         "JobFlowDetail$JobFlowId": "<p>The job flow identifier.</p>",
         "JobFlowDetail$Name": "<p>The name of the job flow.</p>",

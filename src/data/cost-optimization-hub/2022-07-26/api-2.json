@@ -28,7 +28,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetRecommendation":{
       "name":"GetRecommendation",
@@ -44,7 +45,24 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "ListEfficiencyMetrics":{
+      "name":"ListEfficiencyMetrics",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListEfficiencyMetricsRequest"},
+      "output":{"shape":"ListEfficiencyMetricsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
     },
     "ListEnrollmentStatuses":{
       "name":"ListEnrollmentStatuses",
@@ -59,7 +77,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListRecommendationSummaries":{
       "name":"ListRecommendationSummaries",
@@ -74,7 +93,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListRecommendations":{
       "name":"ListRecommendations",
@@ -89,7 +109,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "UpdateEnrollmentStatus":{
       "name":"UpdateEnrollmentStatus",
@@ -371,6 +392,18 @@
         "compute":{"shape":"ComputeConfiguration"}
       }
     },
+    "EfficiencyMetricsByGroup":{
+      "type":"structure",
+      "members":{
+        "metricsByTime":{"shape":"MetricsByTimeList"},
+        "group":{"shape":"String"},
+        "message":{"shape":"String"}
+      }
+    },
+    "EfficiencyMetricsByGroupList":{
+      "type":"list",
+      "member":{"shape":"EfficiencyMetricsByGroup"}
+    },
     "ElastiCacheReservedInstances":{
       "type":"structure",
       "members":{
@@ -429,8 +462,7 @@
     },
     "GetPreferencesRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetPreferencesResponse":{
       "type":"structure",
@@ -474,6 +506,13 @@
         "recommendedResourceDetails":{"shape":"ResourceDetails"},
         "tags":{"shape":"TagList"}
       }
+    },
+    "GranularityType":{
+      "type":"string",
+      "enum":[
+        "Daily",
+        "Monthly"
+      ]
     },
     "ImplementationEffort":{
       "type":"string",
@@ -521,6 +560,34 @@
       "type":"structure",
       "members":{
         "compute":{"shape":"ComputeConfiguration"}
+      }
+    },
+    "ListEfficiencyMetricsRequest":{
+      "type":"structure",
+      "required":[
+        "granularity",
+        "timePeriod"
+      ],
+      "members":{
+        "groupBy":{"shape":"String"},
+        "granularity":{"shape":"GranularityType"},
+        "timePeriod":{"shape":"TimePeriod"},
+        "maxResults":{"shape":"ListEfficiencyMetricsRequestMaxResultsInteger"},
+        "orderBy":{"shape":"OrderBy"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListEfficiencyMetricsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":0
+    },
+    "ListEfficiencyMetricsResponse":{
+      "type":"structure",
+      "members":{
+        "efficiencyMetricsByGroup":{"shape":"EfficiencyMetricsByGroupList"},
+        "nextToken":{"shape":"String"}
       }
     },
     "ListEnrollmentStatusesRequest":{
@@ -628,6 +695,19 @@
         "sizeFlexEligible":{"shape":"Boolean"},
         "currentGeneration":{"shape":"String"}
       }
+    },
+    "MetricsByTime":{
+      "type":"structure",
+      "members":{
+        "score":{"shape":"Double"},
+        "savings":{"shape":"Double"},
+        "spend":{"shape":"Double"},
+        "timestamp":{"shape":"String"}
+      }
+    },
+    "MetricsByTimeList":{
+      "type":"list",
+      "member":{"shape":"MetricsByTime"}
     },
     "MixedInstanceConfiguration":{
       "type":"structure",
@@ -1033,6 +1113,17 @@
         "message":{"shape":"String"}
       },
       "exception":true
+    },
+    "TimePeriod":{
+      "type":"structure",
+      "required":[
+        "start",
+        "end"
+      ],
+      "members":{
+        "start":{"shape":"String"},
+        "end":{"shape":"String"}
+      }
     },
     "Timestamp":{"type":"timestamp"},
     "UpdateEnrollmentStatusRequest":{

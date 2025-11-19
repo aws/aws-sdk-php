@@ -1160,7 +1160,7 @@
     "InvokedViaFunctionUrl": {
       "base": null,
       "refs": {
-        "AddPermissionRequest$InvokedViaFunctionUrl": "<p>Restricts the <code>lambda:InvokeFunction</code> action to function URL calls. When set to <code>true</code>, this prevents the principal from invoking the function by any means other than the function URL. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/urls-auth.html\">Control access to Lambda function URLs</a>.</p>"
+        "AddPermissionRequest$InvokedViaFunctionUrl": "<p>Restricts the <code>lambda:InvokeFunction</code> action to function URL calls. When specified, this option prevents the principal from invoking the function by any means other than the function URL. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/urls-auth.html\">Control access to Lambda function URLs</a>.</p>"
       }
     },
     "KMSAccessDeniedException": {
@@ -1591,7 +1591,7 @@
     "MaximumNumberOfPollers": {
       "base": null,
       "refs": {
-        "ProvisionedPollerConfig$MaximumPollers": "<p>The maximum number of event pollers this event source can scale up to.</p>"
+        "ProvisionedPollerConfig$MaximumPollers": "<p>The maximum number of event pollers this event source can scale up to. For Amazon SQS events source mappings, default is 200, and minimum value allowed is 2. For Amazon MSK and self-managed Apache Kafka event source mappings, default is 200, and minimum value allowed is 1.</p>"
       }
     },
     "MaximumRecordAgeInSeconds": {
@@ -1635,7 +1635,7 @@
     "MinimumNumberOfPollers": {
       "base": null,
       "refs": {
-        "ProvisionedPollerConfig$MinimumPollers": "<p>The minimum number of event pollers this event source can scale down to.</p>"
+        "ProvisionedPollerConfig$MinimumPollers": "<p>The minimum number of event pollers this event source can scale down to. For Amazon SQS events source mappings, default is 2, and minimum 2 required. For Amazon MSK and self-managed Apache Kafka event source mappings, default is 1.</p>"
       }
     },
     "NameSpacedFunctionArn": {
@@ -1782,11 +1782,11 @@
       }
     },
     "ProvisionedPollerConfig": {
-      "base": "<p>The <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode\"> provisioned mode</a> configuration for the event source. Use Provisioned Mode to customize the minimum and maximum number of event pollers for your event source. An event poller is a compute unit that provides approximately 5 MBps of throughput.</p>",
+      "base": "<p>The <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode\"> provisioned mode</a> configuration for the event source. Use Provisioned Mode to customize the minimum and maximum number of event pollers for your event source.</p>",
       "refs": {
-        "CreateEventSourceMappingRequest$ProvisionedPollerConfig": "<p>(Amazon MSK and self-managed Apache Kafka only) The provisioned mode configuration for the event source. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode\">provisioned mode</a>.</p>",
-        "EventSourceMappingConfiguration$ProvisionedPollerConfig": "<p>(Amazon MSK and self-managed Apache Kafka only) The provisioned mode configuration for the event source. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode\">provisioned mode</a>.</p>",
-        "UpdateEventSourceMappingRequest$ProvisionedPollerConfig": "<p>(Amazon MSK and self-managed Apache Kafka only) The provisioned mode configuration for the event source. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode\">provisioned mode</a>.</p>"
+        "CreateEventSourceMappingRequest$ProvisionedPollerConfig": "<p>(Amazon SQS, Amazon MSK, and self-managed Apache Kafka only) The provisioned mode configuration for the event source. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode\">provisioned mode</a>.</p>",
+        "EventSourceMappingConfiguration$ProvisionedPollerConfig": "<p>(Amazon SQS, Amazon MSK, and self-managed Apache Kafka only) The provisioned mode configuration for the event source. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode\">provisioned mode</a>.</p>",
+        "UpdateEventSourceMappingRequest$ProvisionedPollerConfig": "<p>(Amazon SQS, Amazon MSK, and self-managed Apache Kafka only) The provisioned mode configuration for the event source. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode\">provisioned mode</a>.</p>"
       }
     },
     "PublishLayerVersionRequest": {
@@ -2407,6 +2407,26 @@
       "base": null,
       "refs": {
         "TagsError$Message": "<p>The error message.</p>"
+      }
+    },
+    "TenancyConfig": {
+      "base": "<p>Specifies the tenant isolation mode configuration for a Lambda function. This allows you to configure specific tenant isolation strategies for your function invocations. Tenant isolation configuration cannot be modified after function creation.</p>",
+      "refs": {
+        "CreateFunctionRequest$TenancyConfig": "<p>Configuration for multi-tenant applications that use Lambda functions. Defines tenant isolation settings and resource allocations. Required for functions supporting multiple tenants.</p>",
+        "FunctionConfiguration$TenancyConfig": "<p>The function's tenant isolation configuration settings. Determines whether the Lambda function runs on a shared or dedicated infrastructure per unique tenant.</p>"
+      }
+    },
+    "TenantId": {
+      "base": null,
+      "refs": {
+        "InvocationRequest$TenantId": "<p>The identifier of the tenant in a multi-tenant Lambda function.</p>",
+        "InvokeWithResponseStreamRequest$TenantId": "<p>The identifier of the tenant in a multi-tenant Lambda function.</p>"
+      }
+    },
+    "TenantIsolationMode": {
+      "base": null,
+      "refs": {
+        "TenancyConfig$TenantIsolationMode": "<p>Tenant isolation mode allows for invocation to be sent to a corresponding execution environment dedicated to a specific tenant ID.</p>"
       }
     },
     "ThrottleReason": {

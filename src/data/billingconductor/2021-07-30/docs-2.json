@@ -83,6 +83,7 @@
         "CustomLineItemListElement$AccountId": "<p>The Amazon Web Services account in which this custom line item will be applied to.</p>",
         "CustomLineItemVersionListElement$AccountId": "<p>The Amazon Web Services account in which this custom line item will be applied to.</p>",
         "ListAccountAssociationsFilter$AccountId": "<p>The Amazon Web Services account ID to filter on.</p>",
+        "PrimaryAccountIdList$member": null,
         "UpdateBillingGroupOutput$PrimaryAccountId": "<p> The account ID that serves as the main account in a billing group. </p>"
       }
     },
@@ -312,6 +313,19 @@
         "UpdateBillingGroupOutput$StatusReason": "<p> The reason why the billing group is in its current status. </p>"
       }
     },
+    "BillingGroupType": {
+      "base": null,
+      "refs": {
+        "BillingGroupListElement$BillingGroupType": "<p> The type of billing group. </p>",
+        "BillingGroupTypeList$member": null
+      }
+    },
+    "BillingGroupTypeList": {
+      "base": null,
+      "refs": {
+        "ListBillingGroupsFilter$BillingGroupTypes": "<p> Filter billing groups by their type. </p>"
+      }
+    },
     "BillingPeriod": {
       "base": null,
       "refs": {
@@ -374,9 +388,9 @@
     "ComputationRuleEnum": {
       "base": "<p>The display settings of the custom line item</p>",
       "refs": {
-        "CreateCustomLineItemInput$ComputationRule": null,
-        "CustomLineItemListElement$ComputationRule": "<p>The display settings of the custom line item</p>",
-        "CustomLineItemVersionListElement$ComputationRule": "<p>The display settings of the custom line item</p>"
+        "CreateCustomLineItemInput$ComputationRule": "<p> Specifies how the custom line item charges are computed. </p>",
+        "CustomLineItemListElement$ComputationRule": "<p> The computation rule that determines how the custom line item charges are computed and reflected in the bill. </p>",
+        "CustomLineItemVersionListElement$ComputationRule": "<p> The computation rule for a specific version of a custom line item, determining how charges are computed and reflected in the bill. </p>"
       }
     },
     "ConflictException": {
@@ -728,7 +742,7 @@
       "refs": {}
     },
     "LineItemFilter": {
-      "base": "<p>A representation of the line item filter for your custom line item. You can use line item filters to include or exclude specific resource values from the billing group's total cost. For example, if you create a custom line item and you want to filter out a value, such as Savings Plan discounts, you can update <code>LineItemFilter</code> to exclude it.</p>",
+      "base": "<p>A representation of the line item filter for your custom line item. You can use line item filters to include or exclude specific resource values from the billing group's total cost. For example, if you create a custom line item and you want to filter out a value, such as Savings Plans discounts, you can update <code>LineItemFilter</code> to exclude it.</p>",
       "refs": {
         "LineItemFiltersList$member": null
       }
@@ -748,7 +762,7 @@
     "LineItemFilterValuesList": {
       "base": null,
       "refs": {
-        "LineItemFilter$Values": "<p>The values of the line item filter. This specifies the values to filter on. Currently, you can only exclude Savings Plan discounts.</p>"
+        "LineItemFilter$Values": "<p>The values of the line item filter. This specifies the values to filter on. Currently, you can only exclude Savings Plans discounts.</p>"
       }
     },
     "LineItemFiltersList": {
@@ -1041,11 +1055,11 @@
       }
     },
     "PresentationObject": {
-      "base": "<p>The presentation configuration of the custom line item</p>",
+      "base": "<p> An object that defines how custom line item charges are presented in the bill, containing specifications for service presentation. </p>",
       "refs": {
-        "CreateCustomLineItemInput$PresentationDetails": null,
-        "CustomLineItemListElement$PresentationDetails": "<p>The presentation configuration of the custom line item</p>",
-        "CustomLineItemVersionListElement$PresentationDetails": "<p>The presentation configuration of the custom line item</p>"
+        "CreateCustomLineItemInput$PresentationDetails": "<p> Details controlling how the custom line item charges are presented in the bill. Contains specifications for which service the charges will be shown under. </p>",
+        "CustomLineItemListElement$PresentationDetails": "<p> Configuration details specifying how the custom line item charges are presented, including which service the charges are shown under. </p>",
+        "CustomLineItemVersionListElement$PresentationDetails": "<p> Presentation configuration for a specific version of a custom line item, specifying how charges are displayed in the bill. </p>"
       }
     },
     "PricingPlanArn": {
@@ -1194,6 +1208,12 @@
         "UpdatePricingRuleOutput$Type": "<p> The new pricing rule type. </p>"
       }
     },
+    "PrimaryAccountIdList": {
+      "base": null,
+      "refs": {
+        "ListBillingGroupsFilter$PrimaryAccountIds": "<p> A list of primary account IDs to filter the billing groups. </p>"
+      }
+    },
     "ProformaCost": {
       "base": null,
       "refs": {
@@ -1205,6 +1225,21 @@
       "base": "<p>The request references a resource that doesn't exist. </p>",
       "refs": {}
     },
+    "ResponsibilityTransferArn": {
+      "base": null,
+      "refs": {
+        "AccountGrouping$ResponsibilityTransferArn": "<p> The Amazon Resource Name (ARN) that identifies the transfer relationship owned by the Bill Transfer account (caller account). When specified, the PrimaryAccountId is no longer required. </p>",
+        "ListBillingGroupAccountGrouping$ResponsibilityTransferArn": "<p> The Amazon Resource Name (ARN) that identifies the transfer relationship for the billing group. </p>",
+        "ResponsibilityTransferArnsList$member": null,
+        "UpdateBillingGroupAccountGrouping$ResponsibilityTransferArn": "<p> The Amazon Resource Name (ARN) that identifies the transfer relationship. Note: Modifications to the ResponsibilityTransferArn are not permitted for existing billing groups. </p>"
+      }
+    },
+    "ResponsibilityTransferArnsList": {
+      "base": null,
+      "refs": {
+        "ListBillingGroupsFilter$ResponsibilityTransferArns": "<p> Filter billing groups by their responsibility transfer ARNs. </p>"
+      }
+    },
     "RetryAfterSeconds": {
       "base": null,
       "refs": {
@@ -1212,11 +1247,23 @@
         "ThrottlingException$RetryAfterSeconds": "<p>Number of seconds you can safely retry after the call. </p>"
       }
     },
+    "SearchOption": {
+      "base": null,
+      "refs": {
+        "StringSearch$SearchOption": "<p> The search option to be applied when performing the string search. </p>"
+      }
+    },
+    "SearchValue": {
+      "base": null,
+      "refs": {
+        "StringSearch$SearchValue": "<p> The value to search for within the specified string field. </p>"
+      }
+    },
     "Service": {
       "base": null,
       "refs": {
         "CreatePricingRuleInput$Service": "<p> If the <code>Scope</code> attribute is set to <code>SERVICE</code> or <code>SKU</code>, the attribute indicates which service the <code>PricingRule</code> is applicable for. </p>",
-        "PresentationObject$Service": "<p>This defines the service of where the custom line item is presented</p>",
+        "PresentationObject$Service": "<p> The service under which the custom line item charges will be presented. Must be a string between 1 and 128 characters matching the pattern \"<code>^[a-zA-Z0-9]+$</code>\". </p>",
         "PricingRuleListElement$Service": "<p>If the <code>Scope</code> attribute is <code>SERVICE</code>, this attribute indicates which service the <code>PricingRule</code> is applicable for.</p>",
         "UpdatePricingRuleOutput$Service": "<p> If the <code>Scope</code> attribute is set to <code>SERVICE</code>, the attribute indicates which service the <code>PricingRule</code> is applicable for. </p>"
       }
@@ -1248,6 +1295,18 @@
         "ValidationException$Message": null,
         "ValidationExceptionField$Name": "<p>The field name.</p>",
         "ValidationExceptionField$Message": "<p>The message describing why the field failed validation.</p>"
+      }
+    },
+    "StringSearch": {
+      "base": "<p> A structure that defines string search parameters. </p>",
+      "refs": {
+        "StringSearches$member": null
+      }
+    },
+    "StringSearches": {
+      "base": null,
+      "refs": {
+        "ListBillingGroupsFilter$Names": "<p> Filter billing groups by their names. </p>"
       }
     },
     "TagKey": {

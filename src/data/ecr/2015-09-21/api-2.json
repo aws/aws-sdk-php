@@ -241,6 +241,22 @@
         {"shape":"RepositoryPolicyNotFoundException"}
       ]
     },
+    "DeregisterPullTimeUpdateExclusion":{
+      "name":"DeregisterPullTimeUpdateExclusion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeregisterPullTimeUpdateExclusionRequest"},
+      "output":{"shape":"DeregisterPullTimeUpdateExclusionResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ExclusionNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServerException"}
+      ]
+    },
     "DescribeImageReplicationStatus":{
       "name":"DescribeImageReplicationStatus",
       "http":{
@@ -481,6 +497,21 @@
         {"shape":"KmsException"}
       ]
     },
+    "ListImageReferrers":{
+      "name":"ListImageReferrers",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListImageReferrersRequest"},
+      "output":{"shape":"ListImageReferrersResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"RepositoryNotFoundException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "ListImages":{
       "name":"ListImages",
       "http":{
@@ -493,6 +524,21 @@
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
         {"shape":"RepositoryNotFoundException"}
+      ]
+    },
+    "ListPullTimeUpdateExclusions":{
+      "name":"ListPullTimeUpdateExclusions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListPullTimeUpdateExclusionsRequest"},
+      "output":{"shape":"ListPullTimeUpdateExclusionsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ServerException"}
       ]
     },
     "ListTagsForResource":{
@@ -614,7 +660,8 @@
       "errors":[
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"BlockedByOrganizationPolicyException"}
       ]
     },
     "PutReplicationConfiguration":{
@@ -629,6 +676,22 @@
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "RegisterPullTimeUpdateExclusion":{
+      "name":"RegisterPullTimeUpdateExclusion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RegisterPullTimeUpdateExclusionRequest"},
+      "output":{"shape":"RegisterPullTimeUpdateExclusionResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ExclusionAlreadyExistsException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServerException"}
       ]
     },
     "SetRepositoryPolicy":{
@@ -660,7 +723,8 @@
         {"shape":"LimitExceededException"},
         {"shape":"RepositoryNotFoundException"},
         {"shape":"ImageNotFoundException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ImageArchivedException"}
       ]
     },
     "StartLifecyclePolicyPreview":{
@@ -710,6 +774,23 @@
         {"shape":"TooManyTagsException"},
         {"shape":"RepositoryNotFoundException"},
         {"shape":"ServerException"}
+      ]
+    },
+    "UpdateImageStorageClass":{
+      "name":"UpdateImageStorageClass",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateImageStorageClassRequest"},
+      "output":{"shape":"UpdateImageStorageClassResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ImageNotFoundException"},
+        {"shape":"ImageStorageClassUpdateNotSupportedException"},
+        {"shape":"RepositoryNotFoundException"},
+        {"shape":"ServerException"},
+        {"shape":"ValidationException"}
       ]
     },
     "UpdatePullThroughCacheRule":{
@@ -786,8 +867,41 @@
       "min":1
     },
     "AccountSettingValue":{"type":"string"},
+    "Annotations":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
     "Arch":{"type":"string"},
     "Arn":{"type":"string"},
+    "ArtifactStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "ARCHIVED",
+        "ACTIVATING"
+      ]
+    },
+    "ArtifactStatusFilter":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "ARCHIVED",
+        "ACTIVATING",
+        "ANY"
+      ]
+    },
+    "ArtifactType":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "ArtifactTypeList":{
+      "type":"list",
+      "member":{"shape":"ArtifactType"},
+      "max":1,
+      "min":0
+    },
     "Attribute":{
       "type":"structure",
       "required":["key"],
@@ -928,6 +1042,13 @@
       "max":100,
       "min":1
     },
+    "BlockedByOrganizationPolicyException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
     "CompleteLayerUploadRequest":{
       "type":"structure",
       "required":[
@@ -1030,7 +1151,7 @@
       "type":"string",
       "max":612,
       "min":50,
-      "pattern":"^arn:aws:secretsmanager:[a-zA-Z0-9-:]+:secret:ecr\\-pullthroughcache\\/[a-zA-Z0-9\\/_+=.@-]+$"
+      "pattern":"^arn:aws(-\\w+)*:secretsmanager:[a-zA-Z0-9-:]+:secret:ecr\\-pullthroughcache\\/[a-zA-Z0-9\\/_+=.@-]+$"
     },
     "CustomRoleArn":{
       "type":"string",
@@ -1164,6 +1285,19 @@
         "repository":{"shape":"Repository"}
       }
     },
+    "DeregisterPullTimeUpdateExclusionRequest":{
+      "type":"structure",
+      "required":["principalArn"],
+      "members":{
+        "principalArn":{"shape":"PrincipalArn"}
+      }
+    },
+    "DeregisterPullTimeUpdateExclusionResponse":{
+      "type":"structure",
+      "members":{
+        "principalArn":{"shape":"PrincipalArn"}
+      }
+    },
     "DescribeImageReplicationStatusRequest":{
       "type":"structure",
       "required":[
@@ -1212,7 +1346,8 @@
     "DescribeImagesFilter":{
       "type":"structure",
       "members":{
-        "tagStatus":{"shape":"TagStatus"}
+        "tagStatus":{"shape":"TagStatus"},
+        "imageStatus":{"shape":"ImageStatusFilter"}
       }
     },
     "DescribeImagesRequest":{
@@ -1353,8 +1488,27 @@
     "Epoch":{"type":"integer"},
     "EvaluationTimestamp":{"type":"timestamp"},
     "ExceptionMessage":{"type":"string"},
+    "ExclusionAlreadyExistsException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
+    "ExclusionNotFoundException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
     "ExpirationTimestamp":{"type":"timestamp"},
     "ExploitAvailable":{"type":"string"},
+    "FiftyMaxResults":{
+      "type":"integer",
+      "max":50,
+      "min":1
+    },
     "FilePath":{"type":"string"},
     "FindingArn":{"type":"string"},
     "FindingDescription":{"type":"string"},
@@ -1524,9 +1678,19 @@
     },
     "ImageActionType":{
       "type":"string",
-      "enum":["EXPIRE"]
+      "enum":[
+        "EXPIRE",
+        "TRANSITION"
+      ]
     },
     "ImageAlreadyExistsException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
+    "ImageArchivedException":{
       "type":"structure",
       "members":{
         "message":{"shape":"ExceptionMessage"}
@@ -1550,7 +1714,11 @@
         "imageScanFindingsSummary":{"shape":"ImageScanFindingsSummary"},
         "imageManifestMediaType":{"shape":"MediaType"},
         "artifactMediaType":{"shape":"MediaType"},
-        "lastRecordedPullTime":{"shape":"RecordedPullTimestamp"}
+        "lastRecordedPullTime":{"shape":"RecordedPullTimestamp"},
+        "subjectManifestDigest":{"shape":"ImageDigest"},
+        "imageStatus":{"shape":"ImageStatus"},
+        "lastArchivedAt":{"shape":"LastArchivedAtTimestamp"},
+        "lastActivatedAt":{"shape":"LastActivatedAtTimestamp"}
       }
     },
     "ImageDetailList":{
@@ -1585,7 +1753,8 @@
         "KmsError",
         "UpstreamAccessDenied",
         "UpstreamTooManyRequests",
-        "UpstreamUnavailable"
+        "UpstreamUnavailable",
+        "ImageInaccessible"
       ]
     },
     "ImageFailureList":{
@@ -1621,6 +1790,26 @@
         "message":{"shape":"ExceptionMessage"}
       },
       "exception":true
+    },
+    "ImageReferrer":{
+      "type":"structure",
+      "required":[
+        "digest",
+        "mediaType",
+        "size"
+      ],
+      "members":{
+        "digest":{"shape":"ImageDigest"},
+        "mediaType":{"shape":"MediaType"},
+        "artifactType":{"shape":"ArtifactType"},
+        "size":{"shape":"ImageSizeInBytes"},
+        "annotations":{"shape":"Annotations"},
+        "artifactStatus":{"shape":"ArtifactStatus"}
+      }
+    },
+    "ImageReferrerList":{
+      "type":"list",
+      "member":{"shape":"ImageReferrer"}
     },
     "ImageReplicationStatus":{
       "type":"structure",
@@ -1681,6 +1870,30 @@
       }
     },
     "ImageSizeInBytes":{"type":"long"},
+    "ImageStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "ARCHIVED",
+        "ACTIVATING"
+      ]
+    },
+    "ImageStatusFilter":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "ARCHIVED",
+        "ACTIVATING",
+        "ANY"
+      ]
+    },
+    "ImageStorageClassUpdateNotSupportedException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
     "ImageTag":{
       "type":"string",
       "max":300,
@@ -1809,6 +2022,8 @@
       "min":0,
       "pattern":"^$|arn:aws:kms:[a-z0-9-]+:[0-9]{12}:key\\/[a-z0-9-]+"
     },
+    "LastActivatedAtTimestamp":{"type":"timestamp"},
+    "LastArchivedAtTimestamp":{"type":"timestamp"},
     "Layer":{
       "type":"structure",
       "members":{
@@ -1829,7 +2044,8 @@
       "type":"string",
       "enum":[
         "AVAILABLE",
-        "UNAVAILABLE"
+        "UNAVAILABLE",
+        "ARCHIVED"
       ]
     },
     "LayerDigest":{
@@ -1927,7 +2143,8 @@
         "imageDigest":{"shape":"ImageDigest"},
         "imagePushedAt":{"shape":"PushTimestamp"},
         "action":{"shape":"LifecyclePolicyRuleAction"},
-        "appliedRulePriority":{"shape":"LifecyclePolicyRulePriority"}
+        "appliedRulePriority":{"shape":"LifecyclePolicyRulePriority"},
+        "storageClass":{"shape":"LifecyclePolicyStorageClass"}
       }
     },
     "LifecyclePolicyPreviewResultList":{
@@ -1946,18 +2163,31 @@
     "LifecyclePolicyPreviewSummary":{
       "type":"structure",
       "members":{
-        "expiringImageTotalCount":{"shape":"ImageCount"}
+        "expiringImageTotalCount":{"shape":"ImageCount"},
+        "transitioningImageTotalCounts":{"shape":"TransitioningImageTotalCounts"}
       }
     },
     "LifecyclePolicyRuleAction":{
       "type":"structure",
       "members":{
-        "type":{"shape":"ImageActionType"}
+        "type":{"shape":"ImageActionType"},
+        "targetStorageClass":{"shape":"LifecyclePolicyTargetStorageClass"}
       }
     },
     "LifecyclePolicyRulePriority":{
       "type":"integer",
       "min":1
+    },
+    "LifecyclePolicyStorageClass":{
+      "type":"string",
+      "enum":[
+        "ARCHIVE",
+        "STANDARD"
+      ]
+    },
+    "LifecyclePolicyTargetStorageClass":{
+      "type":"string",
+      "enum":["ARCHIVE"]
     },
     "LifecyclePolicyText":{
       "type":"string",
@@ -1981,10 +2211,40 @@
       },
       "exception":true
     },
+    "ListImageReferrersFilter":{
+      "type":"structure",
+      "members":{
+        "artifactTypes":{"shape":"ArtifactTypeList"},
+        "artifactStatus":{"shape":"ArtifactStatusFilter"}
+      }
+    },
+    "ListImageReferrersRequest":{
+      "type":"structure",
+      "required":[
+        "repositoryName",
+        "subjectId"
+      ],
+      "members":{
+        "registryId":{"shape":"RegistryId"},
+        "repositoryName":{"shape":"RepositoryName"},
+        "subjectId":{"shape":"SubjectIdentifier"},
+        "filter":{"shape":"ListImageReferrersFilter"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"FiftyMaxResults"}
+      }
+    },
+    "ListImageReferrersResponse":{
+      "type":"structure",
+      "members":{
+        "referrers":{"shape":"ImageReferrerList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListImagesFilter":{
       "type":"structure",
       "members":{
-        "tagStatus":{"shape":"TagStatus"}
+        "tagStatus":{"shape":"TagStatus"},
+        "imageStatus":{"shape":"ImageStatusFilter"}
       }
     },
     "ListImagesRequest":{
@@ -2002,6 +2262,20 @@
       "type":"structure",
       "members":{
         "imageIds":{"shape":"ImageIdentifierList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListPullTimeUpdateExclusionsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListPullTimeUpdateExclusionsResponse":{
+      "type":"structure",
+      "members":{
+        "pullTimeUpdateExclusions":{"shape":"PullTimeUpdateExclusionList"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -2064,6 +2338,11 @@
       "type":"list",
       "member":{"shape":"Prefix"}
     },
+    "PrincipalArn":{
+      "type":"string",
+      "max":200,
+      "pattern":"^arn:aws(-[a-z]+)*:iam::[0-9]{12}:(role|user)/[\\w+=,.@-]+(/[\\w+=,.@-]+)*$"
+    },
     "ProxyEndpoint":{"type":"string"},
     "PullThroughCacheRule":{
       "type":"structure",
@@ -2108,6 +2387,12 @@
       "member":{"shape":"PullThroughCacheRuleRepositoryPrefix"},
       "max":100,
       "min":1
+    },
+    "PullTimeUpdateExclusionList":{
+      "type":"list",
+      "member":{"shape":"PrincipalArn"},
+      "max":100,
+      "min":0
     },
     "PushTimestamp":{"type":"timestamp"},
     "PutAccountSettingRequest":{
@@ -2288,6 +2573,20 @@
       "max":25,
       "min":2,
       "pattern":"[0-9a-z-]{2,25}"
+    },
+    "RegisterPullTimeUpdateExclusionRequest":{
+      "type":"structure",
+      "required":["principalArn"],
+      "members":{
+        "principalArn":{"shape":"PrincipalArn"}
+      }
+    },
+    "RegisterPullTimeUpdateExclusionResponse":{
+      "type":"structure",
+      "members":{
+        "principalArn":{"shape":"PrincipalArn"},
+        "createdAt":{"shape":"CreationTimestamp"}
+      }
     },
     "RegistryId":{
       "type":"string",
@@ -2576,7 +2875,8 @@
         "PENDING",
         "SCAN_ELIGIBILITY_EXPIRED",
         "FINDINGS_UNAVAILABLE",
-        "LIMIT_EXCEEDED"
+        "LIMIT_EXCEEDED",
+        "IMAGE_ARCHIVED"
       ]
     },
     "ScanStatusDescription":{"type":"string"},
@@ -2717,6 +3017,14 @@
       }
     },
     "Status":{"type":"string"},
+    "String":{"type":"string"},
+    "SubjectIdentifier":{
+      "type":"structure",
+      "required":["imageDigest"],
+      "members":{
+        "imageDigest":{"shape":"ImageDigest"}
+      }
+    },
     "Tag":{
       "type":"structure",
       "required":[
@@ -2766,6 +3074,13 @@
       "key":{"shape":"TagKey"},
       "value":{"shape":"TagValue"}
     },
+    "TargetStorageClass":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "ARCHIVE"
+      ]
+    },
     "TemplateAlreadyExistsException":{
       "type":"structure",
       "members":{
@@ -2787,6 +3102,17 @@
         "message":{"shape":"ExceptionMessage"}
       },
       "exception":true
+    },
+    "TransitioningImageTotalCount":{
+      "type":"structure",
+      "members":{
+        "targetStorageClass":{"shape":"LifecyclePolicyTargetStorageClass"},
+        "imageTotalCount":{"shape":"ImageCount"}
+      }
+    },
+    "TransitioningImageTotalCounts":{
+      "type":"list",
+      "member":{"shape":"TransitioningImageTotalCount"}
     },
     "Type":{"type":"string"},
     "UnableToAccessSecretException":{
@@ -2845,6 +3171,29 @@
     "UntagResourceResponse":{
       "type":"structure",
       "members":{}
+    },
+    "UpdateImageStorageClassRequest":{
+      "type":"structure",
+      "required":[
+        "repositoryName",
+        "imageId",
+        "targetStorageClass"
+      ],
+      "members":{
+        "registryId":{"shape":"RegistryId"},
+        "repositoryName":{"shape":"RepositoryName"},
+        "imageId":{"shape":"ImageIdentifier"},
+        "targetStorageClass":{"shape":"TargetStorageClass"}
+      }
+    },
+    "UpdateImageStorageClassResponse":{
+      "type":"structure",
+      "members":{
+        "registryId":{"shape":"RegistryId"},
+        "repositoryName":{"shape":"RepositoryName"},
+        "imageId":{"shape":"ImageIdentifier"},
+        "imageStatus":{"shape":"ImageStatus"}
+      }
     },
     "UpdatePullThroughCacheRuleRequest":{
       "type":"structure",

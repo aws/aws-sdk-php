@@ -292,7 +292,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAccountAssociations":{
       "name":"ListAccountAssociations",
@@ -309,7 +310,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListBillingGroupCostReports":{
       "name":"ListBillingGroupCostReports",
@@ -326,7 +328,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListBillingGroups":{
       "name":"ListBillingGroups",
@@ -343,7 +346,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCustomLineItemVersions":{
       "name":"ListCustomLineItemVersions",
@@ -359,7 +363,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCustomLineItems":{
       "name":"ListCustomLineItems",
@@ -376,7 +381,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPricingPlans":{
       "name":"ListPricingPlans",
@@ -392,7 +398,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPricingPlansAssociatedWithPricingRule":{
       "name":"ListPricingPlansAssociatedWithPricingRule",
@@ -409,7 +416,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPricingRules":{
       "name":"ListPricingRules",
@@ -425,7 +433,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPricingRulesAssociatedToPricingPlan":{
       "name":"ListPricingRulesAssociatedToPricingPlan",
@@ -442,7 +451,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListResourcesAssociatedToCustomLineItem":{
       "name":"ListResourcesAssociatedToCustomLineItem",
@@ -459,7 +469,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -621,10 +632,10 @@
     },
     "AccountGrouping":{
       "type":"structure",
-      "required":["LinkedAccountIds"],
       "members":{
         "LinkedAccountIds":{"shape":"AccountIdList"},
-        "AutoAssociate":{"shape":"Boolean"}
+        "AutoAssociate":{"shape":"Boolean"},
+        "ResponsibilityTransferArn":{"shape":"ResponsibilityTransferArn"}
       }
     },
     "AccountId":{
@@ -641,7 +652,7 @@
       "type":"list",
       "member":{"shape":"AccountId"},
       "max":30,
-      "min":1
+      "min":0
     },
     "AccountName":{
       "type":"string",
@@ -717,7 +728,7 @@
     },
     "Association":{
       "type":"string",
-      "pattern":"((arn:aws(-cn)?:billingconductor::[0-9]{12}:billinggroup/)?[0-9]{12}|MONITORED|UNMONITORED)"
+      "pattern":"((arn:aws(-cn)?:billingconductor::[0-9]{12}:billinggroup/)?[a-zA-Z0-9]{10,12}|MONITORED|UNMONITORED)"
     },
     "Attribute":{
       "type":"structure",
@@ -840,7 +851,8 @@
         "LastModifiedTime":{"shape":"Instant"},
         "Status":{"shape":"BillingGroupStatus"},
         "StatusReason":{"shape":"BillingGroupStatusReason"},
-        "AccountGrouping":{"shape":"ListBillingGroupAccountGrouping"}
+        "AccountGrouping":{"shape":"ListBillingGroupAccountGrouping"},
+        "BillingGroupType":{"shape":"BillingGroupType"}
       }
     },
     "BillingGroupName":{
@@ -854,7 +866,8 @@
       "type":"string",
       "enum":[
         "ACTIVE",
-        "PRIMARY_ACCOUNT_MISSING"
+        "PRIMARY_ACCOUNT_MISSING",
+        "PENDING"
       ]
     },
     "BillingGroupStatusList":{
@@ -864,6 +877,19 @@
       "min":1
     },
     "BillingGroupStatusReason":{"type":"string"},
+    "BillingGroupType":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "TRANSFER_BILLING"
+      ]
+    },
+    "BillingGroupTypeList":{
+      "type":"list",
+      "member":{"shape":"BillingGroupType"},
+      "max":2,
+      "min":1
+    },
     "BillingPeriod":{
       "type":"string",
       "pattern":"\\d{4}-(0?[1-9]|1[012])"
@@ -1403,7 +1429,7 @@
       "type":"list",
       "member":{"shape":"LineItemFilterValue"},
       "max":1,
-      "min":1
+      "min":0
     },
     "LineItemFiltersList":{
       "type":"list",
@@ -1437,7 +1463,8 @@
     "ListBillingGroupAccountGrouping":{
       "type":"structure",
       "members":{
-        "AutoAssociate":{"shape":"Boolean"}
+        "AutoAssociate":{"shape":"Boolean"},
+        "ResponsibilityTransferArn":{"shape":"ResponsibilityTransferArn"}
       }
     },
     "ListBillingGroupCostReportsFilter":{
@@ -1468,7 +1495,11 @@
         "Arns":{"shape":"BillingGroupArnList"},
         "PricingPlan":{"shape":"PricingPlanFullArn"},
         "Statuses":{"shape":"BillingGroupStatusList"},
-        "AutoAssociate":{"shape":"Boolean"}
+        "AutoAssociate":{"shape":"Boolean"},
+        "PrimaryAccountIds":{"shape":"PrimaryAccountIdList"},
+        "BillingGroupTypes":{"shape":"BillingGroupTypeList"},
+        "Names":{"shape":"StringSearches"},
+        "ResponsibilityTransferArns":{"shape":"ResponsibilityTransferArnsList"}
       }
     },
     "ListBillingGroupsInput":{
@@ -1891,6 +1922,12 @@
         "TIERING"
       ]
     },
+    "PrimaryAccountIdList":{
+      "type":"list",
+      "member":{"shape":"AccountId"},
+      "max":100,
+      "min":1
+    },
     "ProformaCost":{"type":"string"},
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1910,7 +1947,27 @@
       },
       "exception":true
     },
+    "ResponsibilityTransferArn":{
+      "type":"string",
+      "pattern":"arn:[a-z0-9][a-z0-9-.]{0,62}:organizations::\\d{12}:transfer/o-[a-z0-9]{10,32}/(billing)/(inbound|outbound)/rt-[0-9a-z]{8,32}"
+    },
+    "ResponsibilityTransferArnsList":{
+      "type":"list",
+      "member":{"shape":"ResponsibilityTransferArn"},
+      "max":30,
+      "min":1
+    },
     "RetryAfterSeconds":{"type":"integer"},
+    "SearchOption":{
+      "type":"string",
+      "enum":["STARTS_WITH"]
+    },
+    "SearchValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_\\+=\\.\\-@ ]+"
+    },
     "Service":{
       "type":"string",
       "max":128,
@@ -1938,6 +1995,23 @@
       "exception":true
     },
     "String":{"type":"string"},
+    "StringSearch":{
+      "type":"structure",
+      "required":[
+        "SearchOption",
+        "SearchValue"
+      ],
+      "members":{
+        "SearchOption":{"shape":"SearchOption"},
+        "SearchValue":{"shape":"SearchValue"}
+      }
+    },
+    "StringSearches":{
+      "type":"list",
+      "member":{"shape":"StringSearch"},
+      "max":1,
+      "min":1
+    },
     "TagKey":{
       "type":"string",
       "max":128,
@@ -2035,7 +2109,8 @@
     "UpdateBillingGroupAccountGrouping":{
       "type":"structure",
       "members":{
-        "AutoAssociate":{"shape":"Boolean"}
+        "AutoAssociate":{"shape":"Boolean"},
+        "ResponsibilityTransferArn":{"shape":"ResponsibilityTransferArn"}
       }
     },
     "UpdateBillingGroupInput":{
@@ -2263,6 +2338,7 @@
         "ILLEGAL_BILLING_ENTITY",
         "ILLEGAL_MODIFIER_PERCENTAGE",
         "ILLEGAL_TYPE",
+        "ILLEGAL_BILLING_GROUP_TYPE",
         "ILLEGAL_ENDED_BILLINGGROUP",
         "ILLEGAL_TIERING_INPUT",
         "ILLEGAL_OPERATION",

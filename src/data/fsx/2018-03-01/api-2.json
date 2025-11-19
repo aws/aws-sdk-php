@@ -1571,7 +1571,8 @@
         "CopyTagsToBackups":{"shape":"Flag"},
         "Aliases":{"shape":"AlternateDNSNames"},
         "AuditLogConfiguration":{"shape":"WindowsAuditLogCreateConfiguration"},
-        "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"}
+        "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"},
+        "FsrmConfiguration":{"shape":"WindowsFsrmConfiguration"}
       }
     },
     "CreateOntapVolumeConfiguration":{
@@ -4427,7 +4428,8 @@
         "ThroughputCapacity":{"shape":"MegabytesPerSecond"},
         "SelfManagedActiveDirectoryConfiguration":{"shape":"SelfManagedActiveDirectoryConfigurationUpdates"},
         "AuditLogConfiguration":{"shape":"WindowsAuditLogCreateConfiguration"},
-        "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"}
+        "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"},
+        "FsrmConfiguration":{"shape":"WindowsFsrmConfiguration"}
       }
     },
     "UpdateOntapVolumeConfiguration":{
@@ -4760,7 +4762,16 @@
         "Aliases":{"shape":"Aliases"},
         "AuditLogConfiguration":{"shape":"WindowsAuditLogConfiguration"},
         "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"},
-        "PreferredFileServerIpv6":{"shape":"IpAddress"}
+        "PreferredFileServerIpv6":{"shape":"IpAddress"},
+        "FsrmConfiguration":{"shape":"WindowsFsrmConfiguration"}
+      }
+    },
+    "WindowsFsrmConfiguration":{
+      "type":"structure",
+      "required":["FsrmServiceEnabled"],
+      "members":{
+        "FsrmServiceEnabled":{"shape":"Flag"},
+        "EventLogDestination":{"shape":"GeneralARN"}
       }
     }
   }

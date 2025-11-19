@@ -8,6 +8,8 @@
     "AddPolicyGrant": "<p>Adds a policy grant (an authorization policy) to a specified entity, including domain units, environment blueprint configurations, or environment profiles.</p>",
     "AssociateEnvironmentRole": "<p>Associates the environment role in Amazon DataZone.</p>",
     "AssociateGovernedTerms": "<p>Associates governed terms with an asset.</p>",
+    "BatchGetAttributesMetadata": "<p>Gets the attribute metadata.</p>",
+    "BatchPutAttributesMetadata": "<p>Writes the attribute metadata.</p>",
     "CancelMetadataGenerationRun": "<p>Cancels the metadata generation run.</p> <p>Prerequisites:</p> <ul> <li> <p>The run must exist and be in a cancelable status (e.g., SUBMITTED, IN_PROGRESS). </p> </li> <li> <p>Runs in SUCCEEDED status cannot be cancelled.</p> </li> <li> <p>User must have access to the run and cancel permissions.</p> </li> </ul>",
     "CancelSubscription": "<p>Cancels the subscription to the specified asset.</p>",
     "CreateAccountPool": "<p>Creates an account pool. </p>",
@@ -166,6 +168,7 @@
     "UpdateGroupProfile": "<p>Updates the specified group profile in Amazon DataZone.</p>",
     "UpdateProject": "<p>Updates the specified project in Amazon DataZone.</p>",
     "UpdateProjectProfile": "<p>Updates a project profile.</p>",
+    "UpdateRootDomainUnitOwner": "<p>Updates the owner of the root domain unit.</p>",
     "UpdateRule": "<p>Updates a rule. In Amazon DataZone, a rule is a formal agreement that enforces specific requirements across user workflows (e.g., publishing assets to the catalog, requesting subscriptions, creating projects) within the Amazon DataZone data portal. These rules help maintain consistency, ensure compliance, and uphold governance standards in data management processes. For instance, a metadata enforcement rule can specify the required information for creating a subscription request or publishing a data asset to the catalog, ensuring alignment with organizational standards.</p>",
     "UpdateSubscriptionGrantStatus": "<p>Updates the status of the specified subscription grant status in Amazon DataZone.</p>",
     "UpdateSubscriptionRequest": "<p>Updates a specified subscription request in Amazon DataZone.</p>",
@@ -770,6 +773,54 @@
         "TextMatchItem$attribute": "<p>The name of the attribute.</p>"
       }
     },
+    "AttributeEntityType": {
+      "base": null,
+      "refs": {
+        "BatchGetAttributesMetadataInput$entityType": "<p>The entity type for which you want to get attribute metadata.</p>",
+        "BatchPutAttributesMetadataInput$entityType": "<p>The entity type for which you want to write the attribute metadata.</p>"
+      }
+    },
+    "AttributeError": {
+      "base": "<p>The attribute error.</p>",
+      "refs": {
+        "AttributesErrors$member": null
+      }
+    },
+    "AttributeIdentifier": {
+      "base": null,
+      "refs": {
+        "AttributeError$attributeIdentifier": "<p>The attribute ID as part of the attribute error.</p>",
+        "AttributeInput$attributeIdentifier": "<p>The ID of the attribute.</p>",
+        "AttributesList$member": null,
+        "BatchGetAttributeOutput$attributeIdentifier": "<p>The attribute ID.</p>",
+        "BatchPutAttributeOutput$attributeIdentifier": "<p>The attribute ID.</p>"
+      }
+    },
+    "AttributeInput": {
+      "base": "<p>The attribute input.</p>",
+      "refs": {
+        "Attributes$member": null
+      }
+    },
+    "Attributes": {
+      "base": null,
+      "refs": {
+        "BatchPutAttributesMetadataInput$attributes": "<p>The attributes of the metadata.</p>"
+      }
+    },
+    "AttributesErrors": {
+      "base": null,
+      "refs": {
+        "BatchGetAttributesMetadataOutput$errors": "<p>The errors generated when the BatchGetAttributesMetadata action is invoked.</p>",
+        "BatchPutAttributesMetadataOutput$errors": "<p>The errors generated when the BatchPutAttributeMetadata action is invoked.</p>"
+      }
+    },
+    "AttributesList": {
+      "base": null,
+      "refs": {
+        "BatchGetAttributesMetadataInput$attributeIdentifiers": "<p>The attribute identifier.</p>"
+      }
+    },
     "AuthType": {
       "base": null,
       "refs": {
@@ -958,6 +1009,46 @@
         "BasicAuthenticationCredentials$userName": "<p>The user name for the connecion.</p>"
       }
     },
+    "BatchGetAttributeItems": {
+      "base": null,
+      "refs": {
+        "BatchGetAttributesMetadataOutput$attributes": "<p>The results of the BatchGetAttributesMetadata action.</p>"
+      }
+    },
+    "BatchGetAttributeOutput": {
+      "base": "<p>The results of the BatchGetAttribute action.</p>",
+      "refs": {
+        "BatchGetAttributeItems$member": null
+      }
+    },
+    "BatchGetAttributesMetadataInput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetAttributesMetadataOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchPutAttributeItems": {
+      "base": null,
+      "refs": {
+        "BatchPutAttributesMetadataOutput$attributes": "<p>The results of the BatchPutAttributeMetadata action.</p>"
+      }
+    },
+    "BatchPutAttributeOutput": {
+      "base": "<p>The results of the BatchPutAttribute action.</p>",
+      "refs": {
+        "BatchPutAttributeItems$member": null
+      }
+    },
+    "BatchPutAttributesMetadataInput": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchPutAttributesMetadataOutput": {
+      "base": null,
+      "refs": {}
+    },
     "Boolean": {
       "base": null,
       "refs": {
@@ -1062,6 +1153,7 @@
         "AcceptPredictionsInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "AddEntityOwnerInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "AddPolicyGrantInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
+        "BatchPutAttributesMetadataInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "CreateAssetInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "CreateAssetRevisionInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "CreateDataProductInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
@@ -1078,7 +1170,8 @@
         "RemoveEntityOwnerInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "RemovePolicyGrantInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "StartMetadataGenerationRunInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
-        "UpdateGlossaryInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>"
+        "UpdateGlossaryInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
+        "UpdateRootDomainUnitOwnerInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>"
       }
     },
     "CloudFormationProperties": {
@@ -2520,6 +2613,8 @@
         "AssetTypeItem$originDomainId": "<p>The identifier of the Amazon DataZone domain where the asset type was originally created.</p>",
         "AssociateEnvironmentRoleInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the environment role is associated.</p>",
         "AssociateGovernedTermsInput$domainIdentifier": "<p>The ID of the domain where governed terms are to be associated with an asset.</p>",
+        "BatchGetAttributesMetadataInput$domainIdentifier": "<p>The domain ID where you want to get the attribute metadata.</p>",
+        "BatchPutAttributesMetadataInput$domainIdentifier": "<p>The domain ID where you want to write the attribute metadata.</p>",
         "CancelMetadataGenerationRunInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the metadata generation run is to be cancelled.</p>",
         "CancelSubscriptionInput$domainIdentifier": "<p>The unique identifier of the Amazon DataZone domain where the subscription request is being cancelled.</p>",
         "CancelSubscriptionOutput$domainId": "<p>The unique identifier of the Amazon DataZone domain where the subscription is being cancelled.</p>",
@@ -2783,6 +2878,7 @@
         "UpdateProjectOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which a project is updated.</p>",
         "UpdateProjectProfileInput$domainIdentifier": "<p>The ID of the domain where a project profile is to be updated.</p>",
         "UpdateProjectProfileOutput$domainId": "<p>The ID of the domain where project profile is to be updated.</p>",
+        "UpdateRootDomainUnitOwnerInput$domainIdentifier": "<p>The ID of the domain where the root domain unit owner is to be updated.</p>",
         "UpdateRuleInput$domainIdentifier": "<p>The ID of the domain in which a rule is to be updated.</p>",
         "UpdateSubscriptionGrantStatusInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which a subscription grant status is to be updated.</p>",
         "UpdateSubscriptionGrantStatusOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which a subscription grant status is to be updated.</p>",
@@ -3008,6 +3104,8 @@
     "EntityId": {
       "base": null,
       "refs": {
+        "BatchGetAttributesMetadataInput$entityIdentifier": "<p>The entity ID for which you want to get attribute metadata.</p>",
+        "BatchPutAttributesMetadataInput$entityIdentifier": "<p>The entity ID for which you want to write the attribute metadata.</p>",
         "GetTimeSeriesDataPointOutput$entityId": "<p>The ID of the asset for which you want to get the data point.</p>",
         "PostTimeSeriesDataPointsOutput$entityId": "<p>The ID of the asset for which you want to post time series data points.</p>"
       }
@@ -3562,6 +3660,7 @@
     "FormInputList": {
       "base": null,
       "refs": {
+        "AttributeInput$forms": "<p>The metadata forms as part of the attribute input.</p>",
         "CreateAssetInput$formsInput": "<p>Metadata forms attached to the asset.</p>",
         "CreateAssetRevisionInput$formsInput": "<p>The metadata forms to be attached to the asset as part of asset revision.</p>",
         "CreateDataProductInput$formsInput": "<p>The metadata forms of the data product.</p>",
@@ -3593,6 +3692,7 @@
       "refs": {
         "AssetItemAdditionalAttributes$formsOutput": "<p>The forms included in the additional attributes of an inventory asset.</p>",
         "AssetItemAdditionalAttributes$readOnlyFormsOutput": "<p>The read-only forms included in the additional attributes of an inventory asset.</p>",
+        "BatchGetAttributeOutput$forms": "<p>The metadata forms that are part of the results of the BatchGetAttribute action.</p>",
         "CreateAssetOutput$formsOutput": "<p>The metadata forms that are attached to the created asset.</p>",
         "CreateAssetOutput$readOnlyFormsOutput": "<p>The read-only metadata forms that are attached to the created asset.</p>",
         "CreateAssetRevisionOutput$formsOutput": "<p>The metadata forms that were attached to the asset as part of the asset revision.</p>",
@@ -4039,6 +4139,12 @@
         "UpdateGlossaryOutput$status": "<p>The status to be updated as part of the <code>UpdateGlossary</code> action.</p>"
       }
     },
+    "GlossaryTermEnforcementDetail": {
+      "base": "<p>The enforcement details of a glossary term.</p>",
+      "refs": {
+        "RuleDetail$glossaryTermEnforcementDetail": "<p>The enforcement details of a glossary term that's part of the metadata rule.</p>"
+      }
+    },
     "GlossaryTermId": {
       "base": null,
       "refs": {
@@ -4053,6 +4159,7 @@
         "GetAssetOutputGovernedGlossaryTermsList$member": null,
         "GetGlossaryTermInput$identifier": "<p>The ID of the business glossary term.</p>",
         "GetGlossaryTermOutput$id": "<p>The ID of the business glossary term.</p>",
+        "GlossaryTermIdentifiers$member": null,
         "GlossaryTermItem$id": "<p>The identifier of the business glossary term.</p>",
         "GlossaryTerms$member": null,
         "ItemGlossaryTerms$member": null,
@@ -4061,6 +4168,12 @@
         "UpdateGlossaryTermInput$glossaryIdentifier": "<p>The identifier of the business glossary in which a term is to be updated.</p>",
         "UpdateGlossaryTermInput$identifier": "<p>The identifier of the business glossary term that is to be updated.</p>",
         "UpdateGlossaryTermOutput$id": "<p>The identifier of the business glossary term that is to be updated.</p>"
+      }
+    },
+    "GlossaryTermIdentifiers": {
+      "base": null,
+      "refs": {
+        "GlossaryTermEnforcementDetail$requiredGlossaryTermIds": "<p>The ID of the required glossary term.</p>"
       }
     },
     "GlossaryTermItem": {
@@ -4487,7 +4600,7 @@
       }
     },
     "IamUserProfileDetails": {
-      "base": "<p/>",
+      "base": "<p>The details of the IAM user profile.</p>",
       "refs": {
         "UserProfileDetails$iam": "<p>The IAM details of the user profile.</p>"
       }
@@ -6491,6 +6604,7 @@
         "AssetListingItem$listingRevision": "<p>The revision of the listing (asset published in Amazon DataZone catalog).</p>",
         "AssetRevision$revision": "<p>The revision details of the inventory asset.</p>",
         "AssetTypeItem$revision": "<p>The revision of the asset type.</p>",
+        "BatchGetAttributesMetadataInput$entityRevision": "<p>The entity revision for which you want to get attribute metadata.</p>",
         "CreateAssetInput$typeRevision": "<p>The revision of this asset's type.</p>",
         "CreateAssetOutput$revision": "<p>The revision of the asset.</p>",
         "CreateAssetOutput$typeRevision": "<p>The revision type of the asset.</p>",
@@ -7324,6 +7438,8 @@
         "AssetScope$status": "<p>The status of the asset scope.</p>",
         "AssetTargetNameMap$targetName": "<p>The target name in the asset target name map.</p>",
         "AssociateEnvironmentRoleInput$environmentRoleArn": "<p>The ARN of the environment role.</p>",
+        "AttributeError$code": "<p>The code generated as part of the attribute error.</p>",
+        "AttributeError$message": "<p>The message generated as part of the attribute error.</p>",
         "AwsConsoleLinkParameters$uri": "<p>The URI of the console link specified as part of the environment action.</p>",
         "CloudFormationProperties$templateUrl": "<p>The template URL of the cloud formation provisioning properties of the environment blueprint.</p>",
         "ColumnNameList$member": null,
@@ -7587,6 +7703,7 @@
         "UpdateEnvironmentProfileInput$description": "<p>The description to be updated as part of the <code>UpdateEnvironmentProfile</code> action.</p>",
         "UpdateEnvironmentProfileOutput$createdBy": "<p>The Amazon DataZone user who created the environment profile.</p>",
         "UpdateProjectInput$projectProfileVersion": "<p>The project profile version to which the project should be updated. You can only specify the following string for this parameter: <code>latest</code>.</p>",
+        "UpdateRootDomainUnitOwnerInput$newOwner": "<p>The new owner of the root domain unit.</p>",
         "UpdateSubscriptionGrantStatusInput$targetName": "<p>The target name to be updated as part of the <code>UpdateSubscriptionGrantStatus</code> action.</p>",
         "UpdateSubscriptionRequestOutput$reviewerId": "<p>The identifier of the Amazon DataZone user who reviews the subscription request.</p>",
         "UpdateSubscriptionTargetInput$provider": "<p>The provider to be updated as part of the <code>UpdateSubscriptionTarget</code> action.</p>",
@@ -8455,6 +8572,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateRootDomainUnitOwnerInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRootDomainUnitOwnerOutput": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateRuleInput": {
       "base": null,
       "refs": {}
@@ -8627,6 +8752,7 @@
         "CreateUserProfileInput$userIdentifier": "<p>The identifier of the user for which the user profile is created.</p>",
         "GetUserProfileInput$userIdentifier": "<p>The identifier of the user for which you want to get the user profile.</p>",
         "OwnerUserProperties$userIdentifier": "<p>The ID of the owner user.</p>",
+        "UpdateRootDomainUnitOwnerInput$currentOwner": "<p>The current owner of the root domain unit.</p>",
         "UpdateUserProfileInput$userIdentifier": "<p>The identifier of the user whose user profile is to be updated.</p>",
         "UserPolicyGrantPrincipal$userIdentifier": "<p>The user ID of the user policy grant principal.</p>"
       }

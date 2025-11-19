@@ -5280,7 +5280,13 @@
         "MultiplexAlert$AlertType": "The type of the alert",
         "MultiplexAlert$Id": "The unique ID for this alert instance",
         "MultiplexAlert$Message": "The user facing alert message which can have more context",
-        "MultiplexAlert$PipelineId": "The ID of the pipeline this alert is associated with"
+        "MultiplexAlert$PipelineId": "The ID of the pipeline this alert is associated with",
+        "RouterDestination$AvailabilityZoneName": "The Availability Zone (AZ) names of the AZs this destination is created in.",
+        "RouterDestination$RouterOutputArn": "ARN of the output from MediaConnect Router currently connected to this input.",
+        "RouterDestinationSettings$AvailabilityZoneName": "Availability Zone for this MediaConnect Router destination.",
+        "RouterInputSettings$SecretArn": "ARN of the secret used to encrypt this input.",
+        "RouterSettings$SecretArn": "ARN of the secret used to encrypt this input.",
+        "SpecialRouterSettings$RouterArn": "This is the arn of the MediaConnect Router resource being associated with the MediaLive Input."
       }
     },
     "__stringMax1000": {
@@ -7363,6 +7369,55 @@
       "base": "Hlg2020 Settings",
       "refs": {
         "H265ColorSpaceSettings$Hlg2020Settings": null
+      }
+    },
+    "RouterDestination": {
+      "base": null,
+      "refs": {
+        "__listOfRouterDestination$member": null
+      }
+    },
+    "RouterDestinationSettings": {
+      "base": null,
+      "refs": {
+        "__listOfRouterDestinationSettings$member": null
+      }
+    },
+    "RouterEncryptionType": {
+      "base": "Encryption configuration for MediaConnect router. When using SECRETS_MANAGER encryption, you must provide the ARN of the secret used to encrypt data in transit. When using AUTOMATIC encryption, a service-managed secret will be used instead.",
+      "refs": {
+        "RouterInputSettings$EncryptionType": null,
+        "RouterSettings$EncryptionType": null
+      }
+    },
+    "RouterInputSettings": {
+      "base": "The settings for a MediaConnect Router Input.",
+      "refs": {
+        "Input$RouterSettings": "Information about any MediaConnect router association with this input."
+      }
+    },
+    "RouterSettings": {
+      "base": "This is the collection of settings that are used during the creation of a MediaConnect router input.",
+      "refs": {
+        "CreateInput$RouterSettings": null
+      }
+    },
+    "SpecialRouterSettings": {
+      "base": "When using MediaConnect Router as the source of a MediaLive input there's a special handoff that occurs when a router output\nis created. This group of settings is set on your behalf by the MediaConnect Router service using this set of settings. This\nsetting object can only by used by that service.",
+      "refs": {
+        "UpdateInput$SpecialRouterSettings": "When using MediaConnect Router as the source of a MediaLive input there's a special handoff that occurs when a router output\nis created. This group of settings is set on your behalf by the MediaConnect Router service using this set of settings. This\nsetting object can only by used by that service."
+      }
+    },
+    "__listOfRouterDestination": {
+      "base": null,
+      "refs": {
+        "RouterInputSettings$Destinations": "MediaConnect Router destinations associated with the MediaLive Input."
+      }
+    },
+    "__listOfRouterDestinationSettings": {
+      "base": null,
+      "refs": {
+        "RouterSettings$Destinations": "Destinations for the input from MediaConnect Router. Provide one for a single-pipeline input and two for a standard input."
       }
     }
   },

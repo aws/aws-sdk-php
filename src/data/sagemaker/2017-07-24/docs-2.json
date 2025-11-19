@@ -5968,6 +5968,12 @@
         "DataCaptureConfigSummary$EnableCapture": "<p>Whether data capture is enabled or disabled.</p>"
       }
     },
+    "EnableEnhancedMetrics": {
+      "base": null,
+      "refs": {
+        "MetricsConfig$EnableEnhancedMetrics": "<p>Specifies whether to enable enhanced metrics for the endpoint. Enhanced metrics provide utilization data at instance and container granularity. Container granularity is supported for Inference Components. The default is <code>False</code>.</p>"
+      }
+    },
     "EnableInfraCheck": {
       "base": null,
       "refs": {
@@ -7355,7 +7361,7 @@
     "GroupPatternsList": {
       "base": null,
       "refs": {
-        "RoleGroupAssignment$GroupPatterns": "<p>A list of AWS IAM Identity Center group patterns that should be assigned to the specified role. Group patterns support wildcard matching using <code>*</code>.</p>"
+        "RoleGroupAssignment$GroupPatterns": "<p>A list of Amazon Web Services IAM Identity Center group patterns that should be assigned to the specified role. Group patterns support wildcard matching using <code>*</code>.</p>"
       }
     },
     "GroupingAttributeName": {
@@ -10566,6 +10572,12 @@
         "TrialComponentMetricSummary$MetricName": "<p>The name of the metric.</p>"
       }
     },
+    "MetricPublishFrequencyInSeconds": {
+      "base": null,
+      "refs": {
+        "MetricsConfig$MetricPublishFrequencyInSeconds": "<p>The frequency, in seconds, at which utilization metrics are published to Amazon CloudWatch. The default is <code>60</code> seconds.</p>"
+      }
+    },
     "MetricRegex": {
       "base": null,
       "refs": {
@@ -10589,6 +10601,14 @@
       "refs": {
         "FinalAutoMLJobObjectiveMetric$Value": "<p>The value of the metric with the best result.</p>",
         "FinalHyperParameterTuningJobObjectiveMetric$Value": "<p>The value of the objective metric.</p>"
+      }
+    },
+    "MetricsConfig": {
+      "base": "<p>The configuration for Utilization metrics.</p>",
+      "refs": {
+        "CreateEndpointConfigInput$MetricsConfig": "<p>The configuration parameters for utilization metrics.</p>",
+        "DescribeEndpointConfigOutput$MetricsConfig": "<p>The configuration parameters for utilization metrics.</p>",
+        "DescribeEndpointOutput$MetricsConfig": "<p>The configuration parameters for utilization metrics.</p>"
       }
     },
     "MetricsSource": {
@@ -12734,7 +12754,8 @@
       "refs": {
         "DebugRuleConfiguration$VolumeSizeInGB": "<p>The size, in GB, of the ML storage volume attached to the processing instance.</p>",
         "HyperParameterTuningResourceConfig$VolumeSizeInGB": "<p>The volume size in GB for the storage volume to be used in processing hyperparameter optimization jobs (optional). These volumes store model artifacts, incremental states and optionally, scratch space for training algorithms. Do not provide a value for this parameter if a value for <code>InstanceConfigs</code> is also specified.</p> <p>Some instance types have a fixed total local storage size. If you select one of these instances for training, <code>VolumeSizeInGB</code> cannot be greater than this total size. For a list of instance types with local instance storage and their sizes, see <a href=\"http://aws.amazon.com/releasenotes/host-instance-storage-volumes-table/\">instance store volumes</a>.</p> <note> <p>SageMaker supports only the <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html\">General Purpose SSD (gp2)</a> storage volume type.</p> </note>",
-        "ProfilerRuleConfiguration$VolumeSizeInGB": "<p>The size, in GB, of the ML storage volume attached to the processing instance.</p>"
+        "ProfilerRuleConfiguration$VolumeSizeInGB": "<p>The size, in GB, of the ML storage volume attached to the processing instance.</p>",
+        "ResourceConfig$VolumeSizeInGB": "<p>The size of the ML storage volume that you want to provision. </p> <p>ML storage volumes store model artifacts and incremental states. Training algorithms might also use the ML storage volume for scratch space. If you want to store the training data in the ML storage volume, choose <code>File</code> as the <code>TrainingInputMode</code> in the algorithm specification. </p> <p>When using an ML instance with <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ssd-instance-store.html#nvme-ssd-volumes\">NVMe SSD volumes</a>, SageMaker doesn't provision Amazon EBS General Purpose SSD (gp2) storage. Available storage is fixed to the NVMe-type instance's storage capacity. SageMaker configures storage paths for training datasets, checkpoints, model artifacts, and outputs to use the entire capacity of the instance storage. For example, ML instance families with the NVMe-type instance storage include <code>ml.p4d</code>, <code>ml.g4dn</code>, and <code>ml.g5</code>. </p> <p>When using an ML instance with the EBS-only storage option and without instance storage, you must define the size of EBS volume through <code>VolumeSizeInGB</code> in the <code>ResourceConfig</code> API. For example, ML instance families that use EBS volumes include <code>ml.c5</code> and <code>ml.p2</code>. </p> <p>To look up instance types and their instance storage types and volumes, see <a href=\"http://aws.amazon.com/ec2/instance-types/\">Amazon EC2 Instance Types</a>.</p> <p>To find the default local paths defined by the SageMaker training platform, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-train-storage.html\">Amazon SageMaker Training Storage Folders for Training Datasets, Checkpoints, Model Artifacts, and Outputs</a>.</p>"
       }
     },
     "OrderKey": {
@@ -14859,7 +14880,7 @@
       }
     },
     "RoleGroupAssignment": {
-      "base": "<p>Defines the mapping between an in-app role and the AWS IAM Identity Center group patterns that should be assigned to that role within the SageMaker Partner AI App.</p>",
+      "base": "<p>Defines the mapping between an in-app role and the Amazon Web Services IAM Identity Center group patterns that should be assigned to that role within the SageMaker Partner AI App.</p>",
       "refs": {
         "RoleGroupAssignmentsList$member": null
       }
@@ -18984,8 +19005,7 @@
     "VolumeSizeInGB": {
       "base": null,
       "refs": {
-        "HyperParameterTuningInstanceConfig$VolumeSizeInGB": "<p>The volume size in GB of the data to be processed for hyperparameter optimization (optional).</p>",
-        "ResourceConfig$VolumeSizeInGB": "<p>The size of the ML storage volume that you want to provision. </p> <p>ML storage volumes store model artifacts and incremental states. Training algorithms might also use the ML storage volume for scratch space. If you want to store the training data in the ML storage volume, choose <code>File</code> as the <code>TrainingInputMode</code> in the algorithm specification. </p> <p>When using an ML instance with <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ssd-instance-store.html#nvme-ssd-volumes\">NVMe SSD volumes</a>, SageMaker doesn't provision Amazon EBS General Purpose SSD (gp2) storage. Available storage is fixed to the NVMe-type instance's storage capacity. SageMaker configures storage paths for training datasets, checkpoints, model artifacts, and outputs to use the entire capacity of the instance storage. For example, ML instance families with the NVMe-type instance storage include <code>ml.p4d</code>, <code>ml.g4dn</code>, and <code>ml.g5</code>. </p> <p>When using an ML instance with the EBS-only storage option and without instance storage, you must define the size of EBS volume through <code>VolumeSizeInGB</code> in the <code>ResourceConfig</code> API. For example, ML instance families that use EBS volumes include <code>ml.c5</code> and <code>ml.p2</code>. </p> <p>To look up instance types and their instance storage types and volumes, see <a href=\"http://aws.amazon.com/ec2/instance-types/\">Amazon EC2 Instance Types</a>.</p> <p>To find the default local paths defined by the SageMaker training platform, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-train-storage.html\">Amazon SageMaker Training Storage Folders for Training Datasets, Checkpoints, Model Artifacts, and Outputs</a>.</p>"
+        "HyperParameterTuningInstanceConfig$VolumeSizeInGB": "<p>The volume size in GB of the data to be processed for hyperparameter optimization (optional).</p>"
       }
     },
     "VpcConfig": {

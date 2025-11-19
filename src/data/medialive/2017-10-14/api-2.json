@@ -6517,6 +6517,10 @@
         "SdiSources": {
           "shape": "InputSdiSources",
           "locationName": "sdiSources"
+        },
+        "RouterSettings": {
+          "shape": "RouterSettings",
+          "locationName": "routerSettings"
         }
       }
     },
@@ -6587,6 +6591,10 @@
         "SdiSources": {
           "shape": "InputSdiSources",
           "locationName": "sdiSources"
+        },
+        "RouterSettings": {
+          "shape": "RouterSettings",
+          "locationName": "routerSettings"
         }
       }
     },
@@ -7576,6 +7584,10 @@
         "SdiSources": {
           "shape": "InputSdiSources",
           "locationName": "sdiSources"
+        },
+        "RouterSettings": {
+          "shape": "RouterInputSettings",
+          "locationName": "routerSettings"
         }
       }
     },
@@ -10444,6 +10456,10 @@
         "SdiSources": {
           "shape": "InputSdiSources",
           "locationName": "sdiSources"
+        },
+        "RouterSettings": {
+          "shape": "RouterInputSettings",
+          "locationName": "routerSettings"
         }
       }
     },
@@ -11396,7 +11412,8 @@
         "SRT_CALLER",
         "MULTICAST",
         "SMPTE_2110_RECEIVER_GROUP",
-        "SDI"
+        "SDI",
+        "MEDIACONNECT_ROUTER"
       ]
     },
     "InputVpcRequest": {
@@ -16013,6 +16030,10 @@
         "SdiSources": {
           "shape": "InputSdiSources",
           "locationName": "sdiSources"
+        },
+        "SpecialRouterSettings": {
+          "shape": "SpecialRouterSettings",
+          "locationName": "specialRouterSettings"
         }
       }
     },
@@ -16186,6 +16207,10 @@
         "SdiSources": {
           "shape": "InputSdiSources",
           "locationName": "sdiSources"
+        },
+        "SpecialRouterSettings": {
+          "shape": "SpecialRouterSettings",
+          "locationName": "specialRouterSettings"
         }
       },
       "required": [
@@ -25042,6 +25067,93 @@
     "Hlg2020Settings": {
       "type": "structure",
       "members": {}
+    },
+    "RouterDestination": {
+      "type": "structure",
+      "members": {
+        "AvailabilityZoneName": {
+          "shape": "__string",
+          "locationName": "availabilityZoneName"
+        },
+        "RouterOutputArn": {
+          "shape": "__string",
+          "locationName": "routerOutputArn"
+        }
+      }
+    },
+    "RouterDestinationSettings": {
+      "type": "structure",
+      "members": {
+        "AvailabilityZoneName": {
+          "shape": "__string",
+          "locationName": "availabilityZoneName"
+        }
+      },
+      "required": [
+        "AvailabilityZoneName"
+      ]
+    },
+    "RouterEncryptionType": {
+      "type": "string",
+      "enum": [
+        "AUTOMATIC",
+        "SECRETS_MANAGER"
+      ]
+    },
+    "RouterInputSettings": {
+      "type": "structure",
+      "members": {
+        "Destinations": {
+          "shape": "__listOfRouterDestination",
+          "locationName": "destinations"
+        },
+        "EncryptionType": {
+          "shape": "RouterEncryptionType",
+          "locationName": "encryptionType"
+        },
+        "SecretArn": {
+          "shape": "__string",
+          "locationName": "secretArn"
+        }
+      }
+    },
+    "RouterSettings": {
+      "type": "structure",
+      "members": {
+        "Destinations": {
+          "shape": "__listOfRouterDestinationSettings",
+          "locationName": "destinations"
+        },
+        "EncryptionType": {
+          "shape": "RouterEncryptionType",
+          "locationName": "encryptionType"
+        },
+        "SecretArn": {
+          "shape": "__string",
+          "locationName": "secretArn"
+        }
+      }
+    },
+    "SpecialRouterSettings": {
+      "type": "structure",
+      "members": {
+        "RouterArn": {
+          "shape": "__string",
+          "locationName": "routerArn"
+        }
+      }
+    },
+    "__listOfRouterDestination": {
+      "type": "list",
+      "member": {
+        "shape": "RouterDestination"
+      }
+    },
+    "__listOfRouterDestinationSettings": {
+      "type": "list",
+      "member": {
+        "shape": "RouterDestinationSettings"
+      }
     }
   }
 }

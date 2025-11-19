@@ -375,7 +375,8 @@
       "members":{
         "Names":{"shape":"InvoiceUnitNames"},
         "InvoiceReceivers":{"shape":"AccountIdList"},
-        "Accounts":{"shape":"AccountIdList"}
+        "Accounts":{"shape":"AccountIdList"},
+        "BillSourceAccounts":{"shape":"AccountIdList"}
       }
     },
     "GetInvoicePDFRequest":{
@@ -544,7 +545,8 @@
     "InvoiceUnitRule":{
       "type":"structure",
       "members":{
-        "LinkedAccounts":{"shape":"AccountIdList"}
+        "LinkedAccounts":{"shape":"RuleAccountIdList"},
+        "BillSourceAccounts":{"shape":"RuleAccountIdList"}
       }
     },
     "InvoiceUnits":{
@@ -681,6 +683,12 @@
     "ResourceTagValue":{
       "type":"string",
       "max":256,
+      "min":0
+    },
+    "RuleAccountIdList":{
+      "type":"list",
+      "member":{"shape":"AccountIdString"},
+      "max":1000,
       "min":0
     },
     "SensitiveBasicStringWithoutSpace":{

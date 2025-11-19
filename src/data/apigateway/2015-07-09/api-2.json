@@ -2103,6 +2103,15 @@
         "throttle":{"shape":"MapOfApiStageThrottleSettings"}
       }
     },
+    "ApiStatus":{
+      "type":"string",
+      "enum":[
+        "UPDATING",
+        "AVAILABLE",
+        "PENDING",
+        "FAILED"
+      ]
+    },
     "Authorizer":{
       "type":"structure",
       "members":{
@@ -2380,6 +2389,7 @@
         "endpointConfiguration":{"shape":"EndpointConfiguration"},
         "tags":{"shape":"MapOfStringToString"},
         "securityPolicy":{"shape":"SecurityPolicy"},
+        "endpointAccessMode":{"shape":"EndpointAccessMode"},
         "mutualTlsAuthentication":{"shape":"MutualTlsAuthenticationInput"},
         "ownershipVerificationCertificateArn":{"shape":"String"},
         "policy":{"shape":"String"},
@@ -2454,7 +2464,9 @@
         "endpointConfiguration":{"shape":"EndpointConfiguration"},
         "policy":{"shape":"String"},
         "tags":{"shape":"MapOfStringToString"},
-        "disableExecuteApiEndpoint":{"shape":"Boolean"}
+        "disableExecuteApiEndpoint":{"shape":"Boolean"},
+        "securityPolicy":{"shape":"SecurityPolicy"},
+        "endpointAccessMode":{"shape":"EndpointAccessMode"}
       }
     },
     "CreateStageRequest":{
@@ -3053,6 +3065,7 @@
         "domainNameStatus":{"shape":"DomainNameStatus"},
         "domainNameStatusMessage":{"shape":"String"},
         "securityPolicy":{"shape":"SecurityPolicy"},
+        "endpointAccessMode":{"shape":"EndpointAccessMode"},
         "tags":{"shape":"MapOfStringToString"},
         "mutualTlsAuthentication":{"shape":"MutualTlsAuthentication"},
         "ownershipVerificationCertificateArn":{"shape":"String"},
@@ -3088,7 +3101,8 @@
         "UPDATING",
         "PENDING",
         "PENDING_CERTIFICATE_REIMPORT",
-        "PENDING_OWNERSHIP_VERIFICATION"
+        "PENDING_OWNERSHIP_VERIFICATION",
+        "FAILED"
       ]
     },
     "DomainNames":{
@@ -3102,6 +3116,13 @@
       }
     },
     "Double":{"type":"double"},
+    "EndpointAccessMode":{
+      "type":"string",
+      "enum":[
+        "BASIC",
+        "STRICT"
+      ]
+    },
     "EndpointConfiguration":{
       "type":"structure",
       "members":{
@@ -4294,7 +4315,8 @@
         "cacheNamespace":{"shape":"String"},
         "cacheKeyParameters":{"shape":"ListOfString"},
         "integrationResponses":{"shape":"MapOfIntegrationResponse"},
-        "tlsConfig":{"shape":"TlsConfig"}
+        "tlsConfig":{"shape":"TlsConfig"},
+        "responseTransferMode":{"shape":"ResponseTransferMode"}
       }
     },
     "IntegrationResponse":{
@@ -4686,7 +4708,8 @@
         "cacheKeyParameters":{"shape":"ListOfString"},
         "contentHandling":{"shape":"ContentHandlingStrategy"},
         "timeoutInMillis":{"shape":"NullableInteger"},
-        "tlsConfig":{"shape":"TlsConfig"}
+        "tlsConfig":{"shape":"TlsConfig"},
+        "responseTransferMode":{"shape":"ResponseTransferMode"}
       }
     },
     "PutIntegrationResponseRequest":{
@@ -4909,6 +4932,13 @@
         }
       }
     },
+    "ResponseTransferMode":{
+      "type":"string",
+      "enum":[
+        "BUFFERED",
+        "STREAM"
+      ]
+    },
     "RestApi":{
       "type":"structure",
       "members":{
@@ -4925,7 +4955,11 @@
         "policy":{"shape":"String"},
         "tags":{"shape":"MapOfStringToString"},
         "disableExecuteApiEndpoint":{"shape":"Boolean"},
-        "rootResourceId":{"shape":"String"}
+        "rootResourceId":{"shape":"String"},
+        "securityPolicy":{"shape":"SecurityPolicy"},
+        "endpointAccessMode":{"shape":"EndpointAccessMode"},
+        "apiStatus":{"shape":"ApiStatus"},
+        "apiStatusMessage":{"shape":"String"}
       }
     },
     "RestApis":{
@@ -4996,7 +5030,16 @@
       "type":"string",
       "enum":[
         "TLS_1_0",
-        "TLS_1_2"
+        "TLS_1_2",
+        "SecurityPolicy_TLS13_1_3_2025_09",
+        "SecurityPolicy_TLS13_1_3_FIPS_2025_09",
+        "SecurityPolicy_TLS13_1_2_PFS_PQ_2025_09",
+        "SecurityPolicy_TLS13_1_2_FIPS_PQ_2025_09",
+        "SecurityPolicy_TLS13_1_2_PQ_2025_09",
+        "SecurityPolicy_TLS13_1_2_2021_06",
+        "SecurityPolicy_TLS13_2025_EDGE",
+        "SecurityPolicy_TLS12_PFS_2025_EDGE",
+        "SecurityPolicy_TLS12_2018_EDGE"
       ]
     },
     "ServiceUnavailableException":{

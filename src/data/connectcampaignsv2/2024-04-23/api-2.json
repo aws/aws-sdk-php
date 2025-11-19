@@ -168,7 +168,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCampaignState":{
       "name":"GetCampaignState",
@@ -217,7 +218,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetInstanceCommunicationLimits":{
       "name":"GetInstanceCommunicationLimits",
@@ -233,7 +235,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetInstanceOnboardingJobStatus":{
       "name":"GetInstanceOnboardingJobStatus",
@@ -249,7 +252,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCampaigns":{
       "name":"ListCampaigns",
@@ -264,7 +268,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListConnectInstanceIntegrations":{
       "name":"ListConnectInstanceIntegrations",
@@ -281,7 +286,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -653,8 +659,7 @@
     },
     "AgentlessConfig":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AnswerMachineDetectionConfig":{
       "type":"structure",
@@ -1896,6 +1901,12 @@
         }
       }
     },
+    "RingTimeout":{
+      "type":"integer",
+      "box":true,
+      "max":60,
+      "min":15
+    },
     "Schedule":{
       "type":"structure",
       "required":[
@@ -2129,7 +2140,8 @@
         "destinationPhoneNumber":{"shape":"DestinationPhoneNumber"},
         "attributes":{"shape":"Attributes"},
         "connectSourcePhoneNumber":{"shape":"SourcePhoneNumber"},
-        "answerMachineDetectionConfig":{"shape":"AnswerMachineDetectionConfig"}
+        "answerMachineDetectionConfig":{"shape":"AnswerMachineDetectionConfig"},
+        "ringTimeout":{"shape":"RingTimeout"}
       }
     },
     "TelephonyOutboundConfig":{
@@ -2138,7 +2150,8 @@
       "members":{
         "connectContactFlowId":{"shape":"ContactFlowId"},
         "connectSourcePhoneNumber":{"shape":"SourcePhoneNumber"},
-        "answerMachineDetectionConfig":{"shape":"AnswerMachineDetectionConfig"}
+        "answerMachineDetectionConfig":{"shape":"AnswerMachineDetectionConfig"},
+        "ringTimeout":{"shape":"RingTimeout"}
       }
     },
     "TelephonyOutboundMode":{

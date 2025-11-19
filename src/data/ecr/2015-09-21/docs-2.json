@@ -16,6 +16,7 @@
     "DeleteRepository": "<p>Deletes a repository. If the repository isn't empty, you must either delete the contents of the repository or use the <code>force</code> option to delete the repository and have Amazon ECR delete all of its contents on your behalf.</p>",
     "DeleteRepositoryCreationTemplate": "<p>Deletes a repository creation template.</p>",
     "DeleteRepositoryPolicy": "<p>Deletes the repository policy associated with the specified repository.</p>",
+    "DeregisterPullTimeUpdateExclusion": "<p>Removes a principal from the pull time update exclusion list for a registry. Once removed, Amazon ECR will resume updating the pull time if the specified principal pulls an image.</p>",
     "DescribeImageReplicationStatus": "<p>Returns the replication status for a specified image.</p>",
     "DescribeImageScanFindings": "<p>Returns the scan findings for the specified image.</p>",
     "DescribeImages": "<p>Returns metadata about the images in a repository.</p> <note> <p>Starting with Docker version 1.9, the Docker client compresses image layers before pushing them to a V2 Docker registry. The output of the <code>docker images</code> command shows the uncompressed image size. Therefore, Docker might return a larger image than the image shown in the Amazon Web Services Management Console.</p> </note> <important> <p>The new version of Amazon ECR <i>Basic Scanning</i> doesn't use the <a>ImageDetail$imageScanFindingsSummary</a> and <a>ImageDetail$imageScanStatus</a> attributes from the API response to return scan results. Use the <a>DescribeImageScanFindings</a> API instead. For more information about Amazon Web Services native basic scanning, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html\"> Scan images for software vulnerabilities in Amazon ECR</a>.</p> </important>",
@@ -32,7 +33,9 @@
     "GetRegistryScanningConfiguration": "<p>Retrieves the scanning configuration for a registry.</p>",
     "GetRepositoryPolicy": "<p>Retrieves the repository policy for the specified repository.</p>",
     "InitiateLayerUpload": "<p>Notifies Amazon ECR that you intend to upload an image layer.</p> <p>When an image is pushed, the InitiateLayerUpload API is called once per image layer that has not already been uploaded. Whether or not an image layer has been uploaded is determined by the BatchCheckLayerAvailability API action.</p> <note> <p>This operation is used by the Amazon ECR proxy and is not generally used by customers for pulling and pushing images. In most cases, you should use the <code>docker</code> CLI to pull, tag, and push images.</p> </note>",
+    "ListImageReferrers": "<p>Lists the artifacts associated with a specified subject image.</p>",
     "ListImages": "<p>Lists all the image IDs for the specified repository.</p> <p>You can filter images based on whether or not they are tagged by using the <code>tagStatus</code> filter and specifying either <code>TAGGED</code>, <code>UNTAGGED</code> or <code>ANY</code>. For example, you can filter your results to return only <code>UNTAGGED</code> images and then pipe that result to a <a>BatchDeleteImage</a> operation to delete them. Or, you can filter your results to return only <code>TAGGED</code> images to list all of the tags in your repository.</p>",
+    "ListPullTimeUpdateExclusions": "<p>Lists the IAM principals that are excluded from having their image pull times recorded.</p>",
     "ListTagsForResource": "<p>List the tags for an Amazon ECR resource.</p>",
     "PutAccountSetting": "<p>Allows you to change the basic scan type version or registry policy scope.</p>",
     "PutImage": "<p>Creates or updates the image manifest and tags associated with an image.</p> <p>When an image is pushed and all new image layers have been uploaded, the PutImage API is called once to create or update the image manifest and the tags associated with the image.</p> <note> <p>This operation is used by the Amazon ECR proxy and is not generally used by customers for pulling and pushing images. In most cases, you should use the <code>docker</code> CLI to pull, tag, and push images.</p> </note>",
@@ -42,11 +45,13 @@
     "PutRegistryPolicy": "<p>Creates or updates the permissions policy for your registry.</p> <p>A registry policy is used to specify permissions for another Amazon Web Services account and is used when configuring cross-account replication. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/registry-permissions.html\">Registry permissions</a> in the <i>Amazon Elastic Container Registry User Guide</i>.</p>",
     "PutRegistryScanningConfiguration": "<p>Creates or updates the scanning configuration for your private registry.</p>",
     "PutReplicationConfiguration": "<p>Creates or updates the replication configuration for a registry. The existing replication configuration for a repository can be retrieved with the <a>DescribeRegistry</a> API action. The first time the PutReplicationConfiguration API is called, a service-linked IAM role is created in your account for the replication process. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/using-service-linked-roles.html\">Using service-linked roles for Amazon ECR</a> in the <i>Amazon Elastic Container Registry User Guide</i>. For more information on the custom role for replication, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/replication-creation-templates.html#roles-creatingrole-user-console\">Creating an IAM role for replication</a>.</p> <note> <p>When configuring cross-account replication, the destination account must grant the source account permission to replicate. This permission is controlled using a registry permissions policy. For more information, see <a>PutRegistryPolicy</a>.</p> </note>",
+    "RegisterPullTimeUpdateExclusion": "<p>Adds an IAM principal to the pull time update exclusion list for a registry. Amazon ECR will not record the pull time if an excluded principal pulls an image.</p>",
     "SetRepositoryPolicy": "<p>Applies a repository policy to the specified repository to control access permissions. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-policies.html\">Amazon ECR Repository policies</a> in the <i>Amazon Elastic Container Registry User Guide</i>.</p>",
     "StartImageScan": "<p>Starts a basic image vulnerability scan.</p> <p> A basic image scan can only be started once per 24 hours on an individual image. This limit includes if an image was scanned on initial push. You can start up to 100,000 basic scans per 24 hours. This limit includes both scans on initial push and scans initiated by the StartImageScan API. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning-basic.html\">Basic scanning</a> in the <i>Amazon Elastic Container Registry User Guide</i>.</p>",
     "StartLifecyclePolicyPreview": "<p>Starts a preview of a lifecycle policy for the specified repository. This allows you to see the results before associating the lifecycle policy with the repository.</p>",
     "TagResource": "<p>Adds specified tags to a resource with the specified ARN. Existing tags on a resource are not changed if they are not specified in the request parameters.</p>",
     "UntagResource": "<p>Deletes specified tags from a resource.</p>",
+    "UpdateImageStorageClass": "<p>Transitions an image between storage classes. You can transition images from Amazon ECR standard storage class to Amazon ECR archival storage class for long-term storage, or restore archived images back to Amazon ECR standard.</p>",
     "UpdatePullThroughCacheRule": "<p>Updates an existing pull through cache rule.</p>",
     "UpdateRepositoryCreationTemplate": "<p>Updates an existing repository creation template.</p>",
     "UploadLayerPart": "<p>Uploads an image layer part to Amazon ECR.</p> <p>When an image is pushed, each new image layer is uploaded in parts. The maximum size of each image layer part can be 20971520 bytes (or about 20MB). The UploadLayerPart API is called once per each new image layer part.</p> <note> <p>This operation is used by the Amazon ECR proxy and is not generally used by customers for pulling and pushing images. In most cases, you should use the <code>docker</code> CLI to pull, tag, and push images.</p> </note>",
@@ -70,6 +75,12 @@
         "PutAccountSettingResponse$value": "<p>Retrieves the value of the specified account setting.</p>"
       }
     },
+    "Annotations": {
+      "base": null,
+      "refs": {
+        "ImageReferrer$annotations": "<p>A map of annotations associated with the artifact.</p>"
+      }
+    },
     "Arch": {
       "base": null,
       "refs": {
@@ -85,6 +96,31 @@
         "RepositoryScanningConfiguration$repositoryArn": "<p>The ARN of the repository.</p>",
         "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the the resource to which to add tags. Currently, the only supported resource is an Amazon ECR repository.</p>",
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource from which to remove tags. Currently, the only supported resource is an Amazon ECR repository.</p>"
+      }
+    },
+    "ArtifactStatus": {
+      "base": null,
+      "refs": {
+        "ImageReferrer$artifactStatus": "<p>The status of the artifact. Valid values are <code>ACTIVE</code>, <code>ARCHIVED</code>, or <code>ACTIVATING</code>.</p>"
+      }
+    },
+    "ArtifactStatusFilter": {
+      "base": null,
+      "refs": {
+        "ListImageReferrersFilter$artifactStatus": "<p>The artifact status with which to filter your <a>ListImageReferrers</a> results. Valid values are <code>ACTIVE</code>, <code>ARCHIVED</code>, <code>ACTIVATING</code>, or <code>ANY</code>. If not specified, only artifacts with <code>ACTIVE</code> status are returned.</p>"
+      }
+    },
+    "ArtifactType": {
+      "base": null,
+      "refs": {
+        "ArtifactTypeList$member": null,
+        "ImageReferrer$artifactType": "<p>A string identifying the type of artifact.</p>"
+      }
+    },
+    "ArtifactTypeList": {
+      "base": null,
+      "refs": {
+        "ListImageReferrersFilter$artifactTypes": "<p>The artifact types with which to filter your <a>ListImageReferrers</a> results.</p>"
       }
     },
     "Attribute": {
@@ -192,6 +228,10 @@
         "BatchCheckLayerAvailabilityRequest$layerDigests": "<p>The digests of the image layers to check.</p>"
       }
     },
+    "BlockedByOrganizationPolicyException": {
+      "base": "<p>The operation did not succeed because the account is managed by a organization policy.</p>",
+      "refs": {}
+    },
     "CompleteLayerUploadRequest": {
       "base": null,
       "refs": {}
@@ -230,6 +270,7 @@
         "CreatePullThroughCacheRuleResponse$createdAt": "<p>The date and time, in JavaScript date format, when the pull through cache rule was created.</p>",
         "DeletePullThroughCacheRuleResponse$createdAt": "<p>The timestamp associated with the pull through cache rule.</p>",
         "PullThroughCacheRule$createdAt": "<p>The date and time the pull through cache was created.</p>",
+        "RegisterPullTimeUpdateExclusionResponse$createdAt": "<p>The date and time, expressed in standard JavaScript date format, when the exclusion was created.</p>",
         "Repository$createdAt": "<p>The date and time, in JavaScript date format, when the repository was created.</p>"
       }
     },
@@ -352,6 +393,14 @@
       "base": null,
       "refs": {}
     },
+    "DeregisterPullTimeUpdateExclusionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeregisterPullTimeUpdateExclusionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeImageReplicationStatusRequest": {
       "base": null,
       "refs": {}
@@ -468,10 +517,15 @@
     "ExceptionMessage": {
       "base": null,
       "refs": {
+        "BlockedByOrganizationPolicyException$message": null,
         "EmptyUploadException$message": "<p>The error message associated with the exception.</p>",
+        "ExclusionAlreadyExistsException$message": null,
+        "ExclusionNotFoundException$message": null,
         "ImageAlreadyExistsException$message": "<p>The error message associated with the exception.</p>",
+        "ImageArchivedException$message": null,
         "ImageDigestDoesNotMatchException$message": null,
         "ImageNotFoundException$message": null,
+        "ImageStorageClassUpdateNotSupportedException$message": null,
         "ImageTagAlreadyExistsException$message": null,
         "InvalidLayerException$message": "<p>The error message associated with the exception.</p>",
         "InvalidLayerPartException$message": "<p>The error message associated with the exception.</p>",
@@ -510,6 +564,14 @@
         "ValidationException$message": null
       }
     },
+    "ExclusionAlreadyExistsException": {
+      "base": "<p>The specified pull time update exclusion already exists for the registry.</p>",
+      "refs": {}
+    },
+    "ExclusionNotFoundException": {
+      "base": "<p>The specified pull time update exclusion was not found.</p>",
+      "refs": {}
+    },
     "ExpirationTimestamp": {
       "base": null,
       "refs": {
@@ -520,6 +582,12 @@
       "base": null,
       "refs": {
         "EnhancedImageScanFinding$exploitAvailable": "<p>If a finding discovered in your environment has an exploit available.</p>"
+      }
+    },
+    "FiftyMaxResults": {
+      "base": null,
+      "refs": {
+        "ListImageReferrersRequest$maxResults": "<p>The maximum number of image referrer results returned by <code>ListImageReferrers</code> in paginated output. When this parameter is used, <code>ListImageReferrers</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>ListImageReferrers</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 50. If this parameter is not used, then <code>ListImageReferrers</code> returns up to 50 results and a <code>nextToken</code> value, if applicable.</p>"
       }
     },
     "FilePath": {
@@ -667,10 +735,15 @@
       "base": "<p>The specified image has already been pushed, and there were no changes to the manifest or image tag after the last push.</p>",
       "refs": {}
     },
+    "ImageArchivedException": {
+      "base": "<p>The specified image is archived and cannot be scanned.</p>",
+      "refs": {}
+    },
     "ImageCount": {
       "base": null,
       "refs": {
-        "LifecyclePolicyPreviewSummary$expiringImageTotalCount": "<p>The number of expiring images.</p>"
+        "LifecyclePolicyPreviewSummary$expiringImageTotalCount": "<p>The number of expiring images.</p>",
+        "TransitioningImageTotalCount$imageTotalCount": "<p>The total number of images transitioning to the storage class.</p>"
       }
     },
     "ImageDetail": {
@@ -690,9 +763,12 @@
       "refs": {
         "AwsEcrContainerImageDetails$imageHash": "<p>The image hash of the Amazon ECR container image.</p>",
         "ImageDetail$imageDigest": "<p>The <code>sha256</code> digest of the image manifest.</p>",
+        "ImageDetail$subjectManifestDigest": "<p>The digest of the subject manifest for images that are referrers.</p>",
         "ImageIdentifier$imageDigest": "<p>The <code>sha256</code> digest of the image manifest.</p>",
+        "ImageReferrer$digest": "<p>The digest of the artifact manifest.</p>",
         "LifecyclePolicyPreviewResult$imageDigest": "<p>The <code>sha256</code> digest of the image manifest.</p>",
-        "PutImageRequest$imageDigest": "<p>The image digest of the image manifest corresponding to the image.</p>"
+        "PutImageRequest$imageDigest": "<p>The image digest of the image manifest corresponding to the image.</p>",
+        "SubjectIdentifier$imageDigest": "<p>The digest of the image.</p>"
       }
     },
     "ImageDigestDoesNotMatchException": {
@@ -735,7 +811,9 @@
         "ImageFailure$imageId": "<p>The image ID associated with the failure.</p>",
         "ImageIdentifierList$member": null,
         "StartImageScanRequest$imageId": null,
-        "StartImageScanResponse$imageId": null
+        "StartImageScanResponse$imageId": null,
+        "UpdateImageStorageClassRequest$imageId": null,
+        "UpdateImageStorageClassResponse$imageId": null
       }
     },
     "ImageIdentifierList": {
@@ -765,6 +843,18 @@
     "ImageNotFoundException": {
       "base": "<p>The image requested does not exist in the specified repository.</p>",
       "refs": {}
+    },
+    "ImageReferrer": {
+      "base": "<p>An object representing an artifact associated with a subject image.</p>",
+      "refs": {
+        "ImageReferrerList$member": null
+      }
+    },
+    "ImageReferrerList": {
+      "base": null,
+      "refs": {
+        "ListImageReferrersResponse$referrers": "<p>The list of artifacts associated with the subject image.</p>"
+      }
     },
     "ImageReplicationStatus": {
       "base": "<p>The status of the replication process for an image.</p>",
@@ -813,7 +903,7 @@
     "ImageScanningConfiguration": {
       "base": "<p>The image scanning configuration for a repository.</p>",
       "refs": {
-        "CreateRepositoryRequest$imageScanningConfiguration": "<p>The image scanning configuration for the repository. This determines whether images are scanned for known vulnerabilities after being pushed to the repository.</p>",
+        "CreateRepositoryRequest$imageScanningConfiguration": "<important> <p>The <code>imageScanningConfiguration</code> parameter is being deprecated, in favor of specifying the image scanning configuration at the registry level. For more information, see <code>PutRegistryScanningConfiguration</code>.</p> </important> <p>The image scanning configuration for the repository. This determines whether images are scanned for known vulnerabilities after being pushed to the repository.</p>",
         "PutImageScanningConfigurationRequest$imageScanningConfiguration": "<p>The image scanning configuration for the repository. This setting determines whether images are scanned for known vulnerabilities after being pushed to the repository.</p>",
         "PutImageScanningConfigurationResponse$imageScanningConfiguration": "<p>The image scanning configuration setting for the repository.</p>",
         "Repository$imageScanningConfiguration": null
@@ -822,8 +912,27 @@
     "ImageSizeInBytes": {
       "base": null,
       "refs": {
-        "ImageDetail$imageSizeInBytes": "<p>The size, in bytes, of the image in the repository.</p> <p>If the image is a manifest list, this will be the max size of all manifests in the list.</p> <note> <p>Starting with Docker version 1.9, the Docker client compresses image layers before pushing them to a V2 Docker registry. The output of the <code>docker images</code> command shows the uncompressed image size. Therefore, Docker might return a larger image than the image shown in the Amazon Web Services Management Console.</p> </note>"
+        "ImageDetail$imageSizeInBytes": "<p>The size, in bytes, of the image in the repository.</p> <p>If the image is a manifest list, this will be the max size of all manifests in the list.</p> <note> <p>Starting with Docker version 1.9, the Docker client compresses image layers before pushing them to a V2 Docker registry. The output of the <code>docker images</code> command shows the uncompressed image size. Therefore, Docker might return a larger image than the image shown in the Amazon Web Services Management Console.</p> </note>",
+        "ImageReferrer$size": "<p>The size, in bytes, of the artifact.</p>"
       }
+    },
+    "ImageStatus": {
+      "base": null,
+      "refs": {
+        "ImageDetail$imageStatus": "<p>The current status of the image.</p>",
+        "UpdateImageStorageClassResponse$imageStatus": "<p>The current status of the image after the call to UpdateImageStorageClass is complete. Valid values are <code>ACTIVE</code>, <code>ARCHIVED</code>, and <code>ACTIVATING</code>.</p>"
+      }
+    },
+    "ImageStatusFilter": {
+      "base": null,
+      "refs": {
+        "DescribeImagesFilter$imageStatus": "<p>The image status with which to filter your <a>DescribeImages</a> results. Valid values are <code>ACTIVE</code>, <code>ARCHIVED</code>, and <code>ACTIVATING</code>.</p>",
+        "ListImagesFilter$imageStatus": "<p>The image status with which to filter your <a>ListImages</a> results. Valid values are <code>ACTIVE</code>, <code>ARCHIVED</code>, and <code>ACTIVATING</code>.</p>"
+      }
+    },
+    "ImageStorageClassUpdateNotSupportedException": {
+      "base": "<p>The requested image storage class update is not supported.</p>",
+      "refs": {}
     },
     "ImageTag": {
       "base": null,
@@ -831,7 +940,7 @@
         "ImageIdentifier$imageTag": "<p>The tag used for the image.</p>",
         "ImageTagList$member": null,
         "ImageTagsList$member": null,
-        "PutImageRequest$imageTag": "<p>The tag to associate with the image. This parameter is required for images that use the Docker Image Manifest V2 Schema 2 or Open Container Initiative (OCI) formats.</p>"
+        "PutImageRequest$imageTag": "<p>The tag to associate with the image. This parameter is optional.</p>"
       }
     },
     "ImageTagAlreadyExistsException": {
@@ -858,7 +967,7 @@
       }
     },
     "ImageTagMutabilityExclusionFilter": {
-      "base": "<p>Overrides the default image tag mutability setting of the repository for image tags that match the specified filters.</p>",
+      "base": "<p>A filter that specifies which image tags should be excluded from the repository's image tag mutability setting.</p>",
       "refs": {
         "ImageTagMutabilityExclusionFilters$member": null
       }
@@ -866,25 +975,25 @@
     "ImageTagMutabilityExclusionFilterType": {
       "base": null,
       "refs": {
-        "ImageTagMutabilityExclusionFilter$filterType": "<p>Specifies the type of filter to use for excluding image tags from the repository's mutability setting.</p>"
+        "ImageTagMutabilityExclusionFilter$filterType": "<p>The type of filter to apply for excluding image tags from mutability settings.</p>"
       }
     },
     "ImageTagMutabilityExclusionFilterValue": {
       "base": null,
       "refs": {
-        "ImageTagMutabilityExclusionFilter$filter": "<p>The value to use when filtering image tags. Must be either a regular expression pattern or a tag prefix value based on the specified filter type.</p>"
+        "ImageTagMutabilityExclusionFilter$filter": "<p>The filter value used to match image tags for exclusion from mutability settings.</p>"
       }
     },
     "ImageTagMutabilityExclusionFilters": {
       "base": null,
       "refs": {
-        "CreateRepositoryCreationTemplateRequest$imageTagMutabilityExclusionFilters": "<p>Creates a repository creation template with a list of filters that define which image tags can override the default image tag mutability setting.</p>",
-        "CreateRepositoryRequest$imageTagMutabilityExclusionFilters": "<p>Creates a repository with a list of filters that define which image tags can override the default image tag mutability setting.</p>",
-        "PutImageTagMutabilityRequest$imageTagMutabilityExclusionFilters": "<p>Creates or updates a repository with filters that define which image tags can override the default image tag mutability setting.</p>",
-        "PutImageTagMutabilityResponse$imageTagMutabilityExclusionFilters": "<p>Returns a list of filters that were defined for a repository. These filters determine which image tags can override the default image tag mutability setting of the repository.</p>",
-        "Repository$imageTagMutabilityExclusionFilters": "<p>The image tag mutability exclusion filters associated with the repository. These filters specify which image tags can override the repository's default image tag mutability setting.</p>",
-        "RepositoryCreationTemplate$imageTagMutabilityExclusionFilters": "<p>Defines the image tag mutability exclusion filters to apply when creating repositories from this template. These filters specify which image tags can override the repository's default image tag mutability setting.</p>",
-        "UpdateRepositoryCreationTemplateRequest$imageTagMutabilityExclusionFilters": "<p>Updates a repository with filters that define which image tags can override the default image tag mutability setting.</p>"
+        "CreateRepositoryCreationTemplateRequest$imageTagMutabilityExclusionFilters": "<p>A list of filters that specify which image tags should be excluded from the repository creation template's image tag mutability setting.</p>",
+        "CreateRepositoryRequest$imageTagMutabilityExclusionFilters": "<p>A list of filters that specify which image tags should be excluded from the repository's image tag mutability setting.</p>",
+        "PutImageTagMutabilityRequest$imageTagMutabilityExclusionFilters": "<p>A list of filters that specify which image tags should be excluded from the image tag mutability setting being applied.</p>",
+        "PutImageTagMutabilityResponse$imageTagMutabilityExclusionFilters": "<p>The list of filters that specify which image tags are excluded from the repository's image tag mutability setting.</p>",
+        "Repository$imageTagMutabilityExclusionFilters": "<p>A list of filters that specify which image tags are excluded from the repository's image tag mutability setting.</p>",
+        "RepositoryCreationTemplate$imageTagMutabilityExclusionFilters": "<p>A list of filters that specify which image tags are excluded from the repository creation template's image tag mutability setting.</p>",
+        "UpdateRepositoryCreationTemplateRequest$imageTagMutabilityExclusionFilters": "<p>A list of filters that specify which image tags should be excluded from the repository creation template's image tag mutability setting.</p>"
       }
     },
     "ImageTagsList": {
@@ -949,6 +1058,18 @@
       "base": null,
       "refs": {
         "EncryptionConfigurationForRepositoryCreationTemplate$kmsKey": "<p>If you use the <code>KMS</code> encryption type, specify the KMS key to use for encryption. The full ARN of the KMS key must be specified. The key must exist in the same Region as the repository. If no key is specified, the default Amazon Web Services managed KMS key for Amazon ECR will be used.</p>"
+      }
+    },
+    "LastActivatedAtTimestamp": {
+      "base": null,
+      "refs": {
+        "ImageDetail$lastActivatedAt": "<p>The date and time, expressed in standard JavaScript date format, when the image was last restored from Amazon ECR archive to Amazon ECR standard.</p>"
+      }
+    },
+    "LastArchivedAtTimestamp": {
+      "base": null,
+      "refs": {
+        "ImageDetail$lastArchivedAt": "<p>The date and time, expressed in standard JavaScript date format, when the image was last transitioned to Amazon ECR archive.</p>"
       }
     },
     "Layer": {
@@ -1092,6 +1213,19 @@
         "LifecyclePolicyPreviewResult$appliedRulePriority": "<p>The priority of the applied rule.</p>"
       }
     },
+    "LifecyclePolicyStorageClass": {
+      "base": null,
+      "refs": {
+        "LifecyclePolicyPreviewResult$storageClass": "<p>The storage class of the image.</p>"
+      }
+    },
+    "LifecyclePolicyTargetStorageClass": {
+      "base": null,
+      "refs": {
+        "LifecyclePolicyRuleAction$targetStorageClass": "<p>The target storage class for the action. This is only present when the <code>type</code> is <code>TRANSITION.</code> </p>",
+        "TransitioningImageTotalCount$targetStorageClass": "<p>The target storage class.</p>"
+      }
+    },
     "LifecyclePolicyText": {
       "base": null,
       "refs": {
@@ -1122,6 +1256,20 @@
       "base": "<p>The operation did not succeed because it would have exceeded a service limit for your account. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/service-quotas.html\">Amazon ECR service quotas</a> in the Amazon Elastic Container Registry User Guide.</p>",
       "refs": {}
     },
+    "ListImageReferrersFilter": {
+      "base": "<p>An object representing a filter on a <a>ListImageReferrers</a> operation.</p>",
+      "refs": {
+        "ListImageReferrersRequest$filter": "<p>The filter key and value with which to filter your <code>ListImageReferrers</code> results. If no filter is specified, only artifacts with <code>ACTIVE</code> status are returned.</p>"
+      }
+    },
+    "ListImageReferrersRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListImageReferrersResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListImagesFilter": {
       "base": "<p>An object representing a filter on a <a>ListImages</a> operation.</p>",
       "refs": {
@@ -1133,6 +1281,14 @@
       "refs": {}
     },
     "ListImagesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPullTimeUpdateExclusionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPullTimeUpdateExclusionsResponse": {
       "base": null,
       "refs": {}
     },
@@ -1152,7 +1308,8 @@
         "DescribePullThroughCacheRulesRequest$maxResults": "<p>The maximum number of pull through cache rules returned by <code>DescribePullThroughCacheRulesRequest</code> in paginated output. When this parameter is used, <code>DescribePullThroughCacheRulesRequest</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>DescribePullThroughCacheRulesRequest</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 1000. If this parameter is not used, then <code>DescribePullThroughCacheRulesRequest</code> returns up to 100 results and a <code>nextToken</code> value, if applicable.</p>",
         "DescribeRepositoriesRequest$maxResults": "<p>The maximum number of repository results returned by <code>DescribeRepositories</code> in paginated output. When this parameter is used, <code>DescribeRepositories</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>DescribeRepositories</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 1000. If this parameter is not used, then <code>DescribeRepositories</code> returns up to 100 results and a <code>nextToken</code> value, if applicable. This option cannot be used when you specify repositories with <code>repositoryNames</code>.</p>",
         "DescribeRepositoryCreationTemplatesRequest$maxResults": "<p>The maximum number of repository results returned by <code>DescribeRepositoryCreationTemplatesRequest</code> in paginated output. When this parameter is used, <code>DescribeRepositoryCreationTemplatesRequest</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>DescribeRepositoryCreationTemplatesRequest</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 1000. If this parameter is not used, then <code>DescribeRepositoryCreationTemplatesRequest</code> returns up to 100 results and a <code>nextToken</code> value, if applicable.</p>",
-        "ListImagesRequest$maxResults": "<p>The maximum number of image results returned by <code>ListImages</code> in paginated output. When this parameter is used, <code>ListImages</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>ListImages</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 1000. If this parameter is not used, then <code>ListImages</code> returns up to 100 results and a <code>nextToken</code> value, if applicable.</p>"
+        "ListImagesRequest$maxResults": "<p>The maximum number of image results returned by <code>ListImages</code> in paginated output. When this parameter is used, <code>ListImages</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>ListImages</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 1000. If this parameter is not used, then <code>ListImages</code> returns up to 100 results and a <code>nextToken</code> value, if applicable.</p>",
+        "ListPullTimeUpdateExclusionsRequest$maxResults": "<p>The maximum number of pull time update exclusion results returned by <code>ListPullTimeUpdateExclusions</code> in paginated output. When this parameter is used, <code>ListPullTimeUpdateExclusions</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>ListPullTimeUpdateExclusions</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 1000. If this parameter is not used, then <code>ListPullTimeUpdateExclusions</code> returns up to 100 results and a <code>nextToken</code> value, if applicable.</p>"
       }
     },
     "MediaType": {
@@ -1161,6 +1318,7 @@
         "Image$imageManifestMediaType": "<p>The manifest media type of the image.</p>",
         "ImageDetail$imageManifestMediaType": "<p>The media type of the image manifest.</p>",
         "ImageDetail$artifactMediaType": "<p>The artifact media type of the image.</p>",
+        "ImageReferrer$mediaType": "<p>The media type of the artifact manifest.</p>",
         "Layer$mediaType": "<p>The media type of the layer, such as <code>application/vnd.docker.image.rootfs.diff.tar.gzip</code> or <code>application/vnd.oci.image.layer.v1.tar+gzip</code>.</p>",
         "MediaTypeList$member": null,
         "PutImageRequest$imageManifestMediaType": "<p>The media type of the image manifest. If you push an image manifest that does not contain the <code>mediaType</code> field, you must specify the <code>imageManifestMediaType</code> in the request.</p>"
@@ -1193,8 +1351,12 @@
         "DescribeRepositoryCreationTemplatesResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>DescribeRepositoryCreationTemplates</code> request. When the results of a <code>DescribeRepositoryCreationTemplates</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "GetLifecyclePolicyPreviewRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated&#x2028; <code>GetLifecyclePolicyPreviewRequest</code> request where <code>maxResults</code> was used and the&#x2028; results exceeded the value of that parameter. Pagination continues from the end of the&#x2028; previous results that returned the <code>nextToken</code> value. This value is&#x2028; <code>null</code> when there are no more results to return. This option cannot be used when you specify images with <code>imageIds</code>.</p>",
         "GetLifecyclePolicyPreviewResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>GetLifecyclePolicyPreview</code> request. When the results of a <code>GetLifecyclePolicyPreview</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "ListImageReferrersRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated <code>ListImageReferrers</code> request where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is <code>null</code> when there are no more results to return.</p> <note> <p>This token should be treated as an opaque identifier that is only used to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
+        "ListImageReferrersResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>ListImageReferrers</code> request. When the results of a <code>ListImageReferrers</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "ListImagesRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated <code>ListImages</code> request where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is <code>null</code> when there are no more results to return.</p> <note> <p>This token should be treated as an opaque identifier that is only used to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
-        "ListImagesResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>ListImages</code> request. When the results of a <code>ListImages</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"
+        "ListImagesResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>ListImages</code> request. When the results of a <code>ListImages</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "ListPullTimeUpdateExclusionsRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated <code>ListPullTimeUpdateExclusions</code> request where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is <code>null</code> when there are no more results to return.</p> <note> <p>This token should be treated as an opaque identifier that is only used to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
+        "ListPullTimeUpdateExclusionsResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>ListPullTimeUpdateExclusions</code> request. When the results of a <code>ListPullTimeUpdateExclusions</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"
       }
     },
     "PTCValidateFailure": {
@@ -1245,6 +1407,16 @@
       "base": null,
       "refs": {
         "DescribeRepositoryCreationTemplatesRequest$prefixes": "<p>The repository namespace prefixes associated with the repository creation templates to describe. If this value is not specified, all repository creation templates are returned.</p>"
+      }
+    },
+    "PrincipalArn": {
+      "base": null,
+      "refs": {
+        "DeregisterPullTimeUpdateExclusionRequest$principalArn": "<p>The ARN of the IAM principal to remove from the pull time update exclusion list.</p>",
+        "DeregisterPullTimeUpdateExclusionResponse$principalArn": "<p>The ARN of the IAM principal that was removed from the pull time update exclusion list.</p>",
+        "PullTimeUpdateExclusionList$member": null,
+        "RegisterPullTimeUpdateExclusionRequest$principalArn": "<p>The ARN of the IAM principal to exclude from having image pull times recorded.</p>",
+        "RegisterPullTimeUpdateExclusionResponse$principalArn": "<p>The ARN of the IAM principal that was added to the pull time update exclusion list.</p>"
       }
     },
     "ProxyEndpoint": {
@@ -1298,6 +1470,12 @@
       "base": null,
       "refs": {
         "DescribePullThroughCacheRulesRequest$ecrRepositoryPrefixes": "<p>The Amazon ECR repository prefixes associated with the pull through cache rules to return. If no repository prefix value is specified, all pull through cache rules are returned.</p>"
+      }
+    },
+    "PullTimeUpdateExclusionList": {
+      "base": null,
+      "refs": {
+        "ListPullTimeUpdateExclusionsResponse$pullTimeUpdateExclusions": "<p>The list of IAM principal ARNs that are excluded from having their image pull times recorded.</p>"
       }
     },
     "PushTimestamp": {
@@ -1426,6 +1604,14 @@
         "ReplicationDestination$region": "<p>The Region to replicate to.</p>"
       }
     },
+    "RegisterPullTimeUpdateExclusionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RegisterPullTimeUpdateExclusionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "RegistryId": {
       "base": null,
       "refs": {
@@ -1472,6 +1658,7 @@
         "ImageReplicationStatus$registryId": "<p>The Amazon Web Services account ID associated with the registry to which the image belongs.</p>",
         "InitiateLayerUploadRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry to which you intend to upload layers. If you do not specify a registry, the default registry is assumed.</p>",
         "InvalidLayerPartException$registryId": "<p>The registry ID associated with the exception.</p>",
+        "ListImageReferrersRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repository in which to list image referrers. If you do not specify a registry, the default registry is assumed.</p>",
         "ListImagesRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repository in which to list images. If you do not specify a registry, the default registry is assumed.</p>",
         "PullThroughCacheRule$registryId": "<p>The Amazon Web Services account ID associated with the registry the pull through cache rule is associated with.</p>",
         "PutImageRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repository in which to put the image. If you do not specify a registry, the default registry is assumed.</p>",
@@ -1490,6 +1677,8 @@
         "StartImageScanResponse$registryId": "<p>The registry ID associated with the request.</p>",
         "StartLifecyclePolicyPreviewRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repository. If you do not specify a registry, the default registry is assumed.</p>",
         "StartLifecyclePolicyPreviewResponse$registryId": "<p>The registry ID associated with the request.</p>",
+        "UpdateImageStorageClassRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the image to transition. If you do not specify a registry, the default registry is assumed.</p>",
+        "UpdateImageStorageClassResponse$registryId": "<p>The registry ID associated with the request.</p>",
         "UpdatePullThroughCacheRuleRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry associated with the pull through cache rule. If you do not specify a registry, the default registry is assumed.</p>",
         "UpdatePullThroughCacheRuleResponse$registryId": "<p>The registry ID associated with the request.</p>",
         "UpdateRepositoryCreationTemplateResponse$registryId": "<p>The registry ID associated with the request.</p>",
@@ -1688,6 +1877,7 @@
         "ImageDetail$repositoryName": "<p>The name of the repository to which this image belongs.</p>",
         "InitiateLayerUploadRequest$repositoryName": "<p>The name of the repository to which you intend to upload layers.</p>",
         "InvalidLayerPartException$repositoryName": "<p>The repository name associated with the exception.</p>",
+        "ListImageReferrersRequest$repositoryName": "<p>The name of the repository that contains the subject image.</p>",
         "ListImagesRequest$repositoryName": "<p>The repository with image IDs to be listed.</p>",
         "PutImageRequest$repositoryName": "<p>The name of the repository in which to put the image.</p>",
         "PutImageScanningConfigurationRequest$repositoryName": "<p>The name of the repository in which to update the image scanning configuration setting.</p>",
@@ -1707,6 +1897,8 @@
         "StartImageScanResponse$repositoryName": "<p>The repository name associated with the request.</p>",
         "StartLifecyclePolicyPreviewRequest$repositoryName": "<p>The name of the repository to be evaluated.</p>",
         "StartLifecyclePolicyPreviewResponse$repositoryName": "<p>The repository name associated with the request.</p>",
+        "UpdateImageStorageClassRequest$repositoryName": "<p>The name of the repository that contains the image to transition.</p>",
+        "UpdateImageStorageClassResponse$repositoryName": "<p>The repository name associated with the request.</p>",
         "UploadLayerPartRequest$repositoryName": "<p>The name of the repository to which you are uploading layer parts.</p>",
         "UploadLayerPartResponse$repositoryName": "<p>The repository name associated with the request.</p>"
       }
@@ -1969,6 +2161,19 @@
         "EnhancedImageScanFinding$status": "<p>The status of the finding.</p>"
       }
     },
+    "String": {
+      "base": null,
+      "refs": {
+        "Annotations$key": null,
+        "Annotations$value": null
+      }
+    },
+    "SubjectIdentifier": {
+      "base": "<p>An object that identifies an image subject.</p>",
+      "refs": {
+        "ListImageReferrersRequest$subjectId": "<p>An object containing the image digest of the subject image for which to retrieve associated artifacts.</p>"
+      }
+    },
     "Tag": {
       "base": "<p>The metadata to apply to a resource to help you categorize and organize them. Each tag consists of a key and a value, both of which you define. Tag keys can have a maximum character length of 128 characters, and tag values can have a maximum length of 256 characters.</p>",
       "refs": {
@@ -2013,7 +2218,7 @@
       "refs": {
         "DescribeImagesFilter$tagStatus": "<p>The tag status with which to filter your <a>DescribeImages</a> results. You can filter results based on whether they are <code>TAGGED</code> or <code>UNTAGGED</code>.</p>",
         "LifecyclePolicyPreviewFilter$tagStatus": "<p>The tag status of the image.</p>",
-        "ListImagesFilter$tagStatus": "<p>The tag status with which to filter your <a>ListImages</a> results. You can filter results based on whether they are <code>TAGGED</code> or <code>UNTAGGED</code>.</p>"
+        "ListImagesFilter$tagStatus": "<p>The tag status with which to filter your <a>ListImages</a> results.</p>"
       }
     },
     "TagValue": {
@@ -2027,6 +2232,12 @@
       "base": null,
       "refs": {
         "Resource$tags": "<p>The tags attached to the resource.</p>"
+      }
+    },
+    "TargetStorageClass": {
+      "base": null,
+      "refs": {
+        "UpdateImageStorageClassRequest$targetStorageClass": "<p>The target storage class for the image.</p>"
       }
     },
     "TemplateAlreadyExistsException": {
@@ -2046,6 +2257,18 @@
     "TooManyTagsException": {
       "base": "<p>The list of tags on the repository is over the limit. The maximum number of tags that can be applied to a repository is 50.</p>",
       "refs": {}
+    },
+    "TransitioningImageTotalCount": {
+      "base": "<p>The total count of images transitioning to a storage class.</p>",
+      "refs": {
+        "TransitioningImageTotalCounts$member": null
+      }
+    },
+    "TransitioningImageTotalCounts": {
+      "base": null,
+      "refs": {
+        "LifecyclePolicyPreviewSummary$transitioningImageTotalCounts": "<p>The total count of images that will be transitioned to each storage class. This field is only present if at least one image will be transitoned in the summary.</p>"
+      }
     },
     "Type": {
       "base": null,
@@ -2083,6 +2306,14 @@
       "refs": {}
     },
     "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateImageStorageClassRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateImageStorageClassResponse": {
       "base": null,
       "refs": {}
     },

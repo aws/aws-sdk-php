@@ -835,6 +835,16 @@
         {"shape":"OrganizationNotInAllFeaturesModeException"}
       ]
     },
+    "DisableOutboundWebIdentityFederation":{
+      "name":"DisableOutboundWebIdentityFederation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "errors":[
+        {"shape":"FeatureDisabledException"}
+      ]
+    },
     "EnableMFADevice":{
       "name":"EnableMFADevice",
       "http":{
@@ -888,6 +898,20 @@
         {"shape":"OrganizationNotFoundException"},
         {"shape":"OrganizationNotInAllFeaturesModeException"},
         {"shape":"CallerIsNotManagementAccountException"}
+      ]
+    },
+    "EnableOutboundWebIdentityFederation":{
+      "name":"EnableOutboundWebIdentityFederation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "output":{
+        "shape":"EnableOutboundWebIdentityFederationResponse",
+        "resultWrapper":"EnableOutboundWebIdentityFederationResult"
+      },
+      "errors":[
+        {"shape":"FeatureEnabledException"}
       ]
     },
     "GenerateCredentialReport":{
@@ -1183,6 +1207,20 @@
       },
       "errors":[
         {"shape":"NoSuchEntityException"}
+      ]
+    },
+    "GetOutboundWebIdentityFederationInfo":{
+      "name":"GetOutboundWebIdentityFederationInfo",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "output":{
+        "shape":"GetOutboundWebIdentityFederationInfoResponse",
+        "resultWrapper":"GetOutboundWebIdentityFederationInfoResult"
+      },
+      "errors":[
+        {"shape":"FeatureDisabledException"}
       ]
     },
     "GetPolicy":{
@@ -3632,6 +3670,12 @@
         "EnabledFeatures":{"shape":"FeaturesListType"}
       }
     },
+    "EnableOutboundWebIdentityFederationResponse":{
+      "type":"structure",
+      "members":{
+        "IssuerIdentifier":{"shape":"stringType"}
+      }
+    },
     "EntityAlreadyExistsException":{
       "type":"structure",
       "members":{
@@ -3733,6 +3777,32 @@
       "type":"list",
       "member":{"shape":"EvaluationResult"}
     },
+    "FeatureDisabledException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"FeatureDisabledMessage"}
+      },
+      "error":{
+        "code":"FeatureDisabled",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "FeatureDisabledMessage":{"type":"string"},
+    "FeatureEnabledException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"FeatureEnabledMessage"}
+      },
+      "error":{
+        "code":"FeatureEnabled",
+        "httpStatusCode":409,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "FeatureEnabledMessage":{"type":"string"},
     "FeatureType":{
       "type":"string",
       "enum":[
@@ -4020,6 +4090,13 @@
         "IsTruncated":{"shape":"booleanType"},
         "Marker":{"shape":"markerType"},
         "ErrorDetails":{"shape":"ErrorDetails"}
+      }
+    },
+    "GetOutboundWebIdentityFederationInfoResponse":{
+      "type":"structure",
+      "members":{
+        "IssuerIdentifier":{"shape":"stringType"},
+        "JwtVendingEnabled":{"shape":"booleanType"}
       }
     },
     "GetPolicyRequest":{

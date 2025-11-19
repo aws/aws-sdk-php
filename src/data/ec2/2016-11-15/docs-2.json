@@ -89,6 +89,7 @@
     "CreateInternetGateway": "<p>Creates an internet gateway for use with a VPC. After creating the internet gateway, you attach it to a VPC using <a>AttachInternetGateway</a>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html\">Internet gateways</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "CreateIpam": "<p>Create an IPAM. Amazon VPC IP Address Manager (IPAM) is a VPC feature that you can use to automate your IP address management workflows including assigning, tracking, troubleshooting, and auditing IP addresses across Amazon Web Services Regions and accounts throughout your Amazon Web Services Organization.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/create-ipam.html\">Create an IPAM</a> in the <i>Amazon VPC IPAM User Guide</i>. </p>",
     "CreateIpamExternalResourceVerificationToken": "<p>Create a verification token.</p> <p>A verification token is an Amazon Web Services-generated random value that you can use to prove ownership of an external resource. For example, you can use a verification token to validate that you control a public IP address range when you bring an IP address range to Amazon Web Services (BYOIP). </p>",
+    "CreateIpamPolicy": "<p>Creates an IPAM policy.</p> <p>An IPAM policy is a set of rules that define how public IPv4 addresses from IPAM pools are allocated to Amazon Web Services resources. Each rule maps an Amazon Web Services service to IPAM pools that the service will use to get IP addresses. A single policy can have multiple rules and be applied to multiple Amazon Web Services Regions. If the IPAM pool run out of addresses then the services fallback to Amazon-provided IP addresses. A policy can be applied to an individual Amazon Web Services account or an entity within Amazon Web Services Organizations.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/define-public-ipv4-allocation-strategy-with-ipam-policies.html\">Define public IPv4 allocation strategy with IPAM policies</a> in the <i>Amazon VPC IPAM User Guide</i>.</p>",
     "CreateIpamPool": "<p>Create an IP address pool for Amazon VPC IP Address Manager (IPAM). In IPAM, a pool is a collection of contiguous IP addresses CIDRs. Pools enable you to organize your IP addresses according to your routing and security needs. For example, if you have separate routing and security needs for development and production applications, you can create a pool for each.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/create-top-ipam.html\">Create a top-level pool</a> in the <i>Amazon VPC IPAM User Guide</i>. </p>",
     "CreateIpamPrefixListResolver": "<p>Creates an IPAM prefix list resolver.</p> <p>An IPAM prefix list resolver is a component that manages the synchronization between IPAM's CIDR selection rules and customer-managed prefix lists. It automates connectivity configurations by selecting CIDRs from IPAM's database based on your business logic and synchronizing them with prefix lists used in resources such as VPC route tables and security groups.</p> <p>For more information about IPAM prefix list resolver, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/automate-prefix-list-updates.html\">Automate prefix list updates with IPAM</a> in the <i>Amazon VPC IPAM User Guide</i>.</p>",
     "CreateIpamPrefixListResolverTarget": "<p>Creates an IPAM prefix list resolver target.</p> <p>An IPAM prefix list resolver target is an association between a specific customer-managed prefix list and an IPAM prefix list resolver. The target enables the resolver to synchronize CIDRs selected by its rules into the specified prefix list, which can then be referenced in Amazon Web Services resources.</p> <p>For more information about IPAM prefix list resolver, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/automate-prefix-list-updates.html\">Automate prefix list updates with IPAM</a> in the <i>Amazon VPC IPAM User Guide</i>.</p>",
@@ -178,6 +179,7 @@
     "DeleteInternetGateway": "<p>Deletes the specified internet gateway. You must detach the internet gateway from the VPC before you can delete it.</p>",
     "DeleteIpam": "<p>Delete an IPAM. Deleting an IPAM removes all monitored data associated with the IPAM including the historical data for CIDRs.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/delete-ipam.html\">Delete an IPAM</a> in the <i>Amazon VPC IPAM User Guide</i>. </p>",
     "DeleteIpamExternalResourceVerificationToken": "<p>Delete a verification token.</p> <p>A verification token is an Amazon Web Services-generated random value that you can use to prove ownership of an external resource. For example, you can use a verification token to validate that you control a public IP address range when you bring an IP address range to Amazon Web Services (BYOIP). </p>",
+    "DeleteIpamPolicy": "<p>Deletes an IPAM policy.</p> <p>An IPAM policy is a set of rules that define how public IPv4 addresses from IPAM pools are allocated to Amazon Web Services resources. Each rule maps an Amazon Web Services service to IPAM pools that the service will use to get IP addresses. A single policy can have multiple rules and be applied to multiple Amazon Web Services Regions. If the IPAM pool run out of addresses then the services fallback to Amazon-provided IP addresses. A policy can be applied to an individual Amazon Web Services account or an entity within Amazon Web Services Organizations.</p>",
     "DeleteIpamPool": "<p>Delete an IPAM pool.</p> <note> <p>You cannot delete an IPAM pool if there are allocations in it or CIDRs provisioned to it. To release allocations, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ReleaseIpamPoolAllocation.html\">ReleaseIpamPoolAllocation</a>. To deprovision pool CIDRs, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DeprovisionIpamPoolCidr.html\">DeprovisionIpamPoolCidr</a>.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/delete-pool-ipam.html\">Delete a pool</a> in the <i>Amazon VPC IPAM User Guide</i>. </p>",
     "DeleteIpamPrefixListResolver": "<p>Deletes an IPAM prefix list resolver. Before deleting a resolver, you must first delete all resolver targets associated with it.</p>",
     "DeleteIpamPrefixListResolverTarget": "<p>Deletes an IPAM prefix list resolver target. This removes the association between the resolver and the managed prefix list, stopping automatic CIDR synchronization.</p> <p>For more information about IPAM prefix list resolver, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/automate-prefix-list-updates.html\">Automate prefix list updates with IPAM</a> in the <i>Amazon VPC IPAM User Guide</i>.</p>",
@@ -325,7 +327,8 @@
     "DescribeInstances": "<p>Describes the specified instances or all instances.</p> <p>If you specify instance IDs, the output includes information for only the specified instances. If you specify filters, the output includes information for only those instances that meet the filter criteria. If you do not specify instance IDs or filters, the output includes information for all instances, which can affect performance. We recommend that you use pagination to ensure that the operation returns quickly and successfully.</p> <p>If you specify an instance ID that is not valid, an error is returned. If you specify an instance that you do not own, it is not included in the output.</p> <p>Recently terminated instances might appear in the returned results. This interval is usually less than one hour.</p> <p>If you describe instances in the rare case where an Availability Zone is experiencing a service disruption and you specify instance IDs that are in the affected zone, or do not specify any instance IDs at all, the call fails. If you describe instances and specify only instance IDs that are in an unaffected zone, the call works normally.</p> <p>The Amazon EC2 API follows an eventual consistency model. This means that the result of an API command you run that creates or modifies resources might not be immediately available to all subsequent commands you run. For guidance on how to manage eventual consistency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/eventual-consistency.html\">Eventual consistency in the Amazon EC2 API</a> in the <i>Amazon EC2 Developer Guide</i>.</p> <important> <p>We strongly recommend using only paginated requests. Unpaginated requests are susceptible to throttling and timeouts.</p> </important> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
     "DescribeInternetGateways": "<p>Describes your internet gateways. The default is to describe all your internet gateways. Alternatively, you can specify specific internet gateway IDs or filter the results to include only the internet gateways that match specific criteria.</p>",
     "DescribeIpamByoasn": "<p>Describes your Autonomous System Numbers (ASNs), their provisioning statuses, and the BYOIP CIDRs with which they are associated. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/tutorials-byoasn.html\">Tutorial: Bring your ASN to IPAM</a> in the <i>Amazon VPC IPAM guide</i>.</p>",
-    "DescribeIpamExternalResourceVerificationTokens": "<p>Describe verification tokens. A verification token is an Amazon Web Services-generated random value that you can use to prove ownership of an external resource. For example, you can use a verification token to validate that you control a public IP address range when you bring an IP address range to Amazon Web Services (BYOIP). </p>",
+    "DescribeIpamExternalResourceVerificationTokens": "<p>Describe verification tokens.</p> <p>A verification token is an Amazon Web Services-generated random value that you can use to prove ownership of an external resource. For example, you can use a verification token to validate that you control a public IP address range when you bring an IP address range to Amazon Web Services (BYOIP). </p>",
+    "DescribeIpamPolicies": "<p>Describes one or more IPAM policies.</p> <p>An IPAM policy is a set of rules that define how public IPv4 addresses from IPAM pools are allocated to Amazon Web Services resources. Each rule maps an Amazon Web Services service to IPAM pools that the service will use to get IP addresses. A single policy can have multiple rules and be applied to multiple Amazon Web Services Regions. If the IPAM pool run out of addresses then the services fallback to Amazon-provided IP addresses. A policy can be applied to an individual Amazon Web Services account or an entity within Amazon Web Services Organizations.</p>",
     "DescribeIpamPools": "<p>Get information about your IPAM pools.</p>",
     "DescribeIpamPrefixListResolverTargets": "<p>Describes one or more IPAM prefix list resolver Targets. Use this operation to view the configuration and status of resolver targets.</p>",
     "DescribeIpamPrefixListResolvers": "<p>Describes one or more IPAM prefix list resolvers. Use this operation to view the configuration, status, and properties of your resolvers.</p>",
@@ -452,6 +455,7 @@
     "DisableImageDeregistrationProtection": "<p>Disables deregistration protection for an AMI. When deregistration protection is disabled, the AMI can be deregistered.</p> <p>If you chose to include a 24-hour cooldown period when you enabled deregistration protection for the AMI, then, when you disable deregistration protection, you won’t immediately be able to deregister the AMI.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-deregistration-protection.html\">Protect an Amazon EC2 AMI from deregistration</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DisableInstanceSqlHaStandbyDetections": "<p>Disable Amazon EC2 instances running in an SQL Server High Availability cluster from SQL Server High Availability instance standby detection monitoring. Once disabled, Amazon Web Services no longer monitors the metadata for the instances to determine whether they are active or standby nodes in the SQL Server High Availability cluster.</p>",
     "DisableIpamOrganizationAdminAccount": "<p>Disable the IPAM account. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/enable-integ-ipam.html\">Enable integration with Organizations</a> in the <i>Amazon VPC IPAM User Guide</i>. </p>",
+    "DisableIpamPolicy": "<p>Disables an IPAM policy.</p> <p>An IPAM policy is a set of rules that define how public IPv4 addresses from IPAM pools are allocated to Amazon Web Services resources. Each rule maps an Amazon Web Services service to IPAM pools that the service will use to get IP addresses. A single policy can have multiple rules and be applied to multiple Amazon Web Services Regions. If the IPAM pool run out of addresses then the services fallback to Amazon-provided IP addresses. A policy can be applied to an individual Amazon Web Services account or an entity within Amazon Web Services Organizations.</p>",
     "DisableRouteServerPropagation": "<p>Disables route propagation from a route server to a specified route table.</p> <p>When enabled, route server propagation installs the routes in the FIB on the route table you've specified. Route server supports IPv4 and IPv6 route propagation.</p> <p>Amazon VPC Route Server simplifies routing for traffic between workloads that are deployed within a VPC and its internet gateways. With this feature, VPC Route Server dynamically updates VPC and internet gateway route tables with your preferred IPv4 or IPv6 routes to achieve routing fault tolerance for those workloads. This enables you to automatically reroute traffic within a VPC, which increases the manageability of VPC routing and interoperability with third-party workloads.</p> <p>Route server supports the follow route table types:</p> <ul> <li> <p>VPC route tables not associated with subnets</p> </li> <li> <p>Subnet route tables</p> </li> <li> <p>Internet gateway route tables</p> </li> </ul> <p>Route server does not support route tables associated with virtual private gateways. To propagate routes into a transit gateway route table, use <a href=\"https://docs.aws.amazon.com/vpc/latest/tgw/tgw-connect.html\">Transit Gateway Connect</a>.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/dynamic-routing-route-server.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "DisableSerialConsoleAccess": "<p>Disables access to the EC2 serial console of all instances for your account. By default, access to the EC2 serial console is disabled for your account. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configure-access-to-serial-console.html#serial-console-account-access\">Manage account access to the EC2 serial console</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DisableSnapshotBlockPublicAccess": "<p>Disables the <i>block public access for snapshots</i> setting at the account level for the specified Amazon Web Services Region. After you disable block public access for snapshots in a Region, users can publicly share snapshots in that Region.</p> <important> <p>Enabling block public access for snapshots in <i>block-all-sharing</i> mode does not change the permissions for snapshots that are already publicly shared. Instead, it prevents these snapshots from be publicly visible and publicly accessible. Therefore, the attributes for these snapshots still indicate that they are publicly shared, even though they are not publicly available.</p> <p>If you disable block public access , these snapshots will become publicly available again.</p> </important> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/block-public-access-snapshots.html\"> Block public access for snapshots</a> in the <i>Amazon EBS User Guide</i> .</p> <p/>",
@@ -490,6 +494,7 @@
     "EnableImageDeregistrationProtection": "<p>Enables deregistration protection for an AMI. When deregistration protection is enabled, the AMI can't be deregistered.</p> <p>To allow the AMI to be deregistered, you must first disable deregistration protection.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-deregistration-protection.html\">Protect an Amazon EC2 AMI from deregistration</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "EnableInstanceSqlHaStandbyDetections": "<p>Enable Amazon EC2 instances running in an SQL Server High Availability cluster for SQL Server High Availability instance standby detection monitoring. Once enabled, Amazon Web Services monitors the metadata for the instances to determine whether they are active or standby nodes in the SQL Server High Availability cluster. If the instances are determined to be standby failover nodes, Amazon Web Services automatically applies SQL Server licensing fee waiver for those instances.</p> <p>To register an instance, it must be running a Windows SQL Server license-included AMI and have the Amazon Web Services Systems Manager agent installed and running. Only Windows Server 2019 and later and SQL Server (Standard and Enterprise editions) 2017 and later are supported. For more information, see <a href=\"https://docs.aws.amazon.com/sql-server-ec2/latest/userguide/prerequisites-and-requirements.html\"> Prerequisites for using SQL Server High Availability instance standby detection</a>.</p>",
     "EnableIpamOrganizationAdminAccount": "<p>Enable an Organizations member account as the IPAM admin account. You cannot select the Organizations management account as the IPAM admin account. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/enable-integ-ipam.html\">Enable integration with Organizations</a> in the <i>Amazon VPC IPAM User Guide</i>. </p>",
+    "EnableIpamPolicy": "<p>Enables an IPAM policy.</p> <p>An IPAM policy is a set of rules that define how public IPv4 addresses from IPAM pools are allocated to Amazon Web Services resources. Each rule maps an Amazon Web Services service to IPAM pools that the service will use to get IP addresses. A single policy can have multiple rules and be applied to multiple Amazon Web Services Regions. If the IPAM pool run out of addresses then the services fallback to Amazon-provided IP addresses. A policy can be applied to an individual Amazon Web Services account or an entity within Amazon Web Services Organizations.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/define-public-ipv4-allocation-strategy-with-ipam-policies.html\">Define public IPv4 allocation strategy with IPAM policies</a> in the <i>Amazon VPC IPAM User Guide</i>.</p>",
     "EnableReachabilityAnalyzerOrganizationSharing": "<p>Establishes a trust relationship between Reachability Analyzer and Organizations. This operation must be performed by the management account for the organization.</p> <p>After you establish a trust relationship, a user in the management account or a delegated administrator account can run a cross-account analysis using resources from the member accounts.</p>",
     "EnableRouteServerPropagation": "<p>Defines which route tables the route server can update with routes.</p> <p>When enabled, route server propagation installs the routes in the FIB on the route table you've specified. Route server supports IPv4 and IPv6 route propagation.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/dynamic-routing-route-server.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "EnableSerialConsoleAccess": "<p>Enables access to the EC2 serial console of all instances for your account. By default, access to the EC2 serial console is disabled for your account. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configure-access-to-serial-console.html#serial-console-account-access\">Manage account access to the EC2 serial console</a> in the <i>Amazon EC2 User Guide</i>.</p>",
@@ -520,6 +525,7 @@
     "GetDefaultCreditSpecification": "<p>Describes the default credit option for CPU usage of a burstable performance instance family.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html\">Burstable performance instances</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "GetEbsDefaultKmsKeyId": "<p>Describes the default KMS key for EBS encryption by default for your account in this Region.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html\">Amazon EBS encryption</a> in the <i>Amazon EBS User Guide</i>.</p>",
     "GetEbsEncryptionByDefault": "<p>Describes whether EBS encryption by default is enabled for your account in the current Region.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html\">Amazon EBS encryption</a> in the <i>Amazon EBS User Guide</i>.</p>",
+    "GetEnabledIpamPolicy": "<p>Gets the enabled IPAM policy.</p> <p>An IPAM policy is a set of rules that define how public IPv4 addresses from IPAM pools are allocated to Amazon Web Services resources. Each rule maps an Amazon Web Services service to IPAM pools that the service will use to get IP addresses. A single policy can have multiple rules and be applied to multiple Amazon Web Services Regions. If the IPAM pool run out of addresses then the services fallback to Amazon-provided IP addresses. A policy can be applied to an individual Amazon Web Services account or an entity within Amazon Web Services Organizations.</p>",
     "GetFlowLogsIntegrationTemplate": "<p>Generates a CloudFormation template that streamlines and automates the integration of VPC flow logs with Amazon Athena. This make it easier for you to query and gain insights from VPC flow logs data. Based on the information that you provide, we configure resources in the template to do the following:</p> <ul> <li> <p>Create a table in Athena that maps fields to a custom log format</p> </li> <li> <p>Create a Lambda function that updates the table with new partitions on a daily, weekly, or monthly basis</p> </li> <li> <p>Create a table partitioned between two timestamps in the past</p> </li> <li> <p>Create a set of named queries in Athena that you can use to get started quickly</p> </li> </ul> <note> <p> <code>GetFlowLogsIntegrationTemplate</code> does not support integration between Amazon Web Services Transit Gateway Flow Logs and Amazon Athena.</p> </note>",
     "GetGroupsForCapacityReservation": "<p>Lists the resource groups to which a Capacity Reservation has been added.</p>",
     "GetHostReservationPurchasePreview": "<p>Preview a reservation purchase with configurations that match those of your Dedicated Host. You must have active Dedicated Hosts in your account before you purchase a reservation.</p> <p>This is a preview of the <a>PurchaseHostReservation</a> action and does not result in the offering being purchased.</p>",
@@ -533,6 +539,8 @@
     "GetIpamDiscoveredAccounts": "<p>Gets IPAM discovered accounts. A discovered account is an Amazon Web Services account that is monitored under a resource discovery. If you have integrated IPAM with Amazon Web Services Organizations, all accounts in the organization are discovered accounts. Only the IPAM account can get all discovered accounts in the organization.</p>",
     "GetIpamDiscoveredPublicAddresses": "<p>Gets the public IP addresses that have been discovered by IPAM.</p>",
     "GetIpamDiscoveredResourceCidrs": "<p>Returns the resource CIDRs that are monitored as part of a resource discovery. A discovered resource is a resource CIDR monitored under a resource discovery. The following resources can be discovered: VPCs, Public IPv4 pools, VPC subnets, and Elastic IP addresses. </p>",
+    "GetIpamPolicyAllocationRules": "<p>Gets the allocation rules for an IPAM policy.</p> <p>An IPAM policy is a set of rules that define how public IPv4 addresses from IPAM pools are allocated to Amazon Web Services resources. Each rule maps an Amazon Web Services service to IPAM pools that the service will use to get IP addresses. A single policy can have multiple rules and be applied to multiple Amazon Web Services Regions. If the IPAM pool run out of addresses then the services fallback to Amazon-provided IP addresses. A policy can be applied to an individual Amazon Web Services account or an entity within Amazon Web Services Organizations.</p> <p>Allocation rules are optional configurations within an IPAM policy that map Amazon Web Services resource types to specific IPAM pools. If no rules are defined, the resource types default to using Amazon-provided IP addresses.</p>",
+    "GetIpamPolicyOrganizationTargets": "<p>Gets the Amazon Web Services Organizations targets for an IPAM policy.</p> <p>An IPAM policy is a set of rules that define how public IPv4 addresses from IPAM pools are allocated to Amazon Web Services resources. Each rule maps an Amazon Web Services service to IPAM pools that the service will use to get IP addresses. A single policy can have multiple rules and be applied to multiple Amazon Web Services Regions. If the IPAM pool run out of addresses then the services fallback to Amazon-provided IP addresses. A policy can be applied to an individual Amazon Web Services account or an entity within Amazon Web Services Organizations.</p> <p>A target can be an individual Amazon Web Services account or an entity within an Amazon Web Services Organization to which an IPAM policy can be applied.</p>",
     "GetIpamPoolAllocations": "<p>Get a list of all the CIDR allocations in an IPAM pool. The Region you use should be the IPAM pool locale. The locale is the Amazon Web Services Region where this IPAM pool is available for allocations.</p> <note> <p>If you use this action after <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AllocateIpamPoolCidr.html\">AllocateIpamPoolCidr</a> or <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ReleaseIpamPoolAllocation.html\">ReleaseIpamPoolAllocation</a>, note that all EC2 API actions follow an <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/eventual-consistency.html\">eventual consistency</a> model.</p> </note>",
     "GetIpamPoolCidrs": "<p>Get the CIDRs provisioned to an IPAM pool.</p>",
     "GetIpamPrefixListResolverRules": "<p>Retrieves the CIDR selection rules for an IPAM prefix list resolver. Use this operation to view the business logic that determines which CIDRs are selected for synchronization with prefix lists.</p>",
@@ -602,6 +610,7 @@
     "ModifyInstanceNetworkPerformanceOptions": "<p>Change the configuration of the network performance options for an existing instance.</p>",
     "ModifyInstancePlacement": "<p>Modifies the placement attributes for a specified instance. You can do the following:</p> <ul> <li> <p>Modify the affinity between an instance and a <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html\">Dedicated Host</a>. When affinity is set to <code>host</code> and the instance is not associated with a specific Dedicated Host, the next time the instance is started, it is automatically associated with the host on which it lands. If the instance is restarted or rebooted, this relationship persists.</p> </li> <li> <p>Change the Dedicated Host with which an instance is associated.</p> </li> <li> <p>Change the instance tenancy of an instance.</p> </li> <li> <p>Move an instance to or from a <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html\">placement group</a>.</p> </li> </ul> <p>At least one attribute for affinity, host ID, tenancy, or placement group name must be specified in the request. Affinity and tenancy can be modified in the same request.</p> <p>To modify the host ID, tenancy, placement group, or partition for an instance, the instance must be in the <code>stopped</code> state.</p>",
     "ModifyIpam": "<p>Modify the configurations of an IPAM. </p>",
+    "ModifyIpamPolicyAllocationRules": "<p>Modifies the allocation rules in an IPAM policy.</p> <p>An IPAM policy is a set of rules that define how public IPv4 addresses from IPAM pools are allocated to Amazon Web Services resources. Each rule maps an Amazon Web Services service to IPAM pools that the service will use to get IP addresses. A single policy can have multiple rules and be applied to multiple Amazon Web Services Regions. If the IPAM pool run out of addresses then the services fallback to Amazon-provided IP addresses. A policy can be applied to an individual Amazon Web Services account or an entity within Amazon Web Services Organizations.</p> <p>Allocation rules are optional configurations within an IPAM policy that map Amazon Web Services resource types to specific IPAM pools. If no rules are defined, the resource types default to using Amazon-provided IP addresses.</p>",
     "ModifyIpamPool": "<p>Modify the configurations of an IPAM pool.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/mod-pool-ipam.html\">Modify a pool</a> in the <i>Amazon VPC IPAM User Guide</i>. </p>",
     "ModifyIpamPrefixListResolver": "<p>Modifies an IPAM prefix list resolver. You can update the description and CIDR selection rules. Changes to rules will trigger re-evaluation and potential updates to associated prefix lists.</p>",
     "ModifyIpamPrefixListResolverTarget": "<p>Modifies an IPAM prefix list resolver target. You can update version tracking settings and the desired version of the target prefix list.</p>",
@@ -1177,6 +1186,7 @@
       "base": null,
       "refs": {
         "AssociateNatGatewayAddressRequest$AllocationIds": "<p>The allocation IDs of EIPs that you want to associate with your NAT gateway.</p>",
+        "AvailabilityZoneAddress$AllocationIds": "<p>The allocation IDs of the Elastic IP addresses (EIPs) to be used for handling outbound NAT traffic in this specific Availability Zone.</p>",
         "CreateNatGatewayRequest$SecondaryAllocationIds": "<p>Secondary EIP allocation IDs. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-working-with.html\">Create a NAT gateway</a> in the <i>Amazon VPC User Guide</i>.</p>",
         "DescribeAddressTransfersRequest$AllocationIds": "<p>The allocation IDs of Elastic IP addresses.</p>",
         "DescribeAddressesRequest$AllocationIds": "<p>Information about the allocation IDs.</p>"
@@ -1991,10 +2001,29 @@
         "ModifyHostsRequest$AutoPlacement": "<p>Specify whether to enable or disable auto-placement.</p>"
       }
     },
+    "AutoProvisionZonesState": {
+      "base": null,
+      "refs": {
+        "NatGateway$AutoProvisionZones": "<p>For regional NAT gateways only: Indicates whether Amazon Web Services automatically manages AZ coverage. When enabled, the NAT gateway associates EIPs in all AZs where your VPC has subnets to handle outbound NAT traffic, expands to new AZs when you create subnets there, and retracts from AZs where you've removed all subnets. When disabled, you must manually manage which AZs the NAT gateway supports and their corresponding EIPs.</p> <p>A regional NAT gateway is a single NAT Gateway that works across multiple availability zones (AZs) in your VPC, providing redundancy, scalability and availability across all the AZs in a Region.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateways-regional.html\">Regional NAT gateways for automatic multi-AZ expansion</a> in the <i>Amazon VPC User Guide</i>.</p>"
+      }
+    },
     "AutoRecoveryFlag": {
       "base": null,
       "refs": {
         "InstanceTypeInfo$AutoRecoverySupported": "<p>Indicates whether Amazon CloudWatch action based recovery is supported.</p>"
+      }
+    },
+    "AutoScalingIpsState": {
+      "base": null,
+      "refs": {
+        "NatGateway$AutoScalingIps": "<p>For regional NAT gateways only: Indicates whether Amazon Web Services automatically allocates additional Elastic IP addresses (EIPs) in an AZ when the NAT gateway needs more ports due to increased concurrent connections to a single destination from that AZ.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateways-regional.html\">Regional NAT gateways for automatic multi-AZ expansion</a> in the <i>Amazon VPC User Guide</i>.</p>"
+      }
+    },
+    "AvailabilityMode": {
+      "base": null,
+      "refs": {
+        "CreateNatGatewayRequest$AvailabilityMode": "<p>Specifies whether to create a zonal (single-AZ) or regional (multi-AZ) NAT gateway. Defaults to <code>zonal</code>.</p> <p>A zonal NAT gateway is a NAT Gateway that provides redundancy and scalability within a single availability zone. A regional NAT gateway is a single NAT Gateway that works across multiple availability zones (AZs) in your VPC, providing redundancy, scalability and availability across all the AZs in a Region.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateways-regional.html\">Regional NAT gateways for automatic multi-AZ expansion</a> in the <i>Amazon VPC User Guide</i>.</p>",
+        "NatGateway$AvailabilityMode": "<p>Indicates whether this is a zonal (single-AZ) or regional (multi-AZ) NAT gateway.</p> <p>A zonal NAT gateway is a NAT Gateway that provides redundancy and scalability within a single availability zone. A regional NAT gateway is a single NAT Gateway that works across multiple availability zones (AZs) in your VPC, providing redundancy, scalability and availability across all the AZs in a Region.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateways-regional.html\">Regional NAT gateways for automatic multi-AZ expansion</a> in the <i>Amazon VPC User Guide</i>.</p>"
       }
     },
     "AvailabilityZone": {
@@ -2003,10 +2032,24 @@
         "AvailabilityZoneList$member": null
       }
     },
+    "AvailabilityZoneAddress": {
+      "base": "<p>For regional NAT gateways only: The configuration specifying which Elastic IP address (EIP) to use for handling outbound NAT traffic from a specific Availability Zone. </p> <p>A regional NAT gateway is a single NAT Gateway that works across multiple availability zones (AZs) in your VPC, providing redundancy, scalability and availability across all the AZs in a Region.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateways-regional.html\">Regional NAT gateways for automatic multi-AZ expansion</a> in the <i>Amazon VPC User Guide</i>.</p>",
+      "refs": {
+        "AvailabilityZoneAddresses$member": null
+      }
+    },
+    "AvailabilityZoneAddresses": {
+      "base": null,
+      "refs": {
+        "CreateNatGatewayRequest$AvailabilityZoneAddresses": "<p>For regional NAT gateways only: Specifies which Availability Zones you want the NAT gateway to support and the Elastic IP addresses (EIPs) to use in each AZ. The regional NAT gateway uses these EIPs to handle outbound NAT traffic from their respective AZs. If not specified, the NAT gateway will automatically expand to new AZs and associate EIPs upon detection of an elastic network interface. If you specify this parameter, auto-expansion is disabled and you must manually manage AZ coverage.</p> <p>A regional NAT gateway is a single NAT Gateway that works across multiple availability zones (AZs) in your VPC, providing redundancy, scalability and availability across all the AZs in a Region.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateways-regional.html\">Regional NAT gateways for automatic multi-AZ expansion</a> in the <i>Amazon VPC User Guide</i>.</p>"
+      }
+    },
     "AvailabilityZoneId": {
       "base": null,
       "refs": {
         "AllocateHostsRequest$AvailabilityZoneId": "<p>The ID of the Availability Zone.</p>",
+        "AssociateNatGatewayAddressRequest$AvailabilityZoneId": "<p>For regional NAT gateways only: The ID of the Availability Zone where you want to associate an Elastic IP address (EIP). The regional NAT gateway uses a separate EIP in each AZ to handle outbound NAT traffic from that AZ. Use this instead of AvailabilityZone for consistent identification of AZs across Amazon Web Services Regions. </p> <p>A regional NAT gateway is a single NAT Gateway that works across multiple availability zones (AZs) in your VPC, providing redundancy, scalability and availability across all the AZs in a Region.</p>",
+        "AvailabilityZoneAddress$AvailabilityZoneId": "<p>For regional NAT gateways only: The ID of the Availability Zone where this specific NAT gateway configuration will be active. Each AZ in a regional NAT gateway has its own configuration to handle outbound NAT traffic from that AZ. Use this instead of AvailabilityZone for consistent identification of AZs across Amazon Web Services Regions. </p> <p>A regional NAT gateway is a single NAT Gateway that works across multiple availability zones (AZs) in your VPC, providing redundancy, scalability and availability across all the AZs in a Region.</p>",
         "CapacityBlockExtension$AvailabilityZoneId": "<p>The Availability Zone ID of the Capacity Block extension.</p>",
         "CapacityBlockExtensionOffering$AvailabilityZoneId": "<p>The Availability Zone ID of the Capacity Block that will be extended.</p>",
         "CapacityReservationInfo$AvailabilityZoneId": "<p>The ID of the Availability Zone.</p>",
@@ -2020,6 +2063,7 @@
         "InstanceStatus$AvailabilityZoneId": "<p>The ID of the Availability Zone of the instance.</p>",
         "LaunchTemplatePlacement$AvailabilityZoneId": "<p>The ID of the Availability Zone of the instance.</p>",
         "LaunchTemplatePlacementRequest$AvailabilityZoneId": "<p>The ID of the Availability Zone for the instance.</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> can be specified, but not both</p>",
+        "NatGatewayAddress$AvailabilityZoneId": "<p>The ID of the Availability Zone where this Elastic IP address (EIP) is being used to handle outbound NAT traffic. Use this instead of AvailabilityZone for consistent identification of AZs across Amazon Web Services Regions.</p>",
         "Placement$AvailabilityZoneId": "<p>The ID of the Availability Zone of the instance.</p> <p>On input, you can specify <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code>, but not both. If you specify neither one, Amazon EC2 automatically selects an Availability Zone for you.</p> <p>This parameter is not supported for <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFleet\">CreateFleet</a>.</p>",
         "ReservedInstancesOffering$AvailabilityZoneId": "<p>The ID of the Availability Zone.</p>"
       }
@@ -2052,6 +2096,8 @@
     "AvailabilityZoneName": {
       "base": null,
       "refs": {
+        "AssociateNatGatewayAddressRequest$AvailabilityZone": "<p>For regional NAT gateways only: The Availability Zone where you want to associate an Elastic IP address (EIP). The regional NAT gateway uses a separate EIP in each AZ to handle outbound NAT traffic from that AZ.</p> <p>A regional NAT gateway is a single NAT Gateway that works across multiple availability zones (AZs) in your VPC, providing redundancy, scalability and availability across all the AZs in a Region.</p>",
+        "AvailabilityZoneAddress$AvailabilityZone": "<p>For regional NAT gateways only: The Availability Zone where this specific NAT gateway configuration will be active. Each AZ in a regional NAT gateway has its own configuration to handle outbound NAT traffic from that AZ. </p> <p>A regional NAT gateway is a single NAT Gateway that works across multiple availability zones (AZs) in your VPC, providing redundancy, scalability and availability across all the AZs in a Region.</p>",
         "CapacityBlockExtension$AvailabilityZone": "<p>The Availability Zone of the Capacity Block extension.</p>",
         "CapacityBlockExtensionOffering$AvailabilityZone": "<p>The Availability Zone of the Capacity Block that will be extended.</p>",
         "CapacityReservationInfo$AvailabilityZone": "<p>The Availability Zone for the Capacity Reservation.</p>",
@@ -2059,7 +2105,8 @@
         "CreateDefaultSubnetRequest$AvailabilityZone": "<p>The Availability Zone in which to create the default subnet.</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> must be specified, but not both.</p>",
         "CreateVolumeRequest$AvailabilityZone": "<p>The ID of the Availability Zone in which to create the volume. For example, <code>us-east-1a</code>.</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> must be specified, but not both.</p>",
         "FleetLaunchTemplateOverrides$AvailabilityZone": "<p>The Availability Zone in which to launch the instances.</p>",
-        "FleetLaunchTemplateOverridesRequest$AvailabilityZone": "<p>The Availability Zone in which to launch the instances.</p>"
+        "FleetLaunchTemplateOverridesRequest$AvailabilityZone": "<p>The Availability Zone in which to launch the instances.</p>",
+        "NatGatewayAddress$AvailabilityZone": "<p>The Availability Zone where this Elastic IP address (EIP) is being used to handle outbound NAT traffic.</p>"
       }
     },
     "AvailabilityZoneOptInStatus": {
@@ -2378,6 +2425,7 @@
         "CreateInstanceEventWindowRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateInternetGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateIpamExternalResourceVerificationTokenRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateIpamPolicyRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateIpamPoolRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateIpamPoolRequest$AutoImport": "<p>If selected, IPAM will continuously look for resources within the CIDR range of this pool and automatically import them as allocations into your IPAM. The CIDRs that will be allocated for these resources must not already be allocated to other resources in order for the import to succeed. IPAM will import a CIDR regardless of its compliance with the pool's allocation rules, so a resource might be imported and subsequently marked as noncompliant. If IPAM discovers multiple CIDRs that overlap, IPAM will import the largest CIDR only. If IPAM discovers multiple CIDRs with matching CIDRs, IPAM will randomly import one of them only. </p> <p>A locale must be set on the pool for this feature to work.</p>",
         "CreateIpamPoolRequest$PubliclyAdvertisable": "<p>Determines if the pool is publicly advertisable. The request can only contain <code>PubliclyAdvertisable</code> if <code>AddressFamily</code> is <code>ipv6</code> and <code>PublicIpSource</code> is <code>byoip</code>.</p>",
@@ -2489,6 +2537,7 @@
         "DeleteInstanceEventWindowRequest$ForceDelete": "<p>Specify <code>true</code> to force delete the event window. Use the force delete parameter if the event window is currently associated with targets.</p>",
         "DeleteInternetGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteIpamExternalResourceVerificationTokenRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteIpamPolicyRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteIpamPoolRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteIpamPoolRequest$Cascade": "<p>Enables you to quickly delete an IPAM pool and all resources within that pool, including provisioned CIDRs, allocations, and other pools.</p> <important> <p>You can only use this option to delete pools in the private scope or pools in the public scope with a source resource. A source resource is a resource used to provision CIDRs to a resource planning pool.</p> </important>",
         "DeleteIpamPrefixListResolverRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2649,6 +2698,7 @@
         "DescribeInternetGatewaysRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeIpamByoasnRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeIpamExternalResourceVerificationTokensRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeIpamPoliciesRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeIpamPoolsRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeIpamPrefixListResolverTargetsRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeIpamPrefixListResolversRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2788,6 +2838,8 @@
         "DisableInstanceSqlHaStandbyDetectionsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableIpamOrganizationAdminAccountRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableIpamOrganizationAdminAccountResult$Success": "<p>The result of disabling the IPAM account.</p>",
+        "DisableIpamPolicyRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DisableIpamPolicyResult$Return": "<p>Returns true if the IPAM policy was successfully disabled.</p>",
         "DisableRouteServerPropagationRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableSerialConsoleAccessRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableSerialConsoleAccessResult$SerialConsoleAccessEnabled": "<p>If <code>true</code>, access to the EC2 serial console of all instances is enabled for your account. If <code>false</code>, access to the EC2 serial console of all instances is disabled for your account.</p>",
@@ -2850,6 +2902,7 @@
         "EnableInstanceSqlHaStandbyDetectionsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableIpamOrganizationAdminAccountRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableIpamOrganizationAdminAccountResult$Success": "<p>The result of enabling the IPAM account.</p>",
+        "EnableIpamPolicyRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableReachabilityAnalyzerOrganizationSharingRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableReachabilityAnalyzerOrganizationSharingResult$ReturnValue": "<p>Returns <code>true</code> if the request succeeds; otherwise, returns an error.</p>",
         "EnableRouteServerPropagationRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2896,6 +2949,8 @@
         "GetEbsDefaultKmsKeyIdRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetEbsEncryptionByDefaultRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetEbsEncryptionByDefaultResult$EbsEncryptionByDefault": "<p>Indicates whether encryption by default is enabled.</p>",
+        "GetEnabledIpamPolicyRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "GetEnabledIpamPolicyResult$IpamPolicyEnabled": "<p>Indicates whether the IPAM policy is enabled.</p>",
         "GetFlowLogsIntegrationTemplateRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetGroupsForCapacityReservationRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetImageAncestryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2908,6 +2963,8 @@
         "GetIpamDiscoveredAccountsRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetIpamDiscoveredPublicAddressesRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetIpamDiscoveredResourceCidrsRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "GetIpamPolicyAllocationRulesRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "GetIpamPolicyOrganizationTargetsRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetIpamPoolAllocationsRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetIpamPoolCidrsRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetIpamPrefixListResolverRulesRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3063,6 +3120,7 @@
         "ModifyInstanceMetadataOptionsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyInstanceNetworkPerformanceRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyInstancePlacementResult$Return": "<p>Is <code>true</code> if the request succeeds, and an error otherwise.</p>",
+        "ModifyIpamPolicyAllocationRulesRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyIpamPoolRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyIpamPoolRequest$AutoImport": "<p>If true, IPAM will continuously look for resources within the CIDR range of this pool and automatically import them as allocations into your IPAM. The CIDRs that will be allocated for these resources must not already be allocated to other resources in order for the import to succeed. IPAM will import a CIDR regardless of its compliance with the pool's allocation rules, so a resource might be imported and subsequently marked as noncompliant. If IPAM discovers multiple CIDRs that overlap, IPAM will import the largest CIDR only. If IPAM discovers multiple CIDRs with matching CIDRs, IPAM will randomly import one of them only. </p> <p>A locale must be set on the pool for this feature to work.</p>",
         "ModifyIpamPoolRequest$ClearAllocationDefaultNetmaskLength": "<p>Clear the default netmask length allocation rule for this pool.</p>",
@@ -5131,6 +5189,16 @@
       "refs": {
       }
     },
+    "CreateIpamPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateIpamPolicyResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateIpamPoolRequest": {
       "base": null,
       "refs": {
@@ -6441,6 +6509,16 @@
       }
     },
     "DeleteIpamExternalResourceVerificationTokenResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteIpamPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteIpamPolicyResult": {
       "base": null,
       "refs": {
       }
@@ -8224,6 +8302,16 @@
       "refs": {
       }
     },
+    "DescribeIpamPoliciesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeIpamPoliciesResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeIpamPoolsRequest": {
       "base": null,
       "refs": {
@@ -9820,6 +9908,16 @@
       "refs": {
       }
     },
+    "DisableIpamPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisableIpamPolicyResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DisableRouteServerPropagationRequest": {
       "base": null,
       "refs": {
@@ -10757,6 +10855,16 @@
       "refs": {
       }
     },
+    "EnableIpamPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EnableIpamPolicyResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "EnableReachabilityAnalyzerOrganizationSharingRequest": {
       "base": null,
       "refs": {
@@ -11092,7 +11200,7 @@
       }
     },
     "ExternalAuthorityConfiguration": {
-      "base": "<p>The configuration that links an Amazon VPC IPAM scope to an external authority system. It specifies the type of external system and the external resource identifier that identifies your account or instance in that system.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/integrate-infoblox-ipam.html\">Integrate VPC IPAM with Infoblox infrastructure</a> in the <i>Amazon VPC IPAM User Guide</i>..</p>",
+      "base": "<p>The configuration that links an Amazon VPC IPAM scope to an external authority system. It specifies the type of external system and the external resource identifier that identifies your account or instance in that system.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/integrate-infoblox-ipam.html\">Integrate VPC IPAM with Infoblox infrastructure</a> in the <i>Amazon VPC IPAM User Guide</i>.</p>",
       "refs": {
         "CreateIpamScopeRequest$ExternalAuthorityConfiguration": "<p>The configuration that links an Amazon VPC IPAM scope to an external authority system. It specifies the type of external system and the external resource identifier that identifies your account or instance in that system.</p> <p>In IPAM, an external authority is a third-party IP address management system that provides CIDR blocks when you provision address space for top-level IPAM pools. This allows you to use your existing IP management system to control which address ranges are allocated to Amazon Web Services while using Amazon VPC IPAM to manage subnets within those ranges.</p>",
         "ModifyIpamScopeRequest$ExternalAuthorityConfiguration": "<p>The configuration that links an Amazon VPC IPAM scope to an external authority system. It specifies the type of external system and the external resource identifier that identifies your account or instance in that system.</p> <p>In IPAM, an external authority is a third-party IP address management system that provides CIDR blocks when you provision address space for top-level IPAM pools. This allows you to use your existing IP management system to control which address ranges are allocated to Amazon Web Services while using Amazon VPC IPAM to manage subnets within those ranges.</p>"
@@ -11261,6 +11369,7 @@
         "DescribeInstancesRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>affinity</code> - The affinity setting for an instance running on a Dedicated Host (<code>default</code> | <code>host</code>).</p> </li> <li> <p> <code>architecture</code> - The instance architecture (<code>i386</code> | <code>x86_64</code> | <code>arm64</code>).</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone of the instance.</p> </li> <li> <p> <code>availability-zone-id</code> - The ID of the Availability Zone of the instance.</p> </li> <li> <p> <code>block-device-mapping.attach-time</code> - The attach time for an EBS volume mapped to the instance, for example, <code>2022-09-15T17:15:20.000Z</code>.</p> </li> <li> <p> <code>block-device-mapping.delete-on-termination</code> - A Boolean that indicates whether the EBS volume is deleted on instance termination.</p> </li> <li> <p> <code>block-device-mapping.device-name</code> - The device name specified in the block device mapping (for example, <code>/dev/sdh</code> or <code>xvdh</code>).</p> </li> <li> <p> <code>block-device-mapping.status</code> - The status for the EBS volume (<code>attaching</code> | <code>attached</code> | <code>detaching</code> | <code>detached</code>).</p> </li> <li> <p> <code>block-device-mapping.volume-id</code> - The volume ID of the EBS volume.</p> </li> <li> <p> <code>boot-mode</code> - The boot mode that was specified by the AMI (<code>legacy-bios</code> | <code>uefi</code> | <code>uefi-preferred</code>).</p> </li> <li> <p> <code>capacity-reservation-id</code> - The ID of the Capacity Reservation into which the instance was launched.</p> </li> <li> <p> <code>capacity-reservation-specification.capacity-reservation-preference</code> - The instance's Capacity Reservation preference (<code>open</code> | <code>none</code>).</p> </li> <li> <p> <code>capacity-reservation-specification.capacity-reservation-target.capacity-reservation-id</code> - The ID of the targeted Capacity Reservation.</p> </li> <li> <p> <code>capacity-reservation-specification.capacity-reservation-target.capacity-reservation-resource-group-arn</code> - The ARN of the targeted Capacity Reservation group.</p> </li> <li> <p> <code>client-token</code> - The idempotency token you provided when you launched the instance.</p> </li> <li> <p> <code>current-instance-boot-mode</code> - The boot mode that is used to launch the instance at launch or start (<code>legacy-bios</code> | <code>uefi</code>).</p> </li> <li> <p> <code>dns-name</code> - The public DNS name of the instance.</p> </li> <li> <p> <code>ebs-optimized</code> - A Boolean that indicates whether the instance is optimized for Amazon EBS I/O.</p> </li> <li> <p> <code>ena-support</code> - A Boolean that indicates whether the instance is enabled for enhanced networking with ENA.</p> </li> <li> <p> <code>enclave-options.enabled</code> - A Boolean that indicates whether the instance is enabled for Amazon Web Services Nitro Enclaves.</p> </li> <li> <p> <code>hibernation-options.configured</code> - A Boolean that indicates whether the instance is enabled for hibernation. A value of <code>true</code> means that the instance is enabled for hibernation.</p> </li> <li> <p> <code>host-id</code> - The ID of the Dedicated Host on which the instance is running, if applicable.</p> </li> <li> <p> <code>hypervisor</code> - The hypervisor type of the instance (<code>ovm</code> | <code>xen</code>). The value <code>xen</code> is used for both Xen and Nitro hypervisors.</p> </li> <li> <p> <code>iam-instance-profile.arn</code> - The instance profile associated with the instance. Specified as an ARN.</p> </li> <li> <p> <code>iam-instance-profile.id</code> - The instance profile associated with the instance. Specified as an ID.</p> </li> <li> <p> <code>image-id</code> - The ID of the image used to launch the instance.</p> </li> <li> <p> <code>instance-id</code> - The ID of the instance.</p> </li> <li> <p> <code>instance-lifecycle</code> - Indicates whether this is a Spot Instance, a Scheduled Instance, or a Capacity Block (<code>spot</code> | <code>scheduled</code> | <code>capacity-block</code>).</p> </li> <li> <p> <code>instance-state-code</code> - The state of the instance, as a 16-bit unsigned integer. The high byte is used for internal purposes and should be ignored. The low byte is set based on the state represented. The valid values are: 0 (pending), 16 (running), 32 (shutting-down), 48 (terminated), 64 (stopping), and 80 (stopped).</p> </li> <li> <p> <code>instance-state-name</code> - The state of the instance (<code>pending</code> | <code>running</code> | <code>shutting-down</code> | <code>terminated</code> | <code>stopping</code> | <code>stopped</code>).</p> </li> <li> <p> <code>instance-type</code> - The type of instance (for example, <code>t2.micro</code>).</p> </li> <li> <p> <code>instance.group-id</code> - The ID of the security group for the instance. </p> </li> <li> <p> <code>instance.group-name</code> - The name of the security group for the instance. </p> </li> <li> <p> <code>ip-address</code> - The public IPv4 address of the instance.</p> </li> <li> <p> <code>ipv6-address</code> - The IPv6 address of the instance.</p> </li> <li> <p> <code>kernel-id</code> - The kernel ID.</p> </li> <li> <p> <code>key-name</code> - The name of the key pair used when the instance was launched.</p> </li> <li> <p> <code>launch-index</code> - When launching multiple instances, this is the index for the instance in the launch group (for example, 0, 1, 2, and so on). </p> </li> <li> <p> <code>launch-time</code> - The time when the instance was launched, in the ISO 8601 format in the UTC time zone (YYYY-MM-DDThh:mm:ss.sssZ), for example, <code>2021-09-29T11:04:43.305Z</code>. You can use a wildcard (<code>*</code>), for example, <code>2021-09-29T*</code>, which matches an entire day.</p> </li> <li> <p> <code>maintenance-options.auto-recovery</code> - The current automatic recovery behavior of the instance (<code>disabled</code> | <code>default</code>).</p> </li> <li> <p> <code>metadata-options.http-endpoint</code> - The status of access to the HTTP metadata endpoint on your instance (<code>enabled</code> | <code>disabled</code>)</p> </li> <li> <p> <code>metadata-options.http-protocol-ipv4</code> - Indicates whether the IPv4 endpoint is enabled (<code>disabled</code> | <code>enabled</code>).</p> </li> <li> <p> <code>metadata-options.http-protocol-ipv6</code> - Indicates whether the IPv6 endpoint is enabled (<code>disabled</code> | <code>enabled</code>).</p> </li> <li> <p> <code>metadata-options.http-put-response-hop-limit</code> - The HTTP metadata request put response hop limit (integer, possible values <code>1</code> to <code>64</code>)</p> </li> <li> <p> <code>metadata-options.http-tokens</code> - The metadata request authorization state (<code>optional</code> | <code>required</code>)</p> </li> <li> <p> <code>metadata-options.instance-metadata-tags</code> - The status of access to instance tags from the instance metadata (<code>enabled</code> | <code>disabled</code>)</p> </li> <li> <p> <code>metadata-options.state</code> - The state of the metadata option changes (<code>pending</code> | <code>applied</code>).</p> </li> <li> <p> <code>monitoring-state</code> - Indicates whether detailed monitoring is enabled (<code>disabled</code> | <code>enabled</code>).</p> </li> <li> <p> <code>network-interface.addresses.association.allocation-id</code> - The allocation ID.</p> </li> <li> <p> <code>network-interface.addresses.association.association-id</code> - The association ID.</p> </li> <li> <p> <code>network-interface.addresses.association.carrier-ip</code> - The carrier IP address.</p> </li> <li> <p> <code>network-interface.addresses.association.customer-owned-ip</code> - The customer-owned IP address.</p> </li> <li> <p> <code>network-interface.addresses.association.ip-owner-id</code> - The owner ID of the private IPv4 address associated with the network interface.</p> </li> <li> <p> <code>network-interface.addresses.association.public-dns-name</code> - The public DNS name.</p> </li> <li> <p> <code>network-interface.addresses.association.public-ip</code> - The ID of the association of an Elastic IP address (IPv4) with a network interface.</p> </li> <li> <p> <code>network-interface.addresses.primary</code> - Specifies whether the IPv4 address of the network interface is the primary private IPv4 address.</p> </li> <li> <p> <code>network-interface.addresses.private-dns-name</code> - The private DNS name.</p> </li> <li> <p> <code>network-interface.addresses.private-ip-address</code> - The private IPv4 address associated with the network interface.</p> </li> <li> <p> <code>network-interface.association.allocation-id</code> - The allocation ID returned when you allocated the Elastic IP address (IPv4) for your network interface.</p> </li> <li> <p> <code>network-interface.association.association-id</code> - The association ID returned when the network interface was associated with an IPv4 address.</p> </li> <li> <p> <code>network-interface.association.carrier-ip</code> - The customer-owned IP address.</p> </li> <li> <p> <code>network-interface.association.customer-owned-ip</code> - The customer-owned IP address.</p> </li> <li> <p> <code>network-interface.association.ip-owner-id</code> - The owner of the Elastic IP address (IPv4) associated with the network interface.</p> </li> <li> <p> <code>network-interface.association.public-dns-name</code> - The public DNS name.</p> </li> <li> <p> <code>network-interface.association.public-ip</code> - The address of the Elastic IP address (IPv4) bound to the network interface.</p> </li> <li> <p> <code>network-interface.attachment.attach-time</code> - The time that the network interface was attached to an instance.</p> </li> <li> <p> <code>network-interface.attachment.attachment-id</code> - The ID of the interface attachment.</p> </li> <li> <p> <code>network-interface.attachment.delete-on-termination</code> - Specifies whether the attachment is deleted when an instance is terminated.</p> </li> <li> <p> <code>network-interface.attachment.device-index</code> - The device index to which the network interface is attached.</p> </li> <li> <p> <code>network-interface.attachment.instance-id</code> - The ID of the instance to which the network interface is attached.</p> </li> <li> <p> <code>network-interface.attachment.instance-owner-id</code> - The owner ID of the instance to which the network interface is attached.</p> </li> <li> <p> <code>network-interface.attachment.network-card-index</code> - The index of the network card.</p> </li> <li> <p> <code>network-interface.attachment.status</code> - The status of the attachment (<code>attaching</code> | <code>attached</code> | <code>detaching</code> | <code>detached</code>).</p> </li> <li> <p> <code>network-interface.availability-zone</code> - The Availability Zone for the network interface.</p> </li> <li> <p> <code>network-interface.deny-all-igw-traffic</code> - A Boolean that indicates whether a network interface with an IPv6 address is unreachable from the public internet.</p> </li> <li> <p> <code>network-interface.description</code> - The description of the network interface.</p> </li> <li> <p> <code>network-interface.group-id</code> - The ID of a security group associated with the network interface.</p> </li> <li> <p> <code>network-interface.group-name</code> - The name of a security group associated with the network interface.</p> </li> <li> <p> <code>network-interface.ipv4-prefixes.ipv4-prefix</code> - The IPv4 prefixes that are assigned to the network interface.</p> </li> <li> <p> <code>network-interface.ipv6-address</code> - The IPv6 address associated with the network interface.</p> </li> <li> <p> <code>network-interface.ipv6-addresses.ipv6-address</code> - The IPv6 address associated with the network interface.</p> </li> <li> <p> <code>network-interface.ipv6-addresses.is-primary-ipv6</code> - A Boolean that indicates whether this is the primary IPv6 address.</p> </li> <li> <p> <code>network-interface.ipv6-native</code> - A Boolean that indicates whether this is an IPv6 only network interface.</p> </li> <li> <p> <code>network-interface.ipv6-prefixes.ipv6-prefix</code> - The IPv6 prefix assigned to the network interface.</p> </li> <li> <p> <code>network-interface.mac-address</code> - The MAC address of the network interface.</p> </li> <li> <p> <code>network-interface.network-interface-id</code> - The ID of the network interface.</p> </li> <li> <p> <code>network-interface.operator.managed</code> - A Boolean that indicates whether the instance has a managed network interface.</p> </li> <li> <p> <code>network-interface.operator.principal</code> - The principal that manages the network interface. Only valid for instances with managed network interfaces, where <code>managed</code> is <code>true</code>.</p> </li> <li> <p> <code>network-interface.outpost-arn</code> - The ARN of the Outpost.</p> </li> <li> <p> <code>network-interface.owner-id</code> - The ID of the owner of the network interface.</p> </li> <li> <p> <code>network-interface.private-dns-name</code> - The private DNS name of the network interface.</p> </li> <li> <p> <code>network-interface.private-ip-address</code> - The private IPv4 address.</p> </li> <li> <p> <code>network-interface.public-dns-name</code> - The public DNS name.</p> </li> <li> <p> <code>network-interface.requester-id</code> - The requester ID for the network interface.</p> </li> <li> <p> <code>network-interface.requester-managed</code> - Indicates whether the network interface is being managed by Amazon Web Services.</p> </li> <li> <p> <code>network-interface.status</code> - The status of the network interface (<code>available</code>) | <code>in-use</code>).</p> </li> <li> <p> <code>network-interface.source-dest-check</code> - Whether the network interface performs source/destination checking. A value of <code>true</code> means that checking is enabled, and <code>false</code> means that checking is disabled. The value must be <code>false</code> for the network interface to perform network address translation (NAT) in your VPC.</p> </li> <li> <p> <code>network-interface.subnet-id</code> - The ID of the subnet for the network interface.</p> </li> <li> <p> <code>network-interface.tag-key</code> - The key of a tag assigned to the network interface.</p> </li> <li> <p> <code>network-interface.tag-value</code> - The value of a tag assigned to the network interface.</p> </li> <li> <p> <code>network-interface.vpc-id</code> - The ID of the VPC for the network interface.</p> </li> <li> <p> <code>network-performance-options.bandwidth-weighting</code> - Where the performance boost is applied, if applicable. Valid values: <code>default</code>, <code>vpc-1</code>, <code>ebs-1</code>.</p> </li> <li> <p> <code>operator.managed</code> - A Boolean that indicates whether this is a managed instance.</p> </li> <li> <p> <code>operator.principal</code> - The principal that manages the instance. Only valid for managed instances, where <code>managed</code> is <code>true</code>.</p> </li> <li> <p> <code>outpost-arn</code> - The Amazon Resource Name (ARN) of the Outpost.</p> </li> <li> <p> <code>owner-id</code> - The Amazon Web Services account ID of the instance owner.</p> </li> <li> <p> <code>placement-group-name</code> - The name of the placement group for the instance.</p> </li> <li> <p> <code>placement-partition-number</code> - The partition in which the instance is located.</p> </li> <li> <p> <code>platform</code> - The platform. To list only Windows instances, use <code>windows</code>.</p> </li> <li> <p> <code>platform-details</code> - The platform (<code>Linux/UNIX</code> | <code>Red Hat BYOL Linux</code> | <code> Red Hat Enterprise Linux</code> | <code>Red Hat Enterprise Linux with HA</code> | <code>Red Hat Enterprise Linux with High Availability</code> | <code>Red Hat Enterprise Linux with SQL Server Standard and HA</code> | <code>Red Hat Enterprise Linux with SQL Server Enterprise and HA</code> | <code>Red Hat Enterprise Linux with SQL Server Standard</code> | <code>Red Hat Enterprise Linux with SQL Server Web</code> | <code>Red Hat Enterprise Linux with SQL Server Enterprise</code> | <code>SQL Server Enterprise</code> | <code>SQL Server Standard</code> | <code>SQL Server Web</code> | <code>SUSE Linux</code> | <code>Ubuntu Pro</code> | <code>Windows</code> | <code>Windows BYOL</code> | <code>Windows with SQL Server Enterprise</code> | <code>Windows with SQL Server Standard</code> | <code>Windows with SQL Server Web</code>).</p> </li> <li> <p> <code>private-dns-name</code> - The private IPv4 DNS name of the instance.</p> </li> <li> <p> <code>private-dns-name-options.enable-resource-name-dns-a-record</code> - A Boolean that indicates whether to respond to DNS queries for instance hostnames with DNS A records.</p> </li> <li> <p> <code>private-dns-name-options.enable-resource-name-dns-aaaa-record</code> - A Boolean that indicates whether to respond to DNS queries for instance hostnames with DNS AAAA records.</p> </li> <li> <p> <code>private-dns-name-options.hostname-type</code> - The type of hostname (<code>ip-name</code> | <code>resource-name</code>).</p> </li> <li> <p> <code>private-ip-address</code> - The private IPv4 address of the instance. This can only be used to filter by the primary IP address of the network interface attached to the instance. To filter by additional IP addresses assigned to the network interface, use the filter <code>network-interface.addresses.private-ip-address</code>.</p> </li> <li> <p> <code>product-code</code> - The product code associated with the AMI used to launch the instance.</p> </li> <li> <p> <code>product-code.type</code> - The type of product code (<code>devpay</code> | <code>marketplace</code>).</p> </li> <li> <p> <code>ramdisk-id</code> - The RAM disk ID.</p> </li> <li> <p> <code>reason</code> - The reason for the current state of the instance (for example, shows \"User Initiated [date]\" when you stop or terminate the instance). Similar to the state-reason-code filter.</p> </li> <li> <p> <code>requester-id</code> - The ID of the entity that launched the instance on your behalf (for example, Amazon Web Services Management Console, Auto Scaling, and so on).</p> </li> <li> <p> <code>reservation-id</code> - The ID of the instance's reservation. A reservation ID is created any time you launch an instance. A reservation ID has a one-to-one relationship with an instance launch request, but can be associated with more than one instance if you launch multiple instances using the same launch request. For example, if you launch one instance, you get one reservation ID. If you launch ten instances using the same launch request, you also get one reservation ID.</p> </li> <li> <p> <code>root-device-name</code> - The device name of the root device volume (for example, <code>/dev/sda1</code>).</p> </li> <li> <p> <code>root-device-type</code> - The type of the root device volume (<code>ebs</code> | <code>instance-store</code>).</p> </li> <li> <p> <code>source-dest-check</code> - Indicates whether the instance performs source/destination checking. A value of <code>true</code> means that checking is enabled, and <code>false</code> means that checking is disabled. The value must be <code>false</code> for the instance to perform network address translation (NAT) in your VPC. </p> </li> <li> <p> <code>spot-instance-request-id</code> - The ID of the Spot Instance request.</p> </li> <li> <p> <code>state-reason-code</code> - The reason code for the state change.</p> </li> <li> <p> <code>state-reason-message</code> - A message that describes the state change.</p> </li> <li> <p> <code>subnet-id</code> - The ID of the subnet for the instance.</p> </li> <li> <p> <code>tag:&lt;key&gt;</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources that have a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>tenancy</code> - The tenancy of an instance (<code>dedicated</code> | <code>default</code> | <code>host</code>).</p> </li> <li> <p> <code>tpm-support</code> - Indicates if the instance is configured for NitroTPM support (<code>v2.0</code>). </p> </li> <li> <p> <code>usage-operation</code> - The usage operation value for the instance (<code>RunInstances</code> | <code>RunInstances:00g0</code> | <code>RunInstances:0010</code> | <code>RunInstances:1010</code> | <code>RunInstances:1014</code> | <code>RunInstances:1110</code> | <code>RunInstances:0014</code> | <code>RunInstances:0210</code> | <code>RunInstances:0110</code> | <code>RunInstances:0100</code> | <code>RunInstances:0004</code> | <code>RunInstances:0200</code> | <code>RunInstances:000g</code> | <code>RunInstances:0g00</code> | <code>RunInstances:0002</code> | <code>RunInstances:0800</code> | <code>RunInstances:0102</code> | <code>RunInstances:0006</code> | <code>RunInstances:0202</code>).</p> </li> <li> <p> <code>usage-operation-update-time</code> - The time that the usage operation was last updated, for example, <code>2022-09-15T17:15:20.000Z</code>.</p> </li> <li> <p> <code>virtualization-type</code> - The virtualization type of the instance (<code>paravirtual</code> | <code>hvm</code>).</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC that the instance is running in.</p> </li> </ul>",
         "DescribeInternetGatewaysRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>attachment.state</code> - The current state of the attachment between the gateway and the VPC (<code>available</code>). Present only if a VPC is attached.</p> </li> <li> <p> <code>attachment.vpc-id</code> - The ID of an attached VPC.</p> </li> <li> <p> <code>internet-gateway-id</code> - The ID of the Internet gateway.</p> </li> <li> <p> <code>owner-id</code> - The ID of the Amazon Web Services account that owns the internet gateway.</p> </li> <li> <p> <code>tag</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
         "DescribeIpamExternalResourceVerificationTokensRequest$Filters": "<p>One or more filters for the request. For more information about filtering, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html\">Filtering CLI output</a>.</p> <p>Available filters:</p> <ul> <li> <p> <code>ipam-arn</code> </p> </li> <li> <p> <code>ipam-external-resource-verification-token-arn</code> </p> </li> <li> <p> <code>ipam-external-resource-verification-token-id</code> </p> </li> <li> <p> <code>ipam-id</code> </p> </li> <li> <p> <code>ipam-region</code> </p> </li> <li> <p> <code>state</code> </p> </li> <li> <p> <code>status</code> </p> </li> <li> <p> <code>token-name</code> </p> </li> <li> <p> <code>token-value</code> </p> </li> </ul>",
+        "DescribeIpamPoliciesRequest$Filters": "<p>One or more filters for the IPAM policy description.</p>",
         "DescribeIpamPoolsRequest$Filters": "<p>One or more filters for the request. For more information about filtering, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html\">Filtering CLI output</a>.</p>",
         "DescribeIpamPrefixListResolverTargetsRequest$Filters": "<p>One or more filters to limit the results.</p>",
         "DescribeIpamPrefixListResolversRequest$Filters": "<p>One or more filters to limit the results.</p>",
@@ -11360,6 +11469,8 @@
         "GetIpamDiscoveredAccountsRequest$Filters": "<p>Discovered account filters.</p>",
         "GetIpamDiscoveredPublicAddressesRequest$Filters": "<p>Filters.</p>",
         "GetIpamDiscoveredResourceCidrsRequest$Filters": "<p>Filters.</p>",
+        "GetIpamPolicyAllocationRulesRequest$Filters": "<p>One or more filters for the allocation rules.</p>",
+        "GetIpamPolicyOrganizationTargetsRequest$Filters": "<p>One or more filters for the Amazon Web Services Organizations targets.</p>",
         "GetIpamPoolAllocationsRequest$Filters": "<p>One or more filters for the request. For more information about filtering, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html\">Filtering CLI output</a>.</p>",
         "GetIpamPoolCidrsRequest$Filters": "<p>One or more filters for the request. For more information about filtering, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html\">Filtering CLI output</a>.</p>",
         "GetIpamPrefixListResolverRulesRequest$Filters": "<p>One or more filters to limit the results.</p>",
@@ -11983,6 +12094,16 @@
       "refs": {
       }
     },
+    "GetEnabledIpamPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetEnabledIpamPolicyResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetFlowLogsIntegrationTemplateRequest": {
       "base": null,
       "refs": {
@@ -12115,6 +12236,26 @@
       }
     },
     "GetIpamDiscoveredResourceCidrsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetIpamPolicyAllocationRulesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetIpamPolicyAllocationRulesResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetIpamPolicyOrganizationTargetsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetIpamPolicyOrganizationTargetsResult": {
       "base": null,
       "refs": {
       }
@@ -15169,12 +15310,14 @@
         "AssociateIpamResourceDiscoveryRequest$IpamId": "<p>An IPAM ID.</p>",
         "Byoasn$IpamId": "<p>An IPAM ID.</p>",
         "CreateIpamExternalResourceVerificationTokenRequest$IpamId": "<p>The ID of the IPAM that will create the token.</p>",
+        "CreateIpamPolicyRequest$IpamId": "<p>The ID of the IPAM for which you're creating the policy.</p>",
         "CreateIpamPrefixListResolverRequest$IpamId": "<p>The ID of the IPAM that will serve as the source of the IP address database for CIDR selection. The IPAM must be in the Advanced tier to use this feature.</p>",
         "CreateIpamScopeRequest$IpamId": "<p>The ID of the IPAM for which you're creating this scope.</p>",
         "DeleteIpamRequest$IpamId": "<p>The ID of the IPAM to delete.</p>",
         "DeprovisionIpamByoasnRequest$IpamId": "<p>The IPAM ID.</p>",
         "Ipam$IpamId": "<p>The ID of the IPAM.</p>",
         "IpamExternalResourceVerificationToken$IpamId": "<p>The ID of the IPAM that created the token.</p>",
+        "IpamPolicy$IpamId": "<p>The ID of the IPAM this policy belongs to.</p>",
         "IpamResourceCidr$IpamId": "<p>The IPAM ID for an IPAM resource.</p>",
         "IpamResourceDiscoveryAssociation$IpamId": "<p>The IPAM ID.</p>",
         "ModifyIpamRequest$IpamId": "<p>The ID of the IPAM you want to modify.</p>",
@@ -15191,6 +15334,7 @@
       "base": null,
       "refs": {
         "DescribeIpamExternalResourceVerificationTokensRequest$MaxResults": "<p>The maximum number of tokens to return in one page of results.</p>",
+        "DescribeIpamPoliciesRequest$MaxResults": "<p>The maximum number of results to return in a single call.</p>",
         "DescribeIpamPoolsRequest$MaxResults": "<p>The maximum number of results to return in the request.</p>",
         "DescribeIpamPrefixListResolverTargetsRequest$MaxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination\">Pagination</a>.</p>",
         "DescribeIpamPrefixListResolversRequest$MaxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination\">Pagination</a>.</p>",
@@ -15201,6 +15345,8 @@
         "GetIpamDiscoveredAccountsRequest$MaxResults": "<p>The maximum number of discovered accounts to return in one page of results.</p>",
         "GetIpamDiscoveredPublicAddressesRequest$MaxResults": "<p>The maximum number of IPAM discovered public addresses to return in one page of results.</p>",
         "GetIpamDiscoveredResourceCidrsRequest$MaxResults": "<p>The maximum number of discovered resource CIDRs to return in one page of results.</p>",
+        "GetIpamPolicyAllocationRulesRequest$MaxResults": "<p>The maximum number of results to return in a single call.</p>",
+        "GetIpamPolicyOrganizationTargetsRequest$MaxResults": "<p>The maximum number of results to return in a single call.</p>",
         "GetIpamPoolCidrsRequest$MaxResults": "<p>The maximum number of results to return in the request.</p>",
         "GetIpamPrefixListResolverRulesRequest$MaxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination\">Pagination</a>.</p>",
         "GetIpamPrefixListResolverVersionEntriesRequest$MaxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination\">Pagination</a>.</p>",
@@ -15266,6 +15412,104 @@
       "refs": {
         "IpamAddressHistoryRecord$ResourceOverlapStatus": "<p>The overlap status of an IPAM resource. The overlap status tells you if the CIDR for a resource overlaps with another CIDR in the scope. For more information on overlap statuses, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/monitor-cidr-compliance-ipam.html\">Monitor CIDR usage by resource</a> in the <i>Amazon VPC IPAM User Guide</i>.</p>",
         "IpamResourceCidr$OverlapStatus": "<p>The overlap status of an IPAM resource. The overlap status tells you if the CIDR for a resource overlaps with another CIDR in the scope. For more information on overlap statuses, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/monitor-cidr-compliance-ipam.html\">Monitor CIDR usage by resource</a> in the <i>Amazon VPC IPAM User Guide</i>.</p>"
+      }
+    },
+    "IpamPolicy": {
+      "base": "<p>Information about an IPAM policy.</p> <p>An IPAM policy is a set of rules that define how public IPv4 addresses from IPAM pools are allocated to Amazon Web Services resources. Each rule maps an Amazon Web Services service to IPAM pools that the service will use to get IP addresses. A single policy can have multiple rules and be applied to multiple Amazon Web Services Regions. If the IPAM pool run out of addresses then the services fallback to Amazon-provided IP addresses. A policy can be applied to an individual Amazon Web Services account or an entity within Amazon Web Services Organizations.</p>",
+      "refs": {
+        "CreateIpamPolicyResult$IpamPolicy": "<p>Information about the created IPAM policy.</p> <p>An IPAM policy is a set of rules that define how public IPv4 addresses from IPAM pools are allocated to Amazon Web Services resources. Each rule maps an Amazon Web Services service to IPAM pools that the service will use to get IP addresses. A single policy can have multiple rules and be applied to multiple Amazon Web Services Regions. If the IPAM pool run out of addresses then the services fallback to Amazon-provided IP addresses. A policy can be applied to an individual Amazon Web Services account or an entity within Amazon Web Services Organizations.</p>",
+        "DeleteIpamPolicyResult$IpamPolicy": "<p>Information about the deleted IPAM policy.</p> <p>An IPAM policy is a set of rules that define how public IPv4 addresses from IPAM pools are allocated to Amazon Web Services resources. Each rule maps an Amazon Web Services service to IPAM pools that the service will use to get IP addresses. A single policy can have multiple rules and be applied to multiple Amazon Web Services Regions. If the IPAM pool run out of addresses then the services fallback to Amazon-provided IP addresses. A policy can be applied to an individual Amazon Web Services account or an entity within Amazon Web Services Organizations.</p>",
+        "IpamPolicySet$member": null
+      }
+    },
+    "IpamPolicyAllocationRule": {
+      "base": "<p>Information about an IPAM policy allocation rule.</p> <p>Allocation rules are optional configurations within an IPAM policy that map Amazon Web Services resource types to specific IPAM pools. If no rules are defined, the resource types default to using Amazon-provided IP addresses.</p>",
+      "refs": {
+        "IpamPolicyAllocationRuleList$member": null
+      }
+    },
+    "IpamPolicyAllocationRuleList": {
+      "base": null,
+      "refs": {
+        "IpamPolicyDocument$AllocationRules": "<p>The allocation rules in the IPAM policy document.</p> <p>Allocation rules are optional configurations within an IPAM policy that map Amazon Web Services resource types to specific IPAM pools. If no rules are defined, the resource types default to using Amazon-provided IP addresses.</p>"
+      }
+    },
+    "IpamPolicyAllocationRuleListRequest": {
+      "base": null,
+      "refs": {
+        "ModifyIpamPolicyAllocationRulesRequest$AllocationRules": "<p>The new allocation rules to apply to the IPAM policy.</p> <p>Allocation rules are optional configurations within an IPAM policy that map Amazon Web Services resource types to specific IPAM pools. If no rules are defined, the resource types default to using Amazon-provided IP addresses.</p>"
+      }
+    },
+    "IpamPolicyAllocationRuleRequest": {
+      "base": "<p>Information about a requested IPAM policy allocation rule.</p> <p>Allocation rules are optional configurations within an IPAM policy that map Amazon Web Services resource types to specific IPAM pools. If no rules are defined, the resource types default to using Amazon-provided IP addresses.</p>",
+      "refs": {
+        "IpamPolicyAllocationRuleListRequest$member": null
+      }
+    },
+    "IpamPolicyDocument": {
+      "base": "<p>Information about an IPAM policy.</p>",
+      "refs": {
+        "IpamPolicyDocumentSet$member": null,
+        "ModifyIpamPolicyAllocationRulesResult$IpamPolicyDocument": "<p>The modified IPAM policy containing the updated allocation rules.</p>"
+      }
+    },
+    "IpamPolicyDocumentSet": {
+      "base": null,
+      "refs": {
+        "GetIpamPolicyAllocationRulesResult$IpamPolicyDocuments": "<p>The IPAM policy documents containing the allocation rules.</p> <p>Allocation rules are optional configurations within an IPAM policy that map Amazon Web Services resource types to specific IPAM pools. If no rules are defined, the resource types default to using Amazon-provided IP addresses.</p>"
+      }
+    },
+    "IpamPolicyId": {
+      "base": null,
+      "refs": {
+        "DeleteIpamPolicyRequest$IpamPolicyId": "<p>The ID of the IPAM policy to delete.</p>",
+        "DisableIpamPolicyRequest$IpamPolicyId": "<p>The ID of the IPAM policy to disable.</p>",
+        "EnableIpamPolicyRequest$IpamPolicyId": "<p>The ID of the IPAM policy to enable.</p>",
+        "EnableIpamPolicyResult$IpamPolicyId": "<p>The ID of the IPAM policy that was enabled.</p>",
+        "GetEnabledIpamPolicyResult$IpamPolicyId": "<p>The ID of the enabled IPAM policy.</p>",
+        "GetIpamPolicyAllocationRulesRequest$IpamPolicyId": "<p>The ID of the IPAM policy for which to get allocation rules.</p>",
+        "GetIpamPolicyOrganizationTargetsRequest$IpamPolicyId": "<p>The ID of the IPAM policy for which to get Amazon Web Services Organizations targets.</p>",
+        "IpamPolicy$IpamPolicyId": "<p>The ID of the IPAM policy.</p>",
+        "IpamPolicyDocument$IpamPolicyId": "<p>The ID of the IPAM policy.</p>",
+        "ModifyIpamPolicyAllocationRulesRequest$IpamPolicyId": "<p>The ID of the IPAM policy whose allocation rules you want to modify.</p>"
+      }
+    },
+    "IpamPolicyManagedBy": {
+      "base": null,
+      "refs": {
+        "GetEnabledIpamPolicyResult$ManagedBy": "<p>The entity that manages the IPAM policy.</p>"
+      }
+    },
+    "IpamPolicyOrganizationTarget": {
+      "base": "<p>The Amazon Web Services Organizations target for an IPAM policy.</p>",
+      "refs": {
+        "IpamPolicyOrganizationTargetSet$member": null
+      }
+    },
+    "IpamPolicyOrganizationTargetSet": {
+      "base": null,
+      "refs": {
+        "GetIpamPolicyOrganizationTargetsResult$OrganizationTargets": "<p>The Amazon Web Services Organizations targets for an IPAM policy.</p>"
+      }
+    },
+    "IpamPolicyResourceType": {
+      "base": null,
+      "refs": {
+        "GetIpamPolicyAllocationRulesRequest$ResourceType": "<p>The resource type for which to get the allocation rules.</p> <p>The Amazon Web Services service or resource type that can use IP addresses through IPAM policies. Supported services and resource types include:</p> <ul> <li> <p>Elastic IP addresses</p> </li> </ul>",
+        "IpamPolicyDocument$ResourceType": "<p>The resource type of the IPAM policy document.</p> <p>The Amazon Web Services service or resource type that can use IP addresses through IPAM policies. Supported services and resource types include:</p> <ul> <li> <p>Elastic IP addresses</p> </li> </ul>",
+        "ModifyIpamPolicyAllocationRulesRequest$ResourceType": "<p>The resource type for which to modify the allocation rules.</p> <p>The Amazon Web Services service or resource type that can use IP addresses through IPAM policies. Supported services and resource types include:</p> <ul> <li> <p>Elastic IP addresses</p> </li> </ul>"
+      }
+    },
+    "IpamPolicySet": {
+      "base": null,
+      "refs": {
+        "DescribeIpamPoliciesResult$IpamPolicies": "<p>Information about the IPAM policies.</p> <p>An IPAM policy is a set of rules that define how public IPv4 addresses from IPAM pools are allocated to Amazon Web Services resources. Each rule maps an Amazon Web Services service to IPAM pools that the service will use to get IP addresses. A single policy can have multiple rules and be applied to multiple Amazon Web Services Regions. If the IPAM pool run out of addresses then the services fallback to Amazon-provided IP addresses. A policy can be applied to an individual Amazon Web Services account or an entity within Amazon Web Services Organizations.</p>"
+      }
+    },
+    "IpamPolicyState": {
+      "base": null,
+      "refs": {
+        "IpamPolicy$State": "<p>The state of the IPAM policy.</p>"
       }
     },
     "IpamPool": {
@@ -15379,6 +15623,8 @@
         "GetIpamPoolAllocationsRequest$IpamPoolId": "<p>The ID of the IPAM pool you want to see the allocations for.</p>",
         "GetIpamPoolCidrsRequest$IpamPoolId": "<p>The ID of the IPAM pool you want the CIDR for.</p>",
         "GetIpamResourceCidrsRequest$IpamPoolId": "<p>The ID of the IPAM pool that the resource is in.</p>",
+        "IpamPolicyAllocationRule$SourceIpamPoolId": "<p>The ID of the source IPAM pool for the allocation rule.</p> <p>An IPAM pool is a collection of IP addresses in IPAM that can be allocated to Amazon Web Services resources.</p>",
+        "IpamPolicyAllocationRuleRequest$SourceIpamPoolId": "<p>The ID of the source IPAM pool for the requested allocation rule.</p> <p>An IPAM pool is a collection of IP addresses in IPAM that can be allocated to Amazon Web Services resources.</p>",
         "IpamPool$IpamPoolId": "<p>The ID of the IPAM pool.</p>",
         "IpamPool$SourceIpamPoolId": "<p>The ID of the source IPAM pool. You can use this option to create an IPAM pool within an existing source pool.</p>",
         "IpamResourceCidr$IpamPoolId": "<p>The pool ID for an IPAM resource.</p>",
@@ -17911,6 +18157,16 @@
       "refs": {
       }
     },
+    "ModifyIpamPolicyAllocationRulesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyIpamPolicyAllocationRulesResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ModifyIpamPoolRequest": {
       "base": null,
       "refs": {
@@ -19177,16 +19433,18 @@
         "DescribeIpamByoasnRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribeIpamExternalResourceVerificationTokensRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribeIpamExternalResourceVerificationTokensResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "DescribeIpamPoliciesRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "DescribeIpamPoliciesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeIpamPoolsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribeIpamPoolsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeIpamPrefixListResolverTargetsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribeIpamPrefixListResolverTargetsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeIpamPrefixListResolversRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribeIpamPrefixListResolversResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
-        "DescribeIpamResourceDiscoveriesRequest$NextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
-        "DescribeIpamResourceDiscoveriesResult$NextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
+        "DescribeIpamResourceDiscoveriesRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "DescribeIpamResourceDiscoveriesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeIpamResourceDiscoveryAssociationsRequest$NextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
-        "DescribeIpamResourceDiscoveryAssociationsResult$NextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
+        "DescribeIpamResourceDiscoveryAssociationsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeIpamScopesRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribeIpamScopesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeIpamsRequest$NextToken": "<p>The token for the next page of results.</p>",
@@ -19230,6 +19488,10 @@
         "GetIpamDiscoveredPublicAddressesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "GetIpamDiscoveredResourceCidrsRequest$NextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
         "GetIpamDiscoveredResourceCidrsResult$NextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
+        "GetIpamPolicyAllocationRulesRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "GetIpamPolicyAllocationRulesResult$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
+        "GetIpamPolicyOrganizationTargetsRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "GetIpamPolicyOrganizationTargetsResult$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
         "GetIpamPoolAllocationsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "GetIpamPoolAllocationsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "GetIpamPoolCidrsRequest$NextToken": "<p>The token for the next page of results.</p>",
@@ -21301,6 +21563,7 @@
         "Ipam$IpamArn": "<p>The Amazon Resource Name (ARN) of the IPAM.</p>",
         "IpamExternalResourceVerificationToken$IpamExternalResourceVerificationTokenArn": "<p>Token ARN.</p>",
         "IpamExternalResourceVerificationToken$IpamArn": "<p>ARN of the IPAM that created the token.</p>",
+        "IpamPolicy$IpamPolicyArn": "<p>The Amazon Resource Name (ARN) of the IPAM policy.</p>",
         "IpamPool$IpamPoolArn": "<p>The Amazon Resource Name (ARN) of the IPAM pool.</p>",
         "IpamPool$IpamScopeArn": "<p>The ARN of the scope of the IPAM pool.</p>",
         "IpamPool$IpamArn": "<p>The ARN of the IPAM.</p>",
@@ -23555,6 +23818,7 @@
         "CreateInstanceEventWindowRequest$Name": "<p>The name of the event window.</p>",
         "CreateInstanceExportTaskRequest$Description": "<p>A description for the conversion task or the resource being exported. The maximum length is 255 characters.</p>",
         "CreateIpamExternalResourceVerificationTokenRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
+        "CreateIpamPolicyRequest$ClientToken": "<p>A unique, case-sensitive identifier to ensure the idempotency of the request.</p>",
         "CreateIpamPoolRequest$Locale": "<p>The locale for the pool should be one of the following:</p> <ul> <li> <p>An Amazon Web Services Region where you want this IPAM pool to be available for allocations.</p> </li> <li> <p>The network border group for an Amazon Web Services Local Zone where you want this IPAM pool to be available for allocations (<a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html#byoip-zone-avail\">supported Local Zones</a>). This option is only available for IPAM IPv4 pools in the public scope.</p> </li> </ul> <p>Possible values: Any Amazon Web Services Region or supported Amazon Web Services Local Zone. Default is <code>none</code> and means any locale.</p>",
         "CreateIpamPoolRequest$Description": "<p>A description for the IPAM pool.</p>",
         "CreateIpamPoolRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -24030,6 +24294,7 @@
         "DisableFastSnapshotRestoreSuccessItem$OwnerAlias": "<p>The Amazon Web Services owner alias that enabled fast snapshot restores on the snapshot. This is intended for future use.</p>",
         "DisableImageDeregistrationProtectionResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "DisableIpamOrganizationAdminAccountRequest$DelegatedAdminAccountId": "<p>The Organizations member account ID that you want to disable as IPAM account.</p>",
+        "DisableIpamPolicyRequest$OrganizationTargetId": "<p>The ID of the Amazon Web Services Organizations target for which to disable the IPAM policy. This parameter is required only when IPAM is integrated with Amazon Web Services Organizations. When IPAM is not integrated with Amazon Web Services Organizations, omit this parameter and the policy will be disabled for the current account.</p> <p>A target can be an individual Amazon Web Services account or an entity within an Amazon Web Services Organization to which an IPAM policy can be applied.</p>",
         "DisassociateClientVpnTargetNetworkRequest$AssociationId": "<p>The ID of the target network association.</p>",
         "DisassociateClientVpnTargetNetworkResult$AssociationId": "<p>The ID of the target network association.</p>",
         "DisassociateIpamByoasnRequest$Asn": "<p>A public 2-byte or 4-byte ASN.</p>",
@@ -24091,6 +24356,7 @@
         "EnableFastSnapshotRestoreSuccessItem$OwnerAlias": "<p>The Amazon Web Services owner alias that enabled fast snapshot restores on the snapshot. This is intended for future use.</p>",
         "EnableImageDeregistrationProtectionResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "EnableIpamOrganizationAdminAccountRequest$DelegatedAdminAccountId": "<p>The Organizations member account ID that you want to enable as the IPAM account.</p>",
+        "EnableIpamPolicyRequest$OrganizationTargetId": "<p>The ID of the Amazon Web Services Organizations target for which to enable the IPAM policy. This parameter is required only when IPAM is integrated with Amazon Web Services Organizations. When IPAM is not integrated with Amazon Web Services Organizations, omit this parameter and the policy will apply to the current account.</p> <p>A target can be an individual Amazon Web Services account or an entity within an Amazon Web Services Organization to which an IPAM policy can be applied.</p>",
         "EventInformation$EventDescription": "<p>The description of the event.</p>",
         "EventInformation$EventSubType": "<p>The event.</p> <p> <code>error</code> events:</p> <ul> <li> <p> <code>iamFleetRoleInvalid</code> - The EC2 Fleet or Spot Fleet does not have the required permissions either to launch or terminate an instance.</p> </li> <li> <p> <code>allLaunchSpecsTemporarilyBlacklisted</code> - None of the configurations are valid, and several attempts to launch instances have failed. For more information, see the description of the event.</p> </li> <li> <p> <code>spotInstanceCountLimitExceeded</code> - You've reached the limit on the number of Spot Instances that you can launch.</p> </li> <li> <p> <code>spotFleetRequestConfigurationInvalid</code> - The configuration is not valid. For more information, see the description of the event.</p> </li> </ul> <p> <code>fleetRequestChange</code> events:</p> <ul> <li> <p> <code>active</code> - The EC2 Fleet or Spot Fleet request has been validated and Amazon EC2 is attempting to maintain the target number of running instances.</p> </li> <li> <p> <code>deleted</code> (EC2 Fleet) / <code>cancelled</code> (Spot Fleet) - The EC2 Fleet is deleted or the Spot Fleet request is canceled and has no running instances. The EC2 Fleet or Spot Fleet will be deleted two days after its instances are terminated.</p> </li> <li> <p> <code>deleted_running</code> (EC2 Fleet) / <code>cancelled_running</code> (Spot Fleet) - The EC2 Fleet is deleted or the Spot Fleet request is canceled and does not launch additional instances. Its existing instances continue to run until they are interrupted or terminated. The request remains in this state until all instances are interrupted or terminated.</p> </li> <li> <p> <code>deleted_terminating</code> (EC2 Fleet) / <code>cancelled_terminating</code> (Spot Fleet) - The EC2 Fleet is deleted or the Spot Fleet request is canceled and its instances are terminating. The request remains in this state until all instances are terminated.</p> </li> <li> <p> <code>expired</code> - The EC2 Fleet or Spot Fleet request has expired. If the request was created with <code>TerminateInstancesWithExpiration</code> set, a subsequent <code>terminated</code> event indicates that the instances are terminated.</p> </li> <li> <p> <code>modify_in_progress</code> - The EC2 Fleet or Spot Fleet request is being modified. The request remains in this state until the modification is fully processed.</p> </li> <li> <p> <code>modify_succeeded</code> - The EC2 Fleet or Spot Fleet request was modified.</p> </li> <li> <p> <code>submitted</code> - The EC2 Fleet or Spot Fleet request is being evaluated and Amazon EC2 is preparing to launch the target number of instances.</p> </li> <li> <p> <code>progress</code> - The EC2 Fleet or Spot Fleet request is in the process of being fulfilled.</p> </li> </ul> <p> <code>instanceChange</code> events:</p> <ul> <li> <p> <code>launched</code> - A new instance was launched.</p> </li> <li> <p> <code>terminated</code> - An instance was terminated by the user.</p> </li> <li> <p> <code>termination_notified</code> - An instance termination notification was sent when a Spot Instance was terminated by Amazon EC2 during scale-down, when the target capacity of the fleet was modified down, for example, from a target capacity of 4 to a target capacity of 3.</p> </li> </ul> <p> <code>Information</code> events:</p> <ul> <li> <p> <code>fleetProgressHalted</code> - The price in every launch specification is not valid because it is below the Spot price (all the launch specifications have produced <code>launchSpecUnusable</code> events). A launch specification might become valid if the Spot price changes.</p> </li> <li> <p> <code>launchSpecTemporarilyBlacklisted</code> - The configuration is not valid and several attempts to launch instances have failed. For more information, see the description of the event.</p> </li> <li> <p> <code>launchSpecUnusable</code> - The price specified in a launch specification is not valid because it is below the Spot price for the requested Spot pools.</p> <p>Note: Even if a fleet with the <code>maintain</code> request type is in the process of being canceled, it may still publish a <code>launchSpecUnusable</code> event. This does not mean that the canceled fleet is attempting to launch a new instance.</p> </li> <li> <p> <code>registerWithLoadBalancersFailed</code> - An attempt to register instances with load balancers failed. For more information, see the description of the event.</p> </li> </ul>",
         "EventInformation$InstanceId": "<p>The ID of the instance. This information is available only for <code>instanceChange</code> events.</p>",
@@ -24223,6 +24489,7 @@
         "GetIpamDiscoveredAccountsRequest$DiscoveryRegion": "<p>The Amazon Web Services Region that the account information is returned from.</p>",
         "GetIpamDiscoveredPublicAddressesRequest$AddressRegion": "<p>The Amazon Web Services Region for the IP address.</p>",
         "GetIpamDiscoveredResourceCidrsRequest$ResourceRegion": "<p>A resource Region.</p>",
+        "GetIpamPolicyAllocationRulesRequest$Locale": "<p>The locale for which to get the allocation rules.</p>",
         "GetIpamResourceCidrsRequest$ResourceId": "<p>The ID of the resource.</p>",
         "GetIpamResourceCidrsRequest$ResourceOwner": "<p>The ID of the Amazon Web Services account that owns the resource.</p>",
         "GetManagedPrefixListAssociationsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
@@ -24517,6 +24784,11 @@
         "IpamExternalResourceVerificationToken$TokenName": "<p>Token name.</p>",
         "IpamOperatingRegion$RegionName": "<p>The name of the operating Region.</p>",
         "IpamOrganizationalUnitExclusion$OrganizationsEntityPath": "<p>An Amazon Web Services Organizations entity path. For more information on the entity path, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_last-accessed-view-data-orgs.html#access_policies_access-advisor-viewing-orgs-entity-path\">Understand the Amazon Web Services Organizations entity path</a> in the <i>Amazon Web Services Identity and Access Management User Guide</i>.</p>",
+        "IpamPolicy$OwnerId": "<p>The account ID that owns the IPAM policy.</p>",
+        "IpamPolicy$IpamPolicyRegion": "<p>The Region of the IPAM policy.</p>",
+        "IpamPolicy$StateMessage": "<p>A message about the state of the IPAM policy.</p>",
+        "IpamPolicyDocument$Locale": "<p>The locale of the IPAM policy document.</p>",
+        "IpamPolicyOrganizationTarget$OrganizationTargetId": "<p>The ID of a Amazon Web Services Organizations target for an IPAM policy.</p>",
         "IpamPool$OwnerId": "<p>The Amazon Web Services account ID of the owner of the IPAM pool.</p>",
         "IpamPool$IpamRegion": "<p>The Amazon Web Services Region of the IPAM pool.</p>",
         "IpamPool$Locale": "<p>The locale of the IPAM pool.</p> <p>The locale for the pool should be one of the following:</p> <ul> <li> <p>An Amazon Web Services Region where you want this IPAM pool to be available for allocations.</p> </li> <li> <p>The network border group for an Amazon Web Services Local Zone where you want this IPAM pool to be available for allocations (<a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html#byoip-zone-avail\">supported Local Zones</a>). This option is only available for IPAM IPv4 pools in the public scope.</p> </li> </ul> <p>If you choose an Amazon Web Services Region for locale that has not been configured as an operating Region for the IPAM, you'll get an error.</p>",
@@ -24720,6 +24992,7 @@
         "ModifyInstanceMaintenanceOptionsResult$InstanceId": "<p>The ID of the instance.</p>",
         "ModifyInstanceMetadataOptionsResult$InstanceId": "<p>The ID of the instance.</p>",
         "ModifyInstancePlacementRequest$HostResourceGroupArn": "<p>The ARN of the host resource group in which to place the instance. The instance must have a tenancy of <code>host</code> to specify this parameter.</p>",
+        "ModifyIpamPolicyAllocationRulesRequest$Locale": "<p>The locale for which to modify the allocation rules.</p>",
         "ModifyIpamPoolRequest$Description": "<p>The description of the IPAM pool you want to modify.</p>",
         "ModifyIpamPrefixListResolverRequest$Description": "<p>A new description for the IPAM prefix list resolver.</p>",
         "ModifyIpamPrefixListResolverTargetRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -24798,6 +25071,7 @@
         "NatGateway$NatGatewayId": "<p>The ID of the NAT gateway.</p>",
         "NatGateway$SubnetId": "<p>The ID of the subnet in which the NAT gateway is located.</p>",
         "NatGateway$VpcId": "<p>The ID of the VPC in which the NAT gateway is located.</p>",
+        "NatGateway$RouteTableId": "<p>For regional NAT gateways only, this is the ID of the NAT gateway.</p>",
         "NatGatewayAddress$AllocationId": "<p>[Public NAT gateway only] The allocation ID of the Elastic IP address that's associated with the NAT gateway.</p>",
         "NatGatewayAddress$NetworkInterfaceId": "<p>The ID of the network interface associated with the NAT gateway.</p>",
         "NatGatewayAddress$PrivateIp": "<p>The private IP address associated with the NAT gateway.</p>",
@@ -25973,6 +26247,7 @@
         "InternetGateway$Tags": "<p>Any tags assigned to the internet gateway.</p>",
         "Ipam$Tags": "<p>The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p>",
         "IpamExternalResourceVerificationToken$Tags": "<p>Token tags.</p>",
+        "IpamPolicy$Tags": "<p>The tags assigned to the IPAM policy.</p>",
         "IpamPool$Tags": "<p>The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p>",
         "IpamPrefixListResolver$Tags": "<p>The tags assigned to the IPAM prefix list resolver.</p>",
         "IpamPrefixListResolverTarget$Tags": "<p>The tags assigned to the IPAM prefix list resolver target.</p>",
@@ -26098,6 +26373,7 @@
         "CreateInstanceExportTaskRequest$TagSpecifications": "<p>The tags to apply to the export instance task during creation.</p>",
         "CreateInternetGatewayRequest$TagSpecifications": "<p>The tags to assign to the internet gateway.</p>",
         "CreateIpamExternalResourceVerificationTokenRequest$TagSpecifications": "<p>Token tags.</p>",
+        "CreateIpamPolicyRequest$TagSpecifications": "<p>The tags to assign to the IPAM policy.</p>",
         "CreateIpamPoolRequest$TagSpecifications": "<p>The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p>",
         "CreateIpamPrefixListResolverRequest$TagSpecifications": "<p>The tags to apply to the IPAM prefix list resolver during creation. Tags help you organize and manage your Amazon Web Services resources.</p>",
         "CreateIpamPrefixListResolverTargetRequest$TagSpecifications": "<p>The tags to apply to the IPAM prefix list resolver target during creation. Tags help you organize and manage your Amazon Web Services resources.</p>",
@@ -27730,6 +28006,7 @@
         "DescribeDeclarativePoliciesReportsRequest$ReportIds": "<p>One or more report IDs.</p>",
         "DescribeInstanceConnectEndpointsRequest$InstanceConnectEndpointIds": "<p>One or more EC2 Instance Connect Endpoint IDs.</p>",
         "DescribeIpamExternalResourceVerificationTokensRequest$IpamExternalResourceVerificationTokenIds": "<p>Verification token IDs.</p>",
+        "DescribeIpamPoliciesRequest$IpamPolicyIds": "<p>The IDs of the IPAM policies to describe.</p>",
         "DescribeIpamPoolsRequest$IpamPoolIds": "<p>The IDs of the IPAM pools you would like information on.</p>",
         "DescribeIpamPrefixListResolverTargetsRequest$IpamPrefixListResolverTargetIds": "<p>The IDs of the IPAM prefix list resolver Targets to describe. If not specified, all targets in your account are described.</p>",
         "DescribeIpamPrefixListResolversRequest$IpamPrefixListResolverIds": "<p>The IDs of the IPAM prefix list resolvers to describe. If not specified, all resolvers in your account are described.</p>",
@@ -28780,6 +29057,7 @@
         "CreateClientVpnEndpointRequest$VpcId": "<p>The ID of the VPC to associate with the Client VPN endpoint. If no security group IDs are specified in the request, the default security group for the VPC is applied.</p>",
         "CreateEgressOnlyInternetGatewayRequest$VpcId": "<p>The ID of the VPC for which to create the egress-only internet gateway.</p>",
         "CreateLocalGatewayRouteTableVpcAssociationRequest$VpcId": "<p>The ID of the VPC.</p>",
+        "CreateNatGatewayRequest$VpcId": "<p>The ID of the VPC where you want to create a regional NAT gateway.</p>",
         "CreateNetworkAclRequest$VpcId": "<p>The ID of the VPC.</p>",
         "CreateRouteTableRequest$VpcId": "<p>The ID of the VPC.</p>",
         "CreateSecurityGroupRequest$VpcId": "<p>The ID of the VPC. Required for a nondefault VPC.</p>",

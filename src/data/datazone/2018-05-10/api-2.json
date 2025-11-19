@@ -134,6 +134,44 @@
         {"shape":"UnauthorizedException"}
       ]
     },
+    "BatchGetAttributesMetadata":{
+      "name":"BatchGetAttributesMetadata",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/entities/{entityType}/{entityIdentifier}/attributes-metadata",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchGetAttributesMetadataInput"},
+      "output":{"shape":"BatchGetAttributesMetadataOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "BatchPutAttributesMetadata":{
+      "name":"BatchPutAttributesMetadata",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v2/domains/{domainIdentifier}/entities/{entityType}/{entityIdentifier}/attributes-metadata",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchPutAttributesMetadataInput"},
+      "output":{"shape":"BatchPutAttributesMetadataOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "CancelMetadataGenerationRun":{
       "name":"CancelMetadataGenerationRun",
       "http":{
@@ -3123,6 +3161,26 @@
       ],
       "idempotent":true
     },
+    "UpdateRootDomainUnitOwner":{
+      "name":"UpdateRootDomainUnitOwner",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/v2/domains/{domainIdentifier}/root-domain-unit-owner",
+        "responseCode":204
+      },
+      "input":{"shape":"UpdateRootDomainUnitOwnerInput"},
+      "output":{"shape":"UpdateRootDomainUnitOwnerOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "UpdateRule":{
       "name":"UpdateRule",
       "http":{
@@ -4024,6 +4082,58 @@
       "max":128,
       "min":1
     },
+    "AttributeEntityType":{
+      "type":"string",
+      "enum":[
+        "ASSET",
+        "LISTING"
+      ]
+    },
+    "AttributeError":{
+      "type":"structure",
+      "required":[
+        "attributeIdentifier",
+        "code",
+        "message"
+      ],
+      "members":{
+        "attributeIdentifier":{"shape":"AttributeIdentifier"},
+        "code":{"shape":"String"},
+        "message":{"shape":"String"}
+      }
+    },
+    "AttributeIdentifier":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "AttributeInput":{
+      "type":"structure",
+      "required":[
+        "attributeIdentifier",
+        "forms"
+      ],
+      "members":{
+        "attributeIdentifier":{"shape":"AttributeIdentifier"},
+        "forms":{"shape":"FormInputList"}
+      }
+    },
+    "Attributes":{
+      "type":"list",
+      "member":{"shape":"AttributeInput"},
+      "max":5,
+      "min":0
+    },
+    "AttributesErrors":{
+      "type":"list",
+      "member":{"shape":"AttributeError"}
+    },
+    "AttributesList":{
+      "type":"list",
+      "member":{"shape":"AttributeIdentifier"},
+      "max":5,
+      "min":1
+    },
     "AuthType":{
       "type":"string",
       "enum":[
@@ -4174,6 +4284,111 @@
       "max":512,
       "min":0,
       "pattern":"^\\S+$"
+    },
+    "BatchGetAttributeItems":{
+      "type":"list",
+      "member":{"shape":"BatchGetAttributeOutput"}
+    },
+    "BatchGetAttributeOutput":{
+      "type":"structure",
+      "required":["attributeIdentifier"],
+      "members":{
+        "attributeIdentifier":{"shape":"AttributeIdentifier"},
+        "forms":{"shape":"FormOutputList"}
+      }
+    },
+    "BatchGetAttributesMetadataInput":{
+      "type":"structure",
+      "required":[
+        "attributeIdentifiers",
+        "domainIdentifier",
+        "entityIdentifier",
+        "entityType"
+      ],
+      "members":{
+        "attributeIdentifiers":{
+          "shape":"AttributesList",
+          "location":"querystring",
+          "locationName":"attributeIdentifier"
+        },
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "entityIdentifier":{
+          "shape":"EntityId",
+          "location":"uri",
+          "locationName":"entityIdentifier"
+        },
+        "entityRevision":{
+          "shape":"Revision",
+          "location":"querystring",
+          "locationName":"entityRevision"
+        },
+        "entityType":{
+          "shape":"AttributeEntityType",
+          "location":"uri",
+          "locationName":"entityType"
+        }
+      }
+    },
+    "BatchGetAttributesMetadataOutput":{
+      "type":"structure",
+      "required":["errors"],
+      "members":{
+        "attributes":{"shape":"BatchGetAttributeItems"},
+        "errors":{"shape":"AttributesErrors"}
+      }
+    },
+    "BatchPutAttributeItems":{
+      "type":"list",
+      "member":{"shape":"BatchPutAttributeOutput"}
+    },
+    "BatchPutAttributeOutput":{
+      "type":"structure",
+      "required":["attributeIdentifier"],
+      "members":{
+        "attributeIdentifier":{"shape":"AttributeIdentifier"}
+      }
+    },
+    "BatchPutAttributesMetadataInput":{
+      "type":"structure",
+      "required":[
+        "attributes",
+        "domainIdentifier",
+        "entityIdentifier",
+        "entityType"
+      ],
+      "members":{
+        "attributes":{"shape":"Attributes"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "entityIdentifier":{
+          "shape":"EntityId",
+          "location":"uri",
+          "locationName":"entityIdentifier"
+        },
+        "entityType":{
+          "shape":"AttributeEntityType",
+          "location":"uri",
+          "locationName":"entityType"
+        }
+      }
+    },
+    "BatchPutAttributesMetadataOutput":{
+      "type":"structure",
+      "members":{
+        "attributes":{"shape":"BatchPutAttributeItems"},
+        "errors":{"shape":"AttributesErrors"}
+      }
     },
     "Boolean":{
       "type":"boolean",
@@ -9521,9 +9736,21 @@
         "ENABLED"
       ]
     },
+    "GlossaryTermEnforcementDetail":{
+      "type":"structure",
+      "members":{
+        "requiredGlossaryTermIds":{"shape":"GlossaryTermIdentifiers"}
+      }
+    },
     "GlossaryTermId":{
       "type":"string",
       "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+    },
+    "GlossaryTermIdentifiers":{
+      "type":"list",
+      "member":{"shape":"GlossaryTermId"},
+      "max":5,
+      "min":1
     },
     "GlossaryTermItem":{
       "type":"structure",
@@ -13519,6 +13746,7 @@
     "RuleDetail":{
       "type":"structure",
       "members":{
+        "glossaryTermEnforcementDetail":{"shape":"GlossaryTermEnforcementDetail"},
         "metadataFormEnforcementDetail":{"shape":"MetadataFormEnforcementDetail"}
       },
       "union":true
@@ -13586,7 +13814,10 @@
     },
     "RuleType":{
       "type":"string",
-      "enum":["METADATA_FORM_ENFORCEMENT"]
+      "enum":[
+        "METADATA_FORM_ENFORCEMENT",
+        "GLOSSARY_TERM_ENFORCEMENT"
+      ]
     },
     "RunIdentifier":{
       "type":"string",
@@ -15813,6 +16044,31 @@
         "projectResourceTagsDescription":{"shape":"Description"},
         "status":{"shape":"Status"}
       }
+    },
+    "UpdateRootDomainUnitOwnerInput":{
+      "type":"structure",
+      "required":[
+        "currentOwner",
+        "domainIdentifier",
+        "newOwner"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "currentOwner":{"shape":"UserIdentifier"},
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "newOwner":{"shape":"String"}
+      }
+    },
+    "UpdateRootDomainUnitOwnerOutput":{
+      "type":"structure",
+      "members":{}
     },
     "UpdateRuleInput":{
       "type":"structure",

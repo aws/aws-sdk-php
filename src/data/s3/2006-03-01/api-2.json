@@ -1563,6 +1563,12 @@
         "DEEP_ARCHIVE_ACCESS"
       ]
     },
+    "BlockedEncryptionTypes":{
+      "type":"structure",
+      "members":{
+        "EncryptionType":{"shape":"EncryptionTypeList"}
+      }
+    },
     "Body":{"type":"blob"},
     "Bucket":{
       "type":"structure",
@@ -3456,6 +3462,21 @@
       "members":{
         "ReplicaKmsKeyID":{"shape":"ReplicaKmsKeyID"}
       }
+    },
+    "EncryptionType":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "SSE-C"
+      ]
+    },
+    "EncryptionTypeList":{
+      "type":"list",
+      "member":{
+        "shape":"EncryptionType",
+        "locationName":"EncryptionType"
+      },
+      "flattened":true
     },
     "EncryptionTypeMismatch":{
       "type":"structure",
@@ -9199,7 +9220,8 @@
       "type":"structure",
       "members":{
         "ApplyServerSideEncryptionByDefault":{"shape":"ServerSideEncryptionByDefault"},
-        "BucketKeyEnabled":{"shape":"BucketKeyEnabled"}
+        "BucketKeyEnabled":{"shape":"BucketKeyEnabled"},
+        "BlockedEncryptionTypes":{"shape":"BlockedEncryptionTypes"}
       }
     },
     "ServerSideEncryptionRules":{

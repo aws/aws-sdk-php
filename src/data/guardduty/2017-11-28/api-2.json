@@ -599,6 +599,21 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetMalwareScan":{
+      "name":"GetMalwareScan",
+      "http":{
+        "method":"GET",
+        "requestUri":"/malware-scan/{scanId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetMalwareScanRequest"},
+      "output":{"shape":"GetMalwareScanResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetMalwareScanSettings":{
       "name":"GetMalwareScanSettings",
       "http":{
@@ -850,6 +865,20 @@
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerErrorException"}
+      ]
+    },
+    "ListMalwareScans":{
+      "name":"ListMalwareScans",
+      "http":{
+        "method":"POST",
+        "requestUri":"/malware-scan",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMalwareScansRequest"},
+      "output":{"shape":"ListMalwareScansResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
         {"shape":"InternalServerErrorException"}
       ]
     },
@@ -1545,6 +1574,19 @@
       "type":"list",
       "member":{"shape":"Actor"},
       "max":400
+    },
+    "AdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "VersionId":{
+          "shape":"NonEmptyString",
+          "locationName":"versionId"
+        },
+        "DeviceName":{
+          "shape":"NonEmptyString",
+          "locationName":"deviceName"
+        }
+      }
     },
     "AdditionalSequenceTypes":{
       "type":"list",
@@ -3389,6 +3431,13 @@
         }
       }
     },
+    "DetectionSource":{
+      "type":"string",
+      "enum":[
+        "AMAZON",
+        "BITDEFENDER"
+      ]
+    },
     "DetectorAdditionalConfiguration":{
       "type":"structure",
       "members":{
@@ -3631,6 +3680,24 @@
       }
     },
     "Double":{"type":"double"},
+    "EbsSnapshot":{
+      "type":"structure",
+      "members":{
+        "DeviceName":{
+          "shape":"NonEmptyString",
+          "locationName":"deviceName"
+        }
+      }
+    },
+    "EbsSnapshotDetails":{
+      "type":"structure",
+      "members":{
+        "SnapshotArn":{
+          "shape":"String",
+          "locationName":"snapshotArn"
+        }
+      }
+    },
     "EbsSnapshotPreservation":{
       "type":"string",
       "enum":[
@@ -3694,6 +3761,15 @@
         "Reason":{
           "shape":"String",
           "locationName":"reason"
+        }
+      }
+    },
+    "Ec2ImageDetails":{
+      "type":"structure",
+      "members":{
+        "ImageArn":{
+          "shape":"String",
+          "locationName":"imageArn"
         }
       }
     },
@@ -4691,6 +4767,127 @@
         }
       }
     },
+    "GetMalwareScanRequest":{
+      "type":"structure",
+      "required":["ScanId"],
+      "members":{
+        "ScanId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"scanId"
+        }
+      }
+    },
+    "GetMalwareScanResponse":{
+      "type":"structure",
+      "members":{
+        "ScanId":{
+          "shape":"NonEmptyString",
+          "locationName":"scanId"
+        },
+        "DetectorId":{
+          "shape":"DetectorId",
+          "locationName":"detectorId"
+        },
+        "AdminDetectorId":{
+          "shape":"DetectorId",
+          "locationName":"adminDetectorId"
+        },
+        "ResourceArn":{
+          "shape":"NonEmptyString",
+          "locationName":"resourceArn"
+        },
+        "ResourceType":{
+          "shape":"MalwareProtectionResourceType",
+          "locationName":"resourceType"
+        },
+        "ScannedResourcesCount":{
+          "shape":"NonNegativeInteger",
+          "locationName":"scannedResourcesCount"
+        },
+        "SkippedResourcesCount":{
+          "shape":"NonNegativeInteger",
+          "locationName":"skippedResourcesCount"
+        },
+        "FailedResourcesCount":{
+          "shape":"NonNegativeInteger",
+          "locationName":"failedResourcesCount"
+        },
+        "ScannedResources":{
+          "shape":"ScannedResources",
+          "locationName":"scannedResources"
+        },
+        "ScanConfiguration":{
+          "shape":"ScanConfiguration",
+          "locationName":"scanConfiguration"
+        },
+        "ScanCategory":{
+          "shape":"ScanCategory",
+          "locationName":"scanCategory"
+        },
+        "ScanStatus":{
+          "shape":"MalwareProtectionScanStatus",
+          "locationName":"scanStatus"
+        },
+        "ScanStatusReason":{
+          "shape":"ScanStatusReason",
+          "locationName":"scanStatusReason"
+        },
+        "ScanType":{
+          "shape":"MalwareProtectionScanType",
+          "locationName":"scanType"
+        },
+        "ScanStartedAt":{
+          "shape":"Timestamp",
+          "locationName":"scanStartedAt"
+        },
+        "ScanCompletedAt":{
+          "shape":"Timestamp",
+          "locationName":"scanCompletedAt"
+        },
+        "ScanResultDetails":{
+          "shape":"GetMalwareScanResultDetails",
+          "locationName":"scanResultDetails"
+        }
+      }
+    },
+    "GetMalwareScanResultDetails":{
+      "type":"structure",
+      "members":{
+        "ScanResultStatus":{
+          "shape":"ScanResultStatus",
+          "locationName":"scanResultStatus"
+        },
+        "SkippedFileCount":{
+          "shape":"PositiveLong",
+          "locationName":"skippedFileCount"
+        },
+        "FailedFileCount":{
+          "shape":"PositiveLong",
+          "locationName":"failedFileCount"
+        },
+        "ThreatFoundFileCount":{
+          "shape":"PositiveLong",
+          "locationName":"threatFoundFileCount"
+        },
+        "TotalFileCount":{
+          "shape":"PositiveLong",
+          "locationName":"totalFileCount"
+        },
+        "TotalBytes":{
+          "shape":"PositiveLong",
+          "locationName":"totalBytes"
+        },
+        "UniqueThreatCount":{
+          "shape":"PositiveLong",
+          "locationName":"uniqueThreatCount"
+        },
+        "Threats":{
+          "shape":"ScanResultThreats",
+          "locationName":"threats"
+        }
+      }
+    },
     "GetMalwareScanSettingsRequest":{
       "type":"structure",
       "required":["DetectorId"],
@@ -5171,6 +5368,16 @@
         }
       }
     },
+    "IncrementalScanDetails":{
+      "type":"structure",
+      "required":["BaselineResourceArn"],
+      "members":{
+        "BaselineResourceArn":{
+          "shape":"NonEmptyString",
+          "locationName":"baselineResourceArn"
+        }
+      }
+    },
     "Indicator":{
       "type":"structure",
       "required":["Key"],
@@ -5418,6 +5625,31 @@
       "member":{"shape":"String"},
       "max":50,
       "min":0
+    },
+    "ItemDetails":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{
+          "shape":"NonEmptyString",
+          "locationName":"resourceArn"
+        },
+        "ItemPath":{
+          "shape":"NonEmptyString",
+          "locationName":"itemPath"
+        },
+        "Hash":{
+          "shape":"String",
+          "locationName":"hash"
+        },
+        "AdditionalInfo":{
+          "shape":"AdditionalInfo",
+          "locationName":"additionalInfo"
+        }
+      }
+    },
+    "ItemDetailsList":{
+      "type":"list",
+      "member":{"shape":"ItemDetails"}
     },
     "ItemPath":{
       "type":"structure",
@@ -6028,6 +6260,84 @@
         }
       }
     },
+    "ListMalwareScansCriterionKey":{
+      "type":"string",
+      "enum":[
+        "RESOURCE_ARN",
+        "SCAN_ID",
+        "ACCOUNT_ID",
+        "GUARDDUTY_FINDING_ID",
+        "RESOURCE_TYPE",
+        "SCAN_START_TIME",
+        "SCAN_STATUS",
+        "SCAN_TYPE"
+      ]
+    },
+    "ListMalwareScansFilterCriteria":{
+      "type":"structure",
+      "members":{
+        "ListMalwareScansFilterCriterion":{
+          "shape":"ListMalwareScansFilterCriterionList",
+          "locationName":"filterCriterion"
+        }
+      }
+    },
+    "ListMalwareScansFilterCriterion":{
+      "type":"structure",
+      "members":{
+        "ListMalwareScansCriterionKey":{
+          "shape":"ListMalwareScansCriterionKey",
+          "locationName":"criterionKey"
+        },
+        "FilterCondition":{
+          "shape":"FilterCondition",
+          "locationName":"filterCondition"
+        }
+      }
+    },
+    "ListMalwareScansFilterCriterionList":{
+      "type":"list",
+      "member":{"shape":"ListMalwareScansFilterCriterion"},
+      "max":1,
+      "min":0
+    },
+    "ListMalwareScansRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "FilterCriteria":{
+          "shape":"ListMalwareScansFilterCriteria",
+          "locationName":"filterCriteria"
+        },
+        "SortCriteria":{
+          "shape":"SortCriteria",
+          "locationName":"sortCriteria"
+        }
+      }
+    },
+    "ListMalwareScansResponse":{
+      "type":"structure",
+      "required":["Scans"],
+      "members":{
+        "Scans":{
+          "shape":"MalwareScans",
+          "locationName":"scans"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
     "ListMembersRequest":{
       "type":"structure",
       "required":["DetectorId"],
@@ -6344,6 +6654,19 @@
         }
       }
     },
+    "MalwareProtectionFindingsScanConfiguration":{
+      "type":"structure",
+      "members":{
+        "TriggerType":{
+          "shape":"TriggerType",
+          "locationName":"triggerType"
+        },
+        "IncrementalScanDetails":{
+          "shape":"IncrementalScanDetails",
+          "locationName":"incrementalScanDetails"
+        }
+      }
+    },
     "MalwareProtectionPlanActions":{
       "type":"structure",
       "members":{
@@ -6415,14 +6738,106 @@
       "type":"list",
       "member":{"shape":"MalwareProtectionPlanSummary"}
     },
+    "MalwareProtectionResourceType":{
+      "type":"string",
+      "enum":[
+        "EBS_RECOVERY_POINT",
+        "EBS_SNAPSHOT",
+        "EBS_VOLUME",
+        "EC2_AMI",
+        "EC2_INSTANCE",
+        "EC2_RECOVERY_POINT",
+        "S3_RECOVERY_POINT",
+        "S3_BUCKET"
+      ]
+    },
+    "MalwareProtectionScanStatus":{
+      "type":"string",
+      "enum":[
+        "RUNNING",
+        "COMPLETED",
+        "COMPLETED_WITH_ISSUES",
+        "FAILED",
+        "SKIPPED"
+      ]
+    },
+    "MalwareProtectionScanType":{
+      "type":"string",
+      "enum":[
+        "BACKUP_INITIATED",
+        "ON_DEMAND",
+        "GUARDDUTY_INITIATED"
+      ]
+    },
+    "MalwareScan":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{
+          "shape":"NonEmptyString",
+          "locationName":"resourceArn"
+        },
+        "ResourceType":{
+          "shape":"MalwareProtectionResourceType",
+          "locationName":"resourceType"
+        },
+        "ScanId":{
+          "shape":"NonEmptyString",
+          "locationName":"scanId"
+        },
+        "ScanStatus":{
+          "shape":"MalwareProtectionScanStatus",
+          "locationName":"scanStatus"
+        },
+        "ScanResultStatus":{
+          "shape":"ScanResultStatus",
+          "locationName":"scanResultStatus"
+        },
+        "ScanType":{
+          "shape":"MalwareProtectionScanType",
+          "locationName":"scanType"
+        },
+        "ScanStartedAt":{
+          "shape":"Timestamp",
+          "locationName":"scanStartedAt"
+        },
+        "ScanCompletedAt":{
+          "shape":"Timestamp",
+          "locationName":"scanCompletedAt"
+        }
+      }
+    },
     "MalwareScanDetails":{
       "type":"structure",
       "members":{
         "Threats":{
           "shape":"Threats",
           "locationName":"threats"
+        },
+        "ScanId":{
+          "shape":"String",
+          "locationName":"scanId"
+        },
+        "ScanType":{
+          "shape":"MalwareProtectionScanType",
+          "locationName":"scanType"
+        },
+        "ScanCategory":{
+          "shape":"ScanCategory",
+          "locationName":"scanCategory"
+        },
+        "ScanConfiguration":{
+          "shape":"MalwareProtectionFindingsScanConfiguration",
+          "locationName":"scanConfiguration"
+        },
+        "UniqueThreatCount":{
+          "shape":"Integer",
+          "locationName":"uniqueThreatCount"
         }
       }
+    },
+    "MalwareScans":{
+      "type":"list",
+      "member":{"shape":"MalwareScan"}
     },
     "ManagementType":{
       "type":"string",
@@ -6820,6 +7235,10 @@
       "type":"string",
       "max":200,
       "min":1
+    },
+    "NonNegativeInteger":{
+      "type":"integer",
+      "min":0
     },
     "NotEquals":{
       "type":"list",
@@ -7537,6 +7956,29 @@
         "LoginAttributes":{"shape":"LoginAttributes"}
       }
     },
+    "RecoveryPoint":{
+      "type":"structure",
+      "required":["BackupVaultName"],
+      "members":{
+        "BackupVaultName":{
+          "shape":"String",
+          "locationName":"backupVaultName"
+        }
+      }
+    },
+    "RecoveryPointDetails":{
+      "type":"structure",
+      "members":{
+        "RecoveryPointArn":{
+          "shape":"String",
+          "locationName":"recoveryPointArn"
+        },
+        "BackupVaultName":{
+          "shape":"String",
+          "locationName":"backupVaultName"
+        }
+      }
+    },
     "RemoteAccountDetails":{
       "type":"structure",
       "members":{
@@ -7646,12 +8088,24 @@
         "LambdaDetails":{
           "shape":"LambdaDetails",
           "locationName":"lambdaDetails"
+        },
+        "EbsSnapshotDetails":{
+          "shape":"EbsSnapshotDetails",
+          "locationName":"ebsSnapshotDetails"
+        },
+        "Ec2ImageDetails":{
+          "shape":"Ec2ImageDetails",
+          "locationName":"ec2ImageDetails"
+        },
+        "RecoveryPointDetails":{
+          "shape":"RecoveryPointDetails",
+          "locationName":"recoveryPointDetails"
         }
       }
     },
     "ResourceArn":{
       "type":"string",
-      "pattern":"^arn:[A-Za-z-]+:[A-Za-z0-9]+:[A-Za-z0-9-]+:\\d+:(([A-Za-z0-9-]+)[:\\/])?[A-Za-z0-9-]*$"
+      "pattern":"^arn:[A-Za-z-]+:[A-Za-z0-9]+:[A-Za-z0-9-]+:\\d+:(([A-Za-z0-9-]+)[:\\/])?[A-Za-z0-9:-]*$"
     },
     "ResourceData":{
       "type":"structure",
@@ -8166,6 +8620,13 @@
         }
       }
     },
+    "ScanCategory":{
+      "type":"string",
+      "enum":[
+        "FULL_SCAN",
+        "INCREMENTAL_SCAN"
+      ]
+    },
     "ScanCondition":{
       "type":"structure",
       "required":["MapEquals"],
@@ -8187,6 +8648,36 @@
         "Value":{
           "shape":"TagValue",
           "locationName":"value"
+        }
+      }
+    },
+    "ScanConfiguration":{
+      "type":"structure",
+      "members":{
+        "Role":{
+          "shape":"NonEmptyString",
+          "locationName":"role"
+        },
+        "TriggerDetails":{
+          "shape":"TriggerDetails",
+          "locationName":"triggerDetails"
+        },
+        "IncrementalScanDetails":{
+          "shape":"IncrementalScanDetails",
+          "locationName":"incrementalScanDetails"
+        },
+        "RecoveryPoint":{
+          "shape":"ScanConfigurationRecoveryPoint",
+          "locationName":"recoveryPoint"
+        }
+      }
+    },
+    "ScanConfigurationRecoveryPoint":{
+      "type":"structure",
+      "members":{
+        "BackupVaultName":{
+          "shape":"NonEmptyString",
+          "locationName":"backupVaultName"
         }
       }
     },
@@ -8288,6 +8779,42 @@
         }
       }
     },
+    "ScanResultStatus":{
+      "type":"string",
+      "enum":[
+        "NO_THREATS_FOUND",
+        "THREATS_FOUND"
+      ]
+    },
+    "ScanResultThreat":{
+      "type":"structure",
+      "members":{
+        "Name":{
+          "shape":"NonEmptyString",
+          "locationName":"name"
+        },
+        "Source":{
+          "shape":"DetectionSource",
+          "locationName":"source"
+        },
+        "Count":{
+          "shape":"PositiveLong",
+          "locationName":"count"
+        },
+        "Hash":{
+          "shape":"NonEmptyString",
+          "locationName":"hash"
+        },
+        "ItemDetails":{
+          "shape":"ItemDetailsList",
+          "locationName":"itemDetails"
+        }
+      }
+    },
+    "ScanResultThreats":{
+      "type":"list",
+      "member":{"shape":"ScanResultThreat"}
+    },
     "ScanStatus":{
       "type":"string",
       "enum":[
@@ -8295,6 +8822,27 @@
         "COMPLETED",
         "FAILED",
         "SKIPPED"
+      ]
+    },
+    "ScanStatusReason":{
+      "type":"string",
+      "enum":[
+        "ACCESS_DENIED",
+        "RESOURCE_NOT_FOUND",
+        "SNAPSHOT_SIZE_LIMIT_EXCEEDED",
+        "RESOURCE_UNAVAILABLE",
+        "INCONSISTENT_SOURCE",
+        "INCREMENTAL_NO_DIFFERENCE",
+        "NO_EBS_VOLUMES_FOUND",
+        "UNSUPPORTED_PRODUCT_CODE_TYPE",
+        "AMI_SNAPSHOT_LIMIT_EXCEEDED",
+        "UNRELATED_RESOURCES",
+        "BASE_RESOURCE_NOT_SCANNED",
+        "BASE_CREATED_AFTER_TARGET",
+        "UNSUPPORTED_FOR_INCREMENTAL",
+        "UNSUPPORTED_AMI",
+        "UNSUPPORTED_SNAPSHOT",
+        "UNSUPPORTED_COMPOSITE_RECOVERY_POINT"
       ]
     },
     "ScanThreatName":{
@@ -8345,6 +8893,48 @@
           "locationName":"volumes"
         }
       }
+    },
+    "ScannedResource":{
+      "type":"structure",
+      "members":{
+        "ScannedResourceArn":{
+          "shape":"NonEmptyString",
+          "locationName":"scannedResourceArn"
+        },
+        "ScannedResourceType":{
+          "shape":"MalwareProtectionResourceType",
+          "locationName":"scannedResourceType"
+        },
+        "ScannedResourceStatus":{
+          "shape":"MalwareProtectionScanStatus",
+          "locationName":"scannedResourceStatus"
+        },
+        "ScanStatusReason":{
+          "shape":"ScanStatusReason",
+          "locationName":"scanStatusReason"
+        },
+        "ResourceDetails":{
+          "shape":"ScannedResourceDetails",
+          "locationName":"resourceDetails"
+        }
+      }
+    },
+    "ScannedResourceDetails":{
+      "type":"structure",
+      "members":{
+        "EbsVolume":{
+          "shape":"VolumeDetail",
+          "locationName":"ebsVolume"
+        },
+        "EbsSnapshot":{
+          "shape":"EbsSnapshot",
+          "locationName":"ebsSnapshot"
+        }
+      }
+    },
+    "ScannedResources":{
+      "type":"list",
+      "member":{"shape":"ScannedResource"}
     },
     "Scans":{
       "type":"list",
@@ -8681,6 +9271,24 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "StartMalwareScanConfiguration":{
+      "type":"structure",
+      "required":["Role"],
+      "members":{
+        "Role":{
+          "shape":"NonEmptyString",
+          "locationName":"role"
+        },
+        "IncrementalScanDetails":{
+          "shape":"IncrementalScanDetails",
+          "locationName":"incrementalScanDetails"
+        },
+        "RecoveryPoint":{
+          "shape":"RecoveryPoint",
+          "locationName":"recoveryPoint"
+        }
+      }
+    },
     "StartMalwareScanRequest":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -8688,6 +9296,15 @@
         "ResourceArn":{
           "shape":"ResourceArn",
           "locationName":"resourceArn"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "locationName":"clientToken"
+        },
+        "ScanConfiguration":{
+          "shape":"StartMalwareScanConfiguration",
+          "locationName":"scanConfiguration"
         }
       }
     },
@@ -8837,6 +9454,18 @@
         "ItemPaths":{
           "shape":"ItemPaths",
           "locationName":"itemPaths"
+        },
+        "Count":{
+          "shape":"Long",
+          "locationName":"count"
+        },
+        "Hash":{
+          "shape":"String",
+          "locationName":"hash"
+        },
+        "ItemDetails":{
+          "shape":"ItemDetailsList",
+          "locationName":"itemDetails"
         }
       }
     },
@@ -8989,8 +9618,19 @@
         "Description":{
           "shape":"NonEmptyString",
           "locationName":"description"
+        },
+        "TriggerType":{
+          "shape":"TriggerType",
+          "locationName":"triggerType"
         }
       }
+    },
+    "TriggerType":{
+      "type":"string",
+      "enum":[
+        "BACKUP",
+        "GUARDDUTY"
+      ]
     },
     "TrustedEntitySetFormat":{
       "type":"string",

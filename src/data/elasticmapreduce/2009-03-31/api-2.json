@@ -1017,6 +1017,17 @@
         "Dimensions":{"shape":"MetricDimensionList"}
       }
     },
+    "CloudWatchLogConfiguration":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "LogGroupName":{"shape":"XmlString"},
+        "LogStreamNamePrefix":{"shape":"XmlString"},
+        "EncryptionKeyArn":{"shape":"XmlString"},
+        "LogTypes":{"shape":"LogTypesMap"}
+      }
+    },
     "Cluster":{
       "type":"structure",
       "members":{
@@ -1054,7 +1065,8 @@
         "OSReleaseLabel":{"shape":"String"},
         "EbsRootVolumeIops":{"shape":"Integer"},
         "EbsRootVolumeThroughput":{"shape":"Integer"},
-        "ExtendedSupport":{"shape":"BooleanObject"}
+        "ExtendedSupport":{"shape":"BooleanObject"},
+        "MonitoringConfiguration":{"shape":"MonitoringConfiguration"}
       }
     },
     "ClusterId":{"type":"string"},
@@ -2463,6 +2475,11 @@
         "Marker":{"shape":"String"}
       }
     },
+    "LogTypesMap":{
+      "type":"map",
+      "key":{"shape":"XmlString"},
+      "value":{"shape":"XmlStringList"}
+    },
     "Long":{"type":"long"},
     "ManagedScalingPolicy":{
       "type":"structure",
@@ -2528,6 +2545,12 @@
       "members":{
         "ClusterId":{"shape":"ClusterId"},
         "InstanceGroups":{"shape":"InstanceGroupModifyConfigList"}
+      }
+    },
+    "MonitoringConfiguration":{
+      "type":"structure",
+      "members":{
+        "CloudWatchLogConfiguration":{"shape":"CloudWatchLogConfiguration"}
       }
     },
     "NewSupportedProductsList":{
@@ -2942,7 +2965,8 @@
         "OSReleaseLabel":{"shape":"XmlStringMaxLen256"},
         "EbsRootVolumeIops":{"shape":"Integer"},
         "EbsRootVolumeThroughput":{"shape":"Integer"},
-        "ExtendedSupport":{"shape":"BooleanObject"}
+        "ExtendedSupport":{"shape":"BooleanObject"},
+        "MonitoringConfiguration":{"shape":"MonitoringConfiguration"}
       }
     },
     "RunJobFlowOutput":{

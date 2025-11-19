@@ -592,6 +592,23 @@
       ],
       "idempotent":true
     },
+    "DescribeScanJob":{
+      "name":"DescribeScanJob",
+      "http":{
+        "method":"GET",
+        "requestUri":"/scan/jobs/{ScanJobId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeScanJobInput"},
+      "output":{"shape":"DescribeScanJobOutput"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "DisassociateBackupVaultMpaApprovalTeam":{
       "name":"DisassociateBackupVaultMpaApprovalTeam",
       "http":{
@@ -1248,6 +1265,34 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "ListScanJobSummaries":{
+      "name":"ListScanJobSummaries",
+      "http":{
+        "method":"GET",
+        "requestUri":"/audit/scan-job-summaries"
+      },
+      "input":{"shape":"ListScanJobSummariesInput"},
+      "output":{"shape":"ListScanJobSummariesOutput"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "ListScanJobs":{
+      "name":"ListScanJobs",
+      "http":{
+        "method":"GET",
+        "requestUri":"/scan/jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListScanJobsInput"},
+      "output":{"shape":"ListScanJobsOutput"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "ListTags":{
       "name":"ListTags",
       "http":{
@@ -1422,6 +1467,25 @@
         {"shape":"MissingParameterValueException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"InvalidRequestException"}
+      ],
+      "idempotent":true
+    },
+    "StartScanJob":{
+      "name":"StartScanJob",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/scan/job",
+        "responseCode":201
+      },
+      "input":{"shape":"StartScanJobInput"},
+      "output":{"shape":"StartScanJobOutput"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
       ],
       "idempotent":true
     },
@@ -1657,6 +1721,14 @@
       "type":"list",
       "member":{"shape":"AdvancedBackupSetting"}
     },
+    "AggregatedScanResult":{
+      "type":"structure",
+      "members":{
+        "FailedScan":{"shape":"Boolean"},
+        "Findings":{"shape":"ScanFindings"},
+        "LastComputed":{"shape":"timestamp"}
+      }
+    },
     "AggregationPeriod":{
       "type":"string",
       "enum":[
@@ -1806,7 +1878,8 @@
       "members":{
         "BackupPlanName":{"shape":"BackupPlanName"},
         "Rules":{"shape":"BackupRules"},
-        "AdvancedBackupSettings":{"shape":"AdvancedBackupSettings"}
+        "AdvancedBackupSettings":{"shape":"AdvancedBackupSettings"},
+        "ScanSettings":{"shape":"ScanSettings"}
       }
     },
     "BackupPlanInput":{
@@ -1818,7 +1891,8 @@
       "members":{
         "BackupPlanName":{"shape":"BackupPlanName"},
         "Rules":{"shape":"BackupRulesInput"},
-        "AdvancedBackupSettings":{"shape":"AdvancedBackupSettings"}
+        "AdvancedBackupSettings":{"shape":"AdvancedBackupSettings"},
+        "ScanSettings":{"shape":"ScanSettings"}
       }
     },
     "BackupPlanName":{"type":"string"},
@@ -1874,7 +1948,8 @@
         "CopyActions":{"shape":"CopyActions"},
         "EnableContinuousBackup":{"shape":"Boolean"},
         "ScheduleExpressionTimezone":{"shape":"Timezone"},
-        "IndexActions":{"shape":"IndexActions"}
+        "IndexActions":{"shape":"IndexActions"},
+        "ScanActions":{"shape":"ScanActions"}
       }
     },
     "BackupRuleInput":{
@@ -1895,7 +1970,8 @@
         "CopyActions":{"shape":"CopyActions"},
         "EnableContinuousBackup":{"shape":"Boolean"},
         "ScheduleExpressionTimezone":{"shape":"Timezone"},
-        "IndexActions":{"shape":"IndexActions"}
+        "IndexActions":{"shape":"IndexActions"},
+        "ScanActions":{"shape":"ScanActions"}
       }
     },
     "BackupRuleName":{
@@ -2903,7 +2979,8 @@
         "VaultType":{"shape":"VaultType"},
         "IndexStatus":{"shape":"IndexStatus"},
         "IndexStatusMessage":{"shape":"string"},
-        "EncryptionKeyType":{"shape":"EncryptionKeyType"}
+        "EncryptionKeyType":{"shape":"EncryptionKeyType"},
+        "ScanResults":{"shape":"ScanResults"}
       }
     },
     "DescribeRegionSettingsInput":{
@@ -2988,6 +3065,59 @@
         "DeletionStatusMessage":{"shape":"string"},
         "IsParent":{"shape":"boolean"},
         "ParentJobId":{"shape":"string"}
+      }
+    },
+    "DescribeScanJobInput":{
+      "type":"structure",
+      "required":["ScanJobId"],
+      "members":{
+        "ScanJobId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"ScanJobId"
+        }
+      }
+    },
+    "DescribeScanJobOutput":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "BackupVaultArn",
+        "BackupVaultName",
+        "CreatedBy",
+        "CreationDate",
+        "IamRoleArn",
+        "MalwareScanner",
+        "RecoveryPointArn",
+        "ResourceArn",
+        "ResourceName",
+        "ResourceType",
+        "ScanJobId",
+        "ScanMode",
+        "ScannerRoleArn",
+        "State"
+      ],
+      "members":{
+        "AccountId":{"shape":"String"},
+        "BackupVaultArn":{"shape":"String"},
+        "BackupVaultName":{"shape":"String"},
+        "CompletionDate":{"shape":"Timestamp"},
+        "CreatedBy":{"shape":"ScanJobCreator"},
+        "CreationDate":{"shape":"Timestamp"},
+        "IamRoleArn":{"shape":"String"},
+        "MalwareScanner":{"shape":"MalwareScanner"},
+        "RecoveryPointArn":{"shape":"String"},
+        "ResourceArn":{"shape":"String"},
+        "ResourceName":{"shape":"String"},
+        "ResourceType":{"shape":"ScanResourceType"},
+        "ScanBaseRecoveryPointArn":{"shape":"String"},
+        "ScanId":{"shape":"String"},
+        "ScanJobId":{"shape":"String"},
+        "ScanMode":{"shape":"ScanMode"},
+        "ScanResult":{"shape":"ScanResultInfo"},
+        "ScannerRoleArn":{"shape":"String"},
+        "State":{"shape":"ScanState"},
+        "StatusMessage":{"shape":"String"}
       }
     },
     "DisassociateBackupVaultMpaApprovalTeamInput":{
@@ -4592,6 +4722,138 @@
         "RestoreTestingSelections":{"shape":"RestoreTestingSelections"}
       }
     },
+    "ListScanJobSummariesInput":{
+      "type":"structure",
+      "members":{
+        "AccountId":{
+          "shape":"AccountId",
+          "location":"querystring",
+          "locationName":"AccountId"
+        },
+        "ResourceType":{
+          "shape":"ResourceType",
+          "location":"querystring",
+          "locationName":"ResourceType"
+        },
+        "MalwareScanner":{
+          "shape":"MalwareScanner",
+          "location":"querystring",
+          "locationName":"MalwareScanner"
+        },
+        "ScanResultStatus":{
+          "shape":"ScanResultStatus",
+          "location":"querystring",
+          "locationName":"ScanResultStatus"
+        },
+        "State":{
+          "shape":"ScanJobStatus",
+          "location":"querystring",
+          "locationName":"State"
+        },
+        "AggregationPeriod":{
+          "shape":"AggregationPeriod",
+          "location":"querystring",
+          "locationName":"AggregationPeriod"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"NextToken"
+        }
+      }
+    },
+    "ListScanJobSummariesOutput":{
+      "type":"structure",
+      "members":{
+        "ScanJobSummaries":{"shape":"ScanJobSummaryList"},
+        "AggregationPeriod":{"shape":"string"},
+        "NextToken":{"shape":"string"}
+      }
+    },
+    "ListScanJobsInput":{
+      "type":"structure",
+      "members":{
+        "ByAccountId":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"ByAccountId"
+        },
+        "ByBackupVaultName":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"ByBackupVaultName"
+        },
+        "ByCompleteAfter":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"ByCompleteAfter"
+        },
+        "ByCompleteBefore":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"ByCompleteBefore"
+        },
+        "ByMalwareScanner":{
+          "shape":"MalwareScanner",
+          "location":"querystring",
+          "locationName":"ByMalwareScanner"
+        },
+        "ByRecoveryPointArn":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"ByRecoveryPointArn"
+        },
+        "ByResourceArn":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"ByResourceArn"
+        },
+        "ByResourceType":{
+          "shape":"ScanResourceType",
+          "location":"querystring",
+          "locationName":"ByResourceType"
+        },
+        "ByScanResultStatus":{
+          "shape":"ScanResultStatus",
+          "location":"querystring",
+          "locationName":"ByScanResultStatus"
+        },
+        "ByState":{
+          "shape":"ScanState",
+          "location":"querystring",
+          "locationName":"ByState"
+        },
+        "MaxResults":{
+          "shape":"ListScanJobsInputMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"NextToken"
+        }
+      }
+    },
+    "ListScanJobsInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListScanJobsOutput":{
+      "type":"structure",
+      "required":["ScanJobs"],
+      "members":{
+        "NextToken":{"shape":"String"},
+        "ScanJobs":{"shape":"ScanJobs"}
+      }
+    },
     "ListTagsInput":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -4643,6 +4905,10 @@
       }
     },
     "Long":{"type":"long"},
+    "MalwareScanner":{
+      "type":"string",
+      "enum":["GUARDDUTY"]
+    },
     "MaxFrameworkInputs":{
       "type":"integer",
       "max":1000,
@@ -4804,7 +5070,8 @@
         "VaultType":{"shape":"VaultType"},
         "IndexStatus":{"shape":"IndexStatus"},
         "IndexStatusMessage":{"shape":"string"},
-        "EncryptionKeyType":{"shape":"EncryptionKeyType"}
+        "EncryptionKeyType":{"shape":"EncryptionKeyType"},
+        "AggregatedScanResult":{"shape":"AggregatedScanResult"}
       }
     },
     "RecoveryPointByBackupVaultList":{
@@ -4827,7 +5094,8 @@
         "VaultType":{"shape":"VaultType"},
         "IndexStatus":{"shape":"IndexStatus"},
         "IndexStatusMessage":{"shape":"string"},
-        "EncryptionKeyType":{"shape":"EncryptionKeyType"}
+        "EncryptionKeyType":{"shape":"EncryptionKeyType"},
+        "AggregatedScanResult":{"shape":"AggregatedScanResult"}
       }
     },
     "RecoveryPointByResourceList":{
@@ -5327,6 +5595,192 @@
         "CONTINUOUS_AND_SNAPSHOTS"
       ]
     },
+    "ScanAction":{
+      "type":"structure",
+      "members":{
+        "MalwareScanner":{"shape":"MalwareScanner"},
+        "ScanMode":{"shape":"ScanMode"}
+      }
+    },
+    "ScanActions":{
+      "type":"list",
+      "member":{"shape":"ScanAction"}
+    },
+    "ScanFinding":{
+      "type":"string",
+      "enum":["MALWARE"]
+    },
+    "ScanFindings":{
+      "type":"list",
+      "member":{"shape":"ScanFinding"}
+    },
+    "ScanJob":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "BackupVaultArn",
+        "BackupVaultName",
+        "CreatedBy",
+        "CreationDate",
+        "IamRoleArn",
+        "MalwareScanner",
+        "RecoveryPointArn",
+        "ResourceArn",
+        "ResourceName",
+        "ResourceType",
+        "ScanJobId",
+        "ScanMode",
+        "ScannerRoleArn"
+      ],
+      "members":{
+        "AccountId":{"shape":"String"},
+        "BackupVaultArn":{"shape":"String"},
+        "BackupVaultName":{"shape":"String"},
+        "CompletionDate":{"shape":"Timestamp"},
+        "CreatedBy":{"shape":"ScanJobCreator"},
+        "CreationDate":{"shape":"Timestamp"},
+        "IamRoleArn":{"shape":"String"},
+        "MalwareScanner":{"shape":"MalwareScanner"},
+        "RecoveryPointArn":{"shape":"String"},
+        "ResourceArn":{"shape":"String"},
+        "ResourceName":{"shape":"String"},
+        "ResourceType":{"shape":"ScanResourceType"},
+        "ScanBaseRecoveryPointArn":{"shape":"String"},
+        "ScanId":{"shape":"String"},
+        "ScanJobId":{"shape":"String"},
+        "ScanMode":{"shape":"ScanMode"},
+        "ScanResult":{"shape":"ScanResultInfo"},
+        "ScannerRoleArn":{"shape":"String"},
+        "State":{"shape":"ScanState"},
+        "StatusMessage":{"shape":"String"}
+      }
+    },
+    "ScanJobCreator":{
+      "type":"structure",
+      "required":[
+        "BackupPlanArn",
+        "BackupPlanId",
+        "BackupPlanVersion",
+        "BackupRuleId"
+      ],
+      "members":{
+        "BackupPlanArn":{"shape":"String"},
+        "BackupPlanId":{"shape":"String"},
+        "BackupPlanVersion":{"shape":"String"},
+        "BackupRuleId":{"shape":"String"}
+      }
+    },
+    "ScanJobState":{
+      "type":"string",
+      "enum":[
+        "COMPLETED",
+        "COMPLETED_WITH_ISSUES",
+        "FAILED",
+        "CANCELED"
+      ]
+    },
+    "ScanJobStatus":{
+      "type":"string",
+      "enum":[
+        "CREATED",
+        "COMPLETED",
+        "COMPLETED_WITH_ISSUES",
+        "RUNNING",
+        "FAILED",
+        "CANCELED",
+        "AGGREGATE_ALL",
+        "ANY"
+      ]
+    },
+    "ScanJobSummary":{
+      "type":"structure",
+      "members":{
+        "Region":{"shape":"Region"},
+        "AccountId":{"shape":"AccountId"},
+        "State":{"shape":"ScanJobStatus"},
+        "ResourceType":{"shape":"ResourceType"},
+        "Count":{"shape":"integer"},
+        "StartTime":{"shape":"timestamp"},
+        "EndTime":{"shape":"timestamp"},
+        "MalwareScanner":{"shape":"MalwareScanner"},
+        "ScanResultStatus":{"shape":"ScanResultStatus"}
+      }
+    },
+    "ScanJobSummaryList":{
+      "type":"list",
+      "member":{"shape":"ScanJobSummary"}
+    },
+    "ScanJobs":{
+      "type":"list",
+      "member":{"shape":"ScanJob"}
+    },
+    "ScanMode":{
+      "type":"string",
+      "enum":[
+        "FULL_SCAN",
+        "INCREMENTAL_SCAN"
+      ]
+    },
+    "ScanResourceType":{
+      "type":"string",
+      "enum":[
+        "EBS",
+        "EC2",
+        "S3"
+      ]
+    },
+    "ScanResult":{
+      "type":"structure",
+      "members":{
+        "MalwareScanner":{"shape":"MalwareScanner"},
+        "ScanJobState":{"shape":"ScanJobState"},
+        "LastScanTimestamp":{"shape":"timestamp"},
+        "Findings":{"shape":"ScanFindings"}
+      }
+    },
+    "ScanResultInfo":{
+      "type":"structure",
+      "required":["ScanResultStatus"],
+      "members":{
+        "ScanResultStatus":{"shape":"ScanResultStatus"}
+      }
+    },
+    "ScanResultStatus":{
+      "type":"string",
+      "enum":[
+        "NO_THREATS_FOUND",
+        "THREATS_FOUND"
+      ]
+    },
+    "ScanResults":{
+      "type":"list",
+      "member":{"shape":"ScanResult"},
+      "max":5,
+      "min":0
+    },
+    "ScanSetting":{
+      "type":"structure",
+      "members":{
+        "MalwareScanner":{"shape":"MalwareScanner"},
+        "ResourceTypes":{"shape":"ResourceTypes"},
+        "ScannerRoleArn":{"shape":"IAMRoleArn"}
+      }
+    },
+    "ScanSettings":{
+      "type":"list",
+      "member":{"shape":"ScanSetting"}
+    },
+    "ScanState":{
+      "type":"string",
+      "enum":[
+        "CANCELED",
+        "COMPLETED",
+        "COMPLETED_WITH_ISSUES",
+        "CREATED",
+        "FAILED",
+        "RUNNING"
+      ]
+    },
     "ScheduledPlanExecutionMember":{
       "type":"structure",
       "members":{
@@ -5460,6 +5914,38 @@
       "type":"structure",
       "members":{
         "RestoreJobId":{"shape":"RestoreJobId"}
+      }
+    },
+    "StartScanJobInput":{
+      "type":"structure",
+      "required":[
+        "BackupVaultName",
+        "IamRoleArn",
+        "MalwareScanner",
+        "RecoveryPointArn",
+        "ScanMode",
+        "ScannerRoleArn"
+      ],
+      "members":{
+        "BackupVaultName":{"shape":"String"},
+        "IamRoleArn":{"shape":"String"},
+        "IdempotencyToken":{"shape":"String"},
+        "MalwareScanner":{"shape":"MalwareScanner"},
+        "RecoveryPointArn":{"shape":"String"},
+        "ScanBaseRecoveryPointArn":{"shape":"String"},
+        "ScanMode":{"shape":"ScanMode"},
+        "ScannerRoleArn":{"shape":"String"}
+      }
+    },
+    "StartScanJobOutput":{
+      "type":"structure",
+      "required":[
+        "CreationDate",
+        "ScanJobId"
+      ],
+      "members":{
+        "CreationDate":{"shape":"Timestamp"},
+        "ScanJobId":{"shape":"String"}
       }
     },
     "StopBackupJobInput":{
@@ -5613,7 +6099,8 @@
         "BackupPlanArn":{"shape":"ARN"},
         "CreationDate":{"shape":"timestamp"},
         "VersionId":{"shape":"string"},
-        "AdvancedBackupSettings":{"shape":"AdvancedBackupSettings"}
+        "AdvancedBackupSettings":{"shape":"AdvancedBackupSettings"},
+        "ScanSettings":{"shape":"ScanSettings"}
       }
     },
     "UpdateFrameworkInput":{

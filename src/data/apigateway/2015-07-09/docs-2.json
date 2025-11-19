@@ -178,6 +178,12 @@
         "ListOfApiStage$member": null
       }
     },
+    "ApiStatus": {
+      "base": null,
+      "refs": {
+        "RestApi$apiStatus": "<p>The ApiStatus of the RestApi. </p>"
+      }
+    },
     "Authorizer": {
       "base": "<p>Represents an authorization layer for methods. If enabled on a method, API Gateway will activate the authorizer when a client calls the method.</p>",
       "refs": {
@@ -551,6 +557,15 @@
         "DeploymentCanarySettings$percentTraffic": "<p>The percentage (0.0-100.0) of traffic routed to the canary deployment.</p>",
         "MethodSetting$throttlingRateLimit": "<p>Specifies the throttling rate limit.</p>",
         "ThrottleSettings$rateLimit": "<p>The API target request rate limit.</p>"
+      }
+    },
+    "EndpointAccessMode": {
+      "base": null,
+      "refs": {
+        "CreateDomainNameRequest$endpointAccessMode": "<p> The endpoint access mode of the DomainName. Only available for DomainNames that use security policies that start with <code>SecurityPolicy_</code>. </p>",
+        "CreateRestApiRequest$endpointAccessMode": "<p> The endpoint access mode of the RestApi. Only available for RestApis that use security policies that start with <code>SecurityPolicy_</code>.</p>",
+        "DomainName$endpointAccessMode": "<p> The endpoint access mode of the DomainName. </p>",
+        "RestApi$endpointAccessMode": "<p> The endpoint access mode of the RestApi. </p>"
       }
     },
     "EndpointConfiguration": {
@@ -1378,6 +1393,13 @@
       "base": "<p>Represents a collection of Resource resources.</p>",
       "refs": {}
     },
+    "ResponseTransferMode": {
+      "base": null,
+      "refs": {
+        "Integration$responseTransferMode": "<p> The response transfer mode of the integration. </p>",
+        "PutIntegrationRequest$responseTransferMode": "<p> The response transfer mode of the integration. </p>"
+      }
+    },
     "RestApi": {
       "base": "<p>Represents a REST API.</p>",
       "refs": {
@@ -1418,8 +1440,10 @@
     "SecurityPolicy": {
       "base": null,
       "refs": {
-        "CreateDomainNameRequest$securityPolicy": "<p>The Transport Layer Security (TLS) version + cipher suite for this DomainName. The valid values are <code>TLS_1_0</code> and <code>TLS_1_2</code>.</p>",
-        "DomainName$securityPolicy": "<p>The Transport Layer Security (TLS) version + cipher suite for this DomainName. The valid values are <code>TLS_1_0</code> and <code>TLS_1_2</code>.</p>"
+        "CreateDomainNameRequest$securityPolicy": "<p>The Transport Layer Security (TLS) version + cipher suite for this DomainName.</p>",
+        "CreateRestApiRequest$securityPolicy": "<p> The Transport Layer Security (TLS) version + cipher suite for this RestApi. </p>",
+        "DomainName$securityPolicy": "<p>The Transport Layer Security (TLS) version + cipher suite for this DomainName.</p>",
+        "RestApi$securityPolicy": "<p> The Transport Layer Security (TLS) version + cipher suite for this RestApi. </p>"
       }
     },
     "ServiceUnavailableException": {
@@ -1820,6 +1844,7 @@
         "RestApi$version": "<p>A version identifier for the API.</p>",
         "RestApi$policy": "<p>A stringified JSON policy document that applies to this RestApi regardless of the caller and Method configuration.</p>",
         "RestApi$rootResourceId": "<p>The API's root resource ID.</p>",
+        "RestApi$apiStatusMessage": "<p> The status message of the RestApi. When the status message is <code>UPDATING</code> you can still invoke it. </p>",
         "RestApis$position": null,
         "SdkConfigurationProperty$name": "<p>The name of a an SdkType configuration property.</p>",
         "SdkConfigurationProperty$friendlyName": "<p>The user-friendly name of an SdkType configuration property.</p>",

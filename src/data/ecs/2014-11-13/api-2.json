@@ -1723,7 +1723,8 @@
       "members":{
         "infrastructureRoleArn":{"shape":"String"},
         "instanceLaunchTemplate":{"shape":"InstanceLaunchTemplate"},
-        "propagateTags":{"shape":"PropagateMITags"}
+        "propagateTags":{"shape":"PropagateMITags"},
+        "infrastructureOptimization":{"shape":"InfrastructureOptimization"}
       }
     },
     "CreateServiceRequest":{
@@ -2572,6 +2573,12 @@
       "type":"list",
       "member":{"shape":"InferenceAccelerator"}
     },
+    "InfrastructureOptimization":{
+      "type":"structure",
+      "members":{
+        "scaleInAfter":{"shape":"BoxedInteger"}
+      }
+    },
     "InstanceGeneration":{
       "type":"string",
       "enum":[
@@ -3046,7 +3053,8 @@
       "members":{
         "infrastructureRoleArn":{"shape":"String"},
         "instanceLaunchTemplate":{"shape":"InstanceLaunchTemplate"},
-        "propagateTags":{"shape":"PropagateMITags"}
+        "propagateTags":{"shape":"PropagateMITags"},
+        "infrastructureOptimization":{"shape":"InfrastructureOptimization"}
       }
     },
     "ManagedInstancesStorageConfiguration":{
@@ -4738,7 +4746,8 @@
       "members":{
         "infrastructureRoleArn":{"shape":"String"},
         "instanceLaunchTemplate":{"shape":"InstanceLaunchTemplateUpdate"},
-        "propagateTags":{"shape":"PropagateMITags"}
+        "propagateTags":{"shape":"PropagateMITags"},
+        "infrastructureOptimization":{"shape":"InfrastructureOptimization"}
       }
     },
     "UpdateServicePrimaryTaskSetRequest":{

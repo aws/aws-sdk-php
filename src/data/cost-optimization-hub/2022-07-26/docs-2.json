@@ -4,17 +4,17 @@
   "operations": {
     "GetPreferences": "<p>Returns a set of preferences for an account in order to add account-specific preferences into the service. These preferences impact how the savings associated with recommendations are presented—estimated savings after discounts or estimated savings before discounts, for example.</p>",
     "GetRecommendation": "<p>Returns both the current and recommended resource configuration and the estimated cost impact for a recommendation.</p> <p>The <code>recommendationId</code> is only valid for up to a maximum of 24 hours as recommendations are refreshed daily. To retrieve the <code>recommendationId</code>, use the <code>ListRecommendations</code> API.</p>",
+    "ListEfficiencyMetrics": "<p>Returns cost efficiency metrics aggregated over time and optionally grouped by a specified dimension. The metrics provide insights into your cost optimization progress by tracking estimated savings, spending, and measures how effectively you're optimizing your Cloud resources.</p> <p>The operation supports both daily and monthly time granularities and allows grouping results by account ID, Amazon Web Services Region. Results are returned as time-series data, enabling you to analyze trends in your cost optimization performance over the specified time period.</p>",
     "ListEnrollmentStatuses": "<p>Retrieves the enrollment status for an account. It can also return the list of accounts that are enrolled under the organization.</p>",
     "ListRecommendationSummaries": "<p>Returns a concise representation of savings estimates for resources. Also returns de-duped savings across different types of recommendations.</p> <note> <p>The following filters are not supported for this API: <code>recommendationIds</code>, <code>resourceArns</code>, and <code>resourceIds</code>.</p> </note>",
     "ListRecommendations": "<p>Returns a list of recommendations.</p>",
-    "UpdateEnrollmentStatus": "<p>Updates the enrollment (opt in and opt out) status of an account to the Cost Optimization Hub service.</p> <p>If the account is a management account or delegated administrator of an organization, this action can also be used to enroll member accounts of the organization.</p> <p>You must have the appropriate permissions to opt in to Cost Optimization Hub and to view its recommendations. When you opt in, Cost Optimization Hub automatically creates a service-linked role in your account to access its data.</p>",
+    "UpdateEnrollmentStatus": "<p>Updates the enrollment (opt in and opt out) status of an account to the Cost Optimization Hub service.</p> <p>If the account is a management account of an organization, this action can also be used to enroll member accounts of the organization.</p> <p>You must have the appropriate permissions to opt in to Cost Optimization Hub and to view its recommendations. When you opt in, Cost Optimization Hub automatically creates a service-linked role in your account to access its data.</p>",
     "UpdatePreferences": "<p>Updates a set of preferences for an account in order to add account-specific preferences into the service. These preferences impact how the savings associated with recommendations are presented.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You are not authorized to use this operation with the given parameters.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountEnrollmentStatus": {
       "base": "<p>Describes the enrollment status of an organization's member accounts in Cost Optimization Hub.</p>",
@@ -144,6 +144,9 @@
         "GetRecommendationResponse$estimatedMonthlySavings": "<p>The estimated monthly savings amount for the recommendation.</p>",
         "GetRecommendationResponse$estimatedMonthlyCost": "<p>The estimated monthly cost of the current resource. For Reserved Instances and Savings Plans, it refers to the cost for eligible usage.</p>",
         "ListRecommendationSummariesResponse$estimatedTotalDedupedSavings": "<p>The total overall savings for the aggregated view.</p>",
+        "MetricsByTime$score": "<p>The efficiency score for this time period. The score represents a measure of how effectively the cloud resources are being optimized, with higher scores indicating better optimization performance.</p>",
+        "MetricsByTime$savings": "<p>The estimated savings amount for this time period, representing the potential cost reduction achieved through optimization recommendations.</p>",
+        "MetricsByTime$spend": "<p>The total spending amount for this time period.</p>",
         "RdsDbInstanceStorageConfiguration$allocatedStorageInGb": "<p>The new amount of storage in GB to allocate for the DB instance.</p>",
         "RdsDbInstanceStorageConfiguration$iops": "<p>The amount of Provisioned IOPS (input/output operations per second) to be initially allocated for the DB instance.</p>",
         "RdsDbInstanceStorageConfiguration$storageThroughput": "<p>The storage throughput for the DB instance.</p>",
@@ -158,10 +161,10 @@
         "ResourcePricing$estimatedCostBeforeDiscounts": "<p>The savings estimate using Amazon Web Services public pricing without incorporating any discounts.</p>",
         "ResourcePricing$estimatedNetUnusedAmortizedCommitments": "<p>The estimated net unused amortized commitment for the recommendation.</p>",
         "ResourcePricing$estimatedCostAfterDiscounts": "<p>The savings estimate incorporating all discounts with Amazon Web Services, such as Reserved Instances and Savings Plans.</p>",
-        "SavingsPlansPricing$monthlySavingsPlansEligibleCost": "<p>The cost of paying for the recommended Savings Plan monthly.</p>",
-        "SavingsPlansPricing$estimatedMonthlyCommitment": "<p>Estimated monthly commitment for the Savings Plan.</p>",
-        "SavingsPlansPricing$savingsPercentage": "<p>Estimated savings as a percentage of your overall costs after buying the Savings Plan.</p>",
-        "SavingsPlansPricing$estimatedOnDemandCost": "<p>Estimated On-Demand cost you will pay after buying the Savings Plan.</p>",
+        "SavingsPlansPricing$monthlySavingsPlansEligibleCost": "<p>The cost of paying for the recommended Savings Plans monthly.</p>",
+        "SavingsPlansPricing$estimatedMonthlyCommitment": "<p>Estimated monthly commitment for the Savings Plans.</p>",
+        "SavingsPlansPricing$savingsPercentage": "<p>Estimated savings as a percentage of your overall costs after buying the Savings Plans.</p>",
+        "SavingsPlansPricing$estimatedOnDemandCost": "<p>Estimated On-Demand cost you will pay after buying the Savings Plans.</p>",
         "StorageConfiguration$sizeInGb": "<p>The storage volume.</p>",
         "Usage$usageAmount": "<p>The usage amount.</p>"
       }
@@ -256,6 +259,18 @@
         "EcsService$configuration": "<p>The ECS service configuration used for recommendations.</p>"
       }
     },
+    "EfficiencyMetricsByGroup": {
+      "base": "<p>Contains cost efficiency metrics for a specific group over time. The group is defined by the grouping dimension specified in the request, such as account ID, Amazon Web Services Region.</p>",
+      "refs": {
+        "EfficiencyMetricsByGroupList$member": "<p>An individual group's cost efficiency metrics over time.</p>"
+      }
+    },
+    "EfficiencyMetricsByGroupList": {
+      "base": "<p>A list of cost efficiency metrics grouped by the specified dimension.</p>",
+      "refs": {
+        "ListEfficiencyMetricsResponse$efficiencyMetricsByGroup": "<p>A list of cost efficiency metrics grouped by the specified dimension. Each group contains time-series data points with cost efficiency, potential savings, and optimzable spend for the specified time period.</p>"
+      }
+    },
     "ElastiCacheReservedInstances": {
       "base": "<p>The ElastiCache reserved instances recommendation details.</p>",
       "refs": {
@@ -290,22 +305,24 @@
     },
     "GetPreferencesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPreferencesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecommendationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecommendationResponse": {
       "base": null,
+      "refs": {}
+    },
+    "GranularityType": {
+      "base": "<p>The time granularity for aggregating the cost efficiency metrics.</p>",
       "refs": {
+        "ListEfficiencyMetricsRequest$granularity": "<p>The time granularity for the cost efficiency metrics. Specify <code>Daily</code> for metrics aggregated by day, or <code>Monthly</code> for metrics aggregated by month.</p>"
       }
     },
     "ImplementationEffort": {
@@ -340,8 +357,7 @@
     },
     "InternalServerException": {
       "base": "<p>An error on the server occurred during the processing of your request. Try again later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LambdaFunction": {
       "base": "<p>The Lambda function recommendation details.</p>",
@@ -355,20 +371,31 @@
         "LambdaFunction$configuration": "<p>The Lambda function configuration used for recommendations.</p>"
       }
     },
-    "ListEnrollmentStatusesRequest": {
+    "ListEfficiencyMetricsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListEfficiencyMetricsRequestMaxResultsInteger": {
       "base": null,
       "refs": {
+        "ListEfficiencyMetricsRequest$maxResults": "<p>The maximum number of groups to return in the response. Valid values range from 0 to 1000. Use in conjunction with <code>nextToken</code> to paginate through results when the total number of groups exceeds this limit.</p>"
       }
+    },
+    "ListEfficiencyMetricsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListEnrollmentStatusesRequest": {
+      "base": null,
+      "refs": {}
     },
     "ListEnrollmentStatusesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecommendationSummariesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecommendationSummariesRequestMaxResultsInteger": {
       "base": null,
@@ -378,13 +405,11 @@
     },
     "ListRecommendationSummariesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecommendationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecommendationsRequestMaxResultsInteger": {
       "base": null,
@@ -394,8 +419,7 @@
     },
     "ListRecommendationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxResults": {
       "base": null,
@@ -421,6 +445,18 @@
       "base": "<p>The MemoryDB reserved instances configuration used for recommendations.</p> <note> <p>While the API reference uses \"MemoryDB reserved instances\", the user guide and other documentation refer to them as \"MemoryDB reserved nodes\", as the terms are used interchangeably.</p> </note>",
       "refs": {
         "MemoryDbReservedInstances$configuration": "<p>The MemoryDB reserved instances configuration used for recommendations.</p>"
+      }
+    },
+    "MetricsByTime": {
+      "base": "<p>Contains efficiency metrics for a specific point in time, including an efficiency score, potential savings, optimizable spend, and timestamp.</p>",
+      "refs": {
+        "MetricsByTimeList$member": "<p>A single time-series data point containing efficiency metrics.</p>"
+      }
+    },
+    "MetricsByTimeList": {
+      "base": "<p>A list of time-series efficiency metric data points.</p>",
+      "refs": {
+        "EfficiencyMetricsByGroup$metricsByTime": "<p>A list of time-series data points containing efficiency metrics for this group. Each data point includes an efficiency score, estimated savings, spending, and a timestamp corresponding to the specified granularity. This field is null when efficiency metrics cannot be calculated for the group, in which case the message field provides an explanation.</p>"
       }
     },
     "MixedInstanceConfiguration": {
@@ -456,6 +492,7 @@
     "OrderBy": {
       "base": "<p>Defines how rows will be sorted in the response.</p>",
       "refs": {
+        "ListEfficiencyMetricsRequest$orderBy": "<p>The ordering specification for the results. Defines which dimension to sort by and whether to sort in ascending or descending order.</p>",
         "ListRecommendationsRequest$orderBy": "<p>The ordering of recommendations by a dimension.</p>"
       }
     },
@@ -616,8 +653,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified Amazon Resource Name (ARN) in the request doesn't exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourcePricing": {
       "base": "<p>Contains pricing information about the specified resource.</p>",
@@ -668,7 +704,7 @@
       }
     },
     "SavingsPlansPricing": {
-      "base": "<p>Pricing information about a Savings Plan.</p>",
+      "base": "<p>Pricing information about a Savings Plans.</p>",
       "refs": {
         "SavingsPlansCostCalculation$pricing": "<p>Pricing details of the purchase recommendation.</p>"
       }
@@ -712,7 +748,7 @@
         "Ec2InstanceSavingsPlansConfiguration$term": "<p>The Savings Plans recommendation term in years.</p>",
         "Ec2InstanceSavingsPlansConfiguration$paymentOption": "<p>The payment option for the commitment.</p>",
         "Ec2InstanceSavingsPlansConfiguration$hourlyCommitment": "<p>The hourly commitment for the Savings Plans type.</p>",
-        "Ec2InstanceSavingsPlansConfiguration$instanceFamily": "<p>The instance family of the recommended Savings Plan.</p>",
+        "Ec2InstanceSavingsPlansConfiguration$instanceFamily": "<p>The instance family of the recommended Savings Plans.</p>",
         "Ec2InstanceSavingsPlansConfiguration$savingsPlansRegion": "<p>The Amazon Web Services Region of the commitment.</p>",
         "Ec2ReservedInstancesConfiguration$accountScope": "<p>The account scope for which you want recommendations.</p>",
         "Ec2ReservedInstancesConfiguration$service": "<p>The service for which you want recommendations.</p>",
@@ -729,6 +765,8 @@
         "Ec2ReservedInstancesConfiguration$currentGeneration": "<p>Determines whether the recommendation is for a current generation instance.</p>",
         "Ec2ReservedInstancesConfiguration$platform": "<p>The platform of the recommended reservation. The platform is the specific combination of operating system, license model, and software on an instance.</p>",
         "Ec2ReservedInstancesConfiguration$tenancy": "<p>Determines whether the recommended reservation is dedicated or shared.</p>",
+        "EfficiencyMetricsByGroup$group": "<p>The value of the grouping dimension for this set of metrics. For example, if grouped by account ID, this field contains the account ID. If no grouping is specified, this field is empty.</p>",
+        "EfficiencyMetricsByGroup$message": "<p>An explanation of why efficiency metrics could not be calculated for this group when the metricsByTime field is null. Common reasons include insufficient or inconclusive cost and usage data during the specified time period. This field is null or empty when metrics are successfully calculated.</p>",
         "ElastiCacheReservedInstancesConfiguration$accountScope": "<p>The account scope for which you want recommendations.</p>",
         "ElastiCacheReservedInstancesConfiguration$service": "<p>The service for which you want recommendations.</p>",
         "ElastiCacheReservedInstancesConfiguration$term": "<p>The reserved instances recommendation term in years.</p>",
@@ -750,6 +788,9 @@
         "GetRecommendationResponse$region": "<p>The Amazon Web Services Region of the resource.</p>",
         "InstanceConfiguration$type": "<p>The instance type of the configuration.</p>",
         "InternalServerException$message": null,
+        "ListEfficiencyMetricsRequest$groupBy": "<p>The dimension by which to group the cost efficiency metrics. Valid values include account ID, Amazon Web Services Region. When no grouping is specified, metrics are aggregated across all resources in the specified time period.</p>",
+        "ListEfficiencyMetricsRequest$nextToken": "<p>The token to retrieve the next page of results. This value is returned in the response when the number of groups exceeds the specified <code>maxResults</code> value.</p>",
+        "ListEfficiencyMetricsResponse$nextToken": "<p>The token to retrieve the next page of results. When this value is present in the response, additional groups are available. Pass this token in the <code>nextToken</code> parameter of a subsequent request to retrieve the next page.</p>",
         "ListEnrollmentStatusesRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
         "ListEnrollmentStatusesResponse$nextToken": "<p>The token to retrieve the next set of results.</p>",
         "ListRecommendationSummariesRequest$groupBy": "<p>The grouping of recommendations by a dimension.</p>",
@@ -771,6 +812,7 @@
         "MemoryDbReservedInstancesConfiguration$instanceType": "<p>The type of instance that Amazon Web Services recommends.</p>",
         "MemoryDbReservedInstancesConfiguration$instanceFamily": "<p>The instance family of the recommended reservation.</p>",
         "MemoryDbReservedInstancesConfiguration$currentGeneration": "<p>Determines whether the recommendation is for a current generation instance.</p>",
+        "MetricsByTime$timestamp": "<p>The timestamp for this data point. The format depends on the granularity: YYYY-MM-DD for daily metrics, or YYYY-MM for monthly metrics.</p>",
         "MixedInstanceConfiguration$type": "<p>The instance type of the configuration.</p>",
         "OpenSearchReservedInstancesConfiguration$accountScope": "<p>The account scope for which you want recommendations.</p>",
         "OpenSearchReservedInstancesConfiguration$service": "<p>The service for which you want recommendations.</p>",
@@ -841,6 +883,8 @@
         "Tag$key": "<p>The key that's associated with the tag.</p>",
         "Tag$value": "<p>The value that's associated with the tag.</p>",
         "ThrottlingException$message": null,
+        "TimePeriod$start": "<p>The beginning of the time period (inclusive). Specify the date in ISO 8601 format, such as 2024-01-01.</p>",
+        "TimePeriod$end": "<p>The end of the time period (exclusive). Specify the date in ISO 8601 format, such as 2024-12-31.</p>",
         "UpdateEnrollmentStatusResponse$status": "<p>The enrollment status of the account.</p>",
         "Usage$usageType": "<p>The usage type.</p>",
         "Usage$operation": "<p>The operation value.</p>",
@@ -891,7 +935,12 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
+      "refs": {}
+    },
+    "TimePeriod": {
+      "base": "<p>Specifies a date range for retrieving efficiency metrics. The start date is inclusive and the end date is exclusive.</p>",
       "refs": {
+        "ListEfficiencyMetricsRequest$timePeriod": "<p>The time period for which to retrieve the cost efficiency metrics. The start date is inclusive and the end date is exclusive. Dates can be specified in either YYYY-MM-DD format or YYYY-MM format depending on the desired granularity.</p>"
       }
     },
     "Timestamp": {
@@ -903,23 +952,19 @@
     },
     "UpdateEnrollmentStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEnrollmentStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePreferencesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePreferencesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Usage": {
       "base": "<p>Details about the usage.</p>",
@@ -935,8 +980,7 @@
     },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionDetail": {
       "base": "<p>The input failed to meet the constraints specified by the Amazon Web Services service in a specified field.</p>",

@@ -793,6 +793,15 @@
       "input":{"shape":"CreateIpamExternalResourceVerificationTokenRequest"},
       "output":{"shape":"CreateIpamExternalResourceVerificationTokenResult"}
     },
+    "CreateIpamPolicy":{
+      "name":"CreateIpamPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateIpamPolicyRequest"},
+      "output":{"shape":"CreateIpamPolicyResult"}
+    },
     "CreateIpamPool":{
       "name":"CreateIpamPool",
       "http":{
@@ -1587,6 +1596,15 @@
       },
       "input":{"shape":"DeleteIpamExternalResourceVerificationTokenRequest"},
       "output":{"shape":"DeleteIpamExternalResourceVerificationTokenResult"}
+    },
+    "DeleteIpamPolicy":{
+      "name":"DeleteIpamPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIpamPolicyRequest"},
+      "output":{"shape":"DeleteIpamPolicyResult"}
     },
     "DeleteIpamPool":{
       "name":"DeleteIpamPool",
@@ -2905,6 +2923,15 @@
       "input":{"shape":"DescribeIpamExternalResourceVerificationTokensRequest"},
       "output":{"shape":"DescribeIpamExternalResourceVerificationTokensResult"}
     },
+    "DescribeIpamPolicies":{
+      "name":"DescribeIpamPolicies",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeIpamPoliciesRequest"},
+      "output":{"shape":"DescribeIpamPoliciesResult"}
+    },
     "DescribeIpamPools":{
       "name":"DescribeIpamPools",
       "http":{
@@ -4036,6 +4063,15 @@
       "input":{"shape":"DisableIpamOrganizationAdminAccountRequest"},
       "output":{"shape":"DisableIpamOrganizationAdminAccountResult"}
     },
+    "DisableIpamPolicy":{
+      "name":"DisableIpamPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisableIpamPolicyRequest"},
+      "output":{"shape":"DisableIpamPolicyResult"}
+    },
     "DisableRouteServerPropagation":{
       "name":"DisableRouteServerPropagation",
       "http":{
@@ -4375,6 +4411,15 @@
       "input":{"shape":"EnableIpamOrganizationAdminAccountRequest"},
       "output":{"shape":"EnableIpamOrganizationAdminAccountResult"}
     },
+    "EnableIpamPolicy":{
+      "name":"EnableIpamPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableIpamPolicyRequest"},
+      "output":{"shape":"EnableIpamPolicyResult"}
+    },
     "EnableReachabilityAnalyzerOrganizationSharing":{
       "name":"EnableReachabilityAnalyzerOrganizationSharing",
       "http":{
@@ -4643,6 +4688,15 @@
       "input":{"shape":"GetEbsEncryptionByDefaultRequest"},
       "output":{"shape":"GetEbsEncryptionByDefaultResult"}
     },
+    "GetEnabledIpamPolicy":{
+      "name":"GetEnabledIpamPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetEnabledIpamPolicyRequest"},
+      "output":{"shape":"GetEnabledIpamPolicyResult"}
+    },
     "GetFlowLogsIntegrationTemplate":{
       "name":"GetFlowLogsIntegrationTemplate",
       "http":{
@@ -4759,6 +4813,24 @@
       },
       "input":{"shape":"GetIpamDiscoveredResourceCidrsRequest"},
       "output":{"shape":"GetIpamDiscoveredResourceCidrsResult"}
+    },
+    "GetIpamPolicyAllocationRules":{
+      "name":"GetIpamPolicyAllocationRules",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIpamPolicyAllocationRulesRequest"},
+      "output":{"shape":"GetIpamPolicyAllocationRulesResult"}
+    },
+    "GetIpamPolicyOrganizationTargets":{
+      "name":"GetIpamPolicyOrganizationTargets",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIpamPolicyOrganizationTargetsRequest"},
+      "output":{"shape":"GetIpamPolicyOrganizationTargetsResult"}
     },
     "GetIpamPoolAllocations":{
       "name":"GetIpamPoolAllocations",
@@ -5376,6 +5448,15 @@
       },
       "input":{"shape":"ModifyIpamRequest"},
       "output":{"shape":"ModifyIpamResult"}
+    },
+    "ModifyIpamPolicyAllocationRules":{
+      "name":"ModifyIpamPolicyAllocationRules",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyIpamPolicyAllocationRulesRequest"},
+      "output":{"shape":"ModifyIpamPolicyAllocationRulesResult"}
     },
     "ModifyIpamPool":{
       "name":"ModifyIpamPool",
@@ -8242,7 +8323,9 @@
           "shape":"IpList",
           "locationName":"PrivateIpAddress"
         },
-        "DryRun":{"shape":"Boolean"}
+        "DryRun":{"shape":"Boolean"},
+        "AvailabilityZone":{"shape":"AvailabilityZoneName"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"}
       }
     },
     "AssociateNatGatewayAddressResult":{
@@ -9043,7 +9126,28 @@
         "off"
       ]
     },
+    "AutoProvisionZonesState":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled"
+      ]
+    },
     "AutoRecoveryFlag":{"type":"boolean"},
+    "AutoScalingIpsState":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled"
+      ]
+    },
+    "AvailabilityMode":{
+      "type":"string",
+      "enum":[
+        "zonal",
+        "regional"
+      ]
+    },
     "AvailabilityZone":{
       "type":"structure",
       "members":{
@@ -9095,6 +9199,24 @@
           "shape":"AvailabilityZoneState",
           "locationName":"zoneState"
         }
+      }
+    },
+    "AvailabilityZoneAddress":{
+      "type":"structure",
+      "members":{
+        "AvailabilityZone":{"shape":"AvailabilityZoneName"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
+        "AllocationIds":{
+          "shape":"AllocationIdList",
+          "locationName":"AllocationId"
+        }
+      }
+    },
+    "AvailabilityZoneAddresses":{
+      "type":"list",
+      "member":{
+        "shape":"AvailabilityZoneAddress",
+        "locationName":"AvailabilityZoneAddress"
       }
     },
     "AvailabilityZoneId":{"type":"string"},
@@ -13120,6 +13242,31 @@
         }
       }
     },
+    "CreateIpamPolicyRequest":{
+      "type":"structure",
+      "required":["IpamId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "IpamId":{"shape":"IpamId"}
+      }
+    },
+    "CreateIpamPolicyResult":{
+      "type":"structure",
+      "members":{
+        "IpamPolicy":{
+          "shape":"IpamPolicy",
+          "locationName":"ipamPolicy"
+        }
+      }
+    },
     "CreateIpamPoolRequest":{
       "type":"structure",
       "required":[
@@ -13617,8 +13764,8 @@
     },
     "CreateNatGatewayRequest":{
       "type":"structure",
-      "required":["SubnetId"],
       "members":{
+        "AvailabilityMode":{"shape":"AvailabilityMode"},
         "AllocationId":{"shape":"AllocationId"},
         "ClientToken":{
           "shape":"String",
@@ -13626,6 +13773,11 @@
         },
         "DryRun":{"shape":"Boolean"},
         "SubnetId":{"shape":"SubnetId"},
+        "VpcId":{"shape":"VpcId"},
+        "AvailabilityZoneAddresses":{
+          "shape":"AvailabilityZoneAddresses",
+          "locationName":"AvailabilityZoneAddress"
+        },
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
@@ -16135,6 +16287,23 @@
         "IpamExternalResourceVerificationToken":{
           "shape":"IpamExternalResourceVerificationToken",
           "locationName":"ipamExternalResourceVerificationToken"
+        }
+      }
+    },
+    "DeleteIpamPolicyRequest":{
+      "type":"structure",
+      "required":["IpamPolicyId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPolicyId":{"shape":"IpamPolicyId"}
+      }
+    },
+    "DeleteIpamPolicyResult":{
+      "type":"structure",
+      "members":{
+        "IpamPolicy":{
+          "shape":"IpamPolicy",
+          "locationName":"ipamPolicy"
         }
       }
     },
@@ -20012,6 +20181,35 @@
         "IpamExternalResourceVerificationTokens":{
           "shape":"IpamExternalResourceVerificationTokenSet",
           "locationName":"ipamExternalResourceVerificationTokenSet"
+        }
+      }
+    },
+    "DescribeIpamPoliciesRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "IpamPolicyIds":{
+          "shape":"ValueStringList",
+          "locationName":"IpamPolicyId"
+        }
+      }
+    },
+    "DescribeIpamPoliciesResult":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        },
+        "IpamPolicies":{
+          "shape":"IpamPolicySet",
+          "locationName":"ipamPolicySet"
         }
       }
     },
@@ -24073,6 +24271,24 @@
         }
       }
     },
+    "DisableIpamPolicyRequest":{
+      "type":"structure",
+      "required":["IpamPolicyId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPolicyId":{"shape":"IpamPolicyId"},
+        "OrganizationTargetId":{"shape":"String"}
+      }
+    },
+    "DisableIpamPolicyResult":{
+      "type":"structure",
+      "members":{
+        "Return":{
+          "shape":"Boolean",
+          "locationName":"return"
+        }
+      }
+    },
     "DisableRouteServerPropagationRequest":{
       "type":"structure",
       "required":[
@@ -25822,6 +26038,24 @@
         }
       }
     },
+    "EnableIpamPolicyRequest":{
+      "type":"structure",
+      "required":["IpamPolicyId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPolicyId":{"shape":"IpamPolicyId"},
+        "OrganizationTargetId":{"shape":"String"}
+      }
+    },
+    "EnableIpamPolicyResult":{
+      "type":"structure",
+      "members":{
+        "IpamPolicyId":{
+          "shape":"IpamPolicyId",
+          "locationName":"ipamPolicyId"
+        }
+      }
+    },
     "EnableReachabilityAnalyzerOrganizationSharingRequest":{
       "type":"structure",
       "members":{
@@ -27478,7 +27712,8 @@
         "Subnet",
         "NetworkInterface",
         "TransitGateway",
-        "TransitGatewayAttachment"
+        "TransitGatewayAttachment",
+        "RegionalNatGateway"
       ]
     },
     "FpgaDeviceCount":{"type":"integer"},
@@ -28149,6 +28384,29 @@
         }
       }
     },
+    "GetEnabledIpamPolicyRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetEnabledIpamPolicyResult":{
+      "type":"structure",
+      "members":{
+        "IpamPolicyEnabled":{
+          "shape":"Boolean",
+          "locationName":"ipamPolicyEnabled"
+        },
+        "IpamPolicyId":{
+          "shape":"IpamPolicyId",
+          "locationName":"ipamPolicyId"
+        },
+        "ManagedBy":{
+          "shape":"IpamPolicyManagedBy",
+          "locationName":"managedBy"
+        }
+      }
+    },
     "GetFlowLogsIntegrationTemplateRequest":{
       "type":"structure",
       "required":[
@@ -28498,6 +28756,62 @@
         "IpamDiscoveredResourceCidrs":{
           "shape":"IpamDiscoveredResourceCidrSet",
           "locationName":"ipamDiscoveredResourceCidrSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetIpamPolicyAllocationRulesRequest":{
+      "type":"structure",
+      "required":["IpamPolicyId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPolicyId":{"shape":"IpamPolicyId"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "Locale":{"shape":"String"},
+        "ResourceType":{"shape":"IpamPolicyResourceType"},
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetIpamPolicyAllocationRulesResult":{
+      "type":"structure",
+      "members":{
+        "IpamPolicyDocuments":{
+          "shape":"IpamPolicyDocumentSet",
+          "locationName":"ipamPolicyDocumentSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetIpamPolicyOrganizationTargetsRequest":{
+      "type":"structure",
+      "required":["IpamPolicyId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "IpamPolicyId":{"shape":"IpamPolicyId"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        }
+      }
+    },
+    "GetIpamPolicyOrganizationTargetsResult":{
+      "type":"structure",
+      "members":{
+        "OrganizationTargets":{
+          "shape":"IpamPolicyOrganizationTargetSet",
+          "locationName":"organizationTargetSet"
         },
         "NextToken":{
           "shape":"NextToken",
@@ -35346,6 +35660,157 @@
         "ignored"
       ]
     },
+    "IpamPolicy":{
+      "type":"structure",
+      "members":{
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "IpamPolicyId":{
+          "shape":"IpamPolicyId",
+          "locationName":"ipamPolicyId"
+        },
+        "IpamPolicyArn":{
+          "shape":"ResourceArn",
+          "locationName":"ipamPolicyArn"
+        },
+        "IpamPolicyRegion":{
+          "shape":"String",
+          "locationName":"ipamPolicyRegion"
+        },
+        "State":{
+          "shape":"IpamPolicyState",
+          "locationName":"state"
+        },
+        "StateMessage":{
+          "shape":"String",
+          "locationName":"stateMessage"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        },
+        "IpamId":{
+          "shape":"IpamId",
+          "locationName":"ipamId"
+        }
+      }
+    },
+    "IpamPolicyAllocationRule":{
+      "type":"structure",
+      "members":{
+        "SourceIpamPoolId":{
+          "shape":"IpamPoolId",
+          "locationName":"sourceIpamPoolId"
+        }
+      }
+    },
+    "IpamPolicyAllocationRuleList":{
+      "type":"list",
+      "member":{
+        "shape":"IpamPolicyAllocationRule",
+        "locationName":"item"
+      }
+    },
+    "IpamPolicyAllocationRuleListRequest":{
+      "type":"list",
+      "member":{
+        "shape":"IpamPolicyAllocationRuleRequest",
+        "locationName":"item"
+      }
+    },
+    "IpamPolicyAllocationRuleRequest":{
+      "type":"structure",
+      "members":{
+        "SourceIpamPoolId":{"shape":"IpamPoolId"}
+      }
+    },
+    "IpamPolicyDocument":{
+      "type":"structure",
+      "members":{
+        "IpamPolicyId":{
+          "shape":"IpamPolicyId",
+          "locationName":"ipamPolicyId"
+        },
+        "Locale":{
+          "shape":"String",
+          "locationName":"locale"
+        },
+        "ResourceType":{
+          "shape":"IpamPolicyResourceType",
+          "locationName":"resourceType"
+        },
+        "AllocationRules":{
+          "shape":"IpamPolicyAllocationRuleList",
+          "locationName":"allocationRuleSet"
+        }
+      }
+    },
+    "IpamPolicyDocumentSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamPolicyDocument",
+        "locationName":"item"
+      }
+    },
+    "IpamPolicyId":{"type":"string"},
+    "IpamPolicyManagedBy":{
+      "type":"string",
+      "enum":[
+        "account",
+        "delegated-administrator-for-ipam"
+      ]
+    },
+    "IpamPolicyOrganizationTarget":{
+      "type":"structure",
+      "members":{
+        "OrganizationTargetId":{
+          "shape":"String",
+          "locationName":"organizationTargetId"
+        }
+      }
+    },
+    "IpamPolicyOrganizationTargetSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamPolicyOrganizationTarget",
+        "locationName":"item"
+      }
+    },
+    "IpamPolicyResourceType":{
+      "type":"string",
+      "enum":[
+        "alb",
+        "eip",
+        "rds",
+        "rnat"
+      ]
+    },
+    "IpamPolicySet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamPolicy",
+        "locationName":"item"
+      }
+    },
+    "IpamPolicyState":{
+      "type":"string",
+      "enum":[
+        "create-in-progress",
+        "create-complete",
+        "create-failed",
+        "modify-in-progress",
+        "modify-complete",
+        "modify-failed",
+        "delete-in-progress",
+        "delete-complete",
+        "delete-failed",
+        "isolate-in-progress",
+        "isolate-complete",
+        "restore-in-progress"
+      ]
+    },
     "IpamPool":{
       "type":"structure",
       "members":{
@@ -39784,6 +40249,33 @@
         }
       }
     },
+    "ModifyIpamPolicyAllocationRulesRequest":{
+      "type":"structure",
+      "required":[
+        "IpamPolicyId",
+        "Locale",
+        "ResourceType"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPolicyId":{"shape":"IpamPolicyId"},
+        "Locale":{"shape":"String"},
+        "ResourceType":{"shape":"IpamPolicyResourceType"},
+        "AllocationRules":{
+          "shape":"IpamPolicyAllocationRuleListRequest",
+          "locationName":"AllocationRule"
+        }
+      }
+    },
+    "ModifyIpamPolicyAllocationRulesResult":{
+      "type":"structure",
+      "members":{
+        "IpamPolicyDocument":{
+          "shape":"IpamPolicyDocument",
+          "locationName":"ipamPolicyDocument"
+        }
+      }
+    },
     "ModifyIpamPoolRequest":{
       "type":"structure",
       "required":["IpamPoolId"],
@@ -41389,6 +41881,22 @@
         "ConnectivityType":{
           "shape":"ConnectivityType",
           "locationName":"connectivityType"
+        },
+        "AvailabilityMode":{
+          "shape":"AvailabilityMode",
+          "locationName":"availabilityMode"
+        },
+        "AutoScalingIps":{
+          "shape":"AutoScalingIpsState",
+          "locationName":"autoScalingIps"
+        },
+        "AutoProvisionZones":{
+          "shape":"AutoProvisionZonesState",
+          "locationName":"autoProvisionZones"
+        },
+        "RouteTableId":{
+          "shape":"String",
+          "locationName":"routeTableId"
         }
       }
     },
@@ -41426,6 +41934,14 @@
         "Status":{
           "shape":"NatGatewayAddressStatus",
           "locationName":"status"
+        },
+        "AvailabilityZone":{
+          "shape":"AvailabilityZoneName",
+          "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"AvailabilityZoneId",
+          "locationName":"availabilityZoneId"
         }
       }
     },
@@ -46512,6 +47028,7 @@
         "capacity-block",
         "mac-modification-task",
         "ipam-prefix-list-resolver",
+        "ipam-policy",
         "ipam-prefix-list-resolver-target",
         "capacity-manager-data-export",
         "vpn-concentrator"
@@ -49032,7 +49549,8 @@
       "enum":[
         "alb",
         "nlb",
-        "rnat"
+        "rnat",
+        "rds"
       ]
     },
     "ServiceNetworkArn":{"type":"string"},
