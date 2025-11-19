@@ -2,6 +2,7 @@
 namespace Aws\Test\Signature;
 
 use Aws\Signature\AnonymousSignature;
+use Aws\Signature\DpopSignature;
 use Aws\Signature\S3ExpressSignature;
 use Aws\Signature\S3SignatureV4;
 use Aws\Signature\SignatureInterface;
@@ -30,7 +31,8 @@ class SignatureProviderTest extends TestCase
             ['v4-s3express', S3ExpressSignature::class, 's3express'],
             ['v4-unsigned-body', SignatureV4::class, 'foo'],
             ['anonymous', AnonymousSignature::class, 's3'],
-            ['s3v4', S3SignatureV4::class, 's3-outposts']
+            ['s3v4', S3SignatureV4::class, 's3-outposts'],
+            ['dpop', DpopSignature::class, 'signin'],
         ];
     }
 

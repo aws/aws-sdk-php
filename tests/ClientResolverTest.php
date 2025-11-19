@@ -382,6 +382,22 @@ class ClientResolverTest extends TestCase
         $this->assertSame('anonymous', $conf['config']['signature_version']);
     }
 
+    public function testCanCreateNullCredentialsWithDpop()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service' => 'sqs',
+            'region' => 'x',
+            'credentials' => false,
+            'signature_version' => 'dpop'
+        ], new HandlerList());
+        $creds = call_user_func($conf['credentials'])->wait();
+        $this->assertInstanceOf(Credentials::class, $creds);
+        // `'credentials' => false` results in a signature_version overwrite
+        // to 'anonymous' for any other value
+        $this->assertSame('dpop', $conf['config']['signature_version']);
+    }
+
     public function testCanCreateCredentialsFromProvider()
     {
         $c = new Credentials('foo', 'bar');

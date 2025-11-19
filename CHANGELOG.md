@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.362.0 - 2025-11-19
+
+* `Aws\Credentials` - Adds `LoginCredentialProvider`, which supports AWS Console sign-in credentials through the `aws login` CLI workflow.
+
 ## 3.361.0 - 2025-11-19
 
 * `Aws\Route53` - Add dual-stack endpoint support for Route53
