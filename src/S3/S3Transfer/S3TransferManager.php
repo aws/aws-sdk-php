@@ -716,7 +716,7 @@ final class S3TransferManager
         if (empty($defaultRegion)) {
             throw new S3TransferException(
                 "When using the default S3 Client you must define a default region."
-                . "The config parameter is `default_region`.`"
+                . "\nThe config parameter is `default_region`.`"
             );
         }
 

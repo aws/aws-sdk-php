@@ -44,6 +44,7 @@ final class S3TransferManagerConfig
      * @param string $multipartDownloadType
      * @param int $concurrency
      * @param bool $trackProgress
+     * @param string|null $defaultRegion
      */
     public function __construct(
         int $targetPartSizeBytes,
@@ -98,7 +99,7 @@ final class S3TransferManagerConfig
             $config['concurrency']
             ?? self::DEFAULT_CONCURRENCY,
             $config['track_progress'] ?? self::DEFAULT_TRACK_PROGRESS,
-            null
+            $config['default_region'] ?? null
         );
     }
 

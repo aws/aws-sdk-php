@@ -82,7 +82,9 @@ EOF
      */
     public function testDefaultConfigIsSet(): void
     {
-        $manager = new S3TransferManager();
+        $manager = new S3TransferManager(null, [
+            'default_region' => 'us-east-1',
+        ]);
         $this->assertArrayHasKey(
             'target_part_size_bytes',
             $manager->getConfig()->toArray()
@@ -158,7 +160,9 @@ EOF
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Please provide a valid readable file path or a valid stream as source.");
-        $manager = new S3TransferManager();
+        $manager = new S3TransferManager(null, [
+            'default_region' => 'us-east-1',
+        ]);
         $manager->upload(
             new UploadRequest(
                 "noreadablefile",
@@ -180,7 +184,9 @@ EOF
         string $missingProperty
     ): void
     {
-        $manager = new S3TransferManager();
+        $manager = new S3TransferManager(null, [
+            'default_region' => 'us-east-1',
+        ]);
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The `$missingProperty` parameter must be provided as part of the request arguments.");
         $manager->upload(
@@ -220,7 +226,9 @@ EOF
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The provided config `multipart_upload_threshold_bytes`"
             . "must be greater than or equal to " . MultipartUploader::PART_MIN_SIZE);
-        $manager = new S3TransferManager();
+        $manager = new S3TransferManager(null, [
+            'default_region' => 'us-east-1',
+        ]);
         $manager->upload(
             new UploadRequest(
                 Utils::streamFor(),
@@ -501,7 +509,9 @@ EOF
      */
     public function testUploadUsesDefaultChecksumAlgorithm(): void
     {
-        $manager = new S3TransferManager();
+        $manager = new S3TransferManager(null, [
+            'default_region' => 'us-east-1',
+        ]);
         $this->testUploadResolvedChecksum(
             null, // No checksum provided
             MultipartUploader::DEFAULT_CHECKSUM_CALCULATION_ALGORITHM,
@@ -3806,7 +3816,7 @@ EOF
     {
         $this->expectException(S3TransferException::class);
         $this->expectExceptionMessage("When using the default S3 Client you must define a default region."
-            . "The config parameter is `default_region`.`");
+            . "\nThe config parameter is `default_region`.`");
         new S3TransferManager();
     }
 }
