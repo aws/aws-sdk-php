@@ -50,9 +50,7 @@ final class TransferListenerNotifier extends AbstractTransferListener
     public function bytesTransferred(array $context): bool
     {
         foreach ($this->listeners as $listener) {
-            if (!$listener->bytesTransferred($context)) {
-                return false;
-            }
+            $listener->bytesTransferred($context);
         }
 
         return true;

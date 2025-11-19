@@ -398,23 +398,20 @@ EOF;
      */
     public function testTransferListenerNotifierNotifiesListenersOnSuccess(): void
     {
-        $listener1 = $this->getMockBuilder(AbstractTransferListener::class)->getMock();
-        $listener2 = $this->getMockBuilder(AbstractTransferListener::class)->getMock();
-        $listener3 = $this->getMockBuilder(AbstractTransferListener::class)->getMock();
+        $noOfListeners = 3;
+        $listeners = [];
+        for ($i = 0; $i < $noOfListeners; $i++) {
+            $listener = $this->getMockBuilder(
+                AbstractTransferListener::class
+            )->getMock();
+            $listener->method('bytesTransferred')->willReturn(true);
+            $listener->expects($this->once())->method('transferInitiated');
+            $listener->expects($this->atLeastOnce())->method('bytesTransferred');
+            $listener->expects($this->once())->method('transferComplete');
+            $listeners[] = $listener;
+        }
 
-        $listener1->expects($this->once())->method('transferInitiated');
-        $listener1->expects($this->atLeastOnce())->method('bytesTransferred');
-        $listener1->expects($this->once())->method('transferComplete');
-
-        $listener2->expects($this->once())->method('transferInitiated');
-        $listener2->expects($this->atLeastOnce())->method('bytesTransferred');
-        $listener2->expects($this->once())->method('transferComplete');
-
-        $listener3->expects($this->once())->method('transferInitiated');
-        $listener3->expects($this->atLeastOnce())->method('bytesTransferred');
-        $listener3->expects($this->once())->method('transferComplete');
-
-        $listenerNotifier = new TransferListenerNotifier([$listener1, $listener2, $listener3]);
+        $listenerNotifier = new TransferListenerNotifier($listeners);
 
         $s3Client = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
@@ -674,8 +671,10 @@ EOF;
                         'UploadId' => 'TestUploadId'
                     ]));
                 } elseif ($command->getName() === 'UploadPart') {
-                    if ($command['PartNumber'] == 3) {
-                        return Create::rejectionFor(new S3TransferException('Upload failed'));
+                    if ($command['PartNumber'] === 3) {
+                        return Create::rejectionFor(
+                            new S3TransferException('Upload failed')
+                        );
                     }
                 } elseif ($command->getName() === 'AbortMultipartUpload') {
                     $abortMultipartCalled = true;

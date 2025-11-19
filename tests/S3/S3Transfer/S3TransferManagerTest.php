@@ -470,6 +470,8 @@ EOF
                 $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
                 $this->assertEquals($expectedIncrementalPartSize, $snapshot->getTransferredBytes());
                 $expectedIncrementalPartSize += $expectedPartSize;
+
+                return true;
             });
         $transferListener->expects($this->exactly($expectedPartCount))
             ->method('bytesTransferred');
@@ -1433,6 +1435,8 @@ EOF
                     /** @var TransferProgressSnapshot $snapshot */
                     $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
                     $objectKeys[$snapshot->getIdentifier()] = true;
+
+                    return true;
                 });
             $manager->uploadDirectory(
                 new UploadDirectoryRequest(
