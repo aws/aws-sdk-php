@@ -712,8 +712,16 @@ final class S3TransferManager
      */
     private function defaultS3Client(): S3ClientInterface
     {
+        $defaultRegion = $this->config->getDefaultRegion();
+        if (empty($defaultRegion)) {
+            throw new S3TransferException(
+                "When using the default S3 Client you must define a default region."
+                . "The config parameter is `default_region`.`"
+            );
+        }
+
         return new S3Client([
-            'region' => $this->config->getDefaultRegion(),
+            'region' => $defaultRegion,
         ]);
     }
 

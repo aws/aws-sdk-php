@@ -11,7 +11,6 @@ final class S3TransferManagerConfig
     public const DEFAULT_MULTIPART_DOWNLOAD_TYPE = 'part';
     public const DEFAULT_CONCURRENCY = 5;
     private const DEFAULT_TRACK_PROGRESS = false;
-    private const DEFAULT_REGION = 'us-east-1';
 
     /** @var int  */
     private int $targetPartSizeBytes;
@@ -34,8 +33,8 @@ final class S3TransferManagerConfig
     /** @var bool */
     private bool $trackProgress;
 
-    /** @var string */
-    private string $defaultRegion;
+    /** @var string|null */
+    private ?string $defaultRegion;
 
     /**
      * @param int $targetPartSizeBytes
@@ -45,7 +44,6 @@ final class S3TransferManagerConfig
      * @param string $multipartDownloadType
      * @param int $concurrency
      * @param bool $trackProgress
-     * @param string $defaultRegion
      */
     public function __construct(
         int $targetPartSizeBytes,
@@ -55,7 +53,7 @@ final class S3TransferManagerConfig
         string $multipartDownloadType,
         int $concurrency,
         bool $trackProgress,
-        string $defaultRegion
+        ?string $defaultRegion
     ) {
         $this->targetPartSizeBytes = $targetPartSizeBytes;
         $this->multipartUploadThresholdBytes = $multipartUploadThresholdBytes;
@@ -100,7 +98,7 @@ final class S3TransferManagerConfig
             $config['concurrency']
             ?? self::DEFAULT_CONCURRENCY,
             $config['track_progress'] ?? self::DEFAULT_TRACK_PROGRESS,
-            $config['default_region'] ?? self::DEFAULT_REGION
+            null
         );
     }
 
@@ -161,9 +159,9 @@ final class S3TransferManagerConfig
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDefaultRegion(): string
+    public function getDefaultRegion(): ?string
     {
         return $this->defaultRegion;
     }
