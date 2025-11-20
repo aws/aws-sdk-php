@@ -41,7 +41,7 @@ class QueryParser extends AbstractParser
     ) {
         $output = $this->api->getOperation($command->getName())->getOutput();
         $body = $response->getBody();
-        $xml = !$body->isSeekable() || $body->getSize()
+        $xml = (!$body->isSeekable() || !$body->getSize())
             ? $this->parseXml($body, $response)
             : null;
 

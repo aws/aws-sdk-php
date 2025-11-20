@@ -57,7 +57,7 @@ abstract class AbstractRestParser extends AbstractParser
 
         $body = $response->getBody();
         if (!$payload
-            && (!$body->isSeekable() || $body->getSize())
+            && (!$body->isSeekable() || !$body->getSize())
             && count($output->getMembers()) > 0
         ) {
             // if no payload was found, then parse the contents of the body

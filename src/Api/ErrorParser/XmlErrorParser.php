@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Api\ErrorParser;
 
+use Aws\Api\Parser\Exception\ParserException;
 use Aws\Api\Parser\PayloadParserTrait;
 use Aws\Api\Parser\XmlParser;
 use Aws\Api\Service;
@@ -97,15 +98,27 @@ class XmlErrorParser extends AbstractErrorParser
     }
 
     protected function payload(
-        ResponseInterface $response,
+        ResponseInterface|\SimpleXMLElement|array $responseOrParsedBody,
         StructureShape $member
     ) {
-        $xmlBody = $this->parseXml($response->getBody(), $response);
+        $xmlBody = $responseOrParsedBody;
+        if ($responseOrParsedBody instanceof ResponseInterface) {
+            $xmlBody = $this->parseXml(
+                $responseOrParsedBody->getBody(),
+                $responseOrParsedBody
+            );
+        }
+
+
         $prefix = $this->registerNamespacePrefix($xmlBody);
         $errorBody = $xmlBody->xpath("//{$prefix}Error");
 
         if (is_array($errorBody) && !empty($errorBody[0])) {
             return $this->parser->parse($member, $errorBody[0]);
         }
+
+        throw new ParserException(
+            "Error element not found in parsed body"
+        );
     }
 }

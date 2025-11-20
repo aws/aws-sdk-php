@@ -199,29 +199,6 @@ class CloudWatchLogsClient extends AwsClient {
     public function __construct(array $args)
     {
         parent::__construct($args);
-        $this->addStreamingFlagMiddleware();
-    }
-
-    private function addStreamingFlagMiddleware()
-    {
-        $this->getHandlerList()
-            -> appendInit(
-                $this->getStreamingFlagMiddleware(),
-                'streaming-flag-middleware'
-            );
-    }
-
-    private function getStreamingFlagMiddleware(): callable
-    {
-        return function (callable $handler) {
-            return function (CommandInterface $command, $request = null) use ($handler) {
-                if (!empty(self::$streamingCommands[$command->getName()])) {
-                    $command['@http']['stream'] = true;
-                }
-
-                return $handler($command, $request);
-            };
-        };
     }
 
     /**
