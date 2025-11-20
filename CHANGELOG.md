@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.362.1 - 2025-11-20
 
 * `Aws\Organizations` - Added new APIs for Billing Transfer, new policy type INSPECTOR_POLICY, and allow an account to transfer between organizations
 * `Aws\DeviceFarm` - Add support for environment variables and an IAM execution role.
