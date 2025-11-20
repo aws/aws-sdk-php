@@ -28,16 +28,18 @@ class JsonRpcErrorParser extends AbstractErrorParser
         $data = $this->genericHandler($response);
 
         // Make the casing consistent across services.
-        if ($data['parsed']) {
-            $data['parsed'] = array_change_key_case($data['parsed']);
+        $parsed = $data['parsed'] ?? null;
+        if ($parsed) {
+            $parsed = array_change_key_case($data['parsed']);
         }
 
-        if (isset($data['parsed']['__type'])) {
+        if (isset($parsed['__type'])) {
             if (!isset($data['code'])) {
-                $parts = explode('#', $data['parsed']['__type']);
-                $data['code'] = isset($parts[1]) ? $parts[1] : $parts[0];
+                $parts = explode('#', $parsed['__type']);
+                $data['code'] = $parts[1] ?? $parts[0];
             }
-            $data['message'] = $data['parsed']['message'] ?? null;
+
+            $data['message'] = $parsed['message'] ?? null;
         }
 
         $this->populateShape($data, $response, $command);

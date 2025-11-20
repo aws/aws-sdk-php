@@ -7,6 +7,7 @@ use Aws\Api\Parser\XmlParser;
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
 use Aws\CommandInterface;
+use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -39,7 +40,17 @@ class XmlErrorParser extends AbstractErrorParser
         ];
 
         $body = $response->getBody();
-        if ($body->getSize() > 0) {
+        if (!$body->isSeekable()) {
+            $tempBody = Utils::streamFor();
+            Utils::copyToStream($body, $tempBody);
+            $body = $tempBody;
+        }
+
+        // Cast it to string
+        $body = (string) $body;
+
+        // Parse just if is not empty
+        if (!empty($body)) {
             $this->parseBody($this->parseXml($body, $response), $data);
         } else {
             $this->parseHeaders($response, $data);

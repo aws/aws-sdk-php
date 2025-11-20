@@ -48,13 +48,16 @@ trait JsonParserTrait
             $body = $tempBody;
         }
 
-        // Parsing the body to avoid having to read the response body again.
-        // This will avoid issues when the body is not seekable
-        $parsedBody = $this->parseJson((string) $body, $response);
+        // Cast it to string
+        $body = (string) $body;
+        $parsedBody = [];
 
-        // Make the casing lowercase in order to match
-        // how error shapes are modeled
-        $parsedBody = array_change_key_case($parsedBody);
+        // Avoid parsing an empty body
+        if (!empty($body)) {
+            // Parsing the body to avoid having to read the response body again.
+            // This will avoid issues when the body is not seekable
+            $parsedBody = $this->parseJson($body, $response);
+        }
 
         // Parse error code from response body
         if (!$error_code && $parsedBody) {
