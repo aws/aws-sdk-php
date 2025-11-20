@@ -9316,6 +9316,14 @@
       "max":128,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
     },
+    "FunctionType":{
+      "type":"string",
+      "enum":[
+        "REGULAR_FUNCTION",
+        "AGGREGATE_FUNCTION",
+        "STORED_PROCEDURE"
+      ]
+    },
     "Generic512CharString":{
       "type":"string",
       "max":512,
@@ -10705,6 +10713,7 @@
         "CatalogId":{"shape":"CatalogIdString"},
         "DatabaseName":{"shape":"NameString"},
         "Pattern":{"shape":"NameString"},
+        "FunctionType":{"shape":"FunctionType"},
         "NextToken":{"shape":"Token"},
         "MaxResults":{"shape":"CatalogGetterPageSize"}
       }
@@ -17105,6 +17114,7 @@
         "DatabaseName":{"shape":"NameString"},
         "ClassName":{"shape":"NameString"},
         "OwnerName":{"shape":"NameString"},
+        "FunctionType":{"shape":"FunctionType"},
         "OwnerType":{"shape":"PrincipalType"},
         "CreateTime":{"shape":"Timestamp"},
         "ResourceUris":{"shape":"ResourceUriList"},
@@ -17117,6 +17127,7 @@
         "FunctionName":{"shape":"NameString"},
         "ClassName":{"shape":"NameString"},
         "OwnerName":{"shape":"NameString"},
+        "FunctionType":{"shape":"FunctionType"},
         "OwnerType":{"shape":"PrincipalType"},
         "ResourceUris":{"shape":"ResourceUriList"}
       }

@@ -21,6 +21,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getServiceLevelObjectiveAsync(array $args = [])
  * @method \Aws\Result listAuditFindings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAuditFindingsAsync(array $args = [])
+ * @method \Aws\Result listEntityEvents(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listEntityEventsAsync(array $args = [])
  * @method \Aws\Result listGroupingAttributeDefinitions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listGroupingAttributeDefinitionsAsync(array $args = [])
  * @method \Aws\Result listServiceDependencies(array $args = [])

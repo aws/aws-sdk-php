@@ -6224,13 +6224,19 @@
     },
     "Boolean":{"type":"boolean"},
     "BooleanObject":{"type":"boolean"},
+    "BorderRadius":{
+      "type":"string",
+      "max":50
+    },
     "BorderStyle":{
       "type":"structure",
       "members":{
+        "Color":{"shape":"Color"},
         "Show":{
           "shape":"Boolean",
           "box":true
-        }
+        },
+        "Width":{"shape":"Width"}
       }
     },
     "BoxPlotAggregatedFieldWells":{
@@ -6813,6 +6819,7 @@
       "member":{"shape":"CollectiveConstantEntry"},
       "max":2000
     },
+    "Color":{"type":"string"},
     "ColorFillType":{
       "type":"string",
       "enum":[
@@ -14223,7 +14230,9 @@
         "BorderStyle":{"shape":"FreeFormLayoutElementBorderStyle"},
         "SelectedBorderStyle":{"shape":"FreeFormLayoutElementBorderStyle"},
         "BackgroundStyle":{"shape":"FreeFormLayoutElementBackgroundStyle"},
-        "LoadingAnimation":{"shape":"LoadingAnimation"}
+        "LoadingAnimation":{"shape":"LoadingAnimation"},
+        "BorderRadius":{"shape":"BorderRadius"},
+        "Padding":{"shape":"Padding"}
       }
     },
     "FreeFormLayoutElementBackgroundStyle":{
@@ -14237,7 +14246,8 @@
       "type":"structure",
       "members":{
         "Visibility":{"shape":"Visibility"},
-        "Color":{"shape":"HexColorWithTransparency"}
+        "Color":{"shape":"HexColorWithTransparency"},
+        "Width":{"shape":"Width"}
       }
     },
     "FreeFormLayoutScreenCanvasSizeOptions":{
@@ -15218,7 +15228,28 @@
         "ColumnIndex":{"shape":"GridLayoutElementColumnIndex"},
         "ColumnSpan":{"shape":"GridLayoutElementColumnSpan"},
         "RowIndex":{"shape":"GridLayoutElementRowIndex"},
-        "RowSpan":{"shape":"GridLayoutElementRowSpan"}
+        "RowSpan":{"shape":"GridLayoutElementRowSpan"},
+        "BorderStyle":{"shape":"GridLayoutElementBorderStyle"},
+        "SelectedBorderStyle":{"shape":"GridLayoutElementBorderStyle"},
+        "BackgroundStyle":{"shape":"GridLayoutElementBackgroundStyle"},
+        "LoadingAnimation":{"shape":"LoadingAnimation"},
+        "BorderRadius":{"shape":"BorderRadius"},
+        "Padding":{"shape":"Padding"}
+      }
+    },
+    "GridLayoutElementBackgroundStyle":{
+      "type":"structure",
+      "members":{
+        "Visibility":{"shape":"Visibility"},
+        "Color":{"shape":"HexColorWithTransparency"}
+      }
+    },
+    "GridLayoutElementBorderStyle":{
+      "type":"structure",
+      "members":{
+        "Visibility":{"shape":"Visibility"},
+        "Color":{"shape":"HexColorWithTransparency"},
+        "Width":{"shape":"Width"}
       }
     },
     "GridLayoutElementColumnIndex":{
@@ -18923,6 +18954,10 @@
         "NewDefaultValues":{"shape":"NewDefaultValues"}
       }
     },
+    "Padding":{
+      "type":"string",
+      "max":200
+    },
     "PageNumber":{
       "type":"long",
       "min":0
@@ -21949,6 +21984,13 @@
         "Images":{"shape":"SheetImageList"}
       }
     },
+    "SheetBackgroundStyle":{
+      "type":"structure",
+      "members":{
+        "Color":{"shape":"Color"},
+        "Gradient":{"shape":"String"}
+      }
+    },
     "SheetContentType":{
       "type":"string",
       "enum":[
@@ -22153,7 +22195,8 @@
       "type":"structure",
       "members":{
         "Tile":{"shape":"TileStyle"},
-        "TileLayout":{"shape":"TileLayoutStyle"}
+        "TileLayout":{"shape":"TileLayoutStyle"},
+        "Background":{"shape":"SheetBackgroundStyle"}
       }
     },
     "SheetTextBox":{
@@ -23615,6 +23658,10 @@
         "SINGLE_QUOTE"
       ]
     },
+    "TextTransform":{
+      "type":"string",
+      "enum":["CAPITALIZE"]
+    },
     "TextWrap":{
       "type":"string",
       "enum":[
@@ -23763,7 +23810,10 @@
     "TileStyle":{
       "type":"structure",
       "members":{
-        "Border":{"shape":"BorderStyle"}
+        "BackgroundColor":{"shape":"Color"},
+        "Border":{"shape":"BorderStyle"},
+        "BorderRadius":{"shape":"BorderRadius"},
+        "Padding":{"shape":"Padding"}
       }
     },
     "TimeBasedForecastProperties":{
@@ -24743,7 +24793,14 @@
     "Typography":{
       "type":"structure",
       "members":{
-        "FontFamilies":{"shape":"FontList"}
+        "FontFamilies":{"shape":"FontList"},
+        "AxisTitleFontConfiguration":{"shape":"FontConfiguration"},
+        "AxisLabelFontConfiguration":{"shape":"FontConfiguration"},
+        "LegendTitleFontConfiguration":{"shape":"FontConfiguration"},
+        "LegendValueFontConfiguration":{"shape":"FontConfiguration"},
+        "DataLabelFontConfiguration":{"shape":"FontConfiguration"},
+        "VisualTitleFontConfiguration":{"shape":"VisualTitleFontConfiguration"},
+        "VisualSubtitleFontConfiguration":{"shape":"VisualSubtitleFontConfiguration"}
       }
     },
     "UIColorPalette":{
@@ -26899,6 +26956,14 @@
       "max":1024,
       "min":1
     },
+    "VisualSubtitleFontConfiguration":{
+      "type":"structure",
+      "members":{
+        "FontConfiguration":{"shape":"FontConfiguration"},
+        "TextAlignment":{"shape":"HorizontalTextAlignment"},
+        "TextTransform":{"shape":"TextTransform"}
+      }
+    },
     "VisualSubtitleLabelOptions":{
       "type":"structure",
       "members":{
@@ -26910,6 +26975,14 @@
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "VisualTitleFontConfiguration":{
+      "type":"structure",
+      "members":{
+        "FontConfiguration":{"shape":"FontConfiguration"},
+        "TextAlignment":{"shape":"HorizontalTextAlignment"},
+        "TextTransform":{"shape":"TextTransform"}
+      }
     },
     "VisualTitleLabelOptions":{
       "type":"structure",
@@ -27096,6 +27169,10 @@
         "ENABLED",
         "DISABLED"
       ]
+    },
+    "Width":{
+      "type":"string",
+      "max":50
     },
     "WordCloudAggregatedFieldWells":{
       "type":"structure",

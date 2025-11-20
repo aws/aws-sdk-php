@@ -1061,6 +1061,21 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "GetFindingsTrendsV2":{
+      "name":"GetFindingsTrendsV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/findingsTrendsv2"
+      },
+      "input":{"shape":"GetFindingsTrendsV2Request"},
+      "output":{"shape":"GetFindingsTrendsV2Response"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "GetFindingsV2":{
       "name":"GetFindingsV2",
       "http":{
@@ -1173,6 +1188,21 @@
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetResourcesTrendsV2":{
+      "name":"GetResourcesTrendsV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/resourcesTrendsv2"
+      },
+      "input":{"shape":"GetResourcesTrendsV2Request"},
+      "output":{"shape":"GetResourcesTrendsV2Response"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
       ]
     },
     "GetResourcesV2":{
@@ -9171,6 +9201,51 @@
         "Original":{"shape":"NonEmptyString"}
       }
     },
+    "FindingsTrendsCompositeFilter":{
+      "type":"structure",
+      "members":{
+        "StringFilters":{"shape":"FindingsTrendsStringFilterList"},
+        "NestedCompositeFilters":{"shape":"FindingsTrendsCompositeFilterList"},
+        "Operator":{"shape":"AllowedOperators"}
+      }
+    },
+    "FindingsTrendsCompositeFilterList":{
+      "type":"list",
+      "member":{"shape":"FindingsTrendsCompositeFilter"}
+    },
+    "FindingsTrendsFilters":{
+      "type":"structure",
+      "members":{
+        "CompositeFilters":{"shape":"FindingsTrendsCompositeFilterList"},
+        "CompositeOperator":{"shape":"AllowedOperators"}
+      }
+    },
+    "FindingsTrendsStringField":{
+      "type":"string",
+      "enum":[
+        "account_id",
+        "region",
+        "finding_types",
+        "finding_status",
+        "finding_cve_ids",
+        "finding_compliance_status",
+        "finding_control_id",
+        "finding_class_name",
+        "finding_provider",
+        "finding_activity_name"
+      ]
+    },
+    "FindingsTrendsStringFilter":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"FindingsTrendsStringField"},
+        "Filter":{"shape":"StringFilter"}
+      }
+    },
+    "FindingsTrendsStringFilterList":{
+      "type":"list",
+      "member":{"shape":"FindingsTrendsStringFilter"}
+    },
     "FirewallPolicyDetails":{
       "type":"structure",
       "members":{
@@ -9444,6 +9519,32 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "GetFindingsTrendsV2Request":{
+      "type":"structure",
+      "required":[
+        "StartTime",
+        "EndTime"
+      ],
+      "members":{
+        "Filters":{"shape":"FindingsTrendsFilters"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "GetFindingsTrendsV2Response":{
+      "type":"structure",
+      "required":[
+        "Granularity",
+        "TrendsMetrics"
+      ],
+      "members":{
+        "Granularity":{"shape":"GranularityField"},
+        "TrendsMetrics":{"shape":"TrendsMetrics"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "GetFindingsV2Request":{
       "type":"structure",
       "members":{
@@ -9544,6 +9645,32 @@
         "GroupByResults":{"shape":"GroupByResults"}
       }
     },
+    "GetResourcesTrendsV2Request":{
+      "type":"structure",
+      "required":[
+        "StartTime",
+        "EndTime"
+      ],
+      "members":{
+        "Filters":{"shape":"ResourcesTrendsFilters"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "GetResourcesTrendsV2Response":{
+      "type":"structure",
+      "required":[
+        "Granularity",
+        "TrendsMetrics"
+      ],
+      "members":{
+        "Granularity":{"shape":"GranularityField"},
+        "TrendsMetrics":{"shape":"ResourcesTrendsMetrics"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "GetResourcesV2Request":{
       "type":"structure",
       "members":{
@@ -9578,6 +9705,14 @@
       "members":{
         "SecurityControlDefinition":{"shape":"SecurityControlDefinition"}
       }
+    },
+    "GranularityField":{
+      "type":"string",
+      "enum":[
+        "Daily",
+        "Weekly",
+        "Monthly"
+      ]
     },
     "GroupByField":{
       "type":"string",
@@ -11351,6 +11486,13 @@
       "type":"list",
       "member":{"shape":"ResourcesCompositeFilter"}
     },
+    "ResourcesCount":{
+      "type":"structure",
+      "required":["AllResources"],
+      "members":{
+        "AllResources":{"shape":"TrendsValueCount"}
+      }
+    },
     "ResourcesDateField":{
       "type":"string",
       "enum":[
@@ -11440,6 +11582,67 @@
     "ResourcesStringFilterList":{
       "type":"list",
       "member":{"shape":"ResourcesStringFilter"}
+    },
+    "ResourcesTrendsCompositeFilter":{
+      "type":"structure",
+      "members":{
+        "StringFilters":{"shape":"ResourcesTrendsStringFilterList"},
+        "NestedCompositeFilters":{"shape":"ResourcesTrendsCompositeFilterList"},
+        "Operator":{"shape":"AllowedOperators"}
+      }
+    },
+    "ResourcesTrendsCompositeFilterList":{
+      "type":"list",
+      "member":{"shape":"ResourcesTrendsCompositeFilter"}
+    },
+    "ResourcesTrendsFilters":{
+      "type":"structure",
+      "members":{
+        "CompositeFilters":{"shape":"ResourcesTrendsCompositeFilterList"},
+        "CompositeOperator":{"shape":"AllowedOperators"}
+      }
+    },
+    "ResourcesTrendsMetrics":{
+      "type":"list",
+      "member":{"shape":"ResourcesTrendsMetricsResult"}
+    },
+    "ResourcesTrendsMetricsResult":{
+      "type":"structure",
+      "required":[
+        "Timestamp",
+        "TrendsValues"
+      ],
+      "members":{
+        "Timestamp":{"shape":"Timestamp"},
+        "TrendsValues":{"shape":"ResourcesTrendsValues"}
+      }
+    },
+    "ResourcesTrendsStringField":{
+      "type":"string",
+      "enum":[
+        "account_id",
+        "region",
+        "resource_type",
+        "resource_category"
+      ]
+    },
+    "ResourcesTrendsStringFilter":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"ResourcesTrendsStringField"},
+        "Filter":{"shape":"StringFilter"}
+      }
+    },
+    "ResourcesTrendsStringFilterList":{
+      "type":"list",
+      "member":{"shape":"ResourcesTrendsStringFilter"}
+    },
+    "ResourcesTrendsValues":{
+      "type":"structure",
+      "required":["ResourcesCount"],
+      "members":{
+        "ResourcesCount":{"shape":"ResourcesCount"}
+      }
     },
     "Result":{
       "type":"structure",
@@ -11880,6 +12083,29 @@
         "HIGH",
         "CRITICAL"
       ]
+    },
+    "SeverityTrendsCount":{
+      "type":"structure",
+      "required":[
+        "Unknown",
+        "Informational",
+        "Low",
+        "Medium",
+        "High",
+        "Critical",
+        "Fatal",
+        "Other"
+      ],
+      "members":{
+        "Unknown":{"shape":"TrendsValueCount"},
+        "Informational":{"shape":"TrendsValueCount"},
+        "Low":{"shape":"TrendsValueCount"},
+        "Medium":{"shape":"TrendsValueCount"},
+        "High":{"shape":"TrendsValueCount"},
+        "Critical":{"shape":"TrendsValueCount"},
+        "Fatal":{"shape":"TrendsValueCount"},
+        "Other":{"shape":"TrendsValueCount"}
+      }
     },
     "SeverityUpdate":{
       "type":"structure",
@@ -12397,6 +12623,32 @@
     "Timestamp":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
+    },
+    "TrendsMetrics":{
+      "type":"list",
+      "member":{"shape":"TrendsMetricsResult"}
+    },
+    "TrendsMetricsResult":{
+      "type":"structure",
+      "required":[
+        "Timestamp",
+        "TrendsValues"
+      ],
+      "members":{
+        "Timestamp":{"shape":"Timestamp"},
+        "TrendsValues":{"shape":"TrendsValues"}
+      }
+    },
+    "TrendsValueCount":{
+      "type":"long",
+      "min":0
+    },
+    "TrendsValues":{
+      "type":"structure",
+      "required":["SeverityTrends"],
+      "members":{
+        "SeverityTrends":{"shape":"SeverityTrendsCount"}
+      }
     },
     "TypeList":{
       "type":"list",

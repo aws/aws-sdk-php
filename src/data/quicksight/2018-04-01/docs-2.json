@@ -2497,6 +2497,14 @@
         "CustomValuesConfiguration$IncludeNullValue": "<p>Includes the null value in custom action parameter values.</p>"
       }
     },
+    "BorderRadius": {
+      "base": null,
+      "refs": {
+        "FreeFormLayoutElement$BorderRadius": "<p>The border radius of a free-form layout element.</p>",
+        "GridLayoutElement$BorderRadius": "<p>The border radius of a grid layout element.</p>",
+        "TileStyle$BorderRadius": "<p>The border radius of a tile.</p>"
+      }
+    },
     "BorderStyle": {
       "base": "<p>The display options for tile borders for visuals.</p>",
       "refs": {
@@ -2993,6 +3001,14 @@
       "base": null,
       "refs": {
         "TopicConstantValue$ValueList": "<p>The value list of the <code>TopicConstantValue</code>.</p>"
+      }
+    },
+    "Color": {
+      "base": "String to encapsulate the most generic way Color can be formatted (words, hexStrings etc)",
+      "refs": {
+        "BorderStyle$Color": "<p>The option to add color for tile borders for visuals.</p>",
+        "SheetBackgroundStyle$Color": "<p>The solid color background option for sheets.</p>",
+        "TileStyle$BackgroundColor": "<p>The background color of a tile.</p>"
       }
     },
     "ColorFillType": {
@@ -6883,7 +6899,14 @@
         "PanelTitleOptions$FontConfiguration": null,
         "ReferenceLineLabelConfiguration$FontConfiguration": "<p>The font configuration of the label in a reference line.</p>",
         "TableCellStyle$FontConfiguration": "<p>The font configuration of the table cells.</p>",
-        "TableFieldCustomTextContent$FontConfiguration": "<p>The font configuration of the custom text content for the table URL link content.</p>"
+        "TableFieldCustomTextContent$FontConfiguration": "<p>The font configuration of the custom text content for the table URL link content.</p>",
+        "Typography$AxisTitleFontConfiguration": null,
+        "Typography$AxisLabelFontConfiguration": null,
+        "Typography$LegendTitleFontConfiguration": null,
+        "Typography$LegendValueFontConfiguration": null,
+        "Typography$DataLabelFontConfiguration": null,
+        "VisualSubtitleFontConfiguration$FontConfiguration": null,
+        "VisualTitleFontConfiguration$FontConfiguration": null
       }
     },
     "FontDecoration": {
@@ -7583,6 +7606,19 @@
         "GridLayoutElementList$member": null
       }
     },
+    "GridLayoutElementBackgroundStyle": {
+      "base": "<p>The background style configuration of a grid layout element.</p>",
+      "refs": {
+        "GridLayoutElement$BackgroundStyle": "<p>The background style configuration of a grid layout element.</p>"
+      }
+    },
+    "GridLayoutElementBorderStyle": {
+      "base": "<p>The border style configuration of a grid layout element.</p>",
+      "refs": {
+        "GridLayoutElement$BorderStyle": "<p>The border style configuration of a grid layout element.</p>",
+        "GridLayoutElement$SelectedBorderStyle": "<p>The border style configuration of a grid layout element. This border style is used when the element is selected.</p>"
+      }
+    },
     "GridLayoutElementColumnIndex": {
       "base": null,
       "refs": {
@@ -7863,6 +7899,8 @@
         "GeospatialNullSymbolStyle$FillColor": "<p>The color and opacity values for the fill color.</p>",
         "GeospatialNullSymbolStyle$StrokeColor": "<p>The color and opacity values for the stroke color.</p>",
         "GeospatialSolidColor$Color": "<p>The color and opacity values for the color.</p>",
+        "GridLayoutElementBackgroundStyle$Color": "<p>The background color of a grid layout element.</p>",
+        "GridLayoutElementBorderStyle$Color": "<p>The border color of a grid layout element.</p>",
         "PanelConfiguration$BorderColor": "<p>Sets the line color of panel borders.</p>",
         "PanelConfiguration$BackgroundColor": "<p>Sets the background color for each panel.</p>"
       }
@@ -7924,7 +7962,9 @@
       "base": null,
       "refs": {
         "PanelTitleOptions$HorizontalTextAlignment": "<p>Sets the horizontal text alignment of the title within each panel.</p>",
-        "TableCellStyle$HorizontalTextAlignment": "<p>The horizontal text alignment (left, center, right, auto) for the table cells.</p>"
+        "TableCellStyle$HorizontalTextAlignment": "<p>The horizontal text alignment (left, center, right, auto) for the table cells.</p>",
+        "VisualSubtitleFontConfiguration$TextAlignment": "<p>Determines the alignment of visual sub-title.</p>",
+        "VisualTitleFontConfiguration$TextAlignment": "<p>Determines the alignment of visual title.</p>"
       }
     },
     "Host": {
@@ -9235,7 +9275,8 @@
     "LoadingAnimation": {
       "base": "<p>The configuration of loading animation in free-form layout. </p>",
       "refs": {
-        "FreeFormLayoutElement$LoadingAnimation": "<p>The loading animation configuration of a free-form layout element.</p>"
+        "FreeFormLayoutElement$LoadingAnimation": "<p>The loading animation configuration of a free-form layout element.</p>",
+        "GridLayoutElement$LoadingAnimation": null
       }
     },
     "LocalNavigationConfiguration": {
@@ -10082,6 +10123,14 @@
       "base": "<p>A transform operation that overrides the dataset parameter values that are defined in another dataset.</p>",
       "refs": {
         "TransformOperation$OverrideDatasetParameterOperation": null
+      }
+    },
+    "Padding": {
+      "base": null,
+      "refs": {
+        "FreeFormLayoutElement$Padding": "<p>The padding of a free-form layout element.</p>",
+        "GridLayoutElement$Padding": "<p>The padding of a grid layout element.</p>",
+        "TileStyle$Padding": "<p>The padding of a tile.</p>"
       }
     },
     "PageNumber": {
@@ -12473,6 +12522,12 @@
         "SheetList$member": null
       }
     },
+    "SheetBackgroundStyle": {
+      "base": "<p>The background configuration for sheets.</p>",
+      "refs": {
+        "SheetStyle$Background": "<p>The background for sheets.</p>"
+      }
+    },
     "SheetContentType": {
       "base": null,
       "refs": {
@@ -14043,6 +14098,7 @@
         "SearchTopicsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "SessionLifetimeInMinutesInvalidException$Message": null,
         "SessionLifetimeInMinutesInvalidException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
+        "SheetBackgroundStyle$Gradient": "<p>The gradient background option for sheets.</p>",
         "SignupResponse$userLoginName": "<p>The user login name for your Amazon Quick Sight account.</p>",
         "SignupResponse$accountName": "<p>The name of your Quick Sight account.</p>",
         "SignupResponse$directoryType": "<p>The type of Active Directory that is being used to authenticate the Amazon Quick Sight account. Valid values are <code>SIMPLE_AD</code>, <code>AD_CONNECTOR</code>, and <code>MICROSOFT_AD</code>.</p>",
@@ -14832,6 +14888,13 @@
       "base": null,
       "refs": {
         "UploadSettings$TextQualifier": "<p>Text qualifier.</p>"
+      }
+    },
+    "TextTransform": {
+      "base": null,
+      "refs": {
+        "VisualSubtitleFontConfiguration$TextTransform": "<p>Determines the text transformation of visual sub-title.</p>",
+        "VisualTitleFontConfiguration$TextTransform": "<p>Determines the text transformation of visual title.</p>"
       }
     },
     "TextWrap": {
@@ -16525,6 +16588,8 @@
         "GeospatialGradientColor$NullDataVisibility": "<p>The state of visibility for null data.</p>",
         "GeospatialLayerItem$Visibility": "<p>The state of visibility for the layer.</p>",
         "GeospatialMapStyle$BaseMapVisibility": "<p>The state of visibility for the base map.</p>",
+        "GridLayoutElementBackgroundStyle$Visibility": "<p>The background visibility of a grid layout element.</p>",
+        "GridLayoutElementBorderStyle$Visibility": "<p>The border visibility of a grid layout element.</p>",
         "KPISparklineOptions$Visibility": "<p>The visibility of the sparkline.</p>",
         "KPISparklineOptions$TooltipVisibility": "<p>The tooltip visibility of the sparkline.</p>",
         "LabelOptions$Visibility": "<p>Determines whether or not the label is visible.</p>",
@@ -16756,6 +16821,12 @@
         "DashboardVisualResult$VisualSubtitle": "<p>The subtitle of the visual.</p>"
       }
     },
+    "VisualSubtitleFontConfiguration": {
+      "base": "<p>Configures the display properties of the visual sub-title.</p>",
+      "refs": {
+        "Typography$VisualSubtitleFontConfiguration": "<p>Configures the display properties of the visual sub-title.</p>"
+      }
+    },
     "VisualSubtitleLabelOptions": {
       "base": "<p>The subtitle label options for a visual.</p>",
       "refs": {
@@ -16789,6 +16860,12 @@
       "base": null,
       "refs": {
         "DashboardVisualResult$VisualTitle": "<p>The title of the visual.</p>"
+      }
+    },
+    "VisualTitleFontConfiguration": {
+      "base": "<p>Configures the display properties of the visual title.</p>",
+      "refs": {
+        "Typography$VisualTitleFontConfiguration": "<p>Configures the display properties of the visual title.</p>"
       }
     },
     "VisualTitleLabelOptions": {
@@ -16963,6 +17040,14 @@
         "RowAlternateColorOptions$Status": "<p>Determines the widget status.</p>",
         "RowAlternateColorOptions$UsePrimaryBackgroundColor": "<p>The primary background color options for alternate rows.</p>",
         "VisualCustomAction$Status": "<p>The status of the <code>VisualCustomAction</code>.</p>"
+      }
+    },
+    "Width": {
+      "base": "String to encapsulate the most generic way Width can be formatted with whatever units (px, em etc)",
+      "refs": {
+        "BorderStyle$Width": "<p>The option to set the width of tile borders for visuals.</p>",
+        "FreeFormLayoutElementBorderStyle$Width": "<p>The border width of a free-form layout element.</p>",
+        "GridLayoutElementBorderStyle$Width": "<p>The border width of a grid layout element.</p>"
       }
     },
     "WordCloudAggregatedFieldWells": {

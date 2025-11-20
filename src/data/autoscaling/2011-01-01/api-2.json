@@ -38,7 +38,8 @@
       },
       "errors":[
         {"shape":"ResourceContentionFault"},
-        {"shape":"ServiceLinkedRoleFailure"}
+        {"shape":"ServiceLinkedRoleFailure"},
+        {"shape":"InstanceRefreshInProgressFault"}
       ]
     },
     "AttachLoadBalancers":{
@@ -54,7 +55,8 @@
       },
       "errors":[
         {"shape":"ResourceContentionFault"},
-        {"shape":"ServiceLinkedRoleFailure"}
+        {"shape":"ServiceLinkedRoleFailure"},
+        {"shape":"InstanceRefreshInProgressFault"}
       ]
     },
     "AttachTrafficSources":{
@@ -70,7 +72,8 @@
       },
       "errors":[
         {"shape":"ResourceContentionFault"},
-        {"shape":"ServiceLinkedRoleFailure"}
+        {"shape":"ServiceLinkedRoleFailure"},
+        {"shape":"InstanceRefreshInProgressFault"}
       ]
     },
     "BatchDeleteScheduledAction":{
@@ -832,7 +835,8 @@
       },
       "errors":[
         {"shape":"LimitExceededFault"},
-        {"shape":"ResourceContentionFault"}
+        {"shape":"ResourceContentionFault"},
+        {"shape":"InstanceRefreshInProgressFault"}
       ]
     },
     "RecordLifecycleActionHeartbeat":{
@@ -1264,7 +1268,8 @@
         "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"},
         "AvailabilityZoneDistribution":{"shape":"AvailabilityZoneDistribution"},
         "AvailabilityZoneImpairmentPolicy":{"shape":"AvailabilityZoneImpairmentPolicy"},
-        "CapacityReservationSpecification":{"shape":"CapacityReservationSpecification"}
+        "CapacityReservationSpecification":{"shape":"CapacityReservationSpecification"},
+        "InstanceLifecyclePolicy":{"shape":"InstanceLifecyclePolicy"}
       }
     },
     "AutoScalingGroupDesiredCapacity":{"type":"integer"},
@@ -1321,6 +1326,7 @@
         "HealthStatus":{"shape":"XmlStringMaxLen32"},
         "LaunchConfigurationName":{"shape":"XmlStringMaxLen255"},
         "LaunchTemplate":{"shape":"LaunchTemplateSpecification"},
+        "ImageId":{"shape":"XmlStringMaxLen255"},
         "ProtectedFromScaleIn":{"shape":"InstanceProtected"},
         "WeightedCapacity":{"shape":"XmlStringMaxLen32"}
       }
@@ -1637,7 +1643,8 @@
         "AvailabilityZoneDistribution":{"shape":"AvailabilityZoneDistribution"},
         "AvailabilityZoneImpairmentPolicy":{"shape":"AvailabilityZoneImpairmentPolicy"},
         "SkipZonalShiftValidation":{"shape":"SkipZonalShiftValidation"},
-        "CapacityReservationSpecification":{"shape":"CapacityReservationSpecification"}
+        "CapacityReservationSpecification":{"shape":"CapacityReservationSpecification"},
+        "InstanceLifecyclePolicy":{"shape":"InstanceLifecyclePolicy"}
       }
     },
     "CreateLaunchConfigurationType":{
@@ -2196,6 +2203,12 @@
       },
       "exception":true
     },
+    "ImageId":{
+      "type":"string",
+      "max":21,
+      "min":5,
+      "pattern":"^ami-[a-z0-9]{1,17}$"
+    },
     "ImpairedZoneHealthCheckBehavior":{
       "type":"string",
       "enum":[
@@ -2222,6 +2235,7 @@
         "HealthStatus":{"shape":"XmlStringMaxLen32"},
         "LaunchConfigurationName":{"shape":"XmlStringMaxLen255"},
         "LaunchTemplate":{"shape":"LaunchTemplateSpecification"},
+        "ImageId":{"shape":"XmlStringMaxLen255"},
         "ProtectedFromScaleIn":{"shape":"InstanceProtected"},
         "WeightedCapacity":{"shape":"XmlStringMaxLen32"}
       }
@@ -2255,6 +2269,12 @@
     "InstanceIds":{
       "type":"list",
       "member":{"shape":"XmlStringMaxLen19"}
+    },
+    "InstanceLifecyclePolicy":{
+      "type":"structure",
+      "members":{
+        "RetentionTriggers":{"shape":"RetentionTriggers"}
+      }
     },
     "InstanceMaintenancePolicy":{
       "type":"structure",
@@ -2311,7 +2331,8 @@
         "ProgressDetails":{"shape":"InstanceRefreshProgressDetails"},
         "Preferences":{"shape":"RefreshPreferences"},
         "DesiredConfiguration":{"shape":"DesiredConfiguration"},
-        "RollbackDetails":{"shape":"RollbackDetails"}
+        "RollbackDetails":{"shape":"RollbackDetails"},
+        "Strategy":{"shape":"RefreshStrategy"}
       }
     },
     "InstanceRefreshIds":{
@@ -2599,7 +2620,8 @@
         "InstanceType":{"shape":"XmlStringMaxLen255"},
         "WeightedCapacity":{"shape":"XmlStringMaxLen32"},
         "LaunchTemplateSpecification":{"shape":"LaunchTemplateSpecification"},
-        "InstanceRequirements":{"shape":"InstanceRequirements"}
+        "InstanceRequirements":{"shape":"InstanceRequirements"},
+        "ImageId":{"shape":"ImageId"}
       }
     },
     "LaunchTemplateSpecification":{
@@ -3294,7 +3316,10 @@
     },
     "RefreshStrategy":{
       "type":"string",
-      "enum":["Rolling"]
+      "enum":[
+        "Rolling",
+        "ReplaceRootVolume"
+      ]
     },
     "RequestedCapacity":{
       "type":"integer",
@@ -3329,6 +3354,19 @@
       "max":1600,
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
+    "RetentionAction":{
+      "type":"string",
+      "enum":[
+        "retain",
+        "terminate"
+      ]
+    },
+    "RetentionTriggers":{
+      "type":"structure",
+      "members":{
+        "TerminateHookAbandon":{"shape":"RetentionAction"}
+      }
     },
     "RetryStrategy":{
       "type":"string",
@@ -3397,7 +3435,10 @@
         "Successful",
         "Failed",
         "Cancelled",
-        "WaitingForConnectionDraining"
+        "WaitingForConnectionDraining",
+        "WaitingForInPlaceUpdateToStart",
+        "WaitingForInPlaceUpdateToFinalize",
+        "InPlaceUpdateInProgress"
       ]
     },
     "ScalingPolicies":{
@@ -3776,7 +3817,8 @@
         "AvailabilityZoneDistribution":{"shape":"AvailabilityZoneDistribution"},
         "AvailabilityZoneImpairmentPolicy":{"shape":"AvailabilityZoneImpairmentPolicy"},
         "SkipZonalShiftValidation":{"shape":"SkipZonalShiftValidation"},
-        "CapacityReservationSpecification":{"shape":"CapacityReservationSpecification"}
+        "CapacityReservationSpecification":{"shape":"CapacityReservationSpecification"},
+        "InstanceLifecyclePolicy":{"shape":"InstanceLifecyclePolicy"}
       }
     },
     "UpdatePlacementGroupParam":{

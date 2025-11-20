@@ -97,6 +97,30 @@
       "input":{"shape":"BatchDescribeModelPackageInput"},
       "output":{"shape":"BatchDescribeModelPackageOutput"}
     },
+    "BatchRebootClusterNodes":{
+      "name":"BatchRebootClusterNodes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchRebootClusterNodesRequest"},
+      "output":{"shape":"BatchRebootClusterNodesResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
+    "BatchReplaceClusterNodes":{
+      "name":"BatchReplaceClusterNodes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchReplaceClusterNodesRequest"},
+      "output":{"shape":"BatchReplaceClusterNodesResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
     "CreateAction":{
       "name":"CreateAction",
       "http":{
@@ -4216,6 +4240,25 @@
     }
   },
   "shapes":{
+    "AcceleratorPartitionConfig":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "Count"
+      ],
+      "members":{
+        "Type":{"shape":"MIGProfileType"},
+        "Count":{
+          "shape":"AcceleratorPartitionConfigCountInteger",
+          "box":true
+        }
+      }
+    },
+    "AcceleratorPartitionConfigCountInteger":{
+      "type":"integer",
+      "max":10000000,
+      "min":0
+    },
     "AcceleratorsAmount":{
       "type":"integer",
       "box":true,
@@ -6000,6 +6043,160 @@
         "ModelApprovalStatus":{"shape":"ModelApprovalStatus"}
       }
     },
+    "BatchRebootClusterNodeLogicalIdsError":{
+      "type":"structure",
+      "required":[
+        "NodeLogicalId",
+        "ErrorCode",
+        "Message"
+      ],
+      "members":{
+        "NodeLogicalId":{"shape":"ClusterNodeLogicalId"},
+        "ErrorCode":{"shape":"BatchRebootClusterNodesErrorCode"},
+        "Message":{"shape":"String"}
+      }
+    },
+    "BatchRebootClusterNodeLogicalIdsErrors":{
+      "type":"list",
+      "member":{"shape":"BatchRebootClusterNodeLogicalIdsError"},
+      "max":25,
+      "min":0
+    },
+    "BatchRebootClusterNodesError":{
+      "type":"structure",
+      "required":[
+        "NodeId",
+        "ErrorCode",
+        "Message"
+      ],
+      "members":{
+        "NodeId":{"shape":"ClusterNodeId"},
+        "ErrorCode":{"shape":"BatchRebootClusterNodesErrorCode"},
+        "Message":{"shape":"String"}
+      }
+    },
+    "BatchRebootClusterNodesErrorCode":{
+      "type":"string",
+      "enum":[
+        "InstanceIdNotFound",
+        "InvalidInstanceStatus",
+        "InstanceIdInUse",
+        "InternalServerError"
+      ]
+    },
+    "BatchRebootClusterNodesErrors":{
+      "type":"list",
+      "member":{"shape":"BatchRebootClusterNodesError"},
+      "max":25,
+      "min":0
+    },
+    "BatchRebootClusterNodesRequest":{
+      "type":"structure",
+      "required":["ClusterName"],
+      "members":{
+        "ClusterName":{"shape":"ClusterNameOrArn"},
+        "NodeIds":{"shape":"BatchRebootClusterNodesRequestNodeIdsList"},
+        "NodeLogicalIds":{"shape":"BatchRebootClusterNodesRequestNodeLogicalIdsList"}
+      }
+    },
+    "BatchRebootClusterNodesRequestNodeIdsList":{
+      "type":"list",
+      "member":{"shape":"ClusterNodeId"},
+      "max":25,
+      "min":1
+    },
+    "BatchRebootClusterNodesRequestNodeLogicalIdsList":{
+      "type":"list",
+      "member":{"shape":"ClusterNodeLogicalId"},
+      "max":25,
+      "min":1
+    },
+    "BatchRebootClusterNodesResponse":{
+      "type":"structure",
+      "members":{
+        "Successful":{"shape":"ClusterNodeIds"},
+        "Failed":{"shape":"BatchRebootClusterNodesErrors"},
+        "FailedNodeLogicalIds":{"shape":"BatchRebootClusterNodeLogicalIdsErrors"},
+        "SuccessfulNodeLogicalIds":{"shape":"ClusterNodeLogicalIdList"}
+      }
+    },
+    "BatchReplaceClusterNodeLogicalIdsError":{
+      "type":"structure",
+      "required":[
+        "NodeLogicalId",
+        "ErrorCode",
+        "Message"
+      ],
+      "members":{
+        "NodeLogicalId":{"shape":"ClusterNodeLogicalId"},
+        "ErrorCode":{"shape":"BatchReplaceClusterNodesErrorCode"},
+        "Message":{"shape":"String"}
+      }
+    },
+    "BatchReplaceClusterNodeLogicalIdsErrors":{
+      "type":"list",
+      "member":{"shape":"BatchReplaceClusterNodeLogicalIdsError"},
+      "max":25,
+      "min":0
+    },
+    "BatchReplaceClusterNodesError":{
+      "type":"structure",
+      "required":[
+        "NodeId",
+        "ErrorCode",
+        "Message"
+      ],
+      "members":{
+        "NodeId":{"shape":"ClusterNodeId"},
+        "ErrorCode":{"shape":"BatchReplaceClusterNodesErrorCode"},
+        "Message":{"shape":"String"}
+      }
+    },
+    "BatchReplaceClusterNodesErrorCode":{
+      "type":"string",
+      "enum":[
+        "InstanceIdNotFound",
+        "InvalidInstanceStatus",
+        "InstanceIdInUse",
+        "InternalServerError"
+      ]
+    },
+    "BatchReplaceClusterNodesErrors":{
+      "type":"list",
+      "member":{"shape":"BatchReplaceClusterNodesError"},
+      "max":25,
+      "min":0
+    },
+    "BatchReplaceClusterNodesRequest":{
+      "type":"structure",
+      "required":["ClusterName"],
+      "members":{
+        "ClusterName":{"shape":"ClusterNameOrArn"},
+        "NodeIds":{"shape":"BatchReplaceClusterNodesRequestNodeIdsList"},
+        "NodeLogicalIds":{"shape":"BatchReplaceClusterNodesRequestNodeLogicalIdsList"}
+      }
+    },
+    "BatchReplaceClusterNodesRequestNodeIdsList":{
+      "type":"list",
+      "member":{"shape":"ClusterNodeId"},
+      "max":25,
+      "min":1
+    },
+    "BatchReplaceClusterNodesRequestNodeLogicalIdsList":{
+      "type":"list",
+      "member":{"shape":"ClusterNodeLogicalId"},
+      "max":25,
+      "min":1
+    },
+    "BatchReplaceClusterNodesResponse":{
+      "type":"structure",
+      "members":{
+        "Successful":{"shape":"ClusterNodeIds"},
+        "Failed":{"shape":"BatchReplaceClusterNodesErrors"},
+        "FailedNodeLogicalIds":{"shape":"BatchReplaceClusterNodeLogicalIdsErrors"},
+        "SuccessfulNodeLogicalIds":{"shape":"ClusterNodeLogicalIdList"}
+      }
+    },
     "BatchStrategy":{
       "type":"string",
       "enum":[
@@ -7313,7 +7510,8 @@
         "LaunchTime":{"shape":"Timestamp"},
         "LastSoftwareUpdateTime":{"shape":"Timestamp"},
         "InstanceStatus":{"shape":"ClusterInstanceStatusDetails"},
-        "UltraServerInfo":{"shape":"UltraServerInfo"}
+        "UltraServerInfo":{"shape":"UltraServerInfo"},
+        "PrivateDnsHostname":{"shape":"ClusterPrivateDnsHostname"}
       }
     },
     "ClusterNonNegativeInstanceCount":{
@@ -7753,7 +7951,8 @@
         "Count":{"shape":"InstanceCount"},
         "Accelerators":{"shape":"AcceleratorsAmount"},
         "VCpu":{"shape":"VCpuAmount"},
-        "MemoryInGiB":{"shape":"MemoryInGiBAmount"}
+        "MemoryInGiB":{"shape":"MemoryInGiBAmount"},
+        "AcceleratorPartition":{"shape":"AcceleratorPartitionConfig"}
       }
     },
     "ComputeQuotaResourceConfigList":{
@@ -19147,6 +19346,39 @@
       "min":0,
       "pattern":"(https|s3)://([^/]+)/?(.*)"
     },
+    "MIGProfileType":{
+      "type":"string",
+      "enum":[
+        "mig-1g.5gb",
+        "mig-1g.10gb",
+        "mig-1g.18gb",
+        "mig-1g.20gb",
+        "mig-1g.23gb",
+        "mig-1g.35gb",
+        "mig-1g.45gb",
+        "mig-1g.47gb",
+        "mig-2g.10gb",
+        "mig-2g.20gb",
+        "mig-2g.35gb",
+        "mig-2g.45gb",
+        "mig-2g.47gb",
+        "mig-3g.20gb",
+        "mig-3g.40gb",
+        "mig-3g.71gb",
+        "mig-3g.90gb",
+        "mig-3g.93gb",
+        "mig-4g.20gb",
+        "mig-4g.40gb",
+        "mig-4g.71gb",
+        "mig-4g.90gb",
+        "mig-4g.93gb",
+        "mig-7g.40gb",
+        "mig-7g.80gb",
+        "mig-7g.141gb",
+        "mig-7g.180gb",
+        "mig-7g.186gb"
+      ]
+    },
     "MLFramework":{
       "type":"string",
       "max":128,
@@ -24577,7 +24809,8 @@
       "type":"string",
       "enum":[
         "training-job",
-        "hyperpod-cluster"
+        "hyperpod-cluster",
+        "endpoint"
       ]
     },
     "SageMakerResourceNames":{

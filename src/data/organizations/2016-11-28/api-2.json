@@ -34,7 +34,9 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"AccessDeniedForDependencyException"}
+        {"shape":"AccessDeniedForDependencyException"},
+        {"shape":"ConstraintViolationException"},
+        {"shape":"MasterCannotLeaveOrganizationException"}
       ]
     },
     "AttachPolicy":{
@@ -230,6 +232,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"AWSOrganizationsNotInUseException"},
         {"shape":"ConcurrentModificationException"},
+        {"shape":"ConstraintViolationException"},
         {"shape":"InvalidInputException"},
         {"shape":"OrganizationNotEmptyException"},
         {"shape":"ServiceException"},
@@ -449,6 +452,24 @@
         {"shape":"ConstraintViolationException"}
       ]
     },
+    "DescribeResponsibilityTransfer":{
+      "name":"DescribeResponsibilityTransfer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeResponsibilityTransferRequest"},
+      "output":{"shape":"DescribeResponsibilityTransferResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"AWSOrganizationsNotInUseException"},
+        {"shape":"ResponsibilityTransferNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"UnsupportedAPIEndpointException"}
+      ]
+    },
     "DetachPolicy":{
       "name":"DetachPolicy",
       "http":{
@@ -591,6 +612,27 @@
         {"shape":"FinalizingOrganizationException"},
         {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"}
+      ]
+    },
+    "InviteOrganizationToTransferResponsibility":{
+      "name":"InviteOrganizationToTransferResponsibility",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"InviteOrganizationToTransferResponsibilityRequest"},
+      "output":{"shape":"InviteOrganizationToTransferResponsibilityResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"AWSOrganizationsNotInUseException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ConstraintViolationException"},
+        {"shape":"DuplicateHandshakeException"},
+        {"shape":"HandshakeConstraintViolationException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"UnsupportedAPIEndpointException"}
       ]
     },
     "LeaveOrganization":{
@@ -806,6 +848,25 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "ListInboundResponsibilityTransfers":{
+      "name":"ListInboundResponsibilityTransfers",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListInboundResponsibilityTransfersRequest"},
+      "output":{"shape":"ListInboundResponsibilityTransfersResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"AWSOrganizationsNotInUseException"},
+        {"shape":"ResponsibilityTransferNotFoundException"},
+        {"shape":"ConstraintViolationException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"UnsupportedAPIEndpointException"}
+      ]
+    },
     "ListOrganizationalUnitsForParent":{
       "name":"ListOrganizationalUnitsForParent",
       "http":{
@@ -821,6 +882,24 @@
         {"shape":"ParentNotFoundException"},
         {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"}
+      ]
+    },
+    "ListOutboundResponsibilityTransfers":{
+      "name":"ListOutboundResponsibilityTransfers",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListOutboundResponsibilityTransfersRequest"},
+      "output":{"shape":"ListOutboundResponsibilityTransfersResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"AWSOrganizationsNotInUseException"},
+        {"shape":"ConstraintViolationException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"UnsupportedAPIEndpointException"}
       ]
     },
     "ListParents":{
@@ -1022,6 +1101,28 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "TerminateResponsibilityTransfer":{
+      "name":"TerminateResponsibilityTransfer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TerminateResponsibilityTransferRequest"},
+      "output":{"shape":"TerminateResponsibilityTransferResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"AWSOrganizationsNotInUseException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ConstraintViolationException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ResponsibilityTransferNotFoundException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"UnsupportedAPIEndpointException"},
+        {"shape":"ResponsibilityTransferAlreadyInStatusException"},
+        {"shape":"InvalidResponsibilityTransferTransitionException"}
+      ]
+    },
     "UntagResource":{
       "name":"UntagResource",
       "http":{
@@ -1080,6 +1181,25 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"UnsupportedAPIEndpointException"},
         {"shape":"PolicyChangesInProgressException"}
+      ]
+    },
+    "UpdateResponsibilityTransfer":{
+      "name":"UpdateResponsibilityTransfer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateResponsibilityTransferRequest"},
+      "output":{"shape":"UpdateResponsibilityTransferResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"AWSOrganizationsNotInUseException"},
+        {"shape":"ResponsibilityTransferNotFoundException"},
+        {"shape":"ConstraintViolationException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"UnsupportedAPIEndpointException"}
       ]
     }
   },
@@ -1222,7 +1342,8 @@
         "INVITE",
         "ENABLE_ALL_FEATURES",
         "APPROVE_ALL_FEATURES",
-        "ADD_ORGANIZATIONS_SERVICE_LINKED_ROLE"
+        "ADD_ORGANIZATIONS_SERVICE_LINKED_ROLE",
+        "TRANSFER_RESPONSIBILITY"
       ]
     },
     "AlreadyInOrganizationException":{
@@ -1355,7 +1476,15 @@
         "INVALID_PAYMENT_INSTRUMENT",
         "ACCOUNT_CREATION_NOT_COMPLETE",
         "CANNOT_REGISTER_SUSPENDED_ACCOUNT_AS_DELEGATED_ADMINISTRATOR",
-        "ALL_FEATURES_MIGRATION_ORGANIZATION_SIZE_LIMIT_EXCEEDED"
+        "ALL_FEATURES_MIGRATION_ORGANIZATION_SIZE_LIMIT_EXCEEDED",
+        "RESPONSIBILITY_TRANSFER_MAX_LEVEL_VIOLATION",
+        "RESPONSIBILITY_TRANSFER_MAX_INBOUND_QUOTA_VIOLATION",
+        "RESPONSIBILITY_TRANSFER_MAX_OUTBOUND_QUOTA_VIOLATION",
+        "RESPONSIBILITY_TRANSFER_MAX_TRANSFERS_QUOTA_VIOLATION",
+        "ACTIVE_RESPONSIBILITY_TRANSFER_PROCESS",
+        "TRANSFER_RESPONSIBILITY_TARGET_DELETION_IN_PROGRESS",
+        "TRANSFER_RESPONSIBILITY_SOURCE_DELETION_IN_PROGRESS",
+        "UNSUPPORTED_PRICING"
       ]
     },
     "CreateAccountFailureReason":{
@@ -1676,6 +1805,19 @@
         "ResourcePolicy":{"shape":"ResourcePolicy"}
       }
     },
+    "DescribeResponsibilityTransferRequest":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{"shape":"ResponsibilityTransferId"}
+      }
+    },
+    "DescribeResponsibilityTransferResponse":{
+      "type":"structure",
+      "members":{
+        "ResponsibilityTransfer":{"shape":"ResponsibilityTransfer"}
+      }
+    },
     "DestinationParentNotFoundException":{
       "type":"structure",
       "members":{
@@ -1777,7 +1919,8 @@
         "AISERVICES_OPT_OUT_POLICY",
         "CHATBOT_POLICY",
         "DECLARATIVE_POLICY_EC2",
-        "SECURITYHUB_POLICY"
+        "SECURITYHUB_POLICY",
+        "INSPECTOR_POLICY"
       ]
     },
     "EffectivePolicyValidationError":{
@@ -1904,7 +2047,11 @@
         "PAYMENT_INSTRUMENT_REQUIRED",
         "ORGANIZATION_FROM_DIFFERENT_SELLER_OF_RECORD",
         "ORGANIZATION_MEMBERSHIP_CHANGE_RATE_LIMIT_EXCEEDED",
-        "MANAGEMENT_ACCOUNT_EMAIL_NOT_VERIFIED"
+        "MANAGEMENT_ACCOUNT_EMAIL_NOT_VERIFIED",
+        "RESPONSIBILITY_TRANSFER_ALREADY_EXISTS",
+        "SOURCE_AND_TARGET_CANNOT_MATCH",
+        "UNUSED_PREPAYMENT_BALANCE",
+        "LEGACY_PERMISSIONS_STILL_IN_USE"
       ]
     },
     "HandshakeFilter":{
@@ -1980,7 +2127,13 @@
         "MASTER_EMAIL",
         "MASTER_NAME",
         "NOTES",
-        "PARENT_HANDSHAKE"
+        "PARENT_HANDSHAKE",
+        "RESPONSIBILITY_TRANSFER",
+        "TRANSFER_START_TIMESTAMP",
+        "TRANSFER_TYPE",
+        "MANAGEMENT_ACCOUNT",
+        "MANAGEMENT_EMAIL",
+        "MANAGEMENT_NAME"
       ]
     },
     "HandshakeResourceValue":{
@@ -2060,8 +2213,25 @@
         "UNSUPPORTED_ACTION_IN_RESOURCE_POLICY",
         "UNSUPPORTED_POLICY_TYPE_IN_RESOURCE_POLICY",
         "UNSUPPORTED_RESOURCE_IN_RESOURCE_POLICY",
-        "NON_DETACHABLE_POLICY"
+        "NON_DETACHABLE_POLICY",
+        "CALLER_REQUIRED_FIELD_MISSING",
+        "UNSUPPORTED_ACTION_IN_RESPONSIBILITY_TRANSFER",
+        "START_DATE_NOT_BEGINNING_OF_MONTH",
+        "START_DATE_NOT_BEGINNING_OF_DAY",
+        "START_DATE_TOO_EARLY",
+        "START_DATE_TOO_LATE",
+        "INVALID_START_DATE",
+        "END_DATE_NOT_END_OF_MONTH",
+        "END_DATE_TOO_EARLY",
+        "INVALID_END_DATE"
       ]
+    },
+    "InvalidResponsibilityTransferTransitionException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
     },
     "InviteAccountToOrganizationRequest":{
       "type":"structure",
@@ -2073,6 +2243,29 @@
       }
     },
     "InviteAccountToOrganizationResponse":{
+      "type":"structure",
+      "members":{
+        "Handshake":{"shape":"Handshake"}
+      }
+    },
+    "InviteOrganizationToTransferResponsibilityRequest":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "Target",
+        "StartTimestamp",
+        "SourceName"
+      ],
+      "members":{
+        "Type":{"shape":"ResponsibilityTransferType"},
+        "Target":{"shape":"HandshakeParty"},
+        "Notes":{"shape":"HandshakeNotes"},
+        "StartTimestamp":{"shape":"Timestamp"},
+        "SourceName":{"shape":"ResponsibilityTransferName"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "InviteOrganizationToTransferResponsibilityResponse":{
       "type":"structure",
       "members":{
         "Handshake":{"shape":"Handshake"}
@@ -2259,6 +2452,23 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListInboundResponsibilityTransfersRequest":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"ResponsibilityTransferType"},
+        "Id":{"shape":"ResponsibilityTransferId"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListInboundResponsibilityTransfersResponse":{
+      "type":"structure",
+      "members":{
+        "ResponsibilityTransfers":{"shape":"ResponsibilityTransfers"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListOrganizationalUnitsForParentRequest":{
       "type":"structure",
       "required":["ParentId"],
@@ -2272,6 +2482,22 @@
       "type":"structure",
       "members":{
         "OrganizationalUnits":{"shape":"OrganizationalUnits"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListOutboundResponsibilityTransfersRequest":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"ResponsibilityTransferType"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListOutboundResponsibilityTransfersResponse":{
+      "type":"structure",
+      "members":{
+        "ResponsibilityTransfers":{"shape":"ResponsibilityTransfers"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -2627,7 +2853,8 @@
         "AISERVICES_OPT_OUT_POLICY",
         "CHATBOT_POLICY",
         "DECLARATIVE_POLICY_EC2",
-        "SECURITYHUB_POLICY"
+        "SECURITYHUB_POLICY",
+        "INSPECTOR_POLICY"
       ]
     },
     "PolicyTypeAlreadyEnabledException":{
@@ -2738,6 +2965,69 @@
         "Arn":{"shape":"ResourcePolicyArn"}
       }
     },
+    "ResponsibilityTransfer":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ResponsibilityTransferArn"},
+        "Name":{"shape":"ResponsibilityTransferName"},
+        "Id":{"shape":"ResponsibilityTransferId"},
+        "Type":{"shape":"ResponsibilityTransferType"},
+        "Status":{"shape":"ResponsibilityTransferStatus"},
+        "Source":{"shape":"TransferParticipant"},
+        "Target":{"shape":"TransferParticipant"},
+        "StartTimestamp":{"shape":"Timestamp"},
+        "EndTimestamp":{"shape":"Timestamp"},
+        "ActiveHandshakeId":{"shape":"HandshakeId"}
+      }
+    },
+    "ResponsibilityTransferAlreadyInStatusException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
+    "ResponsibilityTransferArn":{
+      "type":"string",
+      "pattern":"^arn:[a-z0-9][a-z0-9-.]{0,62}:organizations::\\d{12}:transfer\\/o-[a-z0-9]{10,32}\\/(billing)\\/(inbound|outbound)\\/rt-[0-9a-z]{8,32}$"
+    },
+    "ResponsibilityTransferId":{
+      "type":"string",
+      "pattern":"^rt-[0-9a-z]{8,32}$"
+    },
+    "ResponsibilityTransferName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[ -~]+$",
+      "sensitive":true
+    },
+    "ResponsibilityTransferNotFoundException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
+    "ResponsibilityTransferStatus":{
+      "type":"string",
+      "enum":[
+        "REQUESTED",
+        "DECLINED",
+        "CANCELED",
+        "EXPIRED",
+        "ACCEPTED",
+        "WITHDRAWN"
+      ]
+    },
+    "ResponsibilityTransferType":{
+      "type":"string",
+      "enum":["BILLING"]
+    },
+    "ResponsibilityTransfers":{
+      "type":"list",
+      "member":{"shape":"ResponsibilityTransfer"}
+    },
     "RoleName":{
       "type":"string",
       "max":64,
@@ -2839,7 +3129,7 @@
     "TaggableResourceId":{
       "type":"string",
       "max":130,
-      "pattern":"^(r-[0-9a-z]{4,32})|(\\d{12})|(ou-[0-9a-z]{4,32}-[a-z0-9]{8,32})|(^p-[0-9a-zA-Z_]{8,128})|(^rp-[0-9a-zA-Z_]{4,128})$"
+      "pattern":"^(r-[0-9a-z]{4,32})|(\\d{12})|(ou-[0-9a-z]{4,32}-[a-z0-9]{8,32})|(^p-[0-9a-zA-Z_]{8,128})|(^rp-[0-9a-zA-Z_]{4,128})|(^rt-[0-9a-zA-Z_]{8,32})$"
     },
     "Tags":{
       "type":"list",
@@ -2865,6 +3155,20 @@
         "ROOT"
       ]
     },
+    "TerminateResponsibilityTransferRequest":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{"shape":"ResponsibilityTransferId"},
+        "EndTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "TerminateResponsibilityTransferResponse":{
+      "type":"structure",
+      "members":{
+        "ResponsibilityTransfer":{"shape":"ResponsibilityTransfer"}
+      }
+    },
     "Timestamp":{"type":"timestamp"},
     "TooManyRequestsException":{
       "type":"structure",
@@ -2873,6 +3177,13 @@
         "Message":{"shape":"ExceptionMessage"}
       },
       "exception":true
+    },
+    "TransferParticipant":{
+      "type":"structure",
+      "members":{
+        "ManagementAccountId":{"shape":"AccountId"},
+        "ManagementAccountEmail":{"shape":"Email"}
+      }
     },
     "UnsupportedAPIEndpointException":{
       "type":"structure",
@@ -2920,6 +3231,23 @@
       "type":"structure",
       "members":{
         "Policy":{"shape":"Policy"}
+      }
+    },
+    "UpdateResponsibilityTransferRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Name"
+      ],
+      "members":{
+        "Id":{"shape":"ResponsibilityTransferId"},
+        "Name":{"shape":"ResponsibilityTransferName"}
+      }
+    },
+    "UpdateResponsibilityTransferResponse":{
+      "type":"structure",
+      "members":{
+        "ResponsibilityTransfer":{"shape":"ResponsibilityTransfer"}
       }
     }
   }

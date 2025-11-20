@@ -22,6 +22,7 @@
     "DeleteInfrastructureConfiguration": "<p>Deletes an infrastructure configuration.</p>",
     "DeleteLifecyclePolicy": "<p>Delete the specified lifecycle policy resource.</p>",
     "DeleteWorkflow": "<p>Deletes a specific workflow resource.</p>",
+    "DistributeImage": "<p>DistributeImage distributes existing AMIs to additional regions and accounts without rebuilding the image.</p>",
     "GetComponent": "<p>Gets a component object.</p>",
     "GetComponentPolicy": "<p>Gets a component policy.</p>",
     "GetContainerRecipe": "<p>Retrieves a container recipe.</p>",
@@ -68,6 +69,7 @@
     "PutContainerRecipePolicy": "<p>Applies a policy to a container image. We recommend that you call the RAM API CreateResourceShare (https://docs.aws.amazon.com//ram/latest/APIReference/API_CreateResourceShare.html) to share resources. If you call the Image Builder API <code>PutContainerImagePolicy</code>, you must also call the RAM API PromoteResourceShareCreatedFromPolicy (https://docs.aws.amazon.com//ram/latest/APIReference/API_PromoteResourceShareCreatedFromPolicy.html) in order for the resource to be visible to all principals with whom the resource is shared.</p>",
     "PutImagePolicy": "<p>Applies a policy to an image. We recommend that you call the RAM API <a href=\"https://docs.aws.amazon.com/ram/latest/APIReference/API_CreateResourceShare.html\">CreateResourceShare</a> to share resources. If you call the Image Builder API <code>PutImagePolicy</code>, you must also call the RAM API <a href=\"https://docs.aws.amazon.com/ram/latest/APIReference/API_PromoteResourceShareCreatedFromPolicy.html\">PromoteResourceShareCreatedFromPolicy</a> in order for the resource to be visible to all principals with whom the resource is shared.</p>",
     "PutImageRecipePolicy": "<p>Applies a policy to an image recipe. We recommend that you call the RAM API <a href=\"https://docs.aws.amazon.com/ram/latest/APIReference/API_CreateResourceShare.html\">CreateResourceShare</a> to share resources. If you call the Image Builder API <code>PutImageRecipePolicy</code>, you must also call the RAM API <a href=\"https://docs.aws.amazon.com/ram/latest/APIReference/API_PromoteResourceShareCreatedFromPolicy.html\">PromoteResourceShareCreatedFromPolicy</a> in order for the resource to be visible to all principals with whom the resource is shared.</p>",
+    "RetryImage": "<p>RetryImage retries an image distribution without rebuilding the image.</p>",
     "SendWorkflowStepAction": "<p>Pauses or resumes image creation when the associated workflow runs a <code>WaitForAction</code> step.</p>",
     "StartImagePipelineExecution": "<p>Manually triggers a pipeline to create an image.</p>",
     "StartResourceStateUpdate": "<p>Begin asynchronous resource state update for lifecycle changes to the specified image resources.</p>",
@@ -79,6 +81,10 @@
     "UpdateLifecyclePolicy": "<p>Update the specified lifecycle policy.</p>"
   },
   "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You do not have permissions to perform the requested operation.</p>",
+      "refs": {}
+    },
     "AccountAggregation": {
       "base": "<p>Contains counts of vulnerability findings from image scans that run when you create new Image Builder images, or build new versions of existing images. The vulnerability counts are grouped by severity level. The counts are aggregated across resources to create the final tally for the account that owns them.</p>",
       "refs": {
@@ -161,6 +167,8 @@
       "refs": {
         "Component$obfuscate": "<p>Indicates whether component source is hidden from view in the console, and from component detail results for API, CLI, or SDK operations.</p>",
         "ComponentSummary$obfuscate": "<p>Indicates whether component source is hidden from view in the console, and from component detail results for API, CLI, or SDK operations.</p>",
+        "CreateComponentRequest$dryRun": "<p>Validates the required permissions for the operation and the request parameters, without actually making the request, and provides an error response. Upon a successful request, the error response is <code>DryRunOperationException</code>.</p>",
+        "CreateWorkflowRequest$dryRun": "<p>Validates the required permissions for the operation and the request parameters, without actually making the request, and provides an error response. Upon a successful request, the error response is <code>DryRunOperationException</code>.</p>",
         "FastLaunchConfiguration$enabled": "<p>A Boolean that represents the current state of faster launching for the Windows AMI. Set to <code>true</code> to start using Windows faster launching, or <code>false</code> to stop using it.</p>",
         "LaunchTemplateConfiguration$setDefaultVersion": "<p>Set the specified Amazon EC2 launch template as the default launch template for the specified account.</p>",
         "LifecycleExecutionResourcesImpactedSummary$hasImpactedResources": "<p>Indicates whether an image resource that was identified for a lifecycle action has associated resources that are also impacted.</p>",
@@ -232,12 +240,16 @@
         "CreateLifecyclePolicyResponse$clientToken": "<p>The client token that uniquely identifies the request.</p>",
         "CreateWorkflowRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>",
         "CreateWorkflowResponse$clientToken": "<p>The client token that uniquely identifies the request.</p>",
+        "DistributeImageRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>",
+        "DistributeImageResponse$clientToken": "<p>The client token that uniquely identifies the request.</p>",
         "ImportComponentRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>",
         "ImportComponentResponse$clientToken": "<p>The client token that uniquely identifies the request.</p>",
         "ImportDiskImageRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>",
         "ImportDiskImageResponse$clientToken": "<p>The client token that uniquely identifies the request.</p>",
         "ImportVmImageRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>",
         "ImportVmImageResponse$clientToken": "<p>The client token that uniquely identifies the request.</p>",
+        "RetryImageRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>",
+        "RetryImageResponse$clientToken": "<p>The client token that uniquely identifies the request.</p>",
         "SendWorkflowStepActionRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>",
         "SendWorkflowStepActionResponse$clientToken": "<p>The client token that uniquely identifies the request.</p>",
         "StartImagePipelineExecutionRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>",
@@ -263,7 +275,7 @@
       "refs": {
         "CreateComponentResponse$componentBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the component that the request created.</p>",
         "DeleteComponentRequest$componentBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the component build version to delete.</p>",
-        "DeleteComponentResponse$componentBuildVersionArn": "<p>The ARN of the component build version that this request deleted.</p>",
+        "DeleteComponentResponse$componentBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the component build version that this request deleted.</p>",
         "GetComponentPolicyRequest$componentArn": "<p>The Amazon Resource Name (ARN) of the component whose policy you want to retrieve.</p>",
         "ImportComponentResponse$componentBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the imported component.</p>",
         "PutComponentPolicyRequest$componentArn": "<p>The Amazon Resource Name (ARN) of the component that this policy should be applied to.</p>",
@@ -726,6 +738,14 @@
         "S3ExportConfiguration$diskImageFormat": "<p>Export the updated image to one of the following supported disk image formats:</p> <ul> <li> <p> <b>Virtual Hard Disk (VHD)</b> – Compatible with Citrix Xen and Microsoft Hyper-V virtualization products.</p> </li> <li> <p> <b>Stream-optimized ESX Virtual Machine Disk (VMDK)</b> – Compatible with VMware ESX and VMware vSphere versions 4, 5, and 6.</p> </li> <li> <p> <b>Raw</b> – Raw format.</p> </li> </ul>"
       }
     },
+    "DistributeImageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DistributeImageResponse": {
+      "base": null,
+      "refs": {}
+    },
     "Distribution": {
       "base": "<p>Defines the settings for a specific Region.</p>",
       "refs": {
@@ -747,6 +767,7 @@
         "CreateImageRequest$distributionConfigurationArn": "<p>The Amazon Resource Name (ARN) of the distribution configuration that defines and configures the outputs of your pipeline.</p>",
         "DeleteDistributionConfigurationRequest$distributionConfigurationArn": "<p>The Amazon Resource Name (ARN) of the distribution configuration to delete.</p>",
         "DeleteDistributionConfigurationResponse$distributionConfigurationArn": "<p>The Amazon Resource Name (ARN) of the distribution configuration that was deleted.</p>",
+        "DistributeImageRequest$distributionConfigurationArn": "<p>The Amazon Resource Name (ARN) of the distribution configuration to use.</p>",
         "GetDistributionConfigurationRequest$distributionConfigurationArn": "<p>The Amazon Resource Name (ARN) of the distribution configuration that you want to retrieve.</p>",
         "UpdateDistributionConfigurationRequest$distributionConfigurationArn": "<p>The Amazon Resource Name (ARN) of the distribution configuration that you want to update.</p>",
         "UpdateDistributionConfigurationResponse$distributionConfigurationArn": "<p>The Amazon Resource Name (ARN) of the distribution configuration that was updated by this request.</p>",
@@ -784,6 +805,10 @@
       "refs": {
         "ContainerRecipe$dockerfileTemplateData": "<p>Dockerfiles are text documents that are used to build Docker containers, and ensure that they contain all of the elements required by the application running inside. The template data consists of contextual variables where Image Builder places build information or scripts, based on your container image recipe.</p>"
       }
+    },
+    "DryRunOperationException": {
+      "base": "<p>The dry run operation of the resource was successful, and no resources or mutations were actually performed due to the dry run flag in the request.</p>",
+      "refs": {}
     },
     "EbsInstanceBlockDeviceSpecification": {
       "base": "<p>Amazon EBS-specific block device mapping specifications.</p>",
@@ -830,8 +855,10 @@
     "ErrorMessage": {
       "base": null,
       "refs": {
+        "AccessDeniedException$message": null,
         "CallRateLimitExceededException$message": null,
         "ClientException$message": null,
+        "DryRunOperationException$message": null,
         "ForbiddenException$message": null,
         "IdempotentParameterMismatchException$message": null,
         "InvalidPaginationTokenException$message": null,
@@ -846,7 +873,8 @@
         "ResourceNotFoundException$message": null,
         "ServiceException$message": null,
         "ServiceQuotaExceededException$message": null,
-        "ServiceUnavailableException$message": null
+        "ServiceUnavailableException$message": null,
+        "TooManyRequestsException$message": null
       }
     },
     "FastLaunchConfiguration": {
@@ -1095,10 +1123,11 @@
       "base": null,
       "refs": {
         "CancelImageCreationRequest$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the image that you want to cancel creation for.</p>",
-        "CancelImageCreationResponse$imageBuildVersionArn": "<p>The ARN of the image whose creation this request canceled.</p>",
+        "CancelImageCreationResponse$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the image whose creation this request canceled.</p>",
         "CreateImageResponse$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the image that the request created.</p>",
         "DeleteImageRequest$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the Image Builder image resource to delete.</p>",
-        "DeleteImageResponse$imageBuildVersionArn": "<p>The ARN of the Image Builder image resource that this request deleted.</p>",
+        "DeleteImageResponse$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the Image Builder image resource that this request deleted.</p>",
+        "DistributeImageResponse$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the image to be distributed.</p>",
         "GetImagePolicyRequest$imageArn": "<p>The Amazon Resource Name (ARN) of the image whose policy you want to retrieve.</p>",
         "GetWorkflowExecutionResponse$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the image resource build version that the specified runtime instance of the workflow created.</p>",
         "GetWorkflowStepExecutionResponse$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the image resource build version that the specified runtime instance of the workflow step creates.</p>",
@@ -1107,15 +1136,17 @@
         "ImportDiskImageResponse$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the output AMI that was created from the ISO disk file.</p>",
         "ListImagePackagesRequest$imageBuildVersionArn": "<p>Filter results for the ListImagePackages request by the Image Build Version ARN</p>",
         "ListWorkflowExecutionsRequest$imageBuildVersionArn": "<p>List all workflow runtime instances for the specified image build version resource ARN.</p>",
-        "ListWorkflowExecutionsResponse$imageBuildVersionArn": "<p>The resource ARN of the image build version for which you requested a list of workflow runtime details.</p>",
-        "ListWorkflowStepExecutionsResponse$imageBuildVersionArn": "<p>The image build version resource ARN that's associated with the specified runtime instance of the workflow.</p>",
+        "ListWorkflowExecutionsResponse$imageBuildVersionArn": "<p>The resource Amazon Resource Name (ARN) of the image build version for which you requested a list of workflow runtime details.</p>",
+        "ListWorkflowStepExecutionsResponse$imageBuildVersionArn": "<p>The image build version resource Amazon Resource Name (ARN) that's associated with the specified runtime instance of the workflow.</p>",
         "PutImagePolicyRequest$imageArn": "<p>The Amazon Resource Name (ARN) of the image that this policy should be applied to.</p>",
         "PutImagePolicyResponse$imageArn": "<p>The Amazon Resource Name (ARN) of the image that this policy was applied to.</p>",
+        "RetryImageRequest$imageBuildVersionArn": "<p>The source image Amazon Resource Name (ARN) to retry.</p>",
+        "RetryImageResponse$imageBuildVersionArn": "<p>The ARN of the image to be retried.</p>",
         "SendWorkflowStepActionRequest$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the image build version to send action for.</p>",
         "SendWorkflowStepActionResponse$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the image build version that received the action request.</p>",
         "StartImagePipelineExecutionResponse$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the image that the request created.</p>",
-        "StartResourceStateUpdateRequest$resourceArn": "<p>The ARN of the Image Builder resource that is updated. The state update might also impact associated resources.</p>",
-        "StartResourceStateUpdateResponse$resourceArn": "<p>The requested ARN of the Image Builder resource for the asynchronous update.</p>",
+        "StartResourceStateUpdateRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the Image Builder resource that is updated. The state update might also impact associated resources.</p>",
+        "StartResourceStateUpdateResponse$resourceArn": "<p>The requested Amazon Resource Name (ARN) of the Image Builder resource for the asynchronous update.</p>",
         "WorkflowStepExecution$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the image build version that ran the workflow.</p>"
       }
     },
@@ -1139,6 +1170,10 @@
         "ImageVersion$arn": "<p>The Amazon Resource Name (ARN) of a specific version of an Image Builder image.</p> <note> <p>Semantic versioning is included in each object's Amazon Resource Name (ARN), at the level that applies to that object as follows:</p> <ol> <li> <p>Versionless ARNs and Name ARNs do not include specific values in any of the nodes. The nodes are either left off entirely, or they are specified as wildcards, for example: x.x.x.</p> </li> <li> <p>Version ARNs have only the first three nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;</p> </li> <li> <p>Build version ARNs have all four nodes, and point to a specific build for a specific version of an object.</p> </li> </ol> </note>",
         "InfrastructureConfiguration$arn": "<p>The Amazon Resource Name (ARN) of the infrastructure configuration.</p>",
         "InfrastructureConfigurationSummary$arn": "<p>The Amazon Resource Name (ARN) of the infrastructure configuration.</p>",
+        "LatestVersionReferences$latestVersionArn": "<p>The latest version Amazon Resource Name (ARN) of the Image Builder resource.</p>",
+        "LatestVersionReferences$latestMajorVersionArn": "<p>The latest version Amazon Resource Name (ARN) with the same <code>major</code> version of the Image Builder resource.</p>",
+        "LatestVersionReferences$latestMinorVersionArn": "<p>The latest version Amazon Resource Name (ARN) with the same <code>minor</code> version of the Image Builder resource.</p>",
+        "LatestVersionReferences$latestPatchVersionArn": "<p>The latest version Amazon Resource Name (ARN) with the same <code>patch</code> version of the Image Builder resource.</p>",
         "ListLifecycleExecutionsRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which to get a list of lifecycle runtime instances.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource whose tags you want to retrieve.</p>",
         "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to tag.</p>",
@@ -1149,6 +1184,7 @@
       "base": "<p>The logging configuration that's defined for the image. Image Builder uses the defined settings to direct execution log output during image creation.</p>",
       "refs": {
         "CreateImageRequest$loggingConfiguration": "<p>Define logging configuration for the image build process.</p>",
+        "DistributeImageRequest$loggingConfiguration": "<p>The logging configuration for the distribution.</p>",
         "Image$loggingConfiguration": "<p>The logging configuration that's defined for the image. Image Builder uses the defined settings to direct execution log output during image creation.</p>",
         "ImageSummary$loggingConfiguration": "<p>The logging configuration that's defined for the image.</p>",
         "ImportDiskImageRequest$loggingConfiguration": "<p>Define logging configuration for the image build process.</p>",
@@ -1543,6 +1579,21 @@
       "base": "<p>Your version number is out of bounds or does not follow the required syntax.</p>",
       "refs": {}
     },
+    "LatestVersionReferences": {
+      "base": "<p>The resource ARNs with different wildcard variations of semantic versioning.</p>",
+      "refs": {
+        "CreateComponentResponse$latestVersionReferences": "<p>The resource ARNs with different wildcard variations of semantic versioning.</p>",
+        "CreateContainerRecipeResponse$latestVersionReferences": "<p>The resource ARNs with different wildcard variations of semantic versioning.</p>",
+        "CreateImageRecipeResponse$latestVersionReferences": "<p>The resource ARNs with different wildcard variations of semantic versioning.</p>",
+        "CreateImageResponse$latestVersionReferences": "<p>The resource ARNs with different wildcard variations of semantic versioning.</p>",
+        "CreateWorkflowResponse$latestVersionReferences": "<p>The resource ARNs with different wildcard variations of semantic versioning.</p>",
+        "GetComponentResponse$latestVersionReferences": "<p>The resource ARNs with different wildcard variations of semantic versioning.</p>",
+        "GetContainerRecipeResponse$latestVersionReferences": "<p>The resource ARNs with different wildcard variations of semantic versioning.</p>",
+        "GetImageRecipeResponse$latestVersionReferences": "<p>The resource ARNs with different wildcard variations of semantic versioning.</p>",
+        "GetImageResponse$latestVersionReferences": "<p>The resource ARNs with different wildcard variations of semantic versioning.</p>",
+        "GetWorkflowResponse$latestVersionReferences": "<p>The resource ARNs with different wildcard variations of semantic versioning.</p>"
+      }
+    },
     "LaunchPermissionConfiguration": {
       "base": "<p>Describes the configuration for a launch permission. The launch permission modification request is sent to the <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyImageAttribute.html\">Amazon EC2 ModifyImageAttribute</a> API on behalf of the user for each Region they have selected to distribute the AMI. To make an AMI public, set the launch permission authorized accounts to <code>all</code>. See the examples for making an AMI public at <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyImageAttribute.html\">Amazon EC2 ModifyImageAttribute</a>.</p>",
       "refs": {
@@ -1678,7 +1729,7 @@
     "LifecyclePolicy": {
       "base": "<p>The configuration details for a lifecycle policy resource.</p>",
       "refs": {
-        "GetLifecyclePolicyResponse$lifecyclePolicy": "<p>The ARN of the image lifecycle policy resource that was returned.</p>"
+        "GetLifecyclePolicyResponse$lifecyclePolicy": "<p>The Amazon Resource Name (ARN) of the image lifecycle policy resource that was returned.</p>"
       }
     },
     "LifecyclePolicyArn": {
@@ -1686,13 +1737,13 @@
       "refs": {
         "CreateLifecyclePolicyResponse$lifecyclePolicyArn": "<p>The Amazon Resource Name (ARN) of the lifecycle policy that the request created.</p>",
         "DeleteLifecyclePolicyRequest$lifecyclePolicyArn": "<p>The Amazon Resource Name (ARN) of the lifecycle policy resource to delete.</p>",
-        "DeleteLifecyclePolicyResponse$lifecyclePolicyArn": "<p>The ARN of the lifecycle policy that was deleted.</p>",
+        "DeleteLifecyclePolicyResponse$lifecyclePolicyArn": "<p>The Amazon Resource Name (ARN) of the lifecycle policy that was deleted.</p>",
         "GetLifecyclePolicyRequest$lifecyclePolicyArn": "<p>Specifies the Amazon Resource Name (ARN) of the image lifecycle policy resource to get.</p>",
         "LifecycleExecution$lifecyclePolicyArn": "<p>The Amazon Resource Name (ARN) of the lifecycle policy that ran.</p>",
         "LifecyclePolicy$arn": "<p>The Amazon Resource Name (ARN) of the lifecycle policy resource.</p>",
         "LifecyclePolicySummary$arn": "<p>The Amazon Resource Name (ARN) of the lifecycle policy summary resource.</p>",
         "UpdateLifecyclePolicyRequest$lifecyclePolicyArn": "<p>The Amazon Resource Name (ARN) of the lifecycle policy resource.</p>",
-        "UpdateLifecyclePolicyResponse$lifecyclePolicyArn": "<p>The ARN of the image lifecycle policy resource that was updated.</p>"
+        "UpdateLifecyclePolicyResponse$lifecyclePolicyArn": "<p>The Amazon Resource Name (ARN) of the image lifecycle policy resource that was updated.</p>"
       }
     },
     "LifecyclePolicyDetail": {
@@ -2120,6 +2171,7 @@
         "DeleteImageRecipeResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "DeleteImageResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "DeleteInfrastructureConfigurationResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
+        "DistributeImageRequest$sourceImage": "<p>The source image Amazon Resource Name (ARN) to distribute.</p>",
         "Distribution$region": "<p>The target Region.</p>",
         "DistributionConfiguration$description": "<p>The description of the distribution configuration.</p>",
         "DistributionConfigurationSummary$description": "<p>The description of the distribution configuration.</p>",
@@ -2297,7 +2349,8 @@
         "ListImagesRequest$includeDeprecated": "<p>Includes deprecated images in the response list.</p>",
         "SystemsManagerAgent$uninstallAfterBuild": "<p>Controls whether the Systems Manager agent is removed from your final build image, prior to creating the new AMI. If this is set to true, then the agent is removed from the final image. If it's set to false, then the agent is left in, so that it is included in the new AMI. default value is false.</p> <p>The default behavior of uninstallAfterBuild is to remove the SSM Agent if it was installed by EC2 Image Builder</p>",
         "UpdateImagePipelineRequest$enhancedImageMetadataEnabled": "<p>Collects additional information about the image being created, including the operating system (OS) version and package list. This information is used to enhance the overall experience of using EC2 Image Builder. Enabled by default.</p>",
-        "UpdateInfrastructureConfigurationRequest$terminateInstanceOnFailure": "<p>The terminate instance on failure setting of the infrastructure configuration. Set to false if you want Image Builder to retain the instance used to configure your AMI if the build or test phase of your workflow fails.</p>"
+        "UpdateInfrastructureConfigurationRequest$terminateInstanceOnFailure": "<p>The terminate instance on failure setting of the infrastructure configuration. Set to false if you want Image Builder to retain the instance used to configure your AMI if the build or test phase of your workflow fails.</p>",
+        "WorkflowExecutionMetadata$retried": "<p>Indicates retry status for this runtime instance of the workflow.</p>"
       }
     },
     "OnWorkflowFailure": {
@@ -2687,12 +2740,21 @@
         "ListWorkflowsRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>"
       }
     },
+    "RetryImageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RetryImageResponse": {
+      "base": null,
+      "refs": {}
+    },
     "RoleNameOrArn": {
       "base": null,
       "refs": {
         "CreateImagePipelineRequest$executionRole": "<p>The name or Amazon Resource Name (ARN) for the IAM role you create that grants Image Builder access to perform workflow actions.</p>",
         "CreateImageRequest$executionRole": "<p>The name or Amazon Resource Name (ARN) for the IAM role you create that grants Image Builder access to perform workflow actions.</p>",
         "CreateLifecyclePolicyRequest$executionRole": "<p>The name or Amazon Resource Name (ARN) for the IAM role you create that grants Image Builder access to run lifecycle actions.</p>",
+        "DistributeImageRequest$executionRole": "<p>The IAM role to use for the distribution.</p>",
         "Image$executionRole": "<p>The name or Amazon Resource Name (ARN) for the IAM role you create that grants Image Builder access to perform workflow actions.</p>",
         "ImagePipeline$executionRole": "<p>The name or Amazon Resource Name (ARN) for the IAM role you create that grants Image Builder access to perform workflow actions.</p>",
         "ImportDiskImageRequest$executionRole": "<p>The name or Amazon Resource Name (ARN) for the IAM role you create that grants Image Builder access to perform workflow actions to import an image from a Microsoft ISO file.</p>",
@@ -2871,6 +2933,7 @@
         "CreateInfrastructureConfigurationRequest$tags": "<p>The metadata tags to assign to the infrastructure configuration resource that Image Builder creates as output. Tags are formatted as key value pairs.</p>",
         "CreateLifecyclePolicyRequest$tags": "<p>Tags to apply to the lifecycle policy resource.</p>",
         "CreateWorkflowRequest$tags": "<p>Tags that apply to the workflow resource.</p>",
+        "DistributeImageRequest$tags": "<p>The tags to apply to the distributed image.</p>",
         "DistributionConfiguration$tags": "<p>The tags of the distribution configuration.</p>",
         "DistributionConfigurationSummary$tags": "<p>The tags associated with the distribution configuration.</p>",
         "Image$tags": "<p>The tags that apply to this image.</p>",
@@ -2937,6 +3000,10 @@
         "Schedule$timezone": "<p>The timezone that applies to the scheduling expression. For example, \"Etc/UTC\", \"America/Los_Angeles\" in the <a href=\"https://www.joda.org/joda-time/timezones.html\">IANA timezone format</a>. If not specified this defaults to UTC.</p>"
       }
     },
+    "TooManyRequestsException": {
+      "base": "<p>You have attempted too many requests for the specific operation.</p>",
+      "refs": {}
+    },
     "UntagResourceRequest": {
       "base": null,
       "refs": {}
@@ -3001,8 +3068,6 @@
         "ComponentVersion$version": "<p>The semantic version of the component.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b> For the first three nodes you can assign any positive integer value, including zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder automatically assigns the build number to the fourth node.</p> <p> <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment requirements for the nodes that you can assign. For example, you might choose a software version pattern, such as 1.0.0, or a date, such as 2021.01.01.</p> <p> <b>Filtering:</b> With semantic versioning, you have the flexibility to use wildcards (x) to specify the most recent versions or nodes when selecting the base image or components for your recipe. When you use a wildcard in any node, all nodes to the right of the first wildcard must also be wildcards.</p> </note>",
         "ContainerRecipe$version": "<p>The semantic version of the container recipe.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b> For the first three nodes you can assign any positive integer value, including zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder automatically assigns the build number to the fourth node.</p> <p> <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment requirements for the nodes that you can assign. For example, you might choose a software version pattern, such as 1.0.0, or a date, such as 2021.01.01.</p> <p> <b>Filtering:</b> With semantic versioning, you have the flexibility to use wildcards (x) to specify the most recent versions or nodes when selecting the base image or components for your recipe. When you use a wildcard in any node, all nodes to the right of the first wildcard must also be wildcards.</p> </note>",
         "CreateComponentRequest$semanticVersion": "<p>The semantic version of the component. This version follows the semantic version syntax.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b> For the first three nodes you can assign any positive integer value, including zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder automatically assigns the build number to the fourth node.</p> <p> <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment requirements for the nodes that you can assign. For example, you might choose a software version pattern, such as 1.0.0, or a date, such as 2021.01.01.</p> </note>",
-        "CreateContainerRecipeRequest$semanticVersion": "<p>The semantic version of the container recipe. This version follows the semantic version syntax.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b> For the first three nodes you can assign any positive integer value, including zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder automatically assigns the build number to the fourth node.</p> <p> <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment requirements for the nodes that you can assign. For example, you might choose a software version pattern, such as 1.0.0, or a date, such as 2021.01.01.</p> </note>",
-        "CreateImageRecipeRequest$semanticVersion": "<p>The semantic version of the image recipe. This version follows the semantic version syntax.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b> For the first three nodes you can assign any positive integer value, including zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder automatically assigns the build number to the fourth node.</p> <p> <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment requirements for the nodes that you can assign. For example, you might choose a software version pattern, such as 1.0.0, or a date, such as 2021.01.01.</p> </note>",
         "CreateWorkflowRequest$semanticVersion": "<p>The semantic version of this workflow resource. The semantic version syntax adheres to the following rules.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b> For the first three nodes you can assign any positive integer value, including zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder automatically assigns the build number to the fourth node.</p> <p> <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment requirements for the nodes that you can assign. For example, you might choose a software version pattern, such as 1.0.0, or a date, such as 2021.01.01.</p> </note>",
         "Image$version": "<p>The semantic version of the image.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b> For the first three nodes you can assign any positive integer value, including zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder automatically assigns the build number to the fourth node.</p> <p> <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment requirements for the nodes that you can assign. For example, you might choose a software version pattern, such as 1.0.0, or a date, such as 2021.01.01.</p> <p> <b>Filtering:</b> With semantic versioning, you have the flexibility to use wildcards (x) to specify the most recent versions or nodes when selecting the base image or components for your recipe. When you use a wildcard in any node, all nodes to the right of the first wildcard must also be wildcards.</p> </note>",
         "ImageRecipe$version": "<p>The version of the image recipe.</p>",
@@ -3048,6 +3113,13 @@
         "PackageVulnerabilityDetails$vulnerablePackages": "<p>The packages that this vulnerability impacts.</p>"
       }
     },
+    "WildcardVersionNumber": {
+      "base": null,
+      "refs": {
+        "CreateContainerRecipeRequest$semanticVersion": "<p>The semantic version of the container recipe. This version follows the semantic version syntax.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b> For the first three nodes you can assign any positive integer value, including zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder automatically assigns the build number to the fourth node.</p> <p> <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment requirements for the nodes that you can assign. For example, you might choose a software version pattern, such as 1.0.0, or a date, such as 2021.01.01.</p> </note>",
+        "CreateImageRecipeRequest$semanticVersion": "<p>The semantic version of the image recipe. This version follows the semantic version syntax.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b> For the first three nodes you can assign any positive integer value, including zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder automatically assigns the build number to the fourth node.</p> <p> <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment requirements for the nodes that you can assign. For example, you might choose a software version pattern, such as 1.0.0, or a date, such as 2021.01.01.</p> </note>"
+      }
+    },
     "Workflow": {
       "base": "<p>Defines a process that Image Builder uses to build and test images during the image creation process.</p>",
       "refs": {
@@ -3059,13 +3131,13 @@
       "refs": {
         "CreateWorkflowResponse$workflowBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the workflow resource that the request created.</p>",
         "DeleteWorkflowRequest$workflowBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the workflow resource to delete.</p>",
-        "DeleteWorkflowResponse$workflowBuildVersionArn": "<p>The ARN of the workflow resource that this request deleted.</p>",
+        "DeleteWorkflowResponse$workflowBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the workflow resource that this request deleted.</p>",
         "GetWorkflowExecutionResponse$workflowBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the build version for the Image Builder workflow resource that defines the specified runtime instance of the workflow.</p>",
         "GetWorkflowStepExecutionResponse$workflowBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the build version for the Image Builder workflow resource that defines this workflow step.</p>",
-        "ListWorkflowStepExecutionsResponse$workflowBuildVersionArn": "<p>The build version ARN for the Image Builder workflow resource that defines the steps for this runtime instance of the workflow.</p>",
+        "ListWorkflowStepExecutionsResponse$workflowBuildVersionArn": "<p>The build version Amazon Resource Name (ARN) for the Image Builder workflow resource that defines the steps for this runtime instance of the workflow.</p>",
         "Workflow$arn": "<p>The Amazon Resource Name (ARN) of the workflow resource.</p>",
         "WorkflowExecutionMetadata$workflowBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the workflow resource build version that ran.</p>",
-        "WorkflowStepExecution$workflowBuildVersionArn": "<p>The ARN of the workflow resource that ran.</p>"
+        "WorkflowStepExecution$workflowBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the workflow resource that ran.</p>"
       }
     },
     "WorkflowConfiguration": {

@@ -3,7 +3,7 @@
   "service": "<fullname>Lake Formation</fullname> <p>Defines the public endpoint for the Lake Formation service.</p>",
   "operations": {
     "AddLFTagsToResource": "<p>Attaches one or more LF-tags to an existing resource.</p>",
-    "AssumeDecoratedRoleWithSAML": "<p>Allows a caller to assume an IAM role decorated as the SAML user specified in the SAML assertion included in the request. This decoration allows Lake Formation to enforce access policies against the SAML users and groups. This API operation requires SAML federation setup in the caller’s account as it can only be called with valid SAML assertions. Lake Formation does not scope down the permission of the assumed role. All permissions attached to the role via the SAML federation setup will be included in the role session. </p> <p> This decorated role is expected to access data in Amazon S3 by getting temporary access from Lake Formation which is authorized via the virtual API <code>GetDataAccess</code>. Therefore, all SAML roles that can be assumed via <code>AssumeDecoratedRoleWithSAML</code> must at a minimum include <code>lakeformation:GetDataAccess</code> in their role policies. A typical IAM policy attached to such a role would look as follows: </p>",
+    "AssumeDecoratedRoleWithSAML": "<p>Allows a caller to assume an IAM role decorated as the SAML user specified in the SAML assertion included in the request. This decoration allows Lake Formation to enforce access policies against the SAML users and groups. This API operation requires SAML federation setup in the caller’s account as it can only be called with valid SAML assertions. Lake Formation does not scope down the permission of the assumed role. All permissions attached to the role via the SAML federation setup will be included in the role session. </p> <p> This decorated role is expected to access data in Amazon S3 by getting temporary access from Lake Formation which is authorized via the virtual API <code>GetDataAccess</code>. Therefore, all SAML roles that can be assumed via <code>AssumeDecoratedRoleWithSAML</code> must at a minimum include <code>lakeformation:GetDataAccess</code> in their role policies. A typical IAM policy attached to such a role would include the following actions: </p> <ul> <li> <p>glue:*Database*</p> </li> <li> <p>glue:*Table*</p> </li> <li> <p>glue:*Partition*</p> </li> <li> <p>glue:*UserDefinedFunction*</p> </li> <li> <p>lakeformation:GetDataAccess</p> </li> </ul>",
     "BatchGrantPermissions": "<p>Batch operation to grant permissions to the principal.</p>",
     "BatchRevokePermissions": "<p>Batch operation to revoke permissions from the principal.</p>",
     "CancelTransaction": "<p>Attempts to cancel the specified transaction. Returns an exception if the transaction was previously committed.</p>",
@@ -14,7 +14,7 @@
     "CreateLakeFormationIdentityCenterConfiguration": "<p>Creates an IAM Identity Center connection with Lake Formation to allow IAM Identity Center users and groups to access Data Catalog resources.</p>",
     "CreateLakeFormationOptIn": "<p>Enforce Lake Formation permissions for the given databases, tables, and principals.</p>",
     "DeleteDataCellsFilter": "<p>Deletes a data cell filter.</p>",
-    "DeleteLFTag": "<p>Deletes the specified LF-tag given a key name. If the input parameter tag key was not found, then the operation will throw an exception. When you delete an LF-tag, the <code>LFTagPolicy</code> attached to the LF-tag becomes invalid. If the deleted LF-tag was still assigned to any resource, the tag policy attach to the deleted LF-tag will no longer be applied to the resource.</p>",
+    "DeleteLFTag": "<p> Deletes an LF-tag by its key name. The operation fails if the specified tag key doesn't exist. When you delete an LF-Tag: </p> <ul> <li> <p>The associated LF-Tag policy becomes invalid.</p> </li> <li> <p> Resources that had this tag assigned will no longer have the tag policy applied to them.</p> </li> </ul>",
     "DeleteLFTagExpression": "<p>Deletes the LF-Tag expression. The caller must be a data lake admin or have <code>DROP</code> permissions on the LF-Tag expression. Deleting a LF-Tag expression will also delete all <code>LFTagPolicy</code> permissions referencing the LF-Tag expression.</p>",
     "DeleteLakeFormationIdentityCenterConfiguration": "<p>Deletes an IAM Identity Center connection with Lake Formation.</p>",
     "DeleteLakeFormationOptIn": "<p>Remove the Lake Formation permissions enforcement of the given databases, tables, and principals.</p>",
@@ -43,7 +43,7 @@
     "ListLFTagExpressions": "<p>Returns the LF-Tag expressions in caller’s account filtered based on caller's permissions. Data Lake and read only admins implicitly can see all tag expressions in their account, else caller needs DESCRIBE permissions on tag expression.</p>",
     "ListLFTags": "<p>Lists LF-tags that the requester has permission to view. </p>",
     "ListLakeFormationOptIns": "<p>Retrieve the current list of resources and principals that are opt in to enforce Lake Formation permissions.</p>",
-    "ListPermissions": "<p>Returns a list of the principal permissions on the resource, filtered by the permissions of the caller. For example, if you are granted an ALTER permission, you are able to see only the principal permissions for ALTER.</p> <p>This operation returns only those permissions that have been explicitly granted.</p> <p>For information about permissions, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/security-data-access.html\">Security and Access Control to Metadata and Data</a>.</p>",
+    "ListPermissions": "<p>Returns a list of the principal permissions on the resource, filtered by the permissions of the caller. For example, if you are granted an ALTER permission, you are able to see only the principal permissions for ALTER.</p> <p>This operation returns only those permissions that have been explicitly granted. If both <code>Principal</code> and <code>Resource</code> parameters are provided, the response returns effective permissions rather than the explicitly granted permissions.</p> <p>For information about permissions, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/security-data-access.html\">Security and Access Control to Metadata and Data</a>.</p>",
     "ListResources": "<p>Lists the resources registered to be managed by the Data Catalog.</p>",
     "ListTableStorageOptimizers": "<p>Returns the configuration of all storage optimizers associated with a specified table.</p>",
     "ListTransactions": "<p>Returns metadata about transactions and their status. To prevent the response from growing indefinitely, only uncommitted transactions and those available for time-travel queries are returned.</p> <p>This operation can help you identify uncommitted transactions or to get information about transactions.</p>",
@@ -953,7 +953,7 @@
     "LFTagKeyResource": {
       "base": "<p>A structure containing an LF-tag key and values for a resource.</p>",
       "refs": {
-        "Resource$LFTag": "<p>The LF-tag key and values attached to a resource.</p>"
+        "Resource$LFTag": "<p>The LF-Tag key and values attached to a resource.</p>"
       }
     },
     "LFTagPair": {
@@ -1410,6 +1410,24 @@
         "ResourceShareList$member": null
       }
     },
+    "RedshiftConnect": {
+      "base": "<p>Configuration for enabling trusted identity propagation with Redshift Connect.</p>",
+      "refs": {
+        "RedshiftScopeUnion$RedshiftConnect": "<p>Configuration for Redshift Connect integration.</p>"
+      }
+    },
+    "RedshiftScopeUnion": {
+      "base": "<p>A union structure representing different Redshift integration scopes.</p>",
+      "refs": {
+        "RedshiftServiceIntegrations$member": null
+      }
+    },
+    "RedshiftServiceIntegrations": {
+      "base": "<p>A list of Redshift service integration configurations.</p>",
+      "refs": {
+        "ServiceIntegrationUnion$Redshift": "<p>Redshift service integration configuration.</p>"
+      }
+    },
     "RegisterResourceRequest": {
       "base": null,
       "refs": {}
@@ -1569,6 +1587,26 @@
         "AssumeDecoratedRoleWithSAMLResponse$SecretAccessKey": "<p>The secret key for the temporary credentials. (The access key consists of an access key ID and a secret key).</p>",
         "GetTemporaryGluePartitionCredentialsResponse$SecretAccessKey": "<p>The secret key for the temporary credentials.</p>",
         "GetTemporaryGlueTableCredentialsResponse$SecretAccessKey": "<p>The secret key for the temporary credentials.</p>"
+      }
+    },
+    "ServiceAuthorization": {
+      "base": "<p>Authorization status for service integrations. Specify a value of <code>ENABLED</code> or <code>DISABLED</code>.</p>",
+      "refs": {
+        "RedshiftConnect$Authorization": "<p>The authorization status for Redshift Connect. Valid values are ENABLED or DISABLED.</p>"
+      }
+    },
+    "ServiceIntegrationList": {
+      "base": "<p>A list of service integrations for trusted identity propagation.</p>",
+      "refs": {
+        "CreateLakeFormationIdentityCenterConfigurationRequest$ServiceIntegrations": "<p>A list of service integrations for enabling trusted identity propagation with external services such as Redshift.</p>",
+        "DescribeLakeFormationIdentityCenterConfigurationResponse$ServiceIntegrations": "<p>A list of service integrations for enabling trusted identity propagation with external services such as Redshift.</p>",
+        "UpdateLakeFormationIdentityCenterConfigurationRequest$ServiceIntegrations": "<p>A list of service integrations for enabling trusted identity propagation with external services such as Redshift.</p>"
+      }
+    },
+    "ServiceIntegrationUnion": {
+      "base": "<p>A union structure representing different service integration types.</p>",
+      "refs": {
+        "ServiceIntegrationList$member": null
       }
     },
     "SessionTokenString": {
@@ -1841,7 +1879,7 @@
     "TrueFalseString": {
       "base": null,
       "refs": {
-        "ListPermissionsRequest$IncludeRelated": "<p>Indicates that related permissions should be included in the results.</p>"
+        "ListPermissionsRequest$IncludeRelated": "<p>Indicates that related permissions should be included in the results when listing permissions on a table resource.</p> <p>Set the field to <code>TRUE</code> to show the cell filters on a table resource. Default is <code>FALSE</code>. The Principal parameter must not be specified when requesting cell filter information.</p>"
       }
     },
     "TrustedResourceOwners": {

@@ -204,6 +204,16 @@
         "ScheduleRunConfiguration$auxiliaryApps": "<p>A list of upload ARNs for app packages to be installed with your app.</p>"
       }
     },
+    "AmazonRoleResourceName": {
+      "base": null,
+      "refs": {
+        "CreateProjectRequest$executionRoleArn": "<p>An IAM role to be assumed by the test host for all runs in the project.</p>",
+        "Project$executionRoleArn": "<p>The IAM execution role associated with the project.</p>",
+        "Run$executionRoleArn": "<p>The IAM role associated with the run.</p>",
+        "ScheduleRunConfiguration$executionRoleArn": "<p>An IAM role to be assumed by the test host for the run.</p>",
+        "UpdateProjectRequest$executionRoleArn": "<p>An IAM role to be assumed by the test host for all runs in the project.</p>"
+      }
+    },
     "AndroidPaths": {
       "base": null,
       "refs": {
@@ -535,14 +545,14 @@
         "GetTestGridProjectRequest$projectArn": "<p>The ARN of the Selenium testing project, from either <a>CreateTestGridProject</a> or <a>ListTestGridProjects</a>.</p>",
         "GetTestGridSessionRequest$projectArn": "<p>The ARN for the project that this session belongs to. See <a>CreateTestGridProject</a> and <a>ListTestGridProjects</a>.</p>",
         "GetTestGridSessionRequest$sessionArn": "<p>An ARN that uniquely identifies a <a>TestGridSession</a>.</p>",
-        "ListTagsForResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the resource or resources for which to list tags. You can associate tags with the following Device Farm resources: <code>PROJECT</code>, <code>RUN</code>, <code>NETWORK_PROFILE</code>, <code>INSTANCE_PROFILE</code>, <code>DEVICE_INSTANCE</code>, <code>SESSION</code>, <code>DEVICE_POOL</code>, <code>DEVICE</code>, and <code>VPCE_CONFIGURATION</code>.</p>",
+        "ListTagsForResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the resource or resources for which to list tags. You can associate tags with the following Device Farm resources: <code>PROJECT</code>, <code>TESTGRID_PROJECT</code>, <code>RUN</code>, <code>NETWORK_PROFILE</code>, <code>INSTANCE_PROFILE</code>, <code>DEVICE_INSTANCE</code>, <code>SESSION</code>, <code>DEVICE_POOL</code>, <code>DEVICE</code>, and <code>VPCE_CONFIGURATION</code>.</p>",
         "ListTestGridSessionActionsRequest$sessionArn": "<p>The ARN of the session to retrieve.</p>",
         "ListTestGridSessionArtifactsRequest$sessionArn": "<p>The ARN of a <a>TestGridSession</a>. </p>",
         "ListTestGridSessionsRequest$projectArn": "<p>ARN of a <a>TestGridProject</a>.</p>",
-        "TagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the resource or resources to which to add tags. You can associate tags with the following Device Farm resources: <code>PROJECT</code>, <code>RUN</code>, <code>NETWORK_PROFILE</code>, <code>INSTANCE_PROFILE</code>, <code>DEVICE_INSTANCE</code>, <code>SESSION</code>, <code>DEVICE_POOL</code>, <code>DEVICE</code>, and <code>VPCE_CONFIGURATION</code>.</p>",
+        "TagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the resource or resources to which to add tags. You can associate tags with the following Device Farm resources: <code>PROJECT</code>, <code>TESTGRID_PROJECT</code>, <code>RUN</code>, <code>NETWORK_PROFILE</code>, <code>INSTANCE_PROFILE</code>, <code>DEVICE_INSTANCE</code>, <code>SESSION</code>, <code>DEVICE_POOL</code>, <code>DEVICE</code>, and <code>VPCE_CONFIGURATION</code>.</p>",
         "TestGridProject$arn": "<p>The ARN for the project.</p>",
         "TestGridSession$arn": "<p>The ARN of the session.</p>",
-        "UntagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the resource or resources from which to delete tags. You can associate tags with the following Device Farm resources: <code>PROJECT</code>, <code>RUN</code>, <code>NETWORK_PROFILE</code>, <code>INSTANCE_PROFILE</code>, <code>DEVICE_INSTANCE</code>, <code>SESSION</code>, <code>DEVICE_POOL</code>, <code>DEVICE</code>, and <code>VPCE_CONFIGURATION</code>.</p>",
+        "UntagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the resource or resources from which to delete tags. You can associate tags with the following Device Farm resources: <code>PROJECT</code>, <code>TESTGRID_PROJECT</code>, <code>RUN</code>, <code>NETWORK_PROFILE</code>, <code>INSTANCE_PROFILE</code>, <code>DEVICE_INSTANCE</code>, <code>SESSION</code>, <code>DEVICE_POOL</code>, <code>DEVICE</code>, and <code>VPCE_CONFIGURATION</code>.</p>",
         "UpdateTestGridProjectRequest$projectArn": "<p>ARN of the project to update.</p>"
       }
     },
@@ -705,6 +715,34 @@
         "TestGridSession$billingMinutes": "<p>The number of billed minutes that were used for this session. </p>",
         "TrialMinutes$total": "<p>The total number of free trial minutes that the account started with.</p>",
         "TrialMinutes$remaining": "<p>The number of free trial minutes remaining in the account.</p>"
+      }
+    },
+    "EnvironmentVariable": {
+      "base": "<p>Information about an environment variable for a project or a run.</p>",
+      "refs": {
+        "EnvironmentVariables$member": null
+      }
+    },
+    "EnvironmentVariableName": {
+      "base": null,
+      "refs": {
+        "EnvironmentVariable$name": "<p>The name of the environment variable.</p>"
+      }
+    },
+    "EnvironmentVariableValue": {
+      "base": null,
+      "refs": {
+        "EnvironmentVariable$value": "<p>The value of the environment variable.</p>"
+      }
+    },
+    "EnvironmentVariables": {
+      "base": null,
+      "refs": {
+        "CreateProjectRequest$environmentVariables": "<p> A set of environment variables which are used by default for all runs in the project. These environment variables are applied to the test run during the execution of a test spec file. </p> <p> For more information about using test spec files, please see <a href=\"https://docs.aws.amazon.com/devicefarm/latest/developerguide/custom-test-environments.html\">Custom test environments </a> in <i>AWS Device Farm.</i> </p>",
+        "Project$environmentVariables": "<p>Environment variables associated with the project.</p>",
+        "Run$environmentVariables": "<p>Environment variables associated with the run.</p>",
+        "ScheduleRunConfiguration$environmentVariables": "<p>Environment variables associated with the run.</p>",
+        "UpdateProjectRequest$environmentVariables": "<p> A set of environment variables which are used by default for all runs in the project. These environment variables are applied to the test run during the execution of a test spec file. </p> <p> For more information about using test spec files, please see <a href=\"https://docs.aws.amazon.com/devicefarm/latest/developerguide/custom-test-environments.html\">Custom test environments </a> in <i>AWS Device Farm.</i> </p>"
       }
     },
     "ExceptionMessage": {

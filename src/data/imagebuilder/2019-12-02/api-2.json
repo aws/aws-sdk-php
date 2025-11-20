@@ -72,7 +72,8 @@
         {"shape":"InvalidVersionNumberException"},
         {"shape":"ResourceInUseException"},
         {"shape":"InvalidParameterCombinationException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "CreateContainerRecipe":{
@@ -243,7 +244,8 @@
         {"shape":"InvalidVersionNumberException"},
         {"shape":"ResourceInUseException"},
         {"shape":"InvalidParameterCombinationException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "DeleteComponent":{
@@ -406,6 +408,29 @@
         {"shape":"ForbiddenException"},
         {"shape":"CallRateLimitExceededException"},
         {"shape":"ResourceDependencyException"}
+      ]
+    },
+    "DistributeImage":{
+      "name":"DistributeImage",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/DistributeImage"
+      },
+      "input":{"shape":"DistributeImageRequest"},
+      "output":{"shape":"DistributeImageResponse"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"IdempotentParameterMismatchException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"CallRateLimitExceededException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetComponent":{
@@ -1216,6 +1241,25 @@
         {"shape":"CallRateLimitExceededException"}
       ]
     },
+    "RetryImage":{
+      "name":"RetryImage",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/RetryImage"
+      },
+      "input":{"shape":"RetryImageRequest"},
+      "output":{"shape":"RetryImageResponse"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"IdempotentParameterMismatchException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"CallRateLimitExceededException"},
+        {"shape":"ResourceInUseException"}
+      ]
+    },
     "SendWorkflowStepAction":{
       "name":"SendWorkflowStepAction",
       "http":{
@@ -1385,6 +1429,14 @@
     }
   },
   "shapes":{
+    "AccessDeniedException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "error":{"httpStatusCode":403},
+      "exception":true
+    },
     "AccountAggregation":{
       "type":"structure",
       "members":{
@@ -1754,7 +1806,7 @@
     },
     "ContainerRecipeArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):container-recipe/[a-z0-9-_]+/[0-9]+\\.[0-9]+\\.[0-9]+$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):container-recipe/[a-z0-9-_]+/(?:[0-9]+|x)\\.(?:[0-9]+|x)\\.(?:[0-9]+|x)$"
     },
     "ContainerRecipeSummary":{
       "type":"structure",
@@ -1804,7 +1856,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "dryRun":{"shape":"Boolean"}
       }
     },
     "CreateComponentResponse":{
@@ -1812,7 +1865,8 @@
       "members":{
         "requestId":{"shape":"NonEmptyString"},
         "clientToken":{"shape":"ClientToken"},
-        "componentBuildVersionArn":{"shape":"ComponentBuildVersionArn"}
+        "componentBuildVersionArn":{"shape":"ComponentBuildVersionArn"},
+        "latestVersionReferences":{"shape":"LatestVersionReferences"}
       }
     },
     "CreateContainerRecipeRequest":{
@@ -1829,7 +1883,7 @@
         "containerType":{"shape":"ContainerType"},
         "name":{"shape":"ResourceName"},
         "description":{"shape":"NonEmptyString"},
-        "semanticVersion":{"shape":"VersionNumber"},
+        "semanticVersion":{"shape":"WildcardVersionNumber"},
         "components":{"shape":"ComponentConfigurationList"},
         "instanceConfiguration":{"shape":"InstanceConfiguration"},
         "dockerfileTemplateData":{"shape":"InlineDockerFileTemplate"},
@@ -1852,7 +1906,8 @@
       "members":{
         "requestId":{"shape":"NonEmptyString"},
         "clientToken":{"shape":"ClientToken"},
-        "containerRecipeArn":{"shape":"ContainerRecipeArn"}
+        "containerRecipeArn":{"shape":"ContainerRecipeArn"},
+        "latestVersionReferences":{"shape":"LatestVersionReferences"}
       }
     },
     "CreateDistributionConfigurationRequest":{
@@ -1929,7 +1984,7 @@
       "members":{
         "name":{"shape":"ResourceName"},
         "description":{"shape":"NonEmptyString"},
-        "semanticVersion":{"shape":"VersionNumber"},
+        "semanticVersion":{"shape":"WildcardVersionNumber"},
         "components":{"shape":"ComponentConfigurationList"},
         "parentImage":{"shape":"NonEmptyString"},
         "blockDeviceMappings":{"shape":"InstanceBlockDeviceMappings"},
@@ -1948,7 +2003,8 @@
       "members":{
         "requestId":{"shape":"NonEmptyString"},
         "clientToken":{"shape":"ClientToken"},
-        "imageRecipeArn":{"shape":"ImageRecipeArn"}
+        "imageRecipeArn":{"shape":"ImageRecipeArn"},
+        "latestVersionReferences":{"shape":"LatestVersionReferences"}
       }
     },
     "CreateImageRequest":{
@@ -1980,7 +2036,8 @@
       "members":{
         "requestId":{"shape":"NonEmptyString"},
         "clientToken":{"shape":"ClientToken"},
-        "imageBuildVersionArn":{"shape":"ImageBuildVersionArn"}
+        "imageBuildVersionArn":{"shape":"ImageBuildVersionArn"},
+        "latestVersionReferences":{"shape":"LatestVersionReferences"}
       }
     },
     "CreateInfrastructureConfigurationRequest":{
@@ -2072,14 +2129,16 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "type":{"shape":"WorkflowType"}
+        "type":{"shape":"WorkflowType"},
+        "dryRun":{"shape":"Boolean"}
       }
     },
     "CreateWorkflowResponse":{
       "type":"structure",
       "members":{
         "clientToken":{"shape":"ClientToken"},
-        "workflowBuildVersionArn":{"shape":"WorkflowBuildVersionArn"}
+        "workflowBuildVersionArn":{"shape":"WorkflowBuildVersionArn"},
+        "latestVersionReferences":{"shape":"LatestVersionReferences"}
       }
     },
     "CvssScore":{
@@ -2287,6 +2346,33 @@
         "VHD"
       ]
     },
+    "DistributeImageRequest":{
+      "type":"structure",
+      "required":[
+        "sourceImage",
+        "distributionConfigurationArn",
+        "executionRole",
+        "clientToken"
+      ],
+      "members":{
+        "sourceImage":{"shape":"NonEmptyString"},
+        "distributionConfigurationArn":{"shape":"DistributionConfigurationArn"},
+        "executionRole":{"shape":"RoleNameOrArn"},
+        "tags":{"shape":"TagMap"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "loggingConfiguration":{"shape":"ImageLoggingConfiguration"}
+      }
+    },
+    "DistributeImageResponse":{
+      "type":"structure",
+      "members":{
+        "clientToken":{"shape":"ClientToken"},
+        "imageBuildVersionArn":{"shape":"ImageBuildVersionArn"}
+      }
+    },
     "Distribution":{
       "type":"structure",
       "required":["region"],
@@ -2345,6 +2431,14 @@
       "min":30
     },
     "DockerFileTemplate":{"type":"string"},
+    "DryRunOperationException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "error":{"httpStatusCode":412},
+      "exception":true
+    },
     "EbsInstanceBlockDeviceSpecification":{
       "type":"structure",
       "members":{
@@ -2497,7 +2591,8 @@
       "type":"structure",
       "members":{
         "requestId":{"shape":"NonEmptyString"},
-        "component":{"shape":"Component"}
+        "component":{"shape":"Component"},
+        "latestVersionReferences":{"shape":"LatestVersionReferences"}
       }
     },
     "GetContainerRecipePolicyRequest":{
@@ -2533,7 +2628,8 @@
       "type":"structure",
       "members":{
         "requestId":{"shape":"NonEmptyString"},
-        "containerRecipe":{"shape":"ContainerRecipe"}
+        "containerRecipe":{"shape":"ContainerRecipe"},
+        "latestVersionReferences":{"shape":"LatestVersionReferences"}
       }
     },
     "GetDistributionConfigurationRequest":{
@@ -2623,7 +2719,8 @@
       "type":"structure",
       "members":{
         "requestId":{"shape":"NonEmptyString"},
-        "imageRecipe":{"shape":"ImageRecipe"}
+        "imageRecipe":{"shape":"ImageRecipe"},
+        "latestVersionReferences":{"shape":"LatestVersionReferences"}
       }
     },
     "GetImageRequest":{
@@ -2641,7 +2738,8 @@
       "type":"structure",
       "members":{
         "requestId":{"shape":"NonEmptyString"},
-        "image":{"shape":"Image"}
+        "image":{"shape":"Image"},
+        "latestVersionReferences":{"shape":"LatestVersionReferences"}
       }
     },
     "GetInfrastructureConfigurationRequest":{
@@ -2760,7 +2858,8 @@
     "GetWorkflowResponse":{
       "type":"structure",
       "members":{
-        "workflow":{"shape":"Workflow"}
+        "workflow":{"shape":"Workflow"},
+        "latestVersionReferences":{"shape":"LatestVersionReferences"}
       }
     },
     "GetWorkflowStepExecutionRequest":{
@@ -2947,7 +3046,7 @@
     },
     "ImageRecipeArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):image-recipe/[a-z0-9-_]+/[0-9]+\\.[0-9]+\\.[0-9]+$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):image-recipe/[a-z0-9-_]+/(?:[0-9]+|x)\\.(?:[0-9]+|x)\\.(?:[0-9]+|x)$"
     },
     "ImageRecipeSummary":{
       "type":"structure",
@@ -3408,6 +3507,15 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "LatestVersionReferences":{
+      "type":"structure",
+      "members":{
+        "latestVersionArn":{"shape":"ImageBuilderArn"},
+        "latestMajorVersionArn":{"shape":"ImageBuilderArn"},
+        "latestMinorVersionArn":{"shape":"ImageBuilderArn"},
+        "latestPatchVersionArn":{"shape":"ImageBuilderArn"}
+      }
     },
     "LaunchPermissionConfiguration":{
       "type":"structure",
@@ -4534,6 +4642,27 @@
       "max":25,
       "min":1
     },
+    "RetryImageRequest":{
+      "type":"structure",
+      "required":[
+        "imageBuildVersionArn",
+        "clientToken"
+      ],
+      "members":{
+        "imageBuildVersionArn":{"shape":"ImageBuildVersionArn"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "RetryImageResponse":{
+      "type":"structure",
+      "members":{
+        "clientToken":{"shape":"ClientToken"},
+        "imageBuildVersionArn":{"shape":"ImageBuildVersionArn"}
+      }
+    },
     "RoleNameOrArn":{
       "type":"string",
       "max":2048,
@@ -4798,6 +4927,14 @@
       "min":3,
       "pattern":"[a-zA-Z0-9]{2,}(?:\\/[a-zA-Z0-9-_+]+)*"
     },
+    "TooManyRequestsException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "error":{"httpStatusCode":429},
+      "exception":true
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -4989,6 +5126,10 @@
       "type":"list",
       "member":{"shape":"VulnerablePackage"}
     },
+    "WildcardVersionNumber":{
+      "type":"string",
+      "pattern":"^(?:[0-9]+|x)\\.(?:[0-9]+|x)\\.(?:[0-9]+|x)$"
+    },
     "Workflow":{
       "type":"structure",
       "members":{
@@ -5050,7 +5191,8 @@
         "totalStepsSkipped":{"shape":"WorkflowStepCount"},
         "startTime":{"shape":"DateTime"},
         "endTime":{"shape":"DateTime"},
-        "parallelGroup":{"shape":"ParallelGroup"}
+        "parallelGroup":{"shape":"ParallelGroup"},
+        "retried":{"shape":"NullableBoolean"}
       }
     },
     "WorkflowExecutionStatus":{

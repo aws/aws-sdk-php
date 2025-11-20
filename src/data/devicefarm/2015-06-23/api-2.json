@@ -1194,6 +1194,12 @@
       "type":"list",
       "member":{"shape":"AmazonResourceName"}
     },
+    "AmazonRoleResourceName":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws:iam::[0-9]{12}:role/.+"
+    },
     "AndroidPaths":{
       "type":"list",
       "member":{"shape":"String"}
@@ -1378,7 +1384,9 @@
       "members":{
         "name":{"shape":"Name"},
         "defaultJobTimeoutMinutes":{"shape":"JobTimeoutMinutes"},
-        "vpcConfig":{"shape":"VpcConfig"}
+        "vpcConfig":{"shape":"VpcConfig"},
+        "environmentVariables":{"shape":"EnvironmentVariables"},
+        "executionRoleArn":{"shape":"AmazonRoleResourceName"}
       }
     },
     "CreateProjectResult":{
@@ -1833,6 +1841,34 @@
       "member":{"shape":"Device"}
     },
     "Double":{"type":"double"},
+    "EnvironmentVariable":{
+      "type":"structure",
+      "required":[
+        "name",
+        "value"
+      ],
+      "members":{
+        "name":{"shape":"EnvironmentVariableName"},
+        "value":{"shape":"EnvironmentVariableValue"}
+      }
+    },
+    "EnvironmentVariableName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z_][a-zA-Z_0-9]*"
+    },
+    "EnvironmentVariableValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "EnvironmentVariables":{
+      "type":"list",
+      "member":{"shape":"EnvironmentVariable"},
+      "max":32,
+      "min":1
+    },
     "ExceptionMessage":{"type":"string"},
     "ExecutionConfiguration":{
       "type":"structure",
@@ -2818,7 +2854,9 @@
         "name":{"shape":"Name"},
         "defaultJobTimeoutMinutes":{"shape":"JobTimeoutMinutes"},
         "created":{"shape":"DateTime"},
-        "vpcConfig":{"shape":"VpcConfig"}
+        "vpcConfig":{"shape":"VpcConfig"},
+        "environmentVariables":{"shape":"EnvironmentVariables"},
+        "executionRoleArn":{"shape":"AmazonRoleResourceName"}
       }
     },
     "Projects":{
@@ -3020,7 +3058,9 @@
         "skipAppResign":{"shape":"SkipAppResign"},
         "testSpecArn":{"shape":"AmazonResourceName"},
         "deviceSelectionResult":{"shape":"DeviceSelectionResult"},
-        "vpcConfig":{"shape":"VpcConfig"}
+        "vpcConfig":{"shape":"VpcConfig"},
+        "executionRoleArn":{"shape":"AmazonRoleResourceName"},
+        "environmentVariables":{"shape":"EnvironmentVariables"}
       }
     },
     "Runs":{
@@ -3073,7 +3113,9 @@
         "customerArtifactPaths":{"shape":"CustomerArtifactPaths"},
         "radios":{"shape":"Radios"},
         "auxiliaryApps":{"shape":"AmazonResourceNames"},
-        "billingMethod":{"shape":"BillingMethod"}
+        "billingMethod":{"shape":"BillingMethod"},
+        "environmentVariables":{"shape":"EnvironmentVariables"},
+        "executionRoleArn":{"shape":"AmazonRoleResourceName"}
       }
     },
     "ScheduleRunRequest":{
@@ -3556,7 +3598,9 @@
         "arn":{"shape":"AmazonResourceName"},
         "name":{"shape":"Name"},
         "defaultJobTimeoutMinutes":{"shape":"JobTimeoutMinutes"},
-        "vpcConfig":{"shape":"VpcConfig"}
+        "vpcConfig":{"shape":"VpcConfig"},
+        "environmentVariables":{"shape":"EnvironmentVariables"},
+        "executionRoleArn":{"shape":"AmazonRoleResourceName"}
       }
     },
     "UpdateProjectResult":{

@@ -16,23 +16,23 @@
     "BatchUpdateFindings": "<p> Used by Security Hub customers to update information about their investigation into one or more findings. Requested by administrator accounts or member accounts. Administrator accounts can update findings for their account and their member accounts. A member account can update findings only for their own account. Administrator and member accounts can use this operation to update the following fields and objects for one or more findings: </p> <ul> <li> <p> <code>Confidence</code> </p> </li> <li> <p> <code>Criticality</code> </p> </li> <li> <p> <code>Note</code> </p> </li> <li> <p> <code>RelatedFindings</code> </p> </li> <li> <p> <code>Severity</code> </p> </li> <li> <p> <code>Types</code> </p> </li> <li> <p> <code>UserDefinedFields</code> </p> </li> <li> <p> <code>VerificationState</code> </p> </li> <li> <p> <code>Workflow</code> </p> </li> </ul> <p> If you use this operation to update a finding, your updates don’t affect the value for the <code>UpdatedAt</code> field of the finding. Also note that it can take several minutes for Security Hub to process your request and update each finding specified in the request. </p> <p> You can configure IAM policies to restrict access to fields and field values. For example, you might not want member accounts to be able to suppress findings or change the finding severity. For more information see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/finding-update-batchupdatefindings.html#batchupdatefindings-configure-access\">Configuring access to BatchUpdateFindings</a> in the <i>Security Hub User Guide</i>. </p>",
     "BatchUpdateFindingsV2": "<p>Used by customers to update information about their investigation into a finding. Requested by delegated administrator accounts or member accounts. Delegated administrator accounts can update findings for their account and their member accounts. Member accounts can update findings for their account. <code>BatchUpdateFindings</code> and <code>BatchUpdateFindingV2</code> both use <code>securityhub:BatchUpdateFindings</code> in the <code>Action</code> element of an IAM policy statement. You must have permission to perform the <code>securityhub:BatchUpdateFindings</code> action. Updates from <code>BatchUpdateFindingsV2</code> don't affect the value of f<code>inding_info.modified_time</code>, <code>finding_info.modified_time_dt</code>, <code>time</code>, <code>time_dt for a finding</code>. This API is in public preview and subject to change.</p>",
     "BatchUpdateStandardsControlAssociations": "<p> For a batch of security controls and standards, this operation updates the enablement status of a control in a standard. </p>",
-    "ConnectorRegistrationsV2": "<p>Grants permission to complete the authorization based on input parameters. This API is in preview release and subject to change.</p>",
+    "ConnectorRegistrationsV2": "<p>Grants permission to complete the authorization based on input parameters. This API is in public preview and subject to change.</p>",
     "CreateActionTarget": "<p>Creates a custom action target in Security Hub.</p> <p>You can use custom actions on findings and insights in Security Hub to trigger target actions in Amazon CloudWatch Events.</p>",
     "CreateAggregatorV2": "<p>Enables aggregation across Amazon Web Services Regions. This API is in public preview and subject to change.</p>",
     "CreateAutomationRule": "<p> Creates an automation rule based on input parameters. </p>",
     "CreateAutomationRuleV2": "<p>Creates a V2 automation rule. This API is in public preview and subject to change.</p>",
     "CreateConfigurationPolicy": "<p> Creates a configuration policy with the defined configuration. Only the Security Hub delegated administrator can invoke this operation from the home Region. </p>",
-    "CreateConnectorV2": "<p>Grants permission to create a connectorV2 based on input parameters. This API is in preview release and subject to change.</p>",
+    "CreateConnectorV2": "<p>Grants permission to create a connectorV2 based on input parameters. This API is in public preview and subject to change.</p>",
     "CreateFindingAggregator": "<note> <p>The <i>aggregation Region</i> is now called the <i>home Region</i>.</p> </note> <p>Used to enable cross-Region aggregation. This operation can be invoked from the home Region only.</p> <p>For information about how cross-Region aggregation works, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/finding-aggregation.html\">Understanding cross-Region aggregation in Security Hub</a> in the <i>Security Hub User Guide</i>. </p>",
     "CreateInsight": "<p>Creates a custom insight in Security Hub. An insight is a consolidation of findings that relate to a security issue that requires attention or remediation.</p> <p>To group the related findings in the insight, use the <code>GroupByAttribute</code>.</p>",
     "CreateMembers": "<p>Creates a member association in Security Hub between the specified accounts and the account used to make the request, which is the administrator account. If you are integrated with Organizations, then the administrator account is designated by the organization management account.</p> <p> <code>CreateMembers</code> is always used to add accounts that are not organization members.</p> <p>For accounts that are managed using Organizations, <code>CreateMembers</code> is only used in the following cases:</p> <ul> <li> <p>Security Hub is not configured to automatically add new organization accounts.</p> </li> <li> <p>The account was disassociated or deleted in Security Hub.</p> </li> </ul> <p>This action can only be used by an account that has Security Hub enabled. To enable Security Hub, you can use the <code>EnableSecurityHub</code> operation.</p> <p>For accounts that are not organization members, you create the account association and then send an invitation to the member account. To send the invitation, you use the <code>InviteMembers</code> operation. If the account owner accepts the invitation, the account becomes a member account in Security Hub.</p> <p>Accounts that are managed using Organizations don't receive an invitation. They automatically become a member account in Security Hub.</p> <ul> <li> <p>If the organization account does not have Security Hub enabled, then Security Hub and the default standards are automatically enabled. Note that Security Hub cannot be enabled automatically for the organization management account. The organization management account must enable Security Hub before the administrator account enables it as a member account.</p> </li> <li> <p>For organization accounts that already have Security Hub enabled, Security Hub does not make any other changes to those accounts. It does not change their enabled standards or controls.</p> </li> </ul> <p>A permissions policy is added that permits the administrator account to view the findings generated in the member account.</p> <p>To remove the association between the administrator and member accounts, use the <code>DisassociateFromMasterAccount</code> or <code>DisassociateMembers</code> operation.</p>",
-    "CreateTicketV2": "<p>Grants permission to create a ticket in the chosen ITSM based on finding information for the provided finding metadata UID. This API is in preview release and subject to change.</p>",
+    "CreateTicketV2": "<p>Grants permission to create a ticket in the chosen ITSM based on finding information for the provided finding metadata UID. This API is in public preview and subject to change.</p>",
     "DeclineInvitations": "<note> <p>We recommend using Organizations instead of Security Hub invitations to manage your member accounts. For information, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-accounts-orgs.html\">Managing Security Hub administrator and member accounts with Organizations</a> in the <i>Security Hub User Guide</i>.</p> </note> <p>Declines invitations to become a Security Hub member account.</p> <p>A prospective member account uses this operation to decline an invitation to become a member.</p> <p>Only member accounts that aren't part of an Amazon Web Services organization should use this operation. Organization accounts don't receive invitations.</p>",
     "DeleteActionTarget": "<p>Deletes a custom action target from Security Hub.</p> <p>Deleting a custom action target does not affect any findings or insights that were already sent to Amazon CloudWatch Events using the custom action.</p>",
     "DeleteAggregatorV2": "<p>Deletes the Aggregator V2. This API is in public preview and subject to change.</p>",
     "DeleteAutomationRuleV2": "<p>Deletes a V2 automation rule. This API is in public preview and subject to change.</p>",
     "DeleteConfigurationPolicy": "<p> Deletes a configuration policy. Only the Security Hub delegated administrator can invoke this operation from the home Region. For the deletion to succeed, you must first disassociate a configuration policy from target accounts, organizational units, or the root by invoking the <code>StartConfigurationPolicyDisassociation</code> operation. </p>",
-    "DeleteConnectorV2": "<p>Grants permission to delete a connectorV2. This API is in preview release and subject to change.</p>",
+    "DeleteConnectorV2": "<p>Grants permission to delete a connectorV2. This API is in public preview and subject to change.</p>",
     "DeleteFindingAggregator": "<note> <p>The <i>aggregation Region</i> is now called the <i>home Region</i>.</p> </note> <p>Deletes a finding aggregator. When you delete the finding aggregator, you stop cross-Region aggregation. Finding replication stops occurring from the linked Regions to the home Region.</p> <p>When you stop cross-Region aggregation, findings that were already replicated and sent to the home Region are still visible from the home Region. However, new findings and finding updates are no longer replicated and sent to the home Region. </p>",
     "DeleteInsight": "<p>Deletes the insight specified by the <code>InsightArn</code>.</p>",
     "DeleteInvitations": "<note> <p>We recommend using Organizations instead of Security Hub invitations to manage your member accounts. For information, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-accounts-orgs.html\">Managing Security Hub administrator and member accounts with Organizations</a> in the <i>Security Hub User Guide</i>.</p> </note> <p>Deletes invitations to become a Security Hub member account.</p> <p>A Security Hub administrator account can use this operation to delete invitations sent to one or more prospective member accounts.</p> <p>This operation is only used to delete invitations that are sent to prospective member accounts that aren't part of an Amazon Web Services organization. Organization accounts don't receive invitations.</p>",
@@ -61,12 +61,13 @@
     "GetAutomationRuleV2": "<p>Returns an automation rule for the V2 service. This API is in public preview and subject to change.</p>",
     "GetConfigurationPolicy": "<p> Provides information about a configuration policy. Only the Security Hub delegated administrator can invoke this operation from the home Region. </p>",
     "GetConfigurationPolicyAssociation": "<p> Returns the association between a configuration and a target account, organizational unit, or the root. The configuration can be a configuration policy or self-managed behavior. Only the Security Hub delegated administrator can invoke this operation from the home Region. </p>",
-    "GetConnectorV2": "<p>Grants permission to retrieve details for a connectorV2 based on connector id. This API is in preview release and subject to change.</p>",
+    "GetConnectorV2": "<p>Grants permission to retrieve details for a connectorV2 based on connector id. This API is in public preview and subject to change.</p>",
     "GetEnabledStandards": "<p>Returns a list of the standards that are currently enabled.</p>",
     "GetFindingAggregator": "<note> <p>The <i>aggregation Region</i> is now called the <i>home Region</i>.</p> </note> <p>Returns the current configuration in the calling account for cross-Region aggregation. A finding aggregator is a resource that establishes the home Region and any linked Regions.</p>",
     "GetFindingHistory": "<p> Returns the history of a Security Hub finding. The history includes changes made to any fields in the Amazon Web Services Security Finding Format (ASFF) except top-level timestamp fields, such as the <code>CreatedAt</code> and <code>UpdatedAt</code> fields. </p> <p>This operation might return fewer results than the maximum number of results (<code>MaxResults</code>) specified in a request, even when more results are available. If this occurs, the response includes a <code>NextToken</code> value, which you should use to retrieve the next set of results in the response. The presence of a <code>NextToken</code> value in a response doesn't necessarily indicate that the results are incomplete. However, you should continue to specify a <code>NextToken</code> value until you receive a response that doesn't include this value.</p>",
     "GetFindingStatisticsV2": "<p>Returns aggregated statistical data about findings. <code>GetFindingStatisticsV2</code> use <code>securityhub:GetAdhocInsightResults</code> in the <code>Action</code> element of an IAM policy statement. You must have permission to perform the <code>s</code> action. This API is in public preview and subject to change.</p>",
     "GetFindings": "<p>Returns a list of findings that match the specified criteria.</p> <p>If cross-Region aggregation is enabled, then when you call <code>GetFindings</code> from the home Region, the results include all of the matching findings from both the home Region and linked Regions.</p>",
+    "GetFindingsTrendsV2": "<p>Returns findings trend data based on the specified criteria. This operation helps you analyze patterns and changes in findings over time. This API is in public preview and subject to change.</p>",
     "GetFindingsV2": "<p>Return a list of findings that match the specified criteria. <code>GetFindings</code> and <code>GetFindingsV2</code> both use <code>securityhub:GetFindings</code> in the <code>Action</code> element of an IAM policy statement. You must have permission to perform the <code>securityhub:GetFindings</code> action. This API is in public preview and subject to change.</p>",
     "GetInsightResults": "<p>Lists the results of the Security Hub insight specified by the insight ARN.</p>",
     "GetInsights": "<p>Lists and describes insights for the specified insight ARNs.</p>",
@@ -74,6 +75,7 @@
     "GetMasterAccount": "<p>This method is deprecated. Instead, use <code>GetAdministratorAccount</code>.</p> <p>The Security Hub console continues to use <code>GetMasterAccount</code>. It will eventually change to use <code>GetAdministratorAccount</code>. Any IAM policies that specifically control access to this function must continue to use <code>GetMasterAccount</code>. You should also add <code>GetAdministratorAccount</code> to your policies to ensure that the correct permissions are in place after the console begins to use <code>GetAdministratorAccount</code>.</p> <p>Provides the details for the Security Hub administrator account for the current member account.</p> <p>Can be used by both member accounts that are managed using Organizations and accounts that were invited manually.</p>",
     "GetMembers": "<p>Returns the details for the Security Hub member accounts for the specified account IDs.</p> <p>An administrator account can be either the delegated Security Hub administrator account for an organization or an administrator account that enabled Security Hub manually.</p> <p>The results include both member accounts that are managed using Organizations and accounts that were invited manually.</p>",
     "GetResourcesStatisticsV2": "<p>Retrieves statistical information about Amazon Web Services resources and their associated security findings. This API is in public preview and subject to change.</p>",
+    "GetResourcesTrendsV2": "<p>Returns resource trend data based on the specified criteria. This operation helps you analyze patterns and changes in resource compliance over time. This API is in public preview and subject to change.</p>",
     "GetResourcesV2": "<p>Returns a list of resources. This API is in public preview and subject to change.</p>",
     "GetSecurityControlDefinition": "<p> Retrieves the definition of a security control. The definition includes the control title, description, Region availability, parameter definitions, and other details. </p>",
     "InviteMembers": "<note> <p>We recommend using Organizations instead of Security Hub invitations to manage your member accounts. For information, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-accounts-orgs.html\">Managing Security Hub administrator and member accounts with Organizations</a> in the <i>Security Hub User Guide</i>.</p> </note> <p>Invites other Amazon Web Services accounts to become member accounts for the Security Hub administrator account that the invitation is sent from.</p> <p>This operation is only used to invite accounts that don't belong to an Amazon Web Services organization. Organization accounts don't receive invitations.</p> <p>Before you can use this action to invite a member, you must first use the <code>CreateMembers</code> action to create the member account in Security Hub.</p> <p>When the account owner enables Security Hub and accepts the invitation to become a member account, the administrator account can view the findings generated in the member account.</p>",
@@ -82,7 +84,7 @@
     "ListAutomationRulesV2": "<p>Returns a list of automation rules and metadata for the calling account. This API is in public preview and subject to change.</p>",
     "ListConfigurationPolicies": "<p> Lists the configuration policies that the Security Hub delegated administrator has created for your organization. Only the delegated administrator can invoke this operation from the home Region. </p>",
     "ListConfigurationPolicyAssociations": "<p> Provides information about the associations for your configuration policies and self-managed behavior. Only the Security Hub delegated administrator can invoke this operation from the home Region. </p>",
-    "ListConnectorsV2": "<p>Grants permission to retrieve a list of connectorsV2 and their metadata for the calling account. This API is in preview release and subject to change.</p>",
+    "ListConnectorsV2": "<p>Grants permission to retrieve a list of connectorsV2 and their metadata for the calling account. This API is in public preview and subject to change.</p>",
     "ListEnabledProductsForImport": "<p>Lists all findings-generating solutions (products) that you are subscribed to receive findings from in Security Hub.</p>",
     "ListFindingAggregators": "<p>If cross-Region aggregation is enabled, then <code>ListFindingAggregators</code> returns the Amazon Resource Name (ARN) of the finding aggregator. You can run this operation from any Amazon Web Services Region.</p>",
     "ListInvitations": "<note> <p>We recommend using Organizations instead of Security Hub invitations to manage your member accounts. For information, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-accounts-orgs.html\">Managing Security Hub administrator and member accounts with Organizations</a> in the <i>Security Hub User Guide</i>.</p> </note> <p>Lists all Security Hub membership invitations that were sent to the calling account.</p> <p>Only accounts that are managed by invitation can use this operation. Accounts that are managed using the integration with Organizations don't receive invitations.</p>",
@@ -99,7 +101,7 @@
     "UpdateAggregatorV2": "<p>Udpates the configuration for the Aggregator V2. This API is in public preview and subject to change.</p>",
     "UpdateAutomationRuleV2": "<p>Updates a V2 automation rule. This API is in public preview and subject to change.</p>",
     "UpdateConfigurationPolicy": "<p> Updates a configuration policy. Only the Security Hub delegated administrator can invoke this operation from the home Region. </p>",
-    "UpdateConnectorV2": "<p>Grants permission to update a connectorV2 based on its id and input parameters. This API is in preview release and subject to change.</p>",
+    "UpdateConnectorV2": "<p>Grants permission to update a connectorV2 based on its id and input parameters. This API is in public preview and subject to change.</p>",
     "UpdateFindingAggregator": "<note> <p>The <i>aggregation Region</i> is now called the <i>home Region</i>.</p> </note> <p>Updates cross-Region aggregation settings. You can use this operation to update the Region linking mode and the list of included or excluded Amazon Web Services Regions. However, you can't use this operation to change the home Region.</p> <p>You can invoke this operation from the current home Region only. </p>",
     "UpdateFindings": "<p> <code>UpdateFindings</code> is a deprecated operation. Instead of <code>UpdateFindings</code>, use the <code>BatchUpdateFindings</code> operation.</p> <p>The <code>UpdateFindings</code> operation updates the <code>Note</code> and <code>RecordState</code> of the Security Hub aggregated findings that the filter attributes specify. Any member account that can view the finding can also see the update to the finding.</p> <p>Finding updates made with <code>UpdateFindings</code> aren't persisted if the same finding is later updated by the finding provider through the <code>BatchImportFindings</code> operation. In addition, Security Hub doesn't record updates made with <code>UpdateFindings</code> in the finding history.</p>",
     "UpdateInsight": "<p>Updates the Security Hub insight identified by the specified insight ARN.</p>",
@@ -296,9 +298,13 @@
       "base": null,
       "refs": {
         "CompositeFilter$Operator": "<p>The logical operator used to combine multiple filter conditions.</p>",
+        "FindingsTrendsCompositeFilter$Operator": "<p>The logical operator (AND, OR) to apply between the string filters and nested composite filters.</p>",
+        "FindingsTrendsFilters$CompositeOperator": "<p>The logical operator (AND, OR) to apply between multiple composite filters.</p>",
         "OcsfFindingFilters$CompositeOperator": "<p>The logical operators used to combine the filtering on multiple <code>CompositeFilters</code>.</p>",
         "ResourcesCompositeFilter$Operator": "<p>The logical operator used to combine multiple filter conditions.</p>",
-        "ResourcesFilters$CompositeOperator": "<p>The logical operator used to combine multiple filter conditions in the structure.</p>"
+        "ResourcesFilters$CompositeOperator": "<p>The logical operator used to combine multiple filter conditions in the structure.</p>",
+        "ResourcesTrendsCompositeFilter$Operator": "<p>The logical operator (AND, OR) to apply between the string filters and nested composite filters.</p>",
+        "ResourcesTrendsFilters$CompositeOperator": "<p>The logical operator (AND, OR) to apply between multiple composite filters.</p>"
       }
     },
     "AlphaNumericNonEmptyString": {
@@ -5661,6 +5667,43 @@
         "FindingProviderFields$Severity": "<p>The severity of a finding.</p>"
       }
     },
+    "FindingsTrendsCompositeFilter": {
+      "base": "<p>A filter structure that contains a logical combination of string filters and nested composite filters for findings trend data.</p>",
+      "refs": {
+        "FindingsTrendsCompositeFilterList$member": null
+      }
+    },
+    "FindingsTrendsCompositeFilterList": {
+      "base": null,
+      "refs": {
+        "FindingsTrendsCompositeFilter$NestedCompositeFilters": "<p>A list of nested composite filters that you can use to create complex filter conditions for findings trend data.</p>",
+        "FindingsTrendsFilters$CompositeFilters": "<p>A list of composite filters to apply to the findings trend data.</p>"
+      }
+    },
+    "FindingsTrendsFilters": {
+      "base": "<p>The structure that defines filters to apply to findings trend data queries.</p>",
+      "refs": {
+        "GetFindingsTrendsV2Request$Filters": "<p>The filters to apply to the findings trend data.</p>"
+      }
+    },
+    "FindingsTrendsStringField": {
+      "base": null,
+      "refs": {
+        "FindingsTrendsStringFilter$FieldName": "<p>The name of the findings field to filter on.</p>"
+      }
+    },
+    "FindingsTrendsStringFilter": {
+      "base": "<p>A filter for string-based fields in findings trend data.</p>",
+      "refs": {
+        "FindingsTrendsStringFilterList$member": null
+      }
+    },
+    "FindingsTrendsStringFilterList": {
+      "base": null,
+      "refs": {
+        "FindingsTrendsCompositeFilter$StringFilters": "<p>A list of string filters that apply to findings trend data fields.</p>"
+      }
+    },
     "FirewallPolicyDetails": {
       "base": "<p>Defines the behavior of the firewall.</p>",
       "refs": {
@@ -5803,6 +5846,14 @@
       "base": null,
       "refs": {}
     },
+    "GetFindingsTrendsV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "GetFindingsTrendsV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "GetFindingsV2Request": {
       "base": null,
       "refs": {}
@@ -5859,6 +5910,14 @@
       "base": null,
       "refs": {}
     },
+    "GetResourcesTrendsV2Request": {
+      "base": null,
+      "refs": {}
+    },
+    "GetResourcesTrendsV2Response": {
+      "base": null,
+      "refs": {}
+    },
     "GetResourcesV2Request": {
       "base": null,
       "refs": {}
@@ -5874,6 +5933,13 @@
     "GetSecurityControlDefinitionResponse": {
       "base": null,
       "refs": {}
+    },
+    "GranularityField": {
+      "base": null,
+      "refs": {
+        "GetFindingsTrendsV2Response$Granularity": "<p>The time interval granularity for the returned trend data.</p>",
+        "GetResourcesTrendsV2Response$Granularity": "<p>The time interval granularity for the returned trend data (such as DAILY or WEEKLY).</p>"
+      }
     },
     "GroupByField": {
       "base": null,
@@ -6629,8 +6695,10 @@
         "GetEnabledStandardsRequest$MaxResults": "<p>The maximum number of results to return in the response.</p>",
         "GetFindingHistoryRequest$MaxResults": "<p> The maximum number of results to be returned. If you don’t provide it, Security Hub returns up to 100 results of finding history. </p>",
         "GetFindingsRequest$MaxResults": "<p>The maximum number of findings to return.</p>",
+        "GetFindingsTrendsV2Request$MaxResults": "<p>The maximum number of trend data points to return in a single response.</p>",
         "GetFindingsV2Request$MaxResults": "<p>The maximum number of results to return.</p>",
         "GetInsightsRequest$MaxResults": "<p>The maximum number of items to return in the response.</p>",
+        "GetResourcesTrendsV2Request$MaxResults": "<p>The maximum number of trend data points to return in a single response.</p>",
         "GetResourcesV2Request$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListAggregatorsV2Request$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListAutomationRulesRequest$MaxResults": "<p> The maximum number of rules to return in the response. This currently ranges from 1 to 100. </p>",
@@ -6764,10 +6832,14 @@
         "GetFindingHistoryResponse$NextToken": "<p> A token for pagination purposes. Provide this token in the subsequent request to <code>GetFindingsHistory</code> to get up to an additional 100 results of history for the same finding that you specified in your initial request. </p>",
         "GetFindingsRequest$NextToken": "<p>The token that is required for pagination. On your first call to the <code>GetFindings</code> operation, set the value of this parameter to <code>NULL</code>.</p> <p>For subsequent calls to the operation, to continue listing data, set the value of this parameter to the value returned from the previous response.</p>",
         "GetFindingsResponse$NextToken": "<p>The pagination token to use to request the next page of results.</p>",
+        "GetFindingsTrendsV2Request$NextToken": "<p>The token to use for paginating results. This value is returned in the response if more results are available.</p>",
+        "GetFindingsTrendsV2Response$NextToken": "<p>The token to use for retrieving the next page of results, if more trend data is available.</p>",
         "GetFindingsV2Request$NextToken": "<p> The token required for pagination. On your first call, set the value of this parameter to <code>NULL</code>. For subsequent calls, to continue listing data, set the value of this parameter to the value returned in the previous response.</p>",
         "GetFindingsV2Response$NextToken": "<p>The pagination token to use to request the next page of results. Otherwise, this parameter is null.</p>",
         "GetInsightsRequest$NextToken": "<p>The token that is required for pagination. On your first call to the <code>GetInsights</code> operation, set the value of this parameter to <code>NULL</code>.</p> <p>For subsequent calls to the operation, to continue listing data, set the value of this parameter to the value returned from the previous response.</p>",
         "GetInsightsResponse$NextToken": "<p>The pagination token to use to request the next page of results.</p>",
+        "GetResourcesTrendsV2Request$NextToken": "<p>The token to use for paginating results. This value is returned in the response if more results are available.</p>",
+        "GetResourcesTrendsV2Response$NextToken": "<p>The token to use for retrieving the next page of results, if more trend data is available.</p>",
         "GetResourcesV2Request$NextToken": "<p>The token required for pagination. On your first call, set the value of this parameter to <code>NULL</code>. For subsequent calls, to continue listing data, set the value of this parameter to the value returned in the previous response.</p>",
         "GetResourcesV2Response$NextToken": "<p>The pagination token to use to request the next page of results. Otherwise, this parameter is null.</p>",
         "ListAggregatorsV2Request$NextToken": "<p>The token required for pagination. On your first call, set the value of this parameter to <code>NULL</code>. For subsequent calls, to continue listing data, set the value of this parameter to the value returned in the previous response.</p>",
@@ -9337,6 +9409,12 @@
         "ResourcesFilters$CompositeFilters": "<p>A collection of complex filtering conditions that can be applied to Amazon Web Services resources.</p>"
       }
     },
+    "ResourcesCount": {
+      "base": "<p>Contains counts of resources for trend analysis.</p>",
+      "refs": {
+        "ResourcesTrendsValues$ResourcesCount": "<p>The resource count statistics for this data point in the trend timeline.</p>"
+      }
+    },
     "ResourcesDateField": {
       "base": null,
       "refs": {
@@ -9414,6 +9492,61 @@
       "base": null,
       "refs": {
         "ResourcesCompositeFilter$StringFilters": "<p>Enables filtering based on string field values.</p>"
+      }
+    },
+    "ResourcesTrendsCompositeFilter": {
+      "base": "<p>A filter structure that contains a logical combination of string filters and nested composite filters for resources trend data.</p>",
+      "refs": {
+        "ResourcesTrendsCompositeFilterList$member": null
+      }
+    },
+    "ResourcesTrendsCompositeFilterList": {
+      "base": null,
+      "refs": {
+        "ResourcesTrendsCompositeFilter$NestedCompositeFilters": "<p>A list of nested composite filters that you can use to create complex filter conditions for resources trend data.</p>",
+        "ResourcesTrendsFilters$CompositeFilters": "<p>A list of composite filters to apply to the resources trend data.</p>"
+      }
+    },
+    "ResourcesTrendsFilters": {
+      "base": "<p>The structure that defines filters to apply to resources trend data queries.</p>",
+      "refs": {
+        "GetResourcesTrendsV2Request$Filters": "<p>The filters to apply to the resources trend data.</p>"
+      }
+    },
+    "ResourcesTrendsMetrics": {
+      "base": null,
+      "refs": {
+        "GetResourcesTrendsV2Response$TrendsMetrics": "<p>The collection of time-series trend metrics, including counts of resources across the specified time period.</p>"
+      }
+    },
+    "ResourcesTrendsMetricsResult": {
+      "base": "<p>Contains the resource trend metrics data for a specific time point in the requested time period.</p>",
+      "refs": {
+        "ResourcesTrendsMetrics$member": null
+      }
+    },
+    "ResourcesTrendsStringField": {
+      "base": null,
+      "refs": {
+        "ResourcesTrendsStringFilter$FieldName": "<p>The name of the resources field to filter on, such as resourceType, accountId, or region.</p>"
+      }
+    },
+    "ResourcesTrendsStringFilter": {
+      "base": "<p>A filter for string-based fields in resources trend data, such as resource type or account ID.</p>",
+      "refs": {
+        "ResourcesTrendsStringFilterList$member": null
+      }
+    },
+    "ResourcesTrendsStringFilterList": {
+      "base": null,
+      "refs": {
+        "ResourcesTrendsCompositeFilter$StringFilters": "<p>A list of string filters that apply to resources trend data fields.</p>"
+      }
+    },
+    "ResourcesTrendsValues": {
+      "base": "<p>Contains the aggregated resource count values for a specific point in the resources trend timeline.</p>",
+      "refs": {
+        "ResourcesTrendsMetricsResult$TrendsValues": "<p>The resource trend metric values associated with this timestamp, including resource counts.</p>"
       }
     },
     "Result": {
@@ -9815,6 +9948,12 @@
         "StandardsControl$SeverityRating": "<p>The severity of findings generated from this security standard control.</p> <p>The finding severity is based on an assessment of how easy it would be to compromise Amazon Web Services resources if the issue is detected.</p>"
       }
     },
+    "SeverityTrendsCount": {
+      "base": "<p>Contains counts of findings grouped by severity level for trend analysis.</p>",
+      "refs": {
+        "TrendsValues$SeverityTrends": "<p>The count of findings organized by severity level for this data point in the trend timeline.</p>"
+      }
+    },
     "SeverityUpdate": {
       "base": "<p>Updates to the severity information for a finding.</p>",
       "refs": {
@@ -10087,8 +10226,10 @@
     "StringFilter": {
       "base": "<p>A string filter for filtering Security Hub findings.</p>",
       "refs": {
+        "FindingsTrendsStringFilter$Filter": null,
         "OcsfStringFilter$Filter": null,
         "ResourcesStringFilter$Filter": null,
+        "ResourcesTrendsStringFilter$Filter": null,
         "StringFilterList$member": null
       }
     },
@@ -10387,16 +10528,54 @@
         "GetConnectorV2Response$LastUpdatedAt": "<p>ISO 8601 UTC timestamp for the time update the connectorV2 connectorStatus.</p>",
         "GetFindingHistoryRequest$StartTime": "<p>A timestamp that indicates the start time of the requested finding history.</p> <p>If you provide values for both <code>StartTime</code> and <code>EndTime</code>, Security Hub returns finding history for the specified time period. If you provide a value for <code>StartTime</code> but not for <code>EndTime</code>, Security Hub returns finding history from the <code>StartTime</code> to the time at which the API is called. If you provide a value for <code>EndTime</code> but not for <code>StartTime</code>, Security Hub returns finding history from the <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_AwsSecurityFindingFilters.html#securityhub-Type-AwsSecurityFindingFilters-CreatedAt\">CreatedAt</a> timestamp of the finding to the <code>EndTime</code>. If you provide neither <code>StartTime</code> nor <code>EndTime</code>, Security Hub returns finding history from the <code>CreatedAt</code> timestamp of the finding to the time at which the API is called. In all of these scenarios, the response is limited to 100 results.</p> <p>For more information about the validation and formatting of timestamp fields in Security Hub, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
         "GetFindingHistoryRequest$EndTime": "<p> An ISO 8601-formatted timestamp that indicates the end time of the requested finding history.</p> <p>If you provide values for both <code>StartTime</code> and <code>EndTime</code>, Security Hub returns finding history for the specified time period. If you provide a value for <code>StartTime</code> but not for <code>EndTime</code>, Security Hub returns finding history from the <code>StartTime</code> to the time at which the API is called. If you provide a value for <code>EndTime</code> but not for <code>StartTime</code>, Security Hub returns finding history from the <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_AwsSecurityFindingFilters.html#securityhub-Type-AwsSecurityFindingFilters-CreatedAt\">CreatedAt</a> timestamp of the finding to the <code>EndTime</code>. If you provide neither <code>StartTime</code> nor <code>EndTime</code>, Security Hub returns finding history from the <code>CreatedAt</code> timestamp of the finding to the time at which the API is called. In all of these scenarios, the response is limited to 100 results.</p> <p>For more information about the validation and formatting of timestamp fields in Security Hub, see <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html#timestamps\">Timestamps</a>.</p>",
+        "GetFindingsTrendsV2Request$StartTime": "<p>The starting timestamp for the time period to analyze findings trends, in ISO 8601 format.</p>",
+        "GetFindingsTrendsV2Request$EndTime": "<p>The ending timestamp for the time period to analyze findings trends, in ISO 8601 format.</p>",
+        "GetResourcesTrendsV2Request$StartTime": "<p>The starting timestamp for the time period to analyze resources trends, in ISO 8601 format.</p>",
+        "GetResourcesTrendsV2Request$EndTime": "<p>The ending timestamp for the time period to analyze resources trends, in ISO 8601 format.</p>",
         "HealthCheck$LastCheckedAt": "<p>ISO 8601 UTC timestamp for the time check the health status of the connectorV2.</p>",
         "Invitation$InvitedAt": "<p>The timestamp of when the invitation was sent.</p>",
         "Member$InvitedAt": "<p>A timestamp for the date and time when the invitation was sent to the member account.</p>",
         "Member$UpdatedAt": "<p>The timestamp for the date and time when the member account was updated.</p>",
+        "ResourcesTrendsMetricsResult$Timestamp": "<p>The timestamp for this data point in the resources trend metrics.</p>",
         "StandardsControl$ControlStatusUpdatedAt": "<p>The date and time that the status of the security standard control was most recently updated.</p>",
         "StandardsControlAssociationDetail$UpdatedAt": "<p> The time at which the enablement status of the control in the specified standard was last updated. </p>",
         "StandardsControlAssociationSummary$UpdatedAt": "<p>The last time that a control's enablement status in a specified standard was updated.</p>",
         "StartConfigurationPolicyAssociationResponse$UpdatedAt": "<p> The date and time, in UTC and ISO 8601 format, that the configuration policy association was last updated. </p>",
+        "TrendsMetricsResult$Timestamp": "<p>The timestamp for this data point in the findings trend metrics.</p>",
         "UpdateConfigurationPolicyResponse$UpdatedAt": "<p> The date and time, in UTC and ISO 8601 format, that the configuration policy was last updated. </p>",
         "UpdateConfigurationPolicyResponse$CreatedAt": "<p> The date and time, in UTC and ISO 8601 format, that the configuration policy was created. </p>"
+      }
+    },
+    "TrendsMetrics": {
+      "base": null,
+      "refs": {
+        "GetFindingsTrendsV2Response$TrendsMetrics": "<p>The collection of time-series trend metrics, including counts of findings by severity across the specified time period.</p>"
+      }
+    },
+    "TrendsMetricsResult": {
+      "base": "<p>Contains the findings trend metrics data for a specific time point in the requested time period.</p>",
+      "refs": {
+        "TrendsMetrics$member": null
+      }
+    },
+    "TrendsValueCount": {
+      "base": null,
+      "refs": {
+        "ResourcesCount$AllResources": "<p>The total count of all resources for the given time interval.</p>",
+        "SeverityTrendsCount$Unknown": "<p>The count of findings with Unknown severity level at this point in the trend timeline.</p>",
+        "SeverityTrendsCount$Informational": "<p>The count of findings with Informational severity level at this point in the trend timeline.</p>",
+        "SeverityTrendsCount$Low": "<p>The count of findings with Low severity level at this point in the trend timeline.</p>",
+        "SeverityTrendsCount$Medium": "<p>The count of findings with Medium severity level at this point in the trend timeline.</p>",
+        "SeverityTrendsCount$High": "<p>The count of findings with High severity level at this point in the trend timeline.</p>",
+        "SeverityTrendsCount$Critical": "<p>The count of findings with Critical severity level at this point in the trend timeline.</p>",
+        "SeverityTrendsCount$Fatal": "<p>The count of findings with Fatal severity level at this point in the trend timeline.</p>",
+        "SeverityTrendsCount$Other": "<p>The count of findings with severity levels not fitting into the standard categories at this point in the trend timeline.</p>"
+      }
+    },
+    "TrendsValues": {
+      "base": "<p>Contains the aggregated finding values for a specific point in the findings trend timeline.</p>",
+      "refs": {
+        "TrendsMetricsResult$TrendsValues": "<p>The finding trend metric values associated with this timestamp, including severity counts.</p>"
       }
     },
     "TypeList": {

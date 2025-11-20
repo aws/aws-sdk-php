@@ -348,6 +348,15 @@
         "UseS3ExpressControlEndpoint":{"value":true}
       }
     },
+    "GetBucketAbac":{
+      "name":"GetBucketAbac",
+      "http":{
+        "method":"GET",
+        "requestUri":"/{Bucket}?abac"
+      },
+      "input":{"shape":"GetBucketAbacRequest"},
+      "output":{"shape":"GetBucketAbacOutput"}
+    },
     "GetBucketAccelerateConfiguration":{
       "name":"GetBucketAccelerateConfiguration",
       "http":{
@@ -883,6 +892,18 @@
       "input":{"shape":"ListPartsRequest"},
       "output":{"shape":"ListPartsOutput"}
     },
+    "PutBucketAbac":{
+      "name":"PutBucketAbac",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/{Bucket}?abac"
+      },
+      "input":{"shape":"PutBucketAbacRequest"},
+      "httpChecksum":{
+        "requestAlgorithmMember":"ChecksumAlgorithm",
+        "requestChecksumRequired":false
+      }
+    },
     "PutBucketAccelerateConfiguration":{
       "name":"PutBucketAccelerateConfiguration",
       "http":{
@@ -1382,6 +1403,12 @@
     }
   },
   "shapes":{
+    "AbacStatus":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"BucketAbacStatus"}
+      }
+    },
     "AbortDate":{"type":"timestamp"},
     "AbortIncompleteMultipartUpload":{
       "type":"structure",
@@ -1578,6 +1605,13 @@
         "BucketRegion":{"shape":"BucketRegion"},
         "BucketArn":{"shape":"S3RegionalOrS3ExpressBucketArnString"}
       }
+    },
+    "BucketAbacStatus":{
+      "type":"string",
+      "enum":[
+        "Enabled",
+        "Disabled"
+      ]
     },
     "BucketAccelerateStatus":{
       "type":"string",
@@ -3642,6 +3676,30 @@
       ]
     },
     "FilterRuleValue":{"type":"string"},
+    "GetBucketAbacOutput":{
+      "type":"structure",
+      "members":{
+        "AbacStatus":{"shape":"AbacStatus"}
+      },
+      "payload":"AbacStatus"
+    },
+    "GetBucketAbacRequest":{
+      "type":"structure",
+      "required":["Bucket"],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "contextParam":{"name":"Bucket"},
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
+        }
+      }
+    },
     "GetBucketAccelerateConfigurationOutput":{
       "type":"structure",
       "members":{
@@ -7125,6 +7183,42 @@
           "locationName":"RestrictPublicBuckets"
         }
       }
+    },
+    "PutBucketAbacRequest":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "AbacStatus"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "contextParam":{"name":"Bucket"},
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "ContentMD5":{
+          "shape":"ContentMD5",
+          "location":"header",
+          "locationName":"Content-MD5"
+        },
+        "ChecksumAlgorithm":{
+          "shape":"ChecksumAlgorithm",
+          "location":"header",
+          "locationName":"x-amz-sdk-checksum-algorithm"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
+        },
+        "AbacStatus":{
+          "shape":"AbacStatus",
+          "locationName":"AbacStatus",
+          "xmlNamespace":{"uri":"http://s3.amazonaws.com/doc/2006-03-01/"}
+        }
+      },
+      "payload":"AbacStatus"
     },
     "PutBucketAccelerateConfigurationRequest":{
       "type":"structure",

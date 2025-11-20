@@ -304,6 +304,10 @@
         "arn":{"shape":"ClusterArn"}
       }
     },
+    "ClusterVpcEndpoint":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9.-]+"
+    },
     "ConflictException":{
       "type":"structure",
       "required":["message"],
@@ -519,7 +523,8 @@
       "type":"structure",
       "required":["serviceName"],
       "members":{
-        "serviceName":{"shape":"ServiceName"}
+        "serviceName":{"shape":"ServiceName"},
+        "clusterVpcEndpoint":{"shape":"ClusterVpcEndpoint"}
       }
     },
     "Integer":{

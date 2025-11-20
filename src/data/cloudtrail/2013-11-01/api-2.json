@@ -450,6 +450,8 @@
       "input":{"shape":"GetEventConfigurationRequest"},
       "output":{"shape":"GetEventConfigurationResponse"},
       "errors":[
+        {"shape":"TrailNotFoundException"},
+        {"shape":"InvalidTrailNameException"},
         {"shape":"CloudTrailARNInvalidException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
@@ -824,6 +826,11 @@
       "input":{"shape":"PutEventConfigurationRequest"},
       "output":{"shape":"PutEventConfigurationResponse"},
       "errors":[
+        {"shape":"TrailNotFoundException"},
+        {"shape":"InvalidTrailNameException"},
+        {"shape":"CloudTrailARNInvalidException"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"InvalidHomeRegionException"},
         {"shape":"EventDataStoreARNInvalidException"},
         {"shape":"EventDataStoreNotFoundException"},
         {"shape":"InvalidEventDataStoreStatusException"},
@@ -833,8 +840,6 @@
         {"shape":"OperationNotPermittedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"InvalidParameterCombinationException"},
-        {"shape":"CloudTrailARNInvalidException"},
         {"shape":"ConflictException"},
         {"shape":"NotOrganizationMasterAccountException"},
         {"shape":"NoManagementAccountSLRExistsException"},
@@ -1378,6 +1383,22 @@
       "member":{"shape":"AdvancedFieldSelector"},
       "min":1
     },
+    "AggregationConfiguration":{
+      "type":"structure",
+      "required":[
+        "Templates",
+        "EventCategory"
+      ],
+      "members":{
+        "Templates":{"shape":"Templates"},
+        "EventCategory":{"shape":"EventCategoryAggregation"}
+      }
+    },
+    "AggregationConfigurations":{
+      "type":"list",
+      "member":{"shape":"AggregationConfiguration"},
+      "max":1
+    },
     "BillingMode":{
       "type":"string",
       "enum":[
@@ -1906,6 +1927,10 @@
       "type":"string",
       "enum":["insight"]
     },
+    "EventCategoryAggregation":{
+      "type":"string",
+      "enum":["Data"]
+    },
     "EventDataStore":{
       "type":"structure",
       "members":{
@@ -2140,15 +2165,18 @@
     "GetEventConfigurationRequest":{
       "type":"structure",
       "members":{
+        "TrailName":{"shape":"String"},
         "EventDataStore":{"shape":"String"}
       }
     },
     "GetEventConfigurationResponse":{
       "type":"structure",
       "members":{
+        "TrailARN":{"shape":"String"},
         "EventDataStoreArn":{"shape":"EventDataStoreArn"},
         "MaxEventSize":{"shape":"MaxEventSize"},
-        "ContextKeySelectors":{"shape":"ContextKeySelectors"}
+        "ContextKeySelectors":{"shape":"ContextKeySelectors"},
+        "AggregationConfigurations":{"shape":"AggregationConfigurations"}
       }
     },
     "GetEventDataStoreRequest":{
@@ -3074,22 +3102,22 @@
     },
     "PutEventConfigurationRequest":{
       "type":"structure",
-      "required":[
-        "MaxEventSize",
-        "ContextKeySelectors"
-      ],
       "members":{
+        "TrailName":{"shape":"String"},
         "EventDataStore":{"shape":"String"},
         "MaxEventSize":{"shape":"MaxEventSize"},
-        "ContextKeySelectors":{"shape":"ContextKeySelectors"}
+        "ContextKeySelectors":{"shape":"ContextKeySelectors"},
+        "AggregationConfigurations":{"shape":"AggregationConfigurations"}
       }
     },
     "PutEventConfigurationResponse":{
       "type":"structure",
       "members":{
+        "TrailARN":{"shape":"String"},
         "EventDataStoreArn":{"shape":"EventDataStoreArn"},
         "MaxEventSize":{"shape":"MaxEventSize"},
-        "ContextKeySelectors":{"shape":"ContextKeySelectors"}
+        "ContextKeySelectors":{"shape":"ContextKeySelectors"},
+        "AggregationConfigurations":{"shape":"AggregationConfigurations"}
       }
     },
     "PutEventSelectorsRequest":{
@@ -3676,6 +3704,20 @@
       "type":"list",
       "member":{"shape":"Tag"},
       "max":200
+    },
+    "Template":{
+      "type":"string",
+      "enum":[
+        "API_ACTIVITY",
+        "RESOURCE_ACCESS",
+        "USER_ACTIONS"
+      ]
+    },
+    "Templates":{
+      "type":"list",
+      "member":{"shape":"Template"},
+      "max":50,
+      "min":1
     },
     "TerminationProtectionEnabled":{"type":"boolean"},
     "ThrottlingException":{

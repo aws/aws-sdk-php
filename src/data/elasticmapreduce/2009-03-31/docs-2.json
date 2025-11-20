@@ -1782,6 +1782,12 @@
       "base": "<p> The result of the <a>RunJobFlow</a> operation. </p>",
       "refs": {}
     },
+    "S3MonitoringConfiguration": {
+      "base": "<p>The Amazon S3 configuration for monitoring log publishing. You can configure your step to send log information to Amazon S3. When it's specified, it takes precedence over the cluster's logging configuration. If you don't specify this configuration entirely, or omit individual fields, EMR falls back to cluster-level logging behavior.</p>",
+      "refs": {
+        "StepMonitoringConfiguration$S3MonitoringConfiguration": "<p>The Amazon S3 configuration for monitoring log publishing. You can configure your step to send log information to Amazon S3. When it's specified, it takes precedence over the cluster's logging configuration. If you don't specify this configuration entirely, or omit individual fields, EMR falls back to cluster-level logging behavior. </p>"
+      }
+    },
     "ScaleDownBehavior": {
       "base": null,
       "refs": {
@@ -2017,6 +2023,12 @@
         "CancelStepsInput$StepIds": "<p>The list of <code>StepIDs</code> to cancel. Use <a>ListSteps</a> to get steps and their states for the specified cluster.</p>"
       }
     },
+    "StepMonitoringConfiguration": {
+      "base": "<p>Object that holds configuration properties for logging.</p>",
+      "refs": {
+        "StepConfig$StepMonitoringConfiguration": "<p>Object that holds configuration properties for logging.</p>"
+      }
+    },
     "StepState": {
       "base": null,
       "refs": {
@@ -2144,8 +2156,12 @@
         "SimplifiedApplication$Name": "<p>The returned release label application name. For example, <code>hadoop</code>.</p>",
         "SimplifiedApplication$Version": "<p>The returned release label application version. For example, <code>3.2.1</code>.</p>",
         "Step$Name": "<p>The name of the cluster step.</p>",
+        "Step$LogUri": "<p>The Amazon S3 destination URI for log publishing.</p>",
+        "Step$EncryptionKeyArn": "<p>The KMS key ARN to encrypt the logs published to the given Amazon S3 destination.</p>",
         "StepStateChangeReason$Message": "<p>The descriptive message for the state change reason.</p>",
         "StepSummary$Name": "<p>The name of the cluster step.</p>",
+        "StepSummary$LogUri": "<p>The Amazon S3 destination URI for log publishing.</p>",
+        "StepSummary$EncryptionKeyArn": "<p>The KMS key ARN to encrypt the logs published to the given Amazon S3 destination.</p>",
         "StringList$member": null,
         "StringMap$key": null,
         "StringMap$value": null,
@@ -2371,6 +2387,8 @@
         "RunJobFlowInput$ServiceRole": "<p>The IAM role that Amazon EMR assumes in order to access Amazon Web Services resources on your behalf. If you've created a custom service role path, you must specify it for the service role when you launch your cluster.</p>",
         "RunJobFlowInput$SecurityConfiguration": "<p>The name of a security configuration to apply to the cluster.</p>",
         "RunJobFlowInput$AutoScalingRole": "<p>An IAM role for automatic scaling policies. The default role is <code>EMR_AutoScaling_DefaultRole</code>. The IAM role provides permissions that the automatic scaling feature requires to launch and terminate Amazon EC2 instances in an instance group.</p>",
+        "S3MonitoringConfiguration$LogUri": "<p>The Amazon S3 destination URI for log publishing.</p>",
+        "S3MonitoringConfiguration$EncryptionKeyArn": "<p>The KMS key ARN to encrypt the logs published to the given Amazon S3 destination.</p>",
         "ScriptBootstrapActionConfig$Path": "<p>Location in Amazon S3 of the script to run during a bootstrap action.</p>",
         "SecurityConfigurationSummary$Name": "<p>The name of the security configuration.</p>",
         "StartNotebookExecutionInput$RelativePath": "<p>The path and file name of the notebook file for this execution, relative to the path specified for the Amazon EMR Notebook. For example, if you specify a path of <code>s3://MyBucket/MyNotebooks</code> when you create an Amazon EMR Notebook for a notebook with an ID of <code>e-ABCDEFGHIJK1234567890ABCD</code> (the <code>EditorID</code> of this request), and you specify a <code>RelativePath</code> of <code>my_notebook_executions/notebook_execution.ipynb</code>, the location of the file for the notebook execution is <code>s3://MyBucket/MyNotebooks/e-ABCDEFGHIJK1234567890ABCD/my_notebook_executions/notebook_execution.ipynb</code>.</p>",

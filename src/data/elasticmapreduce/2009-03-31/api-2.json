@@ -2976,6 +2976,13 @@
         "ClusterArn":{"shape":"ArnType"}
       }
     },
+    "S3MonitoringConfiguration":{
+      "type":"structure",
+      "members":{
+        "LogUri":{"shape":"XmlString"},
+        "EncryptionKeyArn":{"shape":"XmlString"}
+      }
+    },
     "ScaleDownBehavior":{
       "type":"string",
       "enum":[
@@ -3237,7 +3244,9 @@
         "Config":{"shape":"HadoopStepConfig"},
         "ActionOnFailure":{"shape":"ActionOnFailure"},
         "Status":{"shape":"StepStatus"},
-        "ExecutionRoleArn":{"shape":"OptionalArnType"}
+        "ExecutionRoleArn":{"shape":"OptionalArnType"},
+        "LogUri":{"shape":"String"},
+        "EncryptionKeyArn":{"shape":"String"}
       }
     },
     "StepCancellationOption":{
@@ -3256,7 +3265,8 @@
       "members":{
         "Name":{"shape":"XmlStringMaxLen256"},
         "ActionOnFailure":{"shape":"ActionOnFailure"},
-        "HadoopJarStep":{"shape":"HadoopJarStepConfig"}
+        "HadoopJarStep":{"shape":"HadoopJarStepConfig"},
+        "StepMonitoringConfiguration":{"shape":"StepMonitoringConfiguration"}
       }
     },
     "StepConfigList":{
@@ -3309,6 +3319,12 @@
       "type":"list",
       "member":{"shape":"XmlStringMaxLen256"}
     },
+    "StepMonitoringConfiguration":{
+      "type":"structure",
+      "members":{
+        "S3MonitoringConfiguration":{"shape":"S3MonitoringConfiguration"}
+      }
+    },
     "StepState":{
       "type":"string",
       "enum":[
@@ -3352,7 +3368,9 @@
         "Name":{"shape":"String"},
         "Config":{"shape":"HadoopStepConfig"},
         "ActionOnFailure":{"shape":"ActionOnFailure"},
-        "Status":{"shape":"StepStatus"}
+        "Status":{"shape":"StepStatus"},
+        "LogUri":{"shape":"String"},
+        "EncryptionKeyArn":{"shape":"String"}
       }
     },
     "StepSummaryList":{

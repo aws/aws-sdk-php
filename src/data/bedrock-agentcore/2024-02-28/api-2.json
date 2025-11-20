@@ -178,7 +178,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCodeInterpreterSession":{
       "name":"GetCodeInterpreterSession",
@@ -195,7 +196,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetEvent":{
       "name":"GetEvent",
@@ -214,7 +216,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottledException"},
         {"shape":"ServiceException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetMemoryRecord":{
       "name":"GetMemoryRecord",
@@ -233,7 +236,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottledException"},
         {"shape":"ServiceException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetResourceApiKey":{
       "name":"GetResourceApiKey",
@@ -251,7 +255,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetResourceOauth2Token":{
       "name":"GetResourceOauth2Token",
@@ -269,7 +274,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetWorkloadAccessToken":{
       "name":"GetWorkloadAccessToken",
@@ -380,7 +386,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottledException"},
         {"shape":"ServiceException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListBrowserSessions":{
       "name":"ListBrowserSessions",
@@ -397,7 +404,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCodeInterpreterSessions":{
       "name":"ListCodeInterpreterSessions",
@@ -414,7 +422,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListEvents":{
       "name":"ListEvents",
@@ -430,6 +439,25 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"}
+      ],
+      "readonly":true
+    },
+    "ListMemoryExtractionJobs":{
+      "name":"ListMemoryExtractionJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/memories/{memoryId}/extractionJobs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMemoryExtractionJobsInput"},
+      "output":{"shape":"ListMemoryExtractionJobsOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottledException"},
         {"shape":"ServiceException"}
@@ -452,7 +480,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottledException"},
         {"shape":"ServiceException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListSessions":{
       "name":"ListSessions",
@@ -471,7 +500,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottledException"},
         {"shape":"ServiceException"}
-      ]
+      ],
+      "readonly":true
     },
     "RetrieveMemoryRecords":{
       "name":"RetrieveMemoryRecords",
@@ -529,6 +559,25 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "StartMemoryExtractionJob":{
+      "name":"StartMemoryExtractionJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/memories/{memoryId}/extractionJobs/start",
+        "responseCode":200
+      },
+      "input":{"shape":"StartMemoryExtractionJobInput"},
+      "output":{"shape":"StartMemoryExtractionJobOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ServiceException"}
       ],
       "idempotent":true
     },
@@ -1129,7 +1178,8 @@
     "Document":{
       "type":"structure",
       "members":{},
-      "document":true
+      "document":true,
+      "sensitive":true
     },
     "Double":{
       "type":"double",
@@ -1181,6 +1231,53 @@
       "member":{"shape":"EventMetadataFilterExpression"},
       "max":5,
       "min":1
+    },
+    "ExtractionJob":{
+      "type":"structure",
+      "required":["jobId"],
+      "members":{
+        "jobId":{"shape":"String"}
+      }
+    },
+    "ExtractionJobFilterInput":{
+      "type":"structure",
+      "members":{
+        "strategyId":{"shape":"String"},
+        "sessionId":{"shape":"String"},
+        "actorId":{"shape":"String"},
+        "status":{"shape":"ExtractionJobStatus"}
+      }
+    },
+    "ExtractionJobMessages":{
+      "type":"structure",
+      "members":{
+        "messagesList":{"shape":"MessagesList"}
+      },
+      "union":true
+    },
+    "ExtractionJobMetadata":{
+      "type":"structure",
+      "required":[
+        "jobID",
+        "messages"
+      ],
+      "members":{
+        "jobID":{"shape":"String"},
+        "messages":{"shape":"ExtractionJobMessages"},
+        "status":{"shape":"ExtractionJobStatus"},
+        "failureReason":{"shape":"String"},
+        "strategyId":{"shape":"String"},
+        "sessionId":{"shape":"String"},
+        "actorId":{"shape":"String"}
+      }
+    },
+    "ExtractionJobMetadataList":{
+      "type":"list",
+      "member":{"shape":"ExtractionJobMetadata"}
+    },
+    "ExtractionJobStatus":{
+      "type":"string",
+      "enum":["FAILED"]
     },
     "FilterInput":{
       "type":"structure",
@@ -1821,6 +1918,34 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListMemoryExtractionJobsInput":{
+      "type":"structure",
+      "required":["memoryId"],
+      "members":{
+        "memoryId":{
+          "shape":"MemoryId",
+          "location":"uri",
+          "locationName":"memoryId"
+        },
+        "maxResults":{"shape":"ListMemoryExtractionJobsInputMaxResultsInteger"},
+        "filter":{"shape":"ExtractionJobFilterInput"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListMemoryExtractionJobsInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":1
+    },
+    "ListMemoryExtractionJobsOutput":{
+      "type":"structure",
+      "required":["jobs"],
+      "members":{
+        "jobs":{"shape":"ExtractionJobMetadataList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListMemoryRecordsInput":{
       "type":"structure",
       "required":[
@@ -2045,6 +2170,21 @@
       "max":100,
       "min":1,
       "pattern":"[a-zA-Z0-9][a-zA-Z0-9-_]*"
+    },
+    "MessageMetadata":{
+      "type":"structure",
+      "required":[
+        "eventId",
+        "messageIndex"
+      ],
+      "members":{
+        "eventId":{"shape":"String"},
+        "messageIndex":{"shape":"Integer"}
+      }
+    },
+    "MessagesList":{
+      "type":"list",
+      "member":{"shape":"MessageMetadata"}
     },
     "MetadataKey":{
       "type":"string",
@@ -2434,6 +2574,32 @@
         "codeInterpreterIdentifier":{"shape":"String"},
         "sessionId":{"shape":"CodeInterpreterSessionId"},
         "createdAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "StartMemoryExtractionJobInput":{
+      "type":"structure",
+      "required":[
+        "memoryId",
+        "extractionJob"
+      ],
+      "members":{
+        "memoryId":{
+          "shape":"MemoryId",
+          "location":"uri",
+          "locationName":"memoryId"
+        },
+        "extractionJob":{"shape":"ExtractionJob"},
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartMemoryExtractionJobOutput":{
+      "type":"structure",
+      "required":["jobId"],
+      "members":{
+        "jobId":{"shape":"String"}
       }
     },
     "State":{

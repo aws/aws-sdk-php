@@ -1296,7 +1296,8 @@
         "CatalogId":{"shape":"CatalogIdString"},
         "InstanceArn":{"shape":"IdentityCenterInstanceArn"},
         "ExternalFiltering":{"shape":"ExternalFilteringConfiguration"},
-        "ShareRecipients":{"shape":"DataLakePrincipalList"}
+        "ShareRecipients":{"shape":"DataLakePrincipalList"},
+        "ServiceIntegrations":{"shape":"ServiceIntegrationList"}
       }
     },
     "CreateLakeFormationIdentityCenterConfigurationResponse":{
@@ -1546,6 +1547,7 @@
         "ApplicationArn":{"shape":"ApplicationArn"},
         "ExternalFiltering":{"shape":"ExternalFilteringConfiguration"},
         "ShareRecipients":{"shape":"DataLakePrincipalList"},
+        "ServiceIntegrations":{"shape":"ServiceIntegrationList"},
         "ResourceShare":{"shape":"RAMResourceShareArn"}
       }
     },
@@ -2511,6 +2513,24 @@
       ]
     },
     "RAMResourceShareArn":{"type":"string"},
+    "RedshiftConnect":{
+      "type":"structure",
+      "required":["Authorization"],
+      "members":{
+        "Authorization":{"shape":"ServiceAuthorization"}
+      }
+    },
+    "RedshiftScopeUnion":{
+      "type":"structure",
+      "members":{
+        "RedshiftConnect":{"shape":"RedshiftConnect"}
+      },
+      "union":true
+    },
+    "RedshiftServiceIntegrations":{
+      "type":"list",
+      "member":{"shape":"RedshiftScopeUnion"}
+    },
     "RegisterResourceRequest":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -2691,6 +2711,24 @@
       }
     },
     "SecretAccessKeyString":{"type":"string"},
+    "ServiceAuthorization":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "ServiceIntegrationList":{
+      "type":"list",
+      "member":{"shape":"ServiceIntegrationUnion"}
+    },
+    "ServiceIntegrationUnion":{
+      "type":"structure",
+      "members":{
+        "Redshift":{"shape":"RedshiftServiceIntegrations"}
+      },
+      "union":true
+    },
     "SessionTokenString":{"type":"string"},
     "StartQueryPlanningRequest":{
       "type":"structure",
@@ -2991,6 +3029,7 @@
       "members":{
         "CatalogId":{"shape":"CatalogIdString"},
         "ShareRecipients":{"shape":"DataLakePrincipalList"},
+        "ServiceIntegrations":{"shape":"ServiceIntegrationList"},
         "ApplicationStatus":{"shape":"ApplicationStatus"},
         "ExternalFiltering":{"shape":"ExternalFilteringConfiguration"}
       }

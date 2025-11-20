@@ -3,6 +3,7 @@
   "service": "<p>Amazon Bedrock Data Automation Runtime</p>",
   "operations": {
     "GetDataAutomationStatus": "<p>API used to get data automation status.</p>",
+    "InvokeDataAutomation": "<p>Sync API: Invoke data automation.</p>",
     "InvokeDataAutomationAsync": "<p>Async API: Invoke data automation.</p>",
     "ListTagsForResource": "<p>List tags for an Amazon Bedrock Data Automation resource</p>",
     "TagResource": "<p>Tag an Amazon Bedrock Data Automation resource</p>",
@@ -11,8 +12,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>This exception will be thrown when customer does not have access to API.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AssetProcessingConfiguration": {
       "base": "<p>Config containing asset processing related knobs for all modalities</p>",
@@ -24,6 +24,12 @@
       "base": "<p>List of status supported by automation jobs</p>",
       "refs": {
         "GetDataAutomationStatusResponse$status": "<p>Job Status.</p>"
+      }
+    },
+    "Blob": {
+      "base": null,
+      "refs": {
+        "SyncInputConfiguration$bytes": "<p>Input data as bytes</p>"
       }
     },
     "Blueprint": {
@@ -41,7 +47,8 @@
     "BlueprintList": {
       "base": "<p>Blueprint list.</p>",
       "refs": {
-        "InvokeDataAutomationAsyncRequest$blueprints": "<p>Blueprint list.</p>"
+        "InvokeDataAutomationAsyncRequest$blueprints": "<p>Blueprint list.</p>",
+        "InvokeDataAutomationRequest$blueprints": "<p>Blueprint list.</p>"
       }
     },
     "BlueprintStage": {
@@ -62,6 +69,12 @@
         "EventBridgeConfiguration$eventBridgeEnabled": "<p>Event bridge flag.</p>"
       }
     },
+    "CustomOutputStatus": {
+      "base": "<p>Custom output status enum</p>",
+      "refs": {
+        "OutputSegment$customOutputStatus": "<p>Status of blueprint match</p>"
+      }
+    },
     "DataAutomationArn": {
       "base": "<p>Data automation arn.</p>",
       "refs": {
@@ -71,13 +84,15 @@
     "DataAutomationConfiguration": {
       "base": "<p>Data automation configuration.</p>",
       "refs": {
-        "InvokeDataAutomationAsyncRequest$dataAutomationConfiguration": "<p>Data automation configuration.</p>"
+        "InvokeDataAutomationAsyncRequest$dataAutomationConfiguration": "<p>Data automation configuration.</p>",
+        "InvokeDataAutomationRequest$dataAutomationConfiguration": "<p>Data automation configuration.</p>"
       }
     },
     "DataAutomationProfileArn": {
       "base": "<p>Data automation profile arn.</p>",
       "refs": {
-        "InvokeDataAutomationAsyncRequest$dataAutomationProfileArn": "<p>Data automation profile ARN</p>"
+        "InvokeDataAutomationAsyncRequest$dataAutomationProfileArn": "<p>Data automation profile ARN</p>",
+        "InvokeDataAutomationRequest$dataAutomationProfileArn": "<p>Data automation profile ARN</p>"
       }
     },
     "DataAutomationStage": {
@@ -89,7 +104,8 @@
     "EncryptionConfiguration": {
       "base": "<p>Encryption configuration.</p>",
       "refs": {
-        "InvokeDataAutomationAsyncRequest$encryptionConfiguration": "<p>Encryption configuration.</p>"
+        "InvokeDataAutomationAsyncRequest$encryptionConfiguration": "<p>Encryption configuration.</p>",
+        "InvokeDataAutomationRequest$encryptionConfiguration": "<p>Encryption configuration.</p>"
       }
     },
     "EncryptionContextKey": {
@@ -118,13 +134,11 @@
     },
     "GetDataAutomationStatusRequest": {
       "base": "<p>Structure for request of GetDataAutomationStatus API.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataAutomationStatusResponse": {
       "base": "<p>Response of GetDataAutomationStatus API.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IdempotencyToken": {
       "base": "<p>Client specified token used for idempotency checks</p>",
@@ -140,8 +154,7 @@
     },
     "InternalServerException": {
       "base": "<p>This exception is for any internal un-expected service errors.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvocationArn": {
       "base": "<p>Invocation arn.</p>",
@@ -152,13 +165,19 @@
     },
     "InvokeDataAutomationAsyncRequest": {
       "base": "<p>Invoke Data Automation Async Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvokeDataAutomationAsyncResponse": {
       "base": "<p>Invoke Data Automation Async Response</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "InvokeDataAutomationRequest": {
+      "base": "<p>Invoke Data Automation Request</p>",
+      "refs": {}
+    },
+    "InvokeDataAutomationResponse": {
+      "base": "<p>Invoke Data Automation Response</p>",
+      "refs": {}
     },
     "KMSKeyId": {
       "base": null,
@@ -168,13 +187,11 @@
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "NonBlankString": {
       "base": null,
@@ -183,6 +200,7 @@
         "InternalServerException$message": null,
         "ResourceNotFoundException$message": null,
         "ServiceQuotaExceededException$message": null,
+        "ServiceUnavailableException$message": null,
         "ThrottlingException$message": null,
         "ValidationException$message": null
       }
@@ -200,28 +218,57 @@
         "InvokeDataAutomationAsyncRequest$outputConfiguration": "<p>Output configuration.</p>"
       }
     },
+    "OutputSegment": {
+      "base": "<p>Results for an output segment</p>",
+      "refs": {
+        "OutputSegmentList$member": "<p>Output segment</p>"
+      }
+    },
+    "OutputSegmentList": {
+      "base": "<p>Output segment list</p>",
+      "refs": {
+        "InvokeDataAutomationResponse$outputSegments": "<p>List of outputs for each logical sub-doc</p>"
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>This exception will be thrown when resource provided from customer not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "S3Uri": {
       "base": "<p>A path in S3</p>",
       "refs": {
         "InputConfiguration$s3Uri": "<p>S3 uri.</p>",
-        "OutputConfiguration$s3Uri": "<p>S3 uri.</p>"
+        "OutputConfiguration$s3Uri": "<p>S3 uri.</p>",
+        "SyncInputConfiguration$s3Uri": "<p>S3 URI of the input data</p>"
+      }
+    },
+    "SemanticModality": {
+      "base": "<p>Semantic modality enum</p>",
+      "refs": {
+        "InvokeDataAutomationResponse$semanticModality": "<p>Detected semantic modality</p>"
       }
     },
     "ServiceQuotaExceededException": {
       "base": "<p>This exception will be thrown when service quota is exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ServiceUnavailableException": {
+      "base": "<p>This exception will be thrown when service is temporarily unavailable.</p>",
+      "refs": {}
     },
     "String": {
       "base": null,
       "refs": {
         "GetDataAutomationStatusResponse$errorType": "<p>Error Type.</p>",
-        "GetDataAutomationStatusResponse$errorMessage": "<p>Error Message.</p>"
+        "GetDataAutomationStatusResponse$errorMessage": "<p>Error Message.</p>",
+        "OutputSegment$customOutput": "<p>Custom output response</p>",
+        "OutputSegment$standardOutput": "<p>Standard output response</p>"
+      }
+    },
+    "SyncInputConfiguration": {
+      "base": "<p>Input configuration for synchronous API</p>",
+      "refs": {
+        "InvokeDataAutomationRequest$inputConfiguration": "<p>Input configuration.</p>"
       }
     },
     "Tag": {
@@ -253,13 +300,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": "<p>Defines the value within the context. e.g. &lt;key=reason, value=training&gt;.</p>",
@@ -277,8 +322,7 @@
     },
     "ThrottlingException": {
       "base": "<p>This exception will be thrown when customer reached API TPS limit.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TimestampSegment": {
       "base": "<p>Timestamp segment</p>",
@@ -300,18 +344,15 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>This exception will be thrown when customer provided invalid parameters.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "VideoAssetProcessingConfiguration": {
       "base": "<p>Video asset processing configuration</p>",

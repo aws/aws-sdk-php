@@ -2072,9 +2072,35 @@
       "refs": {
         "AnycastIpList$IpAddressType": "<p>The IP address type for the Anycast static IP list.</p>",
         "AnycastIpListSummary$IpAddressType": "<p>The IP address type for the Anycast static IP list.</p>",
-        "CreateAnycastIpListRequest$IpAddressType": "<p>The IP address type for the Anycast static IP list. You can specify one of the following options:</p> <ul> <li> <p> <code>ipv4</code> - Allocate a list of only IPv4 addresses</p> </li> <li> <p> <code>ipv6</code> - Allocate a list of only IPv4 addresses</p> </li> <li> <p> <code>dualstack</code> - Allocate a list of both IPv4 and IPv6 addresses</p> </li> </ul>",
+        "CreateAnycastIpListRequest$IpAddressType": "<p>The IP address type for the Anycast static IP list. You can specify one of the following options:</p> <ul> <li> <p> <code>ipv4</code> only</p> </li> <li> <p> <code>ipv6</code> only </p> </li> <li> <p> <code>dualstack</code> - Allocate a list of both IPv4 and IPv6 addresses</p> </li> </ul>",
         "CustomOriginConfig$IpAddressType": "<p>Specifies which IP protocol CloudFront uses when connecting to your origin. If your origin uses both IPv4 and IPv6 protocols, you can choose <code>dualstack</code> to help optimize reliability.</p>",
-        "UpdateAnycastIpListRequest$IpAddressType": "<p>The IP address type for the Anycast static IP list. You can specify one of the following options:</p> <ul> <li> <p> <code>ipv4</code> - Allocate a list of only IPv4 addresses</p> </li> <li> <p> <code>ipv6</code> - Allocate a list of only IPv4 addresses</p> </li> <li> <p> <code>dualstack</code> - Allocate a list of both IPv4 and IPv6 addresses</p> </li> </ul>"
+        "UpdateAnycastIpListRequest$IpAddressType": "<p>The IP address type for the Anycast static IP list. You can specify one of the following options:</p> <ul> <li> <p> <code>ipv4</code> only</p> </li> <li> <p> <code>ipv6</code> only</p> </li> <li> <p> <code>dualstack</code> - Allocate a list of both IPv4 and IPv6 addresses</p> </li> </ul>"
+      }
+    },
+    "IpamCidrConfig": {
+      "base": "<p>Configuration for an IPAM CIDR that defines a specific IP address range, IPAM pool, and associated Anycast IP address.</p>",
+      "refs": {
+        "IpamCidrConfigList$member": null
+      }
+    },
+    "IpamCidrConfigList": {
+      "base": null,
+      "refs": {
+        "CreateAnycastIpListRequest$IpamCidrConfigs": "<p> A list of IPAM CIDR configurations that specify the IP address ranges and IPAM pool settings for creating the Anycast static IP list. </p>",
+        "IpamConfig$IpamCidrConfigs": "<p>A list of IPAM CIDR configurations that define the IP address ranges, IPAM pools, and associated Anycast IP addresses.</p>"
+      }
+    },
+    "IpamCidrStatus": {
+      "base": null,
+      "refs": {
+        "IpamCidrConfig$Status": "<p>The current status of the IPAM CIDR configuration.</p>"
+      }
+    },
+    "IpamConfig": {
+      "base": "<p>The configuration IPAM settings that includes the quantity of CIDR configurations and the list of IPAM CIDR configurations.</p>",
+      "refs": {
+        "AnycastIpList$IpamConfig": "<p>The IPAM configuration for the Anycast static IP list, that contains the quantity and list of IPAM CIDR configurations.</p>",
+        "AnycastIpListSummary$IpamConfig": "<p>The IPAM configuration for the Anycast static IP list, that contains the quantity and list of IPAM CIDR configurations.</p>"
       }
     },
     "ItemSelection": {
@@ -4236,6 +4262,7 @@
         "Headers$Quantity": "<p>The number of header names in the <code>Items</code> list.</p>",
         "InvalidationList$MaxItems": "<p>The value that you provided for the <code>MaxItems</code> request parameter.</p>",
         "InvalidationList$Quantity": "<p>The number of invalidation batches that were created by the current Amazon Web Services account. </p>",
+        "IpamConfig$Quantity": "<p>The number of IPAM CIDR configurations in the <code>IpamCidrConfigs</code> list.</p>",
         "KeyGroupList$MaxItems": "<p>The maximum number of key groups requested.</p>",
         "KeyGroupList$Quantity": "<p>The number of key groups returned in the response.</p>",
         "KeyPairIds$Quantity": "<p>The number of key pair identifiers in the list.</p>",
@@ -4731,6 +4758,9 @@
         "InvalidationList$NextMarker": "<p>If <code>IsTruncated</code> is <code>true</code>, this element is present and contains the value that you can use for the <code>Marker</code> request parameter to continue listing your invalidation batches where they left off.</p>",
         "InvalidationSummary$Id": "<p>The unique ID for an invalidation request.</p>",
         "InvalidationSummary$Status": "<p>The status of an invalidation request.</p>",
+        "IpamCidrConfig$Cidr": "<p>The CIDR that specifies the IP address range for this IPAM configuration.</p>",
+        "IpamCidrConfig$IpamPoolArn": "<p>The Amazon Resource Name (ARN) of the IPAM pool that the CIDR block is assigned to.</p>",
+        "IpamCidrConfig$AnycastIp": "<p>The specified Anycast IP address allocated from the IPAM pool for this CIDR configuration.</p>",
         "KGKeyPairIds$KeyGroupId": "<p>The identifier of the key group that contains the public keys.</p>",
         "KeyGroup$Id": "<p>The identifier for the key group.</p>",
         "KeyGroupAlreadyExists$Message": null,

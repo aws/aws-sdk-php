@@ -1362,7 +1362,8 @@
         "Matcher":{"shape":"Matcher"},
         "TargetType":{"shape":"TargetTypeEnum"},
         "Tags":{"shape":"TagList"},
-        "IpAddressType":{"shape":"TargetGroupIpAddressTypeEnum"}
+        "IpAddressType":{"shape":"TargetGroupIpAddressTypeEnum"},
+        "TargetControlPort":{"shape":"TargetControlPort"}
       }
     },
     "CreateTargetGroupOutput":{
@@ -3074,6 +3075,11 @@
         "zonal_shift_delegated_to_dns"
       ]
     },
+    "TargetControlPort":{
+      "type":"integer",
+      "max":65535,
+      "min":1
+    },
     "TargetDescription":{
       "type":"structure",
       "required":["Id"],
@@ -3108,7 +3114,8 @@
         "LoadBalancerArns":{"shape":"LoadBalancerArns"},
         "TargetType":{"shape":"TargetTypeEnum"},
         "ProtocolVersion":{"shape":"ProtocolVersion"},
-        "IpAddressType":{"shape":"TargetGroupIpAddressTypeEnum"}
+        "IpAddressType":{"shape":"TargetGroupIpAddressTypeEnum"},
+        "TargetControlPort":{"shape":"TargetControlPort"}
       }
     },
     "TargetGroupArn":{"type":"string"},

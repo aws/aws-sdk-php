@@ -3038,6 +3038,7 @@
         "Status":{"shape":"string"},
         "Arn":{"shape":"string"},
         "IpAddressType":{"shape":"IpAddressType"},
+        "IpamConfig":{"shape":"IpamConfig"},
         "AnycastIps":{"shape":"AnycastIps"},
         "IpCount":{"shape":"integer"},
         "LastModifiedTime":{"shape":"timestamp"}
@@ -3091,7 +3092,8 @@
         "IpCount":{"shape":"integer"},
         "LastModifiedTime":{"shape":"timestamp"},
         "IpAddressType":{"shape":"IpAddressType"},
-        "ETag":{"shape":"string"}
+        "ETag":{"shape":"string"},
+        "IpamConfig":{"shape":"IpamConfig"}
       }
     },
     "AnycastIps":{
@@ -3856,7 +3858,8 @@
         "Name":{"shape":"AnycastIpListName"},
         "IpCount":{"shape":"integer"},
         "Tags":{"shape":"Tags"},
-        "IpAddressType":{"shape":"IpAddressType"}
+        "IpAddressType":{"shape":"IpAddressType"},
+        "IpamCidrConfigs":{"shape":"IpamCidrConfigList"}
       }
     },
     "CreateAnycastIpListResult":{
@@ -7278,6 +7281,54 @@
         "ipv6",
         "dualstack"
       ]
+    },
+    "IpamCidrConfig":{
+      "type":"structure",
+      "required":[
+        "Cidr",
+        "IpamPoolArn"
+      ],
+      "members":{
+        "Cidr":{"shape":"string"},
+        "IpamPoolArn":{"shape":"string"},
+        "AnycastIp":{"shape":"string"},
+        "Status":{"shape":"IpamCidrStatus"}
+      }
+    },
+    "IpamCidrConfigList":{
+      "type":"list",
+      "member":{
+        "shape":"IpamCidrConfig",
+        "locationName":"IpamCidrConfig"
+      }
+    },
+    "IpamCidrStatus":{
+      "type":"string",
+      "enum":[
+        "provisioned",
+        "failed-provision",
+        "provisioning",
+        "deprovisioned",
+        "failed-deprovision",
+        "deprovisioning",
+        "advertised",
+        "failed-advertise",
+        "advertising",
+        "withdrawn",
+        "failed-withdraw",
+        "withdrawing"
+      ]
+    },
+    "IpamConfig":{
+      "type":"structure",
+      "required":[
+        "Quantity",
+        "IpamCidrConfigs"
+      ],
+      "members":{
+        "Quantity":{"shape":"integer"},
+        "IpamCidrConfigs":{"shape":"IpamCidrConfigList"}
+      }
     },
     "ItemSelection":{
       "type":"string",

@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p><note> <p>Amazon Bedrock AgentCore is in preview release and is subject to change.</p> </note> <p>Welcome to the Amazon Bedrock AgentCore Data Plane API reference. Data Plane actions process and handle data or workloads within Amazon Web Services services. </p></p>",
+  "service": "<p>Welcome to the Amazon Bedrock AgentCore Data Plane API reference. Data Plane actions process and handle data or workloads within Amazon Web Services services. </p>",
   "operations": {
     "BatchCreateMemoryRecords": "<p>Creates multiple memory records in a single batch operation for the specified memory with custom content.</p>",
     "BatchDeleteMemoryRecords": "<p>Deletes multiple memory records in a single batch operation from the specified memory.</p>",
@@ -25,11 +25,13 @@
     "ListBrowserSessions": "<p>Retrieves a list of browser sessions in Amazon Bedrock that match the specified criteria. This operation returns summary information about each session, including identifiers, status, and timestamps.</p> <p>You can filter the results by browser identifier and session status. The operation supports pagination to handle large result sets efficiently.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully when retrieving large numbers of sessions.</p> <p>The following operations are related to <code>ListBrowserSessions</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> </ul>",
     "ListCodeInterpreterSessions": "<p>Retrieves a list of code interpreter sessions in Amazon Bedrock that match the specified criteria. This operation returns summary information about each session, including identifiers, status, and timestamps.</p> <p>You can filter the results by code interpreter identifier and session status. The operation supports pagination to handle large result sets efficiently.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully when retrieving large numbers of sessions.</p> <p>The following operations are related to <code>ListCodeInterpreterSessions</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
     "ListEvents": "<p>Lists events in an AgentCore Memory resource based on specified criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListEvents</code> permission.</p>",
+    "ListMemoryExtractionJobs": "<p>Lists all long-term memory extraction jobs that are eligible to be started with optional filtering.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListMemoryExtractionJobs</code> permission.</p>",
     "ListMemoryRecords": "<p>Lists memory records in an AgentCore Memory resource based on specified criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListMemoryRecords</code> permission.</p>",
     "ListSessions": "<p>Lists sessions in an AgentCore Memory resource based on specified criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListSessions</code> permission.</p>",
     "RetrieveMemoryRecords": "<p>Searches for and retrieves memory records from an AgentCore Memory resource based on specified search criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:RetrieveMemoryRecords</code> permission.</p>",
     "StartBrowserSession": "<p>Creates and initializes a browser session in Amazon Bedrock. The session enables agents to navigate and interact with web content, extract information from websites, and perform web-based tasks as part of their response generation.</p> <p>To create a session, you must specify a browser identifier and a name. You can also configure the viewport dimensions to control the visible area of web content. The session remains active until it times out or you explicitly stop it using the <code>StopBrowserSession</code> operation.</p> <p>The following operations are related to <code>StartBrowserSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_UpdateBrowserStream.html\">UpdateBrowserStream</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StopBrowserSession.html\">StopBrowserSession</a> </p> </li> </ul>",
     "StartCodeInterpreterSession": "<p>Creates and initializes a code interpreter session in Amazon Bedrock. The session enables agents to execute code as part of their response generation, supporting programming languages such as Python for data analysis, visualization, and computation tasks.</p> <p>To create a session, you must specify a code interpreter identifier and a name. The session remains active until it times out or you explicitly stop it using the <code>StopCodeInterpreterSession</code> operation.</p> <p>The following operations are related to <code>StartCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_InvokeCodeInterpreter.html\">InvokeCodeInterpreter</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StopCodeInterpreterSession.html\">StopCodeInterpreterSession</a> </p> </li> </ul>",
+    "StartMemoryExtractionJob": "<p> Starts a memory extraction job that processes events that failed extraction previously in an AgentCore Memory resource and produces structured memory records. When earlier extraction attempts have left events unprocessed, this job will pick up and extract those as well. </p> <p>To use this operation, you must have the <code>bedrock-agentcore:StartMemoryExtractionJob</code> permission.</p>",
     "StopBrowserSession": "<p>Terminates an active browser session in Amazon Bedrock. This operation stops the session, releases associated resources, and makes the session unavailable for further use.</p> <p>To stop a browser session, you must specify both the browser identifier and the session ID. Once stopped, a session cannot be restarted; you must create a new session using <code>StartBrowserSession</code>.</p> <p>The following operations are related to <code>StopBrowserSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> </ul>",
     "StopCodeInterpreterSession": "<p>Terminates an active code interpreter session in Amazon Bedrock. This operation stops the session, releases associated resources, and makes the session unavailable for further use.</p> <p>To stop a code interpreter session, you must specify both the code interpreter identifier and the session ID. Once stopped, a session cannot be restarted; you must create a new session using <code>StartCodeInterpreterSession</code>.</p> <p>The following operations are related to <code>StopCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
     "StopRuntimeSession": "<p>Stops a session that is running in an running AgentCore Runtime agent.</p>",
@@ -56,8 +58,8 @@
         "DeleteEventInput$actorId": "<p>The identifier of the actor associated with the event to delete.</p>",
         "Event$actorId": "<p>The identifier of the actor associated with the event.</p>",
         "GetEventInput$actorId": "<p>The identifier of the actor associated with the event.</p>",
-        "ListEventsInput$actorId": "<p>The identifier of the actor for which to list events. If specified, only events from this actor are returned.</p>",
-        "ListSessionsInput$actorId": "<p>The identifier of the actor for which to list sessions. If specified, only sessions involving this actor are returned.</p>",
+        "ListEventsInput$actorId": "<p>The identifier of the actor for which to list events.</p>",
+        "ListSessionsInput$actorId": "<p>The identifier of the actor for which to list sessions. </p>",
         "SessionSummary$actorId": "<p>The identifier of the actor associated with the session.</p>"
       }
     },
@@ -461,6 +463,43 @@
         "FilterInput$eventMetadata": "<p>Event metadata filter criteria to apply when retrieving events.</p>"
       }
     },
+    "ExtractionJob": {
+      "base": "<p>Represents the metadata of a memory extraction job such as the message identifiers that compose this job.</p>",
+      "refs": {
+        "StartMemoryExtractionJobInput$extractionJob": "<p>Extraction job to start in this operation.</p>"
+      }
+    },
+    "ExtractionJobFilterInput": {
+      "base": "<p>Filters for querying memory extraction jobs based on various criteria.</p>",
+      "refs": {
+        "ListMemoryExtractionJobsInput$filter": "<p>Filter criteria to apply when listing extraction jobs.</p>"
+      }
+    },
+    "ExtractionJobMessages": {
+      "base": "<p>The list of messages that compose this extraction job.</p>",
+      "refs": {
+        "ExtractionJobMetadata$messages": "<p>The messages associated with the extraction job.</p>"
+      }
+    },
+    "ExtractionJobMetadata": {
+      "base": "<p>Metadata information associated with this extraction job.</p>",
+      "refs": {
+        "ExtractionJobMetadataList$member": null
+      }
+    },
+    "ExtractionJobMetadataList": {
+      "base": null,
+      "refs": {
+        "ListMemoryExtractionJobsOutput$jobs": "<p>List of extraction job metadata matching the specified criteria.</p>"
+      }
+    },
+    "ExtractionJobStatus": {
+      "base": null,
+      "refs": {
+        "ExtractionJobFilterInput$status": "<p>The status of the extraction job. If specified, only extraction jobs with this status are returned.</p>",
+        "ExtractionJobMetadata$status": "<p>The current status of the extraction job.</p>"
+      }
+    },
     "FilterInput": {
       "base": "<p>Contains filter criteria for listing events.</p>",
       "refs": {
@@ -571,6 +610,7 @@
       "base": null,
       "refs": {
         "MemoryRecordOutput$errorCode": "<p>The error code returned when the memory record operation fails.</p>",
+        "MessageMetadata$messageIndex": "<p>The position of this message within that event’s ordered list of messages.</p>",
         "ToolResultStructuredContent$exitCode": "<p>The exit code from the tool execution.</p>"
       }
     },
@@ -680,6 +720,20 @@
       "base": null,
       "refs": {}
     },
+    "ListMemoryExtractionJobsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListMemoryExtractionJobsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListMemoryExtractionJobsInput$maxResults": "<p>The maximum number of results to return in a single call. The default value is 20.</p>"
+      }
+    },
+    "ListMemoryExtractionJobsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "ListMemoryRecordsInput": {
       "base": null,
       "refs": {}
@@ -724,13 +778,13 @@
     "MaxResults": {
       "base": null,
       "refs": {
-        "ListActorsInput$maxResults": "<p>The maximum number of results to return in a single call. Minimum value of 1, maximum value of 100. Default is 20.</p>",
+        "ListActorsInput$maxResults": "<p>The maximum number of results to return in a single call. The default value is 20.</p>",
         "ListBrowserSessionsRequest$maxResults": "<p>The maximum number of results to return in a single call. The default value is 10. Valid values range from 1 to 100. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
         "ListCodeInterpreterSessionsRequest$maxResults": "<p>The maximum number of results to return in a single call. The default value is 10. Valid values range from 1 to 100. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
-        "ListEventsInput$maxResults": "<p>The maximum number of results to return in a single call. Minimum value of 1, maximum value of 100. Default is 20.</p>",
-        "ListMemoryRecordsInput$maxResults": "<p>The maximum number of results to return in a single call. Minimum value of 1, maximum value of 100. Default is 20.</p>",
-        "ListSessionsInput$maxResults": "<p>The maximum number of results to return in a single call. Minimum value of 1, maximum value of 100. Default is 20.</p>",
-        "RetrieveMemoryRecordsInput$maxResults": "<p>The maximum number of results to return in a single call. Minimum value of 1, maximum value of 100. Default is 20.</p>"
+        "ListEventsInput$maxResults": "<p>The maximum number of results to return in a single call. The default value is 20.</p>",
+        "ListMemoryRecordsInput$maxResults": "<p>The maximum number of results to return in a single call. The default value is 20.</p>",
+        "ListSessionsInput$maxResults": "<p>The maximum number of results to return in a single call. The default value is 20.</p>",
+        "RetrieveMemoryRecordsInput$maxResults": "<p>The maximum number of results to return in a single call. The default value is 20.</p>"
       }
     },
     "MemoryContent": {
@@ -762,9 +816,11 @@
         "GetMemoryRecordInput$memoryId": "<p>The identifier of the AgentCore Memory resource containing the memory record.</p>",
         "ListActorsInput$memoryId": "<p>The identifier of the AgentCore Memory resource for which to list actors.</p>",
         "ListEventsInput$memoryId": "<p>The identifier of the AgentCore Memory resource for which to list events.</p>",
+        "ListMemoryExtractionJobsInput$memoryId": "<p>The unique identifier of the memory to list extraction jobs for.</p>",
         "ListMemoryRecordsInput$memoryId": "<p>The identifier of the AgentCore Memory resource for which to list memory records.</p>",
         "ListSessionsInput$memoryId": "<p>The identifier of the AgentCore Memory resource for which to list sessions.</p>",
-        "RetrieveMemoryRecordsInput$memoryId": "<p>The identifier of the AgentCore Memory resource from which to retrieve memory records.</p>"
+        "RetrieveMemoryRecordsInput$memoryId": "<p>The identifier of the AgentCore Memory resource from which to retrieve memory records.</p>",
+        "StartMemoryExtractionJobInput$memoryId": "<p>The unique identifier of the memory for which to start extraction jobs.</p>"
       }
     },
     "MemoryRecord": {
@@ -869,6 +925,18 @@
         "SearchCriteria$memoryStrategyId": "<p>The memory strategy identifier to filter memory records by.</p>"
       }
     },
+    "MessageMetadata": {
+      "base": "<p>Metadata information associated with this message.</p>",
+      "refs": {
+        "MessagesList$member": null
+      }
+    },
+    "MessagesList": {
+      "base": null,
+      "refs": {
+        "ExtractionJobMessages$messagesList": "<p>The list of messages that compose this extraction job.</p>"
+      }
+    },
     "MetadataKey": {
       "base": null,
       "refs": {
@@ -919,7 +987,7 @@
       "refs": {
         "ListMemoryRecordsInput$namespace": "<p>The namespace to filter memory records by. If specified, only memory records in this namespace are returned.</p>",
         "NamespacesList$member": null,
-        "RetrieveMemoryRecordsInput$namespace": "<p>The namespace to filter memory records by. If specified, only memory records in this namespace are searched.</p>"
+        "RetrieveMemoryRecordsInput$namespace": "<p>The namespace to filter memory records by.</p>"
       }
     },
     "NamespacesList": {
@@ -972,6 +1040,8 @@
         "ListActorsOutput$nextToken": "<p>The token to use in a subsequent request to get the next set of results. This value is null when there are no more results to return.</p>",
         "ListEventsInput$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListEventsOutput$nextToken": "<p>The token to use in a subsequent request to get the next set of results. This value is null when there are no more results to return.</p>",
+        "ListMemoryExtractionJobsInput$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListMemoryExtractionJobsOutput$nextToken": "<p>Token to retrieve the next page of results, if available.</p>",
         "ListMemoryRecordsInput$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListMemoryRecordsOutput$nextToken": "<p>The token to use in a subsequent request to get the next set of results. This value is null when there are no more results to return.</p>",
         "ListSessionsInput$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -1118,7 +1188,7 @@
         "GetEventInput$sessionId": "<p>The identifier of the session containing the event.</p>",
         "InvokeAgentRuntimeResponse$runtimeSessionId": "<p>The identifier of the runtime session.</p>",
         "InvokeAgentRuntimeResponse$mcpSessionId": "<p>The identifier of the MCP session.</p>",
-        "ListEventsInput$sessionId": "<p>The identifier of the session for which to list events. If specified, only events from this session are returned.</p>",
+        "ListEventsInput$sessionId": "<p>The identifier of the session for which to list events.</p>",
         "SessionSummary$sessionId": "<p>The unique identifier of the session.</p>",
         "StopRuntimeSessionResponse$runtimeSessionId": "<p>The ID of the session that you requested to stop.</p>"
       }
@@ -1186,6 +1256,14 @@
       }
     },
     "StartCodeInterpreterSessionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartMemoryExtractionJobInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartMemoryExtractionJobOutput": {
       "base": null,
       "refs": {}
     },
@@ -1261,6 +1339,15 @@
         "ContentBlock$name": "<p>The name of the content block.</p>",
         "ContentBlock$description": "<p>The description of the content block.</p>",
         "CreateEventInput$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, AgentCore ignores the request, but does not return an error.</p>",
+        "ExtractionJob$jobId": "<p>The unique identifier of the extraction job.</p>",
+        "ExtractionJobFilterInput$strategyId": "<p>The memory strategy identifier to filter extraction jobs by. If specified, only extraction jobs with this strategy ID are returned.</p>",
+        "ExtractionJobFilterInput$sessionId": "<p>The unique identifier of the session. If specified, only extraction jobs with this session ID are returned.</p>",
+        "ExtractionJobFilterInput$actorId": "<p>The identifier of the actor. If specified, only extraction jobs with this actor ID are returned.</p>",
+        "ExtractionJobMetadata$jobID": "<p>The unique identifier for the extraction job.</p>",
+        "ExtractionJobMetadata$failureReason": "<p>The cause of failure, if the job did not complete successfully.</p>",
+        "ExtractionJobMetadata$strategyId": "<p>The identifier of the memory strategy for this extraction job.</p>",
+        "ExtractionJobMetadata$sessionId": "<p>The identifier of the session for this extraction job.</p>",
+        "ExtractionJobMetadata$actorId": "<p>The identifier of the actor for this extraction job.</p>",
         "GetAgentCardRequest$agentRuntimeArn": "<p>The ARN of the AgentCore Runtime agent for which you want to get the A2A agent card.</p>",
         "GetAgentCardRequest$qualifier": "<p>Optional qualifier to specify an agent alias, such as <code>prod</code>code&gt; or <code>dev</code>. If you don't provide a value, the DEFAULT alias is used. </p>",
         "GetBrowserSessionRequest$browserIdentifier": "<p>The unique identifier of the browser associated with the session.</p>",
@@ -1281,6 +1368,7 @@
         "ListBrowserSessionsRequest$browserIdentifier": "<p>The unique identifier of the browser to list sessions for. If specified, only sessions for this browser are returned. If not specified, sessions for all browsers are returned.</p>",
         "ListCodeInterpreterSessionsRequest$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter to list sessions for. If specified, only sessions for this code interpreter are returned. If not specified, sessions for all code interpreters are returned.</p>",
         "MemoryRecordOutput$errorMessage": "<p>A human-readable error message describing why the memory record operation failed.</p>",
+        "MessageMetadata$eventId": "<p>The identifier of the event associated with this message.</p>",
         "ResourceContent$uri": "<p>The URI of the resource content.</p>",
         "ResourceContent$mimeType": "<p>The MIME type of the resource content.</p>",
         "ResourceContent$text": "<p>The text resource content.</p>",
@@ -1289,6 +1377,8 @@
         "StartBrowserSessionResponse$browserIdentifier": "<p>The identifier of the browser.</p>",
         "StartCodeInterpreterSessionRequest$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter to use for this session. This identifier specifies which code interpreter environment to initialize for the session.</p>",
         "StartCodeInterpreterSessionResponse$codeInterpreterIdentifier": "<p>The identifier of the code interpreter.</p>",
+        "StartMemoryExtractionJobInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotent processing of the request.</p>",
+        "StartMemoryExtractionJobOutput$jobId": "<p>Extraction Job ID that was attempted to start.</p>",
         "StopBrowserSessionRequest$browserIdentifier": "<p>The unique identifier of the browser associated with the session.</p>",
         "StopBrowserSessionResponse$browserIdentifier": "<p>The identifier of the browser.</p>",
         "StopCodeInterpreterSessionRequest$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter associated with the session.</p>",
