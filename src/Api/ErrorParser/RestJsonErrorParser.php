@@ -49,10 +49,6 @@ class RestJsonErrorParser extends AbstractErrorParser
 
         $this->populateShape($data, $response, $command);
 
-        if (!empty($data['body'])) {
-            $data = array_replace($data, $data['body']);
-        }
-
         return $data;
     }
 }
