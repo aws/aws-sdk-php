@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.363.0 - 2025-11-21
 
 * `Aws\SecurityIR` - Add ListInvestigations and SendFeedback APIs to support SecurityIR AI agents
 * `Aws\MailManager` - Add support for resources in the aws-eusc partition.
