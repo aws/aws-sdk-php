@@ -77,6 +77,18 @@ EOF,
 EOF
     ];
 
+    protected function setUp(): void
+    {
+        set_error_handler(function ($errno, $errstr) {
+            // Ignore trigger_error logging
+        });
+    }
+
+    protected function tearDown(): void
+    {
+        restore_error_handler();
+    }
+
     /**
      * @return void
      */

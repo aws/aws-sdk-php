@@ -329,9 +329,8 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         );
 
         if (!empty($this->uploadId)) {
-            error_log(
+            trigger_error(
                 "Multipart Upload with id: " . $this->uploadId . " failed",
-                E_USER_WARNING
             );
             $this->abortMultipartOperation()->wait();
         }

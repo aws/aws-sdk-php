@@ -24,6 +24,19 @@ use Psr\Http\Message\StreamInterface;
 
 class MultipartUploaderTest extends TestCase
 {
+
+    protected function setUp(): void
+    {
+        set_error_handler(function ($errno, $errstr) {
+            // Ignore trigger_error logging
+        });
+    }
+
+    protected function tearDown(): void
+    {
+        restore_error_handler();
+    }
+
     /**
      * @param array $sourceConfig
      * @param array $commandArgs
@@ -1311,5 +1324,72 @@ EOF;
             'expects_error' => true,
             'error_on_part_number' => 2
         ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testAbortMultipartUploadShowsWarning(): void
+    {
+        // Convert the warning to an exception
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage("Upload failed");
+        set_error_handler(function ($errno, $errstr) {
+            $this->assertStringContainsString(
+                "Multipart Upload with id: ",
+                $errstr,
+            );
+        });
+
+        $abortMultipartCalled = false;
+        $abortMultipartCalledTimes = 0;
+        $s3Client = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $s3Client->method('executeAsync')
+            ->willReturnCallback(function ($command)
+            use (&$abortMultipartCalled, &$abortMultipartCalledTimes) {
+                if ($command->getName() === 'CreateMultipartUpload') {
+                    return Create::promiseFor(new Result([
+                        'UploadId' => 'TestUploadId'
+                    ]));
+                } elseif ($command->getName() === 'UploadPart') {
+                    if ($command['PartNumber'] === 3) {
+                        return Create::rejectionFor(
+                            new S3TransferException('Upload failed')
+                        );
+                    }
+                } elseif ($command->getName() === 'AbortMultipartUpload') {
+                    $abortMultipartCalled = true;
+                    $abortMultipartCalledTimes++;
+                }
+
+                return Create::promiseFor(new Result([]));
+            });
+        $s3Client->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+        $requestArgs = [
+            'Bucket' => 'test-bucket',
+            'Key' => 'test-key',
+        ];
+        $source = Utils::streamFor(str_repeat('*', 1024 * 1024 * 20));
+        try {
+            $multipartUploader = new MultipartUploader(
+                $s3Client,
+                $requestArgs,
+                $source,
+                [
+                    'target_part_size_bytes' => 5242880, // 5MB
+                    'concurrency' => 1,
+                    'request_checksum_calculation' => 'when_supported'
+                ]
+            );
+            $multipartUploader->promise()->wait();
+        } finally {
+            $this->assertTrue($abortMultipartCalled);
+            $source->close();
+        }
     }
 }
