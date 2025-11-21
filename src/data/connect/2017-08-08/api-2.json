@@ -492,6 +492,43 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "CreateContactFlowModuleAlias":{
+      "name":"CreateContactFlowModuleAlias",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/contact-flow-modules/{InstanceId}/{ContactFlowModuleId}/alias"
+      },
+      "input":{"shape":"CreateContactFlowModuleAliasRequest"},
+      "output":{"shape":"CreateContactFlowModuleAliasResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"DuplicateResourceException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "CreateContactFlowModuleVersion":{
+      "name":"CreateContactFlowModuleVersion",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/contact-flow-modules/{InstanceId}/{ContactFlowModuleId}/version"
+      },
+      "input":{"shape":"CreateContactFlowModuleVersionRequest"},
+      "output":{"shape":"CreateContactFlowModuleVersionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateContactFlowVersion":{
       "name":"CreateContactFlowVersion",
       "http":{
@@ -1021,6 +1058,40 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "DeleteContactFlowModuleAlias":{
+      "name":"DeleteContactFlowModuleAlias",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/contact-flow-modules/{InstanceId}/{ContactFlowModuleId}/alias/{AliasId}"
+      },
+      "input":{"shape":"DeleteContactFlowModuleAliasRequest"},
+      "output":{"shape":"DeleteContactFlowModuleAliasResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "DeleteContactFlowModuleVersion":{
+      "name":"DeleteContactFlowModuleVersion",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/contact-flow-modules/{InstanceId}/{ContactFlowModuleId}/version/{ContactFlowModuleVersion}"
+      },
+      "input":{"shape":"DeleteContactFlowModuleVersionRequest"},
+      "output":{"shape":"DeleteContactFlowModuleVersionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "DeleteContactFlowVersion":{
       "name":"DeleteContactFlowVersion",
       "http":{
@@ -1474,6 +1545,23 @@
       },
       "input":{"shape":"DescribeContactFlowModuleRequest"},
       "output":{"shape":"DescribeContactFlowModuleResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "DescribeContactFlowModuleAlias":{
+      "name":"DescribeContactFlowModuleAlias",
+      "http":{
+        "method":"GET",
+        "requestUri":"/contact-flow-modules/{InstanceId}/{ContactFlowModuleId}/alias/{AliasId}"
+      },
+      "input":{"shape":"DescribeContactFlowModuleAliasRequest"},
+      "output":{"shape":"DescribeContactFlowModuleAliasResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InvalidRequestException"},
@@ -2402,6 +2490,40 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "ListContactFlowModuleAliases":{
+      "name":"ListContactFlowModuleAliases",
+      "http":{
+        "method":"GET",
+        "requestUri":"/contact-flow-modules/{InstanceId}/{ContactFlowModuleId}/aliases"
+      },
+      "input":{"shape":"ListContactFlowModuleAliasesRequest"},
+      "output":{"shape":"ListContactFlowModuleAliasesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListContactFlowModuleVersions":{
+      "name":"ListContactFlowModuleVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/contact-flow-modules/{InstanceId}/{ContactFlowModuleId}/versions"
+      },
+      "input":{"shape":"ListContactFlowModuleVersionsRequest"},
+      "output":{"shape":"ListContactFlowModuleVersionsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListContactFlowModules":{
@@ -4023,6 +4145,25 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "UpdateContactFlowModuleAlias":{
+      "name":"UpdateContactFlowModuleAlias",
+      "http":{
+        "method":"POST",
+        "requestUri":"/contact-flow-modules/{InstanceId}/{ContactFlowModuleId}/alias/{AliasId}"
+      },
+      "input":{"shape":"UpdateContactFlowModuleAliasRequest"},
+      "output":{"shape":"UpdateContactFlowModuleAliasResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConditionalOperationFailedException"},
+        {"shape":"DuplicateResourceException"}
       ]
     },
     "UpdateContactFlowModuleContent":{
@@ -6440,8 +6581,47 @@
         "Description":{"shape":"ContactFlowModuleDescription"},
         "State":{"shape":"ContactFlowModuleState"},
         "Status":{"shape":"ContactFlowModuleStatus"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "FlowModuleContentSha256":{"shape":"FlowModuleContentSha256"},
+        "Version":{"shape":"ResourceVersion"},
+        "VersionDescription":{"shape":"ContactFlowModuleDescription"},
+        "Settings":{"shape":"FlowModuleSettings"},
+        "ExternalInvocationConfiguration":{"shape":"ExternalInvocationConfiguration"}
       }
+    },
+    "ContactFlowModuleAlias":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"^([$0-9a-zA-Z][_-]?)+$"
+    },
+    "ContactFlowModuleAliasInfo":{
+      "type":"structure",
+      "members":{
+        "ContactFlowModuleId":{"shape":"ResourceId"},
+        "ContactFlowModuleArn":{"shape":"ARN"},
+        "AliasId":{"shape":"ContactFlowModuleAlias"},
+        "Version":{"shape":"ResourceVersion"},
+        "Name":{"shape":"ContactFlowModuleAlias"},
+        "Description":{"shape":"ContactFlowModuleDescription"},
+        "LastModifiedRegion":{"shape":"RegionName"},
+        "LastModifiedTime":{"shape":"Timestamp"}
+      }
+    },
+    "ContactFlowModuleAliasSummary":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ARN"},
+        "AliasId":{"shape":"ResourceId"},
+        "Version":{"shape":"ResourceVersion"},
+        "AliasName":{"shape":"ContactFlowModuleName"},
+        "AliasDescription":{"shape":"ContactFlowModuleDescription"},
+        "LastModifiedTime":{"shape":"Timestamp"}
+      }
+    },
+    "ContactFlowModuleAliasSummaryList":{
+      "type":"list",
+      "member":{"shape":"ContactFlowModuleAliasSummary"}
     },
     "ContactFlowModuleContent":{
       "type":"string",
@@ -6511,6 +6691,18 @@
         "Name":{"shape":"ContactFlowModuleName"},
         "State":{"shape":"ContactFlowModuleState"}
       }
+    },
+    "ContactFlowModuleVersionSummary":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ARN"},
+        "VersionDescription":{"shape":"ContactFlowModuleDescription"},
+        "Version":{"shape":"ResourceVersion"}
+      }
+    },
+    "ContactFlowModuleVersionSummaryList":{
+      "type":"list",
+      "member":{"shape":"ContactFlowModuleVersionSummary"}
     },
     "ContactFlowModulesSummaryList":{
       "type":"list",
@@ -6864,6 +7056,37 @@
         "TemplateId":{"shape":"TemplateId"}
       }
     },
+    "CreateContactFlowModuleAliasRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowModuleId",
+        "ContactFlowModuleVersion",
+        "AliasName"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceIdOrArn",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Description":{"shape":"ContactFlowDescription"},
+        "ContactFlowModuleId":{
+          "shape":"ContactFlowModuleId",
+          "location":"uri",
+          "locationName":"ContactFlowModuleId"
+        },
+        "ContactFlowModuleVersion":{"shape":"ResourceVersion"},
+        "AliasName":{"shape":"ContactFlowModuleAlias"}
+      }
+    },
+    "CreateContactFlowModuleAliasResponse":{
+      "type":"structure",
+      "members":{
+        "ContactFlowModuleArn":{"shape":"ARN"},
+        "Id":{"shape":"ResourceId"}
+      }
+    },
     "CreateContactFlowModuleRequest":{
       "type":"structure",
       "required":[
@@ -6884,7 +7107,9 @@
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "Settings":{"shape":"FlowModuleSettings"},
+        "ExternalInvocationConfiguration":{"shape":"ExternalInvocationConfiguration"}
       }
     },
     "CreateContactFlowModuleResponse":{
@@ -6892,6 +7117,34 @@
       "members":{
         "Id":{"shape":"ContactFlowModuleId"},
         "Arn":{"shape":"ARN"}
+      }
+    },
+    "CreateContactFlowModuleVersionRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowModuleId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Description":{"shape":"ContactFlowModuleDescription"},
+        "ContactFlowModuleId":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"ContactFlowModuleId"
+        },
+        "FlowModuleContentSha256":{"shape":"FlowModuleContentSha256"}
+      }
+    },
+    "CreateContactFlowModuleVersionResponse":{
+      "type":"structure",
+      "members":{
+        "ContactFlowModuleArn":{"shape":"ARN"},
+        "Version":{"shape":"ResourceVersion"}
       }
     },
     "CreateContactFlowRequest":{
@@ -8016,6 +8269,35 @@
         }
       }
     },
+    "DeleteContactFlowModuleAliasRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowModuleId",
+        "AliasId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceIdOrArn",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactFlowModuleId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"ContactFlowModuleId"
+        },
+        "AliasId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"AliasId"
+        }
+      }
+    },
+    "DeleteContactFlowModuleAliasResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteContactFlowModuleRequest":{
       "type":"structure",
       "required":[
@@ -8036,6 +8318,35 @@
       }
     },
     "DeleteContactFlowModuleResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteContactFlowModuleVersionRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowModuleId",
+        "ContactFlowModuleVersion"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactFlowModuleId":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"ContactFlowModuleId"
+        },
+        "ContactFlowModuleVersion":{
+          "shape":"ResourceVersion",
+          "location":"uri",
+          "locationName":"ContactFlowModuleVersion"
+        }
+      }
+    },
+    "DeleteContactFlowModuleVersionResponse":{
       "type":"structure",
       "members":{}
     },
@@ -8644,6 +8955,37 @@
       "members":{
         "Evaluation":{"shape":"Evaluation"},
         "EvaluationForm":{"shape":"EvaluationFormContent"}
+      }
+    },
+    "DescribeContactFlowModuleAliasRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowModuleId",
+        "AliasId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceIdOrArn",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactFlowModuleId":{
+          "shape":"ContactFlowModuleId",
+          "location":"uri",
+          "locationName":"ContactFlowModuleId"
+        },
+        "AliasId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"AliasId"
+        }
+      }
+    },
+    "DescribeContactFlowModuleAliasResponse":{
+      "type":"structure",
+      "members":{
+        "ContactFlowModuleAlias":{"shape":"ContactFlowModuleAliasInfo"}
       }
     },
     "DescribeContactFlowModuleRequest":{
@@ -10958,6 +11300,12 @@
       "type":"list",
       "member":{"shape":"Expression"}
     },
+    "ExternalInvocationConfiguration":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"}
+      }
+    },
     "FailedRequest":{
       "type":"structure",
       "members":{
@@ -11115,6 +11463,13 @@
       "min":1,
       "pattern":"^[a-zA-Z0-9]{64}$"
     },
+    "FlowModuleContentSha256":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9]{64}$"
+    },
+    "FlowModuleSettings":{"type":"string"},
     "FormId":{"type":"string"},
     "FragmentNumber":{
       "type":"string",
@@ -12664,6 +13019,80 @@
       "required":["EvaluationSummaryList"],
       "members":{
         "EvaluationSummaryList":{"shape":"EvaluationSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListContactFlowModuleAliasesRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowModuleId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceIdOrArn",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactFlowModuleId":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"ContactFlowModuleId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult1000",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListContactFlowModuleAliasesResponse":{
+      "type":"structure",
+      "members":{
+        "ContactFlowModuleAliasSummaryList":{"shape":"ContactFlowModuleAliasSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListContactFlowModuleVersionsRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowModuleId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactFlowModuleId":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"ContactFlowModuleId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult1000",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListContactFlowModuleVersionsResponse":{
+      "type":"structure",
+      "members":{
+        "ContactFlowModuleVersionSummaryList":{"shape":"ContactFlowModuleVersionSummaryList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -18973,12 +19402,43 @@
       "type":"structure",
       "members":{}
     },
-    "UpdateContactFlowModuleContentRequest":{
+    "UpdateContactFlowModuleAliasRequest":{
       "type":"structure",
       "required":[
         "InstanceId",
         "ContactFlowModuleId",
-        "Content"
+        "AliasId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceIdOrArn",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactFlowModuleId":{
+          "shape":"ContactFlowModuleId",
+          "location":"uri",
+          "locationName":"ContactFlowModuleId"
+        },
+        "AliasId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"AliasId"
+        },
+        "Name":{"shape":"ContactFlowModuleName"},
+        "Description":{"shape":"ContactFlowModuleDescription"},
+        "ContactFlowModuleVersion":{"shape":"ResourceVersion"}
+      }
+    },
+    "UpdateContactFlowModuleAliasResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateContactFlowModuleContentRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowModuleId"
       ],
       "members":{
         "InstanceId":{
@@ -18991,7 +19451,8 @@
           "location":"uri",
           "locationName":"ContactFlowModuleId"
         },
-        "Content":{"shape":"ContactFlowModuleContent"}
+        "Content":{"shape":"ContactFlowModuleContent"},
+        "Settings":{"shape":"FlowModuleSettings"}
       }
     },
     "UpdateContactFlowModuleContentResponse":{

@@ -1312,7 +1312,8 @@
       "type":"string",
       "enum":[
         "CUSTOM_JWT",
-        "AWS_IAM"
+        "AWS_IAM",
+        "NONE"
       ]
     },
     "AwsAccountId":{
@@ -1729,6 +1730,7 @@
         "authorizerType":{"shape":"AuthorizerType"},
         "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "interceptorConfigurations":{"shape":"GatewayInterceptorConfigurations"},
         "exceptionLevel":{"shape":"ExceptionLevel"},
         "tags":{"shape":"TagsMap"}
       }
@@ -1761,6 +1763,7 @@
         "authorizerType":{"shape":"AuthorizerType"},
         "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "interceptorConfigurations":{"shape":"GatewayInterceptorConfigurations"},
         "workloadIdentityDetails":{"shape":"WorkloadIdentityDetails"},
         "exceptionLevel":{"shape":"ExceptionLevel"}
       }
@@ -2398,6 +2401,37 @@
       "type":"string",
       "pattern":"([0-9a-z][-]?){1,100}-[0-9a-z]{10}"
     },
+    "GatewayInterceptionPoint":{
+      "type":"string",
+      "enum":[
+        "REQUEST",
+        "RESPONSE"
+      ]
+    },
+    "GatewayInterceptionPoints":{
+      "type":"list",
+      "member":{"shape":"GatewayInterceptionPoint"},
+      "max":2,
+      "min":1
+    },
+    "GatewayInterceptorConfiguration":{
+      "type":"structure",
+      "required":[
+        "interceptor",
+        "interceptionPoints"
+      ],
+      "members":{
+        "interceptor":{"shape":"InterceptorConfiguration"},
+        "interceptionPoints":{"shape":"GatewayInterceptionPoints"},
+        "inputConfiguration":{"shape":"InterceptorInputConfiguration"}
+      }
+    },
+    "GatewayInterceptorConfigurations":{
+      "type":"list",
+      "member":{"shape":"GatewayInterceptorConfiguration"},
+      "max":2,
+      "min":1
+    },
     "GatewayMaxResults":{
       "type":"integer",
       "box":true,
@@ -2727,6 +2761,7 @@
         "authorizerType":{"shape":"AuthorizerType"},
         "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "interceptorConfigurations":{"shape":"GatewayInterceptorConfigurations"},
         "workloadIdentityDetails":{"shape":"WorkloadIdentityDetails"},
         "exceptionLevel":{"shape":"ExceptionLevel"}
       }
@@ -2939,6 +2974,20 @@
       "type":"integer",
       "box":true
     },
+    "InterceptorConfiguration":{
+      "type":"structure",
+      "members":{
+        "lambda":{"shape":"LambdaInterceptorConfiguration"}
+      },
+      "union":true
+    },
+    "InterceptorInputConfiguration":{
+      "type":"structure",
+      "required":["passRequestHeaders"],
+      "members":{
+        "passRequestHeaders":{"shape":"Boolean"}
+      }
+    },
     "InternalServerException":{
       "type":"structure",
       "members":{
@@ -3001,6 +3050,13 @@
       "max":170,
       "min":1,
       "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:([a-z]{2}(-gov)?-[a-z]+-\\d{1}):(\\d{12}):function:([a-zA-Z0-9-_.]+)(:(\\$LATEST|[a-zA-Z0-9-]+))?"
+    },
+    "LambdaInterceptorConfiguration":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"LambdaFunctionArn"}
+      }
     },
     "LifecycleConfiguration":{
       "type":"structure",
@@ -4674,6 +4730,7 @@
         "authorizerType":{"shape":"AuthorizerType"},
         "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "interceptorConfigurations":{"shape":"GatewayInterceptorConfigurations"},
         "exceptionLevel":{"shape":"ExceptionLevel"}
       }
     },
@@ -4705,6 +4762,7 @@
         "authorizerType":{"shape":"AuthorizerType"},
         "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "interceptorConfigurations":{"shape":"GatewayInterceptorConfigurations"},
         "workloadIdentityDetails":{"shape":"WorkloadIdentityDetails"},
         "exceptionLevel":{"shape":"ExceptionLevel"}
       }

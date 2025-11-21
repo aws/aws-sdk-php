@@ -264,7 +264,9 @@
         {"shape":"InvalidRetentionPeriodFault"},
         {"shape":"Ipv6CidrBlockNotFoundFault"},
         {"shape":"UnsupportedOperationFault"},
-        {"shape":"RedshiftIdcApplicationNotExistsFault"}
+        {"shape":"RedshiftIdcApplicationNotExistsFault"},
+        {"shape":"DependentServiceUnavailableFault"},
+        {"shape":"DependentServiceAccessDeniedFault"}
       ]
     },
     "CreateClusterParameterGroup":{
@@ -2039,6 +2041,27 @@
         {"shape":"UnsupportedOperationFault"}
       ]
     },
+    "ModifyLakehouseConfiguration":{
+      "name":"ModifyLakehouseConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyLakehouseConfigurationMessage"},
+      "output":{
+        "shape":"LakehouseConfiguration",
+        "resultWrapper":"ModifyLakehouseConfigurationResult"
+      },
+      "errors":[
+        {"shape":"ClusterNotFoundFault"},
+        {"shape":"InvalidClusterStateFault"},
+        {"shape":"UnsupportedOperationFault"},
+        {"shape":"UnauthorizedOperation"},
+        {"shape":"RedshiftIdcApplicationNotExistsFault"},
+        {"shape":"DependentServiceUnavailableFault"},
+        {"shape":"DependentServiceAccessDeniedFault"}
+      ]
+    },
     "ModifyRedshiftIdcApplication":{
       "name":"ModifyRedshiftIdcApplication",
       "http":{
@@ -2321,6 +2344,8 @@
         {"shape":"DependentServiceUnavailableFault"},
         {"shape":"ReservedNodeAlreadyExistsFault"},
         {"shape":"UnsupportedOperationFault"},
+        {"shape":"RedshiftIdcApplicationNotExistsFault"},
+        {"shape":"DependentServiceAccessDeniedFault"},
         {"shape":"Ipv6CidrBlockNotFoundFault"}
       ]
     },
@@ -2527,6 +2552,13 @@
         "restore-cluster",
         "recommend-node-config",
         "resize-cluster"
+      ]
+    },
+    "ApplicationType":{
+      "type":"string",
+      "enum":[
+        "None",
+        "Lakehouse"
       ]
     },
     "AquaConfiguration":{
@@ -2862,6 +2894,12 @@
         "ClusterIdentifier":{"shape":"String"}
       }
     },
+    "CatalogNameString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-z0-9_-]*[a-z]+[a-z0-9_-]*$"
+    },
     "CertificateAssociation":{
       "type":"structure",
       "members":{
@@ -2938,7 +2976,9 @@
         "MasterPasswordSecretKmsKeyId":{"shape":"String"},
         "IpAddressType":{"shape":"String"},
         "MultiAZ":{"shape":"String"},
-        "MultiAZSecondary":{"shape":"SecondaryClusterInfo"}
+        "MultiAZSecondary":{"shape":"SecondaryClusterInfo"},
+        "LakehouseRegistrationStatus":{"shape":"String"},
+        "CatalogArn":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -3378,6 +3418,13 @@
       },
       "exception":true
     },
+    "Connect":{
+      "type":"structure",
+      "required":["Authorization"],
+      "members":{
+        "Authorization":{"shape":"ServiceAuthorization"}
+      }
+    },
     "ConsumerIdentifierList":{
       "type":"list",
       "member":{"shape":"String"},
@@ -3477,7 +3524,8 @@
         "MasterPasswordSecretKmsKeyId":{"shape":"String"},
         "IpAddressType":{"shape":"String"},
         "MultiAZ":{"shape":"BooleanOptional"},
-        "RedshiftIdcApplicationArn":{"shape":"String"}
+        "RedshiftIdcApplicationArn":{"shape":"String"},
+        "CatalogName":{"shape":"CatalogNameString"}
       }
     },
     "CreateClusterParameterGroupMessage":{
@@ -3695,6 +3743,7 @@
         "IamRoleArn":{"shape":"String"},
         "AuthorizedTokenIssuerList":{"shape":"AuthorizedTokenIssuerList"},
         "ServiceIntegrations":{"shape":"ServiceIntegrationList"},
+        "ApplicationType":{"shape":"ApplicationType"},
         "Tags":{"shape":"TagList"},
         "SsoTagKeys":{"shape":"TagKeyList"}
       }
@@ -5795,6 +5844,29 @@
       "type":"list",
       "member":{"shape":"LakeFormationScopeUnion"}
     },
+    "LakehouseConfiguration":{
+      "type":"structure",
+      "members":{
+        "ClusterIdentifier":{"shape":"String"},
+        "LakehouseIdcApplicationArn":{"shape":"String"},
+        "LakehouseRegistrationStatus":{"shape":"String"},
+        "CatalogArn":{"shape":"String"}
+      }
+    },
+    "LakehouseIdcRegistration":{
+      "type":"string",
+      "enum":[
+        "Associate",
+        "Disassociate"
+      ]
+    },
+    "LakehouseRegistration":{
+      "type":"string",
+      "enum":[
+        "Register",
+        "Deregister"
+      ]
+    },
     "LimitExceededFault":{
       "type":"structure",
       "members":{},
@@ -6095,6 +6167,18 @@
         "IntegrationArn":{"shape":"IntegrationArn"},
         "Description":{"shape":"IntegrationDescription"},
         "IntegrationName":{"shape":"IntegrationName"}
+      }
+    },
+    "ModifyLakehouseConfigurationMessage":{
+      "type":"structure",
+      "required":["ClusterIdentifier"],
+      "members":{
+        "ClusterIdentifier":{"shape":"String"},
+        "LakehouseRegistration":{"shape":"LakehouseRegistration"},
+        "CatalogName":{"shape":"CatalogNameString"},
+        "LakehouseIdcRegistration":{"shape":"LakehouseIdcRegistration"},
+        "LakehouseIdcApplicationArn":{"shape":"String"},
+        "DryRun":{"shape":"BooleanOptional"}
       }
     },
     "ModifyRedshiftIdcApplicationMessage":{
@@ -6591,6 +6675,7 @@
         "IdcOnboardStatus":{"shape":"String"},
         "AuthorizedTokenIssuerList":{"shape":"AuthorizedTokenIssuerList"},
         "ServiceIntegrations":{"shape":"ServiceIntegrationList"},
+        "ApplicationType":{"shape":"ApplicationType"},
         "Tags":{"shape":"TagList"},
         "SsoTagKeys":{"shape":"TagKeyList"}
       },
@@ -6645,6 +6730,17 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "RedshiftScopeUnion":{
+      "type":"structure",
+      "members":{
+        "Connect":{"shape":"Connect"}
+      },
+      "union":true
+    },
+    "RedshiftServiceIntegrations":{
+      "type":"list",
+      "member":{"shape":"RedshiftScopeUnion"}
     },
     "ReferenceLink":{
       "type":"structure",
@@ -6999,7 +7095,9 @@
         "ManageMasterPassword":{"shape":"BooleanOptional"},
         "MasterPasswordSecretKmsKeyId":{"shape":"String"},
         "IpAddressType":{"shape":"String"},
-        "MultiAZ":{"shape":"BooleanOptional"}
+        "MultiAZ":{"shape":"BooleanOptional"},
+        "CatalogName":{"shape":"CatalogNameString"},
+        "RedshiftIdcApplicationArn":{"shape":"String"}
       }
     },
     "RestoreFromClusterSnapshotResult":{
@@ -7366,7 +7464,8 @@
       "type":"structure",
       "members":{
         "LakeFormation":{"shape":"LakeFormationServiceIntegrations"},
-        "S3AccessGrants":{"shape":"S3AccessGrantsServiceIntegrations"}
+        "S3AccessGrants":{"shape":"S3AccessGrantsServiceIntegrations"},
+        "Redshift":{"shape":"RedshiftServiceIntegrations"}
       },
       "union":true
     },

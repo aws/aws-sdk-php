@@ -490,6 +490,24 @@
       ],
       "idempotent":true
     },
+    "DeleteEnforcedGuardrailConfiguration":{
+      "name":"DeleteEnforcedGuardrailConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/enforcedGuardrailsConfiguration/{configId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteEnforcedGuardrailConfigurationRequest"},
+      "output":{"shape":"DeleteEnforcedGuardrailConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "DeleteFoundationModelAgreement":{
       "name":"DeleteFoundationModelAgreement",
       "http":{
@@ -1208,6 +1226,24 @@
       ],
       "readonly":true
     },
+    "ListEnforcedGuardrailsConfiguration":{
+      "name":"ListEnforcedGuardrailsConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/enforcedGuardrailsConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"ListEnforcedGuardrailsConfigurationRequest"},
+      "output":{"shape":"ListEnforcedGuardrailsConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "readonly":true
+    },
     "ListEvaluationJobs":{
       "name":"ListEvaluationJobs",
       "http":{
@@ -1449,6 +1485,25 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
       ]
+    },
+    "PutEnforcedGuardrailConfiguration":{
+      "name":"PutEnforcedGuardrailConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/enforcedGuardrailsConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"PutEnforcedGuardrailConfigurationRequest"},
+      "output":{"shape":"PutEnforcedGuardrailConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
     },
     "PutModelInvocationLoggingConfiguration":{
       "name":"PutModelInvocationLoggingConfiguration",
@@ -1757,6 +1812,44 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "AccountEnforcedGuardrailConfigurationId":{
+      "type":"string",
+      "pattern":"[a-z0-9]+"
+    },
+    "AccountEnforcedGuardrailInferenceInputConfiguration":{
+      "type":"structure",
+      "required":[
+        "guardrailIdentifier",
+        "guardrailVersion",
+        "inputTags"
+      ],
+      "members":{
+        "guardrailIdentifier":{"shape":"GuardrailIdentifier"},
+        "guardrailVersion":{"shape":"GuardrailNumericalVersion"},
+        "inputTags":{"shape":"InputTags"}
+      }
+    },
+    "AccountEnforcedGuardrailOutputConfiguration":{
+      "type":"structure",
+      "members":{
+        "configId":{"shape":"AccountEnforcedGuardrailConfigurationId"},
+        "guardrailArn":{"shape":"GuardrailArn"},
+        "guardrailId":{"shape":"GuardrailId"},
+        "inputTags":{"shape":"InputTags"},
+        "guardrailVersion":{"shape":"GuardrailNumericalVersion"},
+        "createdAt":{"shape":"Timestamp"},
+        "createdBy":{"shape":"String"},
+        "updatedAt":{"shape":"Timestamp"},
+        "updatedBy":{"shape":"String"},
+        "owner":{"shape":"ConfigurationOwner"}
+      }
+    },
+    "AccountEnforcedGuardrailsOutputConfiguration":{
+      "type":"list",
+      "member":{"shape":"AccountEnforcedGuardrailOutputConfiguration"},
+      "max":1,
+      "min":1
     },
     "AccountId":{
       "type":"string",
@@ -3157,6 +3250,10 @@
         "SixMonths"
       ]
     },
+    "ConfigurationOwner":{
+      "type":"string",
+      "enum":["ACCOUNT"]
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -3933,6 +4030,21 @@
       }
     },
     "DeleteCustomModelResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteEnforcedGuardrailConfigurationRequest":{
+      "type":"structure",
+      "required":["configId"],
+      "members":{
+        "configId":{
+          "shape":"AccountEnforcedGuardrailConfigurationId",
+          "location":"uri",
+          "locationName":"configId"
+        }
+      }
+    },
+    "DeleteEnforcedGuardrailConfigurationResponse":{
       "type":"structure",
       "members":{}
     },
@@ -6417,6 +6529,13 @@
       "type":"list",
       "member":{"shape":"InferenceType"}
     },
+    "InputTags":{
+      "type":"string",
+      "enum":[
+        "HONOR",
+        "IGNORE"
+      ]
+    },
     "InstanceCount":{
       "type":"integer",
       "box":true,
@@ -6802,6 +6921,24 @@
       "members":{
         "nextToken":{"shape":"PaginationToken"},
         "modelSummaries":{"shape":"CustomModelSummaryList"}
+      }
+    },
+    "ListEnforcedGuardrailsConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListEnforcedGuardrailsConfigurationResponse":{
+      "type":"structure",
+      "required":["guardrailsConfig"],
+      "members":{
+        "guardrailsConfig":{"shape":"AccountEnforcedGuardrailsOutputConfiguration"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListEvaluationJobsRequest":{
@@ -8031,6 +8168,22 @@
         "commitmentExpirationTime":{"shape":"Timestamp"},
         "creationTime":{"shape":"Timestamp"},
         "lastModifiedTime":{"shape":"Timestamp"}
+      }
+    },
+    "PutEnforcedGuardrailConfigurationRequest":{
+      "type":"structure",
+      "required":["guardrailInferenceConfig"],
+      "members":{
+        "configId":{"shape":"AccountEnforcedGuardrailConfigurationId"},
+        "guardrailInferenceConfig":{"shape":"AccountEnforcedGuardrailInferenceInputConfiguration"}
+      }
+    },
+    "PutEnforcedGuardrailConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "configId":{"shape":"AccountEnforcedGuardrailConfigurationId"},
+        "updatedAt":{"shape":"Timestamp"},
+        "updatedBy":{"shape":"String"}
       }
     },
     "PutModelInvocationLoggingConfigurationRequest":{

@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **odb** service.
  * @method \Aws\Result acceptMarketplaceRegistration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise acceptMarketplaceRegistrationAsync(array $args = [])
+ * @method \Aws\Result associateIamRoleToResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise associateIamRoleToResourceAsync(array $args = [])
  * @method \Aws\Result createCloudAutonomousVmCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createCloudAutonomousVmClusterAsync(array $args = [])
  * @method \Aws\Result createCloudExadataInfrastructure(array $args = [])
@@ -27,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteOdbNetworkAsync(array $args = [])
  * @method \Aws\Result deleteOdbPeeringConnection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteOdbPeeringConnectionAsync(array $args = [])
+ * @method \Aws\Result disassociateIamRoleFromResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociateIamRoleFromResourceAsync(array $args = [])
  * @method \Aws\Result getCloudAutonomousVmCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCloudAutonomousVmClusterAsync(array $args = [])
  * @method \Aws\Result getCloudExadataInfrastructure(array $args = [])

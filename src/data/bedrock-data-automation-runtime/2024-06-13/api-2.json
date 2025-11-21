@@ -259,7 +259,10 @@
         "status":{"shape":"AutomationJobStatus"},
         "errorType":{"shape":"String"},
         "errorMessage":{"shape":"String"},
-        "outputConfiguration":{"shape":"OutputConfiguration"}
+        "outputConfiguration":{"shape":"OutputConfiguration"},
+        "jobSubmissionTime":{"shape":"SyntheticTimestamp_date_time"},
+        "jobCompletionTime":{"shape":"SyntheticTimestamp_date_time"},
+        "jobDurationInSeconds":{"shape":"Integer"}
       }
     },
     "IdempotencyToken":{
@@ -275,6 +278,10 @@
         "s3Uri":{"shape":"S3Uri"},
         "assetProcessingConfiguration":{"shape":"AssetProcessingConfiguration"}
       }
+    },
+    "Integer":{
+      "type":"integer",
+      "box":true
     },
     "InternalServerException":{
       "type":"structure",
@@ -437,6 +444,10 @@
         "bytes":{"shape":"Blob"},
         "s3Uri":{"shape":"S3Uri"}
       }
+    },
+    "SyntheticTimestamp_date_time":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
     },
     "Tag":{
       "type":"structure",

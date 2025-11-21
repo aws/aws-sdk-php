@@ -31,6 +31,12 @@
         "ToolChoice$any": "<p>The model must request at least one tool (no text is generated).</p>"
       }
     },
+    "AppliedGuardrailDetails": {
+      "base": "<p>Details about the specific guardrail that was applied during this assessment, including its identifier, version, ARN, origin, and ownership information.</p>",
+      "refs": {
+        "GuardrailAssessment$appliedGuardrailDetails": null
+      }
+    },
     "ApplyGuardrailRequest": {
       "base": null,
       "refs": {}
@@ -552,6 +558,12 @@
         "ApplyGuardrailResponse$action": "<p>The action taken in the response from the guardrail.</p>"
       }
     },
+    "GuardrailArn": {
+      "base": null,
+      "refs": {
+        "AppliedGuardrailDetails$guardrailArn": "<p>The ARN of the guardrail that was applied.</p>"
+      }
+    },
     "GuardrailAssessment": {
       "base": "<p>A behavior assessment of the guardrail policies used in a call to the Converse API. </p>",
       "refs": {
@@ -982,6 +994,12 @@
         "GuardrailWordPolicyAssessment$customWords": "<p>Custom words in the assessment.</p>"
       }
     },
+    "GuardrailId": {
+      "base": null,
+      "refs": {
+        "AppliedGuardrailDetails$guardrailId": "<p>The unique ID of the guardrail that was applied.</p>"
+      }
+    },
     "GuardrailIdentifier": {
       "base": null,
       "refs": {
@@ -1046,6 +1064,18 @@
         "GuardrailManagedWord$type": "<p>The type for the managed word.</p>"
       }
     },
+    "GuardrailOrigin": {
+      "base": null,
+      "refs": {
+        "GuardrailOriginList$member": null
+      }
+    },
+    "GuardrailOriginList": {
+      "base": null,
+      "refs": {
+        "AppliedGuardrailDetails$guardrailOrigin": "<p>The origin of how the guardrail was applied. This can be either requested at the API level or enforced at the account or organization level as a default guardrail.</p>"
+      }
+    },
     "GuardrailOutputContent": {
       "base": "<p>The output content produced by the guardrail.</p>",
       "refs": {
@@ -1069,6 +1099,12 @@
       "refs": {
         "GuardrailOutputContent$text": "<p>The specific text for the output content produced by the guardrail.</p>",
         "ModelOutputs$member": null
+      }
+    },
+    "GuardrailOwnership": {
+      "base": null,
+      "refs": {
+        "AppliedGuardrailDetails$guardrailOwnership": "<p>The ownership type of the guardrail, indicating whether it is owned by the requesting account or is a cross-account guardrail shared from another AWS account.</p>"
       }
     },
     "GuardrailPiiEntityFilter": {
@@ -1216,6 +1252,7 @@
     "GuardrailVersion": {
       "base": null,
       "refs": {
+        "AppliedGuardrailDetails$guardrailVersion": "<p>The version of the guardrail that was applied.</p>",
         "ApplyGuardrailRequest$guardrailVersion": "<p>The guardrail version used in the request to apply the guardrail.</p>",
         "GuardrailConfiguration$guardrailVersion": "<p>The version of the guardrail.</p>",
         "GuardrailStreamConfiguration$guardrailVersion": "<p>The version of the guardrail.</p>",

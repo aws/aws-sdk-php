@@ -345,7 +345,7 @@
     "AuthorizerType": {
       "base": null,
       "refs": {
-        "CreateGatewayRequest$authorizerType": "<p>The type of authorizer to use for the gateway.</p> <ul> <li> <p> <code>CUSTOM_JWT</code> - Authorize with a bearer token.</p> </li> <li> <p> <code>AWS_IAM</code> - Authorize with your Amazon Web Services IAM credentials.</p> </li> </ul>",
+        "CreateGatewayRequest$authorizerType": "<p>The type of authorizer to use for the gateway.</p> <ul> <li> <p> <code>CUSTOM_JWT</code> - Authorize with a bearer token.</p> </li> <li> <p> <code>AWS_IAM</code> - Authorize with your Amazon Web Services IAM credentials.</p> </li> <li> <p> <code>NONE</code> - No authorization</p> </li> </ul>",
         "CreateGatewayResponse$authorizerType": "<p>The type of authorizer used by the gateway.</p>",
         "GatewaySummary$authorizerType": "<p>The type of authorizer used by the gateway.</p>",
         "GetGatewayResponse$authorizerType": "<p>Authorizer type for the gateway.</p>",
@@ -364,6 +364,7 @@
       "refs": {
         "BrowserSigningConfigInput$enabled": "<p>Specifies whether browser signing is enabled. When enabled, the browser will cryptographically sign HTTP requests to identify itself as an AI agent to bot control vendors.</p>",
         "BrowserSigningConfigOutput$enabled": "<p>Indicates whether browser signing is currently enabled for cryptographic agent identification using HTTP message signatures.</p>",
+        "InterceptorInputConfiguration$passRequestHeaders": "<p>Indicates whether to pass request headers as input into the interceptor. When set to true, request headers will be passed.</p>",
         "RecordingConfig$enabled": "<p>Indicates whether recording is enabled for the browser. When set to true, browser sessions are recorded.</p>"
       }
     },
@@ -1083,6 +1084,34 @@
         "UpdateGatewayTargetRequest$gatewayIdentifier": "<p>The unique identifier of the gateway associated with the target.</p>"
       }
     },
+    "GatewayInterceptionPoint": {
+      "base": null,
+      "refs": {
+        "GatewayInterceptionPoints$member": null
+      }
+    },
+    "GatewayInterceptionPoints": {
+      "base": null,
+      "refs": {
+        "GatewayInterceptorConfiguration$interceptionPoints": "<p>The supported points of interception. This field specifies which points during the gateway invocation to invoke the interceptor</p>"
+      }
+    },
+    "GatewayInterceptorConfiguration": {
+      "base": "<p>The configuration for an interceptor on a gateway. This structure defines settings for an interceptor that will be invoked during the invocation of the gateway.</p>",
+      "refs": {
+        "GatewayInterceptorConfigurations$member": null
+      }
+    },
+    "GatewayInterceptorConfigurations": {
+      "base": null,
+      "refs": {
+        "CreateGatewayRequest$interceptorConfigurations": "<p>A list of configuration settings for a gateway interceptor. Gateway interceptors allow custom code to be invoked during gateway invocations.</p>",
+        "CreateGatewayResponse$interceptorConfigurations": "<p>The list of interceptor configurations for the created gateway.</p>",
+        "GetGatewayResponse$interceptorConfigurations": "<p>The interceptors configured on the gateway.</p>",
+        "UpdateGatewayRequest$interceptorConfigurations": "<p>The updated interceptor configurations for the gateway.</p>",
+        "UpdateGatewayResponse$interceptorConfigurations": "<p>The updated interceptor configurations for the gateway.</p>"
+      }
+    },
     "GatewayMaxResults": {
       "base": null,
       "refs": {
@@ -1315,6 +1344,18 @@
         "TokenBasedTrigger$tokenCount": "<p>Number of tokens that trigger memory processing.</p>"
       }
     },
+    "InterceptorConfiguration": {
+      "base": "<p>The interceptor configuration.</p>",
+      "refs": {
+        "GatewayInterceptorConfiguration$interceptor": "<p>The infrastructure settings of an interceptor configuration. This structure defines how the interceptor can be invoked.</p>"
+      }
+    },
+    "InterceptorInputConfiguration": {
+      "base": "<p>The input configuration of the interceptor.</p>",
+      "refs": {
+        "GatewayInterceptorConfiguration$inputConfiguration": "<p>The configuration for the input of the interceptor. This field specifies how the input to the interceptor is constructed</p>"
+      }
+    },
     "InternalServerException": {
       "base": "<p>This exception is thrown if there was an unexpected error during processing of request</p>",
       "refs": {}
@@ -1372,7 +1413,14 @@
     "LambdaFunctionArn": {
       "base": null,
       "refs": {
+        "LambdaInterceptorConfiguration$arn": "<p>The arn of the lambda function to be invoked for the interceptor.</p>",
         "McpLambdaTargetConfiguration$lambdaArn": "<p>The Amazon Resource Name (ARN) of the Lambda function. This function is invoked by the gateway to communicate with the target.</p>"
+      }
+    },
+    "LambdaInterceptorConfiguration": {
+      "base": "<p>The lambda configuration for the interceptor</p>",
+      "refs": {
+        "InterceptorConfiguration$lambda": "<p>The details of the lambda function used for the interceptor.</p>"
       }
     },
     "LifecycleConfiguration": {

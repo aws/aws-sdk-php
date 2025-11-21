@@ -1872,7 +1872,7 @@
       "type":"string",
       "max":350,
       "min":0,
-      "pattern":"$|arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-])+:([a-z]{2}(-gov)?-[a-z]+-\\d{1})?:(\\d{12})?:(.*)"
+      "pattern":"$|kafka://([^.]([a-zA-Z0-9\\-_.]{0,248}))|arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-])+:((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1})?:(\\d{12})?:(.*)"
     },
     "DestinationConfig":{
       "type":"structure",
@@ -3866,8 +3866,15 @@
       "type":"structure",
       "members":{
         "MinimumPollers":{"shape":"MinimumNumberOfPollers"},
-        "MaximumPollers":{"shape":"MaximumNumberOfPollers"}
+        "MaximumPollers":{"shape":"MaximumNumberOfPollers"},
+        "PollerGroupName":{"shape":"ProvisionedPollerGroupName"}
       }
+    },
+    "ProvisionedPollerGroupName":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"[a-zA-Z0-9-_]*"
     },
     "PublishLayerVersionRequest":{
       "type":"structure",

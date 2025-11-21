@@ -3,6 +3,7 @@
   "service": "<p>Oracle Database@Amazon Web Services is an offering that enables you to access Oracle Exadata infrastructure managed by Oracle Cloud Infrastructure (OCI) inside Amazon Web Services data centers. You can migrate your Oracle Exadata workloads, establish low-latency connectivity with applications running on Amazon Web Services, and integrate with Amazon Web Services services. For example, you can run application servers in a Virtual Private Cloud (VPC) and access an Oracle Exadata system running in Oracle Database@Amazon Web Services. You can get started with Oracle Database@Amazon Web Services by using the familiar Amazon Web Services Management Console, APIs, or CLI.</p> <p>This interface reference for Oracle Database@Amazon Web Services contains documentation for a programming or command line interface that you can use to manage Oracle Database@Amazon Web Services. Oracle Database@Amazon Web Services is asynchronous, which means that some interfaces might require techniques such as polling or callback functions to determine when a command has been applied. The reference structure is as follows.</p> <p> <b>Oracle Database@Amazon Web Services API Reference</b> </p> <ul> <li> <p>For the alphabetical list of API actions, see <a href=\"https://docs.aws.amazon.com/odb/latest/APIReference/API_Operations.html\">API Actions</a>.</p> </li> <li> <p>For the alphabetical list of data types, see <a href=\"https://docs.aws.amazon.com/odb/latest/APIReference/API_Types.html\">Data Types</a>.</p> </li> <li> <p>For a list of common query parameters, see <a href=\"https://docs.aws.amazon.com/odb/latest/APIReference/CommonParameters.html\">Common Parameters</a>.</p> </li> <li> <p>For descriptions of the error codes, see <a href=\"https://docs.aws.amazon.com/odb/latest/APIReference/CommonErrors.html\">Common Errors</a>.</p> </li> </ul>",
   "operations": {
     "AcceptMarketplaceRegistration": "<p>Registers the Amazon Web Services Marketplace token for your Amazon Web Services account to activate your Oracle Database@Amazon Web Services subscription.</p>",
+    "AssociateIamRoleToResource": "<p>Associates an Amazon Web Services Identity and Access Management (IAM) service role with a specified resource to enable Amazon Web Services service integration.</p>",
     "CreateCloudAutonomousVmCluster": "<p>Creates a new Autonomous VM cluster in the specified Exadata infrastructure.</p>",
     "CreateCloudExadataInfrastructure": "<p>Creates an Exadata infrastructure.</p>",
     "CreateCloudVmCluster": "<p>Creates a VM cluster on the specified Exadata infrastructure.</p>",
@@ -13,6 +14,7 @@
     "DeleteCloudVmCluster": "<p>Deletes the specified VM cluster.</p>",
     "DeleteOdbNetwork": "<p>Deletes the specified ODB network.</p>",
     "DeleteOdbPeeringConnection": "<p>Deletes an ODB peering connection.</p> <p>When you delete an ODB peering connection, the underlying VPC peering connection is also deleted.</p>",
+    "DisassociateIamRoleFromResource": "<p>Disassociates an Amazon Web Services Identity and Access Management (IAM) service role from a specified resource to disable Amazon Web Services service integration.</p>",
     "GetCloudAutonomousVmCluster": "<p>Gets information about a specific Autonomous VM cluster.</p>",
     "GetCloudExadataInfrastructure": "<p>Returns information about the specified Exadata infrastructure.</p>",
     "GetCloudExadataInfrastructureUnallocatedResources": "<p>Retrieves information about unallocated resources in a specified Cloud Exadata Infrastructure.</p>",
@@ -58,12 +60,30 @@
       "refs": {
         "CreateOdbNetworkInput$s3Access": "<p>Specifies the configuration for Amazon S3 access from the ODB network.</p>",
         "CreateOdbNetworkInput$zeroEtlAccess": "<p>Specifies the configuration for Zero-ETL access from the ODB network.</p>",
+        "CreateOdbNetworkInput$stsAccess": "<p>The Amazon Web Services Security Token Service (STS) access configuration for the ODB network.</p>",
+        "CreateOdbNetworkInput$kmsAccess": "<p>The Amazon Web Services Key Management Service (KMS) access configuration for the ODB network.</p>",
         "UpdateOdbNetworkInput$s3Access": "<p>Specifies the updated configuration for Amazon S3 access from the ODB network.</p>",
-        "UpdateOdbNetworkInput$zeroEtlAccess": "<p>Specifies the updated configuration for Zero-ETL access from the ODB network.</p>"
+        "UpdateOdbNetworkInput$zeroEtlAccess": "<p>Specifies the updated configuration for Zero-ETL access from the ODB network.</p>",
+        "UpdateOdbNetworkInput$stsAccess": "<p>The Amazon Web Services Security Token Service (STS) access configuration for the ODB network.</p>",
+        "UpdateOdbNetworkInput$kmsAccess": "<p>The Amazon Web Services Key Management Service (KMS) access configuration for the ODB network.</p>"
       }
     },
     "AccessDeniedException": {
       "base": "<p>You don't have sufficient access to perform this action. Make sure you have the required permissions and try again.</p>",
+      "refs": {}
+    },
+    "AssociateIamRoleToResourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateIamRoleToResourceInputResourceArnString": {
+      "base": null,
+      "refs": {
+        "AssociateIamRoleToResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the target resource to associate with the IAM service role.</p>"
+      }
+    },
+    "AssociateIamRoleToResourceOutput": {
+      "base": null,
       "refs": {}
     },
     "AutonomousVirtualMachineList": {
@@ -95,6 +115,7 @@
         "DataCollectionOptions$isIncidentLogsEnabled": "<p>Indicates whether incident logs are enabled for the cloud VM cluster.</p>",
         "DbSystemShapeSummary$areServerTypesSupported": "<p>Indicates whether the hardware system model supports configurable database and server storage types.</p>",
         "DeleteOdbNetworkInput$deleteAssociatedResources": "<p>Specifies whether to delete associated OCI networking resources along with the ODB network.</p>",
+        "InitializeServiceInput$ociIdentityDomain": "<p>The Oracle Cloud Infrastructure (OCI) identity domain configuration for service initialization.</p>",
         "MaintenanceWindow$isCustomActionTimeoutEnabled": "<p>Indicates whether custom action timeout is enabled for the maintenance window.</p>",
         "MaintenanceWindow$skipRu": "<p>Indicates whether to skip release updates during maintenance.</p>"
       }
@@ -415,6 +436,18 @@
       "base": null,
       "refs": {}
     },
+    "CrossRegionS3RestoreSourcesAccess": {
+      "base": "<p>The configuration access for the cross-Region Amazon S3 database restore source for the ODB network.</p>",
+      "refs": {
+        "CrossRegionS3RestoreSourcesAccessList$member": null
+      }
+    },
+    "CrossRegionS3RestoreSourcesAccessList": {
+      "base": null,
+      "refs": {
+        "ManagedServices$crossRegionS3RestoreSourcesAccess": "<p>The access configuration for the cross-Region Amazon S3 database restore source.</p>"
+      }
+    },
     "CustomerContact": {
       "base": "<p>A contact to receive notification from Oracle about maintenance updates for a specific Exadata infrastructure.</p>",
       "refs": {
@@ -591,6 +624,20 @@
       "base": null,
       "refs": {}
     },
+    "DisassociateIamRoleFromResourceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateIamRoleFromResourceInputResourceArnString": {
+      "base": null,
+      "refs": {
+        "DisassociateIamRoleFromResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the target resource to disassociate from the IAM service role.</p>"
+      }
+    },
+    "DisassociateIamRoleFromResourceOutput": {
+      "base": null,
+      "refs": {}
+    },
     "DiskRedundancy": {
       "base": null,
       "refs": {
@@ -746,6 +793,25 @@
         "MaintenanceWindow$hoursOfDay": "<p>The hours of the day when maintenance can be performed.</p>"
       }
     },
+    "IamRole": {
+      "base": "<p>Information about an Amazon Web Services Identity and Access Management (IAM) service role associated with a resource.</p>",
+      "refs": {
+        "IamRoleList$member": null
+      }
+    },
+    "IamRoleList": {
+      "base": null,
+      "refs": {
+        "CloudVmCluster$iamRoles": "<p>The Amazon Web Services Identity and Access Management (IAM) service roles associated with the VM cluster.</p>",
+        "CloudVmClusterSummary$iamRoles": "<p>The Amazon Web Services Identity and Access Management (IAM) service roles associated with the VM cluster in the summary information.</p>"
+      }
+    },
+    "IamRoleStatus": {
+      "base": null,
+      "refs": {
+        "IamRole$status": "<p>The current status of the IAM service role.</p>"
+      }
+    },
     "InitializeServiceInput": {
       "base": null,
       "refs": {}
@@ -888,6 +954,12 @@
       "base": null,
       "refs": {
         "ExadataIormConfig$lifecycleState": "<p>The current state of IORM configuration for the Exadata DB system.</p>"
+      }
+    },
+    "KmsAccess": {
+      "base": "<p>Configuration for Amazon Web Services Key Management Service (KMS) access from the ODB network.</p>",
+      "refs": {
+        "ManagedServices$kmsAccess": "<p>The Amazon Web Services Key Management Service (KMS) access configuration for managed services.</p>"
       }
     },
     "LicenseModel": {
@@ -1186,8 +1258,11 @@
     "ManagedResourceStatus": {
       "base": null,
       "refs": {
+        "CrossRegionS3RestoreSourcesAccess$status": "<p>The current status of the cross-Region S3 restore access configuration.</p>",
+        "KmsAccess$status": "<p>The current status of the KMS access configuration.</p>",
         "ManagedS3BackupAccess$status": "<p>The status of the managed Amazon S3 backup access.</p>",
         "S3Access$status": "<p>The status of the Amazon S3 access.</p>",
+        "StsAccess$status": "<p>The current status of the STS access configuration.</p>",
         "ZeroEtlAccess$status": "<p>The status of the Zero-ETL access.</p>"
       }
     },
@@ -1245,6 +1320,12 @@
       "refs": {
         "OdbNetwork$ociDnsForwardingConfigs": "<p>The DNS resolver endpoint in OCI for forwarding DNS queries for the ociPrivateZone domain.</p>",
         "OdbNetworkSummary$ociDnsForwardingConfigs": "<p>The DNS resolver endpoint in OCI for forwarding DNS queries for the ociPrivateZone domain.</p>"
+      }
+    },
+    "OciIdentityDomain": {
+      "base": "<p>Information about an Oracle Cloud Infrastructure (OCI) identity domain configuration.</p>",
+      "refs": {
+        "GetOciOnboardingStatusOutput$ociIdentityDomain": "<p>The Oracle Cloud Infrastructure (OCI) identity domain information in the onboarding status response.</p>"
       }
     },
     "OciOnboardingStatus": {
@@ -1411,7 +1492,11 @@
       "base": null,
       "refs": {
         "CreateOdbNetworkInput$s3PolicyDocument": "<p>Specifies the endpoint policy for Amazon S3 access from the ODB network.</p>",
-        "UpdateOdbNetworkInput$s3PolicyDocument": "<p>Specifies the updated endpoint policy for Amazon S3 access from the ODB network.</p>"
+        "CreateOdbNetworkInput$stsPolicyDocument": "<p>The STS policy document that defines permissions for token service usage within the ODB network.</p>",
+        "CreateOdbNetworkInput$kmsPolicyDocument": "<p>The KMS policy document that defines permissions for key usage within the ODB network.</p>",
+        "UpdateOdbNetworkInput$s3PolicyDocument": "<p>Specifies the updated endpoint policy for Amazon S3 access from the ODB network.</p>",
+        "UpdateOdbNetworkInput$stsPolicyDocument": "<p>The STS policy document that defines permissions for token service usage within the ODB network.</p>",
+        "UpdateOdbNetworkInput$kmsPolicyDocument": "<p>The KMS policy document that defines permissions for key usage within the ODB network.</p>"
       }
     },
     "PreferenceType": {
@@ -1558,6 +1643,7 @@
         "CreateOdbPeeringConnectionOutput$status": "<p>The status of the ODB peering connection.</p>",
         "DbServer$status": "<p>The current status of the database server.</p>",
         "DbServerSummary$status": "<p>The current status of the database server.</p>",
+        "OciIdentityDomain$status": "<p>The current status of the OCI identity domain.</p>",
         "OdbNetwork$status": "<p>The current status of the ODB network.</p>",
         "OdbNetworkSummary$status": "<p>The current status of the ODB network.</p>",
         "OdbPeeringConnection$status": "<p>The status of the ODB peering connection.</p>",
@@ -1571,6 +1657,14 @@
       "base": null,
       "refs": {
         "ListTagsForResourceResponse$tags": "<p>The list of tags applied to the resource.</p>"
+      }
+    },
+    "RoleArn": {
+      "base": null,
+      "refs": {
+        "AssociateIamRoleToResourceInput$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM service role to associate with the resource.</p>",
+        "DisassociateIamRoleFromResourceInput$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM service role to disassociate from the resource.</p>",
+        "IamRole$iamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM service role.</p>"
       }
     },
     "S3Access": {
@@ -1743,6 +1837,7 @@
         "CreateOdbPeeringConnectionOutput$displayName": "<p>The display name of the ODB peering connection.</p>",
         "CreateOdbPeeringConnectionOutput$statusReason": "<p>The reason for the current status of the ODB peering connection.</p>",
         "CreateOdbPeeringConnectionOutput$odbPeeringConnectionId": "<p>The unique identifier of the ODB peering connection.</p>",
+        "CrossRegionS3RestoreSourcesAccess$region": "<p>The Amazon Web Services Region for cross-Region S3 restore access.</p>",
         "DbIormConfig$dbName": "<p>The database name. For the default DbPlan, the dbName is <code>default</code>.</p>",
         "DbIormConfig$flashCacheLimit": "<p>The flash cache limit for this database. This value is internally configured based on the share value assigned to the database.</p>",
         "DbNode$statusReason": "<p>Additional information about the status of the DB node.</p>",
@@ -1797,7 +1892,10 @@
         "GetOciOnboardingStatusOutput$existingTenancyActivationLink": "<p>The existing OCI tenancy activation link for your Amazon Web Services account.</p>",
         "GetOciOnboardingStatusOutput$newTenancyActivationLink": "<p>A new OCI tenancy activation link for your Amazon Web Services account.</p>",
         "GiVersionSummary$version": "<p>The GI software version.</p>",
+        "IamRole$statusReason": "<p>Additional information about the current status of the IAM service role, if applicable.</p>",
         "InternalServerException$message": null,
+        "KmsAccess$domainName": "<p>The domain name for KMS access configuration.</p>",
+        "KmsAccess$kmsPolicyDocument": "<p>The KMS policy document that defines permissions for key usage.</p>",
         "ListAutonomousVirtualMachinesOutput$nextToken": "<p>The pagination token from which to continue listing.</p>",
         "ListCloudAutonomousVmClustersOutput$nextToken": "<p>The pagination token to continue listing from.</p>",
         "ListCloudExadataInfrastructuresOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
@@ -1810,6 +1908,11 @@
         "ListOdbPeeringConnectionsOutput$nextToken": "<p>The pagination token for the next page of ODB peering connections.</p>",
         "ListSystemVersionsOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "OciDnsForwardingConfig$ociDnsListenerIp": "<p>OCI DNS listener IP for custom DNS setup.</p>",
+        "OciIdentityDomain$ociIdentityDomainId": "<p>The unique identifier of the OCI identity domain.</p>",
+        "OciIdentityDomain$ociIdentityDomainResourceUrl": "<p>The resource URL for accessing the OCI identity domain.</p>",
+        "OciIdentityDomain$ociIdentityDomainUrl": "<p>The URL of the OCI identity domain.</p>",
+        "OciIdentityDomain$statusReason": "<p>Additional information about the current status of the OCI identity domain, if applicable.</p>",
+        "OciIdentityDomain$accountSetupCloudFormationUrl": "<p>The Amazon Web Services CloudFormation URL for setting up the account integration with the OCI identity domain.</p>",
         "OdbNetwork$displayName": "<p>The user-friendly name of the ODB network.</p>",
         "OdbNetwork$statusReason": "<p>Additional information about the current status of the ODB network.</p>",
         "OdbNetwork$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network.</p>",
@@ -1851,6 +1954,8 @@
         "StopDbNodeOutput$dbNodeId": "<p>The unique identifier of the DB node that was stopped.</p>",
         "StopDbNodeOutput$statusReason": "<p>Additional information about the status of the DB node after the stop operation.</p>",
         "StringList$member": null,
+        "StsAccess$domainName": "<p>The domain name for STS access configuration.</p>",
+        "StsAccess$stsPolicyDocument": "<p>The STS policy document that defines permissions for token service usage.</p>",
         "SystemVersionSummary$giVersion": "<p>The version of GI software.</p>",
         "SystemVersionSummary$shape": "<p>The Exadata hardware model.</p>",
         "ThrottlingException$message": null,
@@ -1883,6 +1988,8 @@
         "CreateCloudAutonomousVmClusterInput$dbServers": "<p>The list of database servers to be used for the Autonomous VM cluster.</p>",
         "CreateCloudVmClusterInput$sshPublicKeys": "<p>The public key portion of one or more key pairs used for SSH access to the VM cluster.</p>",
         "CreateCloudVmClusterInput$dbServers": "<p>The list of database servers for the VM cluster.</p>",
+        "CreateOdbNetworkInput$crossRegionS3RestoreSourcesToEnable": "<p>The cross-Region Amazon S3 restore sources to enable for the ODB network.</p>",
+        "CrossRegionS3RestoreSourcesAccess$ipv4Addresses": "<p>The IPv4 addresses allowed for cross-Region S3 restore access.</p>",
         "DbServer$vmClusterIds": "<p>The OCID of the VM clusters that are associated with the database server.</p>",
         "DbServer$autonomousVmClusterIds": "<p>The list of identifiers for the Autonomous VM clusters associated with this database server.</p>",
         "DbServer$autonomousVirtualMachineIds": "<p>The list of unique identifiers for the Autonomous VMs associated with this database server.</p>",
@@ -1890,14 +1997,32 @@
         "DbServerSummary$autonomousVmClusterIds": "<p>A list of identifiers for the Autonomous VM clusters.</p>",
         "DbServerSummary$autonomousVirtualMachineIds": "<p>A list of unique identifiers for the Autonomous VMs.</p>",
         "GetCloudExadataInfrastructureUnallocatedResourcesInput$dbServers": "<p>The database servers to include in the unallocated resources query.</p>",
+        "KmsAccess$ipv4Addresses": "<p>The IPv4 addresses allowed for KMS access.</p>",
         "ManagedS3BackupAccess$ipv4Addresses": "<p>The IPv4 addresses for the managed Amazon S3 backup access.</p>",
         "ManagedServices$managedServicesIpv4Cidrs": "<p>The IPv4 CIDR blocks for the managed services.</p>",
         "OdbNetwork$peeredCidrs": "<p>The list of CIDR ranges from the peered VPC that are allowed access to the ODB network.</p>",
         "OdbNetworkSummary$peeredCidrs": "<p>The list of CIDR ranges from the peered VPC that are allowed access to the ODB network.</p>",
         "S3Access$ipv4Addresses": "<p>The IPv4 addresses for the Amazon S3 access.</p>",
+        "StsAccess$ipv4Addresses": "<p>The IPv4 addresses allowed for STS access.</p>",
         "SystemVersionSummary$systemVersions": "<p>The Exadata system versions that are compatible with the specified Exadata shape and GI version.</p>",
         "UpdateOdbNetworkInput$peeredCidrsToBeAdded": "<p>The list of CIDR ranges from the peered VPC that allow access to the ODB network.</p>",
-        "UpdateOdbNetworkInput$peeredCidrsToBeRemoved": "<p>The list of CIDR ranges from the peered VPC to remove from the ODB network.</p>"
+        "UpdateOdbNetworkInput$peeredCidrsToBeRemoved": "<p>The list of CIDR ranges from the peered VPC to remove from the ODB network.</p>",
+        "UpdateOdbNetworkInput$crossRegionS3RestoreSourcesToEnable": "<p>The cross-Region Amazon S3 restore sources to enable for the ODB network.</p>",
+        "UpdateOdbNetworkInput$crossRegionS3RestoreSourcesToDisable": "<p>The cross-Region Amazon S3 restore sources to disable for the ODB network.</p>"
+      }
+    },
+    "StsAccess": {
+      "base": "<p>Configuration for Amazon Web Services Security Token Service (STS) access from the ODB network.</p>",
+      "refs": {
+        "ManagedServices$stsAccess": "<p>The Amazon Web Services Security Token Service (STS) access configuration for managed services.</p>"
+      }
+    },
+    "SupportedAwsIntegration": {
+      "base": null,
+      "refs": {
+        "AssociateIamRoleToResourceInput$awsIntegration": "<p>The Amazon Web Services integration configuration settings for the IAM service role association.</p>",
+        "DisassociateIamRoleFromResourceInput$awsIntegration": "<p>The Amazon Web Services integration configuration settings for the IAM service role disassociation.</p>",
+        "IamRole$awsIntegration": "<p>The Amazon Web Services integration configuration settings for the IAM service role.</p>"
       }
     },
     "SyntheticTimestamp_date_time": {

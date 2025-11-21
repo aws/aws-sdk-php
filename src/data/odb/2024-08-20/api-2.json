@@ -32,6 +32,23 @@
       ],
       "idempotent":true
     },
+    "AssociateIamRoleToResource":{
+      "name":"AssociateIamRoleToResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateIamRoleToResourceInput"},
+      "output":{"shape":"AssociateIamRoleToResourceOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "CreateCloudAutonomousVmCluster":{
       "name":"CreateCloudAutonomousVmCluster",
       "http":{
@@ -209,6 +226,23 @@
         {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
+    },
+    "DisassociateIamRoleFromResource":{
+      "name":"DisassociateIamRoleFromResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateIamRoleFromResourceInput"},
+      "output":{"shape":"DisassociateIamRoleFromResourceOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
     },
     "GetCloudAutonomousVmCluster":{
       "name":"GetCloudAutonomousVmCluster",
@@ -728,6 +762,29 @@
       },
       "exception":true
     },
+    "AssociateIamRoleToResourceInput":{
+      "type":"structure",
+      "required":[
+        "iamRoleArn",
+        "awsIntegration",
+        "resourceArn"
+      ],
+      "members":{
+        "iamRoleArn":{"shape":"RoleArn"},
+        "awsIntegration":{"shape":"SupportedAwsIntegration"},
+        "resourceArn":{"shape":"AssociateIamRoleToResourceInputResourceArnString"}
+      }
+    },
+    "AssociateIamRoleToResourceInputResourceArnString":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso-[a-z]?|aws-iso):odb:[a-z0-9-]+:\\d{12}:cloud-vm-cluster/[a-z0-9-_]+"
+    },
+    "AssociateIamRoleToResourceOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "AutonomousVirtualMachineList":{
       "type":"list",
       "member":{"shape":"AutonomousVirtualMachineSummary"}
@@ -1026,7 +1083,8 @@
         "vipIds":{"shape":"StringList"},
         "odbNetworkId":{"shape":"ResourceIdOrArn"},
         "percentProgress":{"shape":"Float"},
-        "computeModel":{"shape":"ComputeModel"}
+        "computeModel":{"shape":"ComputeModel"},
+        "iamRoles":{"shape":"IamRoleList"}
       }
     },
     "CloudVmClusterList":{
@@ -1076,7 +1134,8 @@
         "vipIds":{"shape":"StringList"},
         "odbNetworkId":{"shape":"ResourceIdOrArn"},
         "percentProgress":{"shape":"Float"},
-        "computeModel":{"shape":"ComputeModel"}
+        "computeModel":{"shape":"ComputeModel"},
+        "iamRoles":{"shape":"IamRoleList"}
       }
     },
     "ComputeModel":{
@@ -1375,7 +1434,12 @@
         },
         "s3Access":{"shape":"Access"},
         "zeroEtlAccess":{"shape":"Access"},
+        "stsAccess":{"shape":"Access"},
+        "kmsAccess":{"shape":"Access"},
         "s3PolicyDocument":{"shape":"PolicyDocument"},
+        "stsPolicyDocument":{"shape":"PolicyDocument"},
+        "kmsPolicyDocument":{"shape":"PolicyDocument"},
+        "crossRegionS3RestoreSourcesToEnable":{"shape":"StringList"},
         "tags":{"shape":"RequestTagMap"}
       }
     },
@@ -1459,6 +1523,18 @@
         "statusReason":{"shape":"String"},
         "odbPeeringConnectionId":{"shape":"String"}
       }
+    },
+    "CrossRegionS3RestoreSourcesAccess":{
+      "type":"structure",
+      "members":{
+        "region":{"shape":"String"},
+        "ipv4Addresses":{"shape":"StringList"},
+        "status":{"shape":"ManagedResourceStatus"}
+      }
+    },
+    "CrossRegionS3RestoreSourcesAccessList":{
+      "type":"list",
+      "member":{"shape":"CrossRegionS3RestoreSourcesAccess"}
     },
     "CustomerContact":{
       "type":"structure",
@@ -1768,6 +1844,29 @@
       "type":"structure",
       "members":{}
     },
+    "DisassociateIamRoleFromResourceInput":{
+      "type":"structure",
+      "required":[
+        "iamRoleArn",
+        "awsIntegration",
+        "resourceArn"
+      ],
+      "members":{
+        "iamRoleArn":{"shape":"RoleArn"},
+        "awsIntegration":{"shape":"SupportedAwsIntegration"},
+        "resourceArn":{"shape":"DisassociateIamRoleFromResourceInputResourceArnString"}
+      }
+    },
+    "DisassociateIamRoleFromResourceInputResourceArnString":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso-[a-z]?|aws-iso):odb:[a-z0-9-]+:\\d{12}:cloud-vm-cluster/[a-z0-9-_]+"
+    },
+    "DisassociateIamRoleFromResourceOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "DiskRedundancy":{
       "type":"string",
       "enum":[
@@ -1888,7 +1987,8 @@
       "members":{
         "status":{"shape":"OciOnboardingStatus"},
         "existingTenancyActivationLink":{"shape":"String"},
-        "newTenancyActivationLink":{"shape":"String"}
+        "newTenancyActivationLink":{"shape":"String"},
+        "ociIdentityDomain":{"shape":"OciIdentityDomain"}
       }
     },
     "GetOdbNetworkInput":{
@@ -1931,9 +2031,36 @@
       "type":"list",
       "member":{"shape":"Integer"}
     },
+    "IamRole":{
+      "type":"structure",
+      "members":{
+        "iamRoleArn":{"shape":"RoleArn"},
+        "status":{"shape":"IamRoleStatus"},
+        "statusReason":{"shape":"String"},
+        "awsIntegration":{"shape":"SupportedAwsIntegration"}
+      }
+    },
+    "IamRoleList":{
+      "type":"list",
+      "member":{"shape":"IamRole"}
+    },
+    "IamRoleStatus":{
+      "type":"string",
+      "enum":[
+        "ASSOCIATING",
+        "DISASSOCIATING",
+        "FAILED",
+        "CONNECTED",
+        "DISCONNECTED",
+        "PARTIALLY_CONNECTED",
+        "UNKNOWN"
+      ]
+    },
     "InitializeServiceInput":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "ociIdentityDomain":{"shape":"Boolean"}
+      }
     },
     "InitializeServiceOutput":{
       "type":"structure",
@@ -1963,6 +2090,15 @@
         "FAILED",
         "UPDATING"
       ]
+    },
+    "KmsAccess":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"ManagedResourceStatus"},
+        "ipv4Addresses":{"shape":"StringList"},
+        "domainName":{"shape":"String"},
+        "kmsPolicyDocument":{"shape":"String"}
+      }
     },
     "LicenseModel":{
       "type":"string",
@@ -2365,7 +2501,10 @@
         "serviceNetworkEndpoint":{"shape":"ServiceNetworkEndpoint"},
         "managedS3BackupAccess":{"shape":"ManagedS3BackupAccess"},
         "zeroEtlAccess":{"shape":"ZeroEtlAccess"},
-        "s3Access":{"shape":"S3Access"}
+        "s3Access":{"shape":"S3Access"},
+        "stsAccess":{"shape":"StsAccess"},
+        "kmsAccess":{"shape":"KmsAccess"},
+        "crossRegionS3RestoreSourcesAccess":{"shape":"CrossRegionS3RestoreSourcesAccessList"}
       }
     },
     "Month":{
@@ -2420,6 +2559,17 @@
     "OciDnsForwardingConfigList":{
       "type":"list",
       "member":{"shape":"OciDnsForwardingConfig"}
+    },
+    "OciIdentityDomain":{
+      "type":"structure",
+      "members":{
+        "ociIdentityDomainId":{"shape":"String"},
+        "ociIdentityDomainResourceUrl":{"shape":"String"},
+        "ociIdentityDomainUrl":{"shape":"String"},
+        "status":{"shape":"ResourceStatus"},
+        "statusReason":{"shape":"String"},
+        "accountSetupCloudFormationUrl":{"shape":"String"}
+      }
     },
     "OciOnboardingStatus":{
       "type":"string",
@@ -2727,6 +2877,12 @@
       "max":200,
       "min":0
     },
+    "RoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso-{0,1}[a-z]{0,1}):iam::[0-9]{12}:role/.+"
+    },
     "S3Access":{
       "type":"structure",
       "members":{
@@ -2822,6 +2978,19 @@
       "member":{"shape":"String"},
       "max":1024,
       "min":1
+    },
+    "StsAccess":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"ManagedResourceStatus"},
+        "ipv4Addresses":{"shape":"StringList"},
+        "domainName":{"shape":"String"},
+        "stsPolicyDocument":{"shape":"String"}
+      }
+    },
+    "SupportedAwsIntegration":{
+      "type":"string",
+      "enum":["KmsTde"]
     },
     "SyntheticTimestamp_date_time":{
       "type":"timestamp",
@@ -2922,7 +3091,13 @@
         "peeredCidrsToBeRemoved":{"shape":"StringList"},
         "s3Access":{"shape":"Access"},
         "zeroEtlAccess":{"shape":"Access"},
-        "s3PolicyDocument":{"shape":"PolicyDocument"}
+        "stsAccess":{"shape":"Access"},
+        "kmsAccess":{"shape":"Access"},
+        "s3PolicyDocument":{"shape":"PolicyDocument"},
+        "stsPolicyDocument":{"shape":"PolicyDocument"},
+        "kmsPolicyDocument":{"shape":"PolicyDocument"},
+        "crossRegionS3RestoreSourcesToEnable":{"shape":"StringList"},
+        "crossRegionS3RestoreSourcesToDisable":{"shape":"StringList"}
       }
     },
     "UpdateOdbNetworkOutput":{

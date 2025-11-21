@@ -1497,7 +1497,8 @@
       "type":"structure",
       "members":{
         "Enabled":{"shape":"AutoDeploymentNullable"},
-        "RetainStacksOnAccountRemoval":{"shape":"RetainStacksOnAccountRemovalNullable"}
+        "RetainStacksOnAccountRemoval":{"shape":"RetainStacksOnAccountRemovalNullable"},
+        "DependsOn":{"shape":"StackSetARNList"}
       }
     },
     "AutoDeploymentNullable":{"type":"boolean"},
@@ -5167,6 +5168,10 @@
       }
     },
     "StackSetARN":{"type":"string"},
+    "StackSetARNList":{
+      "type":"list",
+      "member":{"shape":"StackSetARN"}
+    },
     "StackSetAutoDeploymentTargetSummaries":{
       "type":"list",
       "member":{"shape":"StackSetAutoDeploymentTargetSummary"}

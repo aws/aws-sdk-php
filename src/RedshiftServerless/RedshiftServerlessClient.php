@@ -119,6 +119,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateCustomDomainAssociationAsync(array $args = [])
  * @method \Aws\Result updateEndpointAccess(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateEndpointAccessAsync(array $args = [])
+ * @method \Aws\Result updateLakehouseConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateLakehouseConfigurationAsync(array $args = [])
  * @method \Aws\Result updateNamespace(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateNamespaceAsync(array $args = [])
  * @method \Aws\Result updateScheduledAction(array $args = [])

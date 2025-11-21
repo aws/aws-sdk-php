@@ -316,6 +316,34 @@
         "title": "Invoke ListComments"
       }
     ],
+    "ListInvestigations": [
+      {
+        "input": {
+          "caseId": "8403556009",
+          "maxResults": 10
+        },
+        "output": {
+          "investigationActions": [
+            {
+              "actionType": "Evidence",
+              "content": "## Evidence Collection Results\n\nAnalyzed CloudTrail logs from 2024-01-15 to 2024-01-16 and found:\n\n- 15 failed login attempts from IP 192.168.1.100\n- Unusual API calls to S3 buckets\n- Privilege escalation attempts detected\n\n### Recommendations\n\n1. Block the suspicious IP address\n2. Review S3 bucket permissions\n3. Audit user privileges",
+              "feedback": {
+                "comment": "The CloudTrail analysis was very helpful in identifying the root cause of the security incident. The recommendations were actionable and led to immediate remediation.",
+                "submittedAt": "2024-01-16T11:15:00Z",
+                "usefulness": "USEFUL"
+              },
+              "investigationId": "inv-hgyuiuytrt",
+              "lastUpdated": "2024-01-16T10:30:00Z",
+              "status": "Completed",
+              "title": "Collected CloudTrail logs for suspicious activity"
+            }
+          ],
+          "nextToken": "eyJsYXN0RXZhbHVhdGVkS2V5Ijp7InBhcnRpdGlvbktleSI6eyJTIjoiQ0FTRV8xMjM0NTY3ODkwIn0sInNvcnRLZXkiOnsiUyI6IjIwMjQtMDEtMTZUMTA6MzA6MDBaIn19fQ=="
+        },
+        "id": "example-1",
+        "title": "Invoke ListInvestigations with feedback examples"
+      }
+    ],
     "ListMemberships": [
       {
         "input": {
@@ -349,6 +377,30 @@
         },
         "id": "example-1",
         "title": "Invoke ListTagsForResource"
+      }
+    ],
+    "SendFeedback": [
+      {
+        "input": {
+          "caseId": "8403556009",
+          "comment": "The CloudTrail analysis was very helpful in identifying the root cause of the security incident.",
+          "resultId": "inv-polkjhyuty",
+          "usefulness": "USEFUL"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Send positive feedback for investigation result"
+      },
+      {
+        "input": {
+          "caseId": "8403556009",
+          "comment": "The investigation results were too generic and didn't provide actionable insights for our specific incident.",
+          "resultId": "inv-irutjfhgjk",
+          "usefulness": "NOT_USEFUL"
+        },
+        "output": {},
+        "id": "example-2",
+        "title": "Send negative feedback with detailed comment"
       }
     ],
     "TagResource": [

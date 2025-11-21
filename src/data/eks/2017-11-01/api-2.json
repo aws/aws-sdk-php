@@ -1391,7 +1391,8 @@
         "remoteNetworkConfig":{"shape":"RemoteNetworkConfigResponse"},
         "computeConfig":{"shape":"ComputeConfigResponse"},
         "storageConfig":{"shape":"StorageConfigResponse"},
-        "deletionProtection":{"shape":"BoxedBoolean"}
+        "deletionProtection":{"shape":"BoxedBoolean"},
+        "controlPlaneScalingConfig":{"shape":"ControlPlaneScalingConfig"}
       }
     },
     "ClusterHealth":{
@@ -1555,6 +1556,12 @@
         "groupName":{"shape":"String"}
       }
     },
+    "ControlPlaneScalingConfig":{
+      "type":"structure",
+      "members":{
+        "tier":{"shape":"ProvisionedControlPlaneTier"}
+      }
+    },
     "CreateAccessConfigRequest":{
       "type":"structure",
       "members":{
@@ -1651,7 +1658,8 @@
         "remoteNetworkConfig":{"shape":"RemoteNetworkConfigRequest"},
         "computeConfig":{"shape":"ComputeConfigRequest"},
         "storageConfig":{"shape":"StorageConfigRequest"},
-        "deletionProtection":{"shape":"BoxedBoolean"}
+        "deletionProtection":{"shape":"BoxedBoolean"},
+        "controlPlaneScalingConfig":{"shape":"ControlPlaneScalingConfig"}
       }
     },
     "CreateClusterResponse":{
@@ -3575,6 +3583,15 @@
         "keyArn":{"shape":"String"}
       }
     },
+    "ProvisionedControlPlaneTier":{
+      "type":"string",
+      "enum":[
+        "standard",
+        "tier-xl",
+        "tier-2xl",
+        "tier-4xl"
+      ]
+    },
     "RegisterClusterRequest":{
       "type":"structure",
       "required":[
@@ -3973,7 +3990,8 @@
         "kubernetesNetworkConfig":{"shape":"KubernetesNetworkConfigRequest"},
         "storageConfig":{"shape":"StorageConfigRequest"},
         "remoteNetworkConfig":{"shape":"RemoteNetworkConfigRequest"},
-        "deletionProtection":{"shape":"BoxedBoolean"}
+        "deletionProtection":{"shape":"BoxedBoolean"},
+        "controlPlaneScalingConfig":{"shape":"ControlPlaneScalingConfig"}
       }
     },
     "UpdateClusterConfigResponse":{
@@ -4154,7 +4172,9 @@
         "KubernetesNetworkConfig",
         "RemoteNetworkConfig",
         "DeletionProtection",
-        "NodeRepairConfig"
+        "NodeRepairConfig",
+        "UpdatedTier",
+        "PreviousTier"
       ]
     },
     "UpdateParams":{
@@ -4226,7 +4246,8 @@
         "ZonalShiftConfigUpdate",
         "AutoModeUpdate",
         "RemoteNetworkConfigUpdate",
-        "DeletionProtectionUpdate"
+        "DeletionProtectionUpdate",
+        "ControlPlaneScalingConfigUpdate"
       ]
     },
     "UpgradePolicyRequest":{

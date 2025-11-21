@@ -241,6 +241,20 @@
         {"shape":"RepositoryPolicyNotFoundException"}
       ]
     },
+    "DeleteSigningConfiguration":{
+      "name":"DeleteSigningConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteSigningConfigurationRequest"},
+      "output":{"shape":"DeleteSigningConfigurationResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"SigningConfigurationNotFoundException"}
+      ]
+    },
     "DeregisterPullTimeUpdateExclusion":{
       "name":"DeregisterPullTimeUpdateExclusion",
       "http":{
@@ -288,6 +302,22 @@
         {"shape":"ImageNotFoundException"},
         {"shape":"ScanNotFoundException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "DescribeImageSigningStatus":{
+      "name":"DescribeImageSigningStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeImageSigningStatusRequest"},
+      "output":{"shape":"DescribeImageSigningStatusResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"ImageNotFoundException"},
+        {"shape":"RepositoryNotFoundException"}
       ]
     },
     "DescribeImages":{
@@ -482,6 +512,21 @@
         {"shape":"RepositoryPolicyNotFoundException"}
       ]
     },
+    "GetSigningConfiguration":{
+      "name":"GetSigningConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetSigningConfigurationRequest"},
+      "output":{"shape":"GetSigningConfigurationResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"},
+        {"shape":"SigningConfigurationNotFoundException"}
+      ]
+    },
     "InitiateLayerUpload":{
       "name":"InitiateLayerUpload",
       "http":{
@@ -672,6 +717,20 @@
       },
       "input":{"shape":"PutReplicationConfigurationRequest"},
       "output":{"shape":"PutReplicationConfigurationResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ValidationException"}
+      ]
+    },
+    "PutSigningConfiguration":{
+      "name":"PutSigningConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutSigningConfigurationRequest"},
+      "output":{"shape":"PutSigningConfigurationResponse"},
       "errors":[
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
@@ -1285,6 +1344,17 @@
         "repository":{"shape":"Repository"}
       }
     },
+    "DeleteSigningConfigurationRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteSigningConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "registryId":{"shape":"RegistryId"},
+        "signingConfiguration":{"shape":"SigningConfiguration"}
+      }
+    },
     "DeregisterPullTimeUpdateExclusionRequest":{
       "type":"structure",
       "required":["principalArn"],
@@ -1341,6 +1411,27 @@
         "imageScanStatus":{"shape":"ImageScanStatus"},
         "imageScanFindings":{"shape":"ImageScanFindings"},
         "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeImageSigningStatusRequest":{
+      "type":"structure",
+      "required":[
+        "repositoryName",
+        "imageId"
+      ],
+      "members":{
+        "repositoryName":{"shape":"RepositoryName"},
+        "imageId":{"shape":"ImageIdentifier"},
+        "registryId":{"shape":"RegistryId"}
+      }
+    },
+    "DescribeImageSigningStatusResponse":{
+      "type":"structure",
+      "members":{
+        "repositoryName":{"shape":"RepositoryName"},
+        "imageId":{"shape":"ImageIdentifier"},
+        "registryId":{"shape":"RegistryId"},
+        "signingStatuses":{"shape":"ImageSigningStatusList"}
       }
     },
     "DescribeImagesFilter":{
@@ -1666,6 +1757,17 @@
         "policyText":{"shape":"RepositoryPolicyText"}
       }
     },
+    "GetSigningConfigurationRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "GetSigningConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "registryId":{"shape":"RegistryId"},
+        "signingConfiguration":{"shape":"SigningConfiguration"}
+      }
+    },
     "Image":{
       "type":"structure",
       "members":{
@@ -1868,6 +1970,19 @@
       "members":{
         "scanOnPush":{"shape":"ScanOnPushFlag"}
       }
+    },
+    "ImageSigningStatus":{
+      "type":"structure",
+      "members":{
+        "signingProfileArn":{"shape":"SigningProfileArn"},
+        "failureCode":{"shape":"SigningStatusFailureCode"},
+        "failureReason":{"shape":"SigningStatusFailureReason"},
+        "status":{"shape":"SigningStatus"}
+      }
+    },
+    "ImageSigningStatusList":{
+      "type":"list",
+      "member":{"shape":"ImageSigningStatus"}
     },
     "ImageSizeInBytes":{"type":"long"},
     "ImageStatus":{
@@ -2536,6 +2651,19 @@
         "replicationConfiguration":{"shape":"ReplicationConfiguration"}
       }
     },
+    "PutSigningConfigurationRequest":{
+      "type":"structure",
+      "required":["signingConfiguration"],
+      "members":{
+        "signingConfiguration":{"shape":"SigningConfiguration"}
+      }
+    },
+    "PutSigningConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "signingConfiguration":{"shape":"SigningConfiguration"}
+      }
+    },
     "RCTAppliedFor":{
       "type":"string",
       "enum":[
@@ -2975,6 +3103,76 @@
       "type":"integer",
       "min":0
     },
+    "SigningConfiguration":{
+      "type":"structure",
+      "required":["rules"],
+      "members":{
+        "rules":{"shape":"SigningRuleList"}
+      }
+    },
+    "SigningConfigurationNotFoundException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
+    "SigningProfileArn":{
+      "type":"string",
+      "max":200,
+      "pattern":"^arn:aws(-[a-z]+)*:signer:[a-z0-9-]+:[0-9]{12}:\\/signing-profiles\\/[a-zA-Z0-9_]{2,}$"
+    },
+    "SigningRepositoryFilter":{
+      "type":"structure",
+      "required":[
+        "filter",
+        "filterType"
+      ],
+      "members":{
+        "filter":{"shape":"SigningRepositoryFilterValue"},
+        "filterType":{"shape":"SigningRepositoryFilterType"}
+      }
+    },
+    "SigningRepositoryFilterList":{
+      "type":"list",
+      "member":{"shape":"SigningRepositoryFilter"},
+      "max":100,
+      "min":1
+    },
+    "SigningRepositoryFilterType":{
+      "type":"string",
+      "enum":["WILDCARD_MATCH"]
+    },
+    "SigningRepositoryFilterValue":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^(?:[a-z0-9*]+(?:[._-][a-z0-9*]+)*/)*[a-z0-9*]+(?:[._-][a-z0-9*]+)*$"
+    },
+    "SigningRule":{
+      "type":"structure",
+      "required":["signingProfileArn"],
+      "members":{
+        "signingProfileArn":{"shape":"SigningProfileArn"},
+        "repositoryFilters":{"shape":"SigningRepositoryFilterList"}
+      }
+    },
+    "SigningRuleList":{
+      "type":"list",
+      "member":{"shape":"SigningRule"},
+      "max":10,
+      "min":0
+    },
+    "SigningStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "COMPLETE",
+        "FAILED"
+      ]
+    },
+    "SigningStatusFailureCode":{"type":"string"},
+    "SigningStatusFailureReason":{"type":"string"},
     "Source":{"type":"string"},
     "SourceLayerHash":{"type":"string"},
     "StartImageScanRequest":{

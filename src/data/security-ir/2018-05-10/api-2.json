@@ -298,6 +298,28 @@
       ],
       "readonly":true
     },
+    "ListInvestigations":{
+      "name":"ListInvestigations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/cases/{caseId}/list-investigations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListInvestigationsRequest"},
+      "output":{"shape":"ListInvestigationsResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"SecurityIncidentResponseNotActiveException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidTokenException"}
+      ],
+      "readonly":true
+    },
     "ListMemberships":{
       "name":"ListMemberships",
       "http":{
@@ -341,6 +363,27 @@
         {"shape":"InvalidTokenException"}
       ],
       "readonly":true
+    },
+    "SendFeedback":{
+      "name":"SendFeedback",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/cases/{caseId}/feedback/{resultId}/send-feedback",
+        "responseCode":200
+      },
+      "input":{"shape":"SendFeedbackRequest"},
+      "output":{"shape":"SendFeedbackResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"SecurityIncidentResponseNotActiveException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidTokenException"}
+      ]
     },
     "TagResource":{
       "name":"TagResource",
@@ -518,6 +561,14 @@
       },
       "exception":true
     },
+    "ActionType":{
+      "type":"string",
+      "enum":[
+        "Evidence",
+        "Investigation",
+        "Summarization"
+      ]
+    },
     "Arn":{
       "type":"string",
       "max":1010,
@@ -690,6 +741,33 @@
       "max":32,
       "min":10,
       "pattern":"\\d{10,32}.*"
+    },
+    "CaseMetadata":{
+      "type":"list",
+      "member":{"shape":"CaseMetadataEntry"},
+      "max":30,
+      "min":1
+    },
+    "CaseMetadataEntry":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"CaseMetadataEntryKeyString"},
+        "value":{"shape":"CaseMetadataEntryValueString"}
+      }
+    },
+    "CaseMetadataEntryKeyString":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "CaseMetadataEntryValueString":{
+      "type":"string",
+      "max":2000,
+      "min":1
     },
     "CaseStatus":{
       "type":"string",
@@ -920,6 +998,22 @@
         "Investigation"
       ]
     },
+    "ExecutionStatus":{
+      "type":"string",
+      "enum":[
+        "Pending",
+        "InProgress",
+        "Waiting",
+        "Completed",
+        "Failed",
+        "Cancelled"
+      ]
+    },
+    "FeedbackComment":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
     "FileName":{
       "type":"string",
       "max":255,
@@ -1018,7 +1112,8 @@
         "resolverType":{"shape":"ResolverType"},
         "impactedServices":{"shape":"ImpactedServicesList"},
         "caseAttachments":{"shape":"CaseAttachmentsList"},
-        "closedDate":{"shape":"Timestamp"}
+        "closedDate":{"shape":"Timestamp"},
+        "caseMetadata":{"shape":"CaseMetadata"}
       }
     },
     "GetMembershipAccountDetailError":{
@@ -1173,6 +1268,52 @@
       "exception":true,
       "retryable":{"throttling":false}
     },
+    "InvestigationAction":{
+      "type":"structure",
+      "required":[
+        "investigationId",
+        "actionType",
+        "title",
+        "content",
+        "status",
+        "lastUpdated"
+      ],
+      "members":{
+        "investigationId":{"shape":"InvestigationId"},
+        "actionType":{"shape":"ActionType"},
+        "title":{"shape":"InvestigationTitle"},
+        "content":{"shape":"InvestigationContent"},
+        "status":{"shape":"ExecutionStatus"},
+        "lastUpdated":{"shape":"Timestamp"},
+        "feedback":{"shape":"InvestigationFeedback"}
+      }
+    },
+    "InvestigationActionList":{
+      "type":"list",
+      "member":{"shape":"InvestigationAction"}
+    },
+    "InvestigationContent":{
+      "type":"string",
+      "max":5000,
+      "min":1
+    },
+    "InvestigationFeedback":{
+      "type":"structure",
+      "members":{
+        "usefulness":{"shape":"UsefulnessRating"},
+        "comment":{"shape":"FeedbackComment"},
+        "submittedAt":{"shape":"Timestamp"}
+      }
+    },
+    "InvestigationId":{
+      "type":"string",
+      "pattern":"inv-[a-z0-9]{10,32}"
+    },
+    "InvestigationTitle":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
     "JobTitle":{
       "type":"string",
       "max":50,
@@ -1303,6 +1444,46 @@
         "nextToken":{"shape":"String"},
         "items":{"shape":"ListCommentsItems"},
         "total":{"shape":"Integer"}
+      }
+    },
+    "ListInvestigationsRequest":{
+      "type":"structure",
+      "required":["caseId"],
+      "members":{
+        "nextToken":{
+          "shape":"ListInvestigationsRequestNextTokenString",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListInvestigationsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "caseId":{
+          "shape":"CaseId",
+          "location":"uri",
+          "locationName":"caseId"
+        }
+      }
+    },
+    "ListInvestigationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":25,
+      "min":1
+    },
+    "ListInvestigationsRequestNextTokenString":{
+      "type":"string",
+      "max":2000,
+      "min":0
+    },
+    "ListInvestigationsResponse":{
+      "type":"structure",
+      "required":["investigationActions"],
+      "members":{
+        "nextToken":{"shape":"String"},
+        "investigationActions":{"shape":"InvestigationActionList"}
       }
     },
     "ListMembershipItem":{
@@ -1500,6 +1681,10 @@
       },
       "exception":true
     },
+    "ResultId":{
+      "type":"string",
+      "pattern":"inv-[a-z0-9]{10,32}"
+    },
     "SecurityIncidentResponseNotActiveException":{
       "type":"structure",
       "required":["message"],
@@ -1520,6 +1705,32 @@
         "Containment, Eradication and Recovery",
         "Post-incident Activities"
       ]
+    },
+    "SendFeedbackRequest":{
+      "type":"structure",
+      "required":[
+        "caseId",
+        "resultId",
+        "usefulness"
+      ],
+      "members":{
+        "caseId":{
+          "shape":"CaseId",
+          "location":"uri",
+          "locationName":"caseId"
+        },
+        "resultId":{
+          "shape":"ResultId",
+          "location":"uri",
+          "locationName":"resultId"
+        },
+        "usefulness":{"shape":"UsefulnessRating"},
+        "comment":{"shape":"FeedbackComment"}
+      }
+    },
+    "SendFeedbackResponse":{
+      "type":"structure",
+      "members":{}
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -1694,7 +1905,8 @@
         "impactedAwsRegionsToAdd":{"shape":"ImpactedAwsRegionList"},
         "impactedAwsRegionsToDelete":{"shape":"ImpactedAwsRegionList"},
         "impactedAccountsToAdd":{"shape":"ImpactedAccounts"},
-        "impactedAccountsToDelete":{"shape":"ImpactedAccounts"}
+        "impactedAccountsToDelete":{"shape":"ImpactedAccounts"},
+        "caseMetadata":{"shape":"CaseMetadata"}
       }
     },
     "UpdateCaseResponse":{
@@ -1770,6 +1982,13 @@
       "type":"string",
       "pattern":"https?://(?:www.)?[a-zA-Z0-9@:._+~#=-]{2,256}\\.[a-z]{2,6}\\b(?:[-a-zA-Z0-9@:%_+.~#?&/=]{0,2048})",
       "sensitive":true
+    },
+    "UsefulnessRating":{
+      "type":"string",
+      "enum":[
+        "USEFUL",
+        "NOT_USEFUL"
+      ]
     },
     "UserAgent":{
       "type":"string",

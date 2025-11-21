@@ -1,5 +1,42 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SecurityIR` - Add ListInvestigations and SendFeedback APIs to support SecurityIR AI agents
+* `Aws\MailManager` - Add support for resources in the aws-eusc partition.
+* `Aws\ECR` - Add support for ECR managed signing
+* `Aws\Athena` - Introduces Spark workgroup features including log persistence, S3/CloudWatch delivery, UI and History Server APIs, and SparkConnect 3.5.6 support. Adds DPU usage limits at workgroup and query levels as well as DPU usage tracking for Capacity Reservation queries to optimize performance and costs.
+* `Aws\CloudFormation` - Adds the DependsOn field to the AutoDeployment configuration parameter for CreateStackSet, UpdateStackSet, and DescribeStackSet APIs, allowing users to set and read auto-deployment dependencies between StackSets
+* `Aws\KMS` - Support for on-demand rotation of AWS KMS Multi-Region keys with imported key material
+* `Aws\KinesisVideo` - This release adds support for Tiered Storage
+* `Aws\APIGateway` - API Gateway supports VPC link V2 for REST APIs.
+* `Aws\Odb` - Adds AssociateIamRoleToResource and DisassociateIamRoleFromResource APIs for managing IAM roles. Enhances CreateOdbNetwork and UpdateOdbNetwork APIs with KMS, STS, and cross-region S3 parameters. Adds OCI identity domain support to InitializeService API.
+* `Aws\BedrockAgentCoreControl` - Support for agentcore gateway interceptor configurations and NONE authorizer type
+* `Aws\ComputeOptimizerAutomation` - Initial release of AWS Compute Optimizer Automation. Create automation rules to implement recommended actions on a recurring schedule based on your specified criteria. Supported actions include: snapshot and delete unattached EBS volumes and upgrade volume types to the latest generation.
+* `Aws\RDS` - Add support for Upgrade Rollout Order
+* `Aws\SESv2` - Added support for new SES regions - Asia Pacific (Malaysia) and Canada (Calgary)
+* `Aws\Organizations` - Add support for policy operations on the UPGRADE_ROLLOUT_POLICY policy type.
+* `Aws\ControlTower` - The manifest field is now optional for the AWS Control Tower CreateLandingZone and UpdateLandingZone APIs for Landing Zone version 4.0
+* `Aws\MediaPackageV2` - Adds support for excluding session key tags from HLS multivariant playlists
+* `Aws\Connect` - New APIs to support aliases and versions for ContactFlowModule. Updated ContactFlowModule APIs to support custom blocks.
+* `Aws\QConnect` - This release introduces two new messaging channel subtypes: Push, WhatsApp, under MessageTemplate which is a resource in Amazon Q in Connect.
+* `Aws\BedrockRuntime` - Add support to automatically enforce safeguards across accounts within an AWS Organization.
+* `Aws\ElasticLoadBalancingv2` - This release adds the health check log feature in ALB, allowing customers to send detailed target health check log data directly to their designated Amazon S3 bucket.
+* `Aws\BedrockDataAutomationRuntime` - Adding new fields to GetDataAutomationStatus: jobSubmissionTime, jobCompletionTime, and jobDurationInSeconds
+* `Aws\Bedrock` - Add support to automatically enforce safeguards across accounts within an AWS Organization.
+* `Aws\EKS` - Adds support for controlPlaneScalingConfig on EKS Clusters.
+* `Aws\MarketplaceMetering` - Endpoint update for new region
+* `Aws\EC2` - This release adds a new capability to create and manage interruptible EC2 Capacity Reservations.
+* `Aws\Lambda` - Launching Enhanced Error Handling and ESM Grouping capabilities for Kafka ESMs
+* `Aws\RedshiftServerless` - Added UpdateLakehouseConfiguration API to manage Amazon Redshift Federated Permissions and AWS IAM Identity Center trusted identity propagation for namespaces.
+* `Aws\LexModelsV2` - Adds support for Intent Disambiguation, allowing resolution of ambiguous user inputs when multiple intents match by presenting clarifying questions to users. Also adds Speech Detection Sensitivity configuration for optimizing voice activity detection sensitivity levels in various noise environments.
+* `Aws\QuickSight` - Amazon Quick Suite now supports QuickChat as an embedding type when calling the GenerateEmbedUrlForRegisteredUser API, enabling developers to embed conversational AI agents directly into their applications.
+* `Aws\SageMaker` - Enhanced SageMaker HyperPod instance groups with support for MinInstanceCount, CapacityRequirements (Spot/On-Demand), and KubernetesConfig (labels and taints). Also Added speculative decoding and MaxInstanceCount for model optimization jobs.
+* `Aws\MarketplaceEntitlementService` - Endpoint update for new region
+* `Aws\Transfer` - Adds support for creating Webapps accessible from a VPC.
+* `Aws\Invoicing` - Added the CreateProcurementPortalPreference, GetProcurementPortalPreference, PutProcurementPortalPreference, UpdateProcurementPortalPreferenceStatus, ListProcurementPortalPreferences and DeleteProcurementPortalPreference APIs for procurement portal preference management.
+* `Aws\Redshift` - Added support for Amazon Redshift Federated Permissions and AWS IAM Identity Center trusted identity propagation.
+
 ## 3.362.1 - 2025-11-20
 
 * `Aws\Organizations` - Added new APIs for Billing Transfer, new policy type INSPECTOR_POLICY, and allow an account to transfer between organizations

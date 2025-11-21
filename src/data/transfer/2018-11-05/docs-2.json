@@ -8,7 +8,7 @@
     "CreateProfile": "<p>Creates the local or partner profile to use for AS2 transfers.</p>",
     "CreateServer": "<p>Instantiates an auto-scaling virtual server based on the selected file transfer protocol in Amazon Web Services. When you make updates to your file transfer protocol-enabled server or when you work with users, use the service-generated <code>ServerId</code> property that is assigned to the newly created server.</p>",
     "CreateUser": "<p>Creates a user and associates them with an existing file transfer protocol-enabled server. You can only create and associate users with servers that have the <code>IdentityProviderType</code> set to <code>SERVICE_MANAGED</code>. Using parameters for <code>CreateUser</code>, you can specify the user name, set the home directory, store the user's public key, and assign the user's Identity and Access Management (IAM) role. You can also optionally add a session policy, and assign metadata with tags that can be used to group and search for users.</p>",
-    "CreateWebApp": "<p>Creates a web app based on specified parameters, and returns the ID for the new web app.</p>",
+    "CreateWebApp": "<p>Creates a web app based on specified parameters, and returns the ID for the new web app. You can configure the web app to be publicly accessible or hosted within a VPC.</p> <p>For more information about using VPC endpoints with Transfer Family, see <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/create-webapp-in-vpc.html\">Create a Transfer Family web app in a VPC</a>.</p>",
     "CreateWorkflow": "<p> Allows you to create a workflow with specified steps and step details the workflow invokes after file transfer completes. After creating a workflow, you can associate the workflow created with any transfer servers by specifying the <code>workflow-details</code> field in <code>CreateServer</code> and <code>UpdateServer</code> operations. </p>",
     "DeleteAccess": "<p>Allows you to delete the access specified in the <code>ServerID</code> and <code>ExternalID</code> parameters.</p>",
     "DeleteAgreement": "<p>Delete the agreement that's specified in the provided <code>AgreementId</code>.</p>",
@@ -32,7 +32,7 @@
     "DescribeSecurityPolicy": "<p>Describes the security policy that is attached to your server or SFTP connector. The response contains a description of the security policy's properties. For more information about security policies, see <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/security-policies.html\">Working with security policies for servers</a> or <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/security-policies-connectors.html\">Working with security policies for SFTP connectors</a>.</p>",
     "DescribeServer": "<p>Describes a file transfer protocol-enabled server that you specify by passing the <code>ServerId</code> parameter.</p> <p>The response contains a description of a server's properties. When you set <code>EndpointType</code> to VPC, the response will contain the <code>EndpointDetails</code>.</p>",
     "DescribeUser": "<p>Describes the user assigned to the specific file transfer protocol-enabled server, as identified by its <code>ServerId</code> property.</p> <p>The response from this call returns the properties of the user associated with the <code>ServerId</code> value that was specified.</p>",
-    "DescribeWebApp": "<p>Describes the web app that's identified by <code>WebAppId</code>.</p>",
+    "DescribeWebApp": "<p>Describes the web app that's identified by <code>WebAppId</code>. The response includes endpoint configuration details such as whether the web app is publicly accessible or VPC hosted.</p> <p>For more information about using VPC endpoints with Transfer Family, see <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/create-webapp-in-vpc.html\">Create a Transfer Family web app in a VPC</a>.</p>",
     "DescribeWebAppCustomization": "<p>Describes the web app customization object that's identified by <code>WebAppId</code>.</p>",
     "DescribeWorkflow": "<p>Describes the specified workflow.</p>",
     "ImportCertificate": "<p>Imports the signing and encryption certificates that you need to create local (AS2) profiles and partner profiles.</p> <p>You can import both the certificate and its chain in the <code>Certificate</code> parameter.</p> <p>After importing a certificate, Transfer Family automatically creates a Amazon CloudWatch metric called <code>DaysUntilExpiry</code> that tracks the number of days until the certificate expires. The metric is based on the <code>InactiveDate</code> parameter and is published daily in the <code>AWS/Transfer</code> namespace.</p> <important> <p>It can take up to a full day after importing a certificate for Transfer Family to emit the <code>DaysUntilExpiry</code> metric to your account.</p> </important> <note> <p>If you use the <code>Certificate</code> parameter to upload both the certificate and its chain, don't use the <code>CertificateChain</code> parameter.</p> </note> <p> <b>CloudWatch monitoring</b> </p> <p>The <code>DaysUntilExpiry</code> metric includes the following specifications:</p> <ul> <li> <p> <b>Units:</b> Count (days)</p> </li> <li> <p> <b>Dimensions:</b> <code>CertificateId</code> (always present), <code>Description</code> (if provided during certificate import)</p> </li> <li> <p> <b>Statistics:</b> Minimum, Maximum, Average</p> </li> <li> <p> <b>Frequency:</b> Published daily</p> </li> </ul>",
@@ -50,7 +50,7 @@
     "ListServers": "<p>Lists the file transfer protocol-enabled servers that are associated with your Amazon Web Services account.</p>",
     "ListTagsForResource": "<p>Lists all of the tags associated with the Amazon Resource Name (ARN) that you specify. The resource can be a user, server, or role.</p>",
     "ListUsers": "<p>Lists the users for a file transfer protocol-enabled server that you specify by passing the <code>ServerId</code> parameter.</p>",
-    "ListWebApps": "<p>Lists all web apps associated with your Amazon Web Services account for your current region.</p>",
+    "ListWebApps": "<p>Lists all web apps associated with your Amazon Web Services account for your current region. The response includes the endpoint type for each web app, showing whether it is publicly accessible or VPC hosted.</p> <p>For more information about using VPC endpoints with Transfer Family, see <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/create-webapp-in-vpc.html\">Create a Transfer Family web app in a VPC</a>.</p>",
     "ListWorkflows": "<p>Lists all workflows associated with your Amazon Web Services account for your current region.</p>",
     "SendWorkflowStepState": "<p>Sends a callback for asynchronous custom steps.</p> <p> The <code>ExecutionId</code>, <code>WorkflowId</code>, and <code>Token</code> are passed to the target resource during execution of a custom step of a workflow. You must include those with their callback as well as providing a status. </p>",
     "StartDirectoryListing": "<p>Retrieves a list of the contents of a directory from a remote SFTP server. You specify the connector ID, the output path, and the remote directory path. You can also specify the optional <code>MaxItems</code> value to control the maximum number of items that are listed from the remote directory. This API returns a list of all files and directories in the remote directory (up to the maximum value), but does not return files or folders in sub-directories. That is, it only returns a list of files and directories one-level deep.</p> <p>After you receive the listing file, you can provide the files that you want to transfer to the <code>RetrieveFilePaths</code> parameter of the <code>StartFileTransfer</code> API call.</p> <p>The naming convention for the output file is <code> <i>connector-ID</i>-<i>listing-ID</i>.json</code>. The output file contains the following information:</p> <ul> <li> <p> <code>filePath</code>: the complete path of a remote file, relative to the directory of the listing request for your SFTP connector on the remote server.</p> </li> <li> <p> <code>modifiedTimestamp</code>: the last time the file was modified, in UTC time format. This field is optional. If the remote file attributes don't contain a timestamp, it is omitted from the file listing.</p> </li> <li> <p> <code>size</code>: the size of the file, in bytes. This field is optional. If the remote file attributes don't contain a file size, it is omitted from the file listing.</p> </li> <li> <p> <code>path</code>: the complete path of a remote directory, relative to the directory of the listing request for your SFTP connector on the remote server.</p> </li> <li> <p> <code>truncated</code>: a flag indicating whether the list output contains all of the items contained in the remote directory or not. If your <code>Truncated</code> output value is true, you can increase the value provided in the optional <code>max-items</code> input attribute to be able to list more items (up to the maximum allowed list size of 10,000 items).</p> </li> </ul>",
@@ -71,7 +71,7 @@
     "UpdateProfile": "<p>Updates some of the parameters for an existing profile. Provide the <code>ProfileId</code> for the profile that you want to update, along with the new values for the parameters to update.</p>",
     "UpdateServer": "<p>Updates the file transfer protocol-enabled server's properties after that server has been created.</p> <p>The <code>UpdateServer</code> call returns the <code>ServerId</code> of the server you updated.</p>",
     "UpdateUser": "<p>Assigns new properties to a user. Parameters you pass modify any or all of the following: the home directory, role, and policy for the <code>UserName</code> and <code>ServerId</code> you specify.</p> <p>The response returns the <code>ServerId</code> and the <code>UserName</code> for the updated user.</p> <p>In the console, you can select <i>Restricted</i> when you create or update a user. This ensures that the user can't access anything outside of their home directory. The programmatic way to configure this behavior is to update the user. Set their <code>HomeDirectoryType</code> to <code>LOGICAL</code>, and specify <code>HomeDirectoryMappings</code> with <code>Entry</code> as root (<code>/</code>) and <code>Target</code> as their home directory.</p> <p>For example, if the user's home directory is <code>/test/admin-user</code>, the following command updates the user so that their configuration in the console shows the <i>Restricted</i> flag as selected.</p> <p> <code> aws transfer update-user --server-id &lt;server-id&gt; --user-name admin-user --home-directory-type LOGICAL --home-directory-mappings \"[{\\\"Entry\\\":\\\"/\\\", \\\"Target\\\":\\\"/test/admin-user\\\"}]\"</code> </p>",
-    "UpdateWebApp": "<p>Assigns new properties to a web app. You can modify the access point, identity provider details, and the web app units.</p>",
+    "UpdateWebApp": "<p>Assigns new properties to a web app. You can modify the access point, identity provider details, endpoint configuration, and the web app units.</p> <p>For more information about using VPC endpoints with Transfer Family, see <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/create-webapp-in-vpc.html\">Create a Transfer Family web app in a VPC</a>.</p>",
     "UpdateWebAppCustomization": "<p>Assigns new customization properties to a web app. You can modify the icon file, logo file, and title.</p>"
   },
   "shapes": {
@@ -716,10 +716,22 @@
         "DescribeWebAppCustomizationResponse$WebAppCustomization": "<p>Returns a structure that contains the details of the web app customizations.</p>"
       }
     },
+    "DescribedWebAppEndpointDetails": {
+      "base": "<p>Contains the endpoint configuration details for a web app, including VPC configuration when the endpoint is hosted within a VPC.</p>",
+      "refs": {
+        "DescribedWebApp$DescribedEndpointDetails": "<p>The endpoint configuration details for the web app, including VPC settings if the endpoint is hosted within a VPC.</p>"
+      }
+    },
     "DescribedWebAppIdentityProviderDetails": {
       "base": "<p>Returns a structure that contains the identity provider details for your web app.</p>",
       "refs": {
         "DescribedWebApp$DescribedIdentityProviderDetails": "<p>A structure that contains the details for the identity provider used by the web app.</p>"
+      }
+    },
+    "DescribedWebAppVpcConfig": {
+      "base": "<p>Contains the VPC configuration details for a web app endpoint, including the VPC identifier, subnet IDs, and VPC endpoint ID used for hosting the endpoint.</p>",
+      "refs": {
+        "DescribedWebAppEndpointDetails$Vpc": "<p>The VPC configuration details when the web app endpoint is hosted within a VPC. This includes the VPC ID, subnet IDs, and VPC endpoint ID.</p>"
       }
     },
     "DescribedWorkflow": {
@@ -1808,7 +1820,8 @@
     "SecurityGroupIds": {
       "base": null,
       "refs": {
-        "EndpointDetails$SecurityGroupIds": "<p>A list of security groups IDs that are available to attach to your server's endpoint.</p> <note> <p>While <code>SecurityGroupIds</code> appears in the response syntax for consistency with <code>CreateServer</code> and <code>UpdateServer</code> operations, this field is not populated in <code>DescribeServer</code> responses. Security groups are managed at the VPC endpoint level and can be modified outside of the Transfer Family service. To retrieve current security group information, use the EC2 <code>DescribeVpcEndpoints</code> API with the <code>VpcEndpointId</code> returned in the response.</p> <p>This property can only be set when <code>EndpointType</code> is set to <code>VPC</code>.</p> <p>You can edit the <code>SecurityGroupIds</code> property in the <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/API_UpdateServer.html\">UpdateServer</a> API only if you are changing the <code>EndpointType</code> from <code>PUBLIC</code> or <code>VPC_ENDPOINT</code> to <code>VPC</code>. To change security groups associated with your server's VPC endpoint after creation, use the Amazon EC2 <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyVpcEndpoint.html\">ModifyVpcEndpoint</a> API.</p> </note>"
+        "EndpointDetails$SecurityGroupIds": "<p>A list of security groups IDs that are available to attach to your server's endpoint.</p> <note> <p>While <code>SecurityGroupIds</code> appears in the response syntax for consistency with <code>CreateServer</code> and <code>UpdateServer</code> operations, this field is not populated in <code>DescribeServer</code> responses. Security groups are managed at the VPC endpoint level and can be modified outside of the Transfer Family service. To retrieve current security group information, use the EC2 <code>DescribeVpcEndpoints</code> API with the <code>VpcEndpointId</code> returned in the response.</p> <p>This property can only be set when <code>EndpointType</code> is set to <code>VPC</code>.</p> <p>You can edit the <code>SecurityGroupIds</code> property in the <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/API_UpdateServer.html\">UpdateServer</a> API only if you are changing the <code>EndpointType</code> from <code>PUBLIC</code> or <code>VPC_ENDPOINT</code> to <code>VPC</code>. To change security groups associated with your server's VPC endpoint after creation, use the Amazon EC2 <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyVpcEndpoint.html\">ModifyVpcEndpoint</a> API.</p> </note>",
+        "WebAppVpcConfig$SecurityGroupIds": "<p>The list of security group IDs that control access to the web app endpoint. These security groups determine which sources can access the endpoint based on IP addresses and port configurations.</p>"
       }
     },
     "SecurityPolicyName": {
@@ -2149,7 +2162,10 @@
     "SubnetIds": {
       "base": null,
       "refs": {
-        "EndpointDetails$SubnetIds": "<p>A list of subnet IDs that are required to host your server endpoint in your VPC.</p> <note> <p>This property can only be set when <code>EndpointType</code> is set to <code>VPC</code>.</p> </note>"
+        "DescribedWebAppVpcConfig$SubnetIds": "<p>The list of subnet IDs within the VPC where the web app endpoint is deployed. These subnets must be in the same VPC and provide network connectivity for the endpoint.</p>",
+        "EndpointDetails$SubnetIds": "<p>A list of subnet IDs that are required to host your server endpoint in your VPC.</p> <note> <p>This property can only be set when <code>EndpointType</code> is set to <code>VPC</code>.</p> </note>",
+        "UpdateWebAppVpcConfig$SubnetIds": "<p>The list of subnet IDs within the VPC where the web app endpoint should be deployed during the update operation.</p>",
+        "WebAppVpcConfig$SubnetIds": "<p>The list of subnet IDs within the VPC where the web app endpoint will be deployed. These subnets must be in the same VPC specified in the VpcId parameter.</p>"
       }
     },
     "Tag": {
@@ -2339,6 +2355,12 @@
       "base": null,
       "refs": {}
     },
+    "UpdateWebAppEndpointDetails": {
+      "base": "<p>Contains the endpoint configuration details for updating a web app, including VPC settings for endpoints hosted within a VPC.</p>",
+      "refs": {
+        "UpdateWebAppRequest$EndpointDetails": "<p>The updated endpoint configuration for the web app. You can modify the endpoint type and VPC configuration settings.</p>"
+      }
+    },
     "UpdateWebAppIdentityCenterConfig": {
       "base": "<p>A structure that describes the values to use for the IAM Identity Center settings when you update a web app.</p>",
       "refs": {
@@ -2358,6 +2380,12 @@
     "UpdateWebAppResponse": {
       "base": null,
       "refs": {}
+    },
+    "UpdateWebAppVpcConfig": {
+      "base": "<p>Contains the VPC configuration settings for updating a web app endpoint, including the subnet IDs where the endpoint should be deployed.</p>",
+      "refs": {
+        "UpdateWebAppEndpointDetails$Vpc": "<p>The VPC configuration details for updating a web app endpoint hosted within a VPC. This includes the subnet IDs for endpoint deployment.</p>"
+      }
     },
     "Url": {
       "base": null,
@@ -2410,13 +2438,16 @@
     "VpcEndpointId": {
       "base": null,
       "refs": {
+        "DescribedWebAppVpcConfig$VpcEndpointId": "<p>The identifier of the VPC endpoint created for the web app.</p>",
         "EndpointDetails$VpcEndpointId": "<p>The identifier of the VPC endpoint.</p> <note> <p>This property can only be set when <code>EndpointType</code> is set to <code>VPC_ENDPOINT</code>.</p> <p>For more information, see https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html#deprecate-vpc-endpoint.</p> </note>"
       }
     },
     "VpcId": {
       "base": null,
       "refs": {
-        "EndpointDetails$VpcId": "<p>The VPC identifier of the VPC in which a server's endpoint will be hosted.</p> <note> <p>This property can only be set when <code>EndpointType</code> is set to <code>VPC</code>.</p> </note>"
+        "DescribedWebAppVpcConfig$VpcId": "<p>The identifier of the VPC where the web app endpoint is hosted.</p>",
+        "EndpointDetails$VpcId": "<p>The VPC identifier of the VPC in which a server's endpoint will be hosted.</p> <note> <p>This property can only be set when <code>EndpointType</code> is set to <code>VPC</code>.</p> </note>",
+        "WebAppVpcConfig$VpcId": "<p>The identifier of the VPC where the web app endpoint will be hosted.</p>"
       }
     },
     "VpcLatticeResourceConfigurationArn": {
@@ -2443,11 +2474,24 @@
         "ListedWebApp$WebAppEndpoint": "<p>The <code>WebAppEndpoint</code> is the unique URL for your Transfer Family web app. This is the value that you use when you configure <b>Origins</b> on CloudFront.</p>"
       }
     },
+    "WebAppEndpointDetails": {
+      "base": "<p>Contains the endpoint configuration for a web app, including VPC settings when the endpoint is hosted within a VPC.</p>",
+      "refs": {
+        "CreateWebAppRequest$EndpointDetails": "<p>The endpoint configuration for the web app. You can specify whether the web app endpoint is publicly accessible or hosted within a VPC.</p>"
+      }
+    },
     "WebAppEndpointPolicy": {
       "base": null,
       "refs": {
         "CreateWebAppRequest$WebAppEndpointPolicy": "<p> Setting for the type of endpoint policy for the web app. The default value is <code>STANDARD</code>. </p> <p>If you are creating the web app in an Amazon Web Services GovCloud (US) Region, you can set this parameter to <code>FIPS</code>.</p>",
         "DescribedWebApp$WebAppEndpointPolicy": "<p> Setting for the type of endpoint policy for the web app. The default value is <code>STANDARD</code>. </p> <p>If your web app was created in an Amazon Web Services GovCloud (US) Region, the value of this parameter can be <code>FIPS</code>, which indicates the web app endpoint is FIPS-compliant.</p>"
+      }
+    },
+    "WebAppEndpointType": {
+      "base": null,
+      "refs": {
+        "DescribedWebApp$EndpointType": "<p>The type of endpoint hosting the web app. Valid values are <code>PUBLIC</code> for publicly accessible endpoints and <code>VPC</code> for VPC-hosted endpoints that provide network isolation.</p>",
+        "ListedWebApp$EndpointType": "<p>The type of endpoint hosting the web app. Valid values are <code>PUBLIC</code> for publicly accessible endpoints and <code>VPC</code> for VPC-hosted endpoints.</p>"
       }
     },
     "WebAppFaviconFile": {
@@ -2506,6 +2550,12 @@
         "CreateWebAppRequest$WebAppUnits": "<p>A union that contains the value for number of concurrent connections or the user sessions on your web app.</p>",
         "DescribedWebApp$WebAppUnits": "<p>A union that contains the value for number of concurrent connections or the user sessions on your web app.</p>",
         "UpdateWebAppRequest$WebAppUnits": "<p>A union that contains the value for number of concurrent connections or the user sessions on your web app.</p>"
+      }
+    },
+    "WebAppVpcConfig": {
+      "base": "<p>Contains the VPC configuration settings for hosting a web app endpoint, including the VPC ID, subnet IDs, and security group IDs for access control.</p>",
+      "refs": {
+        "WebAppEndpointDetails$Vpc": "<p>The VPC configuration for hosting the web app endpoint within a VPC.</p>"
       }
     },
     "WorkflowDescription": {

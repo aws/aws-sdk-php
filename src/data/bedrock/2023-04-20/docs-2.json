@@ -26,6 +26,7 @@
     "DeleteAutomatedReasoningPolicyTestCase": "<p>Deletes an Automated Reasoning policy test. This operation is idempotent; if you delete a test more than once, each call succeeds.</p>",
     "DeleteCustomModel": "<p>Deletes a custom model that you created earlier. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "DeleteCustomModelDeployment": "<p>Deletes a custom model deployment. This operation stops the deployment and removes it from your account. After deletion, the deployment ARN can no longer be used for inference requests.</p> <p>The following actions are related to the <code>DeleteCustomModelDeployment</code> operation:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateCustomModelDeployment.html\">CreateCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetCustomModelDeployment.html\">GetCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_ListCustomModelDeployments.html\">ListCustomModelDeployments</a> </p> </li> </ul>",
+    "DeleteEnforcedGuardrailConfiguration": "<p>Deletes the account-level enforced guardrail configuration.</p>",
     "DeleteFoundationModelAgreement": "<p>Delete the model access agreement for the specified model.</p>",
     "DeleteGuardrail": "<p>Deletes a guardrail.</p> <ul> <li> <p>To delete a guardrail, only specify the ARN of the guardrail in the <code>guardrailIdentifier</code> field. If you delete a guardrail, all of its versions will be deleted.</p> </li> <li> <p>To delete a version of a guardrail, specify the ARN of the guardrail in the <code>guardrailIdentifier</code> field and the version in the <code>guardrailVersion</code> field.</p> </li> </ul>",
     "DeleteImportedModel": "<p>Deletes a custom model that you imported earlier. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">Import a customized model</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>. </p>",
@@ -66,6 +67,7 @@
     "ListAutomatedReasoningPolicyTestResults": "<p>Lists test results for an Automated Reasoning policy, showing how the policy performed against various test scenarios and validation checks.</p>",
     "ListCustomModelDeployments": "<p>Lists custom model deployments in your account. You can filter the results by creation time, name, status, and associated model. Use this operation to manage and monitor your custom model deployments.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>The following actions are related to the <code>ListCustomModelDeployments</code> operation:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateCustomModelDeployment.html\">CreateCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetCustomModelDeployment.html\">GetCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_DeleteCustomModelDeployment.html\">DeleteCustomModelDeployment</a> </p> </li> </ul>",
     "ListCustomModels": "<p>Returns a list of the custom models that you have created with the <code>CreateModelCustomizationJob</code> operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "ListEnforcedGuardrailsConfiguration": "<p>Lists the account-level enforced guardrail configurations.</p>",
     "ListEvaluationJobs": "<p>Lists all existing evaluation jobs.</p>",
     "ListFoundationModelAgreementOffers": "<p>Get the offers associated with the specified model.</p>",
     "ListFoundationModels": "<p>Lists Amazon Bedrock foundation models that you can use. You can filter the results with the request parameters. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/foundation-models.html\">Foundation models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
@@ -80,6 +82,7 @@
     "ListPromptRouters": "<p>Retrieves a list of prompt routers.</p>",
     "ListProvisionedModelThroughputs": "<p>Lists the Provisioned Throughputs in the account. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListTagsForResource": "<p>List the tags associated with the specified resource.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "PutEnforcedGuardrailConfiguration": "<p>Sets the account-level enforced guardrail configuration.</p>",
     "PutModelInvocationLoggingConfiguration": "<p>Set the configuration values for model invocation logging.</p>",
     "PutUseCaseForModelAccess": "<p>Put usecase for model access.</p>",
     "RegisterMarketplaceModelEndpoint": "<p>Registers an existing Amazon SageMaker endpoint with Amazon Bedrock Marketplace, allowing it to be used with Amazon Bedrock APIs.</p>",
@@ -107,6 +110,33 @@
     "AccessDeniedException": {
       "base": "<p>The request is denied because of missing access permissions.</p>",
       "refs": {}
+    },
+    "AccountEnforcedGuardrailConfigurationId": {
+      "base": null,
+      "refs": {
+        "AccountEnforcedGuardrailOutputConfiguration$configId": "<p>Unique ID for the account enforced configuration.</p>",
+        "DeleteEnforcedGuardrailConfigurationRequest$configId": "<p>Unique ID for the account enforced configuration.</p>",
+        "PutEnforcedGuardrailConfigurationRequest$configId": "<p>Unique ID for the account enforced configuration.</p>",
+        "PutEnforcedGuardrailConfigurationResponse$configId": "<p>Unique ID for the account enforced configuration.</p>"
+      }
+    },
+    "AccountEnforcedGuardrailInferenceInputConfiguration": {
+      "base": "<p>Account-level enforced guardrail input configuration.</p>",
+      "refs": {
+        "PutEnforcedGuardrailConfigurationRequest$guardrailInferenceConfig": "<p>Account-level enforced guardrail input configuration.</p>"
+      }
+    },
+    "AccountEnforcedGuardrailOutputConfiguration": {
+      "base": "<p>Account enforced guardrail output configuration.</p>",
+      "refs": {
+        "AccountEnforcedGuardrailsOutputConfiguration$member": null
+      }
+    },
+    "AccountEnforcedGuardrailsOutputConfiguration": {
+      "base": null,
+      "refs": {
+        "ListEnforcedGuardrailsConfigurationResponse$guardrailsConfig": "<p>Array of AccountEnforcedGuardrailOutputConfiguration objects.</p>"
+      }
     },
     "AccountId": {
       "base": null,
@@ -1419,6 +1449,12 @@
         "ProvisionedModelSummary$commitmentDuration": "<p>The duration for which the Provisioned Throughput was committed.</p>"
       }
     },
+    "ConfigurationOwner": {
+      "base": null,
+      "refs": {
+        "AccountEnforcedGuardrailOutputConfiguration$owner": "<p>Configuration owner type.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>Error occurred because of a conflict while performing an operation.</p>",
       "refs": {}
@@ -1753,6 +1789,14 @@
       "refs": {}
     },
     "DeleteCustomModelResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteEnforcedGuardrailConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteEnforcedGuardrailConfigurationResponse": {
       "base": null,
       "refs": {}
     },
@@ -2520,6 +2564,7 @@
     "GuardrailArn": {
       "base": null,
       "refs": {
+        "AccountEnforcedGuardrailOutputConfiguration$guardrailArn": "<p>ARN representation for the guardrail.</p>",
         "CreateGuardrailResponse$guardrailArn": "<p>The ARN of the guardrail.</p>",
         "GetGuardrailResponse$guardrailArn": "<p>The ARN of the guardrail.</p>",
         "GuardrailSummary$arn": "<p>The ARN of the guardrail.</p>",
@@ -2789,6 +2834,7 @@
     "GuardrailId": {
       "base": null,
       "refs": {
+        "AccountEnforcedGuardrailOutputConfiguration$guardrailId": "<p>Unique ID for the guardrail.</p>",
         "CreateGuardrailResponse$guardrailId": "<p>The unique identifier of the guardrail that was created.</p>",
         "CreateGuardrailVersionResponse$guardrailId": "<p>The unique identifier of the guardrail.</p>",
         "GetGuardrailResponse$guardrailId": "<p>The unique identifier of the guardrail.</p>",
@@ -2799,6 +2845,7 @@
     "GuardrailIdentifier": {
       "base": null,
       "refs": {
+        "AccountEnforcedGuardrailInferenceInputConfiguration$guardrailIdentifier": "<p>Identifier for the guardrail, could be the ID or the ARN.</p>",
         "CreateGuardrailVersionRequest$guardrailIdentifier": "<p>The unique identifier of the guardrail. This can be an ID or the ARN.</p>",
         "DeleteGuardrailRequest$guardrailIdentifier": "<p>The unique identifier of the guardrail. This can be an ID or the ARN.</p>",
         "GetGuardrailRequest$guardrailIdentifier": "<p>The unique identifier of the guardrail for which to get details. This can be an ID or the ARN.</p>",
@@ -2864,6 +2911,8 @@
     "GuardrailNumericalVersion": {
       "base": null,
       "refs": {
+        "AccountEnforcedGuardrailInferenceInputConfiguration$guardrailVersion": "<p>Numerical guardrail version.</p>",
+        "AccountEnforcedGuardrailOutputConfiguration$guardrailVersion": "<p>Numerical guardrail version.</p>",
         "CreateGuardrailVersionResponse$version": "<p>The number of the version of the guardrail.</p>",
         "DeleteGuardrailRequest$guardrailVersion": "<p>The version of the guardrail.</p>"
       }
@@ -3400,6 +3449,13 @@
         "FoundationModelSummary$inferenceTypesSupported": "<p>The inference types that the model supports.</p>"
       }
     },
+    "InputTags": {
+      "base": null,
+      "refs": {
+        "AccountEnforcedGuardrailInferenceInputConfiguration$inputTags": "<p>Whether to honor or ignore input tags at runtime.</p>",
+        "AccountEnforcedGuardrailOutputConfiguration$inputTags": "<p>Whether to honor or ignore input tags at runtime.</p>"
+      }
+    },
     "InstanceCount": {
       "base": null,
       "refs": {
@@ -3600,6 +3656,14 @@
       "refs": {}
     },
     "ListCustomModelsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListEnforcedGuardrailsConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListEnforcedGuardrailsConfigurationResponse": {
       "base": null,
       "refs": {}
     },
@@ -4213,6 +4277,8 @@
         "ListCustomModelDeploymentsResponse$nextToken": "<p>The token for the next set of results. This value is null when there are no more results to return.</p>",
         "ListCustomModelsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "ListCustomModelsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "ListEnforcedGuardrailsConfigurationRequest$nextToken": "<p>Opaque continuation token of previous paginated response.</p>",
+        "ListEnforcedGuardrailsConfigurationResponse$nextToken": "<p>Opaque continuation token of previous paginated response.</p>",
         "ListEvaluationJobsRequest$nextToken": "<p>Continuation token from the previous response, for Amazon Bedrock to list the next set of results.</p>",
         "ListEvaluationJobsResponse$nextToken": "<p>Continuation token from the previous response, for Amazon Bedrock to list the next set of results.</p>",
         "ListGuardrailsRequest$nextToken": "<p>If there are more results than were returned in the response, the response returns a <code>nextToken</code> that you can send in another <code>ListGuardrails</code> request to see the next batch of results.</p>",
@@ -4399,6 +4465,14 @@
       "refs": {
         "ProvisionedModelSummaries$member": null
       }
+    },
+    "PutEnforcedGuardrailConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutEnforcedGuardrailConfigurationResponse": {
+      "base": null,
+      "refs": {}
     },
     "PutModelInvocationLoggingConfigurationRequest": {
       "base": null,
@@ -4797,6 +4871,8 @@
     "String": {
       "base": null,
       "refs": {
+        "AccountEnforcedGuardrailOutputConfiguration$createdBy": "<p>The ARN of the role used to update the configuration.</p>",
+        "AccountEnforcedGuardrailOutputConfiguration$updatedBy": "<p>The ARN of the role used to update the configuration.</p>",
         "AgreementAvailability$errorMessage": "<p>Error message.</p>",
         "AutomatedReasoningPolicyBuildStepMessage$message": "<p>The content of the message, describing what occurred during the build step.</p>",
         "BatchDeleteEvaluationJobError$code": "<p>A HTTP status code of the evaluation job being deleted.</p>",
@@ -4813,6 +4889,7 @@
         "MarketplaceModelEndpointSummary$statusMessage": "<p>Additional information about the overall status, if available.</p>",
         "ModelCustomizationHyperParameters$key": null,
         "ModelCustomizationHyperParameters$value": null,
+        "PutEnforcedGuardrailConfigurationResponse$updatedBy": "<p>The ARN of the role used to update the configuration.</p>",
         "SupportTerm$refundPolicyDescription": "<p>Describes the refund policy.</p>",
         "ValidityTerm$agreementDuration": "<p>Describes the agreement duration.</p>"
       }
@@ -4945,6 +5022,8 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "AccountEnforcedGuardrailOutputConfiguration$createdAt": "<p>Timestamp.</p>",
+        "AccountEnforcedGuardrailOutputConfiguration$updatedAt": "<p>Timestamp.</p>",
         "AutomatedReasoningPolicyBuildWorkflowSummary$createdAt": "<p>The timestamp when the build workflow was created.</p>",
         "AutomatedReasoningPolicyBuildWorkflowSummary$updatedAt": "<p>The timestamp when the build workflow was last updated.</p>",
         "AutomatedReasoningPolicySummary$createdAt": "<p>The timestamp when the policy was created.</p>",
@@ -5038,6 +5117,7 @@
         "ProvisionedModelSummary$commitmentExpirationTime": "<p>The timestamp for when the commitment term of the Provisioned Throughput expires.</p>",
         "ProvisionedModelSummary$creationTime": "<p>The time that the Provisioned Throughput was created. </p>",
         "ProvisionedModelSummary$lastModifiedTime": "<p>The time that the Provisioned Throughput was last modified. </p>",
+        "PutEnforcedGuardrailConfigurationResponse$updatedAt": "<p>Timestamp.</p>",
         "TrainingDetails$creationTime": "<p>The start time of the training sub-task of the job.</p>",
         "TrainingDetails$lastModifiedTime": "<p>The latest update to the training sub-task of the job.</p>",
         "UpdateAutomatedReasoningPolicyAnnotationsResponse$updatedAt": "<p>The timestamp when the annotations were updated.</p>",

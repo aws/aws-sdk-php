@@ -16,9 +16,11 @@
     "DeleteRepository": "<p>Deletes a repository. If the repository isn't empty, you must either delete the contents of the repository or use the <code>force</code> option to delete the repository and have Amazon ECR delete all of its contents on your behalf.</p>",
     "DeleteRepositoryCreationTemplate": "<p>Deletes a repository creation template.</p>",
     "DeleteRepositoryPolicy": "<p>Deletes the repository policy associated with the specified repository.</p>",
+    "DeleteSigningConfiguration": "<p>Deletes the registry's signing configuration. Images pushed after deletion of the signing configuration will no longer be automatically signed.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/managed-signing.html\">Managed signing</a> in the <i>Amazon Elastic Container Registry User Guide</i>.</p> <note> <p>Deleting the signing configuration does not affect existing image signatures.</p> </note>",
     "DeregisterPullTimeUpdateExclusion": "<p>Removes a principal from the pull time update exclusion list for a registry. Once removed, Amazon ECR will resume updating the pull time if the specified principal pulls an image.</p>",
     "DescribeImageReplicationStatus": "<p>Returns the replication status for a specified image.</p>",
     "DescribeImageScanFindings": "<p>Returns the scan findings for the specified image.</p>",
+    "DescribeImageSigningStatus": "<p>Returns the signing status for a specified image. If the image matched signing rules that reference different signing profiles, a status is returned for each profile.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/managed-signing.html\">Managed signing</a> in the <i>Amazon Elastic Container Registry User Guide</i>.</p>",
     "DescribeImages": "<p>Returns metadata about the images in a repository.</p> <note> <p>Starting with Docker version 1.9, the Docker client compresses image layers before pushing them to a V2 Docker registry. The output of the <code>docker images</code> command shows the uncompressed image size. Therefore, Docker might return a larger image than the image shown in the Amazon Web Services Management Console.</p> </note> <important> <p>The new version of Amazon ECR <i>Basic Scanning</i> doesn't use the <a>ImageDetail$imageScanFindingsSummary</a> and <a>ImageDetail$imageScanStatus</a> attributes from the API response to return scan results. Use the <a>DescribeImageScanFindings</a> API instead. For more information about Amazon Web Services native basic scanning, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html\"> Scan images for software vulnerabilities in Amazon ECR</a>.</p> </important>",
     "DescribePullThroughCacheRules": "<p>Returns the pull through cache rules for a registry.</p>",
     "DescribeRegistry": "<p>Describes the settings for a registry. The replication configuration for a repository can be created or updated with the <a>PutReplicationConfiguration</a> API action.</p>",
@@ -32,6 +34,7 @@
     "GetRegistryPolicy": "<p>Retrieves the permissions policy for a registry.</p>",
     "GetRegistryScanningConfiguration": "<p>Retrieves the scanning configuration for a registry.</p>",
     "GetRepositoryPolicy": "<p>Retrieves the repository policy for the specified repository.</p>",
+    "GetSigningConfiguration": "<p>Retrieves the registry's signing configuration, which defines rules for automatically signing images using Amazon Web Services Signer.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/managed-signing.html\">Managed signing</a> in the <i>Amazon Elastic Container Registry User Guide</i>.</p>",
     "InitiateLayerUpload": "<p>Notifies Amazon ECR that you intend to upload an image layer.</p> <p>When an image is pushed, the InitiateLayerUpload API is called once per image layer that has not already been uploaded. Whether or not an image layer has been uploaded is determined by the BatchCheckLayerAvailability API action.</p> <note> <p>This operation is used by the Amazon ECR proxy and is not generally used by customers for pulling and pushing images. In most cases, you should use the <code>docker</code> CLI to pull, tag, and push images.</p> </note>",
     "ListImageReferrers": "<p>Lists the artifacts associated with a specified subject image.</p>",
     "ListImages": "<p>Lists all the image IDs for the specified repository.</p> <p>You can filter images based on whether or not they are tagged by using the <code>tagStatus</code> filter and specifying either <code>TAGGED</code>, <code>UNTAGGED</code> or <code>ANY</code>. For example, you can filter your results to return only <code>UNTAGGED</code> images and then pipe that result to a <a>BatchDeleteImage</a> operation to delete them. Or, you can filter your results to return only <code>TAGGED</code> images to list all of the tags in your repository.</p>",
@@ -45,6 +48,7 @@
     "PutRegistryPolicy": "<p>Creates or updates the permissions policy for your registry.</p> <p>A registry policy is used to specify permissions for another Amazon Web Services account and is used when configuring cross-account replication. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/registry-permissions.html\">Registry permissions</a> in the <i>Amazon Elastic Container Registry User Guide</i>.</p>",
     "PutRegistryScanningConfiguration": "<p>Creates or updates the scanning configuration for your private registry.</p>",
     "PutReplicationConfiguration": "<p>Creates or updates the replication configuration for a registry. The existing replication configuration for a repository can be retrieved with the <a>DescribeRegistry</a> API action. The first time the PutReplicationConfiguration API is called, a service-linked IAM role is created in your account for the replication process. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/using-service-linked-roles.html\">Using service-linked roles for Amazon ECR</a> in the <i>Amazon Elastic Container Registry User Guide</i>. For more information on the custom role for replication, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/replication-creation-templates.html#roles-creatingrole-user-console\">Creating an IAM role for replication</a>.</p> <note> <p>When configuring cross-account replication, the destination account must grant the source account permission to replicate. This permission is controlled using a registry permissions policy. For more information, see <a>PutRegistryPolicy</a>.</p> </note>",
+    "PutSigningConfiguration": "<p>Creates or updates the registry's signing configuration, which defines rules for automatically signing images with Amazon Web Services Signer.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/managed-signing.html\">Managed signing</a> in the <i>Amazon Elastic Container Registry User Guide</i>.</p> <note> <p>To successfully generate a signature, the IAM principal pushing images must have permission to sign payloads with the Amazon Web Services Signer signing profile referenced in the signing configuration.</p> </note>",
     "RegisterPullTimeUpdateExclusion": "<p>Adds an IAM principal to the pull time update exclusion list for a registry. Amazon ECR will not record the pull time if an excluded principal pulls an image.</p>",
     "SetRepositoryPolicy": "<p>Applies a repository policy to the specified repository to control access permissions. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-policies.html\">Amazon ECR Repository policies</a> in the <i>Amazon Elastic Container Registry User Guide</i>.</p>",
     "StartImageScan": "<p>Starts a basic image vulnerability scan.</p> <p> A basic image scan can only be started once per 24 hours on an individual image. This limit includes if an image was scanned on initial push. You can start up to 100,000 basic scans per 24 hours. This limit includes both scans on initial push and scans initiated by the StartImageScan API. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning-basic.html\">Basic scanning</a> in the <i>Amazon Elastic Container Registry User Guide</i>.</p>",
@@ -393,6 +397,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteSigningConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSigningConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeregisterPullTimeUpdateExclusionRequest": {
       "base": null,
       "refs": {}
@@ -414,6 +426,14 @@
       "refs": {}
     },
     "DescribeImageScanFindingsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeImageSigningStatusRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeImageSigningStatusResponse": {
       "base": null,
       "refs": {}
     },
@@ -551,6 +571,7 @@
         "ScanNotFoundException$message": null,
         "SecretNotFoundException$message": null,
         "ServerException$message": "<p>The error message associated with the exception.</p>",
+        "SigningConfigurationNotFoundException$message": "<p>The error message associated with the exception.</p>",
         "TemplateAlreadyExistsException$message": null,
         "TemplateNotFoundException$message": null,
         "TooManyTagsException$message": null,
@@ -718,6 +739,14 @@
       "base": null,
       "refs": {}
     },
+    "GetSigningConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSigningConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "Image": {
       "base": "<p>An object representing an Amazon ECR image.</p>",
       "refs": {
@@ -807,6 +836,8 @@
         "DescribeImageReplicationStatusResponse$imageId": null,
         "DescribeImageScanFindingsRequest$imageId": null,
         "DescribeImageScanFindingsResponse$imageId": null,
+        "DescribeImageSigningStatusRequest$imageId": "<p>An object containing identifying information for an image.</p>",
+        "DescribeImageSigningStatusResponse$imageId": "<p>An object with identifying information for the image.</p>",
         "Image$imageId": "<p>An object containing the image tag and image digest associated with an image.</p>",
         "ImageFailure$imageId": "<p>The image ID associated with the failure.</p>",
         "ImageIdentifierList$member": null,
@@ -907,6 +938,18 @@
         "PutImageScanningConfigurationRequest$imageScanningConfiguration": "<p>The image scanning configuration for the repository. This setting determines whether images are scanned for known vulnerabilities after being pushed to the repository.</p>",
         "PutImageScanningConfigurationResponse$imageScanningConfiguration": "<p>The image scanning configuration setting for the repository.</p>",
         "Repository$imageScanningConfiguration": null
+      }
+    },
+    "ImageSigningStatus": {
+      "base": "<p>The signing status for an image. Each status corresponds to a signing profile.</p>",
+      "refs": {
+        "ImageSigningStatusList$member": null
+      }
+    },
+    "ImageSigningStatusList": {
+      "base": null,
+      "refs": {
+        "DescribeImageSigningStatusResponse$signingStatuses": "<p>A list of signing statuses for the specified image. Each status corresponds to a signing profile.</p>"
       }
     },
     "ImageSizeInBytes": {
@@ -1549,6 +1592,14 @@
       "base": null,
       "refs": {}
     },
+    "PutSigningConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutSigningConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "RCTAppliedFor": {
       "base": null,
       "refs": {
@@ -1634,9 +1685,12 @@
         "DeleteRepositoryPolicyRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repository policy to delete. If you do not specify a registry, the default registry is assumed.</p>",
         "DeleteRepositoryPolicyResponse$registryId": "<p>The registry ID associated with the request.</p>",
         "DeleteRepositoryRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repository to delete. If you do not specify a registry, the default registry is assumed.</p>",
+        "DeleteSigningConfigurationResponse$registryId": "<p>The Amazon Web Services account ID associated with the registry.</p>",
         "DescribeImageReplicationStatusRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry. If you do not specify a registry, the default registry is assumed.</p>",
         "DescribeImageScanFindingsRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repository in which to describe the image scan findings for. If you do not specify a registry, the default registry is assumed.</p>",
         "DescribeImageScanFindingsResponse$registryId": "<p>The registry ID associated with the request.</p>",
+        "DescribeImageSigningStatusRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repository. If you do not specify a registry, the default registry is assumed.</p>",
+        "DescribeImageSigningStatusResponse$registryId": "<p>The Amazon Web Services account ID associated with the registry.</p>",
         "DescribeImagesRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repository in which to describe images. If you do not specify a registry, the default registry is assumed.</p>",
         "DescribePullThroughCacheRulesRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry to return the pull through cache rules for. If you do not specify a registry, the default registry is assumed.</p>",
         "DescribeRegistryResponse$registryId": "<p>The registry ID associated with the request.</p>",
@@ -1653,6 +1707,7 @@
         "GetRegistryScanningConfigurationResponse$registryId": "<p>The registry ID associated with the request.</p>",
         "GetRepositoryPolicyRequest$registryId": "<p>The Amazon Web Services account ID associated with the registry that contains the repository. If you do not specify a registry, the default registry is assumed.</p>",
         "GetRepositoryPolicyResponse$registryId": "<p>The registry ID associated with the request.</p>",
+        "GetSigningConfigurationResponse$registryId": "<p>The Amazon Web Services account ID associated with the registry.</p>",
         "Image$registryId": "<p>The Amazon Web Services account ID associated with the registry containing the image.</p>",
         "ImageDetail$registryId": "<p>The Amazon Web Services account ID associated with the registry to which this image belongs.</p>",
         "ImageReplicationStatus$registryId": "<p>The Amazon Web Services account ID associated with the registry to which the image belongs.</p>",
@@ -1865,6 +1920,8 @@
         "DescribeImageReplicationStatusResponse$repositoryName": "<p>The repository name associated with the request.</p>",
         "DescribeImageScanFindingsRequest$repositoryName": "<p>The repository for the image for which to describe the scan findings.</p>",
         "DescribeImageScanFindingsResponse$repositoryName": "<p>The repository name associated with the request.</p>",
+        "DescribeImageSigningStatusRequest$repositoryName": "<p>The name of the repository that contains the image.</p>",
+        "DescribeImageSigningStatusResponse$repositoryName": "<p>The name of the repository.</p>",
         "DescribeImagesRequest$repositoryName": "<p>The repository that contains the images to describe.</p>",
         "GetDownloadUrlForLayerRequest$repositoryName": "<p>The name of the repository that is associated with the image layer to download.</p>",
         "GetLifecyclePolicyPreviewRequest$repositoryName": "<p>The name of the repository.</p>",
@@ -2123,6 +2180,80 @@
       "base": null,
       "refs": {
         "FindingSeverityCounts$value": null
+      }
+    },
+    "SigningConfiguration": {
+      "base": "<p>The signing configuration for a registry, which specifies rules for automatically signing images when pushed.</p>",
+      "refs": {
+        "DeleteSigningConfigurationResponse$signingConfiguration": "<p>The registry's deleted signing configuration.</p>",
+        "GetSigningConfigurationResponse$signingConfiguration": "<p>The registry's signing configuration.</p>",
+        "PutSigningConfigurationRequest$signingConfiguration": "<p>The signing configuration to assign to the registry.</p>",
+        "PutSigningConfigurationResponse$signingConfiguration": "<p>The registry's updated signing configuration.</p>"
+      }
+    },
+    "SigningConfigurationNotFoundException": {
+      "base": "<p>The specified signing configuration was not found. This occurs when attempting to retrieve or delete a signing configuration that does not exist.</p>",
+      "refs": {}
+    },
+    "SigningProfileArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of an Amazon Web Services Signer signing profile. The ARN contains the <code>arn:aws:signer</code> namespace, followed by the region, Amazon Web Services account ID, and signing profile resource path. For example, <code>arn:aws:signer:region:012345678910:/signing-profiles/profile-name</code>.</p>",
+      "refs": {
+        "ImageSigningStatus$signingProfileArn": "<p>The ARN of the Amazon Web Services Signer signing profile used to sign the image.</p>",
+        "SigningRule$signingProfileArn": "<p>The ARN of the Amazon Web Services Signer signing profile to use for signing images that match this rule. For more information about signing profiles, see <a href=\"https://docs.aws.amazon.com/signer/latest/developerguide/signing-profiles.html\">Signing profiles</a> in the <i>Amazon Web Services Signer Developer Guide</i>.</p>"
+      }
+    },
+    "SigningRepositoryFilter": {
+      "base": "<p>A repository filter used to determine which repositories have their images automatically signed on push. Each filter consists of a filter type and filter value.</p>",
+      "refs": {
+        "SigningRepositoryFilterList$member": null
+      }
+    },
+    "SigningRepositoryFilterList": {
+      "base": null,
+      "refs": {
+        "SigningRule$repositoryFilters": "<p>A list of repository filters that determine which repositories have their images signed on push. If no filters are specified, all images pushed to the registry are signed using the rule's signing profile. Maximum of 100 filters per rule.</p>"
+      }
+    },
+    "SigningRepositoryFilterType": {
+      "base": "<p>The type of filter to use when determining which repositories should have their images automatically signed.</p>",
+      "refs": {
+        "SigningRepositoryFilter$filterType": "<p>The type of filter to apply. Currently, only <code>WILDCARD_MATCH</code> is supported, which uses wildcard patterns to match repository names.</p>"
+      }
+    },
+    "SigningRepositoryFilterValue": {
+      "base": null,
+      "refs": {
+        "SigningRepositoryFilter$filter": "<p>The filter value used to match repository names. When using <code>WILDCARD_MATCH</code>, the <code>*</code> character matches any sequence of characters.</p> <p>Examples:</p> <ul> <li> <p> <code>myapp/*</code> - Matches all repositories starting with <code>myapp/</code> </p> </li> <li> <p> <code>*/production</code> - Matches all repositories ending with <code>/production</code> </p> </li> <li> <p> <code>*prod*</code> - Matches all repositories containing <code>prod</code> </p> </li> </ul>"
+      }
+    },
+    "SigningRule": {
+      "base": "<p>A signing rule that specifies a signing profile and optional repository filters. When an image is pushed to a matching repository, a signing job is created using the specified profile.</p>",
+      "refs": {
+        "SigningRuleList$member": null
+      }
+    },
+    "SigningRuleList": {
+      "base": null,
+      "refs": {
+        "SigningConfiguration$rules": "<p>A list of signing rules. Each rule defines a signing profile and optional repository filters that determine which images are automatically signed. Maximum of 10 rules.</p>"
+      }
+    },
+    "SigningStatus": {
+      "base": "<p>The image signing status. Possible values include <code>IN_PROGRESS</code>, <code>COMPLETE</code>, and <code>FAILED</code>.</p>",
+      "refs": {
+        "ImageSigningStatus$status": "<p>The image's signing status. Possible values are:</p> <ul> <li> <p> <code>IN_PROGRESS</code> - Signing is currently in progress.</p> </li> <li> <p> <code>COMPLETE</code> - The signature was successfully generated.</p> </li> <li> <p> <code>FAILED</code> - Signing failed. See <code>failureCode</code> and <code>failureReason</code> for details.</p> </li> </ul>"
+      }
+    },
+    "SigningStatusFailureCode": {
+      "base": null,
+      "refs": {
+        "ImageSigningStatus$failureCode": "<p>The failure code, which is only present if <code>status</code> is <code>FAILED</code>.</p>"
+      }
+    },
+    "SigningStatusFailureReason": {
+      "base": null,
+      "refs": {
+        "ImageSigningStatus$failureReason": "<p>A description of why signing the image failed. This field is only present if <code>status</code> is <code>FAILED</code>.</p>"
       }
     },
     "Source": {

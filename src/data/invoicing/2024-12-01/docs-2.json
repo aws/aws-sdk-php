@@ -1,18 +1,24 @@
 {
   "version": "2.0",
-  "service": "<p> <b>Amazon Web Services Invoice Configuration</b> </p> <p>You can use Amazon Web Services Invoice Configuration APIs to programmatically create, update, delete, get, and list invoice units. You can also programmatically fetch the information of the invoice receiver. For example, business legal name, address, and invoicing contacts. </p> <p>You can use Amazon Web Services Invoice Configuration to receive separate Amazon Web Services invoices based your organizational needs. By using Amazon Web Services Invoice Configuration, you can configure invoice units that are groups of Amazon Web Services accounts that represent your business entities, and receive separate invoices for each business entity. You can also assign a unique member or payer account as the invoice receiver for each invoice unit. As you create new accounts within your Organizations using Amazon Web Services Invoice Configuration APIs, you can automate the creation of new invoice units and subsequently automate the addition of new accounts to your invoice units.</p> <p>Service endpoint</p> <p>You can use the following endpoints for Amazon Web Services Invoice Configuration:</p> <ul> <li> <p> <code>https://invoicing.us-east-1.api.aws</code> </p> </li> </ul>",
+  "service": "<p> <b>Amazon Web Services Invoice Configuration</b> </p> <p>You can use Amazon Web Services Invoice Configuration APIs to programmatically create, update, delete, get, and list invoice units. You can also programmatically fetch the information of the invoice receiver. For example, business legal name, address, and invoicing contacts. </p> <p>You can use Amazon Web Services Invoice Configuration to receive separate Amazon Web Services invoices based your organizational needs. By using Amazon Web Services Invoice Configuration, you can configure invoice units that are groups of Amazon Web Services accounts that represent your business entities, and receive separate invoices for each business entity. You can also assign a unique member or payer account as the invoice receiver for each invoice unit. As you create new accounts within your Organizations using Amazon Web Services Invoice Configuration APIs, you can automate the creation of new invoice units and subsequently automate the addition of new accounts to your invoice units.</p> <p> <b>Amazon Web Services Procurement Portal Preferences</b> </p> <p>You can use Amazon Web Services Procurement Portal Preferences APIs to programmatically create, update, delete, get, and list procurement portal connections and e-invoice delivery settings. You can also programmatically fetch and modify the status of procurement portal configurations. For example, SAP Business Network or Coupa connections, configure e-invoice delivery and purchase order retrieval features.</p> <p>You can use Amazon Web Services Procurement Portal Preferences to connect e-invoice delivery to your procurement portals based on your organizational needs. By using Amazon Web Services Procurement Portal Preferences, you can configure connections to SAP Business Network and Coupa procurement portals that retrieve purchase orders and deliver Amazon Web Services invoices on the same day they are generated. You can also set up testing environments to validate invoice delivery without affecting live transactions, and manage contact information for portal setup and support. </p> <p>Administrative users should understand that billing read-only policies will show all procurement portal connection details. Review your IAM policies to ensure appropriate access controls are in place for procurement portal preferences.</p> <p> <b>Amazon Web Services Invoice Management</b> </p> <p>You can use Amazon Web Services Invoice Management APIs to programmatically list invoice summaries and get invoice documents. You can also programmatically fetch invoice documents with S3 pre-signed URLs.</p> <p>You can use Amazon Web Services Invoice Management to access invoice information based on your organizational needs. By using Amazon Web Services Invoice Management, you can retrieve paginated lists of invoice summaries that include invoice metadata such as invoice IDs, amounts, and currencies without downloading documents. You can also download invoice documents in PDF format using S3 pre-signed URLs with built-in expiration. As you manage invoices across your organization using Amazon Web Services Invoice Management APIs, you can create invoice retrieval processes and integrate invoice data into your financial systems.</p> <p>Service endpoint</p> <p>You can use the following endpoints for Amazon Web Services Invoice Configuration, Amazon Web Services Procurement Portal Preferences, and Amazon Web Services Invoice Management:</p> <ul> <li> <p> <code>https://invoicing.us-east-1.api.aws</code> </p> </li> </ul>",
   "operations": {
     "BatchGetInvoiceProfile": "<p>This gets the invoice profile associated with a set of accounts. The accounts must be linked accounts under the requester management account organization.</p>",
     "CreateInvoiceUnit": "<p>This creates a new invoice unit with the provided definition.</p>",
+    "CreateProcurementPortalPreference": "<p>Creates a procurement portal preference configuration for e-invoice delivery and purchase order retrieval. This preference defines how invoices are delivered to a procurement portal and how purchase orders are retrieved.</p>",
     "DeleteInvoiceUnit": "<p>This deletes an invoice unit with the provided invoice unit ARN. </p>",
+    "DeleteProcurementPortalPreference": "<p>Deletes an existing procurement portal preference. This action cannot be undone. Active e-invoice delivery and PO retrieval configurations will be terminated.</p>",
     "GetInvoicePDF": "<p>Returns a URL to download the invoice document and supplemental documents associated with an invoice. The URLs are pre-signed and have expiration time. For special cases like Brazil, where Amazon Web Services generated invoice identifiers and government provided identifiers do not match, use the Amazon Web Services generated invoice identifier when making API requests. To grant IAM permission to use this operation, the caller needs the <code>invoicing:GetInvoicePDF</code> policy action.</p>",
     "GetInvoiceUnit": "<p>This retrieves the invoice unit definition.</p>",
+    "GetProcurementPortalPreference": "<p>Retrieves the details of a specific procurement portal preference configuration.</p>",
     "ListInvoiceSummaries": "<p>Retrieves your invoice details programmatically, without line item details.</p>",
     "ListInvoiceUnits": "<p>This fetches a list of all invoice unit definitions for a given account, as of the provided <code>AsOf</code> date.</p>",
+    "ListProcurementPortalPreferences": "<p>Retrieves a list of procurement portal preferences associated with the Amazon Web Services account.</p>",
     "ListTagsForResource": "<p>Lists the tags for a resource. </p>",
+    "PutProcurementPortalPreference": "<p>Updates an existing procurement portal preference configuration. This operation can modify settings for e-invoice delivery and purchase order retrieval.</p>",
     "TagResource": "<p>Adds a tag to a resource. </p>",
     "UntagResource": "<p> Removes a tag from a resource. </p>",
-    "UpdateInvoiceUnit": "<p>You can update the invoice unit configuration at any time, and Amazon Web Services will use the latest configuration at the end of the month.</p>"
+    "UpdateInvoiceUnit": "<p>You can update the invoice unit configuration at any time, and Amazon Web Services will use the latest configuration at the end of the month.</p>",
+    "UpdateProcurementPortalPreferenceStatus": "<p>Updates the status of a procurement portal preference, including the activation state of e-invoice delivery and purchase order retrieval features.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -37,6 +43,8 @@
         "InvoiceProfile$AccountId": "<p> The account ID the invoice profile is generated for. </p>",
         "InvoiceSummary$AccountId": "<p> The Amazon Web Services account ID. </p>",
         "InvoiceUnit$InvoiceReceiver": "<p>The account that receives invoices related to the invoice unit. </p>",
+        "ProcurementPortalPreference$AwsAccountId": "<p>The Amazon Web Services account ID associated with this procurement portal preference.</p>",
+        "ProcurementPortalPreferenceSummary$AwsAccountId": "<p>The Amazon Web Services account ID associated with this procurement portal preference summary.</p>",
         "RuleAccountIdList$member": null
       }
     },
@@ -58,6 +66,10 @@
       "refs": {
         "AccessDeniedException$message": null,
         "AmountBreakdown$SubTotalAmount": "<p> The total of a set of the breakdown. </p>",
+        "ConflictException$message": null,
+        "ConflictException$resourceId": "<p>The identifier of the resource that caused the conflict.</p>",
+        "ConflictException$resourceType": "<p>The type of resource that caused the conflict.</p>",
+        "Contact$Name": "<p>The name of the contact person or role.</p>",
         "CurrencyExchangeDetails$SourceCurrencyCode": "<p>The exchange source currency. </p>",
         "CurrencyExchangeDetails$TargetCurrencyCode": "<p>The exchange target currency. </p>",
         "CurrencyExchangeDetails$Rate": "<p>The currency exchange rate. </p>",
@@ -77,6 +89,10 @@
         "InvoiceSummary$InvoiceId": "<p> The invoice ID. </p>",
         "InvoiceSummary$OriginalInvoiceId": "<p>The initial or original invoice ID. </p>",
         "InvoiceSummary$PurchaseOrderNumber": "<p> The purchase order number associated to the invoice.</p>",
+        "ProcurementPortalPreference$EinvoiceDeliveryPreferenceStatusReason": "<p>The reason for the current e-invoice delivery preference status.</p>",
+        "ProcurementPortalPreference$PurchaseOrderRetrievalPreferenceStatusReason": "<p>The reason for the current purchase order retrieval preference status.</p>",
+        "ProcurementPortalPreferenceSummary$EinvoiceDeliveryPreferenceStatusReason": "<p>The reason for the current e-invoice delivery preference status in this summary.</p>",
+        "ProcurementPortalPreferenceSummary$PurchaseOrderRetrievalPreferenceStatusReason": "<p>The reason for the current purchase order retrieval preference status in this summary.</p>",
         "ReceiverAddress$AddressLine1": "<p> The first line of the address. </p>",
         "ReceiverAddress$AddressLine2": "<p> The second line of the address, if applicable. </p>",
         "ReceiverAddress$AddressLine3": "<p> The third line of the address, if applicable. </p>",
@@ -93,6 +109,8 @@
         "TaxesBreakdownAmount$Amount": "<p> The tax amount. </p>",
         "TaxesBreakdownAmount$Rate": "<p> The details of the tax rate. </p>",
         "ThrottlingException$message": null,
+        "UpdateProcurementPortalPreferenceStatusRequest$EinvoiceDeliveryPreferenceStatusReason": "<p>The reason for the e-invoice delivery preference status update, providing context for the change.</p>",
+        "UpdateProcurementPortalPreferenceStatusRequest$PurchaseOrderRetrievalPreferenceStatusReason": "<p>The reason for the purchase order retrieval preference status update, providing context for the change.</p>",
         "ValidationException$message": null,
         "ValidationExceptionField$name": "<p> The input fails to satisfy the constraints specified by an Amazon Web Services service. </p>",
         "ValidationExceptionField$message": "<p> The input fails to satisfy the constraints specified by an Amazon Web Services service. </p>"
@@ -101,8 +119,32 @@
     "BasicStringWithoutSpace": {
       "base": null,
       "refs": {
+        "CreateProcurementPortalPreferenceRequest$BuyerIdentifier": "<p>The unique identifier for the buyer in the procurement portal. </p>",
+        "CreateProcurementPortalPreferenceRequest$SupplierIdentifier": "<p>The unique identifier for the supplier in the procurement portal.</p>",
+        "CreateProcurementPortalPreferenceRequest$ProcurementPortalInstanceEndpoint": "<p>The endpoint URL where e-invoices will be delivered to the procurement portal. Must be a valid HTTPS URL.</p>",
+        "CreateProcurementPortalPreferenceRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure idempotency of the request.</p>",
         "InvoiceProfile$ReceiverName": "<p> The name of the person receiving the invoice profile. </p>",
-        "InvoiceProfile$Issuer": "<p> This specifies the issuing entity of the invoice. </p>"
+        "InvoiceProfile$Issuer": "<p> This specifies the issuing entity of the invoice. </p>",
+        "ListProcurementPortalPreferencesRequest$NextToken": "<p>The token for the next set of results. (You received this token from a previous call.)</p>",
+        "ListProcurementPortalPreferencesResponse$NextToken": "<p>The token to use to retrieve the next set of results, or null if there are no more results.</p>",
+        "ProcurementPortalPreference$BuyerIdentifier": "<p>The unique identifier for the buyer in the procurement portal.</p>",
+        "ProcurementPortalPreference$SupplierIdentifier": "<p>The unique identifier for the supplier in the procurement portal.</p>",
+        "ProcurementPortalPreference$ProcurementPortalSharedSecret": "<p>The shared secret or authentication credential used for secure communication with the procurement portal.</p>",
+        "ProcurementPortalPreference$ProcurementPortalInstanceEndpoint": "<p>The endpoint URL where e-invoices are delivered to the procurement portal.</p>",
+        "ProcurementPortalPreference$PurchaseOrderRetrievalEndpoint": "<p>The endpoint URL used for retrieving purchase orders from the procurement portal.</p>",
+        "ProcurementPortalPreferenceSummary$BuyerIdentifier": "<p>The unique identifier for the buyer in the procurement portal.</p>",
+        "ProcurementPortalPreferenceSummary$SupplierIdentifier": "<p>The unique identifier for the supplier in the procurement portal.</p>",
+        "PutProcurementPortalPreferenceRequest$ProcurementPortalInstanceEndpoint": "<p>The updated endpoint URL where e-invoices will be delivered to the procurement portal. Must be a valid HTTPS URL.</p>",
+        "SellerOfRecords$member": null,
+        "TestEnvPreference$BuyerIdentifier": "<p>The unique identifier for the buyer in the test environment of the procurement portal.</p>",
+        "TestEnvPreference$SupplierIdentifier": "<p>The unique identifier for the supplier in the test environment of the procurement portal.</p>",
+        "TestEnvPreference$ProcurementPortalSharedSecret": "<p>The shared secret or authentication credential used for secure communication with the test environment.</p>",
+        "TestEnvPreference$ProcurementPortalInstanceEndpoint": "<p>The endpoint URL where e-invoices are delivered in the test environment.</p>",
+        "TestEnvPreference$PurchaseOrderRetrievalEndpoint": "<p>The endpoint URL used for retrieving purchase orders in the test environment.</p>",
+        "TestEnvPreferenceInput$BuyerIdentifier": "<p>The unique identifier to use for the buyer in the test environment.</p>",
+        "TestEnvPreferenceInput$SupplierIdentifier": "<p>The unique identifier to use for the supplier in the test environment.</p>",
+        "TestEnvPreferenceInput$ProcurementPortalSharedSecret": "<p>The shared secret or authentication credential to use for secure communication in the test environment.</p>",
+        "TestEnvPreferenceInput$ProcurementPortalInstanceEndpoint": "<p>The endpoint URL where e-invoices will be delivered in the test environment.</p>"
       }
     },
     "BatchGetInvoiceProfileRequest": {
@@ -120,11 +162,66 @@
         "InvoiceSummary$BillingPeriod": "<p> The billing period of the invoice-related document. </p>"
       }
     },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "CreateProcurementPortalPreferenceRequest$EinvoiceDeliveryEnabled": "<p>Indicates whether e-invoice delivery is enabled for this procurement portal preference. Set to true to enable e-invoice delivery, false to disable.</p>",
+        "CreateProcurementPortalPreferenceRequest$PurchaseOrderRetrievalEnabled": "<p>Indicates whether purchase order retrieval is enabled for this procurement portal preference. Set to true to enable PO retrieval, false to disable.</p>",
+        "ProcurementPortalPreference$EinvoiceDeliveryEnabled": "<p>Indicates whether e-invoice delivery is enabled for this procurement portal preference.</p>",
+        "ProcurementPortalPreference$PurchaseOrderRetrievalEnabled": "<p>Indicates whether purchase order retrieval is enabled for this procurement portal preference.</p>",
+        "ProcurementPortalPreferenceSummary$EinvoiceDeliveryEnabled": "<p>Indicates whether e-invoice delivery is enabled for this procurement portal preference.</p>",
+        "ProcurementPortalPreferenceSummary$PurchaseOrderRetrievalEnabled": "<p>Indicates whether purchase order retrieval is enabled for this procurement portal preference.</p>",
+        "PutProcurementPortalPreferenceRequest$EinvoiceDeliveryEnabled": "<p>Updated flag indicating whether e-invoice delivery is enabled for this procurement portal preference.</p>",
+        "PutProcurementPortalPreferenceRequest$PurchaseOrderRetrievalEnabled": "<p>Updated flag indicating whether purchase order retrieval is enabled for this procurement portal preference.</p>"
+      }
+    },
+    "BuyerDomain": {
+      "base": null,
+      "refs": {
+        "CreateProcurementPortalPreferenceRequest$BuyerDomain": "<p>The domain identifier for the buyer in the procurement portal.</p>",
+        "ProcurementPortalPreference$BuyerDomain": "<p>The domain identifier for the buyer in the procurement portal.</p>",
+        "ProcurementPortalPreferenceSummary$BuyerDomain": "<p>The domain identifier for the buyer in the procurement portal.</p>",
+        "TestEnvPreference$BuyerDomain": "<p>The domain identifier for the buyer in the test environment of the procurement portal.</p>",
+        "TestEnvPreferenceInput$BuyerDomain": "<p>The domain identifier to use for the buyer in the test environment.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The request could not be completed due to a conflict with the current state of the resource. This exception occurs when a concurrent modification is detected during an update operation, or when attempting to create a resource that already exists.</p>",
+      "refs": {}
+    },
+    "ConnectionTestingMethod": {
+      "base": null,
+      "refs": {
+        "EinvoiceDeliveryPreference$ConnectionTestingMethod": "<p>The method to use for testing the connection to the procurement portal.</p>"
+      }
+    },
+    "Contact": {
+      "base": "<p>Represents contact information for a person or role associated with the procurement portal preference.</p>",
+      "refs": {
+        "Contacts$member": null
+      }
+    },
+    "Contacts": {
+      "base": null,
+      "refs": {
+        "CreateProcurementPortalPreferenceRequest$Contacts": "<p>List of contact information for portal administrators and technical contacts responsible for the e-invoice integration.</p>",
+        "ProcurementPortalPreference$Contacts": "<p>List of contact information for portal administrators and technical contacts.</p>",
+        "PutProcurementPortalPreferenceRequest$Contacts": "<p>Updated list of contact information for portal administrators and technical contacts.</p>"
+      }
+    },
     "CreateInvoiceUnitRequest": {
       "base": null,
       "refs": {}
     },
     "CreateInvoiceUnitResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateProcurementPortalPreferenceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateProcurementPortalPreferenceResponse": {
       "base": null,
       "refs": {}
     },
@@ -154,6 +251,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteProcurementPortalPreferenceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteProcurementPortalPreferenceResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescriptionString": {
       "base": null,
       "refs": {
@@ -179,6 +284,45 @@
       "base": null,
       "refs": {
         "DiscountsBreakdown$Breakdown": "<p>The list of discounts information. </p>"
+      }
+    },
+    "EinvoiceDeliveryAttachmentType": {
+      "base": null,
+      "refs": {
+        "EinvoiceDeliveryAttachmentTypes$member": null
+      }
+    },
+    "EinvoiceDeliveryAttachmentTypes": {
+      "base": null,
+      "refs": {
+        "EinvoiceDeliveryPreference$EinvoiceDeliveryAttachmentTypes": "<p>The types of attachments to include with the e-invoice delivery.</p>"
+      }
+    },
+    "EinvoiceDeliveryDocumentType": {
+      "base": null,
+      "refs": {
+        "EinvoiceDeliveryDocumentTypes$member": null,
+        "PurchaseOrderDataSource$EinvoiceDeliveryDocumentType": "<p>The type of e-invoice document that requires purchase order data.</p>"
+      }
+    },
+    "EinvoiceDeliveryDocumentTypes": {
+      "base": null,
+      "refs": {
+        "EinvoiceDeliveryPreference$EinvoiceDeliveryDocumentTypes": "<p>The types of e-invoice documents to be delivered.</p>"
+      }
+    },
+    "EinvoiceDeliveryPreference": {
+      "base": "<p>Specifies the preferences for e-invoice delivery, including document types, attachment types, and customization settings.</p>",
+      "refs": {
+        "CreateProcurementPortalPreferenceRequest$EinvoiceDeliveryPreference": "<p>Specifies the e-invoice delivery configuration including document types, attachment types, and customization settings for the portal.</p>",
+        "ProcurementPortalPreference$EinvoiceDeliveryPreference": "<p>The configuration settings that specify how e-invoices are delivered to the procurement portal.</p>",
+        "PutProcurementPortalPreferenceRequest$EinvoiceDeliveryPreference": "<p>Updated e-invoice delivery configuration including document types, attachment types, and customization settings for the portal.</p>"
+      }
+    },
+    "EmailString": {
+      "base": null,
+      "refs": {
+        "Contact$Email": "<p>The email address of the contact person or role.</p>"
       }
     },
     "Entity": {
@@ -224,6 +368,14 @@
       "refs": {}
     },
     "GetInvoiceUnitResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProcurementPortalPreferenceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProcurementPortalPreferenceResponse": {
       "base": null,
       "refs": {}
     },
@@ -309,10 +461,17 @@
         "GetInvoiceUnitRequest$InvoiceUnitArn": "<p> The ARN to identify an invoice unit. This information can't be modified or deleted. </p>",
         "GetInvoiceUnitResponse$InvoiceUnitArn": "<p> The ARN to identify an invoice unit. This information can't be modified or deleted. </p>",
         "InvoiceUnit$InvoiceUnitArn": "<p>ARN to identify an invoice unit. This information can't be modified or deleted. </p>",
+        "InvoiceUnitArns$member": null,
         "ResourceNotFoundException$resourceName": "<p>The resource could not be found.</p>",
         "UpdateInvoiceUnitRequest$InvoiceUnitArn": "<p>The ARN to identify an invoice unit. This information can't be modified or deleted. </p>",
         "UpdateInvoiceUnitResponse$InvoiceUnitArn": "<p> The ARN to identify an invoice unit. This information can't be modified or deleted. </p>",
         "ValidationException$resourceName": "<p>You don't have sufficient access to perform this action. </p>"
+      }
+    },
+    "InvoiceUnitArns": {
+      "base": null,
+      "refs": {
+        "ProcurementPortalPreferenceSelector$InvoiceUnitArns": "<p> The Amazon Resource Name (ARN) of invoice unit identifiers to which this preference applies. </p>"
       }
     },
     "InvoiceUnitName": {
@@ -374,6 +533,14 @@
       "base": null,
       "refs": {}
     },
+    "ListProcurementPortalPreferencesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProcurementPortalPreferencesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsForResourceRequest": {
       "base": null,
       "refs": {}
@@ -381,6 +548,19 @@
     "ListTagsForResourceResponse": {
       "base": null,
       "refs": {}
+    },
+    "Long": {
+      "base": null,
+      "refs": {
+        "ProcurementPortalPreference$Version": "<p>The version number of the procurement portal preference configuration.</p>",
+        "ProcurementPortalPreferenceSummary$Version": "<p>The version number of the procurement portal preference configuration in this summary.</p>"
+      }
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListProcurementPortalPreferencesRequest$MaxResults": "<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned NextToken value.</p>"
+      }
     },
     "MaxResultsInteger": {
       "base": null,
@@ -403,11 +583,104 @@
         "ListInvoiceUnitsResponse$NextToken": "<p>The next token used to indicate where the returned list should start from. </p>"
       }
     },
+    "ProcurementPortalName": {
+      "base": null,
+      "refs": {
+        "CreateProcurementPortalPreferenceRequest$ProcurementPortalName": "<p>The name of the procurement portal.</p>",
+        "ProcurementPortalPreference$ProcurementPortalName": "<p>The name of the procurement portal.</p>",
+        "ProcurementPortalPreferenceSummary$ProcurementPortalName": "<p>The name of the procurement portal.</p>"
+      }
+    },
+    "ProcurementPortalPreference": {
+      "base": "<p>Represents the full configuration of a procurement portal preference, including settings for e-invoice delivery and purchase order retrieval.</p>",
+      "refs": {
+        "GetProcurementPortalPreferenceResponse$ProcurementPortalPreference": "<p>The detailed configuration of the requested procurement portal preference.</p>"
+      }
+    },
+    "ProcurementPortalPreferenceArnString": {
+      "base": null,
+      "refs": {
+        "CreateProcurementPortalPreferenceResponse$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the created procurement portal preference.</p>",
+        "DeleteProcurementPortalPreferenceRequest$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the procurement portal preference to delete.</p>",
+        "DeleteProcurementPortalPreferenceResponse$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the deleted procurement portal preference.</p>",
+        "GetProcurementPortalPreferenceRequest$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the procurement portal preference to retrieve.</p>",
+        "ProcurementPortalPreference$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the procurement portal preference.</p>",
+        "ProcurementPortalPreferenceSummary$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the procurement portal preference.</p>",
+        "PutProcurementPortalPreferenceRequest$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the procurement portal preference to update.</p>",
+        "PutProcurementPortalPreferenceResponse$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the updated procurement portal preference.</p>",
+        "UpdateProcurementPortalPreferenceStatusRequest$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the procurement portal preference to update.</p>",
+        "UpdateProcurementPortalPreferenceStatusResponse$ProcurementPortalPreferenceArn": "<p>The Amazon Resource Name (ARN) of the procurement portal preference with updated status.</p>"
+      }
+    },
+    "ProcurementPortalPreferenceSelector": {
+      "base": "<p>Specifies criteria for selecting which invoices should be processed using a particular procurement portal preference.</p>",
+      "refs": {
+        "CreateProcurementPortalPreferenceRequest$Selector": null,
+        "ProcurementPortalPreference$Selector": null,
+        "ProcurementPortalPreferenceSummary$Selector": null,
+        "PutProcurementPortalPreferenceRequest$Selector": null
+      }
+    },
+    "ProcurementPortalPreferenceStatus": {
+      "base": null,
+      "refs": {
+        "ProcurementPortalPreference$EinvoiceDeliveryPreferenceStatus": "<p>The current status of the e-invoice delivery preference.</p>",
+        "ProcurementPortalPreference$PurchaseOrderRetrievalPreferenceStatus": "<p>The current status of the purchase order retrieval preference.</p>",
+        "ProcurementPortalPreferenceSummary$EinvoiceDeliveryPreferenceStatus": "<p>The current status of the e-invoice delivery preference in this summary.</p>",
+        "ProcurementPortalPreferenceSummary$PurchaseOrderRetrievalPreferenceStatus": "<p>The current status of the purchase order retrieval preference in this summary.</p>",
+        "UpdateProcurementPortalPreferenceStatusRequest$EinvoiceDeliveryPreferenceStatus": "<p>The updated status of the e-invoice delivery preference.</p>",
+        "UpdateProcurementPortalPreferenceStatusRequest$PurchaseOrderRetrievalPreferenceStatus": "<p>The updated status of the purchase order retrieval preference.</p>"
+      }
+    },
+    "ProcurementPortalPreferenceSummaries": {
+      "base": null,
+      "refs": {
+        "ListProcurementPortalPreferencesResponse$ProcurementPortalPreferences": "<p>The list of procurement portal preferences associated with the Amazon Web Services account.</p>"
+      }
+    },
+    "ProcurementPortalPreferenceSummary": {
+      "base": "<p>Provides a summary of a procurement portal preference, including key identifiers and status information.</p>",
+      "refs": {
+        "ProcurementPortalPreferenceSummaries$member": null
+      }
+    },
     "ProfileList": {
       "base": null,
       "refs": {
         "BatchGetInvoiceProfileResponse$Profiles": "<p> A list of invoice profiles corresponding to the requested accounts. </p>"
       }
+    },
+    "Protocol": {
+      "base": null,
+      "refs": {
+        "EinvoiceDeliveryPreference$Protocol": "<p>The communication protocol to use for e-invoice delivery.</p>"
+      }
+    },
+    "PurchaseOrderDataSource": {
+      "base": "<p>Specifies the source configuration for retrieving purchase order data.</p>",
+      "refs": {
+        "PurchaseOrderDataSources$member": null
+      }
+    },
+    "PurchaseOrderDataSourceType": {
+      "base": null,
+      "refs": {
+        "PurchaseOrderDataSource$PurchaseOrderDataSourceType": "<p>The type of source for purchase order data.</p>"
+      }
+    },
+    "PurchaseOrderDataSources": {
+      "base": null,
+      "refs": {
+        "EinvoiceDeliveryPreference$PurchaseOrderDataSources": "<p>The sources of purchase order data to use for e-invoice generation and delivery.</p>"
+      }
+    },
+    "PutProcurementPortalPreferenceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutProcurementPortalPreferenceResponse": {
+      "base": null,
+      "refs": {}
     },
     "ReceiverAddress": {
       "base": "<p> The details of the address associated with the receiver. </p>",
@@ -442,6 +715,7 @@
       "base": null,
       "refs": {
         "CreateInvoiceUnitRequest$ResourceTags": "<p> The tag structure that contains a tag key and value. </p>",
+        "CreateProcurementPortalPreferenceRequest$ResourceTags": "<p>The tags to apply to this procurement portal preference resource. Each tag consists of a key and an optional value.</p>",
         "ListTagsForResourceResponse$ResourceTags": "<p> Adds a tag to a resource. </p>",
         "TagResourceRequest$ResourceTags": "<p> Adds a tag to a resource. </p>"
       }
@@ -459,11 +733,19 @@
         "InvoiceUnitRule$BillSourceAccounts": "<p> A list of Amazon Web Services account account IDs that have delegated their billing responsibility to the receiver account through transfer billing. Unlike linked accounts, these bill source accounts can be payer accounts from other organizations that have authorized billing transfer to this account. </p>"
       }
     },
+    "SellerOfRecords": {
+      "base": null,
+      "refs": {
+        "ProcurementPortalPreferenceSelector$SellerOfRecords": "<p> The list of seller of record IDs to which this preference applies. </p>"
+      }
+    },
     "SensitiveBasicStringWithoutSpace": {
       "base": null,
       "refs": {
+        "CreateProcurementPortalPreferenceRequest$ProcurementPortalSharedSecret": "<p>The shared secret or authentication credential used to establish secure communication with the procurement portal. This value must be encrypted at rest.</p>",
         "InvoiceProfile$ReceiverEmail": "<p>The email address for the invoice profile receiver. </p>",
-        "InvoiceProfile$TaxRegistrationNumber": "<p> Your Tax Registration Number (TRN) information. </p>"
+        "InvoiceProfile$TaxRegistrationNumber": "<p> Your Tax Registration Number (TRN) information. </p>",
+        "PutProcurementPortalPreferenceRequest$ProcurementPortalSharedSecret": "<p>The updated shared secret or authentication credential for the procurement portal. This value must be encrypted at rest.</p>"
       }
     },
     "ServiceQuotaExceededException": {
@@ -490,6 +772,16 @@
       "base": null,
       "refs": {
         "InvoicePDF$SupplementalDocuments": "<p>List of supplemental documents associated with the invoice.</p>"
+      }
+    },
+    "SupplierDomain": {
+      "base": null,
+      "refs": {
+        "CreateProcurementPortalPreferenceRequest$SupplierDomain": "<p>The domain identifier for the supplier in the procurement portal.</p>",
+        "ProcurementPortalPreference$SupplierDomain": "<p>The domain identifier for the supplier in the procurement portal.</p>",
+        "ProcurementPortalPreferenceSummary$SupplierDomain": "<p>The domain identifier for the supplier in the procurement portal.</p>",
+        "TestEnvPreference$SupplierDomain": "<p>The domain identifier for the supplier in the test environment of the procurement portal.</p>",
+        "TestEnvPreferenceInput$SupplierDomain": "<p>The domain identifier to use for the supplier in the test environment.</p>"
       }
     },
     "TagResourceRequest": {
@@ -535,6 +827,19 @@
         "TaxesBreakdown$Breakdown": "<p> A list of tax information. </p>"
       }
     },
+    "TestEnvPreference": {
+      "base": "<p>Contains configuration settings for testing the procurement portal integration in a non-production environment.</p>",
+      "refs": {
+        "ProcurementPortalPreference$TestEnvPreference": "<p>Configuration on settings for the test environment of the procurement portal.</p>"
+      }
+    },
+    "TestEnvPreferenceInput": {
+      "base": "<p>Input parameters for configuring test environment preferences for a procurement portal.</p>",
+      "refs": {
+        "CreateProcurementPortalPreferenceRequest$TestEnvPreference": "<p>Configuration settings for the test environment of the procurement portal. Includes test credentials and endpoints that are used for validation before production deployment.</p>",
+        "PutProcurementPortalPreferenceRequest$TestEnvPreference": "<p>Updated configuration settings for the test environment of the procurement portal.</p>"
+      }
+    },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
       "refs": {}
@@ -544,9 +849,14 @@
       "refs": {
         "DateInterval$StartDate": "<p> The beginning of the time period that you want invoice-related documents for. The start date is inclusive. For example, if <code>start</code> is <code>2019-01-01</code>, AWS retrieves invoices starting at <code>2019-01-01</code> up to the end date. </p>",
         "DateInterval$EndDate": "<p> The end of the time period that you want invoice-related documents for. The end date is exclusive. For example, if <code>end</code> is <code>2019-01-10</code>, Amazon Web Services retrieves invoice-related documents from the start date up to, but not including, <code>2018-01-10</code>. </p>",
+        "EinvoiceDeliveryPreference$EinvoiceDeliveryActivationDate": "<p>The date when e-invoice delivery should be activated for this preference.</p>",
         "InvoicePDF$DocumentUrlExpirationDate": "<p>The pre-signed URL expiration date of the invoice document.</p>",
         "InvoiceSummary$IssuedDate": "<p> The issued date of the invoice. </p>",
         "InvoiceSummary$DueDate": "<p> The invoice due date. </p>",
+        "ProcurementPortalPreference$CreateDate": "<p>The date and time when the procurement portal preference was created.</p>",
+        "ProcurementPortalPreference$LastUpdateDate": "<p>The date and time when the procurement portal preference was last updated.</p>",
+        "ProcurementPortalPreferenceSummary$CreateDate": "<p>The date and time when the procurement portal preference was created.</p>",
+        "ProcurementPortalPreferenceSummary$LastUpdateDate": "<p>The date and time when the procurement portal preference was last updated.</p>",
         "SupplementalDocument$DocumentUrlExpirationDate": "<p>The pre-signed URL expiration date of invoice supplemental document.</p>"
       }
     },
@@ -563,6 +873,14 @@
       "refs": {}
     },
     "UpdateInvoiceUnitResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProcurementPortalPreferenceStatusRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateProcurementPortalPreferenceStatusResponse": {
       "base": null,
       "refs": {}
     },

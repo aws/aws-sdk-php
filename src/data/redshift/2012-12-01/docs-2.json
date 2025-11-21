@@ -121,6 +121,7 @@
     "ModifyEndpointAccess": "<p>Modifies a Redshift-managed VPC endpoint.</p>",
     "ModifyEventSubscription": "<p>Modifies an existing Amazon Redshift event notification subscription.</p>",
     "ModifyIntegration": "<p>Modifies a zero-ETL integration or S3 event integration with Amazon Redshift.</p>",
+    "ModifyLakehouseConfiguration": "<p>Modifies the lakehouse configuration for a cluster. This operation allows you to manage Amazon Redshift federated permissions and Amazon Web Services IAM Identity Center trusted identity propagation.</p>",
     "ModifyRedshiftIdcApplication": "<p>Changes an existing Amazon Redshift IAM Identity Center application.</p>",
     "ModifyScheduledAction": "<p>Modifies a scheduled action. </p>",
     "ModifySnapshotCopyRetentionPeriod": "<p>Modifies the number of days to retain snapshots in the destination Amazon Web Services Region after they are copied from the source Amazon Web Services Region. By default, this operation only changes the retention period of copied automated snapshots. The retention periods for both new and existing copied automated snapshots are updated with the new retention period. You can set the manual option to change only the retention periods of copied manual snapshots. If you set this option, only newly copied manual snapshots have the new retention period. </p>",
@@ -186,6 +187,13 @@
       "base": null,
       "refs": {
         "DescribeNodeConfigurationOptionsMessage$ActionType": "<p>The action type to evaluate for possible node configurations. Specify \"restore-cluster\" to get configuration combinations based on an existing snapshot. Specify \"recommend-node-config\" to get configuration recommendations based on an existing cluster or snapshot. Specify \"resize-cluster\" to get configuration combinations for elastic resize based on an existing cluster. </p>"
+      }
+    },
+    "ApplicationType": {
+      "base": null,
+      "refs": {
+        "CreateRedshiftIdcApplicationMessage$ApplicationType": "<p>The type of application being created. Valid values are <code>None</code> or <code>Lakehouse</code>. Use <code>Lakehouse</code> to enable Amazon Redshift federated permissions on cluster.</p>",
+        "RedshiftIdcApplication$ApplicationType": "<p>The type of application being created. Valid values are <code>None</code> or <code>Lakehouse</code>. Use <code>Lakehouse</code> to enable Amazon Redshift federated permissions on cluster.</p>"
       }
     },
     "AquaConfiguration": {
@@ -461,6 +469,7 @@
         "ModifyClusterMessage$MultiAZ": "<p>If true and the cluster is currently only deployed in a single Availability Zone, the cluster will be modified to be deployed in two Availability Zones.</p>",
         "ModifyClusterSnapshotScheduleMessage$DisassociateSchedule": "<p>A boolean to indicate whether to remove the assoiciation between the cluster and the schedule.</p>",
         "ModifyEventSubscriptionMessage$Enabled": "<p>A Boolean value indicating if the subscription is enabled. <code>true</code> indicates the subscription is enabled </p>",
+        "ModifyLakehouseConfigurationMessage$DryRun": "<p>A boolean value that, if <code>true</code>, validates the request without actually modifying the lakehouse configuration. Use this to check for errors before making changes.</p>",
         "ModifyScheduledActionMessage$Enable": "<p>A modified enable flag of the scheduled action. If true, the scheduled action is active. If false, the scheduled action is disabled. </p>",
         "PendingModifiedValues$PubliclyAccessible": "<p>The pending or in-progress change of the ability to connect to the cluster from the public network.</p>",
         "PendingModifiedValues$EnhancedVpcRouting": "<p>An option that specifies whether to create the cluster with enhanced VPC routing enabled. To create a cluster that uses enhanced VPC routing, the cluster must be in a VPC. For more information, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/enhanced-vpc-routing.html\">Enhanced VPC Routing</a> in the Amazon Redshift Cluster Management Guide.</p> <p>If this option is <code>true</code>, enhanced VPC routing is enabled. </p> <p>Default: false</p>",
@@ -482,6 +491,14 @@
     "CancelResizeMessage": {
       "base": null,
       "refs": {}
+    },
+    "CatalogNameString": {
+      "base": null,
+      "refs": {
+        "CreateClusterMessage$CatalogName": "<p>The name of the Glue data catalog that will be associated with the cluster enabled with Amazon Redshift federated permissions.</p> <p>Constraints:</p> <ul> <li> <p>Must contain at least one lowercase letter.</p> </li> <li> <p>Can only contain lowercase letters (a-z), numbers (0-9), underscores (_), and hyphens (-).</p> </li> </ul> <p>Pattern: <code>^[a-z0-9_-]*[a-z]+[a-z0-9_-]*$</code> </p> <p>Example: <code>my-catalog_01</code> </p>",
+        "ModifyLakehouseConfigurationMessage$CatalogName": "<p>The name of the Glue data catalog that will be associated with the cluster enabled with Amazon Redshift federated permissions.</p> <p>Constraints:</p> <ul> <li> <p>Must contain at least one lowercase letter.</p> </li> <li> <p>Can only contain lowercase letters (a-z), numbers (0-9), underscores (_), and hyphens (-).</p> </li> </ul> <p>Pattern: <code>^[a-z0-9_-]*[a-z]+[a-z0-9_-]*$</code> </p> <p>Example: <code>my-catalog_01</code> </p>",
+        "RestoreFromClusterSnapshotMessage$CatalogName": "<p>The name of the Glue Data Catalog that will be associated with the cluster enabled with Amazon Redshift federated permissions.</p> <p>Constraints:</p> <ul> <li> <p>Must contain at least one lowercase letter.</p> </li> <li> <p>Can only contain lowercase letters (a-z), numbers (0-9), underscores (_), and hyphens (-).</p> </li> </ul> <p>Pattern: <code>^[a-z0-9_-]*[a-z]+[a-z0-9_-]*$</code> </p> <p>Example: <code>my-catalog_01</code> </p>"
+      }
     },
     "CertificateAssociation": {
       "base": "<p>A cluster ID and custom domain name tied to a specific certificate. These are typically returned in a list.</p>",
@@ -781,6 +798,12 @@
     "ConflictPolicyUpdateFault": {
       "base": "<p>There is a conflict while updating the resource policy.</p>",
       "refs": {}
+    },
+    "Connect": {
+      "base": "<p>A structure that defines the Amazon Redshift connect service integration scope.</p>",
+      "refs": {
+        "RedshiftScopeUnion$Connect": "<p>The Amazon Redshift connect integration scope configuration. Defines authorization settings for Amazon Redshift connect service integration.</p>"
+      }
     },
     "ConsumerIdentifierList": {
       "base": null,
@@ -2146,6 +2169,22 @@
         "ServiceIntegrationsUnion$LakeFormation": "<p>A list of scopes set up for Lake Formation integration.</p>"
       }
     },
+    "LakehouseConfiguration": {
+      "base": "<p>Contains configuration information for lakehouse integration, including the cluster identifier, catalog ARN, and registration status.</p>",
+      "refs": {}
+    },
+    "LakehouseIdcRegistration": {
+      "base": null,
+      "refs": {
+        "ModifyLakehouseConfigurationMessage$LakehouseIdcRegistration": "<p>Modifies the Amazon Web Services IAM Identity Center trusted identity propagation on a cluster enabled with Amazon Redshift federated permissions. Valid values are <code>Associate</code> or <code>Disassociate</code>.</p>"
+      }
+    },
+    "LakehouseRegistration": {
+      "base": null,
+      "refs": {
+        "ModifyLakehouseConfigurationMessage$LakehouseRegistration": "<p>Specifies whether to register or deregister the cluster with Amazon Redshift federated permissions. Valid values are <code>Register</code> or <code>Deregister</code>.</p>"
+      }
+    },
     "LimitExceededFault": {
       "base": "<p>The encryption key has exceeded its grant limit in Amazon Web Services KMS.</p>",
       "refs": {}
@@ -2312,6 +2351,10 @@
       "refs": {}
     },
     "ModifyIntegrationMessage": {
+      "base": null,
+      "refs": {}
+    },
+    "ModifyLakehouseConfigurationMessage": {
       "base": null,
       "refs": {}
     },
@@ -2671,6 +2714,18 @@
     "RedshiftInvalidParameterFault": {
       "base": "<p>The request contains one or more invalid parameters. This error occurs when required parameters are missing, parameter values are outside acceptable ranges, or parameter formats are incorrect.</p>",
       "refs": {}
+    },
+    "RedshiftScopeUnion": {
+      "base": "<p>A union structure that defines the scope of Amazon Redshift service integrations. Contains configuration for different integration types such as Amazon Redshift.</p>",
+      "refs": {
+        "RedshiftServiceIntegrations$member": null
+      }
+    },
+    "RedshiftServiceIntegrations": {
+      "base": null,
+      "refs": {
+        "ServiceIntegrationsUnion$Redshift": "<p>A list of scopes set up for Amazon Redshift integration.</p>"
+      }
     },
     "ReferenceLink": {
       "base": "<p>A link to an Amazon Redshift Advisor reference for more information about a recommendation.</p>",
@@ -3076,6 +3131,7 @@
     "ServiceAuthorization": {
       "base": null,
       "refs": {
+        "Connect$Authorization": "<p>Determines whether the Amazon Redshift connect integration is enabled or disabled for the application.</p>",
         "LakeFormationQuery$Authorization": "<p>Determines whether the query scope is enabled or disabled.</p>",
         "ReadWriteAccess$Authorization": "<p>Determines whether the read/write scope is enabled or disabled.</p>"
       }
@@ -3311,6 +3367,8 @@
         "Cluster$MasterPasswordSecretKmsKeyId": "<p>The ID of the Key Management Service (KMS) key used to encrypt and store the cluster's admin credentials secret.</p>",
         "Cluster$IpAddressType": "<p>The IP address type for the cluster. Possible values are <code>ipv4</code> and <code>dualstack</code>.</p>",
         "Cluster$MultiAZ": "<p>A boolean value that, if true, indicates that the cluster is deployed in two Availability Zones.</p>",
+        "Cluster$LakehouseRegistrationStatus": "<p>The status of the lakehouse registration for the cluster. Indicates whether the cluster is successfully registered with Amazon Redshift federated permissions.</p>",
+        "Cluster$CatalogArn": "<p>The Amazon Resource Name (ARN) of the Glue data catalog associated with the cluster enabled with Amazon Redshift federated permissions.</p>",
         "ClusterAssociatedToSchedule$ClusterIdentifier": "<p/>",
         "ClusterCredentials$DbUser": "<p>A database user name that is authorized to log on to the database <code>DbName</code> using the password <code>DbPassword</code>. If the specified DbUser exists in the database, the new user name has the same database permissions as the the user named in DbUser. By default, the user is added to PUBLIC. If the <code>DbGroups</code> parameter is specifed, <code>DbUser</code> is added to the listed groups for any sessions created using these credentials.</p>",
         "ClusterDbRevision$ClusterIdentifier": "<p>The unique identifier of the cluster.</p>",
@@ -3633,6 +3691,10 @@
         "IntegrationError$ErrorCode": "<p>The error code of an inbound integration error.</p>",
         "IntegrationError$ErrorMessage": "<p>The error message of an inbound integration error.</p>",
         "IntegrationsMessage$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned marker value in the <code>Marker</code> parameter and retrying the command. If the <code>Marker</code> field is empty, all response records have been retrieved for the request.</p>",
+        "LakehouseConfiguration$ClusterIdentifier": "<p>The unique identifier of the cluster associated with this lakehouse configuration.</p>",
+        "LakehouseConfiguration$LakehouseIdcApplicationArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center application used for enabling Amazon Web Services IAM Identity Center trusted identity propagation on a cluster enabled with Amazon Redshift federated permissions.</p>",
+        "LakehouseConfiguration$LakehouseRegistrationStatus": "<p>The current status of the lakehouse registration. Indicates whether the cluster is successfully registered with the lakehouse.</p>",
+        "LakehouseConfiguration$CatalogArn": "<p>The Amazon Resource Name (ARN) of the Glue data catalog associated with the lakehouse configuration.</p>",
         "ListRecommendationsMessage$ClusterIdentifier": "<p>The unique identifier of the Amazon Redshift cluster for which the list of Advisor recommendations is returned. If the neither the cluster identifier and the cluster namespace ARN parameters are specified, then recommendations for all clusters in the account are returned.</p>",
         "ListRecommendationsMessage$NamespaceArn": "<p>The Amazon Redshift cluster namespace Amazon Resource Name (ARN) for which the list of Advisor recommendations is returned. If the neither the cluster identifier and the cluster namespace ARN parameters are specified, then recommendations for all clusters in the account are returned.</p>",
         "ListRecommendationsMessage$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned marker value in the Marker parameter and retrying the command. If the Marker field is empty, all response records have been retrieved for the request. </p>",
@@ -3680,6 +3742,8 @@
         "ModifyEventSubscriptionMessage$SnsTopicArn": "<p>The Amazon Resource Name (ARN) of the SNS topic to be used by the event notification subscription.</p>",
         "ModifyEventSubscriptionMessage$SourceType": "<p>The type of source that will be generating the events. For example, if you want to be notified of events generated by a cluster, you would set this parameter to cluster. If this value is not specified, events are returned for all Amazon Redshift objects in your Amazon Web Services account. You must specify a source type in order to specify source IDs.</p> <p>Valid values: cluster, cluster-parameter-group, cluster-security-group, cluster-snapshot, and scheduled-action.</p>",
         "ModifyEventSubscriptionMessage$Severity": "<p>Specifies the Amazon Redshift event severity to be published by the event notification subscription.</p> <p>Values: ERROR, INFO</p>",
+        "ModifyLakehouseConfigurationMessage$ClusterIdentifier": "<p>The unique identifier of the cluster whose lakehouse configuration you want to modify.</p>",
+        "ModifyLakehouseConfigurationMessage$LakehouseIdcApplicationArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center application used for enabling Amazon Web Services IAM Identity Center trusted identity propagation on a cluster enabled with Amazon Redshift federated permissions.</p>",
         "ModifyRedshiftIdcApplicationMessage$RedshiftIdcApplicationArn": "<p>The ARN for the Redshift application that integrates with IAM Identity Center.</p>",
         "ModifyRedshiftIdcApplicationMessage$IamRoleArn": "<p>The IAM role ARN associated with the Amazon Redshift IAM Identity Center application to change. It has the required permissions to be assumed and invoke the IDC Identity Center API.</p>",
         "ModifyScheduledActionMessage$ScheduledActionName": "<p>The name of the scheduled action to modify. </p>",
@@ -3795,6 +3859,7 @@
         "RestoreFromClusterSnapshotMessage$TargetReservedNodeOfferingId": "<p>The identifier of the target reserved node offering.</p>",
         "RestoreFromClusterSnapshotMessage$MasterPasswordSecretKmsKeyId": "<p>The ID of the Key Management Service (KMS) key used to encrypt and store the cluster's admin credentials secret. You can only use this parameter if <code>ManageMasterPassword</code> is true.</p>",
         "RestoreFromClusterSnapshotMessage$IpAddressType": "<p>The IP address type for the cluster. Possible values are <code>ipv4</code> and <code>dualstack</code>.</p>",
+        "RestoreFromClusterSnapshotMessage$RedshiftIdcApplicationArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center application used for enabling Amazon Web Services IAM Identity Center trusted identity propagation on a cluster enabled with Amazon Redshift federated permissions.</p>",
         "RestoreStatus$Status": "<p>The status of the restore action. Returns starting, restoring, completed, or failed.</p>",
         "RestoreTableFromClusterSnapshotMessage$ClusterIdentifier": "<p>The identifier of the Amazon Redshift cluster to restore the table to.</p>",
         "RestoreTableFromClusterSnapshotMessage$SnapshotIdentifier": "<p>The identifier of the snapshot to restore the table from. This snapshot must have been created from the Amazon Redshift cluster specified by the <code>ClusterIdentifier</code> parameter.</p>",

@@ -775,6 +775,15 @@
       "input":{"shape":"CreateInternetGatewayRequest"},
       "output":{"shape":"CreateInternetGatewayResult"}
     },
+    "CreateInterruptibleCapacityReservationAllocation":{
+      "name":"CreateInterruptibleCapacityReservationAllocation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateInterruptibleCapacityReservationAllocationRequest"},
+      "output":{"shape":"CreateInterruptibleCapacityReservationAllocationResult"}
+    },
     "CreateIpam":{
       "name":"CreateIpam",
       "http":{
@@ -6657,6 +6666,15 @@
       "input":{"shape":"UpdateCapacityManagerOrganizationsAccessRequest"},
       "output":{"shape":"UpdateCapacityManagerOrganizationsAccessResult"}
     },
+    "UpdateInterruptibleCapacityReservationAllocation":{
+      "name":"UpdateInterruptibleCapacityReservationAllocation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateInterruptibleCapacityReservationAllocationRequest"},
+      "output":{"shape":"UpdateInterruptibleCapacityReservationAllocationResult"}
+    },
     "UpdateSecurityGroupRuleDescriptionsEgress":{
       "name":"UpdateSecurityGroupRuleDescriptionsEgress",
       "http":{
@@ -10778,6 +10796,18 @@
         "CapacityBlockId":{
           "shape":"CapacityBlockId",
           "locationName":"capacityBlockId"
+        },
+        "Interruptible":{
+          "shape":"BoxedBoolean",
+          "locationName":"interruptible"
+        },
+        "InterruptibleCapacityAllocation":{
+          "shape":"InterruptibleCapacityAllocation",
+          "locationName":"interruptibleCapacityAllocation"
+        },
+        "InterruptionInfo":{
+          "shape":"InterruptionInfo",
+          "locationName":"interruptionInfo"
         }
       }
     },
@@ -13361,6 +13391,47 @@
         "InternetGateway":{
           "shape":"InternetGateway",
           "locationName":"internetGateway"
+        }
+      }
+    },
+    "CreateInterruptibleCapacityReservationAllocationRequest":{
+      "type":"structure",
+      "required":[
+        "CapacityReservationId",
+        "InstanceCount"
+      ],
+      "members":{
+        "CapacityReservationId":{"shape":"CapacityReservationId"},
+        "InstanceCount":{"shape":"Integer"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "DryRun":{"shape":"Boolean"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        }
+      }
+    },
+    "CreateInterruptibleCapacityReservationAllocationResult":{
+      "type":"structure",
+      "members":{
+        "SourceCapacityReservationId":{
+          "shape":"CapacityReservationId",
+          "locationName":"sourceCapacityReservationId"
+        },
+        "TargetInstanceCount":{
+          "shape":"Integer",
+          "locationName":"targetInstanceCount"
+        },
+        "Status":{
+          "shape":"InterruptibleCapacityReservationAllocationStatus",
+          "locationName":"status"
+        },
+        "InterruptionType":{
+          "shape":"InterruptionType",
+          "locationName":"interruptionType"
         }
       }
     },
@@ -28566,6 +28637,18 @@
         "InstanceUsages":{
           "shape":"InstanceUsageSet",
           "locationName":"instanceUsageSet"
+        },
+        "Interruptible":{
+          "shape":"BoxedBoolean",
+          "locationName":"interruptible"
+        },
+        "InterruptibleCapacityAllocation":{
+          "shape":"InterruptibleCapacityAllocation",
+          "locationName":"interruptibleCapacityAllocation"
+        },
+        "InterruptionInfo":{
+          "shape":"InterruptionInfo",
+          "locationName":"interruptionInfo"
         }
       }
     },
@@ -33144,7 +33227,8 @@
       "enum":[
         "spot",
         "scheduled",
-        "capacity-block"
+        "capacity-block",
+        "interruptible-capacity-reservation"
       ]
     },
     "InstanceList":{
@@ -35450,6 +35534,59 @@
         "shape":"InternetGateway",
         "locationName":"item"
       }
+    },
+    "InterruptibleCapacityAllocation":{
+      "type":"structure",
+      "members":{
+        "InstanceCount":{
+          "shape":"Integer",
+          "locationName":"instanceCount"
+        },
+        "TargetInstanceCount":{
+          "shape":"Integer",
+          "locationName":"targetInstanceCount"
+        },
+        "Status":{
+          "shape":"InterruptibleCapacityReservationAllocationStatus",
+          "locationName":"status"
+        },
+        "InterruptibleCapacityReservationId":{
+          "shape":"String",
+          "locationName":"interruptibleCapacityReservationId"
+        },
+        "InterruptionType":{
+          "shape":"InterruptionType",
+          "locationName":"interruptionType"
+        }
+      }
+    },
+    "InterruptibleCapacityReservationAllocationStatus":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "active",
+        "updating",
+        "canceling",
+        "canceled",
+        "failed"
+      ]
+    },
+    "InterruptionInfo":{
+      "type":"structure",
+      "members":{
+        "SourceCapacityReservationId":{
+          "shape":"String",
+          "locationName":"sourceCapacityReservationId"
+        },
+        "InterruptionType":{
+          "shape":"InterruptionType",
+          "locationName":"interruptionType"
+        }
+      }
+    },
+    "InterruptionType":{
+      "type":"string",
+      "enum":["adhoc"]
     },
     "IpAddress":{
       "type":"string",
@@ -39734,7 +39871,8 @@
       "type":"string",
       "enum":[
         "spot",
-        "capacity-block"
+        "capacity-block",
+        "interruptible-capacity-reservation"
       ]
     },
     "MarketplaceProductCode":{"type":"string"},
@@ -54695,6 +54833,47 @@
         "OrganizationsAccess":{
           "shape":"Boolean",
           "locationName":"organizationsAccess"
+        }
+      }
+    },
+    "UpdateInterruptibleCapacityReservationAllocationRequest":{
+      "type":"structure",
+      "required":[
+        "CapacityReservationId",
+        "TargetInstanceCount"
+      ],
+      "members":{
+        "CapacityReservationId":{"shape":"CapacityReservationId"},
+        "TargetInstanceCount":{"shape":"Integer"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "UpdateInterruptibleCapacityReservationAllocationResult":{
+      "type":"structure",
+      "members":{
+        "InterruptibleCapacityReservationId":{
+          "shape":"CapacityReservationId",
+          "locationName":"interruptibleCapacityReservationId"
+        },
+        "SourceCapacityReservationId":{
+          "shape":"CapacityReservationId",
+          "locationName":"sourceCapacityReservationId"
+        },
+        "InstanceCount":{
+          "shape":"Integer",
+          "locationName":"instanceCount"
+        },
+        "TargetInstanceCount":{
+          "shape":"Integer",
+          "locationName":"targetInstanceCount"
+        },
+        "Status":{
+          "shape":"InterruptibleCapacityReservationAllocationStatus",
+          "locationName":"status"
+        },
+        "InterruptionType":{
+          "shape":"InterruptionType",
+          "locationName":"interruptionType"
         }
       }
     },

@@ -2002,6 +2002,12 @@
       "base": null,
       "refs": {}
     },
+    "CustomDisambiguationMessage": {
+      "base": null,
+      "refs": {
+        "IntentDisambiguationSettings$customDisambiguationMessage": "<p>Provides a custom message that will be displayed before presenting the disambiguation options to users. This message helps set the context for users and can be customized to match your bot's tone and brand. If not specified, a default message will be used.</p>"
+      }
+    },
     "CustomPayload": {
       "base": "<p>A custom response string that Amazon Lex sends to your application. You define the content and structure the string.</p>",
       "refs": {
@@ -2463,6 +2469,17 @@
         "SlotCaptureSetting$failureNextStep": "<p>Specifies the next step that the bot runs when the slot value code is not recognized.</p>"
       }
     },
+    "DisplayName": {
+      "base": null,
+      "refs": {
+        "CreateIntentRequest$intentDisplayName": "<p>A display name for the intent. If configured, This name will be shown to users during Intent Disambiguation instead of the intent name. Display names should be user-friendly, descriptive and match the intent's purpose to improve user experience during disambiguation.</p>",
+        "CreateIntentResponse$intentDisplayName": "<p>The display name specified for the intent.</p>",
+        "DescribeIntentResponse$intentDisplayName": "<p>The display name specified for the intent.</p>",
+        "IntentSummary$intentDisplayName": "<p>The display name of the intent.</p>",
+        "UpdateIntentRequest$intentDisplayName": "<p>The new display name for the intent.</p>",
+        "UpdateIntentResponse$intentDisplayName": "<p>The updated display name of the intent.</p>"
+      }
+    },
     "DomainEndpoint": {
       "base": null,
       "refs": {
@@ -2533,6 +2550,7 @@
     "Enabled": {
       "base": null,
       "refs": {
+        "IntentDisambiguationSettings$enabled": "<p>Determines whether the Intent Disambiguation feature is enabled. When set to <code>true</code>, Amazon Lex will present disambiguation options to users when multiple intents could match their input, with the default being <code>false</code>.</p>",
         "NluImprovementSpecification$enabled": "<p>Determines whether the Assisted NLU feature is enabled for the bot. When set to <code>true</code>, Amazon Lex uses advanced models to improve intent recognition and slot resolution, with the default being <code>false</code>.</p>",
         "SlotResolutionImprovementSpecification$enabled": "<p>Specifies whether assisted slot resolution is turned on or off.</p>"
       }
@@ -3298,6 +3316,12 @@
         "UpdateIntentResponse$intentConfirmationSetting": "<p>The updated prompts that Amazon Lex sends to the user to confirm the completion of an intent.</p>"
       }
     },
+    "IntentDisambiguationSettings": {
+      "base": "<p>Configures the Intent Disambiguation feature that helps resolve ambiguous user inputs when multiple intents could match. When enabled, the system presents clarifying questions to users, helping them specify their exact intent for improved conversation accuracy.</p>",
+      "refs": {
+        "NluImprovementSpecification$intentDisambiguationSettings": "<p>An object containing specifications for the Intent Disambiguation feature within the Assisted NLU settings. These settings determine how the bot handles ambiguous user inputs that could match multiple intents.</p>"
+      }
+    },
     "IntentFilter": {
       "base": "<p>Filters the response from the <code>ListIntents</code> operation.</p>",
       "refs": {
@@ -3824,6 +3848,12 @@
       "refs": {
         "CloudWatchLogGroupLogDestination$logPrefix": "<p>The prefix of the log stream name within the log group that you specified </p>",
         "S3BucketLogDestination$logPrefix": "<p>The S3 prefix to assign to audio log files.</p>"
+      }
+    },
+    "MaxDisambiguationIntents": {
+      "base": null,
+      "refs": {
+        "IntentDisambiguationSettings$maxDisambiguationIntents": "<p>Specifies the maximum number of intent options (2-5) to present to users when disambiguation is needed. This setting determines how many intent options will be shown to users when the system detects ambiguous input. The default value is 3.</p>"
       }
     },
     "MaxResults": {
@@ -5050,6 +5080,17 @@
       "base": "<p>Subslot specifications.</p>",
       "refs": {
         "SubSlotSpecificationMap$value": null
+      }
+    },
+    "SpeechDetectionSensitivity": {
+      "base": "<p>Determines the sensitivity level for voice activity detection (VAD) in noisy environments. This setting helps optimize speech recognition accuracy by adjusting how the system responds to background noise.</p> <p>Valid values include:</p> <ul> <li> <p> <code>Default</code> - Standard sensitivity level suitable for most environments</p> </li> <li> <p> <code>HighNoiseTolerance</code> - Increased tolerance for moderate background noise</p> </li> <li> <p> <code>MaximumNoiseTolerance</code> - Maximum tolerance for high levels of background noise</p> </li> </ul>",
+      "refs": {
+        "BotLocaleImportSpecification$speechDetectionSensitivity": "<p>The sensitivity level for voice activity detection (VAD) in the bot locale. This setting helps optimize speech recognition accuracy by adjusting how the system responds to background noise during voice interactions.</p>",
+        "CreateBotLocaleRequest$speechDetectionSensitivity": "<p>The sensitivity level for voice activity detection (VAD) in the bot locale. This setting helps optimize speech recognition accuracy by adjusting how the system responds to background noise during voice interactions.</p>",
+        "CreateBotLocaleResponse$speechDetectionSensitivity": "<p>The sensitivity level for voice activity detection (VAD) that was specified for the bot locale.</p>",
+        "DescribeBotLocaleResponse$speechDetectionSensitivity": "<p>The sensitivity level for voice activity detection (VAD) configured for the bot locale.</p>",
+        "UpdateBotLocaleRequest$speechDetectionSensitivity": "<p>The new sensitivity level for voice activity detection (VAD) in the bot locale. This setting helps optimize speech recognition accuracy by adjusting how the system responds to background noise during voice interactions.</p>",
+        "UpdateBotLocaleResponse$speechDetectionSensitivity": "<p>The updated sensitivity level for voice activity detection (VAD) in the bot locale.</p>"
       }
     },
     "StartBotRecommendationRequest": {

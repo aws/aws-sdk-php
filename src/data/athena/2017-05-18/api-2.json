@@ -435,6 +435,20 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "GetResourceDashboard":{
+      "name":"GetResourceDashboard",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetResourceDashboardRequest"},
+      "output":{"shape":"GetResourceDashboardResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetSession":{
       "name":"GetSession",
       "http":{
@@ -443,6 +457,20 @@
       },
       "input":{"shape":"GetSessionRequest"},
       "output":{"shape":"GetSessionResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetSessionEndpoint":{
+      "name":"GetSessionEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetSessionEndpointRequest"},
+      "output":{"shape":"GetSessionEndpointResponse"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"InvalidRequestException"},
@@ -1219,11 +1247,32 @@
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
     },
+    "Classification":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NameString"},
+        "Properties":{"shape":"ParametersMap"}
+      }
+    },
+    "ClassificationList":{
+      "type":"list",
+      "member":{"shape":"Classification"}
+    },
     "ClientRequestToken":{
       "type":"string",
       "max":36,
       "min":1,
       "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+    },
+    "CloudWatchLoggingConfiguration":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"BoxedBoolean"},
+        "LogGroup":{"shape":"LogGroupName"},
+        "LogStreamNamePrefix":{"shape":"LogStreamNamePrefix"},
+        "LogTypes":{"shape":"LogTypesMap"}
+      }
     },
     "CodeBlock":{
       "type":"string",
@@ -1614,6 +1663,10 @@
       "max":1024,
       "min":1
     },
+    "DpuCount":{
+      "type":"double",
+      "box":true
+    },
     "EncryptionConfiguration":{
       "type":"structure",
       "required":["EncryptionOption"],
@@ -1632,13 +1685,13 @@
     },
     "EngineConfiguration":{
       "type":"structure",
-      "required":["MaxConcurrentDpus"],
       "members":{
         "CoordinatorDpuSize":{"shape":"CoordinatorDpuSize"},
         "MaxConcurrentDpus":{"shape":"MaxConcurrentDpus"},
         "DefaultExecutorDpuSize":{"shape":"DefaultExecutorDpuSize"},
         "AdditionalConfigs":{"shape":"ParametersMap"},
-        "SparkProperties":{"shape":"ParametersMap"}
+        "SparkProperties":{"shape":"ParametersMap"},
+        "Classifications":{"shape":"ClassificationList"}
       }
     },
     "EngineVersion":{
@@ -1940,6 +1993,40 @@
         "QueryRuntimeStatistics":{"shape":"QueryRuntimeStatistics"}
       }
     },
+    "GetResourceDashboardRequest":{
+      "type":"structure",
+      "required":["ResourceARN"],
+      "members":{
+        "ResourceARN":{"shape":"AmazonResourceName"}
+      }
+    },
+    "GetResourceDashboardResponse":{
+      "type":"structure",
+      "required":["Url"],
+      "members":{
+        "Url":{"shape":"String"}
+      }
+    },
+    "GetSessionEndpointRequest":{
+      "type":"structure",
+      "required":["SessionId"],
+      "members":{
+        "SessionId":{"shape":"SessionId"}
+      }
+    },
+    "GetSessionEndpointResponse":{
+      "type":"structure",
+      "required":[
+        "EndpointUrl",
+        "AuthToken",
+        "AuthTokenExpirationTime"
+      ],
+      "members":{
+        "EndpointUrl":{"shape":"String"},
+        "AuthToken":{"shape":"String"},
+        "AuthTokenExpirationTime":{"shape":"Timestamp"}
+      }
+    },
     "GetSessionRequest":{
       "type":"structure",
       "required":["SessionId"],
@@ -1956,6 +2043,7 @@
         "EngineVersion":{"shape":"NameString"},
         "EngineConfiguration":{"shape":"EngineConfiguration"},
         "NotebookVersion":{"shape":"NameString"},
+        "MonitoringConfiguration":{"shape":"MonitoringConfiguration"},
         "SessionConfiguration":{"shape":"SessionConfiguration"},
         "Status":{"shape":"SessionStatus"},
         "Statistics":{"shape":"SessionStatistics"}
@@ -2343,7 +2431,38 @@
         "NextToken":{"shape":"Token"}
       }
     },
+    "LogGroupName":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9._/-]+$"
+    },
+    "LogStreamNamePrefix":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"^[^:*]*$"
+    },
+    "LogTypeKey":{"type":"string"},
+    "LogTypeValue":{"type":"string"},
+    "LogTypeValuesList":{
+      "type":"list",
+      "member":{"shape":"LogTypeValue"}
+    },
+    "LogTypesMap":{
+      "type":"map",
+      "key":{"shape":"LogTypeKey"},
+      "value":{"shape":"LogTypeValuesList"}
+    },
     "Long":{"type":"long"},
+    "ManagedLoggingConfiguration":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"BoxedBoolean"},
+        "KmsKey":{"shape":"KmsKey"}
+      }
+    },
     "ManagedQueryResultsConfiguration":{
       "type":"structure",
       "required":["Enabled"],
@@ -2386,6 +2505,7 @@
     },
     "MaxConcurrentDpus":{
       "type":"integer",
+      "box":true,
       "max":5000,
       "min":2
     },
@@ -2472,6 +2592,14 @@
         "Message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "MonitoringConfiguration":{
+      "type":"structure",
+      "members":{
+        "CloudWatchLoggingConfiguration":{"shape":"CloudWatchLoggingConfiguration"},
+        "ManagedLoggingConfiguration":{"shape":"ManagedLoggingConfiguration"},
+        "S3LoggingConfiguration":{"shape":"S3LoggingConfiguration"}
+      }
     },
     "NameString":{
       "type":"string",
@@ -2682,7 +2810,8 @@
         "ServicePreProcessingTimeInMillis":{"shape":"Long"},
         "QueryPlanningTimeInMillis":{"shape":"Long"},
         "ServiceProcessingTimeInMillis":{"shape":"Long"},
-        "ResultReuseInformation":{"shape":"ResultReuseInformation"}
+        "ResultReuseInformation":{"shape":"ResultReuseInformation"},
+        "DpuCount":{"shape":"DpuCount"}
       }
     },
     "QueryExecutionStatus":{
@@ -2863,6 +2992,20 @@
       "type":"string",
       "enum":["BUCKET_OWNER_FULL_CONTROL"]
     },
+    "S3LoggingConfiguration":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"BoxedBoolean"},
+        "KmsKey":{"shape":"KmsKey"},
+        "LogLocation":{"shape":"S3OutputLocation"}
+      }
+    },
+    "S3OutputLocation":{
+      "type":"string",
+      "max":1024,
+      "pattern":"^s3://[a-z0-9][a-z0-9\\-]*[a-z0-9](/.*)?$"
+    },
     "S3Uri":{
       "type":"string",
       "max":1024,
@@ -2881,6 +3024,7 @@
         "ExecutionRole":{"shape":"RoleArn"},
         "WorkingDirectory":{"shape":"ResultOutputLocation"},
         "IdleTimeoutSeconds":{"shape":"Long"},
+        "SessionIdleTimeoutInMinutes":{"shape":"SessionIdleTimeoutInMinutes"},
         "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
@@ -2980,7 +3124,8 @@
         "ResultConfiguration":{"shape":"ResultConfiguration"},
         "WorkGroup":{"shape":"WorkGroupName"},
         "ExecutionParameters":{"shape":"ExecutionParameters"},
-        "ResultReuseConfiguration":{"shape":"ResultReuseConfiguration"}
+        "ResultReuseConfiguration":{"shape":"ResultReuseConfiguration"},
+        "EngineConfiguration":{"shape":"EngineConfiguration"}
       }
     },
     "StartQueryExecutionOutput":{
@@ -2999,9 +3144,13 @@
         "Description":{"shape":"DescriptionString"},
         "WorkGroup":{"shape":"WorkGroupName"},
         "EngineConfiguration":{"shape":"EngineConfiguration"},
+        "ExecutionRole":{"shape":"RoleArn"},
+        "MonitoringConfiguration":{"shape":"MonitoringConfiguration"},
         "NotebookVersion":{"shape":"NameString"},
         "SessionIdleTimeoutInMinutes":{"shape":"SessionIdleTimeoutInMinutes"},
-        "ClientRequestToken":{"shape":"IdempotencyToken"}
+        "ClientRequestToken":{"shape":"IdempotencyToken"},
+        "Tags":{"shape":"TagList"},
+        "CopyWorkGroupTags":{"shape":"BoxedBoolean"}
       }
     },
     "StartSessionResponse":{
@@ -3356,6 +3505,8 @@
         "EngineVersion":{"shape":"EngineVersion"},
         "AdditionalConfiguration":{"shape":"NameString"},
         "ExecutionRole":{"shape":"RoleArn"},
+        "MonitoringConfiguration":{"shape":"MonitoringConfiguration"},
+        "EngineConfiguration":{"shape":"EngineConfiguration"},
         "CustomerContentEncryptionConfiguration":{"shape":"CustomerContentEncryptionConfiguration"},
         "EnableMinimumEncryptionConfiguration":{"shape":"BoxedBoolean"},
         "IdentityCenterConfiguration":{"shape":"IdentityCenterConfiguration"},
@@ -3378,7 +3529,9 @@
         "ExecutionRole":{"shape":"RoleArn"},
         "CustomerContentEncryptionConfiguration":{"shape":"CustomerContentEncryptionConfiguration"},
         "EnableMinimumEncryptionConfiguration":{"shape":"BoxedBoolean"},
-        "QueryResultsS3AccessGrantsConfiguration":{"shape":"QueryResultsS3AccessGrantsConfiguration"}
+        "QueryResultsS3AccessGrantsConfiguration":{"shape":"QueryResultsS3AccessGrantsConfiguration"},
+        "MonitoringConfiguration":{"shape":"MonitoringConfiguration"},
+        "EngineConfiguration":{"shape":"EngineConfiguration"}
       }
     },
     "WorkGroupDescriptionString":{

@@ -615,7 +615,12 @@
     "Channel": {
       "base": null,
       "refs": {
-        "Channels$member": null
+        "Channels$member": null,
+        "ExtendedMessageTemplateData$channel": "<p>The channel of the message template.</p>",
+        "MessageTemplateData$channel": "<p>The channel of the message template.</p>",
+        "MessageTemplateSearchResultData$channel": "<p>The channel of the message template.</p>",
+        "MessageTemplateSummary$channel": "<p>The channel this message template applies to.</p>",
+        "MessageTemplateVersionSummary$channel": "<p>The channel of the message template.</p>"
       }
     },
     "ChannelSubtype": {
@@ -2244,6 +2249,14 @@
       "refs": {
         "EmailMessageTemplateContentBody$plainText": "<p>The message body, in plain text format, to use in email messages that are based on the message template. We recommend using plain text format for email clients that don't render HTML content and clients that are connected to high-latency networks, such as mobile devices.</p>",
         "EmailMessageTemplateContentBody$html": "<p>The message body, in HTML format, to use in email messages that are based on the message template. We recommend using HTML format for email clients that render HTML content. You can include links, formatted text, and more in an HTML message.</p>",
+        "PushADMMessageTemplateContent$body": "<p>The message body to use in a push notification that is based on the message template.</p>",
+        "PushADMMessageTemplateContent$rawContent": "<p>The URL of the small icon image to display in the status bar and the content view of a push notification that's based on the message template.</p>",
+        "PushAPNSMessageTemplateContent$body": "<p>The message body to use in a push notification that is based on the message template.</p>",
+        "PushAPNSMessageTemplateContent$rawContent": "<p>The raw, JSON-formatted string to use as the payload for a push notification that's based on the message template. If specified, this value overrides all other content for the message template.</p>",
+        "PushBaiduMessageTemplateContent$body": "<p>The message body to use in a push notification that is based on the message template.</p>",
+        "PushBaiduMessageTemplateContent$rawContent": "<p>The URL of the small icon image to display in the status bar and the content view of a push notification that's based on the message template.</p>",
+        "PushFCMMessageTemplateContent$body": "<p>The message body to use in a push notification that is based on the message template.</p>",
+        "PushFCMMessageTemplateContent$rawContent": "<p>The URL of the small icon image to display in the status bar and the content view of a push notification that's based on the message template.</p>",
         "SMSMessageTemplateContentBody$plainText": "<p>The message body to use in SMS messages.</p>"
       }
     },
@@ -2355,6 +2368,23 @@
       "base": null,
       "refs": {
         "SearchMessageTemplatesResponse$results": "<p>The results of the message template search.</p>"
+      }
+    },
+    "MessageTemplateSourceConfiguration": {
+      "base": "<p>The container of message template source configuration.</p>",
+      "refs": {
+        "CreateMessageTemplateRequest$sourceConfiguration": "<p>The source configuration of the message template. Only set this argument for WHATSAPP channel subtype.</p>",
+        "MessageTemplateSummary$sourceConfiguration": null,
+        "UpdateMessageTemplateRequest$sourceConfiguration": "<p>The source configuration of the message template. Only set this argument for WHATSAPP channel subtype.</p>"
+      }
+    },
+    "MessageTemplateSourceConfigurationSummary": {
+      "base": "<p>The container of message template source configuration summary.</p>",
+      "refs": {
+        "ExtendedMessageTemplateData$sourceConfigurationSummary": "<p>The source configuration summary of the message template.</p>",
+        "MessageTemplateData$sourceConfigurationSummary": "<p>The source configuration summary of the message template.</p>",
+        "MessageTemplateSearchResultData$sourceConfigurationSummary": "<p>The source configuration summary of the message template.</p>",
+        "RenderMessageTemplateResponse$sourceConfigurationSummary": "<p>The source configuration of the message template.</p>"
       }
     },
     "MessageTemplateSummary": {
@@ -2523,7 +2553,30 @@
       "refs": {
         "CreateMessageTemplateAttachmentRequest$body": "<p>The body of the attachment file being uploaded. It should be encoded using base64 encoding.</p>",
         "EmailMessageTemplateContent$subject": "<p>The subject line, or title, to use in email messages.</p>",
-        "MessageTemplateBodyContentProvider$content": "<p>The content of the message template.</p>"
+        "MessageTemplateBodyContentProvider$content": "<p>The content of the message template.</p>",
+        "PushADMMessageTemplateContent$title": "<p>The title to use in a push notification that's based on the message template. This title appears above the notification message on a recipient's device.</p>",
+        "PushADMMessageTemplateContent$sound": "<p>The sound to play when a recipient receives a push notification that's based on the message template. You can use the default stream or specify the file name of a sound resource that's bundled in your app. On an Android platform, the sound file must reside in <code>/res/raw/</code>.</p>",
+        "PushADMMessageTemplateContent$url": "<p>The URL to open in a recipient's default mobile browser, if a recipient taps a push notification that's based on the message template and the value of the <code>action</code> property is <code>URL</code>.</p>",
+        "PushADMMessageTemplateContent$imageUrl": "<p>The URL of an image to display in a push notification that's based on the message template.</p>",
+        "PushADMMessageTemplateContent$imageIconUrl": "<p>The URL of the large icon image to display in the content view of a push notification that's based on the message template.</p>",
+        "PushADMMessageTemplateContent$smallImageIconUrl": "<p>The URL of the small icon image to display in the status bar and the content view of a push notification that's based on the message template.</p>",
+        "PushAPNSMessageTemplateContent$title": "<p>The title to use in a push notification that's based on the message template. This title appears above the notification message on a recipient's device.</p>",
+        "PushAPNSMessageTemplateContent$sound": "<p>The key for the sound to play when the recipient receives a push notification that's based on the message template. The value for this key is the name of a sound file in your app's main bundle or the <code>Library/Sounds</code> folder in your app's data container. If the sound file can't be found or you specify <code>default</code> for the value, the system plays the default alert sound.</p>",
+        "PushAPNSMessageTemplateContent$url": "<p>The URL to open in a recipient's default mobile browser, if a recipient taps a push notification that's based on the message template and the value of the <code>action</code> property is <code>URL</code>.</p>",
+        "PushAPNSMessageTemplateContent$mediaUrl": "<p>The URL of an image or video to display in push notifications that are based on the message template.</p>",
+        "PushBaiduMessageTemplateContent$title": "<p>The title to use in a push notification that's based on the message template. This title appears above the notification message on a recipient's device.</p>",
+        "PushBaiduMessageTemplateContent$sound": "<p>The sound to play when a recipient receives a push notification that's based on the message template. You can use the default stream or specify the file name of a sound resource that's bundled in your app. On an Android platform, the sound file must reside in <code>/res/raw/</code>.</p>",
+        "PushBaiduMessageTemplateContent$url": "<p>The URL to open in a recipient's default mobile browser, if a recipient taps a push notification that's based on the message template and the value of the <code>action</code> property is <code>URL</code>.</p>",
+        "PushBaiduMessageTemplateContent$imageUrl": "<p>The URL of an image to display in a push notification that's based on the message template.</p>",
+        "PushBaiduMessageTemplateContent$imageIconUrl": "<p>The URL of the large icon image to display in the content view of a push notification that's based on the message template.</p>",
+        "PushBaiduMessageTemplateContent$smallImageIconUrl": "<p>The URL of the small icon image to display in the status bar and the content view of a push notification that's based on the message template.</p>",
+        "PushFCMMessageTemplateContent$title": "<p>The title to use in a push notification that's based on the message template. This title appears above the notification message on a recipient's device.</p>",
+        "PushFCMMessageTemplateContent$sound": "<p>The sound to play when a recipient receives a push notification that's based on the message template. You can use the default stream or specify the file name of a sound resource that's bundled in your app. On an Android platform, the sound file must reside in <code>/res/raw/</code>.</p>",
+        "PushFCMMessageTemplateContent$url": "<p>The URL to open in a recipient's default mobile browser, if a recipient taps a push notification that's based on the message template and the value of the <code>action</code> property is <code>URL</code>.</p>",
+        "PushFCMMessageTemplateContent$imageUrl": "<p>The URL of an image to display in a push notification that's based on the message template.</p>",
+        "PushFCMMessageTemplateContent$imageIconUrl": "<p>The URL of the large icon image to display in the content view of a push notification that's based on the message template.</p>",
+        "PushFCMMessageTemplateContent$smallImageIconUrl": "<p>The URL of the small icon image to display in the status bar and the content view of a push notification that's based on the message template.</p>",
+        "WhatsAppMessageTemplateSourceConfigurationSummary$statusReason": "<p>The status reason of the message template.</p>"
       }
     },
     "NotifyRecommendationsReceivedError": {
@@ -2630,6 +2683,45 @@
       "refs": {
         "MessageTemplateQueryField$priority": "<p>The importance of the attribute field when calculating query result relevancy scores. The value set for this parameter affects the ordering of search results.</p>",
         "QuickResponseQueryField$priority": "<p>The importance of the attribute field when calculating query result relevancy scores. The value set for this parameter affects the ordering of search results.</p>"
+      }
+    },
+    "PushADMMessageTemplateContent": {
+      "base": "<p>The content of the push message template that applies to ADM (Amazon Device Messaging) notification service.</p>",
+      "refs": {
+        "PushMessageTemplateContent$adm": "<p>The content of the message template that applies to ADM (Amazon Device Messaging) notification service.</p>"
+      }
+    },
+    "PushAPNSMessageTemplateContent": {
+      "base": "<p>The content of the push message template that applies to APNS (Apple Push Notification service) notification service.</p>",
+      "refs": {
+        "PushMessageTemplateContent$apns": "<p>The content of the message template that applies to APNS(Apple Push Notification service) notification service.</p>"
+      }
+    },
+    "PushBaiduMessageTemplateContent": {
+      "base": "<p>The content of the push message template that applies to Baidu notification service.</p>",
+      "refs": {
+        "PushMessageTemplateContent$baidu": "<p>The content of the message template that applies to Baidu notification service.</p>"
+      }
+    },
+    "PushFCMMessageTemplateContent": {
+      "base": "<p>The content of the push message template that applies to FCM (Firebase Cloud Messaging) notification service.</p>",
+      "refs": {
+        "PushMessageTemplateContent$fcm": "<p>The content of the message template that applies to FCM (Firebase Cloud Messaging) notification service.</p>"
+      }
+    },
+    "PushMessageAction": {
+      "base": null,
+      "refs": {
+        "PushADMMessageTemplateContent$action": "<p>The action to occur if a recipient taps a push notification that is based on the message template. Valid values are:</p> <ul> <li> <p> <code>OPEN_APP</code> - Your app opens or it becomes the foreground app if it was sent to the background. This is the default action.</p> </li> <li> <p> <code>DEEP_LINK</code> - Your app opens and displays a designated user interface in the app. This action uses the deep-linking features of the Android platform.</p> </li> <li> <p> <code>URL</code> - The default mobile browser on the recipient's device opens and loads the web page at a URL that you specify.</p> </li> </ul>",
+        "PushAPNSMessageTemplateContent$action": "<p>The action to occur if a recipient taps a push notification that is based on the message template. Valid values are:</p> <ul> <li> <p> <code>OPEN_APP</code> - Your app opens or it becomes the foreground app if it was sent to the background. This is the default action.</p> </li> <li> <p> <code>DEEP_LINK</code> - Your app opens and displays a designated user interface in the app. This action uses the deep-linking features of the iOS platform.</p> </li> <li> <p> <code>URL</code> - The default mobile browser on the recipient's device opens and loads the web page at a URL that you specify.</p> </li> </ul>",
+        "PushBaiduMessageTemplateContent$action": "<p>The action to occur if a recipient taps a push notification that is based on the message template. Valid values are:</p> <ul> <li> <p> <code>OPEN_APP</code> - Your app opens or it becomes the foreground app if it was sent to the background. This is the default action.</p> </li> <li> <p> <code>DEEP_LINK</code> - Your app opens and displays a designated user interface in the app. This action uses the deep-linking features of the Android platform.</p> </li> <li> <p> <code>URL</code> - The default mobile browser on the recipient's device opens and loads the web page at a URL that you specify.</p> </li> </ul>",
+        "PushFCMMessageTemplateContent$action": "<p>The action to occur if a recipient taps a push notification that is based on the message template. Valid values are:</p> <ul> <li> <p> <code>OPEN_APP</code> - Your app opens or it becomes the foreground app if it was sent to the background. This is the default action.</p> </li> <li> <p> <code>DEEP_LINK</code> - Your app opens and displays a designated user interface in the app. This action uses the deep-linking features of the Android platform.</p> </li> <li> <p> <code>URL</code> - The default mobile browser on the recipient's device opens and loads the web page at a URL that you specify.</p> </li> </ul>"
+      }
+    },
+    "PushMessageTemplateContent": {
+      "base": "<p>The content of the message template that applies to the push channel subtype.</p>",
+      "refs": {
+        "MessageTemplateContentProvider$push": null
       }
     },
     "PutFeedbackRequest": {
@@ -3994,6 +4086,75 @@
       "base": null,
       "refs": {
         "SeedUrl$url": "<p>URL for crawling</p>"
+      }
+    },
+    "WhatsAppBusinessAccountId": {
+      "base": null,
+      "refs": {
+        "WhatsAppMessageTemplateSourceConfiguration$businessAccountId": "<p>The ID of the End User Messaging WhatsApp Business Account to associate with this template.</p>",
+        "WhatsAppMessageTemplateSourceConfigurationSummary$businessAccountId": "<p>The ID of the End User Messaging WhatsApp Business Account to associate with this template.</p>"
+      }
+    },
+    "WhatsAppMessageTemplateComponent": {
+      "base": "<p>The component mapping from WhatsApp template parameters to Message Template attributes.</p>",
+      "refs": {
+        "WhatsAppMessageTemplateComponents$member": null
+      }
+    },
+    "WhatsAppMessageTemplateComponents": {
+      "base": null,
+      "refs": {
+        "WhatsAppMessageTemplateSourceConfiguration$components": "<p>The list of component mapping from WhatsApp template parameters to Message Template attributes.</p>",
+        "WhatsAppMessageTemplateSourceConfigurationSummary$components": "<p>The list of component mapping from WhatsApp template parameters to Message Template attributes.</p>"
+      }
+    },
+    "WhatsAppMessageTemplateContent": {
+      "base": "<p>The content of the message template that applies to the WHATSAPP channel subtype.</p>",
+      "refs": {
+        "MessageTemplateContentProvider$whatsApp": "<p>The content of the message template that applies to the WHATSAPP channel subtype.</p>"
+      }
+    },
+    "WhatsAppMessageTemplateContentData": {
+      "base": null,
+      "refs": {
+        "WhatsAppMessageTemplateContent$data": "<p>The data.</p>"
+      }
+    },
+    "WhatsAppMessageTemplateId": {
+      "base": null,
+      "refs": {
+        "WhatsAppMessageTemplateSourceConfiguration$templateId": "<p>The WhatsApp template ID.</p>",
+        "WhatsAppMessageTemplateSourceConfigurationSummary$templateId": "<p>The ID of WhatsApp template.</p>"
+      }
+    },
+    "WhatsAppMessageTemplateLanguage": {
+      "base": null,
+      "refs": {
+        "WhatsAppMessageTemplateSourceConfigurationSummary$language": "<p>The language of the WhatsApp template.</p>"
+      }
+    },
+    "WhatsAppMessageTemplateName": {
+      "base": null,
+      "refs": {
+        "WhatsAppMessageTemplateSourceConfigurationSummary$name": "<p>The name of the WhatsApp template.</p>"
+      }
+    },
+    "WhatsAppMessageTemplateSourceConfiguration": {
+      "base": "<p>Configuration information about the external data source.</p>",
+      "refs": {
+        "MessageTemplateSourceConfiguration$whatsApp": "<p>The sourceConfiguration of the message template that applies to the WHATSAPP channel subtype.</p>"
+      }
+    },
+    "WhatsAppMessageTemplateSourceConfigurationSummary": {
+      "base": "<p>Configuration information about the external data source.</p>",
+      "refs": {
+        "MessageTemplateSourceConfigurationSummary$whatsApp": "<p>The sourceConfiguration summary of the message template that applies to the WHATSAPP channel subtype.</p>"
+      }
+    },
+    "WhatsAppSourceConfigurationStatus": {
+      "base": null,
+      "refs": {
+        "WhatsAppMessageTemplateSourceConfigurationSummary$status": "<p>The status of the message template.</p>"
       }
     }
   }

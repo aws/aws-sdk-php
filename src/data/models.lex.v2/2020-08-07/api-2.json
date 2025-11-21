@@ -3077,7 +3077,8 @@
         "botVersion":{"shape":"DraftBotVersion"},
         "localeId":{"shape":"LocaleId"},
         "nluIntentConfidenceThreshold":{"shape":"ConfidenceThreshold"},
-        "voiceSettings":{"shape":"VoiceSettings"}
+        "voiceSettings":{"shape":"VoiceSettings"},
+        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"}
       }
     },
     "BotLocaleSortAttribute":{
@@ -3804,7 +3805,8 @@
         "description":{"shape":"Description"},
         "nluIntentConfidenceThreshold":{"shape":"ConfidenceThreshold"},
         "voiceSettings":{"shape":"VoiceSettings"},
-        "generativeAISettings":{"shape":"GenerativeAISettings"}
+        "generativeAISettings":{"shape":"GenerativeAISettings"},
+        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"}
       }
     },
     "CreateBotLocaleResponse":{
@@ -3819,7 +3821,8 @@
         "voiceSettings":{"shape":"VoiceSettings"},
         "botLocaleStatus":{"shape":"BotLocaleStatus"},
         "creationDateTime":{"shape":"Timestamp"},
-        "generativeAISettings":{"shape":"GenerativeAISettings"}
+        "generativeAISettings":{"shape":"GenerativeAISettings"},
+        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"}
       }
     },
     "CreateBotReplicaRequest":{
@@ -3951,6 +3954,7 @@
       ],
       "members":{
         "intentName":{"shape":"Name"},
+        "intentDisplayName":{"shape":"DisplayName"},
         "description":{"shape":"Description"},
         "parentIntentSignature":{"shape":"IntentSignature"},
         "sampleUtterances":{"shape":"SampleUtterancesList"},
@@ -3986,6 +3990,7 @@
       "members":{
         "intentId":{"shape":"Id"},
         "intentName":{"shape":"Name"},
+        "intentDisplayName":{"shape":"DisplayName"},
         "description":{"shape":"Description"},
         "parentIntentSignature":{"shape":"IntentSignature"},
         "sampleUtterances":{"shape":"SampleUtterancesList"},
@@ -4203,6 +4208,11 @@
         "importId":{"shape":"Id"},
         "uploadUrl":{"shape":"PresignedS3Url"}
       }
+    },
+    "CustomDisambiguationMessage":{
+      "type":"string",
+      "max":1000,
+      "min":1
     },
     "CustomPayload":{
       "type":"structure",
@@ -4827,7 +4837,8 @@
         "lastBuildSubmittedDateTime":{"shape":"Timestamp"},
         "botLocaleHistoryEvents":{"shape":"BotLocaleHistoryEventsList"},
         "recommendedActions":{"shape":"RecommendedActions"},
-        "generativeAISettings":{"shape":"GenerativeAISettings"}
+        "generativeAISettings":{"shape":"GenerativeAISettings"},
+        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"}
       }
     },
     "DescribeBotRecommendationRequest":{
@@ -5141,6 +5152,7 @@
       "members":{
         "intentId":{"shape":"Id"},
         "intentName":{"shape":"Name"},
+        "intentDisplayName":{"shape":"DisplayName"},
         "description":{"shape":"Description"},
         "parentIntentSignature":{"shape":"IntentSignature"},
         "sampleUtterances":{"shape":"SampleUtterancesList"},
@@ -5454,6 +5466,11 @@
         "intent":{"shape":"IntentOverride"},
         "sessionAttributes":{"shape":"StringMap"}
       }
+    },
+    "DisplayName":{
+      "type":"string",
+      "max":100,
+      "min":1
     },
     "DomainEndpoint":{
       "type":"string",
@@ -6052,6 +6069,15 @@
         "elicitationCodeHook":{"shape":"ElicitationCodeHookInvocationSetting"}
       }
     },
+    "IntentDisambiguationSettings":{
+      "type":"structure",
+      "required":["enabled"],
+      "members":{
+        "enabled":{"shape":"Enabled"},
+        "maxDisambiguationIntents":{"shape":"MaxDisambiguationIntents"},
+        "customDisambiguationMessage":{"shape":"CustomDisambiguationMessage"}
+      }
+    },
     "IntentFilter":{
       "type":"structure",
       "required":[
@@ -6154,6 +6180,7 @@
       "members":{
         "intentId":{"shape":"Id"},
         "intentName":{"shape":"Name"},
+        "intentDisplayName":{"shape":"DisplayName"},
         "description":{"shape":"Description"},
         "parentIntentSignature":{"shape":"IntentSignature"},
         "inputContexts":{"shape":"InputContextsList"},
@@ -7122,6 +7149,12 @@
       "type":"string",
       "max":1024
     },
+    "MaxDisambiguationIntents":{
+      "type":"integer",
+      "box":true,
+      "max":5,
+      "min":2
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -7211,7 +7244,8 @@
       "required":["enabled"],
       "members":{
         "enabled":{"shape":"Enabled"},
-        "assistedNluMode":{"shape":"AssistedNluMode"}
+        "assistedNluMode":{"shape":"AssistedNluMode"},
+        "intentDisambiguationSettings":{"shape":"IntentDisambiguationSettings"}
       }
     },
     "NonEmptyString":{
@@ -8199,6 +8233,14 @@
         "valueElicitationSetting":{"shape":"SubSlotValueElicitationSetting"}
       }
     },
+    "SpeechDetectionSensitivity":{
+      "type":"string",
+      "enum":[
+        "Default",
+        "HighNoiseTolerance",
+        "MaximumNoiseTolerance"
+      ]
+    },
     "StartBotRecommendationRequest":{
       "type":"structure",
       "required":[
@@ -9061,7 +9103,8 @@
         "description":{"shape":"Description"},
         "nluIntentConfidenceThreshold":{"shape":"ConfidenceThreshold"},
         "voiceSettings":{"shape":"VoiceSettings"},
-        "generativeAISettings":{"shape":"GenerativeAISettings"}
+        "generativeAISettings":{"shape":"GenerativeAISettings"},
+        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"}
       }
     },
     "UpdateBotLocaleResponse":{
@@ -9079,7 +9122,8 @@
         "creationDateTime":{"shape":"Timestamp"},
         "lastUpdatedDateTime":{"shape":"Timestamp"},
         "recommendedActions":{"shape":"RecommendedActions"},
-        "generativeAISettings":{"shape":"GenerativeAISettings"}
+        "generativeAISettings":{"shape":"GenerativeAISettings"},
+        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"}
       }
     },
     "UpdateBotRecommendationRequest":{
@@ -9216,6 +9260,7 @@
           "locationName":"intentId"
         },
         "intentName":{"shape":"Name"},
+        "intentDisplayName":{"shape":"DisplayName"},
         "description":{"shape":"Description"},
         "parentIntentSignature":{"shape":"IntentSignature"},
         "sampleUtterances":{"shape":"SampleUtterancesList"},
@@ -9252,6 +9297,7 @@
       "members":{
         "intentId":{"shape":"Id"},
         "intentName":{"shape":"Name"},
+        "intentDisplayName":{"shape":"DisplayName"},
         "description":{"shape":"Description"},
         "parentIntentSignature":{"shape":"IntentSignature"},
         "sampleUtterances":{"shape":"SampleUtterancesList"},

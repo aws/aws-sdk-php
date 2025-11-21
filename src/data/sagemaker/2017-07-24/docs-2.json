@@ -463,6 +463,24 @@
         "UpdateComputeQuotaRequest$ActivationState": "<p>The state of the compute allocation being described. Use to enable or disable compute allocation.</p> <p>Default is <code>Enabled</code>.</p>"
       }
     },
+    "ActiveClusterOperationCount": {
+      "base": null,
+      "refs": {
+        "ActiveOperations$value": null
+      }
+    },
+    "ActiveClusterOperationName": {
+      "base": null,
+      "refs": {
+        "ActiveOperations$key": null
+      }
+    },
+    "ActiveOperations": {
+      "base": null,
+      "refs": {
+        "ClusterInstanceGroupDetails$ActiveOperations": "<p>A map indicating active operations currently in progress for the instance group of a SageMaker HyperPod cluster. When there is a scaling operation in progress, this map contains a key <code>Scaling</code> with value 1. </p>"
+      }
+    },
     "AddAssociationRequest": {
       "base": null,
       "refs": {}
@@ -2627,6 +2645,19 @@
         "ClusterInstancePlacement$AvailabilityZoneId": "<p>The unique identifier (ID) of the Availability Zone where the node in the SageMaker HyperPod cluster is launched.</p>"
       }
     },
+    "ClusterCapacityRequirements": {
+      "base": "<p>Defines the instance capacity requirements for an instance group, including configurations for both Spot and On-Demand capacity types. </p>",
+      "refs": {
+        "ClusterInstanceGroupDetails$CapacityRequirements": "<p>The instance capacity requirements for the instance group.</p>",
+        "ClusterInstanceGroupSpecification$CapacityRequirements": "<p>Specifies the capacity requirements for the instance group.</p>"
+      }
+    },
+    "ClusterCapacityType": {
+      "base": null,
+      "refs": {
+        "ClusterNodeDetails$CapacityType": "<p>The capacity type of the node. Valid values are <code>OnDemand</code> and <code>Spot</code>. When set to <code>OnDemand</code>, the node is launched as an On-Demand instance. When set to <code>Spot</code>, the node is launched as a Spot instance. </p>"
+      }
+    },
     "ClusterConfigMode": {
       "base": null,
       "refs": {
@@ -2681,8 +2712,10 @@
       "base": null,
       "refs": {
         "ClusterInstanceGroupDetails$TargetCount": "<p>The number of instances you specified to add to the instance group of a SageMaker HyperPod cluster.</p>",
+        "ClusterInstanceGroupDetails$MinCount": "<p>The minimum number of instances that must be available in the instance group of a SageMaker HyperPod cluster before it transitions to <code>InService</code> status. </p>",
         "ClusterInstanceGroupDetails$TargetStateCount": "<p>The number of nodes running a specific image ID since the last software update request.</p>",
         "ClusterInstanceGroupSpecification$InstanceCount": "<p>Specifies the number of instances to add to the instance group of a SageMaker HyperPod cluster.</p>",
+        "ClusterInstanceGroupSpecification$MinInstanceCount": "<p>Defines the minimum number of instances required for an instance group to become <code>InService</code>. If this threshold isn't met within 3 hours, the instance group rolls back to its previous state - zero instances for new instance groups, or previous settings for existing instance groups. <code>MinInstanceCount</code> only affects the initial transition to <code>InService</code> and does not guarantee maintaining this minimum afterward. </p>",
         "ClusterRestrictedInstanceGroupDetails$TargetCount": "<p>The number of instances you specified to add to the restricted instance group of a SageMaker HyperPod cluster.</p>",
         "ClusterRestrictedInstanceGroupSpecification$InstanceCount": "<p>Specifies the number of instances to add to the restricted instance group of a SageMaker HyperPod cluster.</p>"
       }
@@ -2789,6 +2822,80 @@
         "ClusterRestrictedInstanceGroupDetails$InstanceType": "<p>The instance type of the restricted instance group of a SageMaker HyperPod cluster.</p>",
         "ClusterRestrictedInstanceGroupSpecification$InstanceType": "<p>Specifies the instance type of the restricted instance group.</p>",
         "ComputeQuotaResourceConfig$InstanceType": "<p>The instance type of the instance group for the cluster.</p>"
+      }
+    },
+    "ClusterKubernetesConfig": {
+      "base": "<p>Kubernetes configuration that specifies labels and taints to be applied to cluster nodes in an instance group. </p>",
+      "refs": {
+        "ClusterInstanceGroupSpecification$KubernetesConfig": "<p>Specifies the Kubernetes configuration for the instance group. You describe what you want the labels and taints to look like, and the cluster works to reconcile the actual state with the declared state for nodes in this instance group. </p>"
+      }
+    },
+    "ClusterKubernetesConfigDetails": {
+      "base": "<p>Detailed Kubernetes configuration showing both the current and desired state of labels and taints for cluster nodes. </p>",
+      "refs": {
+        "ClusterInstanceGroupDetails$KubernetesConfig": "<p>The Kubernetes configuration for the instance group that contains labels and taints to be applied for the nodes in this instance group. </p>"
+      }
+    },
+    "ClusterKubernetesConfigNodeDetails": {
+      "base": "<p>Node-specific Kubernetes configuration showing both current and desired state of labels and taints for an individual cluster node. </p>",
+      "refs": {
+        "ClusterNodeDetails$KubernetesConfig": "<p>The Kubernetes configuration applied to this node, showing both the current and desired state of labels and taints. The cluster works to reconcile the actual state with the declared state. </p>"
+      }
+    },
+    "ClusterKubernetesLabelKey": {
+      "base": null,
+      "refs": {
+        "ClusterKubernetesLabels$key": null
+      }
+    },
+    "ClusterKubernetesLabelValue": {
+      "base": null,
+      "refs": {
+        "ClusterKubernetesLabels$value": null
+      }
+    },
+    "ClusterKubernetesLabels": {
+      "base": null,
+      "refs": {
+        "ClusterKubernetesConfig$Labels": "<p>Key-value pairs of labels to be applied to cluster nodes.</p>",
+        "ClusterKubernetesConfigDetails$CurrentLabels": "<p>The current labels applied to cluster nodes of an instance group.</p>",
+        "ClusterKubernetesConfigDetails$DesiredLabels": "<p>The desired labels to be applied to cluster nodes of an instance group.</p>",
+        "ClusterKubernetesConfigNodeDetails$CurrentLabels": "<p>The current labels applied to the cluster node.</p>",
+        "ClusterKubernetesConfigNodeDetails$DesiredLabels": "<p>The desired labels to be applied to the cluster node.</p>"
+      }
+    },
+    "ClusterKubernetesTaint": {
+      "base": "<p>A Kubernetes taint that can be applied to cluster nodes.</p>",
+      "refs": {
+        "ClusterKubernetesTaints$member": null
+      }
+    },
+    "ClusterKubernetesTaintEffect": {
+      "base": null,
+      "refs": {
+        "ClusterKubernetesTaint$Effect": "<p>The effect of the taint. Valid values are <code>NoSchedule</code>, <code>PreferNoSchedule</code>, and <code>NoExecute</code>. </p>"
+      }
+    },
+    "ClusterKubernetesTaintKey": {
+      "base": null,
+      "refs": {
+        "ClusterKubernetesTaint$Key": "<p>The key of the taint.</p>"
+      }
+    },
+    "ClusterKubernetesTaintValue": {
+      "base": null,
+      "refs": {
+        "ClusterKubernetesTaint$Value": "<p>The value of the taint.</p>"
+      }
+    },
+    "ClusterKubernetesTaints": {
+      "base": null,
+      "refs": {
+        "ClusterKubernetesConfig$Taints": "<p>List of taints to be applied to cluster nodes.</p>",
+        "ClusterKubernetesConfigDetails$CurrentTaints": "<p>The current taints applied to cluster nodes of an instance group.</p>",
+        "ClusterKubernetesConfigDetails$DesiredTaints": "<p>The desired taints to be applied to cluster nodes of an instance group.</p>",
+        "ClusterKubernetesConfigNodeDetails$CurrentTaints": "<p>The current taints applied to the cluster node.</p>",
+        "ClusterKubernetesConfigNodeDetails$DesiredTaints": "<p>The desired taints to be applied to the cluster node.</p>"
       }
     },
     "ClusterLifeCycleConfig": {
@@ -2929,6 +3036,12 @@
         "ClusterRestrictedInstanceGroupDetails$CurrentCount": "<p>The number of instances that are currently in the restricted instance group of a SageMaker HyperPod cluster.</p>"
       }
     },
+    "ClusterOnDemandOptions": {
+      "base": "<p>Configuration options specific to On-Demand instances.</p>",
+      "refs": {
+        "ClusterCapacityRequirements$OnDemand": "<p>Configuration options specific to On-Demand instances.</p>"
+      }
+    },
     "ClusterOrchestrator": {
       "base": "<p>The type of orchestrator used for the SageMaker HyperPod cluster.</p>",
       "refs": {
@@ -3029,6 +3142,12 @@
       "refs": {
         "ListClusterNodesRequest$SortBy": "<p>The field by which to sort results. The default value is <code>CREATION_TIME</code>.</p>",
         "ListClustersRequest$SortBy": "<p>The field by which to sort results. The default value is <code>CREATION_TIME</code>.</p>"
+      }
+    },
+    "ClusterSpotOptions": {
+      "base": "<p>Configuration options specific to Spot instances.</p>",
+      "refs": {
+        "ClusterCapacityRequirements$Spot": "<p>Configuration options specific to Spot instances.</p>"
       }
     },
     "ClusterStatus": {
@@ -8891,7 +9010,8 @@
       "base": null,
       "refs": {
         "ComputeQuotaResourceConfig$Count": "<p>The number of instances to add to the instance group of a SageMaker HyperPod cluster.</p>",
-        "InstanceGroupScalingMetadata$InstanceCount": "<p>The current number of instances in the group.</p>"
+        "InstanceGroupScalingMetadata$InstanceCount": "<p>The current number of instances in the group.</p>",
+        "InstanceGroupScalingMetadata$MinCount": "<p>Minimum instance count of the instance group.</p>"
       }
     },
     "InstanceGroup": {
@@ -11266,6 +11386,7 @@
         "ModelSummary$ModelName": "<p>The name of the model that you want a summary for.</p>",
         "ModelVariantConfig$ModelName": "<p>The name of the Amazon SageMaker Model entity.</p>",
         "ModelVariantConfigSummary$ModelName": "<p>The name of the Amazon SageMaker Model entity.</p>",
+        "OptimizationSageMakerModel$ModelName": "<p>The name of a SageMaker model.</p>",
         "ProductionVariant$ModelName": "<p>The name of the model that you want to host. This is the name that you specified when creating the model.</p>",
         "RecommendationJobInputConfig$ModelName": "<p>The name of the created model.</p>",
         "TransformJob$ModelName": "<p>The name of the model associated with the transform job.</p>"
@@ -11539,6 +11660,30 @@
       "base": null,
       "refs": {
         "ListModelsInput$SortBy": "<p>Sorts the list of results. The default is <code>CreationTime</code>.</p>"
+      }
+    },
+    "ModelSpeculativeDecodingConfig": {
+      "base": "<p>Settings for the model speculative decoding technique that's applied by a model optimization job.</p>",
+      "refs": {
+        "OptimizationConfig$ModelSpeculativeDecodingConfig": "<p>Settings for the model speculative decoding technique that's applied by a model optimization job.</p>"
+      }
+    },
+    "ModelSpeculativeDecodingS3DataType": {
+      "base": null,
+      "refs": {
+        "ModelSpeculativeDecodingTrainingDataSource$S3DataType": "<p>The type of data stored in the Amazon S3 location. Valid values are <code>S3Prefix</code> or <code>ManifestFile</code>.</p>"
+      }
+    },
+    "ModelSpeculativeDecodingTechnique": {
+      "base": null,
+      "refs": {
+        "ModelSpeculativeDecodingConfig$Technique": "<p>The speculative decoding technique to apply during model optimization.</p>"
+      }
+    },
+    "ModelSpeculativeDecodingTrainingDataSource": {
+      "base": "<p>Contains information about the training data source for speculative decoding.</p>",
+      "refs": {
+        "ModelSpeculativeDecodingConfig$TrainingDataSource": "<p>The location of the training data to use for speculative decoding. The data must be formatted as ShareGPT, OpenAI Completions or OpenAI Chat Completions. The input can also be unencrypted captured data from a SageMaker endpoint as long as the endpoint uses one of the above formats.</p>"
       }
     },
     "ModelStepMetadata": {
@@ -12769,6 +12914,14 @@
         "ModelShardingConfig$OverrideEnvironment": "<p>Environment variables that override the default ones in the model container.</p>"
       }
     },
+    "OptimizationJobMaxInstanceCount": {
+      "base": null,
+      "refs": {
+        "CreateOptimizationJobRequest$MaxInstanceCount": "<p>The maximum number of instances to use for the optimization job.</p>",
+        "DescribeOptimizationJobResponse$MaxInstanceCount": "<p>The maximum number of instances to use for the optimization job.</p>",
+        "OptimizationJobSummary$MaxInstanceCount": "<p>The maximum number of instances to use for the optimization job.</p>"
+      }
+    },
     "OptimizationJobModelSource": {
       "base": "<p>The location of the source model to optimize with an optimization job.</p>",
       "refs": {
@@ -12825,6 +12978,13 @@
       "base": "<p>Output values produced by an optimization job.</p>",
       "refs": {
         "DescribeOptimizationJobResponse$OptimizationOutput": "<p>Output values produced by an optimization job.</p>"
+      }
+    },
+    "OptimizationSageMakerModel": {
+      "base": "<p>A SageMaker model to use as the source or destination for an optimization job.</p>",
+      "refs": {
+        "OptimizationJobModelSource$SageMakerModel": "<p>The name of an existing SageMaker model to optimize with an optimization job.</p>",
+        "OptimizationJobOutputConfig$SageMakerModel": "<p>The name of a SageMaker model to use as the output destination for an optimization job.</p>"
       }
     },
     "OptimizationType": {
@@ -15192,6 +15352,7 @@
         "ModelExplainabilityAppSpecification$ConfigUri": "<p>JSON formatted Amazon S3 file that defines explainability parameters. For more information on this JSON configuration file, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-config-json-monitor-model-explainability-parameters.html\">Configure model explainability parameters</a>.</p>",
         "ModelQualityAppSpecification$RecordPreprocessorSourceUri": "<p>An Amazon S3 URI to a script that is called per row prior to running analysis. It can base64 decode the payload and convert it into a flattened JSON so that the built-in container can use the converted data. Applicable only for the built-in (first party) containers.</p>",
         "ModelQualityAppSpecification$PostAnalyticsProcessorSourceUri": "<p>An Amazon S3 URI to a script that is called after analysis has been performed. Applicable only for the built-in (first party) containers.</p>",
+        "ModelSpeculativeDecodingTrainingDataSource$S3Uri": "<p>The Amazon S3 URI that points to the training data for speculative decoding.</p>",
         "MonitoringAppSpecification$RecordPreprocessorSourceUri": "<p>An Amazon S3 URI to a script that is called per row prior to running analysis. It can base64 decode the payload and convert it into a flattened JSON so that the built-in container can use the converted data. Applicable only for the built-in (first party) containers.</p>",
         "MonitoringAppSpecification$PostAnalyticsProcessorSourceUri": "<p>An Amazon S3 URI to a script that is called after analysis has been performed. Applicable only for the built-in (first party) containers.</p>",
         "MonitoringConstraintsResource$S3Uri": "<p>The Amazon S3 URI for the constraints resource.</p>",

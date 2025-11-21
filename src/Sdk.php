@@ -202,6 +202,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionComprehendMedical(array $args = [])
  * @method \Aws\ComputeOptimizer\ComputeOptimizerClient createComputeOptimizer(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionComputeOptimizer(array $args = [])
+ * @method \Aws\ComputeOptimizerAutomation\ComputeOptimizerAutomationClient createComputeOptimizerAutomation(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionComputeOptimizerAutomation(array $args = [])
  * @method \Aws\ConfigService\ConfigServiceClient createConfigService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionConfigService(array $args = [])
  * @method \Aws\Connect\ConnectClient createConnect(array $args = [])

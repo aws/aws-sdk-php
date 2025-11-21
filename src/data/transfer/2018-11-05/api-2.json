@@ -1549,7 +1549,8 @@
         "AccessEndpoint":{"shape":"WebAppAccessEndpoint"},
         "WebAppUnits":{"shape":"WebAppUnits"},
         "Tags":{"shape":"Tags"},
-        "WebAppEndpointPolicy":{"shape":"WebAppEndpointPolicy"}
+        "WebAppEndpointPolicy":{"shape":"WebAppEndpointPolicy"},
+        "EndpointDetails":{"shape":"WebAppEndpointDetails"}
       }
     },
     "CreateWebAppResponse":{
@@ -2179,7 +2180,9 @@
         "WebAppEndpoint":{"shape":"WebAppEndpoint"},
         "WebAppUnits":{"shape":"WebAppUnits"},
         "Tags":{"shape":"Tags"},
-        "WebAppEndpointPolicy":{"shape":"WebAppEndpointPolicy"}
+        "WebAppEndpointPolicy":{"shape":"WebAppEndpointPolicy"},
+        "EndpointType":{"shape":"WebAppEndpointType"},
+        "DescribedEndpointDetails":{"shape":"DescribedWebAppEndpointDetails"}
       }
     },
     "DescribedWebAppCustomization":{
@@ -2196,12 +2199,27 @@
         "FaviconFile":{"shape":"WebAppFaviconFile"}
       }
     },
+    "DescribedWebAppEndpointDetails":{
+      "type":"structure",
+      "members":{
+        "Vpc":{"shape":"DescribedWebAppVpcConfig"}
+      },
+      "union":true
+    },
     "DescribedWebAppIdentityProviderDetails":{
       "type":"structure",
       "members":{
         "IdentityCenterConfig":{"shape":"DescribedIdentityCenterConfig"}
       },
       "union":true
+    },
+    "DescribedWebAppVpcConfig":{
+      "type":"structure",
+      "members":{
+        "SubnetIds":{"shape":"SubnetIds"},
+        "VpcId":{"shape":"VpcId"},
+        "VpcEndpointId":{"shape":"VpcEndpointId"}
+      }
     },
     "DescribedWorkflow":{
       "type":"structure",
@@ -2987,7 +3005,8 @@
         "Arn":{"shape":"Arn"},
         "WebAppId":{"shape":"WebAppId"},
         "AccessEndpoint":{"shape":"WebAppAccessEndpoint"},
-        "WebAppEndpoint":{"shape":"WebAppEndpoint"}
+        "WebAppEndpoint":{"shape":"WebAppEndpoint"},
+        "EndpointType":{"shape":"WebAppEndpointType"}
       }
     },
     "ListedWebApps":{
@@ -4044,6 +4063,13 @@
         "WebAppId":{"shape":"WebAppId"}
       }
     },
+    "UpdateWebAppEndpointDetails":{
+      "type":"structure",
+      "members":{
+        "Vpc":{"shape":"UpdateWebAppVpcConfig"}
+      },
+      "union":true
+    },
     "UpdateWebAppIdentityCenterConfig":{
       "type":"structure",
       "members":{
@@ -4064,7 +4090,8 @@
         "WebAppId":{"shape":"WebAppId"},
         "IdentityProviderDetails":{"shape":"UpdateWebAppIdentityProviderDetails"},
         "AccessEndpoint":{"shape":"WebAppAccessEndpoint"},
-        "WebAppUnits":{"shape":"WebAppUnits"}
+        "WebAppUnits":{"shape":"WebAppUnits"},
+        "EndpointDetails":{"shape":"UpdateWebAppEndpointDetails"}
       }
     },
     "UpdateWebAppResponse":{
@@ -4072,6 +4099,12 @@
       "required":["WebAppId"],
       "members":{
         "WebAppId":{"shape":"WebAppId"}
+      }
+    },
+    "UpdateWebAppVpcConfig":{
+      "type":"structure",
+      "members":{
+        "SubnetIds":{"shape":"SubnetIds"}
       }
     },
     "Url":{
@@ -4130,11 +4163,25 @@
       "max":1024,
       "min":1
     },
+    "WebAppEndpointDetails":{
+      "type":"structure",
+      "members":{
+        "Vpc":{"shape":"WebAppVpcConfig"}
+      },
+      "union":true
+    },
     "WebAppEndpointPolicy":{
       "type":"string",
       "enum":[
         "FIPS",
         "STANDARD"
+      ]
+    },
+    "WebAppEndpointType":{
+      "type":"string",
+      "enum":[
+        "PUBLIC",
+        "VPC"
       ]
     },
     "WebAppFaviconFile":{
@@ -4178,6 +4225,14 @@
         "Provisioned":{"shape":"WebAppUnitCount"}
       },
       "union":true
+    },
+    "WebAppVpcConfig":{
+      "type":"structure",
+      "members":{
+        "SubnetIds":{"shape":"SubnetIds"},
+        "VpcId":{"shape":"VpcId"},
+        "SecurityGroupIds":{"shape":"SecurityGroupIds"}
+      }
     },
     "WorkflowDescription":{
       "type":"string",

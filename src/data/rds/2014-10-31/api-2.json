@@ -4228,6 +4228,7 @@
         "DBClusterOptionGroupMemberships":{"shape":"DBClusterOptionGroupMemberships"},
         "PreferredBackupWindow":{"shape":"String"},
         "PreferredMaintenanceWindow":{"shape":"String"},
+        "UpgradeRolloutOrder":{"shape":"UpgradeRolloutOrder"},
         "ReplicationSourceIdentifier":{"shape":"String"},
         "ReadReplicaIdentifiers":{"shape":"ReadReplicaIdentifierList"},
         "StatusInfos":{"shape":"DBClusterStatusInfoList"},
@@ -4812,6 +4813,7 @@
         "AvailabilityZone":{"shape":"String"},
         "DBSubnetGroup":{"shape":"DBSubnetGroup"},
         "PreferredMaintenanceWindow":{"shape":"String"},
+        "UpgradeRolloutOrder":{"shape":"UpgradeRolloutOrder"},
         "PendingModifiedValues":{"shape":"PendingModifiedValues"},
         "LatestRestorableTime":{"shape":"TStamp"},
         "MultiAZ":{"shape":"Boolean"},
@@ -10271,6 +10273,14 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "UpgradeRolloutOrder":{
+      "type":"string",
+      "enum":[
+        "first",
+        "second",
+        "last"
+      ]
     },
     "UpgradeTarget":{
       "type":"structure",
