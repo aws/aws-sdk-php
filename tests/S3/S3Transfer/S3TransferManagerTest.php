@@ -25,7 +25,7 @@ use Aws\S3\S3Transfer\Models\UploadRequest;
 use Aws\S3\S3Transfer\Models\UploadResult;
 use Aws\S3\S3Transfer\AbstractMultipartDownloader;
 use Aws\S3\S3Transfer\MultipartUploader;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Aws\S3\S3Transfer\S3TransferManager;
 use Aws\Test\TestsUtility;
@@ -39,7 +39,6 @@ use GuzzleHttp\Psr7\Utils;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 
@@ -90,11 +89,16 @@ EOF
         if (!is_dir($this->tempDir)) {
             mkdir($this->tempDir, 0777, true);
         }
+
+        set_error_handler(function ($errno, $errstr) {
+            // Ignore trigger_error logging
+        });
     }
 
     protected function tearDown(): void
     {
         TestsUtility::cleanUpDir($this->tempDir);
+        restore_error_handler();
     }
 
     /**
@@ -102,7 +106,9 @@ EOF
      */
     public function testDefaultConfigIsSet(): void
     {
-        $manager = new S3TransferManager();
+        $manager = new S3TransferManager(null, [
+            'default_region' => 'us-east-1',
+        ]);
         $this->assertArrayHasKey(
             'target_part_size_bytes',
             $manager->getConfig()->toArray()
@@ -178,7 +184,9 @@ EOF
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Please provide a valid readable file path or a valid stream as source.");
-        $manager = new S3TransferManager();
+        $manager = new S3TransferManager(null, [
+            'default_region' => 'us-east-1',
+        ]);
         $manager->upload(
             new UploadRequest(
                 "noreadablefile",
@@ -200,7 +208,9 @@ EOF
         string $missingProperty
     ): void
     {
-        $manager = new S3TransferManager();
+        $manager = new S3TransferManager(null, [
+            'default_region' => 'us-east-1',
+        ]);
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The `$missingProperty` parameter must be provided as part of the request arguments.");
         $manager->upload(
@@ -240,7 +250,9 @@ EOF
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The provided config `multipart_upload_threshold_bytes`"
             . "must be greater than or equal to " . MultipartUploader::PART_MIN_SIZE);
-        $manager = new S3TransferManager();
+        $manager = new S3TransferManager(null, [
+            'default_region' => 'us-east-1',
+        ]);
         $manager->upload(
             new UploadRequest(
                 Utils::streamFor(),
@@ -268,7 +280,7 @@ EOF
         $manager = new S3TransferManager(
             $client,
         );
-        $transferListener = $this->createMock(TransferListener::class);
+        $transferListener = $this->createMock(AbstractTransferListener::class);
         $expectedPartCount = 2;
         $transferListener->expects($this->exactly($expectedPartCount))
             ->method('bytesTransferred');
@@ -301,7 +313,7 @@ EOF
         $manager = new S3TransferManager(
             $client,
         );
-        $transferListener = $this->createMock(TransferListener::class);
+        $transferListener = $this->createMock(AbstractTransferListener::class);
         $transferListener->expects($this->once())
             ->method('bytesTransferred');
         $manager->upload(
@@ -333,7 +345,7 @@ EOF
             $client,
         );
         $expectedPartCount = 2;
-        $transferListener = $this->createMock(TransferListener::class);
+        $transferListener = $this->createMock(AbstractTransferListener::class);
         $transferListener->expects($this->exactly($expectedPartCount))
             ->method('bytesTransferred');
         $manager->upload(
@@ -379,14 +391,14 @@ EOF
         $manager = new S3TransferManager(
             $client,
         );
-        $transferListener = $this->createMock(TransferListener::class);
+        $transferListener = $this->createMock(AbstractTransferListener::class);
         $transferListener->expects($this->exactly($expectedPartCount))
             ->method('bytesTransferred');
         $expectedIncrementalPartSize = $expectedPartSize;
         $transferListener->method('bytesTransferred')
             -> willReturnCallback(function ($context) use ($expectedPartSize, &$expectedIncrementalPartSize) {
                 /** @var TransferProgressSnapshot $snapshot */
-                $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+                $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
                 $this->assertEquals($expectedIncrementalPartSize, $snapshot->getTransferredBytes());
                 $expectedIncrementalPartSize += $expectedPartSize;
             });
@@ -444,7 +456,7 @@ EOF
             $client,
         );
         $expectedPartCount = 2;
-        $transferListener = $this->createMock(TransferListener::class);
+        $transferListener = $this->createMock(AbstractTransferListener::class);
         $transferListener->expects($this->exactly($expectedPartCount))
             ->method('bytesTransferred');
         $manager->upload(
@@ -477,7 +489,7 @@ EOF
         );
         $expectedPartCount = 2;
         $expectedPartSize = 6 * 1024 * 1024; // 6 MBs
-        $transferListener = $this->getMockBuilder(TransferListener::class)
+        $transferListener = $this->getMockBuilder(AbstractTransferListener::class)
         ->onlyMethods(['bytesTransferred'])
         ->getMock();
         $expectedIncrementalPartSize = $expectedPartSize;
@@ -487,7 +499,7 @@ EOF
                 &$expectedIncrementalPartSize
             ) {
                 /** @var TransferProgressSnapshot $snapshot */
-                $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+                $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
                 $this->assertEquals($expectedIncrementalPartSize, $snapshot->getTransferredBytes());
                 $expectedIncrementalPartSize += $expectedPartSize;
 
@@ -521,7 +533,9 @@ EOF
      */
     public function testUploadUsesDefaultChecksumAlgorithm(): void
     {
-        $manager = new S3TransferManager();
+        $manager = new S3TransferManager(null, [
+            'default_region' => 'us-east-1',
+        ]);
         $this->testUploadResolvedChecksum(
             null, // No checksum provided
             MultipartUploader::DEFAULT_CHECKSUM_CALCULATION_ALGORITHM,
@@ -1443,7 +1457,7 @@ EOF
             $manager = new S3TransferManager(
                 $client
             );
-            $transferListener = $this->getMockBuilder(TransferListener::class)
+            $transferListener = $this->getMockBuilder(AbstractTransferListener::class)
                 ->disableOriginalConstructor()
                 ->getMock();
             $transferListener->expects($this->exactly(count($files)))
@@ -1453,7 +1467,7 @@ EOF
             $transferListener->method('bytesTransferred')
                 ->willReturnCallback(function(array $context) use (&$objectKeys) {
                     /** @var TransferProgressSnapshot $snapshot */
-                    $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+                    $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
                     $objectKeys[$snapshot->getIdentifier()] = true;
 
                     return true;
@@ -2985,7 +2999,7 @@ EOF
                     config: $config,
                     listeners: [
                         new class($totalBytesReceived, $totalPartsReceived)
-                            extends TransferListener {
+                            extends AbstractTransferListener {
                             private int $totalBytesReceived;
                             private int $totalPartsReceived;
 
@@ -3003,7 +3017,7 @@ EOF
                              */
                             public function bytesTransferred(array $context): bool {
                                 $snapshot = $context[
-                                TransferListener::PROGRESS_SNAPSHOT_KEY
+                                AbstractTransferListener::PROGRESS_SNAPSHOT_KEY
                                 ];
                                 $this->totalBytesReceived = $snapshot->getTransferredBytes();
                                 $this->totalPartsReceived++;
@@ -3141,7 +3155,7 @@ EOF
                     ),
                     listeners: [
                         new class($totalBytesReceived, $totalPartsReceived)
-                            extends TransferListener {
+                            extends AbstractTransferListener {
                             private int $totalBytesReceived;
                             private int $totalPartsReceived;
 
@@ -3159,7 +3173,7 @@ EOF
                              */
                             public function bytesTransferred(array $context): bool {
                                 $snapshot = $context[
-                                TransferListener::PROGRESS_SNAPSHOT_KEY
+                                AbstractTransferListener::PROGRESS_SNAPSHOT_KEY
                                 ];
                                 $this->totalBytesReceived = $snapshot->getTransferredBytes();
                                 $this->totalPartsReceived++;
@@ -4174,5 +4188,13 @@ EOF
 
         $manager->resumeUpload($request)->wait();
         $this->assertFileDoesNotExist($resumeFile);
+    }
+
+    public function testDefaultRegionIsRequiredWhenUsingDefaultS3Client(): void
+    {
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage("When using the default S3 Client you must define a default region."
+            . "\nThe config parameter is `default_region`.`");
+        new S3TransferManager();
     }
 }

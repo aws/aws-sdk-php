@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Progress;
 
-abstract class TransferListener
+abstract class AbstractTransferListener
 {
     public const REQUEST_ARGS_KEY = 'request_args';
     public const PROGRESS_SNAPSHOT_KEY = 'progress_snapshot';

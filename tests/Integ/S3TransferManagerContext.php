@@ -7,19 +7,16 @@ use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\DownloadFileRequest;
 use Aws\S3\S3Transfer\Models\DownloadRequest;
-use Aws\S3\S3Transfer\Models\DownloadResult;
 use Aws\S3\S3Transfer\Models\ResumeDownloadRequest;
 use Aws\S3\S3Transfer\Models\ResumeUploadRequest;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\UploadRequest;
-use Aws\S3\S3Transfer\Progress\TransferListener;
-use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\S3TransferManager;
 use Aws\Test\TestsUtility;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Behat\Tester\Exception\PendingException;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
@@ -666,11 +663,14 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         $partNumberFail
     ): void
     {
+        // Disable warning from trigger_error
+        set_error_handler(function ($errno, $errstr) {});
+
         $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
         $s3TransferManager = new S3TransferManager(
             self::getSdk()->createS3()
         );
-        $transferListener = new class((int)$partNumberFail) extends TransferListener {
+        $transferListener = new class((int)$partNumberFail) extends AbstractTransferListener {
             private int $partNumber;
             private int $partNumberFail;
 
@@ -683,7 +683,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
             {
                 $this->partNumber++;
                 if ($this->partNumber === $this->partNumberFail) {
-                    throw new \RuntimeException(
+                    throw new S3TransferException(
                         "Transfer failed at part number {$this->partNumber} failed"
                     );
                 }
@@ -695,7 +695,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         // To make sure transferFail is called
         $testCase = new class extends TestCase {};
         $transferListener2 = $testCase->getMockBuilder(
-            TransferListener::class
+            AbstractTransferListener::class
         )->getMock();
         $transferListener2->expects($testCase->once())->method('transferInitiated');
         $transferListener2->expects($testCase->once())->method('transferFail');
@@ -717,15 +717,18 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
             )->wait();
 
             // If we reach here, the test should fail because exception was expected
-            Assert::fail("Expected RuntimeException was not thrown");
+            Assert::fail("Expected `S3TransferException` was not thrown");
 
-        } catch (\RuntimeException $exception) {
+        } catch (S3TransferException $exception) {
             Assert::assertEquals(
                 "Transfer failed at part number {$partNumberFail} failed",
                 $exception->getMessage(),
             );
         } catch (\Exception $e) {
             Assert::fail("Unexpected exception type: " . get_class($e) . " - " . $e->getMessage());
+        } finally {
+            // Restore error logging
+            restore_error_handler();
         }
     }
 
@@ -931,13 +934,13 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         $s3TransferManager = new S3TransferManager(
             self::getSdk()->createS3()
         );
-        $failListener = new class extends TransferListener {
+        $failListener = new class extends AbstractTransferListener {
             /** @var int */
             private int $failAtTransferredMb = (1024 * 1024 * 8) * 2;
 
             public function bytesTransferred(array $context): bool
             {
-                $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+                $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
                 $transferredBytes = $snapshot->getTransferredBytes();
 
                 if ($transferredBytes >= $this->failAtTransferredMb) {
@@ -1041,13 +1044,13 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
     public function iTryToUploadTheFileWithResumeEnabledItFails($file): void
     {
         $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
-        $failListener = new class extends TransferListener {
+        $failListener = new class extends AbstractTransferListener {
             /** @var int */
             private int $failAtTransferredMb = (1024 * 1024 * 8) * 2;
 
             public function bytesTransferred(array $context): bool
             {
-                $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+                $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
                 $transferredBytes = $snapshot->getTransferredBytes();
 
                 if ($transferredBytes >= $this->failAtTransferredMb) {

@@ -2,7 +2,7 @@
 
 namespace Aws\Test\S3\S3Transfer\Progress;
 
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use PHPUnit\Framework\TestCase;
 
@@ -13,15 +13,15 @@ class TransferListenerNotifierTest extends TestCase
      */
     public function testListenerNotifier(): void {
         $listeners = [
-            $this->getMockBuilder(TransferListener::class)
+            $this->getMockBuilder(AbstractTransferListener::class)
                 ->getMock(),
-            $this->getMockBuilder(TransferListener::class)
+            $this->getMockBuilder(AbstractTransferListener::class)
                 ->getMock(),
-            $this->getMockBuilder(TransferListener::class)
+            $this->getMockBuilder(AbstractTransferListener::class)
                 ->getMock(),
-            $this->getMockBuilder(TransferListener::class)
+            $this->getMockBuilder(AbstractTransferListener::class)
                 ->getMock(),
-            $this->getMockBuilder(TransferListener::class)
+            $this->getMockBuilder(AbstractTransferListener::class)
                 ->getMock(),
         ];
         foreach ($listeners as $listener) {

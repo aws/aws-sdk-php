@@ -7,7 +7,7 @@ use Aws\S3\S3Transfer\Progress\ConsoleProgressBar;
 use Aws\S3\S3Transfer\Progress\PlainProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\ProgressBarInterface;
 use Aws\S3\S3Transfer\Progress\SingleProgressTracker;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use PHPUnit\Framework\TestCase;
 
@@ -142,8 +142,8 @@ class SingleProgressTrackerTest extends TestCase
                 'event_invoker' => function (singleProgressTracker $progressTracker): void
                 {
                     $progressTracker->transferInitiated([
-                        TransferListener::REQUEST_ARGS_KEY => [],
-                        TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                        AbstractTransferListener::REQUEST_ARGS_KEY => [],
+                        AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                             'Foo',
                             0,
                             1024
@@ -168,16 +168,16 @@ class SingleProgressTrackerTest extends TestCase
                 'event_invoker' => function (singleProgressTracker $progressTracker): void
                 {
                     $progressTracker->transferInitiated([
-                        TransferListener::REQUEST_ARGS_KEY => [],
-                        TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                        AbstractTransferListener::REQUEST_ARGS_KEY => [],
+                        AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                             'Foo',
                             0,
                             1024
                         )
                     ]);
                     $progressTracker->bytesTransferred([
-                        TransferListener::REQUEST_ARGS_KEY => [],
-                        TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                        AbstractTransferListener::REQUEST_ARGS_KEY => [],
+                        AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                             'Foo',
                             256,
                             1024
@@ -204,24 +204,24 @@ class SingleProgressTrackerTest extends TestCase
                 'event_invoker' => function (singleProgressTracker $progressTracker): void
                 {
                     $progressTracker->transferInitiated([
-                        TransferListener::REQUEST_ARGS_KEY => [],
-                        TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                        AbstractTransferListener::REQUEST_ARGS_KEY => [],
+                        AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                             'Foo',
                             0,
                             0
                         )
                     ]);
                     $progressTracker->bytesTransferred([
-                        TransferListener::REQUEST_ARGS_KEY => [],
-                        TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                        AbstractTransferListener::REQUEST_ARGS_KEY => [],
+                        AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                             'Foo',
                             1024,
                             0
                         )
                     ]);
                     $progressTracker->transferComplete([
-                        TransferListener::REQUEST_ARGS_KEY => [],
-                        TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                        AbstractTransferListener::REQUEST_ARGS_KEY => [],
+                        AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                             'Foo',
                             2048,
                             0
@@ -250,24 +250,24 @@ class SingleProgressTrackerTest extends TestCase
                 'event_invoker' => function (singleProgressTracker $progressTracker): void
                 {
                     $progressTracker->transferInitiated([
-                        TransferListener::REQUEST_ARGS_KEY => [],
-                        TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                        AbstractTransferListener::REQUEST_ARGS_KEY => [],
+                        AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                             'Foo',
                             0,
                             1024
                         )
                     ]);
                     $progressTracker->bytesTransferred([
-                        TransferListener::REQUEST_ARGS_KEY => [],
-                        TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                        AbstractTransferListener::REQUEST_ARGS_KEY => [],
+                        AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                             'Foo',
                             512,
                             1024
                         )
                     ]);
                     $progressTracker->transferFail([
-                        TransferListener::REQUEST_ARGS_KEY => [],
-                        TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                        AbstractTransferListener::REQUEST_ARGS_KEY => [],
+                        AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                             'Foo',
                             512,
                             1024

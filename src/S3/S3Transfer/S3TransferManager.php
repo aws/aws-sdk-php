@@ -5,7 +5,6 @@ namespace Aws\S3\S3Transfer;
 use Aws\ResultInterface;
 use Aws\S3\S3Client;
 use Aws\S3\S3ClientInterface;
-use Aws\S3\S3Transfer\Exception\FileDownloadException;
 use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryResult;
@@ -23,12 +22,11 @@ use Aws\S3\S3Transfer\Models\UploadRequest;
 use Aws\S3\S3Transfer\Models\UploadResult;
 use Aws\S3\S3Transfer\Progress\MultiProgressTracker;
 use Aws\S3\S3Transfer\Progress\SingleProgressTracker;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
-use Aws\S3\S3Transfer\Utils\DownloadHandler;
+use Aws\S3\S3Transfer\Utils\AbstractDownloadHandler;
 use Aws\S3\S3Transfer\Utils\FileDownloadHandler;
-use Aws\S3\S3Transfer\Utils\ResumableDownloadHandler;
 use FilesystemIterator;
 use GuzzleHttp\Promise\Each;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -714,15 +712,15 @@ final class S3TransferManager
      *
      * @param array $getObjectRequestArgs
      * @param array $config
-     * @param DownloadHandler $downloadHandler
+     * @param AbstractDownloadHandler $downloadHandler
      * @param TransferListenerNotifier|null $listenerNotifier
      * @param ResumableDownload|null $resumableDownload
      * @return PromiseInterface
      */
     private function tryMultipartDownload(
-        array $getObjectRequestArgs,
-        array $config,
-        DownloadHandler $downloadHandler,
+        array                     $getObjectRequestArgs,
+        array                     $config,
+        AbstractDownloadHandler   $downloadHandler,
         ?TransferListenerNotifier $listenerNotifier = null,
         ?ResumableDownload $resumableDownload = null,
     ): PromiseInterface
@@ -770,8 +768,8 @@ final class S3TransferManager
         if (!empty($listenerNotifier)) {
             $listenerNotifier->transferInitiated(
                 [
-                    TransferListener::REQUEST_ARGS_KEY => $requestArgs,
-                    TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                    AbstractTransferListener::REQUEST_ARGS_KEY => $requestArgs,
+                    AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                         $requestArgs['Key'],
                         0,
                         $objectSize,
@@ -785,8 +783,8 @@ final class S3TransferManager
                 use ($objectSize, $listenerNotifier, $requestArgs) {
                     $listenerNotifier->bytesTransferred(
                         [
-                            TransferListener::REQUEST_ARGS_KEY => $requestArgs,
-                            TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                            AbstractTransferListener::REQUEST_ARGS_KEY => $requestArgs,
+                            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                                 $requestArgs['Key'],
                                 $objectSize,
                                 $objectSize,
@@ -796,8 +794,8 @@ final class S3TransferManager
 
                     $listenerNotifier->transferComplete(
                         [
-                            TransferListener::REQUEST_ARGS_KEY => $requestArgs,
-                            TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                            AbstractTransferListener::REQUEST_ARGS_KEY => $requestArgs,
+                            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                                 $requestArgs['Key'],
                                 $objectSize,
                                 $objectSize,
@@ -814,8 +812,8 @@ final class S3TransferManager
             use ($objectSize, $requestArgs, $listenerNotifier) {
                 $listenerNotifier->transferFail(
                     [
-                        TransferListener::REQUEST_ARGS_KEY => $requestArgs,
-                        TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
+                        AbstractTransferListener::REQUEST_ARGS_KEY => $requestArgs,
+                        AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                             $requestArgs['Key'],
                             0,
                             $objectSize,
@@ -890,8 +888,16 @@ final class S3TransferManager
      */
     private function defaultS3Client(): S3ClientInterface
     {
+        $defaultRegion = $this->config->getDefaultRegion();
+        if (empty($defaultRegion)) {
+            throw new S3TransferException(
+                "When using the default S3 Client you must define a default region."
+                . "\nThe config parameter is `default_region`.`"
+            );
+        }
+
         return new S3Client([
-            'region' => $this->config->getDefaultRegion(),
+            'region' => $defaultRegion,
         ]);
     }
 

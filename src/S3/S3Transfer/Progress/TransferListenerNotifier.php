@@ -2,9 +2,9 @@
 
 namespace Aws\S3\S3Transfer\Progress;
 
-final class TransferListenerNotifier extends TransferListener
+final class TransferListenerNotifier extends AbstractTransferListener
 {
-    /** @var TransferListener[] */
+    /** @var AbstractTransferListener[] */
     private array $listeners;
 
     /**
@@ -14,9 +14,9 @@ final class TransferListenerNotifier extends TransferListener
     {
         usort($listeners, fn($a, $b) => $a->priority() <=> $b->priority());
         foreach ($listeners as $listener) {
-            if (!$listener instanceof TransferListener) {
+            if (!$listener instanceof AbstractTransferListener) {
                 throw new \InvalidArgumentException(
-                    "Listener must implement " . TransferListener::class . "."
+                    "Listener must implement " . AbstractTransferListener::class . "."
                 );
             }
         }
@@ -25,11 +25,11 @@ final class TransferListenerNotifier extends TransferListener
     }
 
     /**
-     * @param TransferListener $listener
+     * @param AbstractTransferListener $listener
      *
      * @return void
      */
-    public function addListener(TransferListener $listener): void
+    public function addListener(AbstractTransferListener $listener): void
     {
         $this->listeners[] = $listener;
     }

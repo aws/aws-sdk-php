@@ -6,13 +6,11 @@ use Aws\CommandInterface;
 use Aws\CommandPool;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
-use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use GuzzleHttp\Promise\Coroutine;
-use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\PromisorInterface;
 use Throwable;
@@ -280,8 +278,8 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         }
 
         $this->listenerNotifier?->transferInitiated([
-            TransferListener::REQUEST_ARGS_KEY => $requestArgs,
-            TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot
+            AbstractTransferListener::REQUEST_ARGS_KEY => $requestArgs,
+            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot
         ]);
     }
 
@@ -302,9 +300,9 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         $this->currentSnapshot = $newSnapshot;
 
         $this->listenerNotifier?->transferComplete([
-            TransferListener::REQUEST_ARGS_KEY =>
+            AbstractTransferListener::REQUEST_ARGS_KEY =>
                 $this->requestArgs,
-            TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot
+            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot
         ]);
     }
 
@@ -337,17 +335,16 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         );
 
         if (!empty($this->uploadId)) {
-            error_log(
+            trigger_error(
                 "Multipart Upload with id: " . $this->uploadId . " failed",
-                E_USER_WARNING
             );
             $this->abortMultipartOperation()->wait();
         }
 
         $this->listenerNotifier?->transferFail([
-            TransferListener::REQUEST_ARGS_KEY =>
+            AbstractTransferListener::REQUEST_ARGS_KEY =>
                 $this->requestArgs,
-            TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
+            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
             'reason' => $reason,
         ]);
     }

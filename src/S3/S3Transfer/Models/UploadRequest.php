@@ -2,11 +2,11 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
 
-final class UploadRequest extends TransferRequest
+final class UploadRequest extends AbstractTransferRequest
 {
     public static array $configKeys = [
         'multipart_upload_threshold_bytes' => 'int',
@@ -47,8 +47,8 @@ final class UploadRequest extends TransferRequest
      * - resume_file_path (string, optional): To override the default resume file
      *     location to be generated. If specified the file name must end in `.resume`
      *      otherwise it will be added automatically.
-     * @param TransferListener[]|null $listeners
-     * @param TransferListener|null $progressTracker
+     * @param AbstractTransferListener[]|null $listeners
+     * @param AbstractTransferListener|null $progressTracker
      *
      */
     public function __construct(
@@ -56,7 +56,7 @@ final class UploadRequest extends TransferRequest
         array $uploadRequestArgs,
         array $config = [],
         array $listeners = [],
-        ?TransferListener $progressTracker  = null
+        ?AbstractTransferListener $progressTracker  = null
     ) {
         parent::__construct($listeners, $progressTracker, $config);
         $this->source = $source;

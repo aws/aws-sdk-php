@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Progress;
 
-final class TransferProgressBarFormat extends ProgressBarFormat
+final class TransferProgressBarFormat extends AbstractProgressBarFormat
 {
     public const FORMAT_TEMPLATE = "|object_name|:\n[|progress_bar|]"
     ." |percent|% |transferred|/|to_be_transferred| |unit|";

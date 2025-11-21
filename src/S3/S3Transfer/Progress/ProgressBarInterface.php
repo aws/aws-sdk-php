@@ -25,7 +25,7 @@ interface ProgressBarInterface
     public function getPercentCompleted(): int;
 
     /**
-     * @return ProgressBarFormat
+     * @return AbstractProgressBarFormat
      */
-    public function getProgressBarFormat(): ProgressBarFormat;
+    public function getProgressBarFormat(): AbstractProgressBarFormat;
 }

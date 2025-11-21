@@ -4,7 +4,7 @@ namespace Aws\S3\S3Transfer\Progress;
 
 use Closure;
 
-final class MultiProgressTracker extends TransferListener implements ProgressTrackerInterface
+final class MultiProgressTracker extends AbstractTransferListener implements ProgressTrackerInterface
 {
     private const CLEAR_ASCII_CODE = "\033[2J\033[H";
 
@@ -105,7 +105,7 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
     public function transferInitiated(array $context): void
     {
         $this->transferCount++;
-        $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+        $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         if (isset($this->singleProgressTrackers[$snapshot->getIdentifier()])) {
             $progressTracker = $this->singleProgressTrackers[$snapshot->getIdentifier()];
         } else {
@@ -137,7 +137,7 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
      */
     public function bytesTransferred(array $context): bool
     {
-        $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+        $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressTracker = $this->singleProgressTrackers[$snapshot->getIdentifier()];
         $progressTracker->bytesTransferred($context);
         $this->showProgress();
@@ -151,7 +151,7 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
     public function transferComplete(array $context): void
     {
         $this->completed++;
-        $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+        $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressTracker = $this->singleProgressTrackers[$snapshot->getIdentifier()];
         $progressTracker->transferComplete($context);
         $this->showProgress();
@@ -163,7 +163,7 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
     public function transferFail(array $context): void
     {
         $this->failed++;
-        $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+        $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressTracker = $this->singleProgressTrackers[$snapshot->getIdentifier()];
         $progressTracker->transferFail($context);
         $this->showProgress();

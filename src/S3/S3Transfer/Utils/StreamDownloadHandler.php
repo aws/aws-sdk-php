@@ -2,11 +2,11 @@
 
 namespace Aws\S3\S3Transfer\Utils;
 
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;
 
-final class StreamDownloadHandler extends DownloadHandler
+final class StreamDownloadHandler extends AbstractDownloadHandler
 {
     /** @var StreamInterface|null */
     private ?StreamInterface $stream;
@@ -41,12 +41,11 @@ final class StreamDownloadHandler extends DownloadHandler
      */
     public function bytesTransferred(array $context): bool
     {
-        $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+        $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         $response = $snapshot->getResponse();
         $partBody = $response['Body'];
 
         if ($partBody->isSeekable()) {
-            // In case body was already consumed by another process
             $partBody->rewind();
         }
 

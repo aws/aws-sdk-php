@@ -5,12 +5,9 @@ namespace Aws\S3\S3Transfer\Utils;
 use Aws\S3\ApplyChecksumMiddleware;
 use Aws\S3\S3Transfer\AbstractMultipartDownloader;
 use Aws\S3\S3Transfer\Exception\FileDownloadException;
-use Aws\S3\S3Transfer\Exception\S3TransferException;
-use Aws\S3\S3Transfer\Models\ResumableDownload;
-use Aws\S3\S3Transfer\Progress\TransferListener;
-use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 
-class FileDownloadHandler extends DownloadHandler implements ResumableDownloadHandler
+final class FileDownloadHandler extends AbstractDownloadHandler
 {
     private const IDENTIFIER_LENGTH = 8;
     private const TEMP_INFIX = '.s3tmp.';
@@ -128,7 +125,7 @@ class FileDownloadHandler extends DownloadHandler implements ResumableDownloadHa
             return false;
         }
 
-        $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
+        $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
         $response = $snapshot->getResponse();
 
         if ($this->handle === null) {

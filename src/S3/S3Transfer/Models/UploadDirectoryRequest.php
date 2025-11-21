@@ -3,10 +3,10 @@
 namespace Aws\S3\S3Transfer\Models;
 
 use Aws\Arn\ArnParser;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use InvalidArgumentException;
 
-final class UploadDirectoryRequest extends TransferRequest
+final class UploadDirectoryRequest extends AbstractTransferRequest
 {
     public static array $configKeys = [
         'follow_symbolic_links' => 'bool',
@@ -53,7 +53,7 @@ final class UploadDirectoryRequest extends TransferRequest
      * - failure_policy: (callable, optional) The failure policy to handle failed requests.
      * - max_concurrency: (int, optional) The max number of concurrent uploads.
      * @param array $listeners For listening to transfer events such as transferInitiated.
-     * @param TransferListener|null $progressTracker For showing progress in transfers.
+     * @param AbstractTransferListener|null $progressTracker For showing progress in transfers.
      */
     public function __construct(
         string $sourceDirectory,
@@ -61,7 +61,7 @@ final class UploadDirectoryRequest extends TransferRequest
         array $uploadRequestArgs = [],
         array $config = [],
         array $listeners = [],
-        ?TransferListener $progressTracker = null
+        ?AbstractTransferListener $progressTracker = null
     ) {
         parent::__construct($listeners, $progressTracker, $config);
         $this->sourceDirectory = $sourceDirectory;

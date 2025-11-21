@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Progress;
 
-final class ColoredTransferProgressBarFormat extends ProgressBarFormat
+final class ColoredTransferProgressBarFormat extends AbstractProgressBarFormat
 {
     public const BLACK_COLOR_CODE = '[30m';
     public const BLUE_COLOR_CODE = '[34m';

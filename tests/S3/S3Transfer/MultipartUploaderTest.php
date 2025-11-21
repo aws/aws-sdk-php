@@ -11,7 +11,7 @@ use Aws\S3\S3Transfer\AbstractMultipartUploader;
 use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\UploadResult;
 use Aws\S3\S3Transfer\MultipartUploader;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\Test\TestsUtility;
 use Generator;
@@ -34,11 +34,16 @@ class MultipartUploaderTest extends TestCase
         if (!is_dir($this->tempDir)) {
             mkdir($this->tempDir, 0777, true);
         }
+
+        set_error_handler(function ($errno, $errstr) {
+            // Ignore trigger_error logging
+        });
     }
 
     protected function tearDown(): void
     {
         TestsUtility::cleanUpDir($this->tempDir);
+        restore_error_handler();
     }
 
     /**
@@ -415,23 +420,20 @@ EOF;
      */
     public function testTransferListenerNotifierNotifiesListenersOnSuccess(): void
     {
-        $listener1 = $this->getMockBuilder(TransferListener::class)->getMock();
-        $listener2 = $this->getMockBuilder(TransferListener::class)->getMock();
-        $listener3 = $this->getMockBuilder(TransferListener::class)->getMock();
+        $noOfListeners = 3;
+        $listeners = [];
+        for ($i = 0; $i < $noOfListeners; $i++) {
+            $listener = $this->getMockBuilder(
+                AbstractTransferListener::class
+            )->getMock();
+            $listener->method('bytesTransferred')->willReturn(true);
+            $listener->expects($this->once())->method('transferInitiated');
+            $listener->expects($this->atLeastOnce())->method('bytesTransferred');
+            $listener->expects($this->once())->method('transferComplete');
+            $listeners[] = $listener;
+        }
 
-        $listener1->expects($this->once())->method('transferInitiated');
-        $listener1->expects($this->atLeastOnce())->method('bytesTransferred');
-        $listener1->expects($this->once())->method('transferComplete');
-
-        $listener2->expects($this->once())->method('transferInitiated');
-        $listener2->expects($this->atLeastOnce())->method('bytesTransferred');
-        $listener2->expects($this->once())->method('transferComplete');
-
-        $listener3->expects($this->once())->method('transferInitiated');
-        $listener3->expects($this->atLeastOnce())->method('bytesTransferred');
-        $listener3->expects($this->once())->method('transferComplete');
-
-        $listenerNotifier = new TransferListenerNotifier([$listener1, $listener2, $listener3]);
+        $listenerNotifier = new TransferListenerNotifier($listeners);
 
         $s3Client = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
@@ -689,8 +691,10 @@ EOF;
                         'UploadId' => 'TestUploadId'
                     ]));
                 } elseif ($command->getName() === 'UploadPart') {
-                    if ($command['PartNumber'] == 3) {
-                        return Create::rejectionFor(new S3TransferException('Upload failed'));
+                    if ($command['PartNumber'] === 3) {
+                        return Create::rejectionFor(
+                            new S3TransferException('Upload failed')
+                        );
                     }
                 } elseif ($command->getName() === 'AbortMultipartUpload') {
                     $abortMultipartCalled = true;
@@ -735,8 +739,8 @@ EOF;
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Upload failed');
 
-        $listener1 = $this->getMockBuilder(TransferListener::class)->getMock();
-        $listener2 = $this->getMockBuilder(TransferListener::class)->getMock();
+        $listener1 = $this->getMockBuilder(AbstractTransferListener::class)->getMock();
+        $listener2 = $this->getMockBuilder(AbstractTransferListener::class)->getMock();
 
         $listener1->expects($this->once())->method('transferInitiated');
         $listener1->expects($this->once())->method('transferFail');
@@ -1466,5 +1470,70 @@ EOF;
         $uploader->promise()->wait();
 
         $this->assertFileDoesNotExist($resumeFile);
+
+    }
+
+    public function testAbortMultipartUploadShowsWarning(): void
+    {
+        // Convert the warning to an exception
+        $this->expectException(S3TransferException::class);
+        $this->expectExceptionMessage("Upload failed");
+        set_error_handler(function ($errno, $errstr) {
+            $this->assertStringContainsString(
+                "Multipart Upload with id: ",
+                $errstr,
+            );
+        });
+
+        $abortMultipartCalled = false;
+        $abortMultipartCalledTimes = 0;
+        $s3Client = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $s3Client->method('executeAsync')
+            ->willReturnCallback(function ($command)
+            use (&$abortMultipartCalled, &$abortMultipartCalledTimes) {
+                if ($command->getName() === 'CreateMultipartUpload') {
+                    return Create::promiseFor(new Result([
+                        'UploadId' => 'TestUploadId'
+                    ]));
+                } elseif ($command->getName() === 'UploadPart') {
+                    if ($command['PartNumber'] === 3) {
+                        return Create::rejectionFor(
+                            new S3TransferException('Upload failed')
+                        );
+                    }
+                } elseif ($command->getName() === 'AbortMultipartUpload') {
+                    $abortMultipartCalled = true;
+                    $abortMultipartCalledTimes++;
+                }
+
+                return Create::promiseFor(new Result([]));
+            });
+        $s3Client->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+        $requestArgs = [
+            'Bucket' => 'test-bucket',
+            'Key' => 'test-key',
+        ];
+        $source = Utils::streamFor(str_repeat('*', 1024 * 1024 * 20));
+        try {
+            $multipartUploader = new MultipartUploader(
+                $s3Client,
+                $requestArgs,
+                $source,
+                [
+                    'target_part_size_bytes' => 5242880, // 5MB
+                    'concurrency' => 1,
+                    'request_checksum_calculation' => 'when_supported'
+                ]
+            );
+            $multipartUploader->promise()->wait();
+        } finally {
+            $this->assertTrue($abortMultipartCalled);
+            $source->close();
+        }
     }
 }

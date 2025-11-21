@@ -4,11 +4,11 @@ namespace Aws\Test\S3\S3Transfer\Progress;
 
 use Aws\S3\S3Transfer\Progress\ColoredTransferProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\PlainProgressBarFormat;
-use Aws\S3\S3Transfer\Progress\ProgressBarFormat;
+use Aws\S3\S3Transfer\Progress\AbstractProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\TransferProgressBarFormat;
 use PHPUnit\Framework\TestCase;
 
-class ProgressBarFormatTest extends TestCase
+class AbstractProgressBarFormatTest extends TestCase
 {
     /**
      * Tests the different implementations of
@@ -29,7 +29,7 @@ class ProgressBarFormatTest extends TestCase
         string $expectedFormat
     ): void
     {
-        /** @var ProgressBarFormat $progressBarFormat */
+        /** @var AbstractProgressBarFormat $progressBarFormat */
         $progressBarFormat = new $implementationClass();
         $progressBarFormat->setArgs($args);
 
