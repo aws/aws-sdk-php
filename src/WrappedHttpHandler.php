@@ -166,10 +166,11 @@ class WrappedHttpHandler
             throw new \RuntimeException('The HTTP handler was rejected without an "exception" key value pair.');
         }
 
-        $serviceError = "AWS HTTP error: \n";
+        $serviceError = "AWS HTTP error:\n";
 
         if (!isset($err['response'])) {
             $parts = ['response' => null];
+            $serviceError .= $err['exception']->getMessage();
         } else {
             try {
                 $parts = call_user_func(
@@ -177,6 +178,7 @@ class WrappedHttpHandler
                     $err['response'],
                     $command
                 );
+
                 $serviceError .= "{$parts['code']} ({$parts['type']}): "
                     . "{$parts['message']}";
             } catch (ParserException $e) {

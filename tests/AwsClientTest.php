@@ -101,8 +101,8 @@ class AwsClientTest extends TestCase
 
     public function testWrapsExceptions()
     {
-        $this->expectExceptionMessage("Error executing \"foo\" on \"http://us-east-1.foo.amazonaws.com/\"; AWS HTTP error: Baz Bar!");
-        $this->expectException(\Aws\S3\Exception\S3Exception::class);
+        $this->expectExceptionMessage("Error executing \"foo\" on \"http://us-east-1.foo.amazonaws.com/\"; AWS HTTP error:\nBaz Bar!");
+        $this->expectException(S3Exception::class);
         $parser = function () {};
         $errorParser = new JsonRpcErrorParser();
         $h = new WrappedHttpHandler(
