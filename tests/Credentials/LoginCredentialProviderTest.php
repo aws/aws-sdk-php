@@ -1568,6 +1568,11 @@ EOT;
 
     public function testRefreshContinuesWhenDiskReadFails(): void
     {
+        // Skip test if running as root. chmod() will not work
+        if (function_exists('posix_geteuid') && posix_geteuid() === 0) {
+            $this->markTestSkipped('Test cannot run test as root user');
+        }
+
         $awsDir = $this->createAwsHome();
         $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
         $this->createConfigFile($awsDir, 'default', $loginSession);
@@ -1644,7 +1649,11 @@ EOT;
 
     public function testRefreshSucceedsWhenCacheWriteFails(): void
     {
-        $this->markTestSkipped();
+        // Skip test if running as root. chmod() will not work
+        if (function_exists('posix_geteuid') && posix_geteuid() === 0) {
+            $this->markTestSkipped('Test cannot run test as root user');
+        }
+
         $awsDir = $this->createAwsHome();
         $loginSession = 'arn:aws:iam::123456789012:user/TestUser';
         $this->createConfigFile(
