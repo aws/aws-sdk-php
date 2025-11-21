@@ -49,9 +49,6 @@ class RestJsonErrorParser extends AbstractErrorParser
 
         $this->populateShape($data, $response, $command);
 
-        // Now lets make parsed to be all lowercase
-        $data['parsed'] = $parsed;
-
         return $data;
     }
 }
