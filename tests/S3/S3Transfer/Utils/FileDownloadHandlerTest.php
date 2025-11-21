@@ -3,7 +3,7 @@
 namespace Aws\Test\S3\S3Transfer\Utils;
 
 use Aws\S3\S3Transfer\Exception\FileDownloadException;
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Aws\S3\S3Transfer\Utils\FileDownloadHandler;
 use Aws\Test\TestsUtility;
@@ -76,7 +76,7 @@ class FileDownloadHandlerTest extends TestCase
         ];
         $snapshot = new TransferProgressSnapshot('test-key', 11, 11, $response);
 
-        $handler->bytesTransferred([TransferListener::PROGRESS_SNAPSHOT_KEY => $snapshot]);
+        $handler->bytesTransferred([AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $snapshot]);
         $handler->transferComplete([]);
 
         $this->assertEquals('new content', file_get_contents($destination));
@@ -105,11 +105,11 @@ class FileDownloadHandlerTest extends TestCase
         );
 
         $handler->bytesTransferred([
-            TransferListener::PROGRESS_SNAPSHOT_KEY => $snapshot
+            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $snapshot
         ]);
         
         $tempFile = $handler->getTemporaryFilePath();
-        $handler->transferFail([TransferListener::REASON_KEY => 'Test failure']);
+        $handler->transferFail([AbstractTransferListener::REASON_KEY => 'Test failure']);
 
         $this->assertFileExists($tempFile);
     }
@@ -152,7 +152,7 @@ class FileDownloadHandlerTest extends TestCase
         );
 
         $result = $handler->bytesTransferred([
-            TransferListener::PROGRESS_SNAPSHOT_KEY => $snapshot
+            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $snapshot
         ]);
         $this->assertTrue($result);
         $this->assertFileExists($tempFile);
@@ -195,7 +195,7 @@ class FileDownloadHandlerTest extends TestCase
         );
 
         $result = $handler->bytesTransferred([
-            TransferListener::PROGRESS_SNAPSHOT_KEY => $snapshot
+            AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $snapshot
         ]);
         $this->assertTrue($result);
     }
@@ -234,7 +234,7 @@ class FileDownloadHandlerTest extends TestCase
 
         $this->expectException(FileDownloadException::class);
         $this->expectExceptionMessage('Checksum mismatch when writing part to destination file.');
-        $handler->bytesTransferred([TransferListener::PROGRESS_SNAPSHOT_KEY => $snapshot]);
+        $handler->bytesTransferred([AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $snapshot]);
     }
 
     public function testCleansUpResourcesAfterFailure(): void
@@ -250,12 +250,12 @@ class FileDownloadHandlerTest extends TestCase
         ];
         $snapshot = new TransferProgressSnapshot('test-key', 10, 10, $response);
 
-        $handler->bytesTransferred([TransferListener::PROGRESS_SNAPSHOT_KEY => $snapshot]);
+        $handler->bytesTransferred([AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $snapshot]);
         
         $tempFile = $handler->getTemporaryFilePath();
         $this->assertFileExists($tempFile);
 
-        $handler->transferFail([TransferListener::REASON_KEY => 'Test failure']);
+        $handler->transferFail([AbstractTransferListener::REASON_KEY => 'Test failure']);
 
         $this->assertFileDoesNotExist($tempFile);
     }

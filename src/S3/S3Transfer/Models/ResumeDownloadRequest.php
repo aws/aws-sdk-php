@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Utils\FileDownloadHandler;
 
 final class ResumeDownloadRequest
@@ -16,20 +16,20 @@ final class ResumeDownloadRequest
     /** @var array */
     private array $listeners;
 
-    /** @var TransferListener|null */
-    private ?TransferListener $progressTracker;
+    /** @var AbstractTransferListener|null */
+    private ?AbstractTransferListener $progressTracker;
 
     /**
      * @param ResumableDownload|string $resumableDownload
      * @param string $downloadHandlerClass
      * @param array $listeners
-     * @param TransferListener|null $progressTracker
+     * @param AbstractTransferListener|null $progressTracker
      */
     public function __construct(
         string|ResumableDownload $resumableDownload,
         string $downloadHandlerClass = FileDownloadHandler::class,
         array $listeners = [],
-        ?TransferListener $progressTracker = null
+        ?AbstractTransferListener $progressTracker = null
     ) {
         $this->resumableDownload = $resumableDownload;
         $this->downloadHandlerClass = $downloadHandlerClass;
@@ -62,9 +62,9 @@ final class ResumeDownloadRequest
     }
 
     /**
-     * @return TransferListener|null
+     * @return AbstractTransferListener|null
      */
-    public function getProgressTracker(): ?TransferListener
+    public function getProgressTracker(): ?AbstractTransferListener
     {
         return $this->progressTracker;
     }

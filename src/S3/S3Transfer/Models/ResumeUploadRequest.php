@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
-use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 
 final class ResumeUploadRequest
 {
@@ -12,18 +12,18 @@ final class ResumeUploadRequest
     /** @var array */
     private array $listeners;
 
-    /** @var TransferListener|null */
-    private ?TransferListener $progressTracker;
+    /** @var AbstractTransferListener|null */
+    private ?AbstractTransferListener $progressTracker;
 
     /**
      * @param ResumableUpload|string $resumableUpload
      * @param array $listeners
-     * @param TransferListener|null $progressTracker
+     * @param AbstractTransferListener|null $progressTracker
      */
     public function __construct(
         string|ResumableUpload $resumableUpload,
         array $listeners = [],
-        ?TransferListener $progressTracker = null
+        ?AbstractTransferListener $progressTracker = null
     ) {
         $this->resumableUpload = $resumableUpload;
         $this->listeners = $listeners;
@@ -47,9 +47,9 @@ final class ResumeUploadRequest
     }
 
     /**
-     * @return TransferListener|null
+     * @return AbstractTransferListener|null
      */
-    public function getProgressTracker(): ?TransferListener
+    public function getProgressTracker(): ?AbstractTransferListener
     {
         return $this->progressTracker;
     }

@@ -431,7 +431,7 @@ abstract class AbstractMultipartDownloader implements PromisorInterface
         $context = [
             AbstractTransferListener::REQUEST_ARGS_KEY => $this->downloadRequestArgs,
             AbstractTransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
-            'reason' => $reason,
+            AbstractTransferListener::REASON_KEY => $reason,
         ];
 
         // Notify download handler

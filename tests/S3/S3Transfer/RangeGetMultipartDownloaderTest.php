@@ -8,6 +8,7 @@ use Aws\S3\S3Client;
 use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadResult;
 use Aws\S3\S3Transfer\RangeGetMultipartDownloader;
+use Aws\S3\S3Transfer\Utils\FileDownloadHandler;
 use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 use Aws\Test\TestsUtility;
 use Generator;
@@ -224,48 +225,6 @@ class RangeGetMultipartDownloaderTest extends TestCase
     }
 
     /**
-     * Tests nextCommand method includes IfMatch header when ETag is present.
-     *
-     * @return void
-     * @throws \ReflectionException
-     */
-    public function testNextCommandIncludesIfMatchWhenETagPresent(): void
-    {
-        $mockClient = $this->getMockBuilder(S3Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        
-        $mockClient->method('getCommand')
-            ->willReturnCallback(function ($commandName, $args) {
-                return new Command($commandName, $args);
-            });
-
-        $eTag = '"abc123"';
-        $downloader = new RangeGetMultipartDownloader(
-            $mockClient,
-            [
-                'Bucket' => 'TestBucket',
-                'Key' => 'TestKey',
-            ],
-            [
-                'minimum_part_size' => 1024,
-            ],
-            new StreamDownloadHandler(),
-            0, // currentPartNo
-            0, // objectPartsCount
-            0, // objectSizeInBytes
-            $eTag // eTag
-        );
-
-        // Use reflection to test the protected nextCommand method
-        $reflection = new \ReflectionClass($downloader);
-        $nextCommandMethod = $reflection->getMethod('nextCommand');
-
-        $command = $nextCommandMethod->invoke($downloader);
-        $this->assertEquals($eTag, $command['IfMatch']);
-    }
-
-    /**
      * Test IfMatch is properly called in each part get operation.
      *
      * @param int $objectSizeInBytes
@@ -395,6 +354,7 @@ class RangeGetMultipartDownloaderTest extends TestCase
                         'ETag' => 'test-etag'
                     ]));
                 }
+
                 return new RejectedPromise(new \Exception('Download failed'));
             });
 
@@ -403,7 +363,13 @@ class RangeGetMultipartDownloaderTest extends TestCase
                 return new Command($commandName, $args);
             });
 
-        $handler = new \Aws\S3\S3Transfer\Utils\FileDownloadHandler($destination, false, true, null, $partSize);
+        $handler = new FileDownloadHandler(
+            $destination,
+            false,
+            true,
+            null,
+            $partSize
+        );
         $downloader = new RangeGetMultipartDownloader(
             $mockClient,
             ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
@@ -454,11 +420,21 @@ class RangeGetMultipartDownloaderTest extends TestCase
                 return new Command($commandName, $args);
             });
 
-        $handler = new \Aws\S3\S3Transfer\Utils\FileDownloadHandler($destination, false, true, null, $partSize);
+        $handler = new FileDownloadHandler(
+            $destination,
+            false,
+            true,
+            null,
+            $partSize
+        );
         $downloader = new RangeGetMultipartDownloader(
             $mockClient,
             ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
-            ['target_part_size_bytes' => $partSize, 'resume_enabled' => true, 'resume_file_path' => $customResumePath],
+            [
+                'target_part_size_bytes' => $partSize,
+                'resume_enabled' => true,
+                'resume_file_path' => $customResumePath
+            ],
             $handler
         );
 
@@ -506,7 +482,7 @@ class RangeGetMultipartDownloaderTest extends TestCase
                 return new Command($commandName, $args);
             });
 
-        $handler = new \Aws\S3\S3Transfer\Utils\FileDownloadHandler($destination, false, true, null, $partSize);
+        $handler = new FileDownloadHandler($destination, false, true, null, $partSize);
         $downloader = new RangeGetMultipartDownloader(
             $mockClient,
             ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
