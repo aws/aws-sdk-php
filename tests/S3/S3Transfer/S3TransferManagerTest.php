@@ -3827,8 +3827,10 @@ EOF
     public function testDefaultRegionIsRequiredWhenUsingDefaultS3Client(): void
     {
         $this->expectException(S3TransferException::class);
-        $this->expectExceptionMessage("When using the default S3 Client you must define a default region."
-            . "\nThe config parameter is `default_region`.`");
+        $this->expectExceptionMessage(
+            "You could opt for setting a default region as part of the TM config"
+            ." options by using the parameter `default_region`"
+        );
         new S3TransferManager();
     }
 }

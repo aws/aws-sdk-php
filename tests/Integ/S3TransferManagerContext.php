@@ -667,8 +667,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
     ): void
     {
         // Disable warning from error_log
-        $currentLogIni = ini_get('error_log');
-        ini_set('error_log', '0');
+        set_error_handler(function ($errno, $errstr) {});
 
         $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
         $s3TransferManager = new S3TransferManager(
@@ -731,8 +730,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         } catch (\Exception $e) {
             Assert::fail("Unexpected exception type: " . get_class($e) . " - " . $e->getMessage());
         } finally {
-            // Restore error logging
-            ini_set('error_log', $currentLogIni);
+            restore_error_handler();
         }
     }
 

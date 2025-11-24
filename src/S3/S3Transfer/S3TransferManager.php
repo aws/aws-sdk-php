@@ -3,6 +3,7 @@
 namespace Aws\S3\S3Transfer;
 
 use Aws\ResultInterface;
+use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Exception\S3TransferException;
@@ -712,17 +713,21 @@ final class S3TransferManager
      */
     private function defaultS3Client(): S3ClientInterface
     {
-        $defaultRegion = $this->config->getDefaultRegion();
-        if (empty($defaultRegion)) {
-            throw new S3TransferException(
-                "When using the default S3 Client you must define a default region."
-                . "\nThe config parameter is `default_region`.`"
-            );
-        }
+        try {
+            return new S3Client([
+                'region' => $this->config->getDefaultRegion(),
+            ]);
+        } catch (InvalidArgumentException $e) {
+            if (str_contains($e->getMessage(), "A \"region\" configuration value is required for the \"s3\" service")) {
+                throw new S3TransferException(
+                    $e->getMessage()
+                    . "\n You could opt for setting a default region as part of"
+                    ." the TM config options by using the parameter `default_region`"
+                );
+            }
 
-        return new S3Client([
-            'region' => $defaultRegion,
-        ]);
+            throw $e;
+        }
     }
 
     /**
