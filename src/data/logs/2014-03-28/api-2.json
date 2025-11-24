@@ -300,7 +300,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"OperationAbortedException"},
-        {"shape":"ServiceUnavailableException"}
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ValidationException"}
       ]
     },
     "DeleteLogStream":{
@@ -314,7 +315,8 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"OperationAbortedException"},
-        {"shape":"ServiceUnavailableException"}
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ValidationException"}
       ]
     },
     "DeleteMetricFilter":{
@@ -1172,6 +1174,22 @@
         {"shape":"UnrecognizedClientException"}
       ]
     },
+    "PutLogGroupDeletionProtection":{
+      "name":"PutLogGroupDeletionProtection",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutLogGroupDeletionProtectionRequest"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidOperationException"}
+      ]
+    },
     "PutMetricFilter":{
       "name":"PutMetricFilter",
       "http":{
@@ -1815,7 +1833,8 @@
         "logGroupName":{"shape":"LogGroupName"},
         "kmsKeyId":{"shape":"KmsKeyId"},
         "tags":{"shape":"Tags"},
-        "logGroupClass":{"shape":"LogGroupClass"}
+        "logGroupClass":{"shape":"LogGroupClass"},
+        "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"}
       }
     },
     "CreateLogStreamRequest":{
@@ -2085,6 +2104,7 @@
       "max":5,
       "min":1
     },
+    "DeletionProtectionEnabled":{"type":"boolean"},
     "Delimiter":{
       "type":"string",
       "max":2,
@@ -3531,7 +3551,8 @@
         "dataProtectionStatus":{"shape":"DataProtectionStatus"},
         "inheritedProperties":{"shape":"InheritedProperties"},
         "logGroupClass":{"shape":"LogGroupClass"},
-        "logGroupArn":{"shape":"Arn"}
+        "logGroupArn":{"shape":"Arn"},
+        "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"}
       }
     },
     "LogGroupArn":{
@@ -4336,6 +4357,17 @@
         "nextSequenceToken":{"shape":"SequenceToken"},
         "rejectedLogEventsInfo":{"shape":"RejectedLogEventsInfo"},
         "rejectedEntityInfo":{"shape":"RejectedEntityInfo"}
+      }
+    },
+    "PutLogGroupDeletionProtectionRequest":{
+      "type":"structure",
+      "required":[
+        "logGroupIdentifier",
+        "deletionProtectionEnabled"
+      ],
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"}
       }
     },
     "PutMetricFilterRequest":{

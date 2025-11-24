@@ -164,6 +164,8 @@ use Generator;
  * @method \GuzzleHttp\Promise\Promise putIntegrationAsync(array $args = [])
  * @method \Aws\Result putLogEvents(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putLogEventsAsync(array $args = [])
+ * @method \Aws\Result putLogGroupDeletionProtection(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putLogGroupDeletionProtectionAsync(array $args = [])
  * @method \Aws\Result putMetricFilter(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putMetricFilterAsync(array $args = [])
  * @method \Aws\Result putQueryDefinition(array $args = [])

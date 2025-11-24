@@ -212,6 +212,29 @@
         {"shape":"InvalidArgument"}
       ]
     },
+    "CreateConnectionFunction":{
+      "name":"CreateConnectionFunction2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/connection-function",
+        "responseCode":201
+      },
+      "input":{
+        "shape":"CreateConnectionFunctionRequest",
+        "locationName":"CreateConnectionFunctionRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"CreateConnectionFunctionResult"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"EntityAlreadyExists"},
+        {"shape":"InvalidTagging"},
+        {"shape":"EntityLimitExceeded"},
+        {"shape":"InvalidArgument"},
+        {"shape":"EntitySizeLimitExceeded"}
+      ]
+    },
     "CreateConnectionGroup":{
       "name":"CreateConnectionGroup2020_05_31",
       "http":{
@@ -728,6 +751,28 @@
         {"shape":"InvalidOrigin"}
       ]
     },
+    "CreateTrustStore":{
+      "name":"CreateTrustStore2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/trust-store",
+        "responseCode":201
+      },
+      "input":{
+        "shape":"CreateTrustStoreRequest",
+        "locationName":"CreateTrustStoreRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"CreateTrustStoreResult"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
+        {"shape":"EntityAlreadyExists"},
+        {"shape":"InvalidTagging"},
+        {"shape":"EntityLimitExceeded"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
     "CreateVpcOrigin":{
       "name":"CreateVpcOrigin2020_05_31",
       "http":{
@@ -801,6 +846,24 @@
         {"shape":"CloudFrontOriginAccessIdentityInUse"},
         {"shape":"InvalidIfMatchVersion"},
         {"shape":"NoSuchCloudFrontOriginAccessIdentity"}
+      ]
+    },
+    "DeleteConnectionFunction":{
+      "name":"DeleteConnectionFunction2020_05_31",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2020-05-31/connection-function/{Id}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteConnectionFunctionRequest"},
+      "errors":[
+        {"shape":"CannotDeleteEntityWhileInUse"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "DeleteConnectionGroup":{
@@ -1089,6 +1152,23 @@
         {"shape":"InvalidIfMatchVersion"}
       ]
     },
+    "DeleteTrustStore":{
+      "name":"DeleteTrustStore2020_05_31",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2020-05-31/trust-store/{Id}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteTrustStoreRequest"},
+      "errors":[
+        {"shape":"CannotDeleteEntityWhileInUse"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidIfMatchVersion"}
+      ]
+    },
     "DeleteVpcOrigin":{
       "name":"DeleteVpcOrigin2020_05_31",
       "http":{
@@ -1107,6 +1187,22 @@
         {"shape":"UnsupportedOperation"},
         {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"}
+      ]
+    },
+    "DescribeConnectionFunction":{
+      "name":"DescribeConnectionFunction2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/connection-function/{Identifier}/describe",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeConnectionFunctionRequest"},
+      "output":{"shape":"DescribeConnectionFunctionResult"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "DescribeFunction":{
@@ -1243,6 +1339,21 @@
       "errors":[
         {"shape":"AccessDenied"},
         {"shape":"NoSuchCloudFrontOriginAccessIdentity"}
+      ]
+    },
+    "GetConnectionFunction":{
+      "name":"GetConnectionFunction2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/connection-function/{Identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetConnectionFunctionRequest"},
+      "output":{"shape":"GetConnectionFunctionResult"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
+        {"shape":"UnsupportedOperation"}
       ]
     },
     "GetConnectionGroup":{
@@ -1692,6 +1803,21 @@
         {"shape":"NoSuchStreamingDistribution"}
       ]
     },
+    "GetTrustStore":{
+      "name":"GetTrustStore2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/trust-store/{Identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTrustStoreRequest"},
+      "output":{"shape":"GetTrustStoreResult"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
     "GetVpcOrigin":{
       "name":"GetVpcOrigin2020_05_31",
       "http":{
@@ -1763,6 +1889,25 @@
       "output":{"shape":"ListConflictingAliasesResult"},
       "errors":[
         {"shape":"NoSuchDistribution"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
+    "ListConnectionFunctions":{
+      "name":"ListConnectionFunctions2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/connection-functions",
+        "responseCode":200
+      },
+      "input":{
+        "shape":"ListConnectionFunctionsRequest",
+        "locationName":"ListConnectionFunctionsRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"ListConnectionFunctionsResult"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"UnsupportedOperation"},
         {"shape":"InvalidArgument"}
       ]
     },
@@ -1882,6 +2027,21 @@
         {"shape":"InvalidArgument"}
       ]
     },
+    "ListDistributionsByConnectionFunction":{
+      "name":"ListDistributionsByConnectionFunction2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/distributionsByConnectionFunction",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDistributionsByConnectionFunctionRequest"},
+      "output":{"shape":"ListDistributionsByConnectionFunctionResult"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
     "ListDistributionsByConnectionMode":{
       "name":"ListDistributionsByConnectionMode2020_05_31",
       "http":{
@@ -1970,6 +2130,21 @@
       "errors":[
         {"shape":"AccessDenied"},
         {"shape":"NoSuchResponseHeadersPolicy"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
+    "ListDistributionsByTrustStore":{
+      "name":"ListDistributionsByTrustStore2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/distributionsByTrustStore",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDistributionsByTrustStoreRequest"},
+      "output":{"shape":"ListDistributionsByTrustStoreResult"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"InvalidArgument"}
       ]
     },
@@ -2220,6 +2395,25 @@
         {"shape":"NoSuchResource"}
       ]
     },
+    "ListTrustStores":{
+      "name":"ListTrustStores2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/trust-stores",
+        "responseCode":200
+      },
+      "input":{
+        "shape":"ListTrustStoresRequest",
+        "locationName":"ListTrustStoresRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"ListTrustStoresResult"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
     "ListVpcOrigins":{
       "name":"ListVpcOrigins2020_05_31",
       "http":{
@@ -2234,6 +2428,24 @@
         {"shape":"EntityNotFound"},
         {"shape":"UnsupportedOperation"},
         {"shape":"InvalidArgument"}
+      ]
+    },
+    "PublishConnectionFunction":{
+      "name":"PublishConnectionFunction2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/connection-function/{Id}/publish",
+        "responseCode":200
+      },
+      "input":{"shape":"PublishConnectionFunctionRequest"},
+      "output":{"shape":"PublishConnectionFunctionResult"},
+      "errors":[
+        {"shape":"PreconditionFailed"},
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "PublishFunction":{
@@ -2288,6 +2500,28 @@
         {"shape":"InvalidTagging"},
         {"shape":"InvalidArgument"},
         {"shape":"NoSuchResource"}
+      ]
+    },
+    "TestConnectionFunction":{
+      "name":"TestConnectionFunction2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/connection-function/{Id}/test",
+        "responseCode":200
+      },
+      "input":{
+        "shape":"TestConnectionFunctionRequest",
+        "locationName":"TestConnectionFunctionRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"TestConnectionFunctionResult"},
+      "errors":[
+        {"shape":"TestFunctionFailed"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"EntityNotFound"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "TestFunction":{
@@ -2389,6 +2623,29 @@
         {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"},
         {"shape":"NoSuchCloudFrontOriginAccessIdentity"}
+      ]
+    },
+    "UpdateConnectionFunction":{
+      "name":"UpdateConnectionFunction2020_05_31",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2020-05-31/connection-function/{Id}",
+        "responseCode":200
+      },
+      "input":{
+        "shape":"UpdateConnectionFunctionRequest",
+        "locationName":"UpdateConnectionFunctionRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"UpdateConnectionFunctionResult"},
+      "errors":[
+        {"shape":"PreconditionFailed"},
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"},
+        {"shape":"EntitySizeLimitExceeded"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "UpdateConnectionGroup":{
@@ -2873,6 +3130,23 @@
         {"shape":"NoSuchStreamingDistribution"}
       ]
     },
+    "UpdateTrustStore":{
+      "name":"UpdateTrustStore2020_05_31",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2020-05-31/trust-store/{Id}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateTrustStoreRequest"},
+      "output":{"shape":"UpdateTrustStoreResult"},
+      "errors":[
+        {"shape":"PreconditionFailed"},
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidIfMatchVersion"}
+      ]
+    },
     "UpdateVpcOrigin":{
       "name":"UpdateVpcOrigin2020_05_31",
       "http":{
@@ -3214,6 +3488,33 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "CaCertificatesBundleS3Location":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "Key",
+        "Region"
+      ],
+      "members":{
+        "Bucket":{"shape":"string"},
+        "Key":{"shape":"string"},
+        "Region":{"shape":"CaCertificatesBundleS3LocationRegionString"},
+        "Version":{"shape":"string"}
+      }
+    },
+    "CaCertificatesBundleS3LocationRegionString":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"[a-z]{2}-[a-z]+-\\d"
+    },
+    "CaCertificatesBundleSource":{
+      "type":"structure",
+      "members":{
+        "CaCertificatesBundleS3Location":{"shape":"CaCertificatesBundleS3Location"}
+      },
+      "union":true
     },
     "CacheBehavior":{
       "type":"structure",
@@ -3585,6 +3886,53 @@
         "Items":{"shape":"ConflictingAliases"}
       }
     },
+    "ConnectionFunctionAssociation":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{"shape":"ResourceId"}
+      }
+    },
+    "ConnectionFunctionSummary":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Id",
+        "ConnectionFunctionConfig",
+        "ConnectionFunctionArn",
+        "Status",
+        "Stage",
+        "CreatedTime",
+        "LastModifiedTime"
+      ],
+      "members":{
+        "Name":{"shape":"FunctionName"},
+        "Id":{"shape":"ResourceId"},
+        "ConnectionFunctionConfig":{"shape":"FunctionConfig"},
+        "ConnectionFunctionArn":{"shape":"string"},
+        "Status":{"shape":"string"},
+        "Stage":{"shape":"FunctionStage"},
+        "CreatedTime":{"shape":"timestamp"},
+        "LastModifiedTime":{"shape":"timestamp"}
+      }
+    },
+    "ConnectionFunctionSummaryList":{
+      "type":"list",
+      "member":{
+        "shape":"ConnectionFunctionSummary",
+        "locationName":"ConnectionFunctionSummary"
+      }
+    },
+    "ConnectionFunctionTestResult":{
+      "type":"structure",
+      "members":{
+        "ConnectionFunctionSummary":{"shape":"ConnectionFunctionSummary"},
+        "ComputeUtilization":{"shape":"string"},
+        "ConnectionFunctionExecutionLogs":{"shape":"FunctionExecutionLogList"},
+        "ConnectionFunctionErrorMessage":{"shape":"sensitiveStringType"},
+        "ConnectionFunctionOutput":{"shape":"sensitiveStringType"}
+      }
+    },
     "ConnectionGroup":{
       "type":"structure",
       "members":{
@@ -3931,6 +4279,37 @@
         }
       },
       "payload":"CloudFrontOriginAccessIdentity"
+    },
+    "CreateConnectionFunctionRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "ConnectionFunctionConfig",
+        "ConnectionFunctionCode"
+      ],
+      "members":{
+        "Name":{"shape":"FunctionName"},
+        "ConnectionFunctionConfig":{"shape":"FunctionConfig"},
+        "ConnectionFunctionCode":{"shape":"FunctionBlob"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "CreateConnectionFunctionResult":{
+      "type":"structure",
+      "members":{
+        "ConnectionFunctionSummary":{"shape":"ConnectionFunctionSummary"},
+        "Location":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"Location"
+        },
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"ConnectionFunctionSummary"
     },
     "CreateConnectionGroupRequest":{
       "type":"structure",
@@ -4506,6 +4885,30 @@
       },
       "payload":"StreamingDistribution"
     },
+    "CreateTrustStoreRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "CaCertificatesBundleSource"
+      ],
+      "members":{
+        "Name":{"shape":"string"},
+        "CaCertificatesBundleSource":{"shape":"CaCertificatesBundleSource"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "CreateTrustStoreResult":{
+      "type":"structure",
+      "members":{
+        "TrustStore":{"shape":"TrustStore"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"TrustStore"
+    },
     "CreateVpcOriginRequest":{
       "type":"structure",
       "required":["VpcOriginEndpointConfig"],
@@ -4677,6 +5080,25 @@
       "members":{
         "Id":{
           "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        }
+      }
+    },
+    "DeleteConnectionFunctionRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "IfMatch"
+      ],
+      "members":{
+        "Id":{
+          "shape":"ResourceId",
           "location":"uri",
           "locationName":"Id"
         },
@@ -4952,6 +5374,25 @@
         }
       }
     },
+    "DeleteTrustStoreRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "IfMatch"
+      ],
+      "members":{
+        "Id":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        }
+      }
+    },
     "DeleteVpcOriginRequest":{
       "type":"structure",
       "required":[
@@ -4982,6 +5423,34 @@
         }
       },
       "payload":"VpcOrigin"
+    },
+    "DescribeConnectionFunctionRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Identifier"
+        },
+        "Stage":{
+          "shape":"FunctionStage",
+          "location":"querystring",
+          "locationName":"Stage"
+        }
+      }
+    },
+    "DescribeConnectionFunctionResult":{
+      "type":"structure",
+      "members":{
+        "ConnectionFunctionSummary":{"shape":"ConnectionFunctionSummary"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"ConnectionFunctionSummary"
     },
     "DescribeFunctionRequest":{
       "type":"structure",
@@ -5154,7 +5623,9 @@
         "Staging":{"shape":"boolean"},
         "AnycastIpListId":{"shape":"string"},
         "TenantConfig":{"shape":"TenantConfig"},
-        "ConnectionMode":{"shape":"ConnectionMode"}
+        "ConnectionMode":{"shape":"ConnectionMode"},
+        "ViewerMtlsConfig":{"shape":"ViewerMtlsConfig"},
+        "ConnectionFunctionAssociation":{"shape":"ConnectionFunctionAssociation"}
       }
     },
     "DistributionConfigWithTags":{
@@ -5316,7 +5787,9 @@
         "AliasICPRecordals":{"shape":"AliasICPRecordals"},
         "Staging":{"shape":"boolean"},
         "ConnectionMode":{"shape":"ConnectionMode"},
-        "AnycastIpListId":{"shape":"string"}
+        "AnycastIpListId":{"shape":"string"},
+        "ViewerMtlsConfig":{"shape":"ViewerMtlsConfig"},
+        "ConnectionFunctionAssociation":{"shape":"ConnectionFunctionAssociation"}
       }
     },
     "DistributionSummaryList":{
@@ -6082,6 +6555,39 @@
       },
       "payload":"CloudFrontOriginAccessIdentity"
     },
+    "GetConnectionFunctionRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Identifier"
+        },
+        "Stage":{
+          "shape":"FunctionStage",
+          "location":"querystring",
+          "locationName":"Stage"
+        }
+      }
+    },
+    "GetConnectionFunctionResult":{
+      "type":"structure",
+      "members":{
+        "ConnectionFunctionCode":{"shape":"FunctionBlob"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        },
+        "ContentType":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"Content-Type"
+        }
+      },
+      "payload":"ConnectionFunctionCode"
+    },
     "GetConnectionGroupByRoutingEndpointRequest":{
       "type":"structure",
       "required":["RoutingEndpoint"],
@@ -6781,6 +7287,29 @@
         }
       },
       "payload":"StreamingDistribution"
+    },
+    "GetTrustStoreRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Identifier"
+        }
+      }
+    },
+    "GetTrustStoreResult":{
+      "type":"structure",
+      "members":{
+        "TrustStore":{"shape":"TrustStore"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"TrustStore"
     },
     "GetVpcOriginRequest":{
       "type":"structure",
@@ -7656,6 +8185,21 @@
       },
       "payload":"ConflictingAliasesList"
     },
+    "ListConnectionFunctionsRequest":{
+      "type":"structure",
+      "members":{
+        "Marker":{"shape":"string"},
+        "MaxItems":{"shape":"integer"},
+        "Stage":{"shape":"FunctionStage"}
+      }
+    },
+    "ListConnectionFunctionsResult":{
+      "type":"structure",
+      "members":{
+        "NextMarker":{"shape":"string"},
+        "ConnectionFunctions":{"shape":"ConnectionFunctionSummaryList"}
+      }
+    },
     "ListConnectionGroupsRequest":{
       "type":"structure",
       "members":{
@@ -7779,6 +8323,34 @@
         "DistributionIdList":{"shape":"DistributionIdList"}
       },
       "payload":"DistributionIdList"
+    },
+    "ListDistributionsByConnectionFunctionRequest":{
+      "type":"structure",
+      "required":["ConnectionFunctionIdentifier"],
+      "members":{
+        "Marker":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"integer",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        },
+        "ConnectionFunctionIdentifier":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"ConnectionFunctionIdentifier"
+        }
+      }
+    },
+    "ListDistributionsByConnectionFunctionResult":{
+      "type":"structure",
+      "members":{
+        "DistributionList":{"shape":"DistributionList"}
+      },
+      "payload":"DistributionList"
     },
     "ListDistributionsByConnectionModeRequest":{
       "type":"structure",
@@ -7935,6 +8507,34 @@
         "DistributionIdList":{"shape":"DistributionIdList"}
       },
       "payload":"DistributionIdList"
+    },
+    "ListDistributionsByTrustStoreRequest":{
+      "type":"structure",
+      "required":["TrustStoreIdentifier"],
+      "members":{
+        "TrustStoreIdentifier":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"TrustStoreIdentifier"
+        },
+        "Marker":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        }
+      }
+    },
+    "ListDistributionsByTrustStoreResult":{
+      "type":"structure",
+      "members":{
+        "DistributionList":{"shape":"DistributionList"}
+      },
+      "payload":"DistributionList"
     },
     "ListDistributionsByVpcOriginIdRequest":{
       "type":"structure",
@@ -8370,6 +8970,20 @@
         "Tags":{"shape":"Tags"}
       },
       "payload":"Tags"
+    },
+    "ListTrustStoresRequest":{
+      "type":"structure",
+      "members":{
+        "Marker":{"shape":"string"},
+        "MaxItems":{"shape":"integer"}
+      }
+    },
+    "ListTrustStoresResult":{
+      "type":"structure",
+      "members":{
+        "NextMarker":{"shape":"string"},
+        "TrustStoreList":{"shape":"TrustStoreList"}
+      }
     },
     "ListVpcOriginsRequest":{
       "type":"structure",
@@ -9295,6 +9909,32 @@
         "locationName":"PublicKeySummary"
       }
     },
+    "PublishConnectionFunctionRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "IfMatch"
+      ],
+      "members":{
+        "Id":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        }
+      }
+    },
+    "PublishConnectionFunctionResult":{
+      "type":"structure",
+      "members":{
+        "ConnectionFunctionSummary":{"shape":"ConnectionFunctionSummary"}
+      },
+      "payload":"ConnectionFunctionSummary"
+    },
     "PublishFunctionRequest":{
       "type":"structure",
       "required":[
@@ -9512,6 +10152,11 @@
     "ResourceARN":{
       "type":"string",
       "pattern":"arn:aws(-cn)?:cloudfront::[0-9]+:.*"
+    },
+    "ResourceId":{
+      "type":"string",
+      "max":64,
+      "min":1
     },
     "ResourceInUse":{
       "type":"structure",
@@ -10180,6 +10825,35 @@
         "ParameterDefinitions":{"shape":"ParameterDefinitions"}
       }
     },
+    "TestConnectionFunctionRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "IfMatch",
+        "ConnectionObject"
+      ],
+      "members":{
+        "Id":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        },
+        "Stage":{"shape":"FunctionStage"},
+        "ConnectionObject":{"shape":"FunctionEventObject"}
+      }
+    },
+    "TestConnectionFunctionResult":{
+      "type":"structure",
+      "members":{
+        "ConnectionFunctionTestResult":{"shape":"ConnectionFunctionTestResult"}
+      },
+      "payload":"ConnectionFunctionTestResult"
+    },
     "TestFunctionFailed":{
       "type":"structure",
       "members":{
@@ -10809,6 +11483,64 @@
         "Type":{"shape":"ContinuousDeploymentPolicyType"}
       }
     },
+    "TrustStore":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"string"},
+        "Arn":{"shape":"string"},
+        "Name":{"shape":"string"},
+        "Status":{"shape":"TrustStoreStatus"},
+        "NumberOfCaCertificates":{"shape":"integer"},
+        "LastModifiedTime":{"shape":"timestamp"},
+        "Reason":{"shape":"string"}
+      }
+    },
+    "TrustStoreConfig":{
+      "type":"structure",
+      "required":["TrustStoreId"],
+      "members":{
+        "TrustStoreId":{"shape":"string"},
+        "AdvertiseTrustStoreCaNames":{"shape":"boolean"},
+        "IgnoreCertificateExpiry":{"shape":"boolean"}
+      }
+    },
+    "TrustStoreList":{
+      "type":"list",
+      "member":{
+        "shape":"TrustStoreSummary",
+        "locationName":"TrustStoreSummary"
+      }
+    },
+    "TrustStoreStatus":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "active",
+        "failed"
+      ]
+    },
+    "TrustStoreSummary":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Arn",
+        "Name",
+        "Status",
+        "NumberOfCaCertificates",
+        "LastModifiedTime",
+        "ETag"
+      ],
+      "members":{
+        "Id":{"shape":"string"},
+        "Arn":{"shape":"string"},
+        "Name":{"shape":"string"},
+        "Status":{"shape":"TrustStoreStatus"},
+        "NumberOfCaCertificates":{"shape":"integer"},
+        "LastModifiedTime":{"shape":"timestamp"},
+        "Reason":{"shape":"string"},
+        "ETag":{"shape":"string"}
+      }
+    },
     "TrustedKeyGroupDoesNotExist":{
       "type":"structure",
       "members":{
@@ -10998,6 +11730,41 @@
         }
       },
       "payload":"CloudFrontOriginAccessIdentity"
+    },
+    "UpdateConnectionFunctionRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "IfMatch",
+        "ConnectionFunctionConfig",
+        "ConnectionFunctionCode"
+      ],
+      "members":{
+        "Id":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        },
+        "ConnectionFunctionConfig":{"shape":"FunctionConfig"},
+        "ConnectionFunctionCode":{"shape":"FunctionBlob"}
+      }
+    },
+    "UpdateConnectionFunctionResult":{
+      "type":"structure",
+      "members":{
+        "ConnectionFunctionSummary":{"shape":"ConnectionFunctionSummary"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"ConnectionFunctionSummary"
     },
     "UpdateConnectionGroupRequest":{
       "type":"structure",
@@ -11586,6 +12353,44 @@
       },
       "payload":"StreamingDistribution"
     },
+    "UpdateTrustStoreRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "CaCertificatesBundleSource",
+        "IfMatch"
+      ],
+      "members":{
+        "Id":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "CaCertificatesBundleSource":{
+          "shape":"CaCertificatesBundleSource",
+          "locationName":"CaCertificatesBundleSource",
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+        },
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        }
+      },
+      "payload":"CaCertificatesBundleSource"
+    },
+    "UpdateTrustStoreResult":{
+      "type":"structure",
+      "members":{
+        "TrustStore":{"shape":"TrustStore"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"TrustStore"
+    },
     "UpdateVpcOriginRequest":{
       "type":"structure",
       "required":[
@@ -11675,6 +12480,20 @@
           "deprecated":true
         }
       }
+    },
+    "ViewerMtlsConfig":{
+      "type":"structure",
+      "members":{
+        "Mode":{"shape":"ViewerMtlsMode"},
+        "TrustStoreConfig":{"shape":"TrustStoreConfig"}
+      }
+    },
+    "ViewerMtlsMode":{
+      "type":"string",
+      "enum":[
+        "required",
+        "optional"
+      ]
     },
     "ViewerProtocolPolicy":{
       "type":"string",

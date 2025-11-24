@@ -9,6 +9,7 @@
     "CreateAnycastIpList": "<p>Creates an Anycast static IP list.</p>",
     "CreateCachePolicy": "<p>Creates a cache policy.</p> <p>After you create a cache policy, you can attach it to one or more cache behaviors. When it's attached to a cache behavior, the cache policy determines the following:</p> <ul> <li> <p>The values that CloudFront includes in the <i>cache key</i>. These values can include HTTP headers, cookies, and URL query strings. CloudFront uses the cache key to find an object in its cache that it can return to the viewer.</p> </li> <li> <p>The default, minimum, and maximum time to live (TTL) values that you want objects to stay in the CloudFront cache.</p> <important> <p>If your minimum TTL is greater than 0, CloudFront will cache content for at least the duration specified in the cache policy's minimum TTL, even if the <code>Cache-Control: no-cache</code>, <code>no-store</code>, or <code>private</code> directives are present in the origin headers.</p> </important> </li> </ul> <p>The headers, cookies, and query strings that are included in the cache key are also included in requests that CloudFront sends to the origin. CloudFront sends a request when it can't find an object in its cache that matches the request's cache key. If you want to send values to the origin but <i>not</i> include them in the cache key, use <code>OriginRequestPolicy</code>.</p> <p>For more information about cache policies, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/controlling-the-cache-key.html\">Controlling the cache key</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
     "CreateCloudFrontOriginAccessIdentity": "<p>Creates a new origin access identity. If you're using Amazon S3 for your origin, you can use an origin access identity to require users to access your content using a CloudFront URL instead of the Amazon S3 URL. For more information about how to use origin access identities, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/PrivateContent.html\">Serving Private Content through CloudFront</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
+    "CreateConnectionFunction": "<p>Creates a connection function.</p>",
     "CreateConnectionGroup": "<p>Creates a connection group.</p>",
     "CreateContinuousDeploymentPolicy": "<p>Creates a continuous deployment policy that distributes traffic for a custom domain name to two different CloudFront distributions.</p> <p>To use a continuous deployment policy, first use <code>CopyDistribution</code> to create a staging distribution, then use <code>UpdateDistribution</code> to modify the staging distribution's configuration.</p> <p>After you create and update a staging distribution, you can use a continuous deployment policy to incrementally move traffic to the staging distribution. This workflow enables you to test changes to a distribution's configuration before moving all of your domain's production traffic to the new configuration.</p>",
     "CreateDistribution": "<p>Creates a CloudFront distribution.</p>",
@@ -29,10 +30,12 @@
     "CreateResponseHeadersPolicy": "<p>Creates a response headers policy.</p> <p>A response headers policy contains information about a set of HTTP headers. To create a response headers policy, you provide some metadata about the policy and a set of configurations that specify the headers.</p> <p>After you create a response headers policy, you can use its ID to attach it to one or more cache behaviors in a CloudFront distribution. When it's attached to a cache behavior, the response headers policy affects the HTTP headers that CloudFront includes in HTTP responses to requests that match the cache behavior. CloudFront adds or removes response headers according to the configuration of the response headers policy.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/modifying-response-headers.html\">Adding or removing HTTP headers in CloudFront responses</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
     "CreateStreamingDistribution": "<p>This API is deprecated. Amazon CloudFront is deprecating real-time messaging protocol (RTMP) distributions on December 31, 2020. For more information, <a href=\"http://forums.aws.amazon.com/ann.jspa?annID=7356\">read the announcement</a> on the Amazon CloudFront discussion forum.</p>",
     "CreateStreamingDistributionWithTags": "<p>This API is deprecated. Amazon CloudFront is deprecating real-time messaging protocol (RTMP) distributions on December 31, 2020. For more information, <a href=\"http://forums.aws.amazon.com/ann.jspa?annID=7356\">read the announcement</a> on the Amazon CloudFront discussion forum.</p>",
+    "CreateTrustStore": "<p>Creates a trust store.</p>",
     "CreateVpcOrigin": "<p>Create an Amazon CloudFront VPC origin.</p>",
     "DeleteAnycastIpList": "<p>Deletes an Anycast static IP list.</p>",
     "DeleteCachePolicy": "<p>Deletes a cache policy.</p> <p>You cannot delete a cache policy if it's attached to a cache behavior. First update your distributions to remove the cache policy from all cache behaviors, then delete the cache policy.</p> <p>To delete a cache policy, you must provide the policy's identifier and version. To get these values, you can use <code>ListCachePolicies</code> or <code>GetCachePolicy</code>.</p>",
     "DeleteCloudFrontOriginAccessIdentity": "<p>Delete an origin access identity.</p>",
+    "DeleteConnectionFunction": "<p>Deletes a connection function.</p>",
     "DeleteConnectionGroup": "<p>Deletes a connection group.</p>",
     "DeleteContinuousDeploymentPolicy": "<p>Deletes a continuous deployment policy.</p> <p>You cannot delete a continuous deployment policy that's attached to a primary distribution. First update your distribution to remove the continuous deployment policy, then you can delete the policy.</p>",
     "DeleteDistribution": "<p>Delete a distribution.</p> <important> <p>Before you can delete a distribution, you must disable it, which requires permission to update the distribution. Once deleted, a distribution cannot be recovered.</p> </important>",
@@ -50,7 +53,9 @@
     "DeleteResourcePolicy": "<p>Deletes the resource policy attached to the CloudFront resource.</p>",
     "DeleteResponseHeadersPolicy": "<p>Deletes a response headers policy.</p> <p>You cannot delete a response headers policy if it's attached to a cache behavior. First update your distributions to remove the response headers policy from all cache behaviors, then delete the response headers policy.</p> <p>To delete a response headers policy, you must provide the policy's identifier and version. To get these values, you can use <code>ListResponseHeadersPolicies</code> or <code>GetResponseHeadersPolicy</code>.</p>",
     "DeleteStreamingDistribution": "<p>Delete a streaming distribution. To delete an RTMP distribution using the CloudFront API, perform the following steps.</p> <p> <b>To delete an RTMP distribution using the CloudFront API</b>:</p> <ol> <li> <p>Disable the RTMP distribution.</p> </li> <li> <p>Submit a <code>GET Streaming Distribution Config</code> request to get the current configuration and the <code>Etag</code> header for the distribution. </p> </li> <li> <p>Update the XML document that was returned in the response to your <code>GET Streaming Distribution Config</code> request to change the value of <code>Enabled</code> to <code>false</code>.</p> </li> <li> <p>Submit a <code>PUT Streaming Distribution Config</code> request to update the configuration for your distribution. In the request body, include the XML document that you updated in Step 3. Then set the value of the HTTP <code>If-Match</code> header to the value of the <code>ETag</code> header that CloudFront returned when you submitted the <code>GET Streaming Distribution Config</code> request in Step 2.</p> </li> <li> <p>Review the response to the <code>PUT Streaming Distribution Config</code> request to confirm that the distribution was successfully disabled.</p> </li> <li> <p>Submit a <code>GET Streaming Distribution Config</code> request to confirm that your changes have propagated. When propagation is complete, the value of <code>Status</code> is <code>Deployed</code>.</p> </li> <li> <p>Submit a <code>DELETE Streaming Distribution</code> request. Set the value of the HTTP <code>If-Match</code> header to the value of the <code>ETag</code> header that CloudFront returned when you submitted the <code>GET Streaming Distribution Config</code> request in Step 2.</p> </li> <li> <p>Review the response to your <code>DELETE Streaming Distribution</code> request to confirm that the distribution was successfully deleted.</p> </li> </ol> <p>For information about deleting a distribution using the CloudFront console, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/HowToDeleteDistribution.html\">Deleting a Distribution</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
+    "DeleteTrustStore": "<p>Deletes a trust store.</p>",
     "DeleteVpcOrigin": "<p>Delete an Amazon CloudFront VPC origin.</p>",
+    "DescribeConnectionFunction": "<p>Describes a connection function.</p>",
     "DescribeFunction": "<p>Gets configuration information and metadata about a CloudFront function, but not the function's code. To get a function's code, use <code>GetFunction</code>.</p> <p>To get configuration information and metadata about a function, you must provide the function's name and stage. To get these values, you can use <code>ListFunctions</code>.</p>",
     "DescribeKeyValueStore": "<p>Specifies the key value store and its configuration.</p>",
     "DisassociateDistributionTenantWebACL": "<p>Disassociates a distribution tenant from the WAF web ACL.</p>",
@@ -60,6 +65,7 @@
     "GetCachePolicyConfig": "<p>Gets a cache policy configuration.</p> <p>To get a cache policy configuration, you must provide the policy's identifier. If the cache policy is attached to a distribution's cache behavior, you can get the policy's identifier using <code>ListDistributions</code> or <code>GetDistribution</code>. If the cache policy is not attached to a cache behavior, you can get the identifier using <code>ListCachePolicies</code>.</p>",
     "GetCloudFrontOriginAccessIdentity": "<p>Get the information about an origin access identity.</p>",
     "GetCloudFrontOriginAccessIdentityConfig": "<p>Get the configuration information about an origin access identity.</p>",
+    "GetConnectionFunction": "<p>Gets a connection function.</p>",
     "GetConnectionGroup": "<p>Gets information about a connection group.</p>",
     "GetConnectionGroupByRoutingEndpoint": "<p>Gets information about a connection group by using the endpoint that you specify.</p>",
     "GetContinuousDeploymentPolicy": "<p>Gets a continuous deployment policy, including metadata (the policy's identifier and the date and time when the policy was last modified).</p>",
@@ -91,11 +97,13 @@
     "GetResponseHeadersPolicyConfig": "<p>Gets a response headers policy configuration.</p> <p>To get a response headers policy configuration, you must provide the policy's identifier. If the response headers policy is attached to a distribution's cache behavior, you can get the policy's identifier using <code>ListDistributions</code> or <code>GetDistribution</code>. If the response headers policy is not attached to a cache behavior, you can get the identifier using <code>ListResponseHeadersPolicies</code>.</p>",
     "GetStreamingDistribution": "<p>Gets information about a specified RTMP distribution, including the distribution configuration.</p>",
     "GetStreamingDistributionConfig": "<p>Get the configuration information about a streaming distribution.</p>",
+    "GetTrustStore": "<p>Gets a trust store.</p>",
     "GetVpcOrigin": "<p>Get the details of an Amazon CloudFront VPC origin.</p>",
     "ListAnycastIpLists": "<p>Lists your Anycast static IP lists.</p>",
     "ListCachePolicies": "<p>Gets a list of cache policies.</p> <p>You can optionally apply a filter to return only the managed policies created by Amazon Web Services, or only the custom policies created in your Amazon Web Services account.</p> <p>You can optionally specify the maximum number of items to receive in the response. If the total number of items in the list exceeds the maximum that you specify, or the default maximum, the response is paginated. To get the next page of items, send a subsequent request that specifies the <code>NextMarker</code> value from the current response as the <code>Marker</code> value in the subsequent request.</p>",
     "ListCloudFrontOriginAccessIdentities": "<p>Lists origin access identities.</p>",
     "ListConflictingAliases": "<p><note> <p>The <code>ListConflictingAliases</code> API operation only supports standard distributions. To list domain conflicts for both standard distributions and distribution tenants, we recommend that you use the <a href=\"https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListDomainConflicts.html\">ListDomainConflicts</a> API operation instead.</p> </note> <p>Gets a list of aliases that conflict or overlap with the provided alias, and the associated CloudFront standard distribution and Amazon Web Services accounts for each conflicting alias. An alias is commonly known as a custom domain or vanity domain. It can also be called a CNAME or alternate domain name.</p> <p>In the returned list, the standard distribution and account IDs are partially hidden, which allows you to identify the standard distribution and accounts that you own, and helps to protect the information of ones that you don't own.</p> <p>Use this operation to find aliases that are in use in CloudFront that conflict or overlap with the provided alias. For example, if you provide <code>www.example.com</code> as input, the returned list can include <code>www.example.com</code> and the overlapping wildcard alternate domain name (<code><em>.example.com</code>), if they exist. If you provide <code></em>.example.com</code> as input, the returned list can include <code>*.example.com</code> and any alternate domain names covered by that wildcard (for example, <code>www.example.com</code>, <code>test.example.com</code>, <code>dev.example.com</code>, and so on), if they exist.</p> <p>To list conflicting aliases, specify the alias to search and the ID of a standard distribution in your account that has an attached TLS certificate that includes the provided alias. For more information, including how to set up the standard distribution and certificate, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html#alternate-domain-names-move\">Moving an alternate domain name to a different standard distribution or distribution tenant</a> in the <i>Amazon CloudFront Developer Guide</i>.</p> <p>You can optionally specify the maximum number of items to receive in the response. If the total number of items in the list exceeds the maximum that you specify, or the default maximum, the response is paginated. To get the next page of items, send a subsequent request that specifies the <code>NextMarker</code> value from the current response as the <code>Marker</code> value in the subsequent request.</p></p>",
+    "ListConnectionFunctions": "<p>Lists connection functions.</p>",
     "ListConnectionGroups": "<p>Lists the connection groups in your Amazon Web Services account.</p>",
     "ListContinuousDeploymentPolicies": "<p>Gets a list of the continuous deployment policies in your Amazon Web Services account.</p> <p>You can optionally specify the maximum number of items to receive in the response. If the total number of items in the list exceeds the maximum that you specify, or the default maximum, the response is paginated. To get the next page of items, send a subsequent request that specifies the <code>NextMarker</code> value from the current response as the <code>Marker</code> value in the subsequent request.</p>",
     "ListDistributionTenants": "<p>Lists the distribution tenants in your Amazon Web Services account.</p>",
@@ -103,12 +111,14 @@
     "ListDistributions": "<p>List CloudFront distributions.</p>",
     "ListDistributionsByAnycastIpListId": "<p>Lists the distributions in your account that are associated with the specified <code>AnycastIpListId</code>.</p>",
     "ListDistributionsByCachePolicyId": "<p>Gets a list of distribution IDs for distributions that have a cache behavior that's associated with the specified cache policy.</p> <p>You can optionally specify the maximum number of items to receive in the response. If the total number of items in the list exceeds the maximum that you specify, or the default maximum, the response is paginated. To get the next page of items, send a subsequent request that specifies the <code>NextMarker</code> value from the current response as the <code>Marker</code> value in the subsequent request.</p>",
+    "ListDistributionsByConnectionFunction": "<p>Lists distributions by connection function.</p>",
     "ListDistributionsByConnectionMode": "<p>Lists the distributions by the connection mode that you specify.</p>",
     "ListDistributionsByKeyGroup": "<p>Gets a list of distribution IDs for distributions that have a cache behavior that references the specified key group.</p> <p>You can optionally specify the maximum number of items to receive in the response. If the total number of items in the list exceeds the maximum that you specify, or the default maximum, the response is paginated. To get the next page of items, send a subsequent request that specifies the <code>NextMarker</code> value from the current response as the <code>Marker</code> value in the subsequent request.</p>",
     "ListDistributionsByOriginRequestPolicyId": "<p>Gets a list of distribution IDs for distributions that have a cache behavior that's associated with the specified origin request policy.</p> <p>You can optionally specify the maximum number of items to receive in the response. If the total number of items in the list exceeds the maximum that you specify, or the default maximum, the response is paginated. To get the next page of items, send a subsequent request that specifies the <code>NextMarker</code> value from the current response as the <code>Marker</code> value in the subsequent request.</p>",
     "ListDistributionsByOwnedResource": "<p>Lists the CloudFront distributions that are associated with the specified resource that you own.</p>",
     "ListDistributionsByRealtimeLogConfig": "<p>Gets a list of distributions that have a cache behavior that's associated with the specified real-time log configuration.</p> <p>You can specify the real-time log configuration by its name or its Amazon Resource Name (ARN). You must provide at least one. If you provide both, CloudFront uses the name to identify the real-time log configuration to list distributions for.</p> <p>You can optionally specify the maximum number of items to receive in the response. If the total number of items in the list exceeds the maximum that you specify, or the default maximum, the response is paginated. To get the next page of items, send a subsequent request that specifies the <code>NextMarker</code> value from the current response as the <code>Marker</code> value in the subsequent request.</p>",
     "ListDistributionsByResponseHeadersPolicyId": "<p>Gets a list of distribution IDs for distributions that have a cache behavior that's associated with the specified response headers policy.</p> <p>You can optionally specify the maximum number of items to receive in the response. If the total number of items in the list exceeds the maximum that you specify, or the default maximum, the response is paginated. To get the next page of items, send a subsequent request that specifies the <code>NextMarker</code> value from the current response as the <code>Marker</code> value in the subsequent request.</p>",
+    "ListDistributionsByTrustStore": "<p>Lists distributions by trust store.</p>",
     "ListDistributionsByVpcOriginId": "<p>List CloudFront distributions by their VPC origin ID.</p>",
     "ListDistributionsByWebACLId": "<p>List the distributions that are associated with a specified WAF web ACL.</p>",
     "ListDomainConflicts": "<p><note> <p>We recommend that you use the <code>ListDomainConflicts</code> API operation to check for domain conflicts, as it supports both standard distributions and distribution tenants. <a href=\"https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListConflictingAliases.html\">ListConflictingAliases</a> performs similar checks but only supports standard distributions.</p> </note> <p>Lists existing domain associations that conflict with the domain that you specify.</p> <p>You can use this API operation to identify potential domain conflicts when moving domains between standard distributions and/or distribution tenants. Domain conflicts must be resolved first before they can be moved. </p> <p>For example, if you provide <code>www.example.com</code> as input, the returned list can include <code>www.example.com</code> and the overlapping wildcard alternate domain name (<code><em>.example.com</code>), if they exist. If you provide <code></em>.example.com</code> as input, the returned list can include <code>*.example.com</code> and any alternate domain names covered by that wildcard (for example, <code>www.example.com</code>, <code>test.example.com</code>, <code>dev.example.com</code>, and so on), if they exist.</p> <p>To list conflicting domains, specify the following:</p> <ul> <li> <p>The domain to search for</p> </li> <li> <p>The ID of a standard distribution or distribution tenant in your account that has an attached TLS certificate, which covers the specified domain</p> </li> </ul> <p>For more information, including how to set up the standard distribution or distribution tenant, and the certificate, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html#alternate-domain-names-move\">Moving an alternate domain name to a different standard distribution or distribution tenant</a> in the <i>Amazon CloudFront Developer Guide</i>.</p> <p>You can optionally specify the maximum number of items to receive in the response. If the total number of items in the list exceeds the maximum that you specify, or the default maximum, the response is paginated. To get the next page of items, send a subsequent request that specifies the <code>NextMarker</code> value from the current response as the <code>Marker</code> value in the subsequent request.</p></p>",
@@ -126,15 +136,19 @@
     "ListResponseHeadersPolicies": "<p>Gets a list of response headers policies.</p> <p>You can optionally apply a filter to get only the managed policies created by Amazon Web Services, or only the custom policies created in your Amazon Web Services account.</p> <p>You can optionally specify the maximum number of items to receive in the response. If the total number of items in the list exceeds the maximum that you specify, or the default maximum, the response is paginated. To get the next page of items, send a subsequent request that specifies the <code>NextMarker</code> value from the current response as the <code>Marker</code> value in the subsequent request.</p>",
     "ListStreamingDistributions": "<p>List streaming distributions.</p>",
     "ListTagsForResource": "<p>List tags for a CloudFront resource. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/tagging.html\">Tagging a distribution</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
+    "ListTrustStores": "<p>Lists trust stores.</p>",
     "ListVpcOrigins": "<p>List the CloudFront VPC origins in your account.</p>",
+    "PublishConnectionFunction": "<p>Publishes a connection function.</p>",
     "PublishFunction": "<p>Publishes a CloudFront function by copying the function code from the <code>DEVELOPMENT</code> stage to <code>LIVE</code>. This automatically updates all cache behaviors that are using this function to use the newly published copy in the <code>LIVE</code> stage.</p> <p>When a function is published to the <code>LIVE</code> stage, you can attach the function to a distribution's cache behavior, using the function's Amazon Resource Name (ARN).</p> <p>To publish a function, you must provide the function's name and version (<code>ETag</code> value). To get these values, you can use <code>ListFunctions</code> and <code>DescribeFunction</code>.</p>",
     "PutResourcePolicy": "<p>Creates a resource control policy for a given CloudFront resource.</p>",
     "TagResource": "<p>Add tags to a CloudFront resource. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/tagging.html\">Tagging a distribution</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
+    "TestConnectionFunction": "<p>Tests a connection function.</p>",
     "TestFunction": "<p>Tests a CloudFront function.</p> <p>To test a function, you provide an <i>event object</i> that represents an HTTP request or response that your CloudFront distribution could receive in production. CloudFront runs the function, passing it the event object that you provided, and returns the function's result (the modified event object) in the response. The response also contains function logs and error messages, if any exist. For more information about testing functions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/managing-functions.html#test-function\">Testing functions</a> in the <i>Amazon CloudFront Developer Guide</i>.</p> <p>To test a function, you provide the function's name and version (<code>ETag</code> value) along with the event object. To get the function's name and version, you can use <code>ListFunctions</code> and <code>DescribeFunction</code>.</p>",
     "UntagResource": "<p>Remove tags from a CloudFront resource. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/tagging.html\">Tagging a distribution</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
     "UpdateAnycastIpList": "<p>Updates an Anycast static IP list.</p>",
     "UpdateCachePolicy": "<p>Updates a cache policy configuration.</p> <p>When you update a cache policy configuration, all the fields are updated with the values provided in the request. You cannot update some fields independent of others. To update a cache policy configuration:</p> <ol> <li> <p>Use <code>GetCachePolicyConfig</code> to get the current configuration.</p> </li> <li> <p>Locally modify the fields in the cache policy configuration that you want to update.</p> </li> <li> <p>Call <code>UpdateCachePolicy</code> by providing the entire cache policy configuration, including the fields that you modified and those that you didn't.</p> </li> </ol> <important> <p>If your minimum TTL is greater than 0, CloudFront will cache content for at least the duration specified in the cache policy's minimum TTL, even if the <code>Cache-Control: no-cache</code>, <code>no-store</code>, or <code>private</code> directives are present in the origin headers.</p> </important>",
     "UpdateCloudFrontOriginAccessIdentity": "<p>Update an origin access identity.</p>",
+    "UpdateConnectionFunction": "<p>Updates a connection function.</p>",
     "UpdateConnectionGroup": "<p>Updates a connection group.</p>",
     "UpdateContinuousDeploymentPolicy": "<p>Updates a continuous deployment policy. You can update a continuous deployment policy to enable or disable it, to change the percentage of traffic that it sends to the staging distribution, or to change the staging distribution that it sends traffic to.</p> <p>When you update a continuous deployment policy configuration, all the fields are updated with the values that are provided in the request. You cannot update some fields independent of others. To update a continuous deployment policy configuration:</p> <ol> <li> <p>Use <code>GetContinuousDeploymentPolicyConfig</code> to get the current configuration.</p> </li> <li> <p>Locally modify the fields in the continuous deployment policy configuration that you want to update.</p> </li> <li> <p>Use <code>UpdateContinuousDeploymentPolicy</code>, providing the entire continuous deployment policy configuration, including the fields that you modified and those that you didn't.</p> </li> </ol>",
     "UpdateDistribution": "<p>Updates the configuration for a CloudFront distribution.</p> <p>The update process includes getting the current distribution configuration, updating it to make your changes, and then submitting an <code>UpdateDistribution</code> request to make the updates.</p> <p> <b>To update a web distribution using the CloudFront API</b> </p> <ol> <li> <p>Use <code>GetDistributionConfig</code> to get the current configuration, including the version identifier (<code>ETag</code>).</p> </li> <li> <p>Update the distribution configuration that was returned in the response. Note the following important requirements and restrictions:</p> <ul> <li> <p>You must copy the <code>ETag</code> field value from the response. (You'll use it for the <code>IfMatch</code> parameter in your request.) Then, remove the <code>ETag</code> field from the distribution configuration.</p> </li> <li> <p>You can't change the value of <code>CallerReference</code>.</p> </li> </ul> </li> <li> <p>Submit an <code>UpdateDistribution</code> request, providing the updated distribution configuration. The new configuration replaces the existing configuration. The values that you specify in an <code>UpdateDistribution</code> request are not merged into your existing configuration. Make sure to include all fields: the ones that you modified and also the ones that you didn't.</p> </li> </ol>",
@@ -152,6 +166,7 @@
     "UpdateRealtimeLogConfig": "<p>Updates a real-time log configuration.</p> <p>When you update a real-time log configuration, all the parameters are updated with the values provided in the request. You cannot update some parameters independent of others. To update a real-time log configuration:</p> <ol> <li> <p>Call <code>GetRealtimeLogConfig</code> to get the current real-time log configuration.</p> </li> <li> <p>Locally modify the parameters in the real-time log configuration that you want to update.</p> </li> <li> <p>Call this API (<code>UpdateRealtimeLogConfig</code>) by providing the entire real-time log configuration, including the parameters that you modified and those that you didn't.</p> </li> </ol> <p>You cannot update a real-time log configuration's <code>Name</code> or <code>ARN</code>.</p>",
     "UpdateResponseHeadersPolicy": "<p>Updates a response headers policy.</p> <p>When you update a response headers policy, the entire policy is replaced. You cannot update some policy fields independent of others. To update a response headers policy configuration:</p> <ol> <li> <p>Use <code>GetResponseHeadersPolicyConfig</code> to get the current policy's configuration.</p> </li> <li> <p>Modify the fields in the response headers policy configuration that you want to update.</p> </li> <li> <p>Call <code>UpdateResponseHeadersPolicy</code>, providing the entire response headers policy configuration, including the fields that you modified and those that you didn't.</p> </li> </ol>",
     "UpdateStreamingDistribution": "<p>Update a streaming distribution.</p>",
+    "UpdateTrustStore": "<p>Updates a trust store.</p>",
     "UpdateVpcOrigin": "<p>Update an Amazon CloudFront VPC origin in your account.</p>",
     "VerifyDnsConfiguration": "<p>Verify the DNS configuration for your domain names. This API operation checks whether your domain name points to the correct routing endpoint of the connection group, such as d111111abcdef8.cloudfront.net. You can use this API operation to troubleshoot and resolve DNS configuration issues.</p>"
   },
@@ -305,6 +320,25 @@
     "CNAMEAlreadyExists": {
       "base": "<p>The CNAME specified is already defined for CloudFront.</p>",
       "refs": {}
+    },
+    "CaCertificatesBundleS3Location": {
+      "base": "<p>The CA certificates bundle location in Amazon S3.</p>",
+      "refs": {
+        "CaCertificatesBundleSource$CaCertificatesBundleS3Location": "<p>The CA certificates bundle location in Amazon S3.</p>"
+      }
+    },
+    "CaCertificatesBundleS3LocationRegionString": {
+      "base": null,
+      "refs": {
+        "CaCertificatesBundleS3Location$Region": "<p>The location's Region.</p>"
+      }
+    },
+    "CaCertificatesBundleSource": {
+      "base": "<p>A CA certificates bundle source.</p>",
+      "refs": {
+        "CreateTrustStoreRequest$CaCertificatesBundleSource": "<p>The CA certificates bundle source for the trust store.</p>",
+        "UpdateTrustStoreRequest$CaCertificatesBundleSource": "<p>The CA certificates bundle source.</p>"
+      }
     },
     "CacheBehavior": {
       "base": "<p>A complex type that describes how CloudFront processes requests.</p> <p>You must create at least as many cache behaviors (including the default cache behavior) as you have origins if you want CloudFront to serve objects from all of the origins. Each cache behavior specifies the one origin from which you want CloudFront to get objects. If you have two origins and only the default cache behavior, the default cache behavior will cause CloudFront to get objects from one of the origins, but the other origin is never used.</p> <p>For the current quota (formerly known as limit) on the number of cache behaviors that you can add to a distribution, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cloudfront-limits.html\">Quotas</a> in the <i>Amazon CloudFront Developer Guide</i>.</p> <p>If you don't want to specify any cache behaviors, include only an empty <code>CacheBehaviors</code> element. Don't specify an empty individual <code>CacheBehavior</code> element, because this is invalid. For more information, see <a href=\"https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CacheBehaviors.html\">CacheBehaviors</a>. </p> <p>To delete all cache behaviors in an existing distribution, update the distribution configuration and include only an empty <code>CacheBehaviors</code> element.</p> <p>To add, change, or remove one or more cache behaviors, update the distribution configuration and specify all of the cache behaviors that you want to include in the updated distribution.</p> <important> <p>If your minimum TTL is greater than 0, CloudFront will cache content for at least the duration specified in the cache policy's minimum TTL, even if the <code>Cache-Control: no-cache</code>, <code>no-store</code>, or <code>private</code> directives are present in the origin headers.</p> </important> <p>For more information about cache behaviors, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html#DownloadDistValuesCacheBehavior\">Cache Behavior Settings</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
@@ -515,6 +549,36 @@
         "ListConflictingAliasesResult$ConflictingAliasesList": "<p>A list of conflicting aliases.</p>"
       }
     },
+    "ConnectionFunctionAssociation": {
+      "base": "<p>A connection function association.</p>",
+      "refs": {
+        "DistributionConfig$ConnectionFunctionAssociation": "<p>The distribution's connection function association.</p>",
+        "DistributionSummary$ConnectionFunctionAssociation": "<p>The distribution's connection function association.</p>"
+      }
+    },
+    "ConnectionFunctionSummary": {
+      "base": "<p>A connection function summary.</p>",
+      "refs": {
+        "ConnectionFunctionSummaryList$member": null,
+        "ConnectionFunctionTestResult$ConnectionFunctionSummary": "<p>The connection function summary.</p>",
+        "CreateConnectionFunctionResult$ConnectionFunctionSummary": "<p>The summary for the connection function.</p>",
+        "DescribeConnectionFunctionResult$ConnectionFunctionSummary": "<p>The connection function's summary.</p>",
+        "PublishConnectionFunctionResult$ConnectionFunctionSummary": "<p>The connection function summary.</p>",
+        "UpdateConnectionFunctionResult$ConnectionFunctionSummary": "<p>The connection function summary.</p>"
+      }
+    },
+    "ConnectionFunctionSummaryList": {
+      "base": null,
+      "refs": {
+        "ListConnectionFunctionsResult$ConnectionFunctions": "<p>A list of connection functions.</p>"
+      }
+    },
+    "ConnectionFunctionTestResult": {
+      "base": "<p>A connection function test result.</p>",
+      "refs": {
+        "TestConnectionFunctionResult$ConnectionFunctionTestResult": "<p>The connection function test result.</p>"
+      }
+    },
     "ConnectionGroup": {
       "base": "<p>The connection group for your distribution tenants. When you first create a distribution tenant and you don't specify a connection group, CloudFront will automatically create a default connection group for you. When you create a new distribution tenant and don't specify a connection group, the default one will be associated with your distribution tenant.</p>",
       "refs": {
@@ -689,6 +753,14 @@
       "base": "<p>The returned result of the corresponding request.</p>",
       "refs": {}
     },
+    "CreateConnectionFunctionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateConnectionFunctionResult": {
+      "base": null,
+      "refs": {}
+    },
     "CreateConnectionGroupRequest": {
       "base": null,
       "refs": {}
@@ -855,6 +927,14 @@
       "base": "<p>The returned result of the corresponding request.</p>",
       "refs": {}
     },
+    "CreateTrustStoreRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateTrustStoreResult": {
+      "base": null,
+      "refs": {}
+    },
     "CreateVpcOriginRequest": {
       "base": null,
       "refs": {}
@@ -926,6 +1006,10 @@
     },
     "DeleteCloudFrontOriginAccessIdentityRequest": {
       "base": "<p>Deletes a origin access identity.</p>",
+      "refs": {}
+    },
+    "DeleteConnectionFunctionRequest": {
+      "base": null,
       "refs": {}
     },
     "DeleteConnectionGroupRequest": {
@@ -1000,11 +1084,23 @@
       "base": "<p>The request to delete a streaming distribution.</p>",
       "refs": {}
     },
+    "DeleteTrustStoreRequest": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteVpcOriginRequest": {
       "base": null,
       "refs": {}
     },
     "DeleteVpcOriginResult": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeConnectionFunctionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeConnectionFunctionResult": {
       "base": null,
       "refs": {}
     },
@@ -1109,8 +1205,10 @@
       "base": "<p>A distribution list.</p>",
       "refs": {
         "ListDistributionsByAnycastIpListIdResult$DistributionList": null,
+        "ListDistributionsByConnectionFunctionResult$DistributionList": null,
         "ListDistributionsByConnectionModeResult$DistributionList": null,
         "ListDistributionsByRealtimeLogConfigResult$DistributionList": null,
+        "ListDistributionsByTrustStoreResult$DistributionList": null,
         "ListDistributionsByWebACLIdResult$DistributionList": "<p>The <code>DistributionList</code> type.</p>",
         "ListDistributionsResult$DistributionList": "<p>The <code>DistributionList</code> type.</p>"
       }
@@ -1451,28 +1549,36 @@
     "FunctionBlob": {
       "base": null,
       "refs": {
+        "CreateConnectionFunctionRequest$ConnectionFunctionCode": "<p>The code for the connection function.</p>",
         "CreateFunctionRequest$FunctionCode": "<p>The function code. For more information about writing a CloudFront function, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/writing-function-code.html\">Writing function code for CloudFront Functions</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
+        "GetConnectionFunctionResult$ConnectionFunctionCode": "<p>The connection function's code.</p>",
         "GetFunctionResult$FunctionCode": "<p>The function code of a CloudFront function.</p>",
+        "UpdateConnectionFunctionRequest$ConnectionFunctionCode": "<p>The connection function code.</p>",
         "UpdateFunctionRequest$FunctionCode": "<p>The function code. For more information about writing a CloudFront function, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/writing-function-code.html\">Writing function code for CloudFront Functions</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>"
       }
     },
     "FunctionConfig": {
       "base": "<p>Contains configuration information about a CloudFront function.</p>",
       "refs": {
+        "ConnectionFunctionSummary$ConnectionFunctionConfig": null,
+        "CreateConnectionFunctionRequest$ConnectionFunctionConfig": null,
         "CreateFunctionRequest$FunctionConfig": "<p>Configuration information about the function, including an optional comment and the function's runtime.</p>",
         "FunctionSummary$FunctionConfig": "<p>Contains configuration information about a CloudFront function.</p>",
+        "UpdateConnectionFunctionRequest$ConnectionFunctionConfig": null,
         "UpdateFunctionRequest$FunctionConfig": "<p>Configuration information about the function.</p>"
       }
     },
     "FunctionEventObject": {
       "base": null,
       "refs": {
+        "TestConnectionFunctionRequest$ConnectionObject": "<p>The connection object.</p>",
         "TestFunctionRequest$EventObject": "<p>The event object to test the function with. For more information about the structure of the event object, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/managing-functions.html#test-function\">Testing functions</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>"
       }
     },
     "FunctionExecutionLogList": {
       "base": null,
       "refs": {
+        "ConnectionFunctionTestResult$ConnectionFunctionExecutionLogs": "<p>The connection function execution logs.</p>",
         "TestResult$FunctionExecutionLogs": "<p>Contains the log lines that the function wrote (if any) when running the test.</p>"
       }
     },
@@ -1495,6 +1601,8 @@
     "FunctionName": {
       "base": null,
       "refs": {
+        "ConnectionFunctionSummary$Name": "<p>The connection function name.</p>",
+        "CreateConnectionFunctionRequest$Name": "<p>A name for the connection function.</p>",
         "CreateFunctionRequest$Name": "<p>A name to identify the function.</p>",
         "DeleteFunctionRequest$Name": "<p>The name of the function that you are deleting.</p>",
         "DescribeFunctionRequest$Name": "<p>The name of the function that you are getting information about.</p>",
@@ -1518,10 +1626,15 @@
     "FunctionStage": {
       "base": null,
       "refs": {
+        "ConnectionFunctionSummary$Stage": "<p>The connection function stage.</p>",
+        "DescribeConnectionFunctionRequest$Stage": "<p>The connection function's stage.</p>",
         "DescribeFunctionRequest$Stage": "<p>The function's stage, either <code>DEVELOPMENT</code> or <code>LIVE</code>.</p>",
         "FunctionMetadata$Stage": "<p>The stage that the function is in, either <code>DEVELOPMENT</code> or <code>LIVE</code>.</p> <p>When a function is in the <code>DEVELOPMENT</code> stage, you can test the function with <code>TestFunction</code>, and update it with <code>UpdateFunction</code>.</p> <p>When a function is in the <code>LIVE</code> stage, you can attach the function to a distribution's cache behavior, using the function's ARN.</p>",
+        "GetConnectionFunctionRequest$Stage": "<p>The connection function's stage.</p>",
         "GetFunctionRequest$Stage": "<p>The function's stage, either <code>DEVELOPMENT</code> or <code>LIVE</code>.</p>",
+        "ListConnectionFunctionsRequest$Stage": "<p>The connection function's stage.</p>",
         "ListFunctionsRequest$Stage": "<p>An optional filter to return only the functions that are in the specified stage, either <code>DEVELOPMENT</code> or <code>LIVE</code>.</p>",
+        "TestConnectionFunctionRequest$Stage": "<p>The connection function stage.</p>",
         "TestFunctionRequest$Stage": "<p>The stage of the function that you are testing, either <code>DEVELOPMENT</code> or <code>LIVE</code>.</p>"
       }
     },
@@ -1599,6 +1712,14 @@
     },
     "GetCloudFrontOriginAccessIdentityResult": {
       "base": "<p>The returned result of the corresponding request.</p>",
+      "refs": {}
+    },
+    "GetConnectionFunctionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConnectionFunctionResult": {
+      "base": null,
       "refs": {}
     },
     "GetConnectionGroupByRoutingEndpointRequest": {
@@ -1847,6 +1968,14 @@
     },
     "GetStreamingDistributionResult": {
       "base": "<p>The returned result of the corresponding request.</p>",
+      "refs": {}
+    },
+    "GetTrustStoreRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTrustStoreResult": {
+      "base": null,
       "refs": {}
     },
     "GetVpcOriginRequest": {
@@ -2298,6 +2427,14 @@
       "base": null,
       "refs": {}
     },
+    "ListConnectionFunctionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListConnectionFunctionsResult": {
+      "base": null,
+      "refs": {}
+    },
     "ListConnectionGroupsRequest": {
       "base": null,
       "refs": {}
@@ -2346,6 +2483,14 @@
       "base": null,
       "refs": {}
     },
+    "ListDistributionsByConnectionFunctionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDistributionsByConnectionFunctionResult": {
+      "base": null,
+      "refs": {}
+    },
     "ListDistributionsByConnectionModeRequest": {
       "base": null,
       "refs": {}
@@ -2391,6 +2536,14 @@
       "refs": {}
     },
     "ListDistributionsByResponseHeadersPolicyIdResult": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDistributionsByTrustStoreRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDistributionsByTrustStoreResult": {
       "base": null,
       "refs": {}
     },
@@ -2536,6 +2689,14 @@
     },
     "ListTagsForResourceResult": {
       "base": "<p>The returned result of the corresponding request.</p>",
+      "refs": {}
+    },
+    "ListTrustStoresRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTrustStoresResult": {
+      "base": null,
       "refs": {}
     },
     "ListVpcOriginsRequest": {
@@ -3064,6 +3225,14 @@
         "PublicKeyList$Items": "<p>A list of public keys.</p>"
       }
     },
+    "PublishConnectionFunctionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PublishConnectionFunctionResult": {
+      "base": null,
+      "refs": {}
+    },
     "PublishFunctionRequest": {
       "base": null,
       "refs": {}
@@ -3191,6 +3360,19 @@
         "ListTagsForResourceRequest$Resource": "<p>An ARN of a CloudFront resource.</p>",
         "TagResourceRequest$Resource": "<p>An ARN of a CloudFront resource.</p>",
         "UntagResourceRequest$Resource": "<p>An ARN of a CloudFront resource.</p>"
+      }
+    },
+    "ResourceId": {
+      "base": null,
+      "refs": {
+        "ConnectionFunctionAssociation$Id": "<p>The association's ID.</p>",
+        "ConnectionFunctionSummary$Id": "<p>The connection function ID.</p>",
+        "DeleteConnectionFunctionRequest$Id": "<p>The connection function's ID.</p>",
+        "DeleteTrustStoreRequest$Id": "<p>The trust store's ID.</p>",
+        "PublishConnectionFunctionRequest$Id": "<p>The connection function ID.</p>",
+        "TestConnectionFunctionRequest$Id": "<p>The connection function ID.</p>",
+        "UpdateConnectionFunctionRequest$Id": "<p>The connection function ID.</p>",
+        "UpdateTrustStoreRequest$Id": "<p>The trust store ID.</p>"
       }
     },
     "ResourceInUse": {
@@ -3577,8 +3759,10 @@
       "refs": {
         "ConnectionGroup$Tags": null,
         "CreateAnycastIpListRequest$Tags": null,
+        "CreateConnectionFunctionRequest$Tags": null,
         "CreateConnectionGroupRequest$Tags": null,
         "CreateDistributionTenantRequest$Tags": null,
+        "CreateTrustStoreRequest$Tags": null,
         "CreateVpcOriginRequest$Tags": null,
         "DistributionConfigWithTags$Tags": "<p>A complex type that contains zero or more <code>Tag</code> elements.</p>",
         "DistributionTenant$Tags": null,
@@ -3592,6 +3776,14 @@
       "refs": {
         "DistributionConfig$TenantConfig": "<p><note> <p>This field only supports multi-tenant distributions. You can't specify this field for standard distributions. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-config-options.html#unsupported-saas\">Unsupported features for SaaS Manager for Amazon CloudFront</a> in the <i>Amazon CloudFront Developer Guide</i>.</p> </note> <p>A distribution tenant configuration.</p></p>"
       }
+    },
+    "TestConnectionFunctionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TestConnectionFunctionResult": {
+      "base": null,
+      "refs": {}
     },
     "TestFunctionFailed": {
       "base": "<p>The CloudFront function failed.</p>",
@@ -3825,6 +4017,39 @@
         "ContinuousDeploymentPolicyConfig$TrafficConfig": "<p>Contains the parameters for routing production traffic from your primary to staging distributions.</p>"
       }
     },
+    "TrustStore": {
+      "base": "<p>A trust store.</p>",
+      "refs": {
+        "CreateTrustStoreResult$TrustStore": "<p>The trust store.</p>",
+        "GetTrustStoreResult$TrustStore": "<p>The trust store.</p>",
+        "UpdateTrustStoreResult$TrustStore": "<p>The trust store.</p>"
+      }
+    },
+    "TrustStoreConfig": {
+      "base": "<p>A trust store configuration.</p>",
+      "refs": {
+        "ViewerMtlsConfig$TrustStoreConfig": "<p>The trust store configuration associated with the viewer mTLS configuration.</p>"
+      }
+    },
+    "TrustStoreList": {
+      "base": null,
+      "refs": {
+        "ListTrustStoresResult$TrustStoreList": "<p>The trust store list.</p>"
+      }
+    },
+    "TrustStoreStatus": {
+      "base": null,
+      "refs": {
+        "TrustStore$Status": "<p>The trust store's status.</p>",
+        "TrustStoreSummary$Status": "<p>The trust store's status.</p>"
+      }
+    },
+    "TrustStoreSummary": {
+      "base": "<p>A trust store summary.</p>",
+      "refs": {
+        "TrustStoreList$member": null
+      }
+    },
     "TrustedKeyGroupDoesNotExist": {
       "base": "<p>The specified key group does not exist.</p>",
       "refs": {}
@@ -3885,6 +4110,14 @@
     },
     "UpdateCloudFrontOriginAccessIdentityResult": {
       "base": "<p>The returned result of the corresponding request.</p>",
+      "refs": {}
+    },
+    "UpdateConnectionFunctionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateConnectionFunctionResult": {
+      "base": null,
       "refs": {}
     },
     "UpdateConnectionGroupRequest": {
@@ -4023,6 +4256,14 @@
       "base": "<p>The returned result of the corresponding request.</p>",
       "refs": {}
     },
+    "UpdateTrustStoreRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateTrustStoreResult": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateVpcOriginRequest": {
       "base": null,
       "refs": {}
@@ -4063,6 +4304,19 @@
       "refs": {
         "DistributionConfig$ViewerCertificate": "<p>A complex type that determines the distribution's SSL/TLS configuration for communicating with viewers.</p>",
         "DistributionSummary$ViewerCertificate": "<p>A complex type that determines the distribution's SSL/TLS configuration for communicating with viewers.</p>"
+      }
+    },
+    "ViewerMtlsConfig": {
+      "base": "<p>A viewer mTLS configuration.</p>",
+      "refs": {
+        "DistributionConfig$ViewerMtlsConfig": "<p>The distribution's viewer mTLS configuration.</p>",
+        "DistributionSummary$ViewerMtlsConfig": "<p>The distribution's viewer mTLS configuration.</p>"
+      }
+    },
+    "ViewerMtlsMode": {
+      "base": null,
+      "refs": {
+        "ViewerMtlsConfig$Mode": "<p>The viewer mTLS mode.</p>"
       }
     },
     "ViewerProtocolPolicy": {
@@ -4190,6 +4444,8 @@
         "StreamingDistributionSummary$Enabled": "<p>Whether the distribution is enabled to accept end user requests for content.</p>",
         "StreamingLoggingConfig$Enabled": "<p>Specifies whether you want CloudFront to save access logs to an Amazon S3 bucket. If you don't want to enable logging when you create a streaming distribution or if you want to disable logging for an existing streaming distribution, specify <code>false</code> for <code>Enabled</code>, and specify <code>empty Bucket</code> and <code>Prefix</code> elements. If you specify <code>false</code> for <code>Enabled</code> but you specify values for <code>Bucket</code> and <code>Prefix</code>, the values are automatically deleted.</p>",
         "StringSchemaConfig$Required": "<p>Whether the defined parameter is required.</p>",
+        "TrustStoreConfig$AdvertiseTrustStoreCaNames": "<p>The configuration to use to advertise trust store CA names.</p>",
+        "TrustStoreConfig$IgnoreCertificateExpiry": "<p>The configuration to use to ignore certificate expiration.</p>",
         "TrustedKeyGroups$Enabled": "<p>This field is <code>true</code> if any of the key groups in the list have public keys that CloudFront can use to verify the signatures of signed URLs and signed cookies. If not, this field is <code>false</code>.</p>",
         "TrustedSigners$Enabled": "<p>This field is <code>true</code> if any of the Amazon Web Services accounts in the list are configured as trusted signers. If not, this field is <code>false</code>.</p>",
         "UpdateConnectionGroupRequest$Ipv6Enabled": "<p>Enable IPv6 for the connection group. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html#DownloadDistValuesEnableIPv6\">Enable IPv6</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
@@ -4271,12 +4527,15 @@
         "KeyValueStoreList$Quantity": "<p>The quantity of the key value store list.</p>",
         "LambdaFunctionAssociations$Quantity": "<p>The number of Lambda@Edge function associations for this cache behavior.</p>",
         "ListAnycastIpListsRequest$MaxItems": "<p>The maximum number of Anycast static IP lists that you want returned in the response.</p>",
+        "ListConnectionFunctionsRequest$MaxItems": "<p>The maximum number of connection functions that you want returned in the response.</p>",
         "ListConnectionGroupsRequest$MaxItems": "<p>The maximum number of connection groups to return.</p>",
         "ListDistributionTenantsByCustomizationRequest$MaxItems": "<p>The maximum number of distribution tenants to return by the specified customization.</p>",
         "ListDistributionTenantsRequest$MaxItems": "<p>The maximum number of distribution tenants to return.</p>",
+        "ListDistributionsByConnectionFunctionRequest$MaxItems": "<p>The maximum number of distributions that you want returned in the response.</p>",
         "ListDistributionsByConnectionModeRequest$MaxItems": "<p>The maximum number of distributions to return.</p>",
         "ListDomainConflictsRequest$MaxItems": "<p>The maximum number of domain conflicts to return.</p>",
         "ListInvalidationsForDistributionTenantRequest$MaxItems": "<p>The maximum number of invalidations to return for the distribution tenant.</p>",
+        "ListTrustStoresRequest$MaxItems": "<p>The maximum number of trust stores that you want returned in the response.</p>",
         "Origin$ConnectionAttempts": "<p>The number of times that CloudFront attempts to connect to the origin. The minimum number is 1, the maximum is 3, and the default (if you don't specify otherwise) is 3.</p> <p>For a custom origin (including an Amazon S3 bucket that's configured with static website hosting), this value also specifies the number of times that CloudFront attempts to get a response from the origin, in the case of an <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html#DownloadDistValuesOriginResponseTimeout\">Origin Response Timeout</a>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html#origin-connection-attempts\">Origin Connection Attempts</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
         "Origin$ConnectionTimeout": "<p>The number of seconds that CloudFront waits when trying to establish a connection to the origin. The minimum timeout is 1 second, the maximum is 10 seconds, and the default (if you don't specify otherwise) is 10 seconds.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html#origin-connection-timeout\">Origin Connection Timeout</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
         "Origin$ResponseCompletionTimeout": "<p>The time (in seconds) that a request from CloudFront to the origin can stay open and wait for a response. If the complete response isn't received from the origin by this time, CloudFront ends the connection.</p> <p>The value for <code>ResponseCompletionTimeout</code> must be equal to or greater than the value for <code>OriginReadTimeout</code>. If you don't set a value for <code>ResponseCompletionTimeout</code>, CloudFront doesn't enforce a maximum value.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DownloadDistValuesOrigin.html#response-completion-timeout\">Response completion timeout</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
@@ -4313,6 +4572,8 @@
         "StatusCodes$Quantity": "<p>The number of status codes.</p>",
         "StreamingDistributionList$MaxItems": "<p>The value you provided for the <code>MaxItems</code> request parameter.</p>",
         "StreamingDistributionList$Quantity": "<p>The number of streaming distributions that were created by the current Amazon Web Services account. </p>",
+        "TrustStore$NumberOfCaCertificates": "<p>The trust store's number of CA certificates.</p>",
+        "TrustStoreSummary$NumberOfCaCertificates": "<p>The trust store's number of CA certificates.</p>",
         "TrustedKeyGroups$Quantity": "<p>The number of key groups in the list.</p>",
         "TrustedSigners$Quantity": "<p>The number of Amazon Web Services accounts in the list.</p>",
         "VpcOriginConfig$OriginReadTimeout": "<p>Specifies how long, in seconds, CloudFront waits for a response from the origin. This is also known as the <i>origin response timeout</i>. The minimum timeout is 1 second, the maximum is 120 seconds, and the default (if you don't specify otherwise) is 30 seconds.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DownloadDistValuesOrigin.html#DownloadDistValuesOriginResponseTimeout\">Response timeout</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
@@ -4350,6 +4611,8 @@
     "sensitiveStringType": {
       "base": null,
       "refs": {
+        "ConnectionFunctionTestResult$ConnectionFunctionErrorMessage": "<p>The connection function error message.</p>",
+        "ConnectionFunctionTestResult$ConnectionFunctionOutput": "<p>The connection function output.</p>",
         "DistributionSummary$Comment": "<p>The comment originally specified when this distribution was created.</p>",
         "OriginCustomHeader$HeaderValue": "<p>The value for the header that you specified in the <code>HeaderName</code> field.</p>",
         "StringSchemaConfig$Comment": "<p>A comment to describe the parameter.</p>",
@@ -4393,6 +4656,9 @@
         "AwsAccountNumberList$member": null,
         "BatchTooLarge$Message": null,
         "CNAMEAlreadyExists$Message": null,
+        "CaCertificatesBundleS3Location$Bucket": "<p>The S3 bucket.</p>",
+        "CaCertificatesBundleS3Location$Key": "<p>The location's key.</p>",
+        "CaCertificatesBundleS3Location$Version": "<p>The location's version.</p>",
         "CacheBehavior$PathPattern": "<p>The pattern (for example, <code>images/*.jpg</code>) that specifies which requests to apply the behavior to. When CloudFront receives a viewer request, the requested path is compared with path patterns in the order in which cache behaviors are listed in the distribution.</p> <note> <p>You can optionally include a slash (<code>/</code>) at the beginning of the path pattern. For example, <code>/images/*.jpg</code>. CloudFront behavior is the same with or without the leading <code>/</code>.</p> </note> <p>The path pattern for the default cache behavior is <code>*</code> and cannot be changed. If the request for an object does not match the path pattern for any cache behaviors, CloudFront applies the behavior in the default cache behavior.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html#DownloadDistValuesPathPattern\">Path Pattern</a> in the <i> Amazon CloudFront Developer Guide</i>.</p>",
         "CacheBehavior$TargetOriginId": "<p>The value of <code>ID</code> for the origin that you want CloudFront to route requests to when they match this cache behavior.</p>",
         "CacheBehavior$FieldLevelEncryptionId": "<p>The value of <code>ID</code> for the field-level encryption configuration that you want CloudFront to use for encrypting specific fields of data for this cache behavior.</p>",
@@ -4425,6 +4691,9 @@
         "ConflictingAlias$DistributionId": "<p>The (partially hidden) ID of the CloudFront standard distribution associated with the alias.</p>",
         "ConflictingAlias$AccountId": "<p>The (partially hidden) ID of the Amazon Web Services account that owns the standard distribution that's associated with the alias.</p>",
         "ConflictingAliasesList$NextMarker": "<p>If there are more items in the list than are in this response, this element is present. It contains the value that you should use in the <code>Marker</code> field of a subsequent request to continue listing conflicting aliases where you left off.</p>",
+        "ConnectionFunctionSummary$ConnectionFunctionArn": "<p>The connection function Amazon Resource Name (ARN).</p>",
+        "ConnectionFunctionSummary$Status": "<p>The connection function status.</p>",
+        "ConnectionFunctionTestResult$ComputeUtilization": "<p>The connection function compute utilization.</p>",
         "ConnectionGroup$Id": "<p>The ID of the connection group.</p>",
         "ConnectionGroup$Name": "<p>The name of the connection group.</p>",
         "ConnectionGroup$Arn": "<p>The Amazon Resource Name (ARN) of the connection group.</p>",
@@ -4458,6 +4727,8 @@
         "CreateCachePolicyResult$ETag": "<p>The current version of the cache policy.</p>",
         "CreateCloudFrontOriginAccessIdentityResult$Location": "<p>The fully qualified URI of the new origin access identity just created.</p>",
         "CreateCloudFrontOriginAccessIdentityResult$ETag": "<p>The current version of the origin access identity created.</p>",
+        "CreateConnectionFunctionResult$Location": "<p>The location of the connection function.</p>",
+        "CreateConnectionFunctionResult$ETag": "<p>The version identifier for the current version of the connection function.</p>",
         "CreateConnectionGroupRequest$Name": "<p>The name of the connection group. Enter a friendly identifier that is unique within your Amazon Web Services account. This name can't be updated after you create the connection group.</p>",
         "CreateConnectionGroupRequest$AnycastIpListId": "<p>The ID of the Anycast static IP list.</p>",
         "CreateConnectionGroupResult$ETag": "<p>The current version of the connection group.</p>",
@@ -4498,6 +4769,8 @@
         "CreateStreamingDistributionResult$ETag": "<p>The current version of the streaming distribution created.</p>",
         "CreateStreamingDistributionWithTagsResult$Location": "<p>The fully qualified URI of the new streaming distribution resource just created.</p>",
         "CreateStreamingDistributionWithTagsResult$ETag": "<p>The current version of the distribution created.</p>",
+        "CreateTrustStoreRequest$Name": "<p>A name for the trust store.</p>",
+        "CreateTrustStoreResult$ETag": "<p>The version identifier for the current version of the trust store.</p>",
         "CreateVpcOriginResult$Location": "<p>The VPC origin location.</p>",
         "CreateVpcOriginResult$ETag": "<p>The VPC origin ETag.</p>",
         "CustomErrorResponse$ResponsePagePath": "<p>The path to the custom error page that you want CloudFront to return to a viewer when your origin returns the HTTP status code specified by <code>ErrorCode</code>, for example, <code>/4xx-errors/403-forbidden.html</code>. If you want to store your objects and your custom error pages in different locations, your distribution must include a cache behavior for which the following is true:</p> <ul> <li> <p>The value of <code>PathPattern</code> matches the path to your custom error messages. For example, suppose you saved custom error pages for 4xx errors in an Amazon S3 bucket in a directory named <code>/4xx-errors</code>. Your distribution must include a cache behavior for which the path pattern routes requests for your custom error pages to that location, for example, <code>/4xx-errors/*</code>.</p> </li> <li> <p>The value of <code>TargetOriginId</code> specifies the value of the <code>ID</code> element for the origin that contains your custom error pages.</p> </li> </ul> <p>If you specify a value for <code>ResponsePagePath</code>, you must also specify a value for <code>ResponseCode</code>.</p> <p>We recommend that you store custom error pages in an Amazon S3 bucket. If you store custom error pages on an HTTP server and the server starts to return 5xx errors, CloudFront can't get the files that you want to return to viewers because the origin server is unavailable.</p>",
@@ -4514,6 +4787,7 @@
         "DeleteCachePolicyRequest$IfMatch": "<p>The version of the cache policy that you are deleting. The version is the cache policy's <code>ETag</code> value, which you can get using <code>ListCachePolicies</code>, <code>GetCachePolicy</code>, or <code>GetCachePolicyConfig</code>.</p>",
         "DeleteCloudFrontOriginAccessIdentityRequest$Id": "<p>The origin access identity's ID.</p>",
         "DeleteCloudFrontOriginAccessIdentityRequest$IfMatch": "<p>The value of the <code>ETag</code> header you received from a previous <code>GET</code> or <code>PUT</code> request. For example: <code>E2QWRUHAPOMQZL</code>.</p>",
+        "DeleteConnectionFunctionRequest$IfMatch": "<p>The current version (<code>ETag</code> value) of the connection function you are deleting.</p>",
         "DeleteConnectionGroupRequest$Id": "<p>The ID of the connection group to delete.</p>",
         "DeleteConnectionGroupRequest$IfMatch": "<p>The value of the <code>ETag</code> header that you received when retrieving the connection group to delete.</p>",
         "DeleteContinuousDeploymentPolicyRequest$Id": "<p>The identifier of the continuous deployment policy that you are deleting.</p>",
@@ -4544,9 +4818,12 @@
         "DeleteResponseHeadersPolicyRequest$IfMatch": "<p>The version of the response headers policy that you are deleting.</p> <p>The version is the response headers policy's <code>ETag</code> value, which you can get using <code>ListResponseHeadersPolicies</code>, <code>GetResponseHeadersPolicy</code>, or <code>GetResponseHeadersPolicyConfig</code>.</p>",
         "DeleteStreamingDistributionRequest$Id": "<p>The distribution ID.</p>",
         "DeleteStreamingDistributionRequest$IfMatch": "<p>The value of the <code>ETag</code> header that you received when you disabled the streaming distribution. For example: <code>E2QWRUHAPOMQZL</code>.</p>",
+        "DeleteTrustStoreRequest$IfMatch": "<p>The current version (<code>ETag</code> value) of the trust store you are deleting.</p>",
         "DeleteVpcOriginRequest$Id": "<p>The VPC origin ID.</p>",
         "DeleteVpcOriginRequest$IfMatch": "<p>The version identifier of the VPC origin to delete. This is the <code>ETag</code> value returned in the response to <a>GetVpcOrigin</a>.</p>",
         "DeleteVpcOriginResult$ETag": "<p>The VPC origin ETag.</p>",
+        "DescribeConnectionFunctionRequest$Identifier": "<p>The connection function's identifier.</p>",
+        "DescribeConnectionFunctionResult$ETag": "<p>The version identifier for the current version of the connection function.</p>",
         "DescribeFunctionResult$ETag": "<p>The version identifier for the current version of the CloudFront function.</p>",
         "DescribeKeyValueStoreResult$ETag": "<p>The <code>ETag</code> of the resulting key value store.</p>",
         "DisassociateDistributionTenantWebACLRequest$Id": "<p>The ID of the distribution tenant.</p>",
@@ -4654,6 +4931,9 @@
         "GetCloudFrontOriginAccessIdentityConfigResult$ETag": "<p>The current version of the configuration. For example: <code>E2QWRUHAPOMQZL</code>.</p>",
         "GetCloudFrontOriginAccessIdentityRequest$Id": "<p>The identity's ID.</p>",
         "GetCloudFrontOriginAccessIdentityResult$ETag": "<p>The current version of the origin access identity's information. For example: <code>E2QWRUHAPOMQZL</code>.</p>",
+        "GetConnectionFunctionRequest$Identifier": "<p>The connection function's identifier.</p>",
+        "GetConnectionFunctionResult$ETag": "<p>The version identifier for the current version of the connection function.</p>",
+        "GetConnectionFunctionResult$ContentType": "<p>The connection function's content type.</p>",
         "GetConnectionGroupByRoutingEndpointRequest$RoutingEndpoint": "<p>The routing endpoint for the target connection group, such as d111111abcdef8.cloudfront.net.</p>",
         "GetConnectionGroupByRoutingEndpointResult$ETag": "<p>The current version of the connection group.</p>",
         "GetConnectionGroupRequest$Identifier": "<p>The ID, name, or Amazon Resource Name (ARN) of the connection group.</p>",
@@ -4715,6 +4995,8 @@
         "GetStreamingDistributionConfigResult$ETag": "<p>The current version of the configuration. For example: <code>E2QWRUHAPOMQZL</code>. </p>",
         "GetStreamingDistributionRequest$Id": "<p>The streaming distribution's ID.</p>",
         "GetStreamingDistributionResult$ETag": "<p>The current version of the streaming distribution's information. For example: <code>E2QWRUHAPOMQZL</code>.</p>",
+        "GetTrustStoreRequest$Identifier": "<p>The trust store's identifier.</p>",
+        "GetTrustStoreResult$ETag": "<p>The version identifier for the current version of the trust store.</p>",
         "GetVpcOriginRequest$Id": "<p>The VPC origin ID.</p>",
         "GetVpcOriginResult$ETag": "<p>The VPC origin ETag.</p>",
         "HeaderList$member": null,
@@ -4782,6 +5064,8 @@
         "ListCloudFrontOriginAccessIdentitiesRequest$Marker": "<p>Use this when paginating results to indicate where to begin in your list of origin access identities. The results include identities in the list that occur after the marker. To get the next page of results, set the <code>Marker</code> to the value of the <code>NextMarker</code> from the current page's response (which is also the ID of the last identity on that page).</p>",
         "ListCloudFrontOriginAccessIdentitiesRequest$MaxItems": "<p>The maximum number of origin access identities you want in the response body.</p>",
         "ListConflictingAliasesRequest$Marker": "<p>Use this field when paginating results to indicate where to begin in the list of conflicting aliases. The response includes conflicting aliases in the list that occur after the marker. To get the next page of the list, set this field's value to the value of <code>NextMarker</code> from the current page's response.</p>",
+        "ListConnectionFunctionsRequest$Marker": "<p>Use this field when paginating results to indicate where to begin in your list. The response includes items in the list that occur after the marker. To get the next page of the list, set this field's value to the value of <code>NextMarker</code> from the current page's response.</p>",
+        "ListConnectionFunctionsResult$NextMarker": "<p>Indicates the next page of connection functions. To get the next page of the list, use this value in the <code>Marker</code> field of your request.</p>",
         "ListConnectionGroupsRequest$Marker": "<p>The marker for the next set of connection groups to retrieve.</p>",
         "ListConnectionGroupsResult$NextMarker": "<p>A token used for pagination of results returned in the response. You can use the token from the previous request to define where the current request should begin.</p>",
         "ListContinuousDeploymentPoliciesRequest$Marker": "<p>Use this field when paginating results to indicate where to begin in your list of continuous deployment policies. The response includes policies in the list that occur after the marker. To get the next page of the list, set this field's value to the value of <code>NextMarker</code> from the current page's response.</p>",
@@ -4798,6 +5082,8 @@
         "ListDistributionsByCachePolicyIdRequest$Marker": "<p>Use this field when paginating results to indicate where to begin in your list of distribution IDs. The response includes distribution IDs in the list that occur after the marker. To get the next page of the list, set this field's value to the value of <code>NextMarker</code> from the current page's response.</p>",
         "ListDistributionsByCachePolicyIdRequest$MaxItems": "<p>The maximum number of distribution IDs that you want in the response.</p>",
         "ListDistributionsByCachePolicyIdRequest$CachePolicyId": "<p>The ID of the cache policy whose associated distribution IDs you want to list.</p>",
+        "ListDistributionsByConnectionFunctionRequest$Marker": "<p>Use this field when paginating results to indicate where to begin in your list. The response includes items in the list that occur after the marker. To get the next page of the list, set this field's value to the value of <code>NextMarker</code> from the current page's response.</p>",
+        "ListDistributionsByConnectionFunctionRequest$ConnectionFunctionIdentifier": "<p>The distributions by connection function identifier.</p>",
         "ListDistributionsByConnectionModeRequest$Marker": "<p> The marker for the next set of distributions to retrieve.</p>",
         "ListDistributionsByKeyGroupRequest$Marker": "<p>Use this field when paginating results to indicate where to begin in your list of distribution IDs. The response includes distribution IDs in the list that occur after the marker. To get the next page of the list, set this field's value to the value of <code>NextMarker</code> from the current page's response.</p>",
         "ListDistributionsByKeyGroupRequest$MaxItems": "<p>The maximum number of distribution IDs that you want in the response.</p>",
@@ -4815,6 +5101,9 @@
         "ListDistributionsByResponseHeadersPolicyIdRequest$Marker": "<p>Use this field when paginating results to indicate where to begin in your list of distribution IDs. The response includes distribution IDs in the list that occur after the marker. To get the next page of the list, set this field's value to the value of <code>NextMarker</code> from the current page's response.</p>",
         "ListDistributionsByResponseHeadersPolicyIdRequest$MaxItems": "<p>The maximum number of distribution IDs that you want to get in the response.</p>",
         "ListDistributionsByResponseHeadersPolicyIdRequest$ResponseHeadersPolicyId": "<p>The ID of the response headers policy whose associated distribution IDs you want to list.</p>",
+        "ListDistributionsByTrustStoreRequest$TrustStoreIdentifier": "<p>The distributions by trust store identifier.</p>",
+        "ListDistributionsByTrustStoreRequest$Marker": "<p>Use this field when paginating results to indicate where to begin in your list. The response includes items in the list that occur after the marker. To get the next page of the list, set this field's value to the value of <code>NextMarker</code> from the current page's response.</p>",
+        "ListDistributionsByTrustStoreRequest$MaxItems": "<p>The maximum number of distributions that you want returned in the response.</p>",
         "ListDistributionsByVpcOriginIdRequest$Marker": "<p>The marker associated with the VPC origin distributions list.</p>",
         "ListDistributionsByVpcOriginIdRequest$MaxItems": "<p>The maximum number of items included in the list.</p>",
         "ListDistributionsByVpcOriginIdRequest$VpcOriginId": "<p>The VPC origin ID.</p>",
@@ -4854,6 +5143,8 @@
         "ListResponseHeadersPoliciesRequest$MaxItems": "<p>The maximum number of response headers policies that you want to get in the response.</p>",
         "ListStreamingDistributionsRequest$Marker": "<p>The value that you provided for the <code>Marker</code> request parameter.</p>",
         "ListStreamingDistributionsRequest$MaxItems": "<p>The value that you provided for the <code>MaxItems</code> request parameter.</p>",
+        "ListTrustStoresRequest$Marker": "<p>Use this field when paginating results to indicate where to begin in your list. The response includes items in the list that occur after the marker. To get the next page of the list, set this field's value to the value of <code>NextMarker</code> from the current page's response.</p>",
+        "ListTrustStoresResult$NextMarker": "<p>Indicates the next page of trust stores. To get the next page of the list, use this value in the <code>Marker</code> field of your request.</p>",
         "ListVpcOriginsRequest$Marker": "<p>The marker associated with the VPC origins list.</p>",
         "ListVpcOriginsRequest$MaxItems": "<p>The maximum number of items included in the list.</p>",
         "LocationList$member": null,
@@ -4918,6 +5209,7 @@
         "PublicKeySummary$Name": "<p>A name to help identify the public key.</p>",
         "PublicKeySummary$EncodedKey": "<p>The public key.</p>",
         "PublicKeySummary$Comment": "<p>A comment to describe the public key. The comment cannot be longer than 128 characters.</p>",
+        "PublishConnectionFunctionRequest$IfMatch": "<p>The current version (<code>ETag</code> value) of the connection function.</p>",
         "PublishFunctionRequest$IfMatch": "<p>The current version (<code>ETag</code> value) of the function that you are publishing, which you can get using <code>DescribeFunction</code>.</p>",
         "PutResourcePolicyRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the CloudFront resource for which the policy is being created.</p>",
         "PutResourcePolicyRequest$PolicyDocument": "<p>The JSON-formatted resource policy to create.</p>",
@@ -4970,6 +5262,7 @@
         "StreamingDistributionSummary$Comment": "<p>The comment originally specified when this distribution was created.</p>",
         "StreamingLoggingConfig$Bucket": "<p>The Amazon S3 bucket to store the access logs in, for example, <code>amzn-s3-demo-bucket.s3.amazonaws.com</code>.</p>",
         "StreamingLoggingConfig$Prefix": "<p>An optional string that you want CloudFront to prefix to the access log filenames for this streaming distribution, for example, <code>myprefix/</code>. If you want to enable logging, but you don't want to specify a prefix, you still must include an empty <code>Prefix</code> element in the <code>Logging</code> element.</p>",
+        "TestConnectionFunctionRequest$IfMatch": "<p>The current version (<code>ETag</code> value) of the connection function.</p>",
         "TestFunctionFailed$Message": null,
         "TestFunctionRequest$IfMatch": "<p>The current version (<code>ETag</code> value) of the function that you are testing, which you can get using <code>DescribeFunction</code>.</p>",
         "TestResult$ComputeUtilization": "<p>The amount of time that the function took to run as a percentage of the maximum allowed time. For example, a compute utilization of 35 means that the function completed in 35% of the maximum allowed time.</p>",
@@ -5025,6 +5318,16 @@
         "TooManyStreamingDistributionCNAMEs$Message": null,
         "TooManyStreamingDistributions$Message": null,
         "TooManyTrustedSigners$Message": null,
+        "TrustStore$Id": "<p>The trust store's ID.</p>",
+        "TrustStore$Arn": "<p>The trust store's Amazon Resource Name (ARN).</p>",
+        "TrustStore$Name": "<p>The trust store's name.</p>",
+        "TrustStore$Reason": "<p>The trust store's reason.</p>",
+        "TrustStoreConfig$TrustStoreId": "<p>The trust store ID.</p>",
+        "TrustStoreSummary$Id": "<p>The trust store's ID.</p>",
+        "TrustStoreSummary$Arn": "<p>The trust store's Amazon Resource Name (ARN).</p>",
+        "TrustStoreSummary$Name": "<p>The trust store's name.</p>",
+        "TrustStoreSummary$Reason": "<p>The trust store's reason.</p>",
+        "TrustStoreSummary$ETag": "<p>The version identifier for the current version of the trust store.</p>",
         "TrustedKeyGroupDoesNotExist$Message": null,
         "TrustedKeyGroupIdList$member": null,
         "TrustedSignerDoesNotExist$Message": null,
@@ -5038,6 +5341,8 @@
         "UpdateCloudFrontOriginAccessIdentityRequest$Id": "<p>The identity's id.</p>",
         "UpdateCloudFrontOriginAccessIdentityRequest$IfMatch": "<p>The value of the <code>ETag</code> header that you received when retrieving the identity's configuration. For example: <code>E2QWRUHAPOMQZL</code>.</p>",
         "UpdateCloudFrontOriginAccessIdentityResult$ETag": "<p>The current version of the configuration. For example: <code>E2QWRUHAPOMQZL</code>.</p>",
+        "UpdateConnectionFunctionRequest$IfMatch": "<p>The current version (<code>ETag</code> value) of the connection function you are updating.</p>",
+        "UpdateConnectionFunctionResult$ETag": "<p>The version identifier for the current version of the connection function.</p>",
         "UpdateConnectionGroupRequest$Id": "<p>The ID of the connection group.</p>",
         "UpdateConnectionGroupRequest$IfMatch": "<p>The value of the <code>ETag</code> header that you received when retrieving the connection group that you're updating.</p>",
         "UpdateConnectionGroupRequest$AnycastIpListId": "<p>The ID of the Anycast static IP list.</p>",
@@ -5092,6 +5397,8 @@
         "UpdateStreamingDistributionRequest$Id": "<p>The streaming distribution's id.</p>",
         "UpdateStreamingDistributionRequest$IfMatch": "<p>The value of the <code>ETag</code> header that you received when retrieving the streaming distribution's configuration. For example: <code>E2QWRUHAPOMQZL</code>.</p>",
         "UpdateStreamingDistributionResult$ETag": "<p>The current version of the configuration. For example: <code>E2QWRUHAPOMQZL</code>.</p>",
+        "UpdateTrustStoreRequest$IfMatch": "<p>The current version (<code>ETag</code> value) of the trust store you are updating.</p>",
+        "UpdateTrustStoreResult$ETag": "<p>The version identifier for the current version of the trust store.</p>",
         "UpdateVpcOriginRequest$Id": "<p>The VPC origin ID.</p>",
         "UpdateVpcOriginRequest$IfMatch": "<p>The VPC origin to update, if a match occurs.</p>",
         "UpdateVpcOriginResult$ETag": "<p>The VPC origin ETag.</p>",
@@ -5127,6 +5434,8 @@
         "AnycastIpList$LastModifiedTime": "<p>The last time the Anycast static IP list was modified.</p>",
         "AnycastIpListSummary$LastModifiedTime": "<p>The last time the Anycast static IP list was modified.</p>",
         "CachePolicy$LastModifiedTime": "<p>The date and time when the cache policy was last modified.</p>",
+        "ConnectionFunctionSummary$CreatedTime": "<p>The connection function created time.</p>",
+        "ConnectionFunctionSummary$LastModifiedTime": "<p>The connection function last modified time.</p>",
         "ConnectionGroup$CreatedTime": "<p>The date and time when the connection group was created.</p>",
         "ConnectionGroup$LastModifiedTime": "<p>The date and time when the connection group was updated.</p>",
         "ConnectionGroupSummary$CreatedTime": "<p>The date and time when the connection group was created.</p>",
@@ -5154,6 +5463,8 @@
         "ResponseHeadersPolicy$LastModifiedTime": "<p>The date and time when the response headers policy was last modified.</p>",
         "StreamingDistribution$LastModifiedTime": "<p>The date and time that the distribution was last modified.</p>",
         "StreamingDistributionSummary$LastModifiedTime": "<p>The date and time the distribution was last modified.</p>",
+        "TrustStore$LastModifiedTime": "<p>The trust store's last modified time.</p>",
+        "TrustStoreSummary$LastModifiedTime": "<p>The trust store's last modified time.</p>",
         "VpcOrigin$CreatedTime": "<p>The VPC origin created time.</p>",
         "VpcOrigin$LastModifiedTime": "<p>The VPC origin last modified time.</p>",
         "VpcOriginSummary$CreatedTime": "<p>The VPC origin summary created time.</p>",
