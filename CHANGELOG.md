@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.363.1 - 2025-11-24
 
 * `Aws\CloudFront` - Add TrustStore, ConnectionFunction APIs to CloudFront SDK
 * `Aws\CloudWatchLogs` - New CloudWatch Logs feature - LogGroup Deletion Protection, a capability that allows customers to safeguard their critical CloudWatch log groups from accidental or unintended deletion.
