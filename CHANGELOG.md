@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.363.2 - 2025-11-25
 
 * `Aws\EC2` - This release adds support to view Network firewall proxy appliances attached to an existing NAT Gateway via DescribeNatGateways API NatGatewayAttachedAppliance structure.
 * `Aws\Route53` - Adds support for new route53 feature: accelerated recovery.
