@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - This release adds support to view Network firewall proxy appliances attached to an existing NAT Gateway via DescribeNatGateways API NatGatewayAttachedAppliance structure.
+* `Aws\Route53` - Adds support for new route53 feature: accelerated recovery.
+* `Aws\Organizations` - Add support for policy operations on the S3_POLICY and BEDROCK_POLICY policy type.
+* `Aws\NetworkFirewall` - Network Firewall release of the Proxy feature.
+
 ## 3.363.1 - 2025-11-24
 
 * `Aws\CloudFront` - Add TrustStore, ConnectionFunction APIs to CloudFront SDK

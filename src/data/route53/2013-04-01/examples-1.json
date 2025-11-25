@@ -595,6 +595,48 @@
               {
                 "Action": "CREATE",
                 "ResourceRecordSet": {
+                  "Name": "example.com.",
+                  "ResourceRecords": [
+                    {
+                      "Value": "\"verification_string = \\\"google-site-verification=abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef\""
+                    },
+                    {
+                      "Value": "\"1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcd\""
+                    },
+                    {
+                      "Value": "\"ef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890\\\"\""
+                    }
+                  ],
+                  "TTL": 300,
+                  "Type": "TXT"
+                }
+              }
+            ]
+          },
+          "HostedZoneId": "/hostedzone/Z06404571DIQRB3A5ZYSP"
+        },
+        "output": {
+          "ChangeInfo": {
+            "Id": "/change/C08517551SJKVOMY5SXVJ",
+            "Status": "PENDING",
+            "SubmittedAt": "2025-10-15T22:38:22.569000+00:00"
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "Create a TXT record with a value greater than 255 characters. Break the value string up into multiple lines.",
+        "id": "txt-record-creation-1760568065880",
+        "title": "TXT record creation"
+      },
+      {
+        "input": {
+          "ChangeBatch": {
+            "Changes": [
+              {
+                "Action": "CREATE",
+                "ResourceRecordSet": {
                   "AliasTarget": {
                     "DNSName": "example-com-123456789.us-east-2.elb.amazonaws.com ",
                     "EvaluateTargetHealth": true,

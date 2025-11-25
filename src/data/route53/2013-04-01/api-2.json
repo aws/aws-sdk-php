@@ -1081,6 +1081,25 @@
         {"shape":"PriorRequestNotComplete"}
       ]
     },
+    "UpdateHostedZoneFeatures":{
+      "name":"UpdateHostedZoneFeatures",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2013-04-01/hostedzone/{Id}/features"
+      },
+      "input":{
+        "shape":"UpdateHostedZoneFeaturesRequest",
+        "locationName":"UpdateHostedZoneFeaturesRequest",
+        "xmlNamespace":{"uri":"https://route53.amazonaws.com/doc/2013-04-01/"}
+      },
+      "output":{"shape":"UpdateHostedZoneFeaturesResponse"},
+      "errors":[
+        {"shape":"NoSuchHostedZone"},
+        {"shape":"InvalidInput"},
+        {"shape":"PriorRequestNotComplete"},
+        {"shape":"LimitsExceeded"}
+      ]
+    },
     "UpdateTrafficPolicyComment":{
       "name":"UpdateTrafficPolicyComment",
       "http":{
@@ -1132,6 +1151,20 @@
       "type":"string",
       "max":64,
       "min":1
+    },
+    "AcceleratedRecoveryEnabled":{"type":"boolean"},
+    "AcceleratedRecoveryStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLING",
+        "ENABLE_FAILED",
+        "ENABLING_HOSTED_ZONE_LOCKED",
+        "ENABLED",
+        "DISABLING",
+        "DISABLE_FAILED",
+        "DISABLED",
+        "DISABLING_HOSTED_ZONE_LOCKED"
+      ]
     },
     "AccountLimit":{
       "type":"structure",
@@ -2289,6 +2322,7 @@
       "type":"integer",
       "min":1
     },
+    "FailureReason":{"type":"string"},
     "FailureThreshold":{
       "type":"integer",
       "max":10,
@@ -2867,7 +2901,8 @@
         "CallerReference":{"shape":"Nonce"},
         "Config":{"shape":"HostedZoneConfig"},
         "ResourceRecordSetCount":{"shape":"HostedZoneRRSetCount"},
-        "LinkedService":{"shape":"LinkedService"}
+        "LinkedService":{"shape":"LinkedService"},
+        "Features":{"shape":"HostedZoneFeatures"}
       }
     },
     "HostedZoneAlreadyExists":{
@@ -2886,6 +2921,19 @@
       }
     },
     "HostedZoneCount":{"type":"long"},
+    "HostedZoneFailureReasons":{
+      "type":"structure",
+      "members":{
+        "AcceleratedRecovery":{"shape":"FailureReason"}
+      }
+    },
+    "HostedZoneFeatures":{
+      "type":"structure",
+      "members":{
+        "AcceleratedRecoveryStatus":{"shape":"AcceleratedRecoveryStatus"},
+        "FailureReasons":{"shape":"HostedZoneFailureReasons"}
+      }
+    },
     "HostedZoneLimit":{
       "type":"structure",
       "required":[
@@ -4718,6 +4766,22 @@
       "members":{
         "HostedZone":{"shape":"HostedZone"}
       }
+    },
+    "UpdateHostedZoneFeaturesRequest":{
+      "type":"structure",
+      "required":["HostedZoneId"],
+      "members":{
+        "HostedZoneId":{
+          "shape":"ResourceId",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "EnableAcceleratedRecovery":{"shape":"AcceleratedRecoveryEnabled"}
+      }
+    },
+    "UpdateHostedZoneFeaturesResponse":{
+      "type":"structure",
+      "members":{}
     },
     "UpdateTrafficPolicyCommentRequest":{
       "type":"structure",

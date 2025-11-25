@@ -42542,6 +42542,10 @@
           "shape":"AutoProvisionZonesState",
           "locationName":"autoProvisionZones"
         },
+        "AttachedAppliances":{
+          "shape":"NatGatewayAttachedApplianceList",
+          "locationName":"attachedApplianceSet"
+        },
         "RouteTableId":{
           "shape":"String",
           "locationName":"routeTableId"
@@ -42610,6 +42614,69 @@
         "succeeded",
         "failed"
       ]
+    },
+    "NatGatewayApplianceModifyState":{
+      "type":"string",
+      "enum":[
+        "modifying",
+        "completed",
+        "failed"
+      ]
+    },
+    "NatGatewayApplianceState":{
+      "type":"string",
+      "enum":[
+        "attaching",
+        "attached",
+        "detaching",
+        "detached",
+        "attach-failed",
+        "detach-failed"
+      ]
+    },
+    "NatGatewayApplianceType":{
+      "type":"string",
+      "enum":["network-firewall-proxy"]
+    },
+    "NatGatewayAttachedAppliance":{
+      "type":"structure",
+      "members":{
+        "Type":{
+          "shape":"NatGatewayApplianceType",
+          "locationName":"type"
+        },
+        "ApplianceArn":{
+          "shape":"String",
+          "locationName":"applianceArn"
+        },
+        "VpcEndpointId":{
+          "shape":"String",
+          "locationName":"vpcEndpointId"
+        },
+        "AttachmentState":{
+          "shape":"NatGatewayApplianceState",
+          "locationName":"attachmentState"
+        },
+        "ModificationState":{
+          "shape":"NatGatewayApplianceModifyState",
+          "locationName":"modificationState"
+        },
+        "FailureCode":{
+          "shape":"String",
+          "locationName":"failureCode"
+        },
+        "FailureMessage":{
+          "shape":"String",
+          "locationName":"failureMessage"
+        }
+      }
+    },
+    "NatGatewayAttachedApplianceList":{
+      "type":"list",
+      "member":{
+        "shape":"NatGatewayAttachedAppliance",
+        "locationName":"item"
+      }
     },
     "NatGatewayId":{"type":"string"},
     "NatGatewayIdStringList":{
