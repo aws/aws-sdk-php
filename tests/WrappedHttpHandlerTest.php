@@ -11,6 +11,8 @@ use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\WrappedHttpHandler;
 use GuzzleHttp\Promise\RejectedPromise;
+use GuzzleHttp\Psr7\NoSeekStream;
+use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -374,5 +376,85 @@ class WrappedHttpHandlerTest extends TestCase
 
         $wrapped(new Command('a'), new Request('GET', 'http://foo.com'))
             ->wait();
+    }
+
+    /**
+     * @dataProvider errorIsParsedOnNonSeekableResponseBodyProvider
+     *
+     * @return void
+     */
+    public function testErrorIsParsedOnNonSeekableResponseBody(
+        string $protocol,
+        string $body,
+        string $expected
+    )
+    {
+        $service = $this->generateTestService($protocol);
+        $parser = Service::createParser($service);
+        $errorParser = Service::createErrorParser($service->getProtocol(), $service);
+        $client = $this->generateTestClient(
+            $service
+        );
+        $command = $client->getCommand('TestOperation');
+        $exception = new AwsException(
+            'Failed performing test operation',
+            $command,
+        );
+        $uri = 'http://myservice.myregion.foo.com';
+        $request = new Request('GET', $uri);
+        $response = new Response(
+            403,
+            [],
+            new NoSeekStream(
+                Utils::streamFor($body)
+            )
+        );
+        $handler = function () use ($exception, $response) {
+            return new RejectedPromise([
+                'exception' => $exception,
+                'response' => $response,
+            ]);
+        };
+        $wrapped = new WrappedHttpHandler($handler, $parser, $errorParser);
+        try {
+            $wrapped($command, $request)->wait();
+            $this->fail(
+                "Operation should have failed!"
+            );
+        } catch (\Exception $exception) {
+            $this->assertStringContainsString(
+                $expected,
+                $exception->getMessage()
+            );
+        }
+    }
+
+    /**
+     * @return array[]
+     */
+    public function errorIsParsedOnNonSeekableResponseBodyProvider(): array
+    {
+        return [
+            'json' => [
+                'protocol' => 'json',
+                'body' => '{"Message": "Action not allowed!", "__Type": "ListObjects"}',
+                'expected' => 'ListObjects (client): Action not allowed!',
+            ],
+            'query' => [
+                'protocol' => 'query',
+                'body' => '<?xml version="1.0" encoding="UTF-8"?><ErrorResponse><Error><Code>ListObjects</Code><Message>Action not allowed!</Message></Error></ErrorResponse>',
+                'expected' => 'ListObjects (client): Action not allowed!',
+            ],
+            'rest-xml' => [
+                'protocol' => 'rest-xml',
+                'body' => '<?xml version="1.0" encoding="UTF-8"?><Error><Code>ListObjects</Code><Message>Action not allowed!</Message></Error>',
+                'expected' => 'ListObjects (client): Action not allowed!',
+            ],
+            'rest-json' => [
+                'protocol' => 'rest-json',
+                'body' => '{"message": "Action not allowed!", "code": "ListObjects"}',
+                'expected' => 'Action not allowed!',
+            ]
+        ];
     }
 }
