@@ -3,7 +3,6 @@
 namespace Aws\S3\S3Transfer;
 
 use Aws\ResultInterface;
-use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Exception\S3TransferException;

@@ -15,6 +15,7 @@ final class DownloadRequest extends AbstractTransferRequest
         'response_checksum_validation' => 'string',
         'multipart_download_type' => 'string',
         'track_progress' => 'bool',
+        'target_part_size_bytes' => 'int',
     ];
 
     /** @var string|array|null */
@@ -50,11 +51,11 @@ final class DownloadRequest extends AbstractTransferRequest
      * @param AbstractTransferListener|null $progressTracker
      */
     public function __construct(
-        string|array|null        $source,
-        array                    $downloadRequestArgs = [],
-        array                    $config = [],
+        string|array|null $source,
+        array $downloadRequestArgs = [],
+        array $config = [],
         ?AbstractDownloadHandler $downloadHandler = null,
-        array                    $listeners = [],
+        array $listeners = [],
         ?AbstractTransferListener $progressTracker = null
     ) {
         parent::__construct($listeners, $progressTracker, $config);
