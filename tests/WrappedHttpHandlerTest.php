@@ -453,7 +453,7 @@ class WrappedHttpHandlerTest extends TestCase
             'rest-json' => [
                 'protocol' => 'rest-json',
                 'body' => '{"message": "Action not allowed!", "code": "ListObjects"}',
-                'expected' => 'Action not allowed!',
+                'expected' => 'ListObjects (client): Action not allowed!',
             ]
         ];
     }
