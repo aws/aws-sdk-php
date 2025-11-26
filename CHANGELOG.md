@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.363.3 - 2025-11-26
 
 * `Aws\ComputeOptimizer` - Compute Optimizer now identifies idle NAT Gateway resources for cost optimization based on traffic patterns and backup configuration analysis. Access recommendations via the GetIdleRecommendations API.
 * `Aws\CostOptimizationHub` - This release enables AWS Cost Optimization Hub to show cost optimization recommendations for NAT Gateway.
