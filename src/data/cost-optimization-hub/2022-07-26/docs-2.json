@@ -421,6 +421,14 @@
       "base": null,
       "refs": {}
     },
+    "Long": {
+      "base": null,
+      "refs": {
+        "NatGatewayConfiguration$activeConnectionCount": "<p>The number of active connections through the NAT Gateway.</p>",
+        "NatGatewayConfiguration$packetsInFromSource": "<p>The number of packets received from the source through the NAT Gateway.</p>",
+        "NatGatewayConfiguration$packetsInFromDestination": "<p>The number of packets received from the destination through the NAT Gateway.</p>"
+      }
+    },
     "MaxResults": {
       "base": null,
       "refs": {
@@ -469,6 +477,18 @@
       "base": null,
       "refs": {
         "Ec2AutoScalingGroupConfiguration$mixedInstances": "<p>A list of instance types for an EC2 Auto Scaling group with mixed instance types.</p>"
+      }
+    },
+    "NatGateway": {
+      "base": "<p>The NAT Gateway recommendation details.</p>",
+      "refs": {
+        "ResourceDetails$natGateway": "<p>The NAT Gateway recommendation details.</p>"
+      }
+    },
+    "NatGatewayConfiguration": {
+      "base": "<p>The NAT Gateway configuration used for recommendations.</p>",
+      "refs": {
+        "NatGateway$configuration": "<p>The NAT Gateway configuration used for recommendations.</p>"
       }
     },
     "OpenSearchReservedInstances": {
@@ -634,6 +654,7 @@
         "Ec2Instance$costCalculation": "<p>Cost impact of the recommendation.</p>",
         "EcsService$costCalculation": "<p>Cost impact of the recommendation.</p>",
         "LambdaFunction$costCalculation": "<p>Cost impact of the recommendation.</p>",
+        "NatGateway$costCalculation": null,
         "RdsDbInstance$costCalculation": null,
         "RdsDbInstanceStorage$costCalculation": null
       }

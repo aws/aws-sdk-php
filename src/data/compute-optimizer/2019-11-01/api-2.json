@@ -1430,6 +1430,9 @@
         "UtilizationMetricsEBSVolumeWriteIOPSMaximum",
         "UtilizationMetricsVolumeReadOpsPerSecondMaximum",
         "UtilizationMetricsVolumeWriteOpsPerSecondMaximum",
+        "UtilizationMetricsActiveConnectionCountMaximum",
+        "UtilizationMetricsPacketsInFromSourceMaximum",
+        "UtilizationMetricsPacketsInFromDestinationMaximum",
         "Finding",
         "FindingDescription",
         "Tags"
@@ -2161,7 +2164,8 @@
       "type":"string",
       "enum":[
         "Idle",
-        "Unattached"
+        "Unattached",
+        "Unused"
       ]
     },
     "IdleFindingDescription":{"type":"string"},
@@ -2182,7 +2186,10 @@
         "EBSVolumeReadIOPS",
         "EBSVolumeWriteIOPS",
         "VolumeReadOpsPerSecond",
-        "VolumeWriteOpsPerSecond"
+        "VolumeWriteOpsPerSecond",
+        "ActiveConnectionCount",
+        "PacketsInFromSource",
+        "PacketsInFromDestination"
       ]
     },
     "IdleRecommendation":{
@@ -2240,7 +2247,8 @@
         "AutoScalingGroup",
         "EBSVolume",
         "ECSService",
-        "RDSDBInstance"
+        "RDSDBInstance",
+        "NatGateway"
       ]
     },
     "IdleRecommendations":{
@@ -3354,7 +3362,8 @@
         "License",
         "RdsDBInstance",
         "RdsDBInstanceStorage",
-        "AuroraDBClusterStorage"
+        "AuroraDBClusterStorage",
+        "NatGateway"
       ]
     },
     "RecommendationSources":{

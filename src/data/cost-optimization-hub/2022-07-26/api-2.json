@@ -658,6 +658,10 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "Long":{
+      "type":"long",
+      "box":true
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -718,6 +722,21 @@
     "MixedInstanceConfigurationList":{
       "type":"list",
       "member":{"shape":"MixedInstanceConfiguration"}
+    },
+    "NatGateway":{
+      "type":"structure",
+      "members":{
+        "configuration":{"shape":"NatGatewayConfiguration"},
+        "costCalculation":{"shape":"ResourceCostCalculation"}
+      }
+    },
+    "NatGatewayConfiguration":{
+      "type":"structure",
+      "members":{
+        "activeConnectionCount":{"shape":"Long"},
+        "packetsInFromSource":{"shape":"Long"},
+        "packetsInFromDestination":{"shape":"Long"}
+      }
     },
     "OpenSearchReservedInstances":{
       "type":"structure",
@@ -958,7 +977,8 @@
         "rdsDbInstanceStorage":{"shape":"RdsDbInstanceStorage"},
         "auroraDbClusterStorage":{"shape":"AuroraDbClusterStorage"},
         "dynamoDbReservedCapacity":{"shape":"DynamoDbReservedCapacity"},
-        "memoryDbReservedInstances":{"shape":"MemoryDbReservedInstances"}
+        "memoryDbReservedInstances":{"shape":"MemoryDbReservedInstances"},
+        "natGateway":{"shape":"NatGateway"}
       },
       "union":true
     },
@@ -1009,7 +1029,8 @@
         "RdsDbInstance",
         "AuroraDbClusterStorage",
         "DynamoDbReservedCapacity",
-        "MemoryDbReservedInstances"
+        "MemoryDbReservedInstances",
+        "NatGateway"
       ]
     },
     "ResourceTypeList":{
