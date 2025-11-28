@@ -1,0 +1,69 @@
+[
+  {
+    "eventName": "event-bedrock",
+    "expected": {
+      "headers": {
+        ":content-type": "application/json",
+        ":message-type": "event"
+      },
+      "payload": {
+        "eventType": "chunk",
+        "timestamp": 1764360403.788373,
+        "requestId": "req-692a00d3c0796",
+        "modelId": "anthropic.claude-3-sonnet-20240229-v1:0",
+        "contentType": "application\/json",
+        "body": {
+          "type": "content_block_delta",
+          "index": 0,
+          "delta": {
+            "type": "text_delta",
+            "text": "The artificial intelligence revolution is transforming how we approach complex problems across industries."
+          }
+        }
+      }
+    }
+  },
+  {
+    "eventName": "event-cloudwatch",
+    "expected": {
+      "headers": {
+        ":content-type": "application/json",
+        ":message-type": "event"
+      },
+      "payload": {
+        "eventType": "logEvent",
+        "timestamp": 1764360403.78797,
+        "logGroup": "\/aws\/lambda\/my-function",
+        "logStream": "2025\/11\/28\/[$LATEST]692a00d3c06a0",
+        "events": [
+          {
+            "timestamp": 1764360403000,
+            "message": "WARN: High memory usage detected",
+            "id": "692a00d3c06ab"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "eventName": "event-lambda",
+    "expected": {
+      "headers": {
+        ":content-type": "application/json",
+        ":message-type": "event"
+      },
+      "payload": {
+        "eventType": "invoke",
+        "timestamp": 1764360403.787594,
+        "requestId": "lambda-692a00d3c048b",
+        "functionName": "my-function",
+        "statusCode": 200,
+        "payload": {
+          "message": "Function executed successfully",
+          "result": 54,
+          "executionTime": 4829
+        }
+      }
+    }
+  }
+]

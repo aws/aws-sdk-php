@@ -4,12 +4,16 @@ namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Parser\NonSeekableStreamDecodingEventStreamIterator;
 use GuzzleHttp\Psr7\NoSeekStream;
+use GuzzleHttp\Psr7\StreamDecoratorTrait;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class NonSeekableStreamDecodingEventStreamIteratorTest extends TestCase
 {
+    const EVENT_STREAMS_DIR = __DIR__ . '/event-streams/';
+    const CASES_FILE = self::EVENT_STREAMS_DIR . 'cases.json';
+
     public function testFailOnNonSeekableStream()
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -69,131 +73,116 @@ EOF;
         $this->assertFalse($iterator->valid());
     }
 
-    public function testReadAndHashBytesHandlesPartialReads()
+    /**
+     * @param string $eventName
+     * @param array $expected
+     *
+     * @dataProvider readAndHashBytesHandlesPartialReadsProvider
+     *
+     * @return void
+     */
+    public function testReadAndHashBytesHandlesPartialReads(
+        string $eventName,
+        array $expected
+    ): void
     {
-        $payload = str_repeat('A', 1024);
-        $stream = new NoSeekStream(new PartialReadStream($payload));
+        $eventPath = self::EVENT_STREAMS_DIR . "events/$eventName";
+        $eventStream = Utils::streamFor(
+            base64_decode(
+                file_get_contents($eventPath)
+            )
+        );
+        $partialReadStream = new class($eventStream) implements StreamInterface {
+            use StreamDecoratorTrait;
 
-        $iterator = new NonSeekableStreamDecodingEventStreamIterator($stream);
+            private int $position = 0;
+            private int $maxBytesPerRead;
 
-        $reflect = new \ReflectionClass($iterator);
-        $hashContextProperty = $reflect->getProperty('hashContext');
-        $hashContextProperty->setAccessible(true);
-        $hashContextProperty->setValue($iterator, hash_init('crc32c'));
+            /**
+             * @param StreamInterface $stream
+             * @param int $maxBytesPerRead
+             */
+            public function __construct(StreamInterface $stream, int $maxBytesPerRead = 20)
+            {
+                $this->stream = $stream;
+                $this->maxBytesPerRead = $maxBytesPerRead;
+            }
 
-        $method = $reflect->getMethod('readAndHashBytes');
-        $method->setAccessible(true);
-        
-        $result = $method->invoke($iterator, 1024);
+            public function isSeekable(): bool
+            {
+                return false;
+            }
 
-        $this->assertEquals($payload, $result);
+            public function seek($offset, $whence = SEEK_SET): void
+            {
+                throw new \RuntimeException("Stream is not seekable");
+            }
+
+            public function rewind(): void
+            {
+                throw new \RuntimeException("Stream is not seekable");
+            }
+
+            public function isWritable(): bool
+            {
+                return false;
+            }
+
+            public function write($string): int
+            {
+                throw new \RuntimeException("Stream is not writable");
+            }
+
+            public function isReadable(): bool
+            {
+                return true;
+            }
+
+            public function read($length): string
+            {
+                if ($this->eof()) {
+                    return '';
+                }
+
+                // Read only up to maxBytesPerRead
+                $readLength = min($length, $this->maxBytesPerRead);
+                return $this->stream->read($readLength);
+            }
+        };
+        $noSeekStreamDecodingEventStreamIterator = new NonSeekableStreamDecodingEventStreamIterator(
+            $partialReadStream
+        );
+        $noSeekStreamDecodingEventStreamIterator->next();
+        $event = $noSeekStreamDecodingEventStreamIterator->current();
+        $this->assertEquals(
+            $expected['headers'],
+            $event['headers']
+        );
+        $decodedPayload = json_decode(
+            $event['payload']->getContents(),
+            true
+        );
+        $this->assertEquals(
+            $expected['payload'],
+            $decodedPayload
+        );
     }
-}
-/**
- * Simulates partial reads by limiting each read() call to a maximum number of bytes,
- * regardless of what is requested.
- */
-class PartialReadStream implements StreamInterface
-{
-    private string $data;
-    private int $position = 0;
-    private int $maxBytesPerRead;
 
-    public function __construct(string $data, int $maxBytesPerRead = 100)
+    /**
+     * @return \Generator
+     */
+    public function readAndHashBytesHandlesPartialReadsProvider(): \Generator
     {
-        $this->data = $data;
-        $this->maxBytesPerRead = $maxBytesPerRead;
-    }
-
-    public function __toString(): string
-    {
-        return $this->data;
-    }
-
-    public function close(): void
-    {
-        // No resources to close
-    }
-
-    public function detach()
-    {
-        return null;
-    }
-
-    public function getSize(): ?int
-    {
-        return strlen($this->data);
-    }
-
-    public function tell(): int
-    {
-        return $this->position;
-    }
-
-    public function eof(): bool
-    {
-        return $this->position >= strlen($this->data);
-    }
-
-    public function isSeekable(): bool
-    {
-        return false;
-    }
-
-    public function seek($offset, $whence = SEEK_SET): void
-    {
-        throw new \RuntimeException("Stream is not seekable");
-    }
-
-    public function rewind(): void
-    {
-        throw new \RuntimeException("Stream is not seekable");
-    }
-
-    public function isWritable(): bool
-    {
-        return false;
-    }
-
-    public function write($string): int
-    {
-        throw new \RuntimeException("Stream is not writable");
-    }
-
-    public function isReadable(): bool
-    {
-        return true;
-    }
-
-    public function read($length): string
-    {
-        if ($this->eof()) {
-            return '';
+        $cases = json_decode(
+            file_get_contents(self::CASES_FILE),
+            true
+        );
+        foreach ($cases as $case) {
+            yield $case['eventName'] => [
+                'eventName' => $case['eventName'],
+                'expected' => $case['expected'],
+            ];
         }
-
-        // Read only up to maxBytesPerRead
-        $readLength = min($length, $this->maxBytesPerRead);
-        $chunk = substr($this->data, $this->position, $readLength);
-        $this->position += strlen($chunk);
-
-        return $chunk;
-    }
-
-    public function getContents(): string
-    {
-        if ($this->eof()) {
-            return '';
-        }
-
-        $contents = substr($this->data, $this->position);
-        $this->position = strlen($this->data);
-
-        return $contents;
-    }
-
-    public function getMetadata($key = null): mixed
-    {
-        return null;
     }
 }
 
