@@ -97,6 +97,7 @@ EOF;
 
             private int $position = 0;
             private int $maxBytesPerRead;
+            private StreamInterface $stream;
 
             /**
              * @param StreamInterface $stream
