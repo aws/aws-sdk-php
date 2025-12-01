@@ -19,6 +19,10 @@ use Aws\Result;
 use Aws\S3\Crypto\S3EncryptionClient;
 use Aws\S3\Crypto\S3EncryptionClientV2;
 use Aws\S3\S3Client;
+use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
+use Aws\S3\S3Transfer\Models\DownloadRequest;
+use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
+use Aws\S3\S3Transfer\S3TransferManager;
 use Aws\S3\Transfer;
 use Aws\Sdk;
 use Aws\SSO\SSOClient;
@@ -1608,5 +1612,173 @@ EOF;
                 'ChecksumAlgorithm' => 'crc32'
             ]);
         }
+    }
+
+    /**
+     * Tests user agent captures the s3 transfer metric.
+     *
+     * @return void
+     */
+    public function testUserAgentCaptureS3TransferMetricInS3TransferManagerV2()
+    {
+        $s3Client = new S3Client([
+            'region' => 'us-east-2',
+            'http_handler' => function (
+                RequestInterface $request
+            ) {
+                $metrics = $this->getMetricsAsArray($request);
+
+                $this->assertTrue(
+                    in_array(MetricsBuilder::S3_TRANSFER, $metrics)
+                );
+
+                return new Response();
+            }
+        ]);
+        $s3TransferManager = new S3TransferManager(
+            $s3Client
+        );
+        $s3TransferManager->download(
+            new DownloadRequest(
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'foo',
+                ]
+            )
+        )->wait();
+    }
+
+    /**
+     * Tests user agent captures the upload directory metric.
+     *
+     * @return void
+     */
+    public function testUserAgentCaptureS3UploadDirectoryTransfer()
+    {
+        $directory = $this->tempDir . "/upload-directory-test";
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777, true);
+        }
+        $files = [
+            $directory . "/dir-file-1.txt",
+            $directory . "/dir-file-2.txt",
+        ];
+        foreach ($files as $file) {
+            file_put_contents($file, "test");
+        }
+
+        $called = false;
+        $s3Client = new S3Client([
+            'region' => 'us-east-2',
+            'http_handler' => function (
+                RequestInterface $request
+            ) use (&$called) {
+                $called = true;
+                $metrics = $this->getMetricsAsArray($request);
+
+                $this->assertTrue(
+                    in_array(MetricsBuilder::S3_TRANSFER, $metrics)
+                );
+
+                $this->assertTrue(
+                    in_array(
+                        MetricsBuilder::S3_TRANSFER_UPLOAD_DIRECTORY,
+                        $metrics
+                    )
+                );
+
+                return new Response();
+            }
+        ]);
+        $manager = new S3TransferManager(
+            $s3Client,
+        );
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+                [],
+                []
+            )
+        )->wait();
+        $this->assertTrue($called);
+    }
+
+    /**
+     * Test user agent captures the download directory metric
+     * @return void
+     */
+    public function testUserAgentCaptureS3DownloadDirectoryTransfer()
+    {
+        $destinationDirectory = $this->tempDir . "/download-directory-test";
+        if (!is_dir($destinationDirectory)) {
+            mkdir($destinationDirectory, 0777, true);
+        }
+        $called = false;
+        $objects = [
+
+        ];
+        $s3Client = new S3Client([
+            'region' => 'us-east-2',
+            'http_handler' => function (
+                RequestInterface $request
+            ) use (&$called) {
+                // ListObjectsV2 response
+                $uri = $request->getUri();
+                if ($uri->getQuery() === "list-type=2") {
+                    $objectsResponse = <<<EOF
+<ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <Name>Bucket</Name>
+    <Prefix></Prefix>
+    <KeyCount>1</KeyCount>
+    <MaxKeys>1000</MaxKeys>
+    <IsTruncated>false</IsTruncated>
+    <Contents>
+        <Key>TestKey</Key>
+        <Size>100</Size>
+        <LastModified>2025-05-20T14:45:08.000Z</LastModified>
+        <ETag>FixedETag</ETag>
+        <ChecksumAlgorithm>CRC64NVME</ChecksumAlgorithm>
+        <ChecksumType>FULL_OBJECT</ChecksumType>
+        <StorageClass>STANDARD</StorageClass>
+    </Contents>
+</ListBucketResult>
+EOF;
+
+                    return new Response(
+                        200,
+                        [],
+                        Utils::streamFor($objectsResponse)
+                    );
+                }
+
+                // Validate metric
+                $called = true;
+                $metrics = $this->getMetricsAsArray($request);
+
+                $this->assertTrue(
+                    in_array(MetricsBuilder::S3_TRANSFER, $metrics)
+                );
+
+                $this->assertTrue(
+                    in_array(
+                        MetricsBuilder::S3_TRANSFER_DOWNLOAD_DIRECTORY,
+                        $metrics
+                    )
+                );
+
+                return new Response();
+            }
+        ]);
+        $manager = new S3TransferManager(
+            $s3Client,
+        );
+        $manager->downloadDirectory(
+            new DownloadDirectoryRequest(
+                "Bucket",
+                $destinationDirectory,
+            )
+        )->wait();
+        $this->assertTrue($called);
     }
 }

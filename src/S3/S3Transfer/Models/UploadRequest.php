@@ -2,6 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
+use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
@@ -42,16 +43,17 @@ final class UploadRequest extends AbstractTransferRequest
      * - request_checksum_calculation: (string, optional, defaulted to `when_supported`)
      * @param AbstractTransferListener[]|null $listeners
      * @param AbstractTransferListener|null $progressTracker
-     *
+     * @param S3ClientInterface|null $s3Client
      */
     public function __construct(
         StreamInterface|string $source,
         array $uploadRequestArgs,
         array $config = [],
         array $listeners = [],
-        ?AbstractTransferListener $progressTracker  = null
+        ?AbstractTransferListener $progressTracker  = null,
+        ?S3ClientInterface $s3Client = null
     ) {
-        parent::__construct($listeners, $progressTracker, $config);
+        parent::__construct($listeners, $progressTracker, $config, $s3Client);
         $this->source = $source;
         $this->uploadRequestArgs = $uploadRequestArgs;
     }

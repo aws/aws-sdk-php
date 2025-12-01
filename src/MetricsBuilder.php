@@ -53,6 +53,8 @@ final class MetricsBuilder
     const CREDENTIALS_PROFILE_PROCESS = "v";
     const CREDENTIALS_PROFILE_SSO = "r";
     const CREDENTIALS_PROFILE_SSO_LEGACY = "t";
+    const S3_TRANSFER_UPLOAD_DIRECTORY = "9";
+    const S3_TRANSFER_DOWNLOAD_DIRECTORY = "+";
 
     /** @var int */
     private static $MAX_METRICS_SIZE = 1024; // 1KB or 1024 B

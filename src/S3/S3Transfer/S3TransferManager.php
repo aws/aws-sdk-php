@@ -2,6 +2,7 @@
 
 namespace Aws\S3\S3Transfer;
 
+use Aws\MetricsBuilder;
 use Aws\ResultInterface;
 use Aws\S3\S3Client;
 use Aws\S3\S3ClientInterface;
@@ -61,6 +62,11 @@ final class S3TransferManager
         } else {
             $this->s3Client = $s3Client;
         }
+
+        MetricsBuilder::appendMetricsCaptureMiddleware(
+            $this->s3Client->getHandlerList(),
+            MetricsBuilder::S3_TRANSFER
+        );
     }
 
     /**
@@ -126,9 +132,15 @@ final class S3TransferManager
             );
         }
 
+        $s3Client = $uploadRequest->getS3Client();
+        if ($s3Client === null) {
+            $s3Client = $this->s3Client;
+        }
+
         if ($this->requiresMultipartUpload($uploadRequest->getSource(), $mupThreshold)) {
             return $this->tryMultipartUpload(
                 $uploadRequest,
+                $s3Client,
                 $listenerNotifier
             );
         }
@@ -136,6 +148,7 @@ final class S3TransferManager
         return $this->trySingleUpload(
             $uploadRequest->getSource(),
             $uploadRequest->getUploadRequestArgs(),
+            $s3Client,
             $listenerNotifier
         );
     }
@@ -149,6 +162,33 @@ final class S3TransferManager
         UploadDirectoryRequest $uploadDirectoryRequest,
     ): PromiseInterface
     {
+        return $this->doUploadDirectory(
+            $uploadDirectoryRequest,
+            $this->s3Client,
+        );
+    }
+
+    /**
+     * This method is created in order to easily add the
+     * `S3_TRANSFER_UPLOAD_DIRECTORY` metric to the s3Client instance
+     * to be used for the upload directory operation without letting
+     * this metric be appended in another operations that are not
+     * part of the upload directory.
+     *
+     * @param UploadDirectoryRequest $uploadDirectoryRequest
+     * @param S3ClientInterface $s3Client
+     *
+     * @return PromiseInterface
+     */
+    private function doUploadDirectory(
+        UploadDirectoryRequest $uploadDirectoryRequest,
+        S3ClientInterface $s3Client,
+    ): PromiseInterface
+    {
+        MetricsBuilder::appendMetricsCaptureMiddleware(
+            $s3Client->getHandlerList(),
+            MetricsBuilder::S3_TRANSFER_UPLOAD_DIRECTORY
+        );
         $uploadDirectoryRequest->validateSourceDirectory();
 
         $uploadDirectoryRequest->updateConfigWithDefaults(
@@ -227,6 +267,7 @@ final class S3TransferManager
             && ($config['track_progress'] ?? $this->config->isTrackProgress())) {
             $progressTracker = new MultiProgressTracker();
         }
+
         foreach ($files as $file) {
             $relativePath = substr($file, strlen($baseDir));
             if (str_contains($relativePath, $delimiter) && $delimiter !== '/') {
@@ -257,7 +298,8 @@ final class S3TransferManager
                         fn($listener) => clone $listener,
                         $uploadDirectoryRequest->getListeners()
                     ),
-                    $progressTracker
+                    $progressTracker,
+                    $s3Client
                 )
             )->then(function (UploadResult $response) use (&$objectsUploaded) {
                 $objectsUploaded++;
@@ -344,11 +386,17 @@ final class S3TransferManager
             $getObjectRequestArgs[$key] = $value;
         }
 
+        $s3Client = $downloadRequest->getS3Client();
+        if ($s3Client === null) {
+            $s3Client = $this->s3Client;
+        }
+
         return $this->tryMultipartDownload(
             $getObjectRequestArgs,
             $config,
             $downloadRequest->getDownloadHandler(),
-            $listenerNotifier,
+            $s3Client,
+            $listenerNotifier
         );
     }
 
@@ -373,6 +421,33 @@ final class S3TransferManager
         DownloadDirectoryRequest $downloadDirectoryRequest
     ): PromiseInterface
     {
+        return $this->doDownloadDirectory(
+            $downloadDirectoryRequest,
+            $this->s3Client,
+        );
+    }
+
+    /**
+     * This method is created in order to easily add the
+     * `S3_TRANSFER_DOWNLOAD_DIRECTORY` metric to the s3Client instance
+     * to be used for the download directory operation without letting
+     * this metric be appended in another operations that are not
+     * part of the download directory.
+     *
+     * @param DownloadDirectoryRequest $downloadDirectoryRequest
+     * @param S3ClientInterface $s3Client
+     *
+     * @return PromiseInterface
+     */
+    private function doDownloadDirectory(
+        DownloadDirectoryRequest $downloadDirectoryRequest,
+        S3ClientInterface $s3Client,
+    ): PromiseInterface
+    {
+        MetricsBuilder::appendMetricsCaptureMiddleware(
+            $s3Client->getHandlerList(),
+            MetricsBuilder::S3_TRANSFER_DOWNLOAD_DIRECTORY
+        );
         $downloadDirectoryRequest->validateDestinationDirectory();
         $destinationDirectory = $downloadDirectoryRequest->getDestinationDirectory();
         $sourceBucket = $downloadDirectoryRequest->getSourceBucket();
@@ -477,6 +552,7 @@ final class S3TransferManager
                             $downloadDirectoryRequest->getListeners()
                         ),
                         progressTracker: $progressTracker,
+                        s3Client: $s3Client,
                     )
                 ),
             )->then(function () use (
@@ -540,13 +616,15 @@ final class S3TransferManager
      * @param array $config
      * @param AbstractDownloadHandler $downloadHandler
      * @param TransferListenerNotifier|null $listenerNotifier
+     * @param S3ClientInterface|null $s3Client
      *
      * @return PromiseInterface
      */
     private function tryMultipartDownload(
-        array                     $getObjectRequestArgs,
-        array                     $config,
-        AbstractDownloadHandler   $downloadHandler,
+        array $getObjectRequestArgs,
+        array $config,
+        AbstractDownloadHandler $downloadHandler,
+        S3ClientInterface $s3Client,
         ?TransferListenerNotifier $listenerNotifier = null,
     ): PromiseInterface
     {
@@ -554,7 +632,7 @@ final class S3TransferManager
             strtolower($config['multipart_download_type'])
         );
         $multipartDownloader = new $downloaderClassName(
-            $this->s3Client,
+            $s3Client,
             $getObjectRequestArgs,
             $config,
             $downloadHandler,
@@ -567,6 +645,7 @@ final class S3TransferManager
     /**
      * @param string|StreamInterface $source
      * @param array $requestArgs
+     * @param S3ClientInterface $s3Client
      * @param TransferListenerNotifier|null $listenerNotifier
      *
      * @return PromiseInterface
@@ -574,7 +653,8 @@ final class S3TransferManager
     private function trySingleUpload(
         string|StreamInterface $source,
         array $requestArgs,
-        ?TransferListenerNotifier $listenerNotifier = null
+        S3ClientInterface $s3Client,
+        ?TransferListenerNotifier $listenerNotifier = null,
     ): PromiseInterface
     {
         if (is_string($source) && is_readable($source)) {
@@ -601,8 +681,8 @@ final class S3TransferManager
                 ]
             );
 
-            $command = $this->s3Client->getCommand('PutObject', $requestArgs);
-            return $this->s3Client->executeAsync($command)->then(
+            $command = $s3Client->getCommand('PutObject', $requestArgs);
+            return $s3Client->executeAsync($command)->then(
                 function (ResultInterface $result)
                 use ($objectSize, $listenerNotifier, $requestArgs) {
                     $listenerNotifier->bytesTransferred(
@@ -650,9 +730,9 @@ final class S3TransferManager
             });
         }
 
-        $command = $this->s3Client->getCommand('PutObject', $requestArgs);
+        $command = $s3Client->getCommand('PutObject', $requestArgs);
 
-        return $this->s3Client->executeAsync($command)
+        return $s3Client->executeAsync($command)
             ->then(function (ResultInterface $result) {
                 return new UploadResult($result->toArray());
             });
@@ -660,17 +740,19 @@ final class S3TransferManager
 
     /**
      * @param UploadRequest $uploadRequest
+     * @param S3ClientInterface $s3Client
      * @param TransferListenerNotifier|null $listenerNotifier
      *
      * @return PromiseInterface
      */
     private function tryMultipartUpload(
         UploadRequest $uploadRequest,
-        ?TransferListenerNotifier $listenerNotifier = null,
+        S3ClientInterface $s3Client,
+        ?TransferListenerNotifier $listenerNotifier = null
     ): PromiseInterface
     {
         return (new MultipartUploader(
-            $this->s3Client,
+            $s3Client,
             $uploadRequest->getUploadRequestArgs(),
             $uploadRequest->getSource(),
             $uploadRequest->getConfig(),

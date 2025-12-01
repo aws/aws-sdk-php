@@ -2,6 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
+use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\S3TransferManager;
@@ -49,6 +50,7 @@ final class DownloadRequest extends AbstractTransferRequest
      * @param AbstractDownloadHandler|null $downloadHandler
      * @param AbstractTransferListener[]|null $listeners
      * @param AbstractTransferListener|null $progressTracker
+     * @param S3ClientInterface|null $s3Client
      */
     public function __construct(
         string|array|null $source,
@@ -56,9 +58,10 @@ final class DownloadRequest extends AbstractTransferRequest
         array $config = [],
         ?AbstractDownloadHandler $downloadHandler = null,
         array $listeners = [],
-        ?AbstractTransferListener $progressTracker = null
+        ?AbstractTransferListener $progressTracker = null,
+        ?S3ClientInterface $s3Client = null
     ) {
-        parent::__construct($listeners, $progressTracker, $config);
+        parent::__construct($listeners, $progressTracker, $config, $s3Client);
         $this->source = $source;
         $this->downloadRequestArgs = $downloadRequestArgs;
         $this->config = $config;
