@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.364.0 - 2025-12-01
 
 * `Aws\Connect` - This is a combined re:Invent release for Amazon Connect.
 * `Aws\CustomerProfiles` - This release introduces, CRUD APIs for the DomainObjectType and Recommender resources, APIs to offer statistical insights on Object Type Attributes, Changes to SegmentDefinition APIs to support SQL queries to create Segments, and Changes to Domain APIs to support Data Store.
