@@ -92,64 +92,18 @@ EOF;
                 file_get_contents($eventPath)
             )
         );
-        $partialReadStream = new class($eventStream) implements StreamInterface {
-            use StreamDecoratorTrait;
-
-            private int $position = 0;
-            private int $maxBytesPerRead;
-            private StreamInterface $stream;
-
-            /**
-             * @param StreamInterface $stream
-             * @param int $maxBytesPerRead
-             */
-            public function __construct(StreamInterface $stream, int $maxBytesPerRead = 20)
-            {
-                $this->stream = $stream;
-                $this->maxBytesPerRead = $maxBytesPerRead;
-            }
-
-            public function isSeekable(): bool
-            {
-                return false;
-            }
-
-            public function seek($offset, $whence = SEEK_SET): void
-            {
-                throw new \RuntimeException("Stream is not seekable");
-            }
-
-            public function rewind(): void
-            {
-                throw new \RuntimeException("Stream is not seekable");
-            }
-
-            public function isWritable(): bool
-            {
-                return false;
-            }
-
-            public function write($string): int
-            {
-                throw new \RuntimeException("Stream is not writable");
-            }
-
-            public function isReadable(): bool
-            {
-                return true;
-            }
-
-            public function read($length): string
-            {
-                if ($this->eof()) {
+        $partialReadStream = $this->createMock(StreamInterface::class);
+        $partialReadStream->method('isSeekable')->willReturn(false);
+        $partialReadStream->method('isReadable')->willReturn(true);
+        $partialReadStream->method('read')
+            ->willReturnCallback(function ($length) use ($eventStream) {
+                if ($eventStream->eof()) {
                     return '';
                 }
 
-                // Read only up to maxBytesPerRead
-                $readLength = min($length, $this->maxBytesPerRead);
-                return $this->stream->read($readLength);
-            }
-        };
+                $readLength = min($length, 20);
+                return $eventStream->read($readLength);
+            });
         $noSeekStreamDecodingEventStreamIterator = new NonSeekableStreamDecodingEventStreamIterator(
             $partialReadStream
         );
