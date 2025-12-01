@@ -697,8 +697,9 @@ EOF
         try {
             $client = $this->getMockBuilder(S3Client::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync'])
+                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
                 ->getMock();
+            $client->method('getHandlerList')->willReturn(new HandlerList());
             $manager = new S3TransferManager(
                 $client,
             );
@@ -743,7 +744,7 @@ EOF
         try {
             $client = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getCommand', 'executeAsync'])
+            ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
             ->getMock();
             $client->method('getCommand')
                 ->willReturnCallback(function ($commandName, $args) {
@@ -753,6 +754,7 @@ EOF
                 ->willReturnCallback(function () {
                     return Create::promiseFor(new Result([]));
                 });
+            $client->method('getHandlerList')->willReturn(new HandlerList());
             $manager = new S3TransferManager(
                 $client,
             );
@@ -809,7 +811,7 @@ EOF
         try {
             $client = $this->getMockBuilder(S3Client::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync'])
+                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
                 ->getMock();
             $client->method('getCommand')
                 ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
@@ -820,6 +822,7 @@ EOF
                 ->willReturnCallback(function () {
                     return Create::promiseFor(new Result([]));
                 });
+            $client->method('getHandlerList')->willReturn(new HandlerList());
             $manager = new S3TransferManager(
                 $client,
             );
@@ -868,7 +871,7 @@ EOF
         try {
             $client = $this->getMockBuilder(S3Client::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync'])
+                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
                 ->getMock();
             $client->method('getCommand')
                 ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
@@ -879,6 +882,7 @@ EOF
                 ->willReturnCallback(function () {
                     return Create::promiseFor(new Result([]));
                 });
+            $client->method('getHandlerList')->willReturn(new HandlerList());
             $manager = new S3TransferManager(
                 $client,
             );
@@ -946,7 +950,7 @@ EOF
         try {
             $client = $this->getMockBuilder(S3Client::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync'])
+                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
                 ->getMock();
             $client->method('getCommand')
                 ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
@@ -957,6 +961,7 @@ EOF
                 ->willReturnCallback(function () {
                     return Create::promiseFor(new Result([]));
                 });
+            $client->method('getHandlerList')->willReturn(new HandlerList());
             $manager = new S3TransferManager(
                 $client,
             );
@@ -1082,7 +1087,7 @@ EOF
         try {
             $client = $this->getMockBuilder(S3Client::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync'])
+                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
                 ->getMock();
             $client->method('getCommand')
                 ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
@@ -1093,6 +1098,7 @@ EOF
                 ->willReturnCallback(function () {
                     return Create::promiseFor(new Result([]));
                 });
+            $client->method('getHandlerList')->willReturn(new HandlerList());
             $manager = new S3TransferManager(
                 $client,
             );
@@ -1144,7 +1150,7 @@ EOF
         try {
             $client = $this->getMockBuilder(S3Client::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync'])
+                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
                 ->getMock();
             $client->method('getCommand')
                 ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
@@ -1155,6 +1161,7 @@ EOF
                 ->willReturnCallback(function () {
                     return Create::promiseFor(new Result([]));
                 });
+            $client->method('getHandlerList')->willReturn(new HandlerList());
             $manager = new S3TransferManager(
                 $client,
             );
@@ -1228,7 +1235,7 @@ EOF
         try {
             $client = $this->getMockBuilder(S3Client::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync'])
+                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
                 ->getMock();
             $client->method('getCommand')
                 ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
@@ -1240,6 +1247,7 @@ EOF
 
                     return Create::promiseFor(new Result([]));
                 });
+            $client->method('getHandlerList')->willReturn(new HandlerList());
             $manager = new S3TransferManager(
                 $client,
             );
@@ -3807,6 +3815,12 @@ EOF
                     'PutObject' => Create::promiseFor(new Result([])),
                     default => null,
                 };
+            };
+        }
+
+        if (!isset($methodsCallback['getHandlerList'])) {
+            $methodsCallback['getHandlerList'] = function () {
+                return new HandlerList();
             };
         }
 
