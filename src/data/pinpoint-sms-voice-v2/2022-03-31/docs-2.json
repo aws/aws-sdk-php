@@ -1,12 +1,13 @@
 {
   "version": "2.0",
-  "service": "<p>Welcome to the <i>AWS End User Messaging SMS and Voice, version 2 API Reference</i>. This guide provides information about AWS End User Messaging SMS and Voice, version 2 API resources, including supported HTTP methods, parameters, and schemas.</p> <p>Amazon Pinpoint is an Amazon Web Services service that you can use to engage with your recipients across multiple messaging channels. The AWS End User Messaging SMS and Voice, version 2 API provides programmatic access to options that are unique to the SMS and voice channels. AWS End User Messaging SMS and Voice, version 2 resources such as phone numbers, sender IDs, and opt-out lists can be used by the Amazon Pinpoint API.</p> <p>If you're new to AWS End User Messaging SMS and Voice, it's also helpful to review the <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/what-is-service.html\"> AWS End User Messaging SMS User Guide</a>. The <i>AWS End User Messaging SMS User Guide </i> provides tutorials, code samples, and procedures that demonstrate how to use AWS End User Messaging SMS and Voice features programmatically and how to integrate functionality into mobile apps and other types of applications. The guide also provides key information, such as AWS End User Messaging SMS and Voice integration with other Amazon Web Services services, and the quotas that apply to use of the service.</p> <p> <b>Regional availability</b> </p> <p>The <i>AWS End User Messaging SMS and Voice version 2 API Reference</i> is available in several Amazon Web Services Regions and it provides an endpoint for each of these Regions. For a list of all the Regions and endpoints where the API is currently available, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#pinpoint_region\">Amazon Web Services Service Endpoints</a> and <a href=\"https://docs.aws.amazon.com/general/latest/gr/pinpoint.html\">Amazon Pinpoint endpoints and quotas</a> in the Amazon Web Services General Reference. To learn more about Amazon Web Services Regions, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande-manage.html\">Managing Amazon Web Services Regions</a> in the Amazon Web Services General Reference.</p> <p>In each Region, Amazon Web Services maintains multiple Availability Zones. These Availability Zones are physically isolated from each other, but are united by private, low-latency, high-throughput, and highly redundant network connections. These Availability Zones enable us to provide very high levels of availability and redundancy, while also minimizing latency. To learn more about the number of Availability Zones that are available in each Region, see <a href=\"https://aws.amazon.com/about-aws/global-infrastructure/\">Amazon Web Services Global Infrastructure.</a> </p>",
+  "service": "<p>Welcome to the <i>End User MessagingSMS, version 2 API Reference</i>. This guide provides information about End User MessagingSMS, version 2 API resources, including supported HTTP methods, parameters, and schemas.</p> <p>Amazon Pinpoint is an Amazon Web Services service that you can use to engage with your recipients across multiple messaging channels. The End User MessagingSMS, version 2 API provides programmatic access to options that are unique to the SMS and voice channels. End User MessagingSMS, version 2 resources such as phone numbers, sender IDs, and opt-out lists can be used by the Amazon Pinpoint API.</p> <p>If you're new to End User MessagingSMS, it's also helpful to review the <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/what-is-service.html\"> End User MessagingSMS User Guide</a>, where you'll find tutorials, code samples, and procedures that demonstrate how to use End User MessagingSMS features programmatically and how to integrate functionality into mobile apps and other types of applications. The guide also provides key information, such as End User MessagingSMS integration with other Amazon Web Services services, and the quotas that apply to use of the service.</p> <p> <b>Regional availability</b> </p> <p>The <i>End User MessagingSMS version 2 API Reference</i> is available in several Amazon Web Services Regions and it provides an endpoint for each of these Regions. For a list of all the Regions and endpoints where the API is currently available, see <a href=\"https://docs.aws.amazon.com/hgeneral/latest/gr/rande.html#pinpoint_region\">Amazon Web Services Service Endpoints</a> and <a href=\"https://docs.aws.amazon.com/general/latest/gr/pinpoint.html\">Amazon Pinpoint endpoints and quotas</a> in the Amazon Web Services General Reference. To learn more about Amazon Web Services Regions, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande-manage.html\">Managing Amazon Web Services Regions</a> in the Amazon Web Services General Reference.</p> <p>In each Region, Amazon Web Services maintains multiple Availability Zones. These Availability Zones are physically isolated from each other, but are united by private, low-latency, high-throughput, and highly redundant network connections. These Availability Zones enable us to provide very high levels of availability and redundancy, while also minimizing latency. To learn more about the number of Availability Zones that are available in each Region, see <a href=\"http://aws.amazon.com/about-aws/global-infrastructure/\">Amazon Web Services Global Infrastructure.</a> </p>",
   "operations": {
     "AssociateOriginationIdentity": "<p>Associates the specified origination identity with a pool.</p> <p>If the origination identity is a phone number and is already associated with another pool, an error is returned. A sender ID can be associated with multiple pools.</p> <p>If the origination identity configuration doesn't match the pool's configuration, an error is returned.</p>",
     "AssociateProtectConfiguration": "<p>Associate a protect configuration with a configuration set. This replaces the configuration sets current protect configuration. A configuration set can only be associated with one protect configuration at a time. A protect configuration can be associated with multiple configuration sets.</p>",
+    "CarrierLookup": "<p>Returns information about a destination phone number, including whether the number type and whether it is valid, the carrier, and more.</p>",
     "CreateConfigurationSet": "<p>Creates a new configuration set. After you create the configuration set, you can add one or more event destinations to it.</p> <p>A configuration set is a set of rules that you apply to the SMS and voice messages that you send.</p> <p>When you send a message, you can optionally specify a single configuration set.</p>",
     "CreateEventDestination": "<p>Creates a new event destination in a configuration set.</p> <p>An event destination is a location where you send message events. The event options are Amazon CloudWatch, Amazon Data Firehose, or Amazon SNS. For example, when a message is delivered successfully, you can send information about that event to an event destination, or send notifications to endpoints that are subscribed to an Amazon SNS topic. </p> <p>You can only create one event destination at a time. You must provide a value for a single event destination using either <code>CloudWatchLogsDestination</code>, <code>KinesisFirehoseDestination</code> or <code>SnsDestination</code>. If an event destination isn't provided then an exception is returned.</p> <p>Each configuration set can contain between 0 and 5 event destinations. Each event destination can contain a reference to a single destination, such as a CloudWatch or Firehose destination.</p>",
-    "CreateOptOutList": "<p>Creates a new opt-out list.</p> <p>If the opt-out list name already exists, an error is returned.</p> <p>An opt-out list is a list of phone numbers that are opted out, meaning you can't send SMS or voice messages to them. If end user replies with the keyword \"STOP,\" an entry for the phone number is added to the opt-out list. In addition to STOP, your recipients can use any supported opt-out keyword, such as CANCEL or OPTOUT. For a list of supported opt-out keywords, see <a href=\"https://docs.aws.amazon.com/pinpoint/latest/userguide/channels-sms-manage.html#channels-sms-manage-optout\"> SMS opt out </a> in the <i>AWS End User Messaging SMS User Guide</i>.</p>",
+    "CreateOptOutList": "<p>Creates a new opt-out list.</p> <p>If the opt-out list name already exists, an error is returned.</p> <p>An opt-out list is a list of phone numbers that are opted out, meaning you can't send SMS or voice messages to them. If end user replies with the keyword \"STOP,\" an entry for the phone number is added to the opt-out list. In addition to STOP, your recipients can use any supported opt-out keyword, such as CANCEL or OPTOUT. For a list of supported opt-out keywords, see <a href=\"https://docs.aws.amazon.com/pinpoint/latest/userguide/channels-sms-manage.html#channels-sms-manage-optout\"> SMS opt out </a> in the End User MessagingSMS User Guide.</p>",
     "CreatePool": "<p>Creates a new pool and associates the specified origination identity to the pool. A pool can include one or more phone numbers and SenderIds that are associated with your Amazon Web Services account.</p> <p>The new pool inherits its configuration from the specified origination identity. This includes keywords, message type, opt-out list, two-way configuration, and self-managed opt-out configuration. Deletion protection isn't inherited from the origination identity and defaults to false.</p> <p>If the origination identity is a phone number and is already associated with another pool, an error is returned. A sender ID can be associated with multiple pools.</p>",
     "CreateProtectConfiguration": "<p>Create a new protect configuration. By default all country rule sets for each capability are set to <code>ALLOW</code>. Update the country rule sets using <code>UpdateProtectConfigurationCountryRuleSet</code>. A protect configurations name is stored as a Tag with the key set to <code>Name</code> and value as the name of the protect configuration.</p>",
     "CreateRegistration": "<p>Creates a new registration based on the <b>RegistrationType</b> field. </p>",
@@ -19,7 +20,7 @@
     "DeleteDefaultMessageType": "<p>Deletes an existing default message type on a configuration set.</p> <p> A message type is a type of messages that you plan to send. If you send account-related messages or time-sensitive messages such as one-time passcodes, choose <b>Transactional</b>. If you plan to send messages that contain marketing material or other promotional content, choose <b>Promotional</b>. This setting applies to your entire Amazon Web Services account. </p>",
     "DeleteDefaultSenderId": "<p>Deletes an existing default sender ID on a configuration set.</p> <p>A default sender ID is the identity that appears on recipients' devices when they receive SMS messages. Support for sender ID capabilities varies by country or region.</p>",
     "DeleteEventDestination": "<p>Deletes an existing event destination.</p> <p>An event destination is a location where you send response information about the messages that you send. For example, when a message is delivered successfully, you can send information about that event to an Amazon CloudWatch destination, or send notifications to endpoints that are subscribed to an Amazon SNS topic.</p>",
-    "DeleteKeyword": "<p>Deletes an existing keyword from an origination phone number or pool.</p> <p>A keyword is a word that you can search for on a particular phone number or pool. It is also a specific word or phrase that an end user can send to your number to elicit a response, such as an informational message or a special offer. When your number receives a message that begins with a keyword, AWS End User Messaging SMS and Voice responds with a customizable message.</p> <p>Keywords \"HELP\" and \"STOP\" can't be deleted or modified.</p>",
+    "DeleteKeyword": "<p>Deletes an existing keyword from an origination phone number or pool.</p> <p>A keyword is a word that you can search for on a particular phone number or pool. It is also a specific word or phrase that an end user can send to your number to elicit a response, such as an informational message or a special offer. When your number receives a message that begins with a keyword, End User MessagingSMS responds with a customizable message.</p> <p>Keywords \"HELP\" and \"STOP\" can't be deleted or modified.</p>",
     "DeleteMediaMessageSpendLimitOverride": "<p>Deletes an account-level monthly spending limit override for sending multimedia messages (MMS). Deleting a spend limit override will set the <code>EnforcedLimit</code> to equal the <code>MaxLimit</code>, which is controlled by Amazon Web Services. For more information on spend limits (quotas) see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/quotas.html\">Quotas for Server Migration Service</a> in the <i>Server Migration Service User Guide</i>.</p>",
     "DeleteOptOutList": "<p>Deletes an existing opt-out list. All opted out phone numbers in the opt-out list are deleted.</p> <p>If the specified opt-out list name doesn't exist or is in-use by an origination phone number or pool, an error is returned.</p>",
     "DeleteOptedOutNumber": "<p>Deletes an existing opted out destination phone number from the specified opt-out list.</p> <p>Each destination phone number can only be deleted once every 30 days.</p> <p>If the specified destination phone number doesn't exist or if the opt-out list doesn't exist, an error is returned.</p>",
@@ -29,14 +30,14 @@
     "DeleteRegistration": "<p>Permanently delete an existing registration from your account.</p>",
     "DeleteRegistrationAttachment": "<p>Permanently delete the specified registration attachment.</p>",
     "DeleteRegistrationFieldValue": "<p>Delete the value in a registration form field.</p>",
-    "DeleteResourcePolicy": "<p>Deletes the resource-based policy document attached to the AWS End User Messaging SMS and Voice resource. A shared resource can be a Pool, Opt-out list, Sender Id, or Phone number.</p>",
-    "DeleteTextMessageSpendLimitOverride": "<p>Deletes an account-level monthly spending limit override for sending text messages. Deleting a spend limit override will set the <code>EnforcedLimit</code> to equal the <code>MaxLimit</code>, which is controlled by Amazon Web Services. For more information on spend limits (quotas) see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/quotas.html\">Quotas </a> in the <i>AWS End User Messaging SMS User Guide</i>.</p>",
+    "DeleteResourcePolicy": "<p>Deletes the resource-based policy document attached to the End User MessagingSMS resource. A shared resource can be a Pool, Opt-out list, Sender Id, or Phone number.</p>",
+    "DeleteTextMessageSpendLimitOverride": "<p>Deletes an account-level monthly spending limit override for sending text messages. Deleting a spend limit override will set the <code>EnforcedLimit</code> to equal the <code>MaxLimit</code>, which is controlled by Amazon Web Services. For more information on spend limits (quotas) see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/quotas.html\">Quotas </a> in the <i>End User MessagingSMS User Guide</i>.</p>",
     "DeleteVerifiedDestinationNumber": "<p>Delete a verified destination phone number.</p>",
-    "DeleteVoiceMessageSpendLimitOverride": "<p>Deletes an account level monthly spend limit override for sending voice messages. Deleting a spend limit override sets the <code>EnforcedLimit</code> equal to the <code>MaxLimit</code>, which is controlled by Amazon Web Services. For more information on spending limits (quotas) see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/quotas.html\">Quotas </a> in the <i>AWS End User Messaging SMS User Guide</i>.</p>",
+    "DeleteVoiceMessageSpendLimitOverride": "<p>Deletes an account level monthly spend limit override for sending voice messages. Deleting a spend limit override sets the <code>EnforcedLimit</code> equal to the <code>MaxLimit</code>, which is controlled by Amazon Web Services. For more information on spending limits (quotas) see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/quotas.html\">Quotas </a> in the <i>End User MessagingSMS User Guide</i>.</p>",
     "DescribeAccountAttributes": "<p>Describes attributes of your Amazon Web Services account. The supported account attributes include account tier, which indicates whether your account is in the sandbox or production environment. When you're ready to move your account out of the sandbox, create an Amazon Web Services Support case for a service limit increase request.</p> <p>New accounts are placed into an SMS or voice sandbox. The sandbox protects both Amazon Web Services end recipients and SMS or voice recipients from fraud and abuse. </p>",
-    "DescribeAccountLimits": "<p>Describes the current AWS End User Messaging SMS and Voice SMS Voice V2 resource quotas for your account. The description for a quota includes the quota name, current usage toward that quota, and the quota's maximum value.</p> <p>When you establish an Amazon Web Services account, the account has initial quotas on the maximum number of configuration sets, opt-out lists, phone numbers, and pools that you can create in a given Region. For more information see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/quotas.html\">Quotas </a> in the <i>AWS End User Messaging SMS User Guide</i>.</p>",
+    "DescribeAccountLimits": "<p>Describes the current End User MessagingSMS SMS Voice V2 resource quotas for your account. The description for a quota includes the quota name, current usage toward that quota, and the quota's maximum value.</p> <p>When you establish an Amazon Web Services account, the account has initial quotas on the maximum number of configuration sets, opt-out lists, phone numbers, and pools that you can create in a given Region. For more information see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/quotas.html\">Quotas </a> in the <i>End User MessagingSMS User Guide</i>.</p>",
     "DescribeConfigurationSets": "<p>Describes the specified configuration sets or all in your account.</p> <p>If you specify configuration set names, the output includes information for only the specified configuration sets. If you specify filters, the output includes information for only those configuration sets that meet the filter criteria. If you don't specify configuration set names or filters, the output includes information for all configuration sets.</p> <p>If you specify a configuration set name that isn't valid, an error is returned.</p>",
-    "DescribeKeywords": "<p>Describes the specified keywords or all keywords on your origination phone number or pool.</p> <p>A keyword is a word that you can search for on a particular phone number or pool. It is also a specific word or phrase that an end user can send to your number to elicit a response, such as an informational message or a special offer. When your number receives a message that begins with a keyword, AWS End User Messaging SMS and Voice responds with a customizable message.</p> <p>If you specify a keyword that isn't valid, an error is returned.</p>",
+    "DescribeKeywords": "<p>Describes the specified keywords or all keywords on your origination phone number or pool.</p> <p>A keyword is a word that you can search for on a particular phone number or pool. It is also a specific word or phrase that an end user can send to your number to elicit a response, such as an informational message or a special offer. When your number receives a message that begins with a keyword, End User MessagingSMS responds with a customizable message.</p> <p>If you specify a keyword that isn't valid, an error is returned.</p>",
     "DescribeOptOutLists": "<p>Describes the specified opt-out list or all opt-out lists in your account.</p> <p>If you specify opt-out list names, the output includes information for only the specified opt-out lists. Opt-out lists include only those that meet the filter criteria. If you don't specify opt-out list names or filters, the output includes information for all opt-out lists.</p> <p>If you specify an opt-out list name that isn't valid, an error is returned.</p>",
     "DescribeOptedOutNumbers": "<p>Describes the specified opted out destination numbers or all opted out destination numbers in an opt-out list.</p> <p>If you specify opted out numbers, the output includes information for only the specified opted out numbers. If you specify filters, the output includes information for only those opted out numbers that meet the filter criteria. If you don't specify opted out numbers or filters, the output includes information for all opted out destination numbers in your opt-out list.</p> <p>If you specify an opted out number that isn't valid, an exception is returned.</p>",
     "DescribePhoneNumbers": "<p>Describes the specified origination phone number, or all the phone numbers in your account.</p> <p>If you specify phone number IDs, the output includes information for only the specified phone numbers. If you specify filters, the output includes information for only those phone numbers that meet the filter criteria. If you don't specify phone number IDs or filters, the output includes information for all phone numbers.</p> <p>If you specify a phone number ID that isn't valid, an error is returned.</p>",
@@ -50,30 +51,30 @@
     "DescribeRegistrationVersions": "<p>Retrieves the specified registration version.</p>",
     "DescribeRegistrations": "<p>Retrieves the specified registrations.</p>",
     "DescribeSenderIds": "<p>Describes the specified SenderIds or all SenderIds associated with your Amazon Web Services account.</p> <p>If you specify SenderIds, the output includes information for only the specified SenderIds. If you specify filters, the output includes information for only those SenderIds that meet the filter criteria. If you don't specify SenderIds or filters, the output includes information for all SenderIds.</p> <p>f you specify a sender ID that isn't valid, an error is returned.</p>",
-    "DescribeSpendLimits": "<p>Describes the current monthly spend limits for sending voice and text messages.</p> <p>When you establish an Amazon Web Services account, the account has initial monthly spend limit in a given Region. For more information on increasing your monthly spend limit, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/awssupport-spend-threshold.html\"> Requesting increases to your monthly SMS, MMS, or Voice spending quota </a> in the <i>AWS End User Messaging SMS User Guide</i>.</p>",
+    "DescribeSpendLimits": "<p>Describes the current monthly spend limits for sending voice and text messages.</p> <p>When you establish an Amazon Web Services account, the account has initial monthly spend limit in a given Region. For more information on increasing your monthly spend limit, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/awssupport-spend-threshold.html\"> Requesting increases to your monthly SMS, MMS, or Voice spending quota </a> in the <i>End User MessagingSMS User Guide</i>.</p>",
     "DescribeVerifiedDestinationNumbers": "<p>Retrieves the specified verified destination numbers.</p>",
     "DisassociateOriginationIdentity": "<p>Removes the specified origination identity from an existing pool.</p> <p>If the origination identity isn't associated with the specified pool, an error is returned.</p>",
     "DisassociateProtectConfiguration": "<p>Disassociate a protect configuration from a configuration set.</p>",
     "DiscardRegistrationVersion": "<p>Discard the current version of the registration.</p>",
     "GetProtectConfigurationCountryRuleSet": "<p>Retrieve the CountryRuleSet for the specified NumberCapability from a protect configuration.</p>",
-    "GetResourcePolicy": "<p>Retrieves the JSON text of the resource-based policy document attached to the AWS End User Messaging SMS and Voice resource. A shared resource can be a Pool, Opt-out list, Sender Id, or Phone number.</p>",
+    "GetResourcePolicy": "<p>Retrieves the JSON text of the resource-based policy document attached to the End User MessagingSMS resource. A shared resource can be a Pool, Opt-out list, Sender Id, or Phone number.</p>",
     "ListPoolOriginationIdentities": "<p>Lists all associated origination identities in your pool.</p> <p>If you specify filters, the output includes information for only those origination identities that meet the filter criteria.</p>",
     "ListProtectConfigurationRuleSetNumberOverrides": "<p>Retrieve all of the protect configuration rule set number overrides that match the filters.</p>",
     "ListRegistrationAssociations": "<p>Retrieve all of the origination identities that are associated with a registration.</p>",
     "ListTagsForResource": "<p>List all tags associated with a resource.</p>",
-    "PutKeyword": "<p>Creates or updates a keyword configuration on an origination phone number or pool.</p> <p> A keyword is a word that you can search for on a particular phone number or pool. It is also a specific word or phrase that an end user can send to your number to elicit a response, such as an informational message or a special offer. When your number receives a message that begins with a keyword, AWS End User Messaging SMS and Voice responds with a customizable message.</p> <p>If you specify a keyword that isn't valid, an error is returned.</p>",
+    "PutKeyword": "<p>Creates or updates a keyword configuration on an origination phone number or pool.</p> <p> A keyword is a word that you can search for on a particular phone number or pool. It is also a specific word or phrase that an end user can send to your number to elicit a response, such as an informational message or a special offer. When your number receives a message that begins with a keyword, End User MessagingSMS responds with a customizable message.</p> <p>If you specify a keyword that isn't valid, an error is returned.</p>",
     "PutMessageFeedback": "<p>Set the MessageFeedbackStatus as <code>RECEIVED</code> or <code>FAILED</code> for the passed in MessageId. </p> <p>If you use message feedback then you must update message feedback record. When you receive a signal that a user has received the message you must use <code>PutMessageFeedback</code> to set the message feedback record as <code>RECEIVED</code>; Otherwise, an hour after the message feedback record is set to <code>FAILED</code>.</p>",
     "PutOptedOutNumber": "<p>Creates an opted out destination phone number in the opt-out list.</p> <p>If the destination phone number isn't valid or if the specified opt-out list doesn't exist, an error is returned.</p>",
     "PutProtectConfigurationRuleSetNumberOverride": "<p>Create or update a phone number rule override and associate it with a protect configuration.</p>",
     "PutRegistrationFieldValue": "<p>Creates or updates a field value for a registration.</p>",
-    "PutResourcePolicy": "<p>Attaches a resource-based policy to a AWS End User Messaging SMS and Voice resource(phone number, sender Id, phone poll, or opt-out list) that is used for sharing the resource. A shared resource can be a Pool, Opt-out list, Sender Id, or Phone number. For more information about resource-based policies, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/shared-resources.html\">Working with shared resources</a> in the <i>AWS End User Messaging SMS User Guide</i>. </p>",
+    "PutResourcePolicy": "<p>Attaches a resource-based policy to a End User MessagingSMS resource(phone number, sender Id, phone poll, or opt-out list) that is used for sharing the resource. A shared resource can be a Pool, Opt-out list, Sender Id, or Phone number. For more information about resource-based policies, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/shared-resources.html\">Working with shared resources</a> in the <i>End User MessagingSMS User Guide</i>. </p>",
     "ReleasePhoneNumber": "<p>Releases an existing origination phone number in your account. Once released, a phone number is no longer available for sending messages.</p> <p>If the origination phone number has deletion protection enabled or is associated with a pool, an error is returned.</p>",
     "ReleaseSenderId": "<p>Releases an existing sender ID in your account.</p>",
-    "RequestPhoneNumber": "<p>Request an origination phone number for use in your account. For more information on phone number request see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/phone-numbers-request.html\">Request a phone number</a> in the <i>AWS End User Messaging SMS User Guide</i>.</p>",
+    "RequestPhoneNumber": "<p>Request an origination phone number for use in your account. For more information on phone number request see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/phone-numbers-request.html\">Request a phone number</a> in the <i>End User MessagingSMS User Guide</i>.</p>",
     "RequestSenderId": "<p>Request a new sender ID that doesn't require registration. </p>",
     "SendDestinationNumberVerificationCode": "<p>Before you can send test messages to a verified destination phone number you need to opt-in the verified destination phone number. Creates a new text message with a verification code and send it to a verified destination phone number. Once you have the verification code use <a>VerifyDestinationNumber</a> to opt-in the verified destination phone number to receive messages.</p>",
     "SendMediaMessage": "<p>Creates a new multimedia message (MMS) and sends it to a recipient's phone number. </p>",
-    "SendTextMessage": "<p>Creates a new text message and sends it to a recipient's phone number. SendTextMessage only sends an SMS message to one recipient each time it is invoked.</p> <p>SMS throughput limits are measured in Message Parts per Second (MPS). Your MPS limit depends on the destination country of your messages, as well as the type of phone number (origination number) that you use to send the message. For more information about MPS, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/sms-limitations-mps.html\">Message Parts per Second (MPS) limits</a> in the <i>AWS End User Messaging SMS User Guide</i>.</p>",
+    "SendTextMessage": "<p>Creates a new text message and sends it to a recipient's phone number. SendTextMessage only sends an SMS message to one recipient each time it is invoked.</p> <p>SMS throughput limits are measured in Message Parts per Second (MPS). Your MPS limit depends on the destination country of your messages, as well as the type of phone number (origination number) that you use to send the message. For more information about MPS, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/sms-limitations-mps.html\">Message Parts per Second (MPS) limits</a> in the <i>End User MessagingSMS User Guide</i>.</p>",
     "SendVoiceMessage": "<p>Allows you to send a request that sends a voice message. This operation uses <a href=\"http://aws.amazon.com/polly/\">Amazon Polly</a> to convert a text script into a voice message.</p>",
     "SetAccountDefaultProtectConfiguration": "<p>Set a protect configuration as your account default. You can only have one account default protect configuration at a time. The current account default protect configuration is replaced with the provided protect configuration.</p>",
     "SetDefaultMessageFeedbackEnabled": "<p>Sets a configuration set's default for message feedback. </p>",
@@ -83,8 +84,8 @@
     "SetTextMessageSpendLimitOverride": "<p>Sets an account level monthly spend limit override for sending text messages. The requested spend limit must be less than or equal to the <code>MaxLimit</code>, which is set by Amazon Web Services. </p>",
     "SetVoiceMessageSpendLimitOverride": "<p>Sets an account level monthly spend limit override for sending voice messages. The requested spend limit must be less than or equal to the <code>MaxLimit</code>, which is set by Amazon Web Services. </p>",
     "SubmitRegistrationVersion": "<p>Submit the specified registration for review and approval.</p>",
-    "TagResource": "<p>Adds or overwrites only the specified tags for the specified resource. When you specify an existing tag key, the value is overwritten with the new value. Each tag consists of a key and an optional value. Tag keys must be unique per resource. For more information about tags, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/phone-numbers-tags.html\">Tags </a> in the <i>AWS End User Messaging SMS User Guide</i>.</p>",
-    "UntagResource": "<p>Removes the association of the specified tags from a resource. For more information on tags see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/phone-numbers-tags.html\">Tags </a> in the <i>AWS End User Messaging SMS User Guide</i>.</p>",
+    "TagResource": "<p>Adds or overwrites only the specified tags for the specified resource. When you specify an existing tag key, the value is overwritten with the new value. Each tag consists of a key and an optional value. Tag keys must be unique per resource. For more information about tags, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/phone-numbers-tags.html\">Tags </a> in the <i>End User MessagingSMS User Guide</i>.</p>",
+    "UntagResource": "<p>Removes the association of the specified tags from a resource. For more information on tags see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/phone-numbers-tags.html\">Tags </a> in the <i>End User MessagingSMS User Guide</i>.</p>",
     "UpdateEventDestination": "<p>Updates an existing event destination in a configuration set. You can update the IAM role ARN for CloudWatch Logs and Firehose. You can also enable or disable the event destination.</p> <p>You may want to update an event destination to change its matching event types or updating the destination resource ARN. You can't change an event destination's type between CloudWatch Logs, Firehose, and Amazon SNS.</p>",
     "UpdatePhoneNumber": "<p>Updates the configuration of an existing origination phone number. You can update the opt-out list, enable or disable two-way messaging, change the TwoWayChannelArn, enable or disable self-managed opt-outs, and enable or disable deletion protection.</p> <p>If the origination phone number is associated with a pool, an error is returned.</p>",
     "UpdatePool": "<p>Updates the configuration of an existing pool. You can update the opt-out list, enable or disable two-way messaging, change the <code>TwoWayChannelArn</code>, enable or disable self-managed opt-outs, enable or disable deletion protection, and enable or disable shared routes.</p>",
@@ -143,14 +144,14 @@
     "AmazonResourceName": {
       "base": null,
       "refs": {
-        "DeleteResourcePolicyRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the AWS End User Messaging SMS and Voice resource you're deleting the resource-based policy from.</p>",
-        "DeleteResourcePolicyResult$ResourceArn": "<p>The Amazon Resource Name (ARN) of the AWS End User Messaging SMS and Voice resource that the resource-based policy was deleted from.</p>",
-        "GetResourcePolicyRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the AWS End User Messaging SMS and Voice resource attached to the resource-based policy.</p>",
-        "GetResourcePolicyResult$ResourceArn": "<p>The Amazon Resource Name (ARN) of the AWS End User Messaging SMS and Voice resource attached to the resource-based policy.</p>",
+        "DeleteResourcePolicyRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the End User MessagingSMS resource you're deleting the resource-based policy from.</p>",
+        "DeleteResourcePolicyResult$ResourceArn": "<p>The Amazon Resource Name (ARN) of the End User MessagingSMS resource that the resource-based policy was deleted from.</p>",
+        "GetResourcePolicyRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the End User MessagingSMS resource attached to the resource-based policy.</p>",
+        "GetResourcePolicyResult$ResourceArn": "<p>The Amazon Resource Name (ARN) of the End User MessagingSMS resource attached to the resource-based policy.</p>",
         "ListTagsForResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource to query for.</p>",
         "ListTagsForResourceResult$ResourceArn": "<p>The ARN of the resource.</p>",
-        "PutResourcePolicyRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the AWS End User Messaging SMS and Voice resource to attach the resource-based policy to.</p>",
-        "PutResourcePolicyResult$ResourceArn": "<p>The Amazon Resource Name (ARN) of the AWS End User Messaging SMS and Voice resource attached to the resource-based policy.</p>",
+        "PutResourcePolicyRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the End User MessagingSMS resource to attach the resource-based policy to.</p>",
+        "PutResourcePolicyResult$ResourceArn": "<p>The Amazon Resource Name (ARN) of the End User MessagingSMS resource attached to the resource-based policy.</p>",
         "TagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "UntagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>"
       }
@@ -202,7 +203,7 @@
       "base": null,
       "refs": {
         "ConfigurationSetInformation$DefaultMessageFeedbackEnabled": "<p>True if message feedback is enabled.</p>",
-        "CreatePoolRequest$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the pool can't be deleted. You can change this value using the <a>UpdatePool</a> action.</p>",
+        "CreatePoolRequest$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the pool can't be deleted. You can change this value using the <a href=\"https://docs.aws.amazon.com/pinpoint/latest/apireference_smsvoicev2/API_UpdatePool.html\">UpdatePool</a> action.</p>",
         "CreateProtectConfigurationRequest$DeletionProtectionEnabled": "<p>When set to true deletion protection is enabled. By default this is set to false. </p>",
         "DeleteConfigurationSetResult$DefaultMessageFeedbackEnabled": "<p>True if the configuration set has message feedback enabled. By default this is set to false. </p>",
         "EventDestination$Enabled": "<p>When set to true events will be logged.</p>",
@@ -216,16 +217,30 @@
         "SetDefaultMessageFeedbackEnabledResult$MessageFeedbackEnabled": "<p>True if message feedback is enabled.</p>",
         "UpdateEventDestinationRequest$Enabled": "<p>When set to true logging is enabled.</p>",
         "UpdatePhoneNumberRequest$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients.</p>",
-        "UpdatePhoneNumberRequest$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, AWS End User Messaging SMS and Voice automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
+        "UpdatePhoneNumberRequest$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When set to false and an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, End User MessagingSMS automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
         "UpdatePhoneNumberRequest$InternationalSendingEnabled": "<p>By default this is set to false. When set to true the international sending of phone number is Enabled. </p>",
         "UpdatePhoneNumberRequest$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the phone number can't be deleted. </p>",
         "UpdatePoolRequest$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients.</p>",
-        "UpdatePoolRequest$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, AWS End User Messaging SMS and Voice automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
+        "UpdatePoolRequest$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When set to false and an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, End User MessagingSMS automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
         "UpdatePoolRequest$SharedRoutesEnabled": "<p>Indicates whether shared routes are enabled for the pool.</p>",
         "UpdatePoolRequest$DeletionProtectionEnabled": "<p>When set to true the pool can't be deleted.</p>",
         "UpdateProtectConfigurationRequest$DeletionProtectionEnabled": "<p>When set to true deletion protection is enabled. By default this is set to false. </p>",
         "UpdateSenderIdRequest$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the sender ID can't be deleted.</p>"
       }
+    },
+    "CarrierLookupInputPhoneNumberType": {
+      "base": null,
+      "refs": {
+        "CarrierLookupRequest$PhoneNumber": "<p>The phone number that you want to retrieve information about. You can provide the phone number in various formats including special characters such as parentheses, brackets, spaces, hyphens, periods, and commas. The service automatically converts the input to E164 format for processing.</p>"
+      }
+    },
+    "CarrierLookupRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CarrierLookupResult": {
+      "base": null,
+      "refs": {}
     },
     "ClientToken": {
       "base": null,
@@ -775,6 +790,12 @@
         "DescribeVerifiedDestinationNumbersRequest$DestinationPhoneNumbers": "<p>An array of verified destination phone number, in E.164 format.</p>"
       }
     },
+    "DialingCountryCodeType": {
+      "base": null,
+      "refs": {
+        "CarrierLookupResult$DialingCountryCode": "<p>The numeric dialing code for the country or region where the phone number was originally registered.</p>"
+      }
+    },
     "DisassociateOriginationIdentityRequest": {
       "base": null,
       "refs": {}
@@ -798,6 +819,12 @@
     "DiscardRegistrationVersionResult": {
       "base": null,
       "refs": {}
+    },
+    "E164PhoneNumberType": {
+      "base": null,
+      "refs": {
+        "CarrierLookupResult$E164PhoneNumber": "<p>The phone number in E164 format, sanitized from the original input by removing any formatting characters.</p>"
+      }
     },
     "EventDestination": {
       "base": "<p>Contains information about an event destination.</p> <p>Event destinations are associated with configuration sets, which enable you to publish message sending events to CloudWatch, Firehose, or Amazon SNS.</p>",
@@ -833,7 +860,7 @@
     "EventTypeList": {
       "base": null,
       "refs": {
-        "CreateEventDestinationRequest$MatchingEventTypes": "<p>An array of event types that determine which events to log. If \"ALL\" is used, then AWS End User Messaging SMS and Voice logs every event type.</p> <note> <p>The <code>TEXT_SENT</code> event type is not supported.</p> </note>",
+        "CreateEventDestinationRequest$MatchingEventTypes": "<p>An array of event types that determine which events to log. If \"ALL\" is used, then End User MessagingSMS logs every event type.</p> <note> <p>The <code>TEXT_SENT</code> event type is not supported.</p> </note>",
         "EventDestination$MatchingEventTypes": "<p>An array of event types that determine which events to log.</p> <note> <p>The <code>TEXT_SENT</code> event type is not supported.</p> </note>",
         "UpdateEventDestinationRequest$MatchingEventTypes": "<p>An array of event types that determine which events to log.</p> <note> <p>The <code>TEXT_SENT</code> event type is not supported.</p> </note>"
       }
@@ -946,6 +973,7 @@
       "refs": {
         "AssociateOriginationIdentityRequest$IsoCountryCode": "<p>The new two-character code, in ISO 3166-1 alpha-2 format, for the country or region of the origination identity.</p>",
         "AssociateOriginationIdentityResult$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region. </p>",
+        "CarrierLookupResult$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region where the phone number was originally registered.</p>",
         "CreatePoolRequest$IsoCountryCode": "<p>The new two-character code, in ISO 3166-1 alpha-2 format, for the country or region of the new pool.</p>",
         "CreateRegistrationAssociationResult$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region.</p>",
         "DeleteProtectConfigurationRuleSetNumberOverrideResult$IsoCountryCode": "<p>The two-character code, in ISO 3166-1 alpha-2 format, for the country or region.</p>",
@@ -1096,6 +1124,18 @@
         "CloudWatchLogsDestination$LogGroupArn": "<p>The name of the Amazon CloudWatch log group that you want to record events in. </p>"
       }
     },
+    "MCCType": {
+      "base": null,
+      "refs": {
+        "CarrierLookupResult$MCC": "<p>The phone number's mobile country code, for mobile phone number types</p>"
+      }
+    },
+    "MNCType": {
+      "base": null,
+      "refs": {
+        "CarrierLookupResult$MNC": "<p>The phone number's mobile network code, for mobile phone number types.</p>"
+      }
+    },
     "MaxPrice": {
       "base": null,
       "refs": {
@@ -1134,7 +1174,7 @@
     "MediaMessageOriginationIdentity": {
       "base": null,
       "refs": {
-        "SendMediaMessageRequest$OriginationIdentity": "<p>The origination identity of the message. This can be either the PhoneNumber, PhoneNumberId, PhoneNumberArn, SenderId, SenderIdArn, PoolId, or PoolArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
+        "SendMediaMessageRequest$OriginationIdentity": "<p>The origination identity of the message. This can be either the PhoneNumber, PhoneNumberId, PhoneNumberArn, SenderId, SenderIdArn, PoolId, or PoolArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
       }
     },
     "MediaUrlList": {
@@ -1337,20 +1377,20 @@
     "OptOutListNameList": {
       "base": null,
       "refs": {
-        "DescribeOptOutListsRequest$OptOutListNames": "<p>The OptOutLists to show the details of. This is an array of strings that can be either the OptOutListName or OptOutListArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
+        "DescribeOptOutListsRequest$OptOutListNames": "<p>The OptOutLists to show the details of. This is an array of strings that can be either the OptOutListName or OptOutListArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
       }
     },
     "OptOutListNameOrArn": {
       "base": null,
       "refs": {
-        "DeleteOptOutListRequest$OptOutListName": "<p>The OptOutListName or OptOutListArn of the OptOutList to delete. You can use <a>DescribeOptOutLists</a> to find the values for OptOutListName and OptOutListArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
-        "DeleteOptedOutNumberRequest$OptOutListName": "<p>The OptOutListName or OptOutListArn to remove the phone number from.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
-        "DescribeOptedOutNumbersRequest$OptOutListName": "<p>The OptOutListName or OptOutListArn of the OptOutList. You can use <a>DescribeOptOutLists</a> to find the values for OptOutListName and OptOutListArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "DeleteOptOutListRequest$OptOutListName": "<p>The OptOutListName or OptOutListArn of the OptOutList to delete. You can use <a>DescribeOptOutLists</a> to find the values for OptOutListName and OptOutListArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "DeleteOptedOutNumberRequest$OptOutListName": "<p>The OptOutListName or OptOutListArn to remove the phone number from.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "DescribeOptedOutNumbersRequest$OptOutListName": "<p>The OptOutListName or OptOutListArn of the OptOutList. You can use <a>DescribeOptOutLists</a> to find the values for OptOutListName and OptOutListArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
         "OptOutListNameList$member": null,
-        "PutOptedOutNumberRequest$OptOutListName": "<p>The OptOutListName or OptOutListArn to add the phone number to.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
-        "RequestPhoneNumberRequest$OptOutListName": "<p>The name of the OptOutList to associate with the phone number. You can use the OptOutListName or OptOutListArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
-        "UpdatePhoneNumberRequest$OptOutListName": "<p>The OptOutList to add the phone number to. Valid values for this field can be either the OutOutListName or OutOutListArn.</p>",
-        "UpdatePoolRequest$OptOutListName": "<p>The OptOutList to associate with the pool. Valid values are either OptOutListName or OptOutListArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
+        "PutOptedOutNumberRequest$OptOutListName": "<p>The OptOutListName or OptOutListArn to add the phone number to.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "RequestPhoneNumberRequest$OptOutListName": "<p>The name of the OptOutList to associate with the phone number. You can use the OptOutListName or OptOutListArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "UpdatePhoneNumberRequest$OptOutListName": "<p>The OptOutList to add the phone number to. You can use either the opt out list name or the opt out list ARN.</p>",
+        "UpdatePoolRequest$OptOutListName": "<p>The OptOutList to associate with the pool. Valid values are either OptOutListName or OptOutListArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
       }
     },
     "OptedOutFilter": {
@@ -1463,15 +1503,15 @@
     "PhoneNumberIdList": {
       "base": null,
       "refs": {
-        "DescribePhoneNumbersRequest$PhoneNumberIds": "<p>The unique identifier of phone numbers to find information about. This is an array of strings that can be either the PhoneNumberId or PhoneNumberArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
+        "DescribePhoneNumbersRequest$PhoneNumberIds": "<p>The unique identifier of phone numbers to find information about. This is an array of strings that can be either the PhoneNumberId or PhoneNumberArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
       }
     },
     "PhoneNumberIdOrArn": {
       "base": null,
       "refs": {
         "PhoneNumberIdList$member": null,
-        "ReleasePhoneNumberRequest$PhoneNumberId": "<p>The PhoneNumberId or PhoneNumberArn of the phone number to release. You can use <a>DescribePhoneNumbers</a> to get the values for PhoneNumberId and PhoneNumberArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
-        "UpdatePhoneNumberRequest$PhoneNumberId": "<p>The unique identifier of the phone number. Valid values for this field can be either the PhoneNumberId or PhoneNumberArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
+        "ReleasePhoneNumberRequest$PhoneNumberId": "<p>The PhoneNumberId or PhoneNumberArn of the phone number to release. You can use <a>DescribePhoneNumbers</a> to get the values for PhoneNumberId and PhoneNumberArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "UpdatePhoneNumberRequest$PhoneNumberId": "<p>The unique identifier of the phone number. Valid values for this field can be either the PhoneNumberId or PhoneNumberArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
       }
     },
     "PhoneNumberInformation": {
@@ -1486,20 +1526,26 @@
         "DescribePhoneNumbersResult$PhoneNumbers": "<p>An array of PhoneNumberInformation objects that contain the details for the requested phone numbers.</p>"
       }
     },
+    "PhoneNumberType": {
+      "base": null,
+      "refs": {
+        "CarrierLookupResult$PhoneNumberType": "<p>Describes the type of phone number. Valid values are: MOBILE, LANDLINE, OTHER, and INVALID. Avoid sending SMS or voice messages to INVALID phone numbers, as these numbers are unlikely to belong to actual recipients.</p>"
+      }
+    },
     "PhoneOrPoolIdOrArn": {
       "base": null,
       "refs": {
-        "DeleteKeywordRequest$OriginationIdentity": "<p>The origination identity to use such as a PhoneNumberId, PhoneNumberArn, PoolId or PoolArn. You can use <a>DescribePhoneNumbers</a> to find the values for PhoneNumberId and PhoneNumberArn and <a>DescribePools</a> to find the values of PoolId and PoolArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
-        "DescribeKeywordsRequest$OriginationIdentity": "<p>The origination identity to use such as a PhoneNumberId, PhoneNumberArn, SenderId or SenderIdArn. You can use <a>DescribePhoneNumbers</a> to find the values for PhoneNumberId and PhoneNumberArn while <a>DescribeSenderIds</a> can be used to get the values for SenderId and SenderIdArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
-        "PutKeywordRequest$OriginationIdentity": "<p>The origination identity to use such as a PhoneNumberId, PhoneNumberArn, SenderId or SenderIdArn. You can use <a>DescribePhoneNumbers</a> get the values for PhoneNumberId and PhoneNumberArn while <a>DescribeSenderIds</a> can be used to get the values for SenderId and SenderIdArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
+        "DeleteKeywordRequest$OriginationIdentity": "<p>The origination identity to use such as a PhoneNumberId, PhoneNumberArn, PoolId or PoolArn. You can use <a>DescribePhoneNumbers</a> to find the values for PhoneNumberId and PhoneNumberArn and <a>DescribePools</a> to find the values of PoolId and PoolArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "DescribeKeywordsRequest$OriginationIdentity": "<p>The origination identity to use such as a PhoneNumberId, PhoneNumberArn, SenderId or SenderIdArn. You can use <a>DescribePhoneNumbers</a> to find the values for PhoneNumberId and PhoneNumberArn while <a>DescribeSenderIds</a> can be used to get the values for SenderId and SenderIdArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "PutKeywordRequest$OriginationIdentity": "<p>The origination identity to use such as a PhoneNumberId, PhoneNumberArn, SenderId or SenderIdArn. You can use <a>DescribePhoneNumbers</a> get the values for PhoneNumberId and PhoneNumberArn while <a>DescribeSenderIds</a> can be used to get the values for SenderId and SenderIdArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
       }
     },
     "PhoneOrSenderIdOrArn": {
       "base": null,
       "refs": {
-        "AssociateOriginationIdentityRequest$OriginationIdentity": "<p>The origination identity to use, such as PhoneNumberId, PhoneNumberArn, SenderId, or SenderIdArn. You can use <a>DescribePhoneNumbers</a> to find the values for PhoneNumberId and PhoneNumberArn, while <a>DescribeSenderIds</a> can be used to get the values for SenderId and SenderIdArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
-        "CreatePoolRequest$OriginationIdentity": "<p>The origination identity to use such as a PhoneNumberId, PhoneNumberArn, SenderId or SenderIdArn. You can use <a>DescribePhoneNumbers</a> to find the values for PhoneNumberId and PhoneNumberArn while <a>DescribeSenderIds</a> can be used to get the values for SenderId and SenderIdArn.</p> <p>After the pool is created you can add more origination identities to the pool by using <a href=\"https://docs.aws.amazon.com/pinpoint/latest/apireference_smsvoicev2/API_AssociateOriginationIdentity.html\">AssociateOriginationIdentity</a>.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
-        "DisassociateOriginationIdentityRequest$OriginationIdentity": "<p>The origination identity to use such as a PhoneNumberId, PhoneNumberArn, SenderId or SenderIdArn. You can use <a>DescribePhoneNumbers</a> find the values for PhoneNumberId and PhoneNumberArn, or use <a>DescribeSenderIds</a> to get the values for SenderId and SenderIdArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
+        "AssociateOriginationIdentityRequest$OriginationIdentity": "<p>The origination identity to use, such as PhoneNumberId, PhoneNumberArn, SenderId, or SenderIdArn. You can use <a>DescribePhoneNumbers</a> to find the values for PhoneNumberId and PhoneNumberArn, while <a>DescribeSenderIds</a> can be used to get the values for SenderId and SenderIdArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "CreatePoolRequest$OriginationIdentity": "<p>The origination identity to use such as a PhoneNumberId, PhoneNumberArn, SenderId or SenderIdArn. You can use <a href=\"https://docs.aws.amazon.com/pinpoint/latest/apireference_smsvoicev2/API_DescribePhoneNumbers.html\">DescribePhoneNumbers</a> to find the values for PhoneNumberId and PhoneNumberArn, and use <a href=\"https://docs.aws.amazon.com/pinpoint/latest/apireference_smsvoicev2/API_DescribeSenderIds.html\">DescribeSenderIds</a> can be used to get the values for SenderId and SenderIdArn.</p> <p>After the pool is created you can add more origination identities to the pool by using <a href=\"https://docs.aws.amazon.com/pinpoint/latest/apireference_smsvoicev2/API_AssociateOriginationIdentity.html\">AssociateOriginationIdentity</a>.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "DisassociateOriginationIdentityRequest$OriginationIdentity": "<p>The origination identity to use such as a PhoneNumberId, PhoneNumberArn, SenderId or SenderIdArn. You can use <a>DescribePhoneNumbers</a> find the values for PhoneNumberId and PhoneNumberArn, or use <a>DescribeSenderIds</a> to get the values for SenderId and SenderIdArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
       }
     },
     "PoolFilter": {
@@ -1523,19 +1569,19 @@
     "PoolIdList": {
       "base": null,
       "refs": {
-        "DescribePoolsRequest$PoolIds": "<p>The unique identifier of pools to find. This is an array of strings that can be either the PoolId or PoolArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
+        "DescribePoolsRequest$PoolIds": "<p>The unique identifier of pools to find. This is an array of strings that can be either the PoolId or PoolArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
       }
     },
     "PoolIdOrArn": {
       "base": null,
       "refs": {
-        "AssociateOriginationIdentityRequest$PoolId": "<p>The pool to update with the new Identity. This value can be either the PoolId or PoolArn, and you can find these values using <a>DescribePools</a>.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
-        "DeletePoolRequest$PoolId": "<p>The PoolId or PoolArn of the pool to delete. You can use <a>DescribePools</a> to find the values for PoolId and PoolArn .</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
-        "DisassociateOriginationIdentityRequest$PoolId": "<p>The unique identifier for the pool to disassociate with the origination identity. This value can be either the PoolId or PoolArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
-        "ListPoolOriginationIdentitiesRequest$PoolId": "<p>The unique identifier for the pool. This value can be either the PoolId or PoolArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "AssociateOriginationIdentityRequest$PoolId": "<p>The pool to update with the new Identity. This value can be either the PoolId or PoolArn, and you can find these values using <a href=\"https://docs.aws.amazon.com/pinpoint/latest/apireference_smsvoicev2/API_DescribePools.html\">DescribePools</a>.</p> <important> <p>If you are using a shared End User MessagingSMS; resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "DeletePoolRequest$PoolId": "<p>The PoolId or PoolArn of the pool to delete. You can use <a>DescribePools</a> to find the values for PoolId and PoolArn .</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "DisassociateOriginationIdentityRequest$PoolId": "<p>The unique identifier for the pool to disassociate with the origination identity. This value can be either the PoolId or PoolArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "ListPoolOriginationIdentitiesRequest$PoolId": "<p>The unique identifier for the pool. This value can be either the PoolId or PoolArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
         "PoolIdList$member": null,
-        "RequestPhoneNumberRequest$PoolId": "<p>The pool to associated with the phone number. You can use the PoolId or PoolArn. </p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
-        "UpdatePoolRequest$PoolId": "<p>The unique identifier of the pool to update. Valid values are either the PoolId or PoolArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
+        "RequestPhoneNumberRequest$PoolId": "<p>The pool to associated with the phone number. You can use the PoolId or PoolArn. </p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>",
+        "UpdatePoolRequest$PoolId": "<p>The unique identifier of the pool to update. Valid values are either the PoolId or PoolArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
       }
     },
     "PoolInformation": {
@@ -1581,40 +1627,40 @@
       "base": null,
       "refs": {
         "CreatePoolResult$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients.</p>",
-        "CreatePoolResult$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, AWS End User Messaging SMS and Voice automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
+        "CreatePoolResult$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When set to false, and an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, End User MessagingSMS automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
         "CreatePoolResult$SharedRoutesEnabled": "<p>Indicates whether shared routes are enabled for the pool. Set to false and only origination identities in this pool are used to send messages. </p>",
         "CreatePoolResult$DeletionProtectionEnabled": "<p>When set to true deletion protection is enabled. By default this is set to false. </p>",
         "CreateProtectConfigurationResult$AccountDefault": "<p>This is true if the protect configuration is set as your account default protect configuration.</p>",
         "CreateProtectConfigurationResult$DeletionProtectionEnabled": "<p>When set to true deletion protection is enabled. By default this is set to false. </p>",
         "DeleteOptedOutNumberResult$EndUserOptedOut": "<p>This is true if it was the end user who requested their phone number be removed. </p>",
         "DeletePoolResult$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients.</p>",
-        "DeletePoolResult$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, AWS End User Messaging SMS and Voice automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
+        "DeletePoolResult$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When set to false and an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, End User MessagingSMS automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
         "DeletePoolResult$SharedRoutesEnabled": "<p>Indicates whether shared routes are enabled for the pool.</p>",
         "DeleteProtectConfigurationResult$AccountDefault": "<p>This is true if the protect configuration is set as your account default protect configuration.</p>",
         "DeleteProtectConfigurationResult$DeletionProtectionEnabled": "<p>The status of deletion protection for the protect configuration. When set to true deletion protection is enabled. By default this is set to false. </p>",
         "OptedOutNumberInformation$EndUserOptedOut": "<p>This is set to true if it was the end recipient that opted out.</p>",
         "PhoneNumberInformation$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients using the TwoWayChannelArn.</p>",
-        "PhoneNumberInformation$SelfManagedOptOutsEnabled": "<p>When set to false an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, AWS End User Messaging SMS and Voice automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out request. For more information see <a href=\"https://docs.aws.amazon.com/pinpoint/latest/userguide/settings-sms-managing.html#settings-account-sms-self-managed-opt-out\">Self-managed opt-outs</a> </p>",
+        "PhoneNumberInformation$SelfManagedOptOutsEnabled": "<p>When set to false and an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, End User MessagingSMS automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out request. For more information see <a href=\"https://docs.aws.amazon.com/pinpoint/latest/userguide/settings-sms-managing.html#settings-account-sms-self-managed-opt-out\">Self-managed opt-outs</a> </p>",
         "PhoneNumberInformation$InternationalSendingEnabled": "<p>When set to true the international sending of phone number is Enabled.</p>",
         "PhoneNumberInformation$DeletionProtectionEnabled": "<p>When set to true the phone number can't be deleted.</p>",
         "PoolInformation$TwoWayEnabled": "<p>When set to true you can receive incoming text messages from your end recipients using the TwoWayChannelArn.</p>",
-        "PoolInformation$SelfManagedOptOutsEnabled": "<p>When set to false, an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, AWS End User Messaging SMS and Voice automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests. For more information see <a href=\"https://docs.aws.amazon.com/pinpoint/latest/userguide/settings-sms-managing.html#settings-account-sms-self-managed-opt-out\">Self-managed opt-outs</a> </p>",
+        "PoolInformation$SelfManagedOptOutsEnabled": "<p>When set to false, an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, End User MessagingSMS automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests. For more information see <a href=\"https://docs.aws.amazon.com/pinpoint/latest/userguide/settings-sms-managing.html#settings-account-sms-self-managed-opt-out\">Self-managed opt-outs</a> </p>",
         "PoolInformation$SharedRoutesEnabled": "<p>Allows you to enable shared routes on your pool.</p> <p>By default, this is set to <code>False</code>. If you set this value to <code>True</code>, your messages are sent using phone numbers or sender IDs (depending on the country) that are shared with other users. In some countries, such as the United States, senders aren't allowed to use shared routes and must use a dedicated phone number or short code.</p>",
         "PoolInformation$DeletionProtectionEnabled": "<p>When set to true the pool can't be deleted.</p>",
         "ProtectConfigurationInformation$AccountDefault": "<p>This is true if the protect configuration is set as your account default protect configuration.</p>",
         "ProtectConfigurationInformation$DeletionProtectionEnabled": "<p>The status of deletion protection for the protect configuration. When set to true deletion protection is enabled. By default this is set to false. </p>",
         "PutOptedOutNumberResult$EndUserOptedOut": "<p>This is true if it was the end user who requested their phone number be removed. </p>",
         "ReleasePhoneNumberResult$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients.</p>",
-        "ReleasePhoneNumberResult$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, AWS End User Messaging SMS and Voice automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
+        "ReleasePhoneNumberResult$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When set to false and an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, End User MessagingSMS automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
         "ReleaseSenderIdResult$Registered": "<p>True if the sender ID is registered.</p>",
         "RequestPhoneNumberResult$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients.</p>",
-        "RequestPhoneNumberResult$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, AWS End User Messaging SMS and Voice automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
+        "RequestPhoneNumberResult$SelfManagedOptOutsEnabled": "<p>By default this is set to false. When set to false and an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, End User MessagingSMS automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
         "RequestPhoneNumberResult$InternationalSendingEnabled": "<p>By default this is set to false. When set to true the international sending of phone number is Enabled. </p>",
         "RequestPhoneNumberResult$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the phone number can't be deleted. </p>",
         "RequestSenderIdResult$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the sender ID can't be deleted.</p>",
         "RequestSenderIdResult$Registered": "<p>True if the sender ID is registered.</p>",
         "SendMediaMessageRequest$DryRun": "<p>When set to true, the message is checked and validated, but isn't sent to the end recipient.</p>",
-        "SendTextMessageRequest$DryRun": "<p>When set to true, the message is checked and validated, but isn't sent to the end recipient. You are not charged for using <code>DryRun</code>.</p> <p>The Message Parts per Second (MPS) limit when using <code>DryRun</code> is five. If your origination identity has a lower MPS limit then the lower MPS limit is used. For more information about MPS limits, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/sms-limitations-mps.html\">Message Parts per Second (MPS) limits</a> in the <i>AWS End User Messaging SMS User Guide</i>..</p>",
+        "SendTextMessageRequest$DryRun": "<p>When set to true, the message is checked and validated, but isn't sent to the end recipient. You are not charged for using <code>DryRun</code>.</p> <p>The Message Parts per Second (MPS) limit when using <code>DryRun</code> is five. If your origination identity has a lower MPS limit then the lower MPS limit is used. For more information about MPS limits, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/sms-limitations-mps.html\">Message Parts per Second (MPS) limits</a> in the <i>End User MessagingSMS User Guide</i>..</p>",
         "SendVoiceMessageRequest$DryRun": "<p>When set to true, the message is checked and validated, but isn't sent to the end recipient.</p>",
         "SenderIdInformation$DeletionProtectionEnabled": "<p>By default this is set to false. When set to true the sender ID can't be deleted.</p>",
         "SenderIdInformation$Registered": "<p>True if the sender ID is registered.</p>",
@@ -1624,7 +1670,7 @@
         "UpdatePhoneNumberResult$InternationalSendingEnabled": "<p>When set to true the international sending of phone number is Enabled.</p>",
         "UpdatePhoneNumberResult$DeletionProtectionEnabled": "<p>When set to true the phone number can't be deleted.</p>",
         "UpdatePoolResult$TwoWayEnabled": "<p>By default this is set to false. When set to true you can receive incoming text messages from your end recipients.</p>",
-        "UpdatePoolResult$SelfManagedOptOutsEnabled": "<p>When an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, AWS End User Messaging SMS and Voice automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
+        "UpdatePoolResult$SelfManagedOptOutsEnabled": "<p>When set to false and an end recipient sends a message that begins with HELP or STOP to one of your dedicated numbers, End User MessagingSMS automatically replies with a customizable message and adds the end recipient to the OptOutList. When set to true you're responsible for responding to HELP and STOP requests. You're also responsible for tracking and honoring opt-out requests.</p>",
         "UpdatePoolResult$SharedRoutesEnabled": "<p>Indicates whether shared routes are enabled for the pool.</p>",
         "UpdatePoolResult$DeletionProtectionEnabled": "<p>When set to true the pool can't be deleted.</p>",
         "UpdateProtectConfigurationResult$AccountDefault": "<p>This is true if the protect configuration is set as your account default protect configuration.</p>",
@@ -1663,8 +1709,8 @@
     "ProtectConfigurationCountryRuleSet": {
       "base": null,
       "refs": {
-        "GetProtectConfigurationCountryRuleSetResult$CountryRuleSet": "<p>A map of ProtectConfigurationCountryRuleSetInformation objects that contain the details for the requested NumberCapability. The Key is the two-letter ISO country code. For a list of supported ISO country codes, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/phone-numbers-sms-by-country.html\">Supported countries and regions (SMS channel)</a> in the AWS End User Messaging SMS User Guide.</p>",
-        "UpdateProtectConfigurationCountryRuleSetRequest$CountryRuleSetUpdates": "<p>A map of ProtectConfigurationCountryRuleSetInformation objects that contain the details for the requested NumberCapability. The Key is the two-letter ISO country code. For a list of supported ISO country codes, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/phone-numbers-sms-by-country.html\">Supported countries and regions (SMS channel)</a> in the AWS End User Messaging SMS User Guide.</p> <p>For example, to set the United States as allowed and Canada as blocked, the <code>CountryRuleSetUpdates</code> would be formatted as: <code>\"CountryRuleSetUpdates\": { \"US\" : { \"ProtectStatus\": \"ALLOW\" } \"CA\" : { \"ProtectStatus\": \"BLOCK\" } }</code> </p>",
+        "GetProtectConfigurationCountryRuleSetResult$CountryRuleSet": "<p>A map of ProtectConfigurationCountryRuleSetInformation objects that contain the details for the requested NumberCapability. The Key is the two-letter ISO country code. For a list of supported ISO country codes, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/phone-numbers-sms-by-country.html\">Supported countries and regions (SMS channel)</a> in the End User MessagingSMS User Guide.</p>",
+        "UpdateProtectConfigurationCountryRuleSetRequest$CountryRuleSetUpdates": "<p>A map of ProtectConfigurationCountryRuleSetInformation objects that contain the details for the requested NumberCapability. The Key is the two-letter ISO country code. For a list of supported ISO country codes, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/phone-numbers-sms-by-country.html\">Supported countries and regions (SMS channel)</a> in the End User MessagingSMS User Guide.</p> <p>For example, to set the United States as allowed and Canada as blocked, the <code>CountryRuleSetUpdates</code> would be formatted as: <code>\"CountryRuleSetUpdates\": { \"US\" : { \"ProtectStatus\": \"ALLOW\" } \"CA\" : { \"ProtectStatus\": \"BLOCK\" } }</code> </p>",
         "UpdateProtectConfigurationCountryRuleSetResult$CountryRuleSet": "<p>An array of ProtectConfigurationCountryRuleSetInformation containing the rules for the NumberCapability.</p>"
       }
     },
@@ -2230,7 +2276,7 @@
       "base": null,
       "refs": {
         "DeleteResourcePolicyResult$Policy": "<p>The JSON formatted resource-based policy that was deleted.</p>",
-        "GetResourcePolicyResult$Policy": "<p>The JSON formatted string that contains the resource-based policy attached to the AWS End User Messaging SMS and Voice resource. </p>",
+        "GetResourcePolicyResult$Policy": "<p>The JSON formatted string that contains the resource-based policy attached to the End User MessagingSMS resource. </p>",
         "PutResourcePolicyRequest$Policy": "<p>The JSON formatted resource-based policy to attach.</p>",
         "PutResourcePolicyResult$Policy": "<p>The JSON formatted Resource Policy.</p>"
       }
@@ -2339,7 +2385,7 @@
       }
     },
     "SenderIdAndCountry": {
-      "base": "<p> The alphanumeric sender ID in a specific country that you want to describe. For more information on sender IDs see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/sender-id-request.html\">Requesting sender IDs </a> in the <i>AWS End User Messaging SMS User Guide</i>.</p>",
+      "base": "<p> The alphanumeric sender ID in a specific country that you want to describe. For more information on sender IDs see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/sender-id-request.html\">Requesting sender IDs </a> in the <i>End User MessagingSMS User Guide</i>.</p>",
       "refs": {
         "SenderIdList$member": null
       }
@@ -2377,7 +2423,7 @@
     "SenderIdList": {
       "base": null,
       "refs": {
-        "DescribeSenderIdsRequest$SenderIds": "<p>An array of SenderIdAndCountry objects to search for.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
+        "DescribeSenderIdsRequest$SenderIds": "<p>An array of SenderIdAndCountry objects to search for.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
       }
     },
     "SenderIdOrArn": {
@@ -2469,7 +2515,7 @@
       }
     },
     "SpendLimit": {
-      "base": "<p>Describes the current monthly spend limits for sending voice and text messages. For more information on increasing your monthly spend limit, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/awssupport-spend-threshold.html\"> Requesting a spending quota increase </a> in the <i>AWS End User Messaging SMS User Guide</i>. </p>",
+      "base": "<p>Describes the current monthly spend limits for sending voice and text messages. For more information on increasing your monthly spend limit, see <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/awssupport-spend-threshold.html\"> Requesting a spending quota increase </a> in the <i>End User MessagingSMS User Guide</i>. </p>",
       "refs": {
         "SpendLimitList$member": null
       }
@@ -2496,6 +2542,8 @@
         "AssociateOriginationIdentityResult$OriginationIdentityArn": "<p>The PhoneNumberArn or SenderIdArn of the origination identity.</p>",
         "AssociateOriginationIdentityResult$OriginationIdentity": "<p>The PhoneNumberId or SenderId of the origination identity.</p>",
         "AssociateProtectConfigurationResult$ConfigurationSetArn": "<p>The Amazon Resource Name (ARN) of the configuration set.</p>",
+        "CarrierLookupResult$Country": "<p>The name of the country where the phone number was originally registered.</p>",
+        "CarrierLookupResult$Carrier": "<p>The carrier or service provider that the phone number is currently registered with. In some countries and regions, this value may be the carrier or service provider that the phone number was originally registered with.</p>",
         "ConfigurationSetInformation$ConfigurationSetArn": "<p>The Resource Name (ARN) of the ConfigurationSet.</p>",
         "ConflictException$Message": null,
         "ConflictException$ResourceId": "<p>The unique identifier of the request.</p>",
@@ -2731,7 +2779,7 @@
         "CreateVerifiedDestinationNumberRequest$Tags": "<p>An array of tags (key and value pairs) to associate with the destination number.</p>",
         "CreateVerifiedDestinationNumberResult$Tags": "<p>An array of tags (key and value pairs) to associate with the destination number.</p>",
         "ListTagsForResourceResult$Tags": "<p>An array of key and value pair tags that are associated with the resource.</p>",
-        "RequestPhoneNumberRequest$Tags": "<p>An array of tags (key and value pairs) associate with the requested phone number. </p>",
+        "RequestPhoneNumberRequest$Tags": "<p>An array of tags (key and value pairs) to associate with the requested phone number. </p>",
         "RequestPhoneNumberResult$Tags": "<p>An array of key and value pair tags that are associated with the phone number.</p>",
         "RequestSenderIdRequest$Tags": "<p>An array of tags (key and value pairs) to associate with the sender ID.</p>",
         "RequestSenderIdResult$Tags": "<p>An array of tags (key and value pairs) to associate with the sender ID.</p>"
@@ -2761,7 +2809,7 @@
     "TextMessageOriginationIdentity": {
       "base": null,
       "refs": {
-        "SendTextMessageRequest$OriginationIdentity": "<p>The origination identity of the message. This can be either the PhoneNumber, PhoneNumberId, PhoneNumberArn, SenderId, SenderIdArn, PoolId, or PoolArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
+        "SendTextMessageRequest$OriginationIdentity": "<p>The origination identity of the message. This can be either the PhoneNumber, PhoneNumberId, PhoneNumberArn, SenderId, SenderIdArn, PoolId, or PoolArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
       }
     },
     "TextValidation": {
@@ -2954,7 +3002,7 @@
     "VerificationMessageOriginationIdentity": {
       "base": null,
       "refs": {
-        "SendDestinationNumberVerificationCodeRequest$OriginationIdentity": "<p>The origination identity of the message. This can be either the PhoneNumber, PhoneNumberId, PhoneNumberArn, SenderId, SenderIdArn, PoolId, or PoolArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
+        "SendDestinationNumberVerificationCodeRequest$OriginationIdentity": "<p>The origination identity of the message. This can be either the PhoneNumber, PhoneNumberId, PhoneNumberArn, SenderId, SenderIdArn, PoolId, or PoolArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
       }
     },
     "VerificationStatus": {
@@ -3039,7 +3087,7 @@
     "VoiceMessageOriginationIdentity": {
       "base": null,
       "refs": {
-        "SendVoiceMessageRequest$OriginationIdentity": "<p>The origination identity to use for the voice call. This can be the PhoneNumber, PhoneNumberId, PhoneNumberArn, PoolId, or PoolArn.</p> <important> <p>If you are using a shared AWS End User Messaging SMS and Voice resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
+        "SendVoiceMessageRequest$OriginationIdentity": "<p>The origination identity to use for the voice call. This can be the PhoneNumber, PhoneNumberId, PhoneNumberArn, PoolId, or PoolArn.</p> <important> <p>If you are using a shared End User MessagingSMS resource then you must use the full Amazon Resource Name(ARN).</p> </important>"
       }
     }
   }

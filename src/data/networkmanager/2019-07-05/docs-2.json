@@ -11,6 +11,7 @@
     "CreateConnectPeer": "<p>Creates a core network Connect peer for a specified core network connect attachment between a core network and an appliance. The peer address and transit gateway address must be the same IP address family (IPv4 or IPv6).</p>",
     "CreateConnection": "<p>Creates a connection between two devices. The devices can be a physical or virtual appliance that connects to a third-party appliance in a VPC, or a physical appliance that connects to another physical appliance in an on-premises network.</p>",
     "CreateCoreNetwork": "<p>Creates a core network as part of your global network, and optionally, with a core network policy.</p>",
+    "CreateCoreNetworkPrefixListAssociation": "<p>Creates an association between a core network and a prefix list for routing control.</p>",
     "CreateDevice": "<p>Creates a new device in a global network. If you specify both a site ID and a location, the location of the site is used for visualization in the Network Manager console.</p>",
     "CreateDirectConnectGatewayAttachment": "<p>Creates an Amazon Web Services Direct Connect gateway attachment </p>",
     "CreateGlobalNetwork": "<p>Creates a new, empty global network.</p>",
@@ -25,6 +26,7 @@
     "DeleteConnection": "<p>Deletes the specified connection in your global network.</p>",
     "DeleteCoreNetwork": "<p>Deletes a core network along with all core network policies. This can only be done if there are no attachments on a core network.</p>",
     "DeleteCoreNetworkPolicyVersion": "<p>Deletes a policy version from a core network. You can't delete the current LIVE policy.</p>",
+    "DeleteCoreNetworkPrefixListAssociation": "<p>Deletes an association between a core network and a prefix list.</p>",
     "DeleteDevice": "<p>Deletes an existing device. You must first disassociate the device from any links and customer gateways.</p>",
     "DeleteGlobalNetwork": "<p>Deletes an existing global network. You must first delete all global network objects (devices, links, and sites), deregister all transit gateways, and delete any core networks.</p>",
     "DeleteLink": "<p>Deletes an existing link. You must first disassociate the link from any devices and customer gateways.</p>",
@@ -65,17 +67,22 @@
     "GetTransitGatewayRegistrations": "<p>Gets information about the transit gateway registrations in a specified global network.</p>",
     "GetTransitGatewayRouteTableAttachment": "<p>Returns information about a transit gateway route table attachment.</p>",
     "GetVpcAttachment": "<p>Returns information about a VPC attachment.</p>",
+    "ListAttachmentRoutingPolicyAssociations": "<p>Lists the routing policy associations for attachments in a core network.</p>",
     "ListAttachments": "<p>Returns a list of core network attachments.</p>",
     "ListConnectPeers": "<p>Returns a list of core network Connect peers.</p>",
     "ListCoreNetworkPolicyVersions": "<p>Returns a list of core network policy versions.</p>",
+    "ListCoreNetworkPrefixListAssociations": "<p>Lists the prefix list associations for a core network.</p>",
+    "ListCoreNetworkRoutingInformation": "<p>Lists routing information for a core network, including routes and their attributes.</p>",
     "ListCoreNetworks": "<p>Returns a list of owned and shared core networks.</p>",
     "ListOrganizationServiceAccessStatus": "<p>Gets the status of the Service Linked Role (SLR) deployment for the accounts in a given Amazon Web Services Organization.</p>",
     "ListPeerings": "<p>Lists the peerings for a core network.</p>",
     "ListTagsForResource": "<p>Lists the tags for a specified resource.</p>",
+    "PutAttachmentRoutingPolicyLabel": "<p>Applies a routing policy label to an attachment for traffic routing decisions.</p>",
     "PutCoreNetworkPolicy": "<p>Creates a new, immutable version of a core network policy. A subsequent change set is created showing the differences between the LIVE policy and the submitted policy.</p>",
     "PutResourcePolicy": "<p>Creates or updates a resource policy.</p>",
     "RegisterTransitGateway": "<p>Registers a transit gateway in your global network. Not all Regions support transit gateways for global networks. For a list of the supported Regions, see <a href=\"https://docs.aws.amazon.com/network-manager/latest/tgwnm/what-are-global-networks.html#nm-available-regions\">Region Availability</a> in the <i>Amazon Web Services Transit Gateways for Global Networks User Guide</i>. The transit gateway can be in any of the supported Amazon Web Services Regions, but it must be owned by the same Amazon Web Services account that owns the global network. You cannot register a transit gateway in more than one global network.</p>",
     "RejectAttachment": "<p>Rejects a core network attachment request.</p>",
+    "RemoveAttachmentRoutingPolicyLabel": "<p>Removes a routing policy label from an attachment.</p>",
     "RestoreCoreNetworkPolicyVersion": "<p>Restores a previous policy version as a new, immutable version of a core network policy. A subsequent change set is created showing the differences between the LIVE policy and restored policy.</p>",
     "StartOrganizationServiceAccessUpdate": "<p>Enables the Network Manager service for an Amazon Web Services Organization. This can only be called by a management account within the organization. </p>",
     "StartRouteAnalysis": "<p>Starts analyzing the routing path between the specified source and destination. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/tgw/route-analyzer.html\">Route Analyzer</a>.</p>",
@@ -219,6 +226,7 @@
       "refs": {
         "AcceptAttachmentRequest$AttachmentId": "<p>The ID of the attachment. </p>",
         "Attachment$AttachmentId": "<p>The ID of the attachment.</p>",
+        "AttachmentRoutingPolicyAssociationSummary$AttachmentId": "<p>The ID of the attachment associated with the routing policy.</p>",
         "ConnectAttachment$TransportAttachmentId": "<p>The ID of the transport attachment.</p>",
         "ConnectPeer$ConnectAttachmentId": "<p>The ID of the attachment to connect.</p>",
         "ConnectPeerSummary$ConnectAttachmentId": "<p>The ID of a Connect peer attachment.</p>",
@@ -231,9 +239,14 @@
         "GetSiteToSiteVpnAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>",
         "GetTransitGatewayRouteTableAttachmentRequest$AttachmentId": "<p>The ID of the transit gateway route table attachment.</p>",
         "GetVpcAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>",
+        "ListAttachmentRoutingPolicyAssociationsRequest$AttachmentId": "<p>The ID of a specific attachment to filter the routing policy associations.</p>",
         "ListConnectPeersRequest$ConnectAttachmentId": "<p>The ID of the attachment.</p>",
         "NetworkRouteDestination$CoreNetworkAttachmentId": "<p>The ID of a core network attachment.</p>",
+        "PutAttachmentRoutingPolicyLabelRequest$AttachmentId": "<p>The ID of the attachment to apply the routing policy label to.</p>",
+        "PutAttachmentRoutingPolicyLabelResponse$AttachmentId": "<p>The ID of the attachment that received the routing policy label.</p>",
         "RejectAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>",
+        "RemoveAttachmentRoutingPolicyLabelRequest$AttachmentId": "<p>The ID of the attachment to remove the routing policy label from.</p>",
+        "RemoveAttachmentRoutingPolicyLabelResponse$AttachmentId": "<p>The ID of the attachment from which the routing policy label was removed.</p>",
         "UpdateDirectConnectGatewayAttachmentRequest$AttachmentId": "<p>The ID of the Direct Connect gateway attachment for the updated edge locations. </p>",
         "UpdateVpcAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>"
       }
@@ -242,6 +255,18 @@
       "base": null,
       "refs": {
         "ListAttachmentsResponse$Attachments": "<p>Describes the list of attachments.</p>"
+      }
+    },
+    "AttachmentRoutingPolicyAssociationSummary": {
+      "base": "<p>Summary information about routing policy associations for an attachment.</p>",
+      "refs": {
+        "AttachmentRoutingPolicyAssociationsList$member": null
+      }
+    },
+    "AttachmentRoutingPolicyAssociationsList": {
+      "base": null,
+      "refs": {
+        "ListAttachmentRoutingPolicyAssociationsResponse$AttachmentRoutingPolicyAssociations": "<p>The list of attachment routing policy associations.</p>"
       }
     },
     "AttachmentState": {
@@ -321,12 +346,14 @@
       "refs": {
         "CreateConnectAttachmentRequest$ClientToken": "<p>The client token associated with the request.</p>",
         "CreateConnectPeerRequest$ClientToken": "<p>The client token associated with the request.</p>",
+        "CreateCoreNetworkPrefixListAssociationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "CreateCoreNetworkRequest$ClientToken": "<p>The client token associated with a core network request.</p>",
         "CreateDirectConnectGatewayAttachmentRequest$ClientToken": "<p>client token</p>",
         "CreateSiteToSiteVpnAttachmentRequest$ClientToken": "<p>The client token associated with the request.</p>",
         "CreateTransitGatewayPeeringRequest$ClientToken": "<p>The client token associated with the request.</p>",
         "CreateTransitGatewayRouteTableAttachmentRequest$ClientToken": "<p>The client token associated with the request.</p>",
         "CreateVpcAttachmentRequest$ClientToken": "<p>The client token associated with the request.</p>",
+        "PutAttachmentRoutingPolicyLabelRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "PutCoreNetworkPolicyRequest$ClientToken": "<p>The client token associated with the request.</p>"
       }
     },
@@ -515,6 +542,7 @@
       "refs": {
         "AWSLocation$Zone": "<p>The Zone that the device is located in. Specify the ID of an Availability Zone, Local Zone, Wavelength Zone, or an Outpost.</p>",
         "Attachment$SegmentName": "<p>The name of the segment attachment.</p>",
+        "AttachmentRoutingPolicyAssociationSummary$RoutingPolicyLabel": "<p>The routing policy label associated with the attachment.</p>",
         "Connection$Description": "<p>The description of the connection.</p>",
         "ConstrainedStringList$member": null,
         "CoreNetwork$Description": "<p>The description of a core network.</p>",
@@ -528,25 +556,36 @@
         "CoreNetworkChangeValues$NetworkFunctionGroupName": "<p>The network function group name if the change event is associated with a network function group.</p>",
         "CoreNetworkChangeValues$Cidr": "<p>The IP addresses used for a core network.</p>",
         "CoreNetworkChangeValues$DestinationIdentifier": "<p>The ID of the destination.</p>",
+        "CoreNetworkChangeValues$AttachmentId": "<p>The attachment identifier in the core network change values.</p>",
         "CoreNetworkNetworkFunctionGroup$Name": "<p>The name of the network function group.</p>",
         "CoreNetworkNetworkFunctionGroupIdentifier$NetworkFunctionGroupName": "<p>The network function group name.</p>",
         "CoreNetworkPolicy$Description": "<p>The description of a core network policy.</p>",
         "CoreNetworkPolicyVersion$Description": "<p>The description of a core network policy version.</p>",
+        "CoreNetworkRoutingInformation$Prefix": "<p>The IP prefix for the route.</p>",
+        "CoreNetworkRoutingInformation$LocalPreference": "<p>The BGP local preference value for the route.</p>",
+        "CoreNetworkRoutingInformation$Med": "<p>The BGP Multi-Exit Discriminator (MED) value for the route.</p>",
         "CoreNetworkSegment$Name": "<p>The name of a core network segment.</p>",
         "CoreNetworkSegmentEdgeIdentifier$SegmentName": "<p>The name of the segment edge.</p>",
         "CoreNetworkSummary$Description": "<p>The description of a core network.</p>",
+        "CreateConnectAttachmentRequest$RoutingPolicyLabel": "<p>The routing policy label to apply to the Connect attachment for traffic routing decisions.</p>",
         "CreateConnectionRequest$Description": "<p>A description of the connection.</p> <p>Length Constraints: Maximum length of 256 characters.</p>",
+        "CreateCoreNetworkPrefixListAssociationRequest$PrefixListAlias": "<p>An optional alias for the prefix list association.</p>",
+        "CreateCoreNetworkPrefixListAssociationResponse$PrefixListAlias": "<p>The alias of the prefix list association, if provided.</p>",
         "CreateCoreNetworkRequest$Description": "<p>The description of a core network.</p>",
         "CreateDeviceRequest$Description": "<p>A description of the device.</p> <p>Constraints: Maximum length of 256 characters.</p>",
         "CreateDeviceRequest$Type": "<p>The type of the device.</p>",
         "CreateDeviceRequest$Vendor": "<p>The vendor of the device.</p> <p>Constraints: Maximum length of 128 characters.</p>",
         "CreateDeviceRequest$Model": "<p>The model of the device.</p> <p>Constraints: Maximum length of 128 characters.</p>",
         "CreateDeviceRequest$SerialNumber": "<p>The serial number of the device.</p> <p>Constraints: Maximum length of 128 characters.</p>",
+        "CreateDirectConnectGatewayAttachmentRequest$RoutingPolicyLabel": "<p>The routing policy label to apply to the Direct Connect Gateway attachment for traffic routing decisions.</p>",
         "CreateGlobalNetworkRequest$Description": "<p>A description of the global network.</p> <p>Constraints: Maximum length of 256 characters.</p>",
         "CreateLinkRequest$Description": "<p>A description of the link.</p> <p>Constraints: Maximum length of 256 characters.</p>",
         "CreateLinkRequest$Type": "<p>The type of the link.</p> <p>Constraints: Maximum length of 128 characters. Cannot include the following characters: | \\ ^</p>",
         "CreateLinkRequest$Provider": "<p>The provider of the link.</p> <p>Constraints: Maximum length of 128 characters. Cannot include the following characters: | \\ ^</p>",
         "CreateSiteRequest$Description": "<p>A description of your site.</p> <p>Constraints: Maximum length of 256 characters.</p>",
+        "CreateSiteToSiteVpnAttachmentRequest$RoutingPolicyLabel": "<p>The routing policy label to apply to the Site-to-Site VPN attachment for traffic routing decisions.</p>",
+        "CreateTransitGatewayRouteTableAttachmentRequest$RoutingPolicyLabel": "<p>The routing policy label to apply to the Transit Gateway route table attachment for traffic routing decisions.</p>",
+        "CreateVpcAttachmentRequest$RoutingPolicyLabel": "<p>The routing policy label to apply to the VPC attachment for traffic routing decisions.</p>",
         "Device$Description": "<p>The description of the device.</p>",
         "Device$Type": "<p>The device type.</p>",
         "Device$Vendor": "<p>The device vendor.</p>",
@@ -565,6 +604,7 @@
         "Link$Description": "<p>The description of the link.</p>",
         "Link$Type": "<p>The type of the link.</p>",
         "Link$Provider": "<p>The provider of the link.</p>",
+        "ListCoreNetworkRoutingInformationRequest$SegmentName": "<p>The name of the segment to filter routing information by.</p>",
         "Location$Address": "<p>The physical address.</p>",
         "Location$Latitude": "<p>The latitude.</p>",
         "Location$Longitude": "<p>The longitude.</p>",
@@ -588,12 +628,20 @@
         "NetworkTelemetry$ResourceId": "<p>The ID of the resource.</p>",
         "NetworkTelemetry$Address": "<p>The address.</p>",
         "PathComponent$DestinationCidrBlock": "<p>The destination CIDR block in the route table.</p>",
+        "PrefixListAssociation$PrefixListAlias": "<p>The alias of the prefix list in the association.</p>",
         "ProposedNetworkFunctionGroupChange$NetworkFunctionGroupName": "<p>The proposed name change for the network function group name.</p>",
         "ProposedSegmentChange$SegmentName": "<p>The name of the segment to change.</p>",
+        "PutAttachmentRoutingPolicyLabelRequest$RoutingPolicyLabel": "<p>The routing policy label to apply to the attachment.</p>",
+        "PutAttachmentRoutingPolicyLabelResponse$RoutingPolicyLabel": "<p>The routing policy label that was applied to the attachment.</p>",
         "PutCoreNetworkPolicyRequest$Description": "<p>a core network policy description.</p>",
         "Relationship$From": "<p>The ARN of the resource.</p>",
         "Relationship$To": "<p>The ARN of the resource.</p>",
+        "RemoveAttachmentRoutingPolicyLabelResponse$RoutingPolicyLabel": "<p>The routing policy label that was removed from the attachment.</p>",
         "RouteAnalysis$RouteAnalysisId": "<p>The ID of the route analysis.</p>",
+        "RoutingInformationNextHop$CoreNetworkAttachmentId": "<p>The ID of the core network attachment for the next hop.</p>",
+        "RoutingInformationNextHop$ResourceId": "<p>The ID of the resource for the next hop.</p>",
+        "RoutingInformationNextHop$ResourceType": "<p>The type of resource for the next hop.</p>",
+        "RoutingInformationNextHop$SegmentName": "<p>The name of the segment for the next hop.</p>",
         "Site$Description": "<p>The description of the site.</p>",
         "TransitGatewayRegistrationStateReason$Message": "<p>The message for the state reason.</p>",
         "UpdateConnectionRequest$Description": "<p>A description of the connection.</p> <p>Length Constraints: Maximum length of 256 characters.</p>",
@@ -614,10 +662,14 @@
     "ConstrainedStringList": {
       "base": null,
       "refs": {
+        "AttachmentRoutingPolicyAssociationSummary$PendingRoutingPolicies": "<p>The list of routing policies that are pending association with the attachment.</p>",
+        "AttachmentRoutingPolicyAssociationSummary$AssociatedRoutingPolicies": "<p>The list of routing policies currently associated with the attachment.</p>",
         "ConnectPeerConfiguration$InsideCidrBlocks": "<p>The inside IP addresses used for a Connect peer configuration.</p>",
         "CoreNetworkChangeValues$InsideCidrBlocks": "<p>The inside IP addresses used for core network change values.</p>",
         "CoreNetworkChangeValues$SharedSegments": "<p>The shared segments for a core network change value. </p>",
         "CoreNetworkEdge$InsideCidrBlocks": "<p>The inside IP addresses used for core network edges.</p>",
+        "CoreNetworkRoutingInformation$AsPath": "<p>The BGP AS path for the route.</p>",
+        "CoreNetworkRoutingInformation$Communities": "<p>The BGP community values for the route.</p>",
         "CoreNetworkSegment$SharedSegments": "<p>The shared segments of a core network.</p>",
         "CreateConnectPeerRequest$InsideCidrBlocks": "<p>The inside IP addresses used for BGP peering.</p>",
         "GetNetworkRoutesRequest$ExactCidrMatches": "<p>An exact CIDR block.</p>",
@@ -625,6 +677,12 @@
         "GetNetworkRoutesRequest$SubnetOfMatches": "<p>The routes with a subnet that match the specified CIDR filter.</p>",
         "GetNetworkRoutesRequest$SupernetOfMatches": "<p>The routes with a CIDR that encompasses the CIDR filter. Example: If you specify 10.0.1.0/30, then the result returns 10.0.1.0/29.</p>",
         "GetNetworkRoutesRequest$PrefixListIds": "<p>The IDs of the prefix lists.</p>",
+        "ListCoreNetworkRoutingInformationRequest$LocalPreferenceMatches": "<p>Local preference values to match when filtering routing information.</p>",
+        "ListCoreNetworkRoutingInformationRequest$ExactAsPathMatches": "<p>Exact AS path values to match when filtering routing information.</p>",
+        "ListCoreNetworkRoutingInformationRequest$MedMatches": "<p>Multi-Exit Discriminator (MED) values to match when filtering routing information.</p>",
+        "ListCoreNetworkRoutingInformationRequest$CommunityMatches": "<p>BGP community values to match when filtering routing information.</p>",
+        "RoutingPolicyAssociationDetail$RoutingPolicyNames": "<p>The names of the routing policies in the association.</p>",
+        "RoutingPolicyAssociationDetail$SharedSegments": "<p>The names of the segments that are shared with each other in the association.</p>",
         "ServiceInsertionSegments$SendVia": "<p>The list of segments associated with the <code>send-via</code> action.</p>",
         "ServiceInsertionSegments$SendTo": "<p>The list of segments associated with the <code>send-to</code> action.</p>"
       }
@@ -709,11 +767,15 @@
         "CoreNetworkSegmentEdgeIdentifier$CoreNetworkId": "<p>The ID of a core network.</p>",
         "CoreNetworkSummary$CoreNetworkId": "<p>The ID of a core network.</p>",
         "CreateConnectAttachmentRequest$CoreNetworkId": "<p>The ID of a core network where you want to create the attachment. </p>",
+        "CreateCoreNetworkPrefixListAssociationRequest$CoreNetworkId": "<p>The ID of the core network to associate with the prefix list.</p>",
+        "CreateCoreNetworkPrefixListAssociationResponse$CoreNetworkId": "<p>The ID of the core network associated with the prefix list.</p>",
         "CreateDirectConnectGatewayAttachmentRequest$CoreNetworkId": "<p>The ID of the Cloud WAN core network that the Direct Connect gateway attachment should be attached to.</p>",
         "CreateSiteToSiteVpnAttachmentRequest$CoreNetworkId": "<p>The ID of a core network where you're creating a site-to-site VPN attachment.</p>",
         "CreateTransitGatewayPeeringRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
         "CreateVpcAttachmentRequest$CoreNetworkId": "<p>The ID of a core network for the VPC attachment.</p>",
         "DeleteCoreNetworkPolicyVersionRequest$CoreNetworkId": "<p>The ID of a core network for the deleted policy.</p>",
+        "DeleteCoreNetworkPrefixListAssociationRequest$CoreNetworkId": "<p>The ID of the core network from which to delete the prefix list association.</p>",
+        "DeleteCoreNetworkPrefixListAssociationResponse$CoreNetworkId": "<p>The ID of the core network from which the prefix list association was deleted.</p>",
         "DeleteCoreNetworkRequest$CoreNetworkId": "<p>The network ID of the deleted core network.</p>",
         "ExecuteCoreNetworkChangeSetRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
         "GetCoreNetworkChangeEventsRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
@@ -723,14 +785,22 @@
         "GetNetworkResourceRelationshipsRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
         "GetNetworkResourcesRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
         "GetNetworkTelemetryRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
+        "ListAttachmentRoutingPolicyAssociationsRequest$CoreNetworkId": "<p>The ID of the core network to list attachment routing policy associations for.</p>",
         "ListAttachmentsRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
         "ListConnectPeersRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
         "ListCoreNetworkPolicyVersionsRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
+        "ListCoreNetworkPrefixListAssociationsRequest$CoreNetworkId": "<p>The ID of the core network to list prefix list associations for.</p>",
+        "ListCoreNetworkRoutingInformationRequest$CoreNetworkId": "<p>The ID of the core network to retrieve routing information for.</p>",
         "ListPeeringsRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
         "NetworkResource$CoreNetworkId": "<p>The ID of a core network.</p>",
         "NetworkTelemetry$CoreNetworkId": "<p>The ID of a core network.</p>",
         "Peering$CoreNetworkId": "<p>The ID of the core network for the peering request.</p>",
+        "PrefixListAssociation$CoreNetworkId": "<p>The core network id in the association.</p>",
+        "PutAttachmentRoutingPolicyLabelRequest$CoreNetworkId": "<p>The ID of the core network containing the attachment.</p>",
+        "PutAttachmentRoutingPolicyLabelResponse$CoreNetworkId": "<p>The ID of the core network containing the attachment.</p>",
         "PutCoreNetworkPolicyRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
+        "RemoveAttachmentRoutingPolicyLabelRequest$CoreNetworkId": "<p>The ID of the core network containing the attachment.</p>",
+        "RemoveAttachmentRoutingPolicyLabelResponse$CoreNetworkId": "<p>The ID of the core network containing the attachment.</p>",
         "RestoreCoreNetworkPolicyVersionRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
         "UpdateCoreNetworkRequest$CoreNetworkId": "<p>The ID of a core network.</p>"
       }
@@ -773,6 +843,7 @@
     "CoreNetworkPolicyDocument": {
       "base": null,
       "refs": {
+        "CoreNetworkChangeValues$RoutingPolicy": "<p>The routing policy configuration in the core network change values.</p>",
         "CoreNetworkPolicy$PolicyDocument": "<p>Describes a core network policy.</p>",
         "CreateCoreNetworkRequest$PolicyDocument": "<p>The policy document for creating a core network.</p>",
         "PutCoreNetworkPolicyRequest$PolicyDocument": "<p>The policy document.</p>"
@@ -805,6 +876,18 @@
       "base": null,
       "refs": {
         "ListCoreNetworkPolicyVersionsResponse$CoreNetworkPolicyVersions": "<p>Describes core network policy versions.</p>"
+      }
+    },
+    "CoreNetworkRoutingInformation": {
+      "base": "<p>Routing information for a core network, including route details and BGP attributes.</p>",
+      "refs": {
+        "CoreNetworkRoutingInformationList$member": null
+      }
+    },
+    "CoreNetworkRoutingInformationList": {
+      "base": null,
+      "refs": {
+        "ListCoreNetworkRoutingInformationResponse$CoreNetworkRoutingInformation": "<p>The list of routing information for the core network.</p>"
       }
     },
     "CoreNetworkSegment": {
@@ -866,6 +949,14 @@
       "refs": {}
     },
     "CreateConnectionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCoreNetworkPrefixListAssociationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCoreNetworkPrefixListAssociationResponse": {
       "base": null,
       "refs": {}
     },
@@ -1036,6 +1127,14 @@
       "refs": {}
     },
     "DeleteCoreNetworkPolicyVersionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCoreNetworkPrefixListAssociationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCoreNetworkPrefixListAssociationResponse": {
       "base": null,
       "refs": {}
     },
@@ -1266,6 +1365,7 @@
         "ConnectPeer$EdgeLocation": "<p>The Connect peer Regions where edges are located.</p>",
         "ConnectPeerSummary$EdgeLocation": "<p>The Region where the edge is located.</p>",
         "CoreNetworkChangeEventValues$EdgeLocation": "<p>The edge location for the core network change event.</p>",
+        "CoreNetworkChangeEventValues$PeerEdgeLocation": "<p>The edge location of the peer in a core network change event.</p>",
         "CoreNetworkEdge$EdgeLocation": "<p>The Region where a core network edge is located.</p>",
         "CoreNetworkNetworkFunctionGroupIdentifier$EdgeLocation": "<p>The location for the core network edge.</p>",
         "CoreNetworkSegmentEdgeIdentifier$EdgeLocation": "<p>The Region where the segment edge is located.</p>",
@@ -1275,11 +1375,13 @@
         "GetNetworkResourcesRequest$AwsRegion": "<p>The Amazon Web Services Region.</p>",
         "GetNetworkTelemetryRequest$AwsRegion": "<p>The Amazon Web Services Region.</p>",
         "ListAttachmentsRequest$EdgeLocation": "<p>The Region where the edge is located.</p>",
+        "ListCoreNetworkRoutingInformationRequest$EdgeLocation": "<p>The edge location to filter routing information by.</p>",
         "ListPeeringsRequest$EdgeLocation": "<p>Returns a list edge locations for the </p>",
         "NetworkResource$AwsRegion": "<p>The Amazon Web Services Region.</p>",
         "NetworkRouteDestination$EdgeLocation": "<p>The edge location for the network destination.</p>",
         "NetworkTelemetry$AwsRegion": "<p>The Amazon Web Services Region.</p>",
-        "Peering$EdgeLocation": "<p>The edge location for the peer.</p>"
+        "Peering$EdgeLocation": "<p>The edge location for the peer.</p>",
+        "RoutingInformationNextHop$EdgeLocation": "<p>The edge location for the next hop.</p>"
       }
     },
     "ExternalRegionCodeList": {
@@ -1287,6 +1389,7 @@
       "refs": {
         "Attachment$EdgeLocations": "<p>The edge locations that the Direct Connect gateway is associated with. This is returned only for Direct Connect gateway attachments. All other attachment types retrun <code>EdgeLocation</code>.</p>",
         "CoreNetworkChangeValues$EdgeLocations": "<p>The Regions where edges are located in a core network. </p>",
+        "CoreNetworkChangeValues$PeerEdgeLocations": "<p>The edge locations of peers in the core network change values.</p>",
         "CoreNetworkNetworkFunctionGroup$EdgeLocations": "<p>The core network edge locations.</p>",
         "CoreNetworkSegment$EdgeLocations": "<p>The Regions where the edges are located.</p>",
         "CreateDirectConnectGatewayAttachmentRequest$EdgeLocations": "<p>One or more core network edge locations that the Direct Connect gateway attachment is associated with. </p>",
@@ -1296,7 +1399,8 @@
     "FilterMap": {
       "base": null,
       "refs": {
-        "GetNetworkRoutesRequest$DestinationFilters": "<p>Filter by route table destination. Possible Values: TRANSIT_GATEWAY_ATTACHMENT_ID, RESOURCE_ID, or RESOURCE_TYPE.</p>"
+        "GetNetworkRoutesRequest$DestinationFilters": "<p>Filter by route table destination. Possible Values: TRANSIT_GATEWAY_ATTACHMENT_ID, RESOURCE_ID, or RESOURCE_TYPE.</p>",
+        "ListCoreNetworkRoutingInformationRequest$NextHopFilters": "<p>Filters to apply based on next hop information.</p>"
       }
     },
     "FilterName": {
@@ -1637,7 +1741,8 @@
         "CreateConnectPeerRequest$CoreNetworkAddress": "<p>A Connect peer core network address. This only applies only when the protocol is <code>GRE</code>.</p>",
         "CreateConnectPeerRequest$PeerAddress": "<p>The Connect peer address.</p>",
         "RouteAnalysisEndpointOptions$IpAddress": "<p>The IP address.</p>",
-        "RouteAnalysisEndpointOptionsSpecification$IpAddress": "<p>The IP address.</p>"
+        "RouteAnalysisEndpointOptionsSpecification$IpAddress": "<p>The IP address.</p>",
+        "RoutingInformationNextHop$IpAddress": "<p>The IP address of the next hop.</p>"
       }
     },
     "Integer": {
@@ -1743,6 +1848,14 @@
         "Link$State": "<p>The state of the link.</p>"
       }
     },
+    "ListAttachmentRoutingPolicyAssociationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAttachmentRoutingPolicyAssociationsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListAttachmentsRequest": {
       "base": null,
       "refs": {}
@@ -1764,6 +1877,22 @@
       "refs": {}
     },
     "ListCoreNetworkPolicyVersionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCoreNetworkPrefixListAssociationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCoreNetworkPrefixListAssociationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCoreNetworkRoutingInformationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCoreNetworkRoutingInformationResponse": {
       "base": null,
       "refs": {}
     },
@@ -1839,9 +1968,12 @@
         "GetSitesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "GetTransitGatewayConnectPeerAssociationsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "GetTransitGatewayRegistrationsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
+        "ListAttachmentRoutingPolicyAssociationsRequest$MaxResults": "<p>The maximum number of results to return in a single page.</p>",
         "ListAttachmentsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListConnectPeersRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListCoreNetworkPolicyVersionsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
+        "ListCoreNetworkPrefixListAssociationsRequest$MaxResults": "<p>The maximum number of results to return in a single page.</p>",
+        "ListCoreNetworkRoutingInformationRequest$MaxResults": "<p>The maximum number of routing information entries to return in a single page.</p>",
         "ListCoreNetworksRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListOrganizationServiceAccessStatusRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListPeeringsRequest$MaxResults": "<p>The maximum number of results to return.</p>"
@@ -1974,12 +2106,18 @@
         "GetTransitGatewayConnectPeerAssociationsResponse$NextToken": "<p>The token to use for the next page of results.</p>",
         "GetTransitGatewayRegistrationsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "GetTransitGatewayRegistrationsResponse$NextToken": "<p>The token for the next page of results.</p>",
+        "ListAttachmentRoutingPolicyAssociationsRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "ListAttachmentRoutingPolicyAssociationsResponse$NextToken": "<p>The token for the next page of results.</p>",
         "ListAttachmentsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "ListAttachmentsResponse$NextToken": "<p>The token for the next page of results.</p>",
         "ListConnectPeersRequest$NextToken": "<p>The token for the next page of results.</p>",
         "ListConnectPeersResponse$NextToken": "<p>The token for the next page of results.</p>",
         "ListCoreNetworkPolicyVersionsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "ListCoreNetworkPolicyVersionsResponse$NextToken": "<p>The token for the next page of results.</p>",
+        "ListCoreNetworkPrefixListAssociationsRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "ListCoreNetworkPrefixListAssociationsResponse$NextToken": "<p>The token for the next page of results.</p>",
+        "ListCoreNetworkRoutingInformationRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "ListCoreNetworkRoutingInformationResponse$NextToken": "<p>The token for the next page of results.</p>",
         "ListCoreNetworksRequest$NextToken": "<p>The token for the next page of results.</p>",
         "ListCoreNetworksResponse$NextToken": "<p>The token for the next page of results.</p>",
         "ListOrganizationServiceAccessStatusRequest$NextToken": "<p>The token for the next page of results.</p>",
@@ -2081,6 +2219,29 @@
         "PeeringError$MissingPermissionsContext": "<p>Provides additional information about missing permissions for the peering error.</p>"
       }
     },
+    "PrefixListArn": {
+      "base": null,
+      "refs": {
+        "CreateCoreNetworkPrefixListAssociationRequest$PrefixListArn": "<p>The ARN of the prefix list to associate with the core network.</p>",
+        "CreateCoreNetworkPrefixListAssociationResponse$PrefixListArn": "<p>The ARN of the prefix list that was associated with the core network.</p>",
+        "DeleteCoreNetworkPrefixListAssociationRequest$PrefixListArn": "<p>The ARN of the prefix list to disassociate from the core network.</p>",
+        "DeleteCoreNetworkPrefixListAssociationResponse$PrefixListArn": "<p>The ARN of the prefix list that was disassociated from the core network.</p>",
+        "ListCoreNetworkPrefixListAssociationsRequest$PrefixListArn": "<p>The ARN of a specific prefix list to filter the associations.</p>",
+        "PrefixListAssociation$PrefixListArn": "<p>The ARN of the prefix list in the association.</p>"
+      }
+    },
+    "PrefixListAssociation": {
+      "base": "<p>Information about a prefix list association with a core network.</p>",
+      "refs": {
+        "PrefixListAssociationList$member": null
+      }
+    },
+    "PrefixListAssociationList": {
+      "base": null,
+      "refs": {
+        "ListCoreNetworkPrefixListAssociationsResponse$PrefixListAssociations": "<p>The list of prefix list associations for the core network.</p>"
+      }
+    },
     "ProposedNetworkFunctionGroupChange": {
       "base": "<p>Describes proposed changes to a network function group. </p>",
       "refs": {
@@ -2092,6 +2253,14 @@
       "refs": {
         "Attachment$ProposedSegmentChange": "<p>The attachment to move from one segment to another.</p>"
       }
+    },
+    "PutAttachmentRoutingPolicyLabelRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutAttachmentRoutingPolicyLabelResponse": {
+      "base": null,
+      "refs": {}
     },
     "PutCoreNetworkPolicyRequest": {
       "base": null,
@@ -2154,6 +2323,14 @@
       "refs": {
         "GetNetworkResourceRelationshipsResponse$Relationships": "<p>The resource relationships.</p>"
       }
+    },
+    "RemoveAttachmentRoutingPolicyLabelRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RemoveAttachmentRoutingPolicyLabelResponse": {
+      "base": null,
+      "refs": {}
     },
     "ResourceArn": {
       "base": null,
@@ -2300,6 +2477,32 @@
       "base": null,
       "refs": {
         "GetNetworkRoutesRequest$Types": "<p>The route types.</p>"
+      }
+    },
+    "RoutingInformationNextHop": {
+      "base": "<p>Information about the next hop for a route in the core network.</p>",
+      "refs": {
+        "CoreNetworkRoutingInformation$NextHop": "<p>The next hop information for the route.</p>"
+      }
+    },
+    "RoutingPolicyAssociationDetail": {
+      "base": "<p>Information about a routing policy association.</p>",
+      "refs": {
+        "RoutingPolicyAssociationDetailsList$member": null
+      }
+    },
+    "RoutingPolicyAssociationDetailsList": {
+      "base": null,
+      "refs": {
+        "CoreNetworkChangeEventValues$RoutingPolicyAssociationDetails": "<p>The names of the routing policies and other association details in the core network change values.</p>",
+        "CoreNetworkChangeValues$RoutingPolicyAssociationDetails": "<p>The names of the routing policies and other association details in the core network change values.</p>"
+      }
+    },
+    "RoutingPolicyDirection": {
+      "base": null,
+      "refs": {
+        "CoreNetworkChangeEventValues$RoutingPolicyDirection": "<p>The routing policy direction (inbound/outbound) in a core network change event.</p>",
+        "CoreNetworkChangeValues$RoutingPolicyDirection": "<p>The routing policy direction (inbound/outbound) in a core network change event.</p>"
       }
     },
     "SLRDeploymentStatus": {

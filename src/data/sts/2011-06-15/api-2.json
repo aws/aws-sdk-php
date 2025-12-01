@@ -133,6 +133,23 @@
         "resultWrapper":"GetCallerIdentityResult"
       }
     },
+    "GetDelegatedAccessToken":{
+      "name":"GetDelegatedAccessToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDelegatedAccessTokenRequest"},
+      "output":{
+        "shape":"GetDelegatedAccessTokenResponse",
+        "resultWrapper":"GetDelegatedAccessTokenResult"
+      },
+      "errors":[
+        {"shape":"ExpiredTradeInTokenException"},
+        {"shape":"RegionDisabledException"},
+        {"shape":"PackedPolicyTooLargeException"}
+      ]
+    },
     "GetFederationToken":{
       "name":"GetFederationToken",
       "http":{
@@ -163,6 +180,23 @@
       },
       "errors":[
         {"shape":"RegionDisabledException"}
+      ]
+    },
+    "GetWebIdentityToken":{
+      "name":"GetWebIdentityToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetWebIdentityTokenRequest"},
+      "output":{
+        "shape":"GetWebIdentityTokenResponse",
+        "resultWrapper":"GetWebIdentityTokenResult"
+      },
+      "errors":[
+        {"shape":"SessionDurationEscalationException"},
+        {"shape":"OutboundWebIdentityFederationDisabledException"},
+        {"shape":"JWTPayloadSizeExceededException"}
       ]
     }
   },
@@ -327,6 +361,18 @@
       },
       "exception":true
     },
+    "ExpiredTradeInTokenException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"expiredTradeInTokenExceptionMessage"}
+      },
+      "error":{
+        "code":"ExpiredTradeInTokenException",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "FederatedUser":{
       "type":"structure",
       "required":[
@@ -363,6 +409,21 @@
         "Arn":{"shape":"arnType"}
       }
     },
+    "GetDelegatedAccessTokenRequest":{
+      "type":"structure",
+      "required":["TradeInToken"],
+      "members":{
+        "TradeInToken":{"shape":"tradeInTokenType"}
+      }
+    },
+    "GetDelegatedAccessTokenResponse":{
+      "type":"structure",
+      "members":{
+        "Credentials":{"shape":"Credentials"},
+        "PackedPolicySize":{"shape":"nonNegativeIntegerType"},
+        "AssumedPrincipal":{"shape":"arnType"}
+      }
+    },
     "GetFederationTokenRequest":{
       "type":"structure",
       "required":["Name"],
@@ -394,6 +455,26 @@
       "type":"structure",
       "members":{
         "Credentials":{"shape":"Credentials"}
+      }
+    },
+    "GetWebIdentityTokenRequest":{
+      "type":"structure",
+      "required":[
+        "Audience",
+        "SigningAlgorithm"
+      ],
+      "members":{
+        "Audience":{"shape":"webIdentityTokenAudienceListType"},
+        "DurationSeconds":{"shape":"webIdentityTokenDurationSecondsType"},
+        "SigningAlgorithm":{"shape":"jwtAlgorithmType"},
+        "Tags":{"shape":"tagListType"}
+      }
+    },
+    "GetWebIdentityTokenResponse":{
+      "type":"structure",
+      "members":{
+        "WebIdentityToken":{"shape":"webIdentityTokenType"},
+        "Expiration":{"shape":"dateType"}
       }
     },
     "IDPCommunicationErrorException":{
@@ -445,6 +526,18 @@
       "exception":true
     },
     "Issuer":{"type":"string"},
+    "JWTPayloadSizeExceededException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"jwtPayloadSizeExceededException"}
+      },
+      "error":{
+        "code":"JWTPayloadSizeExceededException",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "MalformedPolicyDocumentException":{
       "type":"structure",
       "members":{
@@ -458,6 +551,18 @@
       "exception":true
     },
     "NameQualifier":{"type":"string"},
+    "OutboundWebIdentityFederationDisabledException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"outboundWebIdentityFederationDisabledException"}
+      },
+      "error":{
+        "code":"OutboundWebIdentityFederationDisabledException",
+        "httpStatusCode":403,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "PackedPolicyTooLargeException":{
       "type":"structure",
       "members":{
@@ -486,7 +591,8 @@
     "ProvidedContextsListType":{
       "type":"list",
       "member":{"shape":"ProvidedContext"},
-      "max":5
+      "max":5,
+      "min":1
     },
     "RegionDisabledException":{
       "type":"structure",
@@ -510,6 +616,18 @@
       "max":100000,
       "min":4,
       "sensitive":true
+    },
+    "SessionDurationEscalationException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"sessionDurationEscalationException"}
+      },
+      "error":{
+        "code":"SessionDurationEscalationException",
+        "httpStatusCode":403,
+        "senderFault":true
+      },
+      "exception":true
     },
     "Subject":{"type":"string"},
     "SubjectType":{"type":"string"},
@@ -576,6 +694,7 @@
       "min":1
     },
     "expiredIdentityTokenMessage":{"type":"string"},
+    "expiredTradeInTokenExceptionMessage":{"type":"string"},
     "externalIdType":{
       "type":"string",
       "max":1224,
@@ -592,11 +711,18 @@
     "idpRejectedClaimMessage":{"type":"string"},
     "invalidAuthorizationMessage":{"type":"string"},
     "invalidIdentityTokenMessage":{"type":"string"},
+    "jwtAlgorithmType":{
+      "type":"string",
+      "max":5,
+      "min":5
+    },
+    "jwtPayloadSizeExceededException":{"type":"string"},
     "malformedPolicyDocumentMessage":{"type":"string"},
     "nonNegativeIntegerType":{
       "type":"integer",
       "min":0
     },
+    "outboundWebIdentityFederationDisabledException":{"type":"string"},
     "packedPolicyTooLargeMessage":{"type":"string"},
     "policyDescriptorListType":{
       "type":"list",
@@ -620,6 +746,7 @@
       "min":9,
       "pattern":"[\\w+=/:,.@-]*"
     },
+    "sessionDurationEscalationException":{"type":"string"},
     "sessionPolicyDocumentType":{
       "type":"string",
       "max":2048,
@@ -661,6 +788,10 @@
       "pattern":"[\\d]*"
     },
     "tokenType":{"type":"string"},
+    "tradeInTokenType":{
+      "type":"string",
+      "sensitive":true
+    },
     "unrestrictedSessionPolicyDocumentType":{
       "type":"string",
       "min":1,
@@ -682,6 +813,26 @@
       "type":"string",
       "max":255,
       "min":6
+    },
+    "webIdentityTokenAudienceListType":{
+      "type":"list",
+      "member":{"shape":"webIdentityTokenAudienceStringType"},
+      "max":10,
+      "min":1
+    },
+    "webIdentityTokenAudienceStringType":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
+    "webIdentityTokenDurationSecondsType":{
+      "type":"integer",
+      "max":3600,
+      "min":60
+    },
+    "webIdentityTokenType":{
+      "type":"string",
+      "sensitive":true
     }
   }
 }

@@ -396,6 +396,26 @@
             "type": "structure",
             "members": []
         },
+        "AppliedGuardrailDetails": {
+            "type": "structure",
+            "members": {
+                "guardrailId": {
+                    "shape": "GuardrailId"
+                },
+                "guardrailVersion": {
+                    "shape": "GuardrailVersion"
+                },
+                "guardrailArn": {
+                    "shape": "GuardrailArn"
+                },
+                "guardrailOrigin": {
+                    "shape": "GuardrailOriginList"
+                },
+                "guardrailOwnership": {
+                    "shape": "GuardrailOwnership"
+                }
+            }
+        },
         "ApplyGuardrailRequest": {
             "type": "structure",
             "required": [
@@ -623,6 +643,9 @@
                 "title": {
                     "shape": "String"
                 },
+                "source": {
+                    "shape": "String"
+                },
                 "sourceContent": {
                     "shape": "CitationSourceContentList"
                 },
@@ -649,6 +672,9 @@
         "CitationLocation": {
             "type": "structure",
             "members": {
+                "web": {
+                    "shape": "WebLocation"
+                },
                 "documentChar": {
                     "shape": "DocumentCharLocation"
                 },
@@ -657,6 +683,9 @@
                 },
                 "documentChunk": {
                     "shape": "DocumentChunkLocation"
+                },
+                "searchResultLocation": {
+                    "shape": "SearchResultLocation"
                 }
             },
             "union": true
@@ -724,6 +753,9 @@
                 "title": {
                     "shape": "String"
                 },
+                "source": {
+                    "shape": "String"
+                },
                 "sourceContent": {
                     "shape": "CitationSourceContentListDelta"
                 },
@@ -777,6 +809,9 @@
                 },
                 "citationsContent": {
                     "shape": "CitationsContentBlock"
+                },
+                "searchResult": {
+                    "shape": "SearchResultBlock"
                 }
             },
             "union": true
@@ -789,6 +824,9 @@
                 },
                 "toolUse": {
                     "shape": "ToolUseBlockDelta"
+                },
+                "toolResult": {
+                    "shape": "ToolResultBlocksDelta"
                 },
                 "reasoningContent": {
                     "shape": "ReasoningContentBlockDelta"
@@ -820,6 +858,9 @@
             "members": {
                 "toolUse": {
                     "shape": "ToolUseBlockStart"
+                },
+                "toolResult": {
+                    "shape": "ToolResultBlockStart"
                 }
             },
             "union": true
@@ -931,6 +972,9 @@
                 },
                 "performanceConfig": {
                     "shape": "PerformanceConfiguration"
+                },
+                "serviceTier": {
+                    "shape": "ServiceTier"
                 }
             }
         },
@@ -976,6 +1020,9 @@
                 },
                 "performanceConfig": {
                     "shape": "PerformanceConfiguration"
+                },
+                "serviceTier": {
+                    "shape": "ServiceTier"
                 }
             }
         },
@@ -997,6 +1044,9 @@
                 },
                 "performanceConfig": {
                     "shape": "PerformanceConfiguration"
+                },
+                "serviceTier": {
+                    "shape": "ServiceTier"
                 }
             },
             "event": true
@@ -1091,6 +1141,9 @@
                 },
                 "performanceConfig": {
                     "shape": "PerformanceConfiguration"
+                },
+                "serviceTier": {
+                    "shape": "ServiceTier"
                 }
             }
         },
@@ -1135,6 +1188,12 @@
                 },
                 "system": {
                     "shape": "SystemContentBlocks"
+                },
+                "toolConfig": {
+                    "shape": "ToolConfiguration"
+                },
+                "additionalModelRequestFields": {
+                    "shape": "Document"
                 }
             }
         },
@@ -1426,6 +1485,12 @@
                 "GUARDRAIL_INTERVENED"
             ]
         },
+        "GuardrailArn": {
+            "type": "string",
+            "max": 2048,
+            "min": 0,
+            "pattern": "(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:guardrail\/[a-z0-9]+)"
+        },
         "GuardrailAssessment": {
             "type": "structure",
             "members": {
@@ -1449,6 +1514,9 @@
                 },
                 "invocationMetrics": {
                     "shape": "GuardrailInvocationMetrics"
+                },
+                "appliedGuardrailDetails": {
+                    "shape": "AppliedGuardrailDetails"
                 }
             }
         },
@@ -1759,10 +1827,6 @@
         },
         "GuardrailConfiguration": {
             "type": "structure",
-            "required": [
-                "guardrailIdentifier",
-                "guardrailVersion"
-            ],
             "members": {
                 "guardrailIdentifier": {
                     "shape": "GuardrailIdentifier"
@@ -2082,11 +2146,17 @@
                 "shape": "GuardrailCustomWord"
             }
         },
+        "GuardrailId": {
+            "type": "string",
+            "max": 2048,
+            "min": 0,
+            "pattern": "([a-z0-9]+)"
+        },
         "GuardrailIdentifier": {
             "type": "string",
             "max": 2048,
             "min": 0,
-            "pattern": "(([a-z0-9]+)|(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:guardrail\/[a-z0-9]+))"
+            "pattern": "(|([a-z0-9]+)|(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:guardrail\/[a-z0-9]+))"
         },
         "GuardrailImageBlock": {
             "type": "structure",
@@ -2184,6 +2254,20 @@
                 "PROFANITY"
             ]
         },
+        "GuardrailOrigin": {
+            "type": "string",
+            "enum": [
+                "REQUEST",
+                "ACCOUNT_ENFORCED",
+                "ORGANIZATION_ENFORCED"
+            ]
+        },
+        "GuardrailOriginList": {
+            "type": "list",
+            "member": {
+                "shape": "GuardrailOrigin"
+            }
+        },
         "GuardrailOutputContent": {
             "type": "structure",
             "members": {
@@ -2207,6 +2291,13 @@
         },
         "GuardrailOutputText": {
             "type": "string"
+        },
+        "GuardrailOwnership": {
+            "type": "string",
+            "enum": [
+                "SELF",
+                "CROSS_ACCOUNT"
+            ]
         },
         "GuardrailPiiEntityFilter": {
             "type": "structure",
@@ -2338,10 +2429,6 @@
         },
         "GuardrailStreamConfiguration": {
             "type": "structure",
-            "required": [
-                "guardrailIdentifier",
-                "guardrailVersion"
-            ],
             "members": {
                 "guardrailIdentifier": {
                     "shape": "GuardrailIdentifier"
@@ -2512,7 +2599,7 @@
         },
         "GuardrailVersion": {
             "type": "string",
-            "pattern": "(([1-9][0-9]{0,7})|(DRAFT))"
+            "pattern": "(|([1-9][0-9]{0,7})|(DRAFT))"
         },
         "GuardrailWordPolicyAction": {
             "type": "string",
@@ -2702,6 +2789,11 @@
                     "shape": "PerformanceConfigLatency",
                     "location": "header",
                     "locationName": "X-Amzn-Bedrock-PerformanceConfig-Latency"
+                },
+                "serviceTier": {
+                    "shape": "ServiceTierType",
+                    "location": "header",
+                    "locationName": "X-Amzn-Bedrock-Service-Tier"
                 }
             },
             "payload": "body"
@@ -2725,6 +2817,11 @@
                     "shape": "PerformanceConfigLatency",
                     "location": "header",
                     "locationName": "X-Amzn-Bedrock-PerformanceConfig-Latency"
+                },
+                "serviceTier": {
+                    "shape": "ServiceTierType",
+                    "location": "header",
+                    "locationName": "X-Amzn-Bedrock-Service-Tier"
                 }
             },
             "payload": "body"
@@ -2849,6 +2946,11 @@
                     "shape": "PerformanceConfigLatency",
                     "location": "header",
                     "locationName": "X-Amzn-Bedrock-PerformanceConfig-Latency"
+                },
+                "serviceTier": {
+                    "shape": "ServiceTierType",
+                    "location": "header",
+                    "locationName": "X-Amzn-Bedrock-Service-Tier"
                 }
             },
             "payload": "body"
@@ -2872,6 +2974,11 @@
                     "shape": "PerformanceConfigLatency",
                     "location": "header",
                     "locationName": "X-Amzn-Bedrock-PerformanceConfig-Latency"
+                },
+                "serviceTier": {
+                    "shape": "ServiceTierType",
+                    "location": "header",
+                    "locationName": "X-Amzn-Bedrock-Service-Tier"
                 }
             },
             "payload": "body"
@@ -3282,6 +3389,74 @@
             "min": 1,
             "pattern": "s3:\/\/[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9](\/.*)?"
         },
+        "SearchResultBlock": {
+            "type": "structure",
+            "required": [
+                "source",
+                "title",
+                "content"
+            ],
+            "members": {
+                "source": {
+                    "shape": "String"
+                },
+                "title": {
+                    "shape": "String"
+                },
+                "content": {
+                    "shape": "SearchResultContentBlocks"
+                },
+                "citations": {
+                    "shape": "CitationsConfig"
+                }
+            }
+        },
+        "SearchResultContentBlock": {
+            "type": "structure",
+            "required": [
+                "text"
+            ],
+            "members": {
+                "text": {
+                    "shape": "String"
+                }
+            }
+        },
+        "SearchResultContentBlocks": {
+            "type": "list",
+            "member": {
+                "shape": "SearchResultContentBlock"
+            }
+        },
+        "SearchResultLocation": {
+            "type": "structure",
+            "members": {
+                "searchResultIndex": {
+                    "shape": "SearchResultLocationSearchResultIndexInteger"
+                },
+                "start": {
+                    "shape": "SearchResultLocationStartInteger"
+                },
+                "end": {
+                    "shape": "SearchResultLocationEndInteger"
+                }
+            }
+        },
+        "SearchResultLocationEndInteger": {
+            "type": "integer",
+            "box": true,
+            "min": 0
+        },
+        "SearchResultLocationSearchResultIndexInteger": {
+            "type": "integer",
+            "box": true,
+            "min": 0
+        },
+        "SearchResultLocationStartInteger": {
+            "type": "integer",
+            "box": true,
+            "min": 0
+        },
         "ServiceQuotaExceededException": {
             "type": "structure",
             "members": {
@@ -3294,6 +3469,26 @@
                 "senderFault": true
             },
             "exception": true
+        },
+        "ServiceTier": {
+            "type": "structure",
+            "required": [
+                "type"
+            ],
+            "members": {
+                "type": {
+                    "shape": "ServiceTierType"
+                }
+            }
+        },
+        "ServiceTierType": {
+            "type": "string",
+            "enum": [
+                "priority",
+                "default",
+                "flex",
+                "reserved"
+            ]
         },
         "ServiceUnavailableException": {
             "type": "structure",
@@ -3409,6 +3604,17 @@
             "type": "list",
             "member": {
                 "shape": "SystemContentBlock"
+            }
+        },
+        "SystemTool": {
+            "type": "structure",
+            "required": [
+                "name"
+            ],
+            "members": {
+                "name": {
+                    "shape": "ToolName"
+                }
             }
         },
         "Tag": {
@@ -3527,6 +3733,9 @@
                 "toolSpec": {
                     "shape": "ToolSpecification"
                 },
+                "systemTool": {
+                    "shape": "SystemTool"
+                },
                 "cachePoint": {
                     "shape": "CachePointBlock"
                 }
@@ -3599,7 +3808,42 @@
                 },
                 "status": {
                     "shape": "ToolResultStatus"
+                },
+                "type": {
+                    "shape": "String"
                 }
+            }
+        },
+        "ToolResultBlockDelta": {
+            "type": "structure",
+            "members": {
+                "text": {
+                    "shape": "String"
+                }
+            },
+            "union": true
+        },
+        "ToolResultBlockStart": {
+            "type": "structure",
+            "required": [
+                "toolUseId"
+            ],
+            "members": {
+                "toolUseId": {
+                    "shape": "ToolUseId"
+                },
+                "type": {
+                    "shape": "String"
+                },
+                "status": {
+                    "shape": "ToolResultStatus"
+                }
+            }
+        },
+        "ToolResultBlocksDelta": {
+            "type": "list",
+            "member": {
+                "shape": "ToolResultBlockDelta"
             }
         },
         "ToolResultContentBlock": {
@@ -3619,6 +3863,9 @@
                 },
                 "video": {
                     "shape": "VideoBlock"
+                },
+                "searchResult": {
+                    "shape": "SearchResultBlock"
                 }
             },
             "union": true
@@ -3670,6 +3917,9 @@
                 },
                 "input": {
                     "shape": "Document"
+                },
+                "type": {
+                    "shape": "ToolUseType"
                 }
             }
         },
@@ -3696,6 +3946,9 @@
                 },
                 "name": {
                     "shape": "ToolName"
+                },
+                "type": {
+                    "shape": "ToolUseType"
                 }
             }
         },
@@ -3704,6 +3957,12 @@
             "max": 64,
             "min": 1,
             "pattern": "[a-zA-Z0-9_-]+"
+        },
+        "ToolUseType": {
+            "type": "string",
+            "enum": [
+                "server_tool_use"
+            ]
         },
         "Trace": {
             "type": "string",
@@ -3770,6 +4029,17 @@
         "VideoSourceBytesBlob": {
             "type": "blob",
             "min": 1
+        },
+        "WebLocation": {
+            "type": "structure",
+            "members": {
+                "url": {
+                    "shape": "String"
+                },
+                "domain": {
+                    "shape": "String"
+                }
+            }
         }
     }
 }

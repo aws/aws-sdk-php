@@ -1103,6 +1103,24 @@
         {"shape":"InvalidInputException"}
       ]
     },
+    "DeleteIntegrationResourceProperty":{
+      "name":"DeleteIntegrationResourceProperty",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIntegrationResourcePropertyRequest"},
+      "output":{"shape":"DeleteIntegrationResourcePropertyResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"}
+      ]
+    },
     "DeleteIntegrationTableProperties":{
       "name":"DeleteIntegrationTableProperties",
       "http":{
@@ -2876,6 +2894,24 @@
         {"shape":"ValidationException"},
         {"shape":"FederationSourceException"},
         {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListIntegrationResourceProperties":{
+      "name":"ListIntegrationResourceProperties",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListIntegrationResourcePropertiesRequest"},
+      "output":{"shape":"ListIntegrationResourcePropertiesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidInputException"}
       ]
     },
     "ListJobs":{
@@ -6783,7 +6819,8 @@
       "required":["InstanceArn"],
       "members":{
         "InstanceArn":{"shape":"IdentityCenterInstanceArn"},
-        "Scopes":{"shape":"IdentityCenterScopesList"}
+        "Scopes":{"shape":"IdentityCenterScopesList"},
+        "UserBackgroundSessionsEnabled":{"shape":"NullableBoolean"}
       }
     },
     "CreateGlueIdentityCenterConfigurationResponse":{
@@ -6829,8 +6866,8 @@
       ],
       "members":{
         "IntegrationName":{"shape":"String128"},
-        "SourceArn":{"shape":"String128"},
-        "TargetArn":{"shape":"String128"},
+        "SourceArn":{"shape":"String512"},
+        "TargetArn":{"shape":"String512"},
         "Description":{"shape":"IntegrationDescription"},
         "DataFilter":{"shape":"String2048"},
         "KmsKeyId":{"shape":"String2048"},
@@ -6843,16 +6880,18 @@
       "type":"structure",
       "required":["ResourceArn"],
       "members":{
-        "ResourceArn":{"shape":"String128"},
+        "ResourceArn":{"shape":"String512"},
         "SourceProcessingProperties":{"shape":"SourceProcessingProperties"},
-        "TargetProcessingProperties":{"shape":"TargetProcessingProperties"}
+        "TargetProcessingProperties":{"shape":"TargetProcessingProperties"},
+        "Tags":{"shape":"IntegrationTagsList"}
       }
     },
     "CreateIntegrationResourcePropertyResponse":{
       "type":"structure",
       "required":["ResourceArn"],
       "members":{
-        "ResourceArn":{"shape":"String128"},
+        "ResourceArn":{"shape":"String512"},
+        "ResourcePropertyArn":{"shape":"String512"},
         "SourceProcessingProperties":{"shape":"SourceProcessingProperties"},
         "TargetProcessingProperties":{"shape":"TargetProcessingProperties"}
       }
@@ -6868,8 +6907,8 @@
         "CreateTime"
       ],
       "members":{
-        "SourceArn":{"shape":"String128"},
-        "TargetArn":{"shape":"String128"},
+        "SourceArn":{"shape":"String512"},
+        "TargetArn":{"shape":"String512"},
         "IntegrationName":{"shape":"String128"},
         "Description":{"shape":"IntegrationDescription"},
         "IntegrationArn":{"shape":"String128"},
@@ -6890,7 +6929,7 @@
         "TableName"
       ],
       "members":{
-        "ResourceArn":{"shape":"String128"},
+        "ResourceArn":{"shape":"String512"},
         "TableName":{"shape":"String128"},
         "SourceTableConfig":{"shape":"SourceTableConfig"},
         "TargetTableConfig":{"shape":"TargetTableConfig"}
@@ -7719,7 +7758,8 @@
         "Result":{"shape":"DataQualityRuleResultStatus"},
         "EvaluatedMetrics":{"shape":"EvaluatedMetricsMap"},
         "EvaluatedRule":{"shape":"DataQualityRuleResultDescription"},
-        "RuleMetrics":{"shape":"RuleMetricsMap"}
+        "RuleMetrics":{"shape":"RuleMetricsMap"},
+        "Labels":{"shape":"Labels"}
       }
     },
     "DataQualityRuleResultDescription":{
@@ -8134,6 +8174,17 @@
         "IntegrationIdentifier":{"shape":"String128"}
       }
     },
+    "DeleteIntegrationResourcePropertyRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"String512"}
+      }
+    },
+    "DeleteIntegrationResourcePropertyResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteIntegrationResponse":{
       "type":"structure",
       "required":[
@@ -8145,8 +8196,8 @@
         "CreateTime"
       ],
       "members":{
-        "SourceArn":{"shape":"String128"},
-        "TargetArn":{"shape":"String128"},
+        "SourceArn":{"shape":"String512"},
+        "TargetArn":{"shape":"String512"},
         "IntegrationName":{"shape":"String128"},
         "Description":{"shape":"IntegrationDescription"},
         "IntegrationArn":{"shape":"String128"},
@@ -8166,7 +8217,7 @@
         "TableName"
       ],
       "members":{
-        "ResourceArn":{"shape":"String128"},
+        "ResourceArn":{"shape":"String512"},
         "TableName":{"shape":"String128"}
       }
     },
@@ -8496,7 +8547,7 @@
         "IntegrationArn":{"shape":"String128"},
         "Marker":{"shape":"String128"},
         "MaxRecords":{"shape":"IntegrationInteger"},
-        "TargetArn":{"shape":"String128"}
+        "TargetArn":{"shape":"String512"}
       }
     },
     "DescribeInboundIntegrationsResponse":{
@@ -8804,6 +8855,11 @@
       "type":"string",
       "pattern":"([\\u0009\\u000B\\u000C\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF])*"
     },
+    "EncryptedKeyMetadataString":{
+      "type":"string",
+      "max":2056,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
     "EncryptionAtRest":{
       "type":"structure",
       "required":["CatalogEncryptionMode"],
@@ -8821,6 +8877,11 @@
         "JobBookmarksEncryption":{"shape":"JobBookmarksEncryption"},
         "DataQualityEncryption":{"shape":"DataQualityEncryption"}
       }
+    },
+    "EncryptionKeyIdString":{
+      "type":"string",
+      "max":2056,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "Entity":{
       "type":"structure",
@@ -9264,6 +9325,14 @@
       "type":"string",
       "max":128,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
+    },
+    "FunctionType":{
+      "type":"string",
+      "enum":[
+        "REGULAR_FUNCTION",
+        "AGGREGATE_FUNCTION",
+        "STORED_PROCEDURE"
+      ]
     },
     "Generic512CharString":{
       "type":"string",
@@ -9856,20 +9925,22 @@
       "members":{
         "ApplicationArn":{"shape":"ApplicationArn"},
         "InstanceArn":{"shape":"IdentityCenterInstanceArn"},
-        "Scopes":{"shape":"OrchestrationStringList"}
+        "Scopes":{"shape":"OrchestrationStringList"},
+        "UserBackgroundSessionsEnabled":{"shape":"NullableBoolean"}
       }
     },
     "GetIntegrationResourcePropertyRequest":{
       "type":"structure",
       "required":["ResourceArn"],
       "members":{
-        "ResourceArn":{"shape":"String128"}
+        "ResourceArn":{"shape":"String512"}
       }
     },
     "GetIntegrationResourcePropertyResponse":{
       "type":"structure",
       "members":{
-        "ResourceArn":{"shape":"String128"},
+        "ResourceArn":{"shape":"String512"},
+        "ResourcePropertyArn":{"shape":"String512"},
         "SourceProcessingProperties":{"shape":"SourceProcessingProperties"},
         "TargetProcessingProperties":{"shape":"TargetProcessingProperties"}
       }
@@ -9881,14 +9952,14 @@
         "TableName"
       ],
       "members":{
-        "ResourceArn":{"shape":"String128"},
+        "ResourceArn":{"shape":"String512"},
         "TableName":{"shape":"String128"}
       }
     },
     "GetIntegrationTablePropertiesResponse":{
       "type":"structure",
       "members":{
-        "ResourceArn":{"shape":"String128"},
+        "ResourceArn":{"shape":"String512"},
         "TableName":{"shape":"String128"},
         "SourceTableConfig":{"shape":"SourceTableConfig"},
         "TargetTableConfig":{"shape":"TargetTableConfig"}
@@ -10398,6 +10469,7 @@
         "Name":{"shape":"NameString"},
         "TransactionId":{"shape":"TransactionIdString"},
         "QueryAsOfTime":{"shape":"Timestamp"},
+        "AuditContext":{"shape":"AuditContext"},
         "IncludeStatusDetails":{"shape":"BooleanNullable"}
       }
     },
@@ -10462,6 +10534,7 @@
         "MaxResults":{"shape":"CatalogGetterPageSize"},
         "TransactionId":{"shape":"TransactionIdString"},
         "QueryAsOfTime":{"shape":"Timestamp"},
+        "AuditContext":{"shape":"AuditContext"},
         "IncludeStatusDetails":{"shape":"BooleanNullable"},
         "AttributesToGet":{"shape":"TableAttributesList"}
       }
@@ -10602,6 +10675,7 @@
         "CellFilters":{"shape":"ColumnRowFilterList"},
         "QueryAuthorizationId":{"shape":"HashString"},
         "IsMultiDialectView":{"shape":"Boolean"},
+        "IsMaterializedView":{"shape":"Boolean"},
         "ResourceArn":{"shape":"ArnString"},
         "IsProtected":{"shape":"Boolean"},
         "Permissions":{"shape":"PermissionList"},
@@ -10650,6 +10724,7 @@
         "CatalogId":{"shape":"CatalogIdString"},
         "DatabaseName":{"shape":"NameString"},
         "Pattern":{"shape":"NameString"},
+        "FunctionType":{"shape":"FunctionType"},
         "NextToken":{"shape":"Token"},
         "MaxResults":{"shape":"CatalogGetterPageSize"}
       }
@@ -10961,6 +11036,19 @@
       "members":{},
       "document":true
     },
+    "IcebergEncryptedKey":{
+      "type":"structure",
+      "required":[
+        "KeyId",
+        "EncryptedKeyMetadata"
+      ],
+      "members":{
+        "KeyId":{"shape":"EncryptionKeyIdString"},
+        "EncryptedKeyMetadata":{"shape":"EncryptedKeyMetadataString"},
+        "EncryptedById":{"shape":"EncryptionKeyIdString"},
+        "Properties":{"shape":"StringToStringMap"}
+      }
+    },
     "IcebergInput":{
       "type":"structure",
       "required":["MetadataOperation"],
@@ -11119,7 +11207,9 @@
         "Name":{"shape":"ColumnNameString"},
         "Type":{"shape":"IcebergDocument"},
         "Required":{"shape":"Boolean"},
-        "Doc":{"shape":"CommentString"}
+        "Doc":{"shape":"CommentString"},
+        "InitialDefault":{"shape":"IcebergDocument"},
+        "WriteDefault":{"shape":"IcebergDocument"}
       }
     },
     "IcebergStructFieldList":{
@@ -11141,7 +11231,10 @@
         "PartitionSpec":{"shape":"IcebergPartitionSpec"},
         "SortOrder":{"shape":"IcebergSortOrder"},
         "Location":{"shape":"LocationString"},
-        "Properties":{"shape":"StringToStringMap"}
+        "Properties":{"shape":"StringToStringMap"},
+        "Action":{"shape":"IcebergUpdateAction"},
+        "EncryptionKey":{"shape":"IcebergEncryptedKey"},
+        "KeyId":{"shape":"EncryptionKeyIdString"}
       }
     },
     "IcebergTableUpdateList":{
@@ -11171,6 +11264,22 @@
       "member":{"shape":"IcebergTarget"}
     },
     "IcebergTransformString":{"type":"string"},
+    "IcebergUpdateAction":{
+      "type":"string",
+      "enum":[
+        "add-schema",
+        "set-current-schema",
+        "add-spec",
+        "set-default-spec",
+        "add-sort-order",
+        "set-default-sort-order",
+        "set-location",
+        "set-properties",
+        "remove-properties",
+        "add-encryption-key",
+        "remove-encryption-key"
+      ]
+    },
     "IdString":{
       "type":"string",
       "max":255,
@@ -11251,8 +11360,8 @@
         "CreateTime"
       ],
       "members":{
-        "SourceArn":{"shape":"String128"},
-        "TargetArn":{"shape":"String128"},
+        "SourceArn":{"shape":"String512"},
+        "TargetArn":{"shape":"String512"},
         "IntegrationArn":{"shape":"String128"},
         "Status":{"shape":"IntegrationStatus"},
         "CreateTime":{"shape":"IntegrationTimestamp"},
@@ -11297,8 +11406,8 @@
         "CreateTime"
       ],
       "members":{
-        "SourceArn":{"shape":"String128"},
-        "TargetArn":{"shape":"String128"},
+        "SourceArn":{"shape":"String512"},
+        "TargetArn":{"shape":"String512"},
         "Description":{"shape":"IntegrationDescription"},
         "IntegrationName":{"shape":"String128"},
         "IntegrationArn":{"shape":"String128"},
@@ -11390,6 +11499,35 @@
         "Message":{"shape":"IntegrationErrorMessage"}
       },
       "exception":true
+    },
+    "IntegrationResourceProperty":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"String512"},
+        "ResourcePropertyArn":{"shape":"String512"},
+        "SourceProcessingProperties":{"shape":"SourceProcessingProperties"},
+        "TargetProcessingProperties":{"shape":"TargetProcessingProperties"}
+      }
+    },
+    "IntegrationResourcePropertyFilter":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"String128"},
+        "Values":{"shape":"IntegrationResourcePropertyFilterValues"}
+      }
+    },
+    "IntegrationResourcePropertyFilterList":{
+      "type":"list",
+      "member":{"shape":"IntegrationResourcePropertyFilter"}
+    },
+    "IntegrationResourcePropertyFilterValues":{
+      "type":"list",
+      "member":{"shape":"String128"}
+    },
+    "IntegrationResourcePropertyList":{
+      "type":"list",
+      "member":{"shape":"IntegrationResourceProperty"}
     },
     "IntegrationSourcePropertiesMap":{
       "type":"map",
@@ -11932,7 +12070,7 @@
     },
     "KmsKeyArn":{
       "type":"string",
-      "pattern":"arn:aws:kms:.*"
+      "pattern":"^$|arn:aws[a-z0-9-]*:kms:.*"
     },
     "LabelCount":{"type":"integer"},
     "LabelingSetGenerationTaskRunProperties":{
@@ -11940,6 +12078,11 @@
       "members":{
         "OutputS3Path":{"shape":"UriString"}
       }
+    },
+    "Labels":{
+      "type":"map",
+      "key":{"shape":"NameString"},
+      "value":{"shape":"NameString"}
     },
     "LakeFormationConfiguration":{
       "type":"structure",
@@ -11982,6 +12125,13 @@
         "SUCCEEDED",
         "CANCELLED",
         "FAILED"
+      ]
+    },
+    "LastRefreshType":{
+      "type":"string",
+      "enum":[
+        "FULL",
+        "INCREMENTAL"
       ]
     },
     "LatestSchemaVersionBoolean":{"type":"boolean"},
@@ -12221,6 +12371,21 @@
       "members":{
         "Entities":{"shape":"EntityList"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListIntegrationResourcePropertiesRequest":{
+      "type":"structure",
+      "members":{
+        "Marker":{"shape":"String1024"},
+        "Filters":{"shape":"IntegrationResourcePropertyFilterList"},
+        "MaxRecords":{"shape":"IntegrationInteger"}
+      }
+    },
+    "ListIntegrationResourcePropertiesResponse":{
+      "type":"structure",
+      "members":{
+        "IntegrationResourcePropertyList":{"shape":"IntegrationResourcePropertyList"},
+        "Marker":{"shape":"String1024"}
       }
     },
     "ListJobsRequest":{
@@ -12716,8 +12881,8 @@
         "CreateTime"
       ],
       "members":{
-        "SourceArn":{"shape":"String128"},
-        "TargetArn":{"shape":"String128"},
+        "SourceArn":{"shape":"String512"},
+        "TargetArn":{"shape":"String512"},
         "IntegrationName":{"shape":"String128"},
         "Description":{"shape":"IntegrationDescription"},
         "IntegrationArn":{"shape":"String128"},
@@ -13829,6 +13994,10 @@
     "ReferenceDatasetsList":{
       "type":"list",
       "member":{"shape":"NameString"}
+    },
+    "RefreshSeconds":{
+      "type":"long",
+      "box":true
     },
     "RefreshToken":{
       "type":"string",
@@ -15643,6 +15812,11 @@
       }
     },
     "String":{"type":"string"},
+    "String1024":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
     "String128":{
       "type":"string",
       "max":128,
@@ -15651,6 +15825,11 @@
     "String2048":{
       "type":"string",
       "max":2048,
+      "min":1
+    },
+    "String512":{
+      "type":"string",
+      "max":512,
       "min":1
     },
     "StringColumnStatisticsData":{
@@ -15711,6 +15890,7 @@
         "FederatedTable":{"shape":"FederatedTable"},
         "ViewDefinition":{"shape":"ViewDefinition"},
         "IsMultiDialectView":{"shape":"NullableBoolean"},
+        "IsMaterializedView":{"shape":"NullableBoolean"},
         "Status":{"shape":"TableStatus"}
       }
     },
@@ -15877,6 +16057,10 @@
     "TableVersionErrors":{
       "type":"list",
       "member":{"shape":"TableVersionError"}
+    },
+    "TableVersionId":{
+      "type":"long",
+      "min":-1
     },
     "Tag":{
       "type":"structure",
@@ -16624,7 +16808,8 @@
     "UpdateGlueIdentityCenterConfigurationRequest":{
       "type":"structure",
       "members":{
-        "Scopes":{"shape":"IdentityCenterScopesList"}
+        "Scopes":{"shape":"IdentityCenterScopesList"},
+        "UserBackgroundSessionsEnabled":{"shape":"NullableBoolean"}
       }
     },
     "UpdateGlueIdentityCenterConfigurationResponse":{
@@ -16659,7 +16844,7 @@
       "type":"structure",
       "required":["ResourceArn"],
       "members":{
-        "ResourceArn":{"shape":"String128"},
+        "ResourceArn":{"shape":"String512"},
         "SourceProcessingProperties":{"shape":"SourceProcessingProperties"},
         "TargetProcessingProperties":{"shape":"TargetProcessingProperties"}
       }
@@ -16667,7 +16852,8 @@
     "UpdateIntegrationResourcePropertyResponse":{
       "type":"structure",
       "members":{
-        "ResourceArn":{"shape":"String128"},
+        "ResourceArn":{"shape":"String512"},
+        "ResourcePropertyArn":{"shape":"String512"},
         "SourceProcessingProperties":{"shape":"SourceProcessingProperties"},
         "TargetProcessingProperties":{"shape":"TargetProcessingProperties"}
       }
@@ -16679,7 +16865,7 @@
         "TableName"
       ],
       "members":{
-        "ResourceArn":{"shape":"String128"},
+        "ResourceArn":{"shape":"String512"},
         "TableName":{"shape":"String128"},
         "SourceTableConfig":{"shape":"SourceTableConfig"},
         "TargetTableConfig":{"shape":"TargetTableConfig"}
@@ -16989,6 +17175,7 @@
         "DatabaseName":{"shape":"NameString"},
         "ClassName":{"shape":"NameString"},
         "OwnerName":{"shape":"NameString"},
+        "FunctionType":{"shape":"FunctionType"},
         "OwnerType":{"shape":"PrincipalType"},
         "CreateTime":{"shape":"Timestamp"},
         "ResourceUris":{"shape":"ResourceUriList"},
@@ -17001,6 +17188,7 @@
         "FunctionName":{"shape":"NameString"},
         "ClassName":{"shape":"NameString"},
         "OwnerName":{"shape":"NameString"},
+        "FunctionType":{"shape":"FunctionType"},
         "OwnerType":{"shape":"PrincipalType"},
         "ResourceUris":{"shape":"ResourceUriList"}
       }
@@ -17076,7 +17264,12 @@
       "members":{
         "IsProtected":{"shape":"NullableBoolean"},
         "Definer":{"shape":"ArnString"},
+        "ViewVersionId":{"shape":"TableVersionId"},
+        "ViewVersionToken":{"shape":"HashString"},
+        "RefreshSeconds":{"shape":"RefreshSeconds"},
+        "LastRefreshType":{"shape":"LastRefreshType"},
         "SubObjects":{"shape":"ViewSubObjectsList"},
+        "SubObjectVersionIds":{"shape":"ViewSubObjectVersionIdsList"},
         "Representations":{"shape":"ViewRepresentationList"}
       }
     },
@@ -17086,7 +17279,12 @@
         "IsProtected":{"shape":"NullableBoolean"},
         "Definer":{"shape":"ArnString"},
         "Representations":{"shape":"ViewRepresentationInputList"},
-        "SubObjects":{"shape":"ViewSubObjectsList"}
+        "ViewVersionId":{"shape":"TableVersionId"},
+        "ViewVersionToken":{"shape":"VersionString"},
+        "RefreshSeconds":{"shape":"RefreshSeconds"},
+        "LastRefreshType":{"shape":"LastRefreshType"},
+        "SubObjects":{"shape":"ViewSubObjectsList"},
+        "SubObjectVersionIds":{"shape":"ViewSubObjectVersionIdsList"}
       }
     },
     "ViewDialect":{
@@ -17134,6 +17332,12 @@
       "member":{"shape":"ViewRepresentation"},
       "max":1000,
       "min":1
+    },
+    "ViewSubObjectVersionIdsList":{
+      "type":"list",
+      "member":{"shape":"TableVersionId"},
+      "max":250,
+      "min":0
     },
     "ViewSubObjectsList":{
       "type":"list",

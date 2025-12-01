@@ -179,7 +179,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCertificateSigningRequest":{
       "name":"GetCertificateSigningRequest",
@@ -231,7 +232,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetParametersForExport":{
       "name":"GetParametersForExport",
@@ -286,7 +288,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ImportKey":{
       "name":"ImportKey",
@@ -322,7 +325,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListKeys":{
       "name":"ListKeys",
@@ -339,7 +343,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -356,7 +361,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "RemoveKeyReplicationRegions":{
       "name":"RemoveKeyReplicationRegions",
@@ -561,13 +567,13 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"[A-Za-z]+"
+      "pattern":"[^\\[;\\]<>]+"
     },
     "CertificateSubjectTypeCommonNameString":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"[A-Za-z]+"
+      "pattern":"[^\\[;\\]<>]+"
     },
     "CertificateSubjectTypeCountryString":{
       "type":"string",
@@ -585,19 +591,19 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"[A-Za-z]+"
+      "pattern":"[^\\[;\\]<>]+"
     },
     "CertificateSubjectTypeOrganizationUnitString":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"[A-Za-z]+"
+      "pattern":"[^\\[;\\]<>]+"
     },
     "CertificateSubjectTypeStateOrProvinceString":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"[A-Za-z]+"
+      "pattern":"[^\\[;\\]<>]+"
     },
     "CertificateType":{
       "type":"string",
@@ -1243,7 +1249,7 @@
     "KeyMaterial":{
       "type":"string",
       "max":16384,
-      "min":48,
+      "min":32,
       "sensitive":true
     },
     "KeyMaterialType":{

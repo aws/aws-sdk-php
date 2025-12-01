@@ -41,6 +41,45 @@
         },
         "id": "example-1",
         "title": "CreateScraper with optional alias input, optional clientToken input, and one set of tags"
+      },
+      {
+        "input": {
+          "alias": "alias",
+          "clientToken": "token",
+          "destination": {
+            "ampConfiguration": {
+              "workspaceArn": "arn:aws:aps:us-west-2:123456789012:workspace/ws-ogh2u499-ce12-hg89-v6c7-123412341234"
+            }
+          },
+          "scrapeConfiguration": {
+            "configurationBlob": "blob"
+          },
+          "source": {
+            "vpcConfiguration": {
+              "securityGroupIds": [
+                "sg-abc123"
+              ],
+              "subnetIds": [
+                "subnet-abc123"
+              ]
+            }
+          },
+          "tags": {
+            "exampleTag": "exampleValue"
+          }
+        },
+        "output": {
+          "arn": "arn:aws:aps:us-west-2:123456789012:scraper/scraper-123",
+          "scraperId": "scraper-123",
+          "status": {
+            "statusCode": "CREATING"
+          },
+          "tags": {
+            "exampleTag": "exampleValue"
+          }
+        },
+        "id": "example-2",
+        "title": "CreateScraper with generic VPC config with mandatory securityGroupIds and subnetIds"
       }
     ],
     "DeleteScraper": [

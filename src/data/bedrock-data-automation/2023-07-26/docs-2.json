@@ -46,6 +46,24 @@
         "AudioExtractionCategory$types": null
       }
     },
+    "AudioGenerativeOutputLanguage": {
+      "base": "<p>Configuration for Audio output language</p>",
+      "refs": {
+        "AudioLanguageConfiguration$generativeOutputLanguage": null
+      }
+    },
+    "AudioInputLanguages": {
+      "base": "<p>List of supported audio languages</p>",
+      "refs": {
+        "AudioLanguageConfiguration$inputLanguages": null
+      }
+    },
+    "AudioLanguageConfiguration": {
+      "base": "<p>Optional configuration for audio language settings</p>",
+      "refs": {
+        "AudioOverrideConfiguration$languageConfiguration": null
+      }
+    },
     "AudioOverrideConfiguration": {
       "base": "<p>Override Configuration of Audio</p>",
       "refs": {
@@ -180,6 +198,12 @@
         "ListBlueprintsResponse$blueprints": null
       }
     },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "AudioLanguageConfiguration$identifyMultipleLanguages": "<p>Enable multiple language identification in audio</p>"
+      }
+    },
     "ChannelLabelingConfiguration": {
       "base": "<p>Channel labeling configuration</p>",
       "refs": {
@@ -310,6 +334,14 @@
       "base": "<p>Summary of a DataAutomationProject</p>",
       "refs": {
         "DataAutomationProjectSummaries$member": null
+      }
+    },
+    "DataAutomationProjectType": {
+      "base": "<p>Type of the DataAutomationProject</p>",
+      "refs": {
+        "CreateDataAutomationProjectRequest$projectType": null,
+        "DataAutomationProject$projectType": null,
+        "DataAutomationProjectSummary$projectType": null
       }
     },
     "DateTimestamp": {
@@ -544,6 +576,12 @@
         "EncryptionConfiguration$kmsKeyId": null
       }
     },
+    "Language": {
+      "base": "<p>Supported input languages</p>",
+      "refs": {
+        "AudioInputLanguages$member": null
+      }
+    },
     "ListBlueprintsRequest": {
       "base": "<p>List Blueprint Request</p>",
       "refs": {}
@@ -621,6 +659,30 @@
         "UpdateDataAutomationProjectRequest$overrideConfiguration": null
       }
     },
+    "PIIEntitiesConfiguration": {
+      "base": "<p>Configuration for PII entities detection and redaction</p>",
+      "refs": {
+        "SensitiveDataConfiguration$piiEntitiesConfiguration": "<p>Configuration for PII entities detection and redaction</p>"
+      }
+    },
+    "PIIEntityType": {
+      "base": "<p>Types of PII entities that can be detected, we will support every types that Guardrails can support</p>",
+      "refs": {
+        "PIIEntityTypes$member": null
+      }
+    },
+    "PIIEntityTypes": {
+      "base": "<p>List of PII entity types</p>",
+      "refs": {
+        "PIIEntitiesConfiguration$piiEntityTypes": "<p>Types of PII entities to detect</p>"
+      }
+    },
+    "PIIRedactionMaskMode": {
+      "base": "<p>Mode for redacting detected PII</p>",
+      "refs": {
+        "PIIEntitiesConfiguration$redactionMaskMode": "<p>Mode for redacting detected PII</p>"
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>This exception is thrown when a resource referenced by the operation does not exist</p>",
       "refs": {}
@@ -630,6 +692,33 @@
       "refs": {
         "ListBlueprintsRequest$resourceOwner": null,
         "ListDataAutomationProjectsRequest$resourceOwner": null
+      }
+    },
+    "SensitiveDataConfiguration": {
+      "base": "<p>Configuration for sensitive data detection and redaction</p>",
+      "refs": {
+        "AudioOverrideConfiguration$sensitiveDataConfiguration": null,
+        "DocumentOverrideConfiguration$sensitiveDataConfiguration": null,
+        "ImageOverrideConfiguration$sensitiveDataConfiguration": null,
+        "VideoOverrideConfiguration$sensitiveDataConfiguration": null
+      }
+    },
+    "SensitiveDataDetectionMode": {
+      "base": "<p>Mode for sensitive data detection</p>",
+      "refs": {
+        "SensitiveDataConfiguration$detectionMode": "<p>Mode for sensitive data detection</p>"
+      }
+    },
+    "SensitiveDataDetectionScope": {
+      "base": "<p>Scope of sensitive data detection</p>",
+      "refs": {
+        "SensitiveDataConfiguration$detectionScope": "<p>Scope of detection - what types of sensitive data to detect</p>"
+      }
+    },
+    "SensitiveDataDetectionScopeType": {
+      "base": "<p>Types of sensitive data detection scope</p>",
+      "refs": {
+        "SensitiveDataDetectionScope$member": null
       }
     },
     "ServiceQuotaExceededException": {

@@ -389,7 +389,7 @@
     "Campaign": {
       "base": "<p>An object that describes the deployment of a solution version. For more information on campaigns, see <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_CreateCampaign.html\">CreateCampaign</a>.</p>",
       "refs": {
-        "DescribeCampaignResponse$campaign": "<p>The properties of the campaign.</p>"
+        "DescribeCampaignResponse$campaign": "<note> <p>The <code>latestCampaignUpdate</code> field is only returned when the campaign has had at least one <code>UpdateCampaign</code> call. </p> </note> <p>The properties of the campaign.</p> <note> <p>The <code>latestCampaignUpdate</code> field is only returned when the campaign has had at least one <code>UpdateCampaign</code> call.</p> </note>"
       }
     },
     "CampaignConfig": {
@@ -410,7 +410,7 @@
     "CampaignUpdateSummary": {
       "base": "<p>Provides a summary of the properties of a campaign update. For a complete listing, call the <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeCampaign.html\">DescribeCampaign</a> API.</p>",
       "refs": {
-        "Campaign$latestCampaignUpdate": null
+        "Campaign$latestCampaignUpdate": "<p>Provides a summary of the properties of a campaign update. For a complete listing, call the <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeCampaign.html\">DescribeCampaign</a> API.</p> <note> <p>The <code>latestCampaignUpdate</code> field is only returned when the campaign has had at least one <code>UpdateCampaign</code> call. </p> </note>"
       }
     },
     "Campaigns": {
@@ -454,7 +454,8 @@
     "ColumnNamesList": {
       "base": null,
       "refs": {
-        "ExcludedDatasetColumns$value": null
+        "ExcludedDatasetColumns$value": null,
+        "IncludedDatasetColumns$value": null
       }
     },
     "ContinuousHyperParameterRange": {
@@ -721,7 +722,8 @@
         "CreateDatasetRequest$datasetType": "<p>The type of dataset.</p> <p>One of the following (case insensitive) values:</p> <ul> <li> <p>Interactions</p> </li> <li> <p>Items</p> </li> <li> <p>Users</p> </li> <li> <p>Actions</p> </li> <li> <p>Action_Interactions</p> </li> </ul>",
         "Dataset$datasetType": "<p>One of the following values:</p> <ul> <li> <p>Interactions</p> </li> <li> <p>Items</p> </li> <li> <p>Users</p> </li> <li> <p>Actions</p> </li> <li> <p>Action_Interactions</p> </li> </ul>",
         "DatasetSummary$datasetType": "<p>The dataset type. One of the following values:</p> <ul> <li> <p>Interactions</p> </li> <li> <p>Items</p> </li> <li> <p>Users</p> </li> <li> <p>Event-Interactions</p> </li> </ul>",
-        "ExcludedDatasetColumns$key": null
+        "ExcludedDatasetColumns$key": null,
+        "IncludedDatasetColumns$key": null
       }
     },
     "DatasetUpdateSummary": {
@@ -1292,6 +1294,12 @@
         "DatasetImportJobSummary$importMode": "<p>The import mode the dataset import job used to update the data in the dataset. For more information see <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/updating-existing-bulk-data.html\">Updating existing bulk data</a>. </p>"
       }
     },
+    "IncludedDatasetColumns": {
+      "base": null,
+      "refs": {
+        "TrainingDataConfig$includedDatasetColumns": "<p>A map that specifies which columns to include from each dataset during training. The map can contain up to 3 entries, where each key is a dataset name (maximum length of 256 characters, must contain only letters and underscores) and each value is an array of up to 50 column names. Column names can be up to 150 characters long, must start with a letter or underscore, and can contain only letters, numbers, and underscores.</p>"
+      }
+    },
     "IngestionMode": {
       "base": null,
       "refs": {
@@ -1764,6 +1772,35 @@
       "refs": {
         "Solution$performHPO": "<p>Whether to perform hyperparameter optimization (HPO) on the chosen recipe. The default is <code>false</code>.</p>",
         "SolutionVersion$performHPO": "<p>Whether to perform hyperparameter optimization (HPO) on the chosen recipe. The default is <code>false</code>.</p>"
+      }
+    },
+    "PerformIncrementalUpdate": {
+      "base": null,
+      "refs": {
+        "CreateSolutionRequest$performIncrementalUpdate": "<p>Whether to perform incremental training updates on your model. When enabled, this allows the model to learn from new data more frequently without requiring full retraining, which enables near real-time personalization. This parameter is supported only for solutions that use the semantic-similarity recipe.</p>",
+        "Solution$performIncrementalUpdate": "<p>A Boolean value that indicates whether incremental training updates are performed on the model. When enabled, this allows the model to learn from new data more frequently without requiring full retraining, which enables near real-time personalization. This parameter is supported only for solutions that use the semantic-similarity recipe</p>",
+        "SolutionUpdateSummary$performIncrementalUpdate": "<p>A Boolean value that indicates whether incremental training updates are performed on the model. When enabled, this allows the model to learn from new data more frequently without requiring full retraining, which enables near real-time personalization. This parameter is supported only for solutions that use the semantic-similarity recipe.</p>",
+        "SolutionVersion$performIncrementalUpdate": "<p>Whether the solution version should perform an incremental update. When set to true, the training will process only the data that has changed since the latest training, similar to when trainingMode is set to UPDATE. This can only be used with solution versions that use the User-Personalization recipe.</p>",
+        "UpdateSolutionRequest$performIncrementalUpdate": "<p>Whether to perform incremental training updates on your model. When enabled, this allows the model to learn from new data more frequently without requiring full retraining, which enables near real-time personalization. This parameter is supported only for solutions that use the semantic-similarity recipe.</p>"
+      }
+    },
+    "RankingInfluence": {
+      "base": null,
+      "refs": {
+        "BatchInferenceJobConfig$rankingInfluence": "<p>A map of ranking influence values for POPULARITY and FRESHNESS. For each key, specify a numerical value between 0.0 and 1.0 that determines how much influence that ranking factor has on the final recommendations. A value closer to 1.0 gives more weight to the factor, while a value closer to 0.0 reduces its influence.</p>",
+        "CampaignConfig$rankingInfluence": "<p>A map of ranking influence values for POPULARITY and FRESHNESS. For each key, specify a numerical value between 0.0 and 1.0 that determines how much influence that ranking factor has on the final recommendations. A value closer to 1.0 gives more weight to the factor, while a value closer to 0.0 reduces its influence. </p>"
+      }
+    },
+    "RankingInfluenceType": {
+      "base": null,
+      "refs": {
+        "RankingInfluence$key": null
+      }
+    },
+    "RankingInfluenceWeight": {
+      "base": null,
+      "refs": {
+        "RankingInfluence$value": null
       }
     },
     "Recipe": {

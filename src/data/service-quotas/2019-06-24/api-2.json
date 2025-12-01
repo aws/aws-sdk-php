@@ -126,6 +126,22 @@
         {"shape":"NoAvailableOrganizationException"}
       ]
     },
+    "GetAutoManagementConfiguration":{
+      "name":"GetAutoManagementConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAutoManagementConfigurationRequest"},
+      "output":{"shape":"GetAutoManagementConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"NoSuchResourceException"},
+        {"shape":"IllegalArgumentException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ServiceException"}
+      ]
+    },
     "GetRequestedServiceQuotaChange":{
       "name":"GetRequestedServiceQuotaChange",
       "http":{
@@ -338,6 +354,38 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "StartAutoManagement":{
+      "name":"StartAutoManagement",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartAutoManagementRequest"},
+      "output":{"shape":"StartAutoManagementResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"NoSuchResourceException"},
+        {"shape":"IllegalArgumentException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ServiceException"}
+      ]
+    },
+    "StopAutoManagement":{
+      "name":"StopAutoManagement",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopAutoManagementRequest"},
+      "output":{"shape":"StopAutoManagementResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"NoSuchResourceException"},
+        {"shape":"IllegalArgumentException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ServiceException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -369,6 +417,22 @@
         {"shape":"NoSuchResourceException"},
         {"shape":"IllegalArgumentException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ServiceException"}
+      ]
+    },
+    "UpdateAutoManagement":{
+      "name":"UpdateAutoManagement",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateAutoManagementRequest"},
+      "output":{"shape":"UpdateAutoManagementResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"NoSuchResourceException"},
+        {"shape":"IllegalArgumentException"},
+        {"shape":"TooManyRequestsException"},
         {"shape":"ServiceException"}
       ]
     }
@@ -479,6 +543,32 @@
       }
     },
     "ExceptionMessage":{"type":"string"},
+    "ExcludedLimit":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[A-Za-z0-9-_ /]{1,128}"
+    },
+    "ExcludedQuotaList":{
+      "type":"list",
+      "member":{"shape":"ExcludedLimit"}
+    },
+    "ExcludedService":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[A-Za-z0-9-_ /]{1,128}"
+    },
+    "ExclusionList":{
+      "type":"map",
+      "key":{"shape":"ExcludedService"},
+      "value":{"shape":"ExcludedQuotaList"}
+    },
+    "ExclusionQuotaList":{
+      "type":"map",
+      "key":{"shape":"ExcludedService"},
+      "value":{"shape":"QuotaInfoList"}
+    },
     "GetAWSDefaultServiceQuotaRequest":{
       "type":"structure",
       "required":[
@@ -504,6 +594,20 @@
       "type":"structure",
       "members":{
         "ServiceQuotaTemplateAssociationStatus":{"shape":"ServiceQuotaTemplateAssociationStatus"}
+      }
+    },
+    "GetAutoManagementConfigurationRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "GetAutoManagementConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "OptInLevel":{"shape":"OptInLevel"},
+        "OptInType":{"shape":"OptInType"},
+        "NotificationArn":{"shape":"AmazonResourceName"},
+        "OptInStatus":{"shape":"OptInStatus"},
+        "ExclusionList":{"shape":"ExclusionQuotaList"}
       }
     },
     "GetRequestedServiceQuotaChangeRequest":{
@@ -744,6 +848,24 @@
       },
       "exception":true
     },
+    "OptInLevel":{
+      "type":"string",
+      "enum":["ACCOUNT"]
+    },
+    "OptInStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "OptInType":{
+      "type":"string",
+      "enum":[
+        "NotifyOnly",
+        "NotifyAndAdjust"
+      ]
+    },
     "OrganizationNotInAllFeaturesModeException":{
       "type":"structure",
       "members":{
@@ -827,6 +949,17 @@
         "Message":{"shape":"ExceptionMessage"}
       },
       "exception":true
+    },
+    "QuotaInfo":{
+      "type":"structure",
+      "members":{
+        "QuotaCode":{"shape":"QuotaCode"},
+        "QuotaName":{"shape":"QuotaName"}
+      }
+    },
+    "QuotaInfoList":{
+      "type":"list",
+      "member":{"shape":"QuotaInfo"}
     },
     "QuotaMetricName":{"type":"string"},
     "QuotaMetricNamespace":{"type":"string"},
@@ -997,11 +1130,36 @@
       },
       "exception":true
     },
+    "StartAutoManagementRequest":{
+      "type":"structure",
+      "required":[
+        "OptInLevel",
+        "OptInType"
+      ],
+      "members":{
+        "OptInLevel":{"shape":"OptInLevel"},
+        "OptInType":{"shape":"OptInType"},
+        "NotificationArn":{"shape":"AmazonResourceName"},
+        "ExclusionList":{"shape":"ExclusionList"}
+      }
+    },
+    "StartAutoManagementResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "Statistic":{
       "type":"string",
       "max":256,
       "min":1,
       "pattern":"(Sum|Maximum)"
+    },
+    "StopAutoManagementRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "StopAutoManagementResponse":{
+      "type":"structure",
+      "members":{}
     },
     "SupportCaseAllowed":{"type":"boolean"},
     "Tag":{
@@ -1082,6 +1240,18 @@
       }
     },
     "UntagResourceResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateAutoManagementRequest":{
+      "type":"structure",
+      "members":{
+        "OptInType":{"shape":"OptInType"},
+        "NotificationArn":{"shape":"AmazonResourceName"},
+        "ExclusionList":{"shape":"ExclusionList"}
+      }
+    },
+    "UpdateAutoManagementResponse":{
       "type":"structure",
       "members":{}
     }

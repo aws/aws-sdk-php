@@ -63,7 +63,8 @@
         {"shape":"UnprocessableEntityException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "CheckNoNewAccess":{
       "name":"CheckNoNewAccess",
@@ -81,7 +82,8 @@
         {"shape":"UnprocessableEntityException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "CheckNoPublicAccess":{
       "name":"CheckNoPublicAccess",
@@ -99,7 +101,8 @@
         {"shape":"UnprocessableEntityException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "CreateAccessPreview":{
       "name":"CreateAccessPreview",
@@ -223,7 +226,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetAnalyzedResource":{
       "name":"GetAnalyzedResource",
@@ -240,7 +244,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetAnalyzer":{
       "name":"GetAnalyzer",
@@ -257,7 +262,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetArchiveRule":{
       "name":"GetArchiveRule",
@@ -274,7 +280,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetFinding":{
       "name":"GetFinding",
@@ -291,7 +298,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetFindingRecommendation":{
       "name":"GetFindingRecommendation",
@@ -308,7 +316,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetFindingV2":{
       "name":"GetFindingV2",
@@ -325,7 +334,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetFindingsStatistics":{
       "name":"GetFindingsStatistics",
@@ -342,7 +352,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetGeneratedPolicy":{
       "name":"GetGeneratedPolicy",
@@ -358,7 +369,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAccessPreviewFindings":{
       "name":"ListAccessPreviewFindings",
@@ -376,7 +388,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAccessPreviews":{
       "name":"ListAccessPreviews",
@@ -393,7 +406,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAnalyzedResources":{
       "name":"ListAnalyzedResources",
@@ -410,7 +424,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAnalyzers":{
       "name":"ListAnalyzers",
@@ -426,7 +441,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListArchiveRules":{
       "name":"ListArchiveRules",
@@ -442,7 +458,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListFindings":{
       "name":"ListFindings",
@@ -459,7 +476,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListFindingsV2":{
       "name":"ListFindingsV2",
@@ -476,7 +494,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPolicyGenerations":{
       "name":"ListPolicyGenerations",
@@ -492,7 +511,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -509,7 +529,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "StartPolicyGeneration":{
       "name":"StartPolicyGeneration",
@@ -649,7 +670,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     }
   },
   "shapes":{
@@ -1021,8 +1043,7 @@
     },
     "CancelPolicyGenerationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CheckAccessNotGrantedRequest":{
       "type":"structure",
@@ -2029,8 +2050,7 @@
     },
     "InternetConfiguration":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "InvalidParameterException":{
       "type":"structure",
@@ -2687,7 +2707,8 @@
       "type":"structure",
       "members":{
         "totalActivePublic":{"shape":"Integer"},
-        "totalActiveCrossAccount":{"shape":"Integer"}
+        "totalActiveCrossAccount":{"shape":"Integer"},
+        "totalActiveErrors":{"shape":"Integer"}
       }
     },
     "ResourceTypeList":{
@@ -2932,8 +2953,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagsList":{
       "type":"list",
@@ -3038,8 +3058,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UnusedAccessConfiguration":{
       "type":"structure",

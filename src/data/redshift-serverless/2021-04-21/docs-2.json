@@ -59,6 +59,7 @@
     "UntagResource": "<p>Removes a tag or set of tags from a resource.</p>",
     "UpdateCustomDomainAssociation": "<p>Updates an Amazon Redshift Serverless certificate associated with a custom domain.</p>",
     "UpdateEndpointAccess": "<p>Updates an Amazon Redshift Serverless managed endpoint.</p>",
+    "UpdateLakehouseConfiguration": "<p>Modifies the lakehouse configuration for a namespace. This operation allows you to manage Amazon Redshift federated permissions and Amazon Web Services IAM Identity Center trusted identity propagation.</p>",
     "UpdateNamespace": "<p>Updates a namespace with the specified settings. Unless required, you can't update multiple parameters in one request. For example, you must specify both <code>adminUsername</code> and <code>adminUserPassword</code> to update either field, but you can't update both <code>kmsKeyId</code> and <code>logExports</code> in a single request.</p>",
     "UpdateScheduledAction": "<p>Updates a scheduled action.</p>",
     "UpdateSnapshot": "<p>Updates a snapshot.</p>",
@@ -69,8 +70,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountIdList": {
       "base": null,
@@ -111,6 +111,7 @@
         "RestoreFromSnapshotRequest$manageAdminPassword": "<p>If <code>true</code>, Amazon Redshift uses Secrets Manager to manage the restored snapshot's admin credentials. If <code>MmanageAdminPassword</code> is false or not set, Amazon Redshift uses the admin credentials that the namespace or cluster had at the time the snapshot was taken.</p>",
         "RestoreTableFromRecoveryPointRequest$activateCaseSensitiveIdentifier": "<p>Indicates whether name identifiers for database, schema, and table are case sensitive. If true, the names are case sensitive. If false, the names are not case sensitive. The default is false.</p>",
         "RestoreTableFromSnapshotRequest$activateCaseSensitiveIdentifier": "<p>Indicates whether name identifiers for database, schema, and table are case sensitive. If true, the names are case sensitive. If false, the names are not case sensitive. The default is false.</p>",
+        "UpdateLakehouseConfigurationRequest$dryRun": "<p>A boolean value that, if <code>true</code>, validates the request without actually updating the lakehouse configuration. Use this to check for errors before making changes.</p>",
         "UpdateNamespaceRequest$manageAdminPassword": "<p>If <code>true</code>, Amazon Redshift uses Secrets Manager to manage the namespace's admin credentials. You can't use <code>adminUserPassword</code> if <code>manageAdminPassword</code> is true. If <code>manageAdminPassword</code> is false or not set, Amazon Redshift uses <code>adminUserPassword</code> for the admin user account's password. </p>",
         "UpdateScheduledActionRequest$enabled": "<p>Specifies whether to enable the scheduled action.</p>",
         "UpdateWorkgroupRequest$enhancedVpcRouting": "<p>The value that specifies whether to turn on enhanced virtual private cloud (VPC) routing, which forces Amazon Redshift Serverless to route traffic through your VPC.</p>",
@@ -124,6 +125,12 @@
       "refs": {
         "CreateReservationRequest$capacity": "<p>The number of Redshift Processing Units (RPUs) to reserve.</p>",
         "Reservation$capacity": "<p>The number of Redshift Processing Units (RPUs) to reserve.</p>"
+      }
+    },
+    "CatalogNameString": {
+      "base": null,
+      "refs": {
+        "UpdateLakehouseConfigurationRequest$catalogName": "<p>The name of the Glue Data Catalog that will be associated with the namespace enabled with Amazon Redshift federated permissions.</p> <p>Pattern: <code>^[a-z0-9_-]*[a-z]+[a-z0-9_-]*$</code> </p>"
       }
     },
     "Charge": {
@@ -149,53 +156,43 @@
     },
     "ConflictException": {
       "base": "<p>The submitted action has conflicts.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConvertRecoveryPointToSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ConvertRecoveryPointToSnapshotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCustomDomainAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCustomDomainAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEndpointAccessRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEndpointAccessResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateNamespaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateNamespaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateReservationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateReservationRequestOfferingIdString": {
       "base": null,
@@ -205,38 +202,31 @@
     },
     "CreateReservationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateScheduledActionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateScheduledActionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSnapshotCopyConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSnapshotCopyConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSnapshotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSnapshotScheduleActionParameters": {
       "base": "<p>The parameters that you can use to configure a <a href=\"https://docs.aws.amazon.com/redshift-serverless/latest/APIReference/API_CreateScheduledAction.html\">scheduled action</a> to create a snapshot. For more information about creating a scheduled action, see <a href=\"https://docs.aws.amazon.com/redshift-serverless/latest/APIReference/API_CreateScheduledAction.html\">CreateScheduledAction</a>.</p>",
@@ -246,23 +236,19 @@
     },
     "CreateUsageLimitRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateUsageLimitResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkgroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkgroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CurrencyCode": {
       "base": null,
@@ -324,93 +310,75 @@
     },
     "DeleteCustomDomainAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCustomDomainAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEndpointAccessRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEndpointAccessResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteNamespaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteNamespaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteScheduledActionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteScheduledActionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSnapshotCopyConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSnapshotCopyConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSnapshotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteUsageLimitRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteUsageLimitResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkgroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkgroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Double": {
       "base": null,
@@ -421,6 +389,10 @@
         "Snapshot$currentBackupRateInMegaBytesPerSecond": "<p>The rate at which data is backed up into a snapshot in megabytes per second.</p>",
         "Snapshot$totalBackupSizeInMegaBytes": "<p>The total size, in megabytes, of how big the snapshot is.</p>"
       }
+    },
+    "DryRunException": {
+      "base": "<p>This exception is thrown when the request was successful, but dry run was enabled so no action was taken.</p>",
+      "refs": {}
     },
     "Duration": {
       "base": null,
@@ -452,58 +424,47 @@
     },
     "GetCredentialsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCredentialsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCustomDomainAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCustomDomainAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEndpointAccessRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEndpointAccessResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNamespaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNamespaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecoveryPointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecoveryPointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetReservationOfferingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetReservationOfferingRequestOfferingIdString": {
       "base": null,
@@ -513,13 +474,11 @@
     },
     "GetReservationOfferingResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetReservationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetReservationRequestReservationIdString": {
       "base": null,
@@ -529,78 +488,63 @@
     },
     "GetReservationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetScheduledActionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetScheduledActionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSnapshotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTableRestoreStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTableRestoreStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTrackRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTrackResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetUsageLimitRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetUsageLimitResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkgroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkgroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IamRoleArn": {
       "base": null,
@@ -621,8 +565,7 @@
     },
     "InsufficientCapacityException": {
       "base": "<p>There is an insufficient capacity to perform the action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Integer": {
       "base": null,
@@ -653,13 +596,11 @@
     },
     "InternalServerException": {
       "base": "<p>The request processing has failed because of an unknown error, exception or failure.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidPaginationException": {
       "base": "<p>The provided pagination token is invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IpAddressType": {
       "base": null,
@@ -671,8 +612,7 @@
     },
     "Ipv6CidrBlockNotFoundException": {
       "base": "<p>There are no subnets in your VPC with associated IPv6 CIDR blocks. To use dual-stack mode, associate an IPv6 CIDR block with each subnet in your VPC.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KmsKeyId": {
       "base": null,
@@ -687,10 +627,21 @@
         "UpdateNamespaceRequest$adminPasswordSecretKmsKeyId": "<p>The ID of the Key Management Service (KMS) key used to encrypt and store the namespace's admin credentials secret. You can only use this parameter if <code>manageAdminPassword</code> is true.</p>"
       }
     },
-    "ListCustomDomainAssociationsRequest": {
+    "LakehouseIdcRegistration": {
       "base": null,
       "refs": {
+        "UpdateLakehouseConfigurationRequest$lakehouseIdcRegistration": "<p>Modifies the Amazon Web Services IAM Identity Center trusted identity propagation on a namespace enabled with Amazon Redshift federated permissions. Valid values are <code>Associate</code> or <code>Disassociate</code>.</p>"
       }
+    },
+    "LakehouseRegistration": {
+      "base": null,
+      "refs": {
+        "UpdateLakehouseConfigurationRequest$lakehouseRegistration": "<p>Specifies whether to register or deregister the namespace with Amazon Redshift federated permissions. Valid values are <code>Register</code> or <code>Deregister</code>.</p>"
+      }
+    },
+    "ListCustomDomainAssociationsRequest": {
+      "base": null,
+      "refs": {}
     },
     "ListCustomDomainAssociationsRequestMaxResultsInteger": {
       "base": null,
@@ -700,13 +651,11 @@
     },
     "ListCustomDomainAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEndpointAccessRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEndpointAccessRequestMaxResultsInteger": {
       "base": null,
@@ -716,13 +665,11 @@
     },
     "ListEndpointAccessResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedWorkgroupsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedWorkgroupsRequestMaxResultsInteger": {
       "base": null,
@@ -732,13 +679,11 @@
     },
     "ListManagedWorkgroupsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNamespacesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNamespacesRequestMaxResultsInteger": {
       "base": null,
@@ -748,13 +693,11 @@
     },
     "ListNamespacesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecoveryPointsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecoveryPointsRequestMaxResultsInteger": {
       "base": null,
@@ -764,13 +707,11 @@
     },
     "ListRecoveryPointsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReservationOfferingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReservationOfferingsRequestMaxResultsInteger": {
       "base": null,
@@ -780,13 +721,11 @@
     },
     "ListReservationOfferingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReservationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReservationsRequestMaxResultsInteger": {
       "base": null,
@@ -796,13 +735,11 @@
     },
     "ListReservationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListScheduledActionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListScheduledActionsRequestMaxResultsInteger": {
       "base": null,
@@ -812,13 +749,11 @@
     },
     "ListScheduledActionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSnapshotCopyConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSnapshotCopyConfigurationsRequestMaxResultsInteger": {
       "base": null,
@@ -828,13 +763,11 @@
     },
     "ListSnapshotCopyConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSnapshotsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSnapshotsRequestMaxResultsInteger": {
       "base": null,
@@ -844,13 +777,11 @@
     },
     "ListSnapshotsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTableRestoreStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTableRestoreStatusRequestMaxResultsInteger": {
       "base": null,
@@ -860,23 +791,19 @@
     },
     "ListTableRestoreStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTracksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTracksRequestMaxResultsInteger": {
       "base": null,
@@ -886,13 +813,11 @@
     },
     "ListTracksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListUsageLimitsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListUsageLimitsRequestMaxResultsInteger": {
       "base": null,
@@ -902,13 +827,11 @@
     },
     "ListUsageLimitsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkgroupsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkgroupsRequestMaxResultsInteger": {
       "base": null,
@@ -918,8 +841,7 @@
     },
     "ListWorkgroupsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LogExport": {
       "base": null,
@@ -948,7 +870,7 @@
       }
     },
     "ManagedWorkgroupListItem": {
-      "base": "<p>A collection of Amazon Redshift compute resources managed by AWS Glue.</p>",
+      "base": "<p>A collection of Amazon Redshift compute resources managed by Glue.</p>",
       "refs": {
         "ManagedWorkgroups$member": null
       }
@@ -1009,6 +931,8 @@
         "ScheduledActionAssociation$namespaceName": "<p>Name of associated Amazon Redshift Serverless namespace.</p>",
         "ScheduledActionResponse$namespaceName": "<p>The end time in UTC when the schedule is no longer active. After this time, the scheduled action does not trigger.</p>",
         "SnapshotCopyConfiguration$namespaceName": "<p>The name of the namespace to copy snapshots from in the source Amazon Web Services Region.</p>",
+        "UpdateLakehouseConfigurationRequest$namespaceName": "<p>The name of the namespace whose lakehouse configuration you want to modify.</p>",
+        "UpdateLakehouseConfigurationResponse$namespaceName": "<p>The name of the namespace.</p>",
         "UpdateNamespaceRequest$namespaceName": "<p>The name of the namespace to update. You can't update the name of a namespace once it is created.</p>"
       }
     },
@@ -1113,13 +1037,11 @@
     },
     "PutResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RecoveryPoint": {
       "base": "<p>The automatically created recovery point of a namespace. Recovery points are created every 30 minutes and kept for 24 hours.</p>",
@@ -1182,8 +1104,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The resource could not be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourcePolicy": {
       "base": "<p>The resource policy object. Currently, you can use policies to share snapshots across Amazon Web Services accounts.</p>",
@@ -1194,43 +1115,35 @@
     },
     "RestoreFromRecoveryPointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RestoreFromRecoveryPointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RestoreFromSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RestoreFromSnapshotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RestoreTableFromRecoveryPointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RestoreTableFromRecoveryPointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RestoreTableFromSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RestoreTableFromSnapshotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Schedule": {
       "base": "<p>The schedule of when Amazon Redshift Serverless should run the scheduled action.</p>",
@@ -1295,8 +1208,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The service limit was exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Snapshot": {
       "base": "<p>A snapshot object that contains databases.</p>",
@@ -1345,8 +1257,8 @@
     "SourceArn": {
       "base": null,
       "refs": {
-        "ListManagedWorkgroupsRequest$sourceArn": "<p>The Amazon Resource Name (ARN) for the managed workgroup in the AWS Glue Data Catalog.</p>",
-        "ManagedWorkgroupListItem$sourceArn": "<p>The Amazon Resource Name (ARN) for the managed workgroup in the AWS Glue Data Catalog.</p>"
+        "ListManagedWorkgroupsRequest$sourceArn": "<p>The Amazon Resource Name (ARN) for the managed workgroup in the Glue Data Catalog.</p>",
+        "ManagedWorkgroupListItem$sourceArn": "<p>The Amazon Resource Name (ARN) for the managed workgroup in the Glue Data Catalog.</p>"
       }
     },
     "State": {
@@ -1387,6 +1299,7 @@
         "DeleteSnapshotCopyConfigurationRequest$snapshotCopyConfigurationId": "<p>The ID of the snapshot copy configuration to delete.</p>",
         "DeleteSnapshotRequest$snapshotName": "<p>The name of the snapshot to be deleted.</p>",
         "DeleteUsageLimitRequest$usageLimitId": "<p>The unique identifier of the usage limit to delete.</p>",
+        "DryRunException$message": null,
         "Endpoint$address": "<p>The DNS address of the VPC endpoint.</p>",
         "EndpointAccess$address": "<p>The DNS address of the endpoint.</p>",
         "EndpointAccess$endpointArn": "<p>The Amazon Resource Name (ARN) of the VPC endpoint.</p>",
@@ -1426,9 +1339,11 @@
         "ListWorkgroupsResponse$nextToken": "<p> If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, make the call again using the returned token.</p>",
         "ManagedWorkgroupListItem$managedWorkgroupId": "<p>The unique identifier of the managed workgroup.</p>",
         "Namespace$adminPasswordSecretArn": "<p>The Amazon Resource Name (ARN) for the namespace's admin user credentials secret.</p>",
+        "Namespace$catalogArn": "<p>The Amazon Resource Name (ARN) of the Glue Data Catalog associated with the namespace enabled with Amazon Redshift federated permissions.</p>",
         "Namespace$dbName": "<p>The name of the first database created in the namespace.</p>",
         "Namespace$defaultIamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role to set as a default in the namespace.</p>",
         "Namespace$kmsKeyId": "<p>The ID of the Amazon Web Services Key Management Service key used to encrypt your data.</p>",
+        "Namespace$lakehouseRegistrationStatus": "<p>The status of the lakehouse registration for the namespace. Indicates whether the namespace is successfully registered with Amazon Redshift federated permissions.</p>",
         "Namespace$namespaceArn": "<p>The Amazon Resource Name (ARN) associated with a namespace.</p>",
         "Namespace$namespaceId": "<p>The unique identifier of a namespace.</p>",
         "NetworkInterface$availabilityZone": "<p>The availability Zone.</p>",
@@ -1500,6 +1415,10 @@
         "ThrottlingException$message": null,
         "TooManyTagsException$message": null,
         "UpdateEndpointAccessRequest$endpointName": "<p>The name of the VPC endpoint to update.</p>",
+        "UpdateLakehouseConfigurationRequest$lakehouseIdcApplicationArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center application used for enabling Amazon Web Services IAM Identity Center trusted identity propagation on a namespace enabled with Amazon Redshift federated permissions.</p>",
+        "UpdateLakehouseConfigurationResponse$catalogArn": "<p>The Amazon Resource Name (ARN) of the Glue Data Catalog associated with the lakehouse configuration.</p>",
+        "UpdateLakehouseConfigurationResponse$lakehouseIdcApplicationArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center application used for enabling Amazon Web Services IAM Identity Center trusted identity propagation.</p>",
+        "UpdateLakehouseConfigurationResponse$lakehouseRegistrationStatus": "<p>The current status of the lakehouse registration. Indicates whether the namespace is successfully registered with Amazon Redshift federated permissions.</p>",
         "UpdateNamespaceRequest$defaultIamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role to set as a default in the namespace. This parameter must be updated together with <code>iamRoles</code>.</p>",
         "UpdateNamespaceRequest$kmsKeyId": "<p>The ID of the Amazon Web Services Key Management Service key used to encrypt your data.</p>",
         "UpdateScheduledActionRequest$scheduledActionDescription": "<p>The descripion of the scheduled action to update to.</p>",
@@ -1549,7 +1468,7 @@
         "Namespace$creationDate": "<p>The date of when the namespace was created.</p>",
         "RecoveryPoint$recoveryPointCreateTime": "<p>The time the recovery point is created.</p>",
         "Reservation$endDate": "<p>The end date for the serverless reservation. This date is one year after the start date that you specify.</p>",
-        "Reservation$startDate": "<p>The start date for the serverless reservation. This is the date you specified for the reservation to start when you created the reservation.</p>",
+        "Reservation$startDate": "<p>The start date for the serverless reservation. This is the date you created the reservation.</p>",
         "Snapshot$snapshotCreateTime": "<p>The timestamp of when the snapshot was created.</p>",
         "Snapshot$snapshotRetentionStartTime": "<p>The timestamp of when data within the snapshot started getting retained.</p>",
         "UpdateCustomDomainAssociationResponse$customDomainCertificateExpiryTime": "<p>The expiration time for the certificate.</p>",
@@ -1605,13 +1524,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1629,8 +1546,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -1654,8 +1570,7 @@
     },
     "TooManyTagsException": {
       "base": "<p>The request exceeded the number of tags allowed for a resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TrackList": {
       "base": null,
@@ -1677,73 +1592,67 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCustomDomainAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCustomDomainAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEndpointAccessRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEndpointAccessResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "UpdateLakehouseConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLakehouseConfigurationResponse": {
+      "base": null,
+      "refs": {}
     },
     "UpdateNamespaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNamespaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateScheduledActionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateScheduledActionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSnapshotCopyConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSnapshotCopyConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSnapshotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTarget": {
       "base": "<p>A track that you can switch the current track to.</p>",
@@ -1759,23 +1668,19 @@
     },
     "UpdateUsageLimitRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateUsageLimitResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkgroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkgroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UsageLimit": {
       "base": "<p>The usage limit object.</p>",
@@ -1817,9 +1722,8 @@
       }
     },
     "ValidationException": {
-      "base": "<p>The input failed to satisfy the constraints specified by an AWS service.</p>",
-      "refs": {
-      }
+      "base": "<p>The input failed to satisfy the constraints specified by an Amazon Web Services service.</p>",
+      "refs": {}
     },
     "VpcEndpoint": {
       "base": "<p>The connection endpoint for connecting to Amazon Redshift Serverless through the proxy.</p>",

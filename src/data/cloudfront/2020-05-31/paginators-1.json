@@ -6,6 +6,12 @@
       "limit_key": "MaxItems",
       "result_key": "CloudFrontOriginAccessIdentityList.Items"
     },
+    "ListConnectionFunctions": {
+      "input_token": "Marker",
+      "output_token": "NextMarker",
+      "limit_key": "MaxItems",
+      "result_key": "ConnectionFunctions"
+    },
     "ListConnectionGroups": {
       "input_token": "Marker",
       "output_token": "NextMarker",
@@ -30,7 +36,19 @@
       "limit_key": "MaxItems",
       "result_key": "DistributionList.Items"
     },
+    "ListDistributionsByConnectionFunction": {
+      "input_token": "Marker",
+      "output_token": "DistributionList.NextMarker",
+      "limit_key": "MaxItems",
+      "result_key": "DistributionList.Items"
+    },
     "ListDistributionsByConnectionMode": {
+      "input_token": "Marker",
+      "output_token": "DistributionList.NextMarker",
+      "limit_key": "MaxItems",
+      "result_key": "DistributionList.Items"
+    },
+    "ListDistributionsByTrustStore": {
       "input_token": "Marker",
       "output_token": "DistributionList.NextMarker",
       "limit_key": "MaxItems",
@@ -77,6 +95,12 @@
       "output_token": "StreamingDistributionList.NextMarker",
       "limit_key": "MaxItems",
       "result_key": "StreamingDistributionList.Items"
+    },
+    "ListTrustStores": {
+      "input_token": "Marker",
+      "output_token": "NextMarker",
+      "limit_key": "MaxItems",
+      "result_key": "TrustStoreList"
     }
   }
 }

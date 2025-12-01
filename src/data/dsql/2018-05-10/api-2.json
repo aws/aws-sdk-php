@@ -50,6 +50,25 @@
       ],
       "idempotent":true
     },
+    "DeleteClusterPolicy":{
+      "name":"DeleteClusterPolicy",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/cluster/{identifier}/policy",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteClusterPolicyInput"},
+      "output":{"shape":"DeleteClusterPolicyOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "GetCluster":{
       "name":"GetCluster",
       "http":{
@@ -65,7 +84,26 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "GetClusterPolicy":{
+      "name":"GetClusterPolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/cluster/{identifier}/policy",
+        "responseCode":200
+      },
+      "input":{"shape":"GetClusterPolicyInput"},
+      "output":{"shape":"GetClusterPolicyOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
     },
     "GetVpcEndpointServiceName":{
       "name":"GetVpcEndpointServiceName",
@@ -82,7 +120,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListClusters":{
       "name":"ListClusters",
@@ -99,7 +138,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -116,7 +156,27 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "PutClusterPolicy":{
+      "name":"PutClusterPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/cluster/{identifier}/policy",
+        "responseCode":200
+      },
+      "input":{"shape":"PutClusterPolicyInput"},
+      "output":{"shape":"PutClusterPolicyOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -191,6 +251,10 @@
       "min":1,
       "pattern":"arn:.+"
     },
+    "BypassPolicyLockoutSafetyCheck":{
+      "type":"boolean",
+      "box":true
+    },
     "ClientToken":{
       "type":"string",
       "max":128,
@@ -240,6 +304,10 @@
         "arn":{"shape":"ClusterArn"}
       }
     },
+    "ClusterVpcEndpoint":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9.-]+"
+    },
     "ConflictException":{
       "type":"structure",
       "required":["message"],
@@ -264,7 +332,9 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "multiRegionProperties":{"shape":"MultiRegionProperties"}
+        "multiRegionProperties":{"shape":"MultiRegionProperties"},
+        "policy":{"shape":"PolicyDocument"},
+        "bypassPolicyLockoutSafetyCheck":{"shape":"BypassPolicyLockoutSafetyCheck"}
       }
     },
     "CreateClusterOutput":{
@@ -283,7 +353,8 @@
         "creationTime":{"shape":"ClusterCreationTime"},
         "multiRegionProperties":{"shape":"MultiRegionProperties"},
         "encryptionDetails":{"shape":"EncryptionDetails"},
-        "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"}
+        "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
+        "endpoint":{"shape":"Endpoint"}
       }
     },
     "DeleteClusterInput":{
@@ -318,6 +389,35 @@
         "creationTime":{"shape":"ClusterCreationTime"}
       }
     },
+    "DeleteClusterPolicyInput":{
+      "type":"structure",
+      "required":["identifier"],
+      "members":{
+        "identifier":{
+          "shape":"ClusterId",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "expectedPolicyVersion":{
+          "shape":"PolicyVersion",
+          "location":"querystring",
+          "locationName":"expected-policy-version"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"client-token"
+        }
+      }
+    },
+    "DeleteClusterPolicyOutput":{
+      "type":"structure",
+      "required":["policyVersion"],
+      "members":{
+        "policyVersion":{"shape":"PolicyVersion"}
+      }
+    },
     "DeletionProtectionEnabled":{
       "type":"boolean",
       "box":true
@@ -350,6 +450,10 @@
         "CUSTOMER_MANAGED_KMS_KEY"
       ]
     },
+    "Endpoint":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9.-]+"
+    },
     "GetClusterInput":{
       "type":"structure",
       "required":["identifier"],
@@ -378,7 +482,30 @@
         "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
         "multiRegionProperties":{"shape":"MultiRegionProperties"},
         "tags":{"shape":"TagMap"},
-        "encryptionDetails":{"shape":"EncryptionDetails"}
+        "encryptionDetails":{"shape":"EncryptionDetails"},
+        "endpoint":{"shape":"Endpoint"}
+      }
+    },
+    "GetClusterPolicyInput":{
+      "type":"structure",
+      "required":["identifier"],
+      "members":{
+        "identifier":{
+          "shape":"ClusterId",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "GetClusterPolicyOutput":{
+      "type":"structure",
+      "required":[
+        "policy",
+        "policyVersion"
+      ],
+      "members":{
+        "policy":{"shape":"PolicyDocument"},
+        "policyVersion":{"shape":"PolicyVersion"}
       }
     },
     "GetVpcEndpointServiceNameInput":{
@@ -396,7 +523,8 @@
       "type":"structure",
       "required":["serviceName"],
       "members":{
-        "serviceName":{"shape":"ServiceName"}
+        "serviceName":{"shape":"ServiceName"},
+        "clusterVpcEndpoint":{"shape":"ClusterVpcEndpoint"}
       }
     },
     "Integer":{
@@ -480,6 +608,40 @@
       }
     },
     "NextToken":{"type":"string"},
+    "PolicyDocument":{
+      "type":"string",
+      "max":20480,
+      "min":1
+    },
+    "PolicyVersion":{"type":"string"},
+    "PutClusterPolicyInput":{
+      "type":"structure",
+      "required":[
+        "identifier",
+        "policy"
+      ],
+      "members":{
+        "identifier":{
+          "shape":"ClusterId",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "policy":{"shape":"PolicyDocument"},
+        "bypassPolicyLockoutSafetyCheck":{"shape":"BypassPolicyLockoutSafetyCheck"},
+        "expectedPolicyVersion":{"shape":"PolicyVersion"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "PutClusterPolicyOutput":{
+      "type":"structure",
+      "required":["policyVersion"],
+      "members":{
+        "policyVersion":{"shape":"PolicyVersion"}
+      }
+    },
     "Region":{
       "type":"string",
       "max":50,

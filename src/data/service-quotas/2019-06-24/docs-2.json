@@ -8,6 +8,7 @@
     "DisassociateServiceQuotaTemplate": "<p>Disables your quota request template. After a template is disabled, the quota increase requests in the template are not applied to new Amazon Web Services accounts in your organization. Disabling a quota request template does not apply its quota increase requests.</p>",
     "GetAWSDefaultServiceQuota": "<p>Retrieves the default value for the specified quota. The default value does not reflect any quota increases.</p>",
     "GetAssociationForServiceQuotaTemplate": "<p>Retrieves the status of the association for the quota request template.</p>",
+    "GetAutoManagementConfiguration": "<p>Retrieves information about your <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/automatic-management.html\">Service Quotas Automatic Management</a> configuration. Automatic Management monitors your Service Quotas utilization and notifies you before you run out of your allocated quotas.</p>",
     "GetRequestedServiceQuotaChange": "<p>Retrieves information about the specified quota increase request.</p>",
     "GetServiceQuota": "<p>Retrieves the applied quota value for the specified account-level or resource-level quota. For some quotas, only the default values are available. If the applied quota value is not available for a quota, the quota is not retrieved.</p>",
     "GetServiceQuotaIncreaseRequestFromTemplate": "<p>Retrieves information about the specified quota increase request in your quota request template.</p>",
@@ -20,8 +21,11 @@
     "ListTagsForResource": "<p>Returns a list of the tags assigned to the specified applied quota.</p>",
     "PutServiceQuotaIncreaseRequestIntoTemplate": "<p>Adds a quota increase request to your quota request template.</p>",
     "RequestServiceQuotaIncrease": "<p>Submits a quota increase request for the specified quota at the account or resource level.</p>",
+    "StartAutoManagement": "<p>Starts <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/automatic-management.html\">Service Quotas Automatic Management</a> for an Amazon Web Services account, including notification preferences and excluded quotas configurations. Automatic Management monitors your Service Quotas utilization and notifies you before you run out of your allocated quotas.</p>",
+    "StopAutoManagement": "<p>Stops <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/automatic-management.html\">Service Quotas Automatic Management</a> for an Amazon Web Services account and removes all associated configurations. Automatic Management monitors your Service Quotas utilization and notifies you before you run out of your allocated quotas.</p>",
     "TagResource": "<p>Adds tags to the specified applied quota. You can include one or more tags to add to the quota.</p>",
-    "UntagResource": "<p>Removes tags from the specified applied quota. You can specify one or more tags to remove.</p>"
+    "UntagResource": "<p>Removes tags from the specified applied quota. You can specify one or more tags to remove.</p>",
+    "UpdateAutoManagement": "<p>Updates your <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/automatic-management.html\">Service Quotas Automatic Management</a> configuration, including notification preferences and excluded quotas. Automatic Management monitors your Service Quotas utilization and notifies you before you run out of your allocated quotas.</p>"
   },
   "shapes": {
     "AWSServiceAccessNotEnabledException": {
@@ -35,9 +39,12 @@
     "AmazonResourceName": {
       "base": null,
       "refs": {
+        "GetAutoManagementConfigurationResponse$NotificationArn": "<p>The <a href=\"https://docs.aws.amazon.com/notifications/latest/userguide/resource-level-permissions.html#rlp-table\">User Notifications</a> Amazon Resource Name (ARN) for Automatic Management notifications.</p>",
         "ListTagsForResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) for the applied quota for which you want to list tags. You can get this information by using the Service Quotas console, or by listing the quotas using the <a href=\"https://docs.aws.amazon.com/cli/latest/reference/service-quotas/list-service-quotas.html\">list-service-quotas</a> CLI command or the <a href=\"https://docs.aws.amazon.com/servicequotas/2019-06-24/apireference/API_ListServiceQuotas.html\">ListServiceQuotas</a> Amazon Web Services API operation.</p>",
+        "StartAutoManagementRequest$NotificationArn": "<p>The <a href=\"https://docs.aws.amazon.com/notifications/latest/userguide/resource-level-permissions.html#rlp-table\">User Notifications</a> Amazon Resource Name (ARN) for Automatic Management notifications.</p>",
         "TagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) for the applied quota. You can get this information by using the Service Quotas console, or by listing the quotas using the <a href=\"https://docs.aws.amazon.com/cli/latest/reference/service-quotas/list-service-quotas.html\">list-service-quotas</a> CLI command or the <a href=\"https://docs.aws.amazon.com/servicequotas/2019-06-24/apireference/API_ListServiceQuotas.html\">ListServiceQuotas</a> Amazon Web Services API operation.</p>",
-        "UntagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) for the applied quota that you want to untag. You can get this information by using the Service Quotas console, or by listing the quotas using the <a href=\"https://docs.aws.amazon.com/cli/latest/reference/service-quotas/list-service-quotas.html\">list-service-quotas</a> CLI command or the <a href=\"https://docs.aws.amazon.com/servicequotas/2019-06-24/apireference/API_ListServiceQuotas.html\">ListServiceQuotas</a> Amazon Web Services API operation.</p>"
+        "UntagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) for the applied quota that you want to untag. You can get this information by using the Service Quotas console, or by listing the quotas using the <a href=\"https://docs.aws.amazon.com/cli/latest/reference/service-quotas/list-service-quotas.html\">list-service-quotas</a> CLI command or the <a href=\"https://docs.aws.amazon.com/servicequotas/2019-06-24/apireference/API_ListServiceQuotas.html\">ListServiceQuotas</a> Amazon Web Services API operation.</p>",
+        "UpdateAutoManagementRequest$NotificationArn": "<p>The <a href=\"https://docs.aws.amazon.com/notifications/latest/userguide/resource-level-permissions.html#rlp-table\">User Notifications</a> Amazon Resource Name (ARN) for Automatic Management notifications you want to update.</p>"
       }
     },
     "AppliedLevelEnum": {
@@ -149,6 +156,38 @@
         "TooManyTagsException$Message": null
       }
     },
+    "ExcludedLimit": {
+      "base": null,
+      "refs": {
+        "ExcludedQuotaList$member": null
+      }
+    },
+    "ExcludedQuotaList": {
+      "base": null,
+      "refs": {
+        "ExclusionList$value": null
+      }
+    },
+    "ExcludedService": {
+      "base": null,
+      "refs": {
+        "ExclusionList$key": null,
+        "ExclusionQuotaList$key": null
+      }
+    },
+    "ExclusionList": {
+      "base": null,
+      "refs": {
+        "StartAutoManagementRequest$ExclusionList": "<p>List of Amazon Web Services services excluded from Automatic Management. You won't be notified of Service Quotas utilization for Amazon Web Services services added to the Automatic Management exclusion list. </p>",
+        "UpdateAutoManagementRequest$ExclusionList": "<p>List of Amazon Web Services services you want to exclude from Automatic Management. You won't be notified of Service Quotas utilization for Amazon Web Services services added to the Automatic Management exclusion list. </p>"
+      }
+    },
+    "ExclusionQuotaList": {
+      "base": null,
+      "refs": {
+        "GetAutoManagementConfigurationResponse$ExclusionList": "<p>List of Amazon Web Services services excluded from Automatic Management. You won't be notified of Service Quotas utilization for Amazon Web Services services added to the Automatic Management exclusion list. </p>"
+      }
+    },
     "GetAWSDefaultServiceQuotaRequest": {
       "base": null,
       "refs": {}
@@ -162,6 +201,14 @@
       "refs": {}
     },
     "GetAssociationForServiceQuotaTemplateResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAutoManagementConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAutoManagementConfigurationResponse": {
       "base": null,
       "refs": {}
     },
@@ -337,6 +384,27 @@
       "base": "<p>The specified resource does not exist.</p>",
       "refs": {}
     },
+    "OptInLevel": {
+      "base": null,
+      "refs": {
+        "GetAutoManagementConfigurationResponse$OptInLevel": "<p>Information on the opt-in level for Automatic Management. Only Amazon Web Services account level is supported.</p>",
+        "StartAutoManagementRequest$OptInLevel": "<p>Sets the opt-in level for Automatic Management. Only Amazon Web Services account level is supported.</p>"
+      }
+    },
+    "OptInStatus": {
+      "base": null,
+      "refs": {
+        "GetAutoManagementConfigurationResponse$OptInStatus": "<p>Status on whether Automatic Management is started or stopped.</p>"
+      }
+    },
+    "OptInType": {
+      "base": null,
+      "refs": {
+        "GetAutoManagementConfigurationResponse$OptInType": "<p>Information on the opt-in type for Automatic Management. There are two modes: Notify only and Notify and Auto-Adjust. Currently, only NotifyOnly is available.</p>",
+        "StartAutoManagementRequest$OptInType": "<p>Sets the opt-in type for Automatic Management. There are two modes: Notify only and Notify and Auto-Adjust. Currently, only NotifyOnly is available.</p>",
+        "UpdateAutoManagementRequest$OptInType": "<p>Information on the opt-in type for your Automatic Management configuration. There are two modes: Notify only and Notify and Auto-Adjust. Currently, only NotifyOnly is available.</p>"
+      }
+    },
     "OrganizationNotInAllFeaturesModeException": {
       "base": "<p>The organization that your Amazon Web Services account belongs to is not in All Features mode.</p>",
       "refs": {}
@@ -390,6 +458,7 @@
         "ListRequestedServiceQuotaChangeHistoryByQuotaRequest$QuotaCode": "<p>Specifies the quota identifier. To find the quota code for a specific quota, use the <a>ListServiceQuotas</a> operation, and look for the <code>QuotaCode</code> response in the output for the quota you want.</p>",
         "ListServiceQuotasRequest$QuotaCode": "<p>Specifies the quota identifier. To find the quota code for a specific quota, use the <a>ListServiceQuotas</a> operation, and look for the <code>QuotaCode</code> response in the output for the quota you want.</p>",
         "PutServiceQuotaIncreaseRequestIntoTemplateRequest$QuotaCode": "<p>Specifies the quota identifier. To find the quota code for a specific quota, use the <a>ListServiceQuotas</a> operation, and look for the <code>QuotaCode</code> response in the output for the quota you want.</p>",
+        "QuotaInfo$QuotaCode": "<p>The Service Quotas code for the Amazon Web Services service monitored with Automatic Management.</p>",
         "RequestServiceQuotaIncreaseRequest$QuotaCode": "<p>Specifies the quota identifier. To find the quota code for a specific quota, use the <a>ListServiceQuotas</a> operation, and look for the <code>QuotaCode</code> response in the output for the quota you want.</p>",
         "RequestedServiceQuotaChange$QuotaCode": "<p>Specifies the quota identifier. To find the quota code for a specific quota, use the <a>ListServiceQuotas</a> operation, and look for the <code>QuotaCode</code> response in the output for the quota you want.</p>",
         "ServiceQuota$QuotaCode": "<p>Specifies the quota identifier. To find the quota code for a specific quota, use the <a>ListServiceQuotas</a> operation, and look for the <code>QuotaCode</code> response in the output for the quota you want.</p>",
@@ -433,6 +502,18 @@
       "base": "<p>You have exceeded your service quota. To perform the requested action, remove some of the relevant resources, or use Service Quotas to request a service quota increase.</p>",
       "refs": {}
     },
+    "QuotaInfo": {
+      "base": "<p>Information on your Service Quotas for <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/automatic-management.html\">Service Quotas Automatic Management</a>. Automatic Management monitors your Service Quotas utilization and notifies you before you run out of your allocated quotas.</p>",
+      "refs": {
+        "QuotaInfoList$member": null
+      }
+    },
+    "QuotaInfoList": {
+      "base": null,
+      "refs": {
+        "ExclusionQuotaList$value": null
+      }
+    },
     "QuotaMetricName": {
       "base": null,
       "refs": {
@@ -448,6 +529,7 @@
     "QuotaName": {
       "base": null,
       "refs": {
+        "QuotaInfo$QuotaName": "<p>The Service Quotas name for the Amazon Web Services service monitored with Automatic Management.</p>",
         "RequestedServiceQuotaChange$QuotaName": "<p>Specifies the quota name.</p>",
         "ServiceQuota$QuotaName": "<p>Specifies the quota name.</p>",
         "ServiceQuotaIncreaseRequestInTemplate$QuotaName": "<p>Specifies the quota name.</p>"
@@ -610,11 +692,27 @@
       "base": "<p>The quota request template is not associated with your organization.</p>",
       "refs": {}
     },
+    "StartAutoManagementRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartAutoManagementResponse": {
+      "base": null,
+      "refs": {}
+    },
     "Statistic": {
       "base": null,
       "refs": {
         "MetricInfo$MetricStatisticRecommendation": "<p>The metric statistic that we recommend you use when determining quota usage.</p>"
       }
+    },
+    "StopAutoManagementRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopAutoManagementResponse": {
+      "base": null,
+      "refs": {}
     },
     "SupportCaseAllowed": {
       "base": null,
@@ -671,6 +769,14 @@
       "refs": {}
     },
     "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAutoManagementRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAutoManagementResponse": {
       "base": null,
       "refs": {}
     }

@@ -5,7 +5,7 @@
       {
         "input": {
           "ExternalId": "123ABC",
-          "Policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"Stmt1\",\"Effect\":\"Allow\",\"Action\":\"s3:ListAllMyBuckets\",\"Resource\":\"*\"}]}",
+          "Policy": "escaped-JSON-IAM-POLICY",
           "RoleArn": "arn:aws:iam::123456789012:role/demo",
           "RoleSessionName": "testAssumeRoleSession",
           "Tags": [
@@ -88,7 +88,7 @@
       {
         "input": {
           "DurationSeconds": 3600,
-          "Policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"Stmt1\",\"Effect\":\"Allow\",\"Action\":\"s3:ListAllMyBuckets\",\"Resource\":\"*\"}]}",
+          "Policy": "escaped-JSON-IAM-POLICY",
           "ProviderId": "www.amazon.com",
           "RoleArn": "arn:aws:iam::123456789012:role/FederatedWebIdentityRole",
           "RoleSessionName": "app1",
@@ -215,7 +215,7 @@
         "input": {
           "DurationSeconds": 3600,
           "Name": "testFedUserSession",
-          "Policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"Stmt1\",\"Effect\":\"Allow\",\"Action\":\"s3:ListAllMyBuckets\",\"Resource\":\"*\"}]}",
+          "Policy": "escaped-JSON-IAM-POLICY",
           "Tags": [
             {
               "Key": "Project",

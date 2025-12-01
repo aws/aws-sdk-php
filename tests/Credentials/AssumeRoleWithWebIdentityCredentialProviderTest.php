@@ -6,6 +6,7 @@ use Aws\Command;
 use Aws\Credentials\AssumeRoleWithWebIdentityCredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
+use Aws\Middleware;
 use Aws\Result;
 use Aws\Sts\StsClient;
 use Aws\Sts\Exception\StsException;
@@ -153,6 +154,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $args['RoleArn'] = self::SAMPLE_ROLE_ARN;
         $args['WebIdentityTokenFile'] = '/foo';
+        $args['region'] = 'us-east-1';
         $provider = new AssumeRoleWithWebIdentityCredentialProvider($args);
         $provider()->wait();
     }
@@ -163,6 +165,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         $tokenPath = $dir . '/emptyTokenFile';
         $args['WebIdentityTokenFile'] = $tokenPath;
         $args['RoleArn'] = self::SAMPLE_ROLE_ARN;
+        $args['region'] = 'us-east-1';
         file_put_contents($tokenPath, '');
 
         try {
@@ -395,5 +398,168 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         } finally {
             unlink($tokenPath);
         }
+    }
+
+    /**
+     * Tests region precedence: config > env var > fallback
+     * @dataProvider regionPrecedenceProvider
+     */
+    public function testRegionPrecedence(
+        ?string $configRegion,
+        ?string $envRegion,
+        string $expectedRegion,
+        bool $expectNotice
+    ): void
+    {
+        $originalRegion = getenv('AWS_REGION');
+
+        if ($envRegion !== null) {
+            putenv("AWS_REGION={$envRegion}");
+        } else {
+            putenv("AWS_REGION");
+        }
+
+        $tokenFile = tempnam(sys_get_temp_dir(), 'token');
+        file_put_contents($tokenFile, 'test-token-content');
+
+        try {
+            $config = [
+                'RoleArn' => self::SAMPLE_ROLE_ARN,
+                'WebIdentityTokenFile' => $tokenFile,
+            ];
+
+            if ($configRegion !== null) {
+                $config['region'] = $configRegion;
+            }
+
+            if ($expectNotice) {
+                $this->expectNotice();
+                $this->expectNoticeMessage(
+                    'NOTICE: STS client created without explicit `region` configuration.'
+                );
+            }
+
+            $provider = new AssumeRoleWithWebIdentityCredentialProvider($config);
+
+            // Check region
+            $reflection = new \ReflectionClass($provider);
+            $clientProperty = $reflection->getProperty('client');
+            $stsClient = $clientProperty->getValue($provider);
+
+            $this->assertEquals($expectedRegion, $stsClient->getRegion());
+        } finally {
+            // Cleanup
+            unlink($tokenFile);
+
+            // Restore original AWS_REGION value
+            if ($originalRegion !== false) {
+                putenv("AWS_REGION={$originalRegion}");
+            } else {
+                putenv("AWS_REGION");
+            }
+        }
+    }
+
+    public function regionPrecedenceProvider(): array
+    {
+        return [
+            'config overrides env' => ['us-west-2', 'eu-west-1', 'us-west-2', false],
+            'env used when no config' => [null, 'eu-west-1', 'eu-west-1', false],
+            'fallback when neither' => [null, null, 'us-east-1', true],
+            'empty string uses fallback' => ['', null, 'us-east-1', true],
+        ];
+    }
+
+    /**
+     * Tests that correct endpoints are called
+     * @dataProvider endpointProvider
+     */
+    public function testEndpointSelection(
+        string $region,
+        string $expectedEndpoint
+    ): void
+    {
+        $tokenFile = tempnam(sys_get_temp_dir(), 'token');
+        file_put_contents($tokenFile, 'test-token-content');
+
+        $config = [
+            'RoleArn' => self::SAMPLE_ROLE_ARN,
+            'WebIdentityTokenFile' => $tokenFile,
+            'region' => $region
+        ];
+
+        $provider = new AssumeRoleWithWebIdentityCredentialProvider($config);
+
+        // Get the client via reflection
+        $reflection = new \ReflectionClass($provider);
+        $clientProperty = $reflection->getProperty('client');
+        $stsClient = $clientProperty->getValue($provider);
+
+        // Set up middleware to capture the endpoint
+        $capturedEndpoint = null;
+        $stsClient->getHandlerList()->appendBuild(
+            Middleware::tap(
+                function ($cmd, $req) use (&$capturedEndpoint) {
+                    $capturedEndpoint = (string) $req->getUri();
+                }
+            )
+        );
+
+        // Mock the STS response
+        $stsClient->getHandlerList()->setHandler(
+            function ($c, $r) {
+                $result = [
+                    'Credentials' => [
+                        'AccessKeyId'     => 'foo',
+                        'SecretAccessKey' => 'bar',
+                        'SessionToken'    => 'baz',
+                        'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
+                    ],
+                    'AssumedRoleUser' => [
+                        'AssumedRoleId' => 'ARXXXXXXXXXXXXXXXXXXX:test_session',
+                        'Arn' => self::SAMPLE_ROLE_ARN . "/test_session"
+                    ]
+                ];
+                return Promise\Create::promiseFor(new Result($result));
+            }
+        );
+
+        try {
+            $provider()->wait();
+
+            $this->assertEquals(
+                $expectedEndpoint,
+                $capturedEndpoint,
+                "Failed asserting endpoint for region: {$region}"
+            );
+        } finally {
+            unlink($tokenFile);
+        }
+    }
+
+    public function endpointProvider(): array
+    {
+        return [
+            'us-east-1' => [
+                'region' => 'us-east-1',
+                'expectedEndpoint' => 'https://sts.us-east-1.amazonaws.com/'
+            ],
+            'us-west-2' => [
+                'region' => 'us-west-2',
+                'expectedEndpoint' => 'https://sts.us-west-2.amazonaws.com/'
+            ],
+            'eu-west-1' => [
+                'region' => 'eu-west-1',
+                'expectedEndpoint' => 'https://sts.eu-west-1.amazonaws.com/'
+            ],
+            'ap-southeast-1' => [
+                'region' => 'ap-southeast-1',
+                'expectedEndpoint' => 'https://sts.ap-southeast-1.amazonaws.com/'
+            ],
+            'sa-east-1' => [
+                'region' => 'sa-east-1',
+                'expectedEndpoint' => 'https://sts.sa-east-1.amazonaws.com/'
+            ]
+        ];
     }
 }

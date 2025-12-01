@@ -14,8 +14,9 @@
     "DescribeNotificationConfiguration": "<p>Gets the <code>NotificationConfiguration</code> for a given Kinesis video stream.</p>",
     "DescribeSignalingChannel": "<p>Returns the most current information about the signaling channel. You must specify either the name or the Amazon Resource Name (ARN) of the channel that you want to describe.</p>",
     "DescribeStream": "<p>Returns the most current information about the specified stream. You must specify either the <code>StreamName</code> or the <code>StreamARN</code>. </p>",
+    "DescribeStreamStorageConfiguration": "<p>Retrieves the current storage configuration for the specified Kinesis video stream.</p> <p>In the request, you must specify either the <code>StreamName</code> or the <code>StreamARN</code>.</p> <p>You must have permissions for the <code>KinesisVideo:DescribeStreamStorageConfiguration</code> action.</p>",
     "GetDataEndpoint": "<p>Gets an endpoint for a specified stream for either reading or writing. Use this endpoint in your application to read from the specified stream (using the <code>GetMedia</code> or <code>GetMediaForFragmentList</code> operations) or write to it (using the <code>PutMedia</code> operation). </p> <note> <p>The returned endpoint does not have the API name appended. The client needs to add the API name to the returned endpoint.</p> </note> <p>In the request, specify the stream either by <code>StreamName</code> or <code>StreamARN</code>.</p>",
-    "GetSignalingChannelEndpoint": "<p>Provides an endpoint for the specified signaling channel to send and receive messages. This API uses the <code>SingleMasterChannelEndpointConfiguration</code> input parameter, which consists of the <code>Protocols</code> and <code>Role</code> properties.</p> <p> <code>Protocols</code> is used to determine the communication mechanism. For example, if you specify <code>WSS</code> as the protocol, this API produces a secure websocket endpoint. If you specify <code>HTTPS</code> as the protocol, this API generates an HTTPS endpoint. </p> <p> <code>Role</code> determines the messaging permissions. A <code>MASTER</code> role results in this API generating an endpoint that a client can use to communicate with any of the viewers on the channel. A <code>VIEWER</code> role results in this API generating an endpoint that a client can use to communicate only with a <code>MASTER</code>. </p>",
+    "GetSignalingChannelEndpoint": "<p>Provides an endpoint for the specified signaling channel to send and receive messages. This API uses the <code>SingleMasterChannelEndpointConfiguration</code> input parameter, which consists of the <code>Protocols</code> and <code>Role</code> properties.</p> <p> <code>Protocols</code> is used to determine the communication mechanism. For example, if you specify <code>WSS</code> as the protocol, this API produces a secure websocket endpoint. If you specify <code>HTTPS</code> as the protocol, this API generates an HTTPS endpoint. If you specify <code>WEBRTC</code> as the protocol, but the signaling channel isn't configured for ingestion, you will receive the error <code>InvalidArgumentException</code>.</p> <p> <code>Role</code> determines the messaging permissions. A <code>MASTER</code> role results in this API generating an endpoint that a client can use to communicate with any of the viewers on the channel. A <code>VIEWER</code> role results in this API generating an endpoint that a client can use to communicate only with a <code>MASTER</code>. </p>",
     "ListEdgeAgentConfigurations": "<p>Returns an array of edge configurations associated with the specified Edge Agent.</p> <p>In the request, you must specify the Edge Agent <code>HubDeviceArn</code>.</p>",
     "ListSignalingChannels": "<p>Returns an array of <code>ChannelInfo</code> objects. Each object describes a signaling channel. To retrieve only those channels that satisfy a specific condition, you can specify a <code>ChannelNameCondition</code>.</p>",
     "ListStreams": "<p>Returns an array of <code>StreamInfo</code> objects. Each object describes a stream. To retrieve only streams that satisfy a specific condition, you can specify a <code>StreamNameCondition</code>. </p>",
@@ -31,7 +32,8 @@
     "UpdateMediaStorageConfiguration": "<p>Associates a <code>SignalingChannel</code> to a stream to store the media. There are two signaling modes that you can specify :</p> <ul> <li> <p>If <code>StorageStatus</code> is enabled, the data will be stored in the <code>StreamARN</code> provided. In order for WebRTC Ingestion to work, the stream must have data retention enabled.</p> </li> <li> <p>If <code>StorageStatus</code> is disabled, no data will be stored, and the <code>StreamARN</code> parameter will not be needed. </p> </li> </ul> <important> <p>If <code>StorageStatus</code> is enabled, direct peer-to-peer (master-viewer) connections no longer occur. Peers connect directly to the storage session. You must call the <code>JoinStorageSession</code> API to trigger an SDP offer send and establish a connection between a peer and the storage session. </p> </important>",
     "UpdateNotificationConfiguration": "<p>Updates the notification information for a stream.</p>",
     "UpdateSignalingChannel": "<p>Updates the existing signaling channel. This is an asynchronous operation and takes time to complete. </p> <p>If the <code>MessageTtlSeconds</code> value is updated (either increased or reduced), it only applies to new messages sent via this channel after it's been updated. Existing messages are still expired as per the previous <code>MessageTtlSeconds</code> value.</p>",
-    "UpdateStream": "<p>Updates stream metadata, such as the device name and media type.</p> <p>You must provide the stream name or the Amazon Resource Name (ARN) of the stream.</p> <p>To make sure that you have the latest version of the stream before updating it, you can specify the stream version. Kinesis Video Streams assigns a version to each stream. When you update a stream, Kinesis Video Streams assigns a new version number. To get the latest stream version, use the <code>DescribeStream</code> API. </p> <p> <code>UpdateStream</code> is an asynchronous operation, and takes time to complete.</p>"
+    "UpdateStream": "<p>Updates stream metadata, such as the device name and media type.</p> <p>You must provide the stream name or the Amazon Resource Name (ARN) of the stream.</p> <p>To make sure that you have the latest version of the stream before updating it, you can specify the stream version. Kinesis Video Streams assigns a version to each stream. When you update a stream, Kinesis Video Streams assigns a new version number. To get the latest stream version, use the <code>DescribeStream</code> API. </p> <p> <code>UpdateStream</code> is an asynchronous operation, and takes time to complete.</p>",
+    "UpdateStreamStorageConfiguration": "<p>Updates the storage configuration for an existing Kinesis video stream.</p> <p>This operation allows you to modify the storage tier settings for a stream, enabling you to optimize storage costs and performance based on your access patterns.</p> <p> <code>UpdateStreamStorageConfiguration</code> is an asynchronous operation.</p> <p>You must have permissions for the <code>KinesisVideo:UpdateStreamStorageConfiguration</code> action.</p>"
   },
   "shapes": {
     "APIName": {
@@ -150,8 +152,14 @@
     "DataRetentionInHours": {
       "base": null,
       "refs": {
-        "CreateStreamInput$DataRetentionInHours": "<p>The number of hours that you want to retain the data in the stream. Kinesis Video Streams retains the data in a data store that is associated with the stream.</p> <p>The default value is 0, indicating that the stream does not persist data.</p> <p>When the <code>DataRetentionInHours</code> value is 0, consumers can still consume the fragments that remain in the service host buffer, which has a retention time limit of 5 minutes and a retention memory limit of 200 MB. Fragments are removed from the buffer when either limit is reached.</p>",
+        "CreateStreamInput$DataRetentionInHours": "<p>The number of hours that you want to retain the data in the stream. Kinesis Video Streams retains the data in a data store that is associated with the stream.</p> <p>The default value is 0, indicating that the stream does not persist data. The minimum is 1 hour.</p> <p>When the <code>DataRetentionInHours</code> value is 0, consumers can still consume the fragments that remain in the service host buffer, which has a retention time limit of 5 minutes and a retention memory limit of 200 MB. Fragments are removed from the buffer when either limit is reached.</p>",
         "StreamInfo$DataRetentionInHours": "<p>How long the stream retains data, in hours.</p>"
+      }
+    },
+    "DefaultStorageTier": {
+      "base": null,
+      "refs": {
+        "StreamStorageConfiguration$DefaultStorageTier": "<p>The default storage tier for the stream data. This setting determines the storage class used for stream data, affecting both performance characteristics and storage costs.</p> <p>Available storage tiers:</p> <ul> <li> <p> <code>HOT</code> - Optimized for frequent access with the lowest latency and highest performance. Ideal for real-time applications and frequently accessed data.</p> </li> <li> <p> <code>WARM</code> - Balanced performance and cost for moderately accessed data. Suitable for data that is accessed regularly but not continuously.</p> </li> </ul>"
       }
     },
     "DeleteAfterUpload": {
@@ -246,6 +254,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeStreamStorageConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeStreamStorageConfigurationOutput": {
+      "base": null,
+      "refs": {}
+    },
     "DestinationRegion": {
       "base": null,
       "refs": {
@@ -262,7 +278,7 @@
     "DeviceName": {
       "base": null,
       "refs": {
-        "CreateStreamInput$DeviceName": "<p>The name of the device that is writing to the stream. </p> <note> <p>In the current implementation, Kinesis Video Streams does not use this name.</p> </note>",
+        "CreateStreamInput$DeviceName": "<p>The name of the device that is writing to the stream. </p> <note> <p>In the current implementation, Kinesis Video Streams doesn't use this name.</p> </note>",
         "StreamInfo$DeviceName": "<p>The name of the device that is associated with the stream.</p>",
         "UpdateStreamInput$DeviceName": "<p>The name of the device that is writing to the stream. </p> <note> <p> In the current implementation, Kinesis Video Streams does not use this name. </p> </note>"
       }
@@ -420,7 +436,7 @@
     "KmsKeyId": {
       "base": null,
       "refs": {
-        "CreateStreamInput$KmsKeyId": "<p>The ID of the Key Management Service (KMS) key that you want Kinesis Video Streams to use to encrypt stream data.</p> <p>If no key ID is specified, the default, Kinesis Video-managed key (<code>Amazon Web Services/kinesisvideo</code>) is used.</p> <p> For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/APIReference/API_DescribeKey.html#API_DescribeKey_RequestParameters\">DescribeKey</a>. </p>",
+        "CreateStreamInput$KmsKeyId": "<p>The ID of the Key Management Service (KMS) key that you want Kinesis Video Streams to use to encrypt stream data.</p> <p>If no key ID is specified, the default, Kinesis Video-managed key (<code>aws/kinesisvideo</code>) is used.</p> <p> For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/APIReference/API_DescribeKey.html#API_DescribeKey_RequestParameters\">DescribeKey</a>. </p>",
         "StreamInfo$KmsKeyId": "<p>The ID of the Key Management Service (KMS) key that Kinesis Video Streams uses to encrypt data on the stream.</p>"
       }
     },
@@ -579,7 +595,7 @@
     "MessageTtlSeconds": {
       "base": null,
       "refs": {
-        "SingleMasterConfiguration$MessageTtlSeconds": "<p>The period of time a signaling channel retains undelivered messages before they are discarded.</p>"
+        "SingleMasterConfiguration$MessageTtlSeconds": "<p>The period of time (in seconds) a signaling channel retains undelivered messages before they are discarded. Use to update this value.</p>"
       }
     },
     "NextToken": {
@@ -608,7 +624,7 @@
       "refs": {}
     },
     "NotificationConfiguration": {
-      "base": "<p>The structure that contains the notification information for the KVS images delivery. If this parameter is null, the configuration will be deleted from the stream.</p>",
+      "base": "<p>Use this API to configure Amazon Simple Notification Service (Amazon SNS) notifications for when fragments become available in a stream. If this parameter is null, the configuration will be deleted from the stream.</p> <p>See <a href=\"https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/notifications.html\">Notifications in Kinesis Video Streams</a> for more information.</p>",
       "refs": {
         "DescribeNotificationConfigurationOutput$NotificationConfiguration": "<p>The structure that contains the information required for notifications. If the structure is null, the configuration will be deleted from the stream.</p>",
         "UpdateNotificationConfigurationInput$NotificationConfiguration": "<p>The structure containing the information required for notifications. If the structure is null, the configuration will be deleted from the stream.</p>"
@@ -621,7 +637,7 @@
       }
     },
     "RecorderConfig": {
-      "base": "<p>The recorder configuration consists of the local <code>MediaSourceConfig</code> details that are used as credentials to accesss the local media files streamed on the camera. </p>",
+      "base": "<p>The recorder configuration consists of the local <code>MediaSourceConfig</code> details that are used as credentials to access the local media files streamed on the camera. </p>",
       "refs": {
         "EdgeConfig$RecorderConfig": "<p>The recorder configuration consists of the local <code>MediaSourceConfig</code> details, that are used as credentials to access the local media files streamed on the camera. </p>"
       }
@@ -649,6 +665,8 @@
         "DescribeNotificationConfigurationInput$StreamARN": "<p>The Amazon Resource Name (ARN) of the Kinesis video stream from where you want to retrieve the notification configuration. You must specify either the <code>StreamName</code> or the StreamARN.</p>",
         "DescribeSignalingChannelInput$ChannelARN": "<p>The ARN of the signaling channel that you want to describe.</p>",
         "DescribeStreamInput$StreamARN": "<p>The Amazon Resource Name (ARN) of the stream.</p>",
+        "DescribeStreamStorageConfigurationInput$StreamARN": "<p>The Amazon Resource Name (ARN) of the stream for which you want to retrieve the storage configuration.</p>",
+        "DescribeStreamStorageConfigurationOutput$StreamARN": "<p>The Amazon Resource Name (ARN) of the stream.</p>",
         "GetDataEndpointInput$StreamARN": "<p>The Amazon Resource Name (ARN) of the stream that you want to get the endpoint for. You must specify either this parameter or a <code>StreamName</code> in the request. </p>",
         "GetSignalingChannelEndpointInput$ChannelARN": "<p>The Amazon Resource Name (ARN) of the signalling channel for which you want to get an endpoint.</p>",
         "ListEdgeAgentConfigurationsEdgeConfig$StreamARN": "<p>The Amazon Resource Name (ARN) of the stream.</p>",
@@ -668,7 +686,8 @@
         "UpdateMediaStorageConfigurationInput$ChannelARN": "<p>The Amazon Resource Name (ARN) of the channel.</p>",
         "UpdateNotificationConfigurationInput$StreamARN": "<p>The Amazon Resource Name (ARN) of the Kinesis video stream from where you want to update the notification configuration. You must specify either the <code>StreamName</code> or the <code>StreamARN</code>.</p>",
         "UpdateSignalingChannelInput$ChannelARN": "<p>The Amazon Resource Name (ARN) of the signaling channel that you want to update.</p>",
-        "UpdateStreamInput$StreamARN": "<p>The ARN of the stream whose metadata you want to update.</p>"
+        "UpdateStreamInput$StreamARN": "<p>The ARN of the stream whose metadata you want to update.</p>",
+        "UpdateStreamStorageConfigurationInput$StreamARN": "<p>The Amazon Resource Name (ARN) of the stream for which you want to update the storage configuration.</p>"
       }
     },
     "ResourceEndpoint": {
@@ -722,7 +741,7 @@
     "ScheduleExpression": {
       "base": null,
       "refs": {
-        "ScheduleConfig$ScheduleExpression": "<p>The Quartz cron expression that takes care of scheduling jobs to record from the camera, or local media file, onto the Edge Agent. If the <code>ScheduleExpression</code> is not provided for the <code>RecorderConfig</code>, then the Edge Agent will always be set to recording mode.</p> <p>For more information about Quartz, refer to the <a href=\"http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html\"> <i>Cron Trigger Tutorial</i> </a> page to understand the valid expressions and its use.</p>"
+        "ScheduleConfig$ScheduleExpression": "<p>The Quartz cron expression that takes care of scheduling jobs to record from the camera, or local media file, onto the Edge Agent. If the <code>ScheduleExpression</code> is not provided for the <code>RecorderConfig</code>, then the Edge Agent will always be set to recording mode.</p> <p>For more information about Quartz, refer to the <a href=\"https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html\"> <i>Cron Trigger Tutorial</i> </a> page to understand the valid expressions and its use.</p>"
       }
     },
     "SingleMasterChannelEndpointConfiguration": {
@@ -735,8 +754,8 @@
       "base": "<p>A structure that contains the configuration for the <code>SINGLE_MASTER</code> channel type.</p>",
       "refs": {
         "ChannelInfo$SingleMasterConfiguration": "<p>A structure that contains the configuration for the <code>SINGLE_MASTER</code> channel type.</p>",
-        "CreateSignalingChannelInput$SingleMasterConfiguration": "<p>A structure containing the configuration for the <code>SINGLE_MASTER</code> channel type. </p>",
-        "UpdateSignalingChannelInput$SingleMasterConfiguration": "<p>The structure containing the configuration for the <code>SINGLE_MASTER</code> type of the signaling channel that you want to update. </p>"
+        "CreateSignalingChannelInput$SingleMasterConfiguration": "<p>A structure containing the configuration for the <code>SINGLE_MASTER</code> channel type. The default configuration for the channel message's time to live is 60 seconds (1 minute).</p>",
+        "UpdateSignalingChannelInput$SingleMasterConfiguration": "<p>The structure containing the configuration for the <code>SINGLE_MASTER</code> type of the signaling channel that you want to update. This parameter and the channel message's time-to-live are required for channels with the <code>SINGLE_MASTER</code> channel type.</p>"
       }
     },
     "StartEdgeConfigurationUpdateInput": {
@@ -788,6 +807,8 @@
         "DescribeMappedResourceConfigurationInput$StreamName": "<p>The name of the stream.</p>",
         "DescribeNotificationConfigurationInput$StreamName": "<p>The name of the stream from which to retrieve the notification configuration. You must specify either the <code>StreamName</code> or the <code>StreamARN</code>.</p>",
         "DescribeStreamInput$StreamName": "<p>The name of the stream.</p>",
+        "DescribeStreamStorageConfigurationInput$StreamName": "<p>The name of the stream for which you want to retrieve the storage configuration.</p>",
+        "DescribeStreamStorageConfigurationOutput$StreamName": "<p>The name of the stream.</p>",
         "GetDataEndpointInput$StreamName": "<p>The name of the stream that you want to get the endpoint for. You must specify either this parameter or a <code>StreamARN</code> in the request.</p>",
         "ListEdgeAgentConfigurationsEdgeConfig$StreamName": "<p>The name of the stream.</p>",
         "ListTagsForStreamInput$StreamName": "<p>The name of the stream that you want to list tags for.</p>",
@@ -800,13 +821,22 @@
         "UpdateDataRetentionInput$StreamName": "<p>The name of the stream whose retention period you want to change.</p>",
         "UpdateImageGenerationConfigurationInput$StreamName": "<p>The name of the stream from which to update the image generation configuration. You must specify either the <code>StreamName</code> or the <code>StreamARN</code>.</p>",
         "UpdateNotificationConfigurationInput$StreamName": "<p>The name of the stream from which to update the notification configuration. You must specify either the <code>StreamName</code> or the <code>StreamARN</code>.</p>",
-        "UpdateStreamInput$StreamName": "<p>The name of the stream whose metadata you want to update.</p> <p>The stream name is an identifier for the stream, and must be unique for each account and region.</p>"
+        "UpdateStreamInput$StreamName": "<p>The name of the stream whose metadata you want to update.</p> <p>The stream name is an identifier for the stream, and must be unique for each account and region.</p>",
+        "UpdateStreamStorageConfigurationInput$StreamName": "<p>The name of the stream for which you want to update the storage configuration.</p>"
       }
     },
     "StreamNameCondition": {
       "base": "<p>Specifies the condition that streams must satisfy to be returned when you list streams (see the <code>ListStreams</code> API). A condition has a comparison operation and a value. Currently, you can specify only the <code>BEGINS_WITH</code> operator, which finds streams whose names start with a given prefix. </p>",
       "refs": {
         "ListStreamsInput$StreamNameCondition": "<p>Optional: Returns only streams that satisfy a specific condition. Currently, you can specify only the prefix of a stream name as a condition. </p>"
+      }
+    },
+    "StreamStorageConfiguration": {
+      "base": "<p>The configuration for stream storage, including the default storage tier for stream data. This configuration determines how stream data is stored and accessed, with different tiers offering varying levels of performance and cost optimization.</p>",
+      "refs": {
+        "CreateStreamInput$StreamStorageConfiguration": "<p>The configuration for the stream's storage, including the default storage tier for stream data. This configuration determines how stream data is stored and accessed, with different tiers offering varying levels of performance and cost optimization.</p> <p>If not specified, the stream will use the default storage configuration with HOT tier for optimal performance.</p>",
+        "DescribeStreamStorageConfigurationOutput$StreamStorageConfiguration": "<p>The current storage configuration for the stream, including the default storage tier and other storage-related settings.</p>",
+        "UpdateStreamStorageConfigurationInput$StreamStorageConfiguration": "<p>The new storage configuration for the stream. This includes the default storage tier that determines how stream data is stored and accessed.</p> <p>Different storage tiers offer varying levels of performance and cost optimization to match your specific use case requirements.</p>"
       }
     },
     "SyncStatus": {
@@ -971,6 +1001,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateStreamStorageConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateStreamStorageConfigurationOutput": {
+      "base": null,
+      "refs": {}
+    },
     "UploaderConfig": {
       "base": "<p>The configuration that consists of the <code>ScheduleExpression</code> and the <code>DurationInMinutes</code> details that specify the scheduling to record from a camera, or local media file, onto the Edge Agent. If the <code>ScheduleConfig</code> is not provided in the <code>UploaderConfig</code>, then the Edge Agent will upload at regular intervals (every 1 hour). </p>",
       "refs": {
@@ -992,7 +1030,8 @@
         "StreamInfo$Version": "<p>The version of the stream.</p>",
         "UpdateDataRetentionInput$CurrentVersion": "<p>The version of the stream whose retention period you want to change. To get the version, call either the <code>DescribeStream</code> or the <code>ListStreams</code> API.</p>",
         "UpdateSignalingChannelInput$CurrentVersion": "<p>The current version of the signaling channel that you want to update.</p>",
-        "UpdateStreamInput$CurrentVersion": "<p>The version of the stream whose metadata you want to update.</p>"
+        "UpdateStreamInput$CurrentVersion": "<p>The version of the stream whose metadata you want to update.</p>",
+        "UpdateStreamStorageConfigurationInput$CurrentVersion": "<p>The version of the stream whose storage configuration you want to change. To get the version, call either the <code>DescribeStream</code> or the <code>ListStreams</code> API.</p>"
       }
     },
     "VersionMismatchException": {

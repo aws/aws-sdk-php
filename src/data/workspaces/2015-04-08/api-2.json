@@ -3054,6 +3054,10 @@
       "type":"list",
       "member":{"shape":"IpAddress"}
     },
+    "DnsIpv6Addresses":{
+      "type":"list",
+      "member":{"shape":"Ipv6Address"}
+    },
     "DomainName":{
       "type":"string",
       "pattern":"^([a-zA-Z0-9]+[.-])+([a-zA-Z0-9])+$"
@@ -3447,6 +3451,10 @@
     "IpRuleList":{
       "type":"list",
       "member":{"shape":"IpRuleItem"}
+    },
+    "Ipv6Address":{
+      "type":"string",
+      "pattern":"^(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|[0-9a-fA-F]{1,4}(?::[0-9a-fA-F]{1,4}){0,6}::[0-9a-fA-F]{1,4}$"
     },
     "Limit":{
       "type":"integer",
@@ -4663,6 +4671,7 @@
         "DirectoryId":{"shape":"DirectoryId"},
         "UserName":{"shape":"UserName"},
         "IpAddress":{"shape":"IpAddress"},
+        "Ipv6Address":{"shape":"Ipv6Address"},
         "State":{"shape":"WorkspaceState"},
         "BundleId":{"shape":"BundleId"},
         "SubnetId":{"shape":"SubnetId"},
@@ -4765,6 +4774,7 @@
         "RegistrationCode":{"shape":"RegistrationCode"},
         "SubnetIds":{"shape":"SubnetIds"},
         "DnsIpAddresses":{"shape":"DnsIpAddresses"},
+        "DnsIpv6Addresses":{"shape":"DnsIpv6Addresses"},
         "CustomerUserName":{"shape":"UserName"},
         "IamRoleId":{"shape":"ARN"},
         "DirectoryType":{"shape":"WorkspaceDirectoryType"},
@@ -4995,7 +5005,8 @@
         "RootVolumeEncryptionEnabled":{"shape":"BooleanObject"},
         "WorkspaceProperties":{"shape":"WorkspaceProperties"},
         "Tags":{"shape":"TagList"},
-        "WorkspaceName":{"shape":"WorkspaceName"}
+        "WorkspaceName":{"shape":"WorkspaceName"},
+        "Ipv6Address":{"shape":"Ipv6Address"}
       }
     },
     "WorkspaceRequestList":{

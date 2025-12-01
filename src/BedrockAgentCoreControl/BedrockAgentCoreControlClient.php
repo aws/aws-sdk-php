@@ -93,6 +93,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listWorkloadIdentitiesAsync(array $args = [])
  * @method \Aws\Result setTokenVaultCMK(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setTokenVaultCMKAsync(array $args = [])
+ * @method \Aws\Result synchronizeGatewayTargets(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise synchronizeGatewayTargetsAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

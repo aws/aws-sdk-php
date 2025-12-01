@@ -1,0 +1,1095 @@
+{
+  "version": "2.0",
+  "service": "<p>AWS Partner Central Account service provides APIs for managing partner accounts, connections, and profiles within the AWS Partner Network. This service enables partners to create and manage their partner profiles, establish connections with other partners, and maintain their account information.</p>",
+  "operations": {
+    "AcceptConnectionInvitation": "<p>Accepts a connection invitation from another partner, establishing a formal partnership connection between the two parties.</p>",
+    "AssociateAwsTrainingCertificationEmailDomain": "<p>Associates an email domain with AWS training and certification for the partner account, enabling automatic verification of employee certifications.</p>",
+    "CancelConnection": "<p>Cancels an existing connection between partners, terminating the partnership relationship.</p>",
+    "CancelConnectionInvitation": "<p>Cancels a pending connection invitation before it has been accepted or rejected.</p>",
+    "CancelProfileUpdateTask": "<p>Cancels an in-progress profile update task, stopping any pending changes to the partner profile.</p>",
+    "CreateConnectionInvitation": "<p>Creates a new connection invitation to establish a partnership with another organization.</p>",
+    "CreatePartner": "<p>Creates a new partner account in the AWS Partner Network with the specified details and configuration.</p>",
+    "DisassociateAwsTrainingCertificationEmailDomain": "<p>Removes the association between an email domain and AWS training and certification for the partner account.</p>",
+    "GetAllianceLeadContact": "<p>Retrieves the alliance lead contact information for a partner account.</p>",
+    "GetConnection": "<p>Retrieves detailed information about a specific connection between partners.</p>",
+    "GetConnectionInvitation": "<p>Retrieves detailed information about a specific connection invitation.</p>",
+    "GetConnectionPreferences": "<p>Retrieves the connection preferences for a partner account, including access settings and exclusions.</p>",
+    "GetPartner": "<p>Retrieves detailed information about a specific partner account.</p>",
+    "GetProfileUpdateTask": "<p>Retrieves information about a specific profile update task.</p>",
+    "GetProfileVisibility": "<p>Retrieves the visibility settings for a partner profile, determining who can see the profile information.</p>",
+    "ListConnectionInvitations": "<p>Lists connection invitations for the partner account, with optional filtering by status, type, and other criteria.</p>",
+    "ListConnections": "<p>Lists active connections for the partner account, with optional filtering by connection type and participant.</p>",
+    "ListPartners": "<p>Lists partner accounts in the catalog, providing a summary view of all partners.</p>",
+    "ListTagsForResource": "<p>Lists all tags associated with a specific AWS Partner Central Account resource.</p>",
+    "PutAllianceLeadContact": "<p>Creates or updates the alliance lead contact information for a partner account.</p>",
+    "PutProfileVisibility": "<p>Sets the visibility level for a partner profile, controlling who can view the profile information.</p>",
+    "RejectConnectionInvitation": "<p>Rejects a connection invitation from another partner, declining the partnership request.</p>",
+    "SendEmailVerificationCode": "<p>Sends an email verification code to the specified email address for account verification purposes.</p>",
+    "StartProfileUpdateTask": "<p>Initiates a profile update task to modify partner profile information asynchronously.</p>",
+    "TagResource": "<p>Adds or updates tags for a specified AWS Partner Central Account resource.</p>",
+    "UntagResource": "<p>Removes specified tags from an AWS Partner Central Account resource.</p>",
+    "UpdateConnectionPreferences": "<p>Updates the connection preferences for a partner account, modifying access settings and exclusions.</p>"
+  },
+  "shapes": {
+    "AcceptConnectionInvitationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AcceptConnectionInvitationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "AccessDeniedException": {
+      "base": "<p>The request was denied due to insufficient permissions. The caller does not have the required permissions to perform this operation.</p>",
+      "refs": {}
+    },
+    "AccessDeniedExceptionReason": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$Reason": "<p>The specific reason for the access denial.</p>"
+      }
+    },
+    "AccessType": {
+      "base": null,
+      "refs": {
+        "GetConnectionPreferencesResponse$AccessType": "<p>The access type setting for connections (e.g., open, restricted, invitation-only).</p>",
+        "UpdateConnectionPreferencesRequest$AccessType": "<p>The access type setting for connections (e.g., open, restricted, invitation-only).</p>",
+        "UpdateConnectionPreferencesResponse$AccessType": "<p>The updated access type setting for connections.</p>"
+      }
+    },
+    "AccountSummary": {
+      "base": "<p>Summary information about an AWS account.</p>",
+      "refs": {
+        "Participant$Account": "<p>The AWS account information for the participant.</p>"
+      }
+    },
+    "AllianceLeadContact": {
+      "base": "<p>Contains contact information for the primary alliance lead responsible for partnership activities.</p>",
+      "refs": {
+        "CreatePartnerRequest$AllianceLeadContact": "<p>The primary contact person for alliance and partnership matters.</p>",
+        "CreatePartnerResponse$AllianceLeadContact": "<p>The alliance lead contact information for the partner account.</p>",
+        "GetAllianceLeadContactResponse$AllianceLeadContact": "<p>The alliance lead contact information including name, email, and business title.</p>",
+        "PutAllianceLeadContactRequest$AllianceLeadContact": "<p>The alliance lead contact information to set for the partner account.</p>",
+        "PutAllianceLeadContactResponse$AllianceLeadContact": "<p>The updated alliance lead contact information.</p>"
+      }
+    },
+    "AssociateAwsTrainingCertificationEmailDomainRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateAwsTrainingCertificationEmailDomainResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "AwsAccountId": {
+      "base": null,
+      "refs": {
+        "CancelConnectionResponse$OtherParticipantAccountId": "<p>The AWS account ID of the other participant in the canceled connection.</p>",
+        "Connection$OtherParticipantAccountId": "<p>The AWS account ID of the other participant in the connection.</p>",
+        "ConnectionSummary$OtherParticipantAccountId": "<p>The AWS account ID of the other participant in the connection.</p>",
+        "ConnectionTypeDetail$CanceledBy": "<p>The AWS account ID of the participant who cancelled this connection type.</p>",
+        "GetConnectionResponse$OtherParticipantAccountId": "<p>The AWS account ID of the other participant in the connection.</p>"
+      }
+    },
+    "BusinessValidationCode": {
+      "base": null,
+      "refs": {
+        "BusinessValidationError$Code": "<p>A code identifying the specific business validation error.</p>"
+      }
+    },
+    "BusinessValidationError": {
+      "base": "<p>Contains information about a business rule validation error that occurred during an operation.</p>",
+      "refs": {
+        "ValidationError$BusinessValidationError": "<p>Details about a business rule validation error, if applicable.</p>"
+      }
+    },
+    "CancelConnectionInvitationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelConnectionInvitationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelConnectionInvitationResponseInvitationMessageString": {
+      "base": null,
+      "refs": {
+        "CancelConnectionInvitationResponse$InvitationMessage": "<p>The message that was included with the original connection invitation.</p>"
+      }
+    },
+    "CancelConnectionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelConnectionRequestReasonString": {
+      "base": null,
+      "refs": {
+        "CancelConnectionRequest$Reason": "<p>The reason for canceling the connection, providing context for the termination.</p>"
+      }
+    },
+    "CancelConnectionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelProfileUpdateTaskRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelProfileUpdateTaskResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Catalog": {
+      "base": null,
+      "refs": {
+        "AcceptConnectionInvitationRequest$Catalog": "<p>The catalog identifier where the connection invitation exists.</p>",
+        "AssociateAwsTrainingCertificationEmailDomainRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "CancelConnectionInvitationRequest$Catalog": "<p>The catalog identifier where the connection invitation exists.</p>",
+        "CancelConnectionInvitationResponse$Catalog": "<p>The catalog identifier where the connection invitation was canceled.</p>",
+        "CancelConnectionRequest$Catalog": "<p>The catalog identifier where the connection exists.</p>",
+        "CancelConnectionResponse$Catalog": "<p>The catalog identifier where the connection was canceled.</p>",
+        "CancelProfileUpdateTaskRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "CancelProfileUpdateTaskResponse$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "Connection$Catalog": "<p>The catalog identifier that the connection belongs to.</p>",
+        "ConnectionInvitationSummary$Catalog": "<p>The catalog identifier where the connection invitation exists.</p>",
+        "ConnectionSummary$Catalog": "<p>The catalog identifier where the connection exists.</p>",
+        "CreateConnectionInvitationRequest$Catalog": "<p>The catalog identifier where the connection invitation will be created.</p>",
+        "CreateConnectionInvitationResponse$Catalog": "<p>The catalog identifier where the connection invitation was created.</p>",
+        "CreatePartnerRequest$Catalog": "<p>The catalog identifier where the partner account will be created.</p>",
+        "CreatePartnerResponse$Catalog": "<p>The catalog identifier where the partner account was created.</p>",
+        "DisassociateAwsTrainingCertificationEmailDomainRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "GetAllianceLeadContactRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "GetAllianceLeadContactResponse$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "GetConnectionInvitationRequest$Catalog": "<p>The catalog identifier where the connection invitation exists.</p>",
+        "GetConnectionInvitationResponse$Catalog": "<p>The catalog identifier where the connection invitation exists.</p>",
+        "GetConnectionPreferencesRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "GetConnectionPreferencesResponse$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "GetConnectionRequest$Catalog": "<p>The catalog identifier where the connection exists.</p>",
+        "GetConnectionResponse$Catalog": "<p>The catalog identifier where the connection exists.</p>",
+        "GetPartnerRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "GetPartnerResponse$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "GetProfileUpdateTaskRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "GetProfileUpdateTaskResponse$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "GetProfileVisibilityRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "GetProfileVisibilityResponse$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "ListConnectionInvitationsRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "ListConnectionsRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "ListPartnersRequest$Catalog": "<p>The catalog identifier to list partners from.</p>",
+        "PartnerSummary$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "PutAllianceLeadContactRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "PutAllianceLeadContactResponse$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "PutProfileVisibilityRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "PutProfileVisibilityResponse$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "RejectConnectionInvitationRequest$Catalog": "<p>The catalog identifier where the connection invitation exists.</p>",
+        "RejectConnectionInvitationResponse$Catalog": "<p>The catalog identifier where the connection invitation was rejected.</p>",
+        "SendEmailVerificationCodeRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "StartProfileUpdateTaskRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "StartProfileUpdateTaskResponse$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "UpdateConnectionPreferencesRequest$Catalog": "<p>The catalog identifier for the partner account.</p>",
+        "UpdateConnectionPreferencesResponse$Catalog": "<p>The catalog identifier for the partner account.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": null,
+      "refs": {
+        "AcceptConnectionInvitationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "AssociateAwsTrainingCertificationEmailDomainRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "CancelConnectionInvitationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "CancelConnectionRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "CancelProfileUpdateTaskRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "CreateConnectionInvitationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "CreatePartnerRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "DisassociateAwsTrainingCertificationEmailDomainRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "RejectConnectionInvitationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "StartProfileUpdateTaskRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The request could not be completed due to a conflict with the current state of the resource. This typically occurs when trying to create a resource that already exists or modify a resource that has been changed by another process.</p>",
+      "refs": {}
+    },
+    "ConflictExceptionReason": {
+      "base": null,
+      "refs": {
+        "ConflictException$Reason": "<p>The specific reason for the conflict.</p>"
+      }
+    },
+    "Connection": {
+      "base": "<p>Base structure containing common connection properties.</p>",
+      "refs": {
+        "AcceptConnectionInvitationResponse$Connection": "<p>The details of the accepted connection between the two partners.</p>"
+      }
+    },
+    "ConnectionArn": {
+      "base": null,
+      "refs": {
+        "CancelConnectionResponse$Arn": "<p>The Amazon Resource Name (ARN) of the canceled connection.</p>",
+        "Connection$Arn": "<p>The AWS Resource Name (ARN) of the connection.</p>",
+        "ConnectionSummary$Arn": "<p>The Amazon Resource Name (ARN) of the connection.</p>",
+        "GetConnectionResponse$Arn": "<p>The Amazon Resource Name (ARN) of the connection.</p>"
+      }
+    },
+    "ConnectionId": {
+      "base": null,
+      "refs": {
+        "CancelConnectionInvitationResponse$ConnectionId": "<p>The identifier of the connection associated with the canceled invitation.</p>",
+        "CancelConnectionRequest$Identifier": "<p>The unique identifier of the connection to cancel.</p>",
+        "CancelConnectionResponse$Id": "<p>The unique identifier of the canceled connection.</p>",
+        "Connection$Id": "<p>The unique identifier of the connection.</p>",
+        "ConnectionInvitationSummary$ConnectionId": "<p>The identifier of the connection associated with this invitation.</p>",
+        "ConnectionSummary$Id": "<p>The unique identifier of the connection.</p>",
+        "CreateConnectionInvitationResponse$ConnectionId": "<p>The identifier of the connection associated with this invitation.</p>",
+        "GetConnectionInvitationResponse$ConnectionId": "<p>The identifier of the connection associated with this invitation.</p>",
+        "GetConnectionRequest$Identifier": "<p>The unique identifier of the connection to retrieve.</p>",
+        "GetConnectionResponse$Id": "<p>The unique identifier of the connection.</p>",
+        "RejectConnectionInvitationResponse$ConnectionId": "<p>The identifier of the connection associated with the rejected invitation.</p>"
+      }
+    },
+    "ConnectionInvitationArn": {
+      "base": null,
+      "refs": {
+        "CancelConnectionInvitationResponse$Arn": "<p>The Amazon Resource Name (ARN) of the canceled connection invitation.</p>",
+        "ConnectionInvitationSummary$Arn": "<p>The Amazon Resource Name (ARN) of the connection invitation.</p>",
+        "CreateConnectionInvitationResponse$Arn": "<p>The Amazon Resource Name (ARN) of the created connection invitation.</p>",
+        "GetConnectionInvitationResponse$Arn": "<p>The Amazon Resource Name (ARN) of the connection invitation.</p>",
+        "RejectConnectionInvitationResponse$Arn": "<p>The Amazon Resource Name (ARN) of the rejected connection invitation.</p>"
+      }
+    },
+    "ConnectionInvitationId": {
+      "base": null,
+      "refs": {
+        "AcceptConnectionInvitationRequest$Identifier": "<p>The unique identifier of the connection invitation to accept.</p>",
+        "CancelConnectionInvitationRequest$Identifier": "<p>The unique identifier of the connection invitation to cancel.</p>",
+        "CancelConnectionInvitationResponse$Id": "<p>The unique identifier of the canceled connection invitation.</p>",
+        "ConnectionInvitationSummary$Id": "<p>The unique identifier of the connection invitation.</p>",
+        "CreateConnectionInvitationResponse$Id": "<p>The unique identifier of the created connection invitation.</p>",
+        "GetConnectionInvitationRequest$Identifier": "<p>The unique identifier of the connection invitation to retrieve.</p>",
+        "GetConnectionInvitationResponse$Id": "<p>The unique identifier of the connection invitation.</p>",
+        "RejectConnectionInvitationRequest$Identifier": "<p>The unique identifier of the connection invitation to reject.</p>",
+        "RejectConnectionInvitationResponse$Id": "<p>The unique identifier of the rejected connection invitation.</p>"
+      }
+    },
+    "ConnectionInvitationSummary": {
+      "base": "<p>A summary view of a connection invitation containing key information without full details.</p>",
+      "refs": {
+        "ConnectionInvitationSummaryList$member": null
+      }
+    },
+    "ConnectionInvitationSummaryList": {
+      "base": null,
+      "refs": {
+        "ListConnectionInvitationsResponse$ConnectionInvitationSummaries": "<p>A list of connection invitation summaries matching the specified criteria.</p>"
+      }
+    },
+    "ConnectionPreferencesArn": {
+      "base": null,
+      "refs": {
+        "GetConnectionPreferencesResponse$Arn": "<p>The Amazon Resource Name (ARN) of the connection preferences.</p>",
+        "UpdateConnectionPreferencesResponse$Arn": "<p>The Amazon Resource Name (ARN) of the updated connection preferences.</p>"
+      }
+    },
+    "ConnectionSummary": {
+      "base": "<p>A summary view of an active connection between partners containing key information.</p>",
+      "refs": {
+        "ConnectionSummaryList$member": null
+      }
+    },
+    "ConnectionSummaryList": {
+      "base": null,
+      "refs": {
+        "ListConnectionsResponse$ConnectionSummaries": "<p>A list of connection summaries matching the specified criteria.</p>"
+      }
+    },
+    "ConnectionType": {
+      "base": null,
+      "refs": {
+        "CancelConnectionInvitationResponse$ConnectionType": "<p>The type of connection that was being invited for.</p>",
+        "CancelConnectionRequest$ConnectionType": "<p>The type of connection to cancel (e.g., reseller, distributor, technology partner).</p>",
+        "ConnectionInvitationSummary$ConnectionType": "<p>The type of connection being requested in the invitation.</p>",
+        "ConnectionTypeDetailMap$key": null,
+        "ConnectionTypeSummaryMap$key": null,
+        "CreateConnectionInvitationRequest$ConnectionType": "<p>The type of connection being requested (e.g., reseller, distributor, technology partner).</p>",
+        "CreateConnectionInvitationResponse$ConnectionType": "<p>The type of connection being requested in the invitation.</p>",
+        "GetConnectionInvitationResponse$ConnectionType": "<p>The type of connection being requested in the invitation.</p>",
+        "ListConnectionInvitationsRequest$ConnectionType": "<p>Filter results by connection type (e.g., reseller, distributor, technology partner).</p>",
+        "RejectConnectionInvitationResponse$ConnectionType": "<p>The type of connection that was being invited for.</p>"
+      }
+    },
+    "ConnectionTypeDetail": {
+      "base": "<p>Detailed information about a specific connection type within a connection.</p>",
+      "refs": {
+        "ConnectionTypeDetailMap$value": null
+      }
+    },
+    "ConnectionTypeDetailMap": {
+      "base": null,
+      "refs": {
+        "CancelConnectionResponse$ConnectionTypes": "<p>The list of connection types that were active before cancellation.</p>",
+        "Connection$ConnectionTypes": "<p>The type of connection.</p>",
+        "GetConnectionResponse$ConnectionTypes": "<p>The list of connection types active between the partners.</p>"
+      }
+    },
+    "ConnectionTypeFilter": {
+      "base": null,
+      "refs": {
+        "ListConnectionsRequest$ConnectionType": "<p>Filter results by connection type (e.g., reseller, distributor, technology partner).</p>"
+      }
+    },
+    "ConnectionTypeStatus": {
+      "base": null,
+      "refs": {
+        "ConnectionTypeDetail$Status": "<p>The current status of this connection type.</p>",
+        "ConnectionTypeSummary$Status": "<p>The current status of this connection type (active, canceled, etc.).</p>"
+      }
+    },
+    "ConnectionTypeSummary": {
+      "base": "<p>Summary information about a specific connection type between partners.</p>",
+      "refs": {
+        "ConnectionTypeSummaryMap$value": null
+      }
+    },
+    "ConnectionTypeSummaryMap": {
+      "base": null,
+      "refs": {
+        "ConnectionSummary$ConnectionTypes": "<p>A map of connection types and their summary information for this connection.</p>"
+      }
+    },
+    "CreateConnectionInvitationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateConnectionInvitationRequestMessageString": {
+      "base": null,
+      "refs": {
+        "CreateConnectionInvitationRequest$Message": "<p>A custom message to include with the connection invitation.</p>"
+      }
+    },
+    "CreateConnectionInvitationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateConnectionInvitationResponseInvitationMessageString": {
+      "base": null,
+      "refs": {
+        "CreateConnectionInvitationResponse$InvitationMessage": "<p>The custom message included with the connection invitation.</p>"
+      }
+    },
+    "CreatePartnerRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePartnerResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DateTime": {
+      "base": null,
+      "refs": {
+        "CancelConnectionInvitationResponse$CreatedAt": "<p>The timestamp when the connection invitation was originally created.</p>",
+        "CancelConnectionInvitationResponse$UpdatedAt": "<p>The timestamp when the connection invitation was last updated (canceled).</p>",
+        "CancelConnectionInvitationResponse$ExpiresAt": "<p>The timestamp when the connection invitation would have expired if not canceled.</p>",
+        "CancelConnectionResponse$UpdatedAt": "<p>The timestamp when the connection was last updated (canceled).</p>",
+        "CancelProfileUpdateTaskResponse$StartedAt": "<p>The timestamp when the profile update task was started.</p>",
+        "CancelProfileUpdateTaskResponse$EndedAt": "<p>The timestamp when the profile update task was ended (canceled).</p>",
+        "Connection$UpdatedAt": "<p>The timestamp when the connection was last updated.</p>",
+        "ConnectionInvitationSummary$CreatedAt": "<p>The timestamp when the connection invitation was created.</p>",
+        "ConnectionInvitationSummary$UpdatedAt": "<p>The timestamp when the connection invitation was last updated.</p>",
+        "ConnectionInvitationSummary$ExpiresAt": "<p>The timestamp when the connection invitation will expire.</p>",
+        "ConnectionSummary$UpdatedAt": "<p>The timestamp when the connection was last updated.</p>",
+        "ConnectionTypeDetail$CreatedAt": "<p>The timestamp when this connection type was created.</p>",
+        "ConnectionTypeDetail$CanceledAt": "<p>The timestamp when this connection type was cancelled, if applicable.</p>",
+        "CreateConnectionInvitationResponse$CreatedAt": "<p>The timestamp when the connection invitation was created.</p>",
+        "CreateConnectionInvitationResponse$UpdatedAt": "<p>The timestamp when the connection invitation was last updated.</p>",
+        "CreateConnectionInvitationResponse$ExpiresAt": "<p>The timestamp when the connection invitation will expire if not responded to.</p>",
+        "CreatePartnerResponse$CreatedAt": "<p>The timestamp when the partner account was created.</p>",
+        "GetConnectionInvitationResponse$CreatedAt": "<p>The timestamp when the connection invitation was created.</p>",
+        "GetConnectionInvitationResponse$UpdatedAt": "<p>The timestamp when the connection invitation was last updated.</p>",
+        "GetConnectionInvitationResponse$ExpiresAt": "<p>The timestamp when the connection invitation will expire.</p>",
+        "GetConnectionPreferencesResponse$UpdatedAt": "<p>The timestamp when the connection preferences were last updated.</p>",
+        "GetConnectionResponse$UpdatedAt": "<p>The timestamp when the connection was last updated.</p>",
+        "GetPartnerResponse$CreatedAt": "<p>The timestamp when the partner account was created.</p>",
+        "GetProfileUpdateTaskResponse$StartedAt": "<p>The timestamp when the profile update task was started.</p>",
+        "GetProfileUpdateTaskResponse$EndedAt": "<p>The timestamp when the profile update task was completed or failed.</p>",
+        "PartnerDomain$RegisteredAt": "<p>The timestamp when the domain was registered and verified for the partner account.</p>",
+        "PartnerSummary$CreatedAt": "<p>The timestamp when the partner account was created.</p>",
+        "RejectConnectionInvitationResponse$CreatedAt": "<p>The timestamp when the connection invitation was originally created.</p>",
+        "RejectConnectionInvitationResponse$UpdatedAt": "<p>The timestamp when the connection invitation was last updated (rejected).</p>",
+        "RejectConnectionInvitationResponse$ExpiresAt": "<p>The timestamp when the connection invitation would have expired.</p>",
+        "StartProfileUpdateTaskResponse$StartedAt": "<p>The timestamp when the profile update task was started.</p>",
+        "StartProfileUpdateTaskResponse$EndedAt": "<p>The timestamp when the profile update task ended (null for in-progress tasks).</p>",
+        "UpdateConnectionPreferencesResponse$UpdatedAt": "<p>The timestamp when the connection preferences were last updated.</p>"
+      }
+    },
+    "DisassociateAwsTrainingCertificationEmailDomainRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateAwsTrainingCertificationEmailDomainResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DomainName": {
+      "base": null,
+      "refs": {
+        "DisassociateAwsTrainingCertificationEmailDomainRequest$DomainName": "<p>The domain name to disassociate from AWS training and certification.</p>",
+        "PartnerDomain$DomainName": "<p>The domain name that has been verified for the partner account.</p>"
+      }
+    },
+    "Email": {
+      "base": null,
+      "refs": {
+        "AllianceLeadContact$Email": "<p>The email address of the alliance lead contact person.</p>",
+        "AssociateAwsTrainingCertificationEmailDomainRequest$Email": "<p>The email address used to verify domain ownership for AWS training and certification association.</p>",
+        "CancelConnectionInvitationResponse$InviterEmail": "<p>The email address of the person who sent the connection invitation.</p>",
+        "ConnectionTypeDetail$InviterEmail": "<p>The email address of the person who initiated this connection type.</p>",
+        "CreateConnectionInvitationRequest$Email": "<p>The email address of the person to send the connection invitation to.</p>",
+        "CreateConnectionInvitationResponse$InviterEmail": "<p>The email address of the person who sent the connection invitation.</p>",
+        "GetConnectionInvitationResponse$InviterEmail": "<p>The email address of the person who sent the connection invitation.</p>",
+        "RejectConnectionInvitationResponse$InviterEmail": "<p>The email address of the person who sent the connection invitation.</p>",
+        "SendEmailVerificationCodeRequest$Email": "<p>The email address to send the verification code to.</p>"
+      }
+    },
+    "EmailVerificationCode": {
+      "base": null,
+      "refs": {
+        "AssociateAwsTrainingCertificationEmailDomainRequest$EmailVerificationCode": "<p>The verification code sent to the email address to confirm domain ownership.</p>",
+        "CreatePartnerRequest$EmailVerificationCode": "<p>The verification code sent to the alliance lead contact's email to confirm account creation.</p>",
+        "PutAllianceLeadContactRequest$EmailVerificationCode": "<p>The verification code sent to the alliance lead contact's email to confirm the update.</p>"
+      }
+    },
+    "ErrorDetail": {
+      "base": "<p>Contains detailed information about an error that occurred during an operation.</p>",
+      "refs": {
+        "ErrorDetailList$member": null
+      }
+    },
+    "ErrorDetailList": {
+      "base": null,
+      "refs": {
+        "CancelProfileUpdateTaskResponse$ErrorDetailList": "<p>A list of error details if any errors occurred during the profile update task.</p>",
+        "GetProfileUpdateTaskResponse$ErrorDetailList": "<p>A list of error details if any errors occurred during the profile update task.</p>",
+        "StartProfileUpdateTaskResponse$ErrorDetailList": "<p>A list of error details if any errors occurred during the profile update task.</p>"
+      }
+    },
+    "FieldValidationCode": {
+      "base": null,
+      "refs": {
+        "FieldValidationError$Code": "<p>A code identifying the specific field validation error.</p>"
+      }
+    },
+    "FieldValidationError": {
+      "base": "<p>Contains information about a field-level validation error that occurred during an operation.</p>",
+      "refs": {
+        "ValidationError$FieldValidationError": "<p>Details about a field-level validation error, if applicable.</p>"
+      }
+    },
+    "GetAllianceLeadContactRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAllianceLeadContactResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConnectionInvitationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConnectionInvitationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConnectionInvitationResponseInvitationMessageString": {
+      "base": null,
+      "refs": {
+        "GetConnectionInvitationResponse$InvitationMessage": "<p>The custom message included with the connection invitation.</p>"
+      }
+    },
+    "GetConnectionPreferencesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConnectionPreferencesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConnectionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetConnectionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPartnerRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPartnerResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProfileUpdateTaskRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProfileUpdateTaskResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProfileVisibilityRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProfileVisibilityResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "IndustrySegment": {
+      "base": null,
+      "refs": {
+        "IndustrySegmentList$member": null
+      }
+    },
+    "IndustrySegmentList": {
+      "base": null,
+      "refs": {
+        "PartnerProfile$IndustrySegments": "<p>The industry segments or verticals that the partner serves.</p>",
+        "TaskDetails$IndustrySegments": "<p>The updated industry segments for the partner profile.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>An internal server error occurred while processing the request. This is typically a temporary condition and the request may be retried.</p>",
+      "refs": {}
+    },
+    "InvitationStatus": {
+      "base": null,
+      "refs": {
+        "CancelConnectionInvitationResponse$Status": "<p>The current status of the connection invitation (canceled).</p>",
+        "ConnectionInvitationSummary$Status": "<p>The current status of the connection invitation.</p>",
+        "CreateConnectionInvitationResponse$Status": "<p>The current status of the connection invitation (pending, accepted, rejected, etc.).</p>",
+        "GetConnectionInvitationResponse$Status": "<p>The current status of the connection invitation.</p>",
+        "ListConnectionInvitationsRequest$Status": "<p>Filter results by invitation status (pending, accepted, rejected, canceled, expired).</p>",
+        "RejectConnectionInvitationResponse$Status": "<p>The current status of the connection invitation (rejected).</p>"
+      }
+    },
+    "ListConnectionInvitationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListConnectionInvitationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListConnectionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListConnectionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPartnersRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPartnersResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Locale": {
+      "base": null,
+      "refs": {
+        "LocalizedContent$Locale": "<p>The locale or language code for the localized content.</p>",
+        "PartnerProfile$TranslationSourceLocale": "<p>The source locale used for automatic translation of profile content.</p>",
+        "TaskDetails$TranslationSourceLocale": "<p>The updated translation source locale for the partner profile.</p>"
+      }
+    },
+    "LocalizedContent": {
+      "base": "<p>Contains localized content for a partner profile in a specific language or locale.</p>",
+      "refs": {
+        "LocalizedContentList$member": null
+      }
+    },
+    "LocalizedContentDescriptionString": {
+      "base": null,
+      "refs": {
+        "LocalizedContent$Description": "<p>The localized description of the partner's business and services.</p>"
+      }
+    },
+    "LocalizedContentList": {
+      "base": null,
+      "refs": {
+        "PartnerProfile$LocalizedContents": "<p>A list of localized content versions for different languages and regions.</p>",
+        "TaskDetails$LocalizedContents": "<p>The updated localized content for the partner profile.</p>"
+      }
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListConnectionInvitationsRequest$MaxResults": "<p>The maximum number of connection invitations to return in a single response.</p>",
+        "ListConnectionsRequest$MaxResults": "<p>The maximum number of connections to return in a single response.</p>"
+      }
+    },
+    "NextToken": {
+      "base": null,
+      "refs": {
+        "ListConnectionInvitationsRequest$NextToken": "<p>The token for retrieving the next page of results in paginated responses.</p>",
+        "ListConnectionInvitationsResponse$NextToken": "<p>The token for retrieving the next page of results if more results are available.</p>",
+        "ListConnectionsRequest$NextToken": "<p>The token for retrieving the next page of results in paginated responses.</p>",
+        "ListConnectionsResponse$NextToken": "<p>The token for retrieving the next page of results if more results are available.</p>",
+        "ListPartnersRequest$NextToken": "<p>The token for retrieving the next page of results in paginated responses.</p>",
+        "ListPartnersResponse$NextToken": "<p>The token for retrieving the next page of results if more results are available.</p>"
+      }
+    },
+    "Participant": {
+      "base": "<p>Represents a participant in a partner connection, containing their profile and account information.</p>",
+      "refs": {
+        "ConnectionTypeDetail$OtherParticipant": "<p>Information about the other participant in this connection type.</p>",
+        "ConnectionTypeSummary$OtherParticipant": "<p>Information about the other participant in this connection type.</p>"
+      }
+    },
+    "ParticipantIdentifier": {
+      "base": null,
+      "refs": {
+        "CancelConnectionInvitationResponse$OtherParticipantIdentifier": "<p>The identifier of the other participant who was invited to connect.</p>",
+        "ConnectionInvitationSummary$OtherParticipantIdentifier": "<p>The identifier of the other participant in the connection invitation.</p>",
+        "CreateConnectionInvitationRequest$ReceiverIdentifier": "<p>The identifier of the organization or partner to invite for connection.</p>",
+        "CreateConnectionInvitationResponse$OtherParticipantIdentifier": "<p>The identifier of the organization or partner being invited.</p>",
+        "GetConnectionInvitationResponse$OtherParticipantIdentifier": "<p>The identifier of the other participant in the connection invitation.</p>",
+        "ParticipantIdentifierList$member": null,
+        "RejectConnectionInvitationResponse$OtherParticipantIdentifier": "<p>The identifier of the other participant who sent the invitation.</p>",
+        "UpdateConnectionPreferencesRequestExcludedParticipantIdentifiersList$member": null
+      }
+    },
+    "ParticipantIdentifierList": {
+      "base": null,
+      "refs": {
+        "GetConnectionPreferencesResponse$ExcludedParticipantIds": "<p>A list of participant IDs that are excluded from connection requests or interactions.</p>",
+        "ListConnectionInvitationsRequest$OtherParticipantIdentifiers": "<p>Filter results by specific participant identifiers.</p>",
+        "ListConnectionsRequest$OtherParticipantIdentifiers": "<p>Filter results by specific participant identifiers.</p>",
+        "UpdateConnectionPreferencesResponse$ExcludedParticipantIds": "<p>A list of participant IDs that are excluded from connection requests or interactions.</p>"
+      }
+    },
+    "ParticipantType": {
+      "base": null,
+      "refs": {
+        "CancelConnectionInvitationResponse$ParticipantType": "<p>The type of participant (inviter or invitee) in the connection invitation.</p>",
+        "ConnectionInvitationSummary$ParticipantType": "<p>The type of participant (inviter or invitee) in the connection invitation.</p>",
+        "CreateConnectionInvitationResponse$ParticipantType": "<p>The type of participant (inviter or invitee) in the connection invitation.</p>",
+        "GetConnectionInvitationResponse$ParticipantType": "<p>The type of participant (inviter or invitee) in the connection invitation.</p>",
+        "ListConnectionInvitationsRequest$ParticipantType": "<p>Filter results by participant type (inviter or invitee).</p>",
+        "RejectConnectionInvitationResponse$ParticipantType": "<p>The type of participant (inviter or invitee) in the connection invitation.</p>"
+      }
+    },
+    "PartnerArn": {
+      "base": null,
+      "refs": {
+        "CancelProfileUpdateTaskResponse$Arn": "<p>The Amazon Resource Name (ARN) of the canceled profile update task.</p>",
+        "CreatePartnerResponse$Arn": "<p>The Amazon Resource Name (ARN) of the created partner account.</p>",
+        "GetAllianceLeadContactResponse$Arn": "<p>The Amazon Resource Name (ARN) of the partner account.</p>",
+        "GetPartnerResponse$Arn": "<p>The Amazon Resource Name (ARN) of the partner account.</p>",
+        "GetProfileUpdateTaskResponse$Arn": "<p>The Amazon Resource Name (ARN) of the profile update task.</p>",
+        "GetProfileVisibilityResponse$Arn": "<p>The Amazon Resource Name (ARN) of the partner account.</p>",
+        "PartnerSummary$Arn": "<p>The Amazon Resource Name (ARN) of the partner account.</p>",
+        "PutAllianceLeadContactResponse$Arn": "<p>The Amazon Resource Name (ARN) of the partner account.</p>",
+        "PutProfileVisibilityResponse$Arn": "<p>The Amazon Resource Name (ARN) of the partner account.</p>",
+        "StartProfileUpdateTaskResponse$Arn": "<p>The Amazon Resource Name (ARN) of the started profile update task.</p>"
+      }
+    },
+    "PartnerDomain": {
+      "base": "<p>Represents a verified domain associated with a partner account.</p>",
+      "refs": {
+        "PartnerDomainList$member": null
+      }
+    },
+    "PartnerDomainList": {
+      "base": null,
+      "refs": {
+        "CreatePartnerResponse$AwsTrainingCertificationEmailDomains": "<p>The list of verified email domains associated with AWS training and certification credentials for the partner organization.</p>",
+        "GetPartnerResponse$AwsTrainingCertificationEmailDomains": "<p>The list of verified email domains associated with AWS training and certification credentials for the partner organization.</p>"
+      }
+    },
+    "PartnerId": {
+      "base": null,
+      "refs": {
+        "CancelProfileUpdateTaskResponse$Id": "<p>The unique identifier of the partner account.</p>",
+        "CreatePartnerResponse$Id": "<p>The unique identifier of the created partner account.</p>",
+        "GetAllianceLeadContactResponse$Id": "<p>The unique identifier of the partner account.</p>",
+        "GetPartnerResponse$Id": "<p>The unique identifier of the partner account.</p>",
+        "GetProfileUpdateTaskResponse$Id": "<p>The unique identifier of the partner account.</p>",
+        "GetProfileVisibilityResponse$Id": "<p>The unique identifier of the partner account.</p>",
+        "PartnerSummary$Id": "<p>The unique identifier of the partner account.</p>",
+        "PutAllianceLeadContactResponse$Id": "<p>The unique identifier of the partner account.</p>",
+        "PutProfileVisibilityResponse$Id": "<p>The unique identifier of the partner account.</p>",
+        "StartProfileUpdateTaskResponse$Id": "<p>The unique identifier of the partner account.</p>"
+      }
+    },
+    "PartnerIdentifier": {
+      "base": null,
+      "refs": {
+        "AssociateAwsTrainingCertificationEmailDomainRequest$Identifier": "<p>The unique identifier of the partner account.</p>",
+        "CancelProfileUpdateTaskRequest$Identifier": "<p>The unique identifier of the partner account.</p>",
+        "DisassociateAwsTrainingCertificationEmailDomainRequest$Identifier": "<p>The unique identifier of the partner account.</p>",
+        "GetAllianceLeadContactRequest$Identifier": "<p>The unique identifier of the partner account.</p>",
+        "GetPartnerRequest$Identifier": "<p>The unique identifier of the partner account to retrieve.</p>",
+        "GetProfileUpdateTaskRequest$Identifier": "<p>The unique identifier of the partner account.</p>",
+        "GetProfileVisibilityRequest$Identifier": "<p>The unique identifier of the partner account.</p>",
+        "PutAllianceLeadContactRequest$Identifier": "<p>The unique identifier of the partner account.</p>",
+        "PutProfileVisibilityRequest$Identifier": "<p>The unique identifier of the partner account.</p>",
+        "StartProfileUpdateTaskRequest$Identifier": "<p>The unique identifier of the partner account.</p>"
+      }
+    },
+    "PartnerProfile": {
+      "base": "<p>Contains comprehensive profile information for a partner including public-facing details.</p>",
+      "refs": {
+        "CreatePartnerResponse$Profile": "<p>The partner profile information including display name, description, and other public details.</p>",
+        "GetPartnerResponse$Profile": "<p>The partner profile information including display name, description, and other public details.</p>"
+      }
+    },
+    "PartnerProfileDescriptionString": {
+      "base": null,
+      "refs": {
+        "PartnerProfile$Description": "<p>A description of the partner's business, services, and capabilities.</p>"
+      }
+    },
+    "PartnerProfileId": {
+      "base": null,
+      "refs": {
+        "GetProfileVisibilityResponse$ProfileId": "<p>The unique identifier of the partner profile.</p>",
+        "PartnerProfile$ProfileId": "<p>The unique identifier of the partner profile.</p>",
+        "PartnerProfileSummary$Id": "<p>The unique identifier of the partner profile.</p>",
+        "PutProfileVisibilityResponse$ProfileId": "<p>The unique identifier of the partner profile.</p>"
+      }
+    },
+    "PartnerProfileSummary": {
+      "base": "<p>A summary view of a partner profile containing basic identifying information.</p>",
+      "refs": {
+        "Participant$PartnerProfile": "<p>The partner profile information for the participant.</p>"
+      }
+    },
+    "PartnerSummary": {
+      "base": "<p>A summary view of a partner account containing basic information for listing purposes.</p>",
+      "refs": {
+        "PartnerSummaryList$member": null
+      }
+    },
+    "PartnerSummaryList": {
+      "base": null,
+      "refs": {
+        "ListPartnersResponse$PartnerSummaryList": "<p>A list of partner summaries including basic information about each partner account.</p>"
+      }
+    },
+    "PrimarySolutionType": {
+      "base": null,
+      "refs": {
+        "CreatePartnerRequest$PrimarySolutionType": "<p>The primary type of solution or service the partner provides (e.g., consulting, software, managed services).</p>",
+        "PartnerProfile$PrimarySolutionType": "<p>The primary type of solution or service the partner provides.</p>",
+        "TaskDetails$PrimarySolutionType": "<p>The updated primary solution type for the partner profile.</p>"
+      }
+    },
+    "ProfileTaskId": {
+      "base": null,
+      "refs": {
+        "CancelProfileUpdateTaskRequest$TaskId": "<p>The unique identifier of the profile update task to cancel.</p>",
+        "CancelProfileUpdateTaskResponse$TaskId": "<p>The unique identifier of the canceled profile update task.</p>",
+        "GetProfileUpdateTaskResponse$TaskId": "<p>The unique identifier of the profile update task.</p>",
+        "StartProfileUpdateTaskResponse$TaskId": "<p>The unique identifier of the started profile update task.</p>"
+      }
+    },
+    "ProfileTaskStatus": {
+      "base": null,
+      "refs": {
+        "CancelProfileUpdateTaskResponse$Status": "<p>The current status of the profile update task (canceled).</p>",
+        "GetProfileUpdateTaskResponse$Status": "<p>The current status of the profile update task (in progress, completed, failed, etc.).</p>",
+        "StartProfileUpdateTaskResponse$Status": "<p>The current status of the profile update task (in progress).</p>"
+      }
+    },
+    "ProfileValidationErrorReason": {
+      "base": null,
+      "refs": {
+        "ErrorDetail$Reason": "<p>A machine-readable code or reason for the error.</p>"
+      }
+    },
+    "ProfileVisibility": {
+      "base": null,
+      "refs": {
+        "GetProfileVisibilityResponse$Visibility": "<p>The visibility setting for the partner profile (public, private, restricted, etc.).</p>",
+        "PutProfileVisibilityRequest$Visibility": "<p>The visibility setting to apply to the partner profile.</p>",
+        "PutProfileVisibilityResponse$Visibility": "<p>The updated visibility setting for the partner profile.</p>"
+      }
+    },
+    "PutAllianceLeadContactRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutAllianceLeadContactResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "PutProfileVisibilityRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutProfileVisibilityResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "RejectConnectionInvitationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RejectConnectionInvitationRequestReasonString": {
+      "base": null,
+      "refs": {
+        "RejectConnectionInvitationRequest$Reason": "<p>The reason for rejecting the connection invitation.</p>"
+      }
+    },
+    "RejectConnectionInvitationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "RejectConnectionInvitationResponseInvitationMessageString": {
+      "base": null,
+      "refs": {
+        "RejectConnectionInvitationResponse$InvitationMessage": "<p>The message that was included with the original connection invitation.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The specified resource could not be found. This may occur when referencing a resource that does not exist or has been deleted.</p>",
+      "refs": {}
+    },
+    "ResourceNotFoundExceptionReason": {
+      "base": null,
+      "refs": {
+        "ResourceNotFoundException$Reason": "<p>The specific reason why the resource was not found.</p>"
+      }
+    },
+    "Revision": {
+      "base": null,
+      "refs": {
+        "GetConnectionPreferencesResponse$Revision": "<p>The revision number of the connection preferences for optimistic locking.</p>",
+        "UpdateConnectionPreferencesRequest$Revision": "<p>The revision number of the connection preferences for optimistic locking.</p>",
+        "UpdateConnectionPreferencesResponse$Revision": "<p>The updated revision number of the connection preferences.</p>"
+      }
+    },
+    "SellerProfileId": {
+      "base": null,
+      "refs": {
+        "SellerProfileSummary$Id": "<p>The unique identifier of the seller profile.</p>"
+      }
+    },
+    "SellerProfileSummary": {
+      "base": "<p>A summary view of a seller profile containing basic identifying information.</p>",
+      "refs": {
+        "Participant$SellerProfile": "<p>The seller profile information for the participant.</p>"
+      }
+    },
+    "SendEmailVerificationCodeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SendEmailVerificationCodeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "SensitiveUnicodeString": {
+      "base": null,
+      "refs": {
+        "AllianceLeadContact$FirstName": "<p>The first name of the alliance lead contact person.</p>",
+        "AllianceLeadContact$LastName": "<p>The last name of the alliance lead contact person.</p>",
+        "AllianceLeadContact$BusinessTitle": "<p>The business title or role of the alliance lead contact person.</p>",
+        "CancelConnectionInvitationResponse$InviterName": "<p>The name of the person who sent the connection invitation.</p>",
+        "ConnectionTypeDetail$InviterName": "<p>The name of the person who initiated this connection type.</p>",
+        "CreateConnectionInvitationRequest$Name": "<p>The name of the person sending the connection invitation.</p>",
+        "CreateConnectionInvitationResponse$InviterName": "<p>The name of the person who sent the connection invitation.</p>",
+        "CreatePartnerRequest$LegalName": "<p>The legal name of the organization becoming a partner.</p>",
+        "CreatePartnerResponse$LegalName": "<p>The legal name of the partner organization.</p>",
+        "GetConnectionInvitationResponse$InviterName": "<p>The name of the person who sent the connection invitation.</p>",
+        "GetPartnerResponse$LegalName": "<p>The legal name of the partner organization.</p>",
+        "PartnerSummary$LegalName": "<p>The legal name of the partner organization.</p>",
+        "RejectConnectionInvitationResponse$InviterName": "<p>The name of the person who sent the connection invitation.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request was rejected because it would exceed a service quota or limit. This may occur when trying to create more resources than allowed by the service limits.</p>",
+      "refs": {}
+    },
+    "ServiceQuotaExceededExceptionReason": {
+      "base": null,
+      "refs": {
+        "ServiceQuotaExceededException$Reason": "<p>The specific reason for the service quota being exceeded.</p>"
+      }
+    },
+    "StartProfileUpdateTaskRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartProfileUpdateTaskResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$Message": null,
+        "BusinessValidationError$Message": "<p>A description of the business validation error.</p>",
+        "ConflictException$Message": null,
+        "ErrorDetail$Locale": "<p>The locale or language code for the error message.</p>",
+        "ErrorDetail$Message": "<p>A human-readable description of the error.</p>",
+        "FieldValidationError$Name": "<p>The name of the field that failed validation.</p>",
+        "FieldValidationError$Message": "<p>A description of the field validation error.</p>",
+        "InternalServerException$Message": null,
+        "ResourceNotFoundException$Message": null,
+        "ServiceQuotaExceededException$Message": null,
+        "ThrottlingException$Message": null,
+        "ThrottlingException$ServiceCode": "<p>The service code associated with the throttling error.</p>",
+        "ThrottlingException$QuotaCode": "<p>The quota code associated with the throttling error.</p>",
+        "ValidationException$Message": null
+      }
+    },
+    "Tag": {
+      "base": "<p>A key-value pair used to associate metadata with AWS Partner Central Account resources.</p>",
+      "refs": {
+        "TagList$member": null
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "Tag$Key": "<p>The key name of the tag. Tag keys are case-sensitive.</p>",
+        "TagKeyList$member": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$TagKeys": "<p>A list of tag keys to remove from the specified resource.</p>"
+      }
+    },
+    "TagList": {
+      "base": null,
+      "refs": {
+        "CreatePartnerRequest$Tags": "<p>A list of tags to associate with the partner account for organization and billing purposes.</p>",
+        "ListTagsForResourceResponse$Tags": "<p>A list of tags associated with the specified resource.</p>",
+        "TagResourceRequest$Tags": "<p>A list of tags to add or update for the specified resource.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "Tag$Value": "<p>The value associated with the tag key. Tag values are case-sensitive.</p>"
+      }
+    },
+    "TaggableResourceArn": {
+      "base": null,
+      "refs": {
+        "ListTagsForResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource to list tags for.</p>",
+        "ListTagsForResourceResponse$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that the tags are associated with.</p>",
+        "TagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource to tag.</p>",
+        "UntagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource to remove tags from.</p>"
+      }
+    },
+    "TaskDetails": {
+      "base": "<p>Contains detailed information about a profile update task including the changes to be made.</p>",
+      "refs": {
+        "CancelProfileUpdateTaskResponse$TaskDetails": "<p>The details of the profile update task that was canceled.</p>",
+        "GetProfileUpdateTaskResponse$TaskDetails": "<p>The details of the profile update task including what changes are being made.</p>",
+        "StartProfileUpdateTaskRequest$TaskDetails": "<p>The details of the profile updates to be performed.</p>",
+        "StartProfileUpdateTaskResponse$TaskDetails": "<p>The details of the profile update task that was started.</p>"
+      }
+    },
+    "TaskDetailsDescriptionString": {
+      "base": null,
+      "refs": {
+        "TaskDetails$Description": "<p>The updated description for the partner profile.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was throttled due to too many requests being sent in a short period of time. The client should implement exponential backoff and retry the request.</p>",
+      "refs": {}
+    },
+    "UnicodeString": {
+      "base": null,
+      "refs": {
+        "AccountSummary$Name": "<p>The name associated with the AWS account.</p>",
+        "LocalizedContent$DisplayName": "<p>The localized display name for the partner.</p>",
+        "PartnerProfile$DisplayName": "<p>The public display name for the partner organization.</p>",
+        "PartnerProfileSummary$Name": "<p>The display name of the partner.</p>",
+        "SellerProfileSummary$Name": "<p>The display name of the seller.</p>",
+        "TaskDetails$DisplayName": "<p>The updated display name for the partner profile.</p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateConnectionPreferencesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateConnectionPreferencesRequestExcludedParticipantIdentifiersList": {
+      "base": null,
+      "refs": {
+        "UpdateConnectionPreferencesRequest$ExcludedParticipantIdentifiers": "<p>The updated list of participant identifiers to exclude from connections.</p>"
+      }
+    },
+    "UpdateConnectionPreferencesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Url": {
+      "base": null,
+      "refs": {
+        "LocalizedContent$WebsiteUrl": "<p>The localized website URL for the partner.</p>",
+        "LocalizedContent$LogoUrl": "<p>The URL to the partner's logo image for this locale.</p>",
+        "PartnerProfile$WebsiteUrl": "<p>The partner's primary website URL.</p>",
+        "PartnerProfile$LogoUrl": "<p>The URL to the partner's logo image.</p>",
+        "TaskDetails$WebsiteUrl": "<p>The updated website URL for the partner profile.</p>",
+        "TaskDetails$LogoUrl": "<p>The updated logo URL for the partner profile.</p>"
+      }
+    },
+    "ValidationError": {
+      "base": "<p>Contains information about a validation error, which can be either a field-level or business rule validation error.</p>",
+      "refs": {
+        "ValidationErrorList$member": null
+      }
+    },
+    "ValidationErrorList": {
+      "base": null,
+      "refs": {
+        "ValidationException$ErrorDetails": "<p>A list of detailed validation errors that occurred during request processing.</p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The request failed validation. One or more input parameters are invalid, missing, or do not meet the required format or constraints.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$Reason": "<p>The reason for the validation failure.</p>"
+      }
+    }
+  }
+}

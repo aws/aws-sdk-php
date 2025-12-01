@@ -6,6 +6,7 @@ use Aws\Api\Validator;
 use Aws\Credentials\CredentialsInterface;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\Exception\AwsException;
+use Aws\Signature\DpopSignature;
 use Aws\Signature\S3ExpressSignature;
 use Aws\Token\TokenAuthorization;
 use Aws\Token\TokenInterface;
@@ -154,44 +155,41 @@ final class Middleware
                 RequestInterface $request
             ) use ($handler, $signatureFunction, $credProvider, $tokenProvider, $config) {
                 $signer = $signatureFunction($command);
+
+                // Token authorization path
                 if ($signer instanceof TokenAuthorization) {
-                    return $tokenProvider()->then(
-                        function (TokenInterface $token)
-                        use ($handler, $command, $signer, $request) {
-                            $command->getMetricsBuilder()->identifyMetricByValueAndAppend(
-                                'token',
-                                $token
-                            );
-
-                            return $handler(
-                                $command,
-                                $signer->authorizeRequest($request, $token)
-                            );
-                        }
-                    );
+                    return $tokenProvider()->then(function (TokenInterface $token) use ($handler, $command, $signer, $request) {
+                        $command->getMetricsBuilder()->identifyMetricByValueAndAppend('token', $token);
+                        return $handler($command, $signer->authorizeRequest($request, $token));
+                    });
                 }
 
-                if ($signer instanceof S3ExpressSignature) {
-                    $credentialPromise = $config['s3_express_identity_provider']($command);
-                } else {
-                    $credentialPromise = $credProvider();
-                }
-
-                return $credentialPromise->then(
-                    function (CredentialsInterface $creds)
-                    use ($handler, $command, $signer, $request) {
-                        // Capture credentials metric
-                        $command->getMetricsBuilder()->identifyMetricByValueAndAppend(
-                            'credentials',
-                            $creds
-                        );
-
-                        return $handler(
-                            $command,
-                            $signer->signRequest($request, $creds)
+                // DPoP path
+                if ($signer instanceof DpopSignature) {
+                    if (empty($key = $command['dpopKey'])
+                        || !($key instanceof \OpenSSLAsymmetricKey)
+                    ) {
+                        throw new \RuntimeException(
+                            'A valid DPoP key must be present for DPoP signatures'
                         );
                     }
-                );
+
+                    return $handler($command, $signer->signRequest($request, $key));
+                }
+
+                // Credential signing path
+                $credentialPromise = ($signer instanceof S3ExpressSignature)
+                    ? $config['s3_express_identity_provider']($command)
+                    : $credProvider();
+
+                return $credentialPromise->then(function (CredentialsInterface $creds) use ($handler,
+                    $command,
+                    $signer,
+                    $request
+                ) {
+                    $command->getMetricsBuilder()->identifyMetricByValueAndAppend('credentials', $creds);
+                    return $handler($command, $signer->signRequest($request, $creds));
+                });
             };
         };
     }

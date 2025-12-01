@@ -204,6 +204,21 @@
         {"shape":"NotAuthorizedException"}
       ]
     },
+    "DescribeStreamStorageConfiguration":{
+      "name":"DescribeStreamStorageConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/describeStreamStorageConfiguration"
+      },
+      "input":{"shape":"DescribeStreamStorageConfigurationInput"},
+      "output":{"shape":"DescribeStreamStorageConfigurationOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ClientLimitExceededException"},
+        {"shape":"InvalidArgumentException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetDataEndpoint":{
       "name":"GetDataEndpoint",
       "http":{
@@ -489,6 +504,23 @@
         {"shape":"NotAuthorizedException"},
         {"shape":"VersionMismatchException"}
       ]
+    },
+    "UpdateStreamStorageConfiguration":{
+      "name":"UpdateStreamStorageConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/updateStreamStorageConfiguration"
+      },
+      "input":{"shape":"UpdateStreamStorageConfigurationInput"},
+      "output":{"shape":"UpdateStreamStorageConfigurationOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ClientLimitExceededException"},
+        {"shape":"InvalidArgumentException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"VersionMismatchException"}
+      ]
     }
   },
   "shapes":{
@@ -624,7 +656,8 @@
         "MediaType":{"shape":"MediaType"},
         "KmsKeyId":{"shape":"KmsKeyId"},
         "DataRetentionInHours":{"shape":"DataRetentionInHours"},
-        "Tags":{"shape":"ResourceTags"}
+        "Tags":{"shape":"ResourceTags"},
+        "StreamStorageConfiguration":{"shape":"StreamStorageConfiguration"}
       }
     },
     "CreateStreamOutput":{
@@ -641,6 +674,13 @@
     "DataRetentionInHours":{
       "type":"integer",
       "min":0
+    },
+    "DefaultStorageTier":{
+      "type":"string",
+      "enum":[
+        "HOT",
+        "WARM"
+      ]
     },
     "DeleteAfterUpload":{"type":"boolean"},
     "DeleteEdgeConfigurationInput":{
@@ -785,6 +825,21 @@
       "type":"structure",
       "members":{
         "StreamInfo":{"shape":"StreamInfo"}
+      }
+    },
+    "DescribeStreamStorageConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "StreamName":{"shape":"StreamName"},
+        "StreamARN":{"shape":"ResourceARN"}
+      }
+    },
+    "DescribeStreamStorageConfigurationOutput":{
+      "type":"structure",
+      "members":{
+        "StreamName":{"shape":"StreamName"},
+        "StreamARN":{"shape":"ResourceARN"},
+        "StreamStorageConfiguration":{"shape":"StreamStorageConfiguration"}
       }
     },
     "DestinationRegion":{
@@ -1389,6 +1444,13 @@
         "ComparisonValue":{"shape":"StreamName"}
       }
     },
+    "StreamStorageConfiguration":{
+      "type":"structure",
+      "required":["DefaultStorageTier"],
+      "members":{
+        "DefaultStorageTier":{"shape":"DefaultStorageTier"}
+      }
+    },
     "SyncStatus":{
       "type":"string",
       "enum":[
@@ -1601,6 +1663,23 @@
       }
     },
     "UpdateStreamOutput":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateStreamStorageConfigurationInput":{
+      "type":"structure",
+      "required":[
+        "CurrentVersion",
+        "StreamStorageConfiguration"
+      ],
+      "members":{
+        "StreamName":{"shape":"StreamName"},
+        "StreamARN":{"shape":"ResourceARN"},
+        "CurrentVersion":{"shape":"Version"},
+        "StreamStorageConfiguration":{"shape":"StreamStorageConfiguration"}
+      }
+    },
+    "UpdateStreamStorageConfigurationOutput":{
       "type":"structure",
       "members":{}
     },

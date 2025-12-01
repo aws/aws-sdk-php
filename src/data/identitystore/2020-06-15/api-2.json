@@ -2,9 +2,11 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-06-15",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"identitystore",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"IdentityStore",
     "serviceFullName":"AWS SSO Identity Store",
     "serviceId":"identitystore",
@@ -136,7 +138,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeGroupMembership":{
       "name":"DescribeGroupMembership",
@@ -152,7 +155,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeUser":{
       "name":"DescribeUser",
@@ -168,7 +172,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetGroupId":{
       "name":"GetGroupId",
@@ -184,7 +189,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetGroupMembershipId":{
       "name":"GetGroupMembershipId",
@@ -200,7 +206,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetUserId":{
       "name":"GetUserId",
@@ -216,7 +223,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "IsMemberInGroups":{
       "name":"IsMemberInGroups",
@@ -232,7 +240,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListGroupMemberships":{
       "name":"ListGroupMemberships",
@@ -248,7 +257,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListGroupMembershipsForMember":{
       "name":"ListGroupMembershipsForMember",
@@ -264,7 +274,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListGroups":{
       "name":"ListGroups",
@@ -280,7 +291,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListUsers":{
       "name":"ListUsers",
@@ -296,7 +308,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "UpdateGroup":{
       "name":"UpdateGroup",
@@ -340,9 +353,14 @@
       "type":"structure",
       "members":{
         "Message":{"shape":"ExceptionMessage"},
-        "RequestId":{"shape":"RequestId"}
+        "RequestId":{"shape":"RequestId"},
+        "Reason":{"shape":"AccessDeniedExceptionReason"}
       },
       "exception":true
+    },
+    "AccessDeniedExceptionReason":{
+      "type":"string",
+      "enum":["KMS_ACCESS_DENIED"]
     },
     "Address":{
       "type":"structure",
@@ -389,12 +407,11 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"\\p{L}+(?:\\.\\p{L}+){0,2}"
+      "pattern":"(?:\\p{L}+:\\p{L}+:\\p{L}+(?:\\.\\p{L}+){0,3}|\\p{L}+(?:\\.\\p{L}+){0,2})"
     },
     "AttributeValue":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "ConflictException":{
@@ -474,20 +491,24 @@
         "Title":{"shape":"SensitiveStringType"},
         "PreferredLanguage":{"shape":"SensitiveStringType"},
         "Locale":{"shape":"SensitiveStringType"},
-        "Timezone":{"shape":"SensitiveStringType"}
+        "Timezone":{"shape":"SensitiveStringType"},
+        "Photos":{"shape":"Photos"},
+        "Website":{"shape":"SensitiveStringType"},
+        "Birthdate":{"shape":"SensitiveStringType"}
       }
     },
     "CreateUserResponse":{
       "type":"structure",
       "required":[
-        "UserId",
-        "IdentityStoreId"
+        "IdentityStoreId",
+        "UserId"
       ],
       "members":{
-        "UserId":{"shape":"ResourceId"},
-        "IdentityStoreId":{"shape":"IdentityStoreId"}
+        "IdentityStoreId":{"shape":"IdentityStoreId"},
+        "UserId":{"shape":"ResourceId"}
       }
     },
+    "DateType":{"type":"timestamp"},
     "DeleteGroupMembershipRequest":{
       "type":"structure",
       "required":[
@@ -501,8 +522,7 @@
     },
     "DeleteGroupMembershipResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteGroupRequest":{
       "type":"structure",
@@ -517,8 +537,7 @@
     },
     "DeleteGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteUserRequest":{
       "type":"structure",
@@ -533,8 +552,7 @@
     },
     "DeleteUserResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeGroupMembershipRequest":{
       "type":"structure",
@@ -559,7 +577,11 @@
         "IdentityStoreId":{"shape":"IdentityStoreId"},
         "MembershipId":{"shape":"ResourceId"},
         "GroupId":{"shape":"ResourceId"},
-        "MemberId":{"shape":"MemberId"}
+        "MemberId":{"shape":"MemberId"},
+        "CreatedAt":{"shape":"DateType"},
+        "UpdatedAt":{"shape":"DateType"},
+        "CreatedBy":{"shape":"StringType"},
+        "UpdatedBy":{"shape":"StringType"}
       }
     },
     "DescribeGroupRequest":{
@@ -584,6 +606,10 @@
         "DisplayName":{"shape":"GroupDisplayName"},
         "ExternalIds":{"shape":"ExternalIds"},
         "Description":{"shape":"SensitiveStringType"},
+        "CreatedAt":{"shape":"DateType"},
+        "UpdatedAt":{"shape":"DateType"},
+        "CreatedBy":{"shape":"StringType"},
+        "UpdatedBy":{"shape":"StringType"},
         "IdentityStoreId":{"shape":"IdentityStoreId"}
       }
     },
@@ -601,12 +627,13 @@
     "DescribeUserResponse":{
       "type":"structure",
       "required":[
-        "UserId",
-        "IdentityStoreId"
+        "IdentityStoreId",
+        "UserId"
       ],
       "members":{
-        "UserName":{"shape":"UserName"},
+        "IdentityStoreId":{"shape":"IdentityStoreId"},
         "UserId":{"shape":"ResourceId"},
+        "UserName":{"shape":"UserName"},
         "ExternalIds":{"shape":"ExternalIds"},
         "Name":{"shape":"Name"},
         "DisplayName":{"shape":"SensitiveStringType"},
@@ -620,7 +647,14 @@
         "PreferredLanguage":{"shape":"SensitiveStringType"},
         "Locale":{"shape":"SensitiveStringType"},
         "Timezone":{"shape":"SensitiveStringType"},
-        "IdentityStoreId":{"shape":"IdentityStoreId"}
+        "UserStatus":{"shape":"UserStatus"},
+        "Photos":{"shape":"Photos"},
+        "Website":{"shape":"SensitiveStringType"},
+        "Birthdate":{"shape":"SensitiveStringType"},
+        "CreatedAt":{"shape":"DateType"},
+        "CreatedBy":{"shape":"StringType"},
+        "UpdatedAt":{"shape":"DateType"},
+        "UpdatedBy":{"shape":"StringType"}
       }
     },
     "Email":{
@@ -658,9 +692,9 @@
     },
     "ExternalIdIssuer":{
       "type":"string",
-      "max":100,
+      "max":256,
       "min":1,
-      "pattern":"(?!(?i)(arn|aws):)[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+",
+      "pattern":"[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+",
       "sensitive":true
     },
     "ExternalIds":{
@@ -746,12 +780,12 @@
     "GetUserIdResponse":{
       "type":"structure",
       "required":[
-        "UserId",
-        "IdentityStoreId"
+        "IdentityStoreId",
+        "UserId"
       ],
       "members":{
-        "UserId":{"shape":"ResourceId"},
-        "IdentityStoreId":{"shape":"IdentityStoreId"}
+        "IdentityStoreId":{"shape":"IdentityStoreId"},
+        "UserId":{"shape":"ResourceId"}
       }
     },
     "Group":{
@@ -765,6 +799,10 @@
         "DisplayName":{"shape":"GroupDisplayName"},
         "ExternalIds":{"shape":"ExternalIds"},
         "Description":{"shape":"SensitiveStringType"},
+        "CreatedAt":{"shape":"DateType"},
+        "UpdatedAt":{"shape":"DateType"},
+        "CreatedBy":{"shape":"StringType"},
+        "UpdatedBy":{"shape":"StringType"},
         "IdentityStoreId":{"shape":"IdentityStoreId"}
       }
     },
@@ -788,7 +826,11 @@
         "IdentityStoreId":{"shape":"IdentityStoreId"},
         "MembershipId":{"shape":"ResourceId"},
         "GroupId":{"shape":"ResourceId"},
-        "MemberId":{"shape":"MemberId"}
+        "MemberId":{"shape":"MemberId"},
+        "CreatedAt":{"shape":"DateType"},
+        "UpdatedAt":{"shape":"DateType"},
+        "CreatedBy":{"shape":"StringType"},
+        "UpdatedBy":{"shape":"StringType"}
       }
     },
     "GroupMembershipExistenceResult":{
@@ -857,7 +899,10 @@
       "members":{
         "IdentityStoreId":{"shape":"IdentityStoreId"},
         "MemberId":{"shape":"MemberId"},
-        "MaxResults":{"shape":"MaxResults"},
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true
+        },
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -878,7 +923,10 @@
       "members":{
         "IdentityStoreId":{"shape":"IdentityStoreId"},
         "GroupId":{"shape":"ResourceId"},
-        "MaxResults":{"shape":"MaxResults"},
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true
+        },
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -895,7 +943,10 @@
       "required":["IdentityStoreId"],
       "members":{
         "IdentityStoreId":{"shape":"IdentityStoreId"},
-        "MaxResults":{"shape":"MaxResults"},
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true
+        },
         "NextToken":{"shape":"NextToken"},
         "Filters":{
           "shape":"Filters",
@@ -917,7 +968,10 @@
       "required":["IdentityStoreId"],
       "members":{
         "IdentityStoreId":{"shape":"IdentityStoreId"},
-        "MaxResults":{"shape":"MaxResults"},
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true
+        },
         "NextToken":{"shape":"NextToken"},
         "Filters":{
           "shape":"Filters",
@@ -978,6 +1032,22 @@
       "max":1,
       "min":1
     },
+    "Photo":{
+      "type":"structure",
+      "required":["Value"],
+      "members":{
+        "Value":{"shape":"SensitiveStringType"},
+        "Type":{"shape":"SensitiveStringType"},
+        "Display":{"shape":"SensitiveStringType"},
+        "Primary":{"shape":"SensitiveBooleanType"}
+      }
+    },
+    "Photos":{
+      "type":"list",
+      "member":{"shape":"Photo"},
+      "max":3,
+      "min":1
+    },
     "RequestId":{
       "type":"string",
       "max":36,
@@ -995,10 +1065,15 @@
       "members":{
         "ResourceType":{"shape":"ResourceType"},
         "ResourceId":{"shape":"ResourceId"},
+        "Reason":{"shape":"ResourceNotFoundExceptionReason"},
         "Message":{"shape":"ExceptionMessage"},
         "RequestId":{"shape":"RequestId"}
       },
       "exception":true
+    },
+    "ResourceNotFoundExceptionReason":{
+      "type":"string",
+      "enum":["KMS_KEY_NOT_FOUND"]
     },
     "ResourceType":{
       "type":"string",
@@ -1029,15 +1104,21 @@
       },
       "exception":true
     },
+    "StringType":{"type":"string"},
     "ThrottlingException":{
       "type":"structure",
       "members":{
         "Message":{"shape":"ExceptionMessage"},
         "RequestId":{"shape":"RequestId"},
-        "RetryAfterSeconds":{"shape":"RetryAfterSeconds"}
+        "RetryAfterSeconds":{"shape":"RetryAfterSeconds"},
+        "Reason":{"shape":"ThrottlingExceptionReason"}
       },
       "exception":true,
       "retryable":{"throttling":true}
+    },
+    "ThrottlingExceptionReason":{
+      "type":"string",
+      "enum":["KMS_THROTTLING"]
     },
     "UniqueAttribute":{
       "type":"structure",
@@ -1065,8 +1146,7 @@
     },
     "UpdateGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateUserRequest":{
       "type":"structure",
@@ -1083,18 +1163,18 @@
     },
     "UpdateUserResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "User":{
       "type":"structure",
       "required":[
-        "UserId",
-        "IdentityStoreId"
+        "IdentityStoreId",
+        "UserId"
       ],
       "members":{
-        "UserName":{"shape":"UserName"},
+        "IdentityStoreId":{"shape":"IdentityStoreId"},
         "UserId":{"shape":"ResourceId"},
+        "UserName":{"shape":"UserName"},
         "ExternalIds":{"shape":"ExternalIds"},
         "Name":{"shape":"Name"},
         "DisplayName":{"shape":"SensitiveStringType"},
@@ -1108,7 +1188,14 @@
         "PreferredLanguage":{"shape":"SensitiveStringType"},
         "Locale":{"shape":"SensitiveStringType"},
         "Timezone":{"shape":"SensitiveStringType"},
-        "IdentityStoreId":{"shape":"IdentityStoreId"}
+        "UserStatus":{"shape":"UserStatus"},
+        "Photos":{"shape":"Photos"},
+        "Website":{"shape":"SensitiveStringType"},
+        "Birthdate":{"shape":"SensitiveStringType"},
+        "CreatedAt":{"shape":"DateType"},
+        "CreatedBy":{"shape":"StringType"},
+        "UpdatedAt":{"shape":"DateType"},
+        "UpdatedBy":{"shape":"StringType"}
       }
     },
     "UserName":{
@@ -1118,6 +1205,13 @@
       "pattern":"[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+",
       "sensitive":true
     },
+    "UserStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "Users":{
       "type":"list",
       "member":{"shape":"User"}
@@ -1126,9 +1220,19 @@
       "type":"structure",
       "members":{
         "Message":{"shape":"ExceptionMessage"},
-        "RequestId":{"shape":"RequestId"}
+        "RequestId":{"shape":"RequestId"},
+        "Reason":{"shape":"ValidationExceptionReason"}
       },
       "exception":true
+    },
+    "ValidationExceptionReason":{
+      "type":"string",
+      "enum":[
+        "KMS_INVALID_ARN",
+        "KMS_INVALID_KEY_USAGE",
+        "KMS_INVALID_STATE",
+        "KMS_DISABLED"
+      ]
     }
   }
 }

@@ -1,0 +1,127 @@
+{
+  "version": "2.0",
+  "service": "<p>AWS Sign-In manages authentication for AWS services. This service provides secure authentication flows for accessing AWS resources from the console and developer tools.</p>",
+  "operations": {
+    "CreateOAuth2Token": "<p>CreateOAuth2Token API</p> <p>Path: /v1/token Request Method: POST Content-Type: application/json or application/x-www-form-urlencoded</p> <p>This API implements OAuth 2.0 flows for AWS Sign-In CLI clients, supporting both:</p> <ol> <li>Authorization code redemption (grant_type=authorization_code) - NOT idempotent</li> <li>Token refresh (grant_type=refresh_token) - Idempotent within token validity window</li> </ol> <p>The operation behavior is determined by the grant_type parameter in the request body:</p> <p><strong>Authorization Code Flow (NOT Idempotent):</strong></p> <ul> <li>JSON or form-encoded body with client_id, grant_type=authorization_code, code, redirect_uri, code_verifier</li> <li>Returns access_token, token_type, expires_in, refresh_token, and id_token</li> <li>Each authorization code can only be used ONCE for security (prevents replay attacks)</li> </ul> <p><strong>Token Refresh Flow (Idempotent):</strong></p> <ul> <li>JSON or form-encoded body with client_id, grant_type=refresh_token, refresh_token</li> <li>Returns access_token, token_type, expires_in, and refresh_token (no id_token)</li> <li>Multiple calls with same refresh_token return consistent results within validity window</li> </ul> <p>Authentication and authorization:</p> <ul> <li>Confidential clients: sigv4 signing required with signin:ExchangeToken permissions</li> <li>CLI clients (public): authn/authz skipped based on client_id &amp; grant_type</li> </ul> <p>Note: This operation cannot be marked as @idempotent because it handles both idempotent (token refresh) and non-idempotent (auth code redemption) flows in a single endpoint.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>Error thrown for access denied scenarios with flexible HTTP status mapping</p> <p>Runtime HTTP Status Code Mapping:</p> <ul> <li>HTTP 401 (Unauthorized): TOKEN_EXPIRED, AUTHCODE_EXPIRED</li> <li>HTTP 403 (Forbidden): USER_CREDENTIALS_CHANGED, INSUFFICIENT_PERMISSIONS</li> </ul> <p>The specific HTTP status code is determined at runtime based on the error enum value. Consumers should use the error field to determine the specific access denial reason.</p>",
+      "refs": {}
+    },
+    "AccessToken": {
+      "base": "<p>AWS credentials structure containing temporary access credentials</p> <p>The scoped-down, 15 minute duration AWS credentials. Scoping down will be based on CLI policy (CLI team needs to create it). Similar to cloud shell implementation.</p>",
+      "refs": {
+        "CreateOAuth2TokenResponseBody$accessToken": "<p>Scoped-down AWS credentials (15 minute duration) Present for both authorization code redemption and token refresh</p>"
+      }
+    },
+    "AuthorizationCode": {
+      "base": "<p>Authorization code received from AWS Sign-In /v1/authorize endpoint</p> <p>The authorization code received from AWS Sign-In from /v1/authorize. Used in auth code redemption flow only.</p>",
+      "refs": {
+        "CreateOAuth2TokenRequestBody$code": "<p>The authorization code received from /v1/authorize Required only when grant_type=authorization_code</p>"
+      }
+    },
+    "ClientId": {
+      "base": "<p>Client identifier pattern for AWS Sign-In devtools clients</p> <p>The ARN used by client as part of Sign-In onboarding. Expected values:</p> <ul> <li>arn:aws:signin:::devtools/cross-device (for cross-device devtools login)</li> <li>arn:aws:signin:::devtools/same-device (for same-device devtools login)</li> </ul> <p>This will be finalized after consulting with UX as this is visible to end customer.</p>",
+      "refs": {
+        "CreateOAuth2TokenRequestBody$clientId": "<p>The client identifier (ARN) used during Sign-In onboarding Required for both authorization code and refresh token flows</p>"
+      }
+    },
+    "CodeVerifier": {
+      "base": "<p>PKCE code verifier for OAuth 2.0 security</p> <p>PKCE code verifier to prove possession of the original code challenge. Used to prevent authorization code interception attacks in public clients. Must be 43-128 characters using unreserved characters [A-Z] / [a-z] / [0-9] / &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / &quot;~&quot;</p>",
+      "refs": {
+        "CreateOAuth2TokenRequestBody$codeVerifier": "<p>PKCE code verifier to prove possession of the original code challenge Required only when grant_type=authorization_code</p>"
+      }
+    },
+    "CreateOAuth2TokenRequest": {
+      "base": "<p>Input structure for CreateOAuth2Token operation</p> <p>Contains flattened token operation inputs for both authorization code and refresh token flows. The operation type is determined by the grant_type parameter in the request body.</p>",
+      "refs": {}
+    },
+    "CreateOAuth2TokenRequestBody": {
+      "base": "<p>Request body payload for CreateOAuth2Token operation</p> <p>The operation type is determined by the grant_type parameter:</p> <ul> <li>grant_type=authorization_code: Requires code, redirect_uri, code_verifier</li> <li>grant_type=refresh_token: Requires refresh_token</li> </ul>",
+      "refs": {
+        "CreateOAuth2TokenRequest$tokenInput": "<p>Flattened token operation inputs The specific operation is determined by grant_type in the request body</p>"
+      }
+    },
+    "CreateOAuth2TokenResponse": {
+      "base": "<p>Output structure for CreateOAuth2Token operation</p> <p>Contains flattened token operation outputs for both authorization code and refresh token flows. The response content depends on the grant_type from the original request.</p>",
+      "refs": {}
+    },
+    "CreateOAuth2TokenResponseBody": {
+      "base": "<p>Response body payload for CreateOAuth2Token operation</p> <p>The response content depends on the grant_type from the request:</p> <ul> <li>grant_type=authorization_code: Returns all fields including refresh_token and id_token</li> <li>grant_type=refresh_token: Returns access_token, token_type, expires_in, refresh_token (no id_token)</li> </ul>",
+      "refs": {
+        "CreateOAuth2TokenResponse$tokenOutput": "<p>Flattened token operation outputs The specific response fields depend on the grant_type used in the request</p>"
+      }
+    },
+    "ExpiresIn": {
+      "base": "<p>Time to expiry in seconds</p> <p>The time to expiry in seconds, for these purposes will be at most 900 (15 minutes).</p>",
+      "refs": {
+        "CreateOAuth2TokenResponseBody$expiresIn": "<p>Time to expiry in seconds (maximum 900) Present for both authorization code redemption and token refresh</p>"
+      }
+    },
+    "GrantType": {
+      "base": "<p>OAuth 2.0 grant type parameter</p> <p>For auth code redemption: Must be &quot;authorization_code&quot; For token refresh: Must be &quot;refresh_token&quot;</p> <p>Based on client_id &amp; grant_type, authn/authz is skipped for CLI endpoints.</p>",
+      "refs": {
+        "CreateOAuth2TokenRequestBody$grantType": "<p>OAuth 2.0 grant type - determines which flow is used Must be &quot;authorization_code&quot; or &quot;refresh_token&quot;</p>"
+      }
+    },
+    "IdToken": {
+      "base": "<p>ID token containing user identity information</p> <p>Encoded JWT token containing user identity claims and authentication context. Returned only in authorization code redemption responses (grant_type=authorization_code). Contains user identity information such as ARN and other identity claims.</p>",
+      "refs": {
+        "CreateOAuth2TokenResponseBody$idToken": "<p>ID token containing user identity information Present only in authorization code redemption response (grant_type=authorization_code) Not included in token refresh responses</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>Error thrown when an internal server error occurs</p> <p>HTTP Status Code: 500 Internal Server Error</p> <p>Used for unexpected server-side errors that prevent request processing.</p>",
+      "refs": {}
+    },
+    "OAuth2ErrorCode": {
+      "base": "<p>OAuth 2.0 error codes returned by the server</p> <p>Standard OAuth 2.0 error codes used in error responses to indicate the specific type of error that occurred during token operations.</p>",
+      "refs": {
+        "AccessDeniedException$error": "<p>OAuth 2.0 error code indicating the specific type of access denial Can be TOKEN_EXPIRED, AUTHCODE_EXPIRED, USER_CREDENTIALS_CHANGED, or INSUFFICIENT_PERMISSIONS</p>",
+        "InternalServerException$error": "<p>OAuth 2.0 error code indicating server error Will be SERVER_ERROR for internal server errors</p>",
+        "TooManyRequestsError$error": "<p>OAuth 2.0 error code indicating the specific type of error Will be INVALID_REQUEST for rate limiting scenarios</p>",
+        "ValidationException$error": "<p>OAuth 2.0 error code indicating validation failure Will be INVALID_REQUEST for validation errors</p>"
+      }
+    },
+    "RedirectUri": {
+      "base": "<p>Redirect URI for OAuth 2.0 flow validation</p> <p>The same redirect URI used in the authorization request. This must match exactly what was sent in the original authorization request for security validation.</p>",
+      "refs": {
+        "CreateOAuth2TokenRequestBody$redirectUri": "<p>The redirect URI that must match the original authorization request Required only when grant_type=authorization_code</p>"
+      }
+    },
+    "RefreshToken": {
+      "base": "<p>Encrypted refresh token with cnf.jkt</p> <p>This is the encrypted refresh token returned from auth code redemption. The token content includes cnf.jkt (SHA-256 thumbprint of the presented jwk). Used in subsequent token refresh requests.</p>",
+      "refs": {
+        "CreateOAuth2TokenRequestBody$refreshToken": "<p>The refresh token returned from auth_code redemption Required only when grant_type=refresh_token</p>",
+        "CreateOAuth2TokenResponseBody$refreshToken": "<p>Encrypted refresh token with cnf.jkt (SHA-256 thumbprint of presented jwk) Always present in responses (required for both flows)</p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": "<p>Detailed message explaining the access denial Provides specific information about why access was denied</p>",
+        "AccessToken$accessKeyId": "<p>AWS access key ID for temporary credentials</p>",
+        "AccessToken$secretAccessKey": "<p>AWS secret access key for temporary credentials</p>",
+        "AccessToken$sessionToken": "<p>AWS session token for temporary credentials</p>",
+        "InternalServerException$message": "<p>Detailed message explaining the server error May include error details for debugging purposes</p>",
+        "TooManyRequestsError$message": "<p>Detailed message about the rate limiting May include retry-after information or rate limit details</p>",
+        "ValidationException$message": "<p>Detailed message explaining the validation failure Provides specific information about which validation failed</p>"
+      }
+    },
+    "TokenType": {
+      "base": "<p>Token type parameter indicating credential usage</p> <p>A parameter which indicates to the client how the token must be used. Value is &quot;aws_sigv4&quot; (instead of typical &quot;Bearer&quot; for other OAuth systems) to indicate that the client must de-serialize the token and use it to generate a signature.</p>",
+      "refs": {
+        "CreateOAuth2TokenResponseBody$tokenType": "<p>Token type indicating this is AWS SigV4 credentials Value is &quot;aws_sigv4&quot; for both flows</p>"
+      }
+    },
+    "TooManyRequestsError": {
+      "base": "<p>Error thrown when rate limit is exceeded</p> <p>HTTP Status Code: 429 Too Many Requests</p> <p>Possible OAuth2ErrorCode values:</p> <ul> <li>INVALID_REQUEST: Rate limiting, too many requests, abuse prevention</li> </ul> <p>Possible causes:</p> <ul> <li>Too many token requests from the same client</li> <li>Rate limiting based on client_id or IP address</li> <li>Abuse prevention mechanisms triggered</li> <li>Service protection against excessive token generation</li> </ul>",
+      "refs": {}
+    },
+    "ValidationException": {
+      "base": "<p>Error thrown when request validation fails</p> <p>HTTP Status Code: 400 Bad Request</p> <p>Used for request validation errors such as malformed parameters, missing required fields, or invalid parameter values.</p>",
+      "refs": {}
+    }
+  }
+}

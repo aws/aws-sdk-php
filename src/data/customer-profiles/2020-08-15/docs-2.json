@@ -12,6 +12,7 @@
     "CreateEventTrigger": "<p>Creates an event trigger, which specifies the rules when to perform action based on customer's ingested data.</p> <p>Each event stream can be associated with only one integration in the same region and AWS account as the event stream. </p>",
     "CreateIntegrationWorkflow": "<p> Creates an integration workflow. An integration workflow is an async process which ingests historic data and sets up an integration for ongoing updates. The supported Amazon AppFlow sources are Salesforce, ServiceNow, and Marketo. </p>",
     "CreateProfile": "<p>Creates a standard profile.</p> <p>A standard profile represents the following attributes for a customer profile in a domain.</p>",
+    "CreateRecommender": "<p>Creates a recommender</p>",
     "CreateSegmentDefinition": "<p>Creates a segment definition associated to the given domain.</p>",
     "CreateSegmentEstimate": "<p>Creates a segment estimate query.</p>",
     "CreateSegmentSnapshot": "<p>Triggers a job to export a segment to a specified destination.</p>",
@@ -19,6 +20,7 @@
     "DeleteCalculatedAttributeDefinition": "<p>Deletes an existing calculated attribute definition. Note that deleting a default calculated attribute is possible, however once deleted, you will be unable to undo that action and will need to recreate it on your own using the CreateCalculatedAttributeDefinition API if you want it back.</p>",
     "DeleteDomain": "<p>Deletes a specific domain and all of its customer data, such as customer profile attributes and their related objects.</p>",
     "DeleteDomainLayout": "<p>Deletes the layout used to view data for a specific domain. This API can only be invoked from the Amazon Connect admin website.</p>",
+    "DeleteDomainObjectType": "<p>Delete a DomainObjectType for the given Domain and ObjectType name.</p>",
     "DeleteEventStream": "<p>Disables and deletes the specified event stream.</p>",
     "DeleteEventTrigger": "<p>Disable and deletes the Event Trigger.</p> <note> <p>You cannot delete an Event Trigger with an active Integration associated.</p> </note>",
     "DeleteIntegration": "<p>Removes an integration from a specific domain.</p>",
@@ -26,6 +28,7 @@
     "DeleteProfileKey": "<p>Removes a searchable key from a customer profile.</p>",
     "DeleteProfileObject": "<p>Removes an object associated with a profile of a given ProfileObjectType.</p>",
     "DeleteProfileObjectType": "<p>Removes a ProfileObjectType from a specific domain as well as removes all the ProfileObjects of that type. It also disables integrations from this specific ProfileObjectType. In addition, it scrubs all of the fields of the standard profile that were populated from this ProfileObjectType.</p>",
+    "DeleteRecommender": "<p>Deletes a recommender.</p>",
     "DeleteSegmentDefinition": "<p>Deletes a segment definition from the domain.</p>",
     "DeleteWorkflow": "<p>Deletes the specified workflow and all its corresponding resources. This is an async process.</p>",
     "DetectProfileObjectType": "<p>The process of detecting profile object type mapping by using given objects.</p>",
@@ -34,14 +37,18 @@
     "GetCalculatedAttributeForProfile": "<p>Retrieve a calculated attribute for a customer profile.</p>",
     "GetDomain": "<p>Returns information about a specific domain.</p>",
     "GetDomainLayout": "<p>Gets the layout to view data for a specific domain. This API can only be invoked from the Amazon Connect admin website.</p>",
+    "GetDomainObjectType": "<p>Return a DomainObjectType for the input Domain and ObjectType names. </p>",
     "GetEventStream": "<p>Returns information about the specified event stream in a specific domain.</p>",
     "GetEventTrigger": "<p>Get a specific Event Trigger from the domain.</p>",
     "GetIdentityResolutionJob": "<p>Returns information about an Identity Resolution Job in a specific domain. </p> <p>Identity Resolution Jobs are set up using the Amazon Connect admin console. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-identity-resolution.html\">Use Identity Resolution to consolidate similar profiles</a>.</p>",
     "GetIntegration": "<p>Returns an integration for a domain.</p>",
     "GetMatches": "<p>Before calling this API, use <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_CreateDomain.html\">CreateDomain</a> or <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_UpdateDomain.html\">UpdateDomain</a> to enable identity resolution: set <code>Matching</code> to true.</p> <p>GetMatches returns potentially matching profiles, based on the results of the latest run of a machine learning process. </p> <important> <p>The process of matching duplicate profiles. If <code>Matching</code> = <code>true</code>, Amazon Connect Customer Profiles starts a weekly batch process called Identity Resolution Job. If you do not specify a date and time for Identity Resolution Job to run, by default it runs every Saturday at 12AM UTC to detect duplicate profiles in your domains. </p> <p>After the Identity Resolution Job completes, use the <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_GetMatches.html\">GetMatches</a> API to return and review the results. Or, if you have configured <code>ExportingConfig</code> in the <code>MatchingRequest</code>, you can download the results from S3.</p> </important> <p>Amazon Connect uses the following profile attributes to identify matches:</p> <ul> <li> <p>PhoneNumber</p> </li> <li> <p>HomePhoneNumber</p> </li> <li> <p>BusinessPhoneNumber</p> </li> <li> <p>MobilePhoneNumber</p> </li> <li> <p>EmailAddress</p> </li> <li> <p>PersonalEmailAddress</p> </li> <li> <p>BusinessEmailAddress</p> </li> <li> <p>FullName</p> </li> </ul> <p>For example, two or more profiles—with spelling mistakes such as <b>John Doe</b> and <b>Jhn Doe</b>, or different casing email addresses such as <b>JOHN_DOE@ANYCOMPANY.COM</b> and <b>johndoe@anycompany.com</b>, or different phone number formats such as <b>555-010-0000</b> and <b>+1-555-010-0000</b>—can be detected as belonging to the same customer <b>John Doe</b> and merged into a unified profile.</p>",
+    "GetObjectTypeAttributeStatistics": "<p>The GetObjectTypeAttributeValues API delivers statistical insights about attributes within a specific object type, but is exclusively available for domains with data store enabled. This API performs daily calculations to provide statistical information about your attribute values, helping you understand patterns and trends in your data. The statistical calculations are performed once per day, providing a consistent snapshot of your attribute data characteristics.</p> <note> <p>You'll receive null values in two scenarios: </p> <p>During the first period after enabling data vault (unless a calculation cycle occurs, which happens once daily).</p> <p>For attributes that don't contain numeric values. </p> </note>",
     "GetProfileHistoryRecord": "<p>Returns a history record for a specific profile, for a specific domain.</p>",
     "GetProfileObjectType": "<p>Returns the object types for a specific domain.</p>",
     "GetProfileObjectTypeTemplate": "<p>Returns the template information for a specific object type.</p> <p>A template is a predefined ProfileObjectType, such as “Salesforce-Account” or “Salesforce-Contact.” When a user sends a ProfileObject, using the PutProfileObject API, with an ObjectTypeName that matches one of the TemplateIds, it uses the mappings from the template.</p>",
+    "GetProfileRecommendations": "<p>Fetches the recommendations for a profile in the input Customer Profiles domain. Fetches all the profile recommendations </p>",
+    "GetRecommender": "<p>Retrieves a recommender.</p>",
     "GetSegmentDefinition": "<p>Gets a segment definition from the domain.</p>",
     "GetSegmentEstimate": "<p>Gets the result of a segment estimate query.</p>",
     "GetSegmentMembership": "<p>Determines if the given profiles are within a segment.</p>",
@@ -55,28 +62,35 @@
     "ListCalculatedAttributeDefinitions": "<p>Lists calculated attribute definitions for Customer Profiles</p>",
     "ListCalculatedAttributesForProfile": "<p>Retrieve a list of calculated attributes for a customer profile.</p>",
     "ListDomainLayouts": "<p>Lists the existing layouts that can be used to view data for a specific domain. This API can only be invoked from the Amazon Connect admin website.</p>",
+    "ListDomainObjectTypes": "<p>List all DomainObjectType(s) in a Customer Profiles domain. </p>",
     "ListDomains": "<p>Returns a list of all the domains for an AWS account that have been created.</p>",
     "ListEventStreams": "<p>Returns a list of all the event streams in a specific domain.</p>",
     "ListEventTriggers": "<p>List all Event Triggers under a domain.</p>",
     "ListIdentityResolutionJobs": "<p>Lists all of the Identity Resolution Jobs in your domain. The response sorts the list by <code>JobStartTime</code>.</p>",
     "ListIntegrations": "<p>Lists all of the integrations in your domain.</p>",
+    "ListObjectTypeAttributeValues": "<p>The ListObjectTypeAttributeValues API provides access to the most recent distinct values for any specified attribute, making it valuable for real-time data validation and consistency checks within your object types. This API works across domain, supporting both custom and standard object types. The API accepts the object type name, attribute name, and domain name as input parameters and returns values up to the storage limit of approximately 350KB.</p>",
     "ListObjectTypeAttributes": "<p>Fetch the possible attribute values given the attribute name.</p>",
     "ListProfileAttributeValues": "<p>Fetch the possible attribute values given the attribute name.</p>",
     "ListProfileHistoryRecords": "<p>Returns a list of history records for a specific profile, for a specific domain.</p>",
     "ListProfileObjectTypeTemplates": "<p>Lists all of the template information for object types.</p>",
     "ListProfileObjectTypes": "<p>Lists all of the templates available within the service.</p>",
     "ListProfileObjects": "<p>Returns a list of objects associated with a profile of a given ProfileObjectType.</p>",
+    "ListRecommenderRecipes": "<p>Returns a list of available recommender recipes that can be used to create recommenders.</p>",
+    "ListRecommenders": "<p>Returns a list of recommenders in the specified domain.</p>",
     "ListRuleBasedMatches": "<p>Returns a set of <code>MatchIds</code> that belong to the given domain.</p>",
     "ListSegmentDefinitions": "<p>Lists all segment definitions under a domain.</p>",
     "ListTagsForResource": "<p>Displays the tags associated with an Amazon Connect Customer Profiles resource. In Connect Customer Profiles, domains, profile object types, and integrations can be tagged.</p>",
     "ListUploadJobs": "<p>This API retrieves a list of upload jobs for the specified domain. </p>",
     "ListWorkflows": "<p>Query to list all workflows.</p>",
     "MergeProfiles": "<p>Runs an AWS Lambda job that does the following:</p> <ol> <li> <p>All the profileKeys in the <code>ProfileToBeMerged</code> will be moved to the main profile.</p> </li> <li> <p>All the objects in the <code>ProfileToBeMerged</code> will be moved to the main profile.</p> </li> <li> <p>All the <code>ProfileToBeMerged</code> will be deleted at the end.</p> </li> <li> <p>All the profileKeys in the <code>ProfileIdsToBeMerged</code> will be moved to the main profile.</p> </li> <li> <p>Standard fields are merged as follows:</p> <ol> <li> <p>Fields are always \"union\"-ed if there are no conflicts in standard fields or attributeKeys.</p> </li> <li> <p>When there are conflicting fields:</p> <ol> <li> <p>If no <code>SourceProfileIds</code> entry is specified, the main Profile value is always taken. </p> </li> <li> <p>If a <code>SourceProfileIds</code> entry is specified, the specified profileId is always taken, even if it is a NULL value.</p> </li> </ol> </li> </ol> </li> </ol> <p>You can use MergeProfiles together with <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_GetMatches.html\">GetMatches</a>, which returns potentially matching profiles, or use it with the results of another matching system. After profiles have been merged, they cannot be separated (unmerged).</p>",
+    "PutDomainObjectType": "<p>Create/Update a DomainObjectType in a Customer Profiles domain. To create a new DomainObjectType, Data Store needs to be enabled on the Domain.</p>",
     "PutIntegration": "<p>Adds an integration between the service and a third-party service, which includes Amazon AppFlow and Amazon Connect.</p> <p>An integration can belong to only one domain.</p> <p>To add or remove tags on an existing Integration, see <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_TagResource.html\"> TagResource </a>/<a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_UntagResource.html\"> UntagResource</a>.</p>",
     "PutProfileObject": "<p>Adds additional objects to customer profiles of a given ObjectType.</p> <p>When adding a specific profile object, like a Contact Record, an inferred profile can get created if it is not mapped to an existing profile. The resulting profile will only have a phone number populated in the standard ProfileObject. Any additional Contact Records with the same phone number will be mapped to the same inferred profile.</p> <p>When a ProfileObject is created and if a ProfileObjectType already exists for the ProfileObject, it will provide data to a standard profile depending on the ProfileObjectType definition.</p> <p>PutProfileObject needs an ObjectType, which can be created using PutProfileObjectType.</p>",
     "PutProfileObjectType": "<p>Defines a ProfileObjectType.</p> <p>To add or remove tags on an existing ObjectType, see <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_TagResource.html\"> TagResource</a>/<a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_UntagResource.html\">UntagResource</a>.</p>",
     "SearchProfiles": "<p>Searches for profiles within a specific domain using one or more predefined search keys (e.g., _fullName, _phone, _email, _account, etc.) and/or custom-defined search keys. A search key is a data type pair that consists of a <code>KeyName</code> and <code>Values</code> list.</p> <p>This operation supports searching for profiles with a minimum of 1 key-value(s) pair and up to 5 key-value(s) pairs using either <code>AND</code> or <code>OR</code> logic.</p>",
+    "StartRecommender": "<p>Starts a recommender that was previously stopped. Starting a recommender resumes its ability to generate recommendations.</p>",
     "StartUploadJob": "<p>This API starts the processing of an upload job to ingest profile data. </p>",
+    "StopRecommender": "<p>Stops a recommender, suspending its ability to generate recommendations. The recommender can be restarted later using StartRecommender.</p>",
     "StopUploadJob": "<p>This API stops the processing of an upload job. </p>",
     "TagResource": "<p>Assigns one or more tags (key-value pairs) to the specified Amazon Connect Customer Profiles resource. Tags can help you organize and categorize your resources. You can also use them to scope user permissions by granting a user permission to access or change only resources with certain tag values. In Connect Customer Profiles, domains, profile object types, and integrations can be tagged.</p> <p>Tags don't have any semantic meaning to AWS and are interpreted strictly as strings of characters.</p> <p>You can use the TagResource action with a resource that already has tags. If you specify a new tag key, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value that you specify replaces the previous value for that tag.</p> <p>You can associate as many as 50 tags with a resource.</p>",
     "UntagResource": "<p>Removes one or more tags from the specified Amazon Connect Customer Profiles resource. In Connect Customer Profiles, domains, profile object types, and integrations can be tagged.</p>",
@@ -84,7 +98,8 @@
     "UpdateDomain": "<p>Updates the properties of a domain, including creating or selecting a dead letter queue or an encryption key.</p> <p>After a domain is created, the name can’t be changed.</p> <p>Use this API or <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_CreateDomain.html\">CreateDomain</a> to enable <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_GetMatches.html\">identity resolution</a>: set <code>Matching</code> to true.</p> <p>To prevent cross-service impersonation when you call this API, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/cross-service-confused-deputy-prevention.html\">Cross-service confused deputy prevention</a> for sample policies that you should apply. </p> <p>To add or remove tags on an existing Domain, see <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_TagResource.html\">TagResource</a>/<a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_UntagResource.html\">UntagResource</a>.</p>",
     "UpdateDomainLayout": "<p>Updates the layout used to view data for a specific domain. This API can only be invoked from the Amazon Connect admin website.</p>",
     "UpdateEventTrigger": "<p>Update the properties of an Event Trigger.</p>",
-    "UpdateProfile": "<p>Updates the properties of a profile. The ProfileId is required for updating a customer profile.</p> <p>When calling the UpdateProfile API, specifying an empty string value means that any existing value will be removed. Not specifying a string value means that any value already there will be kept.</p>"
+    "UpdateProfile": "<p>Updates the properties of a profile. The ProfileId is required for updating a customer profile.</p> <p>When calling the UpdateProfile API, specifying an empty string value means that any existing value will be removed. Not specifying a string value means that any value already there will be kept.</p>",
+    "UpdateRecommender": "<p>Updates the properties of an existing recommender, allowing you to modify its configuration and description.</p>"
   },
   "shapes": {
     "name": {
@@ -112,6 +127,8 @@
         "CreateEventTriggerResponse$SegmentFilter": "<p>The destination is triggered only for profiles that meet the criteria of a segment definition.</p>",
         "CreateIntegrationWorkflowRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "CreateRecommenderRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "CreateRecommenderRequest$RecommenderName": "<p>The name of the recommender.</p>",
         "CreateSegmentDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateSegmentDefinitionRequest$SegmentDefinitionName": "<p>The unique name of the segment definition.</p>",
         "CreateSegmentDefinitionResponse$SegmentDefinitionName": "<p>The name of the segment definition.</p>",
@@ -123,6 +140,7 @@
         "DeleteCalculatedAttributeDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteDomainLayoutRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteDomainLayoutRequest$LayoutDefinitionName": "<p>The unique name of the layout.</p>",
+        "DeleteDomainObjectTypeRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteDomainRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteEventStreamRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteEventStreamRequest$EventStreamName": "<p>The name of the event stream</p>",
@@ -134,6 +152,8 @@
         "DeleteProfileObjectRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteProfileObjectTypeRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "DeleteRecommenderRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "DeleteRecommenderRequest$RecommenderName": "<p>The recommender name.</p>",
         "DeleteSegmentDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteSegmentDefinitionRequest$SegmentDefinitionName": "<p>The unique name of the segment definition.</p>",
         "DeleteWorkflowRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -151,6 +171,7 @@
         "GetDomainLayoutRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetDomainLayoutRequest$LayoutDefinitionName": "<p>The unique name of the layout.</p>",
         "GetDomainLayoutResponse$LayoutDefinitionName": "<p>The unique name of the layout.</p>",
+        "GetDomainObjectTypeRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetDomainRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetDomainResponse$DomainName": "<p>The unique name of the domain.</p>",
         "GetEventStreamRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -165,6 +186,7 @@
         "GetIntegrationRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetIntegrationResponse$DomainName": "<p>The unique name of the domain.</p>",
         "GetMatchesRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "GetObjectTypeAttributeStatisticsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetProfileHistoryRecordRequest$DomainName": "<p>The unique name of the domain for which to return a profile history record.</p>",
         "GetProfileObjectTypeRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetProfileObjectTypeResponse$TemplateId": "<p>A unique identifier for the object template.</p>",
@@ -172,6 +194,11 @@
         "GetProfileObjectTypeTemplateResponse$TemplateId": "<p>A unique identifier for the object template.</p>",
         "GetProfileObjectTypeTemplateResponse$SourceName": "<p>The name of the source of the object template.</p>",
         "GetProfileObjectTypeTemplateResponse$SourceObject": "<p>The source of the object template.</p>",
+        "GetProfileRecommendationsRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "GetProfileRecommendationsRequest$RecommenderName": "<p>The unique name of the recommender.</p>",
+        "GetRecommenderRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "GetRecommenderRequest$RecommenderName": "<p>The name of the recommender.</p>",
+        "GetRecommenderResponse$RecommenderName": "<p>The name of the recommender.</p>",
         "GetSegmentDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetSegmentDefinitionRequest$SegmentDefinitionName": "<p>The unique name of the segment definition.</p>",
         "GetSegmentDefinitionResponse$SegmentDefinitionName": "<p>The name of the segment definition.</p>",
@@ -195,12 +222,14 @@
         "ListCalculatedAttributesForProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListDomainItem$DomainName": "<p>The unique name of the domain.</p>",
         "ListDomainLayoutsRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "ListDomainObjectTypesRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListEventStreamsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListEventTriggersRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListIdentityResolutionJobsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListIntegrationItem$DomainName": "<p>The unique name of the domain.</p>",
         "ListIntegrationsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListObjectTypeAttributeItem$AttributeName": "<p>Name of the attribute.</p>",
+        "ListObjectTypeAttributeValuesRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListObjectTypeAttributesRequest$DomainName": "<p>The unique identifier of the domain.</p>",
         "ListProfileHistoryRecordsRequest$DomainName": "<p>The unique name of the domain for which to return profile history records.</p>",
         "ListProfileObjectTypeTemplateItem$TemplateId": "<p>A unique identifier for the object template.</p>",
@@ -208,6 +237,7 @@
         "ListProfileObjectTypeTemplateItem$SourceObject": "<p>The source of the object template.</p>",
         "ListProfileObjectTypesRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListProfileObjectsRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "ListRecommendersRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListRuleBasedMatchesRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListSegmentDefinitionsRequest$DomainName": "<p>The unique identifier of the domain.</p>",
         "ListUploadJobsRequest$DomainName": "<p>The unique name of the domain to list upload jobs for. </p>",
@@ -216,18 +246,24 @@
         "ObjectFilter$KeyName": "<p>A searchable identifier of a profile object. The predefined keys you can use to search for <code>_asset</code> include: <code>_assetId</code>, <code>_assetName</code>, and <code>_serialNumber</code>. The predefined keys you can use to search for <code>_case</code> include: <code>_caseId</code>. The predefined keys you can use to search for <code>_order</code> include: <code>_orderId</code>.</p>",
         "ProfileAttributeValuesRequest$DomainName": "<p>The unique identifier of the domain.</p>",
         "ProfileAttributeValuesResponse$DomainName": "<p>The name of the domain.</p>",
+        "PutDomainObjectTypeRequest$DomainName": "<p>The unique name of the domain.</p>",
         "PutIntegrationRequest$DomainName": "<p>The unique name of the domain.</p>",
         "PutIntegrationResponse$DomainName": "<p>The unique name of the domain.</p>",
         "PutProfileObjectRequest$DomainName": "<p>The unique name of the domain.</p>",
         "PutProfileObjectTypeRequest$DomainName": "<p>The unique name of the domain.</p>",
         "PutProfileObjectTypeRequest$TemplateId": "<p>A unique identifier for the object template. For some attributes in the request, the service will use the default value from the object template when TemplateId is present. If these attributes are present in the request, the service may return a <code>BadRequestException</code>. These attributes include: AllowProfileCreation, SourceLastUpdatedTimestampFormat, Fields, and Keys. For example, if AllowProfileCreation is set to true when TemplateId is set, the service may return a <code>BadRequestException</code>.</p>",
         "PutProfileObjectTypeResponse$TemplateId": "<p>A unique identifier for the object template.</p>",
+        "RecommenderSummary$RecommenderName": "<p>The name of the recommender.</p>",
         "SearchProfilesRequest$DomainName": "<p>The unique name of the domain.</p>",
         "SearchProfilesRequest$KeyName": "<p>A searchable identifier of a customer profile. The predefined keys you can use to search include: _account, _profileId, _assetId, _caseId, _orderId, _fullName, _phone, _email, _ctrContactId, _marketoLeadId, _salesforceAccountId, _salesforceContactId, _salesforceAssetId, _zendeskUserId, _zendeskExternalId, _zendeskTicketId, _serviceNowSystemId, _serviceNowIncidentId, _segmentUserId, _shopifyCustomerId, _shopifyOrderId.</p>",
         "SegmentDefinitionItem$SegmentDefinitionName": "<p>Name of the segment definition.</p>",
         "SourceSegment$SegmentDefinitionName": "<p>The unique name of the segment definition.</p>",
+        "StartRecommenderRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "StartRecommenderRequest$RecommenderName": "<p>The name of the recommender to start.</p>",
         "StartUploadJobRequest$DomainName": "<p>The unique name of the domain containing the upload job to start. </p>",
         "StartUploadJobRequest$JobId": "<p>The unique identifier of the upload job to start. </p>",
+        "StopRecommenderRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "StopRecommenderRequest$RecommenderName": "<p>The name of the recommender to stop.</p>",
         "StopUploadJobRequest$DomainName": "<p>The unique name of the domain containing the upload job to stop. </p>",
         "StopUploadJobRequest$JobId": "<p>The unique identifier of the upload job to stop. </p>",
         "UpdateCalculatedAttributeDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -241,7 +277,10 @@
         "UpdateEventTriggerRequest$SegmentFilter": "<p>The destination is triggered only for profiles that meet the criteria of a segment definition.</p>",
         "UpdateEventTriggerResponse$EventTriggerName": "<p>The unique name of the event trigger.</p>",
         "UpdateEventTriggerResponse$SegmentFilter": "<p>The destination is triggered only for profiles that meet the criteria of a segment definition.</p>",
-        "UpdateProfileRequest$DomainName": "<p>The unique name of the domain.</p>"
+        "UpdateProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "UpdateRecommenderRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "UpdateRecommenderRequest$RecommenderName": "<p>The name of the recommender to update.</p>",
+        "UpdateRecommenderResponse$RecommenderName": "<p>The name of the recommender that was updated.</p>"
       }
     },
     "AccessDeniedException": {
@@ -322,6 +361,12 @@
         "WorkflowStepItem$AppflowIntegration": "<p>Workflow step information specific to <code>APPFLOW_INTEGRATION</code> workflow.</p>"
       }
     },
+    "Arn": {
+      "base": null,
+      "refs": {
+        "CreateRecommenderResponse$RecommenderArn": "<p>The ARN of the recommender</p>"
+      }
+    },
     "AttributeDetails": {
       "base": "<p>Mathematical expression and a list of attribute items specified in that expression.</p>",
       "refs": {
@@ -396,6 +441,7 @@
     "Attributes": {
       "base": null,
       "refs": {
+        "CatalogItem$Attributes": "<p>Additional attributes or properties associated with the catalog item stored as key-value pairs.</p>",
         "CreateProfileRequest$Attributes": "<p>A key value pair of attributes of a customer profile.</p>",
         "Profile$Attributes": "<p>A key value pair of attributes of a customer profile.</p>"
       }
@@ -524,6 +570,12 @@
         "Dimension$CalculatedAttributes": "<p>Object that holds the calculated attributes to segment on.</p>"
       }
     },
+    "CatalogItem": {
+      "base": "<p>Represents an item in the catalog with its complete set of attributes and metadata.</p>",
+      "refs": {
+        "Recommendation$CatalogItem": "<p>The catalog item being recommended, including its complete details and attributes.</p>"
+      }
+    },
     "ComparisonOperator": {
       "base": null,
       "refs": {
@@ -596,6 +648,18 @@
         "ContactPreference$ContactType": "<p>The contact type used for engagement. For example: HomePhoneNumber, PersonalEmailAddress.</p>"
       }
     },
+    "ContentType": {
+      "base": null,
+      "refs": {
+        "DomainObjectTypeField$ContentType": "<p>The content type of the field.</p>"
+      }
+    },
+    "ContextKey": {
+      "base": null,
+      "refs": {
+        "RecommenderContext$key": null
+      }
+    },
     "CreateCalculatedAttributeDefinitionRequest": {
       "base": null,
       "refs": {}
@@ -652,6 +716,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateRecommenderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateRecommenderResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateSegmentDefinitionRequest": {
       "base": null,
       "refs": {}
@@ -703,6 +775,21 @@
         "ScheduledTriggerProperties$DataPullMode": "<p>Specifies whether a scheduled flow has an incremental data transfer or a complete data transfer for each flow run.</p>"
       }
     },
+    "DataStoreRequest": {
+      "base": "<p>The data store request.</p>",
+      "refs": {
+        "CreateDomainRequest$DataStore": "<p>Set to true to enabled data store for this domain.</p>",
+        "UpdateDomainRequest$DataStore": "<p>Set to true to enabled data store for this domain.</p>"
+      }
+    },
+    "DataStoreResponse": {
+      "base": "<p>The data store response.</p>",
+      "refs": {
+        "CreateDomainResponse$DataStore": "<p>The data store.</p>",
+        "GetDomainResponse$DataStore": "<p> True if data store is enabled for this domain.</p>",
+        "UpdateDomainResponse$DataStore": "<p>The data store.</p>"
+      }
+    },
     "Date": {
       "base": null,
       "refs": {
@@ -748,6 +835,14 @@
       "refs": {}
     },
     "DeleteDomainLayoutResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDomainObjectTypeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDomainObjectTypeResponse": {
       "base": null,
       "refs": {}
     },
@@ -812,6 +907,14 @@
       "refs": {}
     },
     "DeleteProfileResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRecommenderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteRecommenderResponse": {
       "base": null,
       "refs": {}
     },
@@ -881,6 +984,38 @@
         "ListDomainsResponse$Items": "<p>The list of ListDomains instances.</p>"
       }
     },
+    "DomainObjectTypeField": {
+      "base": "<p>The standard domain object type.</p>",
+      "refs": {
+        "DomainObjectTypeFields$value": null
+      }
+    },
+    "DomainObjectTypeFieldName": {
+      "base": null,
+      "refs": {
+        "DomainObjectTypeFields$key": null
+      }
+    },
+    "DomainObjectTypeFields": {
+      "base": null,
+      "refs": {
+        "GetDomainObjectTypeResponse$Fields": "<p>A map of field names to their corresponding domain object type field definitions.</p>",
+        "PutDomainObjectTypeRequest$Fields": "<p>A map of field names to their corresponding domain object type field definitions.</p>",
+        "PutDomainObjectTypeResponse$Fields": "<p>A map of field names to their corresponding domain object type field definitions.</p>"
+      }
+    },
+    "DomainObjectTypesList": {
+      "base": null,
+      "refs": {
+        "ListDomainObjectTypesResponse$Items": "<p>The list of domain object types.</p>"
+      }
+    },
+    "DomainObjectTypesListItem": {
+      "base": "<p>Represents an item in the list of domain object types, containing basic information about a specific object type within a domain.</p>",
+      "refs": {
+        "DomainObjectTypesList$member": null
+      }
+    },
     "DomainStats": {
       "base": "<p>Usage-specific statistics about the domain.</p>",
       "refs": {
@@ -890,15 +1025,27 @@
     "Double": {
       "base": null,
       "refs": {
+        "EventParameters$EventValueThreshold": "<p>The minimum value threshold that an event must meet to be considered valid.</p>",
+        "GetObjectTypeAttributeStatisticsPercentiles$P5": "<p>The 5th percentile value of the attribute.</p>",
+        "GetObjectTypeAttributeStatisticsPercentiles$P25": "<p>The 25th percentile value of the attribute.</p>",
+        "GetObjectTypeAttributeStatisticsPercentiles$P50": "<p>The 50th percentile (median) value of the attribute.</p>",
+        "GetObjectTypeAttributeStatisticsPercentiles$P75": "<p>The 75th percentile value of the attribute.</p>",
+        "GetObjectTypeAttributeStatisticsPercentiles$P95": "<p>The 95th percentile value of the attribute.</p>",
+        "GetObjectTypeAttributeStatisticsStats$Maximum": "<p>The maximum value found in the attribute dataset.</p>",
+        "GetObjectTypeAttributeStatisticsStats$Minimum": "<p>The minimum value found in the attribute dataset.</p>",
+        "GetObjectTypeAttributeStatisticsStats$Average": "<p>The arithmetic mean of the attribute values.</p>",
+        "GetObjectTypeAttributeStatisticsStats$StandardDeviation": "<p>The standard deviation of the attribute values, measuring their spread around the mean.</p>",
         "GetSimilarProfilesResponse$ConfidenceScore": "<p>It only has value when the <code>MatchType</code> is <code>ML_BASED_MATCHING</code>.A number between 0 and 1, where a higher score means higher similarity. Examining match confidence scores lets you distinguish between groups of similar records in which the system is highly confident (which you may decide to merge), groups of similar records about which the system is uncertain (which you may decide to have reviewed by a human), and groups of similar records that the system deems to be unlikely (which you may decide to reject). Given confidence scores vary as per the data input, it should not be used as an absolute measure of matching quality.</p>",
-        "MatchItem$ConfidenceScore": "<p>A number between 0 and 1, where a higher score means higher similarity. Examining match confidence scores lets you distinguish between groups of similar records in which the system is highly confident (which you may decide to merge), groups of similar records about which the system is uncertain (which you may decide to have reviewed by a human), and groups of similar records that the system deems to be unlikely (which you may decide to reject). Given confidence scores vary as per the data input, it should not be used an absolute measure of matching quality.</p>"
+        "MatchItem$ConfidenceScore": "<p>A number between 0 and 1, where a higher score means higher similarity. Examining match confidence scores lets you distinguish between groups of similar records in which the system is highly confident (which you may decide to merge), groups of similar records about which the system is uncertain (which you may decide to have reviewed by a human), and groups of similar records that the system deems to be unlikely (which you may decide to reject). Given confidence scores vary as per the data input, it should not be used an absolute measure of matching quality.</p>",
+        "Metrics$value": null
       }
     },
     "Double0To1": {
       "base": null,
       "refs": {
         "AutoMerging$MinAllowedConfidenceScoreForMerging": "<p>A number between 0 and 1 that represents the minimum confidence score required for profiles within a matching group to be merged during the auto-merge process. A higher score means higher similarity required to merge profiles. </p>",
-        "GetAutoMergingPreviewRequest$MinAllowedConfidenceScoreForMerging": "<p>Minimum confidence score required for profiles within a matching group to be merged during the auto-merge process.</p>"
+        "GetAutoMergingPreviewRequest$MinAllowedConfidenceScoreForMerging": "<p>Minimum confidence score required for profiles within a matching group to be merged during the auto-merge process.</p>",
+        "Recommendation$Score": "<p>Recommendation Score between 0 and 1.</p>"
       }
     },
     "EmailList": {
@@ -931,6 +1078,24 @@
       "base": null,
       "refs": {
         "GetSegmentEstimateResponse$Status": "<p>The current status of the query.</p>"
+      }
+    },
+    "EventParameters": {
+      "base": "<p>Configuration parameters for events in the personalization system.</p>",
+      "refs": {
+        "EventParametersList$member": null
+      }
+    },
+    "EventParametersEventTypeString": {
+      "base": null,
+      "refs": {
+        "EventParameters$EventType": "<p>The type of event being tracked (e.g., 'click', 'purchase', 'view').</p>"
+      }
+    },
+    "EventParametersList": {
+      "base": null,
+      "refs": {
+        "EventsConfig$EventParametersList": "<p>A list of event parameters configurations that specify how different event types should be handled.</p>"
       }
     },
     "EventStreamDestinationDetails": {
@@ -1036,6 +1201,12 @@
         "ObjectAttribute$Values": "<p>A list of attribute values used for comparison.</p>"
       }
     },
+    "EventsConfig": {
+      "base": "<p>Configuration settings that define how events are processed and tracked.</p>",
+      "refs": {
+        "RecommenderConfig$EventsConfig": "<p>Configuration settings for how the recommender processes and uses events.</p>"
+      }
+    },
     "ExportingConfig": {
       "base": "<p>Configuration information about the S3 bucket where Identity Resolution Jobs writes result files. </p> <note> <p>You need to give Customer Profiles service principal write permission to your S3 bucket. Otherwise, you'll get an exception in the API response. For an example policy, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/cross-service-confused-deputy-prevention.html#customer-profiles-cross-service\">Amazon Connect Customer Profiles cross-service confused deputy prevention</a>. </p> </note>",
       "refs": {
@@ -1068,6 +1239,12 @@
       "base": null,
       "refs": {
         "GetSegmentMembershipResponse$Failures": "<p>An array of maps where each contains a response per profile failed for the request.</p>"
+      }
+    },
+    "FeatureType": {
+      "base": null,
+      "refs": {
+        "DomainObjectTypeField$FeatureType": "<p>The semantic meaning of the field.</p>"
       }
     },
     "FieldContentType": {
@@ -1204,6 +1381,14 @@
       "base": null,
       "refs": {}
     },
+    "GetDomainObjectTypeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDomainObjectTypeResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetDomainRequest": {
       "base": null,
       "refs": {}
@@ -1252,6 +1437,26 @@
       "base": null,
       "refs": {}
     },
+    "GetObjectTypeAttributeStatisticsPercentiles": {
+      "base": "<p>Contains percentile statistics for object type attributes.</p>",
+      "refs": {
+        "GetObjectTypeAttributeStatisticsStats$Percentiles": "<p>Percentile distribution statistics for the attribute values.</p>"
+      }
+    },
+    "GetObjectTypeAttributeStatisticsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetObjectTypeAttributeStatisticsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetObjectTypeAttributeStatisticsStats": {
+      "base": "<p>Statistical measurements for object type attributes including basic statistics and percentiles.</p>",
+      "refs": {
+        "GetObjectTypeAttributeStatisticsResponse$Statistics": "<p>The statistics.</p>"
+      }
+    },
     "GetProfileHistoryRecordRequest": {
       "base": null,
       "refs": {}
@@ -1273,6 +1478,28 @@
       "refs": {}
     },
     "GetProfileObjectTypeTemplateResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProfileRecommendationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProfileRecommendationsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRecommenderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetRecommenderRequestTrainingMetricsCountInteger": {
+      "base": null,
+      "refs": {
+        "GetRecommenderRequest$TrainingMetricsCount": "<p>The number of training metrics to retrieve for the recommender.</p>"
+      }
+    },
+    "GetRecommenderResponse": {
       "base": null,
       "refs": {}
     },
@@ -1544,6 +1771,14 @@
       "base": null,
       "refs": {}
     },
+    "ListDomainObjectTypesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDomainObjectTypesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListDomainsRequest": {
       "base": null,
       "refs": {}
@@ -1595,6 +1830,26 @@
       "refs": {
         "ListObjectTypeAttributesList$member": null
       }
+    },
+    "ListObjectTypeAttributeValuesItem": {
+      "base": "<p>Represents an item in the list of object type attribute values with its associated metadata.</p>",
+      "refs": {
+        "ListObjectTypeAttributeValuesList$member": null
+      }
+    },
+    "ListObjectTypeAttributeValuesList": {
+      "base": null,
+      "refs": {
+        "ListObjectTypeAttributeValuesResponse$Items": "<p>A list of unique attribute values sorted on the basis of LastUpdatedAt. </p>"
+      }
+    },
+    "ListObjectTypeAttributeValuesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListObjectTypeAttributeValuesResponse": {
+      "base": null,
+      "refs": {}
     },
     "ListObjectTypeAttributesList": {
       "base": null,
@@ -1657,6 +1912,34 @@
       "refs": {}
     },
     "ListProfileObjectsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecommenderRecipesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecommenderRecipesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRecommenderRecipesRequest$MaxResults": "<p>The maximum number of recommender recipes to return in the response. The default value is 100.</p>"
+      }
+    },
+    "ListRecommenderRecipesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecommendersRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRecommendersRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRecommendersRequest$MaxResults": "<p>The maximum number of recommenders to return in the response. The default value is 100.</p>"
+      }
+    },
+    "ListRecommendersResponse": {
       "base": null,
       "refs": {}
     },
@@ -1803,6 +2086,12 @@
         "RuleBasedMatchingResponse$MaxAllowedRuleLevelForMerging": "<p> <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_MatchingRule.html\">MatchingRule</a> </p>"
       }
     },
+    "MaxSize10": {
+      "base": null,
+      "refs": {
+        "GetProfileRecommendationsRequest$MaxResults": "<p>The maximum number of recommendations to return. The default value is 10.</p>"
+      }
+    },
     "MaxSize500": {
       "base": null,
       "refs": {
@@ -1817,6 +2106,12 @@
     "MergeProfilesResponse": {
       "base": null,
       "refs": {}
+    },
+    "Metrics": {
+      "base": null,
+      "refs": {
+        "TrainingMetrics$Metrics": "<p>A collection of performance metrics and statistics from the training process.</p>"
+      }
     },
     "Object": {
       "base": null,
@@ -2094,6 +2389,14 @@
         "TaskPropertiesMap$value": null
       }
     },
+    "PutDomainObjectTypeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutDomainObjectTypeResponse": {
+      "base": null,
+      "refs": {}
+    },
     "PutIntegrationRequest": {
       "base": null,
       "refs": {}
@@ -2146,6 +2449,7 @@
       "base": "<p>Information indicating if the Calculated Attribute is ready for use by confirming all historical data has been processed and reflected.</p>",
       "refs": {
         "CreateCalculatedAttributeDefinitionResponse$Readiness": "<p>Information indicating if the Calculated Attribute is ready for use by confirming all historical data has been processed and reflected.</p>",
+        "DataStoreResponse$Readiness": null,
         "GetCalculatedAttributeDefinitionResponse$Readiness": "<p>Information indicating if the Calculated Attribute is ready for use by confirming all historical data has been processed and reflected.</p>",
         "UpdateCalculatedAttributeDefinitionResponse$Readiness": "<p>Information indicating if the Calculated Attribute is ready for use by confirming all historical data has been processed and reflected.</p>"
       }
@@ -2157,6 +2461,88 @@
         "GetCalculatedAttributeDefinitionResponse$Status": "<p>Status of the Calculated Attribute creation (whether all historical data has been indexed).</p>",
         "ListCalculatedAttributeDefinitionItem$Status": "<p>Status of the Calculated Attribute creation (whether all historical data has been indexed.)</p>",
         "UpdateCalculatedAttributeDefinitionResponse$Status": "<p>Status of the Calculated Attribute creation (whether all historical data has been indexed.)</p>"
+      }
+    },
+    "Recommendation": {
+      "base": "<p>Represents a single recommendation generated by the recommender system.</p>",
+      "refs": {
+        "Recommendations$member": null
+      }
+    },
+    "Recommendations": {
+      "base": null,
+      "refs": {
+        "GetProfileRecommendationsResponse$Recommendations": "<p>List of recommendations generated by the recommender.</p>"
+      }
+    },
+    "RecommenderConfig": {
+      "base": "<p>Configuration settings that define the behavior and parameters of a recommender.</p>",
+      "refs": {
+        "CreateRecommenderRequest$RecommenderConfig": "<p>The recommender configuration.</p>",
+        "GetRecommenderResponse$RecommenderConfig": "<p>The configuration settings for the recommender, including parameters and settings that define its behavior.</p>",
+        "RecommenderSummary$RecommenderConfig": "<p>The configuration settings applied to this recommender.</p>",
+        "RecommenderUpdate$RecommenderConfig": "<p>The updated configuration settings applied to the recommender during this update.</p>",
+        "UpdateRecommenderRequest$RecommenderConfig": "<p>The new configuration settings to apply to the recommender, including updated parameters and settings that define its behavior.</p>"
+      }
+    },
+    "RecommenderConfigTrainingFrequencyInteger": {
+      "base": null,
+      "refs": {
+        "RecommenderConfig$TrainingFrequency": "<p>How often the recommender should retrain its model with new data.</p>"
+      }
+    },
+    "RecommenderContext": {
+      "base": null,
+      "refs": {
+        "GetProfileRecommendationsRequest$Context": "<p>The contextual metadata used to provide dynamic runtime information to tailor recommendations.</p>"
+      }
+    },
+    "RecommenderRecipe": {
+      "base": "<p>Defines the algorithm and approach used to generate recommendations.</p>",
+      "refs": {
+        "RecommenderRecipesList$member": null
+      }
+    },
+    "RecommenderRecipeName": {
+      "base": null,
+      "refs": {
+        "CreateRecommenderRequest$RecommenderRecipeName": "<p>The name of the recommeder recipe.</p>",
+        "GetRecommenderResponse$RecommenderRecipeName": "<p>The name of the recipe used by the recommender to generate recommendations.</p>",
+        "RecommenderRecipe$name": "<p>The name of the recommender recipe.</p>",
+        "RecommenderSummary$RecipeName": "<p>The name of the recipe used by this recommender.</p>"
+      }
+    },
+    "RecommenderRecipesList": {
+      "base": null,
+      "refs": {
+        "ListRecommenderRecipesResponse$RecommenderRecipes": "<p>A list of available recommender recipes and their properties.</p>"
+      }
+    },
+    "RecommenderStatus": {
+      "base": null,
+      "refs": {
+        "GetRecommenderResponse$Status": "<p>The current status of the recommender, indicating whether it is active, creating, updating, or in another state.</p>",
+        "RecommenderSummary$Status": "<p>The current operational status of the recommender.</p>",
+        "RecommenderUpdate$Status": "<p>The current status of the recommender update operation.</p>"
+      }
+    },
+    "RecommenderSummary": {
+      "base": "<p>Provides a summary of a recommender's configuration and current state.</p>",
+      "refs": {
+        "RecommenderSummaryList$member": null
+      }
+    },
+    "RecommenderSummaryList": {
+      "base": null,
+      "refs": {
+        "ListRecommendersResponse$Recommenders": "<p>A list of recommenders and their properties in the specified domain.</p>"
+      }
+    },
+    "RecommenderUpdate": {
+      "base": "<p>Contains information about an update operation performed on a recommender.</p>",
+      "refs": {
+        "GetRecommenderResponse$LatestRecommenderUpdate": "<p>Information about the most recent update performed on the recommender, including status and timestamp.</p>",
+        "RecommenderSummary$LatestRecommenderUpdate": "<p>Information about the most recent update performed on the recommender, including its status and timing.</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -2262,6 +2648,15 @@
         "TriggerProperties$Scheduled": "<p>Specifies the configuration details of a schedule-triggered flow that you define.</p>"
       }
     },
+    "Scope": {
+      "base": null,
+      "refs": {
+        "GetIntegrationResponse$Scope": "<p>Specifies whether the integration applies to profile level data (associated with profiles) or domain level data (not associated with any specific profile). The default value is PROFILE.</p>",
+        "ListIntegrationItem$Scope": "<p>The scope or boundary of the integration item's applicability.</p>",
+        "PutIntegrationRequest$Scope": "<p>Specifies whether the integration applies to profile level data (associated with profiles) or domain level data (not associated with any specific profile). The default value is PROFILE.</p>",
+        "PutIntegrationResponse$Scope": "<p>Specifies whether the integration applies to profile level data (associated with profiles) or domain level data (not associated with any specific profile). The default value is PROFILE.</p>"
+      }
+    },
     "SearchProfilesRequest": {
       "base": null,
       "refs": {}
@@ -2314,6 +2709,13 @@
       "base": null,
       "refs": {
         "GetSegmentSnapshotResponse$Status": "<p>The status of the asynchronous job for exporting the segment snapshot.</p>"
+      }
+    },
+    "SegmentType": {
+      "base": null,
+      "refs": {
+        "GetSegmentDefinitionResponse$SegmentType": "<p>The segment type.</p> <p> Classic : Segments created using traditional SegmentGroup structure</p> <p> Enhanced : Segments created using SQL queries </p>",
+        "SegmentDefinitionItem$SegmentType": "<p>The segment type.</p> <p> Classic : Segments created using traditional SegmentGroup structure</p> <p> Enhanced : Segments created using SQL queries </p>"
       }
     },
     "ServiceNowConnectorOperator": {
@@ -2383,6 +2785,14 @@
         "RangeOverride$Start": "<p>The start time of when to include objects.</p>"
       }
     },
+    "StartRecommenderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartRecommenderResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StartUploadJobRequest": {
       "base": null,
       "refs": {}
@@ -2424,6 +2834,14 @@
         "UploadJobItem$StatusReason": "<p>The reason for the current status of the upload job. </p>"
       }
     },
+    "StopRecommenderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopRecommenderResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StopUploadJobRequest": {
       "base": null,
       "refs": {}
@@ -2435,7 +2853,11 @@
     "String": {
       "base": null,
       "refs": {
-        "DateValues$member": null
+        "DateValues$member": null,
+        "GetRecommenderResponse$FailureReason": "<p>If the recommender fails, provides the reason for the failure.</p>",
+        "RecommenderRecipe$description": "<p>A description of the recommender recipe's purpose and functionality.</p>",
+        "RecommenderSummary$FailureReason": "<p>If the recommender is in a failed state, provides the reason for the failure.</p>",
+        "RecommenderUpdate$FailureReason": "<p>If the update operation failed, provides the reason for the failure.</p>"
       }
     },
     "StringDimensionType": {
@@ -2480,17 +2902,22 @@
         "CreateEventTriggerRequest$Tags": "<p>An array of key-value pairs to apply to this resource.</p>",
         "CreateEventTriggerResponse$Tags": "<p>An array of key-value pairs to apply to this resource.</p>",
         "CreateIntegrationWorkflowRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "CreateRecommenderRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "CreateRecommenderResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateSegmentDefinitionRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateSegmentDefinitionResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "DomainObjectTypesListItem$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "EventStreamSummary$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "EventTriggerSummaryItem$Tags": "<p>An array of key-value pairs to apply to this resource.</p>",
         "GetCalculatedAttributeDefinitionResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetDomainLayoutResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "GetDomainObjectTypeResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetDomainResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetEventStreamResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetEventTriggerResponse$Tags": "<p>An array of key-value pairs to apply to this resource.</p>",
         "GetIntegrationResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetProfileObjectTypeResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "GetRecommenderResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetSegmentDefinitionResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "LayoutItem$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "ListCalculatedAttributeDefinitionItem$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
@@ -2498,10 +2925,13 @@
         "ListIntegrationItem$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "ListProfileObjectTypeItem$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "PutDomainObjectTypeRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "PutDomainObjectTypeResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "PutIntegrationRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "PutIntegrationResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "PutProfileObjectTypeRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "PutProfileObjectTypeResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "RecommenderSummary$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "SegmentDefinitionItem$Tags": "<p>The tags belonging to the segment definition.</p>",
         "TagResourceRequest$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "UpdateCalculatedAttributeDefinitionResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
@@ -2563,6 +2993,24 @@
       "base": null,
       "refs": {
         "ScheduledTriggerProperties$Timezone": "<p>Specifies the time zone used when referring to the date and time of a scheduled-triggered flow, such as America/New_York.</p>"
+      }
+    },
+    "TrainingMetricName": {
+      "base": null,
+      "refs": {
+        "Metrics$key": null
+      }
+    },
+    "TrainingMetrics": {
+      "base": "<p>Contains metrics and performance indicators from the training of a recommender model.</p>",
+      "refs": {
+        "TrainingMetricsList$member": null
+      }
+    },
+    "TrainingMetricsList": {
+      "base": null,
+      "refs": {
+        "GetRecommenderResponse$TrainingMetrics": "<p>A set of metrics that provide information about the recommender's training performance and accuracy.</p>"
       }
     },
     "TriggerConfig": {
@@ -2655,6 +3103,14 @@
       "refs": {}
     },
     "UpdateProfileResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRecommenderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateRecommenderResponse": {
       "base": null,
       "refs": {}
     },
@@ -2824,9 +3280,12 @@
         "CreateDomainRequest$DefaultEncryptionKey": "<p>The default encryption key, which is an AWS managed key, is used when no specific type of encryption key is specified. It is used to encrypt all data before it is placed in permanent or semi-permanent storage.</p>",
         "CreateDomainResponse$DefaultEncryptionKey": "<p>The default encryption key, which is an AWS managed key, is used when no specific type of encryption key is specified. It is used to encrypt all data before it is placed in permanent or semi-permanent storage.</p>",
         "CreateSegmentSnapshotRequest$EncryptionKey": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the exported segment.</p>",
+        "GetDomainObjectTypeResponse$EncryptionKey": "<p>The customer provided KMS key used to encrypt this type of domain object.</p>",
         "GetDomainResponse$DefaultEncryptionKey": "<p>The default encryption key, which is an AWS managed key, is used when no specific type of encryption key is specified. It is used to encrypt all data before it is placed in permanent or semi-permanent storage.</p>",
         "GetProfileObjectTypeResponse$EncryptionKey": "<p>The customer-provided key to encrypt the profile object that will be created in this profile object type.</p>",
         "GetSegmentSnapshotResponse$EncryptionKey": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the exported segment.</p>",
+        "PutDomainObjectTypeRequest$EncryptionKey": "<p>The customer provided KMS key used to encrypt this type of domain object.</p>",
+        "PutDomainObjectTypeResponse$EncryptionKey": "<p>The customer provided KMS key used to encrypt this type of domain object.</p>",
         "PutProfileObjectTypeRequest$EncryptionKey": "<p>The customer-provided key to encrypt the profile object that will be created in this profile object type.</p>",
         "PutProfileObjectTypeResponse$EncryptionKey": "<p>The customer-provided key to encrypt the profile object that will be created in this profile object type.</p>",
         "UpdateDomainRequest$DefaultEncryptionKey": "<p>The default encryption key, which is an AWS managed key, is used when no specific type of encryption key is specified. It is used to encrypt all data before it is placed in permanent or semi-permanent storage. If specified as an empty string, it will clear any existing value.</p>",
@@ -2903,11 +3362,13 @@
         "ListCalculatedAttributeDefinitionsRequest$MaxResults": "<p>The maximum number of calculated attribute definitions returned per page.</p>",
         "ListCalculatedAttributesForProfileRequest$MaxResults": "<p>The maximum number of calculated attributes returned per page.</p>",
         "ListDomainLayoutsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
+        "ListDomainObjectTypesRequest$MaxResults": "<p>The maximum number of domain object types returned per page.</p>",
         "ListDomainsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
         "ListEventStreamsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
         "ListEventTriggersRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListIdentityResolutionJobsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListIntegrationsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
+        "ListObjectTypeAttributeValuesRequest$MaxResults": "<p>The maximum number of objects returned per page. Valid Range: Minimum value of 1. Maximum value of 100. If not provided default as 100.</p>",
         "ListObjectTypeAttributesRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
         "ListProfileHistoryRecordsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListProfileObjectTypeTemplatesRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
@@ -2972,6 +3433,8 @@
         "AutoMerging$Enabled": "<p>The flag that enables the auto-merging of duplicate profiles.</p>",
         "CreateCalculatedAttributeDefinitionRequest$UseHistoricalData": "<p>Whether historical data ingested before the Calculated Attribute was created should be included in calculations.</p>",
         "CreateCalculatedAttributeDefinitionResponse$UseHistoricalData": "<p>Whether historical data ingested before the Calculated Attribute was created should be included in calculations.</p>",
+        "DataStoreRequest$Enabled": "<p>Enabled: Set to true to enabled data store for this domain.</p>",
+        "DataStoreResponse$Enabled": "<p>True if data store is enabled for this domain</p>",
         "GetCalculatedAttributeDefinitionResponse$UseHistoricalData": "<p>Whether historical data ingested before the Calculated Attribute was created should be included in calculations.</p>",
         "GetIntegrationResponse$IsUnstructured": "<p>Boolean that shows if the Flow that's associated with the Integration is created in Amazon Appflow, or with ObjectTypeName equals _unstructured via API/CLI in flowDefinition.</p>",
         "ListAccountIntegrationsRequest$IncludeHidden": "<p>Boolean to indicate if hidden integration should be returned. Defaults to <code>False</code>.</p>",
@@ -3061,8 +3524,21 @@
     "sensitiveString1To1000": {
       "base": null,
       "refs": {
+        "CatalogItem$AdditionalInformation": "<p>Supplementary information about the catalog item beyond the basic description.</p>",
+        "CatalogItem$ImageLink": "<p>The URL link to the item's image.</p>",
+        "CatalogItem$Link": "<p>The URL link to the item's detailed page or external resource.</p>",
         "CreateProfileRequest$AdditionalInformation": "<p>Any additional information relevant to the customer’s profile.</p>",
+        "ListObjectTypeAttributeValuesItem$Value": "<p>The actual value of the object type attribute.</p>",
         "Profile$AdditionalInformation": "<p>Any additional information relevant to the customer’s profile.</p>"
+      }
+    },
+    "sensitiveString1To10000": {
+      "base": null,
+      "refs": {
+        "DomainObjectTypesListItem$Description": "<p>A description explaining the purpose and characteristics of this object type.</p>",
+        "GetDomainObjectTypeResponse$Description": "<p>The description of the domain object type.</p>",
+        "PutDomainObjectTypeRequest$Description": "<p>The description of the domain object type.</p>",
+        "PutDomainObjectTypeResponse$Description": "<p>The description of the domain object type.</p>"
       }
     },
     "sensitiveString1To2000000": {
@@ -3078,6 +3554,13 @@
     "sensitiveString1To255": {
       "base": null,
       "refs": {
+        "CatalogItem$Id": "<p>The unique identifier for the catalog item.</p>",
+        "CatalogItem$Name": "<p>The display name of the catalog item.</p>",
+        "CatalogItem$Code": "<p>The product code or SKU of the catalog item.</p>",
+        "CatalogItem$Type": "<p>The type classification of the catalog item.</p>",
+        "CatalogItem$Category": "<p>The category to which the catalog item belongs.</p>",
+        "CatalogItem$Description": "<p>A detailed description of the catalog item.</p>",
+        "CatalogItem$Price": "<p>The price of the catalog item.</p>",
         "CreateProfileRequest$AccountNumber": "<p>An account number that you have assigned to the customer.</p>",
         "CreateProfileRequest$BusinessName": "<p>The name of the customer’s business.</p>",
         "CreateProfileRequest$FirstName": "<p>The customer’s first name.</p>",
@@ -3110,6 +3593,23 @@
         "Profile$GenderString": "<p>An alternative to Gender which accepts any string as input.</p>"
       }
     },
+    "sensitiveString1To4000": {
+      "base": null,
+      "refs": {
+        "CreateSegmentDefinitionRequest$Description": "<p>The description of the segment definition.</p>",
+        "CreateSegmentDefinitionResponse$Description": "<p>The description of the segment definition.</p>",
+        "GetSegmentDefinitionResponse$Description": "<p>The description of the segment definition.</p>",
+        "SegmentDefinitionItem$Description": "<p>The description of the segment definition.</p>"
+      }
+    },
+    "sensitiveString1To50000": {
+      "base": null,
+      "refs": {
+        "CreateSegmentDefinitionRequest$SegmentSqlQuery": "<p>The segment SQL query.</p>",
+        "CreateSegmentEstimateRequest$SegmentSqlQuery": "<p>The segment SQL query.</p>",
+        "GetSegmentDefinitionResponse$SegmentSqlQuery": "<p>The segment SQL query.</p>"
+      }
+    },
     "sensitiveText": {
       "base": null,
       "refs": {
@@ -3119,24 +3619,24 @@
         "CreateDomainLayoutResponse$Description": "<p>The description of the layout</p>",
         "CreateEventTriggerRequest$Description": "<p>The description of the event trigger.</p>",
         "CreateEventTriggerResponse$Description": "<p>The description of the event trigger.</p>",
-        "CreateSegmentDefinitionRequest$Description": "<p>The description of the segment definition.</p>",
-        "CreateSegmentDefinitionResponse$Description": "<p>The description of the segment definition.</p>",
+        "CreateRecommenderRequest$Description": "<p>The description of the domain object type.</p>",
         "GetCalculatedAttributeDefinitionResponse$Description": "<p>The description of the calculated attribute.</p>",
         "GetDomainLayoutResponse$Description": "<p>The description of the layout</p>",
         "GetEventTriggerResponse$Description": "<p>The description of the event trigger.</p>",
         "GetProfileObjectTypeResponse$Description": "<p>The description of the profile object type.</p>",
-        "GetSegmentDefinitionResponse$Description": "<p>The description of the segment definition.</p>",
+        "GetRecommenderResponse$Description": "<p>A detailed description of the recommender providing information about its purpose and functionality.</p>",
         "LayoutItem$Description": "<p>The description of the layout</p>",
         "ListCalculatedAttributeDefinitionItem$Description": "<p>The threshold for the calculated attribute.</p>",
         "PutProfileObjectTypeRequest$Description": "<p>Description of the profile object type.</p>",
         "PutProfileObjectTypeResponse$Description": "<p>Description of the profile object type.</p>",
-        "SegmentDefinitionItem$Description": "<p>The description of the segment definition.</p>",
+        "RecommenderSummary$Description": "<p>A description of the recommender's purpose and characteristics.</p>",
         "UpdateCalculatedAttributeDefinitionRequest$Description": "<p>The description of the calculated attribute.</p>",
         "UpdateCalculatedAttributeDefinitionResponse$Description": "<p>The description of the calculated attribute.</p>",
         "UpdateDomainLayoutRequest$Description": "<p>The description of the layout</p>",
         "UpdateDomainLayoutResponse$Description": "<p>The description of the layout</p>",
         "UpdateEventTriggerRequest$Description": "<p>The description of the event trigger.</p>",
-        "UpdateEventTriggerResponse$Description": "<p>The description of the event trigger.</p>"
+        "UpdateEventTriggerResponse$Description": "<p>The description of the event trigger.</p>",
+        "UpdateRecommenderRequest$Description": "<p>The new description to assign to the recommender.</p>"
       }
     },
     "sqsQueueUrl": {
@@ -3173,7 +3673,9 @@
         "DeleteSegmentDefinitionResponse$Message": "<p>A message that indicates the delete request is done.</p>",
         "EventStreamDestinationDetails$Message": "<p>The human-readable string that corresponds to the error or success while enabling the streaming destination.</p>",
         "ExtraLengthValues$member": null,
-        "GetSegmentSnapshotResponse$StatusMessage": "<p>The status message of the asynchronous job for exporting the segment snapshot.</p>"
+        "GetObjectTypeAttributeStatisticsRequest$AttributeName": "<p>The attribute name.</p>",
+        "GetSegmentSnapshotResponse$StatusMessage": "<p>The status message of the asynchronous job for exporting the segment snapshot.</p>",
+        "ListObjectTypeAttributeValuesRequest$AttributeName": "<p>The attribute name.</p>"
       }
     },
     "string1To255": {
@@ -3272,6 +3774,7 @@
         "PutProfileObjectTypeResponse$SourceLastUpdatedTimestampFormat": "<p>The format of your <code>sourceLastUpdatedTimestamp</code> that was previously set up in fields that were parsed using <a href=\"https://docs.oracle.com/javase/10/docs/api/java/text/SimpleDateFormat.html\">SimpleDateFormat</a>. If you have <code>sourceLastUpdatedTimestamp</code> in your field, you must set up <code>sourceLastUpdatedTimestampFormat</code>.</p>",
         "Range$TimestampSource": "<p>An expression specifying the field in your JSON object from which the date should be parsed. The expression should follow the structure of \\\"{ObjectTypeName.&lt;Location of timestamp field in JSON pointer format&gt;}\\\". E.g. if your object type is MyType and source JSON is {\"generatedAt\": {\"timestamp\": \"1737587945945\"}}, then TimestampSource should be \"{MyType.generatedAt.timestamp}\".</p>",
         "Range$TimestampFormat": "<p>The format the timestamp field in your JSON object is specified. This value should be one of EPOCHMILLI (for Unix epoch timestamps with second/millisecond level precision) or ISO_8601 (following ISO_8601 format with second/millisecond level precision, with an optional offset of Z or in the format HH:MM or HHMM.). E.g. if your object type is MyType and source JSON is {\"generatedAt\": {\"timestamp\": \"2001-07-04T12:08:56.235-0700\"}}, then TimestampFormat should be \"ISO_8601\".</p>",
+        "RecommenderContext$value": null,
         "SegmentDefinitionItem$DisplayName": "<p>Display name of the segment definition.</p>",
         "Threshold$Value": "<p>The value of the threshold.</p>",
         "UpdateAttributes$key": null,
@@ -3304,6 +3807,8 @@
       "base": null,
       "refs": {
         "CreateUploadJobRequest$UniqueKey": "<p>The unique key columns for de-duping the profiles used to map data to the profile. </p>",
+        "DomainObjectTypeField$Source": "<p>The expression that defines how to extract the field value from the source object.&gt;</p>",
+        "DomainObjectTypeField$Target": "<p>The expression that defines where the field value should be placed in the standard domain object.</p>",
         "EventTriggerSummaryItem$Description": "<p>The description of the event trigger.</p>",
         "GetUploadJobPathResponse$ClientToken": "<p>The plaintext data key used to encrypt the upload file. </p> <p>To persist to the pre-signed url, use the client token and MD5 client token as header. The required headers are as follows: </p> <ul> <li> <p>x-amz-server-side-encryption-customer-key: Client Token </p> </li> <li> <p>x-amz-server-side-encryption-customer-key-MD5: MD5 Client Token </p> </li> <li> <p>x-amz-server-side-encryption-customer-algorithm: AES256 </p> </li> </ul>",
         "GetUploadJobResponse$UniqueKey": "<p>The unique key columns used for de-duping the keys in the upload job. </p>",
@@ -3322,6 +3827,8 @@
         "Batch$StartTime": "<p>Start time of batch to split ingestion.</p>",
         "Batch$EndTime": "<p>End time of batch to split ingestion.</p>",
         "CalculatedAttributeValue$LastObjectTimestamp": "<p>The timestamp of the newest object included in the calculated attribute calculation.</p>",
+        "CatalogItem$CreatedAt": "<p>The timestamp when the catalog item was created.</p>",
+        "CatalogItem$UpdatedAt": "<p>The timestamp when the catalog item was last updated.</p>",
         "CreateCalculatedAttributeDefinitionResponse$CreatedAt": "<p>The timestamp of when the calculated attribute definition was created.</p>",
         "CreateCalculatedAttributeDefinitionResponse$LastUpdatedAt": "<p>The timestamp of when the calculated attribute definition was most recently edited.</p>",
         "CreateDomainLayoutResponse$CreatedAt": "<p>The timestamp of when the layout was created.</p>",
@@ -3332,6 +3839,8 @@
         "CreateEventTriggerResponse$LastUpdatedAt": "<p>The timestamp of when the event trigger was most recently updated.</p>",
         "CreateSegmentDefinitionResponse$CreatedAt": "<p>The timestamp of when the segment definition was created.</p>",
         "DestinationSummary$UnhealthySince": "<p>The timestamp when the status last changed to <code>UNHEALHY</code>.</p>",
+        "DomainObjectTypesListItem$CreatedAt": "<p>The timestamp of when the domain object type was created.</p>",
+        "DomainObjectTypesListItem$LastUpdatedAt": "<p>The timestamp of when the domain object type was most recently edited.</p>",
         "EventStreamDestinationDetails$UnhealthySince": "<p>The timestamp when the status last changed to <code>UNHEALHY</code>.</p>",
         "EventStreamSummary$StoppedSince": "<p>The timestamp when the <code>State</code> changed to <code>STOPPED</code>.</p>",
         "EventTriggerSummaryItem$CreatedAt": "<p>The timestamp of when the event trigger was created.</p>",
@@ -3341,6 +3850,8 @@
         "GetCalculatedAttributeForProfileResponse$LastObjectTimestamp": "<p>The timestamp of the newest object included in the calculated attribute calculation.</p>",
         "GetDomainLayoutResponse$CreatedAt": "<p>The timestamp of when the layout was created.</p>",
         "GetDomainLayoutResponse$LastUpdatedAt": "<p>The timestamp of when the layout was most recently updated.</p>",
+        "GetDomainObjectTypeResponse$CreatedAt": "<p>The timestamp of when the domain object type was created.</p>",
+        "GetDomainObjectTypeResponse$LastUpdatedAt": "<p>The timestamp of when the domain object type was most recently edited.</p>",
         "GetDomainResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "GetDomainResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "GetEventStreamResponse$CreatedAt": "<p>The timestamp of when the export was created.</p>",
@@ -3354,11 +3865,15 @@
         "GetIntegrationResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "GetIntegrationResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "GetMatchesResponse$MatchGenerationDate": "<p>The timestamp this version of Match Result generated.</p>",
+        "GetObjectTypeAttributeStatisticsResponse$CalculatedAt": "<p>Time when this statistics was calculated.</p>",
         "GetProfileHistoryRecordResponse$CreatedAt": "<p>The timestamp of when the profile history record was created.</p>",
         "GetProfileHistoryRecordResponse$LastUpdatedAt": "<p>The timestamp of when the profile history record was last updated.</p>",
         "GetProfileObjectTypeResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "GetProfileObjectTypeResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
+        "GetRecommenderResponse$LastUpdatedAt": "<p>The timestamp of when the recommender was edited.</p>",
+        "GetRecommenderResponse$CreatedAt": "<p>The timestamp of when the recommender was created.</p>",
         "GetSegmentDefinitionResponse$CreatedAt": "<p>The timestamp of when the segment definition was created.</p>",
+        "GetSegmentMembershipResponse$LastComputedAt": "<p>The timestamp indicating when the segment membership was last computed or updated.</p>",
         "GetUploadJobPathResponse$ValidUntil": "<p>The expiry timestamp for the pre-signed URL, after which the URL will no longer be valid. </p>",
         "GetUploadJobResponse$CreatedAt": "<p>The timestamp when the upload job was created. </p>",
         "GetUploadJobResponse$CompletedAt": "<p>The timestamp when the upload job was completed. </p>",
@@ -3374,21 +3889,29 @@
         "ListDomainItem$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "ListDomainItem$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "ListIntegrationItem$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
-        "ListIntegrationItem$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
+        "ListIntegrationItem$LastUpdatedAt": "<p>The timestamp of when the integration was most recently edited.</p>",
         "ListObjectTypeAttributeItem$LastUpdatedAt": "<p>When the attribute was last updated.</p>",
+        "ListObjectTypeAttributeValuesItem$LastUpdatedAt": "<p>The timestamp of when the object type attribute value was most recently updated.</p>",
         "ListProfileObjectTypeItem$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
-        "ListProfileObjectTypeItem$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
+        "ListProfileObjectTypeItem$LastUpdatedAt": "<p>The timestamp of when the profile object type was most recently edited.</p>",
         "ListWorkflowsItem$CreatedAt": "<p>Creation timestamp for workflow.</p>",
         "ListWorkflowsItem$LastUpdatedAt": "<p>Last updated timestamp for workflow.</p>",
         "ListWorkflowsRequest$QueryStartDate": "<p>Retrieve workflows started after timestamp.</p>",
         "ListWorkflowsRequest$QueryEndDate": "<p>Retrieve workflows ended after timestamp.</p>",
         "ProfileHistoryRecord$CreatedAt": "<p>The timestamp of when the profile history record was created.</p>",
         "ProfileHistoryRecord$LastUpdatedAt": "<p>The timestamp of when the profile history record was last updated.</p>",
+        "PutDomainObjectTypeResponse$CreatedAt": "<p>The timestamp of when the domain object type was created.</p>",
+        "PutDomainObjectTypeResponse$LastUpdatedAt": "<p>The timestamp of when the domain object type was most recently edited.</p>",
         "PutIntegrationResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "PutIntegrationResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "PutProfileObjectTypeResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "PutProfileObjectTypeResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
+        "RecommenderSummary$CreatedAt": "<p>The timestamp when the recommender was created.</p>",
+        "RecommenderSummary$LastUpdatedAt": "<p>The timestamp of when the recommender was edited.</p>",
+        "RecommenderUpdate$CreatedAt": "<p>The timestamp when this recommender update was initiated.</p>",
+        "RecommenderUpdate$LastUpdatedAt": "<p>The timestamp of when the recommender was edited.</p>",
         "SegmentDefinitionItem$CreatedAt": "<p>When the segment definition was created.</p>",
+        "TrainingMetrics$Time": "<p>The timestamp when these training metrics were recorded.</p>",
         "UpdateCalculatedAttributeDefinitionResponse$CreatedAt": "<p>The timestamp of when the calculated attribute definition was created.</p>",
         "UpdateCalculatedAttributeDefinitionResponse$LastUpdatedAt": "<p>The timestamp of when the calculated attribute definition was most recently edited.</p>",
         "UpdateDomainLayoutResponse$CreatedAt": "<p>The timestamp of when the layout was created.</p>",
@@ -3418,6 +3941,8 @@
         "ListCalculatedAttributesForProfileResponse$NextToken": "<p>The pagination token from the previous call to ListCalculatedAttributesForProfile.</p>",
         "ListDomainLayoutsRequest$NextToken": "<p>Identifies the next page of results to return.</p>",
         "ListDomainLayoutsResponse$NextToken": "<p>Identifies the next page of results to return.</p>",
+        "ListDomainObjectTypesRequest$NextToken": "<p>The pagination token from the previous call to ListDomainObjectTypes.</p>",
+        "ListDomainObjectTypesResponse$NextToken": "<p>The pagination token from the previous call to ListDomainObjectTypes.</p>",
         "ListDomainsRequest$NextToken": "<p>The pagination token from the previous ListDomain API call.</p>",
         "ListDomainsResponse$NextToken": "<p>The pagination token from the previous ListDomains API call.</p>",
         "ListEventStreamsRequest$NextToken": "<p>Identifies the next page of results to return.</p>",
@@ -3428,6 +3953,8 @@
         "ListIdentityResolutionJobsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListIntegrationsRequest$NextToken": "<p>The pagination token from the previous ListIntegrations API call.</p>",
         "ListIntegrationsResponse$NextToken": "<p>The pagination token from the previous ListIntegrations API call.</p>",
+        "ListObjectTypeAttributeValuesRequest$NextToken": "<p>The pagination token from the previous call.</p>",
+        "ListObjectTypeAttributeValuesResponse$NextToken": "<p>The pagination token from the previous call to call ListObjectTypeAttributeValues. </p>",
         "ListObjectTypeAttributesRequest$NextToken": "<p>The pagination token from the previous call. </p>",
         "ListObjectTypeAttributesResponse$NextToken": "<p>The pagination token from the previous call.</p>",
         "ListProfileHistoryRecordsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -3438,6 +3965,10 @@
         "ListProfileObjectTypesResponse$NextToken": "<p>Identifies the next page of results to return.</p>",
         "ListProfileObjectsRequest$NextToken": "<p>The pagination token from the previous call to ListProfileObjects.</p>",
         "ListProfileObjectsResponse$NextToken": "<p>The pagination token from the previous call to ListProfileObjects.</p>",
+        "ListRecommenderRecipesRequest$NextToken": "<p>A token received from a previous ListRecommenderRecipes call to retrieve the next page of results.</p>",
+        "ListRecommenderRecipesResponse$NextToken": "<p>A token to retrieve the next page of results. Null if there are no more results to retrieve.</p>",
+        "ListRecommendersRequest$NextToken": "<p>A token received from a previous ListRecommenders call to retrieve the next page of results.</p>",
+        "ListRecommendersResponse$NextToken": "<p>A token to retrieve the next page of results. Null if there are no more results to retrieve.</p>",
         "ListRuleBasedMatchesRequest$NextToken": "<p>The pagination token from the previous <code>ListRuleBasedMatches</code> API call.</p>",
         "ListRuleBasedMatchesResponse$NextToken": "<p>The pagination token from the previous <code>ListRuleBasedMatches</code> API call.</p>",
         "ListSegmentDefinitionsRequest$NextToken": "<p>The pagination token from the previous call. </p>",
@@ -3463,21 +3994,27 @@
         "CreateIntegrationWorkflowRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "CustomAttributes$key": null,
         "DeleteCalculatedAttributeDefinitionRequest$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
+        "DeleteDomainObjectTypeRequest$ObjectTypeName": "<p>The unique name of the domain object type.</p>",
         "DeleteProfileObjectRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "DeleteProfileObjectTypeRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
+        "DomainObjectTypesListItem$ObjectTypeName": "<p>The name that identifies the object type within the domain.</p>",
         "EventTriggerSummaryItem$ObjectTypeName": "<p>The unique name of the object type.</p>",
         "GetCalculatedAttributeDefinitionRequest$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
         "GetCalculatedAttributeDefinitionResponse$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
         "GetCalculatedAttributeForProfileRequest$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
         "GetCalculatedAttributeForProfileResponse$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
+        "GetDomainObjectTypeRequest$ObjectTypeName": "<p>The unique name of the domain object type.</p>",
+        "GetDomainObjectTypeResponse$ObjectTypeName": "<p>The unique name of the domain object type.</p>",
         "GetEventTriggerResponse$ObjectTypeName": "<p>The unique name of the object type.</p>",
         "GetIntegrationResponse$ObjectTypeName": "<p>The name of the profile object type.</p>",
+        "GetObjectTypeAttributeStatisticsRequest$ObjectTypeName": "<p>The unique name of the domain object type.</p>",
         "GetProfileHistoryRecordResponse$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "GetProfileObjectTypeRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "GetProfileObjectTypeResponse$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "ListCalculatedAttributeDefinitionItem$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
         "ListCalculatedAttributeForProfileItem$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
         "ListIntegrationItem$ObjectTypeName": "<p>The name of the profile object type.</p>",
+        "ListObjectTypeAttributeValuesRequest$ObjectTypeName": "<p>The unique name of the domain object type.</p>",
         "ListObjectTypeAttributesRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "ListProfileHistoryRecordsRequest$ObjectTypeName": "<p>Applies a filter to include profile history records only with the specified <code>ObjectTypeName</code> value in the response.</p>",
         "ListProfileObjectTypeItem$ObjectTypeName": "<p>The name of the profile object type.</p>",
@@ -3485,6 +4022,8 @@
         "ListProfileObjectsRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "ObjectTypeNames$value": null,
         "ProfileHistoryRecord$ObjectTypeName": "<p>The name of the profile object type.</p>",
+        "PutDomainObjectTypeRequest$ObjectTypeName": "<p>The unique name of the domain object type.</p>",
+        "PutDomainObjectTypeResponse$ObjectTypeName": "<p>The unique name of the domain object type.</p>",
         "PutIntegrationRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "PutIntegrationResponse$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "PutProfileObjectRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
@@ -3542,6 +4081,7 @@
         "GetProfileHistoryRecordRequest$ProfileId": "<p>The unique identifier of the profile for which to return a history record.</p>",
         "GetProfileHistoryRecordRequest$Id": "<p>The unique identifier of the profile history record to return.</p>",
         "GetProfileHistoryRecordResponse$Id": "<p>The unique identifier of the profile history record.</p>",
+        "GetProfileRecommendationsRequest$ProfileId": "<p>The unique identifier of the profile for which to retrieve recommendations.</p>",
         "GetSegmentSnapshotRequest$SnapshotId": "<p>The unique identifier of the segment snapshot.</p>",
         "GetSegmentSnapshotResponse$SnapshotId": "<p>The unique identifier of the segment snapshot.</p>",
         "GetUploadJobRequest$JobId": "<p>The unique identifier of the upload job to retrieve. </p>",

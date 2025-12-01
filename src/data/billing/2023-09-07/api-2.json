@@ -380,7 +380,9 @@
       "enum":[
         "PRIMARY",
         "BILLING_GROUP",
-        "CUSTOM"
+        "CUSTOM",
+        "BILLING_TRANSFER",
+        "BILLING_TRANSFER_SHOWBACK"
       ]
     },
     "BillingViewTypeList":{
@@ -555,6 +557,7 @@
         "activeTimeRange":{"shape":"ActiveTimeRange"},
         "arns":{"shape":"BillingViewArnList"},
         "billingViewTypes":{"shape":"BillingViewTypeList"},
+        "names":{"shape":"StringSearches"},
         "ownerAccountId":{"shape":"AccountId"},
         "sourceAccountId":{"shape":"AccountId"},
         "maxResults":{"shape":"BillingViewsMaxResults"},
@@ -668,6 +671,16 @@
       "max":1024,
       "min":1
     },
+    "SearchOption":{
+      "type":"string",
+      "enum":["STARTS_WITH"]
+    },
+    "SearchValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_\\+=\\.\\-@ ]+"
+    },
     "ServiceCode":{
       "type":"string",
       "max":1024,
@@ -690,6 +703,23 @@
         "quotaCode":{"shape":"QuotaCode"}
       },
       "exception":true
+    },
+    "StringSearch":{
+      "type":"structure",
+      "required":[
+        "searchOption",
+        "searchValue"
+      ],
+      "members":{
+        "searchOption":{"shape":"SearchOption"},
+        "searchValue":{"shape":"SearchValue"}
+      }
+    },
+    "StringSearches":{
+      "type":"list",
+      "member":{"shape":"StringSearch"},
+      "max":1,
+      "min":1
     },
     "TagKey":{
       "type":"string",

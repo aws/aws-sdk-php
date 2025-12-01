@@ -217,6 +217,21 @@
         "OrganizationEventDetailFiltersList$member": null
       }
     },
+    "EventActionability": {
+      "base": null,
+      "refs": {
+        "Event$actionability": "<p>The actionability classification of the event. Possible values are <code>ACTION_REQUIRED</code>, <code>ACTION_MAY_BE_REQUIRED</code> and <code>INFORMATIONAL</code>. Events with <code>ACTION_REQUIRED</code> actionability require customer action to resolve or mitigate the event. Events with <code>ACTION_MAY_BE_REQUIRED</code> actionability indicates that the current status is unknown or conditional and inspection is needed to determine if action is required. Events with <code>INFORMATIONAL</code> actionability are provided for awareness and do not require immediate action.</p>",
+        "EventActionabilityList$member": null,
+        "OrganizationEvent$actionability": "<p>The actionability classification of the event. Possible values are <code>ACTION_REQUIRED</code>, <code>ACTION_MAY_BE_REQUIRED</code> and <code>INFORMATIONAL</code>. Events with <code>ACTION_REQUIRED</code> actionability require customer action to resolve or mitigate the event. Events with <code>ACTION_MAY_BE_REQUIRED</code> actionability indicates that the current status is unknown or conditional and inspection is needed to determine if action is required. Events with <code>INFORMATIONAL</code> actionability are provided for awareness and do not require immediate action.</p>"
+      }
+    },
+    "EventActionabilityList": {
+      "base": null,
+      "refs": {
+        "EventFilter$actionabilities": "<p>A list of actionability values to filter events. Use this to filter events based on whether they require action (<code>ACTION_REQUIRED</code>), may require action (<code>ACTION_MAY_BE_REQUIRED</code>) or are informational (<code>INFORMATIONAL</code>).</p>",
+        "OrganizationEventFilter$actionabilities": "<p>A list of actionability values to filter events. Use this to filter events based on whether they require action (<code>ACTION_REQUIRED</code>), may require action (<code>ACTION_MAY_BE_REQUIRED</code>) or are informational (<code>INFORMATIONAL</code>).</p>"
+      }
+    },
     "EventAggregate": {
       "base": "<p>The number of events of each issue type. Returned by the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeEventAggregates.html\">DescribeEventAggregates</a> operation.</p>",
       "refs": {
@@ -267,10 +282,38 @@
         "DescribeEventsResponse$events": "<p>The events that match the specified filter criteria.</p>"
       }
     },
+    "EventPersona": {
+      "base": null,
+      "refs": {
+        "EventPersonaList$member": null
+      }
+    },
+    "EventPersonaList": {
+      "base": null,
+      "refs": {
+        "Event$personas": "<p>A list of persona classifications that indicate the target audience for the event. Possible values are <code>OPERATIONS</code>, <code>SECURITY</code>, and <code>BILLING</code>. Events can be associated with multiple personas to indicate relevance to different teams or roles within an organization.</p>",
+        "EventFilter$personas": "<p>A list of persona values to filter events. Use this to filter events based on their target audience: <code>OPERATIONS</code>, <code>SECURITY</code>, or <code>BILLING</code>.</p>",
+        "OrganizationEvent$personas": "<p>A list of persona classifications that indicate the target audience for the event. Possible values are <code>OPERATIONS</code>, <code>SECURITY</code>, and <code>BILLING</code>. Events can be associated with multiple personas to indicate relevance to different teams or roles within an organization.</p>",
+        "OrganizationEventFilter$personas": "<p>A list of persona values to filter events. Use this to filter events based on their target audience: <code>OPERATIONS</code>, <code>SECURITY</code>, or <code>BILLING</code>.</p>"
+      }
+    },
     "EventType": {
       "base": "<p>Contains the metadata about a type of event that is reported by Health. The <code>EventType</code> shows the category, service, and the event type code of the event. For example, an <code>issue</code> might be the category, <code>EC2</code> the service, and <code>AWS_EC2_SYSTEM_MAINTENANCE_EVENT</code> the event type code.</p> <p>You can use the <a href=\"https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeEventTypes.html\">DescribeEventTypes</a> API operation to return this information about an event.</p> <p>You can also use the Amazon CloudWatch Events console to create a rule so that you can get notified or take action when Health delivers a specific event to your Amazon Web Services account. For more information, see <a href=\"https://docs.aws.amazon.com/health/latest/ug/cloudwatch-events-health.html\">Monitor for Health events with Amazon CloudWatch Events</a> in the <i>Health User Guide</i>.</p>",
       "refs": {
         "EventTypeList$member": null
+      }
+    },
+    "EventTypeActionability": {
+      "base": null,
+      "refs": {
+        "EventType$actionability": "<p>The actionability classification of the event. Possible values are <code>ACTION_REQUIRED</code>, <code>ACTION_MAY_BE_REQUIRED</code> and <code>INFORMATIONAL</code>. Events with <code>ACTION_REQUIRED</code> actionability require customer action to resolve or mitigate the event. Events with <code>ACTION_MAY_BE_REQUIRED</code> actionability indicates that the current status is unknown or conditional and inspection is needed to determine if action is required. Events with <code>INFORMATIONAL</code> actionability are provided for awareness and do not require immediate action.</p>",
+        "EventTypeActionabilityList$member": null
+      }
+    },
+    "EventTypeActionabilityList": {
+      "base": null,
+      "refs": {
+        "EventTypeFilter$actionabilities": "<p>A list of actionability values to filter event types. Possible values are <code>ACTION_REQUIRED</code>, <code>ACTION_MAY_BE_REQUIRED</code> and <code>INFORMATIONAL</code>.</p>"
       }
     },
     "EventTypeCategoryList": {
@@ -295,6 +338,19 @@
       "base": null,
       "refs": {
         "DescribeEventTypesResponse$eventTypes": "<p>A list of event types that match the filter criteria. Event types have a category (<code>issue</code>, <code>accountNotification</code>, or <code>scheduledChange</code>), a service (for example, <code>EC2</code>, <code>RDS</code>, <code>DATAPIPELINE</code>, <code>BILLING</code>), and a code (in the format <code>AWS_<i>SERVICE</i>_<i>DESCRIPTION</i> </code>; for example, <code>AWS_EC2_SYSTEM_MAINTENANCE_EVENT</code>).</p>"
+      }
+    },
+    "EventTypePersona": {
+      "base": null,
+      "refs": {
+        "EventTypePersonaList$member": null
+      }
+    },
+    "EventTypePersonaList": {
+      "base": null,
+      "refs": {
+        "EventType$personas": "<p>A list of persona classifications that indicate the target audience for the event. Possible values are <code>OPERATIONS</code>, <code>SECURITY</code>, and <code>BILLING</code>. Events can be associated with multiple personas to indicate relevance to different teams or roles within an organization.</p>",
+        "EventTypeFilter$personas": "<p>A list of persona classifications to filter event types. Possible values are <code>OPERATIONS</code>, <code>SECURITY</code>, and <code>BILLING</code>.</p>"
       }
     },
     "InvalidPaginationToken": {
@@ -483,7 +539,7 @@
     "entityStatusCode": {
       "base": null,
       "refs": {
-        "AffectedEntity$statusCode": "<p>The most recent status of the entity affected by the event. The possible values are <code>IMPAIRED</code>, <code>UNIMPAIRED</code>, and <code>UNKNOWN</code>.</p>",
+        "AffectedEntity$statusCode": "<p>The most recent status of the entity affected by the event. The possible values are <code>IMPAIRED</code>, <code>UNIMPAIRED</code>, <code>UNKNOWN</code>, <code>PENDING</code>, and <code>RESOLVED</code>.</p>",
         "entityStatusCodeList$member": null,
         "entityStatuses$key": null
       }

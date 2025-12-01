@@ -483,7 +483,9 @@
         "endTime":{"shape":"timestamp"},
         "lastUpdatedTime":{"shape":"timestamp"},
         "statusCode":{"shape":"eventStatusCode"},
-        "eventScopeCode":{"shape":"eventScopeCode"}
+        "eventScopeCode":{"shape":"eventScopeCode"},
+        "actionability":{"shape":"EventActionability"},
+        "personas":{"shape":"EventPersonaList"}
       }
     },
     "EventAccountFilter":{
@@ -493,6 +495,20 @@
         "eventArn":{"shape":"eventArn"},
         "awsAccountId":{"shape":"accountId"}
       }
+    },
+    "EventActionability":{
+      "type":"string",
+      "enum":[
+        "ACTION_REQUIRED",
+        "ACTION_MAY_BE_REQUIRED",
+        "INFORMATIONAL"
+      ]
+    },
+    "EventActionabilityList":{
+      "type":"list",
+      "member":{"shape":"EventActionability"},
+      "max":3,
+      "min":1
     },
     "EventAggregate":{
       "type":"structure",
@@ -536,6 +552,7 @@
     "EventFilter":{
       "type":"structure",
       "members":{
+        "actionabilities":{"shape":"EventActionabilityList"},
         "eventArns":{"shape":"eventArnList"},
         "eventTypeCodes":{"shape":"eventTypeList"},
         "services":{"shape":"serviceList"},
@@ -548,20 +565,51 @@
         "entityValues":{"shape":"entityValueList"},
         "eventTypeCategories":{"shape":"eventTypeCategoryList"},
         "tags":{"shape":"tagFilter"},
-        "eventStatusCodes":{"shape":"eventStatusCodeList"}
+        "eventStatusCodes":{"shape":"eventStatusCodeList"},
+        "personas":{"shape":"EventPersonaList"}
       }
     },
     "EventList":{
       "type":"list",
       "member":{"shape":"Event"}
     },
+    "EventPersona":{
+      "type":"string",
+      "enum":[
+        "OPERATIONS",
+        "SECURITY",
+        "BILLING"
+      ]
+    },
+    "EventPersonaList":{
+      "type":"list",
+      "member":{"shape":"EventPersona"},
+      "max":3,
+      "min":1
+    },
     "EventType":{
       "type":"structure",
       "members":{
         "service":{"shape":"service"},
         "code":{"shape":"eventTypeCode"},
-        "category":{"shape":"eventTypeCategory"}
+        "category":{"shape":"eventTypeCategory"},
+        "actionability":{"shape":"EventTypeActionability"},
+        "personas":{"shape":"EventTypePersonaList"}
       }
+    },
+    "EventTypeActionability":{
+      "type":"string",
+      "enum":[
+        "ACTION_REQUIRED",
+        "ACTION_MAY_BE_REQUIRED",
+        "INFORMATIONAL"
+      ]
+    },
+    "EventTypeActionabilityList":{
+      "type":"list",
+      "member":{"shape":"EventTypeActionability"},
+      "max":3,
+      "min":1
     },
     "EventTypeCategoryList":{
       "type":"list",
@@ -580,12 +628,28 @@
       "members":{
         "eventTypeCodes":{"shape":"EventTypeCodeList"},
         "services":{"shape":"serviceList"},
-        "eventTypeCategories":{"shape":"EventTypeCategoryList"}
+        "eventTypeCategories":{"shape":"EventTypeCategoryList"},
+        "actionabilities":{"shape":"EventTypeActionabilityList"},
+        "personas":{"shape":"EventTypePersonaList"}
       }
     },
     "EventTypeList":{
       "type":"list",
       "member":{"shape":"EventType"}
+    },
+    "EventTypePersona":{
+      "type":"string",
+      "enum":[
+        "OPERATIONS",
+        "SECURITY",
+        "BILLING"
+      ]
+    },
+    "EventTypePersonaList":{
+      "type":"list",
+      "member":{"shape":"EventTypePersona"},
+      "max":3,
+      "min":1
     },
     "InvalidPaginationToken":{
       "type":"structure",
@@ -646,7 +710,9 @@
         "startTime":{"shape":"timestamp"},
         "endTime":{"shape":"timestamp"},
         "lastUpdatedTime":{"shape":"timestamp"},
-        "statusCode":{"shape":"eventStatusCode"}
+        "statusCode":{"shape":"eventStatusCode"},
+        "actionability":{"shape":"EventActionability"},
+        "personas":{"shape":"EventPersonaList"}
       }
     },
     "OrganizationEventArnsList":{
@@ -682,6 +748,7 @@
     "OrganizationEventFilter":{
       "type":"structure",
       "members":{
+        "actionabilities":{"shape":"EventActionabilityList"},
         "eventTypeCodes":{"shape":"eventTypeList"},
         "awsAccountIds":{"shape":"awsAccountIdsList"},
         "services":{"shape":"serviceList"},
@@ -692,7 +759,8 @@
         "entityArns":{"shape":"entityArnList"},
         "entityValues":{"shape":"entityValueList"},
         "eventTypeCategories":{"shape":"eventTypeCategoryList"},
-        "eventStatusCodes":{"shape":"eventStatusCodeList"}
+        "eventStatusCodes":{"shape":"eventStatusCodeList"},
+        "personas":{"shape":"EventPersonaList"}
       }
     },
     "OrganizationEventList":{

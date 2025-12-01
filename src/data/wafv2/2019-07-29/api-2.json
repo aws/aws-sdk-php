@@ -28,7 +28,9 @@
         {"shape":"WAFInvalidParameterException"},
         {"shape":"WAFNonexistentItemException"},
         {"shape":"WAFUnavailableEntityException"},
-        {"shape":"WAFInvalidOperationException"}
+        {"shape":"WAFInvalidOperationException"},
+        {"shape":"WAFLimitsExceededException"},
+        {"shape":"WAFFeatureNotIncludedInPricingPlanException"}
       ]
     },
     "CheckCapacity":{
@@ -735,7 +737,8 @@
         {"shape":"WAFInvalidParameterException"},
         {"shape":"WAFInvalidOperationException"},
         {"shape":"WAFLimitsExceededException"},
-        {"shape":"WAFLogDestinationPermissionIssueException"}
+        {"shape":"WAFLogDestinationPermissionIssueException"},
+        {"shape":"WAFFeatureNotIncludedInPricingPlanException"}
       ]
     },
     "PutManagedRuleSetVersions":{
@@ -897,7 +900,8 @@
         {"shape":"WAFSubscriptionNotFoundException"},
         {"shape":"WAFInvalidOperationException"},
         {"shape":"WAFExpiredManagedRuleGroupVersionException"},
-        {"shape":"WAFConfigurationWarningException"}
+        {"shape":"WAFConfigurationWarningException"},
+        {"shape":"WAFFeatureNotIncludedInPricingPlanException"}
       ]
     }
   },
@@ -1955,6 +1959,18 @@
         "ConsumedLabels":{"shape":"LabelSummaries"}
       }
     },
+    "DisallowedFeature":{
+      "type":"structure",
+      "members":{
+        "Feature":{"shape":"PricingPlanFeatureName"},
+        "RequiredPricingPlan":{"shape":"RequiredPricingPlanName"}
+      }
+    },
+    "DisallowedFeatures":{
+      "type":"list",
+      "member":{"shape":"DisallowedFeature"},
+      "min":1
+    },
     "DisassociateWebACLRequest":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -2903,7 +2919,8 @@
       "type":"string",
       "enum":[
         "CUSTOMER",
-        "SECURITY_LAKE"
+        "SECURITY_LAKE",
+        "CLOUDWATCH_TELEMETRY_RULE_MANAGED"
       ]
     },
     "LogType":{
@@ -3297,6 +3314,12 @@
         "CONTAINS_WORD"
       ]
     },
+    "PricingPlanFeatureName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[\\w\\-]+$"
+    },
     "ProductDescription":{
       "type":"string",
       "min":1,
@@ -3646,6 +3669,12 @@
         "PhoneNumberFields":{"shape":"PhoneNumberFields"},
         "AddressFields":{"shape":"AddressFields"}
       }
+    },
+    "RequiredPricingPlanName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[\\w\\-]+$"
     },
     "ResourceArn":{
       "type":"string",
@@ -4432,6 +4461,14 @@
       "type":"structure",
       "members":{
         "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "WAFFeatureNotIncludedInPricingPlanException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"},
+        "DisallowedFeatures":{"shape":"DisallowedFeatures"}
       },
       "exception":true
     },

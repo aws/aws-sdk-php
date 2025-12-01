@@ -23,6 +23,8 @@
     "DescribeEngineVersions": "<p>Returns a list of the available Redis OSS engine versions.</p>",
     "DescribeEvents": "<p>Returns events related to clusters, security groups, and parameter groups. You can obtain events specific to a particular cluster, security group, or parameter group by providing the name as a parameter. By default, only the events occurring within the last hour are returned; however, you can retrieve up to 14 days' worth of events if necessary.</p>",
     "DescribeMultiRegionClusters": "<p>Returns details about one or more multi-Region clusters.</p>",
+    "DescribeMultiRegionParameterGroups": "<p>Returns a list of multi-region parameter groups.</p>",
+    "DescribeMultiRegionParameters": "<p>Returns the detailed parameter list for a particular multi-region parameter group.</p>",
     "DescribeParameterGroups": "<p>Returns a list of parameter group descriptions. If a parameter group name is specified, the list contains only the descriptions for that group.</p>",
     "DescribeParameters": "<p>Returns the detailed parameter list for a particular parameter group.</p>",
     "DescribeReservedNodes": "<p>Returns information about reserved nodes for this account, or about a specified reserved node.</p>",
@@ -57,7 +59,7 @@
       }
     },
     "ACLAlreadyExistsFault": {
-      "base": "<p/>",
+      "base": "<p>An ACL with the specified name already exists.</p>",
       "refs": {}
     },
     "ACLClusterNameList": {
@@ -89,7 +91,7 @@
       }
     },
     "ACLNotFoundFault": {
-      "base": "<p/>",
+      "base": "<p>The specified ACL does not exist.</p>",
       "refs": {}
     },
     "ACLPendingChanges": {
@@ -99,7 +101,7 @@
       }
     },
     "ACLQuotaExceededFault": {
-      "base": "<p/>",
+      "base": "<p>The request cannot be processed because it would exceed the maximum number of ACLs allowed.</p>",
       "refs": {}
     },
     "ACLsUpdateStatus": {
@@ -109,7 +111,7 @@
       }
     },
     "APICallRateForCustomerExceededFault": {
-      "base": "<p/>",
+      "base": "<p>The customer has exceeded the maximum number of API requests allowed per time period.</p>",
       "refs": {}
     },
     "AZStatus": {
@@ -198,7 +200,7 @@
       }
     },
     "ClusterAlreadyExistsFault": {
-      "base": "<p/>",
+      "base": "<p>A cluster with the specified name already exists.</p>",
       "refs": {}
     },
     "ClusterConfiguration": {
@@ -222,7 +224,7 @@
       }
     },
     "ClusterNotFoundFault": {
-      "base": "<p/>",
+      "base": "<p>The specified cluster does not exist.</p>",
       "refs": {}
     },
     "ClusterPendingUpdates": {
@@ -232,7 +234,7 @@
       }
     },
     "ClusterQuotaForCustomerExceededFault": {
-      "base": "<p/>",
+      "base": "<p>The request cannot be processed because it would exceed the maximum number of clusters allowed for this customer.</p>",
       "refs": {}
     },
     "CopySnapshotRequest": {
@@ -307,7 +309,7 @@
       }
     },
     "DefaultUserRequired": {
-      "base": "<p/>",
+      "base": "<p>A default user is required and must be specified.</p>",
       "refs": {}
     },
     "DeleteACLRequest": {
@@ -406,6 +408,22 @@
       "base": null,
       "refs": {}
     },
+    "DescribeMultiRegionParameterGroupsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeMultiRegionParameterGroupsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeMultiRegionParametersRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeMultiRegionParametersResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeParameterGroupsRequest": {
       "base": null,
       "refs": {}
@@ -480,7 +498,7 @@
       }
     },
     "DuplicateUserNameFault": {
-      "base": "<p/>",
+      "base": "<p>A user with the specified name already exists.</p>",
       "refs": {}
     },
     "Endpoint": {
@@ -559,7 +577,7 @@
       }
     },
     "InsufficientClusterCapacityFault": {
-      "base": "<p/>",
+      "base": "<p>The cluster does not have sufficient capacity to perform the requested operation.</p>",
       "refs": {}
     },
     "Integer": {
@@ -593,6 +611,8 @@
         "DescribeEventsRequest$Duration": "<p>The number of minutes worth of events to retrieve.</p>",
         "DescribeEventsRequest$MaxResults": "<p>The maximum number of records to include in the response. If more records exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved.</p>",
         "DescribeMultiRegionClustersRequest$MaxResults": "<p>The maximum number of results to return.</p>",
+        "DescribeMultiRegionParameterGroupsRequest$MaxResults": "<p>The maximum number of records to include in the response. If more records exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved.</p>",
+        "DescribeMultiRegionParametersRequest$MaxResults": "<p>The maximum number of records to include in the response. If more records exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved.</p>",
         "DescribeParameterGroupsRequest$MaxResults": "<p>The maximum number of records to include in the response. If more records exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved.</p>",
         "DescribeParametersRequest$MaxResults": "<p>The maximum number of records to include in the response. If more records exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved.</p>",
         "DescribeReservedNodesOfferingsRequest$MaxResults": "<p>The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a marker is included in the response so that the remaining results can be retrieved.</p>",
@@ -609,23 +629,23 @@
       }
     },
     "InvalidACLStateFault": {
-      "base": "<p/>",
+      "base": "<p>The ACL is not in a valid state for the requested operation.</p>",
       "refs": {}
     },
     "InvalidARNFault": {
-      "base": "<p/>",
+      "base": "<p>The specified Amazon Resource Name (ARN) is not valid.</p>",
       "refs": {}
     },
     "InvalidClusterStateFault": {
-      "base": "<p/>",
+      "base": "<p>The cluster is not in a valid state for the requested operation.</p>",
       "refs": {}
     },
     "InvalidCredentialsException": {
-      "base": "<p/>",
+      "base": "<p>The provided credentials are not valid.</p>",
       "refs": {}
     },
     "InvalidKMSKeyFault": {
-      "base": "<p/>",
+      "base": "<p>The specified KMS key is not valid or accessible.</p>",
       "refs": {}
     },
     "InvalidMultiRegionClusterStateFault": {
@@ -633,35 +653,35 @@
       "refs": {}
     },
     "InvalidNodeStateFault": {
-      "base": "<p/>",
+      "base": "<p>The node is not in a valid state for the requested operation.</p>",
       "refs": {}
     },
     "InvalidParameterCombinationException": {
-      "base": "<p/>",
+      "base": "<p>The specified parameter combination is not valid.</p>",
       "refs": {}
     },
     "InvalidParameterGroupStateFault": {
-      "base": "<p/>",
+      "base": "<p>The parameter group is not in a valid state for the requested operation.</p>",
       "refs": {}
     },
     "InvalidParameterValueException": {
-      "base": "<p/>",
+      "base": "<p>The specified parameter value is not valid.</p>",
       "refs": {}
     },
     "InvalidSnapshotStateFault": {
-      "base": "<p/>",
+      "base": "<p>The snapshot is not in a valid state for the requested operation.</p>",
       "refs": {}
     },
     "InvalidSubnet": {
-      "base": "<p/>",
+      "base": "<p>The specified subnet is not valid.</p>",
       "refs": {}
     },
     "InvalidUserStateFault": {
-      "base": "<p/>",
+      "base": "<p>The user is not in a valid state for the requested operation.</p>",
       "refs": {}
     },
     "InvalidVPCNetworkStateFault": {
-      "base": "<p/>",
+      "base": "<p>The VPC network is not in a valid state for the requested operation.</p>",
       "refs": {}
     },
     "IpDiscovery": {
@@ -731,9 +751,33 @@
       "base": "<p>The specified multi-Region cluster does not exist.</p>",
       "refs": {}
     },
+    "MultiRegionParameter": {
+      "base": "<p>Describes an individual setting that controls some aspect of MemoryDB behavior across multiple regions.</p>",
+      "refs": {
+        "MultiRegionParametersList$member": null
+      }
+    },
+    "MultiRegionParameterGroup": {
+      "base": "<p>Represents the output of a CreateMultiRegionParameterGroup operation. A multi-region parameter group represents a collection of parameters that can be applied to clusters across multiple regions.</p>",
+      "refs": {
+        "MultiRegionParameterGroupList$member": null
+      }
+    },
+    "MultiRegionParameterGroupList": {
+      "base": null,
+      "refs": {
+        "DescribeMultiRegionParameterGroupsResponse$MultiRegionParameterGroups": "<p>A list of multi-region parameter groups. Each element in the list contains detailed information about one parameter group.</p>"
+      }
+    },
     "MultiRegionParameterGroupNotFoundFault": {
       "base": "<p>The specified multi-Region parameter group does not exist.</p>",
       "refs": {}
+    },
+    "MultiRegionParametersList": {
+      "base": null,
+      "refs": {
+        "DescribeMultiRegionParametersResponse$MultiRegionParameters": "<p>A list of parameters specific to a particular multi-region parameter group. Each element in the list contains detailed information about one parameter.</p>"
+      }
     },
     "NetworkType": {
       "base": null,
@@ -751,7 +795,7 @@
       }
     },
     "NoOperationFault": {
-      "base": "<p/>",
+      "base": "<p>The requested operation would result in no changes.</p>",
       "refs": {}
     },
     "Node": {
@@ -767,11 +811,11 @@
       }
     },
     "NodeQuotaForClusterExceededFault": {
-      "base": "<p/>",
+      "base": "<p>The request cannot be processed because it would exceed the maximum number of nodes allowed for this cluster.</p>",
       "refs": {}
     },
     "NodeQuotaForCustomerExceededFault": {
-      "base": "<p/>",
+      "base": "<p>The request cannot be processed because it would exceed the maximum number of nodes allowed for this customer.</p>",
       "refs": {}
     },
     "NodeTypeList": {
@@ -800,7 +844,7 @@
       }
     },
     "ParameterGroupAlreadyExistsFault": {
-      "base": "<p/>",
+      "base": "<p>A parameter group with the specified name already exists.</p>",
       "refs": {}
     },
     "ParameterGroupList": {
@@ -810,11 +854,11 @@
       }
     },
     "ParameterGroupNotFoundFault": {
-      "base": "<p/>",
+      "base": "<p>The specified parameter group does not exist.</p>",
       "refs": {}
     },
     "ParameterGroupQuotaExceededFault": {
-      "base": "<p/>",
+      "base": "<p>The request cannot be processed because it would exceed the maximum number of parameter groups allowed.</p>",
       "refs": {}
     },
     "ParameterNameList": {
@@ -973,7 +1017,7 @@
       }
     },
     "ServiceLinkedRoleNotFoundFault": {
-      "base": "<p/>",
+      "base": "<p>The required service-linked role was not found.</p>",
       "refs": {}
     },
     "ServiceUpdate": {
@@ -989,7 +1033,7 @@
       }
     },
     "ServiceUpdateNotFoundFault": {
-      "base": "<p/>",
+      "base": "<p>The specified service update does not exist.</p>",
       "refs": {}
     },
     "ServiceUpdateRequest": {
@@ -1056,11 +1100,11 @@
       }
     },
     "ShardNotFoundFault": {
-      "base": "<p/>",
+      "base": "<p>The specified shard does not exist.</p>",
       "refs": {}
     },
     "ShardsPerClusterQuotaExceededFault": {
-      "base": "<p/>",
+      "base": "<p>The request cannot be processed because it would exceed the maximum number of shards allowed per cluster.</p>",
       "refs": {}
     },
     "SlotMigration": {
@@ -1079,7 +1123,7 @@
       }
     },
     "SnapshotAlreadyExistsFault": {
-      "base": "<p/>",
+      "base": "<p>A snapshot with the specified name already exists.</p>",
       "refs": {}
     },
     "SnapshotArnsList": {
@@ -1095,11 +1139,11 @@
       }
     },
     "SnapshotNotFoundFault": {
-      "base": "<p/>",
+      "base": "<p>The specified snapshot does not exist.</p>",
       "refs": {}
     },
     "SnapshotQuotaExceededFault": {
-      "base": "<p/>",
+      "base": "<p>The request cannot be processed because it would exceed the maximum number of snapshots allowed.</p>",
       "refs": {}
     },
     "SourceType": {
@@ -1204,6 +1248,13 @@
         "DescribeMultiRegionClustersRequest$MultiRegionClusterName": "<p>The name of a specific multi-Region cluster to describe.</p>",
         "DescribeMultiRegionClustersRequest$NextToken": "<p>A token to specify where to start paginating.</p>",
         "DescribeMultiRegionClustersResponse$NextToken": "<p>A token to use to retrieve the next page of results.</p>",
+        "DescribeMultiRegionParameterGroupsRequest$MultiRegionParameterGroupName": "<p>The request for information on a specific multi-region parameter group.</p>",
+        "DescribeMultiRegionParameterGroupsRequest$NextToken": "<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.</p>",
+        "DescribeMultiRegionParameterGroupsResponse$NextToken": "<p>An optional token to include in the response. If this token is provided, the response includes only results beyond the token, up to the value specified by MaxResults.</p>",
+        "DescribeMultiRegionParametersRequest$MultiRegionParameterGroupName": "<p>The name of the multi-region parameter group to return details for.</p>",
+        "DescribeMultiRegionParametersRequest$Source": "<p>The parameter types to return. Valid values: user | system | engine-default</p>",
+        "DescribeMultiRegionParametersRequest$NextToken": "<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.</p>",
+        "DescribeMultiRegionParametersResponse$NextToken": "<p>An optional token to include in the response. If this token is provided, the response includes only results beyond the token, up to the value specified by MaxResults.</p>",
         "DescribeParameterGroupsRequest$ParameterGroupName": "<p>The name of a specific parameter group to return details for.</p>",
         "DescribeParameterGroupsRequest$NextToken": "<p>An optional argument to pass in case the total number of records exceeds the value of MaxResults. If nextToken is returned, there are more results available. The value of nextToken is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. </p>",
         "DescribeParameterGroupsResponse$NextToken": "<p>An optional argument to pass in case the total number of records exceeds the value of MaxResults. If nextToken is returned, there are more results available. The value of nextToken is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. </p>",
@@ -1257,6 +1308,17 @@
         "MultiRegionCluster$EngineVersion": "<p>The version of the engine used by the multi-Region cluster.</p>",
         "MultiRegionCluster$MultiRegionParameterGroupName": "<p>The name of the multi-Region parameter group associated with the cluster.</p>",
         "MultiRegionCluster$ARN": "<p>The Amazon Resource Name (ARN) of the multi-Region cluster.</p>",
+        "MultiRegionParameter$Name": "<p>The name of the parameter.</p>",
+        "MultiRegionParameter$Value": "<p>The value of the parameter.</p>",
+        "MultiRegionParameter$Description": "<p>A description of the parameter.</p>",
+        "MultiRegionParameter$Source": "<p>Indicates the source of the parameter value. Valid values: user | system | engine-default</p>",
+        "MultiRegionParameter$DataType": "<p>The valid data type for the parameter.</p>",
+        "MultiRegionParameter$AllowedValues": "<p>The valid range of values for the parameter.</p>",
+        "MultiRegionParameter$MinimumEngineVersion": "<p>The earliest engine version to which the parameter can apply.</p>",
+        "MultiRegionParameterGroup$Name": "<p>The name of the multi-region parameter group.</p>",
+        "MultiRegionParameterGroup$Family": "<p>The name of the parameter group family that this multi-region parameter group is compatible with.</p>",
+        "MultiRegionParameterGroup$Description": "<p>A description of the multi-region parameter group.</p>",
+        "MultiRegionParameterGroup$ARN": "<p>The Amazon Resource Name (ARN) of the multi-region parameter group.</p>",
         "Node$Name": "<p>The node identifier. A node name is a numeric identifier (0001, 0002, etc.). The combination of cluster name, shard name and node name uniquely identifies every node used in a customer's Amazon account.</p>",
         "Node$Status": "<p>The status of the service update on the node</p>",
         "Node$AvailabilityZone": "<p>The Availability Zone in which the node resides</p>",
@@ -1369,11 +1431,11 @@
       }
     },
     "SubnetGroupAlreadyExistsFault": {
-      "base": "<p/>",
+      "base": "<p>A subnet group with the specified name already exists.</p>",
       "refs": {}
     },
     "SubnetGroupInUseFault": {
-      "base": "<p/>",
+      "base": "<p>The subnet group is currently in use and cannot be deleted.</p>",
       "refs": {}
     },
     "SubnetGroupList": {
@@ -1383,11 +1445,11 @@
       }
     },
     "SubnetGroupNotFoundFault": {
-      "base": "<p/>",
+      "base": "<p>The specified subnet group does not exist.</p>",
       "refs": {}
     },
     "SubnetGroupQuotaExceededFault": {
-      "base": "<p/>",
+      "base": "<p>The request cannot be processed because it would exceed the maximum number of subnet groups allowed.</p>",
       "refs": {}
     },
     "SubnetIdentifierList": {
@@ -1398,7 +1460,7 @@
       }
     },
     "SubnetInUse": {
-      "base": "<p/>",
+      "base": "<p>The subnet is currently in use and cannot be deleted.</p>",
       "refs": {}
     },
     "SubnetList": {
@@ -1408,11 +1470,11 @@
       }
     },
     "SubnetNotAllowedFault": {
-      "base": "<p/>",
+      "base": "<p>The specified subnet is not allowed for this operation.</p>",
       "refs": {}
     },
     "SubnetQuotaExceededFault": {
-      "base": "<p/>",
+      "base": "<p>The request cannot be processed because it would exceed the maximum number of subnets allowed.</p>",
       "refs": {}
     },
     "TStamp": {
@@ -1453,11 +1515,11 @@
       }
     },
     "TagNotFoundFault": {
-      "base": "<p/>",
+      "base": "<p>The specified tag does not exist.</p>",
       "refs": {}
     },
     "TagQuotaPerResourceExceeded": {
-      "base": "<p/>",
+      "base": "<p>The request cannot be processed because it would exceed the maximum number of tags allowed per resource.</p>",
       "refs": {}
     },
     "TagResourceRequest": {
@@ -1475,7 +1537,7 @@
       }
     },
     "TestFailoverNotAvailableFault": {
-      "base": "<p/>",
+      "base": "<p>Test failover is not available for this cluster configuration.</p>",
       "refs": {}
     },
     "UnprocessedCluster": {
@@ -1562,7 +1624,7 @@
       }
     },
     "UserAlreadyExistsFault": {
-      "base": "<p/>",
+      "base": "<p>A user with the specified name already exists.</p>",
       "refs": {}
     },
     "UserList": {
@@ -1599,11 +1661,11 @@
       }
     },
     "UserNotFoundFault": {
-      "base": "<p/>",
+      "base": "<p>The specified user does not exist.</p>",
       "refs": {}
     },
     "UserQuotaExceededFault": {
-      "base": "<p/>",
+      "base": "<p>The request cannot be processed because it would exceed the maximum number of users allowed.</p>",
       "refs": {}
     }
   }

@@ -315,7 +315,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetBillScenario":{
       "name":"GetBillScenario",
@@ -332,7 +333,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetPreferences":{
       "name":"GetPreferences",
@@ -348,7 +350,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetWorkloadEstimate":{
       "name":"GetWorkloadEstimate",
@@ -365,7 +368,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListBillEstimateCommitments":{
       "name":"ListBillEstimateCommitments",
@@ -382,7 +386,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListBillEstimateInputCommitmentModifications":{
       "name":"ListBillEstimateInputCommitmentModifications",
@@ -399,7 +404,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListBillEstimateInputUsageModifications":{
       "name":"ListBillEstimateInputUsageModifications",
@@ -416,7 +422,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListBillEstimateLineItems":{
       "name":"ListBillEstimateLineItems",
@@ -433,7 +440,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListBillEstimates":{
       "name":"ListBillEstimates",
@@ -449,7 +457,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListBillScenarioCommitmentModifications":{
       "name":"ListBillScenarioCommitmentModifications",
@@ -466,7 +475,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListBillScenarioUsageModifications":{
       "name":"ListBillScenarioUsageModifications",
@@ -483,7 +493,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListBillScenarios":{
       "name":"ListBillScenarios",
@@ -499,7 +510,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -515,7 +527,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListWorkloadEstimateUsage":{
       "name":"ListWorkloadEstimateUsage",
@@ -532,7 +545,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListWorkloadEstimates":{
       "name":"ListWorkloadEstimates",
@@ -548,7 +562,8 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -1421,7 +1436,9 @@
         "status":{"shape":"BillScenarioStatus"},
         "createdAt":{"shape":"Timestamp"},
         "expiresAt":{"shape":"Timestamp"},
-        "failureMessage":{"shape":"String"}
+        "failureMessage":{"shape":"String"},
+        "groupSharingPreference":{"shape":"GroupSharingPreferenceEnum"},
+        "costCategoryGroupSharingPreferenceArn":{"shape":"CostCategoryArn"}
       }
     },
     "BillScenarioUsageModificationItem":{
@@ -1475,6 +1492,12 @@
         "currency":{"shape":"CurrencyCode"}
       }
     },
+    "CostCategoryArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[-a-z0-9]*:ce::[0-9]{12}:costcategory/[a-f0-9-]{36}"
+    },
     "CostDifference":{
       "type":"structure",
       "members":{
@@ -1509,7 +1532,10 @@
         "billInterval":{"shape":"BillInterval"},
         "costSummary":{"shape":"BillEstimateCostSummary"},
         "createdAt":{"shape":"Timestamp"},
-        "expiresAt":{"shape":"Timestamp"}
+        "expiresAt":{"shape":"Timestamp"},
+        "groupSharingPreference":{"shape":"GroupSharingPreferenceEnum"},
+        "costCategoryGroupSharingPreferenceArn":{"shape":"CostCategoryArn"},
+        "costCategoryGroupSharingPreferenceEffectiveDate":{"shape":"Timestamp"}
       }
     },
     "CreateBillScenarioRequest":{
@@ -1521,7 +1547,9 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "groupSharingPreference":{"shape":"GroupSharingPreferenceEnum"},
+        "costCategoryGroupSharingPreferenceArn":{"shape":"CostCategoryArn"}
       }
     },
     "CreateBillScenarioResponse":{
@@ -1534,7 +1562,9 @@
         "status":{"shape":"BillScenarioStatus"},
         "createdAt":{"shape":"Timestamp"},
         "expiresAt":{"shape":"Timestamp"},
-        "failureMessage":{"shape":"String"}
+        "failureMessage":{"shape":"String"},
+        "groupSharingPreference":{"shape":"GroupSharingPreferenceEnum"},
+        "costCategoryGroupSharingPreferenceArn":{"shape":"CostCategoryArn"}
       }
     },
     "CreateWorkloadEstimateRequest":{
@@ -1587,8 +1617,7 @@
     },
     "DeleteBillEstimateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteBillScenarioRequest":{
       "type":"structure",
@@ -1599,8 +1628,7 @@
     },
     "DeleteBillScenarioResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteWorkloadEstimateRequest":{
       "type":"structure",
@@ -1611,8 +1639,7 @@
     },
     "DeleteWorkloadEstimateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Double":{
       "type":"double",
@@ -1666,7 +1693,10 @@
         "billInterval":{"shape":"BillInterval"},
         "costSummary":{"shape":"BillEstimateCostSummary"},
         "createdAt":{"shape":"Timestamp"},
-        "expiresAt":{"shape":"Timestamp"}
+        "expiresAt":{"shape":"Timestamp"},
+        "groupSharingPreference":{"shape":"GroupSharingPreferenceEnum"},
+        "costCategoryGroupSharingPreferenceArn":{"shape":"CostCategoryArn"},
+        "costCategoryGroupSharingPreferenceEffectiveDate":{"shape":"Timestamp"}
       }
     },
     "GetBillScenarioRequest":{
@@ -1686,13 +1716,14 @@
         "status":{"shape":"BillScenarioStatus"},
         "createdAt":{"shape":"Timestamp"},
         "expiresAt":{"shape":"Timestamp"},
-        "failureMessage":{"shape":"String"}
+        "failureMessage":{"shape":"String"},
+        "groupSharingPreference":{"shape":"GroupSharingPreferenceEnum"},
+        "costCategoryGroupSharingPreferenceArn":{"shape":"CostCategoryArn"}
       }
     },
     "GetPreferencesRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetPreferencesResponse":{
       "type":"structure",
@@ -1724,6 +1755,14 @@
         "costCurrency":{"shape":"CurrencyCode"},
         "failureMessage":{"shape":"String"}
       }
+    },
+    "GroupSharingPreferenceEnum":{
+      "type":"string",
+      "enum":[
+        "OPEN",
+        "PRIORITIZED",
+        "RESTRICTED"
+      ]
     },
     "HistoricalUsageEntity":{
       "type":"structure",
@@ -1955,7 +1994,9 @@
       "type":"string",
       "enum":[
         "STATUS",
-        "NAME"
+        "NAME",
+        "GROUP_SHARING_PREFERENCE",
+        "COST_CATEGORY_ARN"
       ]
     },
     "ListBillScenariosFilterValues":{
@@ -2250,8 +2291,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Tags":{
       "type":"map",
@@ -2285,8 +2325,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateBillEstimateRequest":{
       "type":"structure",
@@ -2308,7 +2347,10 @@
         "billInterval":{"shape":"BillInterval"},
         "costSummary":{"shape":"BillEstimateCostSummary"},
         "createdAt":{"shape":"Timestamp"},
-        "expiresAt":{"shape":"Timestamp"}
+        "expiresAt":{"shape":"Timestamp"},
+        "groupSharingPreference":{"shape":"GroupSharingPreferenceEnum"},
+        "costCategoryGroupSharingPreferenceArn":{"shape":"CostCategoryArn"},
+        "costCategoryGroupSharingPreferenceEffectiveDate":{"shape":"Timestamp"}
       }
     },
     "UpdateBillScenarioRequest":{
@@ -2317,7 +2359,9 @@
       "members":{
         "identifier":{"shape":"ResourceId"},
         "name":{"shape":"BillScenarioName"},
-        "expiresAt":{"shape":"Timestamp"}
+        "expiresAt":{"shape":"Timestamp"},
+        "groupSharingPreference":{"shape":"GroupSharingPreferenceEnum"},
+        "costCategoryGroupSharingPreferenceArn":{"shape":"CostCategoryArn"}
       }
     },
     "UpdateBillScenarioResponse":{
@@ -2330,7 +2374,9 @@
         "status":{"shape":"BillScenarioStatus"},
         "createdAt":{"shape":"Timestamp"},
         "expiresAt":{"shape":"Timestamp"},
-        "failureMessage":{"shape":"String"}
+        "failureMessage":{"shape":"String"},
+        "groupSharingPreference":{"shape":"GroupSharingPreferenceEnum"},
+        "costCategoryGroupSharingPreferenceArn":{"shape":"CostCategoryArn"}
       }
     },
     "UpdatePreferencesRequest":{

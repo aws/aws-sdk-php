@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>Identity and Access Management Access Analyzer helps you to set, verify, and refine your IAM policies by providing a suite of capabilities. Its features include findings for external and unused access, basic and custom policy checks for validating policies, and policy generation to generate fine-grained policies. To start using IAM Access Analyzer to identify external or unused access, you first need to create an analyzer.</p> <p> <b>External access analyzers</b> help identify potential risks of accessing resources by enabling you to identify any resource policies that grant access to an external principal. It does this by using logic-based reasoning to analyze resource-based policies in your Amazon Web Services environment. An external principal can be another Amazon Web Services account, a root user, an IAM user or role, a federated user, an Amazon Web Services service, or an anonymous user. You can also use IAM Access Analyzer to preview public and cross-account access to your resources before deploying permissions changes.</p> <p> <b>Unused access analyzers</b> help identify potential identity access risks by enabling you to identify unused IAM roles, unused access keys, unused console passwords, and IAM principals with unused service and action-level permissions.</p> <p>Beyond findings, IAM Access Analyzer provides basic and custom policy checks to validate IAM policies before deploying permissions changes. You can use policy generation to refine permissions by attaching a policy generated using access activity logged in CloudTrail logs. </p> <p>This guide describes the IAM Access Analyzer operations that you can call programmatically. For general information about IAM Access Analyzer, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html\">Identity and Access Management Access Analyzer</a> in the <b>IAM User Guide</b>.</p>",
+  "service": "<p>Identity and Access Management Access Analyzer helps you to set, verify, and refine your IAM policies by providing a suite of capabilities. Its features include findings for external, internal, and unused access, basic and custom policy checks for validating policies, and policy generation to generate fine-grained policies. To start using IAM Access Analyzer to identify external, internal, or unused access, you first need to create an analyzer.</p> <p> <b>External access analyzers</b> help you identify potential risks of accessing resources by enabling you to identify any resource policies that grant access to an external principal. It does this by using logic-based reasoning to analyze resource-based policies in your Amazon Web Services environment. An external principal can be another Amazon Web Services account, a root user, an IAM user or role, a federated user, an Amazon Web Services service, or an anonymous user. You can also use IAM Access Analyzer to preview public and cross-account access to your resources before deploying permissions changes.</p> <p> <b>Internal access analyzers</b> help you identify which principals within your organization or account have access to selected resources. This analysis supports implementing the principle of least privilege by ensuring that your specified resources can only be accessed by the intended principals within your organization.</p> <p> <b>Unused access analyzers</b> help you identify potential identity access risks by enabling you to identify unused IAM roles, unused access keys, unused console passwords, and IAM principals with unused service and action-level permissions.</p> <p>Beyond findings, IAM Access Analyzer provides basic and custom policy checks to validate IAM policies before deploying permissions changes. You can use policy generation to refine permissions by attaching a policy generated using access activity logged in CloudTrail logs. </p> <p>This guide describes the IAM Access Analyzer operations that you can call programmatically. For general information about IAM Access Analyzer, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html\">Using Identity and Access Management Access Analyzer</a> in the <b>IAM User Guide</b>.</p>",
   "operations": {
     "ApplyArchiveRule": "<p>Retroactively applies the archive rule to existing findings that meet the archive rule criteria.</p>",
     "CancelPolicyGeneration": "<p>Cancels the requested policy generation.</p>",
@@ -14,10 +14,10 @@
     "DeleteArchiveRule": "<p>Deletes the specified archive rule.</p>",
     "GenerateFindingRecommendation": "<p>Creates a recommendation for an unused permissions finding.</p>",
     "GetAccessPreview": "<p>Retrieves information about an access preview for the specified analyzer.</p>",
-    "GetAnalyzedResource": "<p>Retrieves information about a resource that was analyzed.</p>",
+    "GetAnalyzedResource": "<p>Retrieves information about a resource that was analyzed.</p> <note> <p>This action is supported only for external access analyzers.</p> </note>",
     "GetAnalyzer": "<p>Retrieves information about the specified analyzer.</p>",
     "GetArchiveRule": "<p>Retrieves information about an archive rule.</p> <p>To learn about filter keys that you can use to create an archive rule, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-filter-keys.html\">IAM Access Analyzer filter keys</a> in the <b>IAM User Guide</b>.</p>",
-    "GetFinding": "<p>Retrieves information about the specified finding. GetFinding and GetFindingV2 both use <code>access-analyzer:GetFinding</code> in the <code>Action</code> element of an IAM policy statement. You must have permission to perform the <code>access-analyzer:GetFinding</code> action.</p>",
+    "GetFinding": "<p>Retrieves information about the specified finding. GetFinding and GetFindingV2 both use <code>access-analyzer:GetFinding</code> in the <code>Action</code> element of an IAM policy statement. You must have permission to perform the <code>access-analyzer:GetFinding</code> action.</p> <note> <p>GetFinding is supported only for external access analyzers. You must use GetFindingV2 for internal and unused access analyzers.</p> </note>",
     "GetFindingRecommendation": "<p>Retrieves information about a finding recommendation for the specified analyzer.</p>",
     "GetFindingV2": "<p>Retrieves information about the specified finding. GetFinding and GetFindingV2 both use <code>access-analyzer:GetFinding</code> in the <code>Action</code> element of an IAM policy statement. You must have permission to perform the <code>access-analyzer:GetFinding</code> action.</p>",
     "GetFindingsStatistics": "<p>Retrieves a list of aggregated finding statistics for an external access or unused access analyzer.</p>",
@@ -27,15 +27,15 @@
     "ListAnalyzedResources": "<p>Retrieves a list of resources of the specified type that have been analyzed by the specified analyzer.</p>",
     "ListAnalyzers": "<p>Retrieves a list of analyzers.</p>",
     "ListArchiveRules": "<p>Retrieves a list of archive rules created for the specified analyzer.</p>",
-    "ListFindings": "<p>Retrieves a list of findings generated by the specified analyzer. ListFindings and ListFindingsV2 both use <code>access-analyzer:ListFindings</code> in the <code>Action</code> element of an IAM policy statement. You must have permission to perform the <code>access-analyzer:ListFindings</code> action.</p> <p>To learn about filter keys that you can use to retrieve a list of findings, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-filter-keys.html\">IAM Access Analyzer filter keys</a> in the <b>IAM User Guide</b>.</p>",
+    "ListFindings": "<p>Retrieves a list of findings generated by the specified analyzer. ListFindings and ListFindingsV2 both use <code>access-analyzer:ListFindings</code> in the <code>Action</code> element of an IAM policy statement. You must have permission to perform the <code>access-analyzer:ListFindings</code> action.</p> <p>To learn about filter keys that you can use to retrieve a list of findings, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-filter-keys.html\">IAM Access Analyzer filter keys</a> in the <b>IAM User Guide</b>.</p> <note> <p>ListFindings is supported only for external access analyzers. You must use ListFindingsV2 for internal and unused access analyzers.</p> </note>",
     "ListFindingsV2": "<p>Retrieves a list of findings generated by the specified analyzer. ListFindings and ListFindingsV2 both use <code>access-analyzer:ListFindings</code> in the <code>Action</code> element of an IAM policy statement. You must have permission to perform the <code>access-analyzer:ListFindings</code> action.</p> <p>To learn about filter keys that you can use to retrieve a list of findings, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-filter-keys.html\">IAM Access Analyzer filter keys</a> in the <b>IAM User Guide</b>.</p>",
     "ListPolicyGenerations": "<p>Lists all of the policy generations requested in the last seven days.</p>",
     "ListTagsForResource": "<p>Retrieves a list of tags applied to the specified resource.</p>",
     "StartPolicyGeneration": "<p>Starts the policy generation request.</p>",
-    "StartResourceScan": "<p>Immediately starts a scan of the policies applied to the specified resource.</p>",
+    "StartResourceScan": "<p>Immediately starts a scan of the policies applied to the specified resource.</p> <note> <p>This action is supported only for external access analyzers.</p> </note>",
     "TagResource": "<p>Adds a tag to the specified resource.</p>",
     "UntagResource": "<p>Removes a tag from the specified resource.</p>",
-    "UpdateAnalyzer": "<p>Modifies the configuration of an existing analyzer.</p>",
+    "UpdateAnalyzer": "<p>Modifies the configuration of an existing analyzer.</p> <note> <p>This action is not supported for external access analyzers.</p> </note>",
     "UpdateArchiveRule": "<p>Updates the criteria and values for the specified archive rule.</p>",
     "UpdateFindings": "<p>Updates the status for the specified findings.</p>",
     "ValidatePolicy": "<p>Requests the validation of a policy and returns a list of findings. The findings help you identify issues and provide actionable recommendations to resolve the issue and enable you to author functional policies that meet security best practices. </p>"
@@ -77,8 +77,7 @@
     },
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessPointArn": {
       "base": null,
@@ -283,7 +282,7 @@
     "AnalyzerConfiguration": {
       "base": "<p>Contains information about the configuration of an analyzer for an Amazon Web Services organization or account.</p>",
       "refs": {
-        "AnalyzerSummary$configuration": "<p>Specifies if the analyzer is an external access, unused access, or internal access analyzer.</p>",
+        "AnalyzerSummary$configuration": "<p>Specifies if the analyzer is an external access, unused access, or internal access analyzer. The <a href=\"https://docs.aws.amazon.com/access-analyzer/latest/APIReference/API_GetAnalyzer.html\">GetAnalyzer</a> action includes this property in its response if a configuration is specified, while the <a href=\"https://docs.aws.amazon.com/access-analyzer/latest/APIReference/API_ListAnalyzers.html\">ListAnalyzers</a> action omits it.</p>",
         "CreateAnalyzerRequest$configuration": "<p>Specifies the configuration of the analyzer. If the analyzer is an unused access analyzer, the specified scope of unused access is used for the configuration. If the analyzer is an internal access analyzer, the specified internal access analysis rules are used for the configuration.</p>",
         "UpdateAnalyzerRequest$configuration": null,
         "UpdateAnalyzerResponse$configuration": null
@@ -310,8 +309,7 @@
     },
     "ApplyArchiveRuleRequest": {
       "base": "<p>Retroactively applies an archive rule.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ArchiveRuleSummary": {
       "base": "<p>Contains information about an archive rule. Archive rules automatically archive new findings that meet the criteria you define when you create the rule.</p>",
@@ -346,18 +344,15 @@
     },
     "CancelPolicyGenerationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelPolicyGenerationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CheckAccessNotGrantedRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CheckAccessNotGrantedRequestAccessList": {
       "base": null,
@@ -367,8 +362,7 @@
     },
     "CheckAccessNotGrantedResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CheckAccessNotGrantedResult": {
       "base": null,
@@ -378,13 +372,11 @@
     },
     "CheckNoNewAccessRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CheckNoNewAccessResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CheckNoNewAccessResult": {
       "base": null,
@@ -394,13 +386,11 @@
     },
     "CheckNoPublicAccessRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CheckNoPublicAccessResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CheckNoPublicAccessResult": {
       "base": null,
@@ -458,33 +448,27 @@
     },
     "ConflictException": {
       "base": "<p>A conflict exception error.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAccessPreviewRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAccessPreviewResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAnalyzerRequest": {
       "base": "<p>Creates an analyzer.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAnalyzerResponse": {
       "base": "<p>The response to the request to create an analyzer.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateArchiveRuleRequest": {
       "base": "<p>Creates an archive rule.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Criterion": {
       "base": "<p>The criteria to use in the filter that defines the archive rule. For more information on available filter keys, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-reference-filter-keys.html\">IAM Access Analyzer filter keys</a>.</p>",
@@ -494,13 +478,11 @@
     },
     "DeleteAnalyzerRequest": {
       "base": "<p>Deletes an analyzer.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteArchiveRuleRequest": {
       "base": "<p>Deletes an archive rule.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DynamodbStreamConfiguration": {
       "base": "<p>The proposed access control configuration for a DynamoDB stream. You can propose a configuration for a new DynamoDB stream or an existing DynamoDB stream that you own by specifying the policy for the DynamoDB stream. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutResourcePolicy.html\">PutResourcePolicy</a>.</p> <ul> <li> <p>If the configuration is for an existing DynamoDB stream and you do not specify the DynamoDB policy, then the access preview uses the existing DynamoDB policy for the stream.</p> </li> <li> <p>If the access preview is for a new resource and you do not specify the policy, then the access preview assumes a DynamoDB stream without a policy.</p> </li> <li> <p>To propose deletion of an existing DynamoDB stream policy, you can specify an empty string for the DynamoDB policy.</p> </li> </ul>",
@@ -756,8 +738,7 @@
     },
     "GenerateFindingRecommendationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GenerateFindingRecommendationRequestIdString": {
       "base": null,
@@ -791,48 +772,39 @@
     },
     "GetAccessPreviewRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAccessPreviewResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAnalyzedResourceRequest": {
       "base": "<p>Retrieves an analyzed resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAnalyzedResourceResponse": {
       "base": "<p>The response to the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAnalyzerRequest": {
       "base": "<p>Retrieves an analyzer.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAnalyzerResponse": {
       "base": "<p>The response to the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetArchiveRuleRequest": {
       "base": "<p>Retrieves an archive rule.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetArchiveRuleResponse": {
       "base": "<p>The response to the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFindingRecommendationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFindingRecommendationRequestIdString": {
       "base": null,
@@ -848,48 +820,39 @@
     },
     "GetFindingRecommendationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFindingRequest": {
       "base": "<p>Retrieves a finding.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFindingResponse": {
       "base": "<p>The response to the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFindingV2Request": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFindingV2Response": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFindingsStatisticsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFindingsStatisticsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetGeneratedPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetGeneratedPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GranteePrincipal": {
       "base": null,
@@ -951,6 +914,7 @@
         "ReasonSummary$statementIndex": "<p>The index number of the reason statement.</p>",
         "ResourceTypeDetails$totalActivePublic": "<p>The total number of active public findings for the resource type.</p>",
         "ResourceTypeDetails$totalActiveCrossAccount": "<p>The total number of active cross-account findings for the resource type.</p>",
+        "ResourceTypeDetails$totalActiveErrors": "<p>The total number of active errors for the resource type.</p>",
         "Substring$start": "<p>The start index of the substring, starting from 0.</p>",
         "Substring$length": "<p>The length of the substring.</p>",
         "ThrottlingException$retryAfterSeconds": "<p>The seconds to wait to retry.</p>",
@@ -1018,8 +982,7 @@
     },
     "InternalServerException": {
       "base": "<p>Internal server error.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InternetConfiguration": {
       "base": "<p>This configuration sets the network origin for the Amazon S3 access point or multi-region access point to <code>Internet</code>.</p>",
@@ -1029,8 +992,7 @@
     },
     "InvalidParameterException": {
       "base": "<p>The specified parameter is invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IssueCode": {
       "base": null,
@@ -1154,78 +1116,63 @@
     },
     "ListAccessPreviewFindingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccessPreviewFindingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccessPreviewsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccessPreviewsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAnalyzedResourcesRequest": {
       "base": "<p>Retrieves a list of resources that have been analyzed.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAnalyzedResourcesResponse": {
       "base": "<p>The response to the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAnalyzersRequest": {
       "base": "<p>Retrieves a list of analyzers.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAnalyzersResponse": {
       "base": "<p>The response to the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListArchiveRulesRequest": {
       "base": "<p>Retrieves a list of archive rules created for the specified analyzer.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListArchiveRulesResponse": {
       "base": "<p>The response to the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFindingsRequest": {
       "base": "<p>Retrieves a list of findings generated by the specified analyzer.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFindingsResponse": {
       "base": "<p>The response to the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFindingsV2Request": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFindingsV2Response": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPolicyGenerationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPolicyGenerationsRequestMaxResultsInteger": {
       "base": null,
@@ -1235,18 +1182,15 @@
     },
     "ListPolicyGenerationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": "<p>Retrieves a list of tags applied to the specified resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": "<p>The response to the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Locale": {
       "base": null,
@@ -1557,8 +1501,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource could not be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceType": {
       "base": null,
@@ -1705,8 +1648,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>Service quote met error.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SharedViaList": {
       "base": null,
@@ -1753,18 +1695,15 @@
     },
     "StartPolicyGenerationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartPolicyGenerationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartResourceScanRequest": {
       "base": "<p>Starts a scan of the policies applied to the specified resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Status": {
       "base": null,
@@ -1884,13 +1823,11 @@
     },
     "TagResourceRequest": {
       "base": "<p>Adds a tag to the specified resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": "<p>The response to the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TagsList": {
       "base": null,
@@ -1901,7 +1838,7 @@
     "TagsMap": {
       "base": null,
       "refs": {
-        "AnalyzerSummary$tags": "<p>The tags added to the analyzer.</p>",
+        "AnalyzerSummary$tags": "<p>An array of key-value pairs applied to the analyzer. The key-value pairs consist of the set of Unicode letters, digits, whitespace, <code>_</code>, <code>.</code>, <code>/</code>, <code>=</code>, <code>+</code>, and <code>-</code>.</p> <p>The tag key is a value that is 1 to 128 characters in length and cannot be prefixed with <code>aws:</code>.</p> <p>The tag value is a value that is 0 to 256 characters in length.</p>",
         "CreateAnalyzerRequest$tags": "<p>An array of key-value pairs to apply to the analyzer. You can use the set of Unicode letters, digits, whitespace, <code>_</code>, <code>.</code>, <code>/</code>, <code>=</code>, <code>+</code>, and <code>-</code>.</p> <p>For the tag key, you can specify a value that is 1 to 128 characters in length and cannot be prefixed with <code>aws:</code>.</p> <p>For the tag value, you can specify a value that is 0 to 256 characters in length.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags that are applied to the specified resource.</p>",
         "TagResourceRequest$tags": "<p>The tags to add to the resource.</p>",
@@ -1910,8 +1847,7 @@
     },
     "ThrottlingException": {
       "base": "<p>Throttling limit exceeded error.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -2011,25 +1947,22 @@
     "Type": {
       "base": null,
       "refs": {
-        "AnalyzerSummary$type": "<p>The type of analyzer, which corresponds to the zone of trust chosen for the analyzer.</p>",
+        "AnalyzerSummary$type": "<p>The type represents the zone of trust or scope for the analyzer.</p>",
         "CreateAnalyzerRequest$type": "<p>The type of analyzer to create. You can create only one analyzer per account per Region. You can create up to 5 analyzers per organization per Region.</p>",
         "ListAnalyzersRequest$type": "<p>The type of analyzer.</p>"
       }
     },
     "UnprocessableEntityException": {
       "base": "<p>The specified entity could not be processed.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": "<p>Removes a tag from the specified resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": "<p>The response to the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnusedAccessConfiguration": {
       "base": "<p>Contains information about an unused access analyzer.</p>",
@@ -2099,23 +2032,19 @@
     },
     "UpdateAnalyzerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAnalyzerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateArchiveRuleRequest": {
       "base": "<p>Updates the specified archive rule.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFindingsRequest": {
       "base": "<p>Updates findings with the new values provided in the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidatePolicyFinding": {
       "base": "<p>A finding in a policy. Each finding is an actionable recommendation that can be used to improve the policy.</p>",
@@ -2137,8 +2066,7 @@
     },
     "ValidatePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidatePolicyResourceType": {
       "base": null,
@@ -2148,13 +2076,11 @@
     },
     "ValidatePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>Validation exception error.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>Contains information about a validation exception.</p>",

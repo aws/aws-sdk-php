@@ -89,6 +89,21 @@
         {"shape":"PaginationTokenExpiredException"}
       ]
     },
+    "ListRequiredTags":{
+      "name":"ListRequiredTags",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListRequiredTagsInput"},
+      "output":{"shape":"ListRequiredTagsOutput"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"PaginationTokenExpiredException"},
+        {"shape":"ThrottledException"}
+      ]
+    },
     "StartReportCreation":{
       "name":"StartReportCreation",
       "http":{
@@ -140,6 +155,11 @@
       "max":256,
       "min":0,
       "pattern":"[\\s\\S]*"
+    },
+    "CloudFormationResourceType":{"type":"string"},
+    "CloudFormationResourceTypes":{
+      "type":"list",
+      "member":{"shape":"CloudFormationResourceType"}
     },
     "ComplianceDetails":{
       "type":"structure",
@@ -299,6 +319,25 @@
       "exception":true
     },
     "LastUpdated":{"type":"string"},
+    "ListRequiredTagsInput":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"PaginationToken"},
+        "MaxResults":{"shape":"MaxResultsForListRequiredTags"}
+      }
+    },
+    "ListRequiredTagsOutput":{
+      "type":"structure",
+      "members":{
+        "RequiredTags":{"shape":"RequiredTagsForListRequiredTags"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "MaxResultsForListRequiredTags":{
+      "type":"integer",
+      "max":200,
+      "min":1
+    },
     "MaxResultsGetComplianceSummary":{
       "type":"integer",
       "max":1000,
@@ -330,6 +369,22 @@
       "max":100,
       "min":1
     },
+    "ReportingTagKeys":{
+      "type":"list",
+      "member":{"shape":"TagKey"}
+    },
+    "RequiredTag":{
+      "type":"structure",
+      "members":{
+        "ResourceType":{"shape":"ResourceType"},
+        "CloudFormationResourceTypes":{"shape":"CloudFormationResourceTypes"},
+        "ReportingTagKeys":{"shape":"ReportingTagKeys"}
+      }
+    },
+    "RequiredTagsForListRequiredTags":{
+      "type":"list",
+      "member":{"shape":"RequiredTag"}
+    },
     "ResourceARN":{
       "type":"string",
       "max":1011,
@@ -360,6 +415,7 @@
       "type":"list",
       "member":{"shape":"ResourceTagMapping"}
     },
+    "ResourceType":{"type":"string"},
     "ResourceTypeFilterList":{
       "type":"list",
       "member":{"shape":"AmazonResourceType"}

@@ -51,8 +51,8 @@
     "GetMulticastGroupSession": "<p>Gets information about a multicast group session.</p>",
     "GetNetworkAnalyzerConfiguration": "<p>Get network analyzer configuration.</p>",
     "GetPartnerAccount": "<p>Gets information about a partner account. If <code>PartnerAccountId</code> and <code>PartnerType</code> are <code>null</code>, returns all partner accounts.</p>",
-    "GetPosition": "<p>Get the position information for a given resource.</p> <important> <p>This action is no longer supported. Calls to retrieve the position information should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/2020-11-22/apireference/API_GetResourcePosition.html\">GetResourcePosition</a> API operation instead.</p> </important>",
-    "GetPositionConfiguration": "<p>Get position configuration for a given resource.</p> <important> <p>This action is no longer supported. Calls to retrieve the position configuration should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/2020-11-22/apireference/API_GetResourcePosition.html\">GetResourcePosition</a> API operation instead.</p> </important>",
+    "GetPosition": "<p>Get the position information for a given resource.</p> <important> <p>This action is no longer supported. Calls to retrieve the position information should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/latest/apireference/API_GetResourcePosition.html\">GetResourcePosition</a> API operation instead.</p> </important>",
+    "GetPositionConfiguration": "<p>Get position configuration for a given resource.</p> <important> <p>This action is no longer supported. Calls to retrieve the position configuration should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/latest/apireference/API_GetResourcePosition.html\">GetResourcePosition</a> API operation instead.</p> </important>",
     "GetPositionEstimate": "<p>Get estimated position information as a payload in GeoJSON format. The payload measurement data is resolved using solvers that are provided by third-party vendors.</p>",
     "GetResourceEventConfiguration": "<p>Get the event configuration for a particular resource identifier.</p>",
     "GetResourceLogLevel": "<p>Fetches the log-level override, if any, for a given resource ID and resource type..</p>",
@@ -77,15 +77,15 @@
     "ListMulticastGroupsByFuotaTask": "<p>List all multicast groups associated with a FUOTA task.</p>",
     "ListNetworkAnalyzerConfigurations": "<p>Lists the network analyzer configurations.</p>",
     "ListPartnerAccounts": "<p>Lists the partner accounts associated with your AWS account.</p>",
-    "ListPositionConfigurations": "<p>List position configurations for a given resource, such as positioning solvers.</p> <important> <p>This action is no longer supported. Calls to retrieve position information should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/2020-11-22/apireference/API_GetResourcePosition.html\">GetResourcePosition</a> API operation instead.</p> </important>",
+    "ListPositionConfigurations": "<p>List position configurations for a given resource, such as positioning solvers.</p> <important> <p>This action is no longer supported. Calls to retrieve position information should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/latest/apireference/API_GetResourcePosition.html\">GetResourcePosition</a> API operation instead.</p> </important>",
     "ListQueuedMessages": "<p>List queued messages in the downlink queue.</p>",
     "ListServiceProfiles": "<p>Lists the service profiles registered to your AWS account.</p>",
     "ListTagsForResource": "<p>Lists the tags (metadata) you have assigned to the resource.</p>",
-    "ListWirelessDeviceImportTasks": "<p>List wireless devices that have been added to an import task.</p>",
+    "ListWirelessDeviceImportTasks": "<p>List of import tasks and summary information of onboarding status of devices in each import task.</p>",
     "ListWirelessDevices": "<p>Lists the wireless devices registered to your AWS account.</p>",
     "ListWirelessGatewayTaskDefinitions": "<p>List the wireless gateway tasks definitions registered to your AWS account.</p>",
     "ListWirelessGateways": "<p>Lists the wireless gateways registered to your AWS account.</p>",
-    "PutPositionConfiguration": "<p>Put position configuration for a given resource.</p> <important> <p>This action is no longer supported. Calls to update the position configuration should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/2020-11-22/apireference/API_UpdateResourcePosition.html\">UpdateResourcePosition</a> API operation instead.</p> </important>",
+    "PutPositionConfiguration": "<p>Put position configuration for a given resource.</p> <important> <p>This action is no longer supported. Calls to update the position configuration should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/latest/apireference/API_UpdateResourcePosition.html\">UpdateResourcePosition</a> API operation instead.</p> </important>",
     "PutResourceLogLevel": "<p>Sets the log-level override for a resource ID and resource type. A limit of 200 log level override can be set per account.</p>",
     "ResetAllResourceLogLevels": "<p>Removes the log-level overrides for all resources; wireless devices, wireless gateways, and FUOTA tasks.</p>",
     "ResetResourceLogLevel": "<p>Removes the log-level override, if any, for a specific resource ID and resource type. It can be used for a wireless device, a wireless gateway, or a FUOTA task.</p>",
@@ -108,7 +108,7 @@
     "UpdateMulticastGroup": "<p>Updates properties of a multicast group session.</p>",
     "UpdateNetworkAnalyzerConfiguration": "<p>Update network analyzer configuration.</p>",
     "UpdatePartnerAccount": "<p>Updates properties of a partner account.</p>",
-    "UpdatePosition": "<p>Update the position information of a resource.</p> <important> <p>This action is no longer supported. Calls to update the position information should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/2020-11-22/apireference/API_UpdateResourcePosition.html\">UpdateResourcePosition</a> API operation instead.</p> </important>",
+    "UpdatePosition": "<p>Update the position information of a resource.</p> <important> <p>This action is no longer supported. Calls to update the position information should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/latest/apireference/API_UpdateResourcePosition.html\">UpdateResourcePosition</a> API operation instead.</p> </important>",
     "UpdateResourceEventConfiguration": "<p>Update the event configuration for a particular resource identifier.</p>",
     "UpdateResourcePosition": "<p>Update the position information of a given wireless device or a wireless gateway resource. The position coordinates are based on the <a href=\"https://gisgeography.com/wgs84-world-geodetic-system/\"> World Geodetic System (WGS84)</a>.</p>",
     "UpdateWirelessDevice": "<p>Updates properties of a wireless device.</p>",
@@ -811,9 +811,10 @@
         "GetWirelessDeviceImportTaskResponse$DestinationName": "<p>The name of the destination that's assigned to the wireless devices in the import task.</p>",
         "GetWirelessDeviceResponse$DestinationName": "<p>The name of the destination to which the device is assigned.</p>",
         "ListDevicesForWirelessDeviceImportTaskResponse$DestinationName": "<p>The name of the Sidewalk destination that describes the IoT rule to route messages received from devices in an import task that are onboarded to AWS IoT Wireless.</p>",
-        "ListWirelessDevicesRequest$DestinationName": "<p>A filter to list only the wireless devices that use this destination.</p>",
+        "ListWirelessDevicesRequest$DestinationName": "<p>A filter to list only the wireless devices that use as uplink destination.</p>",
         "PositionConfigurationItem$Destination": "<p>The position data destination that describes the AWS IoT rule that processes the device's position data for use by AWS IoT Core for LoRaWAN.</p>",
         "PutPositionConfigurationRequest$Destination": "<p>The position data destination that describes the AWS IoT rule that processes the device's position data for use by AWS IoT Core for LoRaWAN.</p>",
+        "SidewalkPositioning$DestinationName": "<p>The location destination name of the Sidewalk device.</p>",
         "StartSingleWirelessDeviceImportTaskRequest$DestinationName": "<p>The name of the Sidewalk destination that describes the IoT rule to route messages from the device in the import task that will be onboarded to AWS IoT Wireless.</p>",
         "StartWirelessDeviceImportTaskRequest$DestinationName": "<p>The name of the Sidewalk destination that describes the IoT rule to route messages from the devices in the import task that are onboarded to AWS IoT Wireless.</p>",
         "UpdateDestinationRequest$Name": "<p>The new name of the resource.</p>",
@@ -3017,9 +3018,15 @@
     "PositioningConfigStatus": {
       "base": null,
       "refs": {
-        "CreateWirelessDeviceRequest$Positioning": "<p>FPort values for the GNSS, stream, and ClockSync functions of the positioning information.</p>",
-        "GetWirelessDeviceResponse$Positioning": "<p>FPort values for the GNSS, stream, and ClockSync functions of the positioning information.</p>",
-        "UpdateWirelessDeviceRequest$Positioning": "<p>FPort values for the GNSS, stream, and ClockSync functions of the positioning information.</p>"
+        "CreateWirelessDeviceRequest$Positioning": "<p>The integration status of the Device Location feature for LoRaWAN and Sidewalk devices.</p>",
+        "GetWirelessDeviceImportTaskResponse$Positioning": "<p>The integration status of the Device Location feature for LoRaWAN and Sidewalk devices.</p>",
+        "GetWirelessDeviceResponse$Positioning": "<p>The integration status of the Device Location feature for LoRaWAN and Sidewalk devices.</p>",
+        "ListDevicesForWirelessDeviceImportTaskResponse$Positioning": "<p>The integration status of the Device Location feature for Sidewalk devices.</p>",
+        "StartSingleWirelessDeviceImportTaskRequest$Positioning": "<p>The integration status of the Device Location feature for Sidewalk devices.</p>",
+        "StartWirelessDeviceImportTaskRequest$Positioning": "<p>The integration status of the Device Location feature for Sidewalk devices.</p>",
+        "UpdateWirelessDeviceRequest$Positioning": "<p>The integration status of the Device Location feature for LoRaWAN and Sidewalk devices.</p>",
+        "WirelessDeviceImportTask$Positioning": "<p>The integration status of the Device Location feature for Sidewalk devices.</p>",
+        "WirelessDeviceStatistics$Positioning": "<p>The integration status of the Device Location feature for LoRaWAN and Amazon Sidewalk enabled devices.</p>"
       }
     },
     "PrAllowed": {
@@ -3449,13 +3456,33 @@
         "WirelessDeviceStatistics$Sidewalk": "<p>The Sidewalk account credentials.</p>"
       }
     },
+    "SidewalkListDevicesForImportInfo": {
+      "base": "<p>The Sidewalk-related object containing positioning information used to configure Sidewalk devices during import.</p>",
+      "refs": {
+        "ListDevicesForWirelessDeviceImportTaskResponse$Sidewalk": "<p>The Sidewalk object containing Sidewalk-related device information.</p>"
+      }
+    },
     "SidewalkManufacturingSn": {
       "base": null,
       "refs": {
         "ImportedSidewalkDevice$SidewalkManufacturingSn": "<p>The Sidewalk manufacturing serial number (SMSN) of the Sidewalk device.</p>",
+        "SidewalkCreateWirelessDevice$SidewalkManufacturingSn": "<p>The Sidewalk manufacturing serial number.</p>",
         "SidewalkDevice$SidewalkManufacturingSn": "<p>The Sidewalk manufacturing series number.</p>",
         "SidewalkListDevice$SidewalkManufacturingSn": "<p>The Sidewalk manufacturing series number.</p>",
         "SidewalkSingleStartImportInfo$SidewalkManufacturingSn": "<p>The Sidewalk manufacturing serial number (SMSN) of the device added to the import task.</p>"
+      }
+    },
+    "SidewalkPositioning": {
+      "base": "<p>The Positioning object of the Sidewalk device.</p>",
+      "refs": {
+        "SidewalkCreateWirelessDevice$Positioning": "<p>The Positioning object of the Sidewalk device.</p>",
+        "SidewalkDevice$Positioning": "<p>The Positioning object of the Sidewalk device.</p>",
+        "SidewalkGetStartImportInfo$Positioning": "<p>The Positioning object of the Sidewalk device.</p>",
+        "SidewalkListDevice$Positioning": "<p>The Positioning object of the Sidewalk device.</p>",
+        "SidewalkListDevicesForImportInfo$Positioning": "<p>The Positioning object of the Sidewalk device.</p>",
+        "SidewalkSingleStartImportInfo$Positioning": "<p>The Positioning object of the Sidewalk device.</p>",
+        "SidewalkStartImportInfo$Positioning": "<p>The Positioning object of the Sidewalk device.</p>",
+        "SidewalkUpdateWirelessDevice$Positioning": "<p>The Positioning object of the Sidewalk device.</p>"
       }
     },
     "SidewalkResourceTypeEventConfiguration": {
@@ -3494,6 +3521,12 @@
       "base": "<p>Sidewalk object information for updating an import task.</p>",
       "refs": {
         "UpdateWirelessDeviceImportTaskRequest$Sidewalk": "<p>The Sidewalk-related parameters of the import task to be updated.</p>"
+      }
+    },
+    "SidewalkUpdateWirelessDevice": {
+      "base": "<p>Sidewalk object for updating a wireless device.</p>",
+      "refs": {
+        "UpdateWirelessDeviceRequest$Sidewalk": "<p>The updated sidewalk properties.</p>"
       }
     },
     "SigningAlg": {

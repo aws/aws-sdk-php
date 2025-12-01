@@ -139,6 +139,24 @@
       ],
       "idempotent":true
     },
+    "DeleteTableBucketMetricsConfiguration":{
+      "name":"DeleteTableBucketMetricsConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/buckets/{tableBucketARN}/metrics",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteTableBucketMetricsConfigurationRequest"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
+    },
     "DeleteTableBucketPolicy":{
       "name":"DeleteTableBucketPolicy",
       "http":{
@@ -192,7 +210,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTable":{
       "name":"GetTable",
@@ -211,7 +230,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTableBucket":{
       "name":"GetTableBucket",
@@ -230,7 +250,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTableBucketEncryption":{
       "name":"GetTableBucketEncryption",
@@ -248,7 +269,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"BadRequestException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTableBucketMaintenanceConfiguration":{
       "name":"GetTableBucketMaintenanceConfiguration",
@@ -266,7 +288,27 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "GetTableBucketMetricsConfiguration":{
+      "name":"GetTableBucketMetricsConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/buckets/{tableBucketARN}/metrics",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTableBucketMetricsConfigurationRequest"},
+      "output":{"shape":"GetTableBucketMetricsConfigurationResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "readonly":true
     },
     "GetTableBucketPolicy":{
       "name":"GetTableBucketPolicy",
@@ -284,7 +326,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTableEncryption":{
       "name":"GetTableEncryption",
@@ -302,7 +345,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"BadRequestException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTableMaintenanceConfiguration":{
       "name":"GetTableMaintenanceConfiguration",
@@ -320,7 +364,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTableMaintenanceJobStatus":{
       "name":"GetTableMaintenanceJobStatus",
@@ -338,7 +383,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTableMetadataLocation":{
       "name":"GetTableMetadataLocation",
@@ -356,7 +402,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTablePolicy":{
       "name":"GetTablePolicy",
@@ -374,7 +421,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListNamespaces":{
       "name":"ListNamespaces",
@@ -393,7 +441,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTableBuckets":{
       "name":"ListTableBuckets",
@@ -412,7 +461,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTables":{
       "name":"ListTables",
@@ -430,7 +480,27 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"GET",
+        "requestUri":"/tag/{resourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTagsForResourceRequest"},
+      "output":{"shape":"ListTagsForResourceResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
     },
     "PutTableBucketEncryption":{
       "name":"PutTableBucketEncryption",
@@ -466,6 +536,24 @@
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
       ]
+    },
+    "PutTableBucketMetricsConfiguration":{
+      "name":"PutTableBucketMetricsConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/buckets/{tableBucketARN}/metrics",
+        "responseCode":204
+      },
+      "input":{"shape":"PutTableBucketMetricsConfigurationRequest"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
     },
     "PutTableBucketPolicy":{
       "name":"PutTableBucketPolicy",
@@ -536,6 +624,44 @@
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
       ]
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/tag/{resourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"TagResourceRequest"},
+      "output":{"shape":"TagResourceResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/tag/{resourceArn}",
+        "responseCode":204
+      },
+      "input":{"shape":"UntagResourceRequest"},
+      "output":{"shape":"UntagResourceResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
     },
     "UpdateTableMetadataLocation":{
       "name":"UpdateTableMetadataLocation",
@@ -637,7 +763,8 @@
       "required":["name"],
       "members":{
         "name":{"shape":"TableBucketName"},
-        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "tags":{"shape":"Tags"}
       }
     },
     "CreateTableBucketResponse":{
@@ -669,7 +796,8 @@
         "name":{"shape":"TableName"},
         "format":{"shape":"OpenTableFormat"},
         "metadata":{"shape":"TableMetadata"},
-        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "tags":{"shape":"Tags"}
       }
     },
     "CreateTableResponse":{
@@ -703,6 +831,17 @@
       }
     },
     "DeleteTableBucketEncryptionRequest":{
+      "type":"structure",
+      "required":["tableBucketARN"],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"uri",
+          "locationName":"tableBucketARN"
+        }
+      }
+    },
+    "DeleteTableBucketMetricsConfigurationRequest":{
       "type":"structure",
       "required":["tableBucketARN"],
       "members":{
@@ -890,6 +1029,25 @@
       "members":{
         "tableBucketARN":{"shape":"TableBucketARN"},
         "configuration":{"shape":"TableBucketMaintenanceConfiguration"}
+      }
+    },
+    "GetTableBucketMetricsConfigurationRequest":{
+      "type":"structure",
+      "required":["tableBucketARN"],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"uri",
+          "locationName":"tableBucketARN"
+        }
+      }
+    },
+    "GetTableBucketMetricsConfigurationResponse":{
+      "type":"structure",
+      "required":["tableBucketARN"],
+      "members":{
+        "tableBucketARN":{"shape":"TableBucketARN"},
+        "id":{"shape":"String"}
       }
     },
     "GetTableBucketPolicyRequest":{
@@ -1372,6 +1530,23 @@
         "continuationToken":{"shape":"NextToken"}
       }
     },
+    "ListTagsForResourceRequest":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{
+          "shape":"ResourceArn",
+          "location":"uri",
+          "locationName":"resourceArn"
+        }
+      }
+    },
+    "ListTagsForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"Tags"}
+      }
+    },
     "MaintenanceStatus":{
       "type":"string",
       "enum":[
@@ -1478,6 +1653,17 @@
         "value":{"shape":"TableBucketMaintenanceConfigurationValue"}
       }
     },
+    "PutTableBucketMetricsConfigurationRequest":{
+      "type":"structure",
+      "required":["tableBucketARN"],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"uri",
+          "locationName":"tableBucketARN"
+        }
+      }
+    },
     "PutTableBucketPolicyRequest":{
       "type":"structure",
       "required":[
@@ -1580,6 +1766,12 @@
         "newName":{"shape":"TableName"},
         "versionToken":{"shape":"VersionToken"}
       }
+    },
+    "ResourceArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws[-a-z0-9]*:[a-z0-9]+:[-a-z0-9]*:[0-9]{12}:bucket/.+"
     },
     "ResourcePolicy":{
       "type":"string",
@@ -1776,6 +1968,44 @@
         "aws"
       ]
     },
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"}
+    },
+    "TagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tags"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"ResourceArn",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "TagResourceResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
+    "Tags":{
+      "type":"map",
+      "key":{"shape":"TagKey"},
+      "value":{"shape":"TagValue"}
+    },
     "TooManyRequestsException":{
       "type":"structure",
       "members":{
@@ -1786,6 +2016,29 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "UntagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tagKeys"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"ResourceArn",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "tagKeys":{
+          "shape":"TagKeyList",
+          "location":"querystring",
+          "locationName":"tagKeys"
+        }
+      }
+    },
+    "UntagResourceResponse":{
+      "type":"structure",
+      "members":{}
     },
     "UpdateTableMetadataLocationRequest":{
       "type":"structure",

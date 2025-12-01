@@ -28,6 +28,7 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"},
         {"shape":"ConflictException"},
         {"shape":"NotFoundException"},
         {"shape":"ServiceQuotaExceededException"}
@@ -49,6 +50,7 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"},
         {"shape":"ConflictException"},
         {"shape":"ServiceQuotaExceededException"}
       ],
@@ -69,7 +71,7 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"RequestTimeoutException"}
       ],
       "idempotent":true
     },
@@ -88,8 +90,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ConflictException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"RequestTimeoutException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -108,8 +110,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
       ],
       "idempotent":true
     },
@@ -131,8 +133,8 @@
         {"shape":"KmsInvalidStateException"},
         {"shape":"AccessDeniedException"},
         {"shape":"KmsNotFoundException"},
+        {"shape":"RequestTimeoutException"},
         {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"},
         {"shape":"KmsDisabledException"}
       ],
       "idempotent":true
@@ -152,9 +154,10 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"}
-      ]
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
+      ],
+      "readonly":true
     },
     "GetVectorBucket":{
       "name":"GetVectorBucket",
@@ -171,9 +174,10 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"}
-      ]
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
+      ],
+      "readonly":true
     },
     "GetVectorBucketPolicy":{
       "name":"GetVectorBucketPolicy",
@@ -190,9 +194,10 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"}
-      ]
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
+      ],
+      "readonly":true
     },
     "GetVectors":{
       "name":"GetVectors",
@@ -212,10 +217,11 @@
         {"shape":"KmsInvalidStateException"},
         {"shape":"AccessDeniedException"},
         {"shape":"KmsNotFoundException"},
+        {"shape":"RequestTimeoutException"},
         {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"},
         {"shape":"KmsDisabledException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListIndexes":{
       "name":"ListIndexes",
@@ -232,9 +238,10 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"}
-      ]
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
+      ],
+      "readonly":true
     },
     "ListVectorBuckets":{
       "name":"ListVectorBuckets",
@@ -251,8 +258,9 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ServiceQuotaExceededException"}
-      ]
+        {"shape":"RequestTimeoutException"}
+      ],
+      "readonly":true
     },
     "ListVectors":{
       "name":"ListVectors",
@@ -269,9 +277,10 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"}
-      ]
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
+      ],
+      "readonly":true
     },
     "PutVectorBucketPolicy":{
       "name":"PutVectorBucketPolicy",
@@ -288,8 +297,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"RequestTimeoutException"},
+        {"shape":"NotFoundException"}
       ],
       "idempotent":true
     },
@@ -311,6 +320,7 @@
         {"shape":"KmsInvalidStateException"},
         {"shape":"AccessDeniedException"},
         {"shape":"KmsNotFoundException"},
+        {"shape":"RequestTimeoutException"},
         {"shape":"NotFoundException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"KmsDisabledException"}
@@ -335,10 +345,11 @@
         {"shape":"KmsInvalidStateException"},
         {"shape":"AccessDeniedException"},
         {"shape":"KmsNotFoundException"},
+        {"shape":"RequestTimeoutException"},
         {"shape":"NotFoundException"},
-        {"shape":"ServiceQuotaExceededException"},
         {"shape":"KmsDisabledException"}
-      ]
+      ],
+      "readonly":true
     }
   },
   "shapes":{
@@ -390,7 +401,10 @@
     },
     "CreateIndexOutput":{
       "type":"structure",
-      "members":{}
+      "required":["indexArn"],
+      "members":{
+        "indexArn":{"shape":"IndexArn"}
+      }
     },
     "CreateVectorBucketInput":{
       "type":"structure",
@@ -402,7 +416,10 @@
     },
     "CreateVectorBucketOutput":{
       "type":"structure",
-      "members":{}
+      "required":["vectorBucketArn"],
+      "members":{
+        "vectorBucketArn":{"shape":"VectorBucketArn"}
+      }
     },
     "DataType":{
       "type":"string",
@@ -920,14 +937,31 @@
     },
     "QueryVectorsOutput":{
       "type":"structure",
-      "required":["vectors"],
+      "required":[
+        "vectors",
+        "distanceMetric"
+      ],
       "members":{
-        "vectors":{"shape":"QueryVectorsOutputList"}
+        "vectors":{"shape":"QueryVectorsOutputList"},
+        "distanceMetric":{"shape":"DistanceMetric"}
       }
     },
     "QueryVectorsOutputList":{
       "type":"list",
       "member":{"shape":"QueryOutputVector"}
+    },
+    "RequestTimeoutException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "error":{
+        "httpStatusCode":408,
+        "senderFault":true
+      },
+      "exception":true,
+      "retryable":{"throttling":false}
     },
     "ServiceQuotaExceededException":{
       "type":"structure",

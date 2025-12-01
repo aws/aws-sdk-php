@@ -2,10 +2,8 @@
 namespace Aws\Test;
 
 use Aws\CommandInterface;
-use Aws\Credentials\Credentials;
-use Aws\DocDB\DocDBClient;
 use Aws\Ec2\Ec2Client;
-use Aws\Neptune\NeptuneClient;
+use Aws\PresignUrlMiddleware;
 use Aws\Rds\RdsClient;
 use Aws\Result;
 use Psr\Http\Message\RequestInterface;
@@ -102,6 +100,91 @@ class PresignUrlMiddlewareTest extends TestCase
             'DBInstanceIdentifier' => 'test-replica',
             'SourceDBInstanceIdentifier' => 'test-source',
         ]);
+    }
+
+    /**
+     * @param string $parameter
+     * @param string $value
+     * @param string $expected
+     *
+     * @dataProvider extraQueryParamsProvider
+     *
+     * @return void
+     */
+    public function testExtraQueryParametersAreURLEncoded(
+        string $parameter,
+        string $value,
+        string $expected
+    ): void
+    {
+        $ec2 = new Ec2Client([
+            'region'  => 'us-east-2',
+            'version' => 'latest',
+            'handler' => function (CommandInterface $cmd, RequestInterface $r)
+            use ($expected) {
+                $url = $cmd['PresignedUrl'];
+
+                $this->assertStringContainsString(
+                    $expected,
+                    $url
+                );
+
+                return new Result;
+            },
+        ]);
+        
+        $ec2->getHandlerList()->prependInit(
+            PresignUrlMiddleware::wrap($ec2, $ec2->getEndpointProvider(), [
+                'operations' => ['CopySnapshot'],
+                'service' => 'ec2',
+                'extra_query_params' => ['CopySnapshot' => [$parameter]]
+            ])
+        );
+        
+        $ec2->copySnapshot([
+            'SourceRegion' => 'eu-west-1',
+            'SourceSnapshotId' => 'foo',
+            "$parameter" => $value,
+        ]);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function extraQueryParamsProvider(): array
+    {
+        return [
+            'simple_parameter' => [
+                'parameter' => 'MyParameter',
+                'value' => 'MyValue',
+                'expected' => 'MyParameter=MyValue',
+            ],
+            'simple_parameter_with_space' => [
+                'parameter' => 'MyParameter',
+                'value' => 'My Value',
+                'expected' => 'MyParameter=My%20Value',
+            ],
+            'parameter_injection_with_ampersand' => [
+                'parameter' => 'MyParameter',
+                'value' => 'myValue&anotherKey=anotherValue',
+                'expected' => 'MyParameter=myValue%26anotherKey%3DanotherValue',
+            ],
+            'parameter_injection_multiple_params' => [
+                'parameter' => 'MyParameter',
+                'value' => 'value&param1=val1&param2=val2',
+                'expected' => 'MyParameter=value%26param1%3Dval1%26param2%3Dval2',
+            ],
+            'parameter_injection_with_equals' => [
+                'parameter' => 'MyParameter',
+                'value' => 'value=injection&malicious=true',
+                'expected' => 'MyParameter=value%3Dinjection%26malicious%3Dtrue',
+            ],
+            'parameter_injection_with_question_mark' => [
+                'parameter' => 'MyParameter',
+                'value' => 'value?extra=param&more=data',
+                'expected' => 'MyParameter=value%3Fextra%3Dparam%26more%3Ddata',
+            ],
+        ];
     }
 }
 

@@ -381,6 +381,18 @@
         "ServiceQuotaExceededException$resourceType": "<p> The type of Amazon Web Services resource. </p>"
       }
     },
+    "SearchOption": {
+      "base": null,
+      "refs": {
+        "StringSearch$searchOption": "<p> The type of search operation to perform on the string value. Determines how the search value is matched against the target field. </p>"
+      }
+    },
+    "SearchValue": {
+      "base": null,
+      "refs": {
+        "StringSearch$searchValue": "<p> The string value to use in the search operation. This value is compared against the target field using the specified search option. </p>"
+      }
+    },
     "ServiceCode": {
       "base": null,
       "refs": {
@@ -390,6 +402,18 @@
     "ServiceQuotaExceededException": {
       "base": "<p> You've reached the limit of resources you can create, or exceeded the size of an individual resource. </p>",
       "refs": {}
+    },
+    "StringSearch": {
+      "base": "<p> A structure that defines how to search for string values. You can specify a search option and the value to search for. </p>",
+      "refs": {
+        "StringSearches$member": null
+      }
+    },
+    "StringSearches": {
+      "base": null,
+      "refs": {
+        "ListBillingViewsRequest$names": "<p> Filters the list of billing views by name. You can specify search criteria to match billing view names based on the search option provided. </p>"
+      }
     },
     "TagKey": {
       "base": null,

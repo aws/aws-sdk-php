@@ -3895,6 +3895,7 @@
         "Id":{"shape":"ImportTaskId"},
         "Arn":{"shape":"ImportTaskArn"},
         "DestinationName":{"shape":"DestinationName"},
+        "Positioning":{"shape":"PositioningConfigStatus"},
         "Sidewalk":{"shape":"SidewalkGetStartImportInfo"},
         "CreationTime":{"shape":"CreationTime"},
         "Status":{"shape":"ImportTaskStatus"},
@@ -4379,6 +4380,8 @@
       "members":{
         "NextToken":{"shape":"NextToken"},
         "DestinationName":{"shape":"DestinationName"},
+        "Positioning":{"shape":"PositioningConfigStatus"},
+        "Sidewalk":{"shape":"SidewalkListDevicesForImportInfo"},
         "ImportedWirelessDeviceList":{"shape":"ImportedWirelessDeviceList"}
       }
     },
@@ -5922,7 +5925,9 @@
     "SidewalkCreateWirelessDevice":{
       "type":"structure",
       "members":{
-        "DeviceProfileId":{"shape":"DeviceProfileId"}
+        "DeviceProfileId":{"shape":"DeviceProfileId"},
+        "Positioning":{"shape":"SidewalkPositioning"},
+        "SidewalkManufacturingSn":{"shape":"SidewalkManufacturingSn"}
       }
     },
     "SidewalkDevice":{
@@ -5935,7 +5940,8 @@
         "PrivateKeys":{"shape":"PrivateKeysList"},
         "DeviceProfileId":{"shape":"DeviceProfileId"},
         "CertificateId":{"shape":"DakCertificateId"},
-        "Status":{"shape":"WirelessDeviceSidewalkStatus"}
+        "Status":{"shape":"WirelessDeviceSidewalkStatus"},
+        "Positioning":{"shape":"SidewalkPositioning"}
       }
     },
     "SidewalkDeviceMetadata":{
@@ -5965,7 +5971,8 @@
       "type":"structure",
       "members":{
         "DeviceCreationFileList":{"shape":"DeviceCreationFileList"},
-        "Role":{"shape":"Role"}
+        "Role":{"shape":"Role"},
+        "Positioning":{"shape":"SidewalkPositioning"}
       }
     },
     "SidewalkId":{
@@ -5980,12 +5987,25 @@
         "SidewalkManufacturingSn":{"shape":"SidewalkManufacturingSn"},
         "DeviceCertificates":{"shape":"DeviceCertificateList"},
         "DeviceProfileId":{"shape":"DeviceProfileId"},
-        "Status":{"shape":"WirelessDeviceSidewalkStatus"}
+        "Status":{"shape":"WirelessDeviceSidewalkStatus"},
+        "Positioning":{"shape":"SidewalkPositioning"}
+      }
+    },
+    "SidewalkListDevicesForImportInfo":{
+      "type":"structure",
+      "members":{
+        "Positioning":{"shape":"SidewalkPositioning"}
       }
     },
     "SidewalkManufacturingSn":{
       "type":"string",
       "max":64
+    },
+    "SidewalkPositioning":{
+      "type":"structure",
+      "members":{
+        "DestinationName":{"shape":"DestinationName"}
+      }
     },
     "SidewalkResourceTypeEventConfiguration":{
       "type":"structure",
@@ -6004,14 +6024,16 @@
     "SidewalkSingleStartImportInfo":{
       "type":"structure",
       "members":{
-        "SidewalkManufacturingSn":{"shape":"SidewalkManufacturingSn"}
+        "SidewalkManufacturingSn":{"shape":"SidewalkManufacturingSn"},
+        "Positioning":{"shape":"SidewalkPositioning"}
       }
     },
     "SidewalkStartImportInfo":{
       "type":"structure",
       "members":{
         "DeviceCreationFile":{"shape":"DeviceCreationFile"},
-        "Role":{"shape":"Role"}
+        "Role":{"shape":"Role"},
+        "Positioning":{"shape":"SidewalkPositioning"}
       }
     },
     "SidewalkUpdateAccount":{
@@ -6024,6 +6046,12 @@
       "type":"structure",
       "members":{
         "DeviceCreationFile":{"shape":"DeviceCreationFile"}
+      }
+    },
+    "SidewalkUpdateWirelessDevice":{
+      "type":"structure",
+      "members":{
+        "Positioning":{"shape":"SidewalkPositioning"}
       }
     },
     "SigningAlg":{
@@ -6116,6 +6144,7 @@
         },
         "DeviceName":{"shape":"DeviceName"},
         "Tags":{"shape":"TagList"},
+        "Positioning":{"shape":"PositioningConfigStatus"},
         "Sidewalk":{"shape":"SidewalkSingleStartImportInfo"}
       }
     },
@@ -6143,6 +6172,7 @@
           "idempotencyToken":true
         },
         "Tags":{"shape":"TagList"},
+        "Positioning":{"shape":"PositioningConfigStatus"},
         "Sidewalk":{"shape":"SidewalkStartImportInfo"}
       }
     },
@@ -6780,7 +6810,8 @@
         "Name":{"shape":"WirelessDeviceName"},
         "Description":{"shape":"Description"},
         "LoRaWAN":{"shape":"LoRaWANUpdateDevice"},
-        "Positioning":{"shape":"PositioningConfigStatus"}
+        "Positioning":{"shape":"PositioningConfigStatus"},
+        "Sidewalk":{"shape":"SidewalkUpdateWirelessDevice"}
       }
     },
     "UpdateWirelessDeviceResponse":{
@@ -6964,6 +6995,7 @@
         "Id":{"shape":"ImportTaskId"},
         "Arn":{"shape":"ImportTaskArn"},
         "DestinationName":{"shape":"DestinationName"},
+        "Positioning":{"shape":"PositioningConfigStatus"},
         "Sidewalk":{"shape":"SidewalkGetStartImportInfo"},
         "CreationTime":{"shape":"CreationTime"},
         "Status":{"shape":"ImportTaskStatus"},
@@ -7026,7 +7058,8 @@
         "Sidewalk":{"shape":"SidewalkListDevice"},
         "FuotaDeviceStatus":{"shape":"FuotaDeviceStatus"},
         "MulticastDeviceStatus":{"shape":"MulticastDeviceStatus"},
-        "McGroupId":{"shape":"McGroupId"}
+        "McGroupId":{"shape":"McGroupId"},
+        "Positioning":{"shape":"PositioningConfigStatus"}
       }
     },
     "WirelessDeviceStatisticsList":{

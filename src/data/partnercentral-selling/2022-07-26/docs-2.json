@@ -6,6 +6,7 @@
     "AssignOpportunity": "<p>Enables you to reassign an existing <code>Opportunity</code> to another user within your Partner Central account. The specified user receives the opportunity, and it appears on their Partner Central dashboard, allowing them to take necessary actions or proceed with the opportunity.</p> <p>This is useful for distributing opportunities to the appropriate team members or departments within your organization, ensuring that each opportunity is handled by the right person. By default, the opportunity owner is the one who creates it. Currently, there's no API to enumerate the list of available users.</p>",
     "AssociateOpportunity": "<p>Enables you to create a formal association between an <code>Opportunity</code> and various related entities, enriching the context and details of the opportunity for better collaboration and decision making. You can associate an opportunity with the following entity types:</p> <ul> <li> <p>Partner Solution: A software product or consulting practice created and delivered by Partners. Partner Solutions help customers address business challenges using Amazon Web Services services.</p> </li> <li> <p>Amazon Web Services Products: Amazon Web Services offers many products and services that provide scalable, reliable, and cost-effective infrastructure solutions. For the latest list of Amazon Web Services products, see <a href=\"https://github.com/aws-samples/partner-crm-integration-samples/blob/main/resources/aws_products.json\">Amazon Web Services products</a>.</p> </li> <li> <p>Amazon Web Services Marketplace private offer: Allows Amazon Web Services Marketplace sellers to extend custom pricing and terms to individual Amazon Web Services customers. Sellers can negotiate custom prices, payment schedules, and end user license terms through private offers, enabling Amazon Web Services customers to acquire software solutions tailored to their specific needs. For more information, see <a href=\"https://docs.aws.amazon.com/marketplace/latest/buyerguide/buyer-private-offers.html\">Private offers in Amazon Web Services Marketplace</a>.</p> </li> </ul> <p>To obtain identifiers for these entities, use the following methods:</p> <ul> <li> <p>Solution: Use the <code>ListSolutions</code> operation.</p> </li> <li> <p>AWS Products: For the latest list of Amazon Web Services products, see <a href=\"https://github.com/aws-samples/partner-crm-integration-samples/blob/main/resources/aws_products.json\">Amazon Web Services products</a>.</p> </li> <li> <p>Amazon Web Services Marketplace private offer: Use the <a href=\"https://docs.aws.amazon.com/marketplace/latest/APIReference/catalog-apis.html\">Using the Amazon Web Services Marketplace Catalog API</a> to list entities. Specifically, use the <code>ListEntities</code> operation to retrieve a list of private offers. The request returns the details of available private offers. For more information, see <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/API_ListEntities.html\">ListEntities</a>.</p> </li> </ul>",
     "CreateEngagement": "<p>The <code>CreateEngagement</code> action allows you to create an <code>Engagement</code>, which serves as a collaborative space between different parties such as AWS Partners and AWS Sellers. This action automatically adds the caller's AWS account as an active member of the newly created <code>Engagement</code>.</p>",
+    "CreateEngagementContext": "<p>Creates a new context within an existing engagement. This action allows you to add contextual information such as customer projects or documents to an engagement, providing additional details that help facilitate collaboration between engagement members.</p>",
     "CreateEngagementInvitation": "<p> This action creates an invitation from a sender to a single receiver to join an engagement. </p>",
     "CreateOpportunity": "<p>Creates an <code>Opportunity</code> record in Partner Central. Use this operation to create a potential business opportunity for submission to Amazon Web Services. Creating an opportunity sets <code>Lifecycle.ReviewStatus</code> to <code>Pending Submission</code>.</p> <p>To submit an opportunity, follow these steps:</p> <ol> <li> <p>To create the opportunity, use <code>CreateOpportunity</code>.</p> </li> <li> <p>To associate a solution with the opportunity, use <code>AssociateOpportunity</code>.</p> </li> <li> <p>To start the engagement with AWS, use <code>StartEngagementFromOpportunity</code>.</p> </li> </ol> <p>After submission, you can't edit the opportunity until the review is complete. But opportunities in the <code>Pending Submission</code> state must have complete details. You can update the opportunity while it's in the <code>Pending Submission</code> state.</p> <p>There's a set of mandatory fields to create opportunities, but consider providing optional fields to enrich the opportunity record.</p>",
     "CreateResourceSnapshot": "<p> This action allows you to create an immutable snapshot of a specific resource, such as an opportunity, within the context of an engagement. The snapshot captures a subset of the resource's data based on the schema defined by the provided template.</p>",
@@ -26,6 +27,7 @@
     "ListEngagementResourceAssociations": "<p>Lists the associations between resources and engagements where the caller is a member and has at least one snapshot in the engagement.</p>",
     "ListEngagements": "<p>This action allows users to retrieve a list of Engagement records from Partner Central. This action can be used to manage and track various engagements across different stages of the partner selling process. </p>",
     "ListOpportunities": "<p>This request accepts a list of filters that retrieve opportunity subsets as well as sort options. This feature is available to partners from <a href=\"https://partnercentral.awspartner.com/\">Partner Central</a> using the <code>ListOpportunities</code> API action.</p> <p>To synchronize your system with Amazon Web Services, list only the opportunities that were newly created or updated. We recommend you rely on events emitted by the service into your Amazon Web Services account’s Amazon EventBridge default event bus. You can also use the <code>ListOpportunities</code> action.</p> <p>We recommend the following approach:</p> <ol> <li> <p>Find the latest <code>LastModifiedDate</code> that you stored, and only use the values that came from Amazon Web Services. Don’t use values generated by your system.</p> </li> <li> <p>When you send a <code>ListOpportunities</code> request, submit the date in ISO 8601 format in the <code>AfterLastModifiedDate</code> filter.</p> </li> <li> <p>Amazon Web Services only returns opportunities created or updated on or after that date and time. Use <code>NextToken</code> to iterate over all pages.</p> </li> </ol>",
+    "ListOpportunityFromEngagementTasks": "<p>Lists all in-progress, completed, or failed opportunity creation tasks from engagements that were initiated by the caller's account.</p>",
     "ListResourceSnapshotJobs": "<p> Lists resource snapshot jobs owned by the customer. This operation supports various filtering scenarios, including listing all jobs owned by the caller, jobs for a specific engagement, jobs with a specific status, or any combination of these filters. </p>",
     "ListResourceSnapshots": "<p>Retrieves a list of resource view snapshots based on specified criteria. This operation supports various use cases, including: </p> <ul> <li> <p>Fetching all snapshots associated with an engagement.</p> </li> <li> <p>Retrieving snapshots of a specific resource type within an engagement.</p> </li> <li> <p>Obtaining snapshots for a particular resource using a specified template.</p> </li> <li> <p>Accessing the latest snapshot of a resource within an engagement.</p> </li> <li> <p>Filtering snapshots by resource owner.</p> </li> </ul>",
     "ListSolutions": "<p>Retrieves a list of Partner Solutions that the partner registered on Partner Central. This API is used to generate a list of solutions that an end user selects from for association with an opportunity.</p>",
@@ -34,11 +36,13 @@
     "RejectEngagementInvitation": "<p>This action rejects an <code>EngagementInvitation</code> that AWS shared. Rejecting an invitation indicates that the partner doesn't want to pursue the opportunity, and all related data will become inaccessible thereafter.</p>",
     "StartEngagementByAcceptingInvitationTask": "<p>This action starts the engagement by accepting an <code>EngagementInvitation</code>. The task is asynchronous and involves the following steps: accepting the invitation, creating an opportunity in the partner’s account from the AWS opportunity, and copying details for tracking. When completed, an <code>Opportunity Created</code> event is generated, indicating that the opportunity has been successfully created in the partner's account.</p>",
     "StartEngagementFromOpportunityTask": "<p>Similar to <code>StartEngagementByAcceptingInvitationTask</code>, this action is asynchronous and performs multiple steps before completion. This action orchestrates a comprehensive workflow that combines multiple API operations into a single task to create and initiate an engagement from an existing opportunity. It automatically executes a sequence of operations including <code>GetOpportunity</code>, <code>CreateEngagement</code> (if it doesn't exist), <code>CreateResourceSnapshot</code>, <code>CreateResourceSnapshotJob</code>, <code>CreateEngagementInvitation</code> (if not already invited/accepted), and <code>SubmitOpportunity</code>. </p>",
+    "StartOpportunityFromEngagementTask": "<p>This action creates an opportunity from an existing engagement context. The task is asynchronous and orchestrates the process of converting engagement contextual information into a structured opportunity record within the partner's account.</p>",
     "StartResourceSnapshotJob": "<p>Starts a resource snapshot job that has been previously created.</p>",
     "StopResourceSnapshotJob": "<p>Stops a resource snapshot job. The job must be started prior to being stopped.</p>",
     "SubmitOpportunity": "<p>Use this action to submit an Opportunity that was previously created by partner for AWS review. After you perform this action, the Opportunity becomes non-editable until it is reviewed by AWS and has <code> LifeCycle.ReviewStatus </code> as either <code>Approved</code> or <code>Action Required</code>. </p>",
     "TagResource": "<p>Assigns one or more tags (key-value pairs) to the specified resource.</p>",
     "UntagResource": "<p>Removes a tag or tags from a resource.</p>",
+    "UpdateEngagementContext": "<p>Updates the context information for an existing engagement with new or modified data.</p>",
     "UpdateOpportunity": "<p>Updates the <code>Opportunity</code> record identified by a given <code>Identifier</code>. This operation allows you to modify the details of an existing opportunity to reflect the latest information and progress. Use this action to keep the opportunity record up-to-date and accurate.</p> <p>When you perform updates, include the entire payload with each request. If any field is omitted, the API assumes that the field is set to <code>null</code>. The best practice is to always perform a <code>GetOpportunity</code> to retrieve the latest values, then send the complete payload with the updated values to be changed.</p>"
   },
   "shapes": {
@@ -49,6 +53,12 @@
     "AccessDeniedException": {
       "base": "<p>This error occurs when you don't have permission to perform the requested action.</p> <p>You don’t have access to this action or resource. Review IAM policies or contact your AWS administrator for assistance.</p>",
       "refs": {}
+    },
+    "AccessDeniedExceptionErrorCode": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$Reason": "<p>The reason why access was denied for the requested operation.</p>"
+      }
     },
     "Account": {
       "base": "<p>Specifies the <code>Customer</code>'s account details associated with the <code>Opportunity</code>.</p>",
@@ -126,7 +136,8 @@
     "AddressSummary": {
       "base": "<p>An object that contains an <code>Address</code> object's subset of fields.</p>",
       "refs": {
-        "AccountSummary$Address": "<p>Specifies the end <code>Customer</code>'s address details associated with the <code>Opportunity</code>.</p>"
+        "AccountSummary$Address": "<p>Specifies the end <code>Customer</code>'s address details associated with the <code>Opportunity</code>.</p>",
+        "LeadCustomer$Address": null
       }
     },
     "AddressSummaryCityString": {
@@ -202,8 +213,10 @@
         "EngagementMember$AccountId": "<p>This is the unique identifier for the AWS account associated with the member organization. It's used for AWS-related operations and identity verification. </p>",
         "EngagementResourceAssociationSummary$CreatedBy": "<p>The AWS account ID of the entity that owns the resource. Identifies the account responsible for or having primary control over the resource. </p>",
         "EngagementSummary$CreatedBy": "<p>The AWS Account ID of the Engagement creator.</p>",
+        "EngagementSummary$ModifiedBy": "<p>The AWS account ID of the user who last modified the engagement. This field helps track who made the most recent changes to the engagement.</p>",
         "GetEngagementInvitationResponse$SenderAwsAccountId": "<p>Specifies the AWS Account ID of the sender, which identifies the AWS team responsible for sharing the engagement invitation.</p>",
         "GetEngagementResponse$CreatedBy": "<p>The AWS account ID of the user who originally created the engagement. This field helps in tracking the origin of the engagement.</p>",
+        "GetEngagementResponse$ModifiedBy": "<p>The AWS account ID of the user who last modified the engagement. This field helps track who made the most recent changes to the engagement.</p>",
         "GetResourceSnapshotResponse$CreatedBy": "<p>The AWS account ID of the principal (user or role) who created the snapshot. This helps in tracking the origin of the snapshot. </p>",
         "ListEngagementResourceAssociationsRequest$CreatedBy": "<p>Filters the response to include only snapshots of resources owned by the specified AWS account ID. Use this when you want to find associations related to resources owned by a particular account. </p>",
         "ListResourceSnapshotsRequest$CreatedBy": "<p>Filters the response to include only snapshots of resources owned by the specified AWS account. </p>",
@@ -245,6 +258,25 @@
       "base": null,
       "refs": {
         "RelatedEntityIdentifiers$AwsMarketplaceOffers": "<p>Takes one value per opportunity. Each value is an Amazon Resource Name (ARN), in this format: <code>\"offers\": [\"arn:aws:aws-marketplace:us-east-1:999999999999:AWSMarketplace/Offer/offer-sampleOffer32\"]</code>.</p> <p>Use the <a href=\"https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/API_ListEntities.html\">ListEntities</a> action in the Marketplace Catalog APIs for a list of offers in the associated Marketplace seller account.</p>"
+      }
+    },
+    "AwsMarketplaceOfferSetIdentifier": {
+      "base": null,
+      "refs": {
+        "AwsMarketplaceOfferSetIdentifiers$member": null
+      }
+    },
+    "AwsMarketplaceOfferSetIdentifiers": {
+      "base": null,
+      "refs": {
+        "RelatedEntityIdentifiers$AwsMarketplaceOfferSets": "<p>Enables the association of AWS Marketplace offer sets with the <code>Opportunity</code>. Offer sets allow grouping multiple related marketplace offers together for comprehensive solution packaging. Each value is an Amazon Resource Name (ARN) in this format: <code>arn:aws:aws-marketplace:us-east-1:999999999999:AWSMarketplace/OfferSet/offerset-sampleOfferSet32</code>.</p>"
+      }
+    },
+    "AwsMaturity": {
+      "base": null,
+      "refs": {
+        "LeadCustomer$AwsMaturity": "<p>Indicates the customer's level of experience and adoption with AWS services. This assessment helps determine the appropriate engagement approach and solution complexity.</p>",
+        "LeadInvitationCustomer$AwsMaturity": "<p>Indicates the customer's level of experience and adoption with AWS services. This assessment helps partners understand the customer's cloud maturity and tailor their engagement approach accordingly.</p>"
       }
     },
     "AwsMemberBusinessTitle": {
@@ -350,6 +382,7 @@
         "AcceptEngagementInvitationRequest$Catalog": "<p>The <code>CatalogType</code> parameter specifies the catalog associated with the engagement invitation. Accepted values are <code>AWS</code> and <code>Sandbox</code>, which determine the environment in which the engagement invitation is managed.</p>",
         "AssignOpportunityRequest$Catalog": "<p>Specifies the catalog associated with the request. This field takes a string value from a predefined list: <code>AWS</code> or <code>Sandbox</code>. The catalog determines which environment the opportunity is assigned in. Use <code>AWS</code> to assign real opportunities in the Amazon Web Services catalog, and <code>Sandbox</code> for testing in secure, isolated environments.</p>",
         "AssociateOpportunityRequest$Catalog": "<p>Specifies the catalog associated with the request. This field takes a string value from a predefined list: <code>AWS</code> or <code>Sandbox</code>. The catalog determines which environment the opportunity association is made in. Use <code>AWS</code> to associate opportunities in the Amazon Web Services catalog, and <code>Sandbox</code> for testing in secure, isolated environments.</p>",
+        "CreateEngagementContextRequest$Catalog": "<p>Specifies the catalog associated with the engagement context request. This field takes a string value from a predefined list: <code>AWS</code> or <code>Sandbox</code>. The catalog determines which environment the engagement context is created in. Use <code>AWS</code> to create contexts in the production environment, and <code>Sandbox</code> for testing in secure, isolated environments.</p>",
         "CreateEngagementInvitationRequest$Catalog": "<p> Specifies the catalog related to the engagement. Accepted values are <code>AWS</code> and <code>Sandbox</code>, which determine the environment in which the engagement is managed. </p>",
         "CreateEngagementRequest$Catalog": "<p>The <code>CreateEngagementRequest$Catalog</code> parameter specifies the catalog related to the engagement. Accepted values are <code>AWS</code> and <code>Sandbox</code>, which determine the environment in which the engagement is managed.</p>",
         "CreateOpportunityRequest$Catalog": "<p>Specifies the catalog associated with the request. This field takes a string value from a predefined list: <code>AWS</code> or <code>Sandbox</code>. The catalog determines which environment the opportunity is created in. Use <code>AWS</code> to create opportunities in the Amazon Web Services catalog, and <code>Sandbox</code> for testing in secure, isolated environments.</p>",
@@ -379,6 +412,7 @@
         "ListEngagementResourceAssociationsRequest$Catalog": "<p>Specifies the catalog in which to search for engagement-resource associations. Valid Values: \"AWS\" or \"Sandbox\"</p> <ul> <li> <p> <code>AWS</code> for production environments.</p> </li> <li> <p> <code>Sandbox</code> for testing and development purposes.</p> </li> </ul>",
         "ListEngagementsRequest$Catalog": "<p> Specifies the catalog related to the request. </p>",
         "ListOpportunitiesRequest$Catalog": "<p>Specifies the catalog associated with the request. This field takes a string value from a predefined list: <code>AWS</code> or <code>Sandbox</code>. The catalog determines which environment the opportunities are listed in. Use <code>AWS</code> for listing real opportunities in the Amazon Web Services catalog, and <code>Sandbox</code> for testing in secure, isolated environments.</p>",
+        "ListOpportunityFromEngagementTasksRequest$Catalog": "<p>Specifies the catalog related to the request. Valid values are <code>AWS</code> for production environments and <code>Sandbox</code> for testing or development purposes. The catalog determines which environment the task data is retrieved from.</p>",
         "ListResourceSnapshotJobsRequest$Catalog": "<p> Specifies the catalog related to the request. </p>",
         "ListResourceSnapshotsRequest$Catalog": "<p> Specifies the catalog related to the request. </p>",
         "ListSolutionsRequest$Catalog": "<p>Specifies the catalog associated with the request. This field takes a string value from a predefined list: <code>AWS</code> or <code>Sandbox</code>. The catalog determines which environment the solutions are listed in. Use <code>AWS</code> to list solutions in the Amazon Web Services catalog, and <code>Sandbox</code> to list solutions in a secure and isolated testing environment.</p>",
@@ -389,9 +423,11 @@
         "SolutionBase$Catalog": "<p>Specifies the catalog in which the solution is hosted, either <code>AWS</code> or <code>Sandbox</code>. This helps partners differentiate between live solutions and those in testing environments.</p>",
         "StartEngagementByAcceptingInvitationTaskRequest$Catalog": "<p>Specifies the catalog related to the task. Use <code>AWS</code> for production engagements and <code>Sandbox</code> for testing scenarios.</p>",
         "StartEngagementFromOpportunityTaskRequest$Catalog": "<p>Specifies the catalog in which the engagement is tracked. Acceptable values include <code>AWS</code> for production and <code>Sandbox</code> for testing environments.</p>",
+        "StartOpportunityFromEngagementTaskRequest$Catalog": "<p>Specifies the catalog in which the opportunity creation task is executed. Acceptable values include <code>AWS</code> for production and <code>Sandbox</code> for testing environments.</p>",
         "StartResourceSnapshotJobRequest$Catalog": "<p>Specifies the catalog related to the request. Valid values are:</p> <ul> <li> <p>AWS: Starts the request from the production AWS environment.</p> </li> <li> <p>Sandbox: Starts the request from a sandbox environment used for testing or development purposes.</p> </li> </ul>",
         "StopResourceSnapshotJobRequest$Catalog": "<p>Specifies the catalog related to the request. Valid values are:</p> <ul> <li> <p>AWS: Stops the request from the production AWS environment.</p> </li> <li> <p>Sandbox: Stops the request from a sandbox environment used for testing or development purposes.</p> </li> </ul>",
         "SubmitOpportunityRequest$Catalog": "<p>Specifies the catalog related to the request. Valid values are:</p> <ul> <li> <p>AWS: Submits the opportunity request from the production AWS environment.</p> </li> <li> <p>Sandbox: Submits the opportunity request from a sandbox environment used for testing or development purposes.</p> </li> </ul>",
+        "UpdateEngagementContextRequest$Catalog": "<p>Specifies the catalog associated with the engagement context update request. This field takes a string value from a predefined list: <code>AWS</code> or <code>Sandbox</code>. The catalog determines which environment the engagement context is updated in.</p>",
         "UpdateOpportunityRequest$Catalog": "<p>Specifies the catalog associated with the request. This field takes a string value from a predefined list: <code>AWS</code> or <code>Sandbox</code>. The catalog determines which environment the opportunity is updated in. Use <code>AWS</code> to update real opportunities in the production environment, and <code>Sandbox</code> for testing in secure, isolated environments. When you use the <code>Sandbox</code> catalog, it allows you to simulate and validate your interactions with Amazon Web Services services without affecting live data or operations.</p>"
       }
     },
@@ -410,7 +446,15 @@
     "ClientToken": {
       "base": null,
       "refs": {
-        "CreateEngagementInvitationRequest$ClientToken": "<p> Specifies a unique, client-generated UUID to ensure that the request is handled exactly once. This token helps prevent duplicate invitation creations. </p>"
+        "CreateEngagementContextRequest$ClientToken": "<p>A unique, case-sensitive identifier provided by the client to ensure that the request is handled exactly once. This token helps prevent duplicate context creations and must not exceed sixty-four alphanumeric characters. Use a UUID or other unique string to ensure idempotency.</p>",
+        "CreateEngagementInvitationRequest$ClientToken": "<p> Specifies a unique, client-generated UUID to ensure that the request is handled exactly once. This token helps prevent duplicate invitation creations. </p>",
+        "CreateEngagementRequest$ClientToken": "<p>The <code>CreateEngagementRequest$ClientToken</code> parameter specifies a unique, case-sensitive identifier to ensure that the request is handled exactly once. The value must not exceed sixty-four alphanumeric characters.</p>",
+        "CreateOpportunityRequest$ClientToken": "<p>Required to be unique, and should be unchanging, it can be randomly generated or a meaningful string.</p> <p>Default: None</p> <p>Best practice: To help ensure uniqueness and avoid conflicts, use a Universally Unique Identifier (UUID) as the <code>ClientToken</code>. You can use standard libraries from most programming languages to generate this. If you use the same client token, the API returns the following error: \"Conflicting client token submitted for a new request body.\"</p>",
+        "CreateResourceSnapshotJobRequest$ClientToken": "<p>A client-generated UUID used for idempotency check. The token helps prevent duplicate job creations.</p>",
+        "CreateResourceSnapshotRequest$ClientToken": "<p> Specifies a unique, client-generated UUID to ensure that the request is handled exactly once. This token helps prevent duplicate snapshot creations. </p>",
+        "StartEngagementByAcceptingInvitationTaskRequest$ClientToken": "<p>A unique, case-sensitive identifier provided by the client that helps to ensure the idempotency of the request. This can be a random or meaningful string but must be unique for each request.</p>",
+        "StartEngagementFromOpportunityTaskRequest$ClientToken": "<p>A unique token provided by the client to help ensure the idempotency of the request. It helps prevent the same task from being performed multiple times.</p>",
+        "StartOpportunityFromEngagementTaskRequest$ClientToken": "<p>A unique token provided by the client to help ensure the idempotency of the request. It helps prevent the same task from being performed multiple times.</p>"
       }
     },
     "ClosedLostReason": {
@@ -423,13 +467,17 @@
     "CompanyName": {
       "base": null,
       "refs": {
-        "EngagementCustomer$CompanyName": "<p>Represents the name of the customer’s company associated with the Engagement Invitation. This field is used to identify the customer.</p>"
+        "EngagementCustomer$CompanyName": "<p>Represents the name of the customer’s company associated with the Engagement Invitation. This field is used to identify the customer.</p>",
+        "LeadCustomer$CompanyName": "<p>The name of the lead customer's company. This field is essential for identifying and tracking the customer organization associated with the lead.</p>",
+        "LeadInvitationCustomer$CompanyName": "<p>The name of the customer company associated with the lead invitation. This field identifies the target organization for the lead engagement opportunity.</p>"
       }
     },
     "CompanyWebsiteUrl": {
       "base": null,
       "refs": {
-        "EngagementCustomer$WebsiteUrl": "<p>Provides the website URL of the customer’s company. This field helps partners verify the legitimacy and size of the customer organization.</p>"
+        "EngagementCustomer$WebsiteUrl": "<p>Provides the website URL of the customer’s company. This field helps partners verify the legitimacy and size of the customer organization.</p>",
+        "LeadCustomer$WebsiteUrl": "<p>The website URL of the lead customer's company. This provides additional context about the customer organization and helps verify company legitimacy and size.</p>",
+        "LeadInvitationCustomer$WebsiteUrl": "<p>The website URL of the customer company. This provides additional context about the customer organization and helps partners verify company details and assess business size and legitimacy.</p>"
       }
     },
     "CompetitorName": {
@@ -461,13 +509,37 @@
         "Contact$LastName": "<p>The contact's last name associated with the <code>Opportunity</code>.</p>"
       }
     },
+    "ContextIdentifier": {
+      "base": null,
+      "refs": {
+        "ContextIdentifiers$member": null,
+        "ListOpportunityFromEngagementTaskSummary$ContextId": "<p>The unique identifier of the engagement context associated with the opportunity creation task. This links the task to specific contextual information within the engagement.</p>",
+        "StartOpportunityFromEngagementTaskRequest$ContextIdentifier": "<p>The unique identifier of the engagement context from which to create the opportunity. This specifies the specific contextual information within the engagement that will be used for opportunity creation.</p>",
+        "StartOpportunityFromEngagementTaskResponse$ContextId": "<p>The unique identifier of the engagement context used to create the opportunity.</p>"
+      }
+    },
+    "ContextIdentifiers": {
+      "base": null,
+      "refs": {
+        "ListOpportunityFromEngagementTasksRequest$ContextIdentifier": "<p>Filters tasks by the identifiers of the engagement contexts associated with the opportunity creation. Use this to find tasks related to specific contextual information within engagements that are being converted to opportunities.</p>"
+      }
+    },
     "CountryCode": {
       "base": null,
       "refs": {
         "Address$CountryCode": "<p>Specifies the end <code>Customer</code>'s country associated with the <code>Opportunity</code>.</p>",
         "AddressSummary$CountryCode": "<p>Specifies the end <code>Customer</code>'s country associated with the <code>Opportunity</code>.</p>",
-        "EngagementCustomer$CountryCode": "<p>Indicates the country in which the customer’s company operates. This field is useful for understanding regional requirements or compliance needs.</p>"
+        "EngagementCustomer$CountryCode": "<p>Indicates the country in which the customer’s company operates. This field is useful for understanding regional requirements or compliance needs.</p>",
+        "LeadInvitationCustomer$CountryCode": "<p>The country code indicating the geographic location of the customer company. This information helps partners understand regional requirements and assess their ability to serve the customer effectively.</p>"
       }
+    },
+    "CreateEngagementContextRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateEngagementContextResponse": {
+      "base": null,
+      "refs": {}
     },
     "CreateEngagementInvitationRequest": {
       "base": null,
@@ -481,12 +553,6 @@
       "base": null,
       "refs": {}
     },
-    "CreateEngagementRequestClientTokenString": {
-      "base": null,
-      "refs": {
-        "CreateEngagementRequest$ClientToken": "<p>The <code>CreateEngagementRequest$ClientToken</code> parameter specifies a unique, case-sensitive identifier to ensure that the request is handled exactly once. The value must not exceed sixty-four alphanumeric characters.</p>"
-      }
-    },
     "CreateEngagementResponse": {
       "base": null,
       "refs": {}
@@ -494,12 +560,6 @@
     "CreateOpportunityRequest": {
       "base": null,
       "refs": {}
-    },
-    "CreateOpportunityRequestClientTokenString": {
-      "base": null,
-      "refs": {
-        "CreateOpportunityRequest$ClientToken": "<p>Required to be unique, and should be unchanging, it can be randomly generated or a meaningful string.</p> <p>Default: None</p> <p>Best practice: To help ensure uniqueness and avoid conflicts, use a Universally Unique Identifier (UUID) as the <code>ClientToken</code>. You can use standard libraries from most programming languages to generate this. If you use the same client token, the API returns the following error: \"Conflicting client token submitted for a new request body.\"</p>"
-      }
     },
     "CreateOpportunityRequestPartnerOpportunityIdentifierString": {
       "base": null,
@@ -515,12 +575,6 @@
       "base": null,
       "refs": {}
     },
-    "CreateResourceSnapshotJobRequestClientTokenString": {
-      "base": null,
-      "refs": {
-        "CreateResourceSnapshotJobRequest$ClientToken": "<p>A client-generated UUID used for idempotency check. The token helps prevent duplicate job creations.</p>"
-      }
-    },
     "CreateResourceSnapshotJobResponse": {
       "base": null,
       "refs": {}
@@ -528,12 +582,6 @@
     "CreateResourceSnapshotRequest": {
       "base": null,
       "refs": {}
-    },
-    "CreateResourceSnapshotRequestClientTokenString": {
-      "base": null,
-      "refs": {
-        "CreateResourceSnapshotRequest$ClientToken": "<p> Specifies a unique, client-generated UUID to ensure that the request is handled exactly once. This token helps prevent duplicate snapshot creations. </p>"
-      }
     },
     "CreateResourceSnapshotResponse": {
       "base": null,
@@ -554,6 +602,12 @@
         "UpdateOpportunityRequest$Customer": "<p>Specifies details of the customer associated with the <code>Opportunity</code>.</p>"
       }
     },
+    "CustomerAction": {
+      "base": null,
+      "refs": {
+        "LeadInteraction$CustomerAction": "<p>Describes the action taken by the customer during or as a result of the interaction, such as requesting information, scheduling a meeting, or expressing interest in a solution.</p>"
+      }
+    },
     "CustomerContactsList": {
       "base": null,
       "refs": {
@@ -564,7 +618,8 @@
     "CustomerProjectsContext": {
       "base": "<p>The CustomerProjects structure in Engagements offers a flexible framework for managing customer-project relationships. It supports multiple customers per Engagement and multiple projects per customer, while also allowing for customers without projects and projects without specific customers. </p> <p>All Engagement members have full visibility of customers and their associated projects, enabling the capture of relevant context even when project details are not fully defined. This structure also facilitates targeted invitations, allowing partners to focus on specific customers and their business problems when sending Engagement invitations. </p>",
       "refs": {
-        "EngagementContextPayload$CustomerProject": "<p>Contains detailed information about a customer project when the context type is \"CustomerProject\". This field is present only when the Type in EngagementContextDetails is set to \"CustomerProject\". </p>"
+        "EngagementContextPayload$CustomerProject": "<p>Contains detailed information about a customer project when the context type is \"CustomerProject\". This field is present only when the Type in EngagementContextDetails is set to \"CustomerProject\". </p>",
+        "UpdateEngagementContextPayload$CustomerProject": null
       }
     },
     "CustomerSummary": {
@@ -588,13 +643,17 @@
     "DateTime": {
       "base": null,
       "refs": {
+        "CreateEngagementContextResponse$EngagementLastModifiedAt": "<p>The timestamp indicating when the engagement was last modified as a result of adding the context, in ISO 8601 format (UTC). Example: \"2023-05-01T20:37:46Z\".</p>",
+        "CreateEngagementResponse$ModifiedAt": "<p>The timestamp indicating when the engagement was last modified, in ISO 8601 format (UTC). For newly created engagements, this value matches the creation timestamp. Example: \"2023-05-01T20:37:46Z\".</p>",
         "CreateOpportunityResponse$LastModifiedDate": "<p> <code>DateTime</code> when the opportunity was last modified. When the <code>Opportunity</code> is created, its value is <code>CreatedDate</code>.</p>",
         "EngagementInvitationSummary$InvitationDate": "<p>Indicates the date when the Engagement Invitation was sent to the partner. This provides context for when the opportunity was shared and helps in tracking the timeline for engagement.</p>",
         "EngagementInvitationSummary$ExpirationDate": "<p>Indicates the date and time when the Engagement Invitation will expire. After this date, the invitation can no longer be accepted, and the opportunity will be unavailable to the partner.</p>",
         "EngagementSummary$CreatedAt": "<p>The date and time when the Engagement was created.</p>",
+        "EngagementSummary$ModifiedAt": "<p>The timestamp indicating when the engagement was last modified, in ISO 8601 format (UTC). Example: \"2023-05-01T20:37:46Z\".</p>",
         "GetEngagementInvitationResponse$InvitationDate": "<p>The date when the engagement invitation was sent to the partner.</p>",
         "GetEngagementInvitationResponse$ExpirationDate": "<p>Indicates the date on which the engagement invitation will expire if not accepted by the partner.</p>",
         "GetEngagementResponse$CreatedAt": "<p>The date and time when the Engagement was created, presented in ISO 8601 format (UTC). For example: \"2023-05-01T20:37:46Z\". This timestamp helps track the lifecycle of the Engagement.</p>",
+        "GetEngagementResponse$ModifiedAt": "<p>The timestamp indicating when the engagement was last modified, in ISO 8601 format (UTC). Example: \"2023-05-01T20:37:46Z\". This helps track the most recent changes to the engagement.</p>",
         "GetOpportunityResponse$LastModifiedDate": "<p> <code>DateTime</code> when the opportunity was last modified.</p>",
         "GetOpportunityResponse$CreatedDate": "<p> <code>DateTime</code> when the <code>Opportunity</code> was last created.</p>",
         "GetResourceSnapshotJobResponse$CreatedAt": "<p>The date and time when the snapshot job was created in ISO 8601 format (UTC). Example: \"2023-05-01T20:37:46Z\" </p>",
@@ -602,8 +661,10 @@
         "GetResourceSnapshotResponse$CreatedAt": "<p>The timestamp when the snapshot was created, in ISO 8601 format (e.g., \"2023-06-01T14:30:00Z\"). This allows for precise tracking of when the snapshot was taken. </p>",
         "LastModifiedDate$AfterLastModifiedDate": "<p>Specifies the date after which the opportunities were modified. Use this filter to retrieve only those opportunities that were modified after a given timestamp.</p>",
         "LastModifiedDate$BeforeLastModifiedDate": "<p>Specifies the date before which the opportunities were modified. Use this filter to retrieve only those opportunities that were modified before a given timestamp.</p>",
+        "LeadInteraction$InteractionDate": "<p>The date and time when the lead interaction occurred, in ISO 8601 format (UTC). This timestamp helps track the chronology of lead engagement activities.</p>",
         "ListEngagementByAcceptingInvitationTaskSummary$StartTime": "<p> Task start timestamp. </p>",
         "ListEngagementFromOpportunityTaskSummary$StartTime": "<p> The timestamp indicating when the task was initiated, in RFC 3339 5.6 date-time format. </p>",
+        "ListOpportunityFromEngagementTaskSummary$StartTime": "<p>The timestamp indicating when the task was initiated, in RFC 3339 format.</p>",
         "NextStepsHistory$Time": "<p>Indicates the step execution time.</p>",
         "OpportunitySummary$LastModifiedDate": "<p> <code>DateTime</code> when the <code>Opportunity</code> was last modified.</p>",
         "OpportunitySummary$CreatedDate": "<p> <code>DateTime</code> when the <code>Opportunity</code> was last created.</p>",
@@ -611,6 +672,9 @@
         "SolutionBase$CreatedDate": "<p>Indicates the solution creation date. This is useful to track and audit.</p>",
         "StartEngagementByAcceptingInvitationTaskResponse$StartTime": "<p>The timestamp indicating when the task was initiated. The format follows RFC 3339 section 5.6.</p>",
         "StartEngagementFromOpportunityTaskResponse$StartTime": "<p>The timestamp indicating when the task was initiated. The format follows RFC 3339 section 5.6.</p>",
+        "StartOpportunityFromEngagementTaskResponse$StartTime": "<p>The timestamp indicating when the task was initiated. The format follows RFC 3339 section 5.6.</p>",
+        "UpdateEngagementContextRequest$EngagementLastModifiedAt": "<p>The timestamp when the engagement was last modified, used for optimistic concurrency control. This helps prevent conflicts when multiple users attempt to update the same engagement simultaneously.</p>",
+        "UpdateEngagementContextResponse$EngagementLastModifiedAt": "<p>The timestamp when the engagement context was last modified.</p>",
         "UpdateOpportunityRequest$LastModifiedDate": "<p> <code>DateTime</code> when the opportunity was last modified.</p>",
         "UpdateOpportunityResponse$LastModifiedDate": "<p> <code>DateTime</code> when the opportunity was last modified.</p>"
       }
@@ -654,23 +718,29 @@
       "refs": {
         "AssigneeContact$Email": "<p>Provides the email address of the assignee. This email is used for communications and notifications related to the opportunity.</p>",
         "AwsTeamMember$Email": "<p>Provides the Amazon Web Services team member's email address.</p>",
-        "Contact$Email": "<p>The contact's email address associated with the <code>Opportunity</code>.</p>"
+        "Contact$Email": "<p>The contact's email address associated with the <code>Opportunity</code>.</p>",
+        "LeadContact$Email": "<p>The lead contact's email address associated with the engagement.</p>"
       }
     },
     "EngagementArn": {
       "base": null,
       "refs": {
+        "CreateEngagementContextResponse$EngagementArn": "<p>The Amazon Resource Name (ARN) of the engagement to which the context was added. This globally unique identifier can be used for cross-service references and IAM policies.</p>",
         "CreateEngagementResponse$Arn": "<p>The Amazon Resource Name (ARN) that identifies the engagement.</p>",
         "EngagementSummary$Arn": "<p>The Amazon Resource Name (ARN) of the created Engagement.</p>",
-        "GetEngagementResponse$Arn": "<p>The Amazon Resource Name (ARN) of the engagement retrieved.</p>"
+        "GetEngagementResponse$Arn": "<p>The Amazon Resource Name (ARN) of the engagement retrieved.</p>",
+        "UpdateEngagementContextResponse$EngagementArn": "<p>The Amazon Resource Name (ARN) of the updated engagement.</p>"
       }
     },
     "EngagementArnOrIdentifier": {
       "base": null,
       "refs": {
+        "CreateEngagementContextRequest$EngagementIdentifier": "<p>The unique identifier of the <code>Engagement</code> for which the context is being created. This parameter ensures the context is associated with the correct engagement and provides the necessary linkage between the engagement and its contextual information.</p>",
         "EngagementIdentifiers$member": null,
         "GetEngagementRequest$Identifier": "<p>Specifies the identifier of the Engagement record to retrieve.</p>",
-        "ListEngagementMembersRequest$Identifier": "<p>Identifier of the Engagement record to retrieve members from.</p>"
+        "ListEngagementMembersRequest$Identifier": "<p>Identifier of the Engagement record to retrieve members from.</p>",
+        "StartOpportunityFromEngagementTaskRequest$Identifier": "<p>The unique identifier of the engagement from which the opportunity creation task is to be initiated. This helps ensure that the task is applied to the correct engagement.</p>",
+        "UpdateEngagementContextRequest$EngagementIdentifier": "<p>The unique identifier of the <code>Engagement</code> containing the context to be updated. This parameter ensures the context update is applied to the correct engagement.</p>"
       }
     },
     "EngagementContextDetails": {
@@ -679,16 +749,37 @@
         "EngagementContexts$member": null
       }
     },
+    "EngagementContextIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateEngagementContextResponse$ContextId": "<p>The unique identifier assigned to the newly created engagement context. This ID can be used to reference the specific context within the engagement for future operations.</p>",
+        "EngagementContextDetails$Id": "<p>The unique identifier of the engagement context. This ID is used to reference and manage the specific context within the engagement.</p>",
+        "UpdateEngagementContextRequest$ContextIdentifier": "<p>The unique identifier of the specific engagement context to be updated. This ensures that the correct context within the engagement is modified.</p>",
+        "UpdateEngagementContextResponse$ContextId": "<p>The unique identifier of the engagement context that was updated.</p>"
+      }
+    },
     "EngagementContextPayload": {
       "base": "<p>Represents the payload of an Engagement context. The structure of this payload varies based on the context type specified in the EngagementContextDetails. </p>",
       "refs": {
+        "CreateEngagementContextRequest$Payload": null,
         "EngagementContextDetails$Payload": "<p>Contains the specific details of the Engagement context. The structure of this payload varies depending on the Type field. </p>"
       }
     },
     "EngagementContextType": {
       "base": null,
       "refs": {
-        "EngagementContextDetails$Type": "<p>Specifies the type of Engagement context. Valid values are \"CustomerProject\" or \"Document\", indicating whether the context relates to a customer project or a document respectively. </p>"
+        "CreateEngagementContextRequest$Type": "<p>Specifies the type of context being created for the engagement. This field determines the structure and content of the context payload. Valid values include <code>CustomerProject</code> for customer project-related contexts. The type field ensures that the context is properly categorized and processed according to its intended purpose.</p>",
+        "EngagementContextDetails$Type": "<p>Specifies the type of Engagement context. Valid values are \"CustomerProject\" or \"Document\", indicating whether the context relates to a customer project or a document respectively. </p>",
+        "EngagementContextTypeList$member": null,
+        "UpdateEngagementContextRequest$Type": "<p>Specifies the type of context being updated within the engagement. This field determines the structure and content of the context payload being modified.</p>"
+      }
+    },
+    "EngagementContextTypeList": {
+      "base": null,
+      "refs": {
+        "EngagementSummary$ContextTypes": "<p>An array of context types associated with the engagement, such as \"CustomerProject\" or \"Lead\". This provides a quick overview of the types of contexts included in the engagement.</p>",
+        "ListEngagementsRequest$ContextTypes": "<p>Filters engagements to include only those containing the specified context types, such as \"CustomerProject\" or \"Lead\". Use this to find engagements that have specific types of contextual information associated with them.</p>",
+        "ListEngagementsRequest$ExcludeContextTypes": "<p>Filters engagements to exclude those containing the specified context types. Use this to find engagements that do not have certain types of contextual information, helping to narrow results based on context exclusion criteria.</p>"
       }
     },
     "EngagementContexts": {
@@ -709,6 +800,7 @@
       "base": null,
       "refs": {
         "EngagementCustomerProjectDetails$BusinessProblem": "<p>A description of the business problem the project aims to solve.</p>",
+        "LeadInteraction$BusinessProblem": "<p>Describes the business problem or challenge that the customer discussed during the interaction. This information helps qualify the lead and identify appropriate solutions.</p>",
         "ProjectDetails$BusinessProblem": "<p>Describes the business problem that the project aims to solve. This information is crucial for understanding the project’s goals and objectives.</p>"
       }
     },
@@ -741,6 +833,7 @@
     "EngagementIdentifier": {
       "base": null,
       "refs": {
+        "CreateEngagementContextResponse$EngagementId": "<p>The unique identifier of the engagement to which the context was added. This ID confirms the successful association of the context with the specified engagement.</p>",
         "CreateEngagementInvitationRequest$EngagementIdentifier": "<p> The unique identifier of the <code>Engagement</code> associated with the invitation. This parameter ensures the invitation is created within the correct <code>Engagement</code> context. </p>",
         "CreateEngagementResponse$Id": "<p>Unique identifier assigned to the newly created engagement.</p>",
         "CreateResourceSnapshotJobRequest$EngagementIdentifier": "<p>Specifies the identifier of the engagement associated with the resource to be snapshotted.</p>",
@@ -755,10 +848,13 @@
         "GetResourceSnapshotResponse$EngagementId": "<p>The identifier of the engagement associated with this snapshot. Matches the EngagementIdentifier specified in the request. </p>",
         "ListEngagementFromOpportunityTaskSummary$EngagementId": "<p> The unique identifier of the engagement created as a result of the task. This field is populated when the task is completed successfully. </p>",
         "ListEngagementResourceAssociationsRequest$EngagementIdentifier": "<p>Filters the results to include only associations related to the specified engagement. Use this when you want to find all resources associated with a specific engagement.</p>",
+        "ListOpportunityFromEngagementTaskSummary$EngagementId": "<p>The unique identifier of the engagement from which the opportunity is being created. This field helps track the source of the opportunity creation task.</p>",
         "ListResourceSnapshotJobsRequest$EngagementIdentifier": "<p> The identifier of the engagement to filter the response. </p>",
         "ListResourceSnapshotsRequest$EngagementIdentifier": "<p> The unique identifier of the engagement associated with the snapshots. </p>",
         "ResourceSnapshotJobSummary$EngagementId": "<p>The unique identifier of the Engagement.</p>",
-        "StartEngagementFromOpportunityTaskResponse$EngagementId": "<p>The identifier of the newly created Engagement. Only populated if TaskStatus is COMPLETE.</p>"
+        "StartEngagementFromOpportunityTaskResponse$EngagementId": "<p>The identifier of the newly created Engagement. Only populated if TaskStatus is COMPLETE.</p>",
+        "StartOpportunityFromEngagementTaskResponse$EngagementId": "<p>The unique identifier of the engagement from which the opportunity was created.</p>",
+        "UpdateEngagementContextResponse$EngagementId": "<p>The unique identifier of the engagement that was updated.</p>"
       }
     },
     "EngagementIdentifiers": {
@@ -766,7 +862,8 @@
       "refs": {
         "ListEngagementFromOpportunityTasksRequest$EngagementIdentifier": "<p> Filters tasks by the identifiers of the engagements they created or are associated with. </p>",
         "ListEngagementInvitationsRequest$EngagementIdentifier": "<p> Retrieves a list of engagement invitation summaries based on specified filters. The ListEngagementInvitations operation allows you to view all invitations that you have sent or received. You must specify the ParticipantType to filter invitations where you are either the SENDER or the RECEIVER. Invitations will automatically expire if not accepted within 15 days. </p>",
-        "ListEngagementsRequest$EngagementIdentifier": "<p>An array of strings representing engagement identifiers to retrieve.</p>"
+        "ListEngagementsRequest$EngagementIdentifier": "<p>An array of strings representing engagement identifiers to retrieve.</p>",
+        "ListOpportunityFromEngagementTasksRequest$EngagementIdentifier": "<p>Filters tasks by the identifiers of the engagements from which opportunities are being created. Use this to find all opportunity creation tasks associated with a specific engagement.</p>"
       }
     },
     "EngagementInvitationArn": {
@@ -917,6 +1014,13 @@
         "GetEngagementResponse$Title": "<p>The title of the engagement. It provides a brief, descriptive name for the engagement that is meaningful and easily recognizable.</p>"
       }
     },
+    "EngagementUseCase": {
+      "base": null,
+      "refs": {
+        "LeadInteraction$Usecase": "<p>Describes the specific use case or business scenario discussed during the lead interaction. This helps categorize the customer's interests and potential solutions.</p>",
+        "LeadInvitationInteraction$Usecase": "<p>Describes the specific use case or business scenario associated with the lead interaction. This information helps partners understand the customer's interests and potential solution requirements.</p>"
+      }
+    },
     "ExpectedCustomerSpend": {
       "base": "<p>Provides an estimate of the revenue that the partner is expected to generate from the opportunity. This information helps partners assess the financial value of the project.</p>",
       "refs": {
@@ -1018,7 +1122,9 @@
       "refs": {
         "Account$Industry": "<p>Specifies the industry the end <code>Customer</code> belongs to that's associated with the <code>Opportunity</code>. It refers to the category or sector where the customer's business operates. This is a required field.</p>",
         "AccountSummary$Industry": "<p>Specifies which industry the end <code>Customer</code> belongs to associated with the <code>Opportunity</code>. It refers to the category or sector that the customer's business operates in.</p> <p>To submit a value outside the picklist, use <code>Other</code>.</p> <p>Conditionally mandatory if <code>Other</code> is selected for Industry Vertical in LOVs.</p>",
-        "EngagementCustomer$Industry": "<p>Specifies the industry to which the customer’s company belongs. This field helps categorize the opportunity based on the customer’s business sector.</p>"
+        "EngagementCustomer$Industry": "<p>Specifies the industry to which the customer’s company belongs. This field helps categorize the opportunity based on the customer’s business sector.</p>",
+        "LeadCustomer$Industry": "<p>Specifies the industry sector to which the lead customer's company belongs. This categorization helps in understanding the customer's business context and tailoring appropriate solutions.</p>",
+        "LeadInvitationCustomer$Industry": "<p>Specifies the industry sector of the customer company associated with the lead invitation. This categorization helps partners understand the customer's business context and assess solution fit.</p>"
       }
     },
     "Integer": {
@@ -1070,6 +1176,8 @@
       "refs": {
         "AssigneeContact$BusinessTitle": "<p>Specifies the business title of the assignee managing the opportunity. This helps clarify the individual's role and responsibilities within the organization. Use the value <code>PartnerAccountManager</code> to update details of the opportunity owner.</p>",
         "Contact$BusinessTitle": "<p>The partner contact's title (job title or role) associated with the <code>Opportunity</code>. <code>BusinessTitle</code> supports either <code>PartnerAccountManager</code> or <code>OpportunityOwner</code>.</p>",
+        "LeadContact$BusinessTitle": "<p>The lead contact's business title or job role associated with the engagement.</p>",
+        "LeadInvitationInteraction$ContactBusinessTitle": "<p>The business title or job role of the customer contact involved in the lead interaction. This helps partners identify the decision-making level and engagement approach for the lead.</p>",
         "SenderContact$BusinessTitle": "<p>The sender-provided contact's title (job title or role) associated with the <code>EngagementInvitation</code>.</p>"
       }
     },
@@ -1077,6 +1185,84 @@
       "base": "<p>Defines a filter to retrieve opportunities based on the last modified date. This filter is useful for tracking changes or updates to opportunities over time.</p>",
       "refs": {
         "ListOpportunitiesRequest$LastModifiedDate": "<p>Filters the opportunities based on their last modified date. This filter helps retrieve opportunities that were updated after the specified date, allowing partners to track recent changes or updates.</p>"
+      }
+    },
+    "LeadContact": {
+      "base": "<p>An object that contains a lead contact's details associated with the engagement. This provides contact information for individuals involved in lead-related activities.</p>",
+      "refs": {
+        "LeadInteraction$Contact": "<p>Contains contact information for the customer representative involved in the lead interaction, including their name, title, and contact details.</p>"
+      }
+    },
+    "LeadContext": {
+      "base": "<p>Provides comprehensive details about a lead associated with an engagement. This structure contains information about lead qualification status, customer details, and interaction history to facilitate lead management and tracking within the engagement.</p>",
+      "refs": {
+        "EngagementContextPayload$Lead": "<p>Contains detailed information about a lead when the context type is \"Lead\". This field is present only when the Type in EngagementContextDetails is set to \"Lead\".</p>"
+      }
+    },
+    "LeadCustomer": {
+      "base": "<p>Contains detailed information about the customer associated with the lead, including company details, industry classification, and AWS maturity level. This information helps qualify and categorize the lead for appropriate engagement strategies.</p>",
+      "refs": {
+        "LeadContext$Customer": "<p>Contains detailed information about the customer associated with the lead, including company information, contact details, and other relevant customer data.</p>",
+        "UpdateLeadContext$Customer": "<p>Updated customer information associated with the lead.</p>"
+      }
+    },
+    "LeadInteraction": {
+      "base": "<p>Represents a specific interaction or touchpoint with a lead customer. This structure captures details about communications, meetings, or other engagement activities that help track the lead's progression and engagement history.</p>",
+      "refs": {
+        "LeadInteractionList$member": null,
+        "UpdateLeadContext$Interaction": "<p>Updated interaction details for the lead context.</p>"
+      }
+    },
+    "LeadInteractionList": {
+      "base": null,
+      "refs": {
+        "LeadContext$Interactions": "<p>An array of interactions that have occurred with the lead, providing a history of communications, meetings, and other engagement activities related to the lead.</p>"
+      }
+    },
+    "LeadInvitationCustomer": {
+      "base": "<p>Contains customer information included in a lead invitation payload. This structure provides essential details about the customer to help partners evaluate the lead opportunity and determine their interest in engagement.</p>",
+      "refs": {
+        "LeadInvitationPayload$Customer": "<p>Contains information about the customer associated with the lead invitation. This data helps partners understand the customer's profile, industry, and business context to assess the lead opportunity.</p>"
+      }
+    },
+    "LeadInvitationInteraction": {
+      "base": "<p>Represents interaction details included in a lead invitation payload. This structure provides context about how the lead was generated and the customer's engagement history to help partners assess the opportunity quality.</p>",
+      "refs": {
+        "LeadInvitationPayload$Interaction": "<p>Describes the interaction details associated with the lead, including the source of the lead generation and customer engagement information. This context helps partners evaluate the lead quality and engagement approach.</p>"
+      }
+    },
+    "LeadInvitationPayload": {
+      "base": "<p>Represents the data payload of an engagement invitation for a lead opportunity. This contains detailed information about the customer and interaction history that partners use to evaluate whether to accept the lead engagement invitation.</p>",
+      "refs": {
+        "Payload$LeadInvitation": "<p>Specifies the details of the lead invitation within the Engagement Invitation payload. This data helps partners understand the lead context, customer information, and interaction history for the lead opportunity from AWS.</p>"
+      }
+    },
+    "LeadQualificationStatus": {
+      "base": null,
+      "refs": {
+        "LeadContext$QualificationStatus": "<p>Indicates the current qualification status of the lead, such as whether it has been qualified, disqualified, or is still under evaluation. This helps track the lead's progression through the qualification process.</p>",
+        "UpdateLeadContext$QualificationStatus": "<p>The updated qualification status of the lead.</p>"
+      }
+    },
+    "LeadSourceId": {
+      "base": null,
+      "refs": {
+        "LeadInteraction$SourceId": "<p>The unique identifier of the specific source that generated the lead interaction. This ID provides traceability back to the original lead generation activity.</p>",
+        "LeadInvitationInteraction$SourceId": "<p>The unique identifier of the specific source that generated the lead interaction. This provides traceability to the original lead generation activity for reference and follow-up purposes.</p>"
+      }
+    },
+    "LeadSourceName": {
+      "base": null,
+      "refs": {
+        "LeadInteraction$SourceName": "<p>The descriptive name of the source that generated the lead interaction, providing a human-readable identifier for the lead generation channel or activity.</p>",
+        "LeadInvitationInteraction$SourceName": "<p>The descriptive name of the source that generated the lead interaction. This human-readable identifier helps partners understand the specific lead generation channel or campaign that created the opportunity.</p>"
+      }
+    },
+    "LeadSourceType": {
+      "base": null,
+      "refs": {
+        "LeadInteraction$SourceType": "<p>Specifies the type of source that generated the lead interaction, such as \"Event\", \"Website\", \"Referral\", or \"Campaign\". This categorization helps track lead generation effectiveness across different channels.</p>",
+        "LeadInvitationInteraction$SourceType": "<p>Specifies the type of source that generated the lead interaction, such as \"Event\", \"Website\", or \"Campaign\". This helps partners understand the lead generation channel and assess lead quality based on the source type.</p>"
       }
     },
     "LifeCycle": {
@@ -1257,6 +1443,38 @@
       "base": null,
       "refs": {}
     },
+    "ListOpportunityFromEngagementTaskSummaries": {
+      "base": null,
+      "refs": {
+        "ListOpportunityFromEngagementTasksResponse$TaskSummaries": "<p>An array of <code>ListOpportunityFromEngagementTaskSummary</code> objects, each representing a task that matches the specified filters. The array may be empty if no tasks match the criteria.</p>"
+      }
+    },
+    "ListOpportunityFromEngagementTaskSummary": {
+      "base": "<p>Provides a summary of a task related to creating an opportunity from an engagement. This structure contains key information about the task's status, associated identifiers, and any failure details for opportunity creation processes.</p>",
+      "refs": {
+        "ListOpportunityFromEngagementTaskSummaries$member": null
+      }
+    },
+    "ListOpportunityFromEngagementTasksRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListOpportunityFromEngagementTasksRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListOpportunityFromEngagementTasksRequest$MaxResults": "<p>Specifies the maximum number of results to return in a single page of the response. Use this parameter to control the number of items returned in each request, which can be useful for performance tuning and managing large result sets.</p>"
+      }
+    },
+    "ListOpportunityFromEngagementTasksRequestNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListOpportunityFromEngagementTasksRequest$NextToken": "<p>The token for requesting the next page of results. This value is obtained from the NextToken field in the response of a previous call to this API. Use this parameter for pagination when the result set spans multiple pages.</p>"
+      }
+    },
+    "ListOpportunityFromEngagementTasksResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListResourceSnapshotJobsRequest": {
       "base": null,
       "refs": {}
@@ -1323,13 +1541,21 @@
       "base": "<p> Defines the sorting parameters for listing tasks. This structure allows for specifying the field to sort by and the order of sorting. </p>",
       "refs": {
         "ListEngagementByAcceptingInvitationTasksRequest$Sort": "<p> Specifies the sorting criteria for the returned results. This allows you to order the tasks based on specific attributes. </p>",
-        "ListEngagementFromOpportunityTasksRequest$Sort": "<p> Specifies the sorting criteria for the returned results. This allows you to order the tasks based on specific attributes. </p>"
+        "ListEngagementFromOpportunityTasksRequest$Sort": "<p> Specifies the sorting criteria for the returned results. This allows you to order the tasks based on specific attributes. </p>",
+        "ListOpportunityFromEngagementTasksRequest$Sort": null
       }
     },
     "ListTasksSortName": {
       "base": null,
       "refs": {
         "ListTasksSortBase$SortBy": "<p> Specifies the field by which the task list should be sorted. </p>"
+      }
+    },
+    "MarketSegment": {
+      "base": null,
+      "refs": {
+        "LeadCustomer$MarketSegment": "<p>Specifies the market segment classification of the lead customer, such as enterprise, mid-market, or small business. This segmentation helps in targeting appropriate solutions and engagement strategies.</p>",
+        "LeadInvitationCustomer$MarketSegment": "<p>Specifies the market segment classification of the customer, such as enterprise, mid-market, or small business. This segmentation helps partners determine the appropriate solution complexity and engagement strategy.</p>"
       }
     },
     "Marketing": {
@@ -1374,6 +1600,8 @@
     "Name": {
       "base": null,
       "refs": {
+        "LeadContact$FirstName": "<p>The lead contact's first name associated with the engagement.</p>",
+        "LeadContact$LastName": "<p>The lead contact's last name associated with the engagement.</p>",
         "SenderContact$FirstName": "<p>The sender-provided contact's last name associated with the <code>EngagementInvitation</code>.</p>",
         "SenderContact$LastName": "<p>The sender-provided contact's first name associated with the <code>EngagementInvitation</code>.</p>"
       }
@@ -1425,12 +1653,14 @@
         "ListEngagementByAcceptingInvitationTaskSummary$OpportunityId": "<p> Unique identifier of opportunity that was created. </p>",
         "ListEngagementFromOpportunityTaskSummary$OpportunityId": "<p> The unique identifier of the original Opportunity from which the Engagement is being created. This field helps track the source of the Engagement creation task. </p>",
         "ListOpportunitiesRequestIdentifierList$member": null,
+        "ListOpportunityFromEngagementTaskSummary$OpportunityId": "<p>The unique identifier of the opportunity created as a result of the task. This field is populated when the task is completed successfully.</p>",
         "OpportunityIdentifiers$member": null,
         "OpportunitySummary$Id": "<p>Read-only, system-generated <code>Opportunity</code> unique identifier.</p>",
         "Project$RelatedOpportunityIdentifier": "<p>Specifies the current opportunity's parent opportunity identifier.</p>",
         "StartEngagementByAcceptingInvitationTaskResponse$OpportunityId": "<p>Returns the original opportunity identifier passed in the request. This is the unique identifier for the opportunity.</p>",
         "StartEngagementFromOpportunityTaskRequest$Identifier": "<p>The unique identifier of the opportunity from which the engagement task is to be initiated. This helps ensure that the task is applied to the correct opportunity.</p>",
         "StartEngagementFromOpportunityTaskResponse$OpportunityId": "<p>Returns the original opportunity identifier passed in the request, which is the unique identifier for the opportunity created in the partner’s system.</p>",
+        "StartOpportunityFromEngagementTaskResponse$OpportunityId": "<p>The unique identifier of the opportunity created as a result of the task. This field is populated when the task is completed successfully.</p>",
         "SubmitOpportunityRequest$Identifier": "<p>The identifier of the Opportunity previously created by partner and needs to be submitted.</p>",
         "UpdateOpportunityRequest$Identifier": "<p>Read-only, system generated <code>Opportunity</code> unique identifier.</p>",
         "UpdateOpportunityResponse$Id": "<p>Read-only, system generated <code>Opportunity</code> unique identifier.</p>"
@@ -1440,7 +1670,8 @@
       "base": null,
       "refs": {
         "ListEngagementByAcceptingInvitationTasksRequest$OpportunityIdentifier": "<p> Filters tasks by the identifiers of the opportunities they created or are associated with. </p>",
-        "ListEngagementFromOpportunityTasksRequest$OpportunityIdentifier": "<p> The identifier of the original opportunity associated with this task. </p>"
+        "ListEngagementFromOpportunityTasksRequest$OpportunityIdentifier": "<p> The identifier of the original opportunity associated with this task. </p>",
+        "ListOpportunityFromEngagementTasksRequest$OpportunityIdentifier": "<p>Filters tasks by the identifiers of the opportunities they created or are associated with. Use this to find tasks related to specific opportunity creation processes.</p>"
       }
     },
     "OpportunityInvitationPayload": {
@@ -1535,7 +1766,9 @@
     "PhoneNumber": {
       "base": null,
       "refs": {
+        "AssigneeContact$Phone": "<p>Specifies the contact phone number of the assignee responsible for the opportunity or engagement. This field enables direct communication for time-sensitive matters and facilitates coordination between AWS and partner teams.</p>",
         "Contact$Phone": "<p>The contact's phone number associated with the <code>Opportunity</code>.</p>",
+        "LeadContact$Phone": "<p>The lead contact's phone number associated with the engagement.</p>",
         "SenderContact$Phone": "<p>The sender-provided contact's phone number associated with the <code>EngagementInvitation</code>.</p>"
       }
     },
@@ -1641,8 +1874,10 @@
       "refs": {
         "ListEngagementByAcceptingInvitationTaskSummary$ReasonCode": "<p> A code pointing to the specific reason for the failure. </p>",
         "ListEngagementFromOpportunityTaskSummary$ReasonCode": "<p> A code indicating the specific reason for a task failure. This field is populated when the task status is FAILED and provides a categorized reason for the failure. </p>",
+        "ListOpportunityFromEngagementTaskSummary$ReasonCode": "<p>A code indicating the specific reason for a task failure. This field is populated when the task status is FAILED and provides a categorized reason for the failure.</p>",
         "StartEngagementByAcceptingInvitationTaskResponse$ReasonCode": "<p>Indicates the reason for task failure using an enumerated code.</p>",
-        "StartEngagementFromOpportunityTaskResponse$ReasonCode": "<p>Indicates the reason for task failure using an enumerated code.</p>"
+        "StartEngagementFromOpportunityTaskResponse$ReasonCode": "<p>Indicates the reason for task failure using an enumerated code.</p>",
+        "StartOpportunityFromEngagementTaskResponse$ReasonCode": "<p>Indicates the reason for task failure using an enumerated code.</p>"
       }
     },
     "Receiver": {
@@ -1739,9 +1974,11 @@
         "GetResourceSnapshotJobResponse$Id": "<p>The unique identifier of the snapshot job. This matches the ResourceSnapshotJobIdentifier provided in the request. </p>",
         "ListEngagementByAcceptingInvitationTaskSummary$ResourceSnapshotJobId": "<p> Unique identifier of the resource snapshot job that was created. </p>",
         "ListEngagementFromOpportunityTaskSummary$ResourceSnapshotJobId": "<p> The identifier of the resource snapshot job associated with this task, if a snapshot was created as part of the Engagement creation process. </p>",
+        "ListOpportunityFromEngagementTaskSummary$ResourceSnapshotJobId": "<p>The identifier of the resource snapshot job associated with this task, if a snapshot was created as part of the opportunity creation process.</p>",
         "ResourceSnapshotJobSummary$Id": "<p> The unique identifier for the resource snapshot job within the AWS Partner Central system. This ID is used for direct references to the job within the service. </p>",
         "StartEngagementByAcceptingInvitationTaskResponse$ResourceSnapshotJobId": "<p>The identifier of the Resource Snapshot Job created as part of this task.</p>",
         "StartEngagementFromOpportunityTaskResponse$ResourceSnapshotJobId": "<p>The identifier of the resource snapshot job created to add the opportunity resource snapshot to the Engagement. Only populated if TaskStatus is COMPLETE</p>",
+        "StartOpportunityFromEngagementTaskResponse$ResourceSnapshotJobId": "<p>The identifier of the resource snapshot job created as part of the opportunity creation process.</p>",
         "StartResourceSnapshotJobRequest$ResourceSnapshotJobIdentifier": "<p>The identifier of the resource snapshot job to start.</p>",
         "StopResourceSnapshotJobRequest$ResourceSnapshotJobIdentifier": "<p>The identifier of the job to stop.</p>"
       }
@@ -1986,12 +2223,6 @@
       "base": null,
       "refs": {}
     },
-    "StartEngagementByAcceptingInvitationTaskRequestClientTokenString": {
-      "base": null,
-      "refs": {
-        "StartEngagementByAcceptingInvitationTaskRequest$ClientToken": "<p>A unique, case-sensitive identifier provided by the client that helps to ensure the idempotency of the request. This can be a random or meaningful string but must be unique for each request.</p>"
-      }
-    },
     "StartEngagementByAcceptingInvitationTaskResponse": {
       "base": null,
       "refs": {}
@@ -2000,13 +2231,15 @@
       "base": null,
       "refs": {}
     },
-    "StartEngagementFromOpportunityTaskRequestClientTokenString": {
-      "base": null,
-      "refs": {
-        "StartEngagementFromOpportunityTaskRequest$ClientToken": "<p>A unique token provided by the client to help ensure the idempotency of the request. It helps prevent the same task from being performed multiple times.</p>"
-      }
-    },
     "StartEngagementFromOpportunityTaskResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartOpportunityFromEngagementTaskRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartOpportunityFromEngagementTaskResponse": {
       "base": null,
       "refs": {}
     },
@@ -2051,6 +2284,8 @@
         "ListOpportunitiesRequest$NextToken": "<p>A pagination token used to retrieve the next set of results in subsequent calls. This token is included in the response only if there are additional result pages available.</p>",
         "ListOpportunitiesRequestCustomerCompanyNameList$member": null,
         "ListOpportunitiesResponse$NextToken": "<p>A pagination token used to retrieve the next set of results in subsequent calls. This token is included in the response only if there are additional result pages available.</p>",
+        "ListOpportunityFromEngagementTaskSummary$Message": "<p>A detailed message providing additional information about the task, especially useful in case of failures. This field may contain error details or other relevant information about the task's execution.</p>",
+        "ListOpportunityFromEngagementTasksResponse$NextToken": "<p>A token used for pagination to retrieve the next page of results. If there are more results available, this field will contain a token that can be used in a subsequent API call to retrieve the next page. If there are no more results, this field will be null or an empty string.</p>",
         "ListResourceSnapshotJobsRequest$NextToken": "<p> The token for the next set of results. </p>",
         "ListResourceSnapshotJobsResponse$NextToken": "<p> The token to retrieve the next set of results. If there are no additional results, this value is null. </p>",
         "ListResourceSnapshotsRequest$NextToken": "<p> The token for the next set of results. </p>",
@@ -2070,6 +2305,7 @@
         "SolutionBase$Category": "<p>Specifies the solution category, which helps to categorize and organize the solutions partners offer. Valid values: <code>Software Product</code> | <code>Consulting Service</code> | <code>Hardware Product</code> | <code>Communications Product</code> | <code>Professional Service</code> | <code>Managed Service</code> | <code>Value-Added Resale Amazon Web Services Service</code> | <code>Distribution Service</code> | <code>Training Service</code> | <code>Merger and Acquisition Advising Service</code>.</p>",
         "StartEngagementByAcceptingInvitationTaskResponse$Message": "<p>If the task fails, this field contains a detailed message describing the failure and possible recovery steps.</p>",
         "StartEngagementFromOpportunityTaskResponse$Message": "<p>If the task fails, this field contains a detailed message describing the failure and possible recovery steps.</p>",
+        "StartOpportunityFromEngagementTaskResponse$Message": "<p>If the task fails, this field contains a detailed message describing the failure and possible recovery steps.</p>",
         "ThrottlingException$Message": null,
         "UseCases$member": null,
         "ValidationException$Message": null,
@@ -2108,6 +2344,7 @@
         "ListTagsForResourceResponse$Tags": "<p>A map of the key-value pairs for the tag or tags assigned to the specified resource.</p>",
         "StartEngagementByAcceptingInvitationTaskRequest$Tags": "<p>A map of the key-value pairs of the tag or tags to assign.</p>",
         "StartEngagementFromOpportunityTaskRequest$Tags": "<p>A map of the key-value pairs of the tag or tags to assign.</p>",
+        "StartOpportunityFromEngagementTaskRequest$Tags": "<p>A map of the key-value pairs of the tag or tags to assign.</p>",
         "TagResourceRequest$Tags": "<p>A map of the key-value pairs of the tag or tags to assign.</p>"
       }
     },
@@ -2138,8 +2375,10 @@
       "refs": {
         "ListEngagementByAcceptingInvitationTaskSummary$TaskArn": "<p> The Amazon Resource Name (ARN) that uniquely identifies the task. </p>",
         "ListEngagementFromOpportunityTaskSummary$TaskArn": "<p> The Amazon Resource Name (ARN) uniquely identifying this task within AWS. This ARN can be used for referencing the task in other AWS services or APIs. </p>",
+        "ListOpportunityFromEngagementTaskSummary$TaskArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the task within AWS. This ARN can be used for referencing the task in other AWS services or APIs.</p>",
         "StartEngagementByAcceptingInvitationTaskResponse$TaskArn": "<p>The Amazon Resource Name (ARN) of the task, used for tracking and managing the task within AWS.</p>",
-        "StartEngagementFromOpportunityTaskResponse$TaskArn": "<p>The Amazon Resource Name (ARN) of the task, used for tracking and managing the task within AWS.</p>"
+        "StartEngagementFromOpportunityTaskResponse$TaskArn": "<p>The Amazon Resource Name (ARN) of the task, used for tracking and managing the task within AWS.</p>",
+        "StartOpportunityFromEngagementTaskResponse$TaskArn": "<p>The Amazon Resource Name (ARN) of the task, used for tracking and managing the task within AWS.</p>"
       }
     },
     "TaskArnOrIdentifier": {
@@ -2153,15 +2392,18 @@
       "refs": {
         "ListEngagementByAcceptingInvitationTaskSummary$TaskId": "<p> Unique identifier of the task. </p>",
         "ListEngagementFromOpportunityTaskSummary$TaskId": "<p> A unique identifier for a specific task. </p>",
+        "ListOpportunityFromEngagementTaskSummary$TaskId": "<p>The unique identifier of the task for creating an opportunity from an engagement.</p>",
         "StartEngagementByAcceptingInvitationTaskResponse$TaskId": "<p>The unique identifier of the task, used to track the task’s progress.</p>",
-        "StartEngagementFromOpportunityTaskResponse$TaskId": "<p>The unique identifier of the task, used to track the task’s progress. This value follows a specific pattern: <code>^oit-[0-9a-z]{13}$</code>.</p>"
+        "StartEngagementFromOpportunityTaskResponse$TaskId": "<p>The unique identifier of the task, used to track the task’s progress. This value follows a specific pattern: <code>^oit-[0-9a-z]{13}$</code>.</p>",
+        "StartOpportunityFromEngagementTaskResponse$TaskId": "<p>The unique identifier of the task, used to track the task's progress.</p>"
       }
     },
     "TaskIdentifiers": {
       "base": null,
       "refs": {
         "ListEngagementByAcceptingInvitationTasksRequest$TaskIdentifier": "<p> Filters tasks by their unique identifiers. Use this when you want to retrieve information about specific tasks. </p>",
-        "ListEngagementFromOpportunityTasksRequest$TaskIdentifier": "<p> Filters tasks by their unique identifiers. Use this when you want to retrieve information about specific tasks. </p>"
+        "ListEngagementFromOpportunityTasksRequest$TaskIdentifier": "<p> Filters tasks by their unique identifiers. Use this when you want to retrieve information about specific tasks. </p>",
+        "ListOpportunityFromEngagementTasksRequest$TaskIdentifier": "<p>Filters tasks by their unique identifiers. Use this when you want to retrieve information about specific tasks. Provide the task ID to get details about a particular opportunity creation task.</p>"
       }
     },
     "TaskStatus": {
@@ -2169,8 +2411,10 @@
       "refs": {
         "ListEngagementByAcceptingInvitationTaskSummary$TaskStatus": "<p> Status of the task. </p>",
         "ListEngagementFromOpportunityTaskSummary$TaskStatus": "<p> The current status of the task. </p>",
+        "ListOpportunityFromEngagementTaskSummary$TaskStatus": "<p>The current status of the task. Valid values are COMPLETE, INPROGRESS, or FAILED.</p>",
         "StartEngagementByAcceptingInvitationTaskResponse$TaskStatus": "<p>Indicates the current status of the task.</p>",
         "StartEngagementFromOpportunityTaskResponse$TaskStatus": "<p>Indicates the current status of the task. Valid values include <code>IN_PROGRESS</code>, <code>COMPLETE</code>, and <code>FAILED</code>.</p>",
+        "StartOpportunityFromEngagementTaskResponse$TaskStatus": "<p>Indicates the current status of the task.</p>",
         "TaskStatuses$member": null
       }
     },
@@ -2178,7 +2422,8 @@
       "base": null,
       "refs": {
         "ListEngagementByAcceptingInvitationTasksRequest$TaskStatus": "<p> Filters the tasks based on their current status. This allows you to focus on tasks in specific states. </p>",
-        "ListEngagementFromOpportunityTasksRequest$TaskStatus": "<p> Filters the tasks based on their current status. This allows you to focus on tasks in specific states. </p>"
+        "ListEngagementFromOpportunityTasksRequest$TaskStatus": "<p> Filters the tasks based on their current status. This allows you to focus on tasks in specific states. </p>",
+        "ListOpportunityFromEngagementTasksRequest$TaskStatus": "<p>Filters the tasks based on their current status. This allows you to focus on tasks in specific states. Valid values are <code>COMPLETE</code> for tasks that have finished successfully, <code>INPROGRESS</code> for tasks that are currently running, and <code>FAILED</code> for tasks that have encountered an error and failed to complete.</p>"
       }
     },
     "ThrottlingException": {
@@ -2192,6 +2437,26 @@
     "UntagResourceResponse": {
       "base": null,
       "refs": {}
+    },
+    "UpdateEngagementContextPayload": {
+      "base": "<p>Represents the updated payload of an engagement context. The structure of this payload varies based on the context type being updated.</p>",
+      "refs": {
+        "UpdateEngagementContextRequest$Payload": "<p>Contains the updated contextual information for the engagement. The structure of this payload varies based on the context type specified in the Type field.</p>"
+      }
+    },
+    "UpdateEngagementContextRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateEngagementContextResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateLeadContext": {
+      "base": "<p>Updates the context information for a lead with qualification status, customer details, and interaction data.</p>",
+      "refs": {
+        "UpdateEngagementContextPayload$Lead": "<p>Contains updated information about a lead when the context type is \"Lead\". This field is present only when updating a lead context within the engagement.</p>"
+      }
     },
     "UpdateOpportunityRequest": {
       "base": null,
@@ -2218,7 +2483,7 @@
       "refs": {}
     },
     "ValidationExceptionError": {
-      "base": "<p>Indicates an invalid value for a field.</p> <ul> <li> <p> <i>REQUIRED_FIELD_MISSING:</i> The request is missing a required field.</p> <p>Fix: Verify your request payload includes all required fields.</p> </li> <li> <p> <i>INVALID_ENUM_VALUE:</i> The enum field value isn't an accepted values.</p> <p>Fix: Check the documentation for the list of valid enum values, and update your request with a valid value.</p> </li> <li> <p> <i>INVALID_STRING_FORMAT:</i> The string format is invalid.</p> <p>Fix: Confirm that the string is in the expected format (For example: email address, date).</p> </li> <li> <p> <i>INVALID_VALUE:</i> The value isn't valid.</p> <p>Fix: Confirm that the value meets the expected criteria and is within the allowable range or set.</p> </li> <li> <p> <i>TOO_MANY_VALUES:</i> There are too many values in a field that expects fewer entries.</p> <p>Fix: Reduce the number of values to match the expected limit.</p> </li> <li> <p> <i>ACTION_NOT_PERMITTED:</i> The action isn't permitted due to current state or permissions.</p> <p>Fix: Verify that the action is appropriate for the current state, and that you have the necessary permissions to perform it.</p> </li> <li> <p> <i>DUPLICATE_KEY_VALUE:</i> The value in a field duplicates a value that must be unique.</p> <p>Fix: Verify that the value is unique and doesn't duplicate an existing value in the system.</p> </li> </ul>",
+      "base": "<p>Indicates an invalid value for a field.</p> <ul> <li> <p> <i>REQUIRED_FIELD_MISSING:</i> The request is missing a required field.</p> <p>Fix: Verify your request payload includes all required fields.</p> </li> <li> <p> <i>INVALID_ENUM_VALUE:</i> The enum field value isn't an accepted values.</p> <p>Fix: Check the documentation for the list of valid enum values, and update your request with a valid value.</p> </li> <li> <p> <i>INVALID_STRING_FORMAT:</i> The string format is invalid.</p> <p>Fix: Confirm that the string is in the expected format (For example: email address, date).</p> </li> <li> <p> <i>INVALID_VALUE:</i> The value isn't valid.</p> <p>Fix: Confirm that the value meets the expected criteria and is within the allowable range or set.</p> </li> <li> <p> <i>TOO_MANY_VALUES:</i> There are too many values in a field that expects fewer entries.</p> <p>Fix: Reduce the number of values to match the expected limit.</p> </li> <li> <p> <i>NOT_ENOUGH_VALUES:</i> There are not enough values in a field that expects more entries.</p> <p>Fix: Increase the number of values to match the expected threshold.</p> </li> <li> <p> <i>ACTION_NOT_PERMITTED:</i> The action isn't permitted due to current state or permissions.</p> <p>Fix: Verify that the action is appropriate for the current state, and that you have the necessary permissions to perform it.</p> </li> <li> <p> <i>DUPLICATE_KEY_VALUE:</i> The value in a field duplicates a value that must be unique.</p> <p>Fix: Verify that the value is unique and doesn't duplicate an existing value in the system.</p> </li> </ul>",
       "refs": {
         "ValidationExceptionErrorList$member": null
       }

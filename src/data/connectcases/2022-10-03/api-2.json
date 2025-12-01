@@ -29,7 +29,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "BatchGetField":{
       "name":"BatchGetField",
@@ -46,7 +47,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "BatchPutFieldOptions":{
       "name":"BatchPutFieldOptions",
@@ -349,7 +351,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCaseAuditEvents":{
       "name":"GetCaseAuditEvents",
@@ -366,7 +369,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCaseEventConfiguration":{
       "name":"GetCaseEventConfiguration",
@@ -383,7 +387,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDomain":{
       "name":"GetDomain",
@@ -400,7 +405,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetLayout":{
       "name":"GetLayout",
@@ -417,7 +423,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTemplate":{
       "name":"GetTemplate",
@@ -434,7 +441,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCaseRules":{
       "name":"ListCaseRules",
@@ -451,7 +459,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCasesForContact":{
       "name":"ListCasesForContact",
@@ -468,7 +477,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDomains":{
       "name":"ListDomains",
@@ -484,7 +494,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListFieldOptions":{
       "name":"ListFieldOptions",
@@ -501,7 +512,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListFields":{
       "name":"ListFields",
@@ -518,7 +530,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListLayouts":{
       "name":"ListLayouts",
@@ -535,7 +548,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -570,7 +584,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutCaseEventConfiguration":{
       "name":"PutCaseEventConfiguration",
@@ -590,6 +605,24 @@
         {"shape":"ConflictException"}
       ]
     },
+    "SearchAllRelatedItems":{
+      "name":"SearchAllRelatedItems",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{domainId}/related-items-search",
+        "responseCode":200
+      },
+      "input":{"shape":"SearchAllRelatedItemsRequest"},
+      "output":{"shape":"SearchAllRelatedItemsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "SearchCases":{
       "name":"SearchCases",
       "http":{
@@ -605,7 +638,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "SearchRelatedItems":{
       "name":"SearchRelatedItems",
@@ -622,7 +656,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -690,7 +725,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
     },
@@ -748,7 +784,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
     }
@@ -884,7 +921,8 @@
       ],
       "members":{
         "caseRules":{"shape":"BatchGetCaseRuleResponseCaseRulesList"},
-        "errors":{"shape":"BatchGetCaseRuleResponseErrorsList"}
+        "errors":{"shape":"BatchGetCaseRuleResponseErrorsList"},
+        "unprocessedCaseRules":{"shape":"BatchGetCaseRuleResponseUnprocessedCaseRulesList"}
       }
     },
     "BatchGetCaseRuleResponseCaseRulesList":{
@@ -896,6 +934,12 @@
     "BatchGetCaseRuleResponseErrorsList":{
       "type":"list",
       "member":{"shape":"CaseRuleError"},
+      "max":50,
+      "min":0
+    },
+    "BatchGetCaseRuleResponseUnprocessedCaseRulesList":{
+      "type":"list",
+      "member":{"shape":"CaseRuleId"},
       "max":50,
       "min":0
     },
@@ -1071,7 +1115,9 @@
     "CaseRuleDetails":{
       "type":"structure",
       "members":{
-        "required":{"shape":"RequiredCaseRule"}
+        "required":{"shape":"RequiredCaseRule"},
+        "fieldOptions":{"shape":"FieldOptionsCaseRule"},
+        "hidden":{"shape":"HiddenCaseRule"}
       },
       "union":true
     },
@@ -1165,8 +1211,7 @@
     },
     "CommentFilter":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ConflictException":{
       "type":"structure",
@@ -1538,8 +1583,7 @@
     },
     "DeleteCaseResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteCaseRuleRequest":{
       "type":"structure",
@@ -1562,8 +1606,7 @@
     },
     "DeleteCaseRuleResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDomainRequest":{
       "type":"structure",
@@ -1578,8 +1621,7 @@
     },
     "DeleteDomainResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteFieldRequest":{
       "type":"structure",
@@ -1602,8 +1644,7 @@
     },
     "DeleteFieldResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteLayoutRequest":{
       "type":"structure",
@@ -1626,8 +1667,7 @@
     },
     "DeleteLayoutResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRelatedItemRequest":{
       "type":"structure",
@@ -1656,8 +1696,7 @@
     },
     "DeleteRelatedItemResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTemplateRequest":{
       "type":"structure",
@@ -1680,8 +1719,7 @@
     },
     "DeleteTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Deleted":{"type":"boolean"},
     "DomainArn":{
@@ -1731,13 +1769,11 @@
     },
     "EmptyFieldValue":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EmptyOperandValue":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EventBridgeConfiguration":{
       "type":"structure",
@@ -1876,6 +1912,15 @@
       "max":100,
       "min":1,
       "pattern":".*[\\S]"
+    },
+    "FieldOptionsCaseRule":{
+      "type":"structure",
+      "required":["parentChildFieldOptionsMappings"],
+      "members":{
+        "parentFieldId":{"shape":"FieldId"},
+        "childFieldId":{"shape":"FieldId"},
+        "parentChildFieldOptionsMappings":{"shape":"ParentChildFieldOptionsMappingList"}
+      }
     },
     "FieldOptionsList":{
       "type":"list",
@@ -2214,6 +2259,17 @@
         "createdTime":{"shape":"CreatedTime"},
         "lastModifiedTime":{"shape":"LastModifiedTime"},
         "rules":{"shape":"TemplateCaseRuleList"}
+      }
+    },
+    "HiddenCaseRule":{
+      "type":"structure",
+      "required":[
+        "defaultValue",
+        "conditions"
+      ],
+      "members":{
+        "defaultValue":{"shape":"Boolean"},
+        "conditions":{"shape":"BooleanConditionList"}
       }
     },
     "IamPrincipalArn":{
@@ -2601,6 +2657,35 @@
         "Desc"
       ]
     },
+    "ParentChildFieldOptionValue":{
+      "type":"string",
+      "max":100,
+      "min":0,
+      "pattern":"$|^.*[\\S]"
+    },
+    "ParentChildFieldOptionsMapping":{
+      "type":"structure",
+      "required":[
+        "parentFieldOptionValue",
+        "childFieldOptionValues"
+      ],
+      "members":{
+        "parentFieldOptionValue":{"shape":"ParentChildFieldOptionValue"},
+        "childFieldOptionValues":{"shape":"ParentChildFieldOptionsMappingChildFieldOptionValuesList"}
+      }
+    },
+    "ParentChildFieldOptionsMappingChildFieldOptionValuesList":{
+      "type":"list",
+      "member":{"shape":"ParentChildFieldOptionValue"},
+      "max":1500,
+      "min":0
+    },
+    "ParentChildFieldOptionsMappingList":{
+      "type":"list",
+      "member":{"shape":"ParentChildFieldOptionsMapping"},
+      "max":200,
+      "min":1
+    },
     "PutCaseEventConfigurationRequest":{
       "type":"structure",
       "required":[
@@ -2618,8 +2703,7 @@
     },
     "PutCaseEventConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RelatedItemArn":{
       "type":"string",
@@ -2729,7 +2813,95 @@
     },
     "RuleType":{
       "type":"string",
-      "enum":["Required"]
+      "enum":[
+        "Required",
+        "Hidden",
+        "FieldOptions"
+      ]
+    },
+    "SearchAllRelatedItemsRequest":{
+      "type":"structure",
+      "required":["domainId"],
+      "members":{
+        "domainId":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainId"
+        },
+        "maxResults":{"shape":"SearchAllRelatedItemsRequestMaxResultsInteger"},
+        "nextToken":{"shape":"NextToken"},
+        "filters":{"shape":"SearchAllRelatedItemsRequestFiltersList"},
+        "sorts":{"shape":"SearchAllRelatedItemsRequestSortsList"}
+      }
+    },
+    "SearchAllRelatedItemsRequestFiltersList":{
+      "type":"list",
+      "member":{"shape":"RelatedItemTypeFilter"},
+      "max":10,
+      "min":0
+    },
+    "SearchAllRelatedItemsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":25,
+      "min":1
+    },
+    "SearchAllRelatedItemsRequestSortsList":{
+      "type":"list",
+      "member":{"shape":"SearchAllRelatedItemsSort"},
+      "max":2,
+      "min":0
+    },
+    "SearchAllRelatedItemsResponse":{
+      "type":"structure",
+      "required":["relatedItems"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "relatedItems":{"shape":"SearchAllRelatedItemsResponseRelatedItemsList"}
+      }
+    },
+    "SearchAllRelatedItemsResponseItem":{
+      "type":"structure",
+      "required":[
+        "relatedItemId",
+        "caseId",
+        "type",
+        "associationTime",
+        "content"
+      ],
+      "members":{
+        "relatedItemId":{"shape":"RelatedItemId"},
+        "caseId":{"shape":"CaseId"},
+        "type":{"shape":"RelatedItemType"},
+        "associationTime":{"shape":"AssociationTime"},
+        "content":{"shape":"RelatedItemContent"},
+        "performedBy":{"shape":"UserUnion"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "SearchAllRelatedItemsResponseRelatedItemsList":{
+      "type":"list",
+      "member":{"shape":"SearchAllRelatedItemsResponseItem"},
+      "max":25,
+      "min":0
+    },
+    "SearchAllRelatedItemsSort":{
+      "type":"structure",
+      "required":[
+        "sortProperty",
+        "sortOrder"
+      ],
+      "members":{
+        "sortProperty":{"shape":"SearchAllRelatedItemsSortProperty"},
+        "sortOrder":{"shape":"Order"}
+      }
+    },
+    "SearchAllRelatedItemsSortProperty":{
+      "type":"string",
+      "enum":[
+        "AssociationTime",
+        "CaseId"
+      ]
     },
     "SearchCasesRequest":{
       "type":"structure",
@@ -3062,10 +3234,7 @@
     },
     "TemplateRule":{
       "type":"structure",
-      "required":[
-        "caseRuleId",
-        "fieldId"
-      ],
+      "required":["caseRuleId"],
       "members":{
         "caseRuleId":{"shape":"CaseRuleId"},
         "fieldId":{"shape":"FieldId"}
@@ -3161,8 +3330,7 @@
     },
     "UpdateCaseResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateCaseRuleRequest":{
       "type":"structure",
@@ -3188,8 +3356,7 @@
     },
     "UpdateCaseRuleResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateFieldRequest":{
       "type":"structure",
@@ -3214,8 +3381,7 @@
     },
     "UpdateFieldResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLayoutRequest":{
       "type":"structure",
@@ -3240,8 +3406,7 @@
     },
     "UpdateLayoutResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateTemplateRequest":{
       "type":"structure",
@@ -3270,8 +3435,7 @@
     },
     "UpdateTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UserArn":{
       "type":"string",

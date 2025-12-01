@@ -121,7 +121,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDataAutomationProject":{
       "name":"GetDataAutomationProject",
@@ -138,7 +139,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListBlueprints":{
       "name":"ListBlueprints",
@@ -155,7 +157,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListDataAutomationProjects":{
       "name":"ListDataAutomationProjects",
@@ -172,7 +175,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -305,10 +309,31 @@
       "type":"list",
       "member":{"shape":"AudioExtractionCategoryType"}
     },
+    "AudioGenerativeOutputLanguage":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "EN"
+      ]
+    },
+    "AudioInputLanguages":{
+      "type":"list",
+      "member":{"shape":"Language"}
+    },
+    "AudioLanguageConfiguration":{
+      "type":"structure",
+      "members":{
+        "inputLanguages":{"shape":"AudioInputLanguages"},
+        "generativeOutputLanguage":{"shape":"AudioGenerativeOutputLanguage"},
+        "identifyMultipleLanguages":{"shape":"Boolean"}
+      }
+    },
     "AudioOverrideConfiguration":{
       "type":"structure",
       "members":{
-        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"}
+        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"},
+        "languageConfiguration":{"shape":"AudioLanguageConfiguration"},
+        "sensitiveDataConfiguration":{"shape":"SensitiveDataConfiguration"}
       }
     },
     "AudioStandardExtraction":{
@@ -449,6 +474,10 @@
       "type":"list",
       "member":{"shape":"BlueprintSummary"}
     },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
+    },
     "ChannelLabelingConfiguration":{
       "type":"structure",
       "required":["state"],
@@ -532,6 +561,7 @@
         "projectName":{"shape":"DataAutomationProjectName"},
         "projectDescription":{"shape":"DataAutomationProjectDescription"},
         "projectStage":{"shape":"DataAutomationProjectStage"},
+        "projectType":{"shape":"DataAutomationProjectType"},
         "standardOutputConfiguration":{"shape":"StandardOutputConfiguration"},
         "customOutputConfiguration":{"shape":"CustomOutputConfiguration"},
         "overrideConfiguration":{"shape":"OverrideConfiguration"},
@@ -573,6 +603,7 @@
         "lastModifiedTime":{"shape":"DateTimestamp"},
         "projectName":{"shape":"DataAutomationProjectName"},
         "projectStage":{"shape":"DataAutomationProjectStage"},
+        "projectType":{"shape":"DataAutomationProjectType"},
         "projectDescription":{"shape":"DataAutomationProjectDescription"},
         "standardOutputConfiguration":{"shape":"StandardOutputConfiguration"},
         "customOutputConfiguration":{"shape":"CustomOutputConfiguration"},
@@ -645,9 +676,17 @@
       "members":{
         "projectArn":{"shape":"DataAutomationProjectArn"},
         "projectStage":{"shape":"DataAutomationProjectStage"},
+        "projectType":{"shape":"DataAutomationProjectType"},
         "projectName":{"shape":"DataAutomationProjectName"},
         "creationTime":{"shape":"DateTimestamp"}
       }
+    },
+    "DataAutomationProjectType":{
+      "type":"string",
+      "enum":[
+        "ASYNC",
+        "SYNC"
+      ]
     },
     "DateTimestamp":{
       "type":"timestamp",
@@ -769,7 +808,8 @@
       "type":"structure",
       "members":{
         "splitter":{"shape":"SplitterConfiguration"},
-        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"}
+        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"},
+        "sensitiveDataConfiguration":{"shape":"SensitiveDataConfiguration"}
       }
     },
     "DocumentStandardExtraction":{
@@ -887,7 +927,8 @@
     "ImageOverrideConfiguration":{
       "type":"structure",
       "members":{
-        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"}
+        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"},
+        "sensitiveDataConfiguration":{"shape":"SensitiveDataConfiguration"}
       }
     },
     "ImageStandardExtraction":{
@@ -947,6 +988,22 @@
       "max":2048,
       "min":1,
       "pattern":"[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]+"
+    },
+    "Language":{
+      "type":"string",
+      "enum":[
+        "EN",
+        "DE",
+        "ES",
+        "FR",
+        "IT",
+        "PT",
+        "JA",
+        "KO",
+        "CN",
+        "TW",
+        "HK"
+      ]
     },
     "ListBlueprintsRequest":{
       "type":"structure",
@@ -1039,6 +1096,63 @@
         "modalityRouting":{"shape":"ModalityRoutingConfiguration"}
       }
     },
+    "PIIEntitiesConfiguration":{
+      "type":"structure",
+      "members":{
+        "piiEntityTypes":{"shape":"PIIEntityTypes"},
+        "redactionMaskMode":{"shape":"PIIRedactionMaskMode"}
+      }
+    },
+    "PIIEntityType":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "ADDRESS",
+        "AGE",
+        "NAME",
+        "EMAIL",
+        "PHONE",
+        "USERNAME",
+        "PASSWORD",
+        "DRIVER_ID",
+        "LICENSE_PLATE",
+        "VEHICLE_IDENTIFICATION_NUMBER",
+        "CREDIT_DEBIT_CARD_CVV",
+        "CREDIT_DEBIT_CARD_EXPIRY",
+        "CREDIT_DEBIT_CARD_NUMBER",
+        "PIN",
+        "INTERNATIONAL_BANK_ACCOUNT_NUMBER",
+        "SWIFT_CODE",
+        "IP_ADDRESS",
+        "MAC_ADDRESS",
+        "URL",
+        "AWS_ACCESS_KEY",
+        "AWS_SECRET_KEY",
+        "US_BANK_ACCOUNT_NUMBER",
+        "US_BANK_ROUTING_NUMBER",
+        "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER",
+        "US_PASSPORT_NUMBER",
+        "US_SOCIAL_SECURITY_NUMBER",
+        "CA_HEALTH_NUMBER",
+        "CA_SOCIAL_INSURANCE_NUMBER",
+        "UK_NATIONAL_HEALTH_SERVICE_NUMBER",
+        "UK_NATIONAL_INSURANCE_NUMBER",
+        "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER"
+      ]
+    },
+    "PIIEntityTypes":{
+      "type":"list",
+      "member":{"shape":"PIIEntityType"},
+      "max":32,
+      "min":1
+    },
+    "PIIRedactionMaskMode":{
+      "type":"string",
+      "enum":[
+        "PII",
+        "ENTITY_TYPE"
+      ]
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -1055,6 +1169,35 @@
       "enum":[
         "SERVICE",
         "ACCOUNT"
+      ]
+    },
+    "SensitiveDataConfiguration":{
+      "type":"structure",
+      "required":["detectionMode"],
+      "members":{
+        "detectionMode":{"shape":"SensitiveDataDetectionMode"},
+        "detectionScope":{"shape":"SensitiveDataDetectionScope"},
+        "piiEntitiesConfiguration":{"shape":"PIIEntitiesConfiguration"}
+      }
+    },
+    "SensitiveDataDetectionMode":{
+      "type":"string",
+      "enum":[
+        "DETECTION",
+        "DETECTION_AND_REDACTION"
+      ]
+    },
+    "SensitiveDataDetectionScope":{
+      "type":"list",
+      "member":{"shape":"SensitiveDataDetectionScopeType"},
+      "max":2,
+      "min":1
+    },
+    "SensitiveDataDetectionScopeType":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "CUSTOM"
       ]
     },
     "ServiceQuotaExceededException":{
@@ -1304,7 +1447,8 @@
     "VideoOverrideConfiguration":{
       "type":"structure",
       "members":{
-        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"}
+        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"},
+        "sensitiveDataConfiguration":{"shape":"SensitiveDataConfiguration"}
       }
     },
     "VideoStandardExtraction":{

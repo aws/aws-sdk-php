@@ -193,7 +193,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetStreamGroup":{
       "name":"GetStreamGroup",
@@ -210,7 +211,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetStreamSession":{
       "name":"GetStreamSession",
@@ -227,7 +229,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListApplications":{
       "name":"ListApplications",
@@ -243,7 +246,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListStreamGroups":{
       "name":"ListStreamGroups",
@@ -259,7 +263,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListStreamSessions":{
       "name":"ListStreamSessions",
@@ -276,7 +281,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListStreamSessionsByAccount":{
       "name":"ListStreamSessionsByAccount",
@@ -292,7 +298,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -308,7 +315,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "RemoveStreamGroupLocations":{
       "name":"RemoveStreamGroupLocations",
@@ -657,6 +665,7 @@
         "StatusReason":{"shape":"StreamGroupStatusReason"},
         "LastUpdatedAt":{"shape":"Timestamp"},
         "CreatedAt":{"shape":"Timestamp"},
+        "ExpiresAt":{"shape":"Timestamp"},
         "AssociatedApplications":{"shape":"ArnList"}
       }
     },
@@ -891,6 +900,7 @@
         "StatusReason":{"shape":"StreamGroupStatusReason"},
         "LastUpdatedAt":{"shape":"Timestamp"},
         "CreatedAt":{"shape":"Timestamp"},
+        "ExpiresAt":{"shape":"Timestamp"},
         "AssociatedApplications":{"shape":"ArnList"}
       }
     },
@@ -1351,7 +1361,8 @@
         "ACTIVE",
         "ACTIVE_WITH_ERRORS",
         "ERROR",
-        "DELETING"
+        "DELETING",
+        "EXPIRED"
       ]
     },
     "StreamGroupStatusReason":{
@@ -1372,7 +1383,8 @@
         "StreamClass":{"shape":"StreamClass"},
         "Status":{"shape":"StreamGroupStatus"},
         "CreatedAt":{"shape":"Timestamp"},
-        "LastUpdatedAt":{"shape":"Timestamp"}
+        "LastUpdatedAt":{"shape":"Timestamp"},
+        "ExpiresAt":{"shape":"Timestamp"}
       }
     },
     "StreamGroupSummaryList":{
@@ -1398,7 +1410,13 @@
         "internalError",
         "invalidSignalRequest",
         "placementTimeout",
-        "applicationLogS3DestinationError"
+        "applicationLogS3DestinationError",
+        "applicationExit",
+        "connectionTimeout",
+        "reconnectionTimeout",
+        "maxSessionLengthTimeout",
+        "idleTimeout",
+        "apiTerminated"
       ]
     },
     "StreamSessionSummary":{
@@ -1580,6 +1598,7 @@
         "StatusReason":{"shape":"StreamGroupStatusReason"},
         "LastUpdatedAt":{"shape":"Timestamp"},
         "CreatedAt":{"shape":"Timestamp"},
+        "ExpiresAt":{"shape":"Timestamp"},
         "AssociatedApplications":{"shape":"ArnList"}
       }
     },

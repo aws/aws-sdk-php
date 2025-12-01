@@ -149,6 +149,8 @@
         "AutoStopConfig$enabled": "<p>Enables the application to automatically stop after a certain amount of time being idle. Defaults to true.</p>",
         "CloudWatchLoggingConfiguration$enabled": "<p>Enables CloudWatch logging.</p>",
         "GetDashboardForJobRunRequest$accessSystemProfileLogs": "<p>Allows access to system profile logs for Lake Formation-enabled jobs. Default is false.</p>",
+        "IdentityCenterConfiguration$userBackgroundSessionsEnabled": "<p>Enables user background sessions for this application so Livy sessions can continue running after users log out of their interactive notebook or their Identity Center sessions expire.</p>",
+        "IdentityCenterConfigurationInput$userBackgroundSessionsEnabled": "<p>Enables user background sessions for this application so Livy sessions can continue running after users log out of their interactive notebook or their Identity Center sessions expire.</p>",
         "InteractiveConfiguration$studioEnabled": "<p>Enables you to connect an application to Amazon EMR Studio to run interactive workloads in a notebook.</p>",
         "InteractiveConfiguration$livyEndpointEnabled": "<p>Enables an Apache Livy endpoint that you can connect to and run interactive jobs.</p>",
         "ManagedPersistenceMonitoringConfiguration$enabled": "<p>Enables managed logging and defaults to true. If set to false, managed logging will be turned off.</p>"
@@ -156,13 +158,11 @@
     },
     "CancelJobRunRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelJobRunResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ClientToken": {
       "base": null,
@@ -215,8 +215,7 @@
     },
     "ConflictException": {
       "base": "<p>The request could not be processed because of conflict in the current state of the resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CpuSize": {
       "base": null,
@@ -227,13 +226,11 @@
     },
     "CreateApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Date": {
       "base": null,
@@ -261,13 +258,11 @@
     },
     "DeleteApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DiskSize": {
       "base": null,
@@ -336,33 +331,27 @@
     },
     "GetApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDashboardForJobRunRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDashboardForJobRunResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobRunRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobRunResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Hive": {
       "base": "<p>The configurations for the Hive job driver.</p>",
@@ -392,13 +381,13 @@
       }
     },
     "IdentityCenterConfiguration": {
-      "base": "<p>The IAM Identity Center Configuration that includes the Identify Center instance and application ARNs that provide trusted-identity propagation.</p>",
+      "base": "<p>The IAM Identity Center Configuration accepts the Identity Center instance parameter required to enable trusted identity propagation. This configuration allows identity propagation between integrated services and the Identity Center instance.</p>",
       "refs": {
-        "Application$identityCenterConfiguration": "<p>The IAM Identity Center configuration applied to enable trusted identity propagation. </p>"
+        "Application$identityCenterConfiguration": "<p>The IAM Identity Center configuration applied to enable trusted identity propagation.</p>"
       }
     },
     "IdentityCenterConfigurationInput": {
-      "base": "<p>Specifies the IAM Identity Center configuration used to enable or disable trusted identity propagation. When provided, this configuration determines how the application interacts with IAM Identity Center for user authentication and access control.</p>",
+      "base": "<p>The IAM Identity Center Configuration accepts the Identity Center instance parameter required to enable trusted identity propagation. This configuration allows identity propagation between integrated services and the Identity Center instance.</p>",
       "refs": {
         "CreateApplicationRequest$identityCenterConfiguration": "<p>The IAM Identity Center Configuration accepts the Identity Center instance parameter required to enable trusted identity propagation. This configuration allows identity propagation between integrated services and the Identity Center instance.</p>",
         "UpdateApplicationRequest$identityCenterConfiguration": "<p>Specifies the IAM Identity Center configuration used to enable or disable trusted identity propagation. When provided, this configuration determines how the application interacts with IAM Identity Center for user authentication and access control.</p>"
@@ -477,8 +466,7 @@
     },
     "InternalServerException": {
       "base": "<p>Request processing failed because of an error or failure with the service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "JobArn": {
       "base": null,
@@ -581,8 +569,7 @@
     },
     "ListApplicationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationsRequestMaxResultsInteger": {
       "base": null,
@@ -592,13 +579,11 @@
     },
     "ListApplicationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobRunAttemptsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobRunAttemptsRequestMaxResultsInteger": {
       "base": null,
@@ -608,13 +593,11 @@
     },
     "ListJobRunAttemptsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobRunsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobRunsRequestMaxResultsInteger": {
       "base": null,
@@ -624,18 +607,15 @@
     },
     "ListJobRunsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LogGroupName": {
       "base": null,
@@ -783,8 +763,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource was not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceUtilization": {
       "base": "<p>The resource utilization for memory, storage, and vCPU for jobs.</p>",
@@ -839,8 +818,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The maximum number of resources per account has been reached.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ShutdownGracePeriodInSeconds": {
       "base": null,
@@ -862,33 +840,27 @@
     },
     "StartApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartJobRunRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartJobRunResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "String1024": {
       "base": null,
@@ -953,13 +925,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -975,23 +945,19 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UriString": {
       "base": null,
@@ -1007,8 +973,7 @@
     },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WorkerCounts": {
       "base": null,

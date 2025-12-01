@@ -80,6 +80,22 @@
         {"shape":"OperationNotPermittedException"}
       ]
     },
+    "AssociateSoftwareToImageBuilder":{
+      "name":"AssociateSoftwareToImageBuilder",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateSoftwareToImageBuilderRequest"},
+      "output":{"shape":"AssociateSoftwareToImageBuilderResult"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"IncompatibleImageException"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
     "BatchAssociateUserStack":{
       "name":"BatchAssociateUserStack",
       "http":{
@@ -220,6 +236,24 @@
         {"shape":"EntitlementAlreadyExistsException"}
       ]
     },
+    "CreateExportImageTask":{
+      "name":"CreateExportImageTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateExportImageTaskRequest"},
+      "output":{"shape":"CreateExportImageTaskResult"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidRoleException"},
+        {"shape":"InvalidAccountStatusException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ResourceNotAvailableException"}
+      ]
+    },
     "CreateFleet":{
       "name":"CreateFleet",
       "http":{
@@ -275,6 +309,25 @@
       "errors":[
         {"shape":"OperationNotPermittedException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "CreateImportedImage":{
+      "name":"CreateImportedImage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateImportedImageRequest"},
+      "output":{"shape":"CreateImportedImageResult"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidAccountStatusException"},
+        {"shape":"InvalidRoleException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"IncompatibleImageException"},
+        {"shape":"DryRunOperationException"}
       ]
     },
     "CreateStack":{
@@ -598,6 +651,20 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "DescribeAppLicenseUsage":{
+      "name":"DescribeAppLicenseUsage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeAppLicenseUsageRequest"},
+      "output":{"shape":"DescribeAppLicenseUsageResult"},
+      "errors":[
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "DescribeApplicationFleetAssociations":{
       "name":"DescribeApplicationFleetAssociations",
       "http":{
@@ -709,6 +776,19 @@
       "output":{"shape":"DescribeSessionsResult"},
       "errors":[
         {"shape":"InvalidParameterCombinationException"}
+      ]
+    },
+    "DescribeSoftwareAssociations":{
+      "name":"DescribeSoftwareAssociations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSoftwareAssociationsRequest"},
+      "output":{"shape":"DescribeSoftwareAssociationsResult"},
+      "errors":[
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "DescribeStacks":{
@@ -847,6 +927,21 @@
         {"shape":"OperationNotPermittedException"}
       ]
     },
+    "DisassociateSoftwareFromImageBuilder":{
+      "name":"DisassociateSoftwareFromImageBuilder",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateSoftwareFromImageBuilderRequest"},
+      "output":{"shape":"DisassociateSoftwareFromImageBuilderResult"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
     "EnableUser":{
       "name":"EnableUser",
       "http":{
@@ -868,6 +963,19 @@
       },
       "input":{"shape":"ExpireSessionRequest"},
       "output":{"shape":"ExpireSessionResult"}
+    },
+    "GetExportImageTask":{
+      "name":"GetExportImageTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetExportImageTaskRequest"},
+      "output":{"shape":"GetExportImageTaskResult"},
+      "errors":[
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
     },
     "ListAssociatedFleets":{
       "name":"ListAssociatedFleets",
@@ -899,6 +1007,18 @@
         {"shape":"OperationNotPermittedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"EntitlementNotFoundException"}
+      ]
+    },
+    "ListExportImageTasks":{
+      "name":"ListExportImageTasks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListExportImageTasksRequest"},
+      "output":{"shape":"ListExportImageTasksResult"},
+      "errors":[
+        {"shape":"OperationNotPermittedException"}
       ]
     },
     "ListTagsForResource":{
@@ -964,6 +1084,20 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"InvalidAccountStatusException"},
         {"shape":"IncompatibleImageException"}
+      ]
+    },
+    "StartSoftwareDeploymentToImageBuilder":{
+      "name":"StartSoftwareDeploymentToImageBuilder",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartSoftwareDeploymentToImageBuilderRequest"},
+      "output":{"shape":"StartSoftwareDeploymentToImageBuilderResult"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"ConcurrentModificationException"}
       ]
     },
     "StopAppBlockBuilder":{
@@ -1217,6 +1351,42 @@
         "AUTO_TIME_ZONE_REDIRECTION"
       ]
     },
+    "AdminAppLicenseUsageList":{
+      "type":"list",
+      "member":{"shape":"AdminAppLicenseUsageRecord"}
+    },
+    "AdminAppLicenseUsageRecord":{
+      "type":"structure",
+      "required":[
+        "UserArn",
+        "BillingPeriod",
+        "OwnerAWSAccountId",
+        "SubscriptionFirstUsedDate",
+        "SubscriptionLastUsedDate",
+        "LicenseType",
+        "UserId"
+      ],
+      "members":{
+        "UserArn":{"shape":"String"},
+        "BillingPeriod":{"shape":"String"},
+        "OwnerAWSAccountId":{"shape":"AwsAccountId"},
+        "SubscriptionFirstUsedDate":{"shape":"Timestamp"},
+        "SubscriptionLastUsedDate":{"shape":"Timestamp"},
+        "LicenseType":{"shape":"String"},
+        "UserId":{"shape":"String"}
+      }
+    },
+    "AgentSoftwareVersion":{
+      "type":"string",
+      "enum":[
+        "CURRENT_LATEST",
+        "ALWAYS_LATEST"
+      ]
+    },
+    "AmiName":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9().\\-/_]{3,128}$"
+    },
     "AppBlock":{
       "type":"structure",
       "required":[
@@ -1332,6 +1502,21 @@
       "type":"list",
       "member":{"shape":"AppBlock"}
     },
+    "AppCatalogConfig":{
+      "type":"list",
+      "member":{"shape":"ApplicationConfig"},
+      "max":50
+    },
+    "AppDisplayName":{
+      "type":"string",
+      "max":100,
+      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9_. -]{0,99}$"
+    },
+    "AppName":{
+      "type":"string",
+      "max":100,
+      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,99}$"
+    },
     "AppVisibility":{
       "type":"string",
       "enum":[
@@ -1370,6 +1555,23 @@
       "type":"list",
       "member":{"shape":"ApplicationAttribute"},
       "max":2
+    },
+    "ApplicationConfig":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "AbsoluteAppPath"
+      ],
+      "members":{
+        "Name":{"shape":"AppName"},
+        "DisplayName":{"shape":"AppDisplayName"},
+        "AbsoluteAppPath":{"shape":"FilePath"},
+        "AbsoluteIconPath":{"shape":"FilePath"},
+        "AbsoluteManifestPath":{"shape":"FilePath"},
+        "WorkingDirectory":{"shape":"FilePath"},
+        "LaunchParameters":{"shape":"LaunchParameters"}
+      },
+      "sensitive":true
     },
     "ApplicationFleetAssociation":{
       "type":"structure",
@@ -1484,6 +1686,21 @@
       }
     },
     "AssociateFleetResult":{
+      "type":"structure",
+      "members":{}
+    },
+    "AssociateSoftwareToImageBuilderRequest":{
+      "type":"structure",
+      "required":[
+        "ImageBuilderName",
+        "SoftwareNames"
+      ],
+      "members":{
+        "ImageBuilderName":{"shape":"Name"},
+        "SoftwareNames":{"shape":"StringList"}
+      }
+    },
+    "AssociateSoftwareToImageBuilderResult":{
       "type":"structure",
       "members":{}
     },
@@ -1733,6 +1950,27 @@
         "Entitlement":{"shape":"Entitlement"}
       }
     },
+    "CreateExportImageTaskRequest":{
+      "type":"structure",
+      "required":[
+        "ImageName",
+        "AmiName",
+        "IamRoleArn"
+      ],
+      "members":{
+        "ImageName":{"shape":"Name"},
+        "AmiName":{"shape":"AmiName"},
+        "IamRoleArn":{"shape":"Arn"},
+        "TagSpecifications":{"shape":"Tags"},
+        "AmiDescription":{"shape":"Description"}
+      }
+    },
+    "CreateExportImageTaskResult":{
+      "type":"structure",
+      "members":{
+        "ExportImageTask":{"shape":"ExportImageTask"}
+      }
+    },
     "CreateFleetRequest":{
       "type":"structure",
       "required":[
@@ -1761,7 +1999,8 @@
         "MaxConcurrentSessions":{"shape":"Integer"},
         "UsbDeviceFilterStrings":{"shape":"UsbDeviceFilterStrings"},
         "SessionScriptS3Location":{"shape":"S3Location"},
-        "MaxSessionsPerInstance":{"shape":"Integer"}
+        "MaxSessionsPerInstance":{"shape":"Integer"},
+        "RootVolumeConfig":{"shape":"VolumeConfig"}
       }
     },
     "CreateFleetResult":{
@@ -1789,7 +2028,10 @@
         "DomainJoinInfo":{"shape":"DomainJoinInfo"},
         "AppstreamAgentVersion":{"shape":"AppstreamAgentVersion"},
         "Tags":{"shape":"Tags"},
-        "AccessEndpoints":{"shape":"AccessEndpointList"}
+        "AccessEndpoints":{"shape":"AccessEndpointList"},
+        "RootVolumeConfig":{"shape":"VolumeConfig"},
+        "SoftwaresToInstall":{"shape":"StringList"},
+        "SoftwaresToUninstall":{"shape":"StringList"}
       }
     },
     "CreateImageBuilderResult":{
@@ -1811,6 +2053,32 @@
       "members":{
         "StreamingURL":{"shape":"String"},
         "Expires":{"shape":"Timestamp"}
+      }
+    },
+    "CreateImportedImageRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "SourceAmiId",
+        "IamRoleArn"
+      ],
+      "members":{
+        "Name":{"shape":"Name"},
+        "SourceAmiId":{"shape":"PhotonAmiId"},
+        "IamRoleArn":{"shape":"Arn"},
+        "Description":{"shape":"ImageImportDescription"},
+        "DisplayName":{"shape":"ImageImportDisplayName"},
+        "Tags":{"shape":"Tags"},
+        "RuntimeValidationConfig":{"shape":"RuntimeValidationConfig"},
+        "AgentSoftwareVersion":{"shape":"AgentSoftwareVersion"},
+        "AppCatalogConfig":{"shape":"AppCatalogConfig"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "CreateImportedImageResult":{
+      "type":"structure",
+      "members":{
+        "Image":{"shape":"Image"}
       }
     },
     "CreateStackRequest":{
@@ -2137,6 +2405,22 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "DescribeAppLicenseUsageRequest":{
+      "type":"structure",
+      "required":["BillingPeriod"],
+      "members":{
+        "BillingPeriod":{"shape":"String"},
+        "MaxResults":{"shape":"Integer"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "DescribeAppLicenseUsageResult":{
+      "type":"structure",
+      "members":{
+        "AppLicenseUsages":{"shape":"AdminAppLicenseUsageList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "DescribeApplicationFleetAssociationsRequest":{
       "type":"structure",
       "members":{
@@ -2290,6 +2574,23 @@
       "type":"structure",
       "members":{
         "Sessions":{"shape":"SessionList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "DescribeSoftwareAssociationsRequest":{
+      "type":"structure",
+      "required":["AssociatedResource"],
+      "members":{
+        "AssociatedResource":{"shape":"Arn"},
+        "MaxResults":{"shape":"Integer"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "DescribeSoftwareAssociationsResult":{
+      "type":"structure",
+      "members":{
+        "AssociatedResource":{"shape":"Arn"},
+        "SoftwareAssociations":{"shape":"SoftwareAssociationsList"},
         "NextToken":{"shape":"String"}
       }
     },
@@ -2468,6 +2769,21 @@
       "type":"structure",
       "members":{}
     },
+    "DisassociateSoftwareFromImageBuilderRequest":{
+      "type":"structure",
+      "required":[
+        "ImageBuilderName",
+        "SoftwareNames"
+      ],
+      "members":{
+        "ImageBuilderName":{"shape":"Name"},
+        "SoftwareNames":{"shape":"StringList"}
+      }
+    },
+    "DisassociateSoftwareFromImageBuilderResult":{
+      "type":"structure",
+      "members":{}
+    },
     "DisplayName":{
       "type":"string",
       "max":100
@@ -2488,6 +2804,13 @@
       "type":"list",
       "member":{"shape":"Domain"},
       "max":50
+    },
+    "DryRunOperationException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
     },
     "DynamicAppProvidersEnabled":{
       "type":"string",
@@ -2608,9 +2931,73 @@
       "type":"structure",
       "members":{}
     },
+    "ExportImageTask":{
+      "type":"structure",
+      "required":[
+        "TaskId",
+        "ImageArn",
+        "AmiName",
+        "CreatedDate"
+      ],
+      "members":{
+        "TaskId":{"shape":"UUID"},
+        "ImageArn":{"shape":"Arn"},
+        "AmiName":{"shape":"AmiName"},
+        "CreatedDate":{"shape":"Timestamp"},
+        "AmiDescription":{"shape":"Description"},
+        "State":{"shape":"ExportImageTaskState"},
+        "AmiId":{"shape":"PhotonAmiId"},
+        "TagSpecifications":{"shape":"Tags"},
+        "ErrorDetails":{"shape":"ErrorDetailsList"}
+      }
+    },
+    "ExportImageTaskState":{
+      "type":"string",
+      "enum":[
+        "EXPORTING",
+        "COMPLETED",
+        "FAILED"
+      ]
+    },
+    "ExportImageTasks":{
+      "type":"list",
+      "member":{"shape":"ExportImageTask"}
+    },
     "FeedbackURL":{
       "type":"string",
       "max":1000
+    },
+    "FilePath":{
+      "type":"string",
+      "max":32767,
+      "sensitive":true
+    },
+    "Filter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Values"
+      ],
+      "members":{
+        "Name":{"shape":"FilterName"},
+        "Values":{"shape":"FilterValues"}
+      }
+    },
+    "FilterName":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$"
+    },
+    "FilterValue":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9_:/.-]{0,200}$"
+    },
+    "FilterValues":{
+      "type":"list",
+      "member":{"shape":"FilterValue"}
+    },
+    "Filters":{
+      "type":"list",
+      "member":{"shape":"Filter"}
     },
     "Fleet":{
       "type":"structure",
@@ -2646,7 +3033,8 @@
         "MaxConcurrentSessions":{"shape":"Integer"},
         "UsbDeviceFilterStrings":{"shape":"UsbDeviceFilterStrings"},
         "SessionScriptS3Location":{"shape":"S3Location"},
-        "MaxSessionsPerInstance":{"shape":"Integer"}
+        "MaxSessionsPerInstance":{"shape":"Integer"},
+        "RootVolumeConfig":{"shape":"VolumeConfig"}
       }
     },
     "FleetAttribute":{
@@ -2658,7 +3046,8 @@
         "IAM_ROLE_ARN",
         "USB_DEVICE_FILTER_STRINGS",
         "SESSION_SCRIPT_S3_LOCATION",
-        "MAX_SESSIONS_PER_INSTANCE"
+        "MAX_SESSIONS_PER_INSTANCE",
+        "VOLUME_CONFIGURATION"
       ]
     },
     "FleetAttributes":{
@@ -2704,7 +3093,8 @@
         "DOMAIN_JOIN_NERR_WORKSTATION_NOT_STARTED",
         "DOMAIN_JOIN_ERROR_DS_MACHINE_ACCOUNT_QUOTA_EXCEEDED",
         "DOMAIN_JOIN_NERR_PASSWORD_EXPIRED",
-        "DOMAIN_JOIN_INTERNAL_SERVICE_ERROR"
+        "DOMAIN_JOIN_INTERNAL_SERVICE_ERROR",
+        "VALIDATION_ERROR"
       ]
     },
     "FleetErrors":{
@@ -2732,6 +3122,18 @@
         "ELASTIC"
       ]
     },
+    "GetExportImageTaskRequest":{
+      "type":"structure",
+      "members":{
+        "TaskId":{"shape":"UUID"}
+      }
+    },
+    "GetExportImageTaskResult":{
+      "type":"structure",
+      "members":{
+        "ExportImageTask":{"shape":"ExportImageTask"}
+      }
+    },
     "Image":{
       "type":"structure",
       "required":["Name"],
@@ -2756,7 +3158,9 @@
         "LatestAppstreamAgentVersion":{"shape":"LatestAppstreamAgentVersion"},
         "SupportedInstanceFamilies":{"shape":"StringList"},
         "DynamicAppProvidersEnabled":{"shape":"DynamicAppProvidersEnabled"},
-        "ImageSharedWithOthers":{"shape":"ImageSharedWithOthers"}
+        "ImageSharedWithOthers":{"shape":"ImageSharedWithOthers"},
+        "ManagedSoftwareIncluded":{"shape":"Boolean"},
+        "ImageType":{"shape":"ImageType"}
       }
     },
     "ImageBuilder":{
@@ -2781,6 +3185,7 @@
         "ImageBuilderErrors":{"shape":"ResourceErrors"},
         "AppstreamAgentVersion":{"shape":"AppstreamAgentVersion"},
         "AccessEndpoints":{"shape":"AccessEndpointList"},
+        "RootVolumeConfig":{"shape":"VolumeConfig"},
         "LatestAppstreamAgentVersion":{"shape":"LatestAppstreamAgentVersion"}
       }
     },
@@ -2801,7 +3206,10 @@
         "DELETING",
         "FAILED",
         "UPDATING",
-        "PENDING_QUALIFICATION"
+        "PENDING_QUALIFICATION",
+        "PENDING_SYNCING_APPS",
+        "SYNCING_APPS",
+        "PENDING_IMAGE_IMPORT"
       ]
     },
     "ImageBuilderStateChangeReason":{
@@ -2817,6 +3225,16 @@
         "INTERNAL_ERROR",
         "IMAGE_UNAVAILABLE"
       ]
+    },
+    "ImageImportDescription":{
+      "type":"string",
+      "max":256,
+      "pattern":"^[a-zA-Z0-9_.() -]+$"
+    },
+    "ImageImportDisplayName":{
+      "type":"string",
+      "max":100,
+      "pattern":"^[a-zA-Z0-9_.() -]+$"
     },
     "ImageList":{
       "type":"list",
@@ -2845,7 +3263,8 @@
         "COPYING",
         "DELETING",
         "CREATING",
-        "IMPORTING"
+        "IMPORTING",
+        "VALIDATING"
       ]
     },
     "ImageStateChangeReason":{
@@ -2860,7 +3279,16 @@
       "enum":[
         "INTERNAL_ERROR",
         "IMAGE_BUILDER_NOT_AVAILABLE",
-        "IMAGE_COPY_FAILURE"
+        "IMAGE_COPY_FAILURE",
+        "IMAGE_UPDATE_FAILURE",
+        "IMAGE_IMPORT_FAILURE"
+      ]
+    },
+    "ImageType":{
+      "type":"string",
+      "enum":[
+        "CUSTOM",
+        "NATIVE"
       ]
     },
     "IncompatibleImageException":{
@@ -2869,6 +3297,10 @@
         "Message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "InstanceType":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9-]+(\\.[a-z0-9-]+)+\\.(small|medium|large|xlarge|\\d+xlarge|metal)$"
     },
     "Integer":{"type":"integer"},
     "InvalidAccountStatusException":{
@@ -2909,6 +3341,12 @@
         "TRUE",
         "FALSE"
       ]
+    },
+    "LaunchParameters":{
+      "type":"string",
+      "max":1024,
+      "pattern":"[^\\x00]+",
+      "sensitive":true
     },
     "LimitExceededException":{
       "type":"structure",
@@ -2967,6 +3405,21 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "ListExportImageTasksRequest":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"Filters"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListExportImageTasksResult":{
+      "type":"structure",
+      "members":{
+        "ExportImageTasks":{"shape":"ExportImageTasks"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -3007,6 +3460,7 @@
       "type":"structure",
       "members":{
         "EniPrivateIpAddress":{"shape":"String"},
+        "EniIpv6Addresses":{"shape":"StringList"},
         "EniId":{"shape":"String"}
       }
     },
@@ -3038,6 +3492,10 @@
         "ENABLED",
         "DISABLED"
       ]
+    },
+    "PhotonAmiId":{
+      "type":"string",
+      "pattern":"^ami-[a-z0-9]{8,17}$"
     },
     "PlatformType":{
       "type":"string",
@@ -3123,6 +3581,12 @@
         "Message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "RuntimeValidationConfig":{
+      "type":"structure",
+      "members":{
+        "IntendedInstanceType":{"shape":"InstanceType"}
+      }
     },
     "S3Bucket":{
       "type":"string",
@@ -3234,6 +3698,30 @@
       "type":"list",
       "member":{"shape":"SharedImagePermissions"}
     },
+    "SoftwareAssociations":{
+      "type":"structure",
+      "members":{
+        "SoftwareName":{"shape":"String"},
+        "Status":{"shape":"SoftwareDeploymentStatus"},
+        "DeploymentError":{"shape":"ErrorDetailsList"}
+      }
+    },
+    "SoftwareAssociationsList":{
+      "type":"list",
+      "member":{"shape":"SoftwareAssociations"}
+    },
+    "SoftwareDeploymentStatus":{
+      "type":"string",
+      "enum":[
+        "STAGED_FOR_INSTALLATION",
+        "PENDING_INSTALLATION",
+        "INSTALLED",
+        "STAGED_FOR_UNINSTALLATION",
+        "PENDING_UNINSTALLATION",
+        "FAILED_TO_INSTALL",
+        "FAILED_TO_UNINSTALL"
+      ]
+    },
     "Stack":{
       "type":"structure",
       "required":["Name"],
@@ -3334,6 +3822,18 @@
       "members":{
         "ImageBuilder":{"shape":"ImageBuilder"}
       }
+    },
+    "StartSoftwareDeploymentToImageBuilderRequest":{
+      "type":"structure",
+      "required":["ImageBuilderName"],
+      "members":{
+        "ImageBuilderName":{"shape":"Name"},
+        "RetryFailedDeployments":{"shape":"Boolean"}
+      }
+    },
+    "StartSoftwareDeploymentToImageBuilderResult":{
+      "type":"structure",
+      "members":{}
     },
     "StopAppBlockBuilderRequest":{
       "type":"structure",
@@ -3531,6 +4031,10 @@
       "pattern":"^[-@./#&+\\w\\s]*$"
     },
     "Timestamp":{"type":"timestamp"},
+    "UUID":{
+      "type":"string",
+      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -3652,7 +4156,8 @@
         "MaxConcurrentSessions":{"shape":"Integer"},
         "UsbDeviceFilterStrings":{"shape":"UsbDeviceFilterStrings"},
         "SessionScriptS3Location":{"shape":"S3Location"},
-        "MaxSessionsPerInstance":{"shape":"Integer"}
+        "MaxSessionsPerInstance":{"shape":"Integer"},
+        "RootVolumeConfig":{"shape":"VolumeConfig"}
       }
     },
     "UpdateFleetResult":{
@@ -3862,6 +4367,12 @@
         "PRIVATE",
         "SHARED"
       ]
+    },
+    "VolumeConfig":{
+      "type":"structure",
+      "members":{
+        "VolumeSizeInGb":{"shape":"Integer"}
+      }
     },
     "VpcConfig":{
       "type":"structure",

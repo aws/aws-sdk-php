@@ -193,6 +193,25 @@
         {"shape":"ValidationException"}
       ]
     },
+    "CreateIndex":{
+      "name":"CreateIndex",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/index"
+      },
+      "input":{"shape":"CreateIndexRequest"},
+      "output":{"shape":"CreateIndexResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"DependencyFailureException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateOutboundConnection":{
       "name":"CreateOutboundConnection",
       "http":{
@@ -320,6 +339,24 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"DisabledOperationException"}
+      ]
+    },
+    "DeleteIndex":{
+      "name":"DeleteIndex",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/index/{IndexName}"
+      },
+      "input":{"shape":"DeleteIndexRequest"},
+      "output":{"shape":"DeleteIndexResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"DependencyFailureException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "DeleteOutboundConnection":{
@@ -679,6 +716,22 @@
         {"shape":"DependencyFailureException"}
       ]
     },
+    "GetDefaultApplicationSetting":{
+      "name":"GetDefaultApplicationSetting",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/defaultApplicationSetting",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDefaultApplicationSettingRequest"},
+      "output":{"shape":"GetDefaultApplicationSettingResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetDirectQueryDataSource":{
       "name":"GetDirectQueryDataSource",
       "http":{
@@ -709,6 +762,24 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"DisabledOperationException"}
+      ]
+    },
+    "GetIndex":{
+      "name":"GetIndex",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/index/{IndexName}"
+      },
+      "input":{"shape":"GetIndexRequest"},
+      "output":{"shape":"GetIndexResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"DependencyFailureException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetPackageVersionHistory":{
@@ -993,6 +1064,22 @@
         {"shape":"InternalException"}
       ]
     },
+    "PutDefaultApplicationSetting":{
+      "name":"PutDefaultApplicationSetting",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2021-01-01/opensearch/defaultApplicationSetting",
+        "responseCode":200
+      },
+      "input":{"shape":"PutDefaultApplicationSettingRequest"},
+      "output":{"shape":"PutDefaultApplicationSettingResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "RejectInboundConnection":{
       "name":"RejectInboundConnection",
       "http":{
@@ -1133,6 +1220,24 @@
         {"shape":"LimitExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "UpdateIndex":{
+      "name":"UpdateIndex",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/index/{IndexName}"
+      },
+      "input":{"shape":"UpdateIndexRequest"},
+      "output":{"shape":"UpdateIndexResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"DependencyFailureException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UpdatePackage":{
@@ -2011,6 +2116,30 @@
         "DomainStatus":{"shape":"DomainStatus"}
       }
     },
+    "CreateIndexRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "IndexName",
+        "IndexSchema"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "IndexName":{"shape":"IndexName"},
+        "IndexSchema":{"shape":"IndexSchema"}
+      }
+    },
+    "CreateIndexResponse":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Status":{"shape":"IndexStatus"}
+      }
+    },
     "CreateOutboundConnectionRequest":{
       "type":"structure",
       "required":[
@@ -2220,6 +2349,32 @@
       "type":"structure",
       "members":{
         "Connection":{"shape":"InboundConnection"}
+      }
+    },
+    "DeleteIndexRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "IndexName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "IndexName":{
+          "shape":"IndexName",
+          "location":"uri",
+          "locationName":"IndexName"
+        }
+      }
+    },
+    "DeleteIndexResponse":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Status":{"shape":"IndexStatus"}
       }
     },
     "DeleteOutboundConnectionRequest":{
@@ -3181,6 +3336,16 @@
         "Status":{"shape":"DataSourceStatus"}
       }
     },
+    "GetDefaultApplicationSettingRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "GetDefaultApplicationSettingResponse":{
+      "type":"structure",
+      "members":{
+        "applicationArn":{"shape":"ARN"}
+      }
+    },
     "GetDirectQueryDataSourceRequest":{
       "type":"structure",
       "required":["DataSourceName"],
@@ -3230,6 +3395,32 @@
         "Action":{"shape":"MaintenanceType"},
         "CreatedAt":{"shape":"UpdateTimestamp"},
         "UpdatedAt":{"shape":"UpdateTimestamp"}
+      }
+    },
+    "GetIndexRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "IndexName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "IndexName":{
+          "shape":"IndexName",
+          "location":"uri",
+          "locationName":"IndexName"
+        }
+      }
+    },
+    "GetIndexResponse":{
+      "type":"structure",
+      "required":["IndexSchema"],
+      "members":{
+        "IndexSchema":{"shape":"IndexSchema"}
       }
     },
     "GetPackageVersionHistoryRequest":{
@@ -3464,6 +3655,25 @@
     "InboundConnections":{
       "type":"list",
       "member":{"shape":"InboundConnection"}
+    },
+    "IndexName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^(?!\\.\\.?$)[^_ ,:\"+/*\\\\|?#><A-Z-][^ ,:\"+/*\\\\|?#><A-Z]*$"
+    },
+    "IndexSchema":{
+      "type":"structure",
+      "members":{},
+      "document":true
+    },
+    "IndexStatus":{
+      "type":"string",
+      "enum":[
+        "CREATED",
+        "UPDATED",
+        "DELETED"
+      ]
     },
     "InitiatedBy":{
       "type":"string",
@@ -4605,6 +4815,23 @@
         "ReservationName":{"shape":"ReservationToken"}
       }
     },
+    "PutDefaultApplicationSettingRequest":{
+      "type":"structure",
+      "required":[
+        "applicationArn",
+        "setAsDefault"
+      ],
+      "members":{
+        "applicationArn":{"shape":"ARN"},
+        "setAsDefault":{"shape":"Boolean"}
+      }
+    },
+    "PutDefaultApplicationSettingResponse":{
+      "type":"structure",
+      "members":{
+        "applicationArn":{"shape":"ARN"}
+      }
+    },
     "RecurringCharge":{
       "type":"structure",
       "members":{
@@ -5099,6 +5326,12 @@
       "min":0,
       "pattern":".*"
     },
+    "ThrottlingException":{
+      "type":"structure",
+      "members":{},
+      "error":{"httpStatusCode":429},
+      "exception":true
+    },
     "TimeUnit":{
       "type":"string",
       "enum":["HOURS"]
@@ -5227,6 +5460,34 @@
         "DomainConfig":{"shape":"DomainConfig"},
         "DryRunResults":{"shape":"DryRunResults"},
         "DryRunProgressStatus":{"shape":"DryRunProgressStatus"}
+      }
+    },
+    "UpdateIndexRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "IndexName",
+        "IndexSchema"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "IndexName":{
+          "shape":"IndexName",
+          "location":"uri",
+          "locationName":"IndexName"
+        },
+        "IndexSchema":{"shape":"IndexSchema"}
+      }
+    },
+    "UpdateIndexResponse":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Status":{"shape":"IndexStatus"}
       }
     },
     "UpdatePackageRequest":{

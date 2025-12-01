@@ -203,6 +203,19 @@
         "title": "To delete the policy associated with a repository"
       }
     ],
+    "DeregisterPullTimeUpdateExclusion": [
+      {
+        "input": {
+          "principalArn": "arn:aws:iam::012345678910:role/ECRAccess"
+        },
+        "output": {
+          "principalArn": "arn:aws:iam::012345678910:role/ECRAccess"
+        },
+        "description": "This example removes an IAM role from the pull time update exclusion list. Amazon ECR will resume recording image pull timestamps for this principal.",
+        "id": "deregisterpulltimeupdateexclusion-example",
+        "title": "To remove a principal from the pull time exclusion list"
+      }
+    ],
     "DescribeRepositories": [
       {
         "input": {},
@@ -311,6 +324,108 @@
         "title": "To get the current policy for a repository"
       }
     ],
+    "ListImageReferrers": [
+      {
+        "input": {
+          "repositoryName": "sample-repo",
+          "subjectId": {
+            "imageDigest": "sha256:943e640159415616581703a53fa4ed87e96740655fd67daf2d2146a35337bce5"
+          }
+        },
+        "output": {
+          "referrers": [
+            {
+              "annotations": {
+                "dev.sigstore.bundle.content": "dsse-envelope",
+                "dev.sigstore.bundle.predicateType": "https://sigstore.dev/cosign/sign/v1",
+                "org.opencontainers.image.created": "2025-11-17T22:00:33Z"
+              },
+              "artifactStatus": "ACTIVE",
+              "artifactType": "application/vnd.dev.sigstore.bundle.v0.3+json",
+              "digest": "sha256:270c60be5b6ed41e6e7c505ac0c4e2577748affc14147bcba76b533604dc7a07",
+              "mediaType": "application/vnd.oci.image.manifest.v1+json",
+              "size": 888
+            }
+          ]
+        },
+        "description": "This example lists all artifacts (such as Sigstore signatures) that reference a specific container image in the sample-repo repository.",
+        "id": "listimagereferrers-basic-example",
+        "title": "To list artifacts associated with a subject image"
+      },
+      {
+        "input": {
+          "filter": {
+            "artifactTypes": [
+              "application/vnd.dev.sigstore.bundle.v0.3+json"
+            ]
+          },
+          "repositoryName": "sample-repo",
+          "subjectId": {
+            "imageDigest": "sha256:943e640159415616581703a53fa4ed87e96740655fd67daf2d2146a35337bce5"
+          }
+        },
+        "output": {
+          "referrers": [
+            {
+              "annotations": {
+                "dev.sigstore.bundle.content": "dsse-envelope",
+                "dev.sigstore.bundle.predicateType": "https://sigstore.dev/cosign/sign/v1",
+                "org.opencontainers.image.created": "2025-11-17T22:00:33Z"
+              },
+              "artifactStatus": "ACTIVE",
+              "artifactType": "application/vnd.dev.sigstore.bundle.v0.3+json",
+              "digest": "sha256:270c60be5b6ed41e6e7c505ac0c4e2577748affc14147bcba76b533604dc7a07",
+              "mediaType": "application/vnd.oci.image.manifest.v1+json",
+              "size": 888
+            }
+          ]
+        },
+        "description": "This example lists only Sigstore bundle artifacts associated with a subject image by filtering on the artifact type.",
+        "id": "listimagereferrers-filtered-example",
+        "title": "To list artifacts of a specific type"
+      },
+      {
+        "input": {
+          "filter": {
+            "artifactStatus": "ANY"
+          },
+          "repositoryName": "sample-repo",
+          "subjectId": {
+            "imageDigest": "sha256:943e640159415616581703a53fa4ed87e96740655fd67daf2d2146a35337bce5"
+          }
+        },
+        "output": {
+          "referrers": [
+            {
+              "annotations": {
+                "dev.sigstore.bundle.content": "dsse-envelope",
+                "dev.sigstore.bundle.predicateType": "https://sigstore.dev/cosign/sign/v1",
+                "org.opencontainers.image.created": "2025-11-17T22:00:33Z"
+              },
+              "artifactStatus": "ACTIVE",
+              "artifactType": "application/vnd.dev.sigstore.bundle.v0.3+json",
+              "digest": "sha256:270c60be5b6ed41e6e7c505ac0c4e2577748affc14147bcba76b533604dc7a07",
+              "mediaType": "application/vnd.oci.image.manifest.v1+json",
+              "size": 888
+            },
+            {
+              "annotations": {
+                "dev.sigstore.bundle.predicateType": "https://sigstore.dev/cosign/sign/v1",
+                "org.opencontainers.image.created": "2025-10-15T14:30:00Z"
+              },
+              "artifactStatus": "ARCHIVED",
+              "artifactType": "application/vnd.dev.sigstore.bundle.v0.2+json",
+              "digest": "sha256:5a1c89f2b3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0",
+              "mediaType": "application/vnd.oci.image.manifest.v1+json",
+              "size": 856
+            }
+          ]
+        },
+        "description": "This example lists all artifacts including those that have been archived, by specifying the artifactStatus filter as ANY.",
+        "id": "listimagereferrers-archived-example",
+        "title": "To list both active and archived artifacts"
+      }
+    ],
     "ListImages": [
       {
         "input": {
@@ -328,6 +443,92 @@
         "description": "This example lists all of the images in the repository named ubuntu in the default registry in the current account. ",
         "id": "listimages-example-1470868161594",
         "title": "To list all images in a repository"
+      }
+    ],
+    "ListPullTimeUpdateExclusions": [
+      {
+        "input": {},
+        "output": {
+          "pullTimeUpdateExclusions": [
+            "arn:aws:iam::012345678910:role/ECRAccess"
+          ]
+        },
+        "description": "This example lists all IAM principals that are excluded from having their image pull timestamps recorded in the registry.",
+        "id": "listpulltimeupdateexclusions-basic-example",
+        "title": "To list all pull time update exclusions"
+      },
+      {
+        "input": {
+          "maxResults": 2
+        },
+        "output": {
+          "nextToken": "eyJlbmNyeXB0ZWREYXRhIjpbXX0=",
+          "pullTimeUpdateExclusions": [
+            "arn:aws:iam::012345678910:role/ECRAccess",
+            "arn:aws:iam::012345678910:role/CICDPipeline"
+          ]
+        },
+        "description": "This example lists pull time update exclusions with pagination, requesting a maximum of 2 results per page.",
+        "id": "listpulltimeupdateexclusions-paginated-example",
+        "title": "To list pull time update exclusions with pagination"
+      }
+    ],
+    "RegisterPullTimeUpdateExclusion": [
+      {
+        "input": {
+          "principalArn": "arn:aws:iam::012345678910:role/ECRAccess"
+        },
+        "output": {
+          "createdAt": "2025-11-17T22:08:12.659000+00:00",
+          "principalArn": "arn:aws:iam::012345678910:role/ECRAccess"
+        },
+        "description": "This example adds an IAM role to the pull time update exclusion list so that Amazon ECR will not record image pull timestamps for this principal.",
+        "id": "registerpulltimeupdateexclusion-role-example",
+        "title": "To exclude an IAM role from pull time tracking"
+      }
+    ],
+    "UpdateImageStorageClass": [
+      {
+        "input": {
+          "imageId": {
+            "imageDigest": "sha256:0b1a4e0c81c434fa7928e5c4a2651a521ebabc4ff200c65f7e25b99373efca3b"
+          },
+          "registryId": "724772093679",
+          "repositoryName": "hello-repository",
+          "targetStorageClass": "ARCHIVE"
+        },
+        "output": {
+          "imageId": {
+            "imageDigest": "sha256:0b1a4e0c81c434fa7928e5c4a2651a521ebabc4ff200c65f7e25b99373efca3b"
+          },
+          "imageStatus": "ARCHIVED",
+          "registryId": "724772093679",
+          "repositoryName": "hello-repository"
+        },
+        "description": "This example transitions an image with a specific digest in the hello-repository repository to Amazon ECR Archive storage for long-term archival.",
+        "id": "updateimagestorageclass-archive-example",
+        "title": "To transition an image to Amazon ECR Archive"
+      },
+      {
+        "input": {
+          "imageId": {
+            "imageDigest": "sha256:0b1a4e0c81c434fa7928e5c4a2651a521ebabc4ff200c65f7e25b99373efca3b"
+          },
+          "registryId": "724772093679",
+          "repositoryName": "hello-repository",
+          "targetStorageClass": "STANDARD"
+        },
+        "output": {
+          "imageId": {
+            "imageDigest": "sha256:0b1a4e0c81c434fa7928e5c4a2651a521ebabc4ff200c65f7e25b99373efca3b"
+          },
+          "imageStatus": "ACTIVATING",
+          "registryId": "724772093679",
+          "repositoryName": "hello-repository"
+        },
+        "description": "This example restores an archived image with a specific digest back to Amazon ECR Standard storage.",
+        "id": "updateimagestorageclass-restore-example",
+        "title": "To restore an archived image to Amazon ECR Standard"
       }
     ],
     "UpdateRepositoryCreationTemplate": [

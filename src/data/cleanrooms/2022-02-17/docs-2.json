@@ -253,7 +253,7 @@
     "AllowedColumnList": {
       "base": null,
       "refs": {
-        "ConfiguredTable$allowedColumns": "<p>The columns within the underlying Glue table that can be utilized within collaborations.</p>",
+        "ConfiguredTable$allowedColumns": "<p>The columns within the underlying Glue table that can be used within collaborations.</p>",
         "CreateConfiguredTableInput$allowedColumns": "<p>The columns of the underlying table that can be used by collaborations or analysis rules.</p>",
         "UpdateConfiguredTableInput$allowedColumns": "<p>The columns of the underlying table that can be used by collaborations or analysis rules.</p>"
       }
@@ -267,6 +267,13 @@
         "ConsolidatedPolicyAggregation$allowedResultReceivers": "<p> The allowed result receivers.</p>",
         "ConsolidatedPolicyCustom$allowedResultReceivers": "<p> The allowed result receivers.</p>",
         "ConsolidatedPolicyList$allowedResultReceivers": "<p> The allowed result receivers.</p>"
+      }
+    },
+    "AllowedResultRegions": {
+      "base": null,
+      "refs": {
+        "Collaboration$allowedResultRegions": "<p>The Amazon Web Services Regions where collaboration query results can be stored. Returns the list of Region identifiers that were specified when the collaboration was created. This list is used to enforce regional storage policies and compliance requirements.</p>",
+        "CreateCollaborationInput$allowedResultRegions": "<p>The Amazon Web Services Regions where collaboration query results can be stored. When specified, results can only be written to these Regions. This parameter enables you to meet your compliance and data governance requirements, and implement regional data governance policies.</p>"
       }
     },
     "AnalysisFormat": {
@@ -713,6 +720,8 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "AnalysisTemplateSummary$isSyntheticData": "<p>Indicates if this analysis template summary generated synthetic data.</p>",
+        "CollaborationAnalysisTemplateSummary$isSyntheticData": "<p>Indicates if this collaboration analysis template uses synthetic data generation.</p>",
         "CollaborationChangeRequest$isAutoApproved": "<p>Whether the change request was automatically approved based on the collaboration's auto-approval settings.</p>",
         "CollaborationChangeRequestSummary$isAutoApproved": "<p>Whether the change request was automatically approved.</p>",
         "ConfiguredAudienceModelAssociation$manageResourcePolicies": "<p>When <code>TRUE</code>, indicates that the resource policy for the configured audience model resource being associated is configured for Clean Rooms to manage permissions related to the given collaboration. When <code>FALSE</code>, indicates that the configured audience model resource owner will manage permissions related to the given collaboration.</p>",
@@ -729,10 +738,13 @@
         "MembershipModelInferencePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for model inference costs (<code>TRUE</code>) or has not accepted to pay for model inference costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for model inference costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for model inference costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for model inference costs. </p> </li> </ul>",
         "MembershipModelTrainingPaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for model training costs (<code>TRUE</code>) or has not accepted to pay for model training costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for model training costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for model training costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for model training costs. </p> </li> </ul>",
         "MembershipQueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for query compute costs (<code>TRUE</code>) or has not accepted to pay for query compute costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for query compute costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for query compute costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for query compute costs. </p> </li> </ul>",
+        "MembershipSyntheticDataGenerationPaymentConfig$isResponsible": "<p>Indicates if this membership is responsible for paying for synthetic data generation.</p>",
         "ModelInferencePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for model inference costs (<code>TRUE</code>) or has not configured the collaboration member to pay for model inference costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for model inference costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for model inference costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>",
         "ModelTrainingPaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for model training costs (<code>TRUE</code>) or has not configured the collaboration member to pay for model training costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for model training costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for model training costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>",
         "ProtectedQueryS3OutputConfiguration$singleFileOutput": "<p>Indicates whether files should be output as a single file (<code>TRUE</code>) or output as multiple files (<code>FALSE</code>). This parameter is only supported for analyses with the Spark analytics engine.</p>",
-        "QueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query compute costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for query compute costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for query compute costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>"
+        "QueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query compute costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for query compute costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for query compute costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>",
+        "SyntheticDataColumnProperties$isPredictiveValue": "<p>Indicates if this column contains predictive values that should be treated as target variables in machine learning models. This affects how the synthetic data generation preserves statistical relationships.</p>",
+        "SyntheticDataGenerationPaymentConfig$isResponsible": "<p>Indicates who is responsible for paying for synthetic data generation.</p>"
       }
     },
     "Budget": {
@@ -1070,6 +1082,12 @@
         "ColumnList$member": null
       }
     },
+    "ColumnClassificationDetails": {
+      "base": "<p>Contains classification information for data columns, including mappings that specify how columns should be handled during synthetic data generation and privacy analysis.</p>",
+      "refs": {
+        "MLSyntheticDataParameters$columnClassification": "<p>Classification details for data columns that specify how each column should be treated during synthetic data generation.</p>"
+      }
+    },
     "ColumnList": {
       "base": null,
       "refs": {
@@ -1077,11 +1095,18 @@
         "Schema$partitionKeys": "<p>The partition keys for the dataset underlying this schema.</p>"
       }
     },
+    "ColumnMappingList": {
+      "base": null,
+      "refs": {
+        "ColumnClassificationDetails$columnMapping": "<p>A mapping that defines the classification of data columns for synthetic data generation and specifies how each column should be handled during the privacy-preserving data synthesis process.</p>"
+      }
+    },
     "ColumnName": {
       "base": null,
       "refs": {
         "AllowedColumnList$member": null,
         "Column$name": "<p>The name of the column.</p>",
+        "DifferentialPrivacyColumn$name": "<p>The name of the column, such as user_id, that contains the unique identifier of your users, whose privacy you want to protect. If you want to turn on differential privacy for two or more tables in a collaboration, you must configure the same column as the user identifier column in both analysis rules.</p>",
         "SnowflakeTableSchemaV1$columnName": "<p> The column name.</p>"
       }
     },
@@ -1090,6 +1115,13 @@
       "refs": {
         "Column$type": "<p>The type of the column.</p>",
         "SnowflakeTableSchemaV1$columnType": "<p> The column's data type. Supported data types: <code>ARRAY</code>, <code>BIGINT</code>, <code>BOOLEAN</code>, <code>CHAR</code>, <code>DATE</code>, <code>DECIMAL</code>, <code>DOUBLE</code>, <code>DOUBLE PRECISION</code>, <code>FLOAT</code>, <code>FLOAT4</code>, <code>INT</code>, <code>INTEGER</code>, <code>MAP</code>, <code>NUMERIC</code>, <code>NUMBER</code>, <code>REAL</code>, <code>SMALLINT</code>, <code>STRING</code>, <code>TIMESTAMP</code>, <code>TIMESTAMP_LTZ</code>, <code>TIMESTAMP_NTZ</code>, <code>DATETIME</code>, <code>TINYINT</code>, <code>VARCHAR</code>, <code>TEXT</code>, <code>CHARACTER</code>.</p>"
+      }
+    },
+    "CommercialRegion": {
+      "base": null,
+      "refs": {
+        "AthenaTableReference$region": "<p>The Amazon Web Services Region where the Athena table is located. This parameter is required to uniquely identify and access tables across different Regions.</p>",
+        "GlueTableReference$region": "<p>The Amazon Web Services Region where the Glue table is located. This parameter is required to uniquely identify and access tables across different Regions.</p>"
       }
     },
     "ComputeConfiguration": {
@@ -2440,6 +2472,24 @@
         "PaymentConfiguration$machineLearning": "<p>An object representing the collaboration member's machine learning payment responsibilities set by the collaboration creator.</p>"
       }
     },
+    "MLSyntheticDataParameters": {
+      "base": "<p>Parameters that control the generation of synthetic data for machine learning, including privacy settings and column classification details.</p>",
+      "refs": {
+        "SyntheticDataParameters$mlSyntheticDataParameters": "<p>The machine learning-specific parameters for synthetic data generation.</p>"
+      }
+    },
+    "MLSyntheticDataParametersEpsilonDouble": {
+      "base": null,
+      "refs": {
+        "MLSyntheticDataParameters$epsilon": "<p>The epsilon value for differential privacy when generating synthetic data. Lower values provide stronger privacy guarantees but may reduce data utility.</p>"
+      }
+    },
+    "MaxMembershipInferenceAttackScore": {
+      "base": null,
+      "refs": {
+        "MLSyntheticDataParameters$maxMembershipInferenceAttackScore": "<p>The maximum acceptable score for membership inference attack vulnerability. Synthetic data generation fails if the score for the resulting data exceeds this threshold.</p>"
+      }
+    },
     "MaxResults": {
       "base": null,
       "refs": {
@@ -2716,6 +2766,12 @@
       "base": null,
       "refs": {
         "ListMembershipsOutput$membershipSummaries": "<p>The list of memberships returned from the ListMemberships operation.</p>"
+      }
+    },
+    "MembershipSyntheticDataGenerationPaymentConfig": {
+      "base": "<p>Configuration for payment for synthetic data generation in a membership.</p>",
+      "refs": {
+        "MembershipMLPaymentConfig$syntheticDataGeneration": "<p>The payment configuration for synthetic data generation for this machine learning membership.</p>"
       }
     },
     "ModelInferencePaymentConfig": {
@@ -3652,6 +3708,24 @@
         "SnowflakeTableSchemaList$member": null
       }
     },
+    "SparkProperties": {
+      "base": null,
+      "refs": {
+        "WorkerComputeConfigurationProperties$spark": "<p>The Spark configuration properties for SQL workloads. This map contains key-value pairs that configure Apache Spark settings to optimize performance for your data processing jobs. You can specify up to 50 Spark properties, with each key being 1-200 characters and each value being 0-500 characters. These properties allow you to adjust compute capacity for large datasets and complex workloads.</p>"
+      }
+    },
+    "SparkPropertyKey": {
+      "base": null,
+      "refs": {
+        "SparkProperties$key": null
+      }
+    },
+    "SparkPropertyValue": {
+      "base": null,
+      "refs": {
+        "SparkProperties$value": null
+      }
+    },
     "StartProtectedJobInput": {
       "base": null,
       "refs": {}
@@ -3681,7 +3755,6 @@
         "BatchGetSchemaError$message": "<p>An error message for the error.</p>",
         "ConflictException$message": null,
         "ConflictException$resourceId": "<p>The ID of the conflicting resource.</p>",
-        "DifferentialPrivacyColumn$name": "<p>The name of the column, such as user_id, that contains the unique identifier of your users, whose privacy you want to protect. If you want to turn on differential privacy for two or more tables in a collaboration, you must configure the same column as the user identifier column in both analysis rules.</p>",
         "Hash$sha256": "<p> The SHA-256 hash value.</p>",
         "IdMappingTableInputSource$idNamespaceAssociationId": "<p>The unique identifier of the ID namespace association.</p>",
         "InternalServerException$message": null,
@@ -3700,6 +3773,44 @@
         "ValidationException$message": null,
         "ValidationExceptionField$name": "<p>The name of the input parameter.</p>",
         "ValidationExceptionField$message": "<p>A message for the input validation error.</p>"
+      }
+    },
+    "SupportedS3Region": {
+      "base": null,
+      "refs": {
+        "AllowedResultRegions$member": null
+      }
+    },
+    "SyntheticDataColumnName": {
+      "base": null,
+      "refs": {
+        "SyntheticDataColumnProperties$columnName": "<p>The name of the data column as it appears in the dataset.</p>"
+      }
+    },
+    "SyntheticDataColumnProperties": {
+      "base": "<p>Properties that define how a specific data column should be handled during synthetic data generation, including its name, type, and role in predictive modeling.</p>",
+      "refs": {
+        "ColumnMappingList$member": null
+      }
+    },
+    "SyntheticDataColumnType": {
+      "base": null,
+      "refs": {
+        "SyntheticDataColumnProperties$columnType": "<p>The data type of the column, which determines how the synthetic data generation algorithm processes and synthesizes values for this column.</p>"
+      }
+    },
+    "SyntheticDataGenerationPaymentConfig": {
+      "base": "<p>Payment configuration for synthetic data generation.</p>",
+      "refs": {
+        "MLPaymentConfig$syntheticDataGeneration": "<p>The payment configuration for machine learning synthetic data generation.</p>"
+      }
+    },
+    "SyntheticDataParameters": {
+      "base": "<p>The parameters that control how synthetic data is generated, including privacy settings, column classifications, and other configuration options that affect the data synthesis process.</p>",
+      "refs": {
+        "AnalysisTemplate$syntheticDataParameters": "<p>The parameters used to generate synthetic data for this analysis template.</p>",
+        "CollaborationAnalysisTemplate$syntheticDataParameters": "<p>The synthetic data generation parameters configured for this collaboration analysis template.</p>",
+        "CreateAnalysisTemplateInput$syntheticDataParameters": "<p>The parameters for generating synthetic data when running the analysis template.</p>"
       }
     },
     "TableAlias": {
@@ -4111,6 +4222,12 @@
       "base": null,
       "refs": {
         "WorkerComputeConfiguration$number": "<p> The number of workers.</p> <p>SQL queries support a minimum value of 2 and a maximum value of 400. </p> <p>PySpark jobs support a minimum value of 4 and a maximum value of 128.</p>"
+      }
+    },
+    "WorkerComputeConfigurationProperties": {
+      "base": "<p>The configuration properties that define the compute environment settings for workers in Clean Rooms. These properties enable customization of the underlying compute environment to optimize performance for your specific workloads.</p>",
+      "refs": {
+        "WorkerComputeConfiguration$properties": "<p>The configuration properties for the worker compute environment. These properties allow you to customize the compute settings for your Clean Rooms workloads.</p>"
       }
     },
     "WorkerComputeType": {

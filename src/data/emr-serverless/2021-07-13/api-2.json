@@ -75,7 +75,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetDashboardForJobRun":{
       "name":"GetDashboardForJobRun",
@@ -105,7 +106,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListApplications":{
       "name":"ListApplications",
@@ -119,7 +121,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListJobRunAttempts":{
       "name":"ListJobRunAttempts",
@@ -134,7 +137,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListJobRuns":{
       "name":"ListJobRuns",
@@ -148,7 +152,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -163,7 +168,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "StartApplication":{
       "name":"StartApplication",
@@ -566,8 +572,7 @@
     },
     "DeleteApplicationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DiskSize":{
       "type":"string",
@@ -732,13 +737,15 @@
       "type":"structure",
       "members":{
         "identityCenterInstanceArn":{"shape":"IdentityCenterInstanceArn"},
-        "identityCenterApplicationArn":{"shape":"IdentityCenterApplicationArn"}
+        "identityCenterApplicationArn":{"shape":"IdentityCenterApplicationArn"},
+        "userBackgroundSessionsEnabled":{"shape":"Boolean"}
       }
     },
     "IdentityCenterConfigurationInput":{
       "type":"structure",
       "members":{
-        "identityCenterInstanceArn":{"shape":"IdentityCenterInstanceArn"}
+        "identityCenterInstanceArn":{"shape":"IdentityCenterInstanceArn"},
+        "userBackgroundSessionsEnabled":{"shape":"Boolean"}
       }
     },
     "IdentityCenterInstanceArn":{
@@ -1383,8 +1390,7 @@
     },
     "StartApplicationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StartJobRunRequest":{
       "type":"structure",
@@ -1443,8 +1449,7 @@
     },
     "StopApplicationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "String1024":{
       "type":"string",
@@ -1506,8 +1511,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1544,8 +1548,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateApplicationRequest":{
       "type":"structure",

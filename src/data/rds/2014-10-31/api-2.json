@@ -321,7 +321,8 @@
         {"shape":"NetworkTypeNotSupported"},
         {"shape":"DomainNotFoundFault"},
         {"shape":"StorageTypeNotSupportedFault"},
-        {"shape":"OptionGroupNotFoundFault"}
+        {"shape":"OptionGroupNotFoundFault"},
+        {"shape":"VpcEncryptionControlViolationException"}
       ]
     },
     "CreateDBClusterEndpoint":{
@@ -412,7 +413,8 @@
         {"shape":"NetworkTypeNotSupported"},
         {"shape":"BackupPolicyNotFoundFault"},
         {"shape":"CertificateNotFoundFault"},
-        {"shape":"TenantDatabaseQuotaExceededFault"}
+        {"shape":"TenantDatabaseQuotaExceededFault"},
+        {"shape":"VpcEncryptionControlViolationException"}
       ]
     },
     "CreateDBInstanceReadReplica":{
@@ -450,7 +452,8 @@
         {"shape":"NetworkTypeNotSupported"},
         {"shape":"DomainNotFoundFault"},
         {"shape":"TenantDatabaseQuotaExceededFault"},
-        {"shape":"CertificateNotFoundFault"}
+        {"shape":"CertificateNotFoundFault"},
+        {"shape":"VpcEncryptionControlViolationException"}
       ]
     },
     "CreateDBParameterGroup":{
@@ -1910,7 +1913,8 @@
         {"shape":"StorageTypeNotSupportedFault"},
         {"shape":"StorageTypeNotAvailableFault"},
         {"shape":"OptionGroupNotFoundFault"},
-        {"shape":"KMSKeyNotAccessibleFault"}
+        {"shape":"KMSKeyNotAccessibleFault"},
+        {"shape":"VpcEncryptionControlViolationException"}
       ]
     },
     "ModifyDBClusterEndpoint":{
@@ -1997,7 +2001,8 @@
         {"shape":"KMSKeyNotAccessibleFault"},
         {"shape":"NetworkTypeNotSupported"},
         {"shape":"InvalidDBClusterStateFault"},
-        {"shape":"TenantDatabaseQuotaExceededFault"}
+        {"shape":"TenantDatabaseQuotaExceededFault"},
+        {"shape":"VpcEncryptionControlViolationException"}
       ]
     },
     "ModifyDBParameterGroup":{
@@ -2546,7 +2551,8 @@
         {"shape":"DBClusterParameterGroupNotFoundFault"},
         {"shape":"StorageTypeNotSupportedFault"},
         {"shape":"InvalidDBInstanceStateFault"},
-        {"shape":"InsufficientDBInstanceCapacityFault"}
+        {"shape":"InsufficientDBInstanceCapacityFault"},
+        {"shape":"VpcEncryptionControlViolationException"}
       ]
     },
     "RestoreDBClusterToPointInTime":{
@@ -2582,7 +2588,8 @@
         {"shape":"DBClusterParameterGroupNotFoundFault"},
         {"shape":"StorageTypeNotSupportedFault"},
         {"shape":"DBClusterAutomatedBackupNotFoundFault"},
-        {"shape":"InsufficientDBInstanceCapacityFault"}
+        {"shape":"InsufficientDBInstanceCapacityFault"},
+        {"shape":"VpcEncryptionControlViolationException"}
       ]
     },
     "RestoreDBInstanceFromDBSnapshot":{
@@ -2620,7 +2627,8 @@
         {"shape":"BackupPolicyNotFoundFault"},
         {"shape":"DBClusterSnapshotNotFoundFault"},
         {"shape":"CertificateNotFoundFault"},
-        {"shape":"TenantDatabaseQuotaExceededFault"}
+        {"shape":"TenantDatabaseQuotaExceededFault"},
+        {"shape":"VpcEncryptionControlViolationException"}
       ]
     },
     "RestoreDBInstanceFromS3":{
@@ -2653,7 +2661,8 @@
         {"shape":"KMSKeyNotAccessibleFault"},
         {"shape":"NetworkTypeNotSupported"},
         {"shape":"BackupPolicyNotFoundFault"},
-        {"shape":"CertificateNotFoundFault"}
+        {"shape":"CertificateNotFoundFault"},
+        {"shape":"VpcEncryptionControlViolationException"}
       ]
     },
     "RestoreDBInstanceToPointInTime":{
@@ -2692,7 +2701,8 @@
         {"shape":"NetworkTypeNotSupported"},
         {"shape":"DBInstanceAutomatedBackupNotFoundFault"},
         {"shape":"TenantDatabaseQuotaExceededFault"},
-        {"shape":"CertificateNotFoundFault"}
+        {"shape":"CertificateNotFoundFault"},
+        {"shape":"VpcEncryptionControlViolationException"}
       ]
     },
     "RevokeDBSecurityGroupIngress":{
@@ -2748,7 +2758,8 @@
         {"shape":"InvalidDBClusterStateFault"},
         {"shape":"InvalidDBInstanceStateFault"},
         {"shape":"InvalidDBShardGroupStateFault"},
-        {"shape":"KMSKeyNotAccessibleFault"}
+        {"shape":"KMSKeyNotAccessibleFault"},
+        {"shape":"VpcEncryptionControlViolationException"}
       ]
     },
     "StartDBInstance":{
@@ -2773,7 +2784,8 @@
         {"shape":"InvalidVPCNetworkStateFault"},
         {"shape":"DBClusterNotFoundFault"},
         {"shape":"AuthorizationNotFoundFault"},
-        {"shape":"KMSKeyNotAccessibleFault"}
+        {"shape":"KMSKeyNotAccessibleFault"},
+        {"shape":"VpcEncryptionControlViolationException"}
       ]
     },
     "StartDBInstanceAutomatedBackupsReplication":{
@@ -3399,8 +3411,7 @@
       "type":"string",
       "enum":[
         "standard",
-        "limitless",
-        "scaleout"
+        "limitless"
       ]
     },
     "ConnectionPoolConfiguration":{
@@ -4217,6 +4228,7 @@
         "DBClusterOptionGroupMemberships":{"shape":"DBClusterOptionGroupMemberships"},
         "PreferredBackupWindow":{"shape":"String"},
         "PreferredMaintenanceWindow":{"shape":"String"},
+        "UpgradeRolloutOrder":{"shape":"UpgradeRolloutOrder"},
         "ReplicationSourceIdentifier":{"shape":"String"},
         "ReadReplicaIdentifiers":{"shape":"ReadReplicaIdentifierList"},
         "StatusInfos":{"shape":"DBClusterStatusInfoList"},
@@ -4801,6 +4813,7 @@
         "AvailabilityZone":{"shape":"String"},
         "DBSubnetGroup":{"shape":"DBSubnetGroup"},
         "PreferredMaintenanceWindow":{"shape":"String"},
+        "UpgradeRolloutOrder":{"shape":"UpgradeRolloutOrder"},
         "PendingModifiedValues":{"shape":"PendingModifiedValues"},
         "LatestRestorableTime":{"shape":"TStamp"},
         "MultiAZ":{"shape":"Boolean"},
@@ -10261,6 +10274,14 @@
       },
       "exception":true
     },
+    "UpgradeRolloutOrder":{
+      "type":"string",
+      "enum":[
+        "first",
+        "second",
+        "last"
+      ]
+    },
     "UpgradeTarget":{
       "type":"structure",
       "members":{
@@ -10344,6 +10365,16 @@
         "shape":"UpgradeTarget",
         "locationName":"UpgradeTarget"
       }
+    },
+    "VpcEncryptionControlViolationException":{
+      "type":"structure",
+      "members":{},
+      "error":{
+        "code":"VpcEncryptionControlViolationException",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
     },
     "VpcSecurityGroupIdList":{
       "type":"list",
