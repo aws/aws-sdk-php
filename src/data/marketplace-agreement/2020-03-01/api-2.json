@@ -2,9 +2,11 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-03-01",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"agreement-marketplace",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"Agreement Service",
     "serviceFullName":"AWS Marketplace Agreement Service",
     "serviceId":"Marketplace Agreement",
@@ -25,8 +27,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -41,8 +43,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -67,22 +69,23 @@
       "type":"string",
       "max":32,
       "min":1,
-      "pattern":"^[0-9]+$"
+      "pattern":"[0-9]+"
     },
     "AcceptedTerm":{
       "type":"structure",
       "members":{
-        "byolPricingTerm":{"shape":"ByolPricingTerm"},
-        "configurableUpfrontPricingTerm":{"shape":"ConfigurableUpfrontPricingTerm"},
-        "fixedUpfrontPricingTerm":{"shape":"FixedUpfrontPricingTerm"},
-        "freeTrialPricingTerm":{"shape":"FreeTrialPricingTerm"},
         "legalTerm":{"shape":"LegalTerm"},
-        "paymentScheduleTerm":{"shape":"PaymentScheduleTerm"},
-        "recurringPaymentTerm":{"shape":"RecurringPaymentTerm"},
-        "renewalTerm":{"shape":"RenewalTerm"},
         "supportTerm":{"shape":"SupportTerm"},
+        "renewalTerm":{"shape":"RenewalTerm"},
         "usageBasedPricingTerm":{"shape":"UsageBasedPricingTerm"},
-        "validityTerm":{"shape":"ValidityTerm"}
+        "configurableUpfrontPricingTerm":{"shape":"ConfigurableUpfrontPricingTerm"},
+        "byolPricingTerm":{"shape":"ByolPricingTerm"},
+        "recurringPaymentTerm":{"shape":"RecurringPaymentTerm"},
+        "validityTerm":{"shape":"ValidityTerm"},
+        "paymentScheduleTerm":{"shape":"PaymentScheduleTerm"},
+        "freeTrialPricingTerm":{"shape":"FreeTrialPricingTerm"},
+        "fixedUpfrontPricingTerm":{"shape":"FixedUpfrontPricingTerm"},
+        "variablePaymentTerm":{"shape":"VariablePaymentTerm"}
       },
       "union":true
     },
@@ -99,8 +102,8 @@
     "AccessDeniedException":{
       "type":"structure",
       "members":{
-        "message":{"shape":"ExceptionMessage"},
-        "requestId":{"shape":"RequestId"}
+        "requestId":{"shape":"RequestId"},
+        "message":{"shape":"ExceptionMessage"}
       },
       "exception":true
     },
@@ -108,7 +111,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z]+$"
+      "pattern":"[a-zA-Z]+"
     },
     "AgreementStatus":{
       "type":"string",
@@ -128,19 +131,19 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[A-Za-z]+$"
+      "pattern":"[A-Za-z]+"
     },
     "AgreementViewSummary":{
       "type":"structure",
       "members":{
-        "acceptanceTime":{"shape":"Timestamp"},
-        "acceptor":{"shape":"Acceptor"},
         "agreementId":{"shape":"ResourceId"},
-        "agreementType":{"shape":"AgreementType"},
-        "endTime":{"shape":"Timestamp"},
-        "proposalSummary":{"shape":"ProposalSummary"},
-        "proposer":{"shape":"Proposer"},
+        "acceptanceTime":{"shape":"Timestamp"},
         "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "agreementType":{"shape":"AgreementType"},
+        "acceptor":{"shape":"Acceptor"},
+        "proposer":{"shape":"Proposer"},
+        "proposalSummary":{"shape":"ProposalSummary"},
         "status":{"shape":"AgreementStatus"}
       }
     },
@@ -156,7 +159,7 @@
       "type":"string",
       "max":4096,
       "min":1,
-      "pattern":"^(.)+$"
+      "pattern":"(.)+"
     },
     "ByolPricingTerm":{
       "type":"structure",
@@ -168,34 +171,34 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z]+$"
+      "pattern":"[a-zA-Z]+"
     },
     "ConfigurableUpfrontPricingTerm":{
       "type":"structure",
       "members":{
-        "configuration":{"shape":"ConfigurableUpfrontPricingTermConfiguration"},
+        "type":{"shape":"UnversionedTermType"},
         "currencyCode":{"shape":"CurrencyCode"},
         "rateCards":{"shape":"ConfigurableUpfrontRateCardList"},
-        "type":{"shape":"UnversionedTermType"}
+        "configuration":{"shape":"ConfigurableUpfrontPricingTermConfiguration"}
       }
     },
     "ConfigurableUpfrontPricingTermConfiguration":{
       "type":"structure",
       "required":[
-        "dimensions",
-        "selectorValue"
+        "selectorValue",
+        "dimensions"
       ],
       "members":{
-        "dimensions":{"shape":"DimensionList"},
-        "selectorValue":{"shape":"BoundedString"}
+        "selectorValue":{"shape":"BoundedString"},
+        "dimensions":{"shape":"DimensionList"}
       }
     },
     "ConfigurableUpfrontRateCardItem":{
       "type":"structure",
       "members":{
+        "selector":{"shape":"Selector"},
         "constraints":{"shape":"Constraints"},
-        "rateCard":{"shape":"RateCardList"},
-        "selector":{"shape":"Selector"}
+        "rateCard":{"shape":"RateCardList"}
       }
     },
     "ConfigurableUpfrontRateCardList":{
@@ -213,7 +216,7 @@
       "type":"string",
       "max":3,
       "min":3,
-      "pattern":"^[A-Z]+$"
+      "pattern":"[A-Z]+"
     },
     "DescribeAgreementInput":{
       "type":"structure",
@@ -225,15 +228,15 @@
     "DescribeAgreementOutput":{
       "type":"structure",
       "members":{
-        "acceptanceTime":{"shape":"Timestamp"},
-        "acceptor":{"shape":"Acceptor"},
         "agreementId":{"shape":"ResourceId"},
-        "agreementType":{"shape":"AgreementType"},
-        "endTime":{"shape":"Timestamp"},
-        "estimatedCharges":{"shape":"EstimatedCharges"},
-        "proposalSummary":{"shape":"ProposalSummary"},
+        "acceptor":{"shape":"Acceptor"},
         "proposer":{"shape":"Proposer"},
         "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "acceptanceTime":{"shape":"Timestamp"},
+        "agreementType":{"shape":"AgreementType"},
+        "estimatedCharges":{"shape":"EstimatedCharges"},
+        "proposalSummary":{"shape":"ProposalSummary"},
         "status":{"shape":"AgreementStatus"}
       }
     },
@@ -268,8 +271,8 @@
     "EstimatedCharges":{
       "type":"structure",
       "members":{
-        "agreementValue":{"shape":"BoundedString"},
-        "currencyCode":{"shape":"CurrencyCode"}
+        "currencyCode":{"shape":"CurrencyCode"},
+        "agreementValue":{"shape":"BoundedString"}
       }
     },
     "ExceptionMessage":{
@@ -294,13 +297,13 @@
       "type":"string",
       "max":32,
       "min":1,
-      "pattern":"^[A-Za-z_]+$"
+      "pattern":"[A-Za-z_]+"
     },
     "FilterValue":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[A-Za-z0-9+:_-]+$"
+      "pattern":"[A-Za-z0-9+:_-]+"
     },
     "FilterValueList":{
       "type":"list",
@@ -311,19 +314,19 @@
     "FixedUpfrontPricingTerm":{
       "type":"structure",
       "members":{
+        "type":{"shape":"UnversionedTermType"},
         "currencyCode":{"shape":"CurrencyCode"},
         "duration":{"shape":"BoundedString"},
-        "grants":{"shape":"GrantList"},
         "price":{"shape":"BoundedString"},
-        "type":{"shape":"UnversionedTermType"}
+        "grants":{"shape":"GrantList"}
       }
     },
     "FreeTrialPricingTerm":{
       "type":"structure",
       "members":{
+        "type":{"shape":"UnversionedTermType"},
         "duration":{"shape":"BoundedString"},
-        "grants":{"shape":"GrantList"},
-        "type":{"shape":"UnversionedTermType"}
+        "grants":{"shape":"GrantList"}
       }
     },
     "GetAgreementTermsInput":{
@@ -353,11 +356,15 @@
       "type":"list",
       "member":{"shape":"GrantItem"}
     },
+    "ISO8601Duration":{
+      "type":"string",
+      "pattern":"([-+]?)P(?:([-+]?[0-9]+)D)?(T(?:([-+]?[0-9]+)H)?(?:([-+]?[0-9]+)M)?(?:([-+]?[0-9]+)(?:[.,]([0-9]{0,9}))?S)?)?"
+    },
     "InternalServerException":{
       "type":"structure",
       "members":{
-        "message":{"shape":"ExceptionMessage"},
-        "requestId":{"shape":"RequestId"}
+        "requestId":{"shape":"RequestId"},
+        "message":{"shape":"ExceptionMessage"}
       },
       "exception":true,
       "fault":true
@@ -365,8 +372,8 @@
     "LegalTerm":{
       "type":"structure",
       "members":{
-        "documents":{"shape":"DocumentList"},
-        "type":{"shape":"UnversionedTermType"}
+        "type":{"shape":"UnversionedTermType"},
+        "documents":{"shape":"DocumentList"}
       }
     },
     "MaxResults":{
@@ -379,20 +386,31 @@
       "type":"string",
       "max":8192,
       "min":0,
-      "pattern":"^[a-zA-Z0-9+/=]+$"
+      "pattern":"[a-zA-Z0-9+/=]+"
     },
     "OfferId":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^\\S{1,64}$"
+      "pattern":"\\S{1,64}"
+    },
+    "OfferSetId":{
+      "type":"string",
+      "pattern":"\\S{1,50}"
+    },
+    "PaymentRequestApprovalStrategy":{
+      "type":"string",
+      "enum":[
+        "AUTO_APPROVE_ON_EXPIRATION",
+        "WAIT_FOR_APPROVAL"
+      ]
     },
     "PaymentScheduleTerm":{
       "type":"structure",
       "members":{
+        "type":{"shape":"UnversionedTermType"},
         "currencyCode":{"shape":"CurrencyCode"},
-        "schedule":{"shape":"ScheduleList"},
-        "type":{"shape":"UnversionedTermType"}
+        "schedule":{"shape":"ScheduleList"}
       }
     },
     "PositiveIntegerWithDefaultValueOne":{
@@ -403,8 +421,9 @@
     "ProposalSummary":{
       "type":"structure",
       "members":{
+        "resources":{"shape":"Resources"},
         "offerId":{"shape":"OfferId"},
-        "resources":{"shape":"Resources"}
+        "offerSetId":{"shape":"OfferSetId"}
       }
     },
     "Proposer":{
@@ -427,17 +446,17 @@
     "RecurringPaymentTerm":{
       "type":"structure",
       "members":{
-        "billingPeriod":{"shape":"BoundedString"},
+        "type":{"shape":"UnversionedTermType"},
         "currencyCode":{"shape":"CurrencyCode"},
-        "price":{"shape":"BoundedString"},
-        "type":{"shape":"UnversionedTermType"}
+        "billingPeriod":{"shape":"BoundedString"},
+        "price":{"shape":"BoundedString"}
       }
     },
     "RenewalTerm":{
       "type":"structure",
       "members":{
-        "configuration":{"shape":"RenewalTermConfiguration"},
-        "type":{"shape":"UnversionedTermType"}
+        "type":{"shape":"UnversionedTermType"},
+        "configuration":{"shape":"RenewalTermConfiguration"}
       }
     },
     "RenewalTermConfiguration":{
@@ -451,7 +470,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[A-Za-z0-9-]+$"
+      "pattern":"[A-Za-z0-9-]+"
     },
     "Resource":{
       "type":"structure",
@@ -464,13 +483,13 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[A-Za-z0-9_/-]+$"
+      "pattern":"[A-Za-z0-9_/-]+"
     },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
-        "message":{"shape":"ExceptionMessage"},
         "requestId":{"shape":"RequestId"},
+        "message":{"shape":"ExceptionMessage"},
         "resourceId":{"shape":"ResourceId"},
         "resourceType":{"shape":"ResourceType"}
       },
@@ -487,8 +506,8 @@
     "ScheduleItem":{
       "type":"structure",
       "members":{
-        "chargeAmount":{"shape":"BoundedString"},
-        "chargeDate":{"shape":"Timestamp"}
+        "chargeDate":{"shape":"Timestamp"},
+        "chargeAmount":{"shape":"BoundedString"}
       }
     },
     "ScheduleList":{
@@ -500,9 +519,9 @@
       "members":{
         "catalog":{"shape":"Catalog"},
         "filters":{"shape":"FilterList"},
+        "sort":{"shape":"Sort"},
         "maxResults":{"shape":"MaxResults"},
-        "nextToken":{"shape":"NextToken"},
-        "sort":{"shape":"Sort"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "SearchAgreementsOutput":{
@@ -530,7 +549,7 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^[A-Za-z_]+$"
+      "pattern":"[A-Za-z_]+"
     },
     "SortOrder":{
       "type":"string",
@@ -542,15 +561,15 @@
     "SupportTerm":{
       "type":"structure",
       "members":{
-        "refundPolicy":{"shape":"BoundedString"},
-        "type":{"shape":"UnversionedTermType"}
+        "type":{"shape":"UnversionedTermType"},
+        "refundPolicy":{"shape":"BoundedString"}
       }
     },
     "ThrottlingException":{
       "type":"structure",
       "members":{
-        "message":{"shape":"ExceptionMessage"},
-        "requestId":{"shape":"RequestId"}
+        "requestId":{"shape":"RequestId"},
+        "message":{"shape":"ExceptionMessage"}
       },
       "exception":true
     },
@@ -559,14 +578,14 @@
       "type":"string",
       "max":4096,
       "min":1,
-      "pattern":"^[A-Za-z]+$"
+      "pattern":"[A-Za-z]+"
     },
     "UsageBasedPricingTerm":{
       "type":"structure",
       "members":{
+        "type":{"shape":"UnversionedTermType"},
         "currencyCode":{"shape":"CurrencyCode"},
-        "rateCards":{"shape":"UsageBasedRateCardList"},
-        "type":{"shape":"UnversionedTermType"}
+        "rateCards":{"shape":"UsageBasedRateCardList"}
       }
     },
     "UsageBasedRateCardItem":{
@@ -582,22 +601,22 @@
     "ValidationException":{
       "type":"structure",
       "members":{
-        "fields":{"shape":"ValidationExceptionFieldList"},
+        "requestId":{"shape":"RequestId"},
         "message":{"shape":"ExceptionMessage"},
         "reason":{"shape":"ValidationExceptionReason"},
-        "requestId":{"shape":"RequestId"}
+        "fields":{"shape":"ValidationExceptionFieldList"}
       },
       "exception":true
     },
     "ValidationExceptionField":{
       "type":"structure",
       "required":[
-        "message",
-        "name"
+        "name",
+        "message"
       ],
       "members":{
-        "message":{"shape":"BoundedString"},
-        "name":{"shape":"BoundedString"}
+        "name":{"shape":"BoundedString"},
+        "message":{"shape":"BoundedString"}
       }
     },
     "ValidationExceptionFieldList":{
@@ -623,10 +642,27 @@
     "ValidityTerm":{
       "type":"structure",
       "members":{
+        "type":{"shape":"UnversionedTermType"},
         "agreementDuration":{"shape":"BoundedString"},
-        "agreementEndDate":{"shape":"Timestamp"},
         "agreementStartDate":{"shape":"Timestamp"},
-        "type":{"shape":"UnversionedTermType"}
+        "agreementEndDate":{"shape":"Timestamp"}
+      }
+    },
+    "VariablePaymentTerm":{
+      "type":"structure",
+      "members":{
+        "type":{"shape":"UnversionedTermType"},
+        "currencyCode":{"shape":"CurrencyCode"},
+        "maxTotalChargeAmount":{"shape":"BoundedString"},
+        "configuration":{"shape":"VariablePaymentTermConfiguration"}
+      }
+    },
+    "VariablePaymentTermConfiguration":{
+      "type":"structure",
+      "required":["paymentRequestApprovalStrategy"],
+      "members":{
+        "paymentRequestApprovalStrategy":{"shape":"PaymentRequestApprovalStrategy"},
+        "expirationDuration":{"shape":"ISO8601Duration"}
       }
     },
     "ZeroValueInteger":{

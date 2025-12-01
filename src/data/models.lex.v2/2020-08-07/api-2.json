@@ -3078,7 +3078,9 @@
         "localeId":{"shape":"LocaleId"},
         "nluIntentConfidenceThreshold":{"shape":"ConfidenceThreshold"},
         "voiceSettings":{"shape":"VoiceSettings"},
-        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"}
+        "speechRecognitionSettings":{"shape":"SpeechRecognitionSettings"},
+        "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"},
+        "unifiedSpeechSettings":{"shape":"UnifiedSpeechSettings"}
       }
     },
     "BotLocaleSortAttribute":{
@@ -3805,6 +3807,8 @@
         "description":{"shape":"Description"},
         "nluIntentConfidenceThreshold":{"shape":"ConfidenceThreshold"},
         "voiceSettings":{"shape":"VoiceSettings"},
+        "unifiedSpeechSettings":{"shape":"UnifiedSpeechSettings"},
+        "speechRecognitionSettings":{"shape":"SpeechRecognitionSettings"},
         "generativeAISettings":{"shape":"GenerativeAISettings"},
         "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"}
       }
@@ -3819,6 +3823,8 @@
         "description":{"shape":"Description"},
         "nluIntentConfidenceThreshold":{"shape":"ConfidenceThreshold"},
         "voiceSettings":{"shape":"VoiceSettings"},
+        "unifiedSpeechSettings":{"shape":"UnifiedSpeechSettings"},
+        "speechRecognitionSettings":{"shape":"SpeechRecognitionSettings"},
         "botLocaleStatus":{"shape":"BotLocaleStatus"},
         "creationDateTime":{"shape":"Timestamp"},
         "generativeAISettings":{"shape":"GenerativeAISettings"},
@@ -4331,6 +4337,20 @@
         "endDateTime":{"shape":"Timestamp"}
       }
     },
+    "DeepgramModelId":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"[A-Za-z0-9-_]+"
+    },
+    "DeepgramSpeechModelConfig":{
+      "type":"structure",
+      "required":["apiTokenSecretArn"],
+      "members":{
+        "apiTokenSecretArn":{"shape":"SecretsManagerSecretArn"},
+        "modelId":{"shape":"DeepgramModelId"}
+      }
+    },
     "DefaultConditionalBranch":{
       "type":"structure",
       "members":{
@@ -4828,6 +4848,8 @@
         "description":{"shape":"Description"},
         "nluIntentConfidenceThreshold":{"shape":"ConfidenceThreshold"},
         "voiceSettings":{"shape":"VoiceSettings"},
+        "unifiedSpeechSettings":{"shape":"UnifiedSpeechSettings"},
+        "speechRecognitionSettings":{"shape":"SpeechRecognitionSettings"},
         "intentsCount":{"shape":"ResourceCount"},
         "slotTypesCount":{"shape":"ResourceCount"},
         "botLocaleStatus":{"shape":"BotLocaleStatus"},
@@ -7804,6 +7826,12 @@
         "Descending"
       ]
     },
+    "SecretsManagerSecretArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[A-Za-z-]*:secretsmanager:[a-z0-9-]{1,20}:[0-9]{12}:secret:[A-Za-z0-9/_+=.@-]{1,512}-[A-Za-z0-9]{6}$"
+    },
     "SentimentAnalysisSettings":{
       "type":"structure",
       "required":["detectSentiment"],
@@ -8240,6 +8268,35 @@
         "HighNoiseTolerance",
         "MaximumNoiseTolerance"
       ]
+    },
+    "SpeechFoundationModel":{
+      "type":"structure",
+      "required":["modelArn"],
+      "members":{
+        "modelArn":{"shape":"BedrockModelArn"},
+        "voiceId":{"shape":"VoiceId"}
+      }
+    },
+    "SpeechModelConfig":{
+      "type":"structure",
+      "members":{
+        "deepgramConfig":{"shape":"DeepgramSpeechModelConfig"}
+      }
+    },
+    "SpeechModelPreference":{
+      "type":"string",
+      "enum":[
+        "Standard",
+        "Neural",
+        "Deepgram"
+      ]
+    },
+    "SpeechRecognitionSettings":{
+      "type":"structure",
+      "members":{
+        "speechModelPreference":{"shape":"SpeechModelPreference"},
+        "speechModelConfig":{"shape":"SpeechModelConfig"}
+      }
     },
     "StartBotRecommendationRequest":{
       "type":"structure",
@@ -9011,6 +9068,13 @@
         "userTurn":{"shape":"UserTurnSpecification"}
       }
     },
+    "UnifiedSpeechSettings":{
+      "type":"structure",
+      "required":["speechFoundationModel"],
+      "members":{
+        "speechFoundationModel":{"shape":"SpeechFoundationModel"}
+      }
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -9103,6 +9167,8 @@
         "description":{"shape":"Description"},
         "nluIntentConfidenceThreshold":{"shape":"ConfidenceThreshold"},
         "voiceSettings":{"shape":"VoiceSettings"},
+        "unifiedSpeechSettings":{"shape":"UnifiedSpeechSettings"},
+        "speechRecognitionSettings":{"shape":"SpeechRecognitionSettings"},
         "generativeAISettings":{"shape":"GenerativeAISettings"},
         "speechDetectionSensitivity":{"shape":"SpeechDetectionSensitivity"}
       }
@@ -9117,6 +9183,8 @@
         "description":{"shape":"Description"},
         "nluIntentConfidenceThreshold":{"shape":"ConfidenceThreshold"},
         "voiceSettings":{"shape":"VoiceSettings"},
+        "unifiedSpeechSettings":{"shape":"UnifiedSpeechSettings"},
+        "speechRecognitionSettings":{"shape":"SpeechRecognitionSettings"},
         "botLocaleStatus":{"shape":"BotLocaleStatus"},
         "failureReasons":{"shape":"FailureReasons"},
         "creationDateTime":{"shape":"Timestamp"},
@@ -9707,8 +9775,8 @@
       "type":"structure",
       "required":["voiceId"],
       "members":{
-        "voiceId":{"shape":"VoiceId"},
-        "engine":{"shape":"VoiceEngine"}
+        "engine":{"shape":"VoiceEngine"},
+        "voiceId":{"shape":"VoiceId"}
       }
     },
     "WaitAndContinueSpecification":{

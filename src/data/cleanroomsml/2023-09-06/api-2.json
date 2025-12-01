@@ -1499,6 +1499,18 @@
         "creatorAccountId":{"shape":"AccountId"}
       }
     },
+    "ColumnClassificationDetails":{
+      "type":"structure",
+      "required":["columnMapping"],
+      "members":{
+        "columnMapping":{"shape":"ColumnMappingList"}
+      }
+    },
+    "ColumnMappingList":{
+      "type":"list",
+      "member":{"shape":"SyntheticDataColumnProperties"},
+      "min":5
+    },
     "ColumnName":{
       "type":"string",
       "max":128,
@@ -1917,6 +1929,13 @@
         "customDataIdentifiers":{"shape":"CustomDataIdentifierList"}
       }
     },
+    "DataPrivacyScores":{
+      "type":"structure",
+      "required":["membershipInferenceAttackScores"],
+      "members":{
+        "membershipInferenceAttackScores":{"shape":"MembershipInferenceAttackScoreList"}
+      }
+    },
     "DataSource":{
       "type":"structure",
       "required":["glueDataSource"],
@@ -2302,6 +2321,7 @@
         "numberOfRecords":{"shape":"GetCollaborationMLInputChannelResponseNumberOfRecordsLong"},
         "privacyBudgets":{"shape":"PrivacyBudgets"},
         "description":{"shape":"ResourceDescription"},
+        "syntheticDataConfiguration":{"shape":"SyntheticDataConfiguration"},
         "createTime":{"shape":"SyntheticTimestamp_date_time"},
         "updateTime":{"shape":"SyntheticTimestamp_date_time"},
         "creatorAccountId":{"shape":"AccountId"}
@@ -2596,6 +2616,7 @@
         "numberOfRecords":{"shape":"GetMLInputChannelResponseNumberOfRecordsLong"},
         "privacyBudgets":{"shape":"PrivacyBudgets"},
         "description":{"shape":"ResourceDescription"},
+        "syntheticDataConfiguration":{"shape":"SyntheticDataConfiguration"},
         "createTime":{"shape":"SyntheticTimestamp_date_time"},
         "updateTime":{"shape":"SyntheticTimestamp_date_time"},
         "inputChannel":{"shape":"InputChannel"},
@@ -3847,11 +3868,63 @@
         "roleArn":{"shape":"IamRoleArn"}
       }
     },
+    "MLSyntheticDataParameters":{
+      "type":"structure",
+      "required":[
+        "epsilon",
+        "maxMembershipInferenceAttackScore",
+        "columnClassification"
+      ],
+      "members":{
+        "epsilon":{"shape":"MLSyntheticDataParametersEpsilonDouble"},
+        "maxMembershipInferenceAttackScore":{"shape":"MLSyntheticDataParametersMaxMembershipInferenceAttackScoreDouble"},
+        "columnClassification":{"shape":"ColumnClassificationDetails"}
+      }
+    },
+    "MLSyntheticDataParametersEpsilonDouble":{
+      "type":"double",
+      "box":true,
+      "max":10,
+      "min":0.0001
+    },
+    "MLSyntheticDataParametersMaxMembershipInferenceAttackScoreDouble":{
+      "type":"double",
+      "box":true,
+      "max":1,
+      "min":0.5
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
       "max":100,
       "min":1
+    },
+    "MembershipInferenceAttackScore":{
+      "type":"structure",
+      "required":[
+        "attackVersion",
+        "score"
+      ],
+      "members":{
+        "attackVersion":{"shape":"MembershipInferenceAttackVersion"},
+        "score":{"shape":"MembershipInferenceAttackScoreScoreDouble"}
+      }
+    },
+    "MembershipInferenceAttackScoreList":{
+      "type":"list",
+      "member":{"shape":"MembershipInferenceAttackScore"},
+      "max":1,
+      "min":1
+    },
+    "MembershipInferenceAttackScoreScoreDouble":{
+      "type":"double",
+      "box":true,
+      "max":1.0,
+      "min":0.0
+    },
+    "MembershipInferenceAttackVersion":{
+      "type":"string",
+      "enum":["DISTANCE_TO_CLOSEST_RECORD_V1"]
     },
     "MetricDefinition":{
       "type":"structure",
@@ -4309,6 +4382,47 @@
       "min":1
     },
     "String":{"type":"string"},
+    "SyntheticDataColumnName":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"[a-z0-9_](([a-z0-9_]+-)*([a-z0-9_]+))?"
+    },
+    "SyntheticDataColumnProperties":{
+      "type":"structure",
+      "required":[
+        "columnName",
+        "columnType",
+        "isPredictiveValue"
+      ],
+      "members":{
+        "columnName":{"shape":"SyntheticDataColumnName"},
+        "columnType":{"shape":"SyntheticDataColumnType"},
+        "isPredictiveValue":{"shape":"Boolean"}
+      }
+    },
+    "SyntheticDataColumnType":{
+      "type":"string",
+      "enum":[
+        "CATEGORICAL",
+        "NUMERICAL"
+      ]
+    },
+    "SyntheticDataConfiguration":{
+      "type":"structure",
+      "required":["syntheticDataParameters"],
+      "members":{
+        "syntheticDataParameters":{"shape":"MLSyntheticDataParameters"},
+        "syntheticDataEvaluationScores":{"shape":"SyntheticDataEvaluationScores"}
+      }
+    },
+    "SyntheticDataEvaluationScores":{
+      "type":"structure",
+      "required":["dataPrivacyScores"],
+      "members":{
+        "dataPrivacyScores":{"shape":"DataPrivacyScores"}
+      }
+    },
     "SyntheticTimestamp_date_time":{
       "type":"timestamp",
       "timestampFormat":"iso8601"

@@ -69,6 +69,24 @@
       ],
       "idempotent":true
     },
+    "CreateCapacityProvider":{
+      "name":"CreateCapacityProvider",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2025-11-30/capacity-providers",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateCapacityProviderRequest"},
+      "output":{"shape":"CreateCapacityProviderResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"CapacityProviderLimitExceededException"}
+      ],
+      "idempotent":true
+    },
     "CreateCodeSigningConfig":{
       "name":"CreateCodeSigningConfig",
       "http":{
@@ -118,7 +136,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"CodeVerificationFailedException"},
         {"shape":"CodeSigningConfigNotFoundException"},
-        {"shape":"CodeStorageExceededException"}
+        {"shape":"CodeStorageExceededException"},
+        {"shape":"FunctionVersionsPerCapacityProviderLimitExceededException"}
       ],
       "idempotent":true
     },
@@ -152,6 +171,24 @@
         {"shape":"ResourceConflictException"},
         {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteCapacityProvider":{
+      "name":"DeleteCapacityProvider",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2025-11-30/capacity-providers/{CapacityProviderName}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteCapacityProviderRequest"},
+      "output":{"shape":"DeleteCapacityProviderResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
     },
@@ -196,9 +233,10 @@
       "http":{
         "method":"DELETE",
         "requestUri":"/2015-03-31/functions/{FunctionName}",
-        "responseCode":204
+        "responseCode":200
       },
       "input":{"shape":"DeleteFunctionRequest"},
+      "output":{"shape":"DeleteFunctionResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceConflictException"},
@@ -335,6 +373,23 @@
       ],
       "readonly":true
     },
+    "GetCapacityProvider":{
+      "name":"GetCapacityProvider",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2025-11-30/capacity-providers/{CapacityProviderName}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetCapacityProviderRequest"},
+      "output":{"shape":"GetCapacityProviderResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "GetCodeSigningConfig":{
       "name":"GetCodeSigningConfig",
       "http":{
@@ -462,6 +517,23 @@
       },
       "input":{"shape":"GetFunctionRecursionConfigRequest"},
       "output":{"shape":"GetFunctionRecursionConfigResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "GetFunctionScalingConfig":{
+      "name":"GetFunctionScalingConfig",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2025-11-30/functions/{FunctionName}/function-scaling-config",
+        "responseCode":200
+      },
+      "input":{"shape":"GetFunctionScalingConfigRequest"},
+      "output":{"shape":"GetFunctionScalingConfigResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
         {"shape":"ServiceException"},
@@ -613,6 +685,7 @@
         {"shape":"UnsupportedMediaTypeException"},
         {"shape":"SerializedRequestEntityTooLargeException"},
         {"shape":"InvalidRuntimeException"},
+        {"shape":"NoPublishedVersionException"},
         {"shape":"EC2UnexpectedException"},
         {"shape":"InvalidSubnetIDException"},
         {"shape":"KMSNotFoundException"},
@@ -674,6 +747,7 @@
         {"shape":"UnsupportedMediaTypeException"},
         {"shape":"SerializedRequestEntityTooLargeException"},
         {"shape":"InvalidRuntimeException"},
+        {"shape":"NoPublishedVersionException"},
         {"shape":"EC2UnexpectedException"},
         {"shape":"InvalidSubnetIDException"},
         {"shape":"KMSNotFoundException"},
@@ -708,6 +782,22 @@
         {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "ListCapacityProviders":{
+      "name":"ListCapacityProviders",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2025-11-30/capacity-providers",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCapacityProvidersRequest"},
+      "output":{"shape":"ListCapacityProvidersResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"}
       ],
       "readonly":true
     },
@@ -769,6 +859,23 @@
       },
       "input":{"shape":"ListFunctionUrlConfigsRequest"},
       "output":{"shape":"ListFunctionUrlConfigsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "ListFunctionVersionsByCapacityProvider":{
+      "name":"ListFunctionVersionsByCapacityProvider",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2025-11-30/capacity-providers/{CapacityProviderName}/function-versions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListFunctionVersionsByCapacityProviderRequest"},
+      "output":{"shape":"ListFunctionVersionsByCapacityProviderResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
         {"shape":"ServiceException"},
@@ -926,7 +1033,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"CodeStorageExceededException"},
-        {"shape":"PreconditionFailedException"}
+        {"shape":"PreconditionFailedException"},
+        {"shape":"FunctionVersionsPerCapacityProviderLimitExceededException"}
       ]
     },
     "PutFunctionCodeSigningConfig":{
@@ -990,6 +1098,23 @@
       },
       "input":{"shape":"PutFunctionRecursionConfigRequest"},
       "output":{"shape":"PutFunctionRecursionConfigResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "PutFunctionScalingConfig":{
+      "name":"PutFunctionScalingConfig",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2025-11-30/functions/{FunctionName}/function-scaling-config",
+        "responseCode":202
+      },
+      "input":{"shape":"PutFunctionScalingConfigRequest"},
+      "output":{"shape":"PutFunctionScalingConfigResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceConflictException"},
@@ -1113,6 +1238,23 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"PreconditionFailedException"}
+      ]
+    },
+    "UpdateCapacityProvider":{
+      "name":"UpdateCapacityProvider",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2025-11-30/capacity-providers/{CapacityProviderName}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateCapacityProviderRequest"},
+      "output":{"shape":"UpdateCapacityProviderResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "UpdateCodeSigningConfig":{
@@ -1296,7 +1438,7 @@
       ],
       "members":{
         "FunctionName":{
-          "shape":"FunctionName",
+          "shape":"NamespacedFunctionName",
           "location":"uri",
           "locationName":"FunctionName"
         },
@@ -1307,7 +1449,7 @@
         "SourceAccount":{"shape":"SourceOwner"},
         "EventSourceToken":{"shape":"EventSourceToken"},
         "Qualifier":{
-          "shape":"Qualifier",
+          "shape":"NumericLatestPublishedOrAliasQualifier",
           "location":"querystring",
           "locationName":"Qualifier"
         },
@@ -1438,6 +1580,132 @@
       "streaming":true
     },
     "Boolean":{"type":"boolean"},
+    "CapacityProvider":{
+      "type":"structure",
+      "required":[
+        "CapacityProviderArn",
+        "State",
+        "VpcConfig",
+        "PermissionsConfig"
+      ],
+      "members":{
+        "CapacityProviderArn":{"shape":"CapacityProviderArn"},
+        "State":{"shape":"CapacityProviderState"},
+        "VpcConfig":{"shape":"CapacityProviderVpcConfig"},
+        "PermissionsConfig":{"shape":"CapacityProviderPermissionsConfig"},
+        "InstanceRequirements":{"shape":"InstanceRequirements"},
+        "CapacityProviderScalingConfig":{"shape":"CapacityProviderScalingConfig"},
+        "KmsKeyArn":{"shape":"KMSKeyArn"},
+        "LastModified":{"shape":"Timestamp"}
+      }
+    },
+    "CapacityProviderArn":{
+      "type":"string",
+      "max":140,
+      "min":1,
+      "pattern":"arn:aws[a-zA-Z-]*:lambda:[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:capacity-provider:[a-zA-Z0-9-_]+"
+    },
+    "CapacityProviderConfig":{
+      "type":"structure",
+      "required":["LambdaManagedInstancesCapacityProviderConfig"],
+      "members":{
+        "LambdaManagedInstancesCapacityProviderConfig":{"shape":"LambdaManagedInstancesCapacityProviderConfig"}
+      }
+    },
+    "CapacityProviderLimitExceededException":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"String"},
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "CapacityProviderMaxVCpuCount":{
+      "type":"integer",
+      "box":true,
+      "max":15000,
+      "min":2
+    },
+    "CapacityProviderName":{
+      "type":"string",
+      "max":140,
+      "min":1,
+      "pattern":"(arn:aws[a-zA-Z-]*:lambda:[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:capacity-provider:[a-zA-Z0-9-_]+)|[a-zA-Z0-9-_]+"
+    },
+    "CapacityProviderPermissionsConfig":{
+      "type":"structure",
+      "required":["CapacityProviderOperatorRoleArn"],
+      "members":{
+        "CapacityProviderOperatorRoleArn":{"shape":"RoleArn"}
+      }
+    },
+    "CapacityProviderPredefinedMetricType":{
+      "type":"string",
+      "enum":["LambdaCapacityProviderAverageCPUUtilization"]
+    },
+    "CapacityProviderScalingConfig":{
+      "type":"structure",
+      "members":{
+        "MaxVCpuCount":{"shape":"CapacityProviderMaxVCpuCount"},
+        "ScalingMode":{"shape":"CapacityProviderScalingMode"},
+        "ScalingPolicies":{"shape":"CapacityProviderScalingPoliciesList"}
+      }
+    },
+    "CapacityProviderScalingMode":{
+      "type":"string",
+      "enum":[
+        "Auto",
+        "Manual"
+      ]
+    },
+    "CapacityProviderScalingPoliciesList":{
+      "type":"list",
+      "member":{"shape":"TargetTrackingScalingPolicy"},
+      "max":10,
+      "min":1
+    },
+    "CapacityProviderSecurityGroupIds":{
+      "type":"list",
+      "member":{"shape":"SecurityGroupId"},
+      "max":5,
+      "min":0
+    },
+    "CapacityProviderState":{
+      "type":"string",
+      "enum":[
+        "Pending",
+        "Active",
+        "Failed",
+        "Deleting"
+      ]
+    },
+    "CapacityProviderSubnetIds":{
+      "type":"list",
+      "member":{"shape":"SubnetId"},
+      "max":16,
+      "min":1
+    },
+    "CapacityProviderVpcConfig":{
+      "type":"structure",
+      "required":[
+        "SubnetIds",
+        "SecurityGroupIds"
+      ],
+      "members":{
+        "SubnetIds":{"shape":"CapacityProviderSubnetIds"},
+        "SecurityGroupIds":{"shape":"CapacityProviderSecurityGroupIds"}
+      }
+    },
+    "CapacityProvidersList":{
+      "type":"list",
+      "member":{"shape":"CapacityProvider"},
+      "max":50,
+      "min":0
+    },
     "CodeSigningConfig":{
       "type":"structure",
       "required":[
@@ -1568,9 +1836,33 @@
           "locationName":"FunctionName"
         },
         "Name":{"shape":"Alias"},
-        "FunctionVersion":{"shape":"Version"},
+        "FunctionVersion":{"shape":"VersionWithLatestPublished"},
         "Description":{"shape":"Description"},
         "RoutingConfig":{"shape":"AliasRoutingConfiguration"}
+      }
+    },
+    "CreateCapacityProviderRequest":{
+      "type":"structure",
+      "required":[
+        "CapacityProviderName",
+        "VpcConfig",
+        "PermissionsConfig"
+      ],
+      "members":{
+        "CapacityProviderName":{"shape":"CapacityProviderName"},
+        "VpcConfig":{"shape":"CapacityProviderVpcConfig"},
+        "PermissionsConfig":{"shape":"CapacityProviderPermissionsConfig"},
+        "InstanceRequirements":{"shape":"InstanceRequirements"},
+        "CapacityProviderScalingConfig":{"shape":"CapacityProviderScalingConfig"},
+        "KmsKeyArn":{"shape":"KMSKeyArnNonEmpty"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "CreateCapacityProviderResponse":{
+      "type":"structure",
+      "required":["CapacityProvider"],
+      "members":{
+        "CapacityProvider":{"shape":"CapacityProvider"}
       }
     },
     "CreateCodeSigningConfigRequest":{
@@ -1595,7 +1887,7 @@
       "required":["FunctionName"],
       "members":{
         "EventSourceArn":{"shape":"Arn"},
-        "FunctionName":{"shape":"FunctionName"},
+        "FunctionName":{"shape":"NamespacedFunctionName"},
         "Enabled":{"shape":"Enabled"},
         "BatchSize":{"shape":"BatchSize"},
         "FilterCriteria":{"shape":"FilterCriteria"},
@@ -1655,6 +1947,8 @@
         "EphemeralStorage":{"shape":"EphemeralStorage"},
         "SnapStart":{"shape":"SnapStart"},
         "LoggingConfig":{"shape":"LoggingConfig"},
+        "CapacityProviderConfig":{"shape":"CapacityProviderConfig"},
+        "PublishTo":{"shape":"FunctionVersionLatestPublished"},
         "TenancyConfig":{"shape":"TenancyConfig"}
       }
     },
@@ -1729,6 +2023,24 @@
         }
       }
     },
+    "DeleteCapacityProviderRequest":{
+      "type":"structure",
+      "required":["CapacityProviderName"],
+      "members":{
+        "CapacityProviderName":{
+          "shape":"CapacityProviderName",
+          "location":"uri",
+          "locationName":"CapacityProviderName"
+        }
+      }
+    },
+    "DeleteCapacityProviderResponse":{
+      "type":"structure",
+      "required":["CapacityProvider"],
+      "members":{
+        "CapacityProvider":{"shape":"CapacityProvider"}
+      }
+    },
     "DeleteCodeSigningConfigRequest":{
       "type":"structure",
       "required":["CodeSigningConfigArn"],
@@ -1760,7 +2072,7 @@
       "required":["FunctionName"],
       "members":{
         "FunctionName":{
-          "shape":"FunctionName",
+          "shape":"NamespacedFunctionName",
           "location":"uri",
           "locationName":"FunctionName"
         }
@@ -1782,12 +2094,12 @@
       "required":["FunctionName"],
       "members":{
         "FunctionName":{
-          "shape":"FunctionName",
+          "shape":"NamespacedFunctionName",
           "location":"uri",
           "locationName":"FunctionName"
         },
         "Qualifier":{
-          "shape":"Qualifier",
+          "shape":"NumericLatestPublishedOrAliasQualifier",
           "location":"querystring",
           "locationName":"Qualifier"
         }
@@ -1798,14 +2110,23 @@
       "required":["FunctionName"],
       "members":{
         "FunctionName":{
-          "shape":"FunctionName",
+          "shape":"NamespacedFunctionName",
           "location":"uri",
           "locationName":"FunctionName"
         },
         "Qualifier":{
-          "shape":"Qualifier",
+          "shape":"NumericLatestPublishedOrAliasQualifier",
           "location":"querystring",
           "locationName":"Qualifier"
+        }
+      }
+    },
+    "DeleteFunctionResponse":{
+      "type":"structure",
+      "members":{
+        "StatusCode":{
+          "shape":"Integer",
+          "location":"statusCode"
         }
       }
     },
@@ -1872,7 +2193,7 @@
       "type":"string",
       "max":350,
       "min":0,
-      "pattern":"$|kafka://([^.]([a-zA-Z0-9\\-_.]{0,248}))|arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-])+:((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1})?:(\\d{12})?:(.*)"
+      "pattern":"$|kafka://([^.]([a-zA-Z0-9\\-_.]{0,248}))|arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-])+:([a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1})?:(\\d{12})?:(.*)"
     },
     "DestinationConfig":{
       "type":"structure",
@@ -2130,6 +2451,12 @@
       "min":0,
       "pattern":"[a-zA-Z0-9._\\-]+"
     },
+    "ExecutionEnvironmentMemoryGiBPerVCpu":{
+      "type":"double",
+      "box":true,
+      "max":8.0,
+      "min":2.0
+    },
     "FileSystemArn":{
       "type":"string",
       "max":200,
@@ -2197,7 +2524,9 @@
     },
     "FunctionArn":{
       "type":"string",
-      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
+      "max":10000,
+      "min":0,
+      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
     },
     "FunctionArnList":{
       "type":"list",
@@ -2263,6 +2592,8 @@
         "SnapStart":{"shape":"SnapStartResponse"},
         "RuntimeVersionConfig":{"shape":"RuntimeVersionConfig"},
         "LoggingConfig":{"shape":"LoggingConfig"},
+        "CapacityProviderConfig":{"shape":"CapacityProviderConfig"},
+        "ConfigSha256":{"shape":"String"},
         "TenancyConfig":{"shape":"TenancyConfig"}
       }
     },
@@ -2288,7 +2619,7 @@
       "type":"string",
       "max":140,
       "min":1,
-      "pattern":"(arn:(aws[a-zA-Z-]*)?:lambda:)?([a-z]{2}(-gov)?-[a-z]+-\\d{1}:)?(\\d{12}:)?(function:)?([a-zA-Z0-9-_]+)(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
+      "pattern":"(arn:(aws[a-zA-Z-]*)?:lambda:)?([a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?(function:)?([a-zA-Z0-9-_]+)(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
     },
     "FunctionResponseType":{
       "type":"string",
@@ -2298,6 +2629,19 @@
       "type":"list",
       "member":{"shape":"FunctionResponseType"},
       "max":1,
+      "min":0
+    },
+    "FunctionScalingConfig":{
+      "type":"structure",
+      "members":{
+        "MinExecutionEnvironments":{"shape":"FunctionScalingConfigExecutionEnvironments"},
+        "MaxExecutionEnvironments":{"shape":"FunctionScalingConfigExecutionEnvironments"}
+      }
+    },
+    "FunctionScalingConfigExecutionEnvironments":{
+      "type":"integer",
+      "box":true,
+      "max":15000,
       "min":0
     },
     "FunctionUrl":{
@@ -2339,11 +2683,44 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"(^\\$LATEST$)|((?!^[0-9]+$)([a-zA-Z0-9-_]+))"
+      "pattern":"((?!^\\d+$)^[0-9a-zA-Z-_]+$)"
     },
     "FunctionVersion":{
       "type":"string",
       "enum":["ALL"]
+    },
+    "FunctionVersionLatestPublished":{
+      "type":"string",
+      "enum":["LATEST_PUBLISHED"]
+    },
+    "FunctionVersionsByCapacityProviderList":{
+      "type":"list",
+      "member":{"shape":"FunctionVersionsByCapacityProviderListItem"},
+      "max":50,
+      "min":0
+    },
+    "FunctionVersionsByCapacityProviderListItem":{
+      "type":"structure",
+      "required":[
+        "FunctionArn",
+        "State"
+      ],
+      "members":{
+        "FunctionArn":{"shape":"NameSpacedFunctionArn"},
+        "State":{"shape":"State"}
+      }
+    },
+    "FunctionVersionsPerCapacityProviderLimitExceededException":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"String"},
+        "message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
     },
     "GetAccountSettingsRequest":{
       "type":"structure",
@@ -2373,6 +2750,24 @@
           "location":"uri",
           "locationName":"Name"
         }
+      }
+    },
+    "GetCapacityProviderRequest":{
+      "type":"structure",
+      "required":["CapacityProviderName"],
+      "members":{
+        "CapacityProviderName":{
+          "shape":"CapacityProviderName",
+          "location":"uri",
+          "locationName":"CapacityProviderName"
+        }
+      }
+    },
+    "GetCapacityProviderResponse":{
+      "type":"structure",
+      "required":["CapacityProvider"],
+      "members":{
+        "CapacityProvider":{"shape":"CapacityProvider"}
       }
     },
     "GetCodeSigningConfigRequest":{
@@ -2409,7 +2804,7 @@
       "required":["FunctionName"],
       "members":{
         "FunctionName":{
-          "shape":"FunctionName",
+          "shape":"NamespacedFunctionName",
           "location":"uri",
           "locationName":"FunctionName"
         }
@@ -2453,7 +2848,7 @@
           "locationName":"FunctionName"
         },
         "Qualifier":{
-          "shape":"Qualifier",
+          "shape":"NumericLatestPublishedOrAliasQualifier",
           "location":"querystring",
           "locationName":"Qualifier"
         }
@@ -2464,12 +2859,12 @@
       "required":["FunctionName"],
       "members":{
         "FunctionName":{
-          "shape":"FunctionName",
+          "shape":"NamespacedFunctionName",
           "location":"uri",
           "locationName":"FunctionName"
         },
         "Qualifier":{
-          "shape":"Qualifier",
+          "shape":"NumericLatestPublishedOrAliasQualifier",
           "location":"querystring",
           "locationName":"Qualifier"
         }
@@ -2502,7 +2897,7 @@
           "locationName":"FunctionName"
         },
         "Qualifier":{
-          "shape":"Qualifier",
+          "shape":"NumericLatestPublishedOrAliasQualifier",
           "location":"querystring",
           "locationName":"Qualifier"
         }
@@ -2516,6 +2911,33 @@
         "Tags":{"shape":"Tags"},
         "TagsError":{"shape":"TagsError"},
         "Concurrency":{"shape":"Concurrency"}
+      }
+    },
+    "GetFunctionScalingConfigRequest":{
+      "type":"structure",
+      "required":[
+        "FunctionName",
+        "Qualifier"
+      ],
+      "members":{
+        "FunctionName":{
+          "shape":"UnqualifiedFunctionName",
+          "location":"uri",
+          "locationName":"FunctionName"
+        },
+        "Qualifier":{
+          "shape":"PublishedFunctionQualifier",
+          "location":"querystring",
+          "locationName":"Qualifier"
+        }
+      }
+    },
+    "GetFunctionScalingConfigResponse":{
+      "type":"structure",
+      "members":{
+        "FunctionArn":{"shape":"FunctionArn"},
+        "AppliedFunctionScalingConfig":{"shape":"FunctionScalingConfig"},
+        "RequestedFunctionScalingConfig":{"shape":"FunctionScalingConfig"}
       }
     },
     "GetFunctionUrlConfigRequest":{
@@ -2633,7 +3055,7 @@
           "locationName":"FunctionName"
         },
         "Qualifier":{
-          "shape":"Qualifier",
+          "shape":"NumericLatestPublishedOrAliasQualifier",
           "location":"querystring",
           "locationName":"Qualifier"
         }
@@ -2686,7 +3108,7 @@
           "locationName":"FunctionName"
         },
         "Qualifier":{
-          "shape":"Qualifier",
+          "shape":"NumericLatestPublishedOrAliasQualifier",
           "location":"querystring",
           "locationName":"Qualifier"
         }
@@ -2740,6 +3162,26 @@
         "ImageConfig":{"shape":"ImageConfig"},
         "Error":{"shape":"ImageConfigError"}
       }
+    },
+    "InstanceRequirements":{
+      "type":"structure",
+      "members":{
+        "Architectures":{"shape":"ArchitecturesList"},
+        "AllowedInstanceTypes":{"shape":"InstanceTypeSet"},
+        "ExcludedInstanceTypes":{"shape":"InstanceTypeSet"}
+      }
+    },
+    "InstanceType":{
+      "type":"string",
+      "max":30,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\.\\-]+"
+    },
+    "InstanceTypeSet":{
+      "type":"list",
+      "member":{"shape":"InstanceType"},
+      "max":400,
+      "min":0
     },
     "Integer":{"type":"integer"},
     "InvalidCodeSignatureException":{
@@ -2844,7 +3286,7 @@
         },
         "Payload":{"shape":"Blob"},
         "Qualifier":{
-          "shape":"Qualifier",
+          "shape":"NumericLatestPublishedOrAliasQualifier",
           "location":"querystring",
           "locationName":"Qualifier"
         },
@@ -2968,7 +3410,7 @@
           "locationName":"X-Amz-Client-Context"
         },
         "Qualifier":{
-          "shape":"Qualifier",
+          "shape":"NumericLatestPublishedOrAliasQualifier",
           "location":"querystring",
           "locationName":"Qualifier"
         },
@@ -3048,6 +3490,12 @@
       "type":"string",
       "pattern":"(arn:(aws[a-zA-Z-]*)?:[a-z0-9-.]+:.*)|()"
     },
+    "KMSKeyArnNonEmpty":{
+      "type":"string",
+      "max":10000,
+      "min":0,
+      "pattern":"arn:(aws[a-zA-Z-]*)?:[a-z0-9-.]+:.*"
+    },
     "KMSNotFoundException":{
       "type":"structure",
       "members":{
@@ -3103,6 +3551,15 @@
       "type":"list",
       "member":{"shape":"KafkaSchemaValidationConfig"}
     },
+    "LambdaManagedInstancesCapacityProviderConfig":{
+      "type":"structure",
+      "required":["CapacityProviderArn"],
+      "members":{
+        "CapacityProviderArn":{"shape":"CapacityProviderArn"},
+        "PerExecutionEnvironmentMaxConcurrency":{"shape":"PerExecutionEnvironmentMaxConcurrency"},
+        "ExecutionEnvironmentMemoryGiBPerVCpu":{"shape":"ExecutionEnvironmentMemoryGiBPerVCpu"}
+      }
+    },
     "LastUpdateStatus":{
       "type":"string",
       "enum":[
@@ -3135,7 +3592,19 @@
         "EFSMountTimeout",
         "InvalidRuntime",
         "InvalidZipFileException",
-        "FunctionError"
+        "FunctionError",
+        "VcpuLimitExceeded",
+        "CapacityProviderScalingLimitExceeded",
+        "InsufficientCapacity",
+        "EC2RequestLimitExceeded",
+        "FunctionError.InitTimeout",
+        "FunctionError.RuntimeInitError",
+        "FunctionError.ExtensionInitError",
+        "FunctionError.InvalidEntryPoint",
+        "FunctionError.InvalidWorkingDirectory",
+        "FunctionError.PermissionDenied",
+        "FunctionError.TooManyExtensions",
+        "FunctionError.InitResourceExhausted"
       ]
     },
     "Layer":{
@@ -3246,7 +3715,7 @@
           "locationName":"FunctionName"
         },
         "FunctionVersion":{
-          "shape":"Version",
+          "shape":"VersionWithLatestPublished",
           "location":"querystring",
           "locationName":"FunctionVersion"
         },
@@ -3267,6 +3736,34 @@
       "members":{
         "NextMarker":{"shape":"String"},
         "Aliases":{"shape":"AliasList"}
+      }
+    },
+    "ListCapacityProvidersRequest":{
+      "type":"structure",
+      "members":{
+        "State":{
+          "shape":"CapacityProviderState",
+          "location":"querystring",
+          "locationName":"State"
+        },
+        "Marker":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"MaxFiftyListItems",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        }
+      }
+    },
+    "ListCapacityProvidersResponse":{
+      "type":"structure",
+      "required":["CapacityProviders"],
+      "members":{
+        "CapacityProviders":{"shape":"CapacityProvidersList"},
+        "NextMarker":{"shape":"String"}
       }
     },
     "ListCodeSigningConfigsRequest":{
@@ -3300,7 +3797,7 @@
           "locationName":"EventSourceArn"
         },
         "FunctionName":{
-          "shape":"FunctionName",
+          "shape":"NamespacedFunctionName",
           "location":"querystring",
           "locationName":"FunctionName"
         },
@@ -3328,7 +3825,7 @@
       "required":["FunctionName"],
       "members":{
         "FunctionName":{
-          "shape":"FunctionName",
+          "shape":"NamespacedFunctionName",
           "location":"uri",
           "locationName":"FunctionName"
         },
@@ -3377,6 +3874,39 @@
       "required":["FunctionUrlConfigs"],
       "members":{
         "FunctionUrlConfigs":{"shape":"FunctionUrlConfigList"},
+        "NextMarker":{"shape":"String"}
+      }
+    },
+    "ListFunctionVersionsByCapacityProviderRequest":{
+      "type":"structure",
+      "required":["CapacityProviderName"],
+      "members":{
+        "CapacityProviderName":{
+          "shape":"CapacityProviderName",
+          "location":"uri",
+          "locationName":"CapacityProviderName"
+        },
+        "Marker":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"MaxFiftyListItems",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        }
+      }
+    },
+    "ListFunctionVersionsByCapacityProviderResponse":{
+      "type":"structure",
+      "required":[
+        "CapacityProviderArn",
+        "FunctionVersions"
+      ],
+      "members":{
+        "CapacityProviderArn":{"shape":"CapacityProviderArn"},
+        "FunctionVersions":{"shape":"FunctionVersionsByCapacityProviderList"},
         "NextMarker":{"shape":"String"}
       }
     },
@@ -3629,6 +4159,12 @@
       "max":86400,
       "min":0
     },
+    "MaxFiftyListItems":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":1
+    },
     "MaxFunctionEventInvokeConfigListItems":{
       "type":"integer",
       "box":true,
@@ -3704,7 +4240,7 @@
     "MemorySize":{
       "type":"integer",
       "box":true,
-      "max":10240,
+      "max":32768,
       "min":128
     },
     "Method":{
@@ -3712,6 +4248,12 @@
       "max":6,
       "min":0,
       "pattern":".*"
+    },
+    "MetricTargetValue":{
+      "type":"double",
+      "box":true,
+      "max":100.0,
+      "min":0.0
     },
     "MinimumNumberOfPollers":{
       "type":"integer",
@@ -3721,19 +4263,33 @@
     },
     "NameSpacedFunctionArn":{
       "type":"string",
-      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_\\.]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
+      "max":10000,
+      "min":0,
+      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_\\.]+(:(\\$LATEST(\\.PUBLISHED)?|[a-zA-Z0-9-_]+))?"
     },
     "NamespacedFunctionName":{
       "type":"string",
-      "max":170,
+      "max":256,
       "min":1,
-      "pattern":"(arn:(aws[a-zA-Z-]*)?:lambda:)?([a-z]{2}(-gov)?-[a-z]+-\\d{1}:)?(\\d{12}:)?(function:)?([a-zA-Z0-9-_\\.]+)(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
+      "pattern":"(arn:(aws[a-zA-Z-]*)?:lambda:)?([a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?(function:)?([a-zA-Z0-9-_\\.]+)(:(\\$LATEST(\\.PUBLISHED)?|[a-zA-Z0-9-_]+))?"
     },
     "NamespacedStatementId":{
       "type":"string",
       "max":100,
       "min":1,
       "pattern":"([a-zA-Z0-9-_.]+)"
+    },
+    "NoPublishedVersionException":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"String"},
+        "Message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
     },
     "NonNegativeInteger":{
       "type":"integer",
@@ -3743,6 +4299,12 @@
     "NullableBoolean":{
       "type":"boolean",
       "box":true
+    },
+    "NumericLatestPublishedOrAliasQualifier":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"\\$(LATEST(\\.PUBLISHED)?)|[a-zA-Z0-9-_$]+"
     },
     "OnFailure":{
       "type":"structure",
@@ -3786,6 +4348,12 @@
       "max":4096,
       "min":0,
       "pattern":".*"
+    },
+    "PerExecutionEnvironmentMaxConcurrency":{
+      "type":"integer",
+      "box":true,
+      "max":1600,
+      "min":1
     },
     "PolicyLengthExceededException":{
       "type":"structure",
@@ -3920,8 +4488,15 @@
         },
         "CodeSha256":{"shape":"String"},
         "Description":{"shape":"Description"},
-        "RevisionId":{"shape":"String"}
+        "RevisionId":{"shape":"String"},
+        "PublishTo":{"shape":"FunctionVersionLatestPublished"}
       }
+    },
+    "PublishedFunctionQualifier":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"(\\$LATEST\\.PUBLISHED|[0-9]+)"
     },
     "PutFunctionCodeSigningConfigRequest":{
       "type":"structure",
@@ -3932,7 +4507,7 @@
       "members":{
         "CodeSigningConfigArn":{"shape":"CodeSigningConfigArn"},
         "FunctionName":{
-          "shape":"FunctionName",
+          "shape":"NamespacedFunctionName",
           "location":"uri",
           "locationName":"FunctionName"
         }
@@ -3969,12 +4544,12 @@
       "required":["FunctionName"],
       "members":{
         "FunctionName":{
-          "shape":"FunctionName",
+          "shape":"NamespacedFunctionName",
           "location":"uri",
           "locationName":"FunctionName"
         },
         "Qualifier":{
-          "shape":"Qualifier",
+          "shape":"NumericLatestPublishedOrAliasQualifier",
           "location":"querystring",
           "locationName":"Qualifier"
         },
@@ -4002,6 +4577,32 @@
       "type":"structure",
       "members":{
         "RecursiveLoop":{"shape":"RecursiveLoop"}
+      }
+    },
+    "PutFunctionScalingConfigRequest":{
+      "type":"structure",
+      "required":[
+        "FunctionName",
+        "Qualifier"
+      ],
+      "members":{
+        "FunctionName":{
+          "shape":"UnqualifiedFunctionName",
+          "location":"uri",
+          "locationName":"FunctionName"
+        },
+        "Qualifier":{
+          "shape":"PublishedFunctionQualifier",
+          "location":"querystring",
+          "locationName":"Qualifier"
+        },
+        "FunctionScalingConfig":{"shape":"FunctionScalingConfig"}
+      }
+    },
+    "PutFunctionScalingConfigResponse":{
+      "type":"structure",
+      "members":{
+        "FunctionState":{"shape":"State"}
       }
     },
     "PutProvisionedConcurrencyConfigRequest":{
@@ -4044,12 +4645,12 @@
       ],
       "members":{
         "FunctionName":{
-          "shape":"FunctionName",
+          "shape":"NamespacedFunctionName",
           "location":"uri",
           "locationName":"FunctionName"
         },
         "Qualifier":{
-          "shape":"Qualifier",
+          "shape":"NumericLatestPublishedOrAliasQualifier",
           "location":"querystring",
           "locationName":"Qualifier"
         },
@@ -4144,7 +4745,7 @@
       ],
       "members":{
         "FunctionName":{
-          "shape":"FunctionName",
+          "shape":"NamespacedFunctionName",
           "location":"uri",
           "locationName":"FunctionName"
         },
@@ -4154,7 +4755,7 @@
           "locationName":"StatementId"
         },
         "Qualifier":{
-          "shape":"Qualifier",
+          "shape":"NumericLatestPublishedOrAliasQualifier",
           "location":"querystring",
           "locationName":"Qualifier"
         },
@@ -4500,7 +5101,11 @@
         "Pending",
         "Active",
         "Inactive",
-        "Failed"
+        "Failed",
+        "Deactivating",
+        "Deactivated",
+        "ActiveNonInvocable",
+        "Deleting"
       ]
     },
     "StateReason":{"type":"string"},
@@ -4530,7 +5135,19 @@
         "EFSMountTimeout",
         "InvalidRuntime",
         "InvalidZipFileException",
-        "FunctionError"
+        "FunctionError",
+        "VcpuLimitExceeded",
+        "CapacityProviderScalingLimitExceeded",
+        "InsufficientCapacity",
+        "EC2RequestLimitExceeded",
+        "FunctionError.InitTimeout",
+        "FunctionError.RuntimeInitError",
+        "FunctionError.ExtensionInitError",
+        "FunctionError.InvalidEntryPoint",
+        "FunctionError.InvalidWorkingDirectory",
+        "FunctionError.PermissionDenied",
+        "FunctionError.TooManyExtensions",
+        "FunctionError.InitResourceExhausted"
       ]
     },
     "StatementId":{
@@ -4596,7 +5213,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"arn:(aws[a-zA-Z-]*):lambda:[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:(function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?|code-signing-config:csc-[a-z0-9]{17}|event-source-mapping:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"
+      "pattern":"arn:(aws[a-zA-Z-]*):lambda:[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:(function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?|code-signing-config:csc-[a-z0-9]{17}|event-source-mapping:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|capacity-provider:[a-zA-Z0-9-_]+)"
     },
     "Tags":{
       "type":"map",
@@ -4625,6 +5242,17 @@
       "max":1000,
       "min":84,
       "pattern":".*"
+    },
+    "TargetTrackingScalingPolicy":{
+      "type":"structure",
+      "required":[
+        "PredefinedMetricType",
+        "TargetValue"
+      ],
+      "members":{
+        "PredefinedMetricType":{"shape":"CapacityProviderPredefinedMetricType"},
+        "TargetValue":{"shape":"MetricTargetValue"}
+      }
     },
     "TenancyConfig":{
       "type":"structure",
@@ -4780,10 +5408,29 @@
           "location":"uri",
           "locationName":"Name"
         },
-        "FunctionVersion":{"shape":"Version"},
+        "FunctionVersion":{"shape":"VersionWithLatestPublished"},
         "Description":{"shape":"Description"},
         "RoutingConfig":{"shape":"AliasRoutingConfiguration"},
         "RevisionId":{"shape":"String"}
+      }
+    },
+    "UpdateCapacityProviderRequest":{
+      "type":"structure",
+      "required":["CapacityProviderName"],
+      "members":{
+        "CapacityProviderName":{
+          "shape":"CapacityProviderName",
+          "location":"uri",
+          "locationName":"CapacityProviderName"
+        },
+        "CapacityProviderScalingConfig":{"shape":"CapacityProviderScalingConfig"}
+      }
+    },
+    "UpdateCapacityProviderResponse":{
+      "type":"structure",
+      "required":["CapacityProvider"],
+      "members":{
+        "CapacityProvider":{"shape":"CapacityProvider"}
       }
     },
     "UpdateCodeSigningConfigRequest":{
@@ -4816,7 +5463,7 @@
           "location":"uri",
           "locationName":"UUID"
         },
-        "FunctionName":{"shape":"FunctionName"},
+        "FunctionName":{"shape":"NamespacedFunctionName"},
         "Enabled":{"shape":"Enabled"},
         "BatchSize":{"shape":"BatchSize"},
         "FilterCriteria":{"shape":"FilterCriteria"},
@@ -4856,7 +5503,8 @@
         "DryRun":{"shape":"Boolean"},
         "RevisionId":{"shape":"String"},
         "Architectures":{"shape":"ArchitecturesList"},
-        "SourceKMSKeyArn":{"shape":"KMSKeyArn"}
+        "SourceKMSKeyArn":{"shape":"KMSKeyArn"},
+        "PublishTo":{"shape":"FunctionVersionLatestPublished"}
       }
     },
     "UpdateFunctionConfigurationRequest":{
@@ -4885,7 +5533,8 @@
         "ImageConfig":{"shape":"ImageConfig"},
         "EphemeralStorage":{"shape":"EphemeralStorage"},
         "SnapStart":{"shape":"SnapStart"},
-        "LoggingConfig":{"shape":"LoggingConfig"}
+        "LoggingConfig":{"shape":"LoggingConfig"},
+        "CapacityProviderConfig":{"shape":"CapacityProviderConfig"}
       }
     },
     "UpdateFunctionEventInvokeConfigRequest":{
@@ -4893,12 +5542,12 @@
       "required":["FunctionName"],
       "members":{
         "FunctionName":{
-          "shape":"FunctionName",
+          "shape":"NamespacedFunctionName",
           "location":"uri",
           "locationName":"FunctionName"
         },
         "Qualifier":{
-          "shape":"Qualifier",
+          "shape":"NumericLatestPublishedOrAliasQualifier",
           "location":"querystring",
           "locationName":"Qualifier"
         },
@@ -4958,6 +5607,12 @@
       "max":1024,
       "min":1,
       "pattern":"(\\$LATEST|[0-9]+)"
+    },
+    "VersionWithLatestPublished":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"(\\$LATEST(\\.PUBLISHED)?|[0-9]+)"
     },
     "VpcConfig":{
       "type":"structure",

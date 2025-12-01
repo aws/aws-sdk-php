@@ -100,6 +100,24 @@
         {"shape":"ServerException"}
       ]
     },
+    "CreateCapability":{
+      "name":"CreateCapability",
+      "http":{
+        "method":"POST",
+        "requestUri":"/clusters/{name}/capabilities"
+      },
+      "input":{"shape":"CreateCapabilityRequest"},
+      "output":{"shape":"CreateCapabilityResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServerException"}
+      ]
+    },
     "CreateCluster":{
       "name":"CreateCluster",
       "http":{
@@ -213,6 +231,22 @@
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "DeleteCapability":{
+      "name":"DeleteCapability",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/clusters/{name}/capabilities/{capabilityName}"
+      },
+      "input":{"shape":"DeleteCapabilityRequest"},
+      "output":{"shape":"DeleteCapabilityResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceInUseException"},
         {"shape":"ServerException"}
       ]
     },
@@ -368,6 +402,21 @@
         {"shape":"ServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterException"}
+      ]
+    },
+    "DescribeCapability":{
+      "name":"DescribeCapability",
+      "http":{
+        "method":"GET",
+        "requestUri":"/clusters/{name}/capabilities/{capabilityName}"
+      },
+      "input":{"shape":"DescribeCapabilityRequest"},
+      "output":{"shape":"DescribeCapabilityResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServerException"}
       ]
     },
     "DescribeCluster":{
@@ -610,6 +659,19 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "ListCapabilities":{
+      "name":"ListCapabilities",
+      "http":{
+        "method":"GET",
+        "requestUri":"/clusters/{name}/capabilities"
+      },
+      "input":{"shape":"ListCapabilitiesRequest"},
+      "output":{"shape":"ListCapabilitiesResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ServerException"}
+      ]
+    },
     "ListClusters":{
       "name":"ListClusters",
       "http":{
@@ -834,6 +896,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "UpdateCapability":{
+      "name":"UpdateCapability",
+      "http":{
+        "method":"POST",
+        "requestUri":"/clusters/{name}/capabilities/{capabilityName}"
+      },
+      "input":{"shape":"UpdateCapabilityRequest"},
+      "output":{"shape":"UpdateCapabilityResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceInUseException"},
         {"shape":"ServerException"}
       ]
     },
@@ -1171,6 +1249,77 @@
       "type":"list",
       "member":{"shape":"AddonInfo"}
     },
+    "ArgoCdAwsIdcConfigRequest":{
+      "type":"structure",
+      "required":["idcInstanceArn"],
+      "members":{
+        "idcInstanceArn":{"shape":"String"},
+        "idcRegion":{"shape":"String"}
+      }
+    },
+    "ArgoCdAwsIdcConfigResponse":{
+      "type":"structure",
+      "members":{
+        "idcInstanceArn":{"shape":"String"},
+        "idcRegion":{"shape":"String"},
+        "idcManagedApplicationArn":{"shape":"String"}
+      }
+    },
+    "ArgoCdConfigRequest":{
+      "type":"structure",
+      "required":["awsIdc"],
+      "members":{
+        "namespace":{"shape":"String"},
+        "awsIdc":{"shape":"ArgoCdAwsIdcConfigRequest"},
+        "rbacRoleMappings":{"shape":"ArgoCdRoleMappingList"},
+        "networkAccess":{"shape":"ArgoCdNetworkAccessConfigRequest"}
+      }
+    },
+    "ArgoCdConfigResponse":{
+      "type":"structure",
+      "members":{
+        "namespace":{"shape":"String"},
+        "awsIdc":{"shape":"ArgoCdAwsIdcConfigResponse"},
+        "rbacRoleMappings":{"shape":"ArgoCdRoleMappingList"},
+        "networkAccess":{"shape":"ArgoCdNetworkAccessConfigResponse"},
+        "serverUrl":{"shape":"String"}
+      }
+    },
+    "ArgoCdNetworkAccessConfigRequest":{
+      "type":"structure",
+      "members":{
+        "vpceIds":{"shape":"StringList"}
+      }
+    },
+    "ArgoCdNetworkAccessConfigResponse":{
+      "type":"structure",
+      "members":{
+        "vpceIds":{"shape":"StringList"}
+      }
+    },
+    "ArgoCdRole":{
+      "type":"string",
+      "enum":[
+        "ADMIN",
+        "EDITOR",
+        "VIEWER"
+      ]
+    },
+    "ArgoCdRoleMapping":{
+      "type":"structure",
+      "required":[
+        "role",
+        "identities"
+      ],
+      "members":{
+        "role":{"shape":"ArgoCdRole"},
+        "identities":{"shape":"SsoIdentityList"}
+      }
+    },
+    "ArgoCdRoleMappingList":{
+      "type":"list",
+      "member":{"shape":"ArgoCdRoleMapping"}
+    },
     "AssociateAccessPolicyRequest":{
       "type":"structure",
       "required":[
@@ -1307,6 +1456,100 @@
     "BoxedInteger":{
       "type":"integer",
       "box":true
+    },
+    "Capability":{
+      "type":"structure",
+      "members":{
+        "capabilityName":{"shape":"String"},
+        "arn":{"shape":"String"},
+        "clusterName":{"shape":"String"},
+        "type":{"shape":"CapabilityType"},
+        "roleArn":{"shape":"String"},
+        "status":{"shape":"CapabilityStatus"},
+        "version":{"shape":"String"},
+        "configuration":{"shape":"CapabilityConfigurationResponse"},
+        "tags":{"shape":"TagMap"},
+        "health":{"shape":"CapabilityHealth"},
+        "createdAt":{"shape":"Timestamp"},
+        "modifiedAt":{"shape":"Timestamp"},
+        "deletePropagationPolicy":{"shape":"CapabilityDeletePropagationPolicy"}
+      }
+    },
+    "CapabilityConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "argoCd":{"shape":"ArgoCdConfigRequest"}
+      }
+    },
+    "CapabilityConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "argoCd":{"shape":"ArgoCdConfigResponse"}
+      }
+    },
+    "CapabilityDeletePropagationPolicy":{
+      "type":"string",
+      "enum":["RETAIN"]
+    },
+    "CapabilityHealth":{
+      "type":"structure",
+      "members":{
+        "issues":{"shape":"CapabilityIssueList"}
+      }
+    },
+    "CapabilityIssue":{
+      "type":"structure",
+      "members":{
+        "code":{"shape":"CapabilityIssueCode"},
+        "message":{"shape":"String"}
+      }
+    },
+    "CapabilityIssueCode":{
+      "type":"string",
+      "enum":[
+        "AccessDenied",
+        "ClusterUnreachable"
+      ]
+    },
+    "CapabilityIssueList":{
+      "type":"list",
+      "member":{"shape":"CapabilityIssue"}
+    },
+    "CapabilityStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATE_FAILED",
+        "UPDATING",
+        "DELETING",
+        "DELETE_FAILED",
+        "ACTIVE",
+        "DEGRADED"
+      ]
+    },
+    "CapabilitySummary":{
+      "type":"structure",
+      "members":{
+        "capabilityName":{"shape":"String"},
+        "arn":{"shape":"String"},
+        "type":{"shape":"CapabilityType"},
+        "status":{"shape":"CapabilityStatus"},
+        "version":{"shape":"String"},
+        "createdAt":{"shape":"Timestamp"},
+        "modifiedAt":{"shape":"Timestamp"}
+      }
+    },
+    "CapabilitySummaryList":{
+      "type":"list",
+      "member":{"shape":"CapabilitySummary"}
+    },
+    "CapabilityType":{
+      "type":"string",
+      "enum":[
+        "ACK",
+        "KRO",
+        "ARGOCD"
+      ]
     },
     "Capacity":{
       "type":"integer",
@@ -1630,6 +1873,39 @@
         "addon":{"shape":"Addon"}
       }
     },
+    "CreateCapabilityRequest":{
+      "type":"structure",
+      "required":[
+        "capabilityName",
+        "clusterName",
+        "type",
+        "roleArn",
+        "deletePropagationPolicy"
+      ],
+      "members":{
+        "capabilityName":{"shape":"String"},
+        "clusterName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "clientRequestToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "type":{"shape":"CapabilityType"},
+        "roleArn":{"shape":"String"},
+        "configuration":{"shape":"CapabilityConfigurationRequest"},
+        "tags":{"shape":"TagMap"},
+        "deletePropagationPolicy":{"shape":"CapabilityDeletePropagationPolicy"}
+      }
+    },
+    "CreateCapabilityResponse":{
+      "type":"structure",
+      "members":{
+        "capability":{"shape":"Capability"}
+      }
+    },
     "CreateClusterRequest":{
       "type":"structure",
       "required":[
@@ -1849,6 +2125,31 @@
       "type":"structure",
       "members":{
         "addon":{"shape":"Addon"}
+      }
+    },
+    "DeleteCapabilityRequest":{
+      "type":"structure",
+      "required":[
+        "clusterName",
+        "capabilityName"
+      ],
+      "members":{
+        "clusterName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "capabilityName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"capabilityName"
+        }
+      }
+    },
+    "DeleteCapabilityResponse":{
+      "type":"structure",
+      "members":{
+        "capability":{"shape":"Capability"}
       }
     },
     "DeleteClusterRequest":{
@@ -2122,6 +2423,31 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "DescribeCapabilityRequest":{
+      "type":"structure",
+      "required":[
+        "clusterName",
+        "capabilityName"
+      ],
+      "members":{
+        "clusterName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "capabilityName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"capabilityName"
+        }
+      }
+    },
+    "DescribeCapabilityResponse":{
+      "type":"structure",
+      "members":{
+        "capability":{"shape":"Capability"}
+      }
+    },
     "DescribeClusterRequest":{
       "type":"structure",
       "required":["name"],
@@ -2384,6 +2710,11 @@
           "shape":"String",
           "location":"querystring",
           "locationName":"addonName"
+        },
+        "capabilityName":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"capabilityName"
         }
       }
     },
@@ -2986,6 +3317,40 @@
         "associatedAccessPolicies":{"shape":"AssociatedAccessPoliciesList"}
       }
     },
+    "ListCapabilitiesRequest":{
+      "type":"structure",
+      "required":["clusterName"],
+      "members":{
+        "clusterName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListCapabilitiesRequestMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListCapabilitiesRequestMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListCapabilitiesResponse":{
+      "type":"structure",
+      "members":{
+        "capabilities":{"shape":"CapabilitySummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListClustersRequest":{
       "type":"structure",
       "members":{
@@ -3254,6 +3619,11 @@
           "shape":"String",
           "location":"querystring",
           "locationName":"addonName"
+        },
+        "capabilityName":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"capabilityName"
         },
         "nextToken":{
           "shape":"String",
@@ -3743,6 +4113,28 @@
       "exception":true,
       "fault":true
     },
+    "SsoIdentity":{
+      "type":"structure",
+      "required":[
+        "id",
+        "type"
+      ],
+      "members":{
+        "id":{"shape":"String"},
+        "type":{"shape":"SsoIdentityType"}
+      }
+    },
+    "SsoIdentityList":{
+      "type":"list",
+      "member":{"shape":"SsoIdentity"}
+    },
+    "SsoIdentityType":{
+      "type":"string",
+      "enum":[
+        "SSO_USER",
+        "SSO_GROUP"
+      ]
+    },
     "StartInsightsRefreshRequest":{
       "type":"structure",
       "required":["clusterName"],
@@ -3963,6 +4355,51 @@
       }
     },
     "UpdateAddonResponse":{
+      "type":"structure",
+      "members":{
+        "update":{"shape":"Update"}
+      }
+    },
+    "UpdateArgoCdConfig":{
+      "type":"structure",
+      "members":{
+        "rbacRoleMappings":{"shape":"UpdateRoleMappings"},
+        "networkAccess":{"shape":"ArgoCdNetworkAccessConfigRequest"}
+      }
+    },
+    "UpdateCapabilityConfiguration":{
+      "type":"structure",
+      "members":{
+        "argoCd":{"shape":"UpdateArgoCdConfig"}
+      }
+    },
+    "UpdateCapabilityRequest":{
+      "type":"structure",
+      "required":[
+        "clusterName",
+        "capabilityName"
+      ],
+      "members":{
+        "clusterName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "capabilityName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"capabilityName"
+        },
+        "roleArn":{"shape":"String"},
+        "configuration":{"shape":"UpdateCapabilityConfiguration"},
+        "clientRequestToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "deletePropagationPolicy":{"shape":"CapabilityDeletePropagationPolicy"}
+      }
+    },
+    "UpdateCapabilityResponse":{
       "type":"structure",
       "members":{
         "update":{"shape":"Update"}
@@ -4211,6 +4648,13 @@
       "type":"structure",
       "members":{
         "association":{"shape":"PodIdentityAssociation"}
+      }
+    },
+    "UpdateRoleMappings":{
+      "type":"structure",
+      "members":{
+        "addOrUpdateRoleMappings":{"shape":"ArgoCdRoleMappingList"},
+        "removeRoleMappings":{"shape":"ArgoCdRoleMappingList"}
       }
     },
     "UpdateStatus":{

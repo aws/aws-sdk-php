@@ -66,6 +66,7 @@
     "ListMessageTemplates": "<p>Lists all the available Amazon Q in Connect message templates for the specified knowledge base.</p>",
     "ListMessages": "<p>Lists messages on an Amazon Q in Connect session.</p>",
     "ListQuickResponses": "<p>Lists information about quick response.</p>",
+    "ListSpans": "<p>Retrieves AI agent execution traces for a session, providing granular visibility into agent orchestration flows, LLM interactions, and tool invocations.</p>",
     "ListTagsForResource": "<p>Lists the tags for the specified resource.</p>",
     "NotifyRecommendationsReceived": "<p>Removes the specified recommendations from the specified assistant's queue of newly available recommendations. You can use this API in conjunction with <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_GetRecommendations.html\">GetRecommendations</a> and a <code>waitTimeSeconds</code> input for long-polling behavior and avoiding duplicate recommendations.</p>",
     "PutFeedback": "<p>Provides feedback against the specified assistant for the specified target. This API only supports generative targets.</p>",
@@ -73,6 +74,7 @@
     "RemoveAssistantAIAgent": "<p>Removes the AI Agent that is set for use by default on an Amazon Q in Connect Assistant.</p>",
     "RemoveKnowledgeBaseTemplateUri": "<p>Removes a URI template from a knowledge base.</p>",
     "RenderMessageTemplate": "<p>Renders the Amazon Q in Connect message template based on the attribute values provided and generates the message content. For any variable present in the message template, if the attribute value is neither provided in the attribute request parameter nor the default attribute of the message template, the rendered message content will keep the variable placeholder as it is and return the attribute keys that are missing.</p>",
+    "Retrieve": "<p>Retrieves content from knowledge sources based on a query.</p>",
     "SearchContent": "<p>Searches for content in a specified knowledge base. Can be used to get a specific content resource by its name.</p>",
     "SearchMessageTemplates": "<p>Searches for Amazon Q in Connect message templates in the specified knowledge base.</p>",
     "SearchQuickResponses": "<p>Searches existing Amazon Q in Connect quick responses in an Amazon Q in Connect knowledge base.</p>",
@@ -157,6 +159,7 @@
         "AIAgentSummary$type": "<p>The type of the AI Agent.</p>",
         "CreateAIAgentRequest$type": "<p>The type of the AI Agent.</p>",
         "RemoveAssistantAIAgentRequest$aiAgentType": "<p>The type of the AI Agent being removed for use by default from the Amazon Q in Connect Assistant.</p>",
+        "SpanAttributes$aiAgentType": "<p>AI agent type</p>",
         "UpdateAssistantAIAgentRequest$aiAgentType": "<p>The type of the AI Agent being updated for use by default on the Amazon Q in Connect Assistant.</p>"
       }
     },
@@ -170,6 +173,13 @@
       "base": "<p>The summary of the AI Agent version.</p>",
       "refs": {
         "AIAgentVersionSummariesList$member": null
+      }
+    },
+    "AIGuardrailAssessment": {
+      "base": "<p>The assessment information from the AI Guardrail.</p>",
+      "refs": {
+        "SpanTextValue$aiGuardrailAssessment": "<p>The AI Guardrail assessment for the span text.</p>",
+        "TextMessage$aiGuardrailAssessment": "<p>The AI Guardrail assessment for the text message.</p>"
       }
     },
     "AIGuardrailBlockedMessaging": {
@@ -283,6 +293,14 @@
         "UpdateAIPromptResponse$aiPrompt": "<p>The data of the updated Amazon Q in Connect AI Prompt.</p>"
       }
     },
+    "AIPromptInferenceConfiguration": {
+      "base": "<p>The configuration for inference parameters when using AI Prompts.</p>",
+      "refs": {
+        "AIPromptData$inferenceConfiguration": "<p>The configuration for inference parameters when using the AI Prompt.</p>",
+        "CreateAIPromptRequest$inferenceConfiguration": "<p>The inference configuration for the AI Prompt being created.</p>",
+        "UpdateAIPromptRequest$inferenceConfiguration": "<p>The updated inference configuration for the AI Prompt.</p>"
+      }
+    },
     "AIPromptModelIdentifier": {
       "base": null,
       "refs": {
@@ -326,7 +344,8 @@
       "refs": {
         "AIPromptData$type": "<p>The type of this AI Prompt.</p>",
         "AIPromptSummary$type": "<p>The type of this AI Prompt.</p>",
-        "CreateAIPromptRequest$type": "<p>The type of this AI Prompt.</p>"
+        "CreateAIPromptRequest$type": "<p>The type of this AI Prompt.</p>",
+        "SpanAttributes$promptType": "<p>AI prompt type</p>"
       }
     },
     "AIPromptVersionSummariesList": {
@@ -344,6 +363,12 @@
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
       "refs": {}
+    },
+    "AccessRoleArn": {
+      "base": null,
+      "refs": {
+        "ExternalBedrockKnowledgeBaseConfig$accessRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role used to access the external Bedrock knowledge base.</p>"
+      }
     },
     "ActivateMessageTemplateRequest": {
       "base": null,
@@ -370,6 +395,12 @@
       "refs": {
         "OrCondition$andConditions": "<p>A list of conditions which would be applied together with an <code>AND</code> condition.</p>",
         "TagFilter$andConditions": "<p>A list of conditions which would be applied together with an <code>AND</code> condition.</p>"
+      }
+    },
+    "Annotation": {
+      "base": "<p>An annotation that provides additional context or metadata.</p>",
+      "refs": {
+        "ToolConfiguration$annotations": "<p>Annotations for the tool configuration.</p>"
       }
     },
     "AnswerRecommendationAIAgentConfiguration": {
@@ -437,6 +468,8 @@
         "SessionData$sessionArn": "<p>The Amazon Resource Name (ARN) of the session.</p>",
         "SessionSummary$sessionArn": "<p>The Amazon Resource Name (ARN) of the session.</p>",
         "SessionSummary$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
+        "SpanCitation$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base containing the cited content.</p>",
+        "SuggestedMessageReference$aiAgentArn": "<p>The Amazon Resource Name (ARN) of the AI Agent that generated the suggested message.</p>",
         "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "UpdateSessionDataResponse$sessionArn": "<p>The Amazon Resource Name (ARN) of the session.</p>"
@@ -451,7 +484,9 @@
         "MessageTemplateData$messageTemplateArn": "<p>The Amazon Resource Name (ARN) of the message template.</p>",
         "MessageTemplateSearchResultData$messageTemplateArn": "<p>The Amazon Resource Name (ARN) of the message template.</p>",
         "MessageTemplateSummary$messageTemplateArn": "<p>The Amazon Resource Name (ARN) of the message template.</p>",
-        "MessageTemplateVersionSummary$messageTemplateArn": "<p>The Amazon Resource Name (ARN) of the message template.</p>"
+        "MessageTemplateVersionSummary$messageTemplateArn": "<p>The Amazon Resource Name (ARN) of the message template.</p>",
+        "SpanAttributes$aiAgentArn": "<p>AI agent ARN</p>",
+        "SpanAttributes$promptArn": "<p>AI prompt ARN</p>"
       }
     },
     "AssistantAssociationData": {
@@ -459,6 +494,12 @@
       "refs": {
         "CreateAssistantAssociationResponse$assistantAssociation": "<p>The assistant association.</p>",
         "GetAssistantAssociationResponse$assistantAssociation": "<p>The assistant association.</p>"
+      }
+    },
+    "AssistantAssociationIdList": {
+      "base": null,
+      "refs": {
+        "KnowledgeSource$assistantAssociationIds": "<p>The list of assistant association identifiers for the knowledge source.</p>"
       }
     },
     "AssistantAssociationInputData": {
@@ -584,6 +625,12 @@
         "ParsingConfiguration$bedrockFoundationModelConfiguration": "<p>Settings for a foundation model used to parse documents for a data source.</p>"
       }
     },
+    "BedrockKnowledgeBaseArn": {
+      "base": null,
+      "refs": {
+        "ExternalBedrockKnowledgeBaseConfig$bedrockKnowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the external Bedrock knowledge base.</p>"
+      }
+    },
     "BedrockModelArnForParsing": {
       "base": null,
       "refs": {
@@ -593,9 +640,14 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "AIGuardrailAssessment$blocked": "<p>Indicates whether the AI Guardrail blocked the content.</p>",
+        "Annotation$destructiveHint": "<p>A hint indicating that the annotation contains potentially destructive content.</p>",
         "CreateQuickResponseRequest$isActive": "<p>Whether the quick response is active.</p>",
+        "CreateSessionRequest$removeOrchestratorConfigurationList": "<p>The list of orchestrator configurations to remove from the session.</p>",
         "ExtendedMessageTemplateData$isActive": "<p>Whether the version of the message template is activated.</p>",
+        "GetNextMessageResponse$chunkedResponseTerminated": "<p>Indicates whether the chunked response has been terminated.</p>",
         "MessageConfiguration$generateFillerMessage": "<p>Generates a filler response when tool selection is <code>QUESTION</code>.</p>",
+        "MessageConfiguration$generateChunkedMessage": "<p>Configuration for generating chunked messages.</p>",
         "MessageTemplateFilterField$includeNoExistence": "<p>Whether to treat null value as a match for the attribute field.</p>",
         "MessageTemplateQueryField$allowFuzziness": "<p>Whether the query expects only exact matches on the attribute field values. The results of the query will only include exact matches if this parameter is set to false.</p>",
         "MessageTemplateSearchResultData$isActive": "<p>Whether the version of the message template is activated.</p>",
@@ -609,7 +661,33 @@
         "UpdateQuickResponseRequest$removeGroupingConfiguration": "<p>Whether to remove the grouping configuration of the quick response.</p>",
         "UpdateQuickResponseRequest$removeDescription": "<p>Whether to remove the description from the quick response.</p>",
         "UpdateQuickResponseRequest$removeShortcutKey": "<p>Whether to remove the shortcut key of the quick response.</p>",
-        "UpdateQuickResponseRequest$isActive": "<p>Whether the quick response is active. </p>"
+        "UpdateQuickResponseRequest$isActive": "<p>Whether the quick response is active. </p>",
+        "UpdateSessionRequest$removeOrchestratorConfigurationList": "<p>The list of orchestrator configurations to remove from the session.</p>",
+        "UserInteractionConfiguration$isUserConfirmationRequired": "<p>Indicates whether user confirmation is required for the interaction.</p>"
+      }
+    },
+    "CaseArn": {
+      "base": null,
+      "refs": {
+        "CaseSummarizationInputData$caseArn": "<p>The Amazon Resource Name (ARN) of the case for summarization.</p>"
+      }
+    },
+    "CaseSummarizationAIAgentConfiguration": {
+      "base": "<p>The configuration for AI Agents of type <code>CASE_SUMMARIZATION</code>.</p>",
+      "refs": {
+        "AIAgentConfiguration$caseSummarizationAIAgentConfiguration": "<p>The configuration for AI Agents of type <code>CASE_SUMMARIZATION</code>.</p>"
+      }
+    },
+    "CaseSummarizationChunkDataDetails": {
+      "base": "<p>Details about case summarization chunk data.</p>",
+      "refs": {
+        "DataDetails$caseSummarizationChunkData": "<p>Details about case summarization chunk data.</p>"
+      }
+    },
+    "CaseSummarizationInputData": {
+      "base": "<p>Input data for case summarization.</p>",
+      "refs": {
+        "QueryInputData$caseSummarizationInputData": "<p>Input data for case summarization queries.</p>"
       }
     },
     "Channel": {
@@ -656,9 +734,16 @@
         "ChunkingConfiguration$chunkingStrategy": "<p>Knowledge base can split your source data into chunks. A chunk refers to an excerpt from a data source that is returned when the knowledge base that it belongs to is queried. You have the following options for chunking your data. If you opt for <code>NONE</code>, then you may want to pre-process your files by splitting them up such that each file corresponds to a chunk.</p>"
       }
     },
+    "Citation": {
+      "base": "<p>A citation that references source content.</p>",
+      "refs": {
+        "Citations$member": null
+      }
+    },
     "CitationSpan": {
       "base": "<p>Contains information about where the text with a citation begins and ends in the generated output.</p>",
       "refs": {
+        "Citation$citationSpan": null,
         "SourceContentDataDetails$citationSpan": "<p>Contains information about where the text with a citation begins and ends in the generated output.</p>"
       }
     },
@@ -667,6 +752,12 @@
       "refs": {
         "CitationSpan$beginOffsetInclusive": "<p>Where the text with a citation starts in the generated output.</p>",
         "CitationSpan$endOffsetExclusive": "<p>Where the text with a citation ends in the generated output.</p>"
+      }
+    },
+    "Citations": {
+      "base": null,
+      "refs": {
+        "TextMessage$citations": "<p>The citations associated with the text message.</p>"
       }
     },
     "ClientToken": {
@@ -1174,7 +1265,7 @@
       "refs": {}
     },
     "DependencyFailedException": {
-      "base": "<p>An error occurred while calling a dependency. For example, calling <code>connect:DecribeContact</code> as part of <code>CreateSession</code> with a contactArn.</p>",
+      "base": "<p>The request failed because it depends on another request that failed.</p>",
       "refs": {}
     },
     "Description": {
@@ -1300,6 +1391,13 @@
         "GetMessageTemplateResponse$messageTemplate": "<p>The message template.</p>"
       }
     },
+    "ExternalBedrockKnowledgeBaseConfig": {
+      "base": "<p>Configuration for an external Bedrock knowledge base.</p>",
+      "refs": {
+        "AssistantAssociationInputData$externalBedrockKnowledgeBaseConfig": "<p>The configuration for an external Bedrock knowledge base association.</p>",
+        "AssistantAssociationOutputData$externalBedrockKnowledgeBaseConfig": "<p>The configuration for an external Bedrock knowledge base association in the output data.</p>"
+      }
+    },
     "ExternalSource": {
       "base": null,
       "refs": {
@@ -1324,6 +1422,28 @@
       "base": "<p>A search filter.</p>",
       "refs": {
         "FilterList$member": null
+      }
+    },
+    "FilterAttribute": {
+      "base": "<p>An attribute used for filtering.</p>",
+      "refs": {
+        "RetrievalFilterConfiguration$equals": "<p>Filter configuration for exact equality matching.</p>",
+        "RetrievalFilterConfiguration$greaterThan": "<p>Filter configuration for greater than comparison.</p>",
+        "RetrievalFilterConfiguration$greaterThanOrEquals": "<p>Filter configuration for greater than or equal comparison.</p>",
+        "RetrievalFilterConfiguration$in": "<p>Filter configuration for membership in a set of values.</p>",
+        "RetrievalFilterConfiguration$lessThan": "<p>Filter configuration for less than comparison.</p>",
+        "RetrievalFilterConfiguration$lessThanOrEquals": "<p>Filter configuration for less than or equal comparison.</p>",
+        "RetrievalFilterConfiguration$listContains": "<p>Filter configuration for checking if a list contains a value.</p>",
+        "RetrievalFilterConfiguration$notEquals": "<p>Filter configuration for inequality matching.</p>",
+        "RetrievalFilterConfiguration$notIn": "<p>Filter configuration for exclusion from a set of values.</p>",
+        "RetrievalFilterConfiguration$startsWith": "<p>Filter configuration for prefix matching.</p>",
+        "RetrievalFilterConfiguration$stringContains": "<p>Filter configuration for substring matching.</p>"
+      }
+    },
+    "FilterAttributeKey": {
+      "base": null,
+      "refs": {
+        "FilterAttribute$key": "<p>The key of the filter attribute.</p>"
       }
     },
     "FilterField": {
@@ -1397,10 +1517,12 @@
         "MessageTemplateData$lastModifiedBy": "<p>The Amazon Resource Name (ARN) of the user who last updated the message template data.</p>",
         "MessageTemplateSearchResultData$lastModifiedBy": "<p>The Amazon Resource Name (ARN) of the user who last updated the message template data.</p>",
         "MessageTemplateSummary$lastModifiedBy": "<p>The Amazon Resource Name (ARN) of the user who last updated the message template data.</p>",
+        "OrchestrationAIAgentConfiguration$connectInstanceArn": "<p>The Amazon Resource Name (ARN) of the Amazon Connect instance used by the Orchestration AI Agent.</p>",
         "QuickResponseData$lastModifiedBy": "<p>The Amazon Resource Name (ARN) of the user who last updated the quick response data.</p>",
         "QuickResponseSearchResultData$lastModifiedBy": "<p>The Amazon Resource Name (ARN) of the user who last updated the quick response search result data.</p>",
         "QuickResponseSummary$lastModifiedBy": "<p>The Amazon Resource Name (ARN) of the user who last updated the quick response data.</p>",
-        "SessionIntegrationConfiguration$topicIntegrationArn": "<p>The Amazon Resource Name (ARN) of the integrated Amazon SNS topic used for streaming chat messages.</p>"
+        "SessionIntegrationConfiguration$topicIntegrationArn": "<p>The Amazon Resource Name (ARN) of the integrated Amazon SNS topic used for streaming chat messages.</p>",
+        "SpanAttributes$instanceArn": "<p>Amazon Connect instance ARN</p>"
       }
     },
     "GetAIAgentRequest": {
@@ -1829,7 +1951,16 @@
     "Integer": {
       "base": null,
       "refs": {
-        "SelfServiceConversationHistory$turnNumber": "<p>The number of turn of the conversation history data.</p>"
+        "RetrievalConfiguration$numberOfResults": "<p>The number of results to retrieve.</p>",
+        "SelfServiceConversationHistory$turnNumber": "<p>The number of turn of the conversation history data.</p>",
+        "SpanAttributes$aiAgentVersion": "<p>AI agent version number</p>",
+        "SpanAttributes$requestMaxTokens": "<p>Maximum tokens configured for generation</p>",
+        "SpanAttributes$usageInputTokens": "<p>Number of input tokens in prompt</p>",
+        "SpanAttributes$usageOutputTokens": "<p>Number of output tokens in response</p>",
+        "SpanAttributes$usageTotalTokens": "<p>Total tokens consumed (input + output)</p>",
+        "SpanAttributes$cacheReadInputTokens": "<p>Number of input tokens that were retrieved from cache</p>",
+        "SpanAttributes$cacheWriteInputTokens": "<p>Number of input tokens that were written to cache in this request</p>",
+        "SpanAttributes$promptVersion": "<p>AI prompt version number</p>"
       }
     },
     "IntentDetectedDataDetails": {
@@ -1842,6 +1973,17 @@
       "base": "<p>Information about the Amazon Q intent.</p>",
       "refs": {
         "QueryInputData$intentInputData": "<p>Input information for the intent.</p>"
+      }
+    },
+    "JSONDocument": {
+      "base": null,
+      "refs": {
+        "FilterAttribute$value": "<p>The value of the filter attribute.</p>",
+        "SpanToolUseValue$arguments": "<p>The tool input arguments</p>",
+        "ToolConfiguration$inputSchema": "<p>The input schema for the tool configuration.</p>",
+        "ToolConfiguration$outputSchema": "<p>The output schema for the tool configuration.</p>",
+        "ToolUseResultData$toolResult": "<p>The result of the tool usage.</p>",
+        "ToolUseResultData$inputSchema": "<p>The input schema for the tool use result.</p>"
       }
     },
     "KnowledgeBaseAssociationConfigurationData": {
@@ -1874,7 +2016,8 @@
       "base": null,
       "refs": {
         "KnowledgeBaseAssociationConfigurationData$overrideKnowledgeBaseSearchType": "<p>The search type to be used against the Knowledge Base for this request. The values can be <code>SEMANTIC</code> which uses vector embeddings or <code>HYBRID</code> which use vector embeddings and raw text</p>",
-        "QueryAssistantRequest$overrideKnowledgeBaseSearchType": "<p>The search type to be used against the Knowledge Base for this request. The values can be <code>SEMANTIC</code> which uses vector embeddings or <code>HYBRID</code> which use vector embeddings and raw text.</p>"
+        "QueryAssistantRequest$overrideKnowledgeBaseSearchType": "<p>The search type to be used against the Knowledge Base for this request. The values can be <code>SEMANTIC</code> which uses vector embeddings or <code>HYBRID</code> which use vector embeddings and raw text.</p>",
+        "RetrievalConfiguration$overrideKnowledgeBaseSearchType": "<p>Override setting for the knowledge base search type during retrieval.</p>"
       }
     },
     "KnowledgeBaseStatus": {
@@ -1896,6 +2039,12 @@
         "CreateKnowledgeBaseRequest$knowledgeBaseType": "<p>The type of knowledge base. Only CUSTOM knowledge bases allow you to upload your own content. EXTERNAL knowledge bases support integrations with third-party systems whose content is synchronized automatically. </p>",
         "KnowledgeBaseData$knowledgeBaseType": "<p>The type of knowledge base.</p>",
         "KnowledgeBaseSummary$knowledgeBaseType": "<p>The type of knowledge base.</p>"
+      }
+    },
+    "KnowledgeSource": {
+      "base": "<p>A knowledge source that provides content for recommendations.</p>",
+      "refs": {
+        "RetrievalConfiguration$knowledgeSource": "<p>The knowledge source configuration for content retrieval.</p>"
       }
     },
     "LanguageCode": {
@@ -2040,6 +2189,14 @@
       "base": null,
       "refs": {}
     },
+    "ListSpansRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSpansResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsForResourceRequest": {
       "base": null,
       "refs": {}
@@ -2087,11 +2244,18 @@
         "ListMessageTemplatesRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "ListMessagesRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "ListQuickResponsesRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
+        "ListSpansRequest$maxResults": "<p>Maximum number of spans to return per page</p>",
         "QueryAssistantRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchContentRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchMessageTemplatesRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchQuickResponsesRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchSessionsRequest$maxResults": "<p>The maximum number of results to return per page.</p>"
+      }
+    },
+    "MaxTokensToSample": {
+      "base": null,
+      "refs": {
+        "TextAIPromptInferenceConfiguration$maxTokensToSample": "<p>The maximum number of tokens to generate in the response.</p>"
       }
     },
     "MessageConfiguration": {
@@ -2108,6 +2272,12 @@
         "MessageOutput$value": "<p>The value of a message data.</p>"
       }
     },
+    "MessageFilterType": {
+      "base": null,
+      "refs": {
+        "ListMessagesRequest$filter": "<p>The filter criteria for listing messages.</p>"
+      }
+    },
     "MessageInput": {
       "base": "<p>The message input.</p>",
       "refs": {
@@ -2118,6 +2288,12 @@
       "base": null,
       "refs": {
         "ListMessagesResponse$messages": "<p>The message information.</p>"
+      }
+    },
+    "MessageMetadata": {
+      "base": null,
+      "refs": {
+        "SendMessageRequest$metadata": "<p>Additional metadata for the message.</p>"
       }
     },
     "MessageOutput": {
@@ -2447,12 +2623,17 @@
         "MessageTemplateSummary$name": "<p>The name of the message template.</p>",
         "MessageTemplateVersionSummary$name": "<p>The name of the message template.</p>",
         "SessionData$name": "<p>The name of the session.</p>",
+        "Span$spanName": "<p>Service-defined operation name</p>",
+        "SpanAttributes$aiAgentName": "<p>AI agent name</p>",
+        "SpanAttributes$promptName": "<p>AI prompt name</p>",
+        "SpanToolUseValue$name": "<p>The tool name</p>",
         "UpdateMessageTemplateMetadataRequest$name": "<p>The name of the message template.</p>"
       }
     },
     "NextToken": {
       "base": null,
       "refs": {
+        "CaseSummarizationChunkDataDetails$nextChunkToken": "<p>Token for retrieving the next chunk of streaming summarization data, if available.</p>",
         "EmailGenerativeAnswerChunkDataDetails$nextChunkToken": "<p>Token for retrieving the next chunk of streaming response data, if available.</p>",
         "EmailOverviewChunkDataDetails$nextChunkToken": "<p>Token for retrieving the next chunk of streaming overview data, if available.</p>",
         "EmailResponseChunkDataDetails$nextChunkToken": "<p>Token for retrieving the next chunk of streaming response data, if available.</p>",
@@ -2486,6 +2667,9 @@
         "ListMessageTemplatesResponse$nextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListMessagesRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListMessagesResponse$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListSpansRequest$nextToken": "<p>Pagination token for retrieving the next page of results</p>",
+        "ListSpansResponse$nextToken": "<p>Pagination token for retrieving additional results</p>",
+        "NotesChunkDataDetails$nextChunkToken": "<p>The token for the next chunk of notes data.</p>",
         "QueryAssistantRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "QueryAssistantResponse$nextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "SearchContentRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -2503,14 +2687,23 @@
         "EmailGenerativeAnswerChunkDataDetails$completion": "<p>The partial or complete text content of the generative answer response.</p>",
         "EmailOverviewChunkDataDetails$completion": "<p>The partial or complete overview text content in structured HTML format with customer issues, resolutions, and next steps.</p>",
         "EmailResponseChunkDataDetails$completion": "<p>The partial or complete professional email response text with appropriate greetings and closings.</p>",
+        "NotesChunkDataDetails$completion": "<p>A chunk of the notes completion.</p>",
+        "NotesDataDetails$completion": "<p>The completion data for notes.</p>",
+        "RetrieveRequest$retrievalQuery": "<p>The query for content retrieval.</p>",
         "RuntimeSessionData$key": "<p>The key of the data stored on the session.</p>",
-        "RuntimeSessionDataValue$stringValue": "<p>The string value of the data stored on the session.</p>"
+        "RuntimeSessionDataValue$stringValue": "<p>The string value of the data stored on the session.</p>",
+        "SpanTextValue$value": "<p>String content of the message text</p>",
+        "SuggestedMessageDataDetails$messageText": "<p>The text content of the suggested message.</p>",
+        "SuggestedMessagesList$member": null,
+        "ToolOverrideConstantInputValue$value": "<p>The constant input override value.</p>"
       }
     },
     "NonEmptyString": {
       "base": null,
       "refs": {
         "AnswerRecommendationAIAgentConfiguration$locale": "<p>The locale to which specifies the language and region settings that determine the response language for <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_amazon-q-connect_QueryAssistant.html\">QueryAssistant</a>.</p> <note> <p>For more information on supported locales, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/supported-languages.html#qic-notes-languages\">Language support for Amazon Q in Connect</a>.</p> </note>",
+        "CaseSummarizationAIAgentConfiguration$locale": "<p>The locale setting for the Case Summarization AI Agent.</p>",
+        "CaseSummarizationChunkDataDetails$completion": "<p>A chunk of the case summarization completion.</p>",
         "ConnectConfiguration$instanceId": "<p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.</p>",
         "ContentData$revisionId": "<p>The identifier of the content revision.</p>",
         "ContentMetadata$key": null,
@@ -2533,18 +2726,44 @@
         "ListQuickResponsesRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListQuickResponsesResponse$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ManualSearchAIAgentConfiguration$locale": "<p>The locale to which specifies the language and region settings that determine the response language for <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_amazon-q-connect_QueryAssistant.html\">QueryAssistant</a>.</p> <note> <p>For more information on supported locales, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/supported-languages.html#qic-notes-languages\">Language support for Amazon Q in Connect</a>.</p> </note>",
+        "MessageMetadata$key": null,
+        "MessageMetadata$value": null,
         "MessageTemplateFilterField$name": "<p>The name of the attribute field to filter the message templates by.</p>",
         "MessageTemplateOrderField$name": "<p>The name of the message template.</p>",
         "MessageTemplateQueryField$name": "<p>The name of the attribute to query the message templates by.</p>",
+        "NoteTakingAIAgentConfiguration$locale": "<p>The locale setting for language-specific case summarization generation (for example, en_US, es_ES).</p>",
         "ObjectFieldsList$member": null,
+        "OrchestrationAIAgentConfiguration$locale": "<p>The locale setting for the Orchestration AI Agent.</p>",
+        "OrchestratorConfigurationEntry$orchestratorUseCase": "<p>The use case for the orchestrator configuration. (for example Connect.SelfService, Connect.AgentAssistance)</p>",
         "QueryConditionItem$value": "<p>The value for the query condition to query on.</p>",
         "QuickResponseFilterField$name": "<p>The name of the attribute field to filter the quick responses by.</p>",
         "QuickResponseOrderField$name": "<p>The name of the attribute to order the quick response query results by.</p>",
         "QuickResponseQueryField$name": "<p>The name of the attribute to query the quick responses by.</p>",
+        "RemoveAssistantAIAgentRequest$orchestratorUseCase": "<p>The orchestrator use case for the AI Agent being removed.</p>",
         "SearchQuickResponsesRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "SearchQuickResponsesResponse$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "SendMessageRequest$orchestratorUseCase": "<p>The orchestrator use case for message processing.</p>",
         "ServerSideEncryptionConfiguration$kmsKeyId": "<p>The customer managed key used for encryption. For more information about setting up a customer managed key for Amazon Q in Connect, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/enable-q.html\">Enable Amazon Q in Connect for your instance</a>. For information about valid ID values, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id\">Key identifiers (KeyId)</a>.</p>",
+        "SpanAttributes$operationName": "<p>Action being performed</p>",
+        "SpanAttributes$providerName": "<p>Model provider identifier (e.g., aws.bedrock)</p>",
+        "SpanAttributes$errorType": "<p>Error classification if span failed (e.g., throttle, timeout)</p>",
+        "SpanAttributes$sessionName": "<p>Session name</p>",
+        "SpanAttributes$aiAgentInvoker": "<p>Entity that invoked the AI agent</p>",
+        "SpanAttributes$aiAgentOrchestratorUseCase": "<p>AI agent orchestrator use case</p>",
+        "SpanAttributes$requestModel": "<p>LLM model ID for request (e.g., anthropic.claude-3-sonnet)</p>",
+        "SpanAttributes$responseModel": "<p>Actual model used for response (usually matches requestModel)</p>",
+        "SpanFinishReasonList$member": null,
+        "SpanToolResultValue$error": "<p>The tool invocation error if failed</p>",
         "StartImportJobRequest$clientToken": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "ToolConfiguration$toolName": "<p>The name of the tool.</p>",
+        "ToolConfiguration$title": "<p>The title of the tool configuration.</p>",
+        "ToolConfiguration$toolId": "<p>The identifier of the tool, for example toolName from Model Context Provider server.</p>",
+        "ToolOutputConfiguration$outputVariableNameOverride": "<p>Override the tool output results to different variable name.</p>",
+        "ToolOutputConfiguration$sessionDataNamespace": "<p>The session data namespace for tool output.</p>",
+        "ToolOutputFilter$jsonPath": "<p>The JSON path for filtering tool output.</p>",
+        "ToolOverrideInputValue$jsonPath": "<p>The JSON path for the input value override.</p>",
+        "ToolUseResultData$toolUseId": "<p>The identifier of the tool use instance.</p>",
+        "ToolUseResultData$toolName": "<p>The name of the tool that was used.</p>",
         "UpdateContentRequest$revisionId": "<p>The <code>revisionId</code> of the content resource to update, taken from an earlier call to <code>GetContent</code>, <code>GetContentSummary</code>, <code>SearchContent</code>, or <code>ListContents</code>. If included, this argument acts as an optimistic lock to ensure content was not modified since it was last read. If it has been modified, this API throws a <code>PreconditionFailedException</code>.</p>"
       }
     },
@@ -2577,6 +2796,24 @@
         "PushFCMMessageTemplateContent$imageIconUrl": "<p>The URL of the large icon image to display in the content view of a push notification that's based on the message template.</p>",
         "PushFCMMessageTemplateContent$smallImageIconUrl": "<p>The URL of the small icon image to display in the status bar and the content view of a push notification that's based on the message template.</p>",
         "WhatsAppMessageTemplateSourceConfigurationSummary$statusReason": "<p>The status reason of the message template.</p>"
+      }
+    },
+    "NoteTakingAIAgentConfiguration": {
+      "base": "<p>The configuration for AI Agents of type <code>NOTE_TAKING</code>.</p>",
+      "refs": {
+        "AIAgentConfiguration$noteTakingAIAgentConfiguration": "<p>The configuration for AI Agents of type <code>NOTE_TAKING</code>.</p>"
+      }
+    },
+    "NotesChunkDataDetails": {
+      "base": "<p>Details about notes chunk data.</p>",
+      "refs": {
+        "DataDetails$notesChunkData": "<p>Details about notes chunk data.</p>"
+      }
+    },
+    "NotesDataDetails": {
+      "base": "<p>Details about notes data.</p>",
+      "refs": {
+        "DataDetails$notesData": "<p>Details about notes data.</p>"
       }
     },
     "NotifyRecommendationsReceivedError": {
@@ -2621,6 +2858,29 @@
       "base": null,
       "refs": {
         "TagFilter$orConditions": "<p>A list of conditions which would be applied together with an <code>OR</code> condition.</p>"
+      }
+    },
+    "OrchestrationAIAgentConfiguration": {
+      "base": "<p>The configuration for AI Agents of type <code>ORCHESTRATION</code>.</p>",
+      "refs": {
+        "AIAgentConfiguration$orchestrationAIAgentConfiguration": "<p>The configuration for AI Agents of type <code>ORCHESTRATION</code>.</p>"
+      }
+    },
+    "OrchestratorConfigurationEntry": {
+      "base": "<p>An entry in the orchestrator configuration list.</p>",
+      "refs": {
+        "OrchestratorConfigurationList$member": null
+      }
+    },
+    "OrchestratorConfigurationList": {
+      "base": null,
+      "refs": {
+        "AssistantData$orchestratorConfigurationList": "<p>The list of orchestrator configurations for the assistant.</p>",
+        "AssistantSummary$orchestratorConfigurationList": "<p>The list of orchestrator configurations for the assistant.</p>",
+        "CreateSessionRequest$orchestratorConfigurationList": "<p>The list of orchestrator configurations for the session being created.</p>",
+        "SessionData$orchestratorConfigurationList": "<p>The list of orchestrator configurations for the session.</p>",
+        "UpdateAssistantAIAgentRequest$orchestratorConfigurationList": "<p>The updated list of orchestrator configurations for the assistant AI Agent.</p>",
+        "UpdateSessionRequest$orchestratorConfigurationList": "<p>The updated list of orchestrator configurations for the session.</p>"
       }
     },
     "Order": {
@@ -2671,7 +2931,8 @@
     "Participant": {
       "base": null,
       "refs": {
-        "MessageOutput$participant": "<p>The participant of a message.</p>"
+        "MessageOutput$participant": "<p>The participant of a message.</p>",
+        "SpanMessage$participant": "<p>Message source role</p>"
       }
     },
     "PreconditionFailedException": {
@@ -2683,6 +2944,13 @@
       "refs": {
         "MessageTemplateQueryField$priority": "<p>The importance of the attribute field when calculating query result relevancy scores. The value set for this parameter affects the ordering of search results.</p>",
         "QuickResponseQueryField$priority": "<p>The importance of the attribute field when calculating query result relevancy scores. The value set for this parameter affects the ordering of search results.</p>"
+      }
+    },
+    "Probability": {
+      "base": null,
+      "refs": {
+        "TextAIPromptInferenceConfiguration$temperature": "<p>The temperature setting for controlling randomness in the generated response.</p>",
+        "TextAIPromptInferenceConfiguration$topP": "<p>The top-P sampling parameter for nucleus sampling.</p>"
       }
     },
     "PushADMMessageTemplateContent": {
@@ -3047,13 +3315,16 @@
     "RecommendationType": {
       "base": null,
       "refs": {
+        "GetRecommendationsRequest$recommendationType": "<p>The type of recommendation being requested.</p>",
         "RecommendationData$type": "<p>The type of recommendation.</p>"
       }
     },
     "ReferenceType": {
       "base": null,
       "refs": {
-        "ContentReference$referenceType": "<p>The type of reference content.</p>"
+        "Citation$referenceType": "<p>A type to define the KB origin of a cited content</p>",
+        "ContentReference$referenceType": "<p>The type of reference content.</p>",
+        "RetrieveResult$referenceType": "<p>A type to define the KB origin of a retrieved content.</p>"
       }
     },
     "Relevance": {
@@ -3065,6 +3336,7 @@
     "RelevanceLevel": {
       "base": null,
       "refs": {
+        "IntentDetectedDataDetails$relevanceLevel": "<p>The relevance level of the detected intent.</p>",
         "RankingData$relevanceLevel": "<p>The relevance score of the content.</p>",
         "RecommendationData$relevanceLevel": "<p>The relevance level of the recommendation.</p>"
       }
@@ -3121,6 +3393,46 @@
       "base": "<p>Information about the result.</p>",
       "refs": {
         "QueryResultsList$member": null
+      }
+    },
+    "RetrievalConfiguration": {
+      "base": "<p>Configuration for content retrieval operations.</p>",
+      "refs": {
+        "RetrieveRequest$retrievalConfiguration": "<p>The configuration for the content retrieval operation.</p>"
+      }
+    },
+    "RetrievalFilterConfiguration": {
+      "base": "<p>Configuration for filtering content during retrieval operations.</p>",
+      "refs": {
+        "RetrievalConfiguration$filter": "<p>The filter configuration for content retrieval.</p>",
+        "RetrievalFilterList$member": null
+      }
+    },
+    "RetrievalFilterList": {
+      "base": null,
+      "refs": {
+        "RetrievalFilterConfiguration$andAll": "<p>Filter configuration that requires all conditions to be met.</p>",
+        "RetrievalFilterConfiguration$orAll": "<p>Filter configuration where any condition can be met.</p>"
+      }
+    },
+    "RetrieveRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RetrieveResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "RetrieveResult": {
+      "base": "<p>A single result from a content retrieval operation.</p>",
+      "refs": {
+        "RetrieveResultList$member": null
+      }
+    },
+    "RetrieveResultList": {
+      "base": null,
+      "refs": {
+        "RetrieveResponse$results": "<p>The results of the content retrieval operation.</p>"
       }
     },
     "RuntimeSessionData": {
@@ -3259,12 +3571,17 @@
     "SensitiveString": {
       "base": null,
       "refs": {
+        "Citation$title": "<p>The title of the cited content.</p>",
+        "Citation$sourceURL": "<p>The source URL for the citation.</p>",
         "DocumentText$text": "<p>Text in the document.</p>",
         "GenerativeChunkDataDetails$completion": "<p>A chunk of the LLM response.</p>",
         "GenerativeDataDetails$completion": "<p>The LLM response.</p>",
         "IntentDetectedDataDetails$intent": "<p>The detected intent.</p>",
+        "RetrieveResult$sourceId": "<p>The URL, URI, or ID of the retrieved content when available, or a UUID when unavailable.</p>",
+        "RetrieveResult$contentText": "<p>The text content of the retrieved result.</p>",
         "SelfServiceConversationHistory$inputTranscript": "<p>The input transcript of the conversation history data.</p>",
-        "SelfServiceConversationHistory$botResponse": "<p>The bot response of the conversation history data.</p>"
+        "SelfServiceConversationHistory$botResponse": "<p>The bot response of the conversation history data.</p>",
+        "SpanCitation$title": "<p>The title of the content being cited in the span.</p>"
       }
     },
     "ServerSideEncryptionConfiguration": {
@@ -3344,6 +3661,111 @@
         "SourceContentDataDetails$type": "<p>The type of the source content.</p>"
       }
     },
+    "Span": {
+      "base": "<p>A span represents a unit of work during AI agent execution, capturing timing, status, and contextual attributes.</p>",
+      "refs": {
+        "SpanList$member": null
+      }
+    },
+    "SpanAttributes": {
+      "base": "<p>Contextual attributes capturing operation details, LLM configuration, usage metrics, and conversation data</p>",
+      "refs": {
+        "Span$attributes": "<p>Span-specific contextual attributes</p>"
+      }
+    },
+    "SpanAttributesTemperatureFloat": {
+      "base": null,
+      "refs": {
+        "SpanAttributes$temperature": "<p>Sampling temperature for generation</p>"
+      }
+    },
+    "SpanAttributesTopPFloat": {
+      "base": null,
+      "refs": {
+        "SpanAttributes$topP": "<p>Top-p sampling parameter for generation</p>"
+      }
+    },
+    "SpanCitation": {
+      "base": "<p>A citation that spans a specific range of text.</p>",
+      "refs": {
+        "SpanCitationList$member": null
+      }
+    },
+    "SpanCitationList": {
+      "base": null,
+      "refs": {
+        "SpanTextValue$citations": "<p>The citations associated with the span text.</p>"
+      }
+    },
+    "SpanFinishReasonList": {
+      "base": null,
+      "refs": {
+        "SpanAttributes$responseFinishReasons": "<p>Generation termination reasons (e.g., stop, max_tokens)</p>"
+      }
+    },
+    "SpanList": {
+      "base": null,
+      "refs": {
+        "ListSpansResponse$spans": "<p>Array of span objects for the session</p>"
+      }
+    },
+    "SpanMessage": {
+      "base": "<p>A message in the conversation history with participant role and content values</p>",
+      "refs": {
+        "SpanMessageList$member": null
+      }
+    },
+    "SpanMessageList": {
+      "base": null,
+      "refs": {
+        "SpanAttributes$inputMessages": "<p>Input message collection sent to LLM</p>",
+        "SpanAttributes$outputMessages": "<p>Output message collection received from LLM</p>"
+      }
+    },
+    "SpanMessageValue": {
+      "base": "<p>Message content value - can be text, tool invocation, or tool result</p>",
+      "refs": {
+        "SpanMessageValueList$member": null
+      }
+    },
+    "SpanMessageValueList": {
+      "base": null,
+      "refs": {
+        "SpanAttributes$systemInstructions": "<p>System prompt instructions</p>",
+        "SpanMessage$values": "<p>Message content values (text, tool use, tool result)</p>",
+        "SpanToolResultValue$values": "<p>The tool results</p>"
+      }
+    },
+    "SpanStatus": {
+      "base": null,
+      "refs": {
+        "Span$status": "<p>Span completion status</p>"
+      }
+    },
+    "SpanTextValue": {
+      "base": "<p>Text message content</p>",
+      "refs": {
+        "SpanMessageValue$text": "<p>Text message content</p>"
+      }
+    },
+    "SpanToolResultValue": {
+      "base": "<p>Tool result message content</p>",
+      "refs": {
+        "SpanMessageValue$toolResult": "<p>Tool result message content</p>"
+      }
+    },
+    "SpanToolUseValue": {
+      "base": "<p>Tool invocation message content</p>",
+      "refs": {
+        "SpanMessageValue$toolUse": "<p>Tool invocation message content</p>"
+      }
+    },
+    "SpanType": {
+      "base": null,
+      "refs": {
+        "Span$spanType": "<p>Operation relationship type</p>"
+      }
+    },
     "StartContentUploadRequest": {
       "base": null,
       "refs": {}
@@ -3375,6 +3797,7 @@
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
+        "Annotation$title": "<p>The title of the annotation.</p>",
         "ConflictException$message": null,
         "ContentReference$sourceURL": "<p>The web URL of the source content.</p>",
         "DependencyFailedException$message": null,
@@ -3386,8 +3809,30 @@
         "ThrottlingException$message": null,
         "TooManyTagsException$message": null,
         "TooManyTagsException$resourceName": "<p>The specified resource name.</p>",
+        "ToolConfiguration$description": "<p>The description of the tool configuration.</p>",
+        "ToolExampleList$member": null,
+        "ToolInstruction$instruction": "<p>The instruction text for the tool.</p>",
         "UnauthorizedException$message": null,
+        "UnprocessableContentException$message": null,
         "ValidationException$message": null
+      }
+    },
+    "SuggestedMessageDataDetails": {
+      "base": "<p>Details about suggested message data.</p>",
+      "refs": {
+        "DataDetails$suggestedMessageData": "<p>Details about suggested message data.</p>"
+      }
+    },
+    "SuggestedMessageReference": {
+      "base": "<p>Reference information for a suggested message.</p>",
+      "refs": {
+        "DataReference$suggestedMessageReference": "<p>Reference information for suggested messages.</p>"
+      }
+    },
+    "SuggestedMessagesList": {
+      "base": null,
+      "refs": {
+        "AnswerRecommendationAIAgentConfiguration$suggestedMessages": "<p>The suggested messages configuration for the Answer Recommendation AI Agent.</p>"
       }
     },
     "SyncStatus": {
@@ -3544,6 +3989,12 @@
         "TextFullAIPromptEditTemplateConfiguration$text": "<p>The YAML text for the AI Prompt template.</p>"
       }
     },
+    "TextAIPromptInferenceConfiguration": {
+      "base": "<p>Inference configuration for text-based AI Prompts.</p>",
+      "refs": {
+        "AIPromptInferenceConfiguration$textAIPromptInferenceConfiguration": "<p>The inference configuration for text-based AI Prompts.</p>"
+      }
+    },
     "TextData": {
       "base": "<p>Details about the source content text data.</p>",
       "refs": {
@@ -3591,15 +4042,113 @@
         "CreateAIAgentVersionRequest$modifiedTime": "<p>The modification time of the AI Agent should be tracked for version creation. This field should be specified to avoid version creation when simultaneous update to the underlying AI Agent are possible. The value should be the modifiedTime returned from the request to create or update an AI Agent so that version creation can fail if an update to the AI Agent post the specified modification time has been made.</p>",
         "CreateAIGuardrailVersionRequest$modifiedTime": "<p>The time the AI Guardrail was last modified.</p>",
         "CreateAIPromptVersionRequest$modifiedTime": "<p>The time the AI Prompt was last modified.</p>",
-        "MessageOutput$timestamp": "<p>The timestamp of a message.</p>"
+        "MessageOutput$timestamp": "<p>The timestamp of a message.</p>",
+        "SelfServiceConversationHistory$timestamp": "<p>The timestamp of the conversation history entry.</p>",
+        "Span$startTimestamp": "<p>Operation start time in milliseconds since epoch</p>",
+        "Span$endTimestamp": "<p>Operation end time in milliseconds since epoch</p>",
+        "SpanMessage$timestamp": "<p>Message timestamp</p>"
       }
     },
     "TooManyTagsException": {
       "base": "<p>Amazon Q in Connect throws this exception if you have too many tags in your tag set.</p>",
       "refs": {}
     },
+    "ToolConfiguration": {
+      "base": "<p>Configuration settings for a tool used by AI Agents.</p>",
+      "refs": {
+        "ToolConfigurationList$member": null
+      }
+    },
+    "ToolConfigurationList": {
+      "base": null,
+      "refs": {
+        "OrchestrationAIAgentConfiguration$toolConfigurations": "<p>The tool configurations used by the Orchestration AI Agent.</p>"
+      }
+    },
+    "ToolExampleList": {
+      "base": null,
+      "refs": {
+        "ToolInstruction$examples": "<p>Examples for using the tool.</p>"
+      }
+    },
+    "ToolInstruction": {
+      "base": "<p>Instructions for using a tool.</p>",
+      "refs": {
+        "ToolConfiguration$instruction": "<p>Instructions for using the tool.</p>"
+      }
+    },
+    "ToolOutputConfiguration": {
+      "base": "<p>Configuration for tool output handling.</p>",
+      "refs": {
+        "ToolOutputFilter$outputConfiguration": "<p>The output configuration for the filter.</p>"
+      }
+    },
+    "ToolOutputFilter": {
+      "base": "<p>Filter configuration for tool output.</p>",
+      "refs": {
+        "ToolOutputFilterList$member": null
+      }
+    },
+    "ToolOutputFilterList": {
+      "base": null,
+      "refs": {
+        "ToolConfiguration$outputFilters": "<p>Output filters applies to the tool result.</p>"
+      }
+    },
+    "ToolOverrideConstantInputValue": {
+      "base": "<p>A constant input value for tool override.</p>",
+      "refs": {
+        "ToolOverrideInputValueConfiguration$constant": "<p>Constant input value configuration for tool override.</p>"
+      }
+    },
+    "ToolOverrideInputValue": {
+      "base": "<p>An input value override for tools.</p>",
+      "refs": {
+        "ToolOverrideInputValueList$member": null
+      }
+    },
+    "ToolOverrideInputValueConfiguration": {
+      "base": "<p>Configuration for overriding tool input values.</p>",
+      "refs": {
+        "ToolOverrideInputValue$value": "<p>The override input value.</p>"
+      }
+    },
+    "ToolOverrideInputValueList": {
+      "base": null,
+      "refs": {
+        "ToolConfiguration$overrideInputValues": "<p>Override input values for the tool configuration.</p>"
+      }
+    },
+    "ToolOverrideInputValueType": {
+      "base": null,
+      "refs": {
+        "ToolOverrideConstantInputValue$type": "<p>Override tool input value with constant values</p>"
+      }
+    },
+    "ToolType": {
+      "base": null,
+      "refs": {
+        "ToolConfiguration$toolType": "<p>The type of the tool.</p>"
+      }
+    },
+    "ToolUseResultData": {
+      "base": "<p>Data about the result of tool usage.</p>",
+      "refs": {
+        "MessageData$toolUseResult": "<p>The result of tool usage in the message.</p>"
+      }
+    },
+    "TopK": {
+      "base": null,
+      "refs": {
+        "TextAIPromptInferenceConfiguration$topK": "<p>The top-K sampling parameter for token selection.</p>"
+      }
+    },
     "UnauthorizedException": {
       "base": "<p>You do not have permission to perform this action.</p>",
+      "refs": {}
+    },
+    "UnprocessableContentException": {
+      "base": "<p>The server has a failure of processing the message</p>",
       "refs": {}
     },
     "UntagResourceRequest": {
@@ -3748,6 +4297,12 @@
         "UrlFilterList$member": null
       }
     },
+    "UserInteractionConfiguration": {
+      "base": "<p>Configuration for user interaction settings.</p>",
+      "refs": {
+        "ToolConfiguration$userInteractionConfiguration": "<p>Configuration for user interaction with the tool.</p>"
+      }
+    },
     "Uuid": {
       "base": null,
       "refs": {
@@ -3772,6 +4327,8 @@
         "AssistantData$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
         "AssistantSummary$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
         "AssociationConfiguration$associationId": "<p>The identifier of the association for this Association Configuration.</p>",
+        "Citation$contentId": "<p>The identifier of the content being cited.</p>",
+        "Citation$knowledgeBaseId": "<p>The identifier of the knowledge base containing the cited content.</p>",
         "ContentAssociationData$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "ContentAssociationData$contentId": "<p>The identifier of the content.</p>",
         "ContentAssociationData$contentAssociationId": "<p>The identifier of the content association. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
@@ -3822,11 +4379,28 @@
         "QuickResponseSummary$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "RecommendationTrigger$id": "<p>The identifier of the recommendation trigger.</p>",
         "ResultData$resultId": "<p>The identifier of the result data.</p>",
+        "RetrieveResult$associationId": "<p>The identifier of the assistant association for the retrieved result.</p>",
         "SendMessageResponse$requestMessageId": "<p>The identifier of the submitted message.</p>",
         "SessionData$sessionId": "<p>The identifier of the session.</p>",
         "SessionSummary$sessionId": "<p>The identifier of the session.</p>",
         "SessionSummary$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
         "SourceContentDataDetails$id": "<p>The identifier of the source content.</p>",
+        "Span$spanId": "<p>Unique span identifier</p>",
+        "Span$assistantId": "<p>UUID of the Connect AI Assistant resource</p>",
+        "Span$sessionId": "<p>UUID of the Connect AI Session resource</p>",
+        "Span$parentSpanId": "<p>Parent span identifier for hierarchy. Null for root spans.</p>",
+        "Span$requestId": "<p>The service request ID that initiated the operation</p>",
+        "SpanAttributes$agentId": "<p>Amazon Connect agent ID</p>",
+        "SpanAttributes$contactId": "<p>Amazon Connect contact identifier</p>",
+        "SpanAttributes$initialContactId": "<p>Amazon Connect contact identifier</p>",
+        "SpanAttributes$aiAgentId": "<p>AI agent identifier</p>",
+        "SpanAttributes$promptId": "<p>AI prompt identifier</p>",
+        "SpanCitation$contentId": "<p>The identifier of the content being cited in the span.</p>",
+        "SpanCitation$knowledgeBaseId": "<p>The identifier of the knowledge base containing the cited content.</p>",
+        "SpanMessage$messageId": "<p>Unique message identifier</p>",
+        "SpanToolResultValue$toolUseId": "<p>Relates this result back to the tool invocation</p>",
+        "SpanToolUseValue$toolUseId": "<p>Unique ID for this tool invocation</p>",
+        "SuggestedMessageReference$aiAgentId": "<p>The identifier of the AI Agent that generated the suggested message.</p>",
         "UpdateSessionDataResponse$sessionId": "<p>The identifier of the session.</p>"
       }
     },
@@ -3834,6 +4408,7 @@
       "base": null,
       "refs": {
         "ActivateMessageTemplateRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "AssistantAssociationIdList$member": null,
         "CreateAIAgentRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "CreateAIAgentVersionRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "CreateAIGuardrailRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
@@ -3910,6 +4485,8 @@
         "ListMessagesRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
         "ListMessagesRequest$sessionId": "<p>The identifier of the Amazon Q in Connect session.</p>",
         "ListQuickResponsesRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "ListSpansRequest$assistantId": "<p>UUID or ARN of the Connect AI Assistant resource</p>",
+        "ListSpansRequest$sessionId": "<p>UUID or ARN of the Connect AI Session resource</p>",
         "NotifyRecommendationsReceivedRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "NotifyRecommendationsReceivedRequest$sessionId": "<p>The identifier of the session. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "PutFeedbackRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
@@ -3919,6 +4496,7 @@
         "RemoveAssistantAIAgentRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "RemoveKnowledgeBaseTemplateUriRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "RenderMessageTemplateRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "RetrieveRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant for content retrieval.</p>",
         "SearchContentRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. This should not be a QUICK_RESPONSES type knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "SearchMessageTemplatesRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "SearchQuickResponsesRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. This should be a QUICK_RESPONSES type knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
@@ -3970,7 +4548,9 @@
         "ListAIGuardrailVersionsRequest$aiGuardrailId": "<p>The identifier of the Amazon Q in Connect AI Guardrail for which versions are to be listed.</p>",
         "ListAIPromptVersionsRequest$aiPromptId": "<p>The identifier of the Amazon Q in Connect AI prompt for which versions are to be listed.</p>",
         "ListMessageTemplateVersionsRequest$messageTemplateId": "<p>The identifier of the message template. Can be either the ID or the ARN. It cannot contain any qualifier.</p>",
+        "OrchestratorConfigurationEntry$aiAgentId": "<p>The identifier of the AI Agent in the orchestrator configuration.</p>",
         "RenderMessageTemplateRequest$messageTemplateId": "<p>The identifier of the message template. Can be either the ID or the ARN.</p>",
+        "SendMessageRequest$aiAgentId": "<p>The identifier of the AI Agent to use for processing the message.</p>",
         "UpdateAIAgentRequest$aiAgentId": "<p>The identifier of the Amazon Q in Connect AI Agent.</p>",
         "UpdateAIGuardrailRequest$aiGuardrailId": "<p>The identifier of the Amazon Q in Connect AI Guardrail.</p>",
         "UpdateAIPromptRequest$aiPromptId": "<p>The identifier of the Amazon Q in Connect AI Prompt.</p>",
@@ -3986,6 +4566,8 @@
         "AnswerRecommendationAIAgentConfiguration$queryReformulationAIPromptId": "<p>The AI Prompt identifier for the Query Reformulation prompt used by the <code>ANSWER_RECOMMENDATION</code> AI Agent.</p>",
         "AnswerRecommendationAIAgentConfiguration$answerGenerationAIPromptId": "<p>The AI Prompt identifier for the Answer Generation prompt used by the <code>ANSWER_RECOMMENDATION</code> AI Agent.</p>",
         "AnswerRecommendationAIAgentConfiguration$answerGenerationAIGuardrailId": "<p>The AI Guardrail identifier for the Answer Generation Guardrail used by the <code>ANSWER_RECOMMENDATION</code> AI Agent.</p>",
+        "CaseSummarizationAIAgentConfiguration$caseSummarizationAIPromptId": "<p>The AI Prompt identifier used by the Case Summarization AI Agent.</p>",
+        "CaseSummarizationAIAgentConfiguration$caseSummarizationAIGuardrailId": "<p>The AI Guardrail identifier used by the Case Summarization AI Agent.</p>",
         "EmailGenerativeAnswerAIAgentConfiguration$emailGenerativeAnswerAIPromptId": "<p>The ID of the System AI prompt used for generating comprehensive knowledge-based answers from email queries.</p>",
         "EmailGenerativeAnswerAIAgentConfiguration$emailQueryReformulationAIPromptId": "<p>The ID of the System AI prompt used for reformulating email queries to optimize knowledge base search results.</p>",
         "EmailOverviewAIAgentConfiguration$emailOverviewAIPromptId": "<p>The ID of the System AI prompt used for generating structured email conversation summaries.</p>",
@@ -3993,6 +4575,10 @@
         "EmailResponseAIAgentConfiguration$emailQueryReformulationAIPromptId": "<p>The ID of the System AI prompt used for reformulating email queries to optimize knowledge base search for response generation.</p>",
         "ManualSearchAIAgentConfiguration$answerGenerationAIPromptId": "<p>The AI Prompt identifier for the Answer Generation prompt used by the MANUAL_SEARCH AI Agent.</p>",
         "ManualSearchAIAgentConfiguration$answerGenerationAIGuardrailId": "<p>The AI Guardrail identifier for the Answer Generation guardrail used by the MANUAL_SEARCH AI Agent.</p>",
+        "NoteTakingAIAgentConfiguration$noteTakingAIPromptId": "<p>The AI Prompt identifier used by the Note Taking AI Agent.</p>",
+        "NoteTakingAIAgentConfiguration$noteTakingAIGuardrailId": "<p>The AI Guardrail identifier used by the Note Taking AI Agent.</p>",
+        "OrchestrationAIAgentConfiguration$orchestrationAIPromptId": "<p>The AI Prompt identifier used by the Orchestration AI Agent.</p>",
+        "OrchestrationAIAgentConfiguration$orchestrationAIGuardrailId": "<p>The AI Guardrail identifier used by the Orchestration AI Agent.</p>",
         "SelfServiceAIAgentConfiguration$selfServicePreProcessingAIPromptId": "<p>The AI Prompt identifier for the Self Service Pre-Processing prompt used by the SELF_SERVICE AI Agent</p>",
         "SelfServiceAIAgentConfiguration$selfServiceAnswerGenerationAIPromptId": "<p>The AI Prompt identifier for the Self Service Answer Generation prompt used by the SELF_SERVICE AI Agent</p>",
         "SelfServiceAIAgentConfiguration$selfServiceAIGuardrailId": "<p>The AI Guardrail identifier used by the SELF_SERVICE AI Agent.</p>"

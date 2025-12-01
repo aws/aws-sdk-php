@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - This is a combined re:Invent release for Amazon Connect.
+* `Aws\CustomerProfiles` - This release introduces, CRUD APIs for the DomainObjectType and Recommender resources, APIs to offer statistical insights on Object Type Attributes, Changes to SegmentDefinition APIs to support SQL queries to create Segments, and Changes to Domain APIs to support Data Store.
+* `Aws\CleanRooms` - AWS Clean Rooms now supports privacy-enhancing synthetic dataset generation for custom ML training.
+* `Aws\PartnerCentralSelling` - New Features: Lead Management APIs for capturing and nurturing leads Lead invitation support for partner collaboration Lead-to-opportunity conversion operations AWS Marketplace OfferSets support for opportunities
+* `Aws\Personalize` - This release adds support for includedDatasetColumns and performIncrementalUpdate in solution APIs, and rankingInfluence in campaign and batch inference APIs.
+* `Aws\PartnerCentralAccount` - Initial GA launch of Partner Central Account
+* `Aws\MarketplaceCatalog` - This release introduces offer set entity in AWS Marketplace Catalog API to enable multi-product transaction. Offer set enables sellers to group multiple private offers into a single-click purchase experience, simplifying procurement for customers purchasing multi-product solutions.
+* `Aws\AppIntegrationsService` - This release adds support for MCP servers via the ApplicationType field, allowing customers to register their Bedrock AgentCore gateways as third party applications.
+* `Aws\BedrockAgent` - Support audio and video ingestion on Bedrock Knowledge Bases.
+* `Aws\Lambda` - Launching Lambda Managed Instances - a new feature to run Lambda on EC2.
+* `Aws\ConnectCampaignsV2` - This release added support for new WhatsApp channel and Journey type outbound campaign
+* `Aws\Route53GlobalResolver` - Add SDK for Amazon Route 53 Global Resolver, a fully managed DNS resolver service that offers broad DNS-filtering security controls.
+* `Aws\BedrockAgentRuntime` - Support audio and video content retrieval on Bedrock Knowledge Bases.
+* `Aws\CleanRoomsML` - AWS Clean Rooms ML now supports privacy-enhancing synthetic dataset generation for custom ML training.
+* `Aws\Glue` - feature: Glue: Add support for Iceberg materialized view in Glue Data Catalog, including updated CreateTable API to support materialized views and new APIs for managing data refresh for materialized views. feature: Glue: Add support for Iceberg table encryption keys and struct field defaults.
+* `Aws\LexModelsV2` - Adds support for speech-to-speech models for human-like, adaptive, and expressive voice interactions. Also adds support for speech model preference, allowing customers to select which speech model they want to use for speech-to-text requests.
+* `Aws\EKS` - This release adds support for EKS Capabilities
+* `Aws\ConnectParticipant` - Amazon Connect now supports message processing that intercepts and processes chat messages before they reach any participant.
+* `Aws\QConnect` - New AIAgent types: Orchestration for ModelContextProtocol tool integration, CaseSummary for Amazon Connect Case summaries, NoteTaker for Agent Assistance notes. Added ListSpans and Retrieve APIs. Enhanced Q in Connect AssistantAssociationType to support Bring Your Own Bedrock Knowledge Bases.
+* `Aws\PartnerCentralBenefits` - Initial GA launch of Partner Central Benefits
+* `Aws\MarketplaceAgreement` - This release supports 1/multi-product transactions via offer sets. DescribeAgreement and SearchAgreements APIs now return offer set IDs. SearchAgreements also supports filtering by offer set ID and 2/variable payment pricing terms will be returned through GetAgreementTerms.
+
 ## 3.363.3 - 2025-11-26
 
 * `Aws\ComputeOptimizer` - Compute Optimizer now identifies idle NAT Gateway resources for cost optimization based on traffic patterns and backup configuration analysis. Access recommendations via the GetIdleRecommendations API.

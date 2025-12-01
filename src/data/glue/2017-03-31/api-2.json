@@ -8855,6 +8855,11 @@
       "type":"string",
       "pattern":"([\\u0009\\u000B\\u000C\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF])*"
     },
+    "EncryptedKeyMetadataString":{
+      "type":"string",
+      "max":2056,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
     "EncryptionAtRest":{
       "type":"structure",
       "required":["CatalogEncryptionMode"],
@@ -8872,6 +8877,11 @@
         "JobBookmarksEncryption":{"shape":"JobBookmarksEncryption"},
         "DataQualityEncryption":{"shape":"DataQualityEncryption"}
       }
+    },
+    "EncryptionKeyIdString":{
+      "type":"string",
+      "max":2056,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "Entity":{
       "type":"structure",
@@ -10665,6 +10675,7 @@
         "CellFilters":{"shape":"ColumnRowFilterList"},
         "QueryAuthorizationId":{"shape":"HashString"},
         "IsMultiDialectView":{"shape":"Boolean"},
+        "IsMaterializedView":{"shape":"Boolean"},
         "ResourceArn":{"shape":"ArnString"},
         "IsProtected":{"shape":"Boolean"},
         "Permissions":{"shape":"PermissionList"},
@@ -11025,6 +11036,19 @@
       "members":{},
       "document":true
     },
+    "IcebergEncryptedKey":{
+      "type":"structure",
+      "required":[
+        "KeyId",
+        "EncryptedKeyMetadata"
+      ],
+      "members":{
+        "KeyId":{"shape":"EncryptionKeyIdString"},
+        "EncryptedKeyMetadata":{"shape":"EncryptedKeyMetadataString"},
+        "EncryptedById":{"shape":"EncryptionKeyIdString"},
+        "Properties":{"shape":"StringToStringMap"}
+      }
+    },
     "IcebergInput":{
       "type":"structure",
       "required":["MetadataOperation"],
@@ -11183,7 +11207,9 @@
         "Name":{"shape":"ColumnNameString"},
         "Type":{"shape":"IcebergDocument"},
         "Required":{"shape":"Boolean"},
-        "Doc":{"shape":"CommentString"}
+        "Doc":{"shape":"CommentString"},
+        "InitialDefault":{"shape":"IcebergDocument"},
+        "WriteDefault":{"shape":"IcebergDocument"}
       }
     },
     "IcebergStructFieldList":{
@@ -11205,7 +11231,10 @@
         "PartitionSpec":{"shape":"IcebergPartitionSpec"},
         "SortOrder":{"shape":"IcebergSortOrder"},
         "Location":{"shape":"LocationString"},
-        "Properties":{"shape":"StringToStringMap"}
+        "Properties":{"shape":"StringToStringMap"},
+        "Action":{"shape":"IcebergUpdateAction"},
+        "EncryptionKey":{"shape":"IcebergEncryptedKey"},
+        "KeyId":{"shape":"EncryptionKeyIdString"}
       }
     },
     "IcebergTableUpdateList":{
@@ -11235,6 +11264,22 @@
       "member":{"shape":"IcebergTarget"}
     },
     "IcebergTransformString":{"type":"string"},
+    "IcebergUpdateAction":{
+      "type":"string",
+      "enum":[
+        "add-schema",
+        "set-current-schema",
+        "add-spec",
+        "set-default-spec",
+        "add-sort-order",
+        "set-default-sort-order",
+        "set-location",
+        "set-properties",
+        "remove-properties",
+        "add-encryption-key",
+        "remove-encryption-key"
+      ]
+    },
     "IdString":{
       "type":"string",
       "max":255,
@@ -12025,7 +12070,7 @@
     },
     "KmsKeyArn":{
       "type":"string",
-      "pattern":"arn:aws:kms:.*"
+      "pattern":"^$|arn:aws[a-z0-9-]*:kms:.*"
     },
     "LabelCount":{"type":"integer"},
     "LabelingSetGenerationTaskRunProperties":{
@@ -12080,6 +12125,13 @@
         "SUCCEEDED",
         "CANCELLED",
         "FAILED"
+      ]
+    },
+    "LastRefreshType":{
+      "type":"string",
+      "enum":[
+        "FULL",
+        "INCREMENTAL"
       ]
     },
     "LatestSchemaVersionBoolean":{"type":"boolean"},
@@ -13942,6 +13994,10 @@
     "ReferenceDatasetsList":{
       "type":"list",
       "member":{"shape":"NameString"}
+    },
+    "RefreshSeconds":{
+      "type":"long",
+      "box":true
     },
     "RefreshToken":{
       "type":"string",
@@ -15834,6 +15890,7 @@
         "FederatedTable":{"shape":"FederatedTable"},
         "ViewDefinition":{"shape":"ViewDefinition"},
         "IsMultiDialectView":{"shape":"NullableBoolean"},
+        "IsMaterializedView":{"shape":"NullableBoolean"},
         "Status":{"shape":"TableStatus"}
       }
     },
@@ -16000,6 +16057,10 @@
     "TableVersionErrors":{
       "type":"list",
       "member":{"shape":"TableVersionError"}
+    },
+    "TableVersionId":{
+      "type":"long",
+      "min":-1
     },
     "Tag":{
       "type":"structure",
@@ -17203,7 +17264,12 @@
       "members":{
         "IsProtected":{"shape":"NullableBoolean"},
         "Definer":{"shape":"ArnString"},
+        "ViewVersionId":{"shape":"TableVersionId"},
+        "ViewVersionToken":{"shape":"HashString"},
+        "RefreshSeconds":{"shape":"RefreshSeconds"},
+        "LastRefreshType":{"shape":"LastRefreshType"},
         "SubObjects":{"shape":"ViewSubObjectsList"},
+        "SubObjectVersionIds":{"shape":"ViewSubObjectVersionIdsList"},
         "Representations":{"shape":"ViewRepresentationList"}
       }
     },
@@ -17213,7 +17279,12 @@
         "IsProtected":{"shape":"NullableBoolean"},
         "Definer":{"shape":"ArnString"},
         "Representations":{"shape":"ViewRepresentationInputList"},
-        "SubObjects":{"shape":"ViewSubObjectsList"}
+        "ViewVersionId":{"shape":"TableVersionId"},
+        "ViewVersionToken":{"shape":"VersionString"},
+        "RefreshSeconds":{"shape":"RefreshSeconds"},
+        "LastRefreshType":{"shape":"LastRefreshType"},
+        "SubObjects":{"shape":"ViewSubObjectsList"},
+        "SubObjectVersionIds":{"shape":"ViewSubObjectVersionIdsList"}
       }
     },
     "ViewDialect":{
@@ -17261,6 +17332,12 @@
       "member":{"shape":"ViewRepresentation"},
       "max":1000,
       "min":1
+    },
+    "ViewSubObjectVersionIdsList":{
+      "type":"list",
+      "member":{"shape":"TableVersionId"},
+      "max":250,
+      "min":0
     },
     "ViewSubObjectsList":{
       "type":"list",

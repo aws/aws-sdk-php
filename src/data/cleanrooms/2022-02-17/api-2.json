@@ -1994,7 +1994,8 @@
         "sourceMetadata":{"shape":"AnalysisSourceMetadata"},
         "analysisParameters":{"shape":"AnalysisParameterList"},
         "validations":{"shape":"AnalysisTemplateValidationStatusDetailList"},
-        "errorMessageConfiguration":{"shape":"ErrorMessageConfiguration"}
+        "errorMessageConfiguration":{"shape":"ErrorMessageConfiguration"},
+        "syntheticDataParameters":{"shape":"SyntheticDataParameters"}
       }
     },
     "AnalysisTemplateArn":{
@@ -2077,7 +2078,8 @@
         "membershipId":{"shape":"UUID"},
         "collaborationArn":{"shape":"CollaborationArn"},
         "collaborationId":{"shape":"UUID"},
-        "description":{"shape":"ResourceDescription"}
+        "description":{"shape":"ResourceDescription"},
+        "isSyntheticData":{"shape":"Boolean"}
       }
     },
     "AnalysisTemplateSummaryList":{
@@ -2086,7 +2088,7 @@
     },
     "AnalysisTemplateText":{
       "type":"string",
-      "max":90000,
+      "max":500000,
       "min":0,
       "sensitive":true
     },
@@ -2517,7 +2519,8 @@
         "sourceMetadata":{"shape":"AnalysisSourceMetadata"},
         "analysisParameters":{"shape":"AnalysisParameterList"},
         "validations":{"shape":"AnalysisTemplateValidationStatusDetailList"},
-        "errorMessageConfiguration":{"shape":"ErrorMessageConfiguration"}
+        "errorMessageConfiguration":{"shape":"ErrorMessageConfiguration"},
+        "syntheticDataParameters":{"shape":"SyntheticDataParameters"}
       }
     },
     "CollaborationAnalysisTemplateList":{
@@ -2547,7 +2550,8 @@
         "collaborationArn":{"shape":"CollaborationArn"},
         "collaborationId":{"shape":"UUID"},
         "creatorAccountId":{"shape":"AccountId"},
-        "description":{"shape":"ResourceDescription"}
+        "description":{"shape":"ResourceDescription"},
+        "isSyntheticData":{"shape":"Boolean"}
       }
     },
     "CollaborationAnalysisTemplateSummaryList":{
@@ -2885,9 +2889,22 @@
         "type":{"shape":"ColumnTypeString"}
       }
     },
+    "ColumnClassificationDetails":{
+      "type":"structure",
+      "required":["columnMapping"],
+      "members":{
+        "columnMapping":{"shape":"ColumnMappingList"}
+      }
+    },
     "ColumnList":{
       "type":"list",
       "member":{"shape":"Column"}
+    },
+    "ColumnMappingList":{
+      "type":"list",
+      "member":{"shape":"SyntheticDataColumnProperties"},
+      "max":1000,
+      "min":5
     },
     "ColumnName":{
       "type":"string",
@@ -3419,7 +3436,8 @@
         "tags":{"shape":"TagMap"},
         "analysisParameters":{"shape":"AnalysisParameterList"},
         "schema":{"shape":"AnalysisSchema"},
-        "errorMessageConfiguration":{"shape":"ErrorMessageConfiguration"}
+        "errorMessageConfiguration":{"shape":"ErrorMessageConfiguration"},
+        "syntheticDataParameters":{"shape":"SyntheticDataParameters"}
       }
     },
     "CreateAnalysisTemplateOutput":{
@@ -5726,8 +5744,34 @@
       "type":"structure",
       "members":{
         "modelTraining":{"shape":"ModelTrainingPaymentConfig"},
-        "modelInference":{"shape":"ModelInferencePaymentConfig"}
+        "modelInference":{"shape":"ModelInferencePaymentConfig"},
+        "syntheticDataGeneration":{"shape":"SyntheticDataGenerationPaymentConfig"}
       }
+    },
+    "MLSyntheticDataParameters":{
+      "type":"structure",
+      "required":[
+        "epsilon",
+        "maxMembershipInferenceAttackScore",
+        "columnClassification"
+      ],
+      "members":{
+        "epsilon":{"shape":"MLSyntheticDataParametersEpsilonDouble"},
+        "maxMembershipInferenceAttackScore":{"shape":"MaxMembershipInferenceAttackScore"},
+        "columnClassification":{"shape":"ColumnClassificationDetails"}
+      }
+    },
+    "MLSyntheticDataParametersEpsilonDouble":{
+      "type":"double",
+      "box":true,
+      "max":10,
+      "min":0.0001
+    },
+    "MaxMembershipInferenceAttackScore":{
+      "type":"double",
+      "box":true,
+      "max":1,
+      "min":0.5
     },
     "MaxResults":{
       "type":"integer",
@@ -5762,7 +5806,6 @@
     "MemberList":{
       "type":"list",
       "member":{"shape":"MemberSpecification"},
-      "max":9,
       "min":0
     },
     "MemberSpecification":{
@@ -5884,7 +5927,8 @@
       "type":"structure",
       "members":{
         "modelTraining":{"shape":"MembershipModelTrainingPaymentConfig"},
-        "modelInference":{"shape":"MembershipModelInferencePaymentConfig"}
+        "modelInference":{"shape":"MembershipModelInferencePaymentConfig"},
+        "syntheticDataGeneration":{"shape":"MembershipSyntheticDataGenerationPaymentConfig"}
       }
     },
     "MembershipModelInferencePaymentConfig":{
@@ -6000,6 +6044,13 @@
     "MembershipSummaryList":{
       "type":"list",
       "member":{"shape":"MembershipSummary"}
+    },
+    "MembershipSyntheticDataGenerationPaymentConfig":{
+      "type":"structure",
+      "required":["isResponsible"],
+      "members":{
+        "isResponsible":{"shape":"Boolean"}
+      }
     },
     "ModelInferencePaymentConfig":{
       "type":"structure",
@@ -6397,6 +6448,7 @@
     },
     "ProtectedJobParameters":{
       "type":"structure",
+      "required":["analysisTemplateArn"],
       "members":{
         "analysisTemplateArn":{"shape":"AnalysisTemplateArn"}
       }
@@ -7299,6 +7351,46 @@
         "sa-east-1",
         "mx-central-1"
       ]
+    },
+    "SyntheticDataColumnName":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"[a-z0-9_](([a-z0-9_]+-)*([a-z0-9_]+))?"
+    },
+    "SyntheticDataColumnProperties":{
+      "type":"structure",
+      "required":[
+        "columnName",
+        "columnType",
+        "isPredictiveValue"
+      ],
+      "members":{
+        "columnName":{"shape":"SyntheticDataColumnName"},
+        "columnType":{"shape":"SyntheticDataColumnType"},
+        "isPredictiveValue":{"shape":"Boolean"}
+      }
+    },
+    "SyntheticDataColumnType":{
+      "type":"string",
+      "enum":[
+        "CATEGORICAL",
+        "NUMERICAL"
+      ]
+    },
+    "SyntheticDataGenerationPaymentConfig":{
+      "type":"structure",
+      "required":["isResponsible"],
+      "members":{
+        "isResponsible":{"shape":"Boolean"}
+      }
+    },
+    "SyntheticDataParameters":{
+      "type":"structure",
+      "members":{
+        "mlSyntheticDataParameters":{"shape":"MLSyntheticDataParameters"}
+      },
+      "union":true
     },
     "TableAlias":{
       "type":"string",

@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p/>",
+  "service": "<p>Amazon Lex Model Building Service provides APIs for creating, managing, and deploying conversational bots and their components.</p>",
   "operations": {
     "BatchCreateCustomVocabularyItem": "<p>Create a batch of custom vocabulary items for a given bot locale's custom vocabulary.</p>",
     "BatchDeleteCustomVocabularyItem": "<p>Delete a batch of custom vocabulary items for a given bot locale's custom vocabulary.</p>",
@@ -999,7 +999,8 @@
       "base": null,
       "refs": {
         "BedrockModelSpecification$modelArn": "<p>The ARN of the foundation model used in descriptive bot building.</p>",
-        "DescribeBotResourceGenerationResponse$modelArn": "<p>The ARN of the model used to generate the bot resources.</p>"
+        "DescribeBotResourceGenerationResponse$modelArn": "<p>The ARN of the model used to generate the bot resources.</p>",
+        "SpeechFoundationModel$modelArn": "<p>The Amazon Resource Name (ARN) of the foundation model used for speech processing.</p>"
       }
     },
     "BedrockModelCustomPrompt": {
@@ -2096,6 +2097,18 @@
       "base": "<p>The object used for specifying the data range that the customer wants Amazon Lex to read through in the input transcripts.</p>",
       "refs": {
         "LexTranscriptFilter$dateRangeFilter": "<p>The object that contains a date range filter that will be applied to the transcript. Specify this object if you want Amazon Lex to only read the files that are within the date range.</p>"
+      }
+    },
+    "DeepgramModelId": {
+      "base": null,
+      "refs": {
+        "DeepgramSpeechModelConfig$modelId": "<p>The identifier of the Deepgram speech-to-text model to use for processing speech input.</p>"
+      }
+    },
+    "DeepgramSpeechModelConfig": {
+      "base": "<p>Configuration settings for integrating Deepgram speech-to-text models with Amazon Lex.</p>",
+      "refs": {
+        "SpeechModelConfig$deepgramConfig": "<p>Configuration settings for using Deepgram as the speech-to-text provider.</p>"
       }
     },
     "DefaultConditionalBranch": {
@@ -4691,6 +4704,12 @@
         "SearchAssociatedTranscriptsRequest$searchOrder": "<p>How SearchResults are ordered. Valid values are Ascending or Descending. The default is Descending.</p>"
       }
     },
+    "SecretsManagerSecretArn": {
+      "base": null,
+      "refs": {
+        "DeepgramSpeechModelConfig$apiTokenSecretArn": "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret that contains the Deepgram API token.</p>"
+      }
+    },
     "SentimentAnalysisSettings": {
       "base": "<p>Determines whether Amazon Lex will use Amazon Comprehend to detect the sentiment of user utterances.</p>",
       "refs": {
@@ -5091,6 +5110,35 @@
         "DescribeBotLocaleResponse$speechDetectionSensitivity": "<p>The sensitivity level for voice activity detection (VAD) configured for the bot locale.</p>",
         "UpdateBotLocaleRequest$speechDetectionSensitivity": "<p>The new sensitivity level for voice activity detection (VAD) in the bot locale. This setting helps optimize speech recognition accuracy by adjusting how the system responds to background noise during voice interactions.</p>",
         "UpdateBotLocaleResponse$speechDetectionSensitivity": "<p>The updated sensitivity level for voice activity detection (VAD) in the bot locale.</p>"
+      }
+    },
+    "SpeechFoundationModel": {
+      "base": "<p>Configuration for a foundation model used for speech synthesis and recognition capabilities.</p>",
+      "refs": {
+        "UnifiedSpeechSettings$speechFoundationModel": "<p>The foundation model configuration to use for unified speech processing capabilities.</p>"
+      }
+    },
+    "SpeechModelConfig": {
+      "base": "<p>Configuration settings that define which speech-to-text model to use for processing speech input.</p>",
+      "refs": {
+        "SpeechRecognitionSettings$speechModelConfig": "<p>Configuration settings for the selected speech-to-text model.</p>"
+      }
+    },
+    "SpeechModelPreference": {
+      "base": null,
+      "refs": {
+        "SpeechRecognitionSettings$speechModelPreference": "<p>The speech-to-text model to use.</p>"
+      }
+    },
+    "SpeechRecognitionSettings": {
+      "base": "<p>Settings that control how Amazon Lex processes and recognizes speech input from users.</p>",
+      "refs": {
+        "BotLocaleImportSpecification$speechRecognitionSettings": "<p>Speech-to-text settings to apply when importing the bot locale configuration.</p>",
+        "CreateBotLocaleRequest$speechRecognitionSettings": "<p>Speech-to-text settings to configure for the new bot locale.</p>",
+        "CreateBotLocaleResponse$speechRecognitionSettings": "<p>The speech-to-text settings configured for the created bot locale.</p>",
+        "DescribeBotLocaleResponse$speechRecognitionSettings": "<p>The speech-to-text settings configured for the bot locale.</p>",
+        "UpdateBotLocaleRequest$speechRecognitionSettings": "<p>Updated speech-to-text settings to apply to the bot locale.</p>",
+        "UpdateBotLocaleResponse$speechRecognitionSettings": "<p>The updated speech-to-text settings for the bot locale.</p>"
       }
     },
     "StartBotRecommendationRequest": {
@@ -5779,6 +5827,17 @@
         "TestSetTurnRecord$turnSpecification": "<p>Contains information about the agent or user turn depending upon type of turn.</p>"
       }
     },
+    "UnifiedSpeechSettings": {
+      "base": "<p>Unified configuration settings that combine speech recognition and synthesis capabilities.</p>",
+      "refs": {
+        "BotLocaleImportSpecification$unifiedSpeechSettings": "<p>Unified speech settings to apply when importing the bot locale configuration.</p>",
+        "CreateBotLocaleRequest$unifiedSpeechSettings": "<p>Unified speech settings to configure for the new bot locale.</p>",
+        "CreateBotLocaleResponse$unifiedSpeechSettings": "<p>The unified speech settings configured for the created bot locale.</p>",
+        "DescribeBotLocaleResponse$unifiedSpeechSettings": "<p>The unified speech settings configured for the bot locale.</p>",
+        "UpdateBotLocaleRequest$unifiedSpeechSettings": "<p>Updated unified speech settings to apply to the bot locale.</p>",
+        "UpdateBotLocaleResponse$unifiedSpeechSettings": "<p>The updated unified speech settings for the bot locale.</p>"
+      }
+    },
     "UntagResourceRequest": {
       "base": null,
       "refs": {}
@@ -6031,6 +6090,7 @@
     "VoiceId": {
       "base": null,
       "refs": {
+        "SpeechFoundationModel$voiceId": "<p>The identifier of the voice to use for speech synthesis with the foundation model.</p>",
         "VoiceSettings$voiceId": "<p>The identifier of the Amazon Polly voice to use.</p>"
       }
     },

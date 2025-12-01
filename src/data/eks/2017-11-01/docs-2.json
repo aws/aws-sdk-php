@@ -7,6 +7,7 @@
     "AssociateIdentityProviderConfig": "<p>Associates an identity provider configuration to a cluster.</p> <p>If you want to authenticate identities using an identity provider, you can create an identity provider configuration and associate it to your cluster. After configuring authentication to your cluster you can create Kubernetes <code>Role</code> and <code>ClusterRole</code> objects, assign permissions to them, and then bind them to the identities using Kubernetes <code>RoleBinding</code> and <code>ClusterRoleBinding</code> objects. For more information see <a href=\"https://kubernetes.io/docs/reference/access-authn-authz/rbac/\">Using RBAC Authorization</a> in the Kubernetes documentation.</p>",
     "CreateAccessEntry": "<p>Creates an access entry.</p> <p>An access entry allows an IAM principal to access your cluster. Access entries can replace the need to maintain entries in the <code>aws-auth</code> <code>ConfigMap</code> for authentication. You have the following options for authorizing an IAM principal to access Kubernetes objects on your cluster: Kubernetes role-based access control (RBAC), Amazon EKS, or both. Kubernetes RBAC authorization requires you to create and manage Kubernetes <code>Role</code>, <code>ClusterRole</code>, <code>RoleBinding</code>, and <code>ClusterRoleBinding</code> objects, in addition to managing access entries. If you use Amazon EKS authorization exclusively, you don't need to create and manage Kubernetes <code>Role</code>, <code>ClusterRole</code>, <code>RoleBinding</code>, and <code>ClusterRoleBinding</code> objects.</p> <p>For more information about access entries, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/access-entries.html\">Access entries</a> in the <i>Amazon EKS User Guide</i>.</p>",
     "CreateAddon": "<p>Creates an Amazon EKS add-on.</p> <p>Amazon EKS add-ons help to automate the provisioning and lifecycle management of common operational software for Amazon EKS clusters. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-add-ons.html\">Amazon EKS add-ons</a> in the <i>Amazon EKS User Guide</i>.</p>",
+    "CreateCapability": "<p>Creates a managed capability resource for an Amazon EKS cluster.</p> <p>Capabilities provide fully managed capabilities to build and scale with Kubernetes. When you create a capability, Amazon EKSprovisions and manages the infrastructure required to run the capability outside of your cluster. This approach reduces operational overhead and preserves cluster resources.</p> <p>You can only create one Capability of each type on a given Amazon EKS cluster. Valid types are Argo CD for declarative GitOps deployment, Amazon Web Services Controllers for Kubernetes (ACK) for resource management, and Kube Resource Orchestrator (KRO) for Kubernetes custom resource orchestration.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/capabilities.html\">EKS Capabilities</a> in the <i>Amazon EKS User Guide</i>.</p>",
     "CreateCluster": "<p>Creates an Amazon EKS control plane.</p> <p>The Amazon EKS control plane consists of control plane instances that run the Kubernetes software, such as <code>etcd</code> and the API server. The control plane runs in an account managed by Amazon Web Services, and the Kubernetes API is exposed by the Amazon EKS API server endpoint. Each Amazon EKS cluster control plane is single tenant and unique. It runs on its own set of Amazon EC2 instances.</p> <p>The cluster control plane is provisioned across multiple Availability Zones and fronted by an ELB Network Load Balancer. Amazon EKS also provisions elastic network interfaces in your VPC subnets to provide connectivity from the control plane instances to the nodes (for example, to support <code>kubectl exec</code>, <code>logs</code>, and <code>proxy</code> data flows).</p> <p>Amazon EKS nodes run in your Amazon Web Services account and connect to your cluster's control plane over the Kubernetes API server endpoint and a certificate file that is created for your cluster.</p> <p>You can use the <code>endpointPublicAccess</code> and <code>endpointPrivateAccess</code> parameters to enable or disable public and private access to your cluster's Kubernetes API server endpoint. By default, public access is enabled, and private access is disabled. The endpoint domain name and IP address family depends on the value of the <code>ipFamily</code> for the cluster. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html\">Amazon EKS Cluster Endpoint Access Control</a> in the <i> <i>Amazon EKS User Guide</i> </i>. </p> <p>You can use the <code>logging</code> parameter to enable or disable exporting the Kubernetes control plane logs for your cluster to CloudWatch Logs. By default, cluster control plane logs aren't exported to CloudWatch Logs. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html\">Amazon EKS Cluster Control Plane Logs</a> in the <i> <i>Amazon EKS User Guide</i> </i>.</p> <note> <p>CloudWatch Logs ingestion, archive storage, and data scanning rates apply to exported control plane logs. For more information, see <a href=\"http://aws.amazon.com/cloudwatch/pricing/\">CloudWatch Pricing</a>.</p> </note> <p>In most cases, it takes several minutes to create a cluster. After you create an Amazon EKS cluster, you must configure your Kubernetes tooling to communicate with the API server and launch nodes into your cluster. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/cluster-auth.html\">Allowing users to access your cluster</a> and <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/launch-workers.html\">Launching Amazon EKS nodes</a> in the <i>Amazon EKS User Guide</i>.</p>",
     "CreateEksAnywhereSubscription": "<p>Creates an EKS Anywhere subscription. When a subscription is created, it is a contract agreement for the length of the term specified in the request. Licenses that are used to validate support are provisioned in Amazon Web Services License Manager and the caller account is granted access to EKS Anywhere Curated Packages.</p>",
     "CreateFargateProfile": "<p>Creates an Fargate profile for your Amazon EKS cluster. You must have at least one Fargate profile in a cluster to be able to run pods on Fargate.</p> <p>The Fargate profile allows an administrator to declare which pods run on Fargate and specify which pods run on which Fargate profile. This declaration is done through the profile's selectors. Each profile can have up to five selectors that contain a namespace and labels. A namespace is required for every selector. The label field consists of multiple optional key-value pairs. Pods that match the selectors are scheduled on Fargate. If a to-be-scheduled pod matches any of the selectors in the Fargate profile, then that pod is run on Fargate.</p> <p>When you create a Fargate profile, you must specify a pod execution role to use with the pods that are scheduled with the profile. This role is added to the cluster's Kubernetes <a href=\"https://kubernetes.io/docs/reference/access-authn-authz/rbac/\">Role Based Access Control</a> (RBAC) for authorization so that the <code>kubelet</code> that is running on the Fargate infrastructure can register with your Amazon EKS cluster so that it can appear in your cluster as a node. The pod execution role also provides IAM permissions to the Fargate infrastructure to allow read access to Amazon ECR image repositories. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/pod-execution-role.html\">Pod Execution Role</a> in the <i>Amazon EKS User Guide</i>.</p> <p>Fargate profiles are immutable. However, you can create a new updated profile to replace an existing profile and then delete the original after the updated profile has finished creating.</p> <p>If any Fargate profiles in a cluster are in the <code>DELETING</code> status, you must wait for that Fargate profile to finish deleting before you can create any other profiles in that cluster.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/fargate-profile.html\">Fargate profile</a> in the <i>Amazon EKS User Guide</i>.</p>",
@@ -14,6 +15,7 @@
     "CreatePodIdentityAssociation": "<p>Creates an EKS Pod Identity association between a service account in an Amazon EKS cluster and an IAM role with <i>EKS Pod Identity</i>. Use EKS Pod Identity to give temporary IAM credentials to Pods and the credentials are rotated automatically.</p> <p>Amazon EKS Pod Identity associations provide the ability to manage credentials for your applications, similar to the way that Amazon EC2 instance profiles provide credentials to Amazon EC2 instances.</p> <p>If a Pod uses a service account that has an association, Amazon EKS sets environment variables in the containers of the Pod. The environment variables configure the Amazon Web Services SDKs, including the Command Line Interface, to use the EKS Pod Identity credentials.</p> <p>EKS Pod Identity is a simpler method than <i>IAM roles for service accounts</i>, as this method doesn't use OIDC identity providers. Additionally, you can configure a role for EKS Pod Identity once, and reuse it across clusters.</p> <p>Similar to Amazon Web Services IAM behavior, EKS Pod Identity associations are eventually consistent, and may take several seconds to be effective after the initial API call returns successfully. You must design your applications to account for these potential delays. We recommend that you don’t include association create/updates in the critical, high-availability code paths of your application. Instead, make changes in a separate initialization or setup routine that you run less frequently.</p> <p>You can set a <i>target IAM role</i> in the same or a different account for advanced scenarios. With a target role, EKS Pod Identity automatically performs two role assumptions in sequence: first assuming the role in the association that is in this account, then using those credentials to assume the target IAM role. This process provides your Pod with temporary credentials that have the permissions defined in the target role, allowing secure access to resources in another Amazon Web Services account.</p>",
     "DeleteAccessEntry": "<p>Deletes an access entry.</p> <p>Deleting an access entry of a type other than <code>Standard</code> can cause your cluster to function improperly. If you delete an access entry in error, you can recreate it.</p>",
     "DeleteAddon": "<p>Deletes an Amazon EKS add-on.</p> <p>When you remove an add-on, it's deleted from the cluster. You can always manually start an add-on on the cluster using the Kubernetes API.</p>",
+    "DeleteCapability": "<p>Deletes a managed capability from your Amazon EKS cluster. When you delete a capability, Amazon EKS removes the capability infrastructure but retains all resources that were managed by the capability.</p> <p>Before deleting a capability, you should delete all Kubernetes resources that were created by the capability. After the capability is deleted, these resources become difficult to manage because the controller that managed them is no longer available. To delete resources before removing the capability, use <code>kubectl delete</code> or remove them through your GitOps workflow.</p>",
     "DeleteCluster": "<p>Deletes an Amazon EKS cluster control plane.</p> <p>If you have active services in your cluster that are associated with a load balancer, you must delete those services before deleting the cluster so that the load balancers are deleted properly. Otherwise, you can have orphaned resources in your VPC that prevent you from being able to delete the VPC. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/delete-cluster.html\">Deleting a cluster</a> in the <i>Amazon EKS User Guide</i>.</p> <p>If you have managed node groups or Fargate profiles attached to the cluster, you must delete them first. For more information, see <code>DeleteNodgroup</code> and <code>DeleteFargateProfile</code>.</p>",
     "DeleteEksAnywhereSubscription": "<p>Deletes an expired or inactive subscription. Deleting inactive subscriptions removes them from the Amazon Web Services Management Console view and from list/describe API responses. Subscriptions can only be cancelled within 7 days of creation and are cancelled by creating a ticket in the Amazon Web Services Support Center. </p>",
     "DeleteFargateProfile": "<p>Deletes an Fargate profile.</p> <p>When you delete a Fargate profile, any <code>Pod</code> running on Fargate that was created with the profile is deleted. If the <code>Pod</code> matches another Fargate profile, then it is scheduled on Fargate with that profile. If it no longer matches any Fargate profiles, then it's not scheduled on Fargate and may remain in a pending state.</p> <p>Only one Fargate profile in a cluster can be in the <code>DELETING</code> status at a time. You must wait for a Fargate profile to finish deleting before you can delete any other profiles in that cluster.</p>",
@@ -24,6 +26,7 @@
     "DescribeAddon": "<p>Describes an Amazon EKS add-on.</p>",
     "DescribeAddonConfiguration": "<p>Returns configuration options.</p>",
     "DescribeAddonVersions": "<p>Describes the versions for an add-on.</p> <p>Information such as the Kubernetes versions that you can use the add-on with, the <code>owner</code>, <code>publisher</code>, and the <code>type</code> of the add-on are returned.</p>",
+    "DescribeCapability": "<p>Returns detailed information about a specific managed capability in your Amazon EKS cluster, including its current status, configuration, health information, and any issues that may be affecting its operation.</p>",
     "DescribeCluster": "<p>Describes an Amazon EKS cluster.</p> <p>The API server endpoint and certificate authority data returned by this operation are required for <code>kubelet</code> and <code>kubectl</code> to communicate with your Kubernetes API server. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html\">Creating or updating a <code>kubeconfig</code> file for an Amazon EKS cluster</a>.</p> <note> <p>The API server endpoint and certificate authority data aren't available until the cluster reaches the <code>ACTIVE</code> state.</p> </note>",
     "DescribeClusterVersions": "<p>Lists available Kubernetes versions for Amazon EKS clusters.</p>",
     "DescribeEksAnywhereSubscription": "<p>Returns descriptive information about a subscription.</p>",
@@ -40,6 +43,7 @@
     "ListAccessPolicies": "<p>Lists the available access policies. </p>",
     "ListAddons": "<p>Lists the installed add-ons.</p>",
     "ListAssociatedAccessPolicies": "<p>Lists the access policies associated with an access entry.</p>",
+    "ListCapabilities": "<p>Lists all managed capabilities in your Amazon EKS cluster. You can use this operation to get an overview of all capabilities and their current status.</p>",
     "ListClusters": "<p>Lists the Amazon EKS clusters in your Amazon Web Services account in the specified Amazon Web Services Region.</p>",
     "ListEksAnywhereSubscriptions": "<p>Displays the full description of the subscription.</p>",
     "ListFargateProfiles": "<p>Lists the Fargate profiles associated with the specified cluster in your Amazon Web Services account in the specified Amazon Web Services Region.</p>",
@@ -55,6 +59,7 @@
     "UntagResource": "<p>Deletes specified tags from an Amazon EKS resource.</p>",
     "UpdateAccessEntry": "<p>Updates an access entry.</p>",
     "UpdateAddon": "<p>Updates an Amazon EKS add-on.</p>",
+    "UpdateCapability": "<p>Updates the configuration of a managed capability in your Amazon EKS cluster. You can update the IAM role, configuration settings, and delete propagation policy for a capability.</p> <p>When you update a capability, Amazon EKS applies the changes and may restart capability components as needed. The capability remains available during the update process, but some operations may be temporarily unavailable.</p>",
     "UpdateClusterConfig": "<p>Updates an Amazon EKS cluster configuration. Your cluster continues to function during the update. The response output includes an update ID that you can use to track the status of your cluster update with <code>DescribeUpdate</code>.</p> <p>You can use this operation to do the following actions:</p> <ul> <li> <p>You can use this API operation to enable or disable exporting the Kubernetes control plane logs for your cluster to CloudWatch Logs. By default, cluster control plane logs aren't exported to CloudWatch Logs. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html\">Amazon EKS Cluster control plane logs</a> in the <i> <i>Amazon EKS User Guide</i> </i>.</p> <note> <p>CloudWatch Logs ingestion, archive storage, and data scanning rates apply to exported control plane logs. For more information, see <a href=\"http://aws.amazon.com/cloudwatch/pricing/\">CloudWatch Pricing</a>.</p> </note> </li> <li> <p>You can also use this API operation to enable or disable public and private access to your cluster's Kubernetes API server endpoint. By default, public access is enabled, and private access is disabled. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html\"> Cluster API server endpoint</a> in the <i> <i>Amazon EKS User Guide</i> </i>.</p> </li> <li> <p>You can also use this API operation to choose different subnets and security groups for the cluster. You must specify at least two subnets that are in different Availability Zones. You can't change which VPC the subnets are from, the subnets must be in the same VPC as the subnets that the cluster was created with. For more information about the VPC requirements, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html\">https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html</a> in the <i> <i>Amazon EKS User Guide</i> </i>.</p> </li> <li> <p>You can also use this API operation to enable or disable ARC zonal shift. If zonal shift is enabled, Amazon Web Services configures zonal autoshift for the cluster.</p> </li> <li> <p>You can also use this API operation to add, change, or remove the configuration in the cluster for EKS Hybrid Nodes. To remove the configuration, use the <code>remoteNetworkConfig</code> key with an object containing both subkeys with empty arrays for each. Here is an inline example: <code>\"remoteNetworkConfig\": { \"remoteNodeNetworks\": [], \"remotePodNetworks\": [] }</code>.</p> </li> </ul> <p>Cluster updates are asynchronous, and they should finish within a few minutes. During an update, the cluster status moves to <code>UPDATING</code> (this status transition is eventually consistent). When the update is complete (either <code>Failed</code> or <code>Successful</code>), the cluster status moves to <code>Active</code>.</p>",
     "UpdateClusterVersion": "<p>Updates an Amazon EKS cluster to the specified Kubernetes version. Your cluster continues to function during the update. The response output includes an update ID that you can use to track the status of your cluster update with the <a href=\"https://docs.aws.amazon.com/eks/latest/APIReference/API_DescribeUpdate.html\"> <code>DescribeUpdate</code> </a> API operation.</p> <p>Cluster updates are asynchronous, and they should finish within a few minutes. During an update, the cluster status moves to <code>UPDATING</code> (this status transition is eventually consistent). When the update is complete (either <code>Failed</code> or <code>Successful</code>), the cluster status moves to <code>Active</code>.</p> <p>If your cluster has managed node groups attached to it, all of your node groups' Kubernetes versions must match the cluster's Kubernetes version in order to update the cluster to a new Kubernetes version.</p>",
     "UpdateEksAnywhereSubscription": "<p>Update an EKS Anywhere Subscription. Only auto renewal and tags can be updated after subscription creation.</p>",
@@ -230,6 +235,64 @@
         "DescribeAddonVersionsResponse$addons": "<p>The list of available versions with Kubernetes version compatibility and other properties.</p>"
       }
     },
+    "ArgoCdAwsIdcConfigRequest": {
+      "base": "<p>Configuration for integrating Argo CD with IAM Identity CenterIAM; Identity Center. This allows you to use your organization's identity provider for authentication to Argo CD.</p>",
+      "refs": {
+        "ArgoCdConfigRequest$awsIdc": "<p>Configuration for IAM Identity CenterIAM; Identity Center integration. When configured, users can authenticate to Argo CD using their IAM Identity CenterIAM; Identity Center credentials.</p>"
+      }
+    },
+    "ArgoCdAwsIdcConfigResponse": {
+      "base": "<p>The response object containing IAM Identity CenterIAM; Identity Center configuration details for an Argo CD capability.</p>",
+      "refs": {
+        "ArgoCdConfigResponse$awsIdc": "<p>The IAM Identity CenterIAM; Identity Center integration configuration.</p>"
+      }
+    },
+    "ArgoCdConfigRequest": {
+      "base": "<p>Configuration settings for an Argo CD capability. This includes the Kubernetes namespace, IAM Identity CenterIAM; Identity Center integration, RBAC role mappings, and network access configuration.</p>",
+      "refs": {
+        "CapabilityConfigurationRequest$argoCd": "<p>Configuration settings specific to Argo CD capabilities. This field is only used when creating or updating an Argo CD capability.</p>"
+      }
+    },
+    "ArgoCdConfigResponse": {
+      "base": "<p>The response object containing Argo CD configuration details, including the server URL that you use to access the Argo CD web interface and API.</p>",
+      "refs": {
+        "CapabilityConfigurationResponse$argoCd": "<p>Configuration settings for an Argo CD capability, including the server URL and other Argo CD-specific settings.</p>"
+      }
+    },
+    "ArgoCdNetworkAccessConfigRequest": {
+      "base": "<p>Configuration for network access to the Argo CD capability's managed API server endpoint. When VPC endpoint IDs are specified, public access is blocked and the Argo CD server is only accessible through the specified VPC endpoints.</p>",
+      "refs": {
+        "ArgoCdConfigRequest$networkAccess": "<p>Configuration for network access to the Argo CD capability's managed API server endpoint. By default, the Argo CD server is accessible via a public endpoint. You can optionally specify one or more VPC endpoint IDs to enable private connectivity from your VPCs. When VPC endpoints are configured, public access is blocked and the Argo CD server is only accessible through the specified VPC endpoints.</p>",
+        "UpdateArgoCdConfig$networkAccess": "<p>Updated network access configuration for the Argo CD capability's managed API server endpoint. You can add or remove VPC endpoint associations to control which VPCs have private access to the Argo CD server.</p>"
+      }
+    },
+    "ArgoCdNetworkAccessConfigResponse": {
+      "base": "<p>The response object containing network access configuration for the Argo CD capability's managed API server endpoint. If VPC endpoint IDs are present, public access is blocked and the Argo CD server is only accessible through the specified VPC endpoints.</p>",
+      "refs": {
+        "ArgoCdConfigResponse$networkAccess": "<p>The network access configuration for the Argo CD capability's managed API server endpoint. If VPC endpoint IDs are specified, public access is blocked and the Argo CD server is only accessible through the specified VPC endpoints.</p>"
+      }
+    },
+    "ArgoCdRole": {
+      "base": null,
+      "refs": {
+        "ArgoCdRoleMapping$role": "<p>The Argo CD role to assign. Valid values are:</p> <ul> <li> <p> <code>ADMIN</code> – Full administrative access to Argo CD.</p> </li> <li> <p> <code>EDITOR</code> – Edit access to Argo CD resources.</p> </li> <li> <p> <code>VIEWER</code> – Read-only access to Argo CD resources.</p> </li> </ul>"
+      }
+    },
+    "ArgoCdRoleMapping": {
+      "base": "<p>A mapping between an Argo CD role and IAM Identity CenterIAM; Identity Center identities. This defines which users or groups have specific permissions in Argo CD.</p>",
+      "refs": {
+        "ArgoCdRoleMappingList$member": null
+      }
+    },
+    "ArgoCdRoleMappingList": {
+      "base": null,
+      "refs": {
+        "ArgoCdConfigRequest$rbacRoleMappings": "<p>A list of role mappings that define which IAM Identity CenterIAM; Identity Center users or groups have which Argo CD roles. Each mapping associates an Argo CD role (<code>ADMIN</code>, <code>EDITOR</code>, or <code>VIEWER</code>) with one or more IAM Identity CenterIAM; Identity Center identities.</p>",
+        "ArgoCdConfigResponse$rbacRoleMappings": "<p>The list of role mappings that define which IAM Identity CenterIAM; Identity Center users or groups have which Argo CD roles.</p>",
+        "UpdateRoleMappings$addOrUpdateRoleMappings": "<p>A list of role mappings to add or update. If a mapping for the specified role already exists, it will be updated with the new identities. If it doesn't exist, a new mapping will be created.</p>",
+        "UpdateRoleMappings$removeRoleMappings": "<p>A list of role mappings to remove from the RBAC configuration. Each mapping specifies an Argo CD role (<code>ADMIN</code>, <code>EDITOR</code>, or <code>VIEWER</code>) and the identities to remove from that role.</p>"
+      }
+    },
     "AssociateAccessPolicyRequest": {
       "base": null,
       "refs": {}
@@ -346,6 +409,85 @@
       "refs": {
         "CreateNodegroupRequest$diskSize": "<p>The root device disk size (in GiB) for your node group instances. The default disk size is 20 GiB for Linux and Bottlerocket. The default disk size is 50 GiB for Windows. If you specify <code>launchTemplate</code>, then don't specify <code>diskSize</code>, or the node group deployment will fail. For more information about using launch templates with Amazon EKS, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html\">Customizing managed nodes with launch templates</a> in the <i>Amazon EKS User Guide</i>.</p>",
         "Nodegroup$diskSize": "<p>If the node group wasn't deployed with a launch template, then this is the disk size in the node group configuration. If the node group was deployed with a launch template, then this is <code>null</code>.</p>"
+      }
+    },
+    "Capability": {
+      "base": "<p>An object representing a managed capability in an Amazon EKS cluster. This includes all configuration, status, and health information for the capability.</p>",
+      "refs": {
+        "CreateCapabilityResponse$capability": "<p>An object containing information about the newly created capability, including its name, ARN, status, and configuration.</p>",
+        "DeleteCapabilityResponse$capability": "<p>An object containing information about the deleted capability, including its final status and configuration.</p>",
+        "DescribeCapabilityResponse$capability": "<p>An object containing detailed information about the capability, including its name, ARN, type, status, version, configuration, health status, and timestamps for when it was created and last modified.</p>"
+      }
+    },
+    "CapabilityConfigurationRequest": {
+      "base": "<p>Configuration settings for a capability. The structure of this object varies depending on the capability type.</p>",
+      "refs": {
+        "CreateCapabilityRequest$configuration": "<p>The configuration settings for the capability. The structure of this object varies depending on the capability type. For Argo CD capabilities, you can configure IAM Identity CenterIAM; Identity Center integration, RBAC role mappings, and network access settings.</p>"
+      }
+    },
+    "CapabilityConfigurationResponse": {
+      "base": "<p>The response object containing capability configuration details.</p>",
+      "refs": {
+        "Capability$configuration": "<p>The configuration settings for the capability. The structure varies depending on the capability type.</p>"
+      }
+    },
+    "CapabilityDeletePropagationPolicy": {
+      "base": null,
+      "refs": {
+        "Capability$deletePropagationPolicy": "<p>The delete propagation policy for the capability. Currently, the only supported value is <code>RETAIN</code>, which keeps all resources managed by the capability when the capability is deleted.</p>",
+        "CreateCapabilityRequest$deletePropagationPolicy": "<p>Specifies how Kubernetes resources managed by the capability should be handled when the capability is deleted. Currently, the only supported value is <code>RETAIN</code> which retains all Kubernetes resources managed by the capability when the capability is deleted.</p> <p>Because resources are retained, all Kubernetes resources created by the capability should be deleted from the cluster before deleting the capability itself. After the capability is deleted, these resources become difficult to manage because the controller is no longer available.</p>",
+        "UpdateCapabilityRequest$deletePropagationPolicy": "<p>The updated delete propagation policy for the capability. Currently, the only supported value is <code>RETAIN</code>.</p>"
+      }
+    },
+    "CapabilityHealth": {
+      "base": "<p>Health information for a capability, including any issues that may be affecting its operation.</p>",
+      "refs": {
+        "Capability$health": "<p>Health information for the capability, including any issues that may be affecting its operation.</p>"
+      }
+    },
+    "CapabilityIssue": {
+      "base": "<p>An issue affecting a capability's health or operation.</p>",
+      "refs": {
+        "CapabilityIssueList$member": null
+      }
+    },
+    "CapabilityIssueCode": {
+      "base": null,
+      "refs": {
+        "CapabilityIssue$code": "<p>A code identifying the type of issue. This can be used to programmatically handle specific issue types.</p>"
+      }
+    },
+    "CapabilityIssueList": {
+      "base": null,
+      "refs": {
+        "CapabilityHealth$issues": "<p>A list of issues affecting the capability. If this list is empty, the capability is healthy.</p>"
+      }
+    },
+    "CapabilityStatus": {
+      "base": null,
+      "refs": {
+        "Capability$status": "<p>The current status of the capability. Valid values include:</p> <ul> <li> <p> <code>CREATING</code> – The capability is being created.</p> </li> <li> <p> <code>ACTIVE</code> – The capability is running and available.</p> </li> <li> <p> <code>UPDATING</code> – The capability is being updated.</p> </li> <li> <p> <code>DELETING</code> – The capability is being deleted.</p> </li> <li> <p> <code>CREATE_FAILED</code> – The capability creation failed.</p> </li> <li> <p> <code>UPDATE_FAILED</code> – The capability update failed.</p> </li> <li> <p> <code>DELETE_FAILED</code> – The capability deletion failed.</p> </li> </ul>",
+        "CapabilitySummary$status": "<p>The current status of the capability.</p>"
+      }
+    },
+    "CapabilitySummary": {
+      "base": "<p>A summary of a capability, containing basic information without the full configuration details. This is returned by the <code>ListCapabilities</code> operation.</p>",
+      "refs": {
+        "CapabilitySummaryList$member": null
+      }
+    },
+    "CapabilitySummaryList": {
+      "base": null,
+      "refs": {
+        "ListCapabilitiesResponse$capabilities": "<p>A list of capability summary objects, each containing basic information about a capability including its name, ARN, type, status, version, and timestamps.</p>"
+      }
+    },
+    "CapabilityType": {
+      "base": null,
+      "refs": {
+        "Capability$type": "<p>The type of capability. Valid values are <code>ACK</code>, <code>ARGOCD</code>, or <code>KRO</code>.</p>",
+        "CapabilitySummary$type": "<p>The type of capability. Valid values are <code>ACK</code>, <code>ARGOCD</code>, or <code>KRO</code>.</p>",
+        "CreateCapabilityRequest$type": "<p>The type of capability to create. Valid values are:</p> <ul> <li> <p> <code>ACK</code> – Amazon Web Services Controllers for Kubernetes (ACK), which lets you manage resources directly from Kubernetes.</p> </li> <li> <p> <code>ARGOCD</code> – Argo CD for GitOps-based continuous delivery.</p> </li> <li> <p> <code>KRO</code> – Kube Resource Orchestrator (KRO) for composing and managing custom Kubernetes resources.</p> </li> </ul>"
       }
     },
     "Capacity": {
@@ -554,6 +696,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateCapabilityRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCapabilityResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CreateClusterRequest": {
       "base": null,
       "refs": {}
@@ -607,6 +757,14 @@
       "refs": {}
     },
     "DeleteAddonResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCapabilityRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCapabilityResponse": {
       "base": null,
       "refs": {}
     },
@@ -705,6 +863,14 @@
       }
     },
     "DescribeAddonVersionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeCapabilityRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeCapabilityResponse": {
       "base": null,
       "refs": {}
     },
@@ -1197,6 +1363,20 @@
       "base": null,
       "refs": {}
     },
+    "ListCapabilitiesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCapabilitiesRequestMaxResults": {
+      "base": null,
+      "refs": {
+        "ListCapabilitiesRequest$maxResults": "<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value. If you don't specify a value, the default is 100 results.</p>"
+      }
+    },
+    "ListCapabilitiesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListClustersRequest": {
       "base": null,
       "refs": {}
@@ -1606,6 +1786,24 @@
       "base": "<p>The service is unavailable. Back off and retry the operation.</p>",
       "refs": {}
     },
+    "SsoIdentity": {
+      "base": "<p>An IAM Identity CenterIAM; Identity Center identity (user or group) that can be assigned permissions in a capability.</p>",
+      "refs": {
+        "SsoIdentityList$member": null
+      }
+    },
+    "SsoIdentityList": {
+      "base": null,
+      "refs": {
+        "ArgoCdRoleMapping$identities": "<p>A list of IAM Identity CenterIAM; Identity Center identities (users or groups) that should be assigned this Argo CD role.</p>"
+      }
+    },
+    "SsoIdentityType": {
+      "base": null,
+      "refs": {
+        "SsoIdentity$type": "<p>The type of identity. Valid values are <code>SSO_USER</code> or <code>SSO_GROUP</code>.</p>"
+      }
+    },
     "StartInsightsRefreshRequest": {
       "base": null,
       "refs": {}
@@ -1658,6 +1856,14 @@
         "AddonPodIdentityAssociations$roleArn": "<p>The ARN of an IAM Role.</p>",
         "AddonPodIdentityConfiguration$serviceAccount": "<p>The Kubernetes Service Account name used by the add-on.</p>",
         "AddonVersionInfo$addonVersion": "<p>The version of the add-on.</p>",
+        "ArgoCdAwsIdcConfigRequest$idcInstanceArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity CenterIAM; Identity Center instance to use for authentication.</p>",
+        "ArgoCdAwsIdcConfigRequest$idcRegion": "<p>The Region where your IAM Identity CenterIAM; Identity Center instance is located.</p>",
+        "ArgoCdAwsIdcConfigResponse$idcInstanceArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity CenterIAM; Identity Center instance used for authentication.</p>",
+        "ArgoCdAwsIdcConfigResponse$idcRegion": "<p>The Region where the IAM Identity CenterIAM; Identity Center instance is located.</p>",
+        "ArgoCdAwsIdcConfigResponse$idcManagedApplicationArn": "<p>The Amazon Resource Name (ARN) of the managed application created in IAM Identity CenterIAM; Identity Center for this Argo CD capability. This application is automatically created and managed by Amazon EKS.</p>",
+        "ArgoCdConfigRequest$namespace": "<p>The Kubernetes namespace where Argo CD resources will be created. If not specified, the default namespace is used.</p>",
+        "ArgoCdConfigResponse$namespace": "<p>The Kubernetes namespace where Argo CD resources are monitored by your Argo CD Capability.</p>",
+        "ArgoCdConfigResponse$serverUrl": "<p>The URL of the Argo CD server. Use this URL to access the Argo CD web interface and API.</p>",
         "AssociateAccessPolicyRequest$clusterName": "<p>The name of your cluster.</p>",
         "AssociateAccessPolicyRequest$principalArn": "<p>The Amazon Resource Name (ARN) of the IAM user or role for the <code>AccessEntry</code> that you're associating the access policy to. </p>",
         "AssociateAccessPolicyRequest$policyArn": "<p>The ARN of the <code>AccessPolicy</code> that you're associating. For a list of ARNs, use <code>ListAccessPolicies</code>.</p>",
@@ -1670,6 +1876,15 @@
         "AssociatedAccessPolicy$policyArn": "<p>The ARN of the <code>AccessPolicy</code>.</p>",
         "AutoScalingGroup$name": "<p>The name of the Amazon EC2 Auto Scaling group associated with an Amazon EKS managed node group.</p>",
         "BadRequestException$message": "<p>This exception is thrown if the request contains a semantic error. The precise meaning will depend on the API, and will be documented in the error message.</p>",
+        "Capability$capabilityName": "<p>The unique name of the capability within the cluster.</p>",
+        "Capability$arn": "<p>The Amazon Resource Name (ARN) of the capability.</p>",
+        "Capability$clusterName": "<p>The name of the Amazon EKS cluster that contains this capability.</p>",
+        "Capability$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the capability uses to interact with Amazon Web Services services.</p>",
+        "Capability$version": "<p>The version of the capability software that is currently running.</p>",
+        "CapabilityIssue$message": "<p>A human-readable message describing the issue and potential remediation steps.</p>",
+        "CapabilitySummary$capabilityName": "<p>The unique name of the capability within the cluster.</p>",
+        "CapabilitySummary$arn": "<p>The Amazon Resource Name (ARN) of the capability.</p>",
+        "CapabilitySummary$version": "<p>The version of the capability software that is currently running.</p>",
         "Certificate$data": "<p>The Base64-encoded certificate data required to communicate with your cluster. Add this to the <code>certificate-authority-data</code> section of the <code>kubeconfig</code> file for your cluster.</p>",
         "ClientException$clusterName": "<p>The Amazon EKS cluster associated with the exception.</p>",
         "ClientException$nodegroupName": "<p>The Amazon EKS managed node group associated with the exception.</p>",
@@ -1709,6 +1924,10 @@
         "CreateAddonRequest$addonVersion": "<p>The version of the add-on. The version must match one of the versions returned by <a href=\"https://docs.aws.amazon.com/eks/latest/APIReference/API_DescribeAddonVersions.html\"> <code>DescribeAddonVersions</code> </a>.</p>",
         "CreateAddonRequest$clientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "CreateAddonRequest$configurationValues": "<p>The set of configuration values for the add-on that's created. The values that you provide are validated against the schema returned by <code>DescribeAddonConfiguration</code>.</p>",
+        "CreateCapabilityRequest$capabilityName": "<p>A unique name for the capability. The name must be unique within your cluster and can contain alphanumeric characters, hyphens, and underscores.</p>",
+        "CreateCapabilityRequest$clusterName": "<p>The name of the Amazon EKS cluster where you want to create the capability.</p>",
+        "CreateCapabilityRequest$clientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This token is valid for 24 hours after creation. If you retry a request with the same client request token and the same parameters after the original request has completed successfully, the result of the original request is returned.</p>",
+        "CreateCapabilityRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the capability uses to interact with Amazon Web Services services. This role must have a trust policy that allows the EKS service principal to assume it, and it must have the necessary permissions for the capability type you're creating.</p> <p>For ACK capabilities, the role needs permissions to manage the resources you want to control through Kubernetes. For Argo CD capabilities, the role needs permissions to access Git repositories and Secrets Manager. For KRO capabilities, the role needs permissions based on the resources you'll be orchestrating.</p>",
         "CreateClusterRequest$version": "<p>The desired Kubernetes version for your cluster. If you don't specify a value here, the default version available in Amazon EKS is used.</p> <note> <p>The default version might not be the latest version available.</p> </note>",
         "CreateClusterRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the Kubernetes control plane to make calls to Amazon Web Services API operations on your behalf. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html\">Amazon EKS Service IAM Role</a> in the <i> <i>Amazon EKS User Guide</i> </i>.</p>",
         "CreateClusterRequest$clientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
@@ -1732,6 +1951,8 @@
         "DeleteAccessEntryRequest$clusterName": "<p>The name of your cluster.</p>",
         "DeleteAccessEntryRequest$principalArn": "<p>The ARN of the IAM principal for the <code>AccessEntry</code>.</p>",
         "DeleteAddonRequest$addonName": "<p>The name of the add-on. The name must match one of the names returned by <a href=\"https://docs.aws.amazon.com/eks/latest/APIReference/API_ListAddons.html\"> <code>ListAddons</code> </a>.</p>",
+        "DeleteCapabilityRequest$clusterName": "<p>The name of the Amazon EKS cluster that contains the capability you want to delete.</p>",
+        "DeleteCapabilityRequest$capabilityName": "<p>The name of the capability to delete.</p>",
         "DeleteClusterRequest$name": "<p>The name of the cluster to delete.</p>",
         "DeleteEksAnywhereSubscriptionRequest$id": "<p>The ID of the subscription.</p>",
         "DeleteFargateProfileRequest$clusterName": "<p>The name of your cluster.</p>",
@@ -1757,6 +1978,8 @@
         "DescribeAddonVersionsRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated request, where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is null when there are no more results to return.</p> <note> <p>This token should be treated as an opaque identifier that is used only to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
         "DescribeAddonVersionsRequest$addonName": "<p>The name of the add-on. The name must match one of the names returned by <a href=\"https://docs.aws.amazon.com/eks/latest/APIReference/API_ListAddons.html\"> <code>ListAddons</code> </a>.</p>",
         "DescribeAddonVersionsResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>DescribeAddonVersions</code> request. When the results of a <code>DescribeAddonVersions</code> request exceed <code>maxResults</code>, you can use this value to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p> <note> <p>This token should be treated as an opaque identifier that is used only to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
+        "DescribeCapabilityRequest$clusterName": "<p>The name of the Amazon EKS cluster that contains the capability you want to describe.</p>",
+        "DescribeCapabilityRequest$capabilityName": "<p>The name of the capability to describe.</p>",
         "DescribeClusterRequest$name": "<p>The name of your cluster.</p>",
         "DescribeClusterVersionsRequest$clusterType": "<p>The type of cluster to filter versions by.</p>",
         "DescribeClusterVersionsRequest$nextToken": "<p>Pagination token for the next set of results.</p>",
@@ -1777,6 +2000,7 @@
         "DescribeUpdateRequest$updateId": "<p>The ID of the update to describe.</p>",
         "DescribeUpdateRequest$nodegroupName": "<p>The name of the Amazon EKS node group associated with the update. This parameter is required if the update is a node group update.</p>",
         "DescribeUpdateRequest$addonName": "<p>The name of the add-on. The name must match one of the names returned by <a href=\"https://docs.aws.amazon.com/eks/latest/APIReference/API_ListAddons.html\"> <code>ListAddons</code> </a>. This parameter is required if the update is an add-on update.</p>",
+        "DescribeUpdateRequest$capabilityName": "<p>The name of the capability for which you want to describe updates.</p>",
         "DisassociateAccessPolicyRequest$clusterName": "<p>The name of your cluster.</p>",
         "DisassociateAccessPolicyRequest$principalArn": "<p>The ARN of the IAM principal for the <code>AccessEntry</code>.</p>",
         "DisassociateAccessPolicyRequest$policyArn": "<p>The ARN of the policy to disassociate from the access entry. For a list of associated policies ARNs, use <code>ListAssociatedAccessPolicies</code>.</p>",
@@ -1845,6 +2069,9 @@
         "ListAssociatedAccessPoliciesResponse$clusterName": "<p>The name of your cluster.</p>",
         "ListAssociatedAccessPoliciesResponse$principalArn": "<p>The ARN of the IAM principal for the <code>AccessEntry</code>.</p>",
         "ListAssociatedAccessPoliciesResponse$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated request, where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is null when there are no more results to return.</p> <note> <p>This token should be treated as an opaque identifier that is used only to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
+        "ListCapabilitiesRequest$clusterName": "<p>The name of the Amazon EKS cluster for which you want to list capabilities.</p>",
+        "ListCapabilitiesRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated request, where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is null when there are no more results to return.</p>",
+        "ListCapabilitiesResponse$nextToken": "<p>The <code>nextToken</code> value to include in a future <code>ListCapabilities</code> request. When the results of a <code>ListCapabilities</code> request exceed <code>maxResults</code>, you can use this value to retrieve the next page of results. This value is null when there are no more results to return.</p>",
         "ListClustersRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated request, where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is null when there are no more results to return.</p> <note> <p>This token should be treated as an opaque identifier that is used only to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
         "ListClustersResponse$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated request, where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is null when there are no more results to return.</p> <note> <p>This token should be treated as an opaque identifier that is used only to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
         "ListEksAnywhereSubscriptionsRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated <code>ListEksAnywhereSubscriptions</code> request where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value.</p>",
@@ -1870,6 +2097,7 @@
         "ListUpdatesRequest$name": "<p>The name of the Amazon EKS cluster to list updates for.</p>",
         "ListUpdatesRequest$nodegroupName": "<p>The name of the Amazon EKS managed node group to list updates for.</p>",
         "ListUpdatesRequest$addonName": "<p>The names of the installed add-ons that have available updates.</p>",
+        "ListUpdatesRequest$capabilityName": "<p>The name of the capability for which you want to list updates.</p>",
         "ListUpdatesRequest$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated request, where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is null when there are no more results to return.</p> <note> <p>This token should be treated as an opaque identifier that is used only to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
         "ListUpdatesResponse$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated request, where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is null when there are no more results to return.</p> <note> <p>This token should be treated as an opaque identifier that is used only to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
         "MarketplaceInformation$productId": "<p>The product ID from the Amazon Web Services Marketplace.</p>",
@@ -1942,6 +2170,7 @@
         "ServerException$subscriptionId": "<p>The Amazon EKS subscription ID with the exception.</p>",
         "ServerException$message": "<p>These errors are usually caused by a server-side issue.</p>",
         "ServiceUnavailableException$message": "<p>The request has failed due to a temporary failure of the server.</p>",
+        "SsoIdentity$id": "<p>The unique identifier of the IAM Identity CenterIAM; Identity Center user or group.</p>",
         "StartInsightsRefreshRequest$clusterName": "<p>The name of the cluster for the refresh insights operation.</p>",
         "StartInsightsRefreshResponse$message": "<p>The message associated with the insights refresh operation.</p>",
         "StringList$member": null,
@@ -1961,6 +2190,10 @@
         "UpdateAddonRequest$addonVersion": "<p>The version of the add-on. The version must match one of the versions returned by <a href=\"https://docs.aws.amazon.com/eks/latest/APIReference/API_DescribeAddonVersions.html\"> <code>DescribeAddonVersions</code> </a>.</p>",
         "UpdateAddonRequest$clientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "UpdateAddonRequest$configurationValues": "<p>The set of configuration values for the add-on that's created. The values that you provide are validated against the schema returned by <code>DescribeAddonConfiguration</code>.</p>",
+        "UpdateCapabilityRequest$clusterName": "<p>The name of the Amazon EKS cluster that contains the capability you want to update configuration for.</p>",
+        "UpdateCapabilityRequest$capabilityName": "<p>The name of the capability to update configuration for.</p>",
+        "UpdateCapabilityRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that the capability uses to interact with Amazon Web Services services. If you specify a new role ARN, the capability will start using the new role for all subsequent operations.</p>",
+        "UpdateCapabilityRequest$clientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This token is valid for 24 hours after creation.</p>",
         "UpdateClusterConfigRequest$name": "<p>The name of the Amazon EKS cluster to update.</p>",
         "UpdateClusterConfigRequest$clientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "UpdateClusterVersionRequest$name": "<p>The name of the Amazon EKS cluster to update.</p>",
@@ -1998,6 +2231,8 @@
         "AddonPodIdentityConfiguration$recommendedManagedPolicies": "<p>A suggested IAM Policy for the add-on.</p>",
         "AddonVersionInfo$architecture": "<p>The architectures that the version supports.</p>",
         "AddonVersionInfo$computeTypes": "<p>Indicates the compute type of the add-on version.</p>",
+        "ArgoCdNetworkAccessConfigRequest$vpceIds": "<p>A list of VPC endpoint IDs to associate with the managed Argo CD API server endpoint. Each VPC endpoint provides private connectivity from a specific VPC to the Argo CD server. You can specify multiple VPC endpoint IDs to enable access from multiple VPCs.</p>",
+        "ArgoCdNetworkAccessConfigResponse$vpceIds": "<p>The list of VPC endpoint IDs associated with the managed Argo CD API server endpoint. Each VPC endpoint provides private connectivity from a specific VPC to the Argo CD server.</p>",
         "ClusterIssue$resourceIds": "<p>The resource IDs that the issue relates to.</p>",
         "Compatibility$platformVersions": "<p>The supported compute platform.</p>",
         "ComputeConfigRequest$nodePools": "<p>Configuration for node pools that defines the compute resources for your EKS Auto Mode cluster. For more information, see EKS Auto Mode Node Pools in the <i>Amazon EKS User Guide</i>.</p>",
@@ -2067,9 +2302,11 @@
         "Addon$tags": "<p>Metadata that assists with categorization and organization. Each tag consists of a key and an optional value. You define both. Tags don't propagate to any other cluster or Amazon Web Services resources.</p>",
         "AssociateIdentityProviderConfigRequest$tags": "<p>Metadata that assists with categorization and organization. Each tag consists of a key and an optional value. You define both. Tags don't propagate to any other cluster or Amazon Web Services resources.</p>",
         "AssociateIdentityProviderConfigResponse$tags": "<p>The tags for the resource.</p>",
+        "Capability$tags": null,
         "Cluster$tags": "<p>Metadata that assists with categorization and organization. Each tag consists of a key and an optional value. You define both. Tags don't propagate to any other cluster or Amazon Web Services resources.</p>",
         "CreateAccessEntryRequest$tags": "<p>Metadata that assists with categorization and organization. Each tag consists of a key and an optional value. You define both. Tags don't propagate to any other cluster or Amazon Web Services resources.</p>",
         "CreateAddonRequest$tags": "<p>Metadata that assists with categorization and organization. Each tag consists of a key and an optional value. You define both. Tags don't propagate to any other cluster or Amazon Web Services resources.</p>",
+        "CreateCapabilityRequest$tags": null,
         "CreateClusterRequest$tags": "<p>Metadata that assists with categorization and organization. Each tag consists of a key and an optional value. You define both. Tags don't propagate to any other cluster or Amazon Web Services resources.</p>",
         "CreateEksAnywhereSubscriptionRequest$tags": "<p>The metadata for a subscription to assist with categorization and organization. Each tag consists of a key and an optional value. Subscription tags don't propagate to any other resources associated with the subscription.</p>",
         "CreateFargateProfileRequest$tags": "<p>Metadata that assists with categorization and organization. Each tag consists of a key and an optional value. You define both. Tags don't propagate to any other cluster or Amazon Web Services resources.</p>",
@@ -2124,6 +2361,10 @@
         "Addon$modifiedAt": "<p>The Unix epoch timestamp for the last modification to the object.</p>",
         "AssociatedAccessPolicy$associatedAt": "<p>The date and time the <code>AccessPolicy</code> was associated with an <code>AccessEntry</code>.</p>",
         "AssociatedAccessPolicy$modifiedAt": "<p>The Unix epoch timestamp for the last modification to the object.</p>",
+        "Capability$createdAt": "<p>The Unix epoch timestamp in seconds for when the capability was created.</p>",
+        "Capability$modifiedAt": "<p>The Unix epoch timestamp in seconds for when the capability was last modified.</p>",
+        "CapabilitySummary$createdAt": "<p>The Unix epoch timestamp in seconds for when the capability was created.</p>",
+        "CapabilitySummary$modifiedAt": "<p>The Unix epoch timestamp in seconds for when the capability was last modified.</p>",
         "ClientStat$lastRequestTime": "<p>The timestamp of the last request seen from the Kubernetes client.</p>",
         "Cluster$createdAt": "<p>The Unix epoch timestamp at object creation.</p>",
         "ClusterVersionInformation$releaseDate": "<p>The release date of this cluster version.</p>",
@@ -2167,6 +2408,7 @@
         "DescribeUpdateResponse$update": "<p>The full description of the specified update.</p>",
         "DisassociateIdentityProviderConfigResponse$update": null,
         "UpdateAddonResponse$update": null,
+        "UpdateCapabilityResponse$update": null,
         "UpdateClusterConfigResponse$update": null,
         "UpdateClusterVersionResponse$update": "<p>The full description of the specified update</p>",
         "UpdateNodegroupConfigResponse$update": null,
@@ -2192,6 +2434,26 @@
       "refs": {}
     },
     "UpdateAddonResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateArgoCdConfig": {
+      "base": "<p>Configuration updates for an Argo CD capability. You only need to specify the fields you want to update.</p>",
+      "refs": {
+        "UpdateCapabilityConfiguration$argoCd": "<p>Configuration updates specific to Argo CD capabilities.</p>"
+      }
+    },
+    "UpdateCapabilityConfiguration": {
+      "base": "<p>Configuration updates for a capability. The structure varies depending on the capability type.</p>",
+      "refs": {
+        "UpdateCapabilityRequest$configuration": "<p>The updated configuration settings for the capability. You only need to specify the configuration parameters you want to change. For Argo CD capabilities, you can update RBAC role mappings and network access settings.</p>"
+      }
+    },
+    "UpdateCapabilityRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCapabilityResponse": {
       "base": null,
       "refs": {}
     },
@@ -2266,6 +2528,12 @@
     "UpdatePodIdentityAssociationResponse": {
       "base": null,
       "refs": {}
+    },
+    "UpdateRoleMappings": {
+      "base": "<p>Updates to RBAC role mappings for an Argo CD capability. You can add, update, or remove role mappings in a single operation.</p>",
+      "refs": {
+        "UpdateArgoCdConfig$rbacRoleMappings": "<p>Updated RBAC role mappings for the Argo CD capability. You can add, update, or remove role mappings.</p>"
+      }
     },
     "UpdateStatus": {
       "base": null,

@@ -1012,6 +1012,7 @@
         "GetUnfilteredPartitionMetadataResponse$IsRegisteredWithLakeFormation": "<p>A Boolean value that indicates whether the partition location is registered with Lake Formation.</p>",
         "GetUnfilteredTableMetadataResponse$IsRegisteredWithLakeFormation": "<p>A Boolean value that indicates whether the partition location is registered with Lake Formation.</p>",
         "GetUnfilteredTableMetadataResponse$IsMultiDialectView": "<p>Specifies whether the view supports the SQL dialects of one or more different query engines and can therefore be read by those engines.</p>",
+        "GetUnfilteredTableMetadataResponse$IsMaterializedView": "<p>Indicates if a table is a materialized view.</p>",
         "GetUnfilteredTableMetadataResponse$IsProtected": "<p>A flag that instructs the engine not to push user-provided operations into the logical plan of the view during query planning. However, if set this flag does not guarantee that the engine will comply. Refer to the engine's documentation to understand the guarantees provided, if any.</p>",
         "IcebergStructField$Required": "<p>Indicates whether this field is required (non-nullable) or optional (nullable) in the table schema.</p>",
         "StorageDescriptor$Compressed": "<p> <code>True</code> if the data in the table is compressed, or <code>False</code> if not.</p>",
@@ -1993,7 +1994,7 @@
       "base": null,
       "refs": {
         "Connection$ConnectionType": "<p>The type of the connection. Currently, SFTP is not supported.</p>",
-        "ConnectionInput$ConnectionType": "<p>The type of the connection. Currently, these types are supported:</p> <ul> <li> <p> <code>JDBC</code> - Designates a connection to a database through Java Database Connectivity (JDBC).</p> <p> <code>JDBC</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: All of (<code>HOST</code>, <code>PORT</code>, <code>JDBC_ENGINE</code>) or <code>JDBC_CONNECTION_URL</code>.</p> </li> <li> <p>Required: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> <li> <p>Optional: <code>JDBC_ENFORCE_SSL</code>, <code>CUSTOM_JDBC_CERT</code>, <code>CUSTOM_JDBC_CERT_STRING</code>, <code>SKIP_CUSTOM_JDBC_CERT_VALIDATION</code>. These parameters are used to configure SSL with JDBC.</p> </li> </ul> </li> <li> <p> <code>KAFKA</code> - Designates a connection to an Apache Kafka streaming platform.</p> <p> <code>KAFKA</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>KAFKA_BOOTSTRAP_SERVERS</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SSL_ENABLED</code>, <code>KAFKA_CUSTOM_CERT</code>, <code>KAFKA_SKIP_CUSTOM_CERT_VALIDATION</code>. These parameters are used to configure SSL with <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_CLIENT_KEYSTORE</code>, <code>KAFKA_CLIENT_KEYSTORE_PASSWORD</code>, <code>KAFKA_CLIENT_KEY_PASSWORD</code>, <code>ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD</code>, <code>ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD</code>. These parameters are used to configure TLS client configuration with SSL in <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_MECHANISM</code>. Can be specified as <code>SCRAM-SHA-512</code>, <code>GSSAPI</code>, or <code>AWS_MSK_IAM</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_SCRAM_USERNAME</code>, <code>KAFKA_SASL_SCRAM_PASSWORD</code>, <code>ENCRYPTED_KAFKA_SASL_SCRAM_PASSWORD</code>. These parameters are used to configure SASL/SCRAM-SHA-512 authentication with <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_GSSAPI_KEYTAB</code>, <code>KAFKA_SASL_GSSAPI_KRB5_CONF</code>, <code>KAFKA_SASL_GSSAPI_SERVICE</code>, <code>KAFKA_SASL_GSSAPI_PRINCIPAL</code>. These parameters are used to configure SASL/GSSAPI authentication with <code>KAFKA</code>.</p> </li> </ul> </li> <li> <p> <code>MONGODB</code> - Designates a connection to a MongoDB document database.</p> <p> <code>MONGODB</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>CONNECTION_URL</code>.</p> </li> <li> <p>Required: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> </ul> </li> <li> <p> <code>VIEW_VALIDATION_REDSHIFT</code> - Designates a connection used for view validation by Amazon Redshift.</p> </li> <li> <p> <code>VIEW_VALIDATION_ATHENA</code> - Designates a connection used for view validation by Amazon Athena.</p> </li> <li> <p> <code>NETWORK</code> - Designates a network connection to a data source within an Amazon Virtual Private Cloud environment (Amazon VPC).</p> <p> <code>NETWORK</code> Connections do not require ConnectionParameters. Instead, provide a PhysicalConnectionRequirements.</p> </li> <li> <p> <code>MARKETPLACE</code> - Uses configuration settings contained in a connector purchased from Amazon Web Services Marketplace to read from and write to data stores that are not natively supported by Glue.</p> <p> <code>MARKETPLACE</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>CONNECTOR_TYPE</code>, <code>CONNECTOR_URL</code>, <code>CONNECTOR_CLASS_NAME</code>, <code>CONNECTION_URL</code>.</p> </li> <li> <p>Required for <code>JDBC</code> <code>CONNECTOR_TYPE</code> connections: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> </ul> </li> <li> <p> <code>CUSTOM</code> - Uses configuration settings contained in a custom connector to read from and write to data stores that are not natively supported by Glue.</p> </li> </ul> <p>Additionally, a <code>ConnectionType</code> for the following SaaS connectors is supported:</p> <ul> <li> <p> <code>FACEBOOKADS</code> - Designates a connection to Facebook Ads.</p> </li> <li> <p> <code>GOOGLEADS</code> - Designates a connection to Google Ads.</p> </li> <li> <p> <code>GOOGLESHEETS</code> - Designates a connection to Google Sheets.</p> </li> <li> <p> <code>GOOGLEANALYTICS4</code> - Designates a connection to Google Analytics 4.</p> </li> <li> <p> <code>HUBSPOT</code> - Designates a connection to HubSpot.</p> </li> <li> <p> <code>INSTAGRAMADS</code> - Designates a connection to Instagram Ads.</p> </li> <li> <p> <code>INTERCOM</code> - Designates a connection to Intercom.</p> </li> <li> <p> <code>JIRACLOUD</code> - Designates a connection to Jira Cloud.</p> </li> <li> <p> <code>MARKETO</code> - Designates a connection to Adobe Marketo Engage.</p> </li> <li> <p> <code>NETSUITEERP</code> - Designates a connection to Oracle NetSuite.</p> </li> <li> <p> <code>SALESFORCE</code> - Designates a connection to Salesforce using OAuth authentication.</p> </li> <li> <p> <code>SALESFORCEMARKETINGCLOUD</code> - Designates a connection to Salesforce Marketing Cloud.</p> </li> <li> <p> <code>SALESFORCEPARDOT</code> - Designates a connection to Salesforce Marketing Cloud Account Engagement (MCAE).</p> </li> <li> <p> <code>SAPODATA</code> - Designates a connection to SAP OData.</p> </li> <li> <p> <code>SERVICENOW</code> - Designates a connection to ServiceNow.</p> </li> <li> <p> <code>SLACK</code> - Designates a connection to Slack.</p> </li> <li> <p> <code>SNAPCHATADS</code> - Designates a connection to Snapchat Ads.</p> </li> <li> <p> <code>STRIPE</code> - Designates a connection to Stripe.</p> </li> <li> <p> <code>ZENDESK</code> - Designates a connection to Zendesk.</p> </li> <li> <p> <code>ZOHOCRM</code> - Designates a connection to Zoho CRM.</p> </li> </ul> <p>For more information on the connection parameters needed for a particular connector, see the documentation for the connector in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/console-connections.html\">Adding an Glue connection</a>in the Glue User Guide.</p> <p> <code>SFTP</code> is not supported.</p> <p>For more information about how optional ConnectionProperties are used to configure features in Glue, consult <a href=\"https://docs.aws.amazon.com/glue/latest/dg/connection-defining.html\">Glue connection properties</a>.</p> <p>For more information about how optional ConnectionProperties are used to configure features in Glue Studio, consult <a href=\"https://docs.aws.amazon.com/glue/latest/ug/connectors-chapter.html\">Using connectors and connections</a>.</p>",
+        "ConnectionInput$ConnectionType": "<p>The type of the connection. Currently, these types are supported:</p> <ul> <li> <p> <code>JDBC</code> - Designates a connection to a database through Java Database Connectivity (JDBC).</p> <p> <code>JDBC</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: All of (<code>HOST</code>, <code>PORT</code>, <code>JDBC_ENGINE</code>) or <code>JDBC_CONNECTION_URL</code>.</p> </li> <li> <p>Required: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> <li> <p>Optional: <code>JDBC_ENFORCE_SSL</code>, <code>CUSTOM_JDBC_CERT</code>, <code>CUSTOM_JDBC_CERT_STRING</code>, <code>SKIP_CUSTOM_JDBC_CERT_VALIDATION</code>. These parameters are used to configure SSL with JDBC.</p> </li> </ul> </li> <li> <p> <code>KAFKA</code> - Designates a connection to an Apache Kafka streaming platform.</p> <p> <code>KAFKA</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>KAFKA_BOOTSTRAP_SERVERS</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SSL_ENABLED</code>, <code>KAFKA_CUSTOM_CERT</code>, <code>KAFKA_SKIP_CUSTOM_CERT_VALIDATION</code>. These parameters are used to configure SSL with <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_CLIENT_KEYSTORE</code>, <code>KAFKA_CLIENT_KEYSTORE_PASSWORD</code>, <code>KAFKA_CLIENT_KEY_PASSWORD</code>, <code>ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD</code>, <code>ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD</code>. These parameters are used to configure TLS client configuration with SSL in <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_MECHANISM</code>. Can be specified as <code>SCRAM-SHA-512</code>, <code>GSSAPI</code>, or <code>AWS_MSK_IAM</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_SCRAM_USERNAME</code>, <code>KAFKA_SASL_SCRAM_PASSWORD</code>, <code>ENCRYPTED_KAFKA_SASL_SCRAM_PASSWORD</code>. These parameters are used to configure SASL/SCRAM-SHA-512 authentication with <code>KAFKA</code>.</p> </li> <li> <p>Optional: <code>KAFKA_SASL_GSSAPI_KEYTAB</code>, <code>KAFKA_SASL_GSSAPI_KRB5_CONF</code>, <code>KAFKA_SASL_GSSAPI_SERVICE</code>, <code>KAFKA_SASL_GSSAPI_PRINCIPAL</code>. These parameters are used to configure SASL/GSSAPI authentication with <code>KAFKA</code>.</p> </li> </ul> </li> <li> <p> <code>MONGODB</code> - Designates a connection to a MongoDB document database.</p> <p> <code>MONGODB</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>CONNECTION_URL</code>.</p> </li> <li> <p>Required: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> </ul> </li> <li> <p> <code>VIEW_VALIDATION_REDSHIFT</code> - Designates a connection used for view validation by Amazon Redshift.</p> </li> <li> <p> <code>VIEW_VALIDATION_ATHENA</code> - Designates a connection used for view validation by Amazon Athena.</p> </li> <li> <p> <code>NETWORK</code> - Designates a network connection to a data source within an Amazon Virtual Private Cloud environment (Amazon VPC).</p> <p> <code>NETWORK</code> Connections do not require ConnectionParameters. Instead, provide a PhysicalConnectionRequirements.</p> </li> <li> <p> <code>MARKETPLACE</code> - Uses configuration settings contained in a connector purchased from Amazon Web Services Marketplace to read from and write to data stores that are not natively supported by Glue.</p> <p> <code>MARKETPLACE</code> Connections use the following ConnectionParameters.</p> <ul> <li> <p>Required: <code>CONNECTOR_TYPE</code>, <code>CONNECTOR_URL</code>, <code>CONNECTOR_CLASS_NAME</code>, <code>CONNECTION_URL</code>.</p> </li> <li> <p>Required for <code>JDBC</code> <code>CONNECTOR_TYPE</code> connections: All of (<code>USERNAME</code>, <code>PASSWORD</code>) or <code>SECRET_ID</code>.</p> </li> </ul> </li> <li> <p> <code>CUSTOM</code> - Uses configuration settings contained in a custom connector to read from and write to data stores that are not natively supported by Glue.</p> </li> </ul> <p>For more information on the connection parameters needed for a particular connector, see the documentation for the connector in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/console-connections.html\">Adding an Glue connection</a>in the Glue User Guide.</p> <p> <code>SFTP</code> is not supported.</p> <p>For more information about how optional ConnectionProperties are used to configure features in Glue, consult <a href=\"https://docs.aws.amazon.com/glue/latest/dg/connection-defining.html\">Glue connection properties</a>.</p> <p>For more information about how optional ConnectionProperties are used to configure features in Glue Studio, consult <a href=\"https://docs.aws.amazon.com/glue/latest/ug/connectors-chapter.html\">Using connectors and connections</a>.</p>",
         "ConnectionTypeBrief$ConnectionType": "<p>The name of the connection type.</p>",
         "GetConnectionsFilter$ConnectionType": "<p>The type of connections to return. Currently, SFTP is not supported.</p>",
         "TestConnectionInput$ConnectionType": "<p>The type of connection to test. This operation is only available for the <code>JDBC</code> or <code>SALESFORCE</code> connection types.</p>"
@@ -3881,6 +3882,12 @@
         "SqlAlias$Alias": "<p>A temporary name given to a table, or a column in a table.</p>"
       }
     },
+    "EncryptedKeyMetadataString": {
+      "base": null,
+      "refs": {
+        "IcebergEncryptedKey$EncryptedKeyMetadata": "<p>Encrypted key and metadata, base64 encoded. The format of encrypted key metadata is determined by the table's encryption scheme and can be a wrapped format specific to the table's KMS provider.</p>"
+      }
+    },
     "EncryptionAtRest": {
       "base": "<p>Specifies the encryption-at-rest configuration for the Data Catalog.</p>",
       "refs": {
@@ -3892,6 +3899,14 @@
       "refs": {
         "CreateSecurityConfigurationRequest$EncryptionConfiguration": "<p>The encryption configuration for the new security configuration.</p>",
         "SecurityConfiguration$EncryptionConfiguration": "<p>The encryption configuration associated with this security configuration.</p>"
+      }
+    },
+    "EncryptionKeyIdString": {
+      "base": null,
+      "refs": {
+        "IcebergEncryptedKey$KeyId": "<p>Unique identifier of the encryption key used for Iceberg table encryption. This ID is used to reference the key in table metadata and track which key was used to encrypt specific data.</p>",
+        "IcebergEncryptedKey$EncryptedById": "<p>Optional ID of the key used to encrypt or wrap the key metadata in Iceberg table encryption. This field references another encryption key that was used to encrypt the current key's metadata.</p>",
+        "IcebergTableUpdate$KeyId": "<p>Identifier of the encryption key involved in an Iceberg table update operation. References the specific key being added to or removed from the table's encryption configuration.</p>"
       }
     },
     "Entity": {
@@ -5431,7 +5446,8 @@
         "TaskRun$TaskRunId": "<p>The unique identifier for this task run.</p>",
         "TransformIdList$member": null,
         "UpdateMLTransformRequest$TransformId": "<p>A unique identifier that was generated when the transform was created.</p>",
-        "UpdateMLTransformResponse$TransformId": "<p>The unique identifier for the transform that was updated.</p>"
+        "UpdateMLTransformResponse$TransformId": "<p>The unique identifier for the transform that was updated.</p>",
+        "ViewDefinition$ViewVersionToken": "<p>The version ID of the Apache Iceberg table.</p>"
       }
     },
     "HudiTarget": {
@@ -5483,7 +5499,15 @@
     "IcebergDocument": {
       "base": null,
       "refs": {
-        "IcebergStructField$Type": "<p>The data type definition for this field, specifying the structure and format of the data it contains.</p>"
+        "IcebergStructField$Type": "<p>The data type definition for this field, specifying the structure and format of the data it contains.</p>",
+        "IcebergStructField$InitialDefault": "<p>Default value used to populate the field's value for all records that were written before the field was added to the schema. This enables backward compatibility when adding new fields to existing Iceberg tables.</p>",
+        "IcebergStructField$WriteDefault": "<p>Default value used to populate the field's value for any records written after the field was added to the schema, if the writer does not supply the field's value. This can be changed through schema evolution.</p>"
+      }
+    },
+    "IcebergEncryptedKey": {
+      "base": "<p>Encryption key structure used for Iceberg table encryption. Contains the key ID, encrypted key metadata, optional reference to the encrypting key, and additional properties for the table's encryption scheme.</p>",
+      "refs": {
+        "IcebergTableUpdate$EncryptionKey": "<p>Encryption key information associated with an Iceberg table update operation. Used when adding or removing encryption keys from the table metadata during table evolution.</p>"
       }
     },
     "IcebergInput": {
@@ -5638,6 +5662,12 @@
       "refs": {
         "IcebergPartitionField$Transform": "<p>The transformation function applied to the source field to create the partition, such as identity, bucket, truncate, year, month, day, or hour.</p>",
         "IcebergSortField$Transform": "<p>The transformation function applied to the source field before sorting, such as identity, bucket, or truncate.</p>"
+      }
+    },
+    "IcebergUpdateAction": {
+      "base": null,
+      "refs": {
+        "IcebergTableUpdate$Action": "<p>The type of update action to be performed on the Iceberg table. Defines the specific operation such as adding schema, setting current schema, adding partition spec, or managing encryption keys.</p>"
       }
     },
     "IdString": {
@@ -6355,6 +6385,13 @@
       "base": null,
       "refs": {
         "LastCrawlInfo$Status": "<p>Status of the last crawl.</p>"
+      }
+    },
+    "LastRefreshType": {
+      "base": null,
+      "refs": {
+        "ViewDefinition$LastRefreshType": "<p>Sets the method used for the most recent refresh.</p>",
+        "ViewDefinitionInput$LastRefreshType": "<p>The type of the materialized view's last refresh. Valid values: <code>Full</code>, <code>Incremental</code>.</p>"
       }
     },
     "LatestSchemaVersionBoolean": {
@@ -7684,6 +7721,7 @@
         "MongoDBTarget$ScanAll": "<p>Indicates whether to scan all the records, or to sample rows from the table. Scanning all the records can take a long time when the table is not a high throughput table.</p> <p>A value of <code>true</code> means to scan all records, while a value of <code>false</code> means to sample the records. If no value is specified, the value defaults to <code>true</code>.</p>",
         "StartJobRunRequest$JobRunQueuingEnabled": "<p>Specifies whether job run queuing is enabled for the job run.</p> <p>A value of true means job run queuing is enabled for the job run. If false or not populated, the job run will not be considered for queueing.</p>",
         "Table$IsMultiDialectView": "<p>Specifies whether the view supports the SQL dialects of one or more different query engines and can therefore be read by those engines.</p>",
+        "Table$IsMaterializedView": "<p>Indicates a table is a <code>MaterializedView</code>.</p>",
         "TableOptimizerConfiguration$enabled": "<p>Whether table optimization is enabled.</p>",
         "UpdateCsvClassifierRequest$DisableValueTrimming": "<p>Specifies not to trim values before identifying the type of column values. The default value is true.</p>",
         "UpdateCsvClassifierRequest$AllowSingleColumn": "<p>Enables the processing of files that contain only one column.</p>",
@@ -8755,6 +8793,13 @@
       "base": null,
       "refs": {
         "StatisticSummary$ReferencedDatasets": "<p>The list of datasets referenced by the statistic.</p>"
+      }
+    },
+    "RefreshSeconds": {
+      "base": null,
+      "refs": {
+        "ViewDefinition$RefreshSeconds": "<p>Auto refresh interval in seconds for the materialized view. If not specified, the view will not automatically refresh.</p>",
+        "ViewDefinitionInput$RefreshSeconds": "<p>Auto refresh interval in seconds for the materialized view. If not specified, the view will not automatically refresh.</p>"
       }
     },
     "RefreshToken": {
@@ -10126,6 +10171,7 @@
       "base": null,
       "refs": {
         "CreateIcebergTableInput$Properties": "<p>Key-value pairs of additional table properties and configuration settings for the Iceberg table.</p>",
+        "IcebergEncryptedKey$Properties": "<p>A string to string map of additional metadata used by the table's encryption scheme. These properties provide additional context and configuration for the encryption key implementation.</p>",
         "IcebergTableUpdate$Properties": "<p>Updated key-value pairs of table properties and configuration settings for the Iceberg table.</p>"
       }
     },
@@ -10270,7 +10316,7 @@
     "TableStatus": {
       "base": "<p>A structure containing information about the state of an asynchronous change to a table.</p>",
       "refs": {
-        "Table$Status": null
+        "Table$Status": "<p>Indicates the the state of an asynchronous change to a table.</p>"
       }
     },
     "TableTypeString": {
@@ -10297,6 +10343,14 @@
       "base": null,
       "refs": {
         "BatchDeleteTableVersionResponse$Errors": "<p>A list of errors encountered while trying to delete the specified table versions.</p>"
+      }
+    },
+    "TableVersionId": {
+      "base": null,
+      "refs": {
+        "ViewDefinition$ViewVersionId": "<p>The ID value that identifies this view's version. For materialized views, the version ID is the Apache Iceberg table's snapshot ID. </p>",
+        "ViewDefinitionInput$ViewVersionId": "<p>The ID value that identifies this view's version. For materialized views, the version ID is the Apache Iceberg table's snapshot ID. </p>",
+        "ViewSubObjectVersionIdsList$member": null
       }
     },
     "Tag": {
@@ -11405,7 +11459,8 @@
         "Table$VersionId": "<p>The ID of the table version.</p>",
         "TableVersion$VersionId": "<p>The ID value that identifies this table version. A <code>VersionId</code> is a string representation of an integer. Each version is incremented by 1.</p>",
         "TableVersionError$VersionId": "<p>The ID value of the version in question. A <code>VersionID</code> is a string representation of an integer. Each version is incremented by 1.</p>",
-        "UpdateTableRequest$VersionId": "<p>The version ID at which to update the table contents. </p>"
+        "UpdateTableRequest$VersionId": "<p>The version ID at which to update the table contents. </p>",
+        "ViewDefinitionInput$ViewVersionToken": "<p>The version ID of the Apache Iceberg table.</p>"
       }
     },
     "VersionsString": {
@@ -11466,6 +11521,13 @@
       "base": null,
       "refs": {
         "ViewDefinition$Representations": "<p>A list of representations.</p>"
+      }
+    },
+    "ViewSubObjectVersionIdsList": {
+      "base": null,
+      "refs": {
+        "ViewDefinition$SubObjectVersionIds": "<p>List of the Apache Iceberg table versions referenced by the materialized view.</p>",
+        "ViewDefinitionInput$SubObjectVersionIds": "<p>List of the Apache Iceberg table versions referenced by the materialized view.</p>"
       }
     },
     "ViewSubObjectsList": {

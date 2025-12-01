@@ -175,6 +175,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "CreateRecommender":{
+      "name":"CreateRecommender",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/recommenders/{RecommenderName}",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateRecommenderRequest"},
+      "output":{"shape":"CreateRecommenderResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "CreateSegmentDefinition":{
       "name":"CreateSegmentDefinition",
       "http":{
@@ -290,6 +307,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DeleteDomainObjectType":{
+      "name":"DeleteDomainObjectType",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domains/{DomainName}/domain-object-types/{ObjectTypeName}"
+      },
+      "input":{"shape":"DeleteDomainObjectTypeRequest"},
+      "output":{"shape":"DeleteDomainObjectTypeResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DeleteEventStream":{
       "name":"DeleteEventStream",
       "http":{
@@ -401,6 +434,23 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
+      ]
+    },
+    "DeleteRecommender":{
+      "name":"DeleteRecommender",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domains/{DomainName}/recommenders/{RecommenderName}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteRecommenderRequest"},
+      "output":{"shape":"DeleteRecommenderResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "DeleteSegmentDefinition":{
@@ -533,6 +583,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetDomainObjectType":{
+      "name":"GetDomainObjectType",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/domain-object-types/{ObjectTypeName}"
+      },
+      "input":{"shape":"GetDomainObjectTypeRequest"},
+      "output":{"shape":"GetDomainObjectTypeResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetEventStream":{
       "name":"GetEventStream",
       "http":{
@@ -613,6 +679,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetObjectTypeAttributeStatistics":{
+      "name":"GetObjectTypeAttributeStatistics",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/object-types/{ObjectTypeName}/attributes/{AttributeName}/statistics"
+      },
+      "input":{"shape":"GetObjectTypeAttributeStatisticsRequest"},
+      "output":{"shape":"GetObjectTypeAttributeStatisticsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetProfileHistoryRecord":{
       "name":"GetProfileHistoryRecord",
       "http":{
@@ -660,6 +742,40 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "GetProfileRecommendations":{
+      "name":"GetProfileRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/profiles/{ProfileId}/recommendations"
+      },
+      "input":{"shape":"GetProfileRecommendationsRequest"},
+      "output":{"shape":"GetProfileRecommendationsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetRecommender":{
+      "name":"GetRecommender",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/recommenders/{RecommenderName}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetRecommenderRequest"},
+      "output":{"shape":"GetRecommenderResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
     },
     "GetSegmentDefinition":{
       "name":"GetSegmentDefinition",
@@ -877,6 +993,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListDomainObjectTypes":{
+      "name":"ListDomainObjectTypes",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/domain-object-types"
+      },
+      "input":{"shape":"ListDomainObjectTypesRequest"},
+      "output":{"shape":"ListDomainObjectTypesResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListDomains":{
       "name":"ListDomains",
       "http":{
@@ -949,6 +1081,22 @@
       },
       "input":{"shape":"ListIntegrationsRequest"},
       "output":{"shape":"ListIntegrationsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListObjectTypeAttributeValues":{
+      "name":"ListObjectTypeAttributeValues",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/object-types/{ObjectTypeName}/attributes/{AttributeName}/values"
+      },
+      "input":{"shape":"ListObjectTypeAttributeValuesRequest"},
+      "output":{"shape":"ListObjectTypeAttributeValuesResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"ResourceNotFoundException"},
@@ -1053,6 +1201,41 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListRecommenderRecipes":{
+      "name":"ListRecommenderRecipes",
+      "http":{
+        "method":"GET",
+        "requestUri":"/recommender-recipes",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRecommenderRecipesRequest"},
+      "output":{"shape":"ListRecommenderRecipesResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
+    "ListRecommenders":{
+      "name":"ListRecommenders",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/recommenders",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRecommendersRequest"},
+      "output":{"shape":"ListRecommendersResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "readonly":true
+    },
     "ListRuleBasedMatches":{
       "name":"ListRuleBasedMatches",
       "http":{
@@ -1150,6 +1333,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "PutDomainObjectType":{
+      "name":"PutDomainObjectType",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/domains/{DomainName}/domain-object-types/{ObjectTypeName}"
+      },
+      "input":{"shape":"PutDomainObjectTypeRequest"},
+      "output":{"shape":"PutDomainObjectTypeResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "PutIntegration":{
       "name":"PutIntegration",
       "http":{
@@ -1214,6 +1413,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "StartRecommender":{
+      "name":"StartRecommender",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/domains/{DomainName}/recommenders/{RecommenderName}/start",
+        "responseCode":200
+      },
+      "input":{"shape":"StartRecommenderRequest"},
+      "output":{"shape":"StartRecommenderResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "StartUploadJob":{
       "name":"StartUploadJob",
       "http":{
@@ -1223,6 +1439,23 @@
       },
       "input":{"shape":"StartUploadJobRequest"},
       "output":{"shape":"StartUploadJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "StopRecommender":{
+      "name":"StopRecommender",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/domains/{DomainName}/recommenders/{RecommenderName}/stop",
+        "responseCode":200
+      },
+      "input":{"shape":"StopRecommenderRequest"},
+      "output":{"shape":"StopRecommenderResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
@@ -1354,6 +1587,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
+      ]
+    },
+    "UpdateRecommender":{
+      "name":"UpdateRecommender",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/domains/{DomainName}/recommenders/{RecommenderName}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateRecommenderRequest"},
+      "output":{"shape":"UpdateRecommenderResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     }
   },
@@ -1529,6 +1779,10 @@
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"}
       }
+    },
+    "Arn":{
+      "type":"string",
+      "pattern":"arn:([a-z\\d-]+):profile:.*:.*:.+"
     },
     "AttributeDetails":{
       "type":"structure",
@@ -1827,6 +2081,24 @@
       "key":{"shape":"typeName"},
       "value":{"shape":"CalculatedAttributeDimension"}
     },
+    "CatalogItem":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"sensitiveString1To255"},
+        "Name":{"shape":"sensitiveString1To255"},
+        "Code":{"shape":"sensitiveString1To255"},
+        "Type":{"shape":"sensitiveString1To255"},
+        "Category":{"shape":"sensitiveString1To255"},
+        "Description":{"shape":"sensitiveString1To255"},
+        "AdditionalInformation":{"shape":"sensitiveString1To1000"},
+        "ImageLink":{"shape":"sensitiveString1To1000"},
+        "Link":{"shape":"sensitiveString1To1000"},
+        "CreatedAt":{"shape":"timestamp"},
+        "UpdatedAt":{"shape":"timestamp"},
+        "Price":{"shape":"sensitiveString1To255"},
+        "Attributes":{"shape":"Attributes"}
+      }
+    },
     "ComparisonOperator":{
       "type":"string",
       "enum":[
@@ -1920,6 +2192,19 @@
         "PersonalEmailAddress",
         "BusinessEmailAddress"
       ]
+    },
+    "ContentType":{
+      "type":"string",
+      "enum":[
+        "STRING",
+        "NUMBER"
+      ]
+    },
+    "ContextKey":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_.-]+$"
     },
     "CreateCalculatedAttributeDefinitionRequest":{
       "type":"structure",
@@ -2038,6 +2323,7 @@
         "DeadLetterQueueUrl":{"shape":"sqsQueueUrl"},
         "Matching":{"shape":"MatchingRequest"},
         "RuleBasedMatching":{"shape":"RuleBasedMatchingRequest"},
+        "DataStore":{"shape":"DataStoreRequest"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -2056,6 +2342,7 @@
         "DeadLetterQueueUrl":{"shape":"sqsQueueUrl"},
         "Matching":{"shape":"MatchingResponse"},
         "RuleBasedMatching":{"shape":"RuleBasedMatchingResponse"},
+        "DataStore":{"shape":"DataStoreResponse"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
         "Tags":{"shape":"TagMap"}
@@ -2208,13 +2495,44 @@
         "ProfileId":{"shape":"uuid"}
       }
     },
+    "CreateRecommenderRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "RecommenderName",
+        "RecommenderRecipeName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "RecommenderName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"RecommenderName"
+        },
+        "RecommenderRecipeName":{"shape":"RecommenderRecipeName"},
+        "RecommenderConfig":{"shape":"RecommenderConfig"},
+        "Description":{"shape":"sensitiveText"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateRecommenderResponse":{
+      "type":"structure",
+      "required":["RecommenderArn"],
+      "members":{
+        "RecommenderArn":{"shape":"Arn"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
     "CreateSegmentDefinitionRequest":{
       "type":"structure",
       "required":[
         "DomainName",
         "SegmentDefinitionName",
-        "DisplayName",
-        "SegmentGroups"
+        "DisplayName"
       ],
       "members":{
         "DomainName":{
@@ -2228,8 +2546,9 @@
           "locationName":"SegmentDefinitionName"
         },
         "DisplayName":{"shape":"string1To255"},
-        "Description":{"shape":"sensitiveText"},
+        "Description":{"shape":"sensitiveString1To4000"},
         "SegmentGroups":{"shape":"SegmentGroup"},
+        "SegmentSqlQuery":{"shape":"sensitiveString1To50000"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -2246,7 +2565,7 @@
           "locationName":"DisplayName"
         },
         "Description":{
-          "shape":"sensitiveText",
+          "shape":"sensitiveString1To4000",
           "locationName":"Description"
         },
         "CreatedAt":{
@@ -2265,17 +2584,15 @@
     },
     "CreateSegmentEstimateRequest":{
       "type":"structure",
-      "required":[
-        "DomainName",
-        "SegmentQuery"
-      ],
+      "required":["DomainName"],
       "members":{
         "DomainName":{
           "shape":"name",
           "location":"uri",
           "locationName":"DomainName"
         },
-        "SegmentQuery":{"shape":"SegmentGroupStructure"}
+        "SegmentQuery":{"shape":"SegmentGroupStructure"},
+        "SegmentSqlQuery":{"shape":"sensitiveString1To50000"}
       }
     },
     "CreateSegmentEstimateResponse":{
@@ -2370,6 +2687,19 @@
         "Complete"
       ]
     },
+    "DataStoreRequest":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"optionalBoolean"}
+      }
+    },
+    "DataStoreResponse":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"optionalBoolean"},
+        "Readiness":{"shape":"Readiness"}
+      }
+    },
     "Date":{"type":"timestamp"},
     "DateDimension":{
       "type":"structure",
@@ -2457,6 +2787,29 @@
       "members":{
         "Message":{"shape":"message"}
       }
+    },
+    "DeleteDomainObjectTypeRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "ObjectTypeName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "ObjectTypeName":{
+          "shape":"typeName",
+          "location":"uri",
+          "locationName":"ObjectTypeName"
+        }
+      }
+    },
+    "DeleteDomainObjectTypeResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteDomainRequest":{
       "type":"structure",
@@ -2644,6 +2997,29 @@
         "Message":{"shape":"message"}
       }
     },
+    "DeleteRecommenderRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "RecommenderName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "RecommenderName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"RecommenderName"
+        }
+      }
+    },
+    "DeleteRecommenderResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DeleteSegmentDefinitionRequest":{
       "type":"structure",
       "required":[
@@ -2767,6 +3143,46 @@
       "type":"list",
       "member":{"shape":"ListDomainItem"}
     },
+    "DomainObjectTypeField":{
+      "type":"structure",
+      "required":[
+        "Source",
+        "Target"
+      ],
+      "members":{
+        "Source":{"shape":"text"},
+        "Target":{"shape":"text"},
+        "ContentType":{"shape":"ContentType"},
+        "FeatureType":{"shape":"FeatureType"}
+      }
+    },
+    "DomainObjectTypeFieldName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_.-]+$"
+    },
+    "DomainObjectTypeFields":{
+      "type":"map",
+      "key":{"shape":"DomainObjectTypeFieldName"},
+      "value":{"shape":"DomainObjectTypeField"}
+    },
+    "DomainObjectTypesList":{
+      "type":"list",
+      "member":{"shape":"DomainObjectTypesListItem"},
+      "sensitive":true
+    },
+    "DomainObjectTypesListItem":{
+      "type":"structure",
+      "required":["ObjectTypeName"],
+      "members":{
+        "ObjectTypeName":{"shape":"typeName"},
+        "Description":{"shape":"sensitiveString1To10000"},
+        "CreatedAt":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
     "DomainStats":{
       "type":"structure",
       "members":{
@@ -2808,6 +3224,25 @@
         "SUCCEEDED",
         "FAILED"
       ]
+    },
+    "EventParameters":{
+      "type":"structure",
+      "required":["EventType"],
+      "members":{
+        "EventType":{"shape":"EventParametersEventTypeString"},
+        "EventValueThreshold":{"shape":"Double"}
+      }
+    },
+    "EventParametersEventTypeString":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
+    "EventParametersList":{
+      "type":"list",
+      "member":{"shape":"EventParameters"},
+      "max":5,
+      "min":1
     },
     "EventStreamDestinationDetails":{
       "type":"structure",
@@ -2932,6 +3367,13 @@
       "max":10,
       "min":1
     },
+    "EventsConfig":{
+      "type":"structure",
+      "required":["EventParametersList"],
+      "members":{
+        "EventParametersList":{"shape":"EventParametersList"}
+      }
+    },
     "ExportingConfig":{
       "type":"structure",
       "members":{
@@ -2970,6 +3412,13 @@
     "Failures":{
       "type":"list",
       "member":{"shape":"ProfileQueryFailures"}
+    },
+    "FeatureType":{
+      "type":"string",
+      "enum":[
+        "TEXTUAL",
+        "CATEGORICAL"
+      ]
     },
     "FieldContentType":{
       "type":"string",
@@ -3275,6 +3724,38 @@
         "Tags":{"shape":"TagMap"}
       }
     },
+    "GetDomainObjectTypeRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "ObjectTypeName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "ObjectTypeName":{
+          "shape":"typeName",
+          "location":"uri",
+          "locationName":"ObjectTypeName"
+        }
+      }
+    },
+    "GetDomainObjectTypeResponse":{
+      "type":"structure",
+      "required":["ObjectTypeName"],
+      "members":{
+        "ObjectTypeName":{"shape":"typeName"},
+        "Description":{"shape":"sensitiveString1To10000"},
+        "EncryptionKey":{"shape":"encryptionKey"},
+        "Fields":{"shape":"DomainObjectTypeFields"},
+        "CreatedAt":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
     "GetDomainRequest":{
       "type":"structure",
       "required":["DomainName"],
@@ -3301,6 +3782,7 @@
         "Stats":{"shape":"DomainStats"},
         "Matching":{"shape":"MatchingResponse"},
         "RuleBasedMatching":{"shape":"RuleBasedMatchingResponse"},
+        "DataStore":{"shape":"DataStoreResponse"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
         "Tags":{"shape":"TagMap"}
@@ -3446,7 +3928,8 @@
         "WorkflowId":{"shape":"string1To255"},
         "IsUnstructured":{"shape":"optionalBoolean"},
         "RoleArn":{"shape":"RoleArn"},
-        "EventTriggerNames":{"shape":"EventTriggerNames"}
+        "EventTriggerNames":{"shape":"EventTriggerNames"},
+        "Scope":{"shape":"Scope"}
       }
     },
     "GetMatchesRequest":{
@@ -3477,6 +3960,76 @@
         "MatchGenerationDate":{"shape":"timestamp"},
         "PotentialMatches":{"shape":"matchesNumber"},
         "Matches":{"shape":"MatchesList"}
+      }
+    },
+    "GetObjectTypeAttributeStatisticsPercentiles":{
+      "type":"structure",
+      "required":[
+        "P5",
+        "P25",
+        "P50",
+        "P75",
+        "P95"
+      ],
+      "members":{
+        "P5":{"shape":"Double"},
+        "P25":{"shape":"Double"},
+        "P50":{"shape":"Double"},
+        "P75":{"shape":"Double"},
+        "P95":{"shape":"Double"}
+      }
+    },
+    "GetObjectTypeAttributeStatisticsRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "ObjectTypeName",
+        "AttributeName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "ObjectTypeName":{
+          "shape":"typeName",
+          "location":"uri",
+          "locationName":"ObjectTypeName"
+        },
+        "AttributeName":{
+          "shape":"string1To1000",
+          "location":"uri",
+          "locationName":"AttributeName"
+        }
+      }
+    },
+    "GetObjectTypeAttributeStatisticsResponse":{
+      "type":"structure",
+      "required":[
+        "Statistics",
+        "CalculatedAt"
+      ],
+      "members":{
+        "Statistics":{"shape":"GetObjectTypeAttributeStatisticsStats"},
+        "CalculatedAt":{"shape":"timestamp"}
+      }
+    },
+    "GetObjectTypeAttributeStatisticsStats":{
+      "type":"structure",
+      "required":[
+        "Maximum",
+        "Minimum",
+        "Average",
+        "StandardDeviation",
+        "Percentiles"
+      ],
+      "members":{
+        "Maximum":{"shape":"Double"},
+        "Minimum":{"shape":"Double"},
+        "Average":{"shape":"Double"},
+        "StandardDeviation":{"shape":"Double"},
+        "Percentiles":{"shape":"GetObjectTypeAttributeStatisticsPercentiles"}
       }
     },
     "GetProfileHistoryRecordRequest":{
@@ -3588,6 +4141,85 @@
         "Keys":{"shape":"KeyMap"}
       }
     },
+    "GetProfileRecommendationsRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "ProfileId",
+        "RecommenderName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "ProfileId":{
+          "shape":"uuid",
+          "location":"uri",
+          "locationName":"ProfileId"
+        },
+        "RecommenderName":{"shape":"name"},
+        "Context":{"shape":"RecommenderContext"},
+        "MaxResults":{"shape":"MaxSize10"}
+      }
+    },
+    "GetProfileRecommendationsResponse":{
+      "type":"structure",
+      "members":{
+        "Recommendations":{"shape":"Recommendations"}
+      }
+    },
+    "GetRecommenderRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "RecommenderName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "RecommenderName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"RecommenderName"
+        },
+        "TrainingMetricsCount":{
+          "shape":"GetRecommenderRequestTrainingMetricsCountInteger",
+          "location":"querystring",
+          "locationName":"training-metrics-count"
+        }
+      }
+    },
+    "GetRecommenderRequestTrainingMetricsCountInteger":{
+      "type":"integer",
+      "box":true,
+      "max":5,
+      "min":0
+    },
+    "GetRecommenderResponse":{
+      "type":"structure",
+      "required":[
+        "RecommenderName",
+        "RecommenderRecipeName"
+      ],
+      "members":{
+        "RecommenderName":{"shape":"name"},
+        "RecommenderRecipeName":{"shape":"RecommenderRecipeName"},
+        "RecommenderConfig":{"shape":"RecommenderConfig"},
+        "Description":{"shape":"sensitiveText"},
+        "Status":{"shape":"RecommenderStatus"},
+        "LastUpdatedAt":{"shape":"timestamp"},
+        "CreatedAt":{"shape":"timestamp"},
+        "FailureReason":{"shape":"String"},
+        "LatestRecommenderUpdate":{"shape":"RecommenderUpdate"},
+        "TrainingMetrics":{"shape":"TrainingMetricsList"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
     "GetSegmentDefinitionRequest":{
       "type":"structure",
       "required":[
@@ -3620,7 +4252,7 @@
           "locationName":"DisplayName"
         },
         "Description":{
-          "shape":"sensitiveText",
+          "shape":"sensitiveString1To4000",
           "locationName":"Description"
         },
         "SegmentGroups":{
@@ -3638,6 +4270,14 @@
         "Tags":{
           "shape":"TagMap",
           "locationName":"Tags"
+        },
+        "SegmentSqlQuery":{
+          "shape":"sensitiveString1To50000",
+          "locationName":"SegmentSqlQuery"
+        },
+        "SegmentType":{
+          "shape":"SegmentType",
+          "locationName":"SegmentType"
         }
       }
     },
@@ -3713,6 +4353,10 @@
         "Failures":{
           "shape":"Failures",
           "locationName":"Failures"
+        },
+        "LastComputedAt":{
+          "shape":"timestamp",
+          "locationName":"LastComputedAt"
         }
       }
     },
@@ -4306,6 +4950,34 @@
         "NextToken":{"shape":"token"}
       }
     },
+    "ListDomainObjectTypesRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "MaxResults":{
+          "shape":"maxSize100",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"token",
+          "location":"querystring",
+          "locationName":"next-token"
+        }
+      }
+    },
+    "ListDomainObjectTypesResponse":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"DomainObjectTypesList"},
+        "NextToken":{"shape":"token"}
+      }
+    },
     "ListDomainsRequest":{
       "type":"structure",
       "members":{
@@ -4431,7 +5103,8 @@
         "WorkflowId":{"shape":"string1To255"},
         "IsUnstructured":{"shape":"optionalBoolean"},
         "RoleArn":{"shape":"RoleArn"},
-        "EventTriggerNames":{"shape":"EventTriggerNames"}
+        "EventTriggerNames":{"shape":"EventTriggerNames"},
+        "Scope":{"shape":"Scope"}
       }
     },
     "ListIntegrationsRequest":{
@@ -4476,6 +5149,63 @@
       "members":{
         "AttributeName":{"shape":"name"},
         "LastUpdatedAt":{"shape":"timestamp"}
+      }
+    },
+    "ListObjectTypeAttributeValuesItem":{
+      "type":"structure",
+      "required":[
+        "Value",
+        "LastUpdatedAt"
+      ],
+      "members":{
+        "Value":{"shape":"sensitiveString1To1000"},
+        "LastUpdatedAt":{"shape":"timestamp"}
+      }
+    },
+    "ListObjectTypeAttributeValuesList":{
+      "type":"list",
+      "member":{"shape":"ListObjectTypeAttributeValuesItem"}
+    },
+    "ListObjectTypeAttributeValuesRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "ObjectTypeName",
+        "AttributeName"
+      ],
+      "members":{
+        "NextToken":{
+          "shape":"token",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"maxSize100",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "ObjectTypeName":{
+          "shape":"typeName",
+          "location":"uri",
+          "locationName":"ObjectTypeName"
+        },
+        "AttributeName":{
+          "shape":"string1To1000",
+          "location":"uri",
+          "locationName":"AttributeName"
+        }
+      }
+    },
+    "ListObjectTypeAttributeValuesResponse":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"ListObjectTypeAttributeValuesList"},
+        "NextToken":{"shape":"token"}
       }
     },
     "ListObjectTypeAttributesList":{
@@ -4668,6 +5398,68 @@
       "members":{
         "Items":{"shape":"ProfileObjectList"},
         "NextToken":{"shape":"token"}
+      }
+    },
+    "ListRecommenderRecipesRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{
+          "shape":"ListRecommenderRecipesRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"token",
+          "location":"querystring",
+          "locationName":"next-token"
+        }
+      }
+    },
+    "ListRecommenderRecipesRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":10
+    },
+    "ListRecommenderRecipesResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"token"},
+        "RecommenderRecipes":{"shape":"RecommenderRecipesList"}
+      }
+    },
+    "ListRecommendersRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "MaxResults":{
+          "shape":"ListRecommendersRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"token",
+          "location":"querystring",
+          "locationName":"next-token"
+        }
+      }
+    },
+    "ListRecommendersRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListRecommendersResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"token"},
+        "Recommenders":{"shape":"RecommenderSummaryList"}
       }
     },
     "ListRuleBasedMatchesRequest":{
@@ -4945,6 +5737,11 @@
       "max":15,
       "min":1
     },
+    "MaxSize10":{
+      "type":"integer",
+      "max":10,
+      "min":1
+    },
     "MaxSize500":{
       "type":"integer",
       "box":true,
@@ -4974,6 +5771,11 @@
       "members":{
         "Message":{"shape":"message"}
       }
+    },
+    "Metrics":{
+      "type":"map",
+      "key":{"shape":"TrainingMetricName"},
+      "value":{"shape":"Double"}
     },
     "Object":{
       "type":"string",
@@ -5440,6 +6242,42 @@
       "max":2048,
       "pattern":".+"
     },
+    "PutDomainObjectTypeRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "ObjectTypeName",
+        "Fields"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "ObjectTypeName":{
+          "shape":"typeName",
+          "location":"uri",
+          "locationName":"ObjectTypeName"
+        },
+        "Description":{"shape":"sensitiveString1To10000"},
+        "EncryptionKey":{"shape":"encryptionKey"},
+        "Fields":{"shape":"DomainObjectTypeFields"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "PutDomainObjectTypeResponse":{
+      "type":"structure",
+      "members":{
+        "ObjectTypeName":{"shape":"typeName"},
+        "Description":{"shape":"sensitiveString1To10000"},
+        "EncryptionKey":{"shape":"encryptionKey"},
+        "Fields":{"shape":"DomainObjectTypeFields"},
+        "CreatedAt":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
     "PutIntegrationRequest":{
       "type":"structure",
       "required":["DomainName"],
@@ -5451,11 +6289,12 @@
         },
         "Uri":{"shape":"string1To255"},
         "ObjectTypeName":{"shape":"typeName"},
+        "ObjectTypeNames":{"shape":"ObjectTypeNames"},
         "Tags":{"shape":"TagMap"},
         "FlowDefinition":{"shape":"FlowDefinition"},
-        "ObjectTypeNames":{"shape":"ObjectTypeNames"},
         "RoleArn":{"shape":"RoleArn"},
-        "EventTriggerNames":{"shape":"EventTriggerNames"}
+        "EventTriggerNames":{"shape":"EventTriggerNames"},
+        "Scope":{"shape":"Scope"}
       }
     },
     "PutIntegrationResponse":{
@@ -5477,7 +6316,8 @@
         "WorkflowId":{"shape":"string1To255"},
         "IsUnstructured":{"shape":"optionalBoolean"},
         "RoleArn":{"shape":"RoleArn"},
-        "EventTriggerNames":{"shape":"EventTriggerNames"}
+        "EventTriggerNames":{"shape":"EventTriggerNames"},
+        "Scope":{"shape":"Scope"}
       }
     },
     "PutProfileObjectRequest":{
@@ -5604,6 +6444,101 @@
         "COMPLETED",
         "FAILED"
       ]
+    },
+    "Recommendation":{
+      "type":"structure",
+      "members":{
+        "CatalogItem":{"shape":"CatalogItem"},
+        "Score":{"shape":"Double0To1"}
+      }
+    },
+    "Recommendations":{
+      "type":"list",
+      "member":{"shape":"Recommendation"},
+      "sensitive":true
+    },
+    "RecommenderConfig":{
+      "type":"structure",
+      "required":["EventsConfig"],
+      "members":{
+        "EventsConfig":{"shape":"EventsConfig"},
+        "TrainingFrequency":{"shape":"RecommenderConfigTrainingFrequencyInteger"}
+      }
+    },
+    "RecommenderConfigTrainingFrequencyInteger":{
+      "type":"integer",
+      "box":true,
+      "max":7,
+      "min":7
+    },
+    "RecommenderContext":{
+      "type":"map",
+      "key":{"shape":"ContextKey"},
+      "value":{"shape":"string1To255"},
+      "sensitive":true
+    },
+    "RecommenderRecipe":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"RecommenderRecipeName"},
+        "description":{"shape":"String"}
+      }
+    },
+    "RecommenderRecipeName":{
+      "type":"string",
+      "enum":[
+        "recommended-for-you",
+        "similar-items",
+        "frequently-paired-items",
+        "popular-items",
+        "trending-now"
+      ]
+    },
+    "RecommenderRecipesList":{
+      "type":"list",
+      "member":{"shape":"RecommenderRecipe"}
+    },
+    "RecommenderStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "IN_PROGRESS",
+        "ACTIVE",
+        "FAILED",
+        "STOPPING",
+        "INACTIVE",
+        "STARTING",
+        "DELETING"
+      ]
+    },
+    "RecommenderSummary":{
+      "type":"structure",
+      "members":{
+        "RecommenderName":{"shape":"name"},
+        "RecipeName":{"shape":"RecommenderRecipeName"},
+        "RecommenderConfig":{"shape":"RecommenderConfig"},
+        "CreatedAt":{"shape":"timestamp"},
+        "Description":{"shape":"sensitiveText"},
+        "Status":{"shape":"RecommenderStatus"},
+        "LastUpdatedAt":{"shape":"timestamp"},
+        "Tags":{"shape":"TagMap"},
+        "FailureReason":{"shape":"String"},
+        "LatestRecommenderUpdate":{"shape":"RecommenderUpdate"}
+      }
+    },
+    "RecommenderSummaryList":{
+      "type":"list",
+      "member":{"shape":"RecommenderSummary"}
+    },
+    "RecommenderUpdate":{
+      "type":"structure",
+      "members":{
+        "RecommenderConfig":{"shape":"RecommenderConfig"},
+        "Status":{"shape":"RecommenderStatus"},
+        "CreatedAt":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"},
+        "FailureReason":{"shape":"String"}
+      }
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -5783,6 +6718,13 @@
         "FirstExecutionFrom":{"shape":"Date"}
       }
     },
+    "Scope":{
+      "type":"string",
+      "enum":[
+        "PROFILE",
+        "DOMAIN"
+      ]
+    },
     "SearchProfilesRequest":{
       "type":"structure",
       "required":[
@@ -5836,7 +6778,7 @@
           "locationName":"DisplayName"
         },
         "Description":{
-          "shape":"sensitiveText",
+          "shape":"sensitiveString1To4000",
           "locationName":"Description"
         },
         "SegmentDefinitionArn":{
@@ -5850,6 +6792,10 @@
         "Tags":{
           "shape":"TagMap",
           "locationName":"Tags"
+        },
+        "SegmentType":{
+          "shape":"SegmentType",
+          "locationName":"SegmentType"
         }
       }
     },
@@ -5888,6 +6834,13 @@
         "COMPLETED",
         "IN_PROGRESS",
         "FAILED"
+      ]
+    },
+    "SegmentType":{
+      "type":"string",
+      "enum":[
+        "CLASSIC",
+        "ENHANCED"
       ]
     },
     "ServiceNowConnectorOperator":{
@@ -6001,6 +6954,29 @@
       "member":{"shape":"StandardIdentifier"}
     },
     "Start":{"type":"integer"},
+    "StartRecommenderRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "RecommenderName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "RecommenderName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"RecommenderName"
+        }
+      }
+    },
+    "StartRecommenderResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "StartUploadJobRequest":{
       "type":"structure",
       "required":[
@@ -6057,6 +7033,29 @@
         "VALIDATION_FAILURE",
         "INTERNAL_FAILURE"
       ]
+    },
+    "StopRecommenderRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "RecommenderName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "RecommenderName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"RecommenderName"
+        }
+      }
+    },
+    "StopRecommenderResponse":{
+      "type":"structure",
+      "members":{}
     },
     "StopUploadJobRequest":{
       "type":"structure",
@@ -6197,6 +7196,28 @@
       "type":"string",
       "max":256,
       "pattern":".*"
+    },
+    "TrainingMetricName":{
+      "type":"string",
+      "enum":[
+        "hit",
+        "coverage",
+        "recall",
+        "popularity",
+        "freshness",
+        "similarity"
+      ]
+    },
+    "TrainingMetrics":{
+      "type":"structure",
+      "members":{
+        "Time":{"shape":"timestamp"},
+        "Metrics":{"shape":"Metrics"}
+      }
+    },
+    "TrainingMetricsList":{
+      "type":"list",
+      "member":{"shape":"TrainingMetrics"}
     },
     "TriggerConfig":{
       "type":"structure",
@@ -6369,6 +7390,7 @@
         "DeadLetterQueueUrl":{"shape":"sqsQueueUrl"},
         "Matching":{"shape":"MatchingRequest"},
         "RuleBasedMatching":{"shape":"RuleBasedMatchingRequest"},
+        "DataStore":{"shape":"DataStoreRequest"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -6386,6 +7408,7 @@
         "DeadLetterQueueUrl":{"shape":"sqsQueueUrl"},
         "Matching":{"shape":"MatchingResponse"},
         "RuleBasedMatching":{"shape":"RuleBasedMatchingResponse"},
+        "DataStore":{"shape":"DataStoreResponse"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
         "Tags":{"shape":"TagMap"}
@@ -6474,6 +7497,34 @@
       "required":["ProfileId"],
       "members":{
         "ProfileId":{"shape":"uuid"}
+      }
+    },
+    "UpdateRecommenderRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "RecommenderName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "RecommenderName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"RecommenderName"
+        },
+        "Description":{"shape":"sensitiveText"},
+        "RecommenderConfig":{"shape":"RecommenderConfig"}
+      }
+    },
+    "UpdateRecommenderResponse":{
+      "type":"structure",
+      "required":["RecommenderName"],
+      "members":{
+        "RecommenderName":{"shape":"name"}
       }
     },
     "UploadJobItem":{
@@ -6734,6 +7785,12 @@
       "min":1,
       "sensitive":true
     },
+    "sensitiveString1To10000":{
+      "type":"string",
+      "max":10000,
+      "min":1,
+      "sensitive":true
+    },
     "sensitiveString1To2000000":{
       "type":"string",
       "max":2000000,
@@ -6743,6 +7800,18 @@
     "sensitiveString1To255":{
       "type":"string",
       "max":255,
+      "min":1,
+      "sensitive":true
+    },
+    "sensitiveString1To4000":{
+      "type":"string",
+      "max":4000,
+      "min":1,
+      "sensitive":true
+    },
+    "sensitiveString1To50000":{
+      "type":"string",
+      "max":50000,
       "min":1,
       "sensitive":true
     },

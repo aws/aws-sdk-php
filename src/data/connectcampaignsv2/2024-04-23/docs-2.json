@@ -60,7 +60,8 @@
       "refs": {
         "EmailOutboundMode$agentless": null,
         "SmsOutboundMode$agentless": null,
-        "TelephonyOutboundMode$agentless": null
+        "TelephonyOutboundMode$agentless": null,
+        "WhatsAppOutboundMode$agentless": null
       }
     },
     "AnswerMachineDetectionConfig": {
@@ -93,7 +94,11 @@
         "Source$customerProfilesSegmentArn": null,
         "TagResourceRequest$arn": null,
         "UntagResourceRequest$arn": null,
-        "UpdateCampaignFlowAssociationRequest$connectCampaignFlowArn": null
+        "UpdateCampaignFlowAssociationRequest$connectCampaignFlowArn": null,
+        "WhatsAppChannelSubtypeParameters$connectSourcePhoneNumberArn": null,
+        "WhatsAppChannelSubtypeParameters$templateArn": null,
+        "WhatsAppOutboundConfig$connectSourcePhoneNumberArn": null,
+        "WhatsAppOutboundConfig$wisdomTemplateArn": null
       }
     },
     "AttributeName": {
@@ -113,7 +118,8 @@
       "refs": {
         "EmailChannelSubtypeParameters$templateParameters": null,
         "SmsChannelSubtypeParameters$templateParameters": null,
-        "TelephonyChannelSubtypeParameters$attributes": null
+        "TelephonyChannelSubtypeParameters$attributes": null,
+        "WhatsAppChannelSubtypeParameters$templateParameters": null
       }
     },
     "BandwidthAllocation": {
@@ -221,7 +227,8 @@
       "refs": {
         "EmailChannelSubtypeConfig$capacity": null,
         "SmsChannelSubtypeConfig$capacity": null,
-        "TelephonyChannelSubtypeConfig$capacity": null
+        "TelephonyChannelSubtypeConfig$capacity": null,
+        "WhatsAppChannelSubtypeConfig$capacity": null
       }
     },
     "ChannelSubtype": {
@@ -415,7 +422,8 @@
       "base": "<p>The phone number of the customer, in E.164 format.</p>",
       "refs": {
         "SmsChannelSubtypeParameters$destinationPhoneNumber": null,
-        "TelephonyChannelSubtypeParameters$destinationPhoneNumber": null
+        "TelephonyChannelSubtypeParameters$destinationPhoneNumber": null,
+        "WhatsAppChannelSubtypeParameters$destinationPhoneNumber": null
       }
     },
     "DialRequestId": {
@@ -498,6 +506,14 @@
       "base": "<p>Enumeration of Customer Profiles event type</p>",
       "refs": {
         "ObjectTypeNamesMap$key": null
+      }
+    },
+    "ExternalCampaignType": {
+      "base": "<p>The type of campaign externally exposed in APIs.</p>",
+      "refs": {
+        "Campaign$type": null,
+        "CampaignSummary$type": null,
+        "CreateCampaignRequest$type": null
       }
     },
     "FailedCampaignStateResponse": {
@@ -719,6 +735,32 @@
       "refs": {
         "TimeRange$startTime": null,
         "TimeRange$endTime": null
+      }
+    },
+    "LambdaArn": {
+      "base": "<p>Lambda ARN for integration with Connect instances</p>",
+      "refs": {
+        "LambdaIntegrationConfig$functionArn": null,
+        "LambdaIntegrationIdentifier$functionArn": null,
+        "LambdaIntegrationSummary$functionArn": null
+      }
+    },
+    "LambdaIntegrationConfig": {
+      "base": "<p>Lambda integration config</p>",
+      "refs": {
+        "IntegrationConfig$lambda": null
+      }
+    },
+    "LambdaIntegrationIdentifier": {
+      "base": "<p>Lambda integration identifier</p>",
+      "refs": {
+        "IntegrationIdentifier$lambda": null
+      }
+    },
+    "LambdaIntegrationSummary": {
+      "base": "<p>Lambda integration summary</p>",
+      "refs": {
+        "IntegrationSummary$lambda": null
       }
     },
     "ListCampaignsRequest": {
@@ -1161,7 +1203,8 @@
       "refs": {
         "CommunicationTimeConfig$telephony": null,
         "CommunicationTimeConfig$sms": null,
-        "CommunicationTimeConfig$email": null
+        "CommunicationTimeConfig$email": null,
+        "CommunicationTimeConfig$whatsApp": null
       }
     },
     "TimeZone": {
@@ -1217,6 +1260,30 @@
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by an AWS service.</p>",
       "refs": {}
+    },
+    "WhatsAppChannelSubtypeConfig": {
+      "base": "<p>WhatsApp Channel Subtype config</p>",
+      "refs": {
+        "ChannelSubtypeConfig$whatsApp": null
+      }
+    },
+    "WhatsAppChannelSubtypeParameters": {
+      "base": "<p>Parameters for the WhatsApp Channel Subtype</p>",
+      "refs": {
+        "ChannelSubtypeParameters$whatsApp": null
+      }
+    },
+    "WhatsAppOutboundConfig": {
+      "base": "<p>Default WhatsApp Outbound config</p>",
+      "refs": {
+        "WhatsAppChannelSubtypeConfig$defaultOutboundConfig": null
+      }
+    },
+    "WhatsAppOutboundMode": {
+      "base": "<p>WhatsApp Outbound Mode</p>",
+      "refs": {
+        "WhatsAppChannelSubtypeConfig$outboundMode": null
+      }
     },
     "XAmazonErrorType": {
       "base": "<p>A header that defines the error encountered while processing the request.</p>",

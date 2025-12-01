@@ -720,6 +720,8 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "AnalysisTemplateSummary$isSyntheticData": "<p>Indicates if this analysis template summary generated synthetic data.</p>",
+        "CollaborationAnalysisTemplateSummary$isSyntheticData": "<p>Indicates if this collaboration analysis template uses synthetic data generation.</p>",
         "CollaborationChangeRequest$isAutoApproved": "<p>Whether the change request was automatically approved based on the collaboration's auto-approval settings.</p>",
         "CollaborationChangeRequestSummary$isAutoApproved": "<p>Whether the change request was automatically approved.</p>",
         "ConfiguredAudienceModelAssociation$manageResourcePolicies": "<p>When <code>TRUE</code>, indicates that the resource policy for the configured audience model resource being associated is configured for Clean Rooms to manage permissions related to the given collaboration. When <code>FALSE</code>, indicates that the configured audience model resource owner will manage permissions related to the given collaboration.</p>",
@@ -736,10 +738,13 @@
         "MembershipModelInferencePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for model inference costs (<code>TRUE</code>) or has not accepted to pay for model inference costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for model inference costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for model inference costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for model inference costs. </p> </li> </ul>",
         "MembershipModelTrainingPaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for model training costs (<code>TRUE</code>) or has not accepted to pay for model training costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for model training costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for model training costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for model training costs. </p> </li> </ul>",
         "MembershipQueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for query compute costs (<code>TRUE</code>) or has not accepted to pay for query compute costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for query compute costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for query compute costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for query compute costs. </p> </li> </ul>",
+        "MembershipSyntheticDataGenerationPaymentConfig$isResponsible": "<p>Indicates if this membership is responsible for paying for synthetic data generation.</p>",
         "ModelInferencePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for model inference costs (<code>TRUE</code>) or has not configured the collaboration member to pay for model inference costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for model inference costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for model inference costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>",
         "ModelTrainingPaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for model training costs (<code>TRUE</code>) or has not configured the collaboration member to pay for model training costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for model training costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for model training costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>",
         "ProtectedQueryS3OutputConfiguration$singleFileOutput": "<p>Indicates whether files should be output as a single file (<code>TRUE</code>) or output as multiple files (<code>FALSE</code>). This parameter is only supported for analyses with the Spark analytics engine.</p>",
-        "QueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query compute costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for query compute costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for query compute costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>"
+        "QueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query compute costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for query compute costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for query compute costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>",
+        "SyntheticDataColumnProperties$isPredictiveValue": "<p>Indicates if this column contains predictive values that should be treated as target variables in machine learning models. This affects how the synthetic data generation preserves statistical relationships.</p>",
+        "SyntheticDataGenerationPaymentConfig$isResponsible": "<p>Indicates who is responsible for paying for synthetic data generation.</p>"
       }
     },
     "Budget": {
@@ -1077,11 +1082,23 @@
         "ColumnList$member": null
       }
     },
+    "ColumnClassificationDetails": {
+      "base": "<p>Contains classification information for data columns, including mappings that specify how columns should be handled during synthetic data generation and privacy analysis.</p>",
+      "refs": {
+        "MLSyntheticDataParameters$columnClassification": "<p>Classification details for data columns that specify how each column should be treated during synthetic data generation.</p>"
+      }
+    },
     "ColumnList": {
       "base": null,
       "refs": {
         "Schema$columns": "<p>The columns for the relation that this schema represents.</p>",
         "Schema$partitionKeys": "<p>The partition keys for the dataset underlying this schema.</p>"
+      }
+    },
+    "ColumnMappingList": {
+      "base": null,
+      "refs": {
+        "ColumnClassificationDetails$columnMapping": "<p>A mapping that defines the classification of data columns for synthetic data generation and specifies how each column should be handled during the privacy-preserving data synthesis process.</p>"
       }
     },
     "ColumnName": {
@@ -2455,6 +2472,24 @@
         "PaymentConfiguration$machineLearning": "<p>An object representing the collaboration member's machine learning payment responsibilities set by the collaboration creator.</p>"
       }
     },
+    "MLSyntheticDataParameters": {
+      "base": "<p>Parameters that control the generation of synthetic data for machine learning, including privacy settings and column classification details.</p>",
+      "refs": {
+        "SyntheticDataParameters$mlSyntheticDataParameters": "<p>The machine learning-specific parameters for synthetic data generation.</p>"
+      }
+    },
+    "MLSyntheticDataParametersEpsilonDouble": {
+      "base": null,
+      "refs": {
+        "MLSyntheticDataParameters$epsilon": "<p>The epsilon value for differential privacy when generating synthetic data. Lower values provide stronger privacy guarantees but may reduce data utility.</p>"
+      }
+    },
+    "MaxMembershipInferenceAttackScore": {
+      "base": null,
+      "refs": {
+        "MLSyntheticDataParameters$maxMembershipInferenceAttackScore": "<p>The maximum acceptable score for membership inference attack vulnerability. Synthetic data generation fails if the score for the resulting data exceeds this threshold.</p>"
+      }
+    },
     "MaxResults": {
       "base": null,
       "refs": {
@@ -2731,6 +2766,12 @@
       "base": null,
       "refs": {
         "ListMembershipsOutput$membershipSummaries": "<p>The list of memberships returned from the ListMemberships operation.</p>"
+      }
+    },
+    "MembershipSyntheticDataGenerationPaymentConfig": {
+      "base": "<p>Configuration for payment for synthetic data generation in a membership.</p>",
+      "refs": {
+        "MembershipMLPaymentConfig$syntheticDataGeneration": "<p>The payment configuration for synthetic data generation for this machine learning membership.</p>"
       }
     },
     "ModelInferencePaymentConfig": {
@@ -3738,6 +3779,38 @@
       "base": null,
       "refs": {
         "AllowedResultRegions$member": null
+      }
+    },
+    "SyntheticDataColumnName": {
+      "base": null,
+      "refs": {
+        "SyntheticDataColumnProperties$columnName": "<p>The name of the data column as it appears in the dataset.</p>"
+      }
+    },
+    "SyntheticDataColumnProperties": {
+      "base": "<p>Properties that define how a specific data column should be handled during synthetic data generation, including its name, type, and role in predictive modeling.</p>",
+      "refs": {
+        "ColumnMappingList$member": null
+      }
+    },
+    "SyntheticDataColumnType": {
+      "base": null,
+      "refs": {
+        "SyntheticDataColumnProperties$columnType": "<p>The data type of the column, which determines how the synthetic data generation algorithm processes and synthesizes values for this column.</p>"
+      }
+    },
+    "SyntheticDataGenerationPaymentConfig": {
+      "base": "<p>Payment configuration for synthetic data generation.</p>",
+      "refs": {
+        "MLPaymentConfig$syntheticDataGeneration": "<p>The payment configuration for machine learning synthetic data generation.</p>"
+      }
+    },
+    "SyntheticDataParameters": {
+      "base": "<p>The parameters that control how synthetic data is generated, including privacy settings, column classifications, and other configuration options that affect the data synthesis process.</p>",
+      "refs": {
+        "AnalysisTemplate$syntheticDataParameters": "<p>The parameters used to generate synthetic data for this analysis template.</p>",
+        "CollaborationAnalysisTemplate$syntheticDataParameters": "<p>The synthetic data generation parameters configured for this collaboration analysis template.</p>",
+        "CreateAnalysisTemplateInput$syntheticDataParameters": "<p>The parameters for generating synthetic data when running the analysis template.</p>"
       }
     },
     "TableAlias": {
