@@ -18,10 +18,6 @@ use GuzzleHttp\Promise;
 /**
  * Encapsulates the execution of a multipart upload of an encrypted object to S3.
  *
- * Note that for PHP versions of < 7.1, this class uses an AES-GCM polyfill
- * for encryption since there is no native PHP support. The performance for large
- * inputs will be a lot slower than for PHP 7.1+, so upgrading older PHP version
- * environments may be necessary to use this effectively.
  */
 class S3EncryptionMultipartUploaderV3 extends MultipartUploader
 {
@@ -62,6 +58,17 @@ class S3EncryptionMultipartUploaderV3 extends MultipartUploader
      *
      * - @MaterialsProvider: (MaterialsProviderV3) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for encryption metadata.
+     * - @CommitmentPolicy: (string) Must be set to 'FORBID_ENCRYPT_ALLOW_DECRYPT',
+     *         'REQUIRE_ENCRYPT_ALLOW_DECRYPT', or 'REQUIRE_ENCRYPT_REQUIRE_DECRYPT'.
+     *      - 'FORBID_ENCRYPT_ALLOW_DECRYPT' indicates that the client is configured
+     *         to write messages without key commitment and read messages encrypted 
+     *         with key commitment or without key commitment.
+     *      - 'REQUIRE_ENCRYPT_ALLOW_DECRYPT' indicates that the client is configured
+     *         to write messages with key commitment and read messages encrypted 
+     *         with key commitment or without key commitment.
+     *      - 'REQUIRE_ENCRYPT_REQUIRE_DECRYPT' indicates that the client is configured
+     *         to write messages with key commitment and read messages encrypted 
+     *         with key commitment.
      * - @CipherOptions: (array) Cipher options for encrypting data. A Cipher
      *   is required. Accepts the following options:
      *       - Cipher: (string) gcm

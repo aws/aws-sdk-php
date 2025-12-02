@@ -20,11 +20,11 @@ use GuzzleHttp\Psr7;
  * Provides a wrapper for an S3Client that supplies functionality to encrypt
  * data on putObject[Async] calls and decrypt data on getObject[Async] calls.
  *
- * AWS strongly recommends the upgrade to the S3EncryptionClientV2 (over the
- * S3EncryptionClient), as it offers updated data security best practices to our
- * customers who upgrade. S3EncryptionClientV2 contains breaking changes, so this
+ * AWS strongly recommends the upgrade to the S3EncryptionClientV3 (over the
+ * S3EncryptionClientV2), as it offers updated data security best practices to our
+ * customers who upgrade. S3EncryptionClientV3 contains breaking changes, so this
  * will require planning by engineering teams to migrate. New workflows should
- * just start with S3EncryptionClientV2.
+ * just start with S3EncryptionClientV3.
  *
  * Note that for PHP versions of < 7.1, this class uses an AES-GCM polyfill
  * for encryption since there is no native PHP support. The performance for large
@@ -75,6 +75,7 @@ use GuzzleHttp\Psr7;
  *         'Cipher' => 'gcm',
  *         'KeySize' => 256,
  *     ],
+ *     '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
  *     'Bucket' => 'your-bucket',
  *     'Key' => 'your-key',
  * ]);
@@ -293,7 +294,10 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *      - 'V2_AND_LEGACY' indicates that objects encrypted with both
      *        S3EncryptionClientV2 and older legacy encryption clients are able
      *        to be decrypted.
-     *
+     * - @CommitmentPolicy: (string) Must be set to 'FORBID_ENCRYPT_ALLOW_DECRYPT'.
+     *      - 'FORBID_ENCRYPT_ALLOW_DECRYPT' indicates that the client is configured
+     *         to read messages encrypted with key commitment or without key commitment.
+     * 
      * The optional configuration arguments are as follows:
      *
      * - SaveAs: (string) The path to a file on disk to save the decrypted
@@ -420,6 +424,10 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *      - 'V2_AND_LEGACY' indicates that objects encrypted with both
      *        S3EncryptionClientV2 and older legacy encryption clients are able
      *        to be decrypted.
+     * - @CommitmentPolicy: (string) Must be set to 'FORBID_ENCRYPT_ALLOW_DECRYPT'.
+     *      - 'FORBID_ENCRYPT_ALLOW_DECRYPT' indicates that the client is 
+     *         configured to read messages encrypted with key commitment 
+     *         or without key commitment.
      *
      * The optional configuration arguments are as follows:
      *
