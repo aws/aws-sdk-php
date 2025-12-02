@@ -236,6 +236,37 @@
       "base": "<p/>",
       "refs": {}
     },
+    "AdditionalStorageVolume": {
+      "base": "<p>Contains details about an additional storage volume for a DB instance. RDS support additional storage volumes for RDS for Oracle and RDS for SQL Server.</p>",
+      "refs": {
+        "AdditionalStorageVolumesList$member": null
+      }
+    },
+    "AdditionalStorageVolumeOutput": {
+      "base": "<p>Contains information about an additional storage volume for a DB instance.</p>",
+      "refs": {
+        "AdditionalStorageVolumesOutputList$member": null
+      }
+    },
+    "AdditionalStorageVolumesList": {
+      "base": null,
+      "refs": {
+        "CreateDBInstanceMessage$AdditionalStorageVolumes": "<p>A list of additional storage volumes to create for the DB instance. You can create up to three additional storage volumes using the names <code>rdsdbdata2</code>, <code>rdsdbdata3</code>, and <code>rdsdbdata4</code>. Additional storage volumes are supported for RDS for Oracle and RDS for SQL Server DB instances only.</p>",
+        "CreateDBInstanceReadReplicaMessage$AdditionalStorageVolumes": "<p>A list of additional storage volumes to create for the DB instance. You can create up to three additional storage volumes using the names <code>rdsdbdata2</code>, <code>rdsdbdata3</code>, and <code>rdsdbdata4</code>. Additional storage volumes are supported for RDS for Oracle and RDS for SQL Server DB instances only.</p>",
+        "DBInstanceAutomatedBackup$AdditionalStorageVolumes": "<p>The additional storage volumes associated with the automated backup.</p> <p>Valid Values: <code>GP3 | IO2</code> </p>",
+        "DBSnapshot$AdditionalStorageVolumes": "<p>The additional storage volumes associated with the DB snapshot. RDS supports additional storage volumes for RDS for Oracle and RDS for SQL Server.</p>",
+        "PendingModifiedValues$AdditionalStorageVolumes": "<p>The additional storage volume modifications that are pending for the DB instance.</p>",
+        "RestoreDBInstanceFromDBSnapshotMessage$AdditionalStorageVolumes": "<p>A list of additional storage volumes to create for the DB instance. You can create up to three additional storage volumes using the names <code>rdsdbdata2</code>, <code>rdsdbdata3</code>, and <code>rdsdbdata4</code>. Additional storage volumes are supported for RDS for Oracle and RDS for SQL Server DB instances only.</p>",
+        "RestoreDBInstanceFromS3Message$AdditionalStorageVolumes": "<p>A list of additional storage volumes to modify or delete for the DB instance. You can modify or delete up to three additional storage volumes using the names <code>rdsdbdata2</code>, <code>rdsdbdata3</code>, and <code>rdsdbdata4</code>. Additional storage volumes are supported for RDS for Oracle and RDS for SQL Server DB instances only.</p>",
+        "RestoreDBInstanceToPointInTimeMessage$AdditionalStorageVolumes": "<p>A list of additional storage volumes to restore to the DB instance. You can restore up to three additional storage volumes using the names <code>rdsdbdata2</code>, <code>rdsdbdata3</code>, and <code>rdsdbdata4</code>. Additional storage volumes are supported for RDS for Oracle and RDS for SQL Server DB instances only.</p>"
+      }
+    },
+    "AdditionalStorageVolumesOutputList": {
+      "base": null,
+      "refs": {
+        "DBInstance$AdditionalStorageVolumes": "<p>The additional storage volumes associated with the DB instance. RDS supports additional storage volumes for RDS for Oracle and RDS for SQL Server.</p>"
+      }
+    },
     "ApplyMethod": {
       "base": null,
       "refs": {
@@ -340,6 +371,18 @@
         "DBClusterSnapshot$AvailabilityZones": "<p>The list of Availability Zones (AZs) where instances in the DB cluster snapshot can be restored.</p>",
         "RestoreDBClusterFromS3Message$AvailabilityZones": "<p>A list of Availability Zones (AZs) where instances in the restored DB cluster can be created.</p>",
         "RestoreDBClusterFromSnapshotMessage$AvailabilityZones": "<p>Provides the list of Availability Zones (AZs) where instances in the restored DB cluster can be created.</p> <p>Valid for: Aurora DB clusters only</p>"
+      }
+    },
+    "AvailableAdditionalStorageVolumesOption": {
+      "base": "<p>Contains the available options for additional storage volumes for a DB instance class.</p>",
+      "refs": {
+        "AvailableAdditionalStorageVolumesOptionList$member": null
+      }
+    },
+    "AvailableAdditionalStorageVolumesOptionList": {
+      "base": null,
+      "refs": {
+        "OrderableDBInstanceOption$AvailableAdditionalStorageVolumesOptions": "<p>The available options for additional storage volumes for the DB instance class.</p>"
       }
     },
     "AvailableProcessorFeature": {
@@ -448,6 +491,9 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "AvailableAdditionalStorageVolumesOption$SupportsStorageAutoscaling": "<p>Indicates whether the additional storage volume supports storage autoscaling.</p>",
+        "AvailableAdditionalStorageVolumesOption$SupportsStorageThroughput": "<p>Indicates whether the additional storage volume supports configurable storage throughput.</p>",
+        "AvailableAdditionalStorageVolumesOption$SupportsIops": "<p>Indicates whether the additional storage volume supports provisioned IOPS.</p>",
         "CreateDBProxyRequest$RequireTLS": "<p>Specifies whether Transport Layer Security (TLS) encryption is required for connections to the proxy. By enabling this setting, you can enforce encrypted TLS connections to the proxy.</p>",
         "CreateDBProxyRequest$DebugLogging": "<p>Specifies whether the proxy logs detailed connection and query information. When you enable <code>DebugLogging</code>, the proxy captures connection details and connection pool behavior from your queries. Debug logging increases CloudWatch costs and can impact proxy performance. Enable this option only when you need to troubleshoot connection or performance issues.</p>",
         "DBCluster$StorageEncrypted": "<p>Indicates whether the DB cluster is encrypted.</p>",
@@ -543,6 +589,7 @@
         "TenantDatabase$DeletionProtection": "<p>Specifies whether deletion protection is enabled for the DB instance.</p>",
         "UpgradeTarget$AutoUpgrade": "<p>Indicates whether the target version is applied to any source DB instances that have <code>AutoMinorVersionUpgrade</code> set to true.</p> <p>This parameter is dynamic, and is set by RDS.</p>",
         "UpgradeTarget$IsMajorVersionUpgrade": "<p>Indicates whether upgrading to the target version requires upgrading the major version of the database engine.</p>",
+        "ValidAdditionalStorageOptions$SupportsAdditionalStorageVolumes": "<p>Indicates whether the DB instance supports additional storage volumes.</p>",
         "ValidDBInstanceModificationsMessage$SupportsDedicatedLogVolume": "<p>Indicates whether a DB instance supports using a dedicated log volume (DLV).</p>",
         "ValidStorageOptions$SupportsStorageAutoscaling": "<p>Indicates whether or not Amazon RDS can automatically scale storage for DB instances that use the new instance class.</p>"
       }
@@ -633,6 +680,7 @@
         "GlobalCluster$StorageEncrypted": "<p>The storage encryption setting for the global database cluster.</p>",
         "GlobalCluster$DeletionProtection": "<p>The deletion protection setting for the new global database cluster.</p>",
         "ModifyActivityStreamResponse$EngineNativeAuditFieldsIncluded": "<p>Indicates whether engine-native audit fields are included in the database activity stream.</p>",
+        "ModifyAdditionalStorageVolume$SetForDelete": "<p>Indicates whether to delete the additional storage volume. The value <code>true</code> schedules the volume for deletion. You can delete an additional storage volume only when it doesn't contain database files or other data.</p>",
         "ModifyCertificatesMessage$RemoveCustomerOverride": "<p>Specifies whether to remove the override for the default certificate. If the override is removed, the default certificate is the system default.</p>",
         "ModifyDBClusterMessage$EnableIAMDatabaseAuthentication": "<p>Specifies whether to enable mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts. By default, mapping isn't enabled.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.IAMDBAuth.html\"> IAM Database Authentication</a> in the <i>Amazon Aurora User Guide</i> or <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html\">IAM database authentication for MariaDB, MySQL, and PostgreSQL</a> in the <i>Amazon RDS User Guide</i>.</p> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p>",
         "ModifyDBClusterMessage$DeletionProtection": "<p>Specifies whether the DB cluster has deletion protection enabled. The database can't be deleted when deletion protection is enabled. By default, deletion protection isn't enabled.</p> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p>",
@@ -671,6 +719,7 @@
         "OptionGroupOption$CopyableCrossAccount": "<p>Indicates whether the option can be copied across Amazon Web Services accounts.</p>",
         "OrderableDBInstanceOption$SupportsStorageAutoscaling": "<p>Indicates whether Amazon RDS can automatically scale storage for DB instances that use the specified DB instance class.</p>",
         "OrderableDBInstanceOption$SupportsKerberosAuthentication": "<p>Indicates whether a DB instance supports Kerberos Authentication.</p>",
+        "OrderableDBInstanceOption$SupportsAdditionalStorageVolumes": "<p>Indicates whether the DB instance class supports additional storage volumes.</p>",
         "PendingModifiedValues$MultiAZ": "<p>Indicates whether the Single-AZ DB instance will change to a Multi-AZ deployment.</p>",
         "PendingModifiedValues$MultiTenant": "<p>Indicates whether the DB instance will change to the multi-tenant configuration (TRUE) or the single-tenant configuration (FALSE). </p>",
         "PendingModifiedValues$IAMDatabaseAuthenticationEnabled": "<p>Indicates whether mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts is enabled.</p>",
@@ -1059,15 +1108,15 @@
     "CustomEngineName": {
       "base": null,
       "refs": {
-        "CreateCustomDBEngineVersionMessage$Engine": "<p>The database engine. RDS Custom for Oracle supports the following values:</p> <ul> <li> <p> <code>custom-oracle-ee</code> </p> </li> <li> <p> <code>custom-oracle-ee-cdb</code> </p> </li> <li> <p> <code>custom-oracle-se2</code> </p> </li> <li> <p> <code>custom-oracle-se2-cdb</code> </p> </li> </ul>",
-        "DeleteCustomDBEngineVersionMessage$Engine": "<p>The database engine. RDS Custom for Oracle supports the following values:</p> <ul> <li> <p> <code>custom-oracle-ee</code> </p> </li> <li> <p> <code>custom-oracle-ee-cdb</code> </p> </li> <li> <p> <code>custom-oracle-se2</code> </p> </li> <li> <p> <code>custom-oracle-se2-cdb</code> </p> </li> </ul>",
-        "ModifyCustomDBEngineVersionMessage$Engine": "<p>The database engine. RDS Custom for Oracle supports the following values:</p> <ul> <li> <p> <code>custom-oracle-ee</code> </p> </li> <li> <p> <code>custom-oracle-ee-cdb</code> </p> </li> <li> <p> <code>custom-oracle-se2</code> </p> </li> <li> <p> <code>custom-oracle-se2-cdb</code> </p> </li> </ul>"
+        "CreateCustomDBEngineVersionMessage$Engine": "<p>The database engine.</p> <p>RDS Custom for Oracle supports the following values:</p> <ul> <li> <p> <code>custom-oracle-ee</code> </p> </li> <li> <p> <code>custom-oracle-ee-cdb</code> </p> </li> <li> <p> <code>custom-oracle-se2</code> </p> </li> <li> <p> <code>custom-oracle-se2-cdb</code> </p> </li> </ul> <p>RDS Custom for SQL Server supports the following values:</p> <ul> <li> <p> <code>custom-sqlserver-ee</code> </p> </li> <li> <p> <code>custom-sqlserver-se</code> </p> </li> <li> <p> <code>ccustom-sqlserver-web</code> </p> </li> <li> <p> <code>custom-sqlserver-dev</code> </p> </li> </ul> <p>RDS for SQL Server supports only <code>sqlserver-dev-ee</code>.</p>",
+        "DeleteCustomDBEngineVersionMessage$Engine": "<p>The database engine.</p> <p>RDS Custom for Oracle supports the following values:</p> <ul> <li> <p> <code>custom-oracle-ee</code> </p> </li> <li> <p> <code>custom-oracle-ee-cdb</code> </p> </li> <li> <p> <code>custom-oracle-se2</code> </p> </li> <li> <p> <code>custom-oracle-se2-cdb</code> </p> </li> </ul> <p>RDS Custom for SQL Server supports the following values:</p> <ul> <li> <p> <code>custom-sqlserver-ee</code> </p> </li> <li> <p> <code>custom-sqlserver-se</code> </p> </li> <li> <p> <code>ccustom-sqlserver-web</code> </p> </li> <li> <p> <code>custom-sqlserver-dev</code> </p> </li> </ul> <p>RDS for SQL Server supports only <code>sqlserver-dev-ee</code>.</p>",
+        "ModifyCustomDBEngineVersionMessage$Engine": "<p>The database engine.</p> <p>RDS Custom for Oracle supports the following values:</p> <ul> <li> <p> <code>custom-oracle-ee</code> </p> </li> <li> <p> <code>custom-oracle-ee-cdb</code> </p> </li> <li> <p> <code>custom-oracle-se2</code> </p> </li> <li> <p> <code>custom-oracle-se2-cdb</code> </p> </li> </ul> <p>RDS Custom for SQL Server supports the following values:</p> <ul> <li> <p> <code>custom-sqlserver-ee</code> </p> </li> <li> <p> <code>custom-sqlserver-se</code> </p> </li> <li> <p> <code>ccustom-sqlserver-web</code> </p> </li> <li> <p> <code>custom-sqlserver-dev</code> </p> </li> </ul> <p>RDS for SQL Server supports only <code>sqlserver-dev-ee</code>.</p>"
       }
     },
     "CustomEngineVersion": {
       "base": null,
       "refs": {
-        "CreateCustomDBEngineVersionMessage$EngineVersion": "<p>The name of your CEV. The name format is 19.<i>customized_string</i>. For example, a valid CEV name is <code>19.my_cev1</code>. This setting is required for RDS Custom for Oracle, but optional for Amazon RDS. The combination of <code>Engine</code> and <code>EngineVersion</code> is unique per customer per Region.</p>",
+        "CreateCustomDBEngineVersionMessage$EngineVersion": "<p>The name of your custom engine version (CEV).</p> <p>For RDS Custom for Oracle, the name format is <code>19.*customized_string*</code>. For example, a valid CEV name is <code>19.my_cev1</code>.</p> <p>For RDS for SQL Server and RDS Custom for SQL Server, the name format is <code>major engine_version*.*minor_engine_version*.*customized_string*</code>. For example, a valid CEV name is <code>16.00.4215.2.my_cev1</code>.</p> <p>The CEV name is unique per customer per Amazon Web Services Regions.</p>",
         "DeleteCustomDBEngineVersionMessage$EngineVersion": "<p>The custom engine version (CEV) for your DB instance. This option is required for RDS Custom, but optional for Amazon RDS. The combination of <code>Engine</code> and <code>EngineVersion</code> is unique per customer per Amazon Web Services Region.</p>",
         "ModifyCustomDBEngineVersionMessage$EngineVersion": "<p>The custom engine version (CEV) that you want to modify. This option is required for RDS Custom for Oracle, but optional for Amazon RDS. The combination of <code>Engine</code> and <code>EngineVersion</code> is unique per customer per Amazon Web Services Region.</p>"
       }
@@ -2383,6 +2432,8 @@
     "DoubleOptional": {
       "base": null,
       "refs": {
+        "AvailableAdditionalStorageVolumesOption$MinIopsPerGib": "<p>The minimum ratio of I/O operations per second (IOPS) to gibibytes (GiB) of storage for the additional storage volume.</p>",
+        "AvailableAdditionalStorageVolumesOption$MaxIopsPerGib": "<p>The maximum ratio of I/O operations per second (IOPS) to gibibytes (GiB) of storage for the additional storage volume.</p>",
         "CreateDBShardGroupMessage$MaxACU": "<p>The maximum capacity of the DB shard group in Aurora capacity units (ACUs).</p>",
         "CreateDBShardGroupMessage$MinACU": "<p>The minimum capacity of the DB shard group in Aurora capacity units (ACUs).</p>",
         "DBShardGroup$MaxACU": "<p>The maximum capacity of the DB shard group in Aurora capacity units (ACUs).</p>",
@@ -2808,6 +2859,7 @@
     "Integer": {
       "base": null,
       "refs": {
+        "AdditionalStorageVolumeOutput$AllocatedStorage": "<p>The amount of storage allocated for the additional storage volume, in gibibytes (GiB). The minimum is 20 GiB. The maximum is 65,536 GiB (64 TiB).</p>",
         "ConnectionPoolConfigurationInfo$MaxConnectionsPercent": "<p>The maximum size of the connection pool for each target in a target group. The value is expressed as a percentage of the <code>max_connections</code> setting for the RDS DB instance or Aurora DB cluster used by the target group.</p>",
         "ConnectionPoolConfigurationInfo$MaxIdleConnectionsPercent": "<p>Controls how actively the proxy closes idle database connections in the connection pool. The value is expressed as a percentage of the <code>max_connections</code> setting for the RDS DB instance or Aurora DB cluster used by the target group. With a high value, the proxy leaves a high percentage of idle database connections open. A low value causes the proxy to close more idle connections and return them to the database.</p>",
         "ConnectionPoolConfigurationInfo$ConnectionBorrowTimeout": "<p>The number of seconds for a proxy to wait for a connection to become available in the connection pool. Only applies when the proxy has opened its maximum number of connections and all connections are busy with client sessions.</p>",
@@ -2819,7 +2871,7 @@
         "DBInstance$AllocatedStorage": "<p>The amount of storage in gibibytes (GiB) allocated for the DB instance.</p>",
         "DBInstance$BackupRetentionPeriod": "<p>The number of days for which automatic DB snapshots are retained.</p>",
         "DBInstance$DbInstancePort": "<p>The port that the DB instance listens on. If the DB instance is part of a DB cluster, this can be a different port than the DB cluster port.</p>",
-        "DBInstanceAutomatedBackup$AllocatedStorage": "<p>The allocated storage size for the the automated backup in gibibytes (GiB).</p>",
+        "DBInstanceAutomatedBackup$AllocatedStorage": "<p>The allocated storage size for the automated backup in gibibytes (GiB).</p>",
         "DBInstanceAutomatedBackup$Port": "<p>The port number that the automated backup used for connections.</p> <p>Default: Inherits from the source DB instance</p> <p>Valid Values: <code>1150-65535</code> </p>",
         "DBProxy$IdleClientTimeout": "<p>The number of seconds a connection to the proxy can have no activity before the proxy drops the client connection. The proxy keeps the underlying database connection open and puts it back into the connection pool for reuse by later connection requests.</p> <p>Default: 1800 (30 minutes)</p> <p>Constraints: 1 to 28,800</p>",
         "DBProxyTarget$Port": "<p>The port that the RDS Proxy uses to connect to the target RDS DB instance or Aurora DB cluster.</p>",
@@ -2841,6 +2893,19 @@
     "IntegerOptional": {
       "base": null,
       "refs": {
+        "AdditionalStorageVolume$AllocatedStorage": "<p>The amount of storage allocated for the additional storage volume, in gibibytes (GiB). The minimum is 20 GiB. The maximum is 65,536 GiB (64 TiB).</p>",
+        "AdditionalStorageVolume$IOPS": "<p>The number of I/O operations per second (IOPS) provisioned for the additional storage volume.</p>",
+        "AdditionalStorageVolume$MaxAllocatedStorage": "<p>The upper limit in gibibytes (GiB) to which RDS can automatically scale the storage of the additional storage volume.</p>",
+        "AdditionalStorageVolume$StorageThroughput": "<p>The storage throughput value for the additional storage volume, in mebibytes per second (MiBps). This setting applies only to the General Purpose SSD (<code>gp3</code>) storage type.</p>",
+        "AdditionalStorageVolumeOutput$IOPS": "<p>The number of I/O operations per second (IOPS) provisioned for the additional storage volume.</p>",
+        "AdditionalStorageVolumeOutput$MaxAllocatedStorage": "<p>The upper limit in gibibytes (GiB) to which RDS can automatically scale the storage of the additional storage volume.</p>",
+        "AdditionalStorageVolumeOutput$StorageThroughput": "<p>The storage throughput value for the additional storage volume, in mebibytes per second (MiBps).</p>",
+        "AvailableAdditionalStorageVolumesOption$MinStorageSize": "<p>The minimum amount of storage that you can allocate for the additional storage volume, in gibibytes (GiB).</p>",
+        "AvailableAdditionalStorageVolumesOption$MaxStorageSize": "<p>The maximum amount of storage that you can allocate for the additional storage volume, in gibibytes (GiB).</p>",
+        "AvailableAdditionalStorageVolumesOption$MinIops": "<p>The minimum number of I/O operations per second (IOPS) that the additional storage volume supports.</p>",
+        "AvailableAdditionalStorageVolumesOption$MaxIops": "<p>The maximum number of I/O operations per second (IOPS) that the additional storage volume supports.</p>",
+        "AvailableAdditionalStorageVolumesOption$MinStorageThroughput": "<p>The minimum storage throughput that the additional storage volume supports, in mebibytes per second (MiBps).</p>",
+        "AvailableAdditionalStorageVolumesOption$MaxStorageThroughput": "<p>The maximum storage throughput that the additional storage volume supports, in mebibytes per second (MiBps).</p>",
         "ClusterPendingModifiedValues$BackupRetentionPeriod": "<p>The number of days for which automatic DB snapshots are retained.</p>",
         "ClusterPendingModifiedValues$AllocatedStorage": "<p>The allocated storage size in gibibytes (GiB) for all database engines except Amazon Aurora. For Aurora, <code>AllocatedStorage</code> always returns 1, because Aurora DB cluster storage size isn't fixed, but instead automatically adjusts as needed.</p>",
         "ClusterPendingModifiedValues$Iops": "<p>The Provisioned IOPS (I/O operations per second) value. This setting is only for non-Aurora Multi-AZ DB clusters.</p>",
@@ -2936,6 +3001,10 @@
         "DescribeReservedDBInstancesOfferingsMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more than the <code>MaxRecords</code> value is available, a pagination token called a marker is included in the response so you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "DescribeSourceRegionsMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>",
         "DescribeTenantDatabasesMessage$MaxRecords": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that you can retrieve the remaining results.</p>",
+        "ModifyAdditionalStorageVolume$AllocatedStorage": "<p>The amount of storage allocated for the additional storage volume, in gibibytes (GiB). The minimum is 20 GiB. The maximum is 65,536 GiB (64 TiB).</p>",
+        "ModifyAdditionalStorageVolume$IOPS": "<p>The number of I/O operations per second (IOPS) provisioned for the additional storage volume. This setting is only supported for Provisioned IOPS SSD (<code>io1</code> and <code>io2</code>) storage types.</p>",
+        "ModifyAdditionalStorageVolume$MaxAllocatedStorage": "<p>The upper limit in gibibytes (GiB) to which RDS can automatically scale the storage of the additional storage volume. You must provide a value greater than or equal to <code>AllocatedStorage</code>.</p>",
+        "ModifyAdditionalStorageVolume$StorageThroughput": "<p>The storage throughput value for the additional storage volume, in mebibytes per second (MiBps). This setting applies only to the General Purpose SSD (<code>gp3</code>) storage type.</p>",
         "ModifyCurrentDBClusterCapacityMessage$Capacity": "<p>The DB cluster capacity.</p> <p>When you change the capacity of a paused Aurora Serverless v1 DB cluster, it automatically resumes.</p> <p>Constraints:</p> <ul> <li> <p>For Aurora MySQL, valid capacity values are <code>1</code>, <code>2</code>, <code>4</code>, <code>8</code>, <code>16</code>, <code>32</code>, <code>64</code>, <code>128</code>, and <code>256</code>.</p> </li> <li> <p>For Aurora PostgreSQL, valid capacity values are <code>2</code>, <code>4</code>, <code>8</code>, <code>16</code>, <code>32</code>, <code>64</code>, <code>192</code>, and <code>384</code>.</p> </li> </ul>",
         "ModifyCurrentDBClusterCapacityMessage$SecondsBeforeTimeout": "<p>The amount of time, in seconds, that Aurora Serverless v1 tries to find a scaling point to perform seamless scaling before enforcing the timeout action. The default is 300.</p> <p>Specify a value between 10 and 600 seconds.</p>",
         "ModifyDBClusterMessage$BackupRetentionPeriod": "<p>The number of days for which automated backups are retained. Specify a minimum value of <code>1</code>.</p> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p> <p>Default: <code>1</code> </p> <p>Constraints:</p> <ul> <li> <p>Must be a value from 1 to 35.</p> </li> </ul>",
@@ -3402,6 +3471,18 @@
       "base": null,
       "refs": {}
     },
+    "ModifyAdditionalStorageVolume": {
+      "base": "<p>Contains details about the modification of an additional storage volume.</p>",
+      "refs": {
+        "ModifyAdditionalStorageVolumesList$member": null
+      }
+    },
+    "ModifyAdditionalStorageVolumesList": {
+      "base": null,
+      "refs": {
+        "ModifyDBInstanceMessage$AdditionalStorageVolumes": "<p>A list of additional storage volumes to modify or delete for the DB instance. You can create up to 3 additional storage volumes. Additional storage volumes are supported for RDS for Oracle and RDS for SQL Server DB instances only.</p>"
+      }
+    },
     "ModifyCertificatesMessage": {
       "base": null,
       "refs": {}
@@ -3804,7 +3885,7 @@
       }
     },
     "ProcessorFeature": {
-      "base": "<p>Contains the processor features of a DB instance class.</p> <p>To specify the number of CPU cores, use the <code>coreCount</code> feature name for the <code>Name</code> parameter. To specify the number of threads per core, use the <code>threadsPerCore</code> feature name for the <code>Name</code> parameter.</p> <p>You can set the processor features of the DB instance class for a DB instance when you call one of the following actions:</p> <ul> <li> <p> <code>CreateDBInstance</code> </p> </li> <li> <p> <code>ModifyDBInstance</code> </p> </li> <li> <p> <code>RestoreDBInstanceFromDBSnapshot</code> </p> </li> <li> <p> <code>RestoreDBInstanceFromS3</code> </p> </li> <li> <p> <code>RestoreDBInstanceToPointInTime</code> </p> </li> </ul> <p>You can view the valid processor values for a particular instance class by calling the <code>DescribeOrderableDBInstanceOptions</code> action and specifying the instance class for the <code>DBInstanceClass</code> parameter.</p> <p>In addition, you can use the following actions for DB instance class processor information:</p> <ul> <li> <p> <code>DescribeDBInstances</code> </p> </li> <li> <p> <code>DescribeDBSnapshots</code> </p> </li> <li> <p> <code>DescribeValidDBInstanceModifications</code> </p> </li> </ul> <p>If you call <code>DescribeDBInstances</code>, <code>ProcessorFeature</code> returns non-null values only if the following conditions are met:</p> <ul> <li> <p>You are accessing an Oracle DB instance.</p> </li> <li> <p>Your Oracle DB instance class supports configuring the number of CPU cores and threads per core.</p> </li> <li> <p>The current number CPU cores and threads is set to a non-default value.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html#USER_ConfigureProcessor\"> Configuring the processor for a DB instance class in RDS for Oracle</a> in the <i>Amazon RDS User Guide. </i> </p>",
+      "base": "<p>Contains the processor features of a DB instance class.</p> <p>To specify the number of CPU cores, use the <code>coreCount</code> feature name for the <code>Name</code> parameter. To specify the number of threads per core, use the <code>threadsPerCore</code> feature name for the <code>Name</code> parameter.</p> <p>You can set the processor features of the DB instance class for a DB instance when you call one of the following actions:</p> <ul> <li> <p> <code>CreateDBInstance</code> </p> </li> <li> <p> <code>ModifyDBInstance</code> </p> </li> <li> <p> <code>RestoreDBInstanceFromDBSnapshot</code> </p> </li> <li> <p> <code>RestoreDBInstanceFromS3</code> </p> </li> <li> <p> <code>RestoreDBInstanceToPointInTime</code> </p> </li> </ul> <p>You can view the valid processor values for a particular instance class by calling the <code>DescribeOrderableDBInstanceOptions</code> action and specifying the instance class for the <code>DBInstanceClass</code> parameter.</p> <p>In addition, you can use the following actions for DB instance class processor information:</p> <ul> <li> <p> <code>DescribeDBInstances</code> </p> </li> <li> <p> <code>DescribeDBSnapshots</code> </p> </li> <li> <p> <code>DescribeValidDBInstanceModifications</code> </p> </li> </ul> <p>If you call <code>DescribeDBInstances</code>, <code>ProcessorFeature</code> returns non-null values only if the following conditions are met:</p> <ul> <li> <p>You are accessing an Oracle or SQL Server DB instance.</p> </li> <li> <p>Your Oracle or SQL Server DB instance class supports configuring the number of CPU cores and threads per core.</p> </li> <li> <p>The current number CPU cores and threads is set to a non-default value.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html#USER_ConfigureProcessor\"> Configuring the processor for a DB instance class in RDS for Oracle</a>, <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/SQLServer.Concepts.General.OptimizeCPU.html\"> Optimizing your RDS for SQL Server CPU</a>, and <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html\">DB instance classes</a> in the <i>Amazon RDS User Guide. </i> </p>",
       "refs": {
         "ProcessorFeatureList$member": null
       }
@@ -4382,6 +4463,11 @@
         "AddSourceIdentifierToSubscriptionMessage$SubscriptionName": "<p>The name of the RDS event notification subscription you want to add a source identifier to.</p>",
         "AddSourceIdentifierToSubscriptionMessage$SourceIdentifier": "<p>The identifier of the event source to be added.</p> <p>Constraints:</p> <ul> <li> <p>If the source type is a DB instance, a <code>DBInstanceIdentifier</code> value must be supplied.</p> </li> <li> <p>If the source type is a DB cluster, a <code>DBClusterIdentifier</code> value must be supplied.</p> </li> <li> <p>If the source type is a DB parameter group, a <code>DBParameterGroupName</code> value must be supplied.</p> </li> <li> <p>If the source type is a DB security group, a <code>DBSecurityGroupName</code> value must be supplied.</p> </li> <li> <p>If the source type is a DB snapshot, a <code>DBSnapshotIdentifier</code> value must be supplied.</p> </li> <li> <p>If the source type is a DB cluster snapshot, a <code>DBClusterSnapshotIdentifier</code> value must be supplied.</p> </li> <li> <p>If the source type is an RDS Proxy, a <code>DBProxyName</code> value must be supplied.</p> </li> </ul>",
         "AddTagsToResourceMessage$ResourceName": "<p>The Amazon RDS resource that the tags are added to. This value is an Amazon Resource Name (ARN). For information about creating an ARN, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.ARN.html#USER_Tagging.ARN.Constructing\"> Constructing an RDS Amazon Resource Name (ARN)</a>.</p>",
+        "AdditionalStorageVolume$VolumeName": "<p>The name of the additional storage volume.</p> <p>Valid Values: <code>RDSDBDATA2 | RDSDBDATA3 | RDSDBDATA4</code> </p>",
+        "AdditionalStorageVolume$StorageType": "<p>The storage type for the additional storage volume.</p> <p>Valid Values: <code>GP3 | IO2</code> </p>",
+        "AdditionalStorageVolumeOutput$VolumeName": "<p>The name of the additional storage volume.</p>",
+        "AdditionalStorageVolumeOutput$StorageVolumeStatus": "<p>The status of the additional storage volume.</p> <p>Valid Values: <code>ACTIVE | CREATING | DELETING | MODIFYING | NOT-IN-USE | STORAGE-OPTIMIZATION | VOLUME-FULL</code> </p>",
+        "AdditionalStorageVolumeOutput$StorageType": "<p>The storage type for the additional storage volume.</p> <p>Valid Values: <code>GP3 | IO2</code> </p>",
         "ApplyPendingMaintenanceActionMessage$ResourceIdentifier": "<p>The RDS Amazon Resource Name (ARN) of the resource that the pending maintenance action applies to. For information about creating an ARN, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.ARN.html#USER_Tagging.ARN.Constructing\"> Constructing an RDS Amazon Resource Name (ARN)</a>.</p>",
         "ApplyPendingMaintenanceActionMessage$ApplyAction": "<p>The pending maintenance action to apply to this resource.</p> <p>Valid Values:</p> <ul> <li> <p> <code>ca-certificate-rotation</code> </p> </li> <li> <p> <code>db-upgrade</code> </p> </li> <li> <p> <code>hardware-maintenance</code> </p> </li> <li> <p> <code>os-upgrade</code> </p> </li> <li> <p> <code>system-update</code> </p> </li> </ul> <p>For more information about these actions, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_UpgradeDBInstance.Maintenance.html#maintenance-actions-aurora\">Maintenance actions for Amazon Aurora</a> or <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Maintenance.html#maintenance-actions-rds\">Maintenance actions for Amazon RDS</a>.</p>",
         "ApplyPendingMaintenanceActionMessage$OptInType": "<p>A value that specifies the type of opt-in request, or undoes an opt-in request. An opt-in request of type <code>immediate</code> can't be undone.</p> <p>Valid Values:</p> <ul> <li> <p> <code>immediate</code> - Apply the maintenance action immediately.</p> </li> <li> <p> <code>next-maintenance</code> - Apply the maintenance action during the next maintenance window for the resource.</p> </li> <li> <p> <code>undo-opt-in</code> - Cancel any existing <code>next-maintenance</code> opt-in requests.</p> </li> </ul>",
@@ -4393,6 +4479,7 @@
         "AuthorizeDBSecurityGroupIngressMessage$EC2SecurityGroupOwnerId": "<p>Amazon Web Services account number of the owner of the EC2 security group specified in the <code>EC2SecurityGroupName</code> parameter. The Amazon Web Services access key ID isn't an acceptable value. For VPC DB security groups, <code>EC2SecurityGroupId</code> must be provided. Otherwise, <code>EC2SecurityGroupOwnerId</code> and either <code>EC2SecurityGroupName</code> or <code>EC2SecurityGroupId</code> must be provided.</p>",
         "AvailabilityZone$Name": "<p>The name of the Availability Zone.</p>",
         "AvailabilityZones$member": null,
+        "AvailableAdditionalStorageVolumesOption$StorageType": "<p>The storage type for the additional storage volume.</p> <p>Valid Values: <code>GP3 | IO2</code> </p>",
         "AvailableProcessorFeature$Name": "<p>The name of the processor feature. Valid names are <code>coreCount</code> and <code>threadsPerCore</code>.</p>",
         "AvailableProcessorFeature$DefaultValue": "<p>The default value for the processor feature of the DB instance class.</p>",
         "AvailableProcessorFeature$AllowedValues": "<p>The allowed values for the processor feature of the DB instance class.</p>",
@@ -4470,7 +4557,7 @@
         "CreateDBInstanceMessage$DBName": "<p>The meaning of this parameter differs according to the database engine you use.</p> <dl> <dt>Amazon Aurora MySQL</dt> <dd> <p>The name of the database to create when the primary DB instance of the Aurora MySQL DB cluster is created. If this parameter isn't specified for an Aurora MySQL DB cluster, no database is created in the DB cluster.</p> <p>Constraints:</p> <ul> <li> <p>Must contain 1 to 64 alphanumeric characters.</p> </li> <li> <p>Must begin with a letter. Subsequent characters can be letters, underscores, or digits (0-9).</p> </li> <li> <p>Can't be a word reserved by the database engine.</p> </li> </ul> </dd> <dt>Amazon Aurora PostgreSQL</dt> <dd> <p>The name of the database to create when the primary DB instance of the Aurora PostgreSQL DB cluster is created. A database named <code>postgres</code> is always created. If this parameter is specified, an additional database with this name is created.</p> <p>Constraints:</p> <ul> <li> <p>It must contain 1 to 63 alphanumeric characters.</p> </li> <li> <p>Must begin with a letter. Subsequent characters can be letters, underscores, or digits (0 to 9).</p> </li> <li> <p>Can't be a word reserved by the database engine.</p> </li> </ul> </dd> <dt>Amazon RDS Custom for Oracle</dt> <dd> <p>The Oracle System ID (SID) of the created RDS Custom DB instance. If you don't specify a value, the default value is <code>ORCL</code> for non-CDBs and <code>RDSCDB</code> for CDBs.</p> <p>Default: <code>ORCL</code> </p> <p>Constraints:</p> <ul> <li> <p>Must contain 1 to 8 alphanumeric characters.</p> </li> <li> <p>Must contain a letter.</p> </li> <li> <p>Can't be a word reserved by the database engine.</p> </li> </ul> </dd> <dt>Amazon RDS Custom for SQL Server</dt> <dd> <p>Not applicable. Must be null.</p> </dd> <dt>RDS for Db2</dt> <dd> <p>The name of the database to create when the DB instance is created. If this parameter isn't specified, no database is created in the DB instance. In some cases, we recommend that you don't add a database name. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/db2-db-instance-prereqs.html#db2-prereqs-additional-considerations\">Additional considerations</a> in the <i>Amazon RDS User Guide</i>.</p> <p>Constraints:</p> <ul> <li> <p>Must contain 1 to 64 letters or numbers.</p> </li> <li> <p>Must begin with a letter. Subsequent characters can be letters, underscores, or digits (0-9).</p> </li> <li> <p>Can't be a word reserved by the specified database engine.</p> </li> </ul> </dd> <dt>RDS for MariaDB</dt> <dd> <p>The name of the database to create when the DB instance is created. If this parameter isn't specified, no database is created in the DB instance.</p> <p>Constraints:</p> <ul> <li> <p>Must contain 1 to 64 letters or numbers.</p> </li> <li> <p>Must begin with a letter. Subsequent characters can be letters, underscores, or digits (0-9).</p> </li> <li> <p>Can't be a word reserved by the specified database engine.</p> </li> </ul> </dd> <dt>RDS for MySQL</dt> <dd> <p>The name of the database to create when the DB instance is created. If this parameter isn't specified, no database is created in the DB instance.</p> <p>Constraints:</p> <ul> <li> <p>Must contain 1 to 64 letters or numbers.</p> </li> <li> <p>Must begin with a letter. Subsequent characters can be letters, underscores, or digits (0-9).</p> </li> <li> <p>Can't be a word reserved by the specified database engine.</p> </li> </ul> </dd> <dt>RDS for Oracle</dt> <dd> <p>The Oracle System ID (SID) of the created DB instance. If you don't specify a value, the default value is <code>ORCL</code>. You can't specify the string <code>null</code>, or any other reserved word, for <code>DBName</code>.</p> <p>Default: <code>ORCL</code> </p> <p>Constraints:</p> <ul> <li> <p>Can't be longer than 8 characters.</p> </li> </ul> </dd> <dt>RDS for PostgreSQL</dt> <dd> <p>The name of the database to create when the DB instance is created. A database named <code>postgres</code> is always created. If this parameter is specified, an additional database with this name is created.</p> <p>Constraints:</p> <ul> <li> <p>Must contain 1 to 63 letters, numbers, or underscores.</p> </li> <li> <p>Must begin with a letter. Subsequent characters can be letters, underscores, or digits (0-9).</p> </li> <li> <p>Can't be a word reserved by the specified database engine.</p> </li> </ul> </dd> <dt>RDS for SQL Server</dt> <dd> <p>Not applicable. Must be null.</p> </dd> </dl>",
         "CreateDBInstanceMessage$DBInstanceIdentifier": "<p>The identifier for this DB instance. This parameter is stored as a lowercase string.</p> <p>Constraints:</p> <ul> <li> <p>Must contain from 1 to 63 letters, numbers, or hyphens.</p> </li> <li> <p>First character must be a letter.</p> </li> <li> <p>Can't end with a hyphen or contain two consecutive hyphens.</p> </li> </ul> <p>Example: <code>mydbinstance</code> </p>",
         "CreateDBInstanceMessage$DBInstanceClass": "<p>The compute and memory capacity of the DB instance, for example <code>db.m5.large</code>. Not all DB instance classes are available in all Amazon Web Services Regions, or for all database engines. For the full list of DB instance classes, and availability for your engine, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html\">DB instance classes</a> in the <i>Amazon RDS User Guide</i> or <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.DBInstanceClass.html\">Aurora DB instance classes</a> in the <i>Amazon Aurora User Guide</i>.</p>",
-        "CreateDBInstanceMessage$Engine": "<p>The database engine to use for this DB instance.</p> <p>Not every database engine is available in every Amazon Web Services Region.</p> <p>Valid Values:</p> <ul> <li> <p> <code>aurora-mysql</code> (for Aurora MySQL DB instances)</p> </li> <li> <p> <code>aurora-postgresql</code> (for Aurora PostgreSQL DB instances)</p> </li> <li> <p> <code>custom-oracle-ee</code> (for RDS Custom for Oracle DB instances)</p> </li> <li> <p> <code>custom-oracle-ee-cdb</code> (for RDS Custom for Oracle DB instances)</p> </li> <li> <p> <code>custom-oracle-se2</code> (for RDS Custom for Oracle DB instances)</p> </li> <li> <p> <code>custom-oracle-se2-cdb</code> (for RDS Custom for Oracle DB instances)</p> </li> <li> <p> <code>custom-sqlserver-ee</code> (for RDS Custom for SQL Server DB instances)</p> </li> <li> <p> <code>custom-sqlserver-se</code> (for RDS Custom for SQL Server DB instances)</p> </li> <li> <p> <code>custom-sqlserver-web</code> (for RDS Custom for SQL Server DB instances)</p> </li> <li> <p> <code>custom-sqlserver-dev</code> (for RDS Custom for SQL Server DB instances)</p> </li> <li> <p> <code>db2-ae</code> </p> </li> <li> <p> <code>db2-se</code> </p> </li> <li> <p> <code>mariadb</code> </p> </li> <li> <p> <code>mysql</code> </p> </li> <li> <p> <code>oracle-ee</code> </p> </li> <li> <p> <code>oracle-ee-cdb</code> </p> </li> <li> <p> <code>oracle-se2</code> </p> </li> <li> <p> <code>oracle-se2-cdb</code> </p> </li> <li> <p> <code>postgres</code> </p> </li> <li> <p> <code>sqlserver-ee</code> </p> </li> <li> <p> <code>sqlserver-se</code> </p> </li> <li> <p> <code>sqlserver-ex</code> </p> </li> <li> <p> <code>sqlserver-web</code> </p> </li> </ul>",
+        "CreateDBInstanceMessage$Engine": "<p>The database engine to use for this DB instance.</p> <p>Not every database engine is available in every Amazon Web Services Region.</p> <p>Valid Values:</p> <ul> <li> <p> <code>aurora-mysql</code> (for Aurora MySQL DB instances)</p> </li> <li> <p> <code>aurora-postgresql</code> (for Aurora PostgreSQL DB instances)</p> </li> <li> <p> <code>custom-oracle-ee</code> (for RDS Custom for Oracle DB instances)</p> </li> <li> <p> <code>custom-oracle-ee-cdb</code> (for RDS Custom for Oracle DB instances)</p> </li> <li> <p> <code>custom-oracle-se2</code> (for RDS Custom for Oracle DB instances)</p> </li> <li> <p> <code>custom-oracle-se2-cdb</code> (for RDS Custom for Oracle DB instances)</p> </li> <li> <p> <code>custom-sqlserver-ee</code> (for RDS Custom for SQL Server DB instances)</p> </li> <li> <p> <code>custom-sqlserver-se</code> (for RDS Custom for SQL Server DB instances)</p> </li> <li> <p> <code>custom-sqlserver-web</code> (for RDS Custom for SQL Server DB instances)</p> </li> <li> <p> <code>custom-sqlserver-dev</code> (for RDS Custom for SQL Server DB instances)</p> </li> <li> <p> <code>db2-ae</code> </p> </li> <li> <p> <code>db2-se</code> </p> </li> <li> <p> <code>mariadb</code> </p> </li> <li> <p> <code>mysql</code> </p> </li> <li> <p> <code>oracle-ee</code> </p> </li> <li> <p> <code>oracle-ee-cdb</code> </p> </li> <li> <p> <code>oracle-se2</code> </p> </li> <li> <p> <code>oracle-se2-cdb</code> </p> </li> <li> <p> <code>postgres</code> </p> </li> <li> <p> <code>sqlserver-dev-ee</code> </p> </li> <li> <p> <code>sqlserver-ee</code> </p> </li> <li> <p> <code>sqlserver-se</code> </p> </li> <li> <p> <code>sqlserver-ex</code> </p> </li> <li> <p> <code>sqlserver-web</code> </p> </li> </ul>",
         "CreateDBInstanceMessage$MasterUsername": "<p>The name for the master user.</p> <p>This setting doesn't apply to Amazon Aurora DB instances. The name for the master user is managed by the DB cluster.</p> <p>This setting is required for RDS DB instances.</p> <p>Constraints:</p> <ul> <li> <p>Must be 1 to 16 letters, numbers, or underscores.</p> </li> <li> <p>First character must be a letter.</p> </li> <li> <p>Can't be a reserved word for the chosen database engine.</p> </li> </ul>",
         "CreateDBInstanceMessage$AvailabilityZone": "<p>The Availability Zone (AZ) where the database will be created. For information on Amazon Web Services Regions and Availability Zones, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html\">Regions and Availability Zones</a>.</p> <p>For Amazon Aurora, each Aurora DB cluster hosts copies of its storage in three separate Availability Zones. Specify one of these Availability Zones. Aurora automatically chooses an appropriate Availability Zone if you don't specify one.</p> <p>Default: A random, system-chosen Availability Zone in the endpoint's Amazon Web Services Region.</p> <p>Constraints:</p> <ul> <li> <p>The <code>AvailabilityZone</code> parameter can't be specified if the DB instance is a Multi-AZ deployment.</p> </li> <li> <p>The specified Availability Zone must be in the same Amazon Web Services Region as the current endpoint.</p> </li> </ul> <p>Example: <code>us-east-1d</code> </p>",
         "CreateDBInstanceMessage$DBSubnetGroupName": "<p>A DB subnet group to associate with this DB instance.</p> <p>Constraints:</p> <ul> <li> <p>Must match the name of an existing DB subnet group.</p> </li> </ul> <p>Example: <code>mydbsubnetgroup</code> </p>",
@@ -4666,6 +4753,7 @@
         "DBEngineVersion$DBEngineMediaType": "<p>A value that indicates the source media provider of the AMI based on the usage operation. Applicable for RDS Custom for SQL Server.</p>",
         "DBEngineVersion$KMSKeyId": "<p>The Amazon Web Services KMS key identifier for an encrypted CEV. This parameter is required for RDS Custom, but optional for Amazon RDS.</p>",
         "DBEngineVersion$Status": "<p>The status of the DB engine version, either <code>available</code> or <code>deprecated</code>.</p>",
+        "DBEngineVersion$FailureReason": "<p>The reason that the custom engine version creation for <code>sqlserver-dev-ee</code> failed with an <code>incompatible-installation-media</code> status.</p>",
         "DBEngineVersionMessage$Marker": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
         "DBInstance$DBInstanceIdentifier": "<p>The user-supplied database identifier. This identifier is the unique key that identifies a DB instance.</p>",
         "DBInstance$DBInstanceClass": "<p>The name of the compute and memory capacity class of the DB instance.</p>",
@@ -4703,6 +4791,7 @@
         "DBInstance$ReadReplicaSourceDBClusterIdentifier": "<p>The identifier of the source DB cluster if this DB instance is a read replica.</p>",
         "DBInstance$PercentProgress": "<p>The progress of the storage optimization operation as a percentage.</p>",
         "DBInstance$EngineLifecycleSupport": "<p>The lifecycle type for the DB instance.</p> <p>For more information, see CreateDBInstance.</p>",
+        "DBInstance$StorageVolumeStatus": "<p>The detailed status information for storage volumes associated with the DB instance. This information helps identify which specific volume is causing the instance to be in a storage-full state.</p>",
         "DBInstanceAutomatedBackup$DBInstanceArn": "<p>The Amazon Resource Name (ARN) for the automated backups.</p>",
         "DBInstanceAutomatedBackup$DbiResourceId": "<p>The resource ID for the source DB instance, which can't be changed and which is unique to an Amazon Web Services Region.</p>",
         "DBInstanceAutomatedBackup$Region": "<p>The Amazon Web Services Region associated with the automated backup.</p>",
@@ -5063,6 +5152,8 @@
         "ModifyActivityStreamRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the RDS for Oracle or Microsoft SQL Server DB instance. For example, <code>arn:aws:rds:us-east-1:12345667890:db:my-orcl-db</code>.</p>",
         "ModifyActivityStreamResponse$KmsKeyId": "<p>The Amazon Web Services KMS key identifier for encryption of messages in the database activity stream.</p>",
         "ModifyActivityStreamResponse$KinesisStreamName": "<p>The name of the Amazon Kinesis data stream to be used for the database activity stream.</p>",
+        "ModifyAdditionalStorageVolume$VolumeName": "<p>The name of the additional storage volume that you want to modify.</p> <p>Valid Values: <code>RDSDBDATA2 | RDSDBDATA3 | RDSDBDATA4</code> </p>",
+        "ModifyAdditionalStorageVolume$StorageType": "<p>The new storage type for the additional storage volume.</p> <p>Valid Values: <code>GP3 | IO2</code> </p>",
         "ModifyCertificatesMessage$CertificateIdentifier": "<p>The new default certificate identifier to override the current one with.</p> <p>To determine the valid values, use the <code>describe-certificates</code> CLI command or the <code>DescribeCertificates</code> API operation.</p>",
         "ModifyCurrentDBClusterCapacityMessage$DBClusterIdentifier": "<p>The DB cluster identifier for the cluster being modified. This parameter isn't case-sensitive.</p> <p>Constraints:</p> <ul> <li> <p>Must match the identifier of an existing DB cluster.</p> </li> </ul>",
         "ModifyCurrentDBClusterCapacityMessage$TimeoutAction": "<p>The action to take when the timeout is reached, either <code>ForceApplyCapacityChange</code> or <code>RollbackCapacityChange</code>.</p> <p> <code>ForceApplyCapacityChange</code>, the default, sets the capacity to the specified value as soon as possible.</p> <p> <code>RollbackCapacityChange</code> ignores the capacity change if a scaling point isn't found in the timeout period.</p>",
@@ -5447,6 +5538,7 @@
         "UserAuthConfigInfo$UserName": "<p>The name of the database user to which the proxy connects.</p>",
         "UserAuthConfigInfo$SecretArn": "<p>The Amazon Resource Name (ARN) representing the secret that the proxy uses to authenticate to the RDS DB instance or Aurora DB cluster. These secrets are stored within Amazon Secrets Manager.</p>",
         "ValidStorageOptions$StorageType": "<p>The valid storage types for your DB instance. For example: gp2, gp3, io1, io2.</p>",
+        "ValidVolumeOptions$VolumeName": "<p>The name of the additional storage volume.</p>",
         "VpcSecurityGroupIdList$member": null,
         "VpcSecurityGroupMembership$VpcSecurityGroupId": "<p>The name of the VPC security group.</p>",
         "VpcSecurityGroupMembership$Status": "<p>The membership status of the VPC security group.</p> <p>Currently, the only valid status is <code>active</code>.</p>"
@@ -5465,6 +5557,7 @@
       "refs": {
         "ConnectionPoolConfiguration$SessionPinningFilters": "<p>Each item in the list represents a class of SQL operations that normally cause all later statements in a session using a proxy to be pinned to the same underlying database connection. Including an item in the list exempts that class of SQL operations from the pinning behavior.</p> <p>Default: no session pinning filters</p>",
         "ConnectionPoolConfigurationInfo$SessionPinningFilters": "<p>Each item in the list represents a class of SQL operations that normally cause all later statements in a session using a proxy to be pinned to the same underlying database connection. Including an item in the list exempts that class of SQL operations from the pinning behavior. This setting is only supported for MySQL engine family databases. Currently, the only allowed value is <code>EXCLUDE_VARIABLE_SETS</code>.</p>",
+        "CreateCustomDBEngineVersionMessage$DatabaseInstallationFiles": "<p>The database installation files (ISO and EXE) uploaded to Amazon S3 for your database engine version to import to Amazon RDS.</p>",
         "CreateDBClusterEndpointMessage$StaticMembers": "<p>List of DB instance identifiers that are part of the custom endpoint group.</p>",
         "CreateDBClusterEndpointMessage$ExcludedMembers": "<p>List of DB instance identifiers that aren't part of the custom endpoint group. All other eligible instances are reachable through the custom endpoint. This parameter is relevant only if the list of static members is empty.</p>",
         "CreateDBInstanceMessage$DomainDnsIps": "<p>The IPv4 DNS IP addresses of your primary and secondary Active Directory domain controllers.</p> <p>Constraints:</p> <ul> <li> <p>Two IP addresses must be provided. If there isn't a secondary domain controller, use the IP address of the primary domain controller for both entries in the list.</p> </li> </ul> <p>Example: <code>123.124.125.126,234.235.236.237</code> </p>",
@@ -5476,6 +5569,7 @@
         "DBCluster$CustomEndpoints": "<p>The custom endpoints associated with the DB cluster.</p>",
         "DBClusterEndpoint$StaticMembers": "<p>List of DB instance identifiers that are part of the custom endpoint group.</p>",
         "DBClusterEndpoint$ExcludedMembers": "<p>List of DB instance identifiers that aren't part of the custom endpoint group. All other eligible instances are reachable through the custom endpoint. Only relevant if the list of static members is empty.</p>",
+        "DBEngineVersion$DatabaseInstallationFiles": "<p>The database installation files (ISO and EXE) uploaded to Amazon S3 for your database engine version to import to Amazon RDS. Required for <code>sqlserver-dev-ee</code>.</p>",
         "DBProxy$VpcSecurityGroupIds": "<p>Provides a list of VPC security groups that the proxy belongs to.</p>",
         "DBProxy$VpcSubnetIds": "<p>The EC2 subnet IDs for the proxy.</p>",
         "DBProxyEndpoint$VpcSecurityGroupIds": "<p>Provides a list of VPC security groups that the DB proxy endpoint belongs to.</p>",
@@ -5899,6 +5993,12 @@
         "ModifyDBProxyRequest$Auth": "<p>The new authentication settings for the <code>DBProxy</code>.</p>"
       }
     },
+    "ValidAdditionalStorageOptions": {
+      "base": "<p>Contains the valid options for additional storage volumes for a DB instance. </p>",
+      "refs": {
+        "ValidDBInstanceModificationsMessage$AdditionalStorage": "<p>The valid additional storage options for the DB instance.</p>"
+      }
+    },
     "ValidDBInstanceModificationsMessage": {
       "base": "<p>Information about valid modifications that you can make to your DB instance. Contains the result of a successful call to the <code>DescribeValidDBInstanceModifications</code> action. You can use this information when you call <code>ModifyDBInstance</code>.</p>",
       "refs": {
@@ -5914,13 +6014,26 @@
     "ValidStorageOptionsList": {
       "base": null,
       "refs": {
-        "ValidDBInstanceModificationsMessage$Storage": "<p>Valid storage options for your DB instance.</p>"
+        "ValidDBInstanceModificationsMessage$Storage": "<p>Valid storage options for your DB instance.</p>",
+        "ValidVolumeOptions$Storage": "<p>The valid storage options for the additional storage volume.</p>"
       }
     },
     "ValidUpgradeTargetList": {
       "base": null,
       "refs": {
         "DBEngineVersion$ValidUpgradeTarget": "<p>A list of engine versions that this database engine version can be upgraded to.</p>"
+      }
+    },
+    "ValidVolumeOptions": {
+      "base": "<p>Contains the valid options for an additional storage volume.</p>",
+      "refs": {
+        "ValidVolumeOptionsList$member": null
+      }
+    },
+    "ValidVolumeOptionsList": {
+      "base": null,
+      "refs": {
+        "ValidAdditionalStorageOptions$Volumes": "<p>The valid additional storage volume options for the DB instance.</p>"
       }
     },
     "VpcEncryptionControlViolationException": {

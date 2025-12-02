@@ -1,5 +1,17 @@
 {
   "pagination": {
+    "GetDurableExecutionHistory": {
+      "input_token": "Marker",
+      "output_token": "NextMarker",
+      "limit_key": "MaxItems",
+      "result_key": "Events"
+    },
+    "GetDurableExecutionState": {
+      "input_token": "Marker",
+      "output_token": "NextMarker",
+      "limit_key": "MaxItems",
+      "result_key": "Operations"
+    },
     "ListAliases": {
       "input_token": "Marker",
       "output_token": "NextMarker",
@@ -17,6 +29,12 @@
       "output_token": "NextMarker",
       "limit_key": "MaxItems",
       "result_key": "CodeSigningConfigs"
+    },
+    "ListDurableExecutionsByFunction": {
+      "input_token": "Marker",
+      "output_token": "NextMarker",
+      "limit_key": "MaxItems",
+      "result_key": "DurableExecutions"
     },
     "ListEventSourceMappings": {
       "input_token": "Marker",

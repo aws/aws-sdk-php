@@ -360,6 +360,12 @@
         "NetworkEndpoint$AutonomousSystem": "<p>The Autonomous System (AS) of the network endpoint.</p>"
       }
     },
+    "AutoscalingAutoScalingGroup": {
+      "base": "<p>Contains information about the Auto Scaling Group involved in a GuardDuty finding, including unique identifiers of the Amazon EC2 instances.</p>",
+      "refs": {
+        "ResourceData$AutoscalingAutoScalingGroup": "<p>Contains detailed information about the Auto Scaling Group associated with the activity that prompted GuardDuty to generate a finding.</p>"
+      }
+    },
     "AwsApiCallAction": {
       "base": "<p>Contains information about the API action.</p>",
       "refs": {
@@ -469,6 +475,12 @@
         "DataSourceConfigurationsResult$CloudTrail": "<p>An object that contains information on the status of CloudTrail as a data source.</p>"
       }
     },
+    "CloudformationStack": {
+      "base": "<p>Contains information about the CloudFormation stack involved in a GuardDuty finding, including unique identifiers of the Amazon EC2 instances.</p>",
+      "refs": {
+        "ResourceData$CloudformationStack": "<p>Contains detailed information about the CloudFormation stack associated with the activity that prompted GuardDuty to generate a finding.</p>"
+      }
+    },
     "ClusterStatus": {
       "base": null,
       "refs": {
@@ -519,6 +531,7 @@
     "ContainerUids": {
       "base": null,
       "refs": {
+        "EcsTask$ContainerUids": "<p>A list of unique identifiers for the containers associated with the Amazon ECS task.</p>",
         "KubernetesWorkload$ContainerUids": "<p>A list of unique identifiers for the containers that are part of the Kubernetes workload.</p>"
       }
     },
@@ -1231,6 +1244,12 @@
         "ScanEc2InstanceWithFindingsResult$EbsVolumes": "<p>Describes the configuration of scanning EBS volumes as a data source.</p>"
       }
     },
+    "Ec2Image": {
+      "base": "<p>Contains information about the Amazon EC2 Image involved in a GuardDuty finding, including unique identifiers of the Amazon EC2 instances.</p>",
+      "refs": {
+        "ResourceData$Ec2Image": "<p>Contains detailed information about the EC2 Image associated with the activity that prompted GuardDuty to generate a finding.</p>"
+      }
+    },
     "Ec2ImageDetails": {
       "base": "<p>Contains details about the EC2 AMI that was scanned.</p>",
       "refs": {
@@ -1252,7 +1271,20 @@
     "Ec2InstanceUids": {
       "base": null,
       "refs": {
-        "EksCluster$Ec2InstanceUids": "<p>A list of unique identifiers for the Amazon EC2 instances that serve as worker nodes in the Amazon EKS cluster.</p>"
+        "AutoscalingAutoScalingGroup$Ec2InstanceUids": "<p>A list of unique identifiers for the compromised Amazon EC2 instances that are part of the same Auto Scaling Group.</p>",
+        "CloudformationStack$Ec2InstanceUids": "<p>A list of unique identifiers for the compromised Amazon EC2 instances that were created as part of the same CloudFormation stack.</p>",
+        "Ec2Image$Ec2InstanceUids": "<p>A list of unique identifiers for the compromised Amazon EC2 instances that were launched with the same Amazon Machine Image (AMI).</p>",
+        "Ec2LaunchTemplate$Ec2InstanceUids": "<p>A list of unique identifiers for the compromised Amazon EC2 instances that share the same Amazon EC2 launch template.</p>",
+        "Ec2Vpc$Ec2InstanceUids": "<p>A list of unique identifiers for the compromised Amazon EC2 instances that were launched within the same Virtual Private Cloud (VPC).</p>",
+        "EcsCluster$Ec2InstanceUids": "<p>A list of unique identifiers for the Amazon EC2 instances that serve as container instances in the Amazon ECS cluster.</p>",
+        "EksCluster$Ec2InstanceUids": "<p>A list of unique identifiers for the Amazon EC2 instances that serve as worker nodes in the Amazon EKS cluster.</p>",
+        "IamInstanceProfileV2$Ec2InstanceUids": "<p>A list of unique identifiers for the compromised Amazon EC2 instances that share the same IAM instance profile.</p>"
+      }
+    },
+    "Ec2LaunchTemplate": {
+      "base": "<p>Contains information about the Amazon EC2 launch template involved in a GuardDuty finding, including unique identifiers of the Amazon EC2 instances.</p>",
+      "refs": {
+        "ResourceData$Ec2LaunchTemplate": "<p>Contains detailed information about the EC2 launch template associated with the activity that prompted GuardDuty to generate a finding.</p>"
       }
     },
     "Ec2NetworkInterface": {
@@ -1267,10 +1299,40 @@
         "Ec2Instance$Ec2NetworkInterfaceUids": "<p>The ID of the network interface.</p>"
       }
     },
+    "Ec2Vpc": {
+      "base": "<p>Contains information about the Amazon EC2 VPC involved in a GuardDuty finding, including unique identifiers of the Amazon EC2 instances.</p>",
+      "refs": {
+        "ResourceData$Ec2Vpc": "<p>Contains detailed information about the EC2 VPC associated with the activity that prompted GuardDuty to generate a finding.</p>"
+      }
+    },
+    "EcsCluster": {
+      "base": "<p>Contains information about the Amazon ECS cluster involved in a GuardDuty finding, including cluster identification and status.</p>",
+      "refs": {
+        "ResourceData$EcsCluster": "<p>Contains detailed information about the Amazon ECS cluster associated with the activity that prompted GuardDuty to generate a finding.</p>"
+      }
+    },
     "EcsClusterDetails": {
       "base": "<p>Contains information about the details of the ECS Cluster.</p>",
       "refs": {
         "Resource$EcsClusterDetails": "<p>Contains information about the details of the ECS Cluster.</p>"
+      }
+    },
+    "EcsClusterStatus": {
+      "base": null,
+      "refs": {
+        "EcsCluster$Status": "<p>The current status of the Amazon ECS cluster.</p>"
+      }
+    },
+    "EcsLaunchType": {
+      "base": null,
+      "refs": {
+        "EcsTask$LaunchType": "<p>The infrastructure type on which the Amazon ECS task runs.</p>"
+      }
+    },
+    "EcsTask": {
+      "base": "<p>Contains information about Amazon ECS task involved in a GuardDuty finding, including task definition and container identifiers.</p>",
+      "refs": {
+        "ResourceData$EcsTask": "<p>Contains detailed information about the Amazon ECS task associated with the activity that prompted GuardDuty to generate a finding.</p>"
       }
     },
     "EcsTaskDetails": {
@@ -1803,6 +1865,12 @@
         "InstanceDetails$IamInstanceProfile": "<p>The profile information of the EC2 instance.</p>"
       }
     },
+    "IamInstanceProfileV2": {
+      "base": "<p>Contains information about the IAM instance profile involved in a GuardDuty finding, including unique identifiers of the Amazon EC2 instances.</p>",
+      "refs": {
+        "ResourceData$IamInstanceProfile": "<p>Contains detailed information about the IAM instance profile associated with the activity that prompted GuardDuty to generate a finding.</p>"
+      }
+    },
     "ImpersonatedUser": {
       "base": "<p>Contains information about the impersonated user.</p>",
       "refs": {
@@ -2096,6 +2164,12 @@
       "base": "<p>Information about the Lambda function involved in the finding.</p>",
       "refs": {
         "Resource$LambdaDetails": "<p>Contains information about the Lambda function that was involved in a finding.</p>"
+      }
+    },
+    "LaunchTemplateVersion": {
+      "base": null,
+      "refs": {
+        "Ec2LaunchTemplate$Version": "<p>Version of the EC2 launch template.</p>"
       }
     },
     "Lineage": {
@@ -2465,6 +2539,18 @@
         "GetMasterAccountResponse$Master": "<p>The administrator account details.</p>"
       }
     },
+    "Match": {
+      "base": null,
+      "refs": {
+        "Matches$member": null
+      }
+    },
+    "Matches": {
+      "base": null,
+      "refs": {
+        "Condition$Matches": "<p>Represents the <i>match</i> condition to be applied to a single field when querying for findings. </p> <note> <p> The <i>matches</i> condition is available only for create-filter and update-filter APIs. </p> </note>"
+      }
+    },
     "MaxResults": {
       "base": null,
       "refs": {
@@ -2687,6 +2773,18 @@
       "refs": {
         "Condition$NotEquals": "<p>Represents a <i>not equal</i> <b/> condition to be applied to a single field when querying for findings.</p>",
         "CoverageFilterCondition$NotEquals": "<p>Represents a not equal condition that is applied to a single field while retrieving the coverage details.</p>"
+      }
+    },
+    "NotMatch": {
+      "base": null,
+      "refs": {
+        "NotMatches$member": null
+      }
+    },
+    "NotMatches": {
+      "base": null,
+      "refs": {
+        "Condition$NotMatches": "<p>Represents the <i>not match</i> condition to be applied to a single field when querying for findings. </p> <note> <p> The <i>not-matches</i> condition is available only for create-filter and update-filter APIs. </p> </note>"
       }
     },
     "ObservationTexts": {
@@ -3700,6 +3798,7 @@
         "EcsClusterDetails$Name": "<p>The name of the ECS Cluster.</p>",
         "EcsClusterDetails$Arn": "<p>The Amazon Resource Name (ARN) that identifies the cluster.</p>",
         "EcsClusterDetails$Status": "<p>The status of the ECS cluster.</p>",
+        "EcsTask$TaskDefinitionArn": "<p>The ARN of task definition which describes the container and volume definitions of the Amazon ECS task.</p>",
         "EcsTaskDetails$Arn": "<p>The Amazon Resource Name (ARN) of the task.</p>",
         "EcsTaskDetails$DefinitionArn": "<p>The ARN of the task definition that creates the task.</p>",
         "EcsTaskDetails$Version": "<p>The version counter for the task.</p>",
@@ -4199,6 +4298,7 @@
         "DetectorFeatureConfigurationResult$UpdatedAt": "<p>The timestamp at which the feature object was updated.</p>",
         "EbsVolumeScanDetails$ScanStartedAt": "<p>Returns the start date and time of the malware scan.</p>",
         "EbsVolumeScanDetails$ScanCompletedAt": "<p>Returns the completion date and time of the malware scan.</p>",
+        "EcsTask$CreatedAt": "<p>The timestamp indicating when the Amazon ECS task was created, in UTC format.</p>",
         "EcsTaskDetails$TaskCreatedAt": "<p>The Unix timestamp for the time when the task was created.</p>",
         "EcsTaskDetails$StartedAt": "<p>The Unix timestamp for the time when the task started.</p>",
         "EksCluster$CreatedAt": "<p>The timestamp indicating when the Amazon EKS cluster was created, in UTC format.</p>",

@@ -26,7 +26,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "BatchGetEffectiveLifecyclePolicy":{
       "name":"BatchGetEffectiveLifecyclePolicy",
@@ -39,7 +40,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "BatchGetLifecyclePolicy":{
       "name":"BatchGetLifecyclePolicy",
@@ -52,7 +54,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "BatchGetVpcEndpoint":{
       "name":"BatchGetVpcEndpoint",
@@ -65,7 +68,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "CreateAccessPolicy":{
       "name":"CreateAccessPolicy",
@@ -303,7 +307,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetAccountSettings":{
       "name":"GetAccountSettings",
@@ -316,7 +321,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetIndex":{
       "name":"GetIndex",
@@ -330,7 +336,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetPoliciesStats":{
       "name":"GetPoliciesStats",
@@ -342,7 +349,8 @@
       "output":{"shape":"GetPoliciesStatsResponse"},
       "errors":[
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetSecurityConfig":{
       "name":"GetSecurityConfig",
@@ -356,7 +364,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetSecurityPolicy":{
       "name":"GetSecurityPolicy",
@@ -370,7 +379,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAccessPolicies":{
       "name":"ListAccessPolicies",
@@ -383,7 +393,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCollections":{
       "name":"ListCollections",
@@ -396,7 +407,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListLifecyclePolicies":{
       "name":"ListLifecyclePolicies",
@@ -409,7 +421,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListSecurityConfigs":{
       "name":"ListSecurityConfigs",
@@ -422,7 +435,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListSecurityPolicies":{
       "name":"ListSecurityPolicies",
@@ -435,7 +449,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -462,7 +477,8 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -521,7 +537,8 @@
       "output":{"shape":"UpdateAccountSettingsResponse"},
       "errors":[
         {"shape":"InternalServerException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "UpdateCollection":{
@@ -752,6 +769,7 @@
         "arn":{"shape":"String"},
         "kmsKeyArn":{"shape":"String"},
         "standbyReplicas":{"shape":"StandbyReplicas"},
+        "vectorOptions":{"shape":"VectorOptions"},
         "createdDate":{"shape":"Long"},
         "lastModifiedDate":{"shape":"Long"},
         "collectionEndpoint":{"shape":"String"},
@@ -892,6 +910,7 @@
         "arn":{"shape":"String"},
         "kmsKeyArn":{"shape":"String"},
         "standbyReplicas":{"shape":"StandbyReplicas"},
+        "vectorOptions":{"shape":"VectorOptions"},
         "createdDate":{"shape":"Long"},
         "lastModifiedDate":{"shape":"Long"}
       }
@@ -905,6 +924,7 @@
         "description":{"shape":"CreateCollectionRequestDescriptionString"},
         "tags":{"shape":"Tags"},
         "standbyReplicas":{"shape":"StandbyReplicas"},
+        "vectorOptions":{"shape":"VectorOptions"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -1808,6 +1828,14 @@
         "network"
       ]
     },
+    "ServerlessVectorAccelerationStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED",
+        "ALLOWED"
+      ]
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":[
@@ -2114,6 +2142,13 @@
         "message":{"shape":"String"}
       },
       "exception":true
+    },
+    "VectorOptions":{
+      "type":"structure",
+      "required":["ServerlessVectorAcceleration"],
+      "members":{
+        "ServerlessVectorAcceleration":{"shape":"ServerlessVectorAccelerationStatus"}
+      }
     },
     "VpcEndpointDetail":{
       "type":"structure",

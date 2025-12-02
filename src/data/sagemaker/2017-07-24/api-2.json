@@ -552,6 +552,18 @@
         {"shape":"ResourceLimitExceeded"}
       ]
     },
+    "CreateMlflowApp":{
+      "name":"CreateMlflowApp",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateMlflowAppRequest"},
+      "output":{"shape":"CreateMlflowAppResponse"},
+      "errors":[
+        {"shape":"ResourceLimitExceeded"}
+      ]
+    },
     "CreateMlflowTrackingServer":{
       "name":"CreateMlflowTrackingServer",
       "http":{
@@ -764,6 +776,18 @@
       },
       "input":{"shape":"CreatePresignedDomainUrlRequest"},
       "output":{"shape":"CreatePresignedDomainUrlResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
+    "CreatePresignedMlflowAppUrl":{
+      "name":"CreatePresignedMlflowAppUrl",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreatePresignedMlflowAppUrlRequest"},
+      "output":{"shape":"CreatePresignedMlflowAppUrlResponse"},
       "errors":[
         {"shape":"ResourceNotFound"}
       ]
@@ -1285,6 +1309,18 @@
       "output":{"shape":"DeleteInferenceExperimentResponse"},
       "errors":[
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
+      ]
+    },
+    "DeleteMlflowApp":{
+      "name":"DeleteMlflowApp",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteMlflowAppRequest"},
+      "output":{"shape":"DeleteMlflowAppResponse"},
+      "errors":[
         {"shape":"ResourceNotFound"}
       ]
     },
@@ -2017,6 +2053,18 @@
       },
       "input":{"shape":"DescribeLineageGroupRequest"},
       "output":{"shape":"DescribeLineageGroupResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
+    "DescribeMlflowApp":{
+      "name":"DescribeMlflowApp",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeMlflowAppRequest"},
+      "output":{"shape":"DescribeMlflowAppResponse"},
       "errors":[
         {"shape":"ResourceNotFound"}
       ]
@@ -2899,6 +2947,15 @@
       },
       "input":{"shape":"ListLineageGroupsRequest"},
       "output":{"shape":"ListLineageGroupsResponse"}
+    },
+    "ListMlflowApps":{
+      "name":"ListMlflowApps",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListMlflowAppsRequest"},
+      "output":{"shape":"ListMlflowAppsResponse"}
     },
     "ListMlflowTrackingServers":{
       "name":"ListMlflowTrackingServers",
@@ -3993,6 +4050,19 @@
         {"shape":"ResourceNotFound"}
       ]
     },
+    "UpdateMlflowApp":{
+      "name":"UpdateMlflowApp",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateMlflowAppRequest"},
+      "output":{"shape":"UpdateMlflowAppResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
+      ]
+    },
     "UpdateMlflowTrackingServer":{
       "name":"UpdateMlflowTrackingServer",
       "http":{
@@ -4272,6 +4342,13 @@
       "pattern":".*"
     },
     "AcceptEula":{"type":"boolean"},
+    "AccountDefaultStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "AccountId":{
       "type":"string",
       "max":12,
@@ -7316,6 +7393,7 @@
         "ml.p4d.24xlarge",
         "ml.p4de.24xlarge",
         "ml.p5.48xlarge",
+        "ml.p5.4xlarge",
         "ml.p6e-gb200.36xlarge",
         "ml.trn1.32xlarge",
         "ml.trn1n.32xlarge",
@@ -7644,7 +7722,6 @@
     },
     "ClusterOrchestrator":{
       "type":"structure",
-      "required":["Eks"],
       "members":{
         "Eks":{"shape":"ClusterOrchestratorEksConfig"}
       }
@@ -9214,6 +9291,30 @@
         "LabelingJobArn":{"shape":"LabelingJobArn"}
       }
     },
+    "CreateMlflowAppRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "ArtifactStoreUri",
+        "RoleArn"
+      ],
+      "members":{
+        "Name":{"shape":"MlflowAppName"},
+        "ArtifactStoreUri":{"shape":"S3Uri"},
+        "RoleArn":{"shape":"RoleArn"},
+        "ModelRegistrationMode":{"shape":"ModelRegistrationMode"},
+        "WeeklyMaintenanceWindowStart":{"shape":"WeeklyMaintenanceWindowStart"},
+        "AccountDefaultStatus":{"shape":"AccountDefaultStatus"},
+        "DefaultDomainIdList":{"shape":"DefaultDomainIdList"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateMlflowAppResponse":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"MlflowAppArn"}
+      }
+    },
     "CreateMlflowTrackingServerRequest":{
       "type":"structure",
       "required":[
@@ -9659,6 +9760,21 @@
       "type":"structure",
       "members":{
         "AuthorizedUrl":{"shape":"PresignedDomainUrl"}
+      }
+    },
+    "CreatePresignedMlflowAppUrlRequest":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"MlflowAppArn"},
+        "ExpiresInSeconds":{"shape":"ExpiresInSeconds"},
+        "SessionExpirationDurationInSeconds":{"shape":"SessionExpirationDurationInSeconds"}
+      }
+    },
+    "CreatePresignedMlflowAppUrlResponse":{
+      "type":"structure",
+      "members":{
+        "AuthorizedUrl":{"shape":"MlflowAppUrl"}
       }
     },
     "CreatePresignedMlflowTrackingServerUrlRequest":{
@@ -10332,6 +10448,10 @@
         "InstanceConnectivity"
       ]
     },
+    "DefaultDomainIdList":{
+      "type":"list",
+      "member":{"shape":"DomainId"}
+    },
     "DefaultEbsStorageSettings":{
       "type":"structure",
       "required":[
@@ -10681,6 +10801,19 @@
       "required":["InferenceExperimentArn"],
       "members":{
         "InferenceExperimentArn":{"shape":"InferenceExperimentArn"}
+      }
+    },
+    "DeleteMlflowAppRequest":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"MlflowAppArn"}
+      }
+    },
+    "DeleteMlflowAppResponse":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"MlflowAppArn"}
       }
     },
     "DeleteMlflowTrackingServerRequest":{
@@ -12271,6 +12404,33 @@
         "CreatedBy":{"shape":"UserContext"},
         "LastModifiedTime":{"shape":"Timestamp"},
         "LastModifiedBy":{"shape":"UserContext"}
+      }
+    },
+    "DescribeMlflowAppRequest":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"MlflowAppArn"}
+      }
+    },
+    "DescribeMlflowAppResponse":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"MlflowAppArn"},
+        "Name":{"shape":"MlflowAppName"},
+        "ArtifactStoreUri":{"shape":"S3Uri"},
+        "MlflowVersion":{"shape":"MlflowVersion"},
+        "RoleArn":{"shape":"RoleArn"},
+        "Status":{"shape":"MlflowAppStatus"},
+        "ModelRegistrationMode":{"shape":"ModelRegistrationMode"},
+        "AccountDefaultStatus":{"shape":"AccountDefaultStatus"},
+        "DefaultDomainIdList":{"shape":"DefaultDomainIdList"},
+        "CreationTime":{"shape":"Timestamp"},
+        "CreatedBy":{"shape":"UserContext"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedBy":{"shape":"UserContext"},
+        "WeeklyMaintenanceWindowStart":{"shape":"WeeklyMaintenanceWindowStart"},
+        "MaintenanceStatus":{"shape":"MaintenanceStatus"}
       }
     },
     "DescribeMlflowTrackingServerRequest":{
@@ -15355,7 +15515,7 @@
     },
     "HubContentDocument":{
       "type":"string",
-      "max":65535,
+      "max":170391,
       "min":0,
       "pattern":".*"
     },
@@ -15392,7 +15552,7 @@
     },
     "HubContentMarkdown":{
       "type":"string",
-      "max":65535,
+      "max":170391,
       "min":0
     },
     "HubContentName":{
@@ -15401,9 +15561,15 @@
       "min":0,
       "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
+    "HubContentSearchKeyword":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "pattern":".*"
+    },
     "HubContentSearchKeywordList":{
       "type":"list",
-      "member":{"shape":"HubSearchKeyword"},
+      "member":{"shape":"HubContentSearchKeyword"},
       "max":50,
       "min":0
     },
@@ -15422,7 +15588,9 @@
         "Importing",
         "Deleting",
         "ImportFailed",
-        "DeleteFailed"
+        "DeleteFailed",
+        "PendingImport",
+        "PendingDelete"
       ]
     },
     "HubContentSupportStatus":{
@@ -15438,7 +15606,9 @@
       "enum":[
         "Model",
         "Notebook",
-        "ModelReference"
+        "ModelReference",
+        "DataSet",
+        "JsonDoc"
       ]
     },
     "HubContentVersion":{
@@ -18572,6 +18742,28 @@
       "type":"integer",
       "max":100
     },
+    "ListMlflowAppsRequest":{
+      "type":"structure",
+      "members":{
+        "CreatedAfter":{"shape":"Timestamp"},
+        "CreatedBefore":{"shape":"Timestamp"},
+        "Status":{"shape":"MlflowAppStatus"},
+        "MlflowVersion":{"shape":"MlflowVersion"},
+        "DefaultForDomainId":{"shape":"String"},
+        "AccountDefaultStatus":{"shape":"AccountDefaultStatus"},
+        "SortBy":{"shape":"SortMlflowAppBy"},
+        "SortOrder":{"shape":"SortOrder"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListMlflowAppsResponse":{
+      "type":"structure",
+      "members":{
+        "Summaries":{"shape":"MlflowAppSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListMlflowTrackingServersRequest":{
       "type":"structure",
       "members":{
@@ -19515,6 +19707,14 @@
       "min":1,
       "pattern":"[a-zA-Z]+ ?\\d+\\.\\d+(\\.\\d+)?"
     },
+    "MaintenanceStatus":{
+      "type":"string",
+      "enum":[
+        "MaintenanceInProgress",
+        "MaintenanceComplete",
+        "MaintenanceFailed"
+      ]
+    },
     "MajorMinorVersion":{
       "type":"string",
       "max":64,
@@ -19824,8 +20024,59 @@
         "Comet",
         "DeepchecksLLMEvaluation",
         "Fiddler",
-        "HyperPodClusters"
+        "HyperPodClusters",
+        "RunningInstances",
+        "Datasets",
+        "Evaluators"
       ]
+    },
+    "MlflowAppArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:mlflow-app/.*"
+    },
+    "MlflowAppName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,255}"
+    },
+    "MlflowAppStatus":{
+      "type":"string",
+      "enum":[
+        "Creating",
+        "Created",
+        "CreateFailed",
+        "Updating",
+        "Updated",
+        "UpdateFailed",
+        "Deleting",
+        "DeleteFailed",
+        "Deleted"
+      ]
+    },
+    "MlflowAppSummaries":{
+      "type":"list",
+      "member":{"shape":"MlflowAppSummary"},
+      "max":100,
+      "min":0
+    },
+    "MlflowAppSummary":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"MlflowAppArn"},
+        "Name":{"shape":"MlflowAppName"},
+        "Status":{"shape":"MlflowAppStatus"},
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "MlflowVersion":{"shape":"MlflowVersion"}
+      }
+    },
+    "MlflowAppUrl":{
+      "type":"string",
+      "max":2048,
+      "min":0
     },
     "MlflowVersion":{
       "type":"string",
@@ -20734,6 +20985,13 @@
         "Status":{"shape":"FeatureStatus"},
         "CrossAccountModelRegisterRoleArn":{"shape":"RoleArn"}
       }
+    },
+    "ModelRegistrationMode":{
+      "type":"string",
+      "enum":[
+        "AutoModelRegistrationEnabled",
+        "AutoModelRegistrationDisabled"
+      ]
     },
     "ModelSetupTime":{
       "type":"integer",
@@ -25548,6 +25806,14 @@
         "CreationTime"
       ]
     },
+    "SortMlflowAppBy":{
+      "type":"string",
+      "enum":[
+        "Name",
+        "CreationTime",
+        "Status"
+      ]
+    },
     "SortOrder":{
       "type":"string",
       "enum":[
@@ -28618,6 +28884,25 @@
       "required":["InferenceExperimentArn"],
       "members":{
         "InferenceExperimentArn":{"shape":"InferenceExperimentArn"}
+      }
+    },
+    "UpdateMlflowAppRequest":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"MlflowAppArn"},
+        "Name":{"shape":"MlflowAppName"},
+        "ArtifactStoreUri":{"shape":"S3Uri"},
+        "ModelRegistrationMode":{"shape":"ModelRegistrationMode"},
+        "WeeklyMaintenanceWindowStart":{"shape":"WeeklyMaintenanceWindowStart"},
+        "DefaultDomainIdList":{"shape":"DefaultDomainIdList"},
+        "AccountDefaultStatus":{"shape":"AccountDefaultStatus"}
+      }
+    },
+    "UpdateMlflowAppResponse":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"MlflowAppArn"}
       }
     },
     "UpdateMlflowTrackingServerRequest":{

@@ -1258,6 +1258,17 @@
         "ConstituentsPerAggregate":{"shape":"AggregateListMultiplier"}
       }
     },
+    "CreateAndAttachS3AccessPointOntapConfiguration":{
+      "type":"structure",
+      "required":[
+        "VolumeId",
+        "FileSystemIdentity"
+      ],
+      "members":{
+        "VolumeId":{"shape":"VolumeId"},
+        "FileSystemIdentity":{"shape":"OntapFileSystemIdentity"}
+      }
+    },
     "CreateAndAttachS3AccessPointOpenZFSConfiguration":{
       "type":"structure",
       "required":[
@@ -1283,6 +1294,7 @@
         "Name":{"shape":"S3AccessPointAttachmentName"},
         "Type":{"shape":"S3AccessPointAttachmentType"},
         "OpenZFSConfiguration":{"shape":"CreateAndAttachS3AccessPointOpenZFSConfiguration"},
+        "OntapConfiguration":{"shape":"CreateAndAttachS3AccessPointOntapConfiguration"},
         "S3AccessPoint":{"shape":"CreateAndAttachS3AccessPointS3Configuration"}
       }
     },
@@ -3233,6 +3245,35 @@
         "EndpointIpv6AddressRange":{"shape":"Ipv6AddressRange"}
       }
     },
+    "OntapFileSystemIdentity":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"OntapFileSystemUserType"},
+        "UnixUser":{"shape":"OntapUnixFileSystemUser"},
+        "WindowsUser":{"shape":"OntapWindowsFileSystemUser"}
+      }
+    },
+    "OntapFileSystemUserName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[^\\u0000\\u0085\\u2028\\u2029\\r\\n]{1,256}$"
+    },
+    "OntapFileSystemUserType":{
+      "type":"string",
+      "enum":[
+        "UNIX",
+        "WINDOWS"
+      ]
+    },
+    "OntapUnixFileSystemUser":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"OntapFileSystemUserName"}
+      }
+    },
     "OntapVolumeConfiguration":{
       "type":"structure",
       "members":{
@@ -3261,6 +3302,13 @@
         "DP",
         "LS"
       ]
+    },
+    "OntapWindowsFileSystemUser":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"OntapFileSystemUserName"}
+      }
     },
     "OpenZFSClientConfiguration":{
       "type":"structure",
@@ -3664,6 +3712,7 @@
         "Name":{"shape":"S3AccessPointAttachmentName"},
         "Type":{"shape":"S3AccessPointAttachmentType"},
         "OpenZFSConfiguration":{"shape":"S3AccessPointOpenZFSConfiguration"},
+        "OntapConfiguration":{"shape":"S3AccessPointOntapConfiguration"},
         "S3AccessPoint":{"shape":"S3AccessPoint"}
       }
     },
@@ -3674,7 +3723,8 @@
         "CREATING",
         "DELETING",
         "UPDATING",
-        "FAILED"
+        "FAILED",
+        "MISCONFIGURED"
       ]
     },
     "S3AccessPointAttachmentName":{
@@ -3697,7 +3747,10 @@
     },
     "S3AccessPointAttachmentType":{
       "type":"string",
-      "enum":["OPENZFS"]
+      "enum":[
+        "OPENZFS",
+        "ONTAP"
+      ]
     },
     "S3AccessPointAttachments":{
       "type":"list",
@@ -3734,6 +3787,13 @@
       "type":"list",
       "member":{"shape":"S3AccessPointAttachmentsFilter"},
       "max":2
+    },
+    "S3AccessPointOntapConfiguration":{
+      "type":"structure",
+      "members":{
+        "VolumeId":{"shape":"VolumeId"},
+        "FileSystemIdentity":{"shape":"OntapFileSystemIdentity"}
+      }
     },
     "S3AccessPointOpenZFSConfiguration":{
       "type":"structure",

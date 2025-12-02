@@ -1773,6 +1773,15 @@
         }
       }
     },
+    "AutoscalingAutoScalingGroup":{
+      "type":"structure",
+      "members":{
+        "Ec2InstanceUids":{
+          "shape":"Ec2InstanceUids",
+          "locationName":"ec2InstanceUids"
+        }
+      }
+    },
     "AwsApiCallAction":{
       "type":"structure",
       "members":{
@@ -1910,6 +1919,15 @@
         }
       }
     },
+    "CloudformationStack":{
+      "type":"structure",
+      "members":{
+        "Ec2InstanceUids":{
+          "shape":"Ec2InstanceUids",
+          "locationName":"ec2InstanceUids"
+        }
+      }
+    },
     "ClusterStatus":{
       "type":"string",
       "enum":[
@@ -1977,6 +1995,14 @@
         "LessThanOrEqual":{
           "shape":"Long",
           "locationName":"lessThanOrEqual"
+        },
+        "Matches":{
+          "shape":"Matches",
+          "locationName":"matches"
+        },
+        "NotMatches":{
+          "shape":"NotMatches",
+          "locationName":"notMatches"
         }
       }
     },
@@ -3764,6 +3790,15 @@
         }
       }
     },
+    "Ec2Image":{
+      "type":"structure",
+      "members":{
+        "Ec2InstanceUids":{
+          "shape":"Ec2InstanceUids",
+          "locationName":"ec2InstanceUids"
+        }
+      }
+    },
     "Ec2ImageDetails":{
       "type":"structure",
       "members":{
@@ -3822,6 +3857,16 @@
       "max":25,
       "min":0
     },
+    "Ec2LaunchTemplate":{
+      "type":"structure",
+      "members":{
+        "Ec2InstanceUids":{
+          "shape":"Ec2InstanceUids",
+          "locationName":"ec2InstanceUids"
+        },
+        "Version":{"shape":"LaunchTemplateVersion"}
+      }
+    },
     "Ec2NetworkInterface":{
       "type":"structure",
       "members":{
@@ -3854,6 +3899,28 @@
     "Ec2NetworkInterfaceUids":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "Ec2Vpc":{
+      "type":"structure",
+      "members":{
+        "Ec2InstanceUids":{
+          "shape":"Ec2InstanceUids",
+          "locationName":"ec2InstanceUids"
+        }
+      }
+    },
+    "EcsCluster":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"EcsClusterStatus",
+          "locationName":"status"
+        },
+        "Ec2InstanceUids":{
+          "shape":"Ec2InstanceUids",
+          "locationName":"ec2InstanceUids"
+        }
+      }
     },
     "EcsClusterDetails":{
       "type":"structure",
@@ -3889,6 +3956,44 @@
         "TaskDetails":{
           "shape":"EcsTaskDetails",
           "locationName":"taskDetails"
+        }
+      }
+    },
+    "EcsClusterStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "PROVISIONING",
+        "DEPROVISIONING",
+        "FAILED",
+        "INACTIVE"
+      ]
+    },
+    "EcsLaunchType":{
+      "type":"string",
+      "enum":[
+        "FARGATE",
+        "EC2"
+      ]
+    },
+    "EcsTask":{
+      "type":"structure",
+      "members":{
+        "CreatedAt":{
+          "shape":"Timestamp",
+          "locationName":"createdAt"
+        },
+        "TaskDefinitionArn":{
+          "shape":"String",
+          "locationName":"taskDefinitionArn"
+        },
+        "LaunchType":{
+          "shape":"EcsLaunchType",
+          "locationName":"launchType"
+        },
+        "ContainerUids":{
+          "shape":"ContainerUids",
+          "locationName":"containerUids"
         }
       }
     },
@@ -4276,7 +4381,15 @@
         "ACCESS_KEY",
         "EKS_CLUSTER",
         "KUBERNETES_WORKLOAD",
-        "CONTAINER"
+        "CONTAINER",
+        "ECS_CLUSTER",
+        "ECS_TASK",
+        "AUTOSCALING_AUTO_SCALING_GROUP",
+        "IAM_INSTANCE_PROFILE",
+        "CLOUDFORMATION_STACK",
+        "EC2_LAUNCH_TEMPLATE",
+        "EC2_VPC",
+        "EC2_IMAGE"
       ]
     },
     "FindingStatisticType":{
@@ -5355,6 +5468,15 @@
         }
       }
     },
+    "IamInstanceProfileV2":{
+      "type":"structure",
+      "members":{
+        "Ec2InstanceUids":{
+          "shape":"Ec2InstanceUids",
+          "locationName":"ec2InstanceUids"
+        }
+      }
+    },
     "ImpersonatedUser":{
       "type":"structure",
       "members":{
@@ -5982,6 +6104,10 @@
           "locationName":"tags"
         }
       }
+    },
+    "LaunchTemplateVersion":{
+      "type":"string",
+      "max":256
     },
     "Lineage":{
       "type":"list",
@@ -6872,6 +6998,17 @@
         }
       }
     },
+    "Match":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "Matches":{
+      "type":"list",
+      "member":{"shape":"Match"},
+      "max":5,
+      "min":1
+    },
     "MaxResults":{
       "type":"integer",
       "max":50,
@@ -7243,6 +7380,17 @@
     "NotEquals":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "NotMatch":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "NotMatches":{
+      "type":"list",
+      "member":{"shape":"NotMatch"},
+      "max":5,
+      "min":1
     },
     "ObservationTexts":{
       "type":"list",
@@ -8141,6 +8289,38 @@
         "Container":{
           "shape":"ContainerFindingResource",
           "locationName":"container"
+        },
+        "EcsCluster":{
+          "shape":"EcsCluster",
+          "locationName":"ecsCluster"
+        },
+        "EcsTask":{
+          "shape":"EcsTask",
+          "locationName":"ecsTask"
+        },
+        "IamInstanceProfile":{
+          "shape":"IamInstanceProfileV2",
+          "locationName":"iamInstanceProfile"
+        },
+        "AutoscalingAutoScalingGroup":{
+          "shape":"AutoscalingAutoScalingGroup",
+          "locationName":"autoscalingAutoScalingGroup"
+        },
+        "Ec2LaunchTemplate":{
+          "shape":"Ec2LaunchTemplate",
+          "locationName":"ec2LaunchTemplate"
+        },
+        "Ec2Vpc":{
+          "shape":"Ec2Vpc",
+          "locationName":"ec2Vpc"
+        },
+        "Ec2Image":{
+          "shape":"Ec2Image",
+          "locationName":"ec2Image"
+        },
+        "CloudformationStack":{
+          "shape":"CloudformationStack",
+          "locationName":"cloudformationStack"
         }
       }
     },

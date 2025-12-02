@@ -539,6 +539,7 @@
         "SAMLOptionsOutput$Enabled": "<p>True if SAML is enabled.</p>",
         "ScheduledAction$Mandatory": "<p>Whether the action is required or optional.</p>",
         "ScheduledAction$Cancellable": "<p>Whether or not the scheduled action is cancellable.</p>",
+        "ServerlessVectorAcceleration$Enabled": "<p>Specifies whether serverless vector acceleration is enabled for the domain.</p>",
         "ServiceSoftwareOptions$UpdateAvailable": "<p>True if you're able to update your service software version. False if you can't update your service software version.</p>",
         "ServiceSoftwareOptions$Cancellable": "<p> True if you're able to cancel your service software version update. False if you can't cancel your service software update.</p>",
         "ServiceSoftwareOptions$OptionalDeployment": "<p>True if a service software is never automatically updated. False if a service software is automatically updated after the automated update date.</p>",
@@ -3001,6 +3002,13 @@
       "base": "<p> Configuration details for a Security Lake data source that can be used for direct queries. </p>",
       "refs": {
         "DirectQueryDataSourceType$SecurityLake": "<p> Specifies Security Lake as a type of data source for direct queries. </p>"
+      }
+    },
+    "ServerlessVectorAcceleration": {
+      "base": "<p>Configuration for serverless vector acceleration, which provides <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/gpu-acceleration-vector-index.html\">GPU-accelerated</a> vector search capabilities for improved performance on vector workloads.</p>",
+      "refs": {
+        "AIMLOptionsInput$ServerlessVectorAcceleration": "<p>Specifies whether to enable serverless vector acceleration for the domain. When enabled, provides <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/gpu-acceleration-vector-index.html\">GPU-accelerated</a> vector search capabilities for improved performance on vector workloads.</p>",
+        "AIMLOptionsOutput$ServerlessVectorAcceleration": "<p>The current serverless vector acceleration configuration for the domain.</p>"
       }
     },
     "ServiceSoftwareOptions": {

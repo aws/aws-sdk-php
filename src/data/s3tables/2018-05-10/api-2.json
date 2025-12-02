@@ -175,6 +175,25 @@
       ],
       "idempotent":true
     },
+    "DeleteTableBucketReplication":{
+      "name":"DeleteTableBucketReplication",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/table-bucket-replication",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteTableBucketReplicationRequest"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
+    },
     "DeleteTablePolicy":{
       "name":"DeleteTablePolicy",
       "http":{
@@ -187,6 +206,25 @@
         {"shape":"InternalServerErrorException"},
         {"shape":"ForbiddenException"},
         {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteTableReplication":{
+      "name":"DeleteTableReplication",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/table-replication",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteTableReplicationRequest"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
@@ -329,6 +367,45 @@
       ],
       "readonly":true
     },
+    "GetTableBucketReplication":{
+      "name":"GetTableBucketReplication",
+      "http":{
+        "method":"GET",
+        "requestUri":"/table-bucket-replication",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTableBucketReplicationRequest"},
+      "output":{"shape":"GetTableBucketReplicationResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "readonly":true
+    },
+    "GetTableBucketStorageClass":{
+      "name":"GetTableBucketStorageClass",
+      "http":{
+        "method":"GET",
+        "requestUri":"/buckets/{tableBucketARN}/storage-class",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTableBucketStorageClassRequest"},
+      "output":{"shape":"GetTableBucketStorageClassResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ],
+      "readonly":true
+    },
     "GetTableEncryption":{
       "name":"GetTableEncryption",
       "http":{
@@ -424,6 +501,102 @@
       ],
       "readonly":true
     },
+    "GetTableRecordExpirationConfiguration":{
+      "name":"GetTableRecordExpirationConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/table-record-expiration",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTableRecordExpirationConfigurationRequest"},
+      "output":{"shape":"GetTableRecordExpirationConfigurationResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"MethodNotAllowedException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ],
+      "readonly":true
+    },
+    "GetTableRecordExpirationJobStatus":{
+      "name":"GetTableRecordExpirationJobStatus",
+      "http":{
+        "method":"GET",
+        "requestUri":"/table-record-expiration-job-status",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTableRecordExpirationJobStatusRequest"},
+      "output":{"shape":"GetTableRecordExpirationJobStatusResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"MethodNotAllowedException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ],
+      "readonly":true
+    },
+    "GetTableReplication":{
+      "name":"GetTableReplication",
+      "http":{
+        "method":"GET",
+        "requestUri":"/table-replication",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTableReplicationRequest"},
+      "output":{"shape":"GetTableReplicationResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "readonly":true
+    },
+    "GetTableReplicationStatus":{
+      "name":"GetTableReplicationStatus",
+      "http":{
+        "method":"GET",
+        "requestUri":"/replication-status",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTableReplicationStatusRequest"},
+      "output":{"shape":"GetTableReplicationStatusResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "readonly":true
+    },
+    "GetTableStorageClass":{
+      "name":"GetTableStorageClass",
+      "http":{
+        "method":"GET",
+        "requestUri":"/tables/{tableBucketARN}/{namespace}/{name}/storage-class",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTableStorageClassRequest"},
+      "output":{"shape":"GetTableStorageClassResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ],
+      "readonly":true
+    },
     "ListNamespaces":{
       "name":"ListNamespaces",
       "http":{
@@ -500,7 +673,7 @@
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
       ],
-      "idempotent":true
+      "readonly":true
     },
     "PutTableBucketEncryption":{
       "name":"PutTableBucketEncryption",
@@ -573,6 +746,44 @@
       ],
       "idempotent":true
     },
+    "PutTableBucketReplication":{
+      "name":"PutTableBucketReplication",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/table-bucket-replication",
+        "responseCode":200
+      },
+      "input":{"shape":"PutTableBucketReplicationRequest"},
+      "output":{"shape":"PutTableBucketReplicationResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
+    },
+    "PutTableBucketStorageClass":{
+      "name":"PutTableBucketStorageClass",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/buckets/{tableBucketARN}/storage-class",
+        "responseCode":200
+      },
+      "input":{"shape":"PutTableBucketStorageClassRequest"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
+    },
     "PutTableMaintenanceConfiguration":{
       "name":"PutTableMaintenanceConfiguration",
       "http":{
@@ -602,6 +813,44 @@
         {"shape":"InternalServerErrorException"},
         {"shape":"ForbiddenException"},
         {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ConflictException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
+    },
+    "PutTableRecordExpirationConfiguration":{
+      "name":"PutTableRecordExpirationConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/table-record-expiration",
+        "responseCode":204
+      },
+      "input":{"shape":"PutTableRecordExpirationConfigurationRequest"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"MethodNotAllowedException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
+    },
+    "PutTableReplication":{
+      "name":"PutTableReplication",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/table-replication",
+        "responseCode":200
+      },
+      "input":{"shape":"PutTableReplicationRequest"},
+      "output":{"shape":"PutTableReplicationResponse"},
+      "errors":[
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"ConflictException"},
         {"shape":"BadRequestException"}
@@ -764,6 +1013,7 @@
       "members":{
         "name":{"shape":"TableBucketName"},
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "storageClassConfiguration":{"shape":"StorageClassConfiguration"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -797,6 +1047,7 @@
         "format":{"shape":"OpenTableFormat"},
         "metadata":{"shape":"TableMetadata"},
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "storageClassConfiguration":{"shape":"StorageClassConfiguration"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -863,6 +1114,22 @@
         }
       }
     },
+    "DeleteTableBucketReplicationRequest":{
+      "type":"structure",
+      "required":["tableBucketARN"],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"querystring",
+          "locationName":"tableBucketARN"
+        },
+        "versionToken":{
+          "shape":"VersionToken",
+          "location":"querystring",
+          "locationName":"versionToken"
+        }
+      }
+    },
     "DeleteTableBucketRequest":{
       "type":"structure",
       "required":["tableBucketARN"],
@@ -896,6 +1163,25 @@
           "shape":"TableName",
           "location":"uri",
           "locationName":"name"
+        }
+      }
+    },
+    "DeleteTableReplicationRequest":{
+      "type":"structure",
+      "required":[
+        "tableArn",
+        "versionToken"
+      ],
+      "members":{
+        "tableArn":{
+          "shape":"TableARN",
+          "location":"querystring",
+          "locationName":"tableArn"
+        },
+        "versionToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"versionToken"
         }
       }
     },
@@ -1068,6 +1354,28 @@
         "resourcePolicy":{"shape":"ResourcePolicy"}
       }
     },
+    "GetTableBucketReplicationRequest":{
+      "type":"structure",
+      "required":["tableBucketARN"],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"querystring",
+          "locationName":"tableBucketARN"
+        }
+      }
+    },
+    "GetTableBucketReplicationResponse":{
+      "type":"structure",
+      "required":[
+        "versionToken",
+        "configuration"
+      ],
+      "members":{
+        "versionToken":{"shape":"VersionToken"},
+        "configuration":{"shape":"TableBucketReplicationConfiguration"}
+      }
+    },
     "GetTableBucketRequest":{
       "type":"structure",
       "required":["tableBucketARN"],
@@ -1094,6 +1402,24 @@
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "tableBucketId":{"shape":"TableBucketId"},
         "type":{"shape":"TableBucketType"}
+      }
+    },
+    "GetTableBucketStorageClassRequest":{
+      "type":"structure",
+      "required":["tableBucketARN"],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"uri",
+          "locationName":"tableBucketARN"
+        }
+      }
+    },
+    "GetTableBucketStorageClassResponse":{
+      "type":"structure",
+      "required":["storageClassConfiguration"],
+      "members":{
+        "storageClassConfiguration":{"shape":"StorageClassConfiguration"}
       }
     },
     "GetTableEncryptionRequest":{
@@ -1269,6 +1595,89 @@
         "resourcePolicy":{"shape":"ResourcePolicy"}
       }
     },
+    "GetTableRecordExpirationConfigurationRequest":{
+      "type":"structure",
+      "required":["tableArn"],
+      "members":{
+        "tableArn":{
+          "shape":"TableARN",
+          "location":"querystring",
+          "locationName":"tableArn"
+        }
+      }
+    },
+    "GetTableRecordExpirationConfigurationResponse":{
+      "type":"structure",
+      "required":["configuration"],
+      "members":{
+        "configuration":{"shape":"TableRecordExpirationConfigurationValue"}
+      }
+    },
+    "GetTableRecordExpirationJobStatusRequest":{
+      "type":"structure",
+      "required":["tableArn"],
+      "members":{
+        "tableArn":{
+          "shape":"TableARN",
+          "location":"querystring",
+          "locationName":"tableArn"
+        }
+      }
+    },
+    "GetTableRecordExpirationJobStatusResponse":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"TableRecordExpirationJobStatus"},
+        "lastRunTimestamp":{"shape":"SyntheticTimestamp_date_time"},
+        "failureMessage":{"shape":"String"},
+        "metrics":{"shape":"TableRecordExpirationJobMetrics"}
+      }
+    },
+    "GetTableReplicationRequest":{
+      "type":"structure",
+      "required":["tableArn"],
+      "members":{
+        "tableArn":{
+          "shape":"TableARN",
+          "location":"querystring",
+          "locationName":"tableArn"
+        }
+      }
+    },
+    "GetTableReplicationResponse":{
+      "type":"structure",
+      "required":[
+        "versionToken",
+        "configuration"
+      ],
+      "members":{
+        "versionToken":{"shape":"String"},
+        "configuration":{"shape":"TableReplicationConfiguration"}
+      }
+    },
+    "GetTableReplicationStatusRequest":{
+      "type":"structure",
+      "required":["tableArn"],
+      "members":{
+        "tableArn":{
+          "shape":"TableARN",
+          "location":"querystring",
+          "locationName":"tableArn"
+        }
+      }
+    },
+    "GetTableReplicationStatusResponse":{
+      "type":"structure",
+      "required":[
+        "sourceTableArn",
+        "destinations"
+      ],
+      "members":{
+        "sourceTableArn":{"shape":"TableARN"},
+        "destinations":{"shape":"ReplicationDestinationStatuses"}
+      }
+    },
     "GetTableRequest":{
       "type":"structure",
       "members":{
@@ -1326,8 +1735,47 @@
         "modifiedBy":{"shape":"AccountId"},
         "ownerAccountId":{"shape":"AccountId"},
         "format":{"shape":"OpenTableFormat"},
-        "tableBucketId":{"shape":"TableBucketId"}
+        "tableBucketId":{"shape":"TableBucketId"},
+        "managedTableInformation":{"shape":"ManagedTableInformation"}
       }
+    },
+    "GetTableStorageClassRequest":{
+      "type":"structure",
+      "required":[
+        "tableBucketARN",
+        "namespace",
+        "name"
+      ],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"uri",
+          "locationName":"tableBucketARN"
+        },
+        "namespace":{
+          "shape":"NamespaceName",
+          "location":"uri",
+          "locationName":"namespace"
+        },
+        "name":{
+          "shape":"TableName",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "GetTableStorageClassResponse":{
+      "type":"structure",
+      "required":["storageClassConfiguration"],
+      "members":{
+        "storageClassConfiguration":{"shape":"StorageClassConfiguration"}
+      }
+    },
+    "IAMRole":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:.+:iam::[0-9]{12}:role/.+"
     },
     "IcebergCompactionSettings":{
       "type":"structure",
@@ -1349,7 +1797,8 @@
       "type":"structure",
       "required":["schema"],
       "members":{
-        "schema":{"shape":"IcebergSchema"}
+        "schema":{"shape":"IcebergSchema"},
+        "properties":{"shape":"TableProperties"}
       }
     },
     "IcebergSchema":{
@@ -1390,6 +1839,17 @@
         "Failed",
         "Disabled"
       ]
+    },
+    "LastSuccessfulReplicatedUpdate":{
+      "type":"structure",
+      "required":[
+        "metadataLocation",
+        "timestamp"
+      ],
+      "members":{
+        "metadataLocation":{"shape":"MetadataLocation"},
+        "timestamp":{"shape":"SyntheticTimestamp_date_time"}
+      }
     },
     "ListNamespacesLimit":{
       "type":"integer",
@@ -1547,6 +2007,10 @@
         "tags":{"shape":"Tags"}
       }
     },
+    "Long":{
+      "type":"long",
+      "box":true
+    },
     "MaintenanceStatus":{
       "type":"string",
       "enum":[
@@ -1554,10 +2018,27 @@
         "disabled"
       ]
     },
+    "ManagedTableInformation":{
+      "type":"structure",
+      "members":{
+        "replicationInformation":{"shape":"ReplicationInformation"}
+      }
+    },
     "MetadataLocation":{
       "type":"string",
       "max":2048,
       "min":1
+    },
+    "MethodNotAllowedException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "error":{
+        "httpStatusCode":405,
+        "senderFault":true
+      },
+      "exception":true
     },
     "NamespaceId":{"type":"string"},
     "NamespaceList":{
@@ -1679,6 +2160,52 @@
         "resourcePolicy":{"shape":"ResourcePolicy"}
       }
     },
+    "PutTableBucketReplicationRequest":{
+      "type":"structure",
+      "required":[
+        "tableBucketARN",
+        "configuration"
+      ],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"querystring",
+          "locationName":"tableBucketARN"
+        },
+        "versionToken":{
+          "shape":"VersionToken",
+          "location":"querystring",
+          "locationName":"versionToken"
+        },
+        "configuration":{"shape":"TableBucketReplicationConfiguration"}
+      }
+    },
+    "PutTableBucketReplicationResponse":{
+      "type":"structure",
+      "required":[
+        "versionToken",
+        "status"
+      ],
+      "members":{
+        "versionToken":{"shape":"VersionToken"},
+        "status":{"shape":"String"}
+      }
+    },
+    "PutTableBucketStorageClassRequest":{
+      "type":"structure",
+      "required":[
+        "tableBucketARN",
+        "storageClassConfiguration"
+      ],
+      "members":{
+        "tableBucketARN":{
+          "shape":"TableBucketARN",
+          "location":"uri",
+          "locationName":"tableBucketARN"
+        },
+        "storageClassConfiguration":{"shape":"StorageClassConfiguration"}
+      }
+    },
     "PutTableMaintenanceConfigurationRequest":{
       "type":"structure",
       "required":[
@@ -1739,6 +2266,52 @@
         "resourcePolicy":{"shape":"ResourcePolicy"}
       }
     },
+    "PutTableRecordExpirationConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "tableArn",
+        "value"
+      ],
+      "members":{
+        "tableArn":{
+          "shape":"TableARN",
+          "location":"querystring",
+          "locationName":"tableArn"
+        },
+        "value":{"shape":"TableRecordExpirationConfigurationValue"}
+      }
+    },
+    "PutTableReplicationRequest":{
+      "type":"structure",
+      "required":[
+        "tableArn",
+        "configuration"
+      ],
+      "members":{
+        "tableArn":{
+          "shape":"TableARN",
+          "location":"querystring",
+          "locationName":"tableArn"
+        },
+        "versionToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"versionToken"
+        },
+        "configuration":{"shape":"TableReplicationConfiguration"}
+      }
+    },
+    "PutTableReplicationResponse":{
+      "type":"structure",
+      "required":[
+        "versionToken",
+        "status"
+      ],
+      "members":{
+        "versionToken":{"shape":"String"},
+        "status":{"shape":"String"}
+      }
+    },
     "RenameTableRequest":{
       "type":"structure",
       "required":[
@@ -1766,6 +2339,54 @@
         "newName":{"shape":"TableName"},
         "versionToken":{"shape":"VersionToken"}
       }
+    },
+    "ReplicationDestination":{
+      "type":"structure",
+      "required":["destinationTableBucketARN"],
+      "members":{
+        "destinationTableBucketARN":{"shape":"TableBucketARN"}
+      }
+    },
+    "ReplicationDestinationStatusModel":{
+      "type":"structure",
+      "required":[
+        "replicationStatus",
+        "destinationTableBucketArn"
+      ],
+      "members":{
+        "replicationStatus":{"shape":"ReplicationStatus"},
+        "destinationTableBucketArn":{"shape":"TableBucketARN"},
+        "destinationTableArn":{"shape":"TableARN"},
+        "lastSuccessfulReplicatedUpdate":{"shape":"LastSuccessfulReplicatedUpdate"},
+        "failureMessage":{"shape":"String"}
+      }
+    },
+    "ReplicationDestinationStatuses":{
+      "type":"list",
+      "member":{"shape":"ReplicationDestinationStatusModel"},
+      "max":5,
+      "min":1
+    },
+    "ReplicationDestinations":{
+      "type":"list",
+      "member":{"shape":"ReplicationDestination"},
+      "max":5,
+      "min":1
+    },
+    "ReplicationInformation":{
+      "type":"structure",
+      "required":["sourceTableARN"],
+      "members":{
+        "sourceTableARN":{"shape":"TableARN"}
+      }
+    },
+    "ReplicationStatus":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "completed",
+        "failed"
+      ]
     },
     "ResourceArn":{
       "type":"string",
@@ -1800,6 +2421,20 @@
     "SchemaFieldList":{
       "type":"list",
       "member":{"shape":"SchemaField"}
+    },
+    "StorageClass":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "INTELLIGENT_TIERING"
+      ]
+    },
+    "StorageClassConfiguration":{
+      "type":"structure",
+      "required":["storageClass"],
+      "members":{
+        "storageClass":{"shape":"StorageClass"}
+      }
     },
     "String":{"type":"string"},
     "SyntheticTimestamp_date_time":{
@@ -1845,6 +2480,30 @@
       "max":63,
       "min":3,
       "pattern":"[0-9a-z-]*"
+    },
+    "TableBucketReplicationConfiguration":{
+      "type":"structure",
+      "required":[
+        "role",
+        "rules"
+      ],
+      "members":{
+        "role":{"shape":"IAMRole"},
+        "rules":{"shape":"TableBucketReplicationRules"}
+      }
+    },
+    "TableBucketReplicationRule":{
+      "type":"structure",
+      "required":["destinations"],
+      "members":{
+        "destinations":{"shape":"ReplicationDestinations"}
+      }
+    },
+    "TableBucketReplicationRules":{
+      "type":"list",
+      "member":{"shape":"TableBucketReplicationRule"},
+      "max":1,
+      "min":1
     },
     "TableBucketSummary":{
       "type":"structure",
@@ -1936,6 +2595,72 @@
       "min":1,
       "pattern":"[0-9a-z_]*"
     },
+    "TableProperties":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
+    "TableRecordExpirationConfigurationValue":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"TableRecordExpirationStatus"},
+        "settings":{"shape":"TableRecordExpirationSettings"}
+      }
+    },
+    "TableRecordExpirationJobMetrics":{
+      "type":"structure",
+      "members":{
+        "deletedDataFiles":{"shape":"Long"},
+        "deletedRecords":{"shape":"Long"},
+        "removedFilesSize":{"shape":"Long"}
+      }
+    },
+    "TableRecordExpirationJobStatus":{
+      "type":"string",
+      "enum":[
+        "NotYetRun",
+        "Successful",
+        "Failed",
+        "Disabled"
+      ]
+    },
+    "TableRecordExpirationSettings":{
+      "type":"structure",
+      "members":{
+        "days":{"shape":"PositiveInteger"}
+      }
+    },
+    "TableRecordExpirationStatus":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled"
+      ]
+    },
+    "TableReplicationConfiguration":{
+      "type":"structure",
+      "required":[
+        "role",
+        "rules"
+      ],
+      "members":{
+        "role":{"shape":"IAMRole"},
+        "rules":{"shape":"TableReplicationRules"}
+      }
+    },
+    "TableReplicationRule":{
+      "type":"structure",
+      "required":["destinations"],
+      "members":{
+        "destinations":{"shape":"ReplicationDestinations"}
+      }
+    },
+    "TableReplicationRules":{
+      "type":"list",
+      "member":{"shape":"TableReplicationRule"},
+      "max":1,
+      "min":1
+    },
     "TableSummary":{
       "type":"structure",
       "required":[
@@ -1953,6 +2678,7 @@
         "tableARN":{"shape":"TableARN"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "modifiedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "managedByService":{"shape":"String"},
         "namespaceId":{"shape":"NamespaceId"},
         "tableBucketId":{"shape":"TableBucketId"}
       }

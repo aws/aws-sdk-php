@@ -577,6 +577,61 @@
                 }
             }
         },
+        "AudioBlock": {
+            "type": "structure",
+            "required": [
+                "format",
+                "source"
+            ],
+            "members": {
+                "format": {
+                    "shape": "AudioFormat"
+                },
+                "source": {
+                    "shape": "AudioSource"
+                },
+                "error": {
+                    "shape": "ErrorBlock"
+                }
+            }
+        },
+        "AudioFormat": {
+            "type": "string",
+            "enum": [
+                "mp3",
+                "opus",
+                "wav",
+                "aac",
+                "flac",
+                "mp4",
+                "ogg",
+                "mkv",
+                "mka",
+                "x-aac",
+                "m4a",
+                "mpeg",
+                "mpga",
+                "pcm",
+                "webm"
+            ]
+        },
+        "AudioSource": {
+            "type": "structure",
+            "members": {
+                "bytes": {
+                    "shape": "AudioSourceBytesBlob"
+                },
+                "s3Location": {
+                    "shape": "S3Location"
+                }
+            },
+            "sensitive": true,
+            "union": true
+        },
+        "AudioSourceBytesBlob": {
+            "type": "blob",
+            "min": 1
+        },
         "AutoToolChoice": {
             "type": "structure",
             "members": []
@@ -792,6 +847,9 @@
                 "video": {
                     "shape": "VideoBlock"
                 },
+                "audio": {
+                    "shape": "AudioBlock"
+                },
                 "toolUse": {
                     "shape": "ToolUseBlock"
                 },
@@ -833,6 +891,9 @@
                 },
                 "citation": {
                     "shape": "CitationsDelta"
+                },
+                "image": {
+                    "shape": "ImageBlockDelta"
                 }
             },
             "union": true
@@ -861,6 +922,9 @@
                 },
                 "toolResult": {
                     "shape": "ToolResultBlockStart"
+                },
+                "image": {
+                    "shape": "ImageBlockStart"
                 }
             },
             "union": true
@@ -1419,6 +1483,15 @@
         "DocumentSourceBytesBlob": {
             "type": "blob",
             "min": 1
+        },
+        "ErrorBlock": {
+            "type": "structure",
+            "members": {
+                "message": {
+                    "shape": "String"
+                }
+            },
+            "sensitive": true
         },
         "FoundationModelVersionIdentifier": {
             "type": "string",
@@ -2639,6 +2712,31 @@
                 },
                 "source": {
                     "shape": "ImageSource"
+                },
+                "error": {
+                    "shape": "ErrorBlock"
+                }
+            }
+        },
+        "ImageBlockDelta": {
+            "type": "structure",
+            "members": {
+                "source": {
+                    "shape": "ImageSource"
+                },
+                "error": {
+                    "shape": "ErrorBlock"
+                }
+            }
+        },
+        "ImageBlockStart": {
+            "type": "structure",
+            "required": [
+                "format"
+            ],
+            "members": {
+                "format": {
+                    "shape": "ImageFormat"
                 }
             }
         },
@@ -2661,6 +2759,7 @@
                     "shape": "S3Location"
                 }
             },
+            "sensitive": true,
             "union": true
         },
         "ImageSourceBytesBlob": {
@@ -3579,6 +3678,8 @@
                 "stop_sequence",
                 "guardrail_intervened",
                 "content_filtered",
+                "malformed_model_output",
+                "malformed_tool_use",
                 "model_context_window_exceeded"
             ]
         },
@@ -3819,6 +3920,9 @@
             "members": {
                 "text": {
                     "shape": "String"
+                },
+                "json": {
+                    "shape": "Document"
                 }
             },
             "union": true

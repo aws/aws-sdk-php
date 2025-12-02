@@ -454,6 +454,12 @@
         "CreateOntapVolumeConfiguration$AggregateConfiguration": "<p>Use to specify configuration options for a volume’s storage aggregate or aggregates.</p>"
       }
     },
+    "CreateAndAttachS3AccessPointOntapConfiguration": {
+      "base": "<p>Specifies the FSx for ONTAP volume that the S3 access point will be attached to, and the file system user identity.</p>",
+      "refs": {
+        "CreateAndAttachS3AccessPointRequest$OntapConfiguration": null
+      }
+    },
     "CreateAndAttachS3AccessPointOpenZFSConfiguration": {
       "base": "<p>Specifies the FSx for OpenZFS volume that the S3 access point will be attached to, and the file system user identity.</p>",
       "refs": {
@@ -2018,6 +2024,32 @@
         "FileSystem$OntapConfiguration": "<p>The configuration for this Amazon FSx for NetApp ONTAP file system.</p>"
       }
     },
+    "OntapFileSystemIdentity": {
+      "base": "<p>Specifies the file system user identity that will be used for authorizing all file access requests that are made using the S3 access point. The identity can be either a UNIX user or a Windows user.</p>",
+      "refs": {
+        "CreateAndAttachS3AccessPointOntapConfiguration$FileSystemIdentity": "<p>Specifies the file system user identity to use for authorizing file read and write requests that are made using this S3 access point.</p>",
+        "S3AccessPointOntapConfiguration$FileSystemIdentity": "<p>The file system identity used to authorize file access requests made using the S3 access point.</p>"
+      }
+    },
+    "OntapFileSystemUserName": {
+      "base": null,
+      "refs": {
+        "OntapUnixFileSystemUser$Name": "<p>The name of the UNIX user. The name can be up to 256 characters long.</p>",
+        "OntapWindowsFileSystemUser$Name": "<p>The name of the Windows user. The name can be up to 256 characters long and supports Active Directory users.</p>"
+      }
+    },
+    "OntapFileSystemUserType": {
+      "base": null,
+      "refs": {
+        "OntapFileSystemIdentity$Type": "<p>Specifies the FSx for ONTAP user identity type. Valid values are <code>UNIX</code> and <code>WINDOWS</code>.</p>"
+      }
+    },
+    "OntapUnixFileSystemUser": {
+      "base": "<p>The FSx for ONTAP UNIX file system user that is used for authorizing all file access requests that are made using the S3 access point.</p>",
+      "refs": {
+        "OntapFileSystemIdentity$UnixUser": "<p>Specifies the UNIX user identity for file system operations.</p>"
+      }
+    },
     "OntapVolumeConfiguration": {
       "base": "<p>The configuration of an Amazon FSx for NetApp ONTAP volume.</p>",
       "refs": {
@@ -2028,6 +2060,12 @@
       "base": null,
       "refs": {
         "OntapVolumeConfiguration$OntapVolumeType": "<p>Specifies the type of volume. Valid values are the following:</p> <ul> <li> <p> <code>RW</code> specifies a read/write volume. <code>RW</code> is the default.</p> </li> <li> <p> <code>DP</code> specifies a data-protection volume. You can protect data by replicating it to data-protection mirror copies. If a disaster occurs, you can use these data-protection mirror copies to recover data.</p> </li> <li> <p> <code>LS</code> specifies a load-sharing mirror volume. A load-sharing mirror reduces the network traffic to a FlexVol volume by providing additional read-only access to clients.</p> </li> </ul>"
+      }
+    },
+    "OntapWindowsFileSystemUser": {
+      "base": "<p>The FSx for ONTAP Windows file system user that is used for authorizing all file access requests that are made using the S3 access point.</p>",
+      "refs": {
+        "OntapFileSystemIdentity$WindowsUser": "<p>Specifies the Windows user identity for file system operations.</p>"
       }
     },
     "OpenZFSClientConfiguration": {
@@ -2471,6 +2509,12 @@
       "base": null,
       "refs": {
         "DescribeS3AccessPointAttachmentsRequest$Filters": "<p>Enter a filter Name and Values pair to view a select set of S3 access point attachments.</p>"
+      }
+    },
+    "S3AccessPointOntapConfiguration": {
+      "base": "<p>Describes the FSx for ONTAP attachment configuration of an S3 access point attachment.</p>",
+      "refs": {
+        "S3AccessPointAttachment$OntapConfiguration": "<p>The ONTAP configuration of the S3 access point attachment.</p>"
       }
     },
     "S3AccessPointOpenZFSConfiguration": {
@@ -3233,6 +3277,7 @@
       "refs": {
         "CopySnapshotAndUpdateVolumeRequest$VolumeId": "<p>Specifies the ID of the volume that you are copying the snapshot to.</p>",
         "CopySnapshotAndUpdateVolumeResponse$VolumeId": "<p>The ID of the volume that you copied the snapshot to.</p>",
+        "CreateAndAttachS3AccessPointOntapConfiguration$VolumeId": "<p>The ID of the FSx for ONTAP volume to which you want the S3 access point attached.</p>",
         "CreateAndAttachS3AccessPointOpenZFSConfiguration$VolumeId": "<p>The ID of the FSx for OpenZFS volume to which you want the S3 access point attached.</p>",
         "CreateBackupRequest$VolumeId": "<p>(Optional) The ID of the FSx for ONTAP volume to back up.</p>",
         "CreateOpenZFSVolumeConfiguration$ParentVolumeId": "<p>The ID of the volume to use as the parent volume of the volume that you are creating.</p>",
@@ -3243,6 +3288,7 @@
         "OpenZFSVolumeConfiguration$ParentVolumeId": "<p>The ID of the parent volume.</p>",
         "RestoreVolumeFromSnapshotRequest$VolumeId": "<p>The ID of the volume that you are restoring.</p>",
         "RestoreVolumeFromSnapshotResponse$VolumeId": "<p>The ID of the volume that you restored.</p>",
+        "S3AccessPointOntapConfiguration$VolumeId": "<p>The ID of the FSx for ONTAP volume that the S3 access point is attached to.</p>",
         "S3AccessPointOpenZFSConfiguration$VolumeId": "<p>The ID of the FSx for OpenZFS volume that the S3 access point is attached to.</p>",
         "Snapshot$VolumeId": "<p>The ID of the volume that the snapshot is of.</p>",
         "UpdateVolumeRequest$VolumeId": "<p>The ID of the volume that you want to update, in the format <code>fsvol-0123456789abcdef0</code>.</p>",

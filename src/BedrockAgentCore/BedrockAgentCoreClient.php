@@ -19,6 +19,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteEventAsync(array $args = [])
  * @method \Aws\Result deleteMemoryRecord(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteMemoryRecordAsync(array $args = [])
+ * @method \Aws\Result evaluate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise evaluateAsync(array $args = [])
  * @method \Aws\Result getAgentCard(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAgentCardAsync(array $args = [])
  * @method \Aws\Result getBrowserSession(array $args = [])

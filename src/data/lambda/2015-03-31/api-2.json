@@ -51,6 +51,22 @@
         {"shape":"PreconditionFailedException"}
       ]
     },
+    "CheckpointDurableExecution":{
+      "name":"CheckpointDurableExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2025-12-01/durable-executions/{DurableExecutionArn}/checkpoint",
+        "responseCode":200
+      },
+      "input":{"shape":"CheckpointDurableExecutionRequest"},
+      "output":{"shape":"CheckpointDurableExecutionResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ServiceException"}
+      ],
+      "idempotent":true
+    },
     "CreateAlias":{
       "name":"CreateAlias",
       "http":{
@@ -406,6 +422,56 @@
       ],
       "readonly":true
     },
+    "GetDurableExecution":{
+      "name":"GetDurableExecution",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2025-12-01/durable-executions/{DurableExecutionArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDurableExecutionRequest"},
+      "output":{"shape":"GetDurableExecutionResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ServiceException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "GetDurableExecutionHistory":{
+      "name":"GetDurableExecutionHistory",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2025-12-01/durable-executions/{DurableExecutionArn}/history",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDurableExecutionHistoryRequest"},
+      "output":{"shape":"GetDurableExecutionHistoryResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ServiceException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
+    "GetDurableExecutionState":{
+      "name":"GetDurableExecutionState",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2025-12-01/durable-executions/{DurableExecutionArn}/state",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDurableExecutionStateRequest"},
+      "output":{"shape":"GetDurableExecutionStateResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ServiceException"}
+      ],
+      "readonly":true
+    },
     "GetEventSourceMapping":{
       "name":"GetEventSourceMapping",
       "http":{
@@ -702,6 +768,7 @@
         {"shape":"EFSMountTimeoutException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidRequestContentException"},
+        {"shape":"DurableExecutionAlreadyStartedException"},
         {"shape":"InvalidZipFileException"},
         {"shape":"EFSMountFailureException"}
       ]
@@ -813,6 +880,23 @@
       "errors":[
         {"shape":"InvalidParameterValueException"},
         {"shape":"ServiceException"}
+      ],
+      "readonly":true
+    },
+    "ListDurableExecutionsByFunction":{
+      "name":"ListDurableExecutionsByFunction",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2025-12-01/functions/{FunctionName}/durable-executions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDurableExecutionsByFunctionRequest"},
+      "output":{"shape":"ListDurableExecutionsByFunctionResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ServiceException"},
+        {"shape":"ResourceNotFoundException"}
       ],
       "readonly":true
     },
@@ -1190,6 +1274,70 @@
         {"shape":"PreconditionFailedException"}
       ]
     },
+    "SendDurableExecutionCallbackFailure":{
+      "name":"SendDurableExecutionCallbackFailure",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2025-12-01/durable-execution-callbacks/{CallbackId}/fail",
+        "responseCode":200
+      },
+      "input":{"shape":"SendDurableExecutionCallbackFailureRequest"},
+      "output":{"shape":"SendDurableExecutionCallbackFailureResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ServiceException"},
+        {"shape":"CallbackTimeoutException"}
+      ]
+    },
+    "SendDurableExecutionCallbackHeartbeat":{
+      "name":"SendDurableExecutionCallbackHeartbeat",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2025-12-01/durable-execution-callbacks/{CallbackId}/heartbeat",
+        "responseCode":200
+      },
+      "input":{"shape":"SendDurableExecutionCallbackHeartbeatRequest"},
+      "output":{"shape":"SendDurableExecutionCallbackHeartbeatResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ServiceException"},
+        {"shape":"CallbackTimeoutException"}
+      ]
+    },
+    "SendDurableExecutionCallbackSuccess":{
+      "name":"SendDurableExecutionCallbackSuccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2025-12-01/durable-execution-callbacks/{CallbackId}/succeed",
+        "responseCode":200
+      },
+      "input":{"shape":"SendDurableExecutionCallbackSuccessRequest"},
+      "output":{"shape":"SendDurableExecutionCallbackSuccessResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ServiceException"},
+        {"shape":"CallbackTimeoutException"}
+      ]
+    },
+    "StopDurableExecution":{
+      "name":"StopDurableExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2025-12-01/durable-executions/{DurableExecutionArn}/stop",
+        "responseCode":200
+      },
+      "input":{"shape":"StopDurableExecutionRequest"},
+      "output":{"shape":"StopDurableExecutionResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ServiceException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -1561,11 +1709,21 @@
       "type":"string",
       "pattern":"arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-])+:([a-z]{2}(-gov)?-[a-z]+-\\d{1})?:(\\d{12})?:(.*)"
     },
+    "AttemptCount":{
+      "type":"integer",
+      "min":0
+    },
     "BatchSize":{
       "type":"integer",
       "box":true,
       "max":10000,
       "min":1
+    },
+    "BinaryOperationPayload":{
+      "type":"blob",
+      "max":262144,
+      "min":0,
+      "sensitive":true
     },
     "BisectBatchOnFunctionError":{
       "type":"boolean",
@@ -1580,6 +1738,69 @@
       "streaming":true
     },
     "Boolean":{"type":"boolean"},
+    "CallbackDetails":{
+      "type":"structure",
+      "members":{
+        "CallbackId":{"shape":"CallbackId"},
+        "Result":{"shape":"OperationPayload"},
+        "Error":{"shape":"ErrorObject"}
+      }
+    },
+    "CallbackFailedDetails":{
+      "type":"structure",
+      "required":["Error"],
+      "members":{
+        "Error":{"shape":"EventError"}
+      }
+    },
+    "CallbackId":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[A-Za-z0-9+/]+={0,2}"
+    },
+    "CallbackOptions":{
+      "type":"structure",
+      "members":{
+        "TimeoutSeconds":{"shape":"DurationSeconds"},
+        "HeartbeatTimeoutSeconds":{"shape":"DurationSeconds"}
+      }
+    },
+    "CallbackStartedDetails":{
+      "type":"structure",
+      "required":["CallbackId"],
+      "members":{
+        "CallbackId":{"shape":"CallbackId"},
+        "HeartbeatTimeout":{"shape":"DurationSeconds"},
+        "Timeout":{"shape":"DurationSeconds"}
+      }
+    },
+    "CallbackSucceededDetails":{
+      "type":"structure",
+      "required":["Result"],
+      "members":{
+        "Result":{"shape":"EventResult"}
+      }
+    },
+    "CallbackTimedOutDetails":{
+      "type":"structure",
+      "required":["Error"],
+      "members":{
+        "Error":{"shape":"EventError"}
+      }
+    },
+    "CallbackTimeoutException":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"String"},
+        "Message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "CapacityProvider":{
       "type":"structure",
       "required":[
@@ -1706,6 +1927,107 @@
       "max":50,
       "min":0
     },
+    "ChainedInvokeDetails":{
+      "type":"structure",
+      "members":{
+        "Result":{"shape":"OperationPayload"},
+        "Error":{"shape":"ErrorObject"}
+      }
+    },
+    "ChainedInvokeFailedDetails":{
+      "type":"structure",
+      "required":["Error"],
+      "members":{
+        "Error":{"shape":"EventError"}
+      }
+    },
+    "ChainedInvokeOptions":{
+      "type":"structure",
+      "required":["FunctionName"],
+      "members":{
+        "FunctionName":{"shape":"NamespacedFunctionName"},
+        "TenantId":{"shape":"TenantId"}
+      }
+    },
+    "ChainedInvokeStartedDetails":{
+      "type":"structure",
+      "required":["FunctionName"],
+      "members":{
+        "FunctionName":{"shape":"NamespacedFunctionName"},
+        "TenantId":{"shape":"TenantId"},
+        "Input":{"shape":"EventInput"},
+        "ExecutedVersion":{"shape":"VersionWithLatestPublished"},
+        "DurableExecutionArn":{"shape":"DurableExecutionArn"}
+      }
+    },
+    "ChainedInvokeStoppedDetails":{
+      "type":"structure",
+      "required":["Error"],
+      "members":{
+        "Error":{"shape":"EventError"}
+      }
+    },
+    "ChainedInvokeSucceededDetails":{
+      "type":"structure",
+      "required":["Result"],
+      "members":{
+        "Result":{"shape":"EventResult"}
+      }
+    },
+    "ChainedInvokeTimedOutDetails":{
+      "type":"structure",
+      "required":["Error"],
+      "members":{
+        "Error":{"shape":"EventError"}
+      }
+    },
+    "CheckpointDurableExecutionRequest":{
+      "type":"structure",
+      "required":[
+        "DurableExecutionArn",
+        "CheckpointToken"
+      ],
+      "members":{
+        "DurableExecutionArn":{
+          "shape":"DurableExecutionArn",
+          "location":"uri",
+          "locationName":"DurableExecutionArn"
+        },
+        "CheckpointToken":{"shape":"CheckpointToken"},
+        "Updates":{"shape":"OperationUpdates"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CheckpointDurableExecutionResponse":{
+      "type":"structure",
+      "required":["NewExecutionState"],
+      "members":{
+        "CheckpointToken":{"shape":"CheckpointToken"},
+        "NewExecutionState":{"shape":"CheckpointUpdatedExecutionState"}
+      }
+    },
+    "CheckpointToken":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[A-Za-z0-9+/]+={0,2}"
+    },
+    "CheckpointUpdatedExecutionState":{
+      "type":"structure",
+      "members":{
+        "Operations":{"shape":"Operations"},
+        "NextMarker":{"shape":"String"}
+      }
+    },
+    "ClientToken":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\x21-\\x7E]+"
+    },
     "CodeSigningConfig":{
       "type":"structure",
       "required":[
@@ -1809,6 +2131,38 @@
       "type":"structure",
       "members":{
         "ReservedConcurrentExecutions":{"shape":"ReservedConcurrentExecutions"}
+      }
+    },
+    "ContextDetails":{
+      "type":"structure",
+      "members":{
+        "ReplayChildren":{"shape":"ReplayChildren"},
+        "Result":{"shape":"OperationPayload"},
+        "Error":{"shape":"ErrorObject"}
+      }
+    },
+    "ContextFailedDetails":{
+      "type":"structure",
+      "required":["Error"],
+      "members":{
+        "Error":{"shape":"EventError"}
+      }
+    },
+    "ContextOptions":{
+      "type":"structure",
+      "members":{
+        "ReplayChildren":{"shape":"ReplayChildren"}
+      }
+    },
+    "ContextStartedDetails":{
+      "type":"structure",
+      "members":{}
+    },
+    "ContextSucceededDetails":{
+      "type":"structure",
+      "required":["Result"],
+      "members":{
+        "Result":{"shape":"EventResult"}
       }
     },
     "Cors":{
@@ -1949,6 +2303,7 @@
         "LoggingConfig":{"shape":"LoggingConfig"},
         "CapacityProviderConfig":{"shape":"CapacityProviderConfig"},
         "PublishTo":{"shape":"FunctionVersionLatestPublished"},
+        "DurableConfig":{"shape":"DurableConfig"},
         "TenancyConfig":{"shape":"TenancyConfig"}
       }
     },
@@ -2210,6 +2565,46 @@
         "FullDocument":{"shape":"FullDocument"}
       }
     },
+    "DurableConfig":{
+      "type":"structure",
+      "members":{
+        "RetentionPeriodInDays":{"shape":"RetentionPeriodInDays"},
+        "ExecutionTimeout":{"shape":"ExecutionTimeout"}
+      }
+    },
+    "DurableExecutionAlreadyStartedException":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"String"},
+        "Message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "DurableExecutionArn":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"arn:([a-zA-Z0-9-]+):lambda:([a-zA-Z0-9-]+):(\\d{12}):function:([a-zA-Z0-9_-]+):(\\$LATEST(?:\\.PUBLISHED)?|[0-9]+)/durable-execution/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)"
+    },
+    "DurableExecutionName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-_]+"
+    },
+    "DurableExecutions":{
+      "type":"list",
+      "member":{"shape":"Execution"}
+    },
+    "DurationSeconds":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
     "EC2AccessDeniedException":{
       "type":"structure",
       "members":{
@@ -2374,6 +2769,89 @@
       "max":10240,
       "min":512
     },
+    "ErrorData":{
+      "type":"string",
+      "sensitive":true
+    },
+    "ErrorMessage":{
+      "type":"string",
+      "sensitive":true
+    },
+    "ErrorObject":{
+      "type":"structure",
+      "members":{
+        "ErrorMessage":{"shape":"ErrorMessage"},
+        "ErrorType":{"shape":"ErrorType"},
+        "ErrorData":{"shape":"ErrorData"},
+        "StackTrace":{"shape":"StackTraceEntries"}
+      }
+    },
+    "ErrorType":{
+      "type":"string",
+      "sensitive":true
+    },
+    "Event":{
+      "type":"structure",
+      "members":{
+        "EventType":{"shape":"EventType"},
+        "SubType":{"shape":"OperationSubType"},
+        "EventId":{"shape":"EventId"},
+        "Id":{"shape":"OperationId"},
+        "Name":{"shape":"OperationName"},
+        "EventTimestamp":{"shape":"ExecutionTimestamp"},
+        "ParentId":{"shape":"OperationId"},
+        "ExecutionStartedDetails":{"shape":"ExecutionStartedDetails"},
+        "ExecutionSucceededDetails":{"shape":"ExecutionSucceededDetails"},
+        "ExecutionFailedDetails":{"shape":"ExecutionFailedDetails"},
+        "ExecutionTimedOutDetails":{"shape":"ExecutionTimedOutDetails"},
+        "ExecutionStoppedDetails":{"shape":"ExecutionStoppedDetails"},
+        "ContextStartedDetails":{"shape":"ContextStartedDetails"},
+        "ContextSucceededDetails":{"shape":"ContextSucceededDetails"},
+        "ContextFailedDetails":{"shape":"ContextFailedDetails"},
+        "WaitStartedDetails":{"shape":"WaitStartedDetails"},
+        "WaitSucceededDetails":{"shape":"WaitSucceededDetails"},
+        "WaitCancelledDetails":{"shape":"WaitCancelledDetails"},
+        "StepStartedDetails":{"shape":"StepStartedDetails"},
+        "StepSucceededDetails":{"shape":"StepSucceededDetails"},
+        "StepFailedDetails":{"shape":"StepFailedDetails"},
+        "ChainedInvokeStartedDetails":{"shape":"ChainedInvokeStartedDetails"},
+        "ChainedInvokeSucceededDetails":{"shape":"ChainedInvokeSucceededDetails"},
+        "ChainedInvokeFailedDetails":{"shape":"ChainedInvokeFailedDetails"},
+        "ChainedInvokeTimedOutDetails":{"shape":"ChainedInvokeTimedOutDetails"},
+        "ChainedInvokeStoppedDetails":{"shape":"ChainedInvokeStoppedDetails"},
+        "CallbackStartedDetails":{"shape":"CallbackStartedDetails"},
+        "CallbackSucceededDetails":{"shape":"CallbackSucceededDetails"},
+        "CallbackFailedDetails":{"shape":"CallbackFailedDetails"},
+        "CallbackTimedOutDetails":{"shape":"CallbackTimedOutDetails"},
+        "InvocationCompletedDetails":{"shape":"InvocationCompletedDetails"}
+      }
+    },
+    "EventError":{
+      "type":"structure",
+      "members":{
+        "Payload":{"shape":"ErrorObject"},
+        "Truncated":{"shape":"Truncated"}
+      }
+    },
+    "EventId":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "EventInput":{
+      "type":"structure",
+      "members":{
+        "Payload":{"shape":"InputPayload"},
+        "Truncated":{"shape":"Truncated"}
+      }
+    },
+    "EventResult":{
+      "type":"structure",
+      "members":{
+        "Payload":{"shape":"OperationPayload"},
+        "Truncated":{"shape":"Truncated"}
+      }
+    },
     "EventSourceMappingArn":{
       "type":"string",
       "max":120,
@@ -2451,12 +2929,130 @@
       "min":0,
       "pattern":"[a-zA-Z0-9._\\-]+"
     },
+    "EventType":{
+      "type":"string",
+      "enum":[
+        "ExecutionStarted",
+        "ExecutionSucceeded",
+        "ExecutionFailed",
+        "ExecutionTimedOut",
+        "ExecutionStopped",
+        "ContextStarted",
+        "ContextSucceeded",
+        "ContextFailed",
+        "WaitStarted",
+        "WaitSucceeded",
+        "WaitCancelled",
+        "StepStarted",
+        "StepSucceeded",
+        "StepFailed",
+        "ChainedInvokeStarted",
+        "ChainedInvokeSucceeded",
+        "ChainedInvokeFailed",
+        "ChainedInvokeTimedOut",
+        "ChainedInvokeStopped",
+        "CallbackStarted",
+        "CallbackSucceeded",
+        "CallbackFailed",
+        "CallbackTimedOut",
+        "InvocationCompleted"
+      ]
+    },
+    "Events":{
+      "type":"list",
+      "member":{"shape":"Event"}
+    },
+    "Execution":{
+      "type":"structure",
+      "required":[
+        "DurableExecutionArn",
+        "DurableExecutionName",
+        "FunctionArn",
+        "Status",
+        "StartTimestamp"
+      ],
+      "members":{
+        "DurableExecutionArn":{"shape":"DurableExecutionArn"},
+        "DurableExecutionName":{"shape":"DurableExecutionName"},
+        "FunctionArn":{"shape":"NameSpacedFunctionArn"},
+        "Status":{"shape":"ExecutionStatus"},
+        "StartTimestamp":{"shape":"ExecutionTimestamp"},
+        "EndTimestamp":{"shape":"ExecutionTimestamp"}
+      }
+    },
+    "ExecutionDetails":{
+      "type":"structure",
+      "members":{
+        "InputPayload":{"shape":"InputPayload"}
+      }
+    },
     "ExecutionEnvironmentMemoryGiBPerVCpu":{
       "type":"double",
       "box":true,
       "max":8.0,
       "min":2.0
     },
+    "ExecutionFailedDetails":{
+      "type":"structure",
+      "required":["Error"],
+      "members":{
+        "Error":{"shape":"EventError"}
+      }
+    },
+    "ExecutionStartedDetails":{
+      "type":"structure",
+      "required":[
+        "Input",
+        "ExecutionTimeout"
+      ],
+      "members":{
+        "Input":{"shape":"EventInput"},
+        "ExecutionTimeout":{"shape":"DurationSeconds"}
+      }
+    },
+    "ExecutionStatus":{
+      "type":"string",
+      "enum":[
+        "RUNNING",
+        "SUCCEEDED",
+        "FAILED",
+        "TIMED_OUT",
+        "STOPPED"
+      ]
+    },
+    "ExecutionStatusList":{
+      "type":"list",
+      "member":{"shape":"ExecutionStatus"},
+      "max":10,
+      "min":1
+    },
+    "ExecutionStoppedDetails":{
+      "type":"structure",
+      "required":["Error"],
+      "members":{
+        "Error":{"shape":"EventError"}
+      }
+    },
+    "ExecutionSucceededDetails":{
+      "type":"structure",
+      "required":["Result"],
+      "members":{
+        "Result":{"shape":"EventResult"}
+      }
+    },
+    "ExecutionTimedOutDetails":{
+      "type":"structure",
+      "members":{
+        "Error":{"shape":"EventError"}
+      }
+    },
+    "ExecutionTimeout":{
+      "type":"integer",
+      "box":true,
+      "max":31622400,
+      "min":1
+    },
+    "ExecutionTimestamp":{"type":"timestamp"},
     "FileSystemArn":{
       "type":"string",
       "max":200,
@@ -2594,6 +3190,7 @@
         "LoggingConfig":{"shape":"LoggingConfig"},
         "CapacityProviderConfig":{"shape":"CapacityProviderConfig"},
         "ConfigSha256":{"shape":"String"},
+        "DurableConfig":{"shape":"DurableConfig"},
         "TenancyConfig":{"shape":"TenancyConfig"}
       }
     },
@@ -2786,6 +3383,116 @@
       "required":["CodeSigningConfig"],
       "members":{
         "CodeSigningConfig":{"shape":"CodeSigningConfig"}
+      }
+    },
+    "GetDurableExecutionHistoryRequest":{
+      "type":"structure",
+      "required":["DurableExecutionArn"],
+      "members":{
+        "DurableExecutionArn":{
+          "shape":"DurableExecutionArn",
+          "location":"uri",
+          "locationName":"DurableExecutionArn"
+        },
+        "IncludeExecutionData":{
+          "shape":"IncludeExecutionData",
+          "location":"querystring",
+          "locationName":"IncludeExecutionData"
+        },
+        "MaxItems":{
+          "shape":"ItemCount",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        },
+        "Marker":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "ReverseOrder":{
+          "shape":"ReverseOrder",
+          "location":"querystring",
+          "locationName":"ReverseOrder"
+        }
+      }
+    },
+    "GetDurableExecutionHistoryResponse":{
+      "type":"structure",
+      "required":["Events"],
+      "members":{
+        "Events":{"shape":"Events"},
+        "NextMarker":{"shape":"String"}
+      }
+    },
+    "GetDurableExecutionRequest":{
+      "type":"structure",
+      "required":["DurableExecutionArn"],
+      "members":{
+        "DurableExecutionArn":{
+          "shape":"DurableExecutionArn",
+          "location":"uri",
+          "locationName":"DurableExecutionArn"
+        }
+      }
+    },
+    "GetDurableExecutionResponse":{
+      "type":"structure",
+      "required":[
+        "DurableExecutionArn",
+        "DurableExecutionName",
+        "FunctionArn",
+        "StartTimestamp",
+        "Status"
+      ],
+      "members":{
+        "DurableExecutionArn":{"shape":"DurableExecutionArn"},
+        "DurableExecutionName":{"shape":"DurableExecutionName"},
+        "FunctionArn":{"shape":"NameSpacedFunctionArn"},
+        "InputPayload":{"shape":"InputPayload"},
+        "Result":{"shape":"OutputPayload"},
+        "Error":{"shape":"ErrorObject"},
+        "StartTimestamp":{"shape":"ExecutionTimestamp"},
+        "Status":{"shape":"ExecutionStatus"},
+        "EndTimestamp":{"shape":"ExecutionTimestamp"},
+        "Version":{"shape":"VersionWithLatestPublished"},
+        "TraceHeader":{"shape":"TraceHeader"}
+      }
+    },
+    "GetDurableExecutionStateRequest":{
+      "type":"structure",
+      "required":[
+        "DurableExecutionArn",
+        "CheckpointToken"
+      ],
+      "members":{
+        "DurableExecutionArn":{
+          "shape":"DurableExecutionArn",
+          "location":"uri",
+          "locationName":"DurableExecutionArn"
+        },
+        "CheckpointToken":{
+          "shape":"CheckpointToken",
+          "location":"querystring",
+          "locationName":"CheckpointToken"
+        },
+        "Marker":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"ItemCount",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        }
+      }
+    },
+    "GetDurableExecutionStateResponse":{
+      "type":"structure",
+      "required":["Operations"],
+      "members":{
+        "Operations":{"shape":"Operations"},
+        "NextMarker":{"shape":"String"}
       }
     },
     "GetEventSourceMappingRequest":{
@@ -3163,6 +3870,16 @@
         "Error":{"shape":"ImageConfigError"}
       }
     },
+    "IncludeExecutionData":{
+      "type":"boolean",
+      "box":true
+    },
+    "InputPayload":{
+      "type":"string",
+      "max":6291456,
+      "min":0,
+      "sensitive":true
+    },
     "InstanceRequirements":{
       "type":"structure",
       "members":{
@@ -3260,6 +3977,20 @@
       "exception":true,
       "fault":true
     },
+    "InvocationCompletedDetails":{
+      "type":"structure",
+      "required":[
+        "StartTimestamp",
+        "EndTimestamp",
+        "RequestId"
+      ],
+      "members":{
+        "StartTimestamp":{"shape":"ExecutionTimestamp"},
+        "EndTimestamp":{"shape":"ExecutionTimestamp"},
+        "RequestId":{"shape":"String"},
+        "Error":{"shape":"EventError"}
+      }
+    },
     "InvocationRequest":{
       "type":"structure",
       "required":["FunctionName"],
@@ -3283,6 +4014,11 @@
           "shape":"String",
           "location":"header",
           "locationName":"X-Amz-Client-Context"
+        },
+        "DurableExecutionName":{
+          "shape":"DurableExecutionName",
+          "location":"header",
+          "locationName":"X-Amz-Durable-Execution-Name"
         },
         "Payload":{"shape":"Blob"},
         "Qualifier":{
@@ -3320,6 +4056,11 @@
           "shape":"Version",
           "location":"header",
           "locationName":"X-Amz-Executed-Version"
+        },
+        "DurableExecutionArn":{
+          "shape":"DurableExecutionArn",
+          "location":"header",
+          "locationName":"X-Amz-Durable-Execution-Arn"
         }
       },
       "payload":"Payload"
@@ -3455,6 +4196,11 @@
     "InvokedViaFunctionUrl":{
       "type":"boolean",
       "box":true
+    },
+    "ItemCount":{
+      "type":"integer",
+      "max":1000,
+      "min":0
     },
     "KMSAccessDeniedException":{
       "type":"structure",
@@ -3786,6 +4532,64 @@
       "members":{
         "NextMarker":{"shape":"String"},
         "CodeSigningConfigs":{"shape":"CodeSigningConfigList"}
+      }
+    },
+    "ListDurableExecutionsByFunctionRequest":{
+      "type":"structure",
+      "required":["FunctionName"],
+      "members":{
+        "FunctionName":{
+          "shape":"NamespacedFunctionName",
+          "location":"uri",
+          "locationName":"FunctionName"
+        },
+        "Qualifier":{
+          "shape":"NumericLatestPublishedOrAliasQualifier",
+          "location":"querystring",
+          "locationName":"Qualifier"
+        },
+        "DurableExecutionName":{
+          "shape":"DurableExecutionName",
+          "location":"querystring",
+          "locationName":"DurableExecutionName"
+        },
+        "Statuses":{
+          "shape":"ExecutionStatusList",
+          "location":"querystring",
+          "locationName":"Statuses"
+        },
+        "StartedAfter":{
+          "shape":"ExecutionTimestamp",
+          "location":"querystring",
+          "locationName":"StartedAfter"
+        },
+        "StartedBefore":{
+          "shape":"ExecutionTimestamp",
+          "location":"querystring",
+          "locationName":"StartedBefore"
+        },
+        "ReverseOrder":{
+          "shape":"ReverseOrder",
+          "location":"querystring",
+          "locationName":"ReverseOrder"
+        },
+        "Marker":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"ItemCount",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        }
+      }
+    },
+    "ListDurableExecutionsByFunctionResponse":{
+      "type":"structure",
+      "members":{
+        "DurableExecutions":{"shape":"DurableExecutions"},
+        "NextMarker":{"shape":"String"}
       }
     },
     "ListEventSourceMappingsRequest":{
@@ -4318,6 +5122,120 @@
         "Destination":{"shape":"DestinationArn"}
       }
     },
+    "Operation":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Type",
+        "StartTimestamp",
+        "Status"
+      ],
+      "members":{
+        "Id":{"shape":"OperationId"},
+        "ParentId":{"shape":"OperationId"},
+        "Name":{"shape":"OperationName"},
+        "Type":{"shape":"OperationType"},
+        "SubType":{"shape":"OperationSubType"},
+        "StartTimestamp":{"shape":"ExecutionTimestamp"},
+        "EndTimestamp":{"shape":"ExecutionTimestamp"},
+        "Status":{"shape":"OperationStatus"},
+        "ExecutionDetails":{"shape":"ExecutionDetails"},
+        "ContextDetails":{"shape":"ContextDetails"},
+        "StepDetails":{"shape":"StepDetails"},
+        "WaitDetails":{"shape":"WaitDetails"},
+        "CallbackDetails":{"shape":"CallbackDetails"},
+        "ChainedInvokeDetails":{"shape":"ChainedInvokeDetails"}
+      }
+    },
+    "OperationAction":{
+      "type":"string",
+      "enum":[
+        "START",
+        "SUCCEED",
+        "FAIL",
+        "RETRY",
+        "CANCEL"
+      ]
+    },
+    "OperationId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-_]+"
+    },
+    "OperationName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\x20-\\x7E]+"
+    },
+    "OperationPayload":{
+      "type":"string",
+      "max":6291456,
+      "min":0,
+      "sensitive":true
+    },
+    "OperationStatus":{
+      "type":"string",
+      "enum":[
+        "STARTED",
+        "PENDING",
+        "READY",
+        "SUCCEEDED",
+        "FAILED",
+        "CANCELLED",
+        "TIMED_OUT",
+        "STOPPED"
+      ]
+    },
+    "OperationSubType":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-_]+"
+    },
+    "OperationType":{
+      "type":"string",
+      "enum":[
+        "EXECUTION",
+        "CONTEXT",
+        "STEP",
+        "WAIT",
+        "CALLBACK",
+        "CHAINED_INVOKE"
+      ]
+    },
+    "OperationUpdate":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Type",
+        "Action"
+      ],
+      "members":{
+        "Id":{"shape":"OperationId"},
+        "ParentId":{"shape":"OperationId"},
+        "Name":{"shape":"OperationName"},
+        "Type":{"shape":"OperationType"},
+        "SubType":{"shape":"OperationSubType"},
+        "Action":{"shape":"OperationAction"},
+        "Payload":{"shape":"OperationPayload"},
+        "Error":{"shape":"ErrorObject"},
+        "ContextOptions":{"shape":"ContextOptions"},
+        "StepOptions":{"shape":"StepOptions"},
+        "WaitOptions":{"shape":"WaitOptions"},
+        "CallbackOptions":{"shape":"CallbackOptions"},
+        "ChainedInvokeOptions":{"shape":"ChainedInvokeOptions"}
+      }
+    },
+    "OperationUpdates":{
+      "type":"list",
+      "member":{"shape":"OperationUpdate"}
+    },
+    "Operations":{
+      "type":"list",
+      "member":{"shape":"Operation"}
+    },
     "OrganizationId":{
       "type":"string",
       "max":34,
@@ -4329,6 +5247,12 @@
       "max":253,
       "min":1,
       "pattern":".*"
+    },
+    "OutputPayload":{
+      "type":"string",
+      "max":6291456,
+      "min":0,
+      "sensitive":true
     },
     "PackageType":{
       "type":"string",
@@ -4766,6 +5690,10 @@
         }
       }
     },
+    "ReplayChildren":{
+      "type":"boolean",
+      "box":true
+    },
     "RequestTooLargeException":{
       "type":"structure",
       "members":{
@@ -4839,6 +5767,23 @@
         "RequestResponse",
         "DryRun"
       ]
+    },
+    "RetentionPeriodInDays":{
+      "type":"integer",
+      "box":true,
+      "max":90,
+      "min":1
+    },
+    "RetryDetails":{
+      "type":"structure",
+      "members":{
+        "CurrentAttempt":{"shape":"AttemptCount"},
+        "NextAttemptDelaySeconds":{"shape":"DurationSeconds"}
+      }
+    },
+    "ReverseOrder":{
+      "type":"boolean",
+      "box":true
     },
     "RoleArn":{
       "type":"string",
@@ -4968,6 +5913,55 @@
         "SchemaRegistryConfig":{"shape":"KafkaSchemaRegistryConfig"}
       }
     },
+    "SendDurableExecutionCallbackFailureRequest":{
+      "type":"structure",
+      "required":["CallbackId"],
+      "members":{
+        "CallbackId":{
+          "shape":"CallbackId",
+          "location":"uri",
+          "locationName":"CallbackId"
+        },
+        "Error":{"shape":"ErrorObject"}
+      },
+      "payload":"Error"
+    },
+    "SendDurableExecutionCallbackFailureResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "SendDurableExecutionCallbackHeartbeatRequest":{
+      "type":"structure",
+      "required":["CallbackId"],
+      "members":{
+        "CallbackId":{
+          "shape":"CallbackId",
+          "location":"uri",
+          "locationName":"CallbackId"
+        }
+      }
+    },
+    "SendDurableExecutionCallbackHeartbeatResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "SendDurableExecutionCallbackSuccessRequest":{
+      "type":"structure",
+      "required":["CallbackId"],
+      "members":{
+        "CallbackId":{
+          "shape":"CallbackId",
+          "location":"uri",
+          "locationName":"CallbackId"
+        },
+        "Result":{"shape":"BinaryOperationPayload"}
+      },
+      "payload":"Result"
+    },
+    "SendDurableExecutionCallbackSuccessResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "SensitiveString":{
       "type":"string",
       "sensitive":true
@@ -5095,6 +6089,14 @@
       "min":0,
       "pattern":"\\d{12}"
     },
+    "StackTraceEntries":{
+      "type":"list",
+      "member":{"shape":"StackTraceEntry"}
+    },
+    "StackTraceEntry":{
+      "type":"string",
+      "sensitive":true
+    },
     "State":{
       "type":"string",
       "enum":[
@@ -5136,6 +6138,7 @@
         "InvalidRuntime",
         "InvalidZipFileException",
         "FunctionError",
+        "DrainingDurableExecutions",
         "VcpuLimitExceeded",
         "CapacityProviderScalingLimitExceeded",
         "InsufficientCapacity",
@@ -5155,6 +6158,73 @@
       "max":100,
       "min":1,
       "pattern":"([a-zA-Z0-9-_]+)"
+    },
+    "StepDetails":{
+      "type":"structure",
+      "members":{
+        "Attempt":{"shape":"AttemptCount"},
+        "NextAttemptTimestamp":{"shape":"ExecutionTimestamp"},
+        "Result":{"shape":"OperationPayload"},
+        "Error":{"shape":"ErrorObject"}
+      }
+    },
+    "StepFailedDetails":{
+      "type":"structure",
+      "required":[
+        "Error",
+        "RetryDetails"
+      ],
+      "members":{
+        "Error":{"shape":"EventError"},
+        "RetryDetails":{"shape":"RetryDetails"}
+      }
+    },
+    "StepOptions":{
+      "type":"structure",
+      "members":{
+        "NextAttemptDelaySeconds":{"shape":"StepOptionsNextAttemptDelaySecondsInteger"}
+      }
+    },
+    "StepOptionsNextAttemptDelaySecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":31622400,
+      "min":1
+    },
+    "StepStartedDetails":{
+      "type":"structure",
+      "members":{}
+    },
+    "StepSucceededDetails":{
+      "type":"structure",
+      "required":[
+        "Result",
+        "RetryDetails"
+      ],
+      "members":{
+        "Result":{"shape":"EventResult"},
+        "RetryDetails":{"shape":"RetryDetails"}
+      }
+    },
+    "StopDurableExecutionRequest":{
+      "type":"structure",
+      "required":["DurableExecutionArn"],
+      "members":{
+        "DurableExecutionArn":{
+          "shape":"DurableExecutionArn",
+          "location":"uri",
+          "locationName":"DurableExecutionArn"
+        },
+        "Error":{"shape":"ErrorObject"}
+      },
+      "payload":"Error"
+    },
+    "StopDurableExecutionResponse":{
+      "type":"structure",
+      "required":["StopTimestamp"],
+      "members":{
+        "StopTimestamp":{"shape":"ExecutionTimestamp"}
+      }
     },
     "String":{"type":"string"},
     "StringList":{
@@ -5318,6 +6388,12 @@
       "max":1,
       "min":1
     },
+    "TraceHeader":{
+      "type":"structure",
+      "members":{
+        "XAmznTraceId":{"shape":"XAmznTraceId"}
+      }
+    },
     "TracingConfig":{
       "type":"structure",
       "members":{
@@ -5336,6 +6412,10 @@
         "Active",
         "PassThrough"
       ]
+    },
+    "Truncated":{
+      "type":"boolean",
+      "box":true
     },
     "TumblingWindowInSeconds":{
       "type":"integer",
@@ -5534,7 +6614,8 @@
         "EphemeralStorage":{"shape":"EphemeralStorage"},
         "SnapStart":{"shape":"SnapStart"},
         "LoggingConfig":{"shape":"LoggingConfig"},
-        "CapacityProviderConfig":{"shape":"CapacityProviderConfig"}
+        "CapacityProviderConfig":{"shape":"CapacityProviderConfig"},
+        "DurableConfig":{"shape":"DurableConfig"}
       }
     },
     "UpdateFunctionEventInvokeConfigRequest":{
@@ -5632,6 +6713,47 @@
       }
     },
     "VpcId":{"type":"string"},
+    "WaitCancelledDetails":{
+      "type":"structure",
+      "members":{
+        "Error":{"shape":"EventError"}
+      }
+    },
+    "WaitDetails":{
+      "type":"structure",
+      "members":{
+        "ScheduledEndTimestamp":{"shape":"ExecutionTimestamp"}
+      }
+    },
+    "WaitOptions":{
+      "type":"structure",
+      "members":{
+        "WaitSeconds":{"shape":"WaitOptionsWaitSecondsInteger"}
+      }
+    },
+    "WaitOptionsWaitSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":31622400,
+      "min":1
+    },
+    "WaitStartedDetails":{
+      "type":"structure",
+      "required":[
+        "Duration",
+        "ScheduledEndTimestamp"
+      ],
+      "members":{
+        "Duration":{"shape":"DurationSeconds"},
+        "ScheduledEndTimestamp":{"shape":"ExecutionTimestamp"}
+      }
+    },
+    "WaitSucceededDetails":{
+      "type":"structure",
+      "members":{
+        "Duration":{"shape":"DurationSeconds"}
+      }
+    },
     "Weight":{
       "type":"double",
       "max":1.0,
@@ -5640,6 +6762,11 @@
     "WorkingDirectory":{
       "type":"string",
       "max":1000,
+      "min":0
+    },
+    "XAmznTraceId":{
+      "type":"string",
+      "max":8192,
       "min":0
     }
   }

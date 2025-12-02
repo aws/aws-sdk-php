@@ -1397,6 +1397,24 @@
         {"shape":"UnauthorizedException"}
       ]
     },
+    "GetDataExportConfiguration":{
+      "name":"GetDataExportConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/data-export-configuration",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDataExportConfigurationInput"},
+      "output":{"shape":"GetDataExportConfigurationOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
     "GetDataProduct":{
       "name":"GetDataProduct",
       "http":{
@@ -2564,6 +2582,27 @@
       },
       "input":{"shape":"PostTimeSeriesDataPointsInput"},
       "output":{"shape":"PostTimeSeriesDataPointsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
+    "PutDataExportConfiguration":{
+      "name":"PutDataExportConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v2/domains/{domainIdentifier}/data-export-configuration",
+        "responseCode":200
+      },
+      "input":{"shape":"PutDataExportConfigurationInput"},
+      "output":{"shape":"PutDataExportConfigurationOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -4541,6 +4580,13 @@
         "parameters":{"shape":"ConfigurableActionParameterList"},
         "type":{"shape":"String"}
       }
+    },
+    "ConfigurationStatus":{
+      "type":"string",
+      "enum":[
+        "COMPLETED",
+        "FAILED"
+      ]
     },
     "ConflictException":{
       "type":"structure",
@@ -7541,6 +7587,13 @@
       "member":{"shape":"RegionName"},
       "min":0
     },
+    "EncryptionConfiguration":{
+      "type":"structure",
+      "members":{
+        "kmsKeyArn":{"shape":"String"},
+        "sseAlgorithm":{"shape":"String"}
+      }
+    },
     "EntityId":{
       "type":"string",
       "pattern":"^[a-zA-Z0-9_-]{1,36}$"
@@ -8358,6 +8411,28 @@
         "props":{"shape":"ConnectionPropertiesOutput"},
         "scope":{"shape":"ConnectionScope"},
         "type":{"shape":"ConnectionType"}
+      }
+    },
+    "GetDataExportConfigurationInput":{
+      "type":"structure",
+      "required":["domainIdentifier"],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        }
+      }
+    },
+    "GetDataExportConfigurationOutput":{
+      "type":"structure",
+      "members":{
+        "createdAt":{"shape":"CreatedAt"},
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "isExportEnabled":{"shape":"Boolean"},
+        "s3TableBucketArn":{"shape":"String"},
+        "status":{"shape":"ConfigurationStatus"},
+        "updatedAt":{"shape":"UpdatedAt"}
       }
     },
     "GetDataProductInput":{
@@ -9216,6 +9291,11 @@
           "shape":"MetadataGenerationRunIdentifier",
           "location":"uri",
           "locationName":"identifier"
+        },
+        "type":{
+          "shape":"MetadataGenerationRunType",
+          "location":"querystring",
+          "locationName":"type"
         }
       }
     },
@@ -9234,7 +9314,13 @@
         "owningProjectId":{"shape":"ProjectId"},
         "status":{"shape":"MetadataGenerationRunStatus"},
         "target":{"shape":"MetadataGenerationRunTarget"},
-        "type":{"shape":"MetadataGenerationRunType"}
+        "type":{
+          "shape":"MetadataGenerationRunType",
+          "deprecated":true,
+          "deprecatedMessage":"This field is going to be deprecated, please use the 'types' field to provide the MetadataGenerationRun types"
+        },
+        "typeStats":{"shape":"MetadataGenerationRunTypeStats"},
+        "types":{"shape":"MetadataGenerationRunTypes"}
       }
     },
     "GetProjectInput":{
@@ -11445,6 +11531,11 @@
           "location":"querystring",
           "locationName":"status"
         },
+        "targetIdentifier":{
+          "shape":"EntityId",
+          "location":"querystring",
+          "locationName":"targetIdentifier"
+        },
         "type":{
           "shape":"MetadataGenerationRunType",
           "location":"querystring",
@@ -12352,7 +12443,12 @@
         "owningProjectId":{"shape":"ProjectId"},
         "status":{"shape":"MetadataGenerationRunStatus"},
         "target":{"shape":"MetadataGenerationRunTarget"},
-        "type":{"shape":"MetadataGenerationRunType"}
+        "type":{
+          "shape":"MetadataGenerationRunType",
+          "deprecated":true,
+          "deprecatedMessage":"This field is going to be deprecated, please use the 'types' field to provide the MetadataGenerationRun types"
+        },
+        "types":{"shape":"MetadataGenerationRunTypes"}
       }
     },
     "MetadataGenerationRunStatus":{
@@ -12362,7 +12458,8 @@
         "IN_PROGRESS",
         "CANCELED",
         "SUCCEEDED",
-        "FAILED"
+        "FAILED",
+        "PARTIALLY_SUCCEEDED"
       ]
     },
     "MetadataGenerationRunTarget":{
@@ -12379,7 +12476,33 @@
     },
     "MetadataGenerationRunType":{
       "type":"string",
-      "enum":["BUSINESS_DESCRIPTIONS"]
+      "enum":[
+        "BUSINESS_DESCRIPTIONS",
+        "BUSINESS_NAMES",
+        "BUSINESS_GLOSSARY_ASSOCIATIONS"
+      ]
+    },
+    "MetadataGenerationRunTypeStat":{
+      "type":"structure",
+      "required":[
+        "status",
+        "type"
+      ],
+      "members":{
+        "errorMessage":{"shape":"String"},
+        "status":{"shape":"MetadataGenerationRunStatus"},
+        "type":{"shape":"MetadataGenerationRunType"}
+      }
+    },
+    "MetadataGenerationRunTypeStats":{
+      "type":"list",
+      "member":{"shape":"MetadataGenerationRunTypeStat"}
+    },
+    "MetadataGenerationRunTypes":{
+      "type":"list",
+      "member":{"shape":"MetadataGenerationRunType"},
+      "max":2,
+      "min":1
     },
     "MetadataGenerationRuns":{
       "type":"list",
@@ -13042,6 +13165,30 @@
         "cloudFormation":{"shape":"CloudFormationProperties"}
       },
       "union":true
+    },
+    "PutDataExportConfigurationInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "enableExport"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "enableExport":{"shape":"Boolean"},
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
+      }
+    },
+    "PutDataExportConfigurationOutput":{
+      "type":"structure",
+      "members":{}
     },
     "PutEnvironmentBlueprintConfigurationInput":{
       "type":"structure",
@@ -14531,8 +14678,7 @@
       "required":[
         "domainIdentifier",
         "owningProjectIdentifier",
-        "target",
-        "type"
+        "target"
       ],
       "members":{
         "clientToken":{
@@ -14546,7 +14692,12 @@
         },
         "owningProjectIdentifier":{"shape":"ProjectId"},
         "target":{"shape":"MetadataGenerationRunTarget"},
-        "type":{"shape":"MetadataGenerationRunType"}
+        "type":{
+          "shape":"MetadataGenerationRunType",
+          "deprecated":true,
+          "deprecatedMessage":"This field is going to be deprecated, please use the 'types' field to provide the MetadataGenerationRun types"
+        },
+        "types":{"shape":"MetadataGenerationRunTypes"}
       }
     },
     "StartMetadataGenerationRunOutput":{
@@ -14562,7 +14713,12 @@
         "id":{"shape":"MetadataGenerationRunIdentifier"},
         "owningProjectId":{"shape":"ProjectId"},
         "status":{"shape":"MetadataGenerationRunStatus"},
-        "type":{"shape":"MetadataGenerationRunType"}
+        "type":{
+          "shape":"MetadataGenerationRunType",
+          "deprecated":true,
+          "deprecatedMessage":"This field is going to be deprecated, please use the 'types' field to provide the MetadataGenerationRun types"
+        },
+        "types":{"shape":"MetadataGenerationRunTypes"}
       }
     },
     "Status":{

@@ -107,6 +107,30 @@
         "AsyncInvokeSummaries$member": null
       }
     },
+    "AudioBlock": {
+      "base": "<p>An audio content block that contains audio data in various supported formats.</p>",
+      "refs": {
+        "ContentBlock$audio": "<p>An audio content block containing audio data in the conversation.</p>"
+      }
+    },
+    "AudioFormat": {
+      "base": null,
+      "refs": {
+        "AudioBlock$format": "<p>The format of the audio data, such as MP3, WAV, FLAC, or other supported audio formats.</p>"
+      }
+    },
+    "AudioSource": {
+      "base": "<p>The source of audio data, which can be provided either as raw bytes or a reference to an S3 location.</p>",
+      "refs": {
+        "AudioBlock$source": "<p>The source of the audio data, which can be provided as raw bytes or an S3 location.</p>"
+      }
+    },
+    "AudioSourceBytesBlob": {
+      "base": null,
+      "refs": {
+        "AudioSource$bytes": "<p>Audio data encoded in base64.</p>"
+      }
+    },
     "AutoToolChoice": {
       "base": "<p>The Model automatically decides if a tool should be called or whether to generate text instead. For example, <code>{\"auto\" : {}}</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Call a tool with the Converse API</a> in the Amazon Bedrock User Guide</p>",
       "refs": {
@@ -419,6 +443,7 @@
         "ConverseTokensRequest$additionalModelRequestFields": "<p>The additionalModelRequestFields of Converse input request to count tokens for. Use this field when you want to pass additional parameters that the model supports.</p>",
         "MessageStopEvent$additionalModelResponseFields": "<p>The additional model response fields.</p>",
         "ToolInputSchema$json": "<p>The JSON schema for the tool. For more information, see <a href=\"https://json-schema.org/understanding-json-schema/reference\">JSON Schema Reference</a>.</p>",
+        "ToolResultBlockDelta$json": "<p>The JSON schema for the tool result content block. see <a href=\"https://json-schema.org/understanding-json-schema/reference\">JSON Schema Reference</a>.</p>",
         "ToolResultContentBlock$json": "<p>A tool result that is JSON format data. </p>",
         "ToolUseBlock$input": "<p>The input to pass to the tool. </p>"
       }
@@ -536,6 +561,14 @@
       "base": null,
       "refs": {
         "DocumentSource$bytes": "<p>The raw bytes for the document. If you use an Amazon Web Services SDK, you don't need to encode the bytes in base64.</p>"
+      }
+    },
+    "ErrorBlock": {
+      "base": "<p>A block containing error information when content processing fails.</p>",
+      "refs": {
+        "AudioBlock$error": "<p>Error information if the audio block could not be processed or contains invalid data.</p>",
+        "ImageBlock$error": "<p>Error information if the image block could not be processed or contains invalid data.</p>",
+        "ImageBlockDelta$error": "<p>Error information if this image delta could not be processed.</p>"
       }
     },
     "FoundationModelVersionIdentifier": {
@@ -1286,16 +1319,30 @@
         "ToolResultContentBlock$image": "<p>A tool result that is an image. </p> <note> <p>This field is only supported by Amazon Nova and Anthropic Claude 3 and 4 models.</p> </note>"
       }
     },
+    "ImageBlockDelta": {
+      "base": "<p>A streaming delta event that contains incremental image data during streaming responses.</p>",
+      "refs": {
+        "ContentBlockDelta$image": "<p>A streaming delta event containing incremental image data.</p>"
+      }
+    },
+    "ImageBlockStart": {
+      "base": "<p>The initial event in a streaming image block that indicates the start of image content.</p>",
+      "refs": {
+        "ContentBlockStart$image": "<p>The initial event indicating the start of a streaming image block.</p>"
+      }
+    },
     "ImageFormat": {
       "base": null,
       "refs": {
-        "ImageBlock$format": "<p>The format of the image.</p>"
+        "ImageBlock$format": "<p>The format of the image.</p>",
+        "ImageBlockStart$format": "<p>The format of the image data that will be streamed in subsequent delta events.</p>"
       }
     },
     "ImageSource": {
       "base": "<p>The source for an image.</p>",
       "refs": {
-        "ImageBlock$source": "<p>The source for the image.</p>"
+        "ImageBlock$source": "<p>The source for the image.</p>",
+        "ImageBlockDelta$source": "<p>The incremental image source data for this delta event.</p>"
       }
     },
     "ImageSourceBytesBlob": {
@@ -1671,6 +1718,7 @@
     "S3Location": {
       "base": "<p>A storage location in an Amazon S3 bucket.</p>",
       "refs": {
+        "AudioSource$s3Location": "<p>A reference to audio data stored in an Amazon S3 bucket. To see which models support S3 uploads, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html\">Supported models and features for Converse</a>.</p>",
         "DocumentSource$s3Location": "<p>The location of a document object in an Amazon S3 bucket. To see which models support S3 uploads, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html\">Supported models and features for Converse</a>.</p>",
         "ImageSource$s3Location": "<p>The location of an image object in an Amazon S3 bucket. To see which models support S3 uploads, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html\">Supported models and features for Converse</a>.</p>",
         "VideoSource$s3Location": "<p>The location of a video object in an Amazon S3 bucket. To see which models support S3 uploads, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html\">Supported models and features for Converse</a>.</p>"
@@ -1813,6 +1861,7 @@
         "DocumentBlock$context": "<p>Contextual information about how the document should be processed or interpreted by the model when generating citations.</p>",
         "DocumentContentBlock$text": "<p>The text content of the document.</p>",
         "DocumentSource$text": "<p>The text content of the document source.</p>",
+        "ErrorBlock$message": "<p>A human-readable error message describing what went wrong during content processing.</p>",
         "GuardrailAssessmentListMap$key": null,
         "GuardrailAssessmentMap$key": null,
         "GuardrailConverseTextBlock$text": "<p>The text that you want to guard.</p>",

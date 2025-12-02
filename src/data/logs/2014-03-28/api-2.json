@@ -28,6 +28,22 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "AssociateSourceToS3TableIntegration":{
+      "name":"AssociateSourceToS3TableIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateSourceToS3TableIntegrationRequest"},
+      "output":{"shape":"AssociateSourceToS3TableIntegrationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CancelExportTask":{
       "name":"CancelExportTask",
       "http":{
@@ -662,6 +678,22 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "DisassociateSourceFromS3TableIntegration":{
+      "name":"DisassociateSourceFromS3TableIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateSourceFromS3TableIntegrationRequest"},
+      "output":{"shape":"DisassociateSourceFromS3TableIntegrationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "FilterLogEvents":{
       "name":"FilterLogEvents",
       "http":{
@@ -796,6 +828,21 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "GetLogFields":{
+      "name":"GetLogFields",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetLogFieldsRequest"},
+      "output":{"shape":"GetLogFieldsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "GetLogGroupFields":{
       "name":"GetLogGroupFields",
       "http":{
@@ -904,6 +951,20 @@
         {"shape":"InvalidOperationException"}
       ]
     },
+    "ListAggregateLogGroupSummaries":{
+      "name":"ListAggregateLogGroupSummaries",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAggregateLogGroupSummariesRequest"},
+      "output":{"shape":"ListAggregateLogGroupSummariesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidParameterException"}
+      ]
+    },
     "ListAnomalies":{
       "name":"ListAnomalies",
       "http":{
@@ -987,6 +1048,22 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListSourcesForS3TableIntegration":{
+      "name":"ListSourcesForS3TableIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListSourcesForS3TableIntegrationRequest"},
+      "output":{"shape":"ListSourcesForS3TableIntegrationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -1551,6 +1628,17 @@
         "entries":{"shape":"AddKeyEntries"}
       }
     },
+    "AggregateLogGroupSummaries":{
+      "type":"list",
+      "member":{"shape":"AggregateLogGroupSummary"}
+    },
+    "AggregateLogGroupSummary":{
+      "type":"structure",
+      "members":{
+        "logGroupCount":{"shape":"LogGroupCount"},
+        "groupingIdentifiers":{"shape":"GroupingIdentifiers"}
+      }
+    },
     "AllowedActionForAllowVendedLogsDeliveryForResource":{"type":"string"},
     "AllowedFieldDelimiters":{
       "type":"list",
@@ -1663,6 +1751,23 @@
         "logGroupName":{"shape":"LogGroupName"},
         "kmsKeyId":{"shape":"KmsKeyId"},
         "resourceIdentifier":{"shape":"ResourceIdentifier"}
+      }
+    },
+    "AssociateSourceToS3TableIntegrationRequest":{
+      "type":"structure",
+      "required":[
+        "integrationArn",
+        "dataSource"
+      ],
+      "members":{
+        "integrationArn":{"shape":"Arn"},
+        "dataSource":{"shape":"DataSource"}
+      }
+    },
+    "AssociateSourceToS3TableIntegrationResponse":{
+      "type":"structure",
+      "members":{
+        "identifier":{"shape":"S3TableIntegrationSourceIdentifier"}
       }
     },
     "Baseline":{"type":"boolean"},
@@ -1903,6 +2008,31 @@
         "DISABLED"
       ]
     },
+    "DataSource":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"DataSourceName"},
+        "type":{"shape":"DataSourceType"}
+      }
+    },
+    "DataSourceFilter":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"DataSourceName"},
+        "type":{"shape":"DataSourceType"}
+      }
+    },
+    "DataSourceFilters":{
+      "type":"list",
+      "member":{"shape":"DataSourceFilter"},
+      "max":5,
+      "min":1
+    },
+    "DataSourceName":{"type":"string"},
+    "DataSourceType":{"type":"string"},
+    "DataType":{"type":"string"},
     "DateTimeConverter":{
       "type":"structure",
       "required":[
@@ -2568,6 +2698,19 @@
         "resourceIdentifier":{"shape":"ResourceIdentifier"}
       }
     },
+    "DisassociateSourceFromS3TableIntegrationRequest":{
+      "type":"structure",
+      "required":["identifier"],
+      "members":{
+        "identifier":{"shape":"S3TableIntegrationSourceIdentifier"}
+      }
+    },
+    "DisassociateSourceFromS3TableIntegrationResponse":{
+      "type":"structure",
+      "members":{
+        "identifier":{"shape":"S3TableIntegrationSourceIdentifier"}
+      }
+    },
     "Distribution":{
       "type":"string",
       "enum":[
@@ -2779,7 +2922,8 @@
         "fieldIndexName":{"shape":"FieldIndexName"},
         "lastScanTime":{"shape":"Timestamp"},
         "firstEventTime":{"shape":"Timestamp"},
-        "lastEventTime":{"shape":"Timestamp"}
+        "lastEventTime":{"shape":"Timestamp"},
+        "type":{"shape":"IndexType"}
       }
     },
     "FieldIndexName":{
@@ -2787,6 +2931,12 @@
       "max":512,
       "min":1,
       "pattern":"[\\.\\-_/#A-Za-z0-9]+"
+    },
+    "FieldIndexNames":{
+      "type":"list",
+      "member":{"shape":"FieldIndexName"},
+      "max":20,
+      "min":1
     },
     "FieldIndexes":{
       "type":"list",
@@ -3000,6 +3150,23 @@
         "nextBackwardToken":{"shape":"NextToken"}
       }
     },
+    "GetLogFieldsRequest":{
+      "type":"structure",
+      "required":[
+        "dataSourceName",
+        "dataSourceType"
+      ],
+      "members":{
+        "dataSourceName":{"shape":"DataSourceName"},
+        "dataSourceType":{"shape":"DataSourceType"}
+      }
+    },
+    "GetLogFieldsResponse":{
+      "type":"structure",
+      "members":{
+        "logFields":{"shape":"LogFieldsList"}
+      }
+    },
     "GetLogGroupFieldsRequest":{
       "type":"structure",
       "members":{
@@ -3156,6 +3323,19 @@
       "max":512,
       "min":1
     },
+    "GroupingIdentifier":{
+      "type":"structure",
+      "members":{
+        "key":{"shape":"GroupingIdentifierKey"},
+        "value":{"shape":"GroupingIdentifierValue"}
+      }
+    },
+    "GroupingIdentifierKey":{"type":"string"},
+    "GroupingIdentifierValue":{"type":"string"},
+    "GroupingIdentifiers":{
+      "type":"list",
+      "member":{"shape":"GroupingIdentifier"}
+    },
     "Histogram":{
       "type":"map",
       "key":{"shape":"Time"},
@@ -3181,6 +3361,13 @@
       "enum":[
         "ACCOUNT",
         "LOG_GROUP"
+      ]
+    },
+    "IndexType":{
+      "type":"string",
+      "enum":[
+        "FACET",
+        "FIELD_INDEX"
       ]
     },
     "InferredTokenName":{
@@ -3322,6 +3509,34 @@
       "members":{},
       "exception":true
     },
+    "ListAggregateLogGroupSummariesGroupBy":{
+      "type":"string",
+      "enum":[
+        "DATA_SOURCE_NAME_TYPE_AND_FORMAT",
+        "DATA_SOURCE_NAME_AND_TYPE"
+      ]
+    },
+    "ListAggregateLogGroupSummariesRequest":{
+      "type":"structure",
+      "required":["groupBy"],
+      "members":{
+        "accountIdentifiers":{"shape":"AccountIds"},
+        "includeLinkedAccounts":{"shape":"IncludeLinkedAccounts"},
+        "logGroupClass":{"shape":"LogGroupClass"},
+        "logGroupNamePattern":{"shape":"LogGroupNameRegexPattern"},
+        "dataSources":{"shape":"DataSourceFilters"},
+        "groupBy":{"shape":"ListAggregateLogGroupSummariesGroupBy"},
+        "nextToken":{"shape":"NextToken"},
+        "limit":{"shape":"ListLogGroupsRequestLimit"}
+      }
+    },
+    "ListAggregateLogGroupSummariesResponse":{
+      "type":"structure",
+      "members":{
+        "aggregateLogGroupSummaries":{"shape":"AggregateLogGroupSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListAnomaliesLimit":{
       "type":"integer",
       "max":50,
@@ -3411,8 +3626,15 @@
         "includeLinkedAccounts":{"shape":"IncludeLinkedAccounts"},
         "accountIdentifiers":{"shape":"AccountIds"},
         "nextToken":{"shape":"NextToken"},
-        "limit":{"shape":"ListLimit"}
+        "limit":{"shape":"ListLimit"},
+        "dataSources":{"shape":"DataSourceFilters"},
+        "fieldIndexNames":{"shape":"FieldIndexNames"}
       }
+    },
+    "ListLogGroupsRequestLimit":{
+      "type":"integer",
+      "max":50,
+      "min":1
     },
     "ListLogGroupsResponse":{
       "type":"structure",
@@ -3439,6 +3661,27 @@
       "members":{
         "nextToken":{"shape":"NextToken"},
         "scheduledQueries":{"shape":"ScheduledQuerySummaryList"}
+      }
+    },
+    "ListSourcesForS3TableIntegrationMaxResults":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
+    "ListSourcesForS3TableIntegrationRequest":{
+      "type":"structure",
+      "required":["integrationArn"],
+      "members":{
+        "integrationArn":{"shape":"Arn"},
+        "maxResults":{"shape":"ListSourcesForS3TableIntegrationMaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListSourcesForS3TableIntegrationResponse":{
+      "type":"structure",
+      "members":{
+        "sources":{"shape":"S3TableIntegrationSources"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -3538,6 +3781,30 @@
       }
     },
     "LogEventIndex":{"type":"integer"},
+    "LogFieldName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "LogFieldType":{
+      "type":"structure",
+      "members":{
+        "type":{"shape":"DataType"},
+        "element":{"shape":"LogFieldType"},
+        "fields":{"shape":"LogFieldsList"}
+      }
+    },
+    "LogFieldsList":{
+      "type":"list",
+      "member":{"shape":"LogFieldsListItem"}
+    },
+    "LogFieldsListItem":{
+      "type":"structure",
+      "members":{
+        "logFieldName":{"shape":"LogFieldName"},
+        "logFieldType":{"shape":"LogFieldType"}
+      }
+    },
     "LogGroup":{
       "type":"structure",
       "members":{
@@ -3573,6 +3840,7 @@
         "DELIVERY"
       ]
     },
+    "LogGroupCount":{"type":"integer"},
     "LogGroupField":{
       "type":"structure",
       "members":{
@@ -4732,6 +5000,38 @@
           "box":true
         }
       }
+    },
+    "S3TableIntegrationSource":{
+      "type":"structure",
+      "members":{
+        "identifier":{"shape":"S3TableIntegrationSourceIdentifier"},
+        "dataSource":{"shape":"DataSource"},
+        "status":{"shape":"S3TableIntegrationSourceStatus"},
+        "statusReason":{"shape":"S3TableIntegrationSourceStatusReason"},
+        "createdTimeStamp":{"shape":"Timestamp"}
+      }
+    },
+    "S3TableIntegrationSourceIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "S3TableIntegrationSourceStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "UNHEALTHY",
+        "FAILED",
+        "DATA_SOURCE_DELETE_IN_PROGRESS"
+      ]
+    },
+    "S3TableIntegrationSourceStatusReason":{
+      "type":"string",
+      "min":1
+    },
+    "S3TableIntegrationSources":{
+      "type":"list",
+      "member":{"shape":"S3TableIntegrationSource"}
     },
     "S3Uri":{
       "type":"string",

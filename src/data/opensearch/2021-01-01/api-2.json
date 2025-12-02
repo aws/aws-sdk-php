@@ -1331,14 +1331,16 @@
       "type":"structure",
       "members":{
         "NaturalLanguageQueryGenerationOptions":{"shape":"NaturalLanguageQueryGenerationOptionsInput"},
-        "S3VectorsEngine":{"shape":"S3VectorsEngine"}
+        "S3VectorsEngine":{"shape":"S3VectorsEngine"},
+        "ServerlessVectorAcceleration":{"shape":"ServerlessVectorAcceleration"}
       }
     },
     "AIMLOptionsOutput":{
       "type":"structure",
       "members":{
         "NaturalLanguageQueryGenerationOptions":{"shape":"NaturalLanguageQueryGenerationOptionsOutput"},
-        "S3VectorsEngine":{"shape":"S3VectorsEngine"}
+        "S3VectorsEngine":{"shape":"S3VectorsEngine"},
+        "ServerlessVectorAcceleration":{"shape":"ServerlessVectorAcceleration"}
       }
     },
     "AIMLOptionsStatus":{
@@ -5134,6 +5136,12 @@
       "required":["RoleArn"],
       "members":{
         "RoleArn":{"shape":"DirectQueryDataSourceRoleArn"}
+      }
+    },
+    "ServerlessVectorAcceleration":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"}
       }
     },
     "ServiceSoftwareOptions":{

@@ -1,0 +1,664 @@
+{
+  "version": "2.0",
+  "service": "<p>The Nova Act service provides a REST API for managing AI-powered workflow automation. It enables users to create workflow definitions, execute workflow runs, manage sessions, and orchestrate acts (individual AI tasks) with tool integrations.</p>",
+  "operations": {
+    "CreateAct": "<p>Creates a new AI task (act) within a session that can interact with tools and perform specific actions.</p>",
+    "CreateSession": "<p>Creates a new session context within a workflow run to manage conversation state and acts.</p>",
+    "CreateWorkflowDefinition": "<p>Creates a new workflow definition template that can be used to execute multiple workflow runs.</p>",
+    "CreateWorkflowRun": "<p>Creates a new execution instance of a workflow definition with specified parameters.</p>",
+    "DeleteWorkflowDefinition": "<p>Deletes a workflow definition and all associated resources. This operation cannot be undone.</p>",
+    "DeleteWorkflowRun": "<p>Terminates and cleans up a workflow run, stopping all associated acts and sessions.</p>",
+    "GetWorkflowDefinition": "<p>Retrieves the details and configuration of a specific workflow definition.</p>",
+    "GetWorkflowRun": "<p>Retrieves the current state, configuration, and execution details of a workflow run.</p>",
+    "InvokeActStep": "<p>Executes the next step of an act, processing tool call results and returning new tool calls if needed.</p>",
+    "ListActs": "<p>Lists all acts within a specific session with their current status and execution details.</p>",
+    "ListModels": "<p>Lists all available AI models that can be used for workflow execution, including their status and compatibility information.</p>",
+    "ListSessions": "<p>Lists all sessions within a specific workflow run.</p>",
+    "ListWorkflowDefinitions": "<p>Lists all workflow definitions in your account with optional filtering and pagination.</p>",
+    "ListWorkflowRuns": "<p>Lists all workflow runs for a specific workflow definition with optional filtering and pagination.</p>",
+    "UpdateAct": "<p>Updates an existing act's configuration, status, or error information.</p>",
+    "UpdateWorkflowRun": "<p>Updates the configuration or state of an active workflow run.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You don't have sufficient permissions to perform this action.</p>",
+      "refs": {}
+    },
+    "ActError": {
+      "base": "<p>Error information when an act fails to execute successfully.</p>",
+      "refs": {
+        "UpdateActRequest$error": "<p>Error information to associate with the act, if applicable.</p>"
+      }
+    },
+    "ActErrorMessageString": {
+      "base": null,
+      "refs": {
+        "ActError$message": "<p>A human-readable description of the error that occurred.</p>"
+      }
+    },
+    "ActErrorTypeString": {
+      "base": null,
+      "refs": {
+        "ActError$type": "<p>The type or category of error that occurred.</p>"
+      }
+    },
+    "ActStatus": {
+      "base": null,
+      "refs": {
+        "ActSummary$status": "<p>The current execution status of the act.</p>",
+        "CreateActResponse$status": "<p>The initial status of the act after creation.</p>",
+        "UpdateActRequest$status": "<p>The new status to set for the act.</p>"
+      }
+    },
+    "ActSummaries": {
+      "base": null,
+      "refs": {
+        "ListActsResponse$actSummaries": "<p>A list of summary information for acts in the session.</p>"
+      }
+    },
+    "ActSummary": {
+      "base": "<p>Summary information about an act, including its status and execution timing.</p>",
+      "refs": {
+        "ActSummaries$member": null
+      }
+    },
+    "Call": {
+      "base": "<p>A request for the client to execute a specific tool with given parameters.</p>",
+      "refs": {
+        "Calls$member": null
+      }
+    },
+    "CallId": {
+      "base": null,
+      "refs": {
+        "Call$callId": "<p>A unique identifier for this tool call, used to match results back to requests.</p>",
+        "CallResult$callId": "<p>The identifier of the tool call that this result corresponds to.</p>"
+      }
+    },
+    "CallResult": {
+      "base": "<p>The result returned from executing a tool call.</p>",
+      "refs": {
+        "CallResults$member": null
+      }
+    },
+    "CallResultContent": {
+      "base": "<p>Content returned from a tool call execution.</p>",
+      "refs": {
+        "CallResultContents$member": null
+      }
+    },
+    "CallResultContents": {
+      "base": null,
+      "refs": {
+        "CallResult$content": "<p>The content returned by the tool execution, which can include text or other media types.</p>"
+      }
+    },
+    "CallResults": {
+      "base": null,
+      "refs": {
+        "InvokeActStepRequest$callResults": "<p>The results from previous tool calls that the act requested.</p>"
+      }
+    },
+    "Calls": {
+      "base": null,
+      "refs": {
+        "InvokeActStepResponse$calls": "<p>A list of tool calls that the act wants to execute in this step.</p>"
+      }
+    },
+    "ClientInfo": {
+      "base": "<p>Information about the client making API requests, used for compatibility checking.</p>",
+      "refs": {
+        "CreateWorkflowRunRequest$clientInfo": "<p>Information about the client making the request, including compatibility version and SDK version.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": null,
+      "refs": {
+        "CreateActRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "CreateSessionRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "CreateWorkflowDefinitionRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "CreateWorkflowRunRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
+      }
+    },
+    "CloudWatchLogGroupName": {
+      "base": null,
+      "refs": {
+        "CreateWorkflowRunRequest$logGroupName": "<p>The CloudWatch log group name for storing workflow execution logs.</p>",
+        "GetWorkflowRunResponse$logGroupName": "<p>The CloudWatch log group name for this workflow run's logs.</p>"
+      }
+    },
+    "CompatibilityInformation": {
+      "base": "<p>Information about client compatibility and supported model versions.</p>",
+      "refs": {
+        "ListModelsResponse$compatibilityInformation": "<p>Information about client compatibility and supported models.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The request could not be completed due to a conflict with the current state of the resource.</p>",
+      "refs": {}
+    },
+    "CreateActRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateActResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSessionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateWorkflowDefinitionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateWorkflowDefinitionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateWorkflowRunRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateWorkflowRunResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DateTimestamp": {
+      "base": null,
+      "refs": {
+        "ActSummary$startedAt": "<p>The timestamp when the act started execution.</p>",
+        "ActSummary$endedAt": "<p>The timestamp when the act completed execution, if applicable.</p>",
+        "GetWorkflowDefinitionResponse$createdAt": "<p>The timestamp when the workflow definition was created.</p>",
+        "GetWorkflowRunResponse$startedAt": "<p>The timestamp when the workflow run started execution.</p>",
+        "GetWorkflowRunResponse$endedAt": "<p>The timestamp when the workflow run completed execution, if applicable.</p>",
+        "WorkflowDefinitionSummary$createdAt": "<p>The timestamp when the workflow definition was created.</p>",
+        "WorkflowRunSummary$startedAt": "<p>The timestamp when the workflow run started execution.</p>",
+        "WorkflowRunSummary$endedAt": "<p>The timestamp when the workflow run completed execution, if applicable.</p>"
+      }
+    },
+    "DeleteWorkflowDefinitionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteWorkflowDefinitionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteWorkflowRunRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteWorkflowRunResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetWorkflowDefinitionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetWorkflowDefinitionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetWorkflowRunRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetWorkflowRunResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "ClientInfo$compatibilityVersion": "<p>The compatibility version of the client, used to ensure API compatibility.</p>",
+        "CompatibilityInformation$clientCompatibilityVersion": "<p>The client compatibility version that was requested.</p>",
+        "InternalServerException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request.</p>",
+        "ListModelsRequest$clientCompatibilityVersion": "<p>The client compatibility version to filter models by compatibility.</p>",
+        "ModelSummary$minimumCompatibilityVersion": "<p>The minimum client compatibility version required to use this model.</p>",
+        "ThrottlingException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the throttled request.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>An internal server error occurred. Please try again later.</p>",
+      "refs": {}
+    },
+    "InternalServerExceptionReason": {
+      "base": null,
+      "refs": {
+        "InternalServerException$reason": "<p>The reason for the internal server error.</p>"
+      }
+    },
+    "InvokeActStepRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "InvokeActStepResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListActsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListActsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListModelsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListModelsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSessionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSessionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListWorkflowDefinitionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListWorkflowDefinitionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListWorkflowRunsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListWorkflowRunsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListActsRequest$maxResults": "<p>The maximum number of acts to return in a single response.</p>",
+        "ListSessionsRequest$maxResults": "<p>The maximum number of sessions to return in a single response.</p>",
+        "ListWorkflowDefinitionsRequest$maxResults": "<p>The maximum number of workflow definitions to return in a single response.</p>",
+        "ListWorkflowRunsRequest$maxResults": "<p>The maximum number of workflow runs to return in a single response.</p>"
+      }
+    },
+    "ModelAlias": {
+      "base": "<p>An alias that provides a stable reference to a model version.</p>",
+      "refs": {
+        "ModelAliases$member": null
+      }
+    },
+    "ModelAliases": {
+      "base": null,
+      "refs": {
+        "ListModelsResponse$modelAliases": "<p>A list of model aliases that provide stable references to model versions.</p>"
+      }
+    },
+    "ModelId": {
+      "base": null,
+      "refs": {
+        "CreateWorkflowRunRequest$modelId": "<p>The ID of the AI model to use for workflow execution.</p>",
+        "GetWorkflowRunResponse$modelId": "<p>The ID of the AI model being used for this workflow run.</p>",
+        "ModelAlias$aliasName": "<p>The name of the model alias.</p>",
+        "ModelAlias$latestModelId": "<p>The model ID that this alias currently points to.</p>",
+        "ModelAlias$resolvedModelId": "<p>The resolved model ID after alias resolution.</p>",
+        "ModelIdList$member": null,
+        "ModelSummary$modelId": "<p>The unique identifier of the model.</p>"
+      }
+    },
+    "ModelIdList": {
+      "base": null,
+      "refs": {
+        "CompatibilityInformation$supportedModelIds": "<p>A list of model IDs that are supported for the client compatibility version.</p>"
+      }
+    },
+    "ModelLifecycle": {
+      "base": "<p>Lifecycle information for an AI model.</p>",
+      "refs": {
+        "ModelSummary$modelLifecycle": "<p>The lifecycle information for the model.</p>"
+      }
+    },
+    "ModelStatus": {
+      "base": null,
+      "refs": {
+        "ModelLifecycle$status": "<p>The current lifecycle status of the model.</p>"
+      }
+    },
+    "ModelSummaries": {
+      "base": null,
+      "refs": {
+        "ListModelsResponse$modelSummaries": "<p>A list of available AI models with their status and compatibility information.</p>"
+      }
+    },
+    "ModelSummary": {
+      "base": "<p>Summary information about an available AI model.</p>",
+      "refs": {
+        "ModelSummaries$member": null
+      }
+    },
+    "NextToken": {
+      "base": null,
+      "refs": {
+        "ListActsRequest$nextToken": "<p>The token for retrieving the next page of results.</p>",
+        "ListActsResponse$nextToken": "<p>The token for retrieving the next page of results, if available.</p>",
+        "ListSessionsRequest$nextToken": "<p>The token for retrieving the next page of results.</p>",
+        "ListSessionsResponse$nextToken": "<p>The token for retrieving the next page of results, if available.</p>",
+        "ListWorkflowDefinitionsRequest$nextToken": "<p>The token for retrieving the next page of results.</p>",
+        "ListWorkflowDefinitionsResponse$nextToken": "<p>The token for retrieving the next page of results, if available.</p>",
+        "ListWorkflowRunsRequest$nextToken": "<p>The token for retrieving the next page of results.</p>",
+        "ListWorkflowRunsResponse$nextToken": "<p>The token for retrieving the next page of results, if available.</p>"
+      }
+    },
+    "NonBlankString": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": "<p>You don't have sufficient permissions to perform this action. Verify your IAM permissions and try again.</p>",
+        "ClientInfo$sdkVersion": "<p>The version of the SDK being used by the client.</p>",
+        "CompatibilityInformation$message": "<p>Additional information about compatibility requirements or recommendations.</p>",
+        "ConflictException$message": "<p>The requested operation conflicts with the current state of the resource.</p>",
+        "ConflictException$resourceId": "<p>The identifier of the resource that caused the conflict.</p>",
+        "ConflictException$resourceType": "<p>The type of resource that caused the conflict.</p>",
+        "InternalServerException$message": "<p>The service encountered an internal error. Try again later.</p>",
+        "ResourceNotFoundException$message": "<p>The specified resource was not found.</p>",
+        "ResourceNotFoundException$resourceId": "<p>The identifier of the resource that wasn't found.</p>",
+        "ResourceNotFoundException$resourceType": "<p>The type of resource that wasn't found.</p>",
+        "ServiceQuotaExceededException$message": "<p>The request would exceed one or more service quotas for your account.</p>",
+        "ServiceQuotaExceededException$resourceId": "<p>The identifier of the resource that exceeded the quota.</p>",
+        "ServiceQuotaExceededException$resourceType": "<p>The type of resource that exceeded the quota.</p>",
+        "ServiceQuotaExceededException$serviceCode": "<p>The service code for the quota that was exceeded.</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>The code for the specific quota that was exceeded.</p>",
+        "ThrottlingException$message": "<p>The request was denied due to request throttling.</p>",
+        "ThrottlingException$serviceCode": "<p>The service code where throttling occurred.</p>",
+        "ThrottlingException$quotaCode": "<p>The quota code related to the throttling.</p>",
+        "TraceLocation$location": "<p>The specific location where the trace data is stored.</p>",
+        "ValidationException$message": "<p>The input fails to satisfy the constraints specified by the service.</p>",
+        "ValidationExceptionField$name": "<p>The name of the field that failed validation.</p>",
+        "ValidationExceptionField$message": "<p>A description of the validation error for this field.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The requested resource was not found.</p>",
+      "refs": {}
+    },
+    "S3BucketName": {
+      "base": null,
+      "refs": {
+        "WorkflowExportConfig$s3BucketName": "<p>The name of your Amazon S3 bucket, that Nova Act uses to export your workflow data. Note that the IAM role used to access Nova Act must also have write permissions to this bucket.</p>"
+      }
+    },
+    "S3KeyPrefix": {
+      "base": "<p>A prefix for S3 object keys that will be prepended to 'step_{N}.json'. Must follow S3 object key naming guidelines and cannot end with a forward slash as it will be directly concatenated with the filename.</p>",
+      "refs": {
+        "WorkflowExportConfig$s3KeyPrefix": "<p>An optional prefix for Amazon S3 object keys to organize exported data.</p>"
+      }
+    },
+    "SensitiveDocument": {
+      "base": null,
+      "refs": {
+        "Call$input": "<p>The input parameters for the tool call, formatted according to the tool's schema.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request would exceed a service quota limit.</p>",
+      "refs": {}
+    },
+    "SessionSummaries": {
+      "base": null,
+      "refs": {
+        "ListSessionsResponse$sessionSummaries": "<p>A list of summary information for sessions in the workflow run.</p>"
+      }
+    },
+    "SessionSummary": {
+      "base": "<p>Summary information about a session within a workflow run.</p>",
+      "refs": {
+        "SessionSummaries$member": null
+      }
+    },
+    "SortOrder": {
+      "base": null,
+      "refs": {
+        "ListActsRequest$sortOrder": "<p>The sort order for the returned acts (ascending or descending).</p>",
+        "ListSessionsRequest$sortOrder": "<p>The sort order for the returned sessions (ascending or descending).</p>",
+        "ListWorkflowDefinitionsRequest$sortOrder": "<p>The sort order for the returned workflow definitions (ascending or descending).</p>",
+        "ListWorkflowRunsRequest$sortOrder": "<p>The sort order for the returned workflow runs (ascending or descending).</p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "Call$name": "<p>The name of the tool to invoke, following the pattern 'tool.{toolName}' or 'browser.{browserAction}'.</p>",
+        "CallResultContent$text": "<p>Text content returned from the tool execution.</p>"
+      }
+    },
+    "Task": {
+      "base": null,
+      "refs": {
+        "CreateActRequest$task": "<p>The task description that defines what the act should accomplish.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was throttled due to too many requests. Please try again later.</p>",
+      "refs": {}
+    },
+    "ToolDescription": {
+      "base": null,
+      "refs": {
+        "ToolSpec$description": "<p>A description of what the tool does and how it should be used.</p>"
+      }
+    },
+    "ToolInputSchema": {
+      "base": "<p>The schema definition for tool input parameters.</p>",
+      "refs": {
+        "ToolSpec$inputSchema": "<p>The JSON schema that defines the expected input format for the tool.</p>"
+      }
+    },
+    "ToolInputSchemaDocument": {
+      "base": null,
+      "refs": {
+        "ToolInputSchema$json": "<p>The JSON schema that defines the expected input format for the tool.</p>"
+      }
+    },
+    "ToolName": {
+      "base": null,
+      "refs": {
+        "ToolSpec$name": "<p>The unique name of the tool that acts will use to invoke it.</p>"
+      }
+    },
+    "ToolSpec": {
+      "base": "<p>Specification for a tool that acts can invoke, including its name, description, and input schema.</p>",
+      "refs": {
+        "ToolSpecs$member": null
+      }
+    },
+    "ToolSpecs": {
+      "base": null,
+      "refs": {
+        "CreateActRequest$toolSpecs": "<p>A list of tool specifications that the act can invoke to complete its task.</p>"
+      }
+    },
+    "TraceLocation": {
+      "base": "<p>Information about where trace data is stored for debugging and monitoring.</p>",
+      "refs": {
+        "ActSummary$traceLocation": "<p>The location where trace information for this act is stored.</p>",
+        "WorkflowRunSummary$traceLocation": "<p>The location where trace information for this workflow run is stored.</p>"
+      }
+    },
+    "TraceLocationType": {
+      "base": null,
+      "refs": {
+        "TraceLocation$locationType": "<p>The type of storage location for the trace data.</p>"
+      }
+    },
+    "UpdateActRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateActResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateWorkflowRunRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateWorkflowRunResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UuidString": {
+      "base": null,
+      "refs": {
+        "ActSummary$workflowRunId": "<p>The unique identifier of the workflow run containing this act.</p>",
+        "ActSummary$sessionId": "<p>The unique identifier of the session containing this act.</p>",
+        "ActSummary$actId": "<p>The unique identifier of the act.</p>",
+        "CreateActRequest$workflowRunId": "<p>The unique identifier of the workflow run containing the session.</p>",
+        "CreateActRequest$sessionId": "<p>The unique identifier of the session to create the act in.</p>",
+        "CreateActResponse$actId": "<p>The unique identifier for the created act.</p>",
+        "CreateSessionRequest$workflowRunId": "<p>The unique identifier of the workflow run to create the session in.</p>",
+        "CreateSessionResponse$sessionId": "<p>The unique identifier for the created session.</p>",
+        "CreateWorkflowRunResponse$workflowRunId": "<p>The unique identifier for the created workflow run.</p>",
+        "DeleteWorkflowRunRequest$workflowRunId": "<p>The unique identifier of the workflow run to delete.</p>",
+        "GetWorkflowRunRequest$workflowRunId": "<p>The unique identifier of the workflow run to retrieve.</p>",
+        "GetWorkflowRunResponse$workflowRunId": "<p>The unique identifier of the workflow run.</p>",
+        "InvokeActStepRequest$workflowRunId": "<p>The unique identifier of the workflow run containing the act.</p>",
+        "InvokeActStepRequest$sessionId": "<p>The unique identifier of the session containing the act.</p>",
+        "InvokeActStepRequest$actId": "<p>The unique identifier of the act to invoke the next step for.</p>",
+        "InvokeActStepRequest$previousStepId": "<p>The identifier of the previous step, used for tracking execution flow.</p>",
+        "InvokeActStepResponse$stepId": "<p>The unique identifier for this execution step.</p>",
+        "ListActsRequest$workflowRunId": "<p>The unique identifier of the workflow run containing the session.</p>",
+        "ListActsRequest$sessionId": "<p>The unique identifier of the session to list acts for.</p>",
+        "ListSessionsRequest$workflowRunId": "<p>The unique identifier of the workflow run to list sessions for.</p>",
+        "SessionSummary$sessionId": "<p>The unique identifier of the session.</p>",
+        "UpdateActRequest$workflowRunId": "<p>The unique identifier of the workflow run containing the act.</p>",
+        "UpdateActRequest$sessionId": "<p>The unique identifier of the session containing the act.</p>",
+        "UpdateActRequest$actId": "<p>The unique identifier of the act to update.</p>",
+        "UpdateWorkflowRunRequest$workflowRunId": "<p>The unique identifier of the workflow run to update.</p>",
+        "WorkflowRunSummary$workflowRunId": "<p>The unique identifier of the workflow run.</p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The input parameters for the request are invalid.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Information about a field that failed validation.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": "<p>The list of fields that failed validation.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$reason": "<p>The reason for the validation failure.</p>"
+      }
+    },
+    "WorkflowDefinitionArn": {
+      "base": null,
+      "refs": {
+        "GetWorkflowDefinitionResponse$arn": "<p>The Amazon Resource Name (ARN) of the workflow definition.</p>",
+        "WorkflowDefinitionSummary$workflowDefinitionArn": "<p>The Amazon Resource Name (ARN) of the workflow definition.</p>"
+      }
+    },
+    "WorkflowDefinitionName": {
+      "base": null,
+      "refs": {
+        "CreateActRequest$workflowDefinitionName": "<p>The name of the workflow definition containing the session.</p>",
+        "CreateSessionRequest$workflowDefinitionName": "<p>The name of the workflow definition containing the workflow run.</p>",
+        "CreateWorkflowDefinitionRequest$name": "<p>The name of the workflow definition. Must be unique within your account and region.</p>",
+        "CreateWorkflowRunRequest$workflowDefinitionName": "<p>The name of the workflow definition to execute.</p>",
+        "DeleteWorkflowDefinitionRequest$workflowDefinitionName": "<p>The name of the workflow definition to delete.</p>",
+        "DeleteWorkflowRunRequest$workflowDefinitionName": "<p>The name of the workflow definition containing the workflow run.</p>",
+        "GetWorkflowDefinitionRequest$workflowDefinitionName": "<p>The name of the workflow definition to retrieve.</p>",
+        "GetWorkflowDefinitionResponse$name": "<p>The name of the workflow definition.</p>",
+        "GetWorkflowRunRequest$workflowDefinitionName": "<p>The name of the workflow definition containing the workflow run.</p>",
+        "InvokeActStepRequest$workflowDefinitionName": "<p>The name of the workflow definition containing the act.</p>",
+        "ListActsRequest$workflowDefinitionName": "<p>The name of the workflow definition containing the session.</p>",
+        "ListSessionsRequest$workflowDefinitionName": "<p>The name of the workflow definition containing the workflow run.</p>",
+        "ListWorkflowRunsRequest$workflowDefinitionName": "<p>The name of the workflow definition to list workflow runs for.</p>",
+        "UpdateActRequest$workflowDefinitionName": "<p>The name of the workflow definition containing the act.</p>",
+        "UpdateWorkflowRunRequest$workflowDefinitionName": "<p>The name of the workflow definition containing the workflow run.</p>",
+        "WorkflowDefinitionSummary$workflowDefinitionName": "<p>The name of the workflow definition.</p>"
+      }
+    },
+    "WorkflowDefinitionStatus": {
+      "base": null,
+      "refs": {
+        "CreateWorkflowDefinitionResponse$status": "<p>The current status of the workflow definition after creation.</p>",
+        "DeleteWorkflowDefinitionResponse$status": "<p>The status of the workflow definition after deletion request.</p>",
+        "GetWorkflowDefinitionResponse$status": "<p>The current status of the workflow definition.</p>",
+        "WorkflowDefinitionSummary$status": "<p>The current status of the workflow definition.</p>"
+      }
+    },
+    "WorkflowDefinitionSummaries": {
+      "base": null,
+      "refs": {
+        "ListWorkflowDefinitionsResponse$workflowDefinitionSummaries": "<p>A list of summary information for workflow definitions.</p>"
+      }
+    },
+    "WorkflowDefinitionSummary": {
+      "base": "<p>Summary information about a workflow definition, used in list operations.</p>",
+      "refs": {
+        "WorkflowDefinitionSummaries$member": null
+      }
+    },
+    "WorkflowDescription": {
+      "base": null,
+      "refs": {
+        "CreateWorkflowDefinitionRequest$description": "<p>An optional description of the workflow definition's purpose and functionality.</p>",
+        "GetWorkflowDefinitionResponse$description": "<p>The description of the workflow definition.</p>"
+      }
+    },
+    "WorkflowExportConfig": {
+      "base": "<p>Configuration settings for exporting workflow execution data and logs to Amazon Simple Storage Service (Amazon S3).</p>",
+      "refs": {
+        "CreateWorkflowDefinitionRequest$exportConfig": "<p>Configuration for exporting workflow execution data to Amazon Simple Storage Service.</p>",
+        "GetWorkflowDefinitionResponse$exportConfig": "<p>The export configuration for the workflow definition.</p>"
+      }
+    },
+    "WorkflowRunArn": {
+      "base": null,
+      "refs": {
+        "GetWorkflowRunResponse$workflowRunArn": "<p>The Amazon Resource Name (ARN) of the workflow run.</p>",
+        "WorkflowRunSummary$workflowRunArn": "<p>The Amazon Resource Name (ARN) of the workflow run.</p>"
+      }
+    },
+    "WorkflowRunStatus": {
+      "base": null,
+      "refs": {
+        "CreateWorkflowRunResponse$status": "<p>The initial status of the workflow run after creation.</p>",
+        "DeleteWorkflowRunResponse$status": "<p>The status of the workflow run after deletion request.</p>",
+        "GetWorkflowRunResponse$status": "<p>The current execution status of the workflow run.</p>",
+        "UpdateWorkflowRunRequest$status": "<p>The new status to set for the workflow run.</p>",
+        "WorkflowRunSummary$status": "<p>The current execution status of the workflow run.</p>"
+      }
+    },
+    "WorkflowRunSummaries": {
+      "base": null,
+      "refs": {
+        "ListWorkflowRunsResponse$workflowRunSummaries": "<p>A list of summary information for workflow runs.</p>"
+      }
+    },
+    "WorkflowRunSummary": {
+      "base": "<p>Summary information about a workflow run, including execution status and timing.</p>",
+      "refs": {
+        "WorkflowRunSummaries$member": null
+      }
+    }
+  }
+}

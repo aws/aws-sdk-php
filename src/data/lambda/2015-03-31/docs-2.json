@@ -4,6 +4,7 @@
   "operations": {
     "AddLayerVersionPermission": "<p>Adds permissions to the resource-based policy of a version of an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html\">Lambda layer</a>. Use this action to grant layer usage permission to other accounts. You can grant permission to a single account, all accounts in an organization, or all Amazon Web Services accounts. </p> <p>To revoke permission, call <a>RemoveLayerVersionPermission</a> with the statement ID that you specified when you added it.</p>",
     "AddPermission": "<p>Grants a <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#Principal_specifying\">principal</a> permission to use a function. You can apply the policy at the function level, or specify a qualifier to restrict access to a single version or alias. If you use a qualifier, the invoker must use the full Amazon Resource Name (ARN) of that version or alias to invoke the function. Note: Lambda does not support adding policies to version $LATEST.</p> <p>To grant permission to another account, specify the account ID as the <code>Principal</code>. To grant permission to an organization defined in Organizations, specify the organization ID as the <code>PrincipalOrgID</code>. For Amazon Web Services services, the principal is a domain-style identifier that the service defines, such as <code>s3.amazonaws.com</code> or <code>sns.amazonaws.com</code>. For Amazon Web Services services, you can also specify the ARN of the associated resource as the <code>SourceArn</code>. If you grant permission to a service principal without specifying the source, other accounts could potentially configure resources in their account to invoke your Lambda function.</p> <p>This operation adds a statement to a resource-based permissions policy for the function. For more information about function policies, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html\">Using resource-based policies for Lambda</a>.</p>",
+    "CheckpointDurableExecution": "<p>Saves the progress of a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html\">durable function</a> execution during runtime. This API is used by the Lambda durable functions SDK to checkpoint completed steps and schedule asynchronous operations. You typically don't need to call this API directly as the SDK handles checkpointing automatically.</p> <p>Each checkpoint operation consumes the current checkpoint token and returns a new one for the next checkpoint. This ensures that checkpoints are applied in the correct order and prevents duplicate or out-of-order state updates.</p>",
     "CreateAlias": "<p>Creates an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html\">alias</a> for a Lambda function version. Use aliases to provide clients with a function identifier that you can update to invoke a different version.</p> <p>You can also map an alias to split invocation requests between two versions. Use the <code>RoutingConfig</code> parameter to specify a second version and the percentage of invocation requests that it receives.</p>",
     "CreateCapacityProvider": "<p>Creates a capacity provider that manages compute resources for Lambda functions</p>",
     "CreateCodeSigningConfig": "<p>Creates a code signing configuration. A <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-codesigning.html\">code signing configuration</a> defines a list of allowed signing profiles and defines the code-signing validation policy (action to be taken if deployment validation checks fail). </p>",
@@ -25,6 +26,9 @@
     "GetAlias": "<p>Returns details about a Lambda function <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html\">alias</a>.</p>",
     "GetCapacityProvider": "<p>Retrieves information about a specific capacity provider, including its configuration, state, and associated resources.</p>",
     "GetCodeSigningConfig": "<p>Returns information about the specified code signing configuration.</p>",
+    "GetDurableExecution": "<p>Retrieves detailed information about a specific <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html\">durable execution</a>, including its current status, input payload, result or error information, and execution metadata such as start time and usage statistics.</p>",
+    "GetDurableExecutionHistory": "<p>Retrieves the execution history for a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html\">durable execution</a>, showing all the steps, callbacks, and events that occurred during the execution. This provides a detailed audit trail of the execution's progress over time.</p> <p>The history is available while the execution is running and for a retention period after it completes (1-90 days, default 30 days). You can control whether to include execution data such as step results and callback payloads.</p>",
+    "GetDurableExecutionState": "<p>Retrieves the current execution state required for the replay process during <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html\">durable function</a> execution. This API is used by the Lambda durable functions SDK to get state information needed for replay. You typically don't need to call this API directly as the SDK handles state management automatically.</p> <p>The response contains operations ordered by start sequence number in ascending order. Completed operations with children don't include child operation details since they don't need to be replayed.</p>",
     "GetEventSourceMapping": "<p>Returns details about an event source mapping. You can get the identifier of a mapping from the output of <a>ListEventSourceMappings</a>.</p>",
     "GetFunction": "<p>Returns information about the function or function version, with a link to download the deployment package that's valid for 10 minutes. If you specify a function version, only details that are specific to that version are returned.</p>",
     "GetFunctionCodeSigningConfig": "<p>Returns the code signing configuration for the specified function.</p>",
@@ -46,6 +50,7 @@
     "ListAliases": "<p>Returns a list of <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html\">aliases</a> for a Lambda function.</p>",
     "ListCapacityProviders": "<p>Returns a list of capacity providers in your account.</p>",
     "ListCodeSigningConfigs": "<p>Returns a list of <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuring-codesigning.html\">code signing configurations</a>. A request returns up to 10,000 configurations per call. You can use the <code>MaxItems</code> parameter to return fewer configurations per call. </p>",
+    "ListDurableExecutionsByFunction": "<p>Returns a list of <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html\">durable executions</a> for a specified Lambda function. You can filter the results by execution name, status, and start time range. This API supports pagination for large result sets.</p>",
     "ListEventSourceMappings": "<p>Lists event source mappings. Specify an <code>EventSourceArn</code> to show only event source mappings for a single event source.</p>",
     "ListFunctionEventInvokeConfigs": "<p>Retrieves a list of configurations for asynchronous invocation for a function.</p> <p>To configure options for asynchronous invocation, use <a>PutFunctionEventInvokeConfig</a>.</p>",
     "ListFunctionUrlConfigs": "<p>Returns a list of Lambda function URLs for the specified function.</p>",
@@ -68,6 +73,10 @@
     "PutRuntimeManagementConfig": "<p>Sets the runtime management configuration for a function's version. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/runtimes-update.html\">Runtime updates</a>.</p>",
     "RemoveLayerVersionPermission": "<p>Removes a statement from the permissions policy for a version of an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html\">Lambda layer</a>. For more information, see <a>AddLayerVersionPermission</a>.</p>",
     "RemovePermission": "<p>Revokes function-use permission from an Amazon Web Services service or another Amazon Web Services account. You can get the ID of the statement from the output of <a>GetPolicy</a>.</p>",
+    "SendDurableExecutionCallbackFailure": "<p>Sends a failure response for a callback operation in a durable execution. Use this API when an external system cannot complete a callback operation successfully.</p>",
+    "SendDurableExecutionCallbackHeartbeat": "<p>Sends a heartbeat signal for a long-running callback operation to prevent timeout. Use this API to extend the callback timeout period while the external operation is still in progress.</p>",
+    "SendDurableExecutionCallbackSuccess": "<p>Sends a successful completion response for a callback operation in a durable execution. Use this API when an external system has successfully completed a callback operation.</p>",
+    "StopDurableExecution": "<p>Stops a running <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html\">durable execution</a>. The execution transitions to STOPPED status and cannot be resumed. Any in-progress operations are terminated.</p>",
     "TagResource": "<p>Adds <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/tagging.html\">tags</a> to a function, event source mapping, or code signing configuration.</p>",
     "UntagResource": "<p>Removes <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/tagging.html\">tags</a> from a function, event source mapping, or code signing configuration.</p>",
     "UpdateAlias": "<p>Updates the configuration of a Lambda function <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html\">alias</a>.</p>",
@@ -229,12 +238,25 @@
         "SigningProfileVersionArns$member": null
       }
     },
+    "AttemptCount": {
+      "base": null,
+      "refs": {
+        "RetryDetails$CurrentAttempt": "<p>The current attempt number for this operation.</p>",
+        "StepDetails$Attempt": "<p>The current attempt number for this step.</p>"
+      }
+    },
     "BatchSize": {
       "base": null,
       "refs": {
         "CreateEventSourceMappingRequest$BatchSize": "<p>The maximum number of records in each batch that Lambda pulls from your stream or queue and sends to your function. Lambda passes all of the records in the batch to the function in a single call, up to the payload limit for synchronous invocation (6 MB).</p> <ul> <li> <p> <b>Amazon Kinesis</b> – Default 100. Max 10,000.</p> </li> <li> <p> <b>Amazon DynamoDB Streams</b> – Default 100. Max 10,000.</p> </li> <li> <p> <b>Amazon Simple Queue Service</b> – Default 10. For standard queues the max is 10,000. For FIFO queues the max is 10.</p> </li> <li> <p> <b>Amazon Managed Streaming for Apache Kafka</b> – Default 100. Max 10,000.</p> </li> <li> <p> <b>Self-managed Apache Kafka</b> – Default 100. Max 10,000.</p> </li> <li> <p> <b>Amazon MQ (ActiveMQ and RabbitMQ)</b> – Default 100. Max 10,000.</p> </li> <li> <p> <b>DocumentDB</b> – Default 100. Max 10,000.</p> </li> </ul>",
         "EventSourceMappingConfiguration$BatchSize": "<p>The maximum number of records in each batch that Lambda pulls from your stream or queue and sends to your function. Lambda passes all of the records in the batch to the function in a single call, up to the payload limit for synchronous invocation (6 MB).</p> <p>Default value: Varies by service. For Amazon SQS, the default is 10. For all other services, the default is 100.</p> <p>Related setting: When you set <code>BatchSize</code> to a value greater than 10, you must set <code>MaximumBatchingWindowInSeconds</code> to at least 1.</p>",
         "UpdateEventSourceMappingRequest$BatchSize": "<p>The maximum number of records in each batch that Lambda pulls from your stream or queue and sends to your function. Lambda passes all of the records in the batch to the function in a single call, up to the payload limit for synchronous invocation (6 MB).</p> <ul> <li> <p> <b>Amazon Kinesis</b> – Default 100. Max 10,000.</p> </li> <li> <p> <b>Amazon DynamoDB Streams</b> – Default 100. Max 10,000.</p> </li> <li> <p> <b>Amazon Simple Queue Service</b> – Default 10. For standard queues the max is 10,000. For FIFO queues the max is 10.</p> </li> <li> <p> <b>Amazon Managed Streaming for Apache Kafka</b> – Default 100. Max 10,000.</p> </li> <li> <p> <b>Self-managed Apache Kafka</b> – Default 100. Max 10,000.</p> </li> <li> <p> <b>Amazon MQ (ActiveMQ and RabbitMQ)</b> – Default 100. Max 10,000.</p> </li> <li> <p> <b>DocumentDB</b> – Default 100. Max 10,000.</p> </li> </ul>"
+      }
+    },
+    "BinaryOperationPayload": {
+      "base": null,
+      "refs": {
+        "SendDurableExecutionCallbackSuccessRequest$Result": "<p>The result data from the successful callback operation. Maximum size is 256 KB.</p>"
       }
     },
     "BisectBatchOnFunctionError": {
@@ -270,6 +292,56 @@
         "UpdateFunctionCodeRequest$Publish": "<p>Set to true to publish a new version of the function after updating the code. This has the same effect as calling <a>PublishVersion</a> separately.</p>",
         "UpdateFunctionCodeRequest$DryRun": "<p>Set to true to validate the request parameters and access permissions without modifying the function code.</p>"
       }
+    },
+    "CallbackDetails": {
+      "base": "<p>Contains details about a callback operation in a durable execution, including the callback token and timeout configuration.</p>",
+      "refs": {
+        "Operation$CallbackDetails": null
+      }
+    },
+    "CallbackFailedDetails": {
+      "base": "<p>Contains details about a failed callback operation, including error information and the reason for failure.</p>",
+      "refs": {
+        "Event$CallbackFailedDetails": null
+      }
+    },
+    "CallbackId": {
+      "base": null,
+      "refs": {
+        "CallbackDetails$CallbackId": "<p>The callback ID. Callback IDs are generated by the <code>DurableContext</code> when a durable function calls <code>ctx.waitForCallback</code>.</p>",
+        "CallbackStartedDetails$CallbackId": "<p>The callback ID. Callback IDs are generated by the <code>DurableContext</code> when a durable function calls <code>ctx.waitForCallback</code>.</p>",
+        "SendDurableExecutionCallbackFailureRequest$CallbackId": "<p>The unique identifier for the callback operation.</p>",
+        "SendDurableExecutionCallbackHeartbeatRequest$CallbackId": "<p>The unique identifier for the callback operation.</p>",
+        "SendDurableExecutionCallbackSuccessRequest$CallbackId": "<p>The unique identifier for the callback operation.</p>"
+      }
+    },
+    "CallbackOptions": {
+      "base": "<p>Configuration options for callback operations in durable executions, including timeout settings and retry behavior.</p>",
+      "refs": {
+        "OperationUpdate$CallbackOptions": null
+      }
+    },
+    "CallbackStartedDetails": {
+      "base": "<p>Contains details about a callback operation that has started, including timing information and callback metadata.</p>",
+      "refs": {
+        "Event$CallbackStartedDetails": null
+      }
+    },
+    "CallbackSucceededDetails": {
+      "base": "<p>Contains details about a successfully completed callback operation, including the result data and completion timestamp.</p>",
+      "refs": {
+        "Event$CallbackSucceededDetails": null
+      }
+    },
+    "CallbackTimedOutDetails": {
+      "base": "<p>Contains details about a callback operation that timed out, including timeout duration and any partial results.</p>",
+      "refs": {
+        "Event$CallbackTimedOutDetails": null
+      }
+    },
+    "CallbackTimeoutException": {
+      "base": "<p>The callback ID token has either expired or the callback associated with the token has already been closed.</p>",
+      "refs": {}
     },
     "CapacityProvider": {
       "base": "<p>A capacity provider manages compute resources for Lambda functions.</p>",
@@ -382,6 +454,76 @@
         "ListCapacityProvidersResponse$CapacityProviders": "<p>A list of capacity providers in your account.</p>"
       }
     },
+    "ChainedInvokeDetails": {
+      "base": "<p>Contains details about a chained function invocation in a durable execution, including the target function and invocation parameters.</p>",
+      "refs": {
+        "Operation$ChainedInvokeDetails": null
+      }
+    },
+    "ChainedInvokeFailedDetails": {
+      "base": "<p>Contains details about a failed chained function invocation, including error information and failure reason.</p>",
+      "refs": {
+        "Event$ChainedInvokeFailedDetails": null
+      }
+    },
+    "ChainedInvokeOptions": {
+      "base": "<p>Configuration options for chained function invocations in durable executions, including retry settings and timeout configuration.</p>",
+      "refs": {
+        "OperationUpdate$ChainedInvokeOptions": null
+      }
+    },
+    "ChainedInvokeStartedDetails": {
+      "base": "<p>Contains details about a chained function invocation that has started execution, including start time and execution context.</p>",
+      "refs": {
+        "Event$ChainedInvokeStartedDetails": null
+      }
+    },
+    "ChainedInvokeStoppedDetails": {
+      "base": "<p>Details about a chained invocation that was stopped.</p>",
+      "refs": {
+        "Event$ChainedInvokeStoppedDetails": "<p>Details about a chained invocation that was stopped.</p>"
+      }
+    },
+    "ChainedInvokeSucceededDetails": {
+      "base": "<p>Details about a chained invocation that succeeded.</p>",
+      "refs": {
+        "Event$ChainedInvokeSucceededDetails": "<p>Details about a chained invocation that succeeded.</p>"
+      }
+    },
+    "ChainedInvokeTimedOutDetails": {
+      "base": "<p>Details about a chained invocation that timed out.</p>",
+      "refs": {
+        "Event$ChainedInvokeTimedOutDetails": "<p>Details about a chained invocation that timed out.</p>"
+      }
+    },
+    "CheckpointDurableExecutionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CheckpointDurableExecutionResponse": {
+      "base": "<p>The response from the CheckpointDurableExecution operation.</p>",
+      "refs": {}
+    },
+    "CheckpointToken": {
+      "base": null,
+      "refs": {
+        "CheckpointDurableExecutionRequest$CheckpointToken": "<p>A unique token that identifies the current checkpoint state. This token is provided by the Lambda runtime and must be used to ensure checkpoints are applied in the correct order. Each checkpoint operation consumes this token and returns a new one.</p>",
+        "CheckpointDurableExecutionResponse$CheckpointToken": "<p>A new checkpoint token to use for the next checkpoint operation. This token replaces the one provided in the request and must be used for subsequent checkpoints to maintain proper ordering.</p>",
+        "GetDurableExecutionStateRequest$CheckpointToken": "<p>A checkpoint token that identifies the current state of the execution. This token is provided by the Lambda runtime and ensures that state retrieval is consistent with the current execution context.</p>"
+      }
+    },
+    "CheckpointUpdatedExecutionState": {
+      "base": "<p>Contains operations that have been updated since the last checkpoint, such as completed asynchronous work like timers or callbacks.</p>",
+      "refs": {
+        "CheckpointDurableExecutionResponse$NewExecutionState": "<p>Updated execution state information that includes any changes that occurred since the last checkpoint, such as completed callbacks or expired timers. This allows the SDK to update its internal state during replay.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": null,
+      "refs": {
+        "CheckpointDurableExecutionRequest$ClientToken": "<p>An optional idempotency token to ensure that duplicate checkpoint requests are handled correctly. If provided, Lambda uses this token to detect and handle duplicate requests within a 15-minute window.</p>"
+      }
+    },
     "CodeSigningConfig": {
       "base": "<p>Details about a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-codesigning.html\">Code signing configuration</a>. </p>",
       "refs": {
@@ -471,6 +613,36 @@
       "base": null,
       "refs": {
         "GetFunctionResponse$Concurrency": "<p>The function's <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html\">reserved concurrency</a>.</p>"
+      }
+    },
+    "ContextDetails": {
+      "base": "<p>Details about a durable execution context.</p>",
+      "refs": {
+        "Operation$ContextDetails": "<p>Details about the context, if this operation represents a context.</p>"
+      }
+    },
+    "ContextFailedDetails": {
+      "base": "<p>Details about a context that failed.</p>",
+      "refs": {
+        "Event$ContextFailedDetails": "<p>Details about a context that failed.</p>"
+      }
+    },
+    "ContextOptions": {
+      "base": "<p>Configuration options for a durable execution context.</p>",
+      "refs": {
+        "OperationUpdate$ContextOptions": "<p>Options for context operations.</p>"
+      }
+    },
+    "ContextStartedDetails": {
+      "base": "<p>Details about a context that has started.</p>",
+      "refs": {
+        "Event$ContextStartedDetails": "<p>Details about a context that started.</p>"
+      }
+    },
+    "ContextSucceededDetails": {
+      "base": "<p>Details about a context that succeeded.</p>",
+      "refs": {
+        "Event$ContextSucceededDetails": "<p>Details about a context that succeeded.</p>"
       }
     },
     "Cors": {
@@ -644,6 +816,60 @@
         "UpdateEventSourceMappingRequest$DocumentDBEventSourceConfig": "<p>Specific configuration settings for a DocumentDB event source.</p>"
       }
     },
+    "DurableConfig": {
+      "base": "<p>Configuration settings for <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html\">durable functions</a>, including execution timeout and retention period for execution history.</p>",
+      "refs": {
+        "CreateFunctionRequest$DurableConfig": "<p>Configuration settings for durable functions. Enables creating functions with durability that can remember their state and continue execution even after interruptions.</p>",
+        "FunctionConfiguration$DurableConfig": "<p>The function's durable execution configuration settings, if the function is configured for durability.</p>",
+        "UpdateFunctionConfigurationRequest$DurableConfig": "<p>Configuration settings for durable functions. Allows updating execution timeout and retention period for functions with durability enabled.</p>"
+      }
+    },
+    "DurableExecutionAlreadyStartedException": {
+      "base": "<p>The durable execution with the specified name has already been started. Each durable execution name must be unique within the function. Use a different name or check the status of the existing execution.</p>",
+      "refs": {}
+    },
+    "DurableExecutionArn": {
+      "base": null,
+      "refs": {
+        "ChainedInvokeStartedDetails$DurableExecutionArn": "<p>The Amazon Resource Name (ARN) that identifies the durable execution.</p>",
+        "CheckpointDurableExecutionRequest$DurableExecutionArn": "<p>The Amazon Resource Name (ARN) of the durable execution.</p>",
+        "Execution$DurableExecutionArn": "<p>The Amazon Resource Name (ARN) of the durable execution, if this execution is a durable execution.</p>",
+        "GetDurableExecutionHistoryRequest$DurableExecutionArn": "<p>The Amazon Resource Name (ARN) of the durable execution.</p>",
+        "GetDurableExecutionRequest$DurableExecutionArn": "<p>The Amazon Resource Name (ARN) of the durable execution.</p>",
+        "GetDurableExecutionResponse$DurableExecutionArn": "<p>The Amazon Resource Name (ARN) of the durable execution.</p>",
+        "GetDurableExecutionStateRequest$DurableExecutionArn": "<p>The Amazon Resource Name (ARN) of the durable execution.</p>",
+        "InvocationResponse$DurableExecutionArn": "<p>The ARN of the durable execution that was started. This is returned when invoking a durable function and provides a unique identifier for tracking the execution.</p>",
+        "StopDurableExecutionRequest$DurableExecutionArn": "<p>The Amazon Resource Name (ARN) of the durable execution.</p>"
+      }
+    },
+    "DurableExecutionName": {
+      "base": null,
+      "refs": {
+        "Execution$DurableExecutionName": "<p>The unique name of the durable execution, if one was provided when the execution was started.</p>",
+        "GetDurableExecutionResponse$DurableExecutionName": "<p>The name of the durable execution. This is either the name you provided when invoking the function, or a system-generated unique identifier if no name was provided.</p>",
+        "InvocationRequest$DurableExecutionName": "<p>Optional unique name for the durable execution. When you start your special function, you can give it a unique name to identify this specific execution. It's like giving a nickname to a task.</p>",
+        "ListDurableExecutionsByFunctionRequest$DurableExecutionName": "<p>Filter executions by name. Only executions with names that contain this string are returned.</p>"
+      }
+    },
+    "DurableExecutions": {
+      "base": null,
+      "refs": {
+        "ListDurableExecutionsByFunctionResponse$DurableExecutions": "<p>List of durable execution summaries matching the filter criteria.</p>"
+      }
+    },
+    "DurationSeconds": {
+      "base": null,
+      "refs": {
+        "CallbackOptions$TimeoutSeconds": "<p>The timeout for the callback operation in seconds. If not specified or set to 0, the callback has no timeout.</p>",
+        "CallbackOptions$HeartbeatTimeoutSeconds": "<p>The heartbeat timeout for the callback operation, in seconds. If not specified or set to 0, heartbeat timeout is disabled.</p>",
+        "CallbackStartedDetails$HeartbeatTimeout": "<p>The heartbeat timeout value, in seconds.</p>",
+        "CallbackStartedDetails$Timeout": "<p>The timeout value, in seconds.</p>",
+        "ExecutionStartedDetails$ExecutionTimeout": "<p>The maximum amount of time that the durable execution is allowed to run, in seconds.</p>",
+        "RetryDetails$NextAttemptDelaySeconds": "<p>The delay before the next retry attempt, in seconds.</p>",
+        "WaitStartedDetails$Duration": "<p>The duration to wait, in seconds.</p>",
+        "WaitSucceededDetails$Duration": "<p>The wait duration, in seconds.</p>"
+      }
+    },
     "EC2AccessDeniedException": {
       "base": "<p>Need additional permissions to configure VPC settings.</p>",
       "refs": {}
@@ -759,6 +985,84 @@
         "EphemeralStorage$Size": "<p>The size of the function's <code>/tmp</code> directory.</p>"
       }
     },
+    "ErrorData": {
+      "base": null,
+      "refs": {
+        "ErrorObject$ErrorData": "<p>Machine-readable error data.</p>"
+      }
+    },
+    "ErrorMessage": {
+      "base": null,
+      "refs": {
+        "ErrorObject$ErrorMessage": "<p>A human-readable error message.</p>"
+      }
+    },
+    "ErrorObject": {
+      "base": "<p>An object that contains error information.</p>",
+      "refs": {
+        "CallbackDetails$Error": "<p>An error object that contains details about the failure.</p>",
+        "ChainedInvokeDetails$Error": "<p>Details about the chained invocation failure.</p>",
+        "ContextDetails$Error": "<p>Details about the context failure.</p>",
+        "EventError$Payload": "<p>The error payload.</p>",
+        "GetDurableExecutionResponse$Error": "<p>Error information if the durable execution failed. This field is only present when the execution status is <code>FAILED</code>, <code>TIMED_OUT</code>, or <code>STOPPED</code>. The combined size of all error fields is limited to 256 KB.</p>",
+        "OperationUpdate$Error": "<p>The error information for failed operations.</p>",
+        "SendDurableExecutionCallbackFailureRequest$Error": "<p>Error details describing why the callback operation failed.</p>",
+        "StepDetails$Error": "<p>Details about the step failure.</p>",
+        "StopDurableExecutionRequest$Error": "<p>Optional error details explaining why the execution is being stopped.</p>"
+      }
+    },
+    "ErrorType": {
+      "base": null,
+      "refs": {
+        "ErrorObject$ErrorType": "<p>The error type.</p>"
+      }
+    },
+    "Event": {
+      "base": "<p>An event that occurred during the execution of a durable function.</p>",
+      "refs": {
+        "Events$member": null
+      }
+    },
+    "EventError": {
+      "base": "<p>Error information for an event.</p>",
+      "refs": {
+        "CallbackFailedDetails$Error": "<p>An error object that contains details about the failure.</p>",
+        "CallbackTimedOutDetails$Error": "<p>Details about the callback timeout.</p>",
+        "ChainedInvokeFailedDetails$Error": "<p>Details about the chained invocation failure.</p>",
+        "ChainedInvokeStoppedDetails$Error": "<p>Details about why the chained invocation stopped.</p>",
+        "ChainedInvokeTimedOutDetails$Error": "<p>Details about the chained invocation timeout.</p>",
+        "ContextFailedDetails$Error": "<p>Details about the context failure.</p>",
+        "ExecutionFailedDetails$Error": "<p>Details about the execution failure.</p>",
+        "ExecutionStoppedDetails$Error": "<p>Details about why the execution stopped.</p>",
+        "ExecutionTimedOutDetails$Error": "<p>Details about the execution timeout.</p>",
+        "InvocationCompletedDetails$Error": "<p>Details about the invocation failure.</p>",
+        "StepFailedDetails$Error": "<p>Details about the step failure.</p>",
+        "WaitCancelledDetails$Error": "<p>Details about why the wait operation was cancelled.</p>"
+      }
+    },
+    "EventId": {
+      "base": null,
+      "refs": {
+        "Event$EventId": "<p>The unique identifier for this event. Event IDs increment sequentially.</p>"
+      }
+    },
+    "EventInput": {
+      "base": "<p>Input information for an event.</p>",
+      "refs": {
+        "ChainedInvokeStartedDetails$Input": "<p>The JSON input payload provided to the chained invocation.</p>",
+        "ExecutionStartedDetails$Input": "<p>The input payload provided for the durable execution.</p>"
+      }
+    },
+    "EventResult": {
+      "base": "<p>Result information for an event.</p>",
+      "refs": {
+        "CallbackSucceededDetails$Result": "<p>The response payload from the successful operation.</p>",
+        "ChainedInvokeSucceededDetails$Result": "<p>The response payload from the successful operation.</p>",
+        "ContextSucceededDetails$Result": "<p>The JSON response payload from the successful context.</p>",
+        "ExecutionSucceededDetails$Result": "<p>The response payload from the successful operation.</p>",
+        "StepSucceededDetails$Result": "<p>The response payload from the successful operation.</p>"
+      }
+    },
     "EventSourceMappingArn": {
       "base": null,
       "refs": {
@@ -810,10 +1114,104 @@
         "AddPermissionRequest$EventSourceToken": "<p>For Alexa Smart Home functions, a token that the invoker must supply.</p>"
       }
     },
+    "EventType": {
+      "base": null,
+      "refs": {
+        "Event$EventType": "<p>The type of event that occurred.</p>"
+      }
+    },
+    "Events": {
+      "base": null,
+      "refs": {
+        "GetDurableExecutionHistoryResponse$Events": "<p>An array of execution history events, ordered chronologically unless <code>ReverseOrder</code> is set to <code>true</code>. Each event represents a significant occurrence during the execution, such as step completion or callback resolution.</p>"
+      }
+    },
+    "Execution": {
+      "base": "<p>Information about a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html\">durable execution</a>.</p>",
+      "refs": {
+        "DurableExecutions$member": null
+      }
+    },
+    "ExecutionDetails": {
+      "base": "<p>Details about a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html\">durable execution</a>.</p>",
+      "refs": {
+        "Operation$ExecutionDetails": "<p>Details about the execution, if this operation represents an execution.</p>"
+      }
+    },
     "ExecutionEnvironmentMemoryGiBPerVCpu": {
       "base": null,
       "refs": {
         "LambdaManagedInstancesCapacityProviderConfig$ExecutionEnvironmentMemoryGiBPerVCpu": "<p>The amount of memory in GiB allocated per vCPU for execution environments.</p>"
+      }
+    },
+    "ExecutionFailedDetails": {
+      "base": "<p>Details about a failed <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html\">durable execution</a>.</p>",
+      "refs": {
+        "Event$ExecutionFailedDetails": "<p>Details about an execution that failed.</p>"
+      }
+    },
+    "ExecutionStartedDetails": {
+      "base": "<p>Details about a durable execution that started.</p>",
+      "refs": {
+        "Event$ExecutionStartedDetails": "<p>Details about an execution that started.</p>"
+      }
+    },
+    "ExecutionStatus": {
+      "base": null,
+      "refs": {
+        "Execution$Status": "<p>The current status of the durable execution.</p>",
+        "ExecutionStatusList$member": null,
+        "GetDurableExecutionResponse$Status": "<p>The current status of the durable execution. Valid values are <code>RUNNING</code>, <code>SUCCEEDED</code>, <code>FAILED</code>, <code>TIMED_OUT</code>, and <code>STOPPED</code>.</p>"
+      }
+    },
+    "ExecutionStatusList": {
+      "base": null,
+      "refs": {
+        "ListDurableExecutionsByFunctionRequest$Statuses": "<p>Filter executions by status. Valid values: RUNNING, SUCCEEDED, FAILED, TIMED_OUT, STOPPED.</p>"
+      }
+    },
+    "ExecutionStoppedDetails": {
+      "base": "<p>Details about a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html\">durable execution</a> that stopped.</p>",
+      "refs": {
+        "Event$ExecutionStoppedDetails": "<p>Details about an execution that was stopped.</p>"
+      }
+    },
+    "ExecutionSucceededDetails": {
+      "base": "<p>Details about a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html\">durable execution</a> that succeeded.</p>",
+      "refs": {
+        "Event$ExecutionSucceededDetails": "<p>Details about an execution that succeeded.</p>"
+      }
+    },
+    "ExecutionTimedOutDetails": {
+      "base": "<p>Details about a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html\">durable execution</a> that timed out.</p>",
+      "refs": {
+        "Event$ExecutionTimedOutDetails": "<p>Details about an execution that timed out.</p>"
+      }
+    },
+    "ExecutionTimeout": {
+      "base": null,
+      "refs": {
+        "DurableConfig$ExecutionTimeout": "<p>The maximum time (in seconds) that a durable execution can run before timing out. This timeout applies to the entire durable execution, not individual function invocations.</p>"
+      }
+    },
+    "ExecutionTimestamp": {
+      "base": null,
+      "refs": {
+        "Event$EventTimestamp": "<p>The date and time when this event occurred, in <a href=\"https://www.w3.org/TR/NOTE-datetime\">ISO-8601 format</a> (YYYY-MM-DDThh:mm:ss.sTZD).</p>",
+        "Execution$StartTimestamp": "<p>The date and time when the durable execution started, in <a href=\"https://www.w3.org/TR/NOTE-datetime\">ISO-8601 format</a> (YYYY-MM-DDThh:mm:ss.sTZD).</p>",
+        "Execution$EndTimestamp": "<p>The date and time when the durable execution ended, in <a href=\"https://www.w3.org/TR/NOTE-datetime\">ISO-8601 format</a> (YYYY-MM-DDThh:mm:ss.sTZD).</p>",
+        "GetDurableExecutionResponse$StartTimestamp": "<p>The date and time when the durable execution started, in Unix timestamp format.</p>",
+        "GetDurableExecutionResponse$EndTimestamp": "<p>The date and time when the durable execution ended, in Unix timestamp format. This field is only present if the execution has completed (status is <code>SUCCEEDED</code>, <code>FAILED</code>, <code>TIMED_OUT</code>, or <code>STOPPED</code>).</p>",
+        "InvocationCompletedDetails$StartTimestamp": "<p>The date and time when the invocation started, in <a href=\"https://www.w3.org/TR/NOTE-datetime\">ISO-8601 format</a> (YYYY-MM-DDThh:mm:ss.sTZD).</p>",
+        "InvocationCompletedDetails$EndTimestamp": "<p>The date and time when the invocation ended, in <a href=\"https://www.w3.org/TR/NOTE-datetime\">ISO-8601 format</a> (YYYY-MM-DDThh:mm:ss.sTZD).</p>",
+        "ListDurableExecutionsByFunctionRequest$StartedAfter": "<p>Filter executions that started after this timestamp (ISO 8601 format).</p>",
+        "ListDurableExecutionsByFunctionRequest$StartedBefore": "<p>Filter executions that started before this timestamp (ISO 8601 format).</p>",
+        "Operation$StartTimestamp": "<p>The date and time when the operation started, in <a href=\"https://www.w3.org/TR/NOTE-datetime\">ISO-8601 format</a> (YYYY-MM-DDThh:mm:ss.sTZD).</p>",
+        "Operation$EndTimestamp": "<p>The date and time when the operation ended, in <a href=\"https://www.w3.org/TR/NOTE-datetime\">ISO-8601 format</a> (YYYY-MM-DDThh:mm:ss.sTZD).</p>",
+        "StepDetails$NextAttemptTimestamp": "<p>The date and time when the next attempt is scheduled, in <a href=\"https://www.w3.org/TR/NOTE-datetime\">ISO-8601 format</a> (YYYY-MM-DDThh:mm:ss.sTZD). Only populated when the step is in a pending state.</p>",
+        "StopDurableExecutionResponse$StopTimestamp": "<p>The timestamp when the execution was stopped (ISO 8601 format).</p>",
+        "WaitDetails$ScheduledEndTimestamp": "<p>The date and time when the wait operation is scheduled to complete, in <a href=\"https://www.w3.org/TR/NOTE-datetime\">ISO-8601 format</a> (YYYY-MM-DDThh:mm:ss.sTZD).</p>",
+        "WaitStartedDetails$ScheduledEndTimestamp": "<p>The date and time when the wait operation is scheduled to complete, in <a href=\"https://www.w3.org/TR/NOTE-datetime\">ISO-8601 format</a> (YYYY-MM-DDThh:mm:ss.sTZD).</p>"
       }
     },
     "FileSystemArn": {
@@ -1098,6 +1496,30 @@
       "base": null,
       "refs": {}
     },
+    "GetDurableExecutionHistoryRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDurableExecutionHistoryResponse": {
+      "base": "<p>The response from the GetDurableExecutionHistory operation, containing the execution history and events.</p>",
+      "refs": {}
+    },
+    "GetDurableExecutionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDurableExecutionResponse": {
+      "base": "<p>The response from the GetDurableExecution operation, containing detailed information about the durable execution.</p>",
+      "refs": {}
+    },
+    "GetDurableExecutionStateRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDurableExecutionStateResponse": {
+      "base": "<p>The response from the GetDurableExecutionState operation, containing the current execution state for replay.</p>",
+      "refs": {}
+    },
     "GetEventSourceMappingRequest": {
       "base": null,
       "refs": {}
@@ -1249,6 +1671,20 @@
         "FunctionConfiguration$ImageConfigResponse": "<p>The function's image configuration values.</p>"
       }
     },
+    "IncludeExecutionData": {
+      "base": null,
+      "refs": {
+        "GetDurableExecutionHistoryRequest$IncludeExecutionData": "<p>Specifies whether to include execution data such as step results and callback payloads in the history events. Set to <code>true</code> to include data, or <code>false</code> to exclude it for a more compact response. The default is <code>true</code>.</p>"
+      }
+    },
+    "InputPayload": {
+      "base": null,
+      "refs": {
+        "EventInput$Payload": "<p>The input payload.</p>",
+        "ExecutionDetails$InputPayload": "<p>The original input payload provided for the durable execution.</p>",
+        "GetDurableExecutionResponse$InputPayload": "<p>The JSON input payload that was provided when the durable execution was started. For asynchronous invocations, this is limited to 256 KB. For synchronous invocations, this can be up to 6 MB.</p>"
+      }
+    },
     "InstanceRequirements": {
       "base": "<p>Specifications that define the characteristics and constraints for compute instances used by the capacity provider.</p>",
       "refs": {
@@ -1305,6 +1741,12 @@
     "InvalidZipFileException": {
       "base": "<p>Lambda could not unzip the deployment package.</p>",
       "refs": {}
+    },
+    "InvocationCompletedDetails": {
+      "base": "<p>Details about a function invocation that completed.</p>",
+      "refs": {
+        "Event$InvocationCompletedDetails": "<p>Details about a function invocation that completed.</p>"
+      }
     },
     "InvocationRequest": {
       "base": null,
@@ -1369,6 +1811,14 @@
       "base": null,
       "refs": {
         "AddPermissionRequest$InvokedViaFunctionUrl": "<p>Indicates whether the permission applies when the function is invoked through a function URL. </p>"
+      }
+    },
+    "ItemCount": {
+      "base": null,
+      "refs": {
+        "GetDurableExecutionHistoryRequest$MaxItems": "<p>The maximum number of history events to return per call. You can use <code>Marker</code> to retrieve additional pages of results. The default is 100 and the maximum allowed is 1000. A value of 0 uses the default.</p>",
+        "GetDurableExecutionStateRequest$MaxItems": "<p>The maximum number of operations to return per call. You can use <code>Marker</code> to retrieve additional pages of results. The default is 100 and the maximum allowed is 1000. A value of 0 uses the default.</p>",
+        "ListDurableExecutionsByFunctionRequest$MaxItems": "<p>Maximum number of executions to return (1-1000). Default is 100.</p>"
       }
     },
     "KMSAccessDeniedException": {
@@ -1619,6 +2069,14 @@
     },
     "ListCodeSigningConfigsResponse": {
       "base": null,
+      "refs": {}
+    },
+    "ListDurableExecutionsByFunctionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDurableExecutionsByFunctionResponse": {
+      "base": "<p>The response from the ListDurableExecutionsByFunction operation, containing a list of durable executions and pagination information.</p>",
       "refs": {}
     },
     "ListEventSourceMappingsRequest": {
@@ -1891,8 +2349,10 @@
     "NameSpacedFunctionArn": {
       "base": null,
       "refs": {
+        "Execution$FunctionArn": "<p>The Amazon Resource Name (ARN) of the Lambda function.</p>",
         "FunctionConfiguration$FunctionArn": "<p>The function's Amazon Resource Name (ARN).</p>",
         "FunctionVersionsByCapacityProviderListItem$FunctionArn": "<p>The Amazon Resource Name (ARN) of the function version.</p>",
+        "GetDurableExecutionResponse$FunctionArn": "<p>The Amazon Resource Name (ARN) of the Lambda function that was invoked to start this durable execution.</p>",
         "GetRuntimeManagementConfigResponse$FunctionArn": "<p>The Amazon Resource Name (ARN) of your function.</p>"
       }
     },
@@ -1900,6 +2360,8 @@
       "base": null,
       "refs": {
         "AddPermissionRequest$FunctionName": "<p>The name or ARN of the Lambda function, version, or alias.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code> (name-only), <code>my-function:v1</code> (with alias).</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>You can append a version number or alias to any of the formats. The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
+        "ChainedInvokeOptions$FunctionName": "<p>The name or ARN of the Lambda function to invoke.</p>",
+        "ChainedInvokeStartedDetails$FunctionName": "<p>The name or ARN of the Lambda function being invoked.</p>",
         "CreateEventSourceMappingRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>MyFunction</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:MyFunction</code>.</p> </li> <li> <p> <b>Version or Alias ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:MyFunction:PROD</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:MyFunction</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it's limited to 64 characters in length.</p>",
         "DeleteFunctionCodeSigningConfigRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> - <code>MyFunction</code>.</p> </li> <li> <p> <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:MyFunction</code>.</p> </li> <li> <p> <b>Partial ARN</b> - <code>123456789012:function:MyFunction</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "DeleteFunctionEventInvokeConfigRequest$FunctionName": "<p>The name or ARN of the Lambda function, version, or alias.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> - <code>my-function</code> (name-only), <code>my-function:v1</code> (with alias).</p> </li> <li> <p> <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> - <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>You can append a version number or alias to any of the formats. The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
@@ -1914,6 +2376,7 @@
         "InvocationRequest$FunctionName": "<p>The name or ARN of the Lambda function, version, or alias.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code> (name-only), <code>my-function:v1</code> (with alias).</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>You can append a version number or alias to any of the formats. The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "InvokeAsyncRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "InvokeWithResponseStreamRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
+        "ListDurableExecutionsByFunctionRequest$FunctionName": "<p>The name or ARN of the Lambda function. You can specify a function name, a partial ARN, or a full ARN.</p>",
         "ListEventSourceMappingsRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> – <code>MyFunction</code>.</p> </li> <li> <p> <b>Function ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:MyFunction</code>.</p> </li> <li> <p> <b>Version or Alias ARN</b> – <code>arn:aws:lambda:us-west-2:123456789012:function:MyFunction:PROD</code>.</p> </li> <li> <p> <b>Partial ARN</b> – <code>123456789012:function:MyFunction</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it's limited to 64 characters in length.</p>",
         "ListFunctionEventInvokeConfigsRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> - <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p> </li> <li> <p> <b>Partial ARN</b> - <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
         "ListVersionsByFunctionRequest$FunctionName": "<p>The name or ARN of the Lambda function.</p> <p class=\"title\"> <b>Name formats</b> </p> <ul> <li> <p> <b>Function name</b> - <code>MyFunction</code>.</p> </li> <li> <p> <b>Function ARN</b> - <code>arn:aws:lambda:us-west-2:123456789012:function:MyFunction</code>.</p> </li> <li> <p> <b>Partial ARN</b> - <code>123456789012:function:MyFunction</code>.</p> </li> </ul> <p>The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.</p>",
@@ -1966,6 +2429,7 @@
         "GetRuntimeManagementConfigRequest$Qualifier": "<p>Specify a version of the function. This can be <code>$LATEST</code> or a published version number. If no value is specified, the configuration for the <code>$LATEST</code> version is returned.</p>",
         "InvocationRequest$Qualifier": "<p>Specify a version or alias to invoke a published version of the function.</p>",
         "InvokeWithResponseStreamRequest$Qualifier": "<p>The alias name.</p>",
+        "ListDurableExecutionsByFunctionRequest$Qualifier": "<p>The function version or alias. If not specified, lists executions for the $LATEST version.</p>",
         "PutFunctionEventInvokeConfigRequest$Qualifier": "<p>A version number or alias name.</p>",
         "PutRuntimeManagementConfigRequest$Qualifier": "<p>Specify a version of the function. This can be <code>$LATEST</code> or a published version number. If no value is specified, the configuration for the <code>$LATEST</code> version is returned.</p>",
         "RemovePermissionRequest$Qualifier": "<p>Specify a version or alias to remove permissions from a published version of the function.</p>",
@@ -1984,6 +2448,88 @@
         "DestinationConfig$OnSuccess": "<p>The destination configuration for successful invocations. Not supported in <code>CreateEventSourceMapping</code> or <code>UpdateEventSourceMapping</code>.</p>"
       }
     },
+    "Operation": {
+      "base": "<p>Information about an operation within a durable execution.</p>",
+      "refs": {
+        "Operations$member": null
+      }
+    },
+    "OperationAction": {
+      "base": null,
+      "refs": {
+        "OperationUpdate$Action": "<p>The action to take on the operation.</p>"
+      }
+    },
+    "OperationId": {
+      "base": null,
+      "refs": {
+        "Event$Id": "<p>The unique identifier for this operation.</p>",
+        "Event$ParentId": "<p>The unique identifier of the parent operation, if this operation is running within a child context.</p>",
+        "Operation$Id": "<p>The unique identifier for this operation.</p>",
+        "Operation$ParentId": "<p>The unique identifier of the parent operation, if this operation is running within a child context.</p>",
+        "OperationUpdate$Id": "<p>The unique identifier for this operation.</p>",
+        "OperationUpdate$ParentId": "<p>The unique identifier of the parent operation, if this operation is running within a child context.</p>"
+      }
+    },
+    "OperationName": {
+      "base": null,
+      "refs": {
+        "Event$Name": "<p>The customer-provided name for this operation.</p>",
+        "Operation$Name": "<p>The customer-provided name for this operation.</p>",
+        "OperationUpdate$Name": "<p>The customer-provided name for this operation.</p>"
+      }
+    },
+    "OperationPayload": {
+      "base": null,
+      "refs": {
+        "CallbackDetails$Result": "<p>The response payload from the callback operation as a string.</p>",
+        "ChainedInvokeDetails$Result": "<p>The response payload from the chained invocation.</p>",
+        "ContextDetails$Result": "<p>The response payload from the context.</p>",
+        "EventResult$Payload": "<p>The result payload.</p>",
+        "OperationUpdate$Payload": "<p>The payload for successful operations.</p>",
+        "StepDetails$Result": "<p>The JSON response payload from the step operation.</p>"
+      }
+    },
+    "OperationStatus": {
+      "base": null,
+      "refs": {
+        "Operation$Status": "<p>The current status of the operation.</p>"
+      }
+    },
+    "OperationSubType": {
+      "base": null,
+      "refs": {
+        "Event$SubType": "<p>The subtype of the event, providing additional categorization.</p>",
+        "Operation$SubType": "<p>The subtype of the operation, providing additional categorization.</p>",
+        "OperationUpdate$SubType": "<p>The subtype of the operation, providing additional categorization.</p>"
+      }
+    },
+    "OperationType": {
+      "base": null,
+      "refs": {
+        "Operation$Type": "<p>The type of operation.</p>",
+        "OperationUpdate$Type": "<p>The type of operation to update.</p>"
+      }
+    },
+    "OperationUpdate": {
+      "base": "<p>An update to be applied to an operation during checkpointing.</p>",
+      "refs": {
+        "OperationUpdates$member": null
+      }
+    },
+    "OperationUpdates": {
+      "base": null,
+      "refs": {
+        "CheckpointDurableExecutionRequest$Updates": "<p>An array of state updates to apply during this checkpoint. Each update represents a change to the execution state, such as completing a step, starting a callback, or scheduling a timer. Updates are applied atomically as part of the checkpoint operation.</p>"
+      }
+    },
+    "Operations": {
+      "base": null,
+      "refs": {
+        "CheckpointUpdatedExecutionState$Operations": "<p>A list of operations that have been updated since the last checkpoint.</p>",
+        "GetDurableExecutionStateResponse$Operations": "<p>An array of operations that represent the current state of the durable execution. Operations are ordered by their start sequence number in ascending order and include information needed for replay processing.</p>"
+      }
+    },
     "OrganizationId": {
       "base": null,
       "refs": {
@@ -1994,6 +2540,12 @@
       "base": null,
       "refs": {
         "AllowOriginsList$member": null
+      }
+    },
+    "OutputPayload": {
+      "base": null,
+      "refs": {
+        "GetDurableExecutionResponse$Result": "<p>The JSON result returned by the durable execution if it completed successfully. This field is only present when the execution status is <code>SUCCEEDED</code>. The result is limited to 256 KB.</p>"
       }
     },
     "PackageType": {
@@ -2198,6 +2750,13 @@
       "base": null,
       "refs": {}
     },
+    "ReplayChildren": {
+      "base": null,
+      "refs": {
+        "ContextDetails$ReplayChildren": "<p>Whether the state data of child operations of this completed context should be included in the invoke payload and <code>GetDurableExecutionState</code> response.</p>",
+        "ContextOptions$ReplayChildren": "<p>Whether the state data of children of the completed context should be included in the invoke payload and <code>GetDurableExecutionState</code> response.</p>"
+      }
+    },
     "RequestTooLargeException": {
       "base": "<p>The request payload exceeded the <code>Invoke</code> request body JSON input quota. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html\">Lambda quotas</a>.</p>",
       "refs": {}
@@ -2236,6 +2795,26 @@
       "base": null,
       "refs": {
         "InvokeWithResponseStreamRequest$InvocationType": "<p>Use one of the following options:</p> <ul> <li> <p> <code>RequestResponse</code> (default) – Invoke the function synchronously. Keep the connection open until the function returns a response or times out. The API operation response includes the function response and additional data.</p> </li> <li> <p> <code>DryRun</code> – Validate parameter values and verify that the IAM user or role has permission to invoke the function.</p> </li> </ul>"
+      }
+    },
+    "RetentionPeriodInDays": {
+      "base": null,
+      "refs": {
+        "DurableConfig$RetentionPeriodInDays": "<p>The number of days to retain execution history after a durable execution completes. After this period, execution history is no longer available through the GetDurableExecutionHistory API.</p>"
+      }
+    },
+    "RetryDetails": {
+      "base": "<p>Information about retry attempts for an operation.</p>",
+      "refs": {
+        "StepFailedDetails$RetryDetails": "<p>Information about retry attempts for this step operation.</p>",
+        "StepSucceededDetails$RetryDetails": "<p>Information about retry attempts for this step operation.</p>"
+      }
+    },
+    "ReverseOrder": {
+      "base": null,
+      "refs": {
+        "GetDurableExecutionHistoryRequest$ReverseOrder": "<p>When set to <code>true</code>, returns the history events in reverse chronological order (newest first). By default, events are returned in chronological order (oldest first).</p>",
+        "ListDurableExecutionsByFunctionRequest$ReverseOrder": "<p>Set to true to return results in reverse chronological order (newest first). Default is false.</p>"
       }
     },
     "RoleArn": {
@@ -2352,6 +2931,30 @@
         "UpdateEventSourceMappingRequest$SelfManagedKafkaEventSourceConfig": null
       }
     },
+    "SendDurableExecutionCallbackFailureRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SendDurableExecutionCallbackFailureResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "SendDurableExecutionCallbackHeartbeatRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SendDurableExecutionCallbackHeartbeatResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "SendDurableExecutionCallbackSuccessRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SendDurableExecutionCallbackSuccessResponse": {
+      "base": null,
+      "refs": {}
+    },
     "SensitiveString": {
       "base": null,
       "refs": {
@@ -2438,6 +3041,18 @@
         "AddPermissionRequest$SourceAccount": "<p>For Amazon Web Services service, the ID of the Amazon Web Services account that owns the resource. Use this together with <code>SourceArn</code> to ensure that the specified account owns the resource. It is possible for an Amazon S3 bucket to be deleted by its owner and recreated by another account.</p>"
       }
     },
+    "StackTraceEntries": {
+      "base": null,
+      "refs": {
+        "ErrorObject$StackTrace": "<p>Stack trace information for the error.</p>"
+      }
+    },
+    "StackTraceEntry": {
+      "base": null,
+      "refs": {
+        "StackTraceEntries$member": null
+      }
+    },
     "State": {
       "base": null,
       "refs": {
@@ -2466,6 +3081,50 @@
         "RemoveLayerVersionPermissionRequest$StatementId": "<p>The identifier that was specified when the statement was added.</p>"
       }
     },
+    "StepDetails": {
+      "base": "<p>Details about a step operation.</p>",
+      "refs": {
+        "Operation$StepDetails": "<p>Details about the step, if this operation represents a step.</p>"
+      }
+    },
+    "StepFailedDetails": {
+      "base": "<p>Details about a step that failed.</p>",
+      "refs": {
+        "Event$StepFailedDetails": "<p>Details about a step that failed.</p>"
+      }
+    },
+    "StepOptions": {
+      "base": "<p>Configuration options for a step operation.</p>",
+      "refs": {
+        "OperationUpdate$StepOptions": "<p>Options for step operations.</p>"
+      }
+    },
+    "StepOptionsNextAttemptDelaySecondsInteger": {
+      "base": null,
+      "refs": {
+        "StepOptions$NextAttemptDelaySeconds": "<p>The delay in seconds before the next retry attempt.</p>"
+      }
+    },
+    "StepStartedDetails": {
+      "base": "<p>Details about a step that has started.</p>",
+      "refs": {
+        "Event$StepStartedDetails": "<p>Details about a step that started.</p>"
+      }
+    },
+    "StepSucceededDetails": {
+      "base": "<p>Details about a step that succeeded.</p>",
+      "refs": {
+        "Event$StepSucceededDetails": "<p>Details about a step that succeeded.</p>"
+      }
+    },
+    "StopDurableExecutionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopDurableExecutionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "String": {
       "base": null,
       "refs": {
@@ -2475,8 +3134,11 @@
         "AddPermissionRequest$RevisionId": "<p>Update the policy only if the revision ID matches the ID that's specified. Use this option to avoid modifying a policy that has changed since you last read it.</p>",
         "AddPermissionResponse$Statement": "<p>The permission statement that's added to the function policy.</p>",
         "AliasConfiguration$RevisionId": "<p>A unique identifier that changes when you update the alias.</p>",
+        "CallbackTimeoutException$Type": "<p>The exception type.</p>",
+        "CallbackTimeoutException$Message": null,
         "CapacityProviderLimitExceededException$Type": "<p>The exception type.</p>",
         "CapacityProviderLimitExceededException$message": null,
+        "CheckpointUpdatedExecutionState$NextMarker": "<p>Indicates that more results are available. Use this value in a subsequent call to retrieve the next page of results.</p>",
         "CodeSigningConfigNotFoundException$Type": null,
         "CodeSigningConfigNotFoundException$Message": null,
         "CodeStorageExceededException$Type": "<p>The exception type.</p>",
@@ -2484,6 +3146,8 @@
         "CodeVerificationFailedException$Type": null,
         "CodeVerificationFailedException$Message": null,
         "DeleteEventSourceMappingRequest$UUID": "<p>The identifier of the event source mapping.</p>",
+        "DurableExecutionAlreadyStartedException$Type": "<p>The exception type.</p>",
+        "DurableExecutionAlreadyStartedException$Message": null,
         "EC2AccessDeniedException$Type": null,
         "EC2AccessDeniedException$Message": null,
         "EC2ThrottledException$Type": null,
@@ -2517,6 +3181,10 @@
         "FunctionConfiguration$ConfigSha256": "<p>The SHA256 hash of the function configuration.</p>",
         "FunctionVersionsPerCapacityProviderLimitExceededException$Type": "<p>The exception type.</p>",
         "FunctionVersionsPerCapacityProviderLimitExceededException$message": null,
+        "GetDurableExecutionHistoryRequest$Marker": "<p>If <code>NextMarker</code> was returned from a previous request, use this value to retrieve the next page of results. Each pagination token expires after 24 hours.</p>",
+        "GetDurableExecutionHistoryResponse$NextMarker": "<p>If present, indicates that more history events are available. Use this value as the <code>Marker</code> parameter in a subsequent request to retrieve the next page of results.</p>",
+        "GetDurableExecutionStateRequest$Marker": "<p>If <code>NextMarker</code> was returned from a previous request, use this value to retrieve the next page of operations. Each pagination token expires after 24 hours.</p>",
+        "GetDurableExecutionStateResponse$NextMarker": "<p>If present, indicates that more operations are available. Use this value as the <code>Marker</code> parameter in a subsequent request to retrieve the next page of results.</p>",
         "GetEventSourceMappingRequest$UUID": "<p>The identifier of the event source mapping.</p>",
         "GetLayerVersionPolicyResponse$Policy": "<p>The policy document.</p>",
         "GetLayerVersionPolicyResponse$RevisionId": "<p>A unique identifier for the current revision of the policy.</p>",
@@ -2538,6 +3206,7 @@
         "InvalidSubnetIDException$Message": null,
         "InvalidZipFileException$Type": null,
         "InvalidZipFileException$Message": null,
+        "InvocationCompletedDetails$RequestId": "<p>The request ID for the invocation.</p>",
         "InvocationRequest$ClientContext": "<p>Up to 3,583 bytes of base64-encoded data about the invoking client to pass to the function in the context object. Lambda passes the <code>ClientContext</code> object to your function for synchronous invocations only.</p>",
         "InvocationResponse$FunctionError": "<p>If present, indicates that an error occurred during function execution. Details about the error are included in the response payload.</p>",
         "InvocationResponse$LogResult": "<p>The last 4 KB of the execution log, which is base64-encoded.</p>",
@@ -2564,6 +3233,8 @@
         "ListCapacityProvidersResponse$NextMarker": "<p>The pagination token that's included if more results are available.</p>",
         "ListCodeSigningConfigsRequest$Marker": "<p>Specify the pagination token that's returned by a previous request to retrieve the next page of results.</p>",
         "ListCodeSigningConfigsResponse$NextMarker": "<p>The pagination token that's included if more results are available.</p>",
+        "ListDurableExecutionsByFunctionRequest$Marker": "<p>Pagination token from a previous request to continue retrieving results.</p>",
+        "ListDurableExecutionsByFunctionResponse$NextMarker": "<p>Pagination token for retrieving additional results. Present only if there are more results available.</p>",
         "ListEventSourceMappingsRequest$Marker": "<p>A pagination token returned by a previous call.</p>",
         "ListEventSourceMappingsResponse$NextMarker": "<p>A pagination token that's returned when the response doesn't contain all event source mappings.</p>",
         "ListFunctionEventInvokeConfigsRequest$Marker": "<p>Specify the pagination token that's returned by a previous request to retrieve the next page of results.</p>",
@@ -2744,6 +3415,8 @@
     "TenantId": {
       "base": null,
       "refs": {
+        "ChainedInvokeOptions$TenantId": "<p>The tenant identifier for the chained invocation.</p>",
+        "ChainedInvokeStartedDetails$TenantId": "<p>The tenant identifier for the chained invocation.</p>",
         "InvocationRequest$TenantId": "<p>The identifier of the tenant in a multi-tenant Lambda function.</p>",
         "InvokeWithResponseStreamRequest$TenantId": "<p>The identifier of the tenant in a multi-tenant Lambda function.</p>"
       }
@@ -2806,6 +3479,12 @@
         "EventSourceMappingConfiguration$Topics": "<p>The name of the Kafka topic.</p>"
       }
     },
+    "TraceHeader": {
+      "base": "<p>Contains trace headers for the Lambda durable execution.</p>",
+      "refs": {
+        "GetDurableExecutionResponse$TraceHeader": "<p>The trace headers associated with the durable execution.</p>"
+      }
+    },
     "TracingConfig": {
       "base": "<p>The function's <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/services-xray.html\">X-Ray</a> tracing configuration. To sample and record incoming requests, set <code>Mode</code> to <code>Active</code>.</p>",
       "refs": {
@@ -2824,6 +3503,14 @@
       "refs": {
         "TracingConfig$Mode": "<p>The tracing mode.</p>",
         "TracingConfigResponse$Mode": "<p>The tracing mode.</p>"
+      }
+    },
+    "Truncated": {
+      "base": null,
+      "refs": {
+        "EventError$Truncated": "<p>Indicates if the error payload was truncated due to size limits.</p>",
+        "EventInput$Truncated": "<p>Indicates if the error payload was truncated due to size limits.</p>",
+        "EventResult$Truncated": "<p>Indicates if the error payload was truncated due to size limits.</p>"
       }
     },
     "TumblingWindowInSeconds": {
@@ -2929,7 +3616,9 @@
     "VersionWithLatestPublished": {
       "base": null,
       "refs": {
+        "ChainedInvokeStartedDetails$ExecutedVersion": "<p>The version of the function that was executed.</p>",
         "CreateAliasRequest$FunctionVersion": "<p>The function version that the alias invokes.</p>",
+        "GetDurableExecutionResponse$Version": "<p>The version of the Lambda function that was invoked for this durable execution. This ensures that all replays during the execution use the same function version.</p>",
         "ListAliasesRequest$FunctionVersion": "<p>Specify a function version to only list aliases that invoke that version.</p>",
         "UpdateAliasRequest$FunctionVersion": "<p>The function version that the alias invokes.</p>"
       }
@@ -2953,6 +3642,42 @@
         "VpcConfigResponse$VpcId": "<p>The ID of the VPC.</p>"
       }
     },
+    "WaitCancelledDetails": {
+      "base": "<p>Details about a wait operation that was cancelled.</p>",
+      "refs": {
+        "Event$WaitCancelledDetails": "<p>Details about a wait operation that was cancelled.</p>"
+      }
+    },
+    "WaitDetails": {
+      "base": "<p>Details about a wait operation.</p>",
+      "refs": {
+        "Operation$WaitDetails": "<p>Details about the wait operation, if this operation represents a wait.</p>"
+      }
+    },
+    "WaitOptions": {
+      "base": "<p>Specifies how long to pause the durable execution.</p>",
+      "refs": {
+        "OperationUpdate$WaitOptions": "<p>Options for wait operations.</p>"
+      }
+    },
+    "WaitOptionsWaitSecondsInteger": {
+      "base": null,
+      "refs": {
+        "WaitOptions$WaitSeconds": "<p>The duration to wait, in seconds.</p>"
+      }
+    },
+    "WaitStartedDetails": {
+      "base": "<p>Details about a wait operation that has started.</p>",
+      "refs": {
+        "Event$WaitStartedDetails": "<p>Details about a wait operation that started.</p>"
+      }
+    },
+    "WaitSucceededDetails": {
+      "base": "<p>Details about a wait operation that succeeded.</p>",
+      "refs": {
+        "Event$WaitSucceededDetails": "<p>Details about a wait operation that succeeded.</p>"
+      }
+    },
     "Weight": {
       "base": null,
       "refs": {
@@ -2963,6 +3688,12 @@
       "base": null,
       "refs": {
         "ImageConfig$WorkingDirectory": "<p>Specifies the working directory.</p>"
+      }
+    },
+    "XAmznTraceId": {
+      "base": null,
+      "refs": {
+        "TraceHeader$XAmznTraceId": "<p>The X-Ray trace header associated with the durable execution.</p>"
       }
     }
   }

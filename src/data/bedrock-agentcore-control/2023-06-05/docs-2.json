@@ -7,30 +7,45 @@
     "CreateApiKeyCredentialProvider": "<p>Creates a new API key credential provider.</p>",
     "CreateBrowser": "<p>Creates a custom browser.</p>",
     "CreateCodeInterpreter": "<p>Creates a custom code interpreter.</p>",
+    "CreateEvaluator": "<p> Creates a custom evaluator for agent quality assessment. Custom evaluators use LLM-as-a-Judge configurations with user-defined prompts, rating scales, and model settings to evaluate agent performance at tool call, trace, or session levels. </p>",
     "CreateGateway": "<p>Creates a gateway for Amazon Bedrock Agent. A gateway serves as an integration point between your agent and external services.</p> <p>If you specify <code>CUSTOM_JWT</code> as the <code>authorizerType</code>, you must provide an <code>authorizerConfiguration</code>.</p>",
     "CreateGatewayTarget": "<p>Creates a target for a gateway. A target defines an endpoint that the gateway can connect to.</p>",
     "CreateMemory": "<p>Creates a new Amazon Bedrock AgentCore Memory resource.</p>",
     "CreateOauth2CredentialProvider": "<p>Creates a new OAuth2 credential provider.</p>",
+    "CreateOnlineEvaluationConfig": "<p> Creates an online evaluation configuration for continuous monitoring of agent performance. Online evaluation automatically samples live traffic from CloudWatch logs at specified rates and applies evaluators to assess agent quality in production. </p>",
+    "CreatePolicy": "<p>Creates a policy within the AgentCore Policy system. Policies provide real-time, deterministic control over agentic interactions with AgentCore Gateway. Using the Cedar policy language, you can define fine-grained policies that specify which interactions with Gateway tools are permitted based on input parameters and OAuth claims, ensuring agents operate within defined boundaries and business rules. The policy is validated during creation against the Cedar schema generated from the Gateway's tools' input schemas, which defines the available tools, their parameters, and expected data types. This is an asynchronous operation. Use the <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/API_GetPolicy.html\">GetPolicy</a> operation to poll the <code>status</code> field to track completion.</p>",
+    "CreatePolicyEngine": "<p>Creates a new policy engine within the AgentCore Policy system. A policy engine is a collection of policies that evaluates and authorizes agent tool calls. When associated with Gateways (each Gateway can be associated with at most one policy engine, but multiple Gateways can be associated with the same engine), the policy engine intercepts all agent requests and determines whether to allow or deny each action based on the defined policies. This is an asynchronous operation. Use the <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/API_GetPolicyEngine.html\">GetPolicyEngine</a> operation to poll the <code>status</code> field to track completion.</p>",
     "CreateWorkloadIdentity": "<p>Creates a new workload identity.</p>",
     "DeleteAgentRuntime": "<p>Deletes an Amazon Bedrock AgentCore Runtime.</p>",
     "DeleteAgentRuntimeEndpoint": "<p>Deletes an AAgentCore Runtime endpoint.</p>",
     "DeleteApiKeyCredentialProvider": "<p>Deletes an API key credential provider.</p>",
     "DeleteBrowser": "<p>Deletes a custom browser.</p>",
     "DeleteCodeInterpreter": "<p>Deletes a custom code interpreter.</p>",
+    "DeleteEvaluator": "<p> Deletes a custom evaluator. Builtin evaluators cannot be deleted. The evaluator must not be referenced by any active online evaluation configurations. </p>",
     "DeleteGateway": "<p>Deletes a gateway.</p>",
     "DeleteGatewayTarget": "<p>Deletes a gateway target.</p>",
     "DeleteMemory": "<p>Deletes an Amazon Bedrock AgentCore Memory resource.</p>",
     "DeleteOauth2CredentialProvider": "<p>Deletes an OAuth2 credential provider.</p>",
+    "DeleteOnlineEvaluationConfig": "<p> Deletes an online evaluation configuration and stops any ongoing evaluation processes associated with it. </p>",
+    "DeletePolicy": "<p>Deletes an existing policy from the AgentCore Policy system. Once deleted, the policy can no longer be used for agent behavior control and all references to it become invalid. This is an asynchronous operation. Use the <code>GetPolicy</code> operation to poll the <code>status</code> field to track completion.</p>",
+    "DeletePolicyEngine": "<p>Deletes an existing policy engine from the AgentCore Policy system. The policy engine must not have any associated policies before deletion. Once deleted, the policy engine and all its configurations become unavailable for policy management and evaluation. This is an asynchronous operation. Use the <code>GetPolicyEngine</code> operation to poll the <code>status</code> field to track completion.</p>",
+    "DeleteResourcePolicy": "<p>Deletes the resource-based policy for a specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime and Gateway.</p> </note>",
     "DeleteWorkloadIdentity": "<p>Deletes a workload identity.</p>",
     "GetAgentRuntime": "<p>Gets an Amazon Bedrock AgentCore Runtime.</p>",
     "GetAgentRuntimeEndpoint": "<p>Gets information about an Amazon Secure AgentEndpoint.</p>",
     "GetApiKeyCredentialProvider": "<p>Retrieves information about an API key credential provider.</p>",
     "GetBrowser": "<p>Gets information about a custom browser.</p>",
     "GetCodeInterpreter": "<p>Gets information about a custom code interpreter.</p>",
+    "GetEvaluator": "<p> Retrieves detailed information about an evaluator, including its configuration, status, and metadata. Works with both built-in and custom evaluators. </p>",
     "GetGateway": "<p>Retrieves information about a specific Gateway.</p>",
     "GetGatewayTarget": "<p>Retrieves information about a specific gateway target.</p>",
     "GetMemory": "<p>Retrieve an existing Amazon Bedrock AgentCore Memory resource.</p>",
     "GetOauth2CredentialProvider": "<p>Retrieves information about an OAuth2 credential provider.</p>",
+    "GetOnlineEvaluationConfig": "<p> Retrieves detailed information about an online evaluation configuration, including its rules, data sources, evaluators, and execution status. </p>",
+    "GetPolicy": "<p>Retrieves detailed information about a specific policy within the AgentCore Policy system. This operation returns the complete policy definition, metadata, and current status, allowing administrators to review and manage policy configurations.</p>",
+    "GetPolicyEngine": "<p>Retrieves detailed information about a specific policy engine within the AgentCore Policy system. This operation returns the complete policy engine configuration, metadata, and current status, allowing administrators to review and manage policy engine settings.</p>",
+    "GetPolicyGeneration": "<p>Retrieves information about a policy generation request within the AgentCore Policy system. Policy generation converts natural language descriptions into Cedar policy statements using AI-powered translation, enabling non-technical users to create policies.</p>",
+    "GetResourcePolicy": "<p>Retrieves the resource-based policy for a specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime and Gateway.</p> </note>",
     "GetTokenVault": "<p>Retrieves information about a token vault.</p>",
     "GetWorkloadIdentity": "<p>Retrieves information about a workload identity.</p>",
     "ListAgentRuntimeEndpoints": "<p>Lists all endpoints for a specific Amazon Secure Agent.</p>",
@@ -39,29 +54,47 @@
     "ListApiKeyCredentialProviders": "<p>Lists all API key credential providers in your account.</p>",
     "ListBrowsers": "<p>Lists all custom browsers in your account.</p>",
     "ListCodeInterpreters": "<p>Lists all custom code interpreters in your account.</p>",
+    "ListEvaluators": "<p> Lists all available evaluators, including both builtin evaluators provided by the service and custom evaluators created by the user. </p>",
     "ListGatewayTargets": "<p>Lists all targets for a specific gateway.</p>",
     "ListGateways": "<p>Lists all gateways in the account.</p>",
     "ListMemories": "<p>Lists the available Amazon Bedrock AgentCore Memory resources in the current Amazon Web Services Region.</p>",
     "ListOauth2CredentialProviders": "<p>Lists all OAuth2 credential providers in your account.</p>",
+    "ListOnlineEvaluationConfigs": "<p> Lists all online evaluation configurations in the account, providing summary information about each configuration's status and settings. </p>",
+    "ListPolicies": "<p>Retrieves a list of policies within the AgentCore Policy engine. This operation supports pagination and filtering to help administrators manage and discover policies across policy engines. Results can be filtered by policy engine or resource associations.</p>",
+    "ListPolicyEngines": "<p>Retrieves a list of policy engines within the AgentCore Policy system. This operation supports pagination to help administrators discover and manage policy engines across their account. Each policy engine serves as a container for related policies.</p>",
+    "ListPolicyGenerationAssets": "<p>Retrieves a list of generated policy assets from a policy generation request within the AgentCore Policy system. This operation returns the actual Cedar policies and related artifacts produced by the AI-powered policy generation process, allowing users to review and select from multiple generated policy options.</p>",
+    "ListPolicyGenerations": "<p>Retrieves a list of policy generation requests within the AgentCore Policy system. This operation supports pagination and filtering to help track and manage AI-powered policy generation operations.</p>",
     "ListTagsForResource": "<p>Lists the tags associated with the specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Code Interpreter tool, and Gateway.</p> </note>",
     "ListWorkloadIdentities": "<p>Lists all workload identities in your account.</p>",
+    "PutResourcePolicy": "<p>Creates or updates a resource-based policy for a resource with the specified resourceArn.</p> <note> <p>This feature is currently available only for AgentCore Runtime and Gateway.</p> </note>",
     "SetTokenVaultCMK": "<p>Sets the customer master key (CMK) for a token vault.</p>",
+    "StartPolicyGeneration": "<p>Initiates the AI-powered generation of Cedar policies from natural language descriptions within the AgentCore Policy system. This feature enables both technical and non-technical users to create policies by describing their authorization requirements in plain English, which is then automatically translated into formal Cedar policy statements. The generation process analyzes the natural language input along with the Gateway's tool context to produce validated policy options. Generated policy assets are automatically deleted after 7 days, so you should review and create policies from the generated assets within this timeframe. Once created, policies are permanent and not subject to this expiration. Generated policies should be reviewed and tested in log-only mode before deploying to production. Use this when you want to describe policy intent naturally rather than learning Cedar syntax, though generated policies may require refinement for complex scenarios.</p>",
     "SynchronizeGatewayTargets": "<p>The gateway targets.</p>",
     "TagResource": "<p>Associates the specified tags to a resource with the specified resourceArn. If existing tags on a resource are not specified in the request parameters, they are not changed. When a resource is deleted, the tags associated with that resource are also deleted.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Code Interpreter tool, and Gateway.</p> </note>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p> <note> <p>This feature is currently available only for AgentCore Runtime, Browser, Code Interpreter tool, and Gateway.</p> </note>",
     "UpdateAgentRuntime": "<p>Updates an existing Amazon Secure Agent.</p>",
     "UpdateAgentRuntimeEndpoint": "<p>Updates an existing Amazon Bedrock AgentCore Runtime endpoint.</p>",
     "UpdateApiKeyCredentialProvider": "<p>Updates an existing API key credential provider.</p>",
+    "UpdateEvaluator": "<p> Updates a custom evaluator's configuration, description, or evaluation level. Built-in evaluators cannot be updated. The evaluator must not be locked for modification. </p>",
     "UpdateGateway": "<p>Updates an existing gateway.</p>",
     "UpdateGatewayTarget": "<p>Updates an existing gateway target.</p>",
     "UpdateMemory": "<p>Update an Amazon Bedrock AgentCore Memory resource memory.</p>",
     "UpdateOauth2CredentialProvider": "<p>Updates an existing OAuth2 credential provider.</p>",
+    "UpdateOnlineEvaluationConfig": "<p> Updates an online evaluation configuration's settings, including rules, data sources, evaluators, and execution status. Changes take effect immediately for ongoing evaluations. </p>",
+    "UpdatePolicy": "<p>Updates an existing policy within the AgentCore Policy system. This operation allows modification of the policy description and definition while maintaining the policy's identity. The updated policy is validated against the Cedar schema before being applied. This is an asynchronous operation. Use the <code>GetPolicy</code> operation to poll the <code>status</code> field to track completion.</p>",
+    "UpdatePolicyEngine": "<p>Updates an existing policy engine within the AgentCore Policy system. This operation allows modification of the policy engine description while maintaining its identity. This is an asynchronous operation. Use the <code>GetPolicyEngine</code> operation to poll the <code>status</code> field to track completion.</p>",
     "UpdateWorkloadIdentity": "<p>Updates an existing workload identity.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>This exception is thrown when a request is denied per access permissions</p>",
       "refs": {}
+    },
+    "AdditionalModelRequestFields": {
+      "base": null,
+      "refs": {
+        "BedrockEvaluatorModelConfig$additionalModelRequestFields": "<p> Additional model-specific request fields to customize model behavior beyond the standard inference configuration. </p>"
+      }
     },
     "AgentEndpointDescription": {
       "base": null,
@@ -232,6 +265,54 @@
         "CustomJWTAuthorizerConfiguration$allowedClients": "<p>Represents individual client IDs that are validated in the incoming JWT token validation process.</p>"
       }
     },
+    "AllowedScopeType": {
+      "base": null,
+      "refs": {
+        "AllowedScopesType$member": null
+      }
+    },
+    "AllowedScopesType": {
+      "base": null,
+      "refs": {
+        "CustomJWTAuthorizerConfiguration$allowedScopes": "<p>An array of scopes that are allowed to access the token.</p>"
+      }
+    },
+    "ApiGatewayTargetConfiguration": {
+      "base": "<p>The configuration for an Amazon API Gateway target.</p>",
+      "refs": {
+        "McpTargetConfiguration$apiGateway": "<p>The configuration for an Amazon API Gateway target.</p>"
+      }
+    },
+    "ApiGatewayToolConfiguration": {
+      "base": "<p>The configuration for defining REST API tool filters and overrides for the gateway target.</p>",
+      "refs": {
+        "ApiGatewayTargetConfiguration$apiGatewayToolConfiguration": "<p>The configuration for defining REST API tool filters and overrides for the gateway target.</p>"
+      }
+    },
+    "ApiGatewayToolFilter": {
+      "base": "<p>Specifies which operations from an API Gateway REST API are exposed as tools. Tool names and descriptions are derived from the operationId and description fields in the API's exported OpenAPI specification.</p>",
+      "refs": {
+        "ApiGatewayToolFilters$member": null
+      }
+    },
+    "ApiGatewayToolFilters": {
+      "base": null,
+      "refs": {
+        "ApiGatewayToolConfiguration$toolFilters": "<p>A list of path and method patterns to expose as tools using metadata from the REST API's OpenAPI specification.</p>"
+      }
+    },
+    "ApiGatewayToolOverride": {
+      "base": "<p>Settings to override configurations for a tool.</p>",
+      "refs": {
+        "ApiGatewayToolOverrides$member": null
+      }
+    },
+    "ApiGatewayToolOverrides": {
+      "base": null,
+      "refs": {
+        "ApiGatewayToolConfiguration$toolOverrides": "<p>A list of explicit tool definitions with optional custom names and descriptions.</p>"
+      }
+    },
     "ApiKeyCredentialLocation": {
       "base": null,
       "refs": {
@@ -353,10 +434,32 @@
         "UpdateGatewayResponse$authorizerType": "<p>The updated authorizer type for the gateway.</p>"
       }
     },
+    "AuthorizingClaimMatchValueType": {
+      "base": "<p>Defines the value or values to match for and the relationship of the match.</p>",
+      "refs": {
+        "CustomClaimValidationType$authorizingClaimMatchValue": "<p>Defines the value or values to match for and the relationship of the match.</p>"
+      }
+    },
     "AwsAccountId": {
       "base": null,
       "refs": {
         "S3Configuration$bucketOwnerAccountId": "<p>The account ID of the Amazon S3 bucket owner. This ID is used for cross-account access to the bucket.</p>"
+      }
+    },
+    "BedrockAgentcoreResourceArn": {
+      "base": null,
+      "refs": {
+        "DeleteResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which to delete the resource policy.</p>",
+        "GetResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which to retrieve the resource policy.</p>",
+        "ListPoliciesRequest$targetResourceScope": "<p>Optional filter to list policies that apply to a specific resource scope or resource type. This helps narrow down policy results to those relevant for particular Amazon Web Services resources, agent tools, or operational contexts within the policy engine ecosystem.</p>",
+        "PutResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which to create or update the resource policy.</p>",
+        "Resource$arn": "<p>The Amazon Resource Name (ARN) of the resource. This globally unique identifier specifies the exact resource that policies will be evaluated against for access control decisions. </p>"
+      }
+    },
+    "BedrockEvaluatorModelConfig": {
+      "base": "<p> The configuration for using Amazon Bedrock models in evaluator assessments, including model selection and inference parameters. </p>",
+      "refs": {
+        "EvaluatorModelConfig$bedrockEvaluatorModelConfig": "<p> The Amazon Bedrock model configuration for evaluation. </p>"
       }
     },
     "Boolean": {
@@ -364,6 +467,10 @@
       "refs": {
         "BrowserSigningConfigInput$enabled": "<p>Specifies whether browser signing is enabled. When enabled, the browser will cryptographically sign HTTP requests to identify itself as an AI agent to bot control vendors.</p>",
         "BrowserSigningConfigOutput$enabled": "<p>Indicates whether browser signing is currently enabled for cryptographic agent identification using HTTP message signatures.</p>",
+        "CreateOnlineEvaluationConfigRequest$enableOnCreate": "<p> Whether to enable the online evaluation configuration immediately upon creation. If true, evaluation begins automatically. </p>",
+        "EvaluatorSummary$lockedForModification": "<p> Whether the evaluator is locked for modification due to being referenced by active online evaluation configurations. </p>",
+        "FilterValue$booleanValue": "<p> The boolean value for true/false filtering conditions. </p>",
+        "GetEvaluatorResponse$lockedForModification": "<p> Whether the evaluator is locked for modification due to being referenced by active online evaluation configurations. </p>",
         "InterceptorInputConfiguration$passRequestHeaders": "<p>Indicates whether to pass request headers as input into the interceptor. When set to true, request headers will be passed.</p>",
         "RecordingConfig$enabled": "<p>Indicates whether recording is enabled for the browser. When set to true, browser sessions are recorded.</p>"
       }
@@ -433,6 +540,42 @@
         "BrowserSummaries$member": null
       }
     },
+    "CategoricalScaleDefinition": {
+      "base": "<p> The definition of a categorical rating scale option that provides a named category with its description for evaluation scoring. </p>",
+      "refs": {
+        "CategoricalScaleDefinitions$member": null
+      }
+    },
+    "CategoricalScaleDefinitionLabelString": {
+      "base": null,
+      "refs": {
+        "CategoricalScaleDefinition$label": "<p> The label or name of this categorical rating option. </p>"
+      }
+    },
+    "CategoricalScaleDefinitions": {
+      "base": null,
+      "refs": {
+        "RatingScale$categorical": "<p> The categorical rating scale with named categories and definitions for qualitative evaluation. </p>"
+      }
+    },
+    "CedarPolicy": {
+      "base": "<p>Represents a Cedar policy statement within the AgentCore Policy system. Cedar is a policy language designed for authorization that provides human-readable, analyzable, and high-performance policy evaluation for controlling agent behavior and access decisions. </p>",
+      "refs": {
+        "PolicyDefinition$cedar": "<p>The Cedar policy definition within the policy definition structure. This contains the Cedar policy statement that defines the authorization logic using Cedar's human-readable, analyzable policy language. Cedar policies specify principals (who can access), actions (what operations are allowed), resources (what can be accessed), and optional conditions for fine-grained control. Cedar provides a formal policy language designed for authorization with deterministic evaluation, making policies testable, reviewable, and auditable. All Cedar policies follow a default-deny model where actions are denied unless explicitly permitted, and forbid policies always override permit policies.</p>"
+      }
+    },
+    "ClaimMatchOperatorType": {
+      "base": null,
+      "refs": {
+        "AuthorizingClaimMatchValueType$claimMatchOperator": "<p>Defines the relationship between the claim field value and the value or values you're matching for.</p>"
+      }
+    },
+    "ClaimMatchValueType": {
+      "base": "<p>The value or values to match for.</p> <ul> <li> <p>Include a <code>matchValueString</code> with the <code>EQUALS</code> operator to specify a string that matches the claim field value.</p> </li> <li> <p>Include a <code>matchValueArray</code> to specify an array of string values. You can use the following operators:</p> <ul> <li> <p>Use <code>CONTAINS</code> to yield a match if the claim field value is in the array.</p> </li> <li> <p>Use <code>CONTAINS_ANY</code> to yield a match if the claim field value contains any of the strings in the array.</p> </li> </ul> </li> </ul>",
+      "refs": {
+        "AuthorizingClaimMatchValueType$claimMatchValue": "<p>The value or values to match for.</p>"
+      }
+    },
     "ClientIdType": {
       "base": null,
       "refs": {
@@ -477,14 +620,45 @@
         "CreateAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request but does not return an error.</p>",
         "CreateCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request but does not return an error.</p>",
+        "CreateEvaluatorRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGatewayRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGatewayTargetRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "CreateOnlineEvaluationConfigRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "CreatePolicyEngineRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request with the same client token, the service returns the same response without creating a duplicate policy engine.</p>",
+        "CreatePolicyRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure the idempotency of the request. The AWS SDK automatically generates this token, so you don't need to provide it in most cases. If you retry a request with the same client token, the service returns the same response without creating a duplicate policy.</p>",
         "DeleteAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, the service ignores the request but does not return an error.</p>",
         "DeleteBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "StartPolicyGenerationRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure the idempotency of the request. The AWS SDK automatically generates this token, so you don't need to provide it in most cases. If you retry a request with the same client token, the service returns the same response without starting a duplicate generation.</p>",
         "UpdateAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
-        "UpdateAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>"
+        "UpdateAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "UpdateEvaluatorRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "UpdateOnlineEvaluationConfigRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If you don't specify this field, a value is randomly generated for you. If this token matches a previous request, the service ignores the request, but doesn't return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>"
+      }
+    },
+    "CloudWatchLogsInputConfig": {
+      "base": "<p> The configuration for reading agent traces from CloudWatch logs as input for online evaluation. </p>",
+      "refs": {
+        "DataSourceConfig$cloudWatchLogs": "<p> The CloudWatch logs configuration for reading agent traces from log groups. </p>"
+      }
+    },
+    "CloudWatchLogsInputConfigLogGroupNamesList": {
+      "base": null,
+      "refs": {
+        "CloudWatchLogsInputConfig$logGroupNames": "<p> The list of CloudWatch log group names to monitor for agent traces.</p>"
+      }
+    },
+    "CloudWatchLogsInputConfigServiceNamesList": {
+      "base": null,
+      "refs": {
+        "CloudWatchLogsInputConfig$serviceNames": "<p> The list of service names to filter traces within the specified log groups. Used to identify relevant agent sessions. </p>"
+      }
+    },
+    "CloudWatchOutputConfig": {
+      "base": "<p> The configuration for writing evaluation results to CloudWatch logs with embedded metric format (EMF) for monitoring. </p>",
+      "refs": {
+        "OutputConfig$cloudWatchConfig": "<p> The CloudWatch configuration for writing evaluation results to CloudWatch logs with embedded metric format. </p>"
       }
     },
     "Code": {
@@ -578,6 +752,12 @@
         "AgentRuntimeArtifact$containerConfiguration": "<p>The container configuration for the agent artifact.</p>"
       }
     },
+    "Content": {
+      "base": "<p>Represents content input for policy generation operations. This structure encapsulates the natural language descriptions or other content formats that are used as input for AI-powered policy generation.</p>",
+      "refs": {
+        "StartPolicyGenerationRequest$content": "<p>The natural language description of the desired policy behavior. This content is processed by AI to generate corresponding Cedar policy statements that match the described intent.</p>"
+      }
+    },
     "CreateAgentRuntimeEndpointRequest": {
       "base": null,
       "refs": {}
@@ -615,6 +795,14 @@
       "refs": {}
     },
     "CreateCodeInterpreterResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateEvaluatorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateEvaluatorResponse": {
       "base": null,
       "refs": {}
     },
@@ -659,6 +847,30 @@
       "refs": {}
     },
     "CreateOauth2CredentialProviderResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateOnlineEvaluationConfigRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateOnlineEvaluationConfigResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePolicyEngineRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePolicyEngineResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePolicyResponse": {
       "base": null,
       "refs": {}
     },
@@ -739,6 +951,18 @@
         "UpdateOauth2CredentialProviderResponse$credentialProviderVendor": "<p>The vendor of the OAuth2 credential provider.</p>"
       }
     },
+    "CustomClaimValidationType": {
+      "base": "<p>Defines the name of a custom claim field and rules for finding matches to authenticate its value.</p>",
+      "refs": {
+        "CustomClaimValidationsType$member": null
+      }
+    },
+    "CustomClaimValidationsType": {
+      "base": null,
+      "refs": {
+        "CustomJWTAuthorizerConfiguration$customClaims": "<p>An array of objects that define a custom claim validation name, value, and operation </p>"
+      }
+    },
     "CustomConfigurationInput": {
       "base": "<p>Input for custom configuration of a memory strategy.</p>",
       "refs": {
@@ -755,6 +979,18 @@
       "base": "<p>Input for a custom consolidation configuration.</p>",
       "refs": {
         "ModifyConsolidationConfiguration$customConsolidationConfiguration": "<p>The updated custom consolidation configuration.</p>"
+      }
+    },
+    "CustomEvaluatorArn": {
+      "base": null,
+      "refs": {
+        "CreateEvaluatorResponse$evaluatorArn": "<p> The Amazon Resource Name (ARN) of the created evaluator. </p>"
+      }
+    },
+    "CustomEvaluatorName": {
+      "base": null,
+      "refs": {
+        "CreateEvaluatorRequest$evaluatorName": "<p> The name of the evaluator. Must be unique within your account. </p>"
       }
     },
     "CustomExtractionConfiguration": {
@@ -793,6 +1029,26 @@
         "Oauth2ProviderConfigOutput$customOauth2ProviderConfig": "<p>The output configuration for a custom OAuth2 provider.</p>"
       }
     },
+    "CustomReflectionConfiguration": {
+      "base": "<p>Contains configurations for a custom reflection strategy.</p>",
+      "refs": {
+        "ReflectionConfiguration$customReflectionConfiguration": "<p>The configuration for a custom reflection strategy.</p>"
+      }
+    },
+    "CustomReflectionConfigurationInput": {
+      "base": "<p>Input for a custom reflection configuration.</p>",
+      "refs": {
+        "ModifyReflectionConfiguration$customReflectionConfiguration": "<p>The updated custom reflection configuration.</p>"
+      }
+    },
+    "DataSourceConfig": {
+      "base": "<p> The configuration that specifies where to read agent traces for online evaluation. </p>",
+      "refs": {
+        "CreateOnlineEvaluationConfigRequest$dataSourceConfig": "<p> The data source configuration that specifies CloudWatch log groups and service names to monitor for agent traces. </p>",
+        "GetOnlineEvaluationConfigResponse$dataSourceConfig": "<p> The data source configuration specifying CloudWatch log groups and service names to monitor. </p>",
+        "UpdateOnlineEvaluationConfigRequest$dataSourceConfig": "<p> The updated data source configuration specifying CloudWatch log groups and service names to monitor. </p>"
+      }
+    },
     "DateTimestamp": {
       "base": null,
       "refs": {
@@ -812,8 +1068,16 @@
         "CreateGatewayTargetResponse$createdAt": "<p>The timestamp when the target was created.</p>",
         "CreateGatewayTargetResponse$updatedAt": "<p>The timestamp when the target was last updated.</p>",
         "CreateGatewayTargetResponse$lastSynchronizedAt": "<p>The last synchronization of the target.</p>",
+        "CreatePolicyEngineResponse$createdAt": "<p>The timestamp when the policy engine was created. This is automatically set by the service and used for auditing and lifecycle management.</p>",
+        "CreatePolicyEngineResponse$updatedAt": "<p>The timestamp when the policy engine was last updated. For newly created policy engines, this matches the <code>createdAt</code> timestamp.</p>",
+        "CreatePolicyResponse$createdAt": "<p>The timestamp when the policy was created. This is automatically set by the service and used for auditing and lifecycle management.</p>",
+        "CreatePolicyResponse$updatedAt": "<p>The timestamp when the policy was last updated. For newly created policies, this matches the createdAt timestamp.</p>",
         "DeleteBrowserResponse$lastUpdatedAt": "<p>The timestamp when the browser was last updated.</p>",
         "DeleteCodeInterpreterResponse$lastUpdatedAt": "<p>The timestamp when the code interpreter was last updated.</p>",
+        "DeletePolicyEngineResponse$createdAt": "<p>The timestamp when the deleted policy engine was originally created.</p>",
+        "DeletePolicyEngineResponse$updatedAt": "<p>The timestamp when the deleted policy engine was last modified before deletion. This tracks the final state of the policy engine before it was removed from the system.</p>",
+        "DeletePolicyResponse$createdAt": "<p>The timestamp when the deleted policy was originally created.</p>",
+        "DeletePolicyResponse$updatedAt": "<p>The timestamp when the deleted policy was last modified before deletion. This tracks the final state of the policy before it was removed from the system.</p>",
         "GatewaySummary$createdAt": "<p>The timestamp when the gateway was created.</p>",
         "GatewaySummary$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
         "GatewayTarget$createdAt": "<p>The date and time at which the target was created.</p>",
@@ -832,6 +1096,20 @@
         "GetGatewayTargetResponse$createdAt": "<p>The timestamp when the gateway target was created.</p>",
         "GetGatewayTargetResponse$updatedAt": "<p>The timestamp when the gateway target was last updated.</p>",
         "GetGatewayTargetResponse$lastSynchronizedAt": "<p>The last synchronization of the target.</p>",
+        "GetPolicyEngineResponse$createdAt": "<p>The timestamp when the policy engine was originally created.</p>",
+        "GetPolicyEngineResponse$updatedAt": "<p>The timestamp when the policy engine was last modified. This tracks the most recent changes to the policy engine configuration.</p>",
+        "GetPolicyGenerationResponse$createdAt": "<p>The timestamp when the policy generation request was created. This is used for tracking and auditing generation operations and their lifecycle.</p>",
+        "GetPolicyGenerationResponse$updatedAt": "<p>The timestamp when the policy generation was last updated. This tracks the progress of the generation process and any status changes.</p>",
+        "GetPolicyResponse$createdAt": "<p>The timestamp when the policy was originally created.</p>",
+        "GetPolicyResponse$updatedAt": "<p>The timestamp when the policy was last modified. This tracks the most recent changes to the policy configuration.</p>",
+        "Policy$createdAt": "<p>The timestamp when the policy was originally created. This is automatically set by the service and used for auditing and lifecycle management.</p>",
+        "Policy$updatedAt": "<p>The timestamp when the policy was last modified. This tracks the most recent changes to the policy configuration or metadata.</p>",
+        "PolicyEngine$createdAt": "<p>The timestamp when the policy engine was originally created. This is automatically set by the service and used for auditing and lifecycle management.</p>",
+        "PolicyEngine$updatedAt": "<p>The timestamp when the policy engine was last modified. This tracks the most recent changes to the policy engine configuration or metadata.</p>",
+        "PolicyGeneration$createdAt": "<p>The timestamp when this policy generation request was created.</p>",
+        "PolicyGeneration$updatedAt": "<p>The timestamp when this policy generation was last updated.</p>",
+        "StartPolicyGenerationResponse$createdAt": "<p>The timestamp when the policy generation request was created.</p>",
+        "StartPolicyGenerationResponse$updatedAt": "<p>The timestamp when the policy generation was last updated.</p>",
         "TargetSummary$createdAt": "<p>The timestamp when the target was created.</p>",
         "TargetSummary$updatedAt": "<p>The timestamp when the target was last updated.</p>",
         "UpdateAgentRuntimeEndpointResponse$createdAt": "<p>The timestamp when the AgentCore Runtime endpoint was created.</p>",
@@ -842,7 +1120,11 @@
         "UpdateGatewayResponse$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
         "UpdateGatewayTargetResponse$createdAt": "<p>The timestamp when the gateway target was created.</p>",
         "UpdateGatewayTargetResponse$updatedAt": "<p>The timestamp when the gateway target was last updated.</p>",
-        "UpdateGatewayTargetResponse$lastSynchronizedAt": "<p>The date and time at which the targets were last synchronized.</p>"
+        "UpdateGatewayTargetResponse$lastSynchronizedAt": "<p>The date and time at which the targets were last synchronized.</p>",
+        "UpdatePolicyEngineResponse$createdAt": "<p>The original creation timestamp of the policy engine.</p>",
+        "UpdatePolicyEngineResponse$updatedAt": "<p>The timestamp when the policy engine was last updated.</p>",
+        "UpdatePolicyResponse$createdAt": "<p>The original creation timestamp of the policy.</p>",
+        "UpdatePolicyResponse$updatedAt": "<p>The timestamp when the policy was last updated.</p>"
       }
     },
     "DecryptionFailure": {
@@ -886,6 +1168,14 @@
       "refs": {}
     },
     "DeleteCodeInterpreterResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteEvaluatorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteEvaluatorResponse": {
       "base": null,
       "refs": {}
     },
@@ -939,6 +1229,38 @@
       "base": null,
       "refs": {}
     },
+    "DeleteOnlineEvaluationConfigRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteOnlineEvaluationConfigResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeletePolicyEngineRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeletePolicyEngineResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeletePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeletePolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteResourcePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteResourcePolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteWorkloadIdentityRequest": {
       "base": null,
       "refs": {}
@@ -957,17 +1279,32 @@
         "CreateBrowserRequest$description": "<p>The description of the browser.</p>",
         "CreateCodeInterpreterRequest$description": "<p>The description of the code interpreter.</p>",
         "CreateMemoryInput$description": "<p>The description of the memory.</p>",
+        "CreatePolicyEngineRequest$description": "<p>A human-readable description of the policy engine's purpose and scope (1-4,096 characters). This helps administrators understand the policy engine's role in the overall governance strategy. Document which Gateway this engine will be associated with, what types of tools or workflows it governs, and the team or service responsible for maintaining it. Clear descriptions are essential when managing multiple policy engines across different services or environments.</p>",
+        "CreatePolicyEngineResponse$description": "<p>A human-readable description of the policy engine's purpose.</p>",
+        "CreatePolicyRequest$description": "<p>A human-readable description of the policy's purpose and functionality (1-4,096 characters). This helps policy administrators understand the policy's intent, business rules, and operational scope. Use this field to document why the policy exists, what business requirement it addresses, and any special considerations for maintenance. Clear descriptions are essential for policy governance, auditing, and troubleshooting.</p>",
+        "CreatePolicyResponse$description": "<p>The human-readable description of the policy's purpose and functionality. This helps administrators understand and manage the policy.</p>",
         "CustomMemoryStrategyInput$description": "<p>The description of the custom memory strategy.</p>",
+        "DeletePolicyEngineResponse$description": "<p>The human-readable description of the deleted policy engine.</p>",
+        "DeletePolicyResponse$description": "<p>The human-readable description of the deleted policy.</p>",
+        "EpisodicMemoryStrategyInput$description": "<p>The description of the episodic memory strategy.</p>",
         "GetAgentRuntimeResponse$description": "<p>The description of the AgentCore Runtime.</p>",
         "GetBrowserResponse$description": "<p>The description of the browser.</p>",
         "GetCodeInterpreterResponse$description": "<p>The description of the code interpreter.</p>",
+        "GetPolicyEngineResponse$description": "<p>The human-readable description of the policy engine's purpose and scope. This helps administrators understand the policy engine's role in governance.</p>",
+        "GetPolicyResponse$description": "<p>The human-readable description of the policy's purpose and functionality. This helps administrators understand and manage the policy.</p>",
         "Memory$description": "<p>The description of the memory.</p>",
         "MemoryStrategy$description": "<p>The description of the memory strategy.</p>",
         "ModifyMemoryStrategyInput$description": "<p>The updated description of the memory strategy.</p>",
+        "Policy$description": "<p>A human-readable description of the policy's purpose and functionality. Limited to 4,096 characters, this helps administrators understand and manage the policy.</p>",
+        "PolicyEngine$description": "<p>A human-readable description of the policy engine's purpose and scope. Limited to 4,096 characters, this helps administrators understand the policy engine's role in the overall governance strategy.</p>",
         "SemanticMemoryStrategyInput$description": "<p>The description of the semantic memory strategy.</p>",
         "SummaryMemoryStrategyInput$description": "<p>The description of the summary memory strategy.</p>",
         "UpdateAgentRuntimeRequest$description": "<p>The updated description of the AgentCore Runtime.</p>",
         "UpdateMemoryInput$description": "<p>The updated description of the AgentCore Memory resource.</p>",
+        "UpdatePolicyEngineRequest$description": "<p>The new description for the policy engine.</p>",
+        "UpdatePolicyEngineResponse$description": "<p>The updated description of the policy engine.</p>",
+        "UpdatePolicyRequest$description": "<p>The new human-readable description for the policy. This optional field allows updating the policy's documentation while keeping the same policy logic.</p>",
+        "UpdatePolicyResponse$description": "<p>The updated description of the policy.</p>",
         "UserPreferenceMemoryStrategyInput$description": "<p>The description of the user preference memory strategy.</p>"
       }
     },
@@ -981,6 +1318,12 @@
       "base": null,
       "refs": {
         "Oauth2Discovery$discoveryUrl": "<p>The discovery URL for the OAuth2 provider.</p>"
+      }
+    },
+    "Double": {
+      "base": null,
+      "refs": {
+        "FilterValue$doubleValue": "<p> The numeric value for numerical filtering and comparisons. </p>"
       }
     },
     "EncryptionFailure": {
@@ -1020,6 +1363,197 @@
         "UpdateAgentRuntimeRequest$environmentVariables": "<p>Updated environment variables to set in the AgentCore Runtime environment.</p>"
       }
     },
+    "EpisodicConsolidationOverride": {
+      "base": "<p>Contains configurations to override the default consolidation step for the episodic memory strategy.</p>",
+      "refs": {
+        "CustomConsolidationConfiguration$episodicConsolidationOverride": "<p>The configurations to override the default consolidation step for the episodic memory strategy.</p>"
+      }
+    },
+    "EpisodicExtractionOverride": {
+      "base": "<p>Contains configurations to override the default extraction step for the episodic memory strategy.</p>",
+      "refs": {
+        "CustomExtractionConfiguration$episodicExtractionOverride": "<p>The configurations to override the default extraction step for the episodic memory strategy.</p>"
+      }
+    },
+    "EpisodicMemoryStrategyInput": {
+      "base": "<p>Input for creating an episodic memory strategy.</p>",
+      "refs": {
+        "MemoryStrategyInput$episodicMemoryStrategy": "<p>Input for creating an episodic memory strategy</p>"
+      }
+    },
+    "EpisodicOverrideConfigurationInput": {
+      "base": "<p>Input for the configuration to override the episodic memory strategy.</p>",
+      "refs": {
+        "CustomConfigurationInput$episodicOverride": "<p>The episodic memory strategy override configuration for a custom memory strategy.</p>"
+      }
+    },
+    "EpisodicOverrideConsolidationConfigurationInput": {
+      "base": "<p>Configurations for overriding the consolidation step of the episodic memory strategy.</p>",
+      "refs": {
+        "CustomConsolidationConfigurationInput$episodicConsolidationOverride": "<p>Configurations to override the consolidation step of the episodic strategy.</p>",
+        "EpisodicOverrideConfigurationInput$consolidation": "<p>Contains configurations for overriding the consolidation step of the episodic memory strategy.</p>"
+      }
+    },
+    "EpisodicOverrideExtractionConfigurationInput": {
+      "base": "<p>Configurations for overriding the extraction step of the episodic memory strategy.</p>",
+      "refs": {
+        "CustomExtractionConfigurationInput$episodicExtractionOverride": "<p>Configurations to override the extraction step of the episodic strategy.</p>",
+        "EpisodicOverrideConfigurationInput$extraction": "<p>Contains configurations for overriding the extraction step of the episodic memory strategy.</p>"
+      }
+    },
+    "EpisodicOverrideReflectionConfigurationInput": {
+      "base": "<p>Configurations for overriding the reflection step of the episodic memory strategy.</p>",
+      "refs": {
+        "CustomReflectionConfigurationInput$episodicReflectionOverride": "<p>The reflection override configuration input.</p>",
+        "EpisodicOverrideConfigurationInput$reflection": "<p>Contains configurations for overriding the reflection step of the episodic memory strategy.</p>"
+      }
+    },
+    "EpisodicReflectionConfiguration": {
+      "base": "<p>The configuration for the reflections created with the episodic memory strategy.</p>",
+      "refs": {
+        "ReflectionConfiguration$episodicReflectionConfiguration": "<p>The configuration for the episodic reflection strategy.</p>"
+      }
+    },
+    "EpisodicReflectionConfigurationInput": {
+      "base": "<p>An episodic reflection configuration input.</p>",
+      "refs": {
+        "EpisodicMemoryStrategyInput$reflectionConfiguration": "<p>The configuration for the reflections created with the episodic memory strategy.</p>",
+        "ModifyReflectionConfiguration$episodicReflectionConfiguration": "<p>The updated episodic reflection configuration.</p>"
+      }
+    },
+    "EpisodicReflectionOverride": {
+      "base": "<p>Contains configurations to override the default reflection step for the episodic memory strategy.</p>",
+      "refs": {
+        "CustomReflectionConfiguration$episodicReflectionOverride": "<p>The configuration for a reflection strategy to override the default one.</p>"
+      }
+    },
+    "EvaluationConfigDescription": {
+      "base": null,
+      "refs": {
+        "CreateOnlineEvaluationConfigRequest$description": "<p> The description of the online evaluation configuration that explains its monitoring purpose and scope. </p>",
+        "GetOnlineEvaluationConfigResponse$description": "<p> The description of the online evaluation configuration. </p>",
+        "OnlineEvaluationConfigSummary$description": "<p> The description of the online evaluation configuration. </p>",
+        "UpdateOnlineEvaluationConfigRequest$description": "<p> The updated description of the online evaluation configuration. </p>"
+      }
+    },
+    "EvaluationConfigName": {
+      "base": null,
+      "refs": {
+        "CreateOnlineEvaluationConfigRequest$onlineEvaluationConfigName": "<p> The name of the online evaluation configuration. Must be unique within your account. </p>",
+        "GetOnlineEvaluationConfigResponse$onlineEvaluationConfigName": "<p> The name of the online evaluation configuration. </p>",
+        "OnlineEvaluationConfigSummary$onlineEvaluationConfigName": "<p> The name of the online evaluation configuration. </p>"
+      }
+    },
+    "EvaluatorArn": {
+      "base": null,
+      "refs": {
+        "DeleteEvaluatorResponse$evaluatorArn": "<p> The Amazon Resource Name (ARN) of the deleted evaluator. </p>",
+        "EvaluatorSummary$evaluatorArn": "<p> The Amazon Resource Name (ARN) of the evaluator. </p>",
+        "GetEvaluatorResponse$evaluatorArn": "<p> The Amazon Resource Name (ARN) of the evaluator. </p>",
+        "UpdateEvaluatorResponse$evaluatorArn": "<p> The Amazon Resource Name (ARN) of the updated evaluator. </p>"
+      }
+    },
+    "EvaluatorConfig": {
+      "base": "<p> The configuration that defines how an evaluator assesses agent performance, including the evaluation method and parameters. </p>",
+      "refs": {
+        "CreateEvaluatorRequest$evaluatorConfig": "<p> The configuration for the evaluator, including LLM-as-a-Judge settings with instructions, rating scale, and model configuration. </p>",
+        "GetEvaluatorResponse$evaluatorConfig": "<p> The configuration of the evaluator, including LLM-as-a-Judge settings for custom evaluators. </p>",
+        "UpdateEvaluatorRequest$evaluatorConfig": "<p> The updated configuration for the evaluator, including LLM-as-a-Judge settings with instructions, rating scale, and model configuration. </p>"
+      }
+    },
+    "EvaluatorDescription": {
+      "base": null,
+      "refs": {
+        "CreateEvaluatorRequest$description": "<p> The description of the evaluator that explains its purpose and evaluation criteria. </p>",
+        "EvaluatorSummary$description": "<p> The description of the evaluator. </p>",
+        "GetEvaluatorResponse$description": "<p> The description of the evaluator. </p>",
+        "UpdateEvaluatorRequest$description": "<p> The updated description of the evaluator. </p>"
+      }
+    },
+    "EvaluatorId": {
+      "base": null,
+      "refs": {
+        "CreateEvaluatorResponse$evaluatorId": "<p> The unique identifier of the created evaluator. </p>",
+        "DeleteEvaluatorRequest$evaluatorId": "<p> The unique identifier of the evaluator to delete. </p>",
+        "DeleteEvaluatorResponse$evaluatorId": "<p> The unique identifier of the deleted evaluator. </p>",
+        "EvaluatorReference$evaluatorId": "<p> The unique identifier of the evaluator. Can reference builtin evaluators (e.g., Builtin.Helpfulness) or custom evaluators. </p>",
+        "EvaluatorSummary$evaluatorId": "<p> The unique identifier of the evaluator. </p>",
+        "GetEvaluatorRequest$evaluatorId": "<p> The unique identifier of the evaluator to retrieve. Can be a built-in evaluator ID (e.g., Builtin.Helpfulness) or a custom evaluator ID. </p>",
+        "GetEvaluatorResponse$evaluatorId": "<p> The unique identifier of the evaluator. </p>",
+        "UpdateEvaluatorRequest$evaluatorId": "<p> The unique identifier of the evaluator to update. </p>",
+        "UpdateEvaluatorResponse$evaluatorId": "<p> The unique identifier of the updated evaluator. </p>"
+      }
+    },
+    "EvaluatorInstructions": {
+      "base": null,
+      "refs": {
+        "LlmAsAJudgeEvaluatorConfig$instructions": "<p> The evaluation instructions that guide the language model in assessing agent performance, including criteria and evaluation guidelines. </p>"
+      }
+    },
+    "EvaluatorLevel": {
+      "base": null,
+      "refs": {
+        "CreateEvaluatorRequest$level": "<p> The evaluation level that determines the scope of evaluation. Valid values are <code>TOOL_CALL</code> for individual tool invocations, <code>TRACE</code> for single request-response interactions, or <code>SESSION</code> for entire conversation sessions. </p>",
+        "EvaluatorSummary$level": "<p> The evaluation level (<code>TOOL_CALL</code>, <code>TRACE</code>, or <code>SESSION</code>) that determines the scope of evaluation. </p>",
+        "GetEvaluatorResponse$level": "<p> The evaluation level (<code>TOOL_CALL</code>, <code>TRACE</code>, or <code>SESSION</code>) that determines the scope of evaluation. </p>",
+        "UpdateEvaluatorRequest$level": "<p> The updated evaluation level (<code>TOOL_CALL</code>, <code>TRACE</code>, or <code>SESSION</code>) that determines the scope of evaluation. </p>"
+      }
+    },
+    "EvaluatorList": {
+      "base": null,
+      "refs": {
+        "CreateOnlineEvaluationConfigRequest$evaluators": "<p> The list of evaluators to apply during online evaluation. Can include both built-in evaluators and custom evaluators created with <code>CreateEvaluator</code>. </p>",
+        "GetOnlineEvaluationConfigResponse$evaluators": "<p> The list of evaluators applied during online evaluation. </p>",
+        "UpdateOnlineEvaluationConfigRequest$evaluators": "<p> The updated list of evaluators to apply during online evaluation. </p>"
+      }
+    },
+    "EvaluatorModelConfig": {
+      "base": "<p> The model configuration that specifies which foundation model to use for evaluation and how to configure it. </p>",
+      "refs": {
+        "LlmAsAJudgeEvaluatorConfig$modelConfig": "<p> The model configuration that specifies which foundation model to use and how to configure it for evaluation. </p>"
+      }
+    },
+    "EvaluatorName": {
+      "base": null,
+      "refs": {
+        "EvaluatorSummary$evaluatorName": "<p> The name of the evaluator. </p>",
+        "GetEvaluatorResponse$evaluatorName": "<p> The name of the evaluator. </p>"
+      }
+    },
+    "EvaluatorReference": {
+      "base": "<p> The reference to an evaluator used in online evaluation configurations, containing the evaluator identifier. </p>",
+      "refs": {
+        "EvaluatorList$member": null
+      }
+    },
+    "EvaluatorStatus": {
+      "base": null,
+      "refs": {
+        "CreateEvaluatorResponse$status": "<p> The status of the evaluator creation operation. </p>",
+        "DeleteEvaluatorResponse$status": "<p> The status of the evaluator deletion operation. </p>",
+        "EvaluatorSummary$status": "<p> The current status of the evaluator. </p>",
+        "GetEvaluatorResponse$status": "<p> The current status of the evaluator. </p>",
+        "UpdateEvaluatorResponse$status": "<p> The status of the evaluator update operation. </p>"
+      }
+    },
+    "EvaluatorSummary": {
+      "base": "<p> The summary information about an evaluator, including basic metadata and status information. </p>",
+      "refs": {
+        "EvaluatorSummaryList$member": null
+      }
+    },
+    "EvaluatorSummaryList": {
+      "base": null,
+      "refs": {
+        "ListEvaluatorsResponse$evaluators": "<p> The list of evaluator summaries containing basic information about each evaluator. </p>"
+      }
+    },
+    "EvaluatorType": {
+      "base": null,
+      "refs": {
+        "EvaluatorSummary$evaluatorType": "<p> The type of evaluator, indicating whether it is a built-in evaluator provided by the service or a custom evaluator created by the user. </p>"
+      }
+    },
     "ExceptionLevel": {
       "base": null,
       "refs": {
@@ -1034,6 +1568,60 @@
       "base": "<p>Contains extraction configuration information for a memory strategy.</p>",
       "refs": {
         "StrategyConfiguration$extraction": "<p>The extraction configuration for the memory strategy.</p>"
+      }
+    },
+    "Filter": {
+      "base": "<p> The filter that applies conditions to agent traces during online evaluation to determine which traces should be evaluated. </p>",
+      "refs": {
+        "FilterList$member": null
+      }
+    },
+    "FilterKeyString": {
+      "base": null,
+      "refs": {
+        "Filter$key": "<p> The key or field name to filter on within the agent trace data. </p>"
+      }
+    },
+    "FilterList": {
+      "base": null,
+      "refs": {
+        "Rule$filters": "<p> The list of filters that determine which agent traces should be included in the evaluation based on trace properties. </p>"
+      }
+    },
+    "FilterOperator": {
+      "base": null,
+      "refs": {
+        "Filter$operator": "<p> The comparison operator to use for filtering. </p>"
+      }
+    },
+    "FilterValue": {
+      "base": "<p> The value used in filter comparisons, supporting different data types for flexible filtering criteria. </p>",
+      "refs": {
+        "Filter$value": "<p> The value to compare against using the specified operator. </p>"
+      }
+    },
+    "FilterValueStringValueString": {
+      "base": null,
+      "refs": {
+        "FilterValue$stringValue": "<p> The string value for text-based filtering. </p>"
+      }
+    },
+    "Finding": {
+      "base": "<p>Represents a finding or issue discovered during policy generation or validation. Findings provide insights about potential problems, recommendations, or validation results from policy analysis operations. Finding types include: VALID (policy is ready to use), INVALID (policy has validation errors that must be fixed), NOT_TRANSLATABLE (input couldn't be converted to policy), ALLOW_ALL (policy would allow all actions, potential security risk), ALLOW_NONE (policy would allow no actions, unusable), DENY_ALL (policy would deny all actions, may be too restrictive), and DENY_NONE (policy would deny no actions, ineffective). Review all findings before creating policies from generated assets to ensure they match your security requirements.</p>",
+      "refs": {
+        "Findings$member": null
+      }
+    },
+    "FindingType": {
+      "base": null,
+      "refs": {
+        "Finding$type": "<p>The type or category of the finding. This classifies the finding as an error, warning, recommendation, or informational message to help users understand the severity and nature of the issue.</p>"
+      }
+    },
+    "Findings": {
+      "base": null,
+      "refs": {
+        "PolicyGenerationAsset$findings": "<p>Analysis findings and insights related to this specific generated policy asset. These findings may include validation results, potential issues, or recommendations for improvement to help users evaluate the quality and appropriateness of the generated policy.</p>"
       }
     },
     "GatewayArn": {
@@ -1134,6 +1722,28 @@
       "refs": {
         "ListGatewaysRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "ListGatewaysResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>"
+      }
+    },
+    "GatewayPolicyEngineArn": {
+      "base": null,
+      "refs": {
+        "GatewayPolicyEngineConfiguration$arn": "<p>The ARN of the policy engine. The policy engine contains Cedar policies that define fine-grained authorization rules specifying who can perform what actions on which resources as agents interact through the gateway.</p>"
+      }
+    },
+    "GatewayPolicyEngineConfiguration": {
+      "base": "<p>The configuration for a policy engine associated with a gateway. A policy engine is a collection of policies that evaluates and authorizes agent tool calls. When associated with a gateway, the policy engine intercepts all agent requests and determines whether to allow or deny each action based on the defined policies.</p>",
+      "refs": {
+        "CreateGatewayRequest$policyEngineConfiguration": "<p>The policy engine configuration for the gateway. A policy engine is a collection of policies that evaluates and authorizes agent tool calls. When associated with a gateway, the policy engine intercepts all agent requests and determines whether to allow or deny each action based on the defined policies.</p>",
+        "CreateGatewayResponse$policyEngineConfiguration": "<p>The policy engine configuration for the created gateway.</p>",
+        "GetGatewayResponse$policyEngineConfiguration": "<p>The policy engine configuration for the gateway.</p>",
+        "UpdateGatewayRequest$policyEngineConfiguration": "<p>The updated policy engine configuration for the gateway. A policy engine is a collection of policies that evaluates and authorizes agent tool calls. When associated with a gateway, the policy engine intercepts all agent requests and determines whether to allow or deny each action based on the defined policies.</p>",
+        "UpdateGatewayResponse$policyEngineConfiguration": "<p>The updated policy engine configuration for the gateway.</p>"
+      }
+    },
+    "GatewayPolicyEngineMode": {
+      "base": null,
+      "refs": {
+        "GatewayPolicyEngineConfiguration$mode": "<p>The enforcement mode for the policy engine. Valid values include:</p> <ul> <li> <p> <code>LOG_ONLY</code> - The policy engine evaluates each action against your policies and adds traces on whether tool calls would be allowed or denied, but does not enforce the decision. Use this mode to test and validate policies before enabling enforcement.</p> </li> <li> <p> <code>ENFORCE</code> - The policy engine evaluates actions against your policies and enforces decisions by allowing or denying agent operations. Test and validate policies in <code>LOG_ONLY</code> mode before enabling enforcement to avoid unintended denials or adversely affecting production traffic.</p> </li> </ul>"
       }
     },
     "GatewayProtocolConfiguration": {
@@ -1239,6 +1849,14 @@
       "base": null,
       "refs": {}
     },
+    "GetEvaluatorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetEvaluatorResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetGatewayRequest": {
       "base": null,
       "refs": {}
@@ -1268,6 +1886,46 @@
       "refs": {}
     },
     "GetOauth2CredentialProviderResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOnlineEvaluationConfigRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOnlineEvaluationConfigResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPolicyEngineRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPolicyEngineResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPolicyGenerationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPolicyGenerationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetResourcePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetResourcePolicyResponse": {
       "base": null,
       "refs": {}
     },
@@ -1317,6 +1975,18 @@
         "RequestHeaderAllowlist$member": null
       }
     },
+    "InboundTokenClaimNameType": {
+      "base": null,
+      "refs": {
+        "CustomClaimValidationType$inboundTokenClaimName": "<p>The name of the custom claim field to check.</p>"
+      }
+    },
+    "InboundTokenClaimValueType": {
+      "base": null,
+      "refs": {
+        "CustomClaimValidationType$inboundTokenClaimValueType": "<p>The data type of the claim value to check for.</p> <ul> <li> <p>Use <code>STRING</code> if you want to find an exact match to a string you define.</p> </li> <li> <p>Use <code>STRING_ARRAY</code> if you want to fnd a match to at least one value in an array you define.</p> </li> </ul>"
+      }
+    },
     "IncludedOauth2ProviderConfigInput": {
       "base": "<p>Configuration settings for connecting to a supported OAuth2 provider. This includes client credentials and OAuth2 discovery information for providers that have built-in support.</p>",
       "refs": {
@@ -1327,6 +1997,36 @@
       "base": "<p>The configuration details returned for a supported OAuth2 provider, including client credentials and OAuth2 discovery information.</p>",
       "refs": {
         "Oauth2ProviderConfigOutput$includedOauth2ProviderConfig": "<p>The configuration for a non-custom OAuth2 provider. This includes the configuration details for supported OAuth2 providers that have built-in integration support.</p>"
+      }
+    },
+    "InferenceConfiguration": {
+      "base": "<p> The configuration parameters that control how the foundation model behaves during evaluation, including response generation settings. </p>",
+      "refs": {
+        "BedrockEvaluatorModelConfig$inferenceConfig": "<p> The inference configuration parameters that control model behavior during evaluation, including temperature, token limits, and sampling settings. </p>"
+      }
+    },
+    "InferenceConfigurationMaxTokensInteger": {
+      "base": null,
+      "refs": {
+        "InferenceConfiguration$maxTokens": "<p> The maximum number of tokens to generate in the model response during evaluation. </p>"
+      }
+    },
+    "InferenceConfigurationStopSequencesList": {
+      "base": null,
+      "refs": {
+        "InferenceConfiguration$stopSequences": "<p> The list of sequences that will cause the model to stop generating tokens when encountered. </p>"
+      }
+    },
+    "InferenceConfigurationTemperatureFloat": {
+      "base": null,
+      "refs": {
+        "InferenceConfiguration$temperature": "<p> The temperature value that controls randomness in the model's responses. Lower values produce more deterministic outputs. </p>"
+      }
+    },
+    "InferenceConfigurationTopPFloat": {
+      "base": null,
+      "refs": {
+        "InferenceConfiguration$topP": "<p> The top-p sampling parameter that controls the diversity of the model's responses by limiting the cumulative probability of token choices. </p>"
       }
     },
     "InlinePayload": {
@@ -1503,6 +2203,20 @@
       "base": null,
       "refs": {}
     },
+    "ListEvaluatorsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListEvaluatorsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListEvaluatorsRequest$maxResults": "<p> The maximum number of evaluators to return in a single response. </p>"
+      }
+    },
+    "ListEvaluatorsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListGatewayTargetsRequest": {
       "base": null,
       "refs": {}
@@ -1547,6 +2261,52 @@
       "base": null,
       "refs": {}
     },
+    "ListOnlineEvaluationConfigsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListOnlineEvaluationConfigsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListOnlineEvaluationConfigsRequest$maxResults": "<p> The maximum number of online evaluation configurations to return in a single response. </p>"
+      }
+    },
+    "ListOnlineEvaluationConfigsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPoliciesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPoliciesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPolicyEnginesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPolicyEnginesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPolicyGenerationAssetsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPolicyGenerationAssetsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPolicyGenerationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPolicyGenerationsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsForResourceRequest": {
       "base": null,
       "refs": {}
@@ -1569,10 +2329,36 @@
       "base": null,
       "refs": {}
     },
+    "LlmAsAJudgeEvaluatorConfig": {
+      "base": "<p> The configuration for LLM-as-a-Judge evaluation that uses a language model to assess agent performance based on custom instructions and rating scales. </p>",
+      "refs": {
+        "EvaluatorConfig$llmAsAJudge": "<p> The LLM-as-a-Judge configuration that uses a language model to evaluate agent performance based on custom instructions and rating scales. </p>"
+      }
+    },
+    "LogGroupName": {
+      "base": null,
+      "refs": {
+        "CloudWatchLogsInputConfigLogGroupNamesList$member": null,
+        "CloudWatchOutputConfig$logGroupName": "<p> The name of the CloudWatch log group where evaluation results will be written. The log group will be created if it doesn't exist. </p>"
+      }
+    },
     "MCPGatewayConfiguration": {
       "base": "<p>The configuration for a Model Context Protocol (MCP) gateway. This structure defines how the gateway implements the MCP protocol.</p>",
       "refs": {
         "GatewayProtocolConfiguration$mcp": "<p>The configuration for the Model Context Protocol (MCP). This protocol enables communication between Amazon Bedrock Agent and external tools.</p>"
+      }
+    },
+    "MatchValueString": {
+      "base": null,
+      "refs": {
+        "ClaimMatchValueType$matchValueString": "<p>The string value to match for.</p>",
+        "MatchValueStringList$member": null
+      }
+    },
+    "MatchValueStringList": {
+      "base": null,
+      "refs": {
+        "ClaimMatchValueType$matchValueStringList": "<p>An array of strings to check for a match.</p>"
       }
     },
     "MaxResults": {
@@ -1583,7 +2369,11 @@
         "ListAgentRuntimesRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListApiKeyCredentialProvidersRequest$maxResults": "<p>Maximum number of results to return.</p>",
         "ListBrowsersRequest$maxResults": "<p>The maximum number of results to return in a single call. The default value is 10. The maximum value is 50.</p>",
-        "ListCodeInterpretersRequest$maxResults": "<p>The maximum number of results to return in the response.</p>"
+        "ListCodeInterpretersRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
+        "ListPoliciesRequest$maxResults": "<p>The maximum number of policies to return in a single response. If not specified, the default is 10 policies per page, with a maximum of 100 per page.</p>",
+        "ListPolicyEnginesRequest$maxResults": "<p>The maximum number of policy engines to return in a single response. If not specified, the default is 10 policy engines per page, with a maximum of 100 per page.</p>",
+        "ListPolicyGenerationAssetsRequest$maxResults": "<p>The maximum number of policy generation assets to return in a single response. If not specified, the default is 10 assets per page, with a maximum of 100 per page. This helps control response size when dealing with policy generations that produce many alternative policy options.</p>",
+        "ListPolicyGenerationsRequest$maxResults": "<p>The maximum number of policy generations to return in a single response.</p>"
       }
     },
     "McpInstructions": {
@@ -1753,6 +2543,12 @@
         "Oauth2ProviderConfigOutput$microsoftOauth2ProviderConfig": "<p>The output configuration for a Microsoft OAuth2 provider.</p>"
       }
     },
+    "ModelId": {
+      "base": null,
+      "refs": {
+        "BedrockEvaluatorModelConfig$modelId": "<p> The identifier of the Amazon Bedrock model to use for evaluation. Must be a supported foundation model available in your region. </p>"
+      }
+    },
     "ModifyConsolidationConfiguration": {
       "base": "<p>Contains information for modifying a consolidation configuration.</p>",
       "refs": {
@@ -1795,6 +2591,12 @@
         "ModifyMemoryStrategiesList$member": null
       }
     },
+    "ModifyReflectionConfiguration": {
+      "base": "<p>Contains information for modifying a reflection configuration.</p>",
+      "refs": {
+        "ModifyStrategyConfiguration$reflection": "<p>The updated reflection configuration.</p>"
+      }
+    },
     "ModifySelfManagedConfiguration": {
       "base": "<p>The configuration for updating the self-managed memory strategy.</p>",
       "refs": {
@@ -1818,6 +2620,7 @@
       "refs": {
         "CreateMemoryInput$name": "<p>The name of the memory. The name must be unique within your account.</p>",
         "CustomMemoryStrategyInput$name": "<p>The name of the custom memory strategy.</p>",
+        "EpisodicMemoryStrategyInput$name": "<p>The name of the episodic memory strategy.</p>",
         "Memory$name": "<p>The name of the memory.</p>",
         "MemoryStrategy$name": "<p>The name of the memory strategy.</p>",
         "SemanticMemoryStrategyInput$name": "<p>The name of the semantic memory strategy.</p>",
@@ -1835,11 +2638,23 @@
       "base": null,
       "refs": {
         "CustomMemoryStrategyInput$namespaces": "<p>The namespaces associated with the custom memory strategy.</p>",
+        "EpisodicMemoryStrategyInput$namespaces": "<p>The namespaces for which to create episodes.</p>",
+        "EpisodicOverrideReflectionConfigurationInput$namespaces": "<p>The namespaces to use for episodic reflection. Can be less nested than the episodic namespaces.</p>",
+        "EpisodicReflectionConfiguration$namespaces": "<p>The namespaces for which to create reflections. Can be less nested than the episodic namespaces.</p>",
+        "EpisodicReflectionConfigurationInput$namespaces": "<p>The namespaces over which to create reflections. Can be less nested than episode namespaces.</p>",
+        "EpisodicReflectionOverride$namespaces": "<p>The namespaces over which reflections were created. Can be less nested than the episodic namespaces.</p>",
         "MemoryStrategy$namespaces": "<p>The namespaces associated with the memory strategy.</p>",
         "ModifyMemoryStrategyInput$namespaces": "<p>The updated namespaces for the memory strategy.</p>",
         "SemanticMemoryStrategyInput$namespaces": "<p>The namespaces associated with the semantic memory strategy.</p>",
         "SummaryMemoryStrategyInput$namespaces": "<p>The namespaces associated with the summary memory strategy.</p>",
         "UserPreferenceMemoryStrategyInput$namespaces": "<p>The namespaces associated with the user preference memory strategy.</p>"
+      }
+    },
+    "NaturalLanguage": {
+      "base": null,
+      "refs": {
+        "Content$rawText": "<p>The raw text content containing natural language descriptions of desired policy behavior. This text is processed by AI to generate corresponding Cedar policy statements that match the described intent.</p>",
+        "PolicyGenerationAsset$rawTextFragment": "<p>The portion of the original natural language input that this generated policy asset addresses. This helps users understand which part of their policy description was translated into this specific Cedar policy statement, enabling better policy selection and refinement. When a single natural language input describes multiple authorization requirements, the generation process creates separate policy assets for each requirement, with each asset's rawTextFragment showing which requirement it addresses. Use this mapping to verify that all parts of your natural language input were correctly translated into Cedar policies.</p>"
       }
     },
     "NetworkConfiguration": {
@@ -1868,7 +2683,15 @@
         "ListBrowsersRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListBrowsersResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
         "ListCodeInterpretersRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
-        "ListCodeInterpretersResponse$nextToken": "<p>A token to retrieve the next page of results.</p>"
+        "ListCodeInterpretersResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListPoliciesRequest$nextToken": "<p>A pagination token returned from a previous <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/API_ListPolicies.html\">ListPolicies</a> call. Use this token to retrieve the next page of results when the response is paginated.</p>",
+        "ListPoliciesResponse$nextToken": "<p>A pagination token that can be used in subsequent ListPolicies calls to retrieve additional results. This token is only present when there are more results available.</p>",
+        "ListPolicyEnginesRequest$nextToken": "<p>A pagination token returned from a previous <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/API_ListPolicyEngines.html\">ListPolicyEngines</a> call. Use this token to retrieve the next page of results when the response is paginated.</p>",
+        "ListPolicyEnginesResponse$nextToken": "<p>A pagination token that can be used in subsequent <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/API_ListPolicyEngines.html\">ListPolicyEngines</a> calls to retrieve additional results. This token is only present when there are more results available. </p>",
+        "ListPolicyGenerationAssetsRequest$nextToken": "<p>A pagination token returned from a previous <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/API_ListPolicyGenerationAssets.html\">ListPolicyGenerationAssets</a> call. Use this token to retrieve the next page of assets when the response is paginated due to large numbers of generated policy options.</p>",
+        "ListPolicyGenerationAssetsResponse$nextToken": "<p>A pagination token that can be used in subsequent <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/API_ListPolicyGenerationAssets.html\">ListPolicyGenerationAssets</a> calls to retrieve additional assets. This token is only present when there are more generated policy assets available beyond the current response.</p>",
+        "ListPolicyGenerationsRequest$nextToken": "<p>A pagination token for retrieving additional policy generations when results are paginated.</p>",
+        "ListPolicyGenerationsResponse$nextToken": "<p>A pagination token for retrieving additional policy generations if more results are available.</p>"
       }
     },
     "NonBlankString": {
@@ -1881,6 +2704,36 @@
         "ServiceQuotaExceededException$message": null,
         "ThrottlingException$message": null,
         "UnauthorizedException$message": null
+      }
+    },
+    "NonEmptyString": {
+      "base": null,
+      "refs": {
+        "InferenceConfigurationStopSequencesList$member": null
+      }
+    },
+    "NumericalScaleDefinition": {
+      "base": "<p> The definition of a numerical rating scale option that provides a numeric value with its description for evaluation scoring. </p>",
+      "refs": {
+        "NumericalScaleDefinitions$member": null
+      }
+    },
+    "NumericalScaleDefinitionLabelString": {
+      "base": null,
+      "refs": {
+        "NumericalScaleDefinition$label": "<p> The label or name that describes this numerical rating option. </p>"
+      }
+    },
+    "NumericalScaleDefinitionValueDouble": {
+      "base": null,
+      "refs": {
+        "NumericalScaleDefinition$value": "<p> The numerical value for this rating scale option. </p>"
+      }
+    },
+    "NumericalScaleDefinitions": {
+      "base": null,
+      "refs": {
+        "RatingScale$numerical": "<p> The numerical rating scale with defined score values and descriptions for quantitative evaluation. </p>"
       }
     },
     "OAuthCredentialProvider": {
@@ -1911,6 +2764,18 @@
       "base": null,
       "refs": {
         "OAuthCustomParameters$value": null
+      }
+    },
+    "OAuthDefaultReturnUrl": {
+      "base": null,
+      "refs": {
+        "OAuthCredentialProvider$defaultReturnUrl": "<p>The URL where the end user's browser is redirected after obtaining the authorization code. Generally points to the customer's application.</p>"
+      }
+    },
+    "OAuthGrantType": {
+      "base": null,
+      "refs": {
+        "OAuthCredentialProvider$grantType": "<p>Specifies the kind of credentials to use for authorization:</p> <ul> <li> <p> <code>CLIENT_CREDENTIALS</code> - Authorization with a client ID and secret.</p> </li> <li> <p> <code>AUTHORIZATION_CODE</code> - Authorization with a token that is specific to an individual end user.</p> </li> </ul>"
       }
     },
     "OAuthScope": {
@@ -1973,15 +2838,256 @@
         "UpdateOauth2CredentialProviderResponse$oauth2ProviderConfigOutput": "<p>The configuration output for the OAuth2 provider.</p>"
       }
     },
+    "OnlineEvaluationConfigArn": {
+      "base": null,
+      "refs": {
+        "CreateOnlineEvaluationConfigResponse$onlineEvaluationConfigArn": "<p> The Amazon Resource Name (ARN) of the created online evaluation configuration. </p>",
+        "DeleteOnlineEvaluationConfigResponse$onlineEvaluationConfigArn": "<p> The Amazon Resource Name (ARN) of the deleted online evaluation configuration. </p>",
+        "GetOnlineEvaluationConfigResponse$onlineEvaluationConfigArn": "<p> The Amazon Resource Name (ARN) of the online evaluation configuration. </p>",
+        "OnlineEvaluationConfigSummary$onlineEvaluationConfigArn": "<p> The Amazon Resource Name (ARN) of the online evaluation configuration. </p>",
+        "UpdateOnlineEvaluationConfigResponse$onlineEvaluationConfigArn": "<p> The Amazon Resource Name (ARN) of the updated online evaluation configuration. </p>"
+      }
+    },
+    "OnlineEvaluationConfigId": {
+      "base": null,
+      "refs": {
+        "CreateOnlineEvaluationConfigResponse$onlineEvaluationConfigId": "<p> The unique identifier of the created online evaluation configuration. </p>",
+        "DeleteOnlineEvaluationConfigRequest$onlineEvaluationConfigId": "<p> The unique identifier of the online evaluation configuration to delete. </p>",
+        "DeleteOnlineEvaluationConfigResponse$onlineEvaluationConfigId": "<p> The unique identifier of the deleted online evaluation configuration. </p>",
+        "GetOnlineEvaluationConfigRequest$onlineEvaluationConfigId": "<p> The unique identifier of the online evaluation configuration to retrieve. </p>",
+        "GetOnlineEvaluationConfigResponse$onlineEvaluationConfigId": "<p> The unique identifier of the online evaluation configuration. </p>",
+        "OnlineEvaluationConfigSummary$onlineEvaluationConfigId": "<p> The unique identifier of the online evaluation configuration. </p>",
+        "UpdateOnlineEvaluationConfigRequest$onlineEvaluationConfigId": "<p> The unique identifier of the online evaluation configuration to update. </p>",
+        "UpdateOnlineEvaluationConfigResponse$onlineEvaluationConfigId": "<p> The unique identifier of the updated online evaluation configuration. </p>"
+      }
+    },
+    "OnlineEvaluationConfigStatus": {
+      "base": null,
+      "refs": {
+        "CreateOnlineEvaluationConfigResponse$status": "<p> The status of the online evaluation configuration. </p>",
+        "DeleteOnlineEvaluationConfigResponse$status": "<p> The status of the online evaluation configuration deletion operation. </p>",
+        "GetOnlineEvaluationConfigResponse$status": "<p> The status of the online evaluation configuration. </p>",
+        "OnlineEvaluationConfigSummary$status": "<p> The status of the online evaluation configuration. </p>",
+        "UpdateOnlineEvaluationConfigResponse$status": "<p> The status of the online evaluation configuration. </p>"
+      }
+    },
+    "OnlineEvaluationConfigSummary": {
+      "base": "<p> The summary information about an online evaluation configuration, including basic metadata and execution status. </p>",
+      "refs": {
+        "OnlineEvaluationConfigSummaryList$member": null
+      }
+    },
+    "OnlineEvaluationConfigSummaryList": {
+      "base": null,
+      "refs": {
+        "ListOnlineEvaluationConfigsResponse$onlineEvaluationConfigs": "<p> The list of online evaluation configuration summaries containing basic information about each configuration. </p>"
+      }
+    },
+    "OnlineEvaluationExecutionStatus": {
+      "base": null,
+      "refs": {
+        "CreateOnlineEvaluationConfigResponse$executionStatus": "<p> The execution status indicating whether the online evaluation is currently running. </p>",
+        "GetOnlineEvaluationConfigResponse$executionStatus": "<p> The execution status indicating whether the online evaluation is currently running. </p>",
+        "OnlineEvaluationConfigSummary$executionStatus": "<p> The execution status indicating whether the online evaluation is currently running. </p>",
+        "UpdateOnlineEvaluationConfigRequest$executionStatus": "<p> The updated execution status to enable or disable the online evaluation. </p>",
+        "UpdateOnlineEvaluationConfigResponse$executionStatus": "<p> The execution status indicating whether the online evaluation is currently running. </p>"
+      }
+    },
+    "OutputConfig": {
+      "base": "<p> The configuration that specifies where evaluation results should be written for monitoring and analysis. </p>",
+      "refs": {
+        "CreateOnlineEvaluationConfigResponse$outputConfig": null,
+        "GetOnlineEvaluationConfigResponse$outputConfig": "<p> The output configuration specifying where evaluation results are written. </p>"
+      }
+    },
     "OverrideType": {
       "base": null,
       "refs": {
         "StrategyConfiguration$type": "<p>The type of override for the strategy configuration.</p>"
       }
     },
+    "Policies": {
+      "base": null,
+      "refs": {
+        "ListPoliciesResponse$policies": "<p>An array of policy objects that match the specified criteria. Each policy object contains the policy metadata, status, and key identifiers for further operations.</p>"
+      }
+    },
+    "Policy": {
+      "base": "<p>Represents a complete policy resource within the AgentCore Policy system. Policies are ARN-able resources that contain Cedar policy statements and associated metadata for controlling agent behavior and access decisions. Each policy belongs to a policy engine and defines fine-grained authorization rules that are evaluated in real-time as agents interact with tools through Gateway. Policies use the Cedar policy language to specify who (principals based on OAuth claims like username, role, or scope) can perform what actions (tool calls) on which resources (Gateways), with optional conditions for attribute-based access control. Multiple policies can apply to a single request, with Cedar's forbid-wins semantics ensuring that security restrictions are never accidentally overridden.</p>",
+      "refs": {
+        "Policies$member": null
+      }
+    },
+    "PolicyArn": {
+      "base": null,
+      "refs": {
+        "CreatePolicyResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the created policy. This globally unique identifier can be used for cross-service references and IAM policy statements.</p>",
+        "DeletePolicyResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the deleted policy. This globally unique identifier confirms which policy resource was successfully removed.</p>",
+        "GetPolicyResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the policy. This globally unique identifier can be used for cross-service references and IAM policy statements.</p>",
+        "Policy$policyArn": "<p>The Amazon Resource Name (ARN) of the policy. This globally unique identifier can be used for cross-service references and IAM policy statements.</p>",
+        "UpdatePolicyResponse$policyArn": "<p>The ARN of the updated policy.</p>"
+      }
+    },
+    "PolicyDefinition": {
+      "base": "<p>Represents the definition structure for policies within the AgentCore Policy system. This structure encapsulates different policy formats and languages that can be used to define access control rules.</p>",
+      "refs": {
+        "CreatePolicyRequest$definition": "<p>The Cedar policy statement that defines the access control rules. This contains the actual policy logic written in Cedar policy language, specifying effect (permit or forbid), principals, actions, resources, and conditions for agent behavior control.</p>",
+        "CreatePolicyResponse$definition": "<p>The Cedar policy statement that was created. This is the validated policy definition that will be used for agent behavior control and access decisions.</p>",
+        "DeletePolicyResponse$definition": null,
+        "GetPolicyResponse$definition": "<p>The Cedar policy statement that defines the access control rules. This contains the actual policy logic used for agent behavior control and access decisions.</p>",
+        "Policy$definition": "<p>The Cedar policy statement that defines the access control rules. This contains the actual policy logic used for agent behavior control and access decisions.</p>",
+        "PolicyGenerationAsset$definition": null,
+        "UpdatePolicyRequest$definition": "<p>The new Cedar policy statement that defines the access control rules. This replaces the existing policy definition with new logic while maintaining the policy's identity.</p>",
+        "UpdatePolicyResponse$definition": "<p>The updated Cedar policy statement.</p>"
+      }
+    },
+    "PolicyEngine": {
+      "base": "<p>Represents a policy engine resource within the AgentCore Policy system. Policy engines serve as containers for grouping related policies and provide the execution context for policy evaluation and management. Each policy engine can be associated with one Gateway (one engine per Gateway), where it intercepts all agent tool calls and evaluates them against the contained policies before allowing tools to execute. The policy engine maintains the Cedar schema generated from the Gateway's tool manifest, ensuring that policies are validated against the actual tools and parameters available. Policy engines support two enforcement modes that can be configured when associating with a Gateway: log-only mode for testing (evaluates decisions without blocking) and enforce mode for production (actively allows or denies based on policy evaluation).</p>",
+      "refs": {
+        "PolicyEngines$member": null
+      }
+    },
+    "PolicyEngineArn": {
+      "base": null,
+      "refs": {
+        "CreatePolicyEngineResponse$policyEngineArn": "<p>The Amazon Resource Name (ARN) of the created policy engine. This globally unique identifier can be used for cross-service references and IAM policy statements.</p>",
+        "DeletePolicyEngineResponse$policyEngineArn": "<p>The Amazon Resource Name (ARN) of the deleted policy engine. This globally unique identifier confirms which policy engine resource was successfully removed.</p>",
+        "GetPolicyEngineResponse$policyEngineArn": "<p>The Amazon Resource Name (ARN) of the policy engine. This globally unique identifier can be used for cross-service references and IAM policy statements.</p>",
+        "PolicyEngine$policyEngineArn": "<p>The Amazon Resource Name (ARN) of the policy engine. This globally unique identifier can be used for cross-service references and IAM policy statements.</p>",
+        "UpdatePolicyEngineResponse$policyEngineArn": "<p>The ARN of the updated policy engine.</p>"
+      }
+    },
+    "PolicyEngineName": {
+      "base": null,
+      "refs": {
+        "CreatePolicyEngineRequest$name": "<p>The customer-assigned immutable name for the policy engine. This name identifies the policy engine and cannot be changed after creation.</p>",
+        "CreatePolicyEngineResponse$name": "<p>The customer-assigned name of the created policy engine. This matches the name provided in the request and serves as the human-readable identifier.</p>",
+        "DeletePolicyEngineResponse$name": "<p>The customer-assigned name of the deleted policy engine.</p>",
+        "GetPolicyEngineResponse$name": "<p>The customer-assigned name of the policy engine. This is the human-readable identifier that was specified when the policy engine was created.</p>",
+        "PolicyEngine$name": "<p>The customer-assigned immutable name for the policy engine. This human-readable identifier must be unique within the account and cannot exceed 48 characters.</p>",
+        "UpdatePolicyEngineResponse$name": "<p>The name of the updated policy engine.</p>"
+      }
+    },
+    "PolicyEngineStatus": {
+      "base": null,
+      "refs": {
+        "CreatePolicyEngineResponse$status": "<p>The current status of the policy engine. A status of <code>ACTIVE</code> indicates the policy engine is ready for use.</p>",
+        "DeletePolicyEngineResponse$status": "<p>The status of the policy engine deletion operation. This provides status about any issues that occurred during the deletion process.</p>",
+        "GetPolicyEngineResponse$status": "<p>The current status of the policy engine.</p>",
+        "PolicyEngine$status": "<p>The current status of the policy engine.</p>",
+        "UpdatePolicyEngineResponse$status": "<p>The current status of the updated policy engine.</p>"
+      }
+    },
+    "PolicyEngines": {
+      "base": null,
+      "refs": {
+        "ListPolicyEnginesResponse$policyEngines": "<p>An array of policy engine objects that exist in the account. Each policy engine object contains the engine metadata, status, and key identifiers for further operations.</p>"
+      }
+    },
+    "PolicyGeneration": {
+      "base": "<p>Represents a policy generation request within the AgentCore Policy system. Tracks the AI-powered conversion of natural language descriptions into Cedar policy statements, enabling users to author policies by describing authorization requirements in plain English. The generation process analyzes the natural language input along with the Gateway's tool context and Cedar schema to produce one or more validated policy options. Each generation request tracks the status of the conversion process and maintains findings about the generated policies, including validation results and potential issues. Generated policy assets remain available for one week after successful generation, allowing time to review and create policies from the generated options.</p>",
+      "refs": {
+        "PolicyGenerations$member": null
+      }
+    },
+    "PolicyGenerationArn": {
+      "base": null,
+      "refs": {
+        "GetPolicyGenerationResponse$policyGenerationArn": "<p>The Amazon Resource Name (ARN) of the policy generation. This globally unique identifier can be used for tracking, auditing, and cross-service references.</p>",
+        "PolicyGeneration$policyGenerationArn": "<p>The ARN of this policy generation request.</p>",
+        "StartPolicyGenerationResponse$policyGenerationArn": "<p>The ARN of the created policy generation request.</p>"
+      }
+    },
+    "PolicyGenerationAsset": {
+      "base": "<p>Represents a generated policy asset from the AI-powered policy generation process within the AgentCore Policy system. Each asset contains a Cedar policy statement generated from natural language input, along with associated metadata and analysis findings to help users evaluate and select the most appropriate policy option.</p>",
+      "refs": {
+        "PolicyGenerationAssets$member": null
+      }
+    },
+    "PolicyGenerationAssets": {
+      "base": null,
+      "refs": {
+        "ListPolicyGenerationAssetsResponse$policyGenerationAssets": "<p>An array of generated policy assets including Cedar policies and related artifacts from the AI-powered policy generation process. Each asset represents a different policy option or variation generated from the original natural language input.</p>"
+      }
+    },
+    "PolicyGenerationName": {
+      "base": null,
+      "refs": {
+        "GetPolicyGenerationResponse$name": "<p>The customer-assigned name for the policy generation request. This helps identify and track generation operations across multiple requests.</p>",
+        "PolicyGeneration$name": "<p>The customer-assigned name for this policy generation request.</p>",
+        "StartPolicyGenerationRequest$name": "<p>A customer-assigned name for the policy generation request. This helps track and identify generation operations, especially when running multiple generations simultaneously.</p>",
+        "StartPolicyGenerationResponse$name": "<p>The customer-assigned name for the policy generation request.</p>"
+      }
+    },
+    "PolicyGenerationStatus": {
+      "base": null,
+      "refs": {
+        "GetPolicyGenerationResponse$status": "<p>The current status of the policy generation. This indicates whether the generation is in progress, completed successfully, or failed during processing.</p>",
+        "PolicyGeneration$status": "<p>The current status of this policy generation request.</p>",
+        "StartPolicyGenerationResponse$status": "<p>The initial status of the policy generation request.</p>"
+      }
+    },
+    "PolicyGenerations": {
+      "base": null,
+      "refs": {
+        "ListPolicyGenerationsResponse$policyGenerations": "<p>An array of policy generation objects that match the specified criteria.</p>"
+      }
+    },
+    "PolicyName": {
+      "base": null,
+      "refs": {
+        "CreatePolicyRequest$name": "<p>The customer-assigned immutable name for the policy. Must be unique within the account. This name is used for policy identification and cannot be changed after creation.</p>",
+        "CreatePolicyResponse$name": "<p>The customer-assigned name of the created policy. This matches the name provided in the request and serves as the human-readable identifier for the policy.</p>",
+        "DeletePolicyResponse$name": "<p>The customer-assigned name of the deleted policy. This confirms which policy was successfully removed from the system and matches the name that was originally assigned during policy creation.</p>",
+        "GetPolicyResponse$name": "<p>The customer-assigned name of the policy. This is the human-readable identifier that was specified when the policy was created.</p>",
+        "Policy$name": "<p>The customer-assigned immutable name for the policy. This human-readable identifier must be unique within the account and cannot exceed 48 characters.</p>",
+        "UpdatePolicyResponse$name": "<p>The name of the updated policy.</p>"
+      }
+    },
+    "PolicyStatus": {
+      "base": null,
+      "refs": {
+        "CreatePolicyResponse$status": "<p>The current status of the policy. A status of <code>ACTIVE</code> indicates the policy is ready for use.</p>",
+        "DeletePolicyResponse$status": "<p>The status of the policy deletion operation. This provides information about any issues that occurred during the deletion process.</p>",
+        "GetPolicyResponse$status": "<p>The current status of the policy.</p>",
+        "Policy$status": "<p>The current status of the policy.</p>",
+        "UpdatePolicyResponse$status": "<p>The current status of the updated policy.</p>"
+      }
+    },
+    "PolicyStatusReasons": {
+      "base": null,
+      "refs": {
+        "CreatePolicyEngineResponse$statusReasons": "<p>Additional information about the policy engine status. This provides details about any failures or the current state of the policy engine creation process.</p>",
+        "CreatePolicyResponse$statusReasons": "<p>Additional information about the policy status. This provides details about any failures or the current state of the policy creation process.</p>",
+        "DeletePolicyEngineResponse$statusReasons": "<p>Additional information about the deletion status. This provides details about the deletion process or any issues that may have occurred.</p>",
+        "DeletePolicyResponse$statusReasons": "<p>Additional information about the deletion status. This provides details about the deletion process or any issues that may have occurred.</p>",
+        "GetPolicyEngineResponse$statusReasons": "<p>Additional information about the policy engine status. This provides details about any failures or the current state of the policy engine.</p>",
+        "GetPolicyGenerationResponse$statusReasons": "<p>Additional information about the generation status. This provides details about any failures, warnings, or the current state of the generation process.</p>",
+        "GetPolicyResponse$statusReasons": "<p>Additional information about the policy status. This provides details about any failures or the current state of the policy.</p>",
+        "Policy$statusReasons": "<p>Additional information about the policy status. This provides details about any failures or the current state of the policy lifecycle.</p>",
+        "PolicyEngine$statusReasons": "<p>Additional information about the policy engine status. This provides details about any failures or the current state of the policy engine lifecycle.</p>",
+        "PolicyGeneration$statusReasons": "<p>Additional information about the generation status.</p>",
+        "StartPolicyGenerationResponse$statusReasons": "<p>Additional information about the generation status.</p>",
+        "UpdatePolicyEngineResponse$statusReasons": "<p>Additional information about the update status.</p>",
+        "UpdatePolicyResponse$statusReasons": "<p>Additional information about the update status.</p>"
+      }
+    },
+    "PolicyValidationMode": {
+      "base": null,
+      "refs": {
+        "CreatePolicyRequest$validationMode": "<p>The validation mode for the policy creation. Determines how Cedar analyzer validation results are handled during policy creation. FAIL_ON_ANY_FINDINGS (default) runs the Cedar analyzer to validate the policy against the Cedar schema and tool context, failing creation if the analyzer detects any validation issues to ensure strict conformance. IGNORE_ALL_FINDINGS runs the Cedar analyzer but allows policy creation even if validation issues are detected, useful for testing or when the policy schema is evolving. Use FAIL_ON_ANY_FINDINGS for production policies to ensure correctness, and IGNORE_ALL_FINDINGS only when you understand and accept the analyzer findings.</p>",
+        "UpdatePolicyRequest$validationMode": "<p>The validation mode for the policy update. Determines how Cedar analyzer validation results are handled during policy updates. FAIL_ON_ANY_FINDINGS runs the Cedar analyzer and fails the update if validation issues are detected, ensuring the policy conforms to the Cedar schema and tool context. IGNORE_ALL_FINDINGS runs the Cedar analyzer but allows updates despite validation warnings. Use FAIL_ON_ANY_FINDINGS to ensure policy correctness during updates, especially when modifying policy logic or conditions.</p>"
+      }
+    },
     "Prompt": {
       "base": null,
       "refs": {
+        "EpisodicConsolidationOverride$appendToPrompt": "<p>The text appended to the prompt for the consolidation step of the episodic memory strategy.</p>",
+        "EpisodicExtractionOverride$appendToPrompt": "<p>The text appended to the prompt for the extraction step of the episodic memory strategy.</p>",
+        "EpisodicOverrideConsolidationConfigurationInput$appendToPrompt": "<p>The text to append to the prompt for the consolidation step of the episodic memory strategy.</p>",
+        "EpisodicOverrideExtractionConfigurationInput$appendToPrompt": "<p>The text to append to the prompt for the extraction step of the episodic memory strategy.</p>",
+        "EpisodicOverrideReflectionConfigurationInput$appendToPrompt": "<p>The text to append to the prompt for reflection step of the episodic memory strategy.</p>",
+        "EpisodicReflectionOverride$appendToPrompt": "<p>The text appended to the prompt for the reflection step of the episodic memory strategy.</p>",
         "SemanticConsolidationOverride$appendToPrompt": "<p>The text to append to the prompt for semantic consolidation.</p>",
         "SemanticExtractionOverride$appendToPrompt": "<p>The text to append to the prompt for semantic extraction.</p>",
         "SemanticOverrideConsolidationConfigurationInput$appendToPrompt": "<p>The text to append to the prompt for semantic consolidation.</p>",
@@ -2002,11 +3108,31 @@
         "UpdateAgentRuntimeRequest$protocolConfiguration": null
       }
     },
+    "PutResourcePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutResourcePolicyResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "RatingScale": {
+      "base": "<p> The rating scale that defines how evaluators should score agent performance, supporting both numerical and categorical scales. </p>",
+      "refs": {
+        "LlmAsAJudgeEvaluatorConfig$ratingScale": "<p> The rating scale that defines how the evaluator should score agent performance, either numerical or categorical. </p>"
+      }
+    },
     "RecordingConfig": {
       "base": "<p>The recording configuration for a browser. This structure defines how browser sessions are recorded.</p>",
       "refs": {
         "CreateBrowserRequest$recording": "<p>The recording configuration for the browser. When enabled, browser sessions are recorded and stored in the specified Amazon S3 location.</p>",
         "GetBrowserResponse$recording": null
+      }
+    },
+    "ReflectionConfiguration": {
+      "base": "<p>Contains reflection configuration information for a memory strategy.</p>",
+      "refs": {
+        "StrategyConfiguration$reflection": "<p>The reflection configuration for the memory strategy.</p>"
       }
     },
     "RequestHeaderAllowlist": {
@@ -2027,6 +3153,59 @@
       "base": null,
       "refs": {
         "SchemaDefinition$required": "<p>The required fields in the schema definition. These fields must be provided when using the schema.</p>"
+      }
+    },
+    "Resource": {
+      "base": "<p>Represents a resource within the AgentCore Policy system. Resources are the targets of policy evaluation. Currently, only AgentCore Gateways are supported as resources for policy enforcement.</p>",
+      "refs": {
+        "GetPolicyGenerationResponse$resource": "<p>The resource information associated with the policy generation. This provides context about the target resources for which the policies are being generated.</p>",
+        "PolicyGeneration$resource": "<p>The resource information associated with this policy generation.</p>",
+        "StartPolicyGenerationRequest$resource": "<p>The resource information that provides context for policy generation. This helps the AI understand the target resources and generate appropriate access control rules.</p>",
+        "StartPolicyGenerationResponse$resource": "<p>The resource information associated with the policy generation request.</p>"
+      }
+    },
+    "ResourceId": {
+      "base": null,
+      "refs": {
+        "CreatePolicyEngineResponse$policyEngineId": "<p>The unique identifier for the created policy engine. This system-generated identifier consists of the user name plus a 10-character generated suffix and is used for all subsequent policy engine operations.</p>",
+        "CreatePolicyRequest$policyEngineId": "<p>The identifier of the policy engine which contains this policy. Policy engines group related policies and provide the execution context for policy evaluation.</p>",
+        "CreatePolicyResponse$policyId": "<p>The unique identifier for the created policy. This is a system-generated identifier consisting of the user name plus a 10-character generated suffix, used for all subsequent policy operations.</p>",
+        "CreatePolicyResponse$policyEngineId": "<p>The identifier of the policy engine that manages this policy. This confirms the policy engine assignment and is used for policy evaluation routing.</p>",
+        "DeletePolicyEngineRequest$policyEngineId": "<p>The unique identifier of the policy engine to be deleted. This must be a valid policy engine ID that exists within the account.</p>",
+        "DeletePolicyEngineResponse$policyEngineId": "<p>The unique identifier of the policy engine being deleted. This confirms which policy engine the deletion operation targets.</p>",
+        "DeletePolicyRequest$policyEngineId": "<p>The identifier of the policy engine that manages the policy to be deleted. This ensures the policy is deleted from the correct policy engine context.</p>",
+        "DeletePolicyRequest$policyId": "<p>The unique identifier of the policy to be deleted. This must be a valid policy ID that exists within the specified policy engine.</p>",
+        "DeletePolicyResponse$policyId": "<p>The unique identifier of the policy being deleted. This confirms which policy the deletion operation targets.</p>",
+        "DeletePolicyResponse$policyEngineId": "<p>The identifier of the policy engine from which the policy was deleted. This confirms the policy engine context for the deletion operation.</p>",
+        "GetPolicyEngineRequest$policyEngineId": "<p>The unique identifier of the policy engine to be retrieved. This must be a valid policy engine ID that exists within the account.</p>",
+        "GetPolicyEngineResponse$policyEngineId": "<p>The unique identifier of the retrieved policy engine. This matches the policy engine ID provided in the request and serves as the system identifier.</p>",
+        "GetPolicyGenerationRequest$policyGenerationId": "<p>The unique identifier of the policy generation request to be retrieved. This must be a valid generation ID from a previous <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/API_StartPolicyGeneration.html\">StartPolicyGeneration</a> call.</p>",
+        "GetPolicyGenerationRequest$policyEngineId": "<p>The identifier of the policy engine associated with the policy generation request. This provides the context for the generation operation and schema validation.</p>",
+        "GetPolicyGenerationResponse$policyEngineId": "<p>The identifier of the policy engine associated with this policy generation. This confirms the policy engine context for the generation operation.</p>",
+        "GetPolicyGenerationResponse$policyGenerationId": "<p>The unique identifier of the policy generation request. This matches the generation ID provided in the request and serves as the tracking identifier.</p>",
+        "GetPolicyRequest$policyEngineId": "<p>The identifier of the policy engine that manages the policy to be retrieved.</p>",
+        "GetPolicyRequest$policyId": "<p>The unique identifier of the policy to be retrieved. This must be a valid policy ID that exists within the specified policy engine.</p>",
+        "GetPolicyResponse$policyId": "<p>The unique identifier of the retrieved policy. This matches the policy ID provided in the request and serves as the system identifier for the policy.</p>",
+        "GetPolicyResponse$policyEngineId": "<p>The identifier of the policy engine that manages this policy. This confirms the policy engine context for the retrieved policy.</p>",
+        "ListPoliciesRequest$policyEngineId": "<p>The identifier of the policy engine whose policies to retrieve.</p>",
+        "ListPolicyGenerationAssetsRequest$policyGenerationId": "<p>The unique identifier of the policy generation request whose assets are to be retrieved. This must be a valid generation ID from a previous <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/API_StartPolicyGeneration.html\">StartPolicyGeneration</a> call that has completed processing.</p>",
+        "ListPolicyGenerationAssetsRequest$policyEngineId": "<p>The unique identifier of the policy engine associated with the policy generation request. This provides the context for the generation operation and ensures assets are retrieved from the correct policy engine.</p>",
+        "ListPolicyGenerationsRequest$policyEngineId": "<p>The identifier of the policy engine whose policy generations to retrieve.</p>",
+        "Policy$policyId": "<p>The unique identifier for the policy. This system-generated identifier consists of the user name plus a 10-character generated suffix and serves as the primary key for policy operations.</p>",
+        "Policy$policyEngineId": "<p>The identifier of the policy engine that manages this policy. This establishes the policy engine context for policy evaluation and management.</p>",
+        "PolicyEngine$policyEngineId": "<p>The unique identifier for the policy engine. This system-generated identifier consists of the user name plus a 10-character generated suffix and serves as the primary key for policy engine operations.</p>",
+        "PolicyGeneration$policyEngineId": "<p>The identifier of the policy engine associated with this generation request.</p>",
+        "PolicyGeneration$policyGenerationId": "<p>The unique identifier for this policy generation request.</p>",
+        "PolicyGenerationAsset$policyGenerationAssetId": "<p>The unique identifier for this generated policy asset within the policy generation request. This ID can be used to reference specific generated policy options when creating actual policies from the generation results.</p>",
+        "StartPolicyGenerationRequest$policyEngineId": "<p>The identifier of the policy engine that provides the context for policy generation. This engine's schema and tool context are used to ensure generated policies are valid and applicable.</p>",
+        "StartPolicyGenerationResponse$policyEngineId": "<p>The identifier of the policy engine associated with the started policy generation. </p>",
+        "StartPolicyGenerationResponse$policyGenerationId": "<p>The unique identifier assigned to the policy generation request for tracking progress. </p>",
+        "UpdatePolicyEngineRequest$policyEngineId": "<p>The unique identifier of the policy engine to be updated.</p>",
+        "UpdatePolicyEngineResponse$policyEngineId": "<p>The unique identifier of the updated policy engine.</p>",
+        "UpdatePolicyRequest$policyEngineId": "<p>The identifier of the policy engine that manages the policy to be updated. This ensures the policy is updated within the correct policy engine context.</p>",
+        "UpdatePolicyRequest$policyId": "<p>The unique identifier of the policy to be updated. This must be a valid policy ID that exists within the specified policy engine.</p>",
+        "UpdatePolicyResponse$policyId": "<p>The unique identifier of the updated policy.</p>",
+        "UpdatePolicyResponse$policyEngineId": "<p>The identifier of the policy engine managing the updated policy.</p>"
       }
     },
     "ResourceLimitExceededException": {
@@ -2053,6 +3232,14 @@
         "ResourceOauth2ReturnUrlListType$member": null
       }
     },
+    "ResourcePolicyBody": {
+      "base": null,
+      "refs": {
+        "GetResourcePolicyResponse$policy": "<p>The resource policy associated with the specified resource.</p>",
+        "PutResourcePolicyRequest$policy": "<p>The resource policy to create or update.</p>",
+        "PutResourcePolicyResponse$policy": "<p>The resource policy that was created or updated.</p>"
+      }
+    },
     "ResourceType": {
       "base": null,
       "refs": {
@@ -2072,6 +3259,19 @@
         "ResponseListType$member": null
       }
     },
+    "RestApiMethod": {
+      "base": null,
+      "refs": {
+        "ApiGatewayToolOverride$method": "<p>The HTTP method to expose for the specified path.</p>",
+        "RestApiMethods$member": null
+      }
+    },
+    "RestApiMethods": {
+      "base": null,
+      "refs": {
+        "ApiGatewayToolFilter$methods": "<p>The methods to filter for.</p>"
+      }
+    },
     "RoleArn": {
       "base": null,
       "refs": {
@@ -2080,13 +3280,24 @@
         "CreateCodeInterpreterRequest$executionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the code interpreter to access Amazon Web Services services.</p>",
         "CreateGatewayRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the gateway to access Amazon Web Services services.</p>",
         "CreateGatewayResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the gateway.</p>",
+        "CreateOnlineEvaluationConfigRequest$evaluationExecutionRoleArn": "<p> The Amazon Resource Name (ARN) of the IAM role that grants permissions to read from CloudWatch logs, write evaluation results, and invoke Amazon Bedrock models for evaluation. </p>",
         "GetAgentRuntimeResponse$roleArn": "<p>The IAM role ARN that provides permissions for the AgentCore Runtime.</p>",
         "GetBrowserResponse$executionRoleArn": "<p>The IAM role ARN that provides permissions for the browser.</p>",
         "GetCodeInterpreterResponse$executionRoleArn": "<p>The IAM role ARN that provides permissions for the code interpreter.</p>",
         "GetGatewayResponse$roleArn": "<p>The IAM role ARN that provides permissions for the gateway.</p>",
+        "GetOnlineEvaluationConfigResponse$evaluationExecutionRoleArn": "<p> The Amazon Resource Name (ARN) of the IAM role used for evaluation execution. </p>",
         "UpdateAgentRuntimeRequest$roleArn": "<p>The updated IAM role ARN that provides permissions for the AgentCore Runtime.</p>",
         "UpdateGatewayRequest$roleArn": "<p>The updated IAM role ARN that provides permissions for the gateway.</p>",
-        "UpdateGatewayResponse$roleArn": "<p>The updated IAM role ARN that provides permissions for the gateway.</p>"
+        "UpdateGatewayResponse$roleArn": "<p>The updated IAM role ARN that provides permissions for the gateway.</p>",
+        "UpdateOnlineEvaluationConfigRequest$evaluationExecutionRoleArn": "<p> The updated Amazon Resource Name (ARN) of the IAM role used for evaluation execution. </p>"
+      }
+    },
+    "Rule": {
+      "base": "<p> The evaluation rule that defines sampling configuration, filtering criteria, and session detection settings for online evaluation. </p>",
+      "refs": {
+        "CreateOnlineEvaluationConfigRequest$rule": "<p> The evaluation rule that defines sampling configuration, filters, and session detection settings for the online evaluation. </p>",
+        "GetOnlineEvaluationConfigResponse$rule": "<p> The evaluation rule containing sampling configuration, filters, and session settings. </p>",
+        "UpdateOnlineEvaluationConfigRequest$rule": "<p> The updated evaluation rule containing sampling configuration, filters, and session settings. </p>"
       }
     },
     "RuntimeContainerUri": {
@@ -2143,6 +3354,18 @@
       "base": "<p>Output configuration for a Salesforce OAuth2 provider.</p>",
       "refs": {
         "Oauth2ProviderConfigOutput$salesforceOauth2ProviderConfig": "<p>The output configuration for a Salesforce OAuth2 provider.</p>"
+      }
+    },
+    "SamplingConfig": {
+      "base": "<p> The configuration that controls what percentage of agent traces are sampled for evaluation to manage evaluation volume and costs. </p>",
+      "refs": {
+        "Rule$samplingConfig": "<p> The sampling configuration that determines what percentage of agent traces to evaluate. </p>"
+      }
+    },
+    "SamplingConfigSamplingPercentageDouble": {
+      "base": null,
+      "refs": {
+        "SamplingConfig$samplingPercentage": "<p> The percentage of agent traces to sample for evaluation, ranging from 0.01% to 100%. </p>"
       }
     },
     "SandboxName": {
@@ -2278,9 +3501,27 @@
       "base": "<p>An internal error occurred.</p>",
       "refs": {}
     },
+    "ServiceName": {
+      "base": null,
+      "refs": {
+        "CloudWatchLogsInputConfigServiceNamesList$member": null
+      }
+    },
     "ServiceQuotaExceededException": {
       "base": "<p>This exception is thrown when a request is made beyond the service quota</p>",
       "refs": {}
+    },
+    "SessionConfig": {
+      "base": "<p> The configuration that defines how agent sessions are detected and when they are considered complete for evaluation. </p>",
+      "refs": {
+        "Rule$sessionConfig": "<p> The session configuration that defines timeout settings for detecting when agent sessions are complete and ready for evaluation. </p>"
+      }
+    },
+    "SessionConfigSessionTimeoutMinutesInteger": {
+      "base": null,
+      "refs": {
+        "SessionConfig$sessionTimeoutMinutes": "<p> The number of minutes of inactivity after which an agent session is considered complete and ready for evaluation. Default is 15 minutes. </p>"
+      }
     },
     "SetTokenVaultCMKRequest": {
       "base": null,
@@ -2300,6 +3541,20 @@
       "base": "<p>Output configuration for a Slack OAuth2 provider.</p>",
       "refs": {
         "Oauth2ProviderConfigOutput$slackOauth2ProviderConfig": "<p>The output configuration for a Slack OAuth2 provider.</p>"
+      }
+    },
+    "StartPolicyGenerationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartPolicyGenerationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Statement": {
+      "base": null,
+      "refs": {
+        "CedarPolicy$statement": "<p>The Cedar policy statement that defines the authorization logic. This statement follows Cedar syntax and specifies principals, actions, resources, and conditions that determine when access should be allowed or denied.</p>"
       }
     },
     "StatusReason": {
@@ -2331,26 +3586,52 @@
     "String": {
       "base": null,
       "refs": {
+        "ApiGatewayTargetConfiguration$restApiId": "<p>The ID of the API Gateway REST API.</p>",
+        "ApiGatewayTargetConfiguration$stage": "<p>The ID of the stage of the REST API to add as a target.</p>",
+        "ApiGatewayToolFilter$filterPath": "<p>Resource path to match in the REST API. Supports exact paths (for example, <code>/pets</code>) or wildcard paths (for example, <code>/pets/*</code> to match all paths under <code>/pets</code>). Must match existing paths in the REST API.</p>",
+        "ApiGatewayToolOverride$name": "<p>The name of tool. Identifies the tool in the Model Context Protocol.</p>",
+        "ApiGatewayToolOverride$description": "<p>The description of the tool. Provides information about the purpose and usage of the tool. If not provided, uses the description from the API's OpenAPI specification.</p>",
+        "ApiGatewayToolOverride$path": "<p>Resource path in the REST API (e.g., <code>/pets</code>). Must explicitly match an existing path in the REST API.</p>",
+        "CategoricalScaleDefinition$definition": "<p> The description that explains what this categorical rating represents and when it should be used. </p>",
         "ConcurrentModificationException$message": null,
         "CreateOauth2CredentialProviderResponse$callbackUrl": "<p>Callback URL to register on the OAuth2 credential provider as an allowed callback URL. This URL is where the OAuth2 authorization server redirects users after they complete the authorization flow.</p>",
+        "CreateOnlineEvaluationConfigResponse$failureReason": "<p> The reason for failure if the online evaluation configuration creation or execution failed. </p>",
         "DecryptionFailure$message": null,
         "DeleteMemoryStrategyInput$memoryStrategyId": "<p>The unique identifier of the memory strategy to delete.</p>",
         "EncryptionFailure$message": null,
+        "EpisodicConsolidationOverride$modelId": "<p>The model ID used for the consolidation step of the episodic memory strategy.</p>",
+        "EpisodicExtractionOverride$modelId": "<p>The model ID used for the extraction step of the episodic memory strategy.</p>",
+        "EpisodicOverrideConsolidationConfigurationInput$modelId": "<p>The model ID to use for the consolidation step of the episodic memory strategy.</p>",
+        "EpisodicOverrideExtractionConfigurationInput$modelId": "<p>The model ID to use for the extraction step of the episodic memory strategy.</p>",
+        "EpisodicOverrideReflectionConfigurationInput$modelId": "<p>The model ID to use for the reflection step of the episodic memory strategy.</p>",
+        "EpisodicReflectionOverride$modelId": "<p>The model ID used for the reflection step of the episodic memory strategy.</p>",
+        "Finding$description": "<p>A human-readable description of the finding. This provides detailed information about the issue, recommendation, or validation result to help users understand and address the finding. </p>",
         "GetAgentRuntimeEndpointResponse$failureReason": "<p>The reason for failure if the AgentCore Runtime endpoint is in a failed state.</p>",
+        "GetAgentRuntimeResponse$failureReason": "<p>The reason for failure if the AgentCore Runtime is in a failed state.</p>",
         "GetBrowserResponse$failureReason": "<p>The reason for failure if the browser is in a failed state.</p>",
         "GetCodeInterpreterResponse$failureReason": "<p>The reason for failure if the code interpreter is in a failed state.</p>",
         "GetOauth2CredentialProviderResponse$callbackUrl": "<p>Callback URL to register on the OAuth2 credential provider as an allowed callback URL. This URL is where the OAuth2 authorization server redirects users after they complete the authorization flow.</p>",
+        "GetOnlineEvaluationConfigResponse$failureReason": "<p> The reason for failure if the online evaluation configuration execution failed. </p>",
+        "GetPolicyGenerationResponse$findings": "<p>The findings and results from the policy generation process. This includes any issues, recommendations, validation results, or insights from the generated policies.</p>",
         "InvocationConfiguration$payloadDeliveryBucketName": "<p>The S3 bucket name for event payload delivery.</p>",
         "ListApiKeyCredentialProvidersRequest$nextToken": "<p>Pagination token.</p>",
         "ListApiKeyCredentialProvidersResponse$nextToken": "<p>Pagination token for the next page of results.</p>",
+        "ListEvaluatorsRequest$nextToken": "<p> The pagination token from a previous request to retrieve the next page of results. </p>",
+        "ListEvaluatorsResponse$nextToken": "<p> The pagination token to use in a subsequent request to retrieve the next page of results. </p>",
         "ListMemoriesInput$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListMemoriesOutput$nextToken": "<p>A token to retrieve the next page of results.</p>",
         "ListOauth2CredentialProvidersRequest$nextToken": "<p>Pagination token.</p>",
         "ListOauth2CredentialProvidersResponse$nextToken": "<p>Pagination token for the next page of results.</p>",
+        "ListOnlineEvaluationConfigsRequest$nextToken": "<p> The pagination token from a previous request to retrieve the next page of results. </p>",
+        "ListOnlineEvaluationConfigsResponse$nextToken": "<p> The pagination token to use in a subsequent request to retrieve the next page of results. </p>",
         "ListWorkloadIdentitiesRequest$nextToken": "<p>Pagination token.</p>",
         "ListWorkloadIdentitiesResponse$nextToken": "<p>Pagination token for the next page of results.</p>",
         "Memory$failureReason": "<p>The reason for failure if the memory is in a failed state.</p>",
         "ModifyMemoryStrategyInput$memoryStrategyId": "<p>The unique identifier of the memory strategy to modify.</p>",
+        "NumericalScaleDefinition$definition": "<p> The description that explains what this numerical rating represents and when it should be used. </p>",
+        "OnlineEvaluationConfigSummary$failureReason": "<p> The reason for failure if the online evaluation configuration execution failed. </p>",
+        "PolicyGeneration$findings": "<p>Findings and insights from this policy generation process.</p>",
+        "PolicyStatusReasons$member": null,
         "RequiredProperties$member": null,
         "ResourceLimitExceededException$message": null,
         "SchemaDefinition$description": "<p>The description of the schema definition. This description provides information about the purpose and usage of the schema.</p>",
@@ -2360,12 +3641,14 @@
         "SemanticOverrideConsolidationConfigurationInput$modelId": "<p>The model ID to use for semantic consolidation.</p>",
         "SemanticOverrideExtractionConfigurationInput$modelId": "<p>The model ID to use for semantic extraction.</p>",
         "ServiceException$message": null,
+        "StartPolicyGenerationResponse$findings": "<p>Initial findings from the policy generation process.</p>",
         "SummaryConsolidationOverride$modelId": "<p>The model ID to use for summary consolidation.</p>",
         "SummaryOverrideConsolidationConfigurationInput$modelId": "<p>The model ID to use for summary consolidation.</p>",
         "ThrottledException$message": null,
         "ToolDefinition$name": "<p>The name of the tool. This name identifies the tool in the Model Context Protocol.</p>",
         "ToolDefinition$description": "<p>The description of the tool. This description provides information about the purpose and usage of the tool.</p>",
         "UpdateOauth2CredentialProviderResponse$callbackUrl": "<p>Callback URL to register on the OAuth2 credential provider as an allowed callback URL. This URL is where the OAuth2 authorization server redirects users after they complete the authorization flow.</p>",
+        "UpdateOnlineEvaluationConfigResponse$failureReason": "<p> The reason for failure if the online evaluation configuration update or execution failed. </p>",
         "UserPreferenceConsolidationOverride$modelId": "<p>The model ID to use for user preference consolidation.</p>",
         "UserPreferenceExtractionOverride$modelId": "<p>The model ID to use for user preference extraction.</p>",
         "UserPreferenceOverrideConsolidationConfigurationInput$modelId": "<p>The model ID to use for user preference consolidation.</p>",
@@ -2600,10 +3883,18 @@
       "refs": {
         "ApiKeyCredentialProviderItem$createdTime": "<p>The timestamp when the API key credential provider was created.</p>",
         "ApiKeyCredentialProviderItem$lastUpdatedTime": "<p>The timestamp when the API key credential provider was last updated.</p>",
+        "CreateEvaluatorResponse$createdAt": "<p> The timestamp when the evaluator was created. </p>",
+        "CreateOnlineEvaluationConfigResponse$createdAt": "<p> The timestamp when the online evaluation configuration was created. </p>",
+        "EvaluatorSummary$createdAt": "<p> The timestamp when the evaluator was created. </p>",
+        "EvaluatorSummary$updatedAt": "<p> The timestamp when the evaluator was last updated. </p>",
         "GetApiKeyCredentialProviderResponse$createdTime": "<p>The timestamp when the API key credential provider was created.</p>",
         "GetApiKeyCredentialProviderResponse$lastUpdatedTime": "<p>The timestamp when the API key credential provider was last updated.</p>",
+        "GetEvaluatorResponse$createdAt": "<p> The timestamp when the evaluator was created. </p>",
+        "GetEvaluatorResponse$updatedAt": "<p> The timestamp when the evaluator was last updated. </p>",
         "GetOauth2CredentialProviderResponse$createdTime": "<p>The timestamp when the OAuth2 credential provider was created.</p>",
         "GetOauth2CredentialProviderResponse$lastUpdatedTime": "<p>The timestamp when the OAuth2 credential provider was last updated.</p>",
+        "GetOnlineEvaluationConfigResponse$createdAt": "<p> The timestamp when the online evaluation configuration was created. </p>",
+        "GetOnlineEvaluationConfigResponse$updatedAt": "<p> The timestamp when the online evaluation configuration was last updated. </p>",
         "GetTokenVaultResponse$lastModifiedDate": "<p>The timestamp when the token vault was last modified.</p>",
         "GetWorkloadIdentityResponse$createdTime": "<p>The timestamp when the workload identity was created.</p>",
         "GetWorkloadIdentityResponse$lastUpdatedTime": "<p>The timestamp when the workload identity was last updated.</p>",
@@ -2615,11 +3906,15 @@
         "MemorySummary$updatedAt": "<p>The timestamp when the memory was last updated.</p>",
         "Oauth2CredentialProviderItem$createdTime": "<p>The timestamp when the OAuth2 credential provider was created.</p>",
         "Oauth2CredentialProviderItem$lastUpdatedTime": "<p>The timestamp when the OAuth2 credential provider was last updated.</p>",
+        "OnlineEvaluationConfigSummary$createdAt": "<p> The timestamp when the online evaluation configuration was created. </p>",
+        "OnlineEvaluationConfigSummary$updatedAt": "<p> The timestamp when the online evaluation configuration was last updated. </p>",
         "SetTokenVaultCMKResponse$lastModifiedDate": "<p>The timestamp when the token vault was last modified.</p>",
         "UpdateApiKeyCredentialProviderResponse$createdTime": "<p>The timestamp when the API key credential provider was created.</p>",
         "UpdateApiKeyCredentialProviderResponse$lastUpdatedTime": "<p>The timestamp when the API key credential provider was last updated.</p>",
+        "UpdateEvaluatorResponse$updatedAt": "<p> The timestamp when the evaluator was last updated. </p>",
         "UpdateOauth2CredentialProviderResponse$createdTime": "<p>The timestamp when the OAuth2 credential provider was created.</p>",
         "UpdateOauth2CredentialProviderResponse$lastUpdatedTime": "<p>The timestamp when the OAuth2 credential provider was last updated.</p>",
+        "UpdateOnlineEvaluationConfigResponse$updatedAt": "<p> The timestamp when the online evaluation configuration was last updated. </p>",
         "UpdateWorkloadIdentityResponse$createdTime": "<p>The timestamp when the workload identity was created.</p>",
         "UpdateWorkloadIdentityResponse$lastUpdatedTime": "<p>The timestamp when the workload identity was last updated.</p>"
       }
@@ -2749,6 +4044,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateEvaluatorRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateEvaluatorResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateGatewayRequest": {
       "base": null,
       "refs": {}
@@ -2790,6 +4093,30 @@
       "refs": {}
     },
     "UpdateOauth2CredentialProviderResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateOnlineEvaluationConfigRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateOnlineEvaluationConfigResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePolicyEngineRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePolicyEngineResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePolicyRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePolicyResponse": {
       "base": null,
       "refs": {}
     },

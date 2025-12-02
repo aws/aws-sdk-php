@@ -73,6 +73,7 @@
     "GetAssetFilter": "<p>Gets an asset filter.</p> <p>Prerequisites:</p> <ul> <li> <p>Domain (<code>--domain-identifier</code>), asset (<code>--asset-identifier</code>), and filter (<code>--identifier</code>) must all exist. </p> </li> <li> <p>The asset filter should not have been deleted.</p> </li> <li> <p>The asset must still exist (since the filter is linked to it).</p> </li> </ul>",
     "GetAssetType": "<p>Gets an Amazon DataZone asset type.</p> <p>Asset types define the categories and characteristics of different kinds of data assets within Amazon DataZone.. They determine what metadata fields are required, what operations are possible, and how the asset integrates with other Amazon Web Services services. Asset types can range from built-in types like Amazon S3 buckets and Amazon Web Services Glue tables to custom types defined for specific organizational needs. Understanding asset types is crucial for properly organizing and managing different kinds of data resources.</p> <p>Prerequisites:</p> <ul> <li> <p>The asset type with identifier must exist in the domain. ResourceNotFoundException.</p> </li> <li> <p>You must have the GetAssetType permission.</p> </li> <li> <p>Ensure the domain-identifier value is correct and accessible.</p> </li> </ul>",
     "GetConnection": "<p>Gets a connection. In Amazon DataZone, a connection enables you to connect your resources (domains, projects, and environments) to external resources and services.</p>",
+    "GetDataExportConfiguration": "<p>Gets data export configuration details.</p>",
     "GetDataProduct": "<p>Gets the data product.</p> <p>Prerequisites:</p> <ul> <li> <p>The data product ID must exist. </p> </li> <li> <p>The domain must be valid and accessible.</p> </li> <li> <p>User must have read or discovery permissions for the data product.</p> </li> </ul>",
     "GetDataSource": "<p>Gets an Amazon DataZone data source.</p>",
     "GetDataSourceRun": "<p>Gets an Amazon DataZone data source run.</p>",
@@ -138,6 +139,7 @@
     "ListTimeSeriesDataPoints": "<p>Lists time series data points.</p>",
     "PostLineageEvent": "<p>Posts a data lineage event.</p>",
     "PostTimeSeriesDataPoints": "<p>Posts time series data points to Amazon DataZone for the specified asset.</p>",
+    "PutDataExportConfiguration": "<p>Creates data export configuration details.</p> <p>In the current release, you can enable exporting asset metadata only for one domain per Amazon Web Services account per region. If you disable exporting asset metadata feature for a domain where it's already enabled, you cannot enable this feature for another domain in the same Amazon Web Services account and region.</p>",
     "PutEnvironmentBlueprintConfiguration": "<p>Writes the configuration for the specified environment blueprint in Amazon DataZone.</p>",
     "RejectPredictions": "<p>Rejects automatically generated business-friendly metadata for your Amazon DataZone assets.</p>",
     "RejectSubscriptionRequest": "<p>Rejects the specified subscription request.</p>",
@@ -150,7 +152,7 @@
     "SearchTypes": "<p>Searches for types in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The --domain-identifier must refer to an existing Amazon DataZone domain. </p> </li> <li> <p>--search-scope must be one of the valid values including: ASSET_TYPE, GLOSSARY_TERM_TYPE, DATA_PRODUCT_TYPE.</p> </li> <li> <p>The --managed flag must be present without a value.</p> </li> <li> <p>The user must have permissions for form or asset types in the domain.</p> </li> <li> <p>If using --filters, ensure that the JSON is valid.</p> </li> <li> <p>Filters contain correct structure (attribute, value, operator).</p> </li> </ul>",
     "SearchUserProfiles": "<p>Searches user profiles in Amazon DataZone.</p>",
     "StartDataSourceRun": "<p>Start the run of the specified data source in Amazon DataZone.</p>",
-    "StartMetadataGenerationRun": "<p>Starts the metadata generation run.</p> <p>Prerequisites:</p> <ul> <li> <p>Asset must be created and belong to the specified domain and project. </p> </li> <li> <p>Asset type must be supported for metadata generation (e.g., Amazon Web Services Glue table).</p> </li> <li> <p>Asset must have a structured schema with valid rows and columns.</p> </li> <li> <p>Valid values for --type: BUSINESS_DESCRIPTIONS, BUSINESS_NAMES.</p> </li> <li> <p>The user must have permission to run metadata generation in the domain/project.</p> </li> </ul>",
+    "StartMetadataGenerationRun": "<p>Starts the metadata generation run.</p> <p>Prerequisites:</p> <ul> <li> <p>Asset must be created and belong to the specified domain and project. </p> </li> <li> <p>Asset type must be supported for metadata generation (e.g., Amazon Web Services Glue table).</p> </li> <li> <p>Asset must have a structured schema with valid rows and columns.</p> </li> <li> <p>Valid values for --type: BUSINESS_DESCRIPTIONS, BUSINESS_NAMES, BUSINESS_GLOSSARY_ASSOCIATIONS.</p> </li> <li> <p>The user must have permission to run metadata generation in the domain/project.</p> </li> </ul>",
     "TagResource": "<p>Tags a resource in Amazon DataZone.</p>",
     "UntagResource": "<p>Untags a resource in Amazon DataZone.</p>",
     "UpdateAccountPool": "<p>Updates the account pool.</p>",
@@ -1084,6 +1086,7 @@
         "FormEntryInput$required": "<p>Specifies whether a form entry is required.</p>",
         "FormEntryOutput$required": "<p>Specifies whether a form entry is required.</p>",
         "GetConnectionInput$withSecret": "<p>Specifies whether a connection has a secret.</p>",
+        "GetDataExportConfigurationOutput$isExportEnabled": "<p>Specifies whether the export is enabled.</p>",
         "GetDataSourceOutput$publishOnImport": "<p>Specifies whether the assets that this data source creates in the inventory are to be also automatically published to the catalog.</p>",
         "GetProjectProfileOutput$allowCustomProjectResourceTags": "<p>Specifies whether custom project resource tags are supported.</p>",
         "GetSubscriptionOutput$retainPermissions": "<p>The retain permissions of the subscription.</p>",
@@ -1099,6 +1102,7 @@
         "OverrideDomainUnitOwnersPolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy is inherited by child domain units.</p>",
         "OverrideProjectOwnersPolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy is inherited by child domain units.</p>",
         "PhysicalEndpoint$enableTrustedIdentityPropagation": "<p>Specified whether trusted identity propagation for the connection is enabled.</p>",
+        "PutDataExportConfigurationInput$enableExport": "<p>Specifies that the export is to be enabled as part of creating data export configuration details.</p>",
         "RecommendationConfiguration$enableBusinessNameGeneration": "<p>Specifies whether automatic business name generation is to be enabled or not as part of the recommendation configuration.</p>",
         "RedshiftLineageSyncConfigurationInput$enabled": "<p>Specifies whether the Amaon Redshift lineage sync configuration is enabled.</p>",
         "RedshiftLineageSyncConfigurationOutput$enabled": "<p>Specifies whether the Amaon Redshift lineage sync configuration is enabled.</p>",
@@ -1166,6 +1170,7 @@
         "DeleteTimeSeriesDataPointsInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "PostLineageEventInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "PostTimeSeriesDataPointsInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
+        "PutDataExportConfigurationInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "RejectPredictionsInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "RemoveEntityOwnerInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "RemovePolicyGrantInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
@@ -1231,6 +1236,12 @@
       "base": "<p>The configurable action of a Amazon DataZone environment.</p>",
       "refs": {
         "EnvironmentActionList$member": null
+      }
+    },
+    "ConfigurationStatus": {
+      "base": null,
+      "refs": {
+        "GetDataExportConfigurationOutput$status": "<p>The status of the data export configuration.</p>"
       }
     },
     "ConflictException": {
@@ -1704,6 +1715,7 @@
         "GetAssetOutput$createdAt": "<p>The timestamp of when the asset was created.</p>",
         "GetAssetOutput$firstRevisionCreatedAt": "<p>The timestamp of when the first revision of the asset was created.</p>",
         "GetAssetTypeOutput$createdAt": "<p>The timestamp of when the asset type was created.</p>",
+        "GetDataExportConfigurationOutput$createdAt": "<p>The timestamp at which the data export configuration report was created.</p>",
         "GetDataProductOutput$createdAt": "<p>The timestamp at which the data product is created.</p>",
         "GetDataProductOutput$firstRevisionCreatedAt": "<p>The timestamp at which the first revision of the data product is created.</p>",
         "GetDomainOutput$createdAt": "<p>The timestamp of when the Amazon DataZone domain was created.</p>",
@@ -2723,6 +2735,7 @@
         "GetAssetTypeOutput$originDomainId": "<p>The ID of the Amazon DataZone domain in which the asset type was originally created.</p>",
         "GetConnectionInput$domainIdentifier": "<p>The ID of the domain where we get the connection.</p>",
         "GetConnectionOutput$domainId": "<p>The domain ID of the connection.</p>",
+        "GetDataExportConfigurationInput$domainIdentifier": "<p>The ID of the domain where you want to get the data export configuration details.</p>",
         "GetDataProductInput$domainIdentifier": "<p>The ID of the domain where the data product lives.</p>",
         "GetDataProductOutput$domainId": "<p>The ID of the domain where the data product lives.</p>",
         "GetDataSourceInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the data source exists.</p>",
@@ -2826,6 +2839,7 @@
         "PostTimeSeriesDataPointsOutput$domainId": "<p>The ID of the Amazon DataZone domain in which you want to post time series data points.</p>",
         "ProjectProfileSummary$domainId": "<p>The domain ID of the project profile.</p>",
         "ProjectSummary$domainId": "<p>The identifier of a Amazon DataZone domain where the project exists.</p>",
+        "PutDataExportConfigurationInput$domainIdentifier": "<p>The domain ID where you want to create data export configuration details.</p>",
         "PutEnvironmentBlueprintConfigurationInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain.</p>",
         "PutEnvironmentBlueprintConfigurationOutput$domainId": "<p>The identifier of the Amazon DataZone domain.</p>",
         "RejectPredictionsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain.</p>",
@@ -3101,12 +3115,20 @@
         "PutEnvironmentBlueprintConfigurationOutput$enabledRegions": "<p>Specifies the enabled Amazon Web Services Regions.</p>"
       }
     },
+    "EncryptionConfiguration": {
+      "base": "<p>The encryption configuration details.</p>",
+      "refs": {
+        "GetDataExportConfigurationOutput$encryptionConfiguration": "<p>The encryption configuration as part of the data export configuration details.</p>",
+        "PutDataExportConfigurationInput$encryptionConfiguration": "<p>The encryption configuration as part of creating data export configuration details.</p> <p>The KMS key provided here as part of encryptionConfiguration must have the required permissions as described in <a href=\"https://docs.aws.amazon.com/sagemaker-unified-studio/latest/adminguide/sagemaker-unified-studio-export-asset-metadata-kms-permissions.html\">KMS permissions for exporting asset metadata in Amazon SageMaker Unified Studio</a>.</p>"
+      }
+    },
     "EntityId": {
       "base": null,
       "refs": {
         "BatchGetAttributesMetadataInput$entityIdentifier": "<p>The entity ID for which you want to get attribute metadata.</p>",
         "BatchPutAttributesMetadataInput$entityIdentifier": "<p>The entity ID for which you want to write the attribute metadata.</p>",
         "GetTimeSeriesDataPointOutput$entityId": "<p>The ID of the asset for which you want to get the data point.</p>",
+        "ListMetadataGenerationRunsInput$targetIdentifier": "<p>The target ID for which you want to list metadata generation runs.</p>",
         "PostTimeSeriesDataPointsOutput$entityId": "<p>The ID of the asset for which you want to post time series data points.</p>"
       }
     },
@@ -3817,6 +3839,14 @@
       "refs": {}
     },
     "GetConnectionOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDataExportConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDataExportConfigurationOutput": {
       "base": null,
       "refs": {}
     },
@@ -5458,6 +5488,7 @@
         "GetMetadataGenerationRunOutput$status": "<p>The status of the metadata generation run.</p>",
         "ListMetadataGenerationRunsInput$status": "<p>The status of the metadata generation runs.</p>",
         "MetadataGenerationRunItem$status": "<p>The status of the metadata generation run.</p>",
+        "MetadataGenerationRunTypeStat$status": "<p>The status of the metadata generation run type statistics.</p>",
         "StartMetadataGenerationRunOutput$status": "<p>The status of the metadata generation run.</p>"
       }
     },
@@ -5472,11 +5503,35 @@
     "MetadataGenerationRunType": {
       "base": null,
       "refs": {
+        "GetMetadataGenerationRunInput$type": "<p>The type of the metadata generation run.</p>",
         "GetMetadataGenerationRunOutput$type": "<p>The type of metadata generation run.</p>",
         "ListMetadataGenerationRunsInput$type": "<p>The type of the metadata generation runs.</p>",
         "MetadataGenerationRunItem$type": "<p>The type of the metadata generation run.</p>",
+        "MetadataGenerationRunTypeStat$type": "<p>The type of the metadata generation run type statistics.</p>",
+        "MetadataGenerationRunTypes$member": null,
         "StartMetadataGenerationRunInput$type": "<p>The type of the metadata generation run.</p>",
         "StartMetadataGenerationRunOutput$type": "<p>The type of the metadata generation run.</p>"
+      }
+    },
+    "MetadataGenerationRunTypeStat": {
+      "base": "<p>The statistics of the metadata generation run type.</p>",
+      "refs": {
+        "MetadataGenerationRunTypeStats$member": null
+      }
+    },
+    "MetadataGenerationRunTypeStats": {
+      "base": null,
+      "refs": {
+        "GetMetadataGenerationRunOutput$typeStats": "<p>The type stats included in the metadata generation run output details.</p>"
+      }
+    },
+    "MetadataGenerationRunTypes": {
+      "base": null,
+      "refs": {
+        "GetMetadataGenerationRunOutput$types": "<p>The types of the metadata generation run.</p>",
+        "MetadataGenerationRunItem$types": "<p>The types of the metadata generation run.</p>",
+        "StartMetadataGenerationRunInput$types": "<p>The types of the metadata generation run.</p>",
+        "StartMetadataGenerationRunOutput$types": "<p>The types of the metadata generation run.</p>"
       }
     },
     "MetadataGenerationRuns": {
@@ -6201,6 +6256,14 @@
         "UpdateEnvironmentBlueprintOutput$provisioningProperties": "<p>The provisioning properties to be updated as part of the <code>UpdateEnvironmentBlueprint</code> action.</p>",
         "UpdateEnvironmentOutput$provisioningProperties": "<p>The provisioning properties to be updated as part of the <code>UpdateEnvironment</code> action.</p>"
       }
+    },
+    "PutDataExportConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "PutDataExportConfigurationOutput": {
+      "base": null,
+      "refs": {}
     },
     "PutEnvironmentBlueprintConfigurationInput": {
       "base": null,
@@ -7507,6 +7570,8 @@
         "DomainUnitGroupProperties$groupId": "<p>The ID of the domain unit group.</p>",
         "DomainUnitSummary$name": "<p>The name of the domain unit summary.</p>",
         "DomainUnitUserProperties$userId": "<p>The ID of teh domain unit user.</p>",
+        "EncryptionConfiguration$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key to use for encryption. This field is required only when <code>sseAlgorithm</code> is set to <code>aws:kms</code>.</p>",
+        "EncryptionConfiguration$sseAlgorithm": "<p>The server-side encryption algorithm to use. Valid values are AES256 for S3-managed encryption keys, or aws:kms for Amazon Web Services KMS-managed encryption keys. If you choose SSE-KMS encryption you must grant the S3 Tables maintenance principal access to your KMS key. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-kms-permissions.html\">Permissions requirements for S3 Tables SSE-KMS encryption</a>.</p>",
         "EnvironmentActionSummary$description": "<p>The environment action description.</p>",
         "EnvironmentActionSummary$name": "<p>The name of the environment action.</p>",
         "EnvironmentBlueprintSummary$provider": "<p>The provider of the blueprint.</p>",
@@ -7527,6 +7592,7 @@
         "GetAssetFilterOutput$effectiveRowFilter": "<p>The row filter of the asset filter.</p>",
         "GetAssetFilterOutput$errorMessage": "<p>The error message that is displayed if the action does not complete successfully.</p>",
         "GetConnectionOutput$environmentUserRole": "<p>The environment user role.</p>",
+        "GetDataExportConfigurationOutput$s3TableBucketArn": "<p>The Amazon S3 table bucket ARN as part of the data export configuration details.</p>",
         "GetDataSourceOutput$connectionId": "<p>The ID of the connection.</p>",
         "GetDataSourceRunOutput$dataSourceConfigurationSnapshot": "<p>The configuration snapshot of the data source run.</p>",
         "GetDomainOutput$arn": "<p>The ARN of the specified Amazon DataZone domain.</p>",
@@ -7608,6 +7674,7 @@
         "Member$groupIdentifier": "<p>The ID of the group of a project member.</p>",
         "Member$userIdentifier": "<p>The user ID of a project member.</p>",
         "MetadataGenerationRunTarget$identifier": "<p>The ID of the metadata generation run's target.</p>",
+        "MetadataGenerationRunTypeStat$errorMessage": "<p>The error message displayed if the action fails to run.</p>",
         "MetadataMap$key": null,
         "MetadataMap$value": null,
         "MlflowPropertiesInput$trackingServerArn": "<p>The tracking server ARN as part of the MLflow properties of a connection.</p>",
@@ -8645,6 +8712,7 @@
         "DeleteSubscriptionGrantOutput$updatedAt": "<p>The timestamp of when the subscription grant that is deleted was updated.</p>",
         "DomainSummary$lastUpdatedAt": "<p>A timestamp of when a Amazon DataZone domain was last updated.</p>",
         "GetAssetTypeOutput$updatedAt": "<p>The timestamp of when the asset type was updated.</p>",
+        "GetDataExportConfigurationOutput$updatedAt": "<p>The timestamp at which the data export configuration report was updated.</p>",
         "GetDomainOutput$lastUpdatedAt": "<p>The timestamp of when the Amazon DataZone domain was last updated.</p>",
         "GetDomainUnitOutput$lastUpdatedAt": "<p>The timestamp at which the domain unit was last updated.</p>",
         "GetGlossaryOutput$updatedAt": "<p>The timestamp of when the business glossary was updated.</p>",

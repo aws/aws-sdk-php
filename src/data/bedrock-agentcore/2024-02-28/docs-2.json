@@ -9,9 +9,10 @@
     "CreateEvent": "<p>Creates an event in an AgentCore Memory resource. Events represent interactions or activities that occur within a session and are associated with specific actors.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:CreateEvent</code> permission.</p> <p>This operation is subject to request rate limiting.</p>",
     "DeleteEvent": "<p>Deletes an event from an AgentCore Memory resource. When you delete an event, it is permanently removed.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:DeleteEvent</code> permission.</p>",
     "DeleteMemoryRecord": "<p>Deletes a memory record from an AgentCore Memory resource. When you delete a memory record, it is permanently removed.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:DeleteMemoryRecord</code> permission.</p>",
+    "Evaluate": "<p> Performs on-demand evaluation of agent traces using a specified evaluator. This synchronous API accepts traces in OpenTelemetry format and returns immediate scoring results with detailed explanations.</p>",
     "GetAgentCard": "<p>Retrieves the A2A agent card associated with an AgentCore Runtime agent.</p>",
-    "GetBrowserSession": "<p>Retrieves detailed information about a specific browser session in Amazon Bedrock. This operation returns the session's configuration, current status, associated streams, and metadata.</p> <p>To get a browser session, you must specify both the browser identifier and the session ID. The response includes information about the session's viewport configuration, timeout settings, and stream endpoints.</p> <p>The following operations are related to <code>GetBrowserSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_ListBrowserSessions.html\">ListBrowserSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StopBrowserSession.html\">StopBrowserSession</a> </p> </li> </ul>",
-    "GetCodeInterpreterSession": "<p>Retrieves detailed information about a specific code interpreter session in Amazon Bedrock. This operation returns the session's configuration, current status, and metadata.</p> <p>To get a code interpreter session, you must specify both the code interpreter identifier and the session ID. The response includes information about the session's timeout settings and current status.</p> <p>The following operations are related to <code>GetCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_ListCodeInterpreterSessions.html\">ListCodeInterpreterSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StopCodeInterpreterSession.html\">StopCodeInterpreterSession</a> </p> </li> </ul>",
+    "GetBrowserSession": "<p>Retrieves detailed information about a specific browser session in Amazon Bedrock. This operation returns the session's configuration, current status, associated streams, and metadata.</p> <p>To get a browser session, you must specify both the browser identifier and the session ID. The response includes information about the session's viewport configuration, timeout settings, and stream endpoints.</p> <p>The following operations are related to <code>GetBrowserSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_ListBrowserSessions.html\">ListBrowserSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopBrowserSession.html\">StopBrowserSession</a> </p> </li> </ul>",
+    "GetCodeInterpreterSession": "<p>Retrieves detailed information about a specific code interpreter session in Amazon Bedrock. This operation returns the session's configuration, current status, and metadata.</p> <p>To get a code interpreter session, you must specify both the code interpreter identifier and the session ID. The response includes information about the session's timeout settings and current status.</p> <p>The following operations are related to <code>GetCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_ListCodeInterpreterSessions.html\">ListCodeInterpreterSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopCodeInterpreterSession.html\">StopCodeInterpreterSession</a> </p> </li> </ul>",
     "GetEvent": "<p>Retrieves information about a specific event in an AgentCore Memory resource.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:GetEvent</code> permission.</p>",
     "GetMemoryRecord": "<p>Retrieves a specific memory record from an AgentCore Memory resource.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:GetMemoryRecord</code> permission.</p>",
     "GetResourceApiKey": "<p>Retrieves the API key associated with an API key credential provider.</p>",
@@ -20,20 +21,20 @@
     "GetWorkloadAccessTokenForJWT": "<p>Obtains a workload access token for agentic workloads acting on behalf of a user, using a JWT token.</p>",
     "GetWorkloadAccessTokenForUserId": "<p>Obtains a workload access token for agentic workloads acting on behalf of a user, using the user's ID.</p>",
     "InvokeAgentRuntime": "<p>Sends a request to an agent or tool hosted in an Amazon Bedrock AgentCore Runtime and receives responses in real-time. </p> <p>To invoke an agent you must specify the AgentCore Runtime ARN and provide a payload containing your request. You can optionally specify a qualifier to target a specific version or endpoint of the agent.</p> <p>This operation supports streaming responses, allowing you to receive partial responses as they become available. We recommend using pagination to ensure that the operation returns quickly and successfully when processing large responses.</p> <p>For example code, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-invoke-agent.html\">Invoke an AgentCore Runtime agent</a>. </p> <p>If you're integrating your agent with OAuth, you can't use the Amazon Web Services SDK to call <code>InvokeAgentRuntime</code>. Instead, make a HTTPS request to <code>InvokeAgentRuntime</code>. For an example, see <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-oauth.html\">Authenticate and authorize with Inbound Auth and Outbound Auth</a>.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:InvokeAgentRuntime</code> permission. If you are making a call to <code>InvokeAgentRuntime</code> on behalf of a user ID with the <code>X-Amzn-Bedrock-AgentCore-Runtime-User-Id</code> header, You require permissions to both actions (<code>bedrock-agentcore:InvokeAgentRuntime</code> and <code>bedrock-agentcore:InvokeAgentRuntimeForUser</code>). </p>",
-    "InvokeCodeInterpreter": "<p>Executes code within an active code interpreter session in Amazon Bedrock. This operation processes the provided code, runs it in a secure environment, and returns the execution results including output, errors, and generated visualizations.</p> <p>To execute code, you must specify the code interpreter identifier, session ID, and the code to run in the arguments parameter. The operation returns a stream containing the execution results, which can include text output, error messages, and data visualizations.</p> <p>This operation is subject to request rate limiting based on your account's service quotas.</p> <p>The following operations are related to <code>InvokeCodeInterpreter</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
+    "InvokeCodeInterpreter": "<p>Executes code within an active code interpreter session in Amazon Bedrock. This operation processes the provided code, runs it in a secure environment, and returns the execution results including output, errors, and generated visualizations.</p> <p>To execute code, you must specify the code interpreter identifier, session ID, and the code to run in the arguments parameter. The operation returns a stream containing the execution results, which can include text output, error messages, and data visualizations.</p> <p>This operation is subject to request rate limiting based on your account's service quotas.</p> <p>The following operations are related to <code>InvokeCodeInterpreter</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
     "ListActors": "<p>Lists all actors in an AgentCore Memory resource. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListActors</code> permission.</p>",
-    "ListBrowserSessions": "<p>Retrieves a list of browser sessions in Amazon Bedrock that match the specified criteria. This operation returns summary information about each session, including identifiers, status, and timestamps.</p> <p>You can filter the results by browser identifier and session status. The operation supports pagination to handle large result sets efficiently.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully when retrieving large numbers of sessions.</p> <p>The following operations are related to <code>ListBrowserSessions</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> </ul>",
-    "ListCodeInterpreterSessions": "<p>Retrieves a list of code interpreter sessions in Amazon Bedrock that match the specified criteria. This operation returns summary information about each session, including identifiers, status, and timestamps.</p> <p>You can filter the results by code interpreter identifier and session status. The operation supports pagination to handle large result sets efficiently.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully when retrieving large numbers of sessions.</p> <p>The following operations are related to <code>ListCodeInterpreterSessions</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
+    "ListBrowserSessions": "<p>Retrieves a list of browser sessions in Amazon Bedrock that match the specified criteria. This operation returns summary information about each session, including identifiers, status, and timestamps.</p> <p>You can filter the results by browser identifier and session status. The operation supports pagination to handle large result sets efficiently.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully when retrieving large numbers of sessions.</p> <p>The following operations are related to <code>ListBrowserSessions</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> </ul>",
+    "ListCodeInterpreterSessions": "<p>Retrieves a list of code interpreter sessions in Amazon Bedrock that match the specified criteria. This operation returns summary information about each session, including identifiers, status, and timestamps.</p> <p>You can filter the results by code interpreter identifier and session status. The operation supports pagination to handle large result sets efficiently.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully when retrieving large numbers of sessions.</p> <p>The following operations are related to <code>ListCodeInterpreterSessions</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
     "ListEvents": "<p>Lists events in an AgentCore Memory resource based on specified criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListEvents</code> permission.</p>",
     "ListMemoryExtractionJobs": "<p>Lists all long-term memory extraction jobs that are eligible to be started with optional filtering.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListMemoryExtractionJobs</code> permission.</p>",
     "ListMemoryRecords": "<p>Lists memory records in an AgentCore Memory resource based on specified criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListMemoryRecords</code> permission.</p>",
     "ListSessions": "<p>Lists sessions in an AgentCore Memory resource based on specified criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:ListSessions</code> permission.</p>",
     "RetrieveMemoryRecords": "<p>Searches for and retrieves memory records from an AgentCore Memory resource based on specified search criteria. We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>To use this operation, you must have the <code>bedrock-agentcore:RetrieveMemoryRecords</code> permission.</p>",
-    "StartBrowserSession": "<p>Creates and initializes a browser session in Amazon Bedrock. The session enables agents to navigate and interact with web content, extract information from websites, and perform web-based tasks as part of their response generation.</p> <p>To create a session, you must specify a browser identifier and a name. You can also configure the viewport dimensions to control the visible area of web content. The session remains active until it times out or you explicitly stop it using the <code>StopBrowserSession</code> operation.</p> <p>The following operations are related to <code>StartBrowserSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_UpdateBrowserStream.html\">UpdateBrowserStream</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StopBrowserSession.html\">StopBrowserSession</a> </p> </li> </ul>",
-    "StartCodeInterpreterSession": "<p>Creates and initializes a code interpreter session in Amazon Bedrock. The session enables agents to execute code as part of their response generation, supporting programming languages such as Python for data analysis, visualization, and computation tasks.</p> <p>To create a session, you must specify a code interpreter identifier and a name. The session remains active until it times out or you explicitly stop it using the <code>StopCodeInterpreterSession</code> operation.</p> <p>The following operations are related to <code>StartCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_InvokeCodeInterpreter.html\">InvokeCodeInterpreter</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StopCodeInterpreterSession.html\">StopCodeInterpreterSession</a> </p> </li> </ul>",
+    "StartBrowserSession": "<p>Creates and initializes a browser session in Amazon Bedrock. The session enables agents to navigate and interact with web content, extract information from websites, and perform web-based tasks as part of their response generation.</p> <p>To create a session, you must specify a browser identifier and a name. You can also configure the viewport dimensions to control the visible area of web content. The session remains active until it times out or you explicitly stop it using the <code>StopBrowserSession</code> operation.</p> <p>The following operations are related to <code>StartBrowserSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_UpdateBrowserStream.html\">UpdateBrowserStream</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopBrowserSession.html\">StopBrowserSession</a> </p> </li> </ul>",
+    "StartCodeInterpreterSession": "<p>Creates and initializes a code interpreter session in Amazon Bedrock. The session enables agents to execute code as part of their response generation, supporting programming languages such as Python for data analysis, visualization, and computation tasks.</p> <p>To create a session, you must specify a code interpreter identifier and a name. The session remains active until it times out or you explicitly stop it using the <code>StopCodeInterpreterSession</code> operation.</p> <p>The following operations are related to <code>StartCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_InvokeCodeInterpreter.html\">InvokeCodeInterpreter</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopCodeInterpreterSession.html\">StopCodeInterpreterSession</a> </p> </li> </ul>",
     "StartMemoryExtractionJob": "<p> Starts a memory extraction job that processes events that failed extraction previously in an AgentCore Memory resource and produces structured memory records. When earlier extraction attempts have left events unprocessed, this job will pick up and extract those as well. </p> <p>To use this operation, you must have the <code>bedrock-agentcore:StartMemoryExtractionJob</code> permission.</p>",
-    "StopBrowserSession": "<p>Terminates an active browser session in Amazon Bedrock. This operation stops the session, releases associated resources, and makes the session unavailable for further use.</p> <p>To stop a browser session, you must specify both the browser identifier and the session ID. Once stopped, a session cannot be restarted; you must create a new session using <code>StartBrowserSession</code>.</p> <p>The following operations are related to <code>StopBrowserSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> </ul>",
-    "StopCodeInterpreterSession": "<p>Terminates an active code interpreter session in Amazon Bedrock. This operation stops the session, releases associated resources, and makes the session unavailable for further use.</p> <p>To stop a code interpreter session, you must specify both the code interpreter identifier and the session ID. Once stopped, a session cannot be restarted; you must create a new session using <code>StartCodeInterpreterSession</code>.</p> <p>The following operations are related to <code>StopCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
+    "StopBrowserSession": "<p>Terminates an active browser session in Amazon Bedrock. This operation stops the session, releases associated resources, and makes the session unavailable for further use.</p> <p>To stop a browser session, you must specify both the browser identifier and the session ID. Once stopped, a session cannot be restarted; you must create a new session using <code>StartBrowserSession</code>.</p> <p>The following operations are related to <code>StopBrowserSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html\">StartBrowserSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html\">GetBrowserSession</a> </p> </li> </ul>",
+    "StopCodeInterpreterSession": "<p>Terminates an active code interpreter session in Amazon Bedrock. This operation stops the session, releases associated resources, and makes the session unavailable for further use.</p> <p>To stop a code interpreter session, you must specify both the code interpreter identifier and the session ID. Once stopped, a session cannot be restarted; you must create a new session using <code>StartCodeInterpreterSession</code>.</p> <p>The following operations are related to <code>StopCodeInterpreterSession</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html\">StartCodeInterpreterSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html\">GetCodeInterpreterSession</a> </p> </li> </ul>",
     "StopRuntimeSession": "<p>Stops a session that is running in an running AgentCore Runtime agent.</p>",
     "UpdateBrowserStream": "<p>Updates a browser stream. To use this operation, you must have permissions to perform the bedrock:UpdateBrowserStream action.</p>"
   },
@@ -342,6 +343,12 @@
         "Content$text": "<p>The text content of the memory item.</p>"
       }
     },
+    "Context": {
+      "base": "<p> The contextual information associated with an evaluation, including span context details that identify the specific traces and sessions being evaluated within the agent's execution flow. </p>",
+      "refs": {
+        "EvaluationResultContent$context": "<p> The contextual information associated with this evaluation result, including span context details that identify the specific traces and sessions that were evaluated. </p>"
+      }
+    },
     "Conversational": {
       "base": "<p>Contains conversational content for an event payload.</p>",
       "refs": {
@@ -423,8 +430,82 @@
     "Double": {
       "base": null,
       "refs": {
+        "EvaluationResultContent$value": "<p> The numerical score assigned by the evaluator according to its configured rating scale. For numerical scales, this is a decimal value within the defined range. This field is not allowed for categorical scales. </p>",
         "MemoryRecordSummary$score": "<p>The relevance score of the memory record when returned as part of a search result. Higher values indicate greater relevance to the search query.</p>",
         "ToolResultStructuredContent$executionTime": "<p>The execution time of the tool operation in milliseconds.</p>"
+      }
+    },
+    "DuplicateIdException": {
+      "base": "<p> An exception thrown when attempting to create a resource with an identifier that already exists.</p>",
+      "refs": {}
+    },
+    "EvaluateRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "EvaluateResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "EvaluationErrorCode": {
+      "base": null,
+      "refs": {
+        "EvaluationResultContent$errorCode": "<p> The error code indicating the type of failure that occurred during evaluation. Used to programmatically identify and handle different categories of evaluation errors. </p>"
+      }
+    },
+    "EvaluationErrorMessage": {
+      "base": null,
+      "refs": {
+        "EvaluationResultContent$errorMessage": "<p> The error message describing what went wrong if the evaluation failed. Provides detailed information about evaluation failures to help diagnose and resolve issues with evaluator configuration or input data. </p>"
+      }
+    },
+    "EvaluationExplanation": {
+      "base": null,
+      "refs": {
+        "EvaluationResultContent$explanation": "<p> The detailed explanation provided by the evaluator describing the reasoning behind the assigned score. This qualitative feedback helps understand why specific ratings were given and provides actionable insights for improvement. </p>"
+      }
+    },
+    "EvaluationInput": {
+      "base": "<p> The input data structure containing agent session spans in OpenTelemetry format. Supports traces from frameworks like Strands (AgentCore Runtime) and LangGraph with OpenInference instrumentation for comprehensive evaluation. </p>",
+      "refs": {
+        "EvaluateRequest$evaluationInput": "<p> The input data containing agent session spans to be evaluated. Includes a list of spans in OpenTelemetry format from supported frameworks like Strands (AgentCore Runtime) or LangGraph with OpenInference instrumentation. </p>"
+      }
+    },
+    "EvaluationResultContent": {
+      "base": "<p> The comprehensive result of an evaluation containing the score, explanation, evaluator metadata, and execution details. Provides both quantitative ratings and qualitative insights about agent performance. </p>",
+      "refs": {
+        "EvaluationResults$member": null
+      }
+    },
+    "EvaluationResults": {
+      "base": null,
+      "refs": {
+        "EvaluateResponse$evaluationResults": "<p> The detailed evaluation results containing scores, explanations, and metadata. Includes the evaluator information, numerical or categorical ratings based on the evaluator's rating scale, and token usage statistics for the evaluation process. </p>"
+      }
+    },
+    "EvaluationTarget": {
+      "base": "<p> The specification of which trace or span IDs to evaluate within the provided input data. Allows precise targeting of evaluation at different levels: tool calls, traces, or sessions. </p>",
+      "refs": {
+        "EvaluateRequest$evaluationTarget": "<p> The specific trace or span IDs to evaluate within the provided input. Allows targeting evaluation at different levels: individual tool calls, single request-response interactions (traces), or entire conversation sessions. </p>"
+      }
+    },
+    "EvaluatorArn": {
+      "base": null,
+      "refs": {
+        "EvaluationResultContent$evaluatorArn": "<p> The Amazon Resource Name (ARN) of the evaluator used to generate this result. For custom evaluators, this is the full ARN; for built-in evaluators, this follows the pattern <code>Builtin.{EvaluatorName}</code>. </p>"
+      }
+    },
+    "EvaluatorId": {
+      "base": null,
+      "refs": {
+        "EvaluateRequest$evaluatorId": "<p> The unique identifier of the evaluator to use for scoring. Can be a built-in evaluator (e.g., <code>Builtin.Helpfulness</code>, <code>Builtin.Correctness</code>) or a custom evaluator ARN created through the control plane API. </p>",
+        "EvaluationResultContent$evaluatorId": "<p> The unique identifier of the evaluator that produced this result. This matches the <code>evaluatorId</code> provided in the evaluation request and can be used to identify which evaluator generated specific results. </p>"
+      }
+    },
+    "EvaluatorName": {
+      "base": null,
+      "refs": {
+        "EvaluationResultContent$evaluatorName": "<p> The human-readable name of the evaluator used for this evaluation. For built-in evaluators, this is the descriptive name (e.g., \"Helpfulness\", \"Correctness\"); for custom evaluators, this is the user-defined name. </p>"
       }
     },
     "Event": {
@@ -611,6 +692,9 @@
       "refs": {
         "MemoryRecordOutput$errorCode": "<p>The error code returned when the memory record operation fails.</p>",
         "MessageMetadata$messageIndex": "<p>The position of this message within that event’s ordered list of messages.</p>",
+        "TokenUsage$inputTokens": "<p> The number of tokens consumed for input processing during the evaluation. Includes tokens from the evaluation prompt, agent traces, and any additional context provided to the evaluator model. </p>",
+        "TokenUsage$outputTokens": "<p> The number of tokens generated by the evaluator model in its response. Includes tokens for the score, explanation, and any additional output produced during the evaluation process. </p>",
+        "TokenUsage$totalTokens": "<p> The total number of tokens consumed during the evaluation, calculated as the sum of input and output tokens. Used for cost calculation and rate limiting within the service limits. </p>",
         "ToolResultStructuredContent$exitCode": "<p>The exit code from the tool execution.</p>"
       }
     },
@@ -685,7 +769,8 @@
     "LeftExpression": {
       "base": "<p>Left expression of the event metadata filter.</p>",
       "refs": {
-        "EventMetadataFilterExpression$left": "<p>Left operand of the event metadata filter expression.</p>"
+        "EventMetadataFilterExpression$left": "<p>Left operand of the event metadata filter expression.</p>",
+        "MemoryMetadataFilterExpression$left": null
       }
     },
     "ListActorsInput": {
@@ -823,6 +908,18 @@
         "StartMemoryExtractionJobInput$memoryId": "<p>The unique identifier of the memory for which to start extraction jobs.</p>"
       }
     },
+    "MemoryMetadataFilterExpression": {
+      "base": "<p>Filters to apply to metadata associated with a memory. Specify the metadata key and value in the <code>left</code> and <code>right</code> fields and use the <code>operator</code> field to define the relationship to match.</p>",
+      "refs": {
+        "MemoryMetadataFilterList$member": null
+      }
+    },
+    "MemoryMetadataFilterList": {
+      "base": null,
+      "refs": {
+        "SearchCriteria$metadataFilters": "<p>Filters to apply to metadata associated with a memory.</p>"
+      }
+    },
     "MemoryRecord": {
       "base": "<p>Contains information about a memory record in an AgentCore Memory resource.</p>",
       "refs": {
@@ -948,7 +1045,9 @@
       "base": null,
       "refs": {
         "CreateEventInput$metadata": "<p>The key-value metadata to attach to the event.</p>",
-        "Event$metadata": "<p>Metadata associated with an event.</p>"
+        "Event$metadata": "<p>Metadata associated with an event.</p>",
+        "MemoryRecord$metadata": "<p>A map of metadata key-value pairs associated with a memory record.</p>",
+        "MemoryRecordSummary$metadata": "<p>A map of metadata key-value pairs associated with a memory record.</p>"
       }
     },
     "MetadataValue": {
@@ -1013,6 +1112,7 @@
       "refs": {
         "AccessDeniedException$message": null,
         "ConflictException$message": null,
+        "DuplicateIdException$message": null,
         "InternalServerException$message": null,
         "ResourceNotFoundException$message": null,
         "RuntimeClientError$message": null,
@@ -1030,7 +1130,8 @@
     "OperatorType": {
       "base": null,
       "refs": {
-        "EventMetadataFilterExpression$operator": "<p>Operator applied to the event metadata filter expression.</p>"
+        "EventMetadataFilterExpression$operator": "<p>Operator applied to the event metadata filter expression.</p>",
+        "MemoryMetadataFilterExpression$operator": "<p>The relationship between the metadata key and value to match when applying the metadata filter.</p>"
       }
     },
     "PaginationToken": {
@@ -1125,7 +1226,8 @@
     "RightExpression": {
       "base": "<p>Right expression of the <code>eventMetadata</code>filter.</p>",
       "refs": {
-        "EventMetadataFilterExpression$right": "<p>Right operand of the event metadata filter expression.</p>"
+        "EventMetadataFilterExpression$right": "<p>Right operand of the event metadata filter expression.</p>",
+        "MemoryMetadataFilterExpression$right": null
       }
     },
     "Role": {
@@ -1217,6 +1319,36 @@
         "GetAgentCardRequest$runtimeSessionId": "<p>The session ID that the AgentCore Runtime agent is using. </p>",
         "InvokeAgentRuntimeRequest$runtimeSessionId": "<p>The identifier of the runtime session.</p>",
         "StopRuntimeSessionRequest$runtimeSessionId": "<p>The ID of the session that you want to stop.</p>"
+      }
+    },
+    "Span": {
+      "base": null,
+      "refs": {
+        "Spans$member": null
+      }
+    },
+    "SpanContext": {
+      "base": "<p> The contextual information that uniquely identifies a span within the distributed tracing system. Contains session, trace, and span identifiers used to correlate evaluation results with specific agent execution points. </p>",
+      "refs": {
+        "Context$spanContext": "<p> The span context information that uniquely identifies the trace and span being evaluated, including session ID, trace ID, and span ID for precise targeting within the agent's execution flow. </p>"
+      }
+    },
+    "SpanId": {
+      "base": null,
+      "refs": {
+        "SpanIds$member": null
+      }
+    },
+    "SpanIds": {
+      "base": null,
+      "refs": {
+        "EvaluationTarget$spanIds": "<p> The list of specific span IDs to evaluate within the provided traces. Used to target evaluation at individual tool calls or specific operations within the agent's execution flow. </p>"
+      }
+    },
+    "Spans": {
+      "base": null,
+      "refs": {
+        "EvaluationInput$sessionSpans": "<p> The collection of spans representing agent execution traces within a session. Each span contains detailed information about tool calls, model interactions, and other agent activities that can be evaluated for quality and performance. </p>"
       }
     },
     "StartBrowserSessionRequest": {
@@ -1339,6 +1471,7 @@
         "ContentBlock$name": "<p>The name of the content block.</p>",
         "ContentBlock$description": "<p>The description of the content block.</p>",
         "CreateEventInput$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, AgentCore ignores the request, but does not return an error.</p>",
+        "EvaluationResultContent$label": "<p> The categorical label assigned by the evaluator when using a categorical rating scale. This provides a human-readable description of the evaluation result (e.g., \"Excellent\", \"Good\", \"Poor\") corresponding to the numerical value. For numerical scales, this field is optional and provides a natural language explanation of what the value means (e.g., value 0.5 = \"Somewhat Helpful\"). </p>",
         "ExtractionJob$jobId": "<p>The unique identifier of the extraction job.</p>",
         "ExtractionJobFilterInput$strategyId": "<p>The memory strategy identifier to filter extraction jobs by. If specified, only extraction jobs with this strategy ID are returned.</p>",
         "ExtractionJobFilterInput$sessionId": "<p>The unique identifier of the session. If specified, only extraction jobs with this session ID are returned.</p>",
@@ -1373,6 +1506,9 @@
         "ResourceContent$mimeType": "<p>The MIME type of the resource content.</p>",
         "ResourceContent$text": "<p>The text resource content.</p>",
         "ServiceException$message": null,
+        "SpanContext$sessionId": "<p> The unique identifier of the session containing this span. Sessions represent complete conversation flows and are detected using configurable <code>SessionTimeoutMinutes</code> (default 15 minutes). </p>",
+        "SpanContext$traceId": "<p> The unique identifier of the trace containing this span. Traces represent individual request-response interactions within a session and group related spans together. </p>",
+        "SpanContext$spanId": "<p> The unique identifier of the specific span being referenced. Spans represent individual operations like tool calls, model invocations, or other discrete actions within the agent's execution. </p>",
         "StartBrowserSessionRequest$browserIdentifier": "<p>The unique identifier of the browser to use for this session. This identifier specifies which browser environment to initialize for the session.</p>",
         "StartBrowserSessionResponse$browserIdentifier": "<p>The identifier of the browser.</p>",
         "StartCodeInterpreterSessionRequest$codeInterpreterIdentifier": "<p>The unique identifier of the code interpreter to use for this session. This identifier specifies which code interpreter environment to initialize for the session.</p>",
@@ -1438,6 +1574,12 @@
         "SessionSummary$createdAt": "<p>The timestamp when the session was created.</p>"
       }
     },
+    "TokenUsage": {
+      "base": "<p> The token consumption statistics for language model operations during evaluation. Provides detailed breakdown of input, output, and total tokens used for cost tracking and performance monitoring. </p>",
+      "refs": {
+        "EvaluationResultContent$tokenUsage": "<p> The token consumption statistics for this evaluation, including input tokens, output tokens, and total tokens used by the underlying language model during the evaluation process. </p>"
+      }
+    },
     "ToolArguments": {
       "base": "<p>The collection of arguments that specify the operation to perform and its parameters when invoking a tool in Amazon Bedrock. Different tools require different arguments, and this structure provides a flexible way to pass the appropriate arguments to each tool type.</p>",
       "refs": {
@@ -1454,6 +1596,18 @@
       "base": "<p>Contains structured content from a tool result.</p>",
       "refs": {
         "CodeInterpreterResult$structuredContent": "<p>The structured content of the execution result. This includes additional metadata about the execution, such as execution time, memory usage, and structured representations of output data. The format depends on the specific code interpreter and execution context.</p>"
+      }
+    },
+    "TraceId": {
+      "base": null,
+      "refs": {
+        "TraceIds$member": null
+      }
+    },
+    "TraceIds": {
+      "base": null,
+      "refs": {
+        "EvaluationTarget$traceIds": "<p> The list of trace IDs to evaluate, representing complete request-response interactions. Used to evaluate entire conversation turns or specific agent interactions within a session. </p>"
       }
     },
     "UnauthorizedException": {

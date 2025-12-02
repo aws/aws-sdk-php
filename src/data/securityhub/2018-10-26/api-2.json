@@ -238,23 +238,6 @@
         {"shape":"AccessDeniedException"}
       ]
     },
-    "ConnectorRegistrationsV2":{
-      "name":"ConnectorRegistrationsV2",
-      "http":{
-        "method":"POST",
-        "requestUri":"/connectorsv2/registrations"
-      },
-      "input":{"shape":"ConnectorRegistrationsV2Request"},
-      "output":{"shape":"ConnectorRegistrationsV2Response"},
-      "errors":[
-        {"shape":"AccessDeniedException"},
-        {"shape":"InternalServerException"},
-        {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"}
-      ]
-    },
     "CreateActionTarget":{
       "name":"CreateActionTarget",
       "http":{
@@ -285,7 +268,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "CreateAutomationRule":{
@@ -317,7 +301,8 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "CreateConfigurationPolicy":{
@@ -351,7 +336,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "CreateFindingAggregator":{
@@ -1469,6 +1455,23 @@
       "errors":[
         {"shape":"InternalException"},
         {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "RegisterConnectorV2":{
+      "name":"RegisterConnectorV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/connectorsv2/register"
+      },
+      "input":{"shape":"RegisterConnectorV2Request"},
+      "output":{"shape":"RegisterConnectorV2Response"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"}
       ]
     },
@@ -8242,25 +8245,6 @@
         "SERVICENOW"
       ]
     },
-    "ConnectorRegistrationsV2Request":{
-      "type":"structure",
-      "required":[
-        "AuthCode",
-        "AuthState"
-      ],
-      "members":{
-        "AuthCode":{"shape":"NonEmptyString"},
-        "AuthState":{"shape":"NonEmptyString"}
-      }
-    },
-    "ConnectorRegistrationsV2Response":{
-      "type":"structure",
-      "required":["ConnectorId"],
-      "members":{
-        "ConnectorArn":{"shape":"NonEmptyString"},
-        "ConnectorId":{"shape":"NonEmptyString"}
-      }
-    },
     "ConnectorStatus":{
       "type":"string",
       "enum":[
@@ -8467,11 +8451,15 @@
     },
     "CreateConnectorV2Response":{
       "type":"structure",
-      "required":["ConnectorId"],
+      "required":[
+        "ConnectorArn",
+        "ConnectorId"
+      ],
       "members":{
         "ConnectorArn":{"shape":"NonEmptyString"},
         "ConnectorId":{"shape":"NonEmptyString"},
-        "AuthUrl":{"shape":"NonEmptyString"}
+        "AuthUrl":{"shape":"NonEmptyString"},
+        "ConnectorStatus":{"shape":"ConnectorStatus"}
       }
     },
     "CreateFindingAggregatorRequest":{
@@ -8536,7 +8524,8 @@
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "Mode":{"shape":"TicketCreationMode"}
       }
     },
     "CreateTicketV2Response":{
@@ -9725,6 +9714,7 @@
         "compliance.status",
         "compliance.control",
         "finding_info.title",
+        "finding_info.related_events.traits.category",
         "finding_info.types",
         "metadata.product.name",
         "metadata.product.uid",
@@ -9737,7 +9727,8 @@
         "vulnerabilities.affected_packages.name",
         "finding_info.analytic.name",
         "compliance.standards",
-        "cloud.account.name"
+        "cloud.account.name",
+        "vendor_attributes.severity"
       ]
     },
     "GroupByResult":{
@@ -10029,7 +10020,6 @@
     },
     "JiraCloudUpdateConfiguration":{
       "type":"structure",
-      "required":["ProjectKey"],
       "members":{
         "ProjectKey":{"shape":"NonEmptyString"}
       }
@@ -10780,7 +10770,9 @@
         "evidences.dst_endpoint.port",
         "evidences.src_endpoint.autonomous_system.number",
         "evidences.src_endpoint.port",
-        "resources.image.in_use_count"
+        "resources.image.in_use_count",
+        "vulnerabilities.cve.cvss.base_score",
+        "vendor_attributes.severity_id"
       ]
     },
     "OcsfNumberFilter":{
@@ -10812,6 +10804,7 @@
         "finding_info.title",
         "finding_info.types",
         "finding_info.uid",
+        "finding_info.related_events.traits.category",
         "finding_info.related_events.uid",
         "finding_info.related_events.product.uid",
         "finding_info.related_events.title",
@@ -10865,7 +10858,8 @@
         "vulnerabilities.cve.epss.score",
         "vulnerabilities.cve.uid",
         "vulnerabilities.related_vulnerabilities",
-        "cloud.account.name"
+        "cloud.account.name",
+        "vendor_attributes.severity"
       ]
     },
     "OcsfStringFilter":{
@@ -11119,7 +11113,8 @@
     "ProviderUpdateConfiguration":{
       "type":"structure",
       "members":{
-        "JiraCloud":{"shape":"JiraCloudUpdateConfiguration"}
+        "JiraCloud":{"shape":"JiraCloudUpdateConfiguration"},
+        "ServiceNow":{"shape":"ServiceNowUpdateConfiguration"}
       },
       "union":true
     },
@@ -11171,6 +11166,25 @@
         "AVAILABLE",
         "UNAVAILABLE"
       ]
+    },
+    "RegisterConnectorV2Request":{
+      "type":"structure",
+      "required":[
+        "AuthCode",
+        "AuthState"
+      ],
+      "members":{
+        "AuthCode":{"shape":"NonEmptyString"},
+        "AuthState":{"shape":"NonEmptyString"}
+      }
+    },
+    "RegisterConnectorV2Response":{
+      "type":"structure",
+      "required":["ConnectorId"],
+      "members":{
+        "ConnectorArn":{"shape":"NonEmptyString"},
+        "ConnectorId":{"shape":"NonEmptyString"}
+      }
     },
     "RelatedFinding":{
       "type":"structure",
@@ -12019,11 +12033,6 @@
       "type":"list",
       "member":{"shape":"SensitiveDataResult"}
     },
-    "SensitiveNonEmptyString":{
-      "type":"string",
-      "pattern":".*\\S.*",
-      "sensitive":true
-    },
     "Sequence":{
       "type":"structure",
       "members":{
@@ -12036,10 +12045,13 @@
     },
     "ServiceNowDetail":{
       "type":"structure",
-      "required":["AuthStatus"],
+      "required":[
+        "SecretArn",
+        "AuthStatus"
+      ],
       "members":{
         "InstanceName":{"shape":"NonEmptyString"},
-        "ClientId":{"shape":"NonEmptyString"},
+        "SecretArn":{"shape":"NonEmptyString"},
         "AuthStatus":{"shape":"ConnectorAuthStatus"}
       }
     },
@@ -12047,14 +12059,27 @@
       "type":"structure",
       "required":[
         "InstanceName",
-        "ClientId",
-        "ClientSecret"
+        "SecretArn"
       ],
       "members":{
         "InstanceName":{"shape":"NonEmptyString"},
-        "ClientId":{"shape":"NonEmptyString"},
-        "ClientSecret":{"shape":"SensitiveNonEmptyString"}
+        "SecretArn":{"shape":"NonEmptyString"}
       }
+    },
+    "ServiceNowUpdateConfiguration":{
+      "type":"structure",
+      "members":{
+        "SecretArn":{"shape":"NonEmptyString"}
+      }
+    },
+    "ServiceQuotaExceededException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"NonEmptyString"},
+        "Code":{"shape":"NonEmptyString"}
+      },
+      "error":{"httpStatusCode":402},
+      "exception":true
     },
     "Severity":{
       "type":"structure",
@@ -12620,6 +12645,10 @@
       "error":{"httpStatusCode":429},
       "exception":true
     },
+    "TicketCreationMode":{
+      "type":"string",
+      "enum":["DRYRUN"]
+    },
     "Timestamp":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
@@ -12878,7 +12907,6 @@
           "location":"uri",
           "locationName":"ConnectorId"
         },
-        "ClientSecret":{"shape":"SensitiveNonEmptyString"},
         "Description":{"shape":"NonEmptyString"},
         "Provider":{"shape":"ProviderUpdateConfiguration"}
       }
