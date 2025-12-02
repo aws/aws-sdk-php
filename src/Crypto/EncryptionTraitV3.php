@@ -215,9 +215,13 @@ trait EncryptionTraitV3
         //# The generated IV or Message ID MUST be set or returned from the
         //# encryption process such that it can be included in the content metadata.
         //= ../specification/s3-encryption/key-derivation.md#hkdf-operation
+        //= type=implication
         //# When encrypting or decrypting with ALG_AES_256_GCM_HKDF_SHA512_COMMIT_KEY,
         //# the IV used in the AES-GCM content encryption/decryption
         //# MUST consist entirely of bytes with the value 0x01.
+        //= ../specification/s3-encryption/key-derivation.md#hkdf-operation
+        //= type=implication
+        //# The IV's total length MUST match the IV length defined by the algorithm suite.
         $options['Iv'] = str_repeat("\1", $algorithmSuite->getIvLengthBytes());
         $messageId = $provider->generateIv(
             $this->getCipherOpenSslName(
@@ -434,8 +438,6 @@ trait EncryptionTraitV3
                         . " encrypted in this way, but other AWS SDKs may not be"
                         . " able to.", E_USER_NOTICE);
                 }
-                //= ../specification/s3-encryption/key-derivation.md#hkdf-operation
-                //# The client MUST set the AAD to the Algorithm Suite ID represented as bytes.
                 $cipherOptions['Aad'] = isset($cipherOptions['Aad'])
                     ? $cipherOptions['Aad'] + $algorithmSuiteIdAsBytes
                     : $algorithmSuiteIdAsBytes;
