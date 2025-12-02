@@ -1,0 +1,27 @@
+name: Model Change Scan
+
+on:
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  verify-no-models-changes:
+    runs-on: ubuntu-latest
+    name: Check for model changes
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - run: |
+          BASE_REPO="${{ github.event.pull_request.base.repo.clone_url }}"
+          git fetch $BASE_REPO master:master -q
+          CHANGED_FILES=$(git diff --name-only FETCH_HEAD...HEAD -- src/data/)
+          if [ ! -z "$CHANGED_FILES" ]; then
+            echo "Changes detected in the following models:"
+            echo "$CHANGED_FILES"
+            exit 1
+          fi

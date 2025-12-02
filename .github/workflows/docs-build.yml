@@ -1,4 +1,4 @@
-name: Build API documentation
+name: Build API Documentation
 permissions:
   contents: read
 on:
@@ -14,12 +14,12 @@ jobs:
         php-versions: ['8.1']
     name: Build API documentation for PHP ${{ matrix.php-versions }}
     steps:
-      - name: Setup PHP with Xdebug
+      - name: Setup PHP with JIT
         uses: shivammathur/setup-php@v2
         with:
-          coverage: xdebug
+          coverage: none
           php-version: ${{ matrix.php-versions }}
-          ini-values: xdebug.overload_var_dump=0, memory_limit=4G, phar.readonly=false
+          ini-values: memory_limit=4G, phar.readonly=false, opcache.enable=1, opcache.enable_cli=1, opcache.jit=tracing, opcache.jit_buffer_size=128M
 
       - name: Checkout CodeBase
         uses: actions/checkout@v6

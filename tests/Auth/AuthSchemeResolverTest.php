@@ -136,7 +136,6 @@ class AuthSchemeResolverTest extends TestCase
         $resolver = new AuthSchemeResolver($credentialProvider);
         $reflection = new \ReflectionClass($resolver);
         $method = $reflection->getMethod('isCompatibleAuthScheme');
-        $method->setAccessible(true);
         $this->assertTrue($method->invokeArgs($resolver, ['v4']));
     }
 
@@ -150,7 +149,6 @@ class AuthSchemeResolverTest extends TestCase
         $resolver = new AuthSchemeResolver($credentialProvider);
         $reflection = new \ReflectionClass($resolver);
         $method = $reflection->getMethod('isCompatibleAuthScheme');
-        $method->setAccessible(true);
         $this->assertFalse($method->invokeArgs($resolver, ['invalidScheme']));
     }
 

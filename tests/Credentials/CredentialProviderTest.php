@@ -451,10 +451,18 @@ EOT;
     public function testCreatesFromProcessCredentialProvider(): void
     {
         $awsDir = $this->createAwsHome();
-        $ini = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [foo]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
 EOT;
+        } else {
+            $ini = <<<EOT
+[foo]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/credentials', $ini);
 
         $creds = call_user_func(CredentialProvider::process('foo'))->wait();
@@ -466,10 +474,18 @@ EOT;
     {
         $testAccountId = 'foo';
         $awsDir = $this->createAwsHome();
-        $ini = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [foo]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1, "AccountId": "$testAccountId"}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1,"AccountId":"$testAccountId"}
 EOT;
+        } else {
+            $ini = <<<EOT
+[foo]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1,"AccountId":"$testAccountId"}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/credentials', $ini);
 
         $creds = call_user_func(CredentialProvider::process('foo'))->wait();
@@ -481,10 +497,18 @@ EOT;
     public function testCreatesFromProcessCredentialWithFilename(): void
     {
         $awsDir = $this->createAwsHome();
-        $ini = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [baz]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
 EOT;
+        } else {
+            $ini = <<<EOT
+[baz]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/mycreds', $ini);
 
         $creds = call_user_func(CredentialProvider::process('baz', $awsDir . '/mycreds'))->wait();
@@ -495,10 +519,18 @@ EOT;
     public function testCreatesFromProcessCredentialWithFilenameParameterOverSharedFilename(): void
     {
         $awsDir = $this->createAwsHome();
-        $ini = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [baz]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
 EOT;
+        } else {
+            $ini = <<<EOT
+[baz]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/mycreds', $ini);
         putenv("AWS_SHARED_CREDENTIALS_FILE={$awsDir}/badfilename");
 
@@ -512,10 +544,18 @@ EOT;
     public function testCreatesFromProcessCredentialWithSharedFilename(): void
     {
         $awsDir = $this->createAwsHome();
-        $ini = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [baz]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
 EOT;
+        } else {
+            $ini = <<<EOT
+[baz]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/mycreds', $ini);
         putenv("AWS_SHARED_CREDENTIALS_FILE={$awsDir}/mycreds");
 
@@ -566,10 +606,19 @@ EOT;
         $awsDir = $this->createAwsHome();
         $expiration = new DateTimeResult("+1 hour");
         $expires = $expiration->getTimestamp();
-        $ini = <<<EOT
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [foo]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "SessionToken": "baz", "Expiration":"$expiration", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Expiration":"$expiration","Version":1}
 EOT;
+        } else {
+            $ini = <<<EOT
+[foo]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Expiration":"$expiration","Version":1}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/credentials', $ini);
 
         $creds = call_user_func(CredentialProvider::process('foo'))->wait();
@@ -601,10 +650,18 @@ EOT;
         $this->expectException(\Aws\Exception\CredentialsException::class);
 
         $awsDir = $this->createAwsHome();
-        $ini = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [default]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":2}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":2}
 EOT;
+        } else {
+            $ini = <<<EOT
+[default]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":2}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/credentials', $ini);
 
         call_user_func(CredentialProvider::process())->wait();
@@ -616,10 +673,18 @@ EOT;
         $this->expectException(\Aws\Exception\CredentialsException::class);
 
         $awsDir = $this->createAwsHome();
-        $ini = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [default]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "SessionToken":"baz","Version":1, "Expiration":"1970-01-01T00:00:00.000Z"}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Version":1,"Expiration":"1970-01-01T00:00:00.000Z"}
 EOT;
+        } else {
+            $ini = <<<EOT
+[default]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Version":1,"Expiration":"1970-01-01T00:00:00.000Z"}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/credentials', $ini);
 
         call_user_func(CredentialProvider::process())->wait();
@@ -631,10 +696,18 @@ EOT;
         $this->expectException(\Aws\Exception\CredentialsException::class);
 
         $awsDir = $this->createAwsHome();
-        $ini = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [default]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "SessionToken":"baz","Version":1, "Expiration":"invalid_date_format"}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Version":1,"Expiration":"invalid_date_format"}
 EOT;
+        } else {
+            $ini = <<<EOT
+[default]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Version":1,"Expiration":"invalid_date_format"}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/credentials', $ini);
 
         call_user_func(CredentialProvider::process())->wait();
@@ -1808,14 +1881,20 @@ EOT;
     {
         $awsDir = $this->createTempDir('aws_') . '/.aws';
         mkdir($awsDir, 0777, true);
-
-        $credentialsIni = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $credentialsIni = <<<EOT
 [default]
-credential_process = echo '{"AccessKeyId":"credentialsFoo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"credentialsFoo","SecretAccessKey":"bar","Version":1}
 EOT;
+        } else {
+            $credentialsIni = <<<EOT
+[default]
+credential_process = echo '{"AccessKeyId":"credentialsFoo","SecretAccessKey":"bar","Version":1}'
+EOT;
+        }
+
         file_put_contents($awsDir . '/credentials', $credentialsIni);
         putenv('HOME=' . dirname($awsDir));
-
         $provider = CredentialProvider::defaultProvider();
         $creds = $provider()->wait();
 
@@ -1826,11 +1905,19 @@ EOT;
     {
         $awsDir = $this->createTempDir('aws_') . '/.aws';
         mkdir($awsDir, 0777, true);
-
-        $configIni = <<<EOT
+        if (PHP_OS_FAMILY === 'Windows') {
+            $configIni = <<<EOT
 [profile default]
-credential_process = echo '{"AccessKeyId":"configFoo","SecretAccessKey":"baz", "Version":1}'
+credential_process = echo {"AccessKeyId":"configFoo","SecretAccessKey":"baz","Version":1}
+
 EOT;
+        } else {
+            $configIni = <<<EOT
+[profile default]
+credential_process = echo '{"AccessKeyId":"configFoo","SecretAccessKey":"baz","Version":1}'
+
+EOT;
+        }
 
         file_put_contents($awsDir . '/config', $configIni);
         putenv('HOME=' . dirname($awsDir));
@@ -2201,10 +2288,19 @@ EOF
         putenv('HOME=' . $home);
 
         $profile = 'test-profile';
-        $configData = <<<EOF
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $configData = <<<EOF
 [$profile]
-credential_process= echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
 EOF;
+        } else {
+            $configData = <<<EOF
+[$profile]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+EOF;
+        }
+
         $configPath = $awsDir . '/config';
         file_put_contents($configPath, $configData);
 

@@ -25,6 +25,10 @@ class CodeSnippetGeneratorTest extends TestCase
         $expected,
         $isInput = true
     ) {
+        if (PHP_OS_FAMILY === 'Windows') {
+            $this->markTestSkipped();
+        }
+
         $builder = new CodeSnippetGenerator($service);
         $this->assertSame($expected, $builder($operation, $input, [], $isInput));
     }

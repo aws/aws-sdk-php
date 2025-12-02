@@ -52,10 +52,8 @@ class SignatureV4Test extends TestCase
         $s = new SignatureV4('foo', 'bar');
         $r = new Request('GET', 'http://httpbin.org', ['X-amz-Foo' => ['baz', '  bar ']]);
         $methA = new \ReflectionMethod($s, 'parseRequest');
-        $methA->setAccessible(true);
         $reqArray = $methA->invoke($s, $r);
         $methB = new \ReflectionMethod($s, 'createContext');
-        $methB->setAccessible(true);
         $result = $methB->invoke($s, $reqArray, '123');
         $this->assertSame('host;x-amz-foo', $result['headers']);
         $this->assertSame("GET\n/\n\nhost:httpbin.org\nx-amz-foo:bar,baz\n\nhost;x-amz-foo\n123", $result['creq']);
@@ -68,7 +66,6 @@ class SignatureV4Test extends TestCase
             'x-amz-content-sha256' => '123'
         ]);
         $method = new \ReflectionMethod($sig, 'getPayload');
-        $method->setAccessible(true);
         $this->assertSame('123', $method->invoke($sig, $req));
     }
 
@@ -77,7 +74,6 @@ class SignatureV4Test extends TestCase
         $sig = new SignatureV4('foo', 'bar');
         // Hack the class so that it thinks it needs 3 more entries to be full
         $p = new \ReflectionProperty($sig, 'cacheSize');
-        $p->setAccessible(true);
         $p->setValue($sig, 47);
 
         $request = new Request('GET', 'http://www.example.com');
@@ -398,12 +394,9 @@ class SignatureV4Test extends TestCase
         $signature = new SignatureV4('host', 'us-east-1', ['unsigned-body' => 'true']);
         $request = Psr7\Message::parseRequest($req);
         $contextFn = new \ReflectionMethod($signature, 'createContext');
-        $contextFn->setAccessible(true);
         $parseFn = new \ReflectionMethod($signature, 'parseRequest');
-        $parseFn->setAccessible(true);
         $parsed = $parseFn->invoke($signature, $request);
         $payloadFn = new \ReflectionMethod($signature, 'getPayload');
-        $payloadFn->setAccessible(true);
         $payload = $payloadFn->invoke($signature, $request);
         $this->assertSame('UNSIGNED-PAYLOAD',$payload);
         $ctx = $contextFn->invoke($signature, $parsed, $payload);
@@ -524,12 +517,9 @@ class SignatureV4Test extends TestCase
         $signature = new SignatureV4('host', 'us-east-1');
         $request = Psr7\Message::parseRequest($req);
         $contextFn = new \ReflectionMethod($signature, 'createContext');
-        $contextFn->setAccessible(true);
         $parseFn = new \ReflectionMethod($signature, 'parseRequest');
-        $parseFn->setAccessible(true);
         $parsed = $parseFn->invoke($signature, $request);
         $payloadFn = new \ReflectionMethod($signature, 'getPayload');
-        $payloadFn->setAccessible(true);
         $payload = $payloadFn->invoke($signature, $request);
         $ctx = $contextFn->invoke($signature, $parsed, $payload);
         $this->assertEquals($creq, $ctx['creq']);
