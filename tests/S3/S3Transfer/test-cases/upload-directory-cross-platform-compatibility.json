@@ -1,0 +1,315 @@
+[
+  {
+    "summary": "Test upload directory - Windows happy case",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "maxConcurrency": 10
+    },
+    "uploadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "source": "C:\\Users\\user\\Documents",
+      "recursive": true,
+      "s3Prefix": "backup"
+    },
+    "sourceStructure": [
+      {
+        "path": "C:\\Users\\user\\Documents\\report.docx",
+        "type": "file",
+        "size": 1048576
+      },
+      {
+        "path": "C:\\Users\\user\\Documents\\projects\\presentation.pptx",
+        "type": "file",
+        "size": 5242880
+      },
+      {
+        "path": "C:\\Users\\user\\Documents\\notes.txt",
+        "type": "file",
+        "size": 2048
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "backup/report.docx",
+          "filePath": "C:\\Users\\user\\Documents\\report.docx"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"winhappy123\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "backup/projects/presentation.pptx",
+          "filePath": "C:\\Users\\user\\Documents\\projects\\presentation.pptx"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"winhappy456\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "backup/notes.txt",
+          "filePath": "C:\\Users\\user\\Documents\\notes.txt"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"winhappy789\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsUploaded": 3,
+        "objectsFailed": 0,
+        "note": "Windows normal operation with backslash to forward slash conversion"
+      }
+    ]
+  },
+  {
+    "summary": "Test upload directory - macOS happy case",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "maxConcurrency": 10
+    },
+    "uploadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "source": "/Users/user/Pictures",
+      "recursive": true,
+      "s3Prefix": "photos"
+    },
+    "sourceStructure": [
+      {
+        "path": "/Users/user/Pictures/IMG_001.jpg",
+        "type": "file",
+        "size": 4194304
+      },
+      {
+        "path": "/Users/user/Pictures/2023/summer/beach.jpg",
+        "type": "file",
+        "size": 6291456
+      },
+      {
+        "path": "/Users/user/Pictures/album.json",
+        "type": "file",
+        "size": 1024
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "photos/IMG_001.jpg",
+          "filePath": "/Users/user/Pictures/IMG_001.jpg"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"machappy123\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "photos/2023/summer/beach.jpg",
+          "filePath": "/Users/user/Pictures/2023/summer/beach.jpg"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"machappy456\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "photos/album.json",
+          "filePath": "/Users/user/Pictures/album.json"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"machappy789\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsUploaded": 3,
+        "objectsFailed": 0,
+        "note": "macOS normal operation with forward slash preservation"
+      }
+    ]
+  },
+  {
+    "summary": "Test upload directory - Linux happy case",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "maxConcurrency": 10
+    },
+    "uploadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "source": "/home/user/workspace/project",
+      "recursive": true,
+      "s3Prefix": "code"
+    },
+    "sourceStructure": [
+      {
+        "path": "/home/user/workspace/project/main.c",
+        "type": "file",
+        "size": 8192
+      },
+      {
+        "path": "/home/user/workspace/project/lib/utils.h",
+        "type": "file",
+        "size": 2048
+      },
+      {
+        "path": "/home/user/workspace/project/Makefile",
+        "type": "file",
+        "size": 1024
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "code/main.c",
+          "filePath": "/home/user/workspace/project/main.c"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"linuxhappy123\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "code/lib/utils.h",
+          "filePath": "/home/user/workspace/project/lib/utils.h"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"linuxhappy456\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "code/Makefile",
+          "filePath": "/home/user/workspace/project/Makefile"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"linuxhappy789\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsUploaded": 3,
+        "objectsFailed": 0,
+        "note": "Linux normal operation with forward slash preservation"
+      }
+    ]
+  },
+  {
+    "summary": "Test upload directory - Linux case sensitivity (distinct files)",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "maxConcurrency": 10
+    },
+    "uploadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "source": "/home/user/documents",
+      "recursive": true,
+      "s3Prefix": "backup"
+    },
+    "sourceStructure": [
+      {
+        "path": "/home/user/documents/readme.txt",
+        "type": "file",
+        "size": 1024
+      },
+      {
+        "path": "/home/user/documents/README.TXT",
+        "type": "file",
+        "size": 2048
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "backup/readme.txt",
+          "filePath": "/home/user/documents/readme.txt"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"linux123\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "backup/README.TXT",
+          "filePath": "/home/user/documents/README.TXT"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"linux456\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsUploaded": 2,
+        "objectsFailed": 0,
+        "note": "Linux case-sensitive filesystem treats files as distinct"
+      }
+    ]
+  }
+]
