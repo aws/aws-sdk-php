@@ -246,11 +246,12 @@ class RetryMiddlewareV2
      */
     public function exponentialDelayWithJitter($attempts)
     {
+        $max = mt_getrandmax();
         try {
-            $rand = random_int(0, mt_getrandmax()) / mt_getrandmax();
+            $rand = random_int(0, $max) / $max;
         } catch (Exception $_) {
             // fallback to prevent failing
-            $rand = mt_rand(0, mt_getrandmax()) / mt_getrandmax();
+            $rand = mt_rand(0, $max) / $max;
         }
 
         return min(1000 * $rand * pow(2, $attempts) , $this->maxBackoff);
