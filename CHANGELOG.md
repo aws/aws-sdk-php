@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.366.0 - 2025-12-03
 
 * `Aws\` - Adds support for PHP 8.5
 * `Aws\Bedrock` - Adding support in Amazon Bedrock to customize models with reinforcement fine-tuning (RFT) and support for updating the existing Custom Model Deployments.
