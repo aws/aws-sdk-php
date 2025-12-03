@@ -907,10 +907,8 @@ final class S3TransferManager
      */
     public static function isDir($path): bool
     {
-        if (is_link($path)) {
-            $path = readlink($path);
-        }
+        $realPath = realpath($path);
 
-        return is_dir($path);
+        return $realPath !== false && is_dir($realPath);
     }
 }
