@@ -193,6 +193,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateAutomatedReasoningPolicyAnnotationsAsync(array $args = [])
  * @method \Aws\Result updateAutomatedReasoningPolicyTestCase(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAutomatedReasoningPolicyTestCaseAsync(array $args = [])
+ * @method \Aws\Result updateCustomModelDeployment(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateCustomModelDeploymentAsync(array $args = [])
  * @method \Aws\Result updateGuardrail(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateGuardrailAsync(array $args = [])
  * @method \Aws\Result updateMarketplaceModelEndpoint(array $args = [])

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Adds support for PHP 8.5
+* `Aws\Bedrock` - Adding support in Amazon Bedrock to customize models with reinforcement fine-tuning (RFT) and support for updating the existing Custom Model Deployments.
+* `Aws\SageMaker` - Introduces Serverless training: A fully managed compute infrastructure that abstracts away all infrastructure complexity, allowing you to focus purely on model development. Added AI model customization assets used to train, refine, and evaluate custom models during the model customization process.
+
 ## 3.365.0 - 2025-12-02
 
 * `Aws\` - Fixed an issue in NonSeekableStreamDecodingEventStreamIterator where partial reads from non-seekable streams could result in truncated payloads and CRC mismatches.

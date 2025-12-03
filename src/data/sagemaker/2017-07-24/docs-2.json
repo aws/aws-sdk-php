@@ -410,7 +410,8 @@
     "AcceptEula": {
       "base": null,
       "refs": {
-        "ModelAccessConfig$AcceptEula": "<p>Specifies agreement to the model end-user license agreement (EULA). The <code>AcceptEula</code> value must be explicitly defined as <code>True</code> in order to accept the EULA that this model requires. You are responsible for reviewing and complying with any applicable license terms and making sure they are acceptable for your use case before downloading or using a model.</p>"
+        "ModelAccessConfig$AcceptEula": "<p>Specifies agreement to the model end-user license agreement (EULA). The <code>AcceptEula</code> value must be explicitly defined as <code>True</code> in order to accept the EULA that this model requires. You are responsible for reviewing and complying with any applicable license terms and making sure they are acceptable for your use case before downloading or using a model.</p>",
+        "ServerlessJobConfig$AcceptEula": "<p> Specifies agreement to the model end-user license agreement (EULA). The <code>AcceptEula</code> value must be explicitly defined as <code>True</code> in order to accept the EULA that this model requires. You are responsible for reviewing and complying with any applicable license terms and making sure they are acceptable for your use case before downloading or using a model. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-foundation-models-choose.html#jumpstart-foundation-models-choose-eula\">End-user license agreements</a> section for more details on accepting the EULA. </p>"
       }
     },
     "AccountDefaultStatus": {
@@ -1021,6 +1022,18 @@
         "ListAssociationsRequest$DestinationArn": "<p>A filter that returns only associations with the specified destination Amazon Resource Name (ARN).</p>",
         "QueryLineageStartArns$member": null,
         "Vertex$Arn": "<p>The Amazon Resource Name (ARN) of the lineage entity resource.</p>"
+      }
+    },
+    "AssociationInfo": {
+      "base": "<p> The data type used to describe the relationship between different sources. </p>",
+      "refs": {
+        "AssociationInfoList$member": null
+      }
+    },
+    "AssociationInfoList": {
+      "base": null,
+      "refs": {
+        "LineageMetadata$Associations": "<p> The lineage metadata associations. </p>"
       }
     },
     "AssociationSummaries": {
@@ -1645,6 +1658,12 @@
         "CandidateArtifactLocations$BacktestResults": "<p>The Amazon S3 prefix to the accuracy metrics and the inference results observed over the testing window. Available only for the time-series forecasting problem type.</p>"
       }
     },
+    "BaseModel": {
+      "base": "<p>Identifies the foundation model that was used as the starting point for model customization.</p>",
+      "refs": {
+        "ModelPackageContainerDefinition$BaseModel": "<p> The base model of the package. </p>"
+      }
+    },
     "BaseModelName": {
       "base": null,
       "refs": {
@@ -1885,6 +1904,30 @@
         "MonitoringInput$BatchTransformInput": "<p>Input object for the batch transform job.</p>"
       }
     },
+    "BedrockCustomModelDeploymentMetadata": {
+      "base": "<p> The metadata of the Amazon Bedrock custom model deployment. </p>",
+      "refs": {
+        "PipelineExecutionStepMetadata$BedrockCustomModelDeployment": "<p> The metadata of the Amazon Bedrock custom model deployment used in pipeline execution step. </p>"
+      }
+    },
+    "BedrockCustomModelMetadata": {
+      "base": "<p> The metadata of the Amazon Bedrock custom model. </p>",
+      "refs": {
+        "PipelineExecutionStepMetadata$BedrockCustomModel": "<p> The metadata of the Amazon Bedrock custom model used in the pipeline execution step. </p>"
+      }
+    },
+    "BedrockModelImportMetadata": {
+      "base": "<p> The metadata of the Amazon Bedrock model import. </p>",
+      "refs": {
+        "PipelineExecutionStepMetadata$BedrockModelImport": "<p> The metadata of Amazon Bedrock model import used in pipeline execution step. </p>"
+      }
+    },
+    "BedrockProvisionedModelThroughputMetadata": {
+      "base": "<p> The metadata of the Amazon Bedrock provisioned model throughput. </p>",
+      "refs": {
+        "PipelineExecutionStepMetadata$BedrockProvisionedModelThroughput": "<p> The metadata of the Amazon Bedrock provisioned model throughput used in the pipeline execution step. </p>"
+      }
+    },
     "BestObjectiveNotImproving": {
       "base": "<p>A structure that keeps track of which training jobs launched by your hyperparameter tuning job are not improving model performance as evaluated against an objective function.</p>",
       "refs": {
@@ -1902,6 +1945,12 @@
       "refs": {
         "DescribeTrainingJobResponse$BillableTimeInSeconds": "<p>The billable time in seconds. Billable time refers to the absolute wall-clock time.</p> <p>Multiply <code>BillableTimeInSeconds</code> by the number of instances (<code>InstanceCount</code>) in your training cluster to get the total compute time SageMaker bills you if you run distributed training. The formula is as follows: <code>BillableTimeInSeconds * InstanceCount</code> .</p> <p>You can calculate the savings from using managed spot training using the formula <code>(1 - BillableTimeInSeconds / TrainingTimeInSeconds) * 100</code>. For example, if <code>BillableTimeInSeconds</code> is 100 and <code>TrainingTimeInSeconds</code> is 500, the savings is 80%.</p>",
         "TrainingJob$BillableTimeInSeconds": "<p>The billable time in seconds.</p>"
+      }
+    },
+    "BillableTokenCount": {
+      "base": null,
+      "refs": {
+        "DescribeTrainingJobResponse$BillableTokenCount": "<p> The billable token count for eligible serverless training jobs. </p>"
       }
     },
     "BlockedReason": {
@@ -1954,6 +2003,7 @@
         "ListStageDevicesRequest$ExcludeDevicesDeployedInOtherStage": "<p>Toggle for excluding devices deployed in other stages.</p>",
         "Model$EnableNetworkIsolation": "<p>Isolates the model container. No inbound or outbound network calls can be made to or from the model container.</p>",
         "ModelDashboardIndicatorAction$Enabled": "<p>Indicates whether the alert action is turned on.</p>",
+        "ModelPackageContainerDefinition$IsCheckpoint": "<p> The checkpoint of the model package. </p>",
         "MonitoringCsvDatasetFormat$Header": "<p>Indicates if the CSV data has a header.</p>",
         "MonitoringJsonDatasetFormat$Line": "<p>Indicates if the file should be read as a JSON object per line. </p>",
         "MonitoringNetworkConfig$EnableInterContainerTrafficEncryption": "<p>Whether to encrypt all communications between the instances used for the monitoring jobs. Choose <code>True</code> to encrypt communications. Encryption provides greater security for distributed jobs, but the processing might take longer.</p>",
@@ -4439,6 +4489,12 @@
         "CustomerMetadataMap$value": null
       }
     },
+    "CustomizationTechnique": {
+      "base": null,
+      "refs": {
+        "ServerlessJobConfig$CustomizationTechnique": "<p> The model customization technique. </p>"
+      }
+    },
     "CustomizedMetricSpecification": {
       "base": "<p>A customized metric.</p>",
       "refs": {
@@ -4536,6 +4592,12 @@
       "base": "<p>Configuration for Dataset Definition inputs. The Dataset Definition input must specify exactly one of either <code>AthenaDatasetDefinition</code> or <code>RedshiftDatasetDefinition</code> types.</p>",
       "refs": {
         "ProcessingInput$DatasetDefinition": "<p>Configuration for a Dataset Definition input. </p>"
+      }
+    },
+    "DatasetSource": {
+      "base": "<p> Specifies a dataset source for a channel. </p>",
+      "refs": {
+        "DataSource$DatasetSource": "<p> The dataset resource that's associated with a channel. </p>"
       }
     },
     "DebugHookConfig": {
@@ -6756,6 +6818,18 @@
         "DescribePartnerAppResponse$Error": "<p>This is an error field object that contains the error code and the reason for an operation failure.</p>"
       }
     },
+    "EvaluationType": {
+      "base": null,
+      "refs": {
+        "ServerlessJobConfig$EvaluationType": "<p> The evaluation job type. Required when serverless job type is <code>Evaluation</code>. </p>"
+      }
+    },
+    "EvaluatorArn": {
+      "base": null,
+      "refs": {
+        "ServerlessJobConfig$EvaluatorArn": "<p> The evaluator Amazon Resource Name (ARN) used as reward function or reward prompt. </p>"
+      }
+    },
     "EventDetails": {
       "base": "<p>Detailed information about a specific event, including event metadata.</p>",
       "refs": {
@@ -7839,6 +7913,7 @@
     "HubContentName": {
       "base": null,
       "refs": {
+        "BaseModel$HubContentName": "<p> The hub content name of the base model. </p>",
         "CreateHubContentPresignedUrlsRequest$HubContentName": "<p>The name of the hub content for which to generate presigned URLs. This identifies the specific model or content within the hub.</p>",
         "CreateHubContentReferenceRequest$HubContentName": "<p>The name of the hub content to reference.</p>",
         "DeleteHubContentReferenceRequest$HubContentName": "<p>The name of the hub content to delete.</p>",
@@ -7909,6 +7984,7 @@
     "HubContentVersion": {
       "base": null,
       "refs": {
+        "BaseModel$HubContentVersion": "<p> The hub content version of the base model. </p>",
         "CreateHubContentPresignedUrlsRequest$HubContentVersion": "<p>The version of the hub content. If not specified, the latest version is used.</p>",
         "CreateHubContentReferenceRequest$MinVersion": "<p>The minimum version of the hub content to reference.</p>",
         "DeleteHubContentRequest$HubContentVersion": "<p>The version of the content that you want to delete from a hub.</p>",
@@ -7919,6 +7995,12 @@
         "ListHubContentVersionsRequest$MinVersion": "<p>The lower bound of the hub content versions to list.</p>",
         "UpdateHubContentReferenceRequest$MinVersion": "<p>The minimum hub content version of the referenced model that you want to use. The minimum version must be older than the latest available version of the referenced model. To support all versions of a model, set the value to <code>1.0.0</code>.</p>",
         "UpdateHubContentRequest$HubContentVersion": "<p>The hub content version that you want to update. For example, if you have two versions of a resource in your hub, you can update the second version.</p>"
+      }
+    },
+    "HubDataSetArn": {
+      "base": null,
+      "refs": {
+        "DatasetSource$DatasetArn": "<p> The Amazon Resource Name (ARN) of the dataset resource. </p>"
       }
     },
     "HubDescription": {
@@ -8744,6 +8826,12 @@
       "refs": {
         "DescribeInferenceComponentOutput$LastDeploymentConfig": "<p>The deployment and rollback settings that you assigned to the inference component.</p>",
         "UpdateInferenceComponentInput$DeploymentConfig": "<p>The deployment configuration for the inference component. The configuration contains the desired deployment strategy and rollback settings.</p>"
+      }
+    },
+    "InferenceComponentMetadata": {
+      "base": "<p> The metadata of the inference component. </p>",
+      "refs": {
+        "PipelineExecutionStepMetadata$InferenceComponent": "<p> The metadata of the inference component used in pipeline execution step. </p>"
       }
     },
     "InferenceComponentName": {
@@ -9751,6 +9839,12 @@
         "LineageGroupSummaries$member": null
       }
     },
+    "LineageMetadata": {
+      "base": "<p> The metadata that tracks relationships between ML artifacts, actions, and contexts. </p>",
+      "refs": {
+        "PipelineExecutionStepMetadata$Lineage": "<p> The metadata of the lineage used in pipeline execution step. </p>"
+      }
+    },
     "LineageType": {
       "base": null,
       "refs": {
@@ -10563,6 +10657,18 @@
         "UpdateImageVersionRequest$MLFramework": "<p>The machine learning framework vended in the image version.</p>"
       }
     },
+    "MLflowArn": {
+      "base": null,
+      "refs": {
+        "MLflowConfiguration$MlflowResourceArn": "<p> The Amazon Resource Name (ARN) of MLflow configuration resource. </p>"
+      }
+    },
+    "MLflowConfiguration": {
+      "base": "<p> The MLflow configuration. </p>",
+      "refs": {
+        "DescribePipelineExecutionResponse$MLflowConfig": "<p> The MLflow configuration of the pipeline execution. </p>"
+      }
+    },
     "MaintenanceStatus": {
       "base": null,
       "refs": {
@@ -10592,6 +10698,14 @@
       "base": null,
       "refs": {
         "ProductionVariantManagedInstanceScaling$Status": "<p>Indicates whether managed instance scaling is enabled.</p>"
+      }
+    },
+    "MapString2048": {
+      "base": null,
+      "refs": {
+        "LineageMetadata$ActionArns": "<p> The Amazon Resource Name (ARN) of the lineage metadata action. </p>",
+        "LineageMetadata$ArtifactArns": "<p> The Amazon Resource Name (ARN) of the lineage metadata artifact. </p>",
+        "LineageMetadata$ContextArns": "<p> The Amazon Resource Name (ARN) of the lineage metadata context. </p>"
       }
     },
     "MaxAutoMLJobRuntimeInSeconds": {
@@ -10971,6 +11085,12 @@
         "InstanceMetadataServiceConfiguration$MinimumInstanceMetadataServiceVersion": "<p>Indicates the minimum IMDS version that the notebook instance supports. When passed as part of <code>CreateNotebookInstance</code>, if no value is selected, then it defaults to IMDSv1. This means that both IMDSv1 and IMDSv2 are supported. If passed as part of <code>UpdateNotebookInstance</code>, there is no default.</p>"
       }
     },
+    "MlFlowResourceArn": {
+      "base": "<p>MlflowDetails relevant fields</p>",
+      "refs": {
+        "MlflowConfig$MlflowResourceArn": "<p> The Amazon Resource Name (ARN) of the MLflow resource. </p>"
+      }
+    },
     "MlReservationArn": {
       "base": null,
       "refs": {
@@ -11031,6 +11151,50 @@
       "base": null,
       "refs": {
         "CreatePresignedMlflowAppUrlResponse$AuthorizedUrl": "<p>A presigned URL with an authorization token.</p>"
+      }
+    },
+    "MlflowConfig": {
+      "base": "<p> The MLflow configuration using SageMaker managed MLflow. </p>",
+      "refs": {
+        "CreateTrainingJobRequest$MlflowConfig": "<p> The MLflow configuration using SageMaker managed MLflow. </p>",
+        "DescribeTrainingJobResponse$MlflowConfig": "<p> The MLflow configuration using SageMaker managed MLflow. </p>"
+      }
+    },
+    "MlflowDetails": {
+      "base": "<p> The MLflow details of this job. </p>",
+      "refs": {
+        "DescribeTrainingJobResponse$MlflowDetails": "<p> The MLflow details of this job. </p>"
+      }
+    },
+    "MlflowExperimentEntityName": {
+      "base": null,
+      "refs": {
+        "MLflowConfiguration$MlflowExperimentName": "<p> The name of the MLflow configuration. </p>",
+        "StartPipelineExecutionRequest$MlflowExperimentName": "<p> The MLflow experiment name of the start execution. </p>"
+      }
+    },
+    "MlflowExperimentId": {
+      "base": null,
+      "refs": {
+        "MlflowDetails$MlflowExperimentId": "<p> The MLflow experiment ID used for this job. </p>"
+      }
+    },
+    "MlflowExperimentName": {
+      "base": "<p>MlflowConfig relevant fields</p>",
+      "refs": {
+        "MlflowConfig$MlflowExperimentName": "<p> The MLflow experiment name used for this job. </p>"
+      }
+    },
+    "MlflowRunId": {
+      "base": null,
+      "refs": {
+        "MlflowDetails$MlflowRunId": "<p> The MLflow run ID used for this job. </p>"
+      }
+    },
+    "MlflowRunName": {
+      "base": null,
+      "refs": {
+        "MlflowConfig$MlflowRunName": "<p> The MLflow run name used for this job. </p>"
       }
     },
     "MlflowVersion": {
@@ -11542,13 +11706,16 @@
         "CreateModelPackageOutput$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the new model package.</p>",
         "DescribeCompilationJobResponse$ModelPackageVersionArn": "<p>The Amazon Resource Name (ARN) of the versioned model package that was provided to SageMaker Neo when you initiated a compilation job.</p>",
         "DescribeModelPackageOutput$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
+        "DescribeTrainingJobResponse$OutputModelPackageArn": "<p> The Amazon Resource Name (ARN) of the output model package containing model weights or checkpoints. </p>",
         "InferenceRecommendationsJob$ModelPackageVersionArn": "<p>The Amazon Resource Name (ARN) of a versioned model package.</p>",
         "ListInferenceRecommendationsJobsRequest$ModelPackageVersionArnEquals": "<p>A filter that returns only jobs that were created for this versioned model package.</p>",
         "ModelPackage$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
         "ModelPackageArnList$member": null,
+        "ModelPackageConfig$SourceModelPackageArn": "<p> The Amazon Resource Name (ARN) of the source model package used for continued fine-tuning and custom model evaluation. </p>",
         "ModelPackageSummaries$key": null,
         "ModelPackageSummary$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
         "RecommendationJobInputConfig$ModelPackageVersionArn": "<p>The Amazon Resource Name (ARN) of a versioned model package.</p>",
+        "TrainingJob$OutputModelPackageArn": "<p> The output model package Amazon Resource Name (ARN) that contains model weights or checkpoint. </p>",
         "UpdateModelPackageInput$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
         "UpdateModelPackageOutput$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model.</p>"
       }
@@ -11557,6 +11724,14 @@
       "base": null,
       "refs": {
         "BatchDescribeModelPackageInput$ModelPackageArnList": "<p>The list of Amazon Resource Name (ARN) of the model package groups.</p>"
+      }
+    },
+    "ModelPackageConfig": {
+      "base": "<p> The configuration for the Model package. </p>",
+      "refs": {
+        "CreateTrainingJobRequest$ModelPackageConfig": "<p> The configuration for the model package. </p>",
+        "DescribeTrainingJobResponse$ModelPackageConfig": "<p> The configuration for the model package. </p>",
+        "TrainingJob$ModelPackageConfig": "<p> The model package configuration. </p>"
       }
     },
     "ModelPackageContainerDefinition": {
@@ -11589,6 +11764,7 @@
       "refs": {
         "CreateModelPackageGroupOutput$ModelPackageGroupArn": "<p>The Amazon Resource Name (ARN) of the model group.</p>",
         "DescribeModelPackageGroupOutput$ModelPackageGroupArn": "<p>The Amazon Resource Name (ARN) of the model group.</p>",
+        "ModelPackageConfig$ModelPackageGroupArn": "<p> The Amazon Resource Name (ARN) of the model package group of output model package. </p>",
         "ModelPackageGroup$ModelPackageGroupArn": "<p>The Amazon Resource Name (ARN) of the model group.</p>",
         "ModelPackageGroupSummary$ModelPackageGroupArn": "<p>The Amazon Resource Name (ARN) of the model group.</p>",
         "PutModelPackageGroupPolicyOutput$ModelPackageGroupArn": "<p>The Amazon Resource Name (ARN) of the model package group.</p>"
@@ -11627,6 +11803,17 @@
         "DescribeModelPackageOutput$ModelCard": "<p>The model card associated with the model package. Since <code>ModelPackageModelCard</code> is tied to a model package, it is a specific usage of a model card and its schema is simplified compared to the schema of <code>ModelCard</code>. The <code>ModelPackageModelCard</code> schema does not include <code>model_package_details</code>, and <code>model_overview</code> is composed of the <code>model_creator</code> and <code>model_artifact</code> properties. For more information about the model package model card schema, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-registry-details.html#model-card-schema\">Model package model card schema</a>. For more information about the model card associated with the model package, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-registry-details.html\">View the Details of a Model Version</a>.</p>",
         "ModelPackage$ModelCard": null,
         "UpdateModelPackageInput$ModelCard": "<p>The model card associated with the model package. Since <code>ModelPackageModelCard</code> is tied to a model package, it is a specific usage of a model card and its schema is simplified compared to the schema of <code>ModelCard</code>. The <code>ModelPackageModelCard</code> schema does not include <code>model_package_details</code>, and <code>model_overview</code> is composed of the <code>model_creator</code> and <code>model_artifact</code> properties. For more information about the model package model card schema, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-registry-details.html#model-card-schema\">Model package model card schema</a>. For more information about the model card associated with the model package, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-registry-details.html\">View the Details of a Model Version</a>.</p>"
+      }
+    },
+    "ModelPackageRegistrationType": {
+      "base": null,
+      "refs": {
+        "BatchDescribeModelPackageSummary$ModelPackageRegistrationType": "<p> The package registration type of the model package summary. </p>",
+        "CreateModelPackageInput$ModelPackageRegistrationType": "<p> The package registration type of the model package input. </p>",
+        "DescribeModelPackageOutput$ModelPackageRegistrationType": "<p> The package registration type of the model package output. </p>",
+        "ModelPackage$ModelPackageRegistrationType": "<p> The package registration type of the model package. </p>",
+        "ModelPackageSummary$ModelPackageRegistrationType": "<p> The package registration type of the model package summary. </p>",
+        "UpdateModelPackageInput$ModelPackageRegistrationType": "<p> The package registration type of the model package input. </p>"
       }
     },
     "ModelPackageSecurityConfig": {
@@ -13191,7 +13378,7 @@
         "DebugRuleConfiguration$VolumeSizeInGB": "<p>The size, in GB, of the ML storage volume attached to the processing instance.</p>",
         "HyperParameterTuningResourceConfig$VolumeSizeInGB": "<p>The volume size in GB for the storage volume to be used in processing hyperparameter optimization jobs (optional). These volumes store model artifacts, incremental states and optionally, scratch space for training algorithms. Do not provide a value for this parameter if a value for <code>InstanceConfigs</code> is also specified.</p> <p>Some instance types have a fixed total local storage size. If you select one of these instances for training, <code>VolumeSizeInGB</code> cannot be greater than this total size. For a list of instance types with local instance storage and their sizes, see <a href=\"http://aws.amazon.com/releasenotes/host-instance-storage-volumes-table/\">instance store volumes</a>.</p> <note> <p>SageMaker supports only the <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html\">General Purpose SSD (gp2)</a> storage volume type.</p> </note>",
         "ProfilerRuleConfiguration$VolumeSizeInGB": "<p>The size, in GB, of the ML storage volume attached to the processing instance.</p>",
-        "ResourceConfig$VolumeSizeInGB": "<p>The size of the ML storage volume that you want to provision. </p> <p>ML storage volumes store model artifacts and incremental states. Training algorithms might also use the ML storage volume for scratch space. If you want to store the training data in the ML storage volume, choose <code>File</code> as the <code>TrainingInputMode</code> in the algorithm specification. </p> <p>When using an ML instance with <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ssd-instance-store.html#nvme-ssd-volumes\">NVMe SSD volumes</a>, SageMaker doesn't provision Amazon EBS General Purpose SSD (gp2) storage. Available storage is fixed to the NVMe-type instance's storage capacity. SageMaker configures storage paths for training datasets, checkpoints, model artifacts, and outputs to use the entire capacity of the instance storage. For example, ML instance families with the NVMe-type instance storage include <code>ml.p4d</code>, <code>ml.g4dn</code>, and <code>ml.g5</code>. </p> <p>When using an ML instance with the EBS-only storage option and without instance storage, you must define the size of EBS volume through <code>VolumeSizeInGB</code> in the <code>ResourceConfig</code> API. For example, ML instance families that use EBS volumes include <code>ml.c5</code> and <code>ml.p2</code>. </p> <p>To look up instance types and their instance storage types and volumes, see <a href=\"http://aws.amazon.com/ec2/instance-types/\">Amazon EC2 Instance Types</a>.</p> <p>To find the default local paths defined by the SageMaker training platform, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-train-storage.html\">Amazon SageMaker Training Storage Folders for Training Datasets, Checkpoints, Model Artifacts, and Outputs</a>.</p>"
+        "ResourceConfig$VolumeSizeInGB": "<p>The size of the ML storage volume that you want to provision. </p> <p>SageMaker automatically selects the volume size for serverless training jobs. You cannot customize this setting.</p> <p>ML storage volumes store model artifacts and incremental states. Training algorithms might also use the ML storage volume for scratch space. If you want to store the training data in the ML storage volume, choose <code>File</code> as the <code>TrainingInputMode</code> in the algorithm specification. </p> <p>When using an ML instance with <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ssd-instance-store.html#nvme-ssd-volumes\">NVMe SSD volumes</a>, SageMaker doesn't provision Amazon EBS General Purpose SSD (gp2) storage. Available storage is fixed to the NVMe-type instance's storage capacity. SageMaker configures storage paths for training datasets, checkpoints, model artifacts, and outputs to use the entire capacity of the instance storage. For example, ML instance families with the NVMe-type instance storage include <code>ml.p4d</code>, <code>ml.g4dn</code>, and <code>ml.g5</code>. </p> <p>When using an ML instance with the EBS-only storage option and without instance storage, you must define the size of EBS volume through <code>VolumeSizeInGB</code> in the <code>ResourceConfig</code> API. For example, ML instance families that use EBS volumes include <code>ml.c5</code> and <code>ml.p2</code>. </p> <p>To look up instance types and their instance storage types and volumes, see <a href=\"http://aws.amazon.com/ec2/instance-types/\">Amazon EC2 Instance Types</a>.</p> <p>To find the default local paths defined by the SageMaker training platform, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-train-storage.html\">Amazon SageMaker Training Storage Folders for Training Datasets, Checkpoints, Model Artifacts, and Outputs</a>.</p>"
       }
     },
     "OrderKey": {
@@ -13456,6 +13643,12 @@
         "CreatePartnerAppRequest$Type": "<p>The type of SageMaker Partner AI App to create. Must be one of the following: <code>lakera-guard</code>, <code>comet</code>, <code>deepchecks-llm-evaluation</code>, or <code>fiddler</code>.</p>",
         "DescribePartnerAppResponse$Type": "<p>The type of SageMaker Partner AI App. Must be one of the following: <code>lakera-guard</code>, <code>comet</code>, <code>deepchecks-llm-evaluation</code>, or <code>fiddler</code>.</p>",
         "PartnerAppSummary$Type": "<p>The type of SageMaker Partner AI App to create. Must be one of the following: <code>lakera-guard</code>, <code>comet</code>, <code>deepchecks-llm-evaluation</code>, or <code>fiddler</code>.</p>"
+      }
+    },
+    "Peft": {
+      "base": null,
+      "refs": {
+        "ServerlessJobConfig$Peft": "<p> The parameter-efficient fine-tuning configuration. </p>"
       }
     },
     "PendingDeploymentSummary": {
@@ -14574,6 +14767,12 @@
       "refs": {
         "AdditionalInferenceSpecificationDefinition$SupportedRealtimeInferenceInstanceTypes": "<p>A list of the instance types that are used to generate inferences in real-time.</p>",
         "InferenceSpecification$SupportedRealtimeInferenceInstanceTypes": "<p>A list of the instance types that are used to generate inferences in real-time.</p> <p>This parameter is required for unversioned models, and optional for versioned models.</p>"
+      }
+    },
+    "RecipeName": {
+      "base": null,
+      "refs": {
+        "BaseModel$RecipeName": "<p> The recipe name of the base model. </p>"
       }
     },
     "RecommendationFailureReason": {
@@ -15728,7 +15927,7 @@
     "SecondaryStatus": {
       "base": null,
       "refs": {
-        "DescribeTrainingJobResponse$SecondaryStatus": "<p> Provides detailed information about the state of the training job. For detailed information on the secondary status of the training job, see <code>StatusMessage</code> under <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_SecondaryStatusTransition.html\">SecondaryStatusTransition</a>.</p> <p>SageMaker provides primary statuses and secondary statuses that apply to each of them:</p> <dl> <dt>InProgress</dt> <dd> <ul> <li> <p> <code>Starting</code> - Starting the training job.</p> </li> <li> <p> <code>Downloading</code> - An optional stage for algorithms that support <code>File</code> training input mode. It indicates that data is being downloaded to the ML storage volumes.</p> </li> <li> <p> <code>Training</code> - Training is in progress.</p> </li> <li> <p> <code>Interrupted</code> - The job stopped because the managed spot training instances were interrupted. </p> </li> <li> <p> <code>Uploading</code> - Training is complete and the model artifacts are being uploaded to the S3 location.</p> </li> </ul> </dd> <dt>Completed</dt> <dd> <ul> <li> <p> <code>Completed</code> - The training job has completed.</p> </li> </ul> </dd> <dt>Failed</dt> <dd> <ul> <li> <p> <code>Failed</code> - The training job has failed. The reason for the failure is returned in the <code>FailureReason</code> field of <code>DescribeTrainingJobResponse</code>.</p> </li> </ul> </dd> <dt>Stopped</dt> <dd> <ul> <li> <p> <code>MaxRuntimeExceeded</code> - The job stopped because it exceeded the maximum allowed runtime.</p> </li> <li> <p> <code>MaxWaitTimeExceeded</code> - The job stopped because it exceeded the maximum allowed wait time.</p> </li> <li> <p> <code>Stopped</code> - The training job has stopped.</p> </li> </ul> </dd> <dt>Stopping</dt> <dd> <ul> <li> <p> <code>Stopping</code> - Stopping the training job.</p> </li> </ul> </dd> </dl> <important> <p>Valid values for <code>SecondaryStatus</code> are subject to change. </p> </important> <p>We no longer support the following secondary statuses:</p> <ul> <li> <p> <code>LaunchingMLInstances</code> </p> </li> <li> <p> <code>PreparingTraining</code> </p> </li> <li> <p> <code>DownloadingTrainingImage</code> </p> </li> </ul>",
+        "DescribeTrainingJobResponse$SecondaryStatus": "<p> Provides detailed information about the state of the training job. For detailed information on the secondary status of the training job, see <code>StatusMessage</code> under <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_SecondaryStatusTransition.html\">SecondaryStatusTransition</a>.</p> <p>SageMaker provides primary statuses and secondary statuses that apply to each of them:</p> <dl> <dt>InProgress</dt> <dd> <ul> <li> <p> <code>Starting</code> - Starting the training job.</p> </li> <li> <p> <code>Pending</code> - The training job is waiting for compute capacity or compute resource provision.</p> </li> <li> <p> <code>Downloading</code> - An optional stage for algorithms that support <code>File</code> training input mode. It indicates that data is being downloaded to the ML storage volumes.</p> </li> <li> <p> <code>Training</code> - Training is in progress.</p> </li> <li> <p> <code>Interrupted</code> - The job stopped because the managed spot training instances were interrupted. </p> </li> <li> <p> <code>Uploading</code> - Training is complete and the model artifacts are being uploaded to the S3 location.</p> </li> </ul> </dd> <dt>Completed</dt> <dd> <ul> <li> <p> <code>Completed</code> - The training job has completed.</p> </li> </ul> </dd> <dt>Failed</dt> <dd> <ul> <li> <p> <code>Failed</code> - The training job has failed. The reason for the failure is returned in the <code>FailureReason</code> field of <code>DescribeTrainingJobResponse</code>.</p> </li> </ul> </dd> <dt>Stopped</dt> <dd> <ul> <li> <p> <code>MaxRuntimeExceeded</code> - The job stopped because it exceeded the maximum allowed runtime.</p> </li> <li> <p> <code>MaxWaitTimeExceeded</code> - The job stopped because it exceeded the maximum allowed wait time.</p> </li> <li> <p> <code>Stopped</code> - The training job has stopped.</p> </li> </ul> </dd> <dt>Stopping</dt> <dd> <ul> <li> <p> <code>Stopping</code> - Stopping the training job.</p> </li> </ul> </dd> </dl> <important> <p>Valid values for <code>SecondaryStatus</code> are subject to change. </p> </important> <p>We no longer support the following secondary statuses:</p> <ul> <li> <p> <code>LaunchingMLInstances</code> </p> </li> <li> <p> <code>PreparingTraining</code> </p> </li> <li> <p> <code>DownloadingTrainingImage</code> </p> </li> </ul>",
         "SecondaryStatusTransition$Status": "<p>Contains a secondary status information from a training job.</p> <p>Status might be one of the following secondary statuses:</p> <dl> <dt>InProgress</dt> <dd> <ul> <li> <p> <code>Starting</code> - Starting the training job.</p> </li> <li> <p> <code>Downloading</code> - An optional stage for algorithms that support <code>File</code> training input mode. It indicates that data is being downloaded to the ML storage volumes.</p> </li> <li> <p> <code>Training</code> - Training is in progress.</p> </li> <li> <p> <code>Uploading</code> - Training is complete and the model artifacts are being uploaded to the S3 location.</p> </li> </ul> </dd> <dt>Completed</dt> <dd> <ul> <li> <p> <code>Completed</code> - The training job has completed.</p> </li> </ul> </dd> <dt>Failed</dt> <dd> <ul> <li> <p> <code>Failed</code> - The training job has failed. The reason for the failure is returned in the <code>FailureReason</code> field of <code>DescribeTrainingJobResponse</code>.</p> </li> </ul> </dd> <dt>Stopped</dt> <dd> <ul> <li> <p> <code>MaxRuntimeExceeded</code> - The job stopped because it exceeded the maximum allowed runtime.</p> </li> <li> <p> <code>Stopped</code> - The training job has stopped.</p> </li> </ul> </dd> <dt>Stopping</dt> <dd> <ul> <li> <p> <code>Stopping</code> - Stopping the training job.</p> </li> </ul> </dd> </dl> <p>We no longer support the following secondary statuses:</p> <ul> <li> <p> <code>LaunchingMLInstances</code> </p> </li> <li> <p> <code>PreparingTrainingStack</code> </p> </li> <li> <p> <code>DownloadingTrainingImage</code> </p> </li> </ul>",
         "TrainingJob$SecondaryStatus": "<p> Provides detailed information about the state of the training job. For detailed information about the secondary status of the training job, see <code>StatusMessage</code> under <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_SecondaryStatusTransition.html\">SecondaryStatusTransition</a>.</p> <p>SageMaker provides primary statuses and secondary statuses that apply to each of them:</p> <dl> <dt>InProgress</dt> <dd> <ul> <li> <p> <code>Starting</code> - Starting the training job.</p> </li> <li> <p> <code>Downloading</code> - An optional stage for algorithms that support <code>File</code> training input mode. It indicates that data is being downloaded to the ML storage volumes.</p> </li> <li> <p> <code>Training</code> - Training is in progress.</p> </li> <li> <p> <code>Uploading</code> - Training is complete and the model artifacts are being uploaded to the S3 location.</p> </li> </ul> </dd> <dt>Completed</dt> <dd> <ul> <li> <p> <code>Completed</code> - The training job has completed.</p> </li> </ul> </dd> <dt>Failed</dt> <dd> <ul> <li> <p> <code>Failed</code> - The training job has failed. The reason for the failure is returned in the <code>FailureReason</code> field of <code>DescribeTrainingJobResponse</code>.</p> </li> </ul> </dd> <dt>Stopped</dt> <dd> <ul> <li> <p> <code>MaxRuntimeExceeded</code> - The job stopped because it exceeded the maximum allowed runtime.</p> </li> <li> <p> <code>Stopped</code> - The training job has stopped.</p> </li> </ul> </dd> <dt>Stopping</dt> <dd> <ul> <li> <p> <code>Stopping</code> - Stopping the training job.</p> </li> </ul> </dd> </dl> <important> <p>Valid values for <code>SecondaryStatus</code> are subject to change. </p> </important> <p>We no longer support the following secondary statuses:</p> <ul> <li> <p> <code>LaunchingMLInstances</code> </p> </li> <li> <p> <code>PreparingTrainingStack</code> </p> </li> <li> <p> <code>DownloadingTrainingImage</code> </p> </li> </ul>",
         "TrainingJobSummary$SecondaryStatus": "<p>The secondary status of the training job.</p>"
@@ -15821,6 +16020,25 @@
     "SendPipelineExecutionStepSuccessResponse": {
       "base": null,
       "refs": {}
+    },
+    "ServerlessJobBaseModelArn": {
+      "base": "<p>ServerlessJobConfig relevant fields</p>",
+      "refs": {
+        "ServerlessJobConfig$BaseModelArn": "<p> The base model Amazon Resource Name (ARN) in <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-foundation-models-use.html\">SageMaker Public Hub</a>. SageMaker always selects the latest version of the provided model. </p>"
+      }
+    },
+    "ServerlessJobConfig": {
+      "base": "<p> The configuration for the serverless training job. </p>",
+      "refs": {
+        "CreateTrainingJobRequest$ServerlessJobConfig": "<p> The configuration for serverless training jobs. </p>",
+        "DescribeTrainingJobResponse$ServerlessJobConfig": "<p> The configuration for serverless training jobs. </p>"
+      }
+    },
+    "ServerlessJobType": {
+      "base": null,
+      "refs": {
+        "ServerlessJobConfig$JobType": "<p> The serverless training job type. </p>"
+      }
     },
     "ServerlessMaxConcurrency": {
       "base": null,
@@ -16642,6 +16860,10 @@
     "String1024": {
       "base": null,
       "refs": {
+        "BedrockCustomModelDeploymentMetadata$Arn": "<p> The Amazon Resource Name (ARN) of the metadata for the Amazon Bedrock custom model deployment. </p>",
+        "BedrockCustomModelMetadata$Arn": "<p> The Amazon Resource Name (ARN) of the Amazon Bedrock custom model metadata. </p>",
+        "BedrockModelImportMetadata$Arn": "<p> The Amazon Resource Name (ARN) of the Amazon Bedrock model import metadata. </p>",
+        "BedrockProvisionedModelThroughputMetadata$Arn": "<p> The Amazon Resource Name (ARN) of the Amazon Bedrock provisioned model throughput metadata. </p>",
         "ClarifyCheckStepMetadata$BaselineUsedForDriftCheckConstraints": "<p>The Amazon S3 URI of baseline constraints file to be used for the drift check.</p>",
         "ClarifyCheckStepMetadata$CalculatedBaselineConstraints": "<p>The Amazon S3 URI of the newly calculated baseline constraints file.</p>",
         "ClarifyCheckStepMetadata$ViolationReport": "<p>The Amazon S3 URI of the violation report if violations are detected.</p>",
@@ -16681,8 +16903,13 @@
     "String2048": {
       "base": null,
       "refs": {
+        "AssociationInfo$SourceArn": "<p> The Amazon Resource Name (ARN) of the <code>AssociationInfo</code> source. </p>",
+        "AssociationInfo$DestinationArn": "<p> The Amazon Resource Name (ARN) of the <code>AssociationInfo</code> destination. </p>",
         "CreatePartnerAppPresignedUrlResponse$Url": "<p>The presigned URL that you can use to access the SageMaker Partner AI App.</p>",
-        "DescribePartnerAppResponse$BaseUrl": "<p>The URL of the SageMaker Partner AI App that the Application SDK uses to support in-app calls for the user.</p>"
+        "DescribePartnerAppResponse$BaseUrl": "<p>The URL of the SageMaker Partner AI App that the Application SDK uses to support in-app calls for the user.</p>",
+        "InferenceComponentMetadata$Arn": "<p> The Amazon Resource Name (ARN) of the inference component metadata. </p>",
+        "MapString2048$key": null,
+        "MapString2048$value": null
       }
     },
     "String256": {
@@ -17816,6 +18043,12 @@
         "UltraServer$TotalInstanceCount": "<p>The total number of instances in this UltraServer.</p>"
       }
     },
+    "TotalStepCountPerEpoch": {
+      "base": "<p>TrainingProgressInfo relevant fields</p>",
+      "refs": {
+        "TrainingProgressInfo$TotalStepCountPerEpoch": "<p> The total step count per epoch. </p>"
+      }
+    },
     "TrackingServerArn": {
       "base": null,
       "refs": {
@@ -17956,6 +18189,18 @@
       "base": null,
       "refs": {
         "TrainingEnvironmentMap$value": null
+      }
+    },
+    "TrainingEpochCount": {
+      "base": null,
+      "refs": {
+        "TrainingProgressInfo$MaxEpoch": "<p> The maximum number of epochs for this job. </p>"
+      }
+    },
+    "TrainingEpochIndex": {
+      "base": null,
+      "refs": {
+        "TrainingProgressInfo$CurrentEpoch": "<p> The current epoch number. </p>"
       }
     },
     "TrainingImageConfig": {
@@ -18230,6 +18475,12 @@
         "TrainingPlanSummaries$member": null
       }
     },
+    "TrainingProgressInfo": {
+      "base": "<p> The serverless training job progress information. </p>",
+      "refs": {
+        "DescribeTrainingJobResponse$ProgressInfo": "<p> The Serverless training job progress information. </p>"
+      }
+    },
     "TrainingRepositoryAccessMode": {
       "base": null,
       "refs": {
@@ -18253,6 +18504,12 @@
       "refs": {
         "CreateAlgorithmInput$TrainingSpecification": "<p>Specifies details about training jobs run by this algorithm, including the following:</p> <ul> <li> <p>The Amazon ECR path of the container and the version digest of the algorithm.</p> </li> <li> <p>The hyperparameters that the algorithm supports.</p> </li> <li> <p>The instance types that the algorithm supports for training.</p> </li> <li> <p>Whether the algorithm supports distributed training.</p> </li> <li> <p>The metrics that the algorithm emits to Amazon CloudWatch.</p> </li> <li> <p>Which metrics that the algorithm emits can be used as the objective metric for hyperparameter tuning jobs.</p> </li> <li> <p>The input channels that the algorithm supports for training data. For example, an algorithm might support <code>train</code>, <code>validation</code>, and <code>test</code> channels.</p> </li> </ul>",
         "DescribeAlgorithmOutput$TrainingSpecification": "<p>Details about training jobs run by this algorithm.</p>"
+      }
+    },
+    "TrainingStepIndex": {
+      "base": null,
+      "refs": {
+        "TrainingProgressInfo$CurrentStep": "<p> The current step number. </p>"
       }
     },
     "TrainingTimeInSeconds": {

@@ -96,6 +96,7 @@
     "UpdateAutomatedReasoningPolicy": "<p>Updates an existing Automated Reasoning policy with new rules, variables, or configuration. This creates a new version of the policy while preserving the previous version.</p>",
     "UpdateAutomatedReasoningPolicyAnnotations": "<p>Updates the annotations for an Automated Reasoning policy build workflow. This allows you to modify extracted rules, variables, and types before finalizing the policy.</p>",
     "UpdateAutomatedReasoningPolicyTestCase": "<p>Updates an existing Automated Reasoning policy test. You can modify the content, query, expected result, and confidence threshold.</p>",
+    "UpdateCustomModelDeployment": "<p> Updates a custom model deployment with a new custom model. This allows you to deploy updated models without creating new deployment endpoints. </p>",
     "UpdateGuardrail": "<p>Updates a guardrail with the values you specify.</p> <ul> <li> <p>Specify a <code>name</code> and optional <code>description</code>.</p> </li> <li> <p>Specify messages for when the guardrail successfully blocks a prompt or a model response in the <code>blockedInputMessaging</code> and <code>blockedOutputsMessaging</code> fields.</p> </li> <li> <p>Specify topics for the guardrail to deny in the <code>topicPolicyConfig</code> object. Each <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailTopicConfig.html\">GuardrailTopicConfig</a> object in the <code>topicsConfig</code> list pertains to one topic.</p> <ul> <li> <p>Give a <code>name</code> and <code>description</code> so that the guardrail can properly identify the topic.</p> </li> <li> <p>Specify <code>DENY</code> in the <code>type</code> field.</p> </li> <li> <p>(Optional) Provide up to five prompts that you would categorize as belonging to the topic in the <code>examples</code> list.</p> </li> </ul> </li> <li> <p>Specify filter strengths for the harmful categories defined in Amazon Bedrock in the <code>contentPolicyConfig</code> object. Each <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailContentFilterConfig.html\">GuardrailContentFilterConfig</a> object in the <code>filtersConfig</code> list pertains to a harmful category. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-content-filters\">Content filters</a>. For more information about the fields in a content filter, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailContentFilterConfig.html\">GuardrailContentFilterConfig</a>.</p> <ul> <li> <p>Specify the category in the <code>type</code> field.</p> </li> <li> <p>Specify the strength of the filter for prompts in the <code>inputStrength</code> field and for model responses in the <code>strength</code> field of the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailContentFilterConfig.html\">GuardrailContentFilterConfig</a>.</p> </li> </ul> </li> <li> <p>(Optional) For security, include the ARN of a KMS key in the <code>kmsKeyId</code> field.</p> </li> </ul>",
     "UpdateMarketplaceModelEndpoint": "<p>Updates the configuration of an existing endpoint for a model from Amazon Bedrock Marketplace.</p>",
     "UpdateProvisionedModelThroughput": "<p>Updates the name or associated model for a Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>"
@@ -1642,7 +1643,8 @@
         "GetModelCustomizationJobResponse$outputModelArn": "<p>The Amazon Resource Name (ARN) of the output model.</p>",
         "ListCustomModelDeploymentsRequest$modelArnEquals": "<p>Filters deployments by the Amazon Resource Name (ARN) of the associated custom model.</p>",
         "ModelCopyJobSummary$targetModelArn": "<p>The Amazon Resource Name (ARN) of the copied model.</p>",
-        "ModelCustomizationJobSummary$customModelArn": "<p>Amazon Resource Name (ARN) of the custom model.</p>"
+        "ModelCustomizationJobSummary$customModelArn": "<p>Amazon Resource Name (ARN) of the custom model.</p>",
+        "UpdateCustomModelDeploymentRequest$modelArn": "<p> ARN of the new custom model to deploy. This replaces the currently deployed model. </p>"
       }
     },
     "CustomModelDeploymentArn": {
@@ -1650,7 +1652,8 @@
       "refs": {
         "CreateCustomModelDeploymentResponse$customModelDeploymentArn": "<p>The Amazon Resource Name (ARN) of the custom model deployment. Use this ARN as the <code>modelId</code> parameter when invoking the model with the <code>InvokeModel</code> or <code>Converse</code> operations.</p>",
         "CustomModelDeploymentSummary$customModelDeploymentArn": "<p>The Amazon Resource Name (ARN) of the custom model deployment.</p>",
-        "GetCustomModelDeploymentResponse$customModelDeploymentArn": "<p>The Amazon Resource Name (ARN) of the custom model deployment.</p>"
+        "GetCustomModelDeploymentResponse$customModelDeploymentArn": "<p>The Amazon Resource Name (ARN) of the custom model deployment.</p>",
+        "UpdateCustomModelDeploymentResponse$customModelDeploymentArn": "<p> ARN of the custom model deployment being updated. </p>"
       }
     },
     "CustomModelDeploymentDescription": {
@@ -1664,7 +1667,8 @@
       "base": null,
       "refs": {
         "DeleteCustomModelDeploymentRequest$customModelDeploymentIdentifier": "<p>The Amazon Resource Name (ARN) or name of the custom model deployment to delete.</p>",
-        "GetCustomModelDeploymentRequest$customModelDeploymentIdentifier": "<p>The Amazon Resource Name (ARN) or name of the custom model deployment to retrieve information about.</p>"
+        "GetCustomModelDeploymentRequest$customModelDeploymentIdentifier": "<p>The Amazon Resource Name (ARN) or name of the custom model deployment to retrieve information about.</p>",
+        "UpdateCustomModelDeploymentRequest$customModelDeploymentIdentifier": "<p> Identifier of the custom model deployment to update with the new custom model. </p>"
       }
     },
     "CustomModelDeploymentStatus": {
@@ -1685,6 +1689,18 @@
       "base": null,
       "refs": {
         "ListCustomModelDeploymentsResponse$modelDeploymentSummaries": "<p>A list of custom model deployment summaries.</p>"
+      }
+    },
+    "CustomModelDeploymentUpdateDetails": {
+      "base": "<p> Details about an update to a custom model deployment, including the new custom model resource ARN and current update status. </p>",
+      "refs": {
+        "GetCustomModelDeploymentResponse$updateDetails": "<p> Details about any pending or completed updates to the custom model deployment, including the new model ARN and update status. </p>"
+      }
+    },
+    "CustomModelDeploymentUpdateStatus": {
+      "base": null,
+      "refs": {
+        "CustomModelDeploymentUpdateDetails$updateStatus": "<p> Current status of the deployment update. </p>"
       }
     },
     "CustomModelName": {
@@ -1903,6 +1919,12 @@
       "base": null,
       "refs": {
         "GetFoundationModelAvailabilityResponse$entitlementAvailability": "<p>Entitlement availability. </p>"
+      }
+    },
+    "EpochCount": {
+      "base": null,
+      "refs": {
+        "RFTHyperParameters$epochCount": "<p> Number of training epochs to run during reinforcement fine-tuning. Higher values may improve performance but increase training time. </p>"
       }
     },
     "ErrorMessage": {
@@ -2561,6 +2583,12 @@
     "GetUseCaseForModelAccessResponse": {
       "base": null,
       "refs": {}
+    },
+    "GraderConfig": {
+      "base": "<p> Configuration for the grader used in reinforcement fine-tuning to evaluate model responses and provide reward signals. </p>",
+      "refs": {
+        "RFTConfig$graderConfig": "<p> Configuration for the grader that evaluates model responses and provides reward signals during RFT training. </p>"
+      }
     },
     "GuardrailArn": {
       "base": null,
@@ -3606,6 +3634,18 @@
         "KnowledgeBaseVectorSearchConfiguration$numberOfResults": "<p>The number of text chunks to retrieve; the number of results to return.</p>"
       }
     },
+    "LambdaArn": {
+      "base": null,
+      "refs": {
+        "LambdaGraderConfig$lambdaArn": "<p> ARN of the AWS Lambda function that will evaluate model responses and return reward scores for RFT training. </p>"
+      }
+    },
+    "LambdaGraderConfig": {
+      "base": "<p> Configuration for using an AWS Lambda function to grade model responses during reinforcement fine-tuning training. </p>",
+      "refs": {
+        "GraderConfig$lambdaGrader": "<p> Configuration for using an AWS Lambda function as the grader for evaluating model responses and provide reward signals in reinforcement fine-tuning. </p>"
+      }
+    },
     "LegalTerm": {
       "base": "<p>The legal term of the agreement.</p>",
       "refs": {
@@ -3904,6 +3944,7 @@
         "CreateCustomModelResponse$modelArn": "<p>The Amazon Resource Name (ARN) of the new custom model.</p>",
         "CreateModelCopyJobRequest$sourceModelArn": "<p>The Amazon Resource Name (ARN) of the model to be copied.</p>",
         "CustomModelDeploymentSummary$modelArn": "<p>The Amazon Resource Name (ARN) of the custom model associated with this deployment.</p>",
+        "CustomModelDeploymentUpdateDetails$modelArn": "<p> ARN of the new custom model being deployed as part of the update. </p>",
         "CustomModelSummary$baseModelArn": "<p>The base model Amazon Resource Name (ARN).</p>",
         "GetCustomModelResponse$modelArn": "<p>Amazon Resource Name (ARN) associated with this model.</p>",
         "GetCustomModelResponse$baseModelArn": "<p>Amazon Resource Name (ARN) of the base model.</p>",
@@ -4521,6 +4562,54 @@
         "RAGStopSequences$member": null
       }
     },
+    "RFTBatchSize": {
+      "base": null,
+      "refs": {
+        "RFTHyperParameters$batchSize": "<p> Number of training samples processed in each batch during reinforcement fine-tuning (RFT) training. Larger batches may improve training stability. </p>"
+      }
+    },
+    "RFTConfig": {
+      "base": "<p> Configuration settings for reinforcement fine-tuning (RFT), including grader configuration and training hyperparameters. </p>",
+      "refs": {
+        "CustomizationConfig$rftConfig": "<p> Configuration settings for reinforcement fine-tuning (RFT) model customization, including grader configuration and hyperparameters. </p>"
+      }
+    },
+    "RFTEvalInterval": {
+      "base": null,
+      "refs": {
+        "RFTHyperParameters$evalInterval": "<p> Interval between evaluation runs during RFT training, measured in training steps. More frequent evaluation provides better monitoring. </p>"
+      }
+    },
+    "RFTHyperParameters": {
+      "base": "<p> Hyperparameters for controlling the reinforcement fine-tuning training process, including learning settings and evaluation intervals. </p>",
+      "refs": {
+        "RFTConfig$hyperParameters": "<p> Hyperparameters that control the reinforcement fine-tuning training process, including learning rate, batch size, and epoch count. </p>"
+      }
+    },
+    "RFTInferenceMaxTokens": {
+      "base": null,
+      "refs": {
+        "RFTHyperParameters$inferenceMaxTokens": "<p> Maximum number of tokens the model can generate in response to each prompt during RFT training. </p>"
+      }
+    },
+    "RFTLearningRate": {
+      "base": null,
+      "refs": {
+        "RFTHyperParameters$learningRate": "<p> Learning rate for the reinforcement fine-tuning. Controls how quickly the model adapts to reward signals. </p>"
+      }
+    },
+    "RFTMaxPromptLength": {
+      "base": null,
+      "refs": {
+        "RFTHyperParameters$maxPromptLength": "<p> Maximum length of input prompts during RFT training, measured in tokens. Longer prompts allow more context but increase memory usage and training-time. </p>"
+      }
+    },
+    "RFTTrainingSamplePerPrompt": {
+      "base": null,
+      "refs": {
+        "RFTHyperParameters$trainingSamplePerPrompt": "<p> Number of response samples generated per prompt during RFT training. More samples provide better reward signal estimation. </p>"
+      }
+    },
     "RagConfigs": {
       "base": null,
       "refs": {
@@ -4561,6 +4650,12 @@
       "base": null,
       "refs": {
         "RatingScaleItemValue$stringValue": "<p>A string representing the value for a rating in a custom metric rating scale.</p>"
+      }
+    },
+    "ReasoningEffort": {
+      "base": null,
+      "refs": {
+        "RFTHyperParameters$reasoningEffort": "<p> Level of reasoning effort applied during RFT training. Higher values may improve response quality but increase training time. </p>"
       }
     },
     "RegionAvailability": {
@@ -5189,6 +5284,14 @@
       "refs": {}
     },
     "UpdateAutomatedReasoningPolicyTestCaseResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCustomModelDeploymentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCustomModelDeploymentResponse": {
       "base": null,
       "refs": {}
     },
