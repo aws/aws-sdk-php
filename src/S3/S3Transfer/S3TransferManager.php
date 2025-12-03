@@ -244,6 +244,7 @@ final class S3TransferManager
                     }
                 }
 
+                // If filter is not null
                 if ($filter !== null) {
                     return !self::isDir($file) && $filter($file);
                 }

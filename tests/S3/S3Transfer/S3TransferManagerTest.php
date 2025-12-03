@@ -741,7 +741,7 @@ EOF
                 $validFilesCount++;
             }
 
-            $filePathName = $directory . "/" . $fileName . ".txt";
+            $filePathName = $directory . DIRECTORY_SEPARATOR . $fileName . ".txt";
             file_put_contents($filePathName, "test");
         }
         $client = $this->getMockBuilder(S3Client::class)
@@ -898,7 +898,11 @@ EOF
                 ]
             )
         )->wait();
-        $subDirPrefix = str_replace($directory . "/", "", $subDirectory);
+        $subDirPrefix = str_replace(
+            $directory . DIRECTORY_SEPARATOR,
+            "",
+            $subDirectory
+        );
         foreach ($objectKeys as $key => $validated) {
             if (str_starts_with($key, $subDirPrefix)) {
                 // Files in subdirectory should have been ignored
@@ -926,7 +930,12 @@ EOF
         if (is_link($symLinkDirectory)) {
             unlink($symLinkDirectory);
         }
-        symlink($linkDirectory, $symLinkDirectory);
+        if (!symlink($linkDirectory, $symLinkDirectory)) {
+            $this->markTestSkipped(
+                "Unable to create symbolic link for directory {$symLinkDirectory}"
+            );
+        }
+
         $files = [
             $directory . DIRECTORY_SEPARATOR . "dir-file-1.txt",
             $directory . DIRECTORY_SEPARATOR . "dir-file-2.txt",
@@ -1026,7 +1035,12 @@ EOF
         }
 
         mkdir($parentDirectory, 0777, true);
-        symlink($parentDirectory, $linkToParent);
+        if (!symlink($parentDirectory, $linkToParent)) {
+            $this->markTestSkipped(
+                "Unable to create symbolic link for directory {$parentDirectory}"
+            );
+        }
+
         $operationCompleted = false;
         try {
             $s3Client = new S3Client([
@@ -2599,7 +2613,7 @@ EOF
         )->wait();
         $this->assertTrue($called);
         foreach ($expectedFileKeys as $key) {
-            $file = $destinationDirectory . "/" . $key;
+            $file = $destinationDirectory . DIRECTORY_SEPARATOR . $key;
             $this->assertFileExists($file);
             $this->assertEquals(
                 "Test file " . $key,
@@ -2729,10 +2743,16 @@ EOF
         $this->assertTrue($called);
         // Validate the expected file output
         if ($expectedOutput['success']) {
+            $fileName = $expectedOutput['filename'];
+            // Make sure we use the OS directory separator
+            $fileName = str_replace(
+                '/',
+                DIRECTORY_SEPARATOR,
+                $fileName
+            );
+            $fullFilePath = $fullDirectoryPath . DIRECTORY_SEPARATOR . $fileName;
             $this->assertFileExists(
-                $fullDirectoryPath
-                . DIRECTORY_SEPARATOR
-                . $expectedOutput['filename']
+                $fullFilePath
             );
         }
     }
@@ -2764,7 +2784,7 @@ EOF
                 ],
                 'expected_output' => [
                     'success' => true,
-                    'filename' => '2023'. DIRECTORY_SEPARATOR.'Jan' . DIRECTORY_SEPARATOR . '1.png',
+                    'filename' => '2023/Jan/1.png',
                 ]
             ],
             'download_directory_2' => [
@@ -3353,6 +3373,7 @@ EOF
             "Test download directory - S3 directory bucket" => true,
             "Test download directory - Windows happy case" => php_uname('s') !== "Windows",
             "Test download directory - Linux case sensitivity (no conflict)" => php_uname('s') !== "Linux",
+            "Test download directory - Linux special characters allowed" => php_uname('s') !== "Linux",
         ];
         if ($testsToSkip[$testId] ?? false) {
             $this->markTestSkipped(
