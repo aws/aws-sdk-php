@@ -45,6 +45,9 @@ class S3TransferManagerTest extends TestCase
     private const UPLOAD_BASE_CASES = __DIR__ . '/test-cases/upload-single-object.json';
     private const UPLOAD_DIRECTORY_BASE_CASES = __DIR__ . '/test-cases/upload-directory.json';
     private const DOWNLOAD_DIRECTORY_BASE_CASES = __DIR__ . '/test-cases/download-directory.json';
+    private const UPLOAD_DIRECTORY_CROSS_PLATFORM_BASE_CASES = __DIR__ . '/test-cases/upload-directory-cross-platform-compatibility.json';
+    private const DOWNLOAD_DIRECTORY_CROSS_PLATFORM_BASE_CASES = __DIR__ . '/test-cases/download-directory-cross-platform-compatibility.json';
+
     private static array $s3BodyTemplates = [
         'CreateMultipartUpload' => <<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -76,17 +79,23 @@ EOF,
     </Contents>
 EOF
     ];
+    private string $tempDir;
 
     protected function setUp(): void
     {
         set_error_handler(function ($errno, $errstr) {
             // Ignore trigger_error logging
         });
+        $this->tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR
+            . "transfer-manager-test";
     }
 
     protected function tearDown(): void
     {
         restore_error_handler();
+        if (is_dir($this->tempDir)) {
+            TestsUtility::cleanUpDir($this->tempDir);
+        }
     }
 
     /**
@@ -626,6 +635,18 @@ EOF
         bool $isDirectoryValid
     ): void
     {
+        $directory = $this->tempDir . DIRECTORY_SEPARATOR . $directory;
+
+        // Make sure it exists when is valid directory
+        if ($isDirectoryValid && !is_dir($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+        // Make sure it does not exist when is an invalid directory
+        if (!$isDirectoryValid && is_dir($directory)) {
+            TestsUtility::cleanUpDir($directory);
+        }
+
         if (!$isDirectoryValid) {
             $this->expectException(InvalidArgumentException::class);
             $this->expectExceptionMessage(
@@ -635,22 +656,15 @@ EOF
             $this->assertTrue(true);
         }
 
-       try {
-           $manager = new S3TransferManager(
-               $this->getS3ClientMock(),
-           );
-           $manager->uploadDirectory(
-               new UploadDirectoryRequest(
-                   $directory,
-                   "Bucket",
-               )
-           )->wait();
-       } finally {
-           // Clean up resources
-           if ($isDirectoryValid && is_dir($directory)) {
-               TestsUtility::cleanUpDir($directory);
-           }
-       }
+        $manager = new S3TransferManager(
+            $this->getS3ClientMock(),
+        );
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+            )
+        )->wait();
     }
 
     /**
@@ -658,23 +672,13 @@ EOF
      */
     public function uploadDirectoryValidatesProvidedDirectoryProvider(): array
     {
-        $validDirectory = sys_get_temp_dir() . "/upload-directory-test";
-        if (!is_dir($validDirectory)) {
-            mkdir($validDirectory, 0777, true);
-        }
-
-        $invalidDirectory = sys_get_temp_dir() . "/invalid-directory-test";
-        if (is_dir($invalidDirectory)) {
-            rmdir($invalidDirectory);
-        }
-
         return [
             'valid_directory' => [
-                'directory' => $validDirectory,
+                'directory' => 'valid-directory-test',
                 'is_valid_directory' => true,
             ],
             'invalid_directory' => [
-                'directory' => $invalidDirectory,
+                'directory' => 'invalid-directory-test',
                 'is_valid_directory' => false,
             ]
         ];
@@ -689,33 +693,29 @@ EOF
         $this->expectExceptionMessage(
             'The provided config `filter` must be callable'
         );
-        $directory = sys_get_temp_dir() . "/upload-directory-test";
+        $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
 
-        try {
-            $client = $this->getMockBuilder(S3Client::class)
-                ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
-                ->getMock();
-            $client->method('getHandlerList')->willReturn(new HandlerList());
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $manager->uploadDirectory(
-                new UploadDirectoryRequest(
-                    $directory,
-                    "Bucket",
-                    [],
-                    [
-                        'filter' => 'invalid_filter',
-                    ]
-                )
-            )->wait();
-        } finally {
-            TestsUtility::cleanUpDir($directory);
-        }
+        $client = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
+            ->getMock();
+        $client->method('getHandlerList')->willReturn(new HandlerList());
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+                [],
+                [
+                    'filter' => 'invalid_filter',
+                ]
+            )
+        )->wait();
     }
 
     /**
@@ -723,12 +723,11 @@ EOF
      */
     public function testUploadDirectoryFileFilter(): void
     {
-        $directory = sys_get_temp_dir() . "/upload-directory-test";
+        $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
 
-        $filesCreated = [];
         $validFilesCount = 0;
         for ($i = 0; $i < 10; $i++) {
             $fileName = "file-$i";
@@ -739,49 +738,44 @@ EOF
 
             $filePathName = $directory . "/" . $fileName . ".txt";
             file_put_contents($filePathName, "test");
-            $filesCreated[] = $filePathName;
         }
-        try {
-            $client = $this->getMockBuilder(S3Client::class)
+        $client = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
             ->getMock();
-            $client->method('getCommand')
-                ->willReturnCallback(function ($commandName, $args) {
-                    return new Command($commandName, $args);
-                });
-            $client->method('executeAsync')
-                ->willReturnCallback(function () {
-                    return Create::promiseFor(new Result([]));
-                });
-            $client->method('getHandlerList')->willReturn(new HandlerList());
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $calledTimes = 0;
-            $manager->uploadDirectory(
-                new UploadDirectoryRequest(
-                    $directory,
-                    "Bucket",
-                    [],
-                    [
-                        'filter' => function (string $objectKey) {
-                            return str_ends_with($objectKey, "-valid.txt");
-                        },
-                        'upload_object_request_modifier' => function ($requestArgs) use (&$calledTimes) {
-                            $this->assertStringContainsString(
-                                'valid.txt',
-                                $requestArgs["Key"]
-                            );
-                            $calledTimes++;
-                        }
-                    ]
-                )
-            )->wait();
-            $this->assertEquals($validFilesCount, $calledTimes);
-        } finally {
-            TestsUtility::cleanUpDir($directory);
-        }
+        $client->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+        $client->method('executeAsync')
+            ->willReturnCallback(function () {
+                return Create::promiseFor(new Result([]));
+            });
+        $client->method('getHandlerList')->willReturn(new HandlerList());
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $calledTimes = 0;
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+                [],
+                [
+                    'filter' => function (string $objectKey) {
+                        return str_ends_with($objectKey, "-valid.txt");
+                    },
+                    'upload_object_request_modifier' => function ($requestArgs) use (&$calledTimes) {
+                        $this->assertStringContainsString(
+                            'valid.txt',
+                            $requestArgs["Key"]
+                        );
+                        $calledTimes++;
+                    }
+                ]
+            )
+        )->wait();
+        $this->assertEquals($validFilesCount, $calledTimes);
     }
 
     /**
@@ -789,58 +783,58 @@ EOF
      */
     public function testUploadDirectoryRecursive(): void
     {
-        $directory = sys_get_temp_dir() . "/upload-directory-test";
-        $subDirectory = $directory . "/sub-directory";
+        $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
+        $subDirectory = $directory . DIRECTORY_SEPARATOR . "sub-directory";
         if (!is_dir($subDirectory)) {
             mkdir($subDirectory, 0777, true);
         }
         $files = [
-            $directory . "/dir-file-1.txt",
-            $directory . "/dir-file-2.txt",
-            $subDirectory . "/subdir-file-1.txt",
-            $subDirectory . "/subdir-file-2.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-1.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-2.txt",
+            $subDirectory . DIRECTORY_SEPARATOR . "subdir-file-1.txt",
+            $subDirectory . DIRECTORY_SEPARATOR . "subdir-file-2.txt",
         ];
         $objectKeys = [];
         foreach ($files as $file) {
             file_put_contents($file, "test");
             // Remove the directory from the file path to leave
             // just what will be the object key
-            $objectKey = str_replace($directory . "/", "", $file);
+            $objectKey = str_replace(
+                $directory . DIRECTORY_SEPARATOR,
+                "",
+                $file
+            );
             $objectKeys[$objectKey] = false;
         }
-        try {
-            $client = $this->getMockBuilder(S3Client::class)
-                ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
-                ->getMock();
-            $client->method('getCommand')
-                ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
-                    $objectKeys[$args["Key"]] = true;
-                    return new Command($commandName, $args);
-                });
-            $client->method('executeAsync')
-                ->willReturnCallback(function () {
-                    return Create::promiseFor(new Result([]));
-                });
-            $client->method('getHandlerList')->willReturn(new HandlerList());
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $manager->uploadDirectory(
-                new UploadDirectoryRequest(
-                    $directory,
-                    "Bucket",
-                    [],
-                    [
-                        'recursive' => true,
-                    ]
-                )
-            )->wait();
-            foreach ($objectKeys as $key => $validated) {
-                $this->assertTrue($validated);
-            }
-        } finally {
-            TestsUtility::cleanUpDir($directory);
+        $client = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
+            ->getMock();
+        $client->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
+                $objectKeys[$args["Key"]] = true;
+                return new Command($commandName, $args);
+            });
+        $client->method('executeAsync')
+            ->willReturnCallback(function () {
+                return Create::promiseFor(new Result([]));
+            });
+        $client->method('getHandlerList')->willReturn(new HandlerList());
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+                [],
+                [
+                    'recursive' => true,
+                ]
+            )
+        )->wait();
+        foreach ($objectKeys as $key => $validated) {
+            $this->assertTrue($validated);
         }
     }
 
@@ -849,64 +843,64 @@ EOF
      */
     public function testUploadDirectoryNonRecursive(): void
     {
-        $directory = sys_get_temp_dir() . "/upload-directory-test";
-        $subDirectory = $directory . "/sub-directory";
+        $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
+        $subDirectory = $directory . DIRECTORY_SEPARATOR . "sub-directory";
         if (!is_dir($subDirectory)) {
             mkdir($subDirectory, 0777, true);
         }
         $files = [
-            $directory . "/dir-file-1.txt",
-            $directory . "/dir-file-2.txt",
-            $subDirectory . "/subdir-file-1.txt",
-            $subDirectory . "/subdir-file-2.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-1.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-2.txt",
+            $subDirectory . DIRECTORY_SEPARATOR . "subdir-file-1.txt",
+            $subDirectory . DIRECTORY_SEPARATOR . "subdir-file-2.txt",
         ];
         $objectKeys = [];
         foreach ($files as $file) {
             file_put_contents($file, "test");
             // Remove the directory from the file path to leave
             // just what will be the object key
-            $objectKey = str_replace($directory . "/", "", $file);
+            $objectKey = str_replace(
+                $directory . DIRECTORY_SEPARATOR,
+                "",
+                $file
+            );
             $objectKeys[$objectKey] = false;
         }
-        try {
-            $client = $this->getMockBuilder(S3Client::class)
-                ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
-                ->getMock();
-            $client->method('getCommand')
-                ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
-                    $objectKeys[$args["Key"]] = true;
-                    return new Command($commandName, $args);
-                });
-            $client->method('executeAsync')
-                ->willReturnCallback(function () {
-                    return Create::promiseFor(new Result([]));
-                });
-            $client->method('getHandlerList')->willReturn(new HandlerList());
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $manager->uploadDirectory(
-                new UploadDirectoryRequest(
-                    $directory,
-                    "Bucket",
-                    [],
-                    [
-                        'recursive' => false,
-                    ]
-                )
-            )->wait();
-            $subDirPrefix = str_replace($directory . "/", "", $subDirectory);
-            foreach ($objectKeys as $key => $validated) {
-                if (str_starts_with($key, $subDirPrefix)) {
-                    // Files in subdirectory should have been ignored
-                    $this->assertFalse($validated, "Key {$key} should have not been considered");
-                } else {
-                    $this->assertTrue($validated, "Key {$key} should have been considered");
-                }
+        $client = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
+            ->getMock();
+        $client->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
+                $objectKeys[$args["Key"]] = true;
+                return new Command($commandName, $args);
+            });
+        $client->method('executeAsync')
+            ->willReturnCallback(function () {
+                return Create::promiseFor(new Result([]));
+            });
+        $client->method('getHandlerList')->willReturn(new HandlerList());
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+                [],
+                [
+                    'recursive' => false,
+                ]
+            )
+        )->wait();
+        $subDirPrefix = str_replace($directory . "/", "", $subDirectory);
+        foreach ($objectKeys as $key => $validated) {
+            if (str_starts_with($key, $subDirPrefix)) {
+                // Files in subdirectory should have been ignored
+                $this->assertFalse($validated, "Key {$key} should have not been considered");
+            } else {
+                $this->assertTrue($validated, "Key {$key} should have been considered");
             }
-        } finally {
-            TestsUtility::cleanUpDir($directory);
         }
     }
 
@@ -915,101 +909,104 @@ EOF
      */
     public function testUploadDirectoryFollowsSymbolicLink(): void
     {
-        $directory = sys_get_temp_dir() . "/upload-directory-test";
-        $linkDirectory = sys_get_temp_dir() . "/link-directory-test";
+        $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
+        $linkDirectory = $this->tempDir . DIRECTORY_SEPARATOR . "link-directory-test";
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
         if (!is_dir($linkDirectory)) {
             mkdir($linkDirectory, 0777, true);
         }
-        $symLinkDirectory = $directory . "/upload-directory-test-link";
+        $symLinkDirectory = $directory . DIRECTORY_SEPARATOR . "upload-directory-test-link";
         if (is_link($symLinkDirectory)) {
             unlink($symLinkDirectory);
         }
         symlink($linkDirectory, $symLinkDirectory);
         $files = [
-            $directory . "/dir-file-1.txt",
-            $directory . "/dir-file-2.txt",
-            $linkDirectory . "/symlink-file-1.txt",
-            $linkDirectory . "/symlink-file-2.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-1.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-2.txt",
+            $linkDirectory . DIRECTORY_SEPARATOR . "symlink-file-1.txt",
+            $linkDirectory . DIRECTORY_SEPARATOR . "symlink-file-2.txt",
         ];
         $objectKeys = [];
         foreach ($files as $file) {
             file_put_contents($file, "test");
             // Remove the directory from the file path to leave
             // just what will be the object key
-            $objectKey = str_replace($directory . "/", "", $file);
-            $objectKey = str_replace($linkDirectory . "/", "", $objectKey);
+            $objectKey = str_replace(
+                $directory . DIRECTORY_SEPARATOR,
+                "",
+                $file
+            );
+            $objectKey = str_replace(
+                $linkDirectory . DIRECTORY_SEPARATOR,
+                "",
+                $objectKey
+            );
             if (str_contains($objectKey, 'symlink-file')) {
-                $objectKey = "upload-directory-test-link/" . $objectKey;
+                $objectKey = str_replace(
+                    $directory . DIRECTORY_SEPARATOR,
+                    "",
+                        $symLinkDirectory
+                ) . DIRECTORY_SEPARATOR . $objectKey;
             }
 
             $objectKeys[$objectKey] = false;
         }
-        try {
-            $client = $this->getMockBuilder(S3Client::class)
-                ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
-                ->getMock();
-            $client->method('getCommand')
-                ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
-                    $objectKeys[$args["Key"]] = true;
-                    return new Command($commandName, $args);
-                });
-            $client->method('executeAsync')
-                ->willReturnCallback(function () {
-                    return Create::promiseFor(new Result([]));
-                });
-            $client->method('getHandlerList')->willReturn(new HandlerList());
-            $manager = new S3TransferManager(
-                $client,
-            );
-            // First lets make sure that when follows_symbolic_link is false
-            // the directory in the link will not be traversed.
-            $manager->uploadDirectory(
-                new UploadDirectoryRequest(
-                    $directory,
-                    "Bucket",
-                    [],
-                    [
-                        'recursive' => true,
-                        'follow_symbolic_links' => false,
-                    ]
-                )
-            )->wait();
-            foreach ($objectKeys as $key => $validated) {
-                if (str_contains($key, "symlink")) {
-                    // Files in subdirectory should have been ignored
-                    $this->assertFalse($validated, "Key {$key} should have not been considered");
-                } else {
-                    $this->assertTrue($validated, "Key {$key} should have been considered");
-                }
-            }
-            // Now let's enable follow_symbolic_links and all files should have
-            // been considered, included the ones in the symlink directory.
-            $manager->uploadDirectory(
-                new UploadDirectoryRequest(
-                    $directory,
-                    "Bucket",
-                    [],
-                    [
-                        'recursive' => true,
-                        'follow_symbolic_links' => true,
-                    ]
-                )
-            )->wait();
-            foreach ($objectKeys as $key => $validated) {
+
+        $client = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
+            ->getMock();
+        $client->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
+                $objectKeys[$args["Key"]] = true;
+                return new Command($commandName, $args);
+            });
+        $client->method('executeAsync')
+            ->willReturnCallback(function () {
+                return Create::promiseFor(new Result([]));
+            });
+        $client->method('getHandlerList')->willReturn(new HandlerList());
+        $manager = new S3TransferManager(
+            $client,
+        );
+        // First lets make sure that when follows_symbolic_link is false
+        // the directory in the link will not be traversed.
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+                [],
+                [
+                    'recursive' => true,
+                    'follow_symbolic_links' => false,
+                ]
+            )
+        )->wait();
+        foreach ($objectKeys as $key => $validated) {
+            if (str_contains($key, "symlink")) {
+                // Files in subdirectory should have been ignored
+                $this->assertFalse($validated, "Key {$key} should have not been considered");
+            } else {
                 $this->assertTrue($validated, "Key {$key} should have been considered");
             }
-        } finally {
-            foreach ($files as $file) {
-                unlink($file);
-            }
-
-            unlink($symLinkDirectory);
-            rmdir($linkDirectory);
-            rmdir($directory);
+        }
+        // Now let's enable follow_symbolic_links and all files should have
+        // been considered, included the ones in the symlink directory.
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+                [],
+                [
+                    'recursive' => true,
+                    'follow_symbolic_links' => true,
+                ]
+            )
+        )->wait();
+        foreach ($objectKeys as $key => $validated) {
+            $this->assertTrue($validated, "Key {$key} should have been considered");
         }
     }
 
@@ -1017,8 +1014,8 @@ EOF
      * @return void
      */
     public function testUploadDirectoryFailsOnCircularSymbolicLinkTraversal() {
-        $parentDirectory = sys_get_temp_dir() . "/upload-directory-test";
-        $linkToParent = $parentDirectory . "/link_to_parent";
+        $parentDirectory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
+        $linkToParent = $parentDirectory . DIRECTORY_SEPARATOR . "link_to_parent";
         if (is_dir($parentDirectory)) {
             TestsUtility::cleanUpDir($parentDirectory);
         }
@@ -1055,9 +1052,6 @@ EOF
                     $exception->getMessage()
                 );
             }
-        } finally {
-            unlink($linkToParent);
-            rmdir($parentDirectory);
         }
     }
 
@@ -1066,58 +1060,58 @@ EOF
      */
     public function testUploadDirectoryUsesProvidedPrefix(): void
     {
-        $directory = sys_get_temp_dir() . "/upload-directory-test";
+        $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
         $files = [
-            $directory . "/dir-file-1.txt",
-            $directory . "/dir-file-2.txt",
-            $directory . "/dir-file-3.txt",
-            $directory . "/dir-file-4.txt",
-            $directory . "/dir-file-5.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-1.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-2.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-3.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-4.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-5.txt",
         ];
         $s3Prefix = 'expenses-files/';
         $objectKeys = [];
         foreach ($files as $file) {
             file_put_contents($file, "test");
-            $objectKey = str_replace($directory . "/", "", $file);
+            $objectKey = str_replace(
+                $directory . DIRECTORY_SEPARATOR,
+                "",
+                $file
+            );
             $objectKeys[$s3Prefix . $objectKey] = false;
         }
-        try {
-            $client = $this->getMockBuilder(S3Client::class)
-                ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
-                ->getMock();
-            $client->method('getCommand')
-                ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
-                    $objectKeys[$args["Key"]] = true;
-                    return new Command($commandName, $args);
-                });
-            $client->method('executeAsync')
-                ->willReturnCallback(function () {
-                    return Create::promiseFor(new Result([]));
-                });
-            $client->method('getHandlerList')->willReturn(new HandlerList());
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $manager->uploadDirectory(
-                new UploadDirectoryRequest(
-                    $directory,
-                    "Bucket",
-                    [],
-                    [
-                        's3_prefix' => $s3Prefix
-                    ]
-                )
-            )->wait();
+        $client = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
+            ->getMock();
+        $client->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
+                $objectKeys[$args["Key"]] = true;
+                return new Command($commandName, $args);
+            });
+        $client->method('executeAsync')
+            ->willReturnCallback(function () {
+                return Create::promiseFor(new Result([]));
+            });
+        $client->method('getHandlerList')->willReturn(new HandlerList());
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+                [],
+                [
+                    's3_prefix' => $s3Prefix
+                ]
+            )
+        )->wait();
 
-            foreach ($objectKeys as $key => $validated) {
-                $this->assertTrue($validated, "Key {$key} should have been validated");
-            }
-        } finally {
-            TestsUtility::cleanUpDir($directory);
+        foreach ($objectKeys as $key => $validated) {
+            $this->assertTrue($validated, "Key {$key} should have been validated");
         }
     }
 
@@ -1126,62 +1120,62 @@ EOF
      */
     public function testUploadDirectoryUsesProvidedDelimiter(): void
     {
-        $directory = sys_get_temp_dir() . "/upload-directory-test";
+        $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
         $files = [
-            $directory . "/dir-file-1.txt",
-            $directory . "/dir-file-2.txt",
-            $directory . "/dir-file-3.txt",
-            $directory . "/dir-file-4.txt",
-            $directory . "/dir-file-5.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-1.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-2.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-3.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-4.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-5.txt",
         ];
         $s3Prefix = 'expenses-files/today/records/';
         $s3Delimiter = '|';
         $objectKeys = [];
         foreach ($files as $file) {
             file_put_contents($file, "test");
-            $objectKey = str_replace($directory . "/", "", $file);
+            $objectKey = str_replace(
+                $directory . DIRECTORY_SEPARATOR,
+                "",
+                $file
+            );
             $objectKey = $s3Prefix . $objectKey;
-            $objectKey = str_replace("/", $s3Delimiter, $objectKey);
+            $objectKey = str_replace(DIRECTORY_SEPARATOR, $s3Delimiter, $objectKey);
             $objectKeys[$objectKey] = false;
         }
-        try {
-            $client = $this->getMockBuilder(S3Client::class)
-                ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
-                ->getMock();
-            $client->method('getCommand')
-                ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
-                    $objectKeys[$args["Key"]] = true;
-                    return new Command($commandName, $args);
-                });
-            $client->method('executeAsync')
-                ->willReturnCallback(function () {
-                    return Create::promiseFor(new Result([]));
-                });
-            $client->method('getHandlerList')->willReturn(new HandlerList());
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $manager->uploadDirectory(
-                new UploadDirectoryRequest(
-                    $directory,
-                    "Bucket",
-                    [],
-                    [
-                        's3_prefix' => $s3Prefix,
-                        's3_delimiter' => $s3Delimiter,
-                    ]
-                )
-            )->wait();
+        $client = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
+            ->getMock();
+        $client->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
+                $objectKeys[$args["Key"]] = true;
+                return new Command($commandName, $args);
+            });
+        $client->method('executeAsync')
+            ->willReturnCallback(function () {
+                return Create::promiseFor(new Result([]));
+            });
+        $client->method('getHandlerList')->willReturn(new HandlerList());
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+                [],
+                [
+                    's3_prefix' => $s3Prefix,
+                    's3_delimiter' => $s3Delimiter,
+                ]
+            )
+        )->wait();
 
-            foreach ($objectKeys as $key => $validated) {
-                $this->assertTrue($validated, "Key {$key} should have been validated");
-            }
-        } finally {
-            TestsUtility::cleanUpDir($directory);
+        foreach ($objectKeys as $key => $validated) {
+            $this->assertTrue($validated, "Key {$key} should have been validated");
         }
     }
 
@@ -1192,28 +1186,24 @@ EOF
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The provided config `upload_object_request_modifier` must be callable.");
-        $directory = sys_get_temp_dir() . "/upload-directory-test";
+        $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
-        try {
-            $client = $this->getS3ClientMock();
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $manager->uploadDirectory(
-                new UploadDirectoryRequest(
-                    $directory,
-                    "Bucket",
-                    [],
-                    [
-                        'upload_object_request_modifier' => false,
-                    ]
-                )
-            )->wait();
-        } finally {
-            TestsUtility::cleanUpDir($directory);
-        }
+        $client = $this->getS3ClientMock();
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+                [],
+                [
+                    'upload_object_request_modifier' => false,
+                ]
+            )
+        )->wait();
     }
 
     /**
@@ -1221,56 +1211,53 @@ EOF
      */
     public function testUploadDirectoryPutObjectRequestCallbackWorks(): void
     {
-        $directory = sys_get_temp_dir() . "/upload-directory-test";
+        $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
         $files = [
-            $directory . "/dir-file-1.txt",
-            $directory . "/dir-file-2.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-1.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-2.txt",
         ];
         foreach ($files as $file) {
             file_put_contents($file, "test");
         }
-        try {
-            $client = $this->getMockBuilder(S3Client::class)
-                ->disableOriginalConstructor()
-                ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
-                ->getMock();
-            $client->method('getCommand')
-                ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
-                    return new Command($commandName, $args);
-                });
-            $client->method('executeAsync')
-                ->willReturnCallback(function ($command) {
-                    $this->assertEquals("Test", $command['FooParameter']);
 
-                    return Create::promiseFor(new Result([]));
-                });
-            $client->method('getHandlerList')->willReturn(new HandlerList());
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $called = 0;
-            $manager->uploadDirectory(
-                new UploadDirectoryRequest(
-                    $directory,
-                    "Bucket",
-                    [],
-                    [
-                        'upload_object_request_modifier' => function (
-                            &$requestArgs
-                        ) use (&$called) {
-                            $requestArgs["FooParameter"] = "Test";
-                            $called++;
-                        },
-                    ]
-                )
-            )->wait();
-            $this->assertEquals(count($files), $called);
-        } finally {
-            TestsUtility::cleanUpDir($directory);
-        }
+        $client = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
+            ->getMock();
+        $client->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
+                return new Command($commandName, $args);
+            });
+        $client->method('executeAsync')
+            ->willReturnCallback(function ($command) {
+                $this->assertEquals("Test", $command['FooParameter']);
+
+                return Create::promiseFor(new Result([]));
+            });
+        $client->method('getHandlerList')->willReturn(new HandlerList());
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $called = 0;
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+                [],
+                [
+                    'upload_object_request_modifier' => function (
+                        &$requestArgs
+                    ) use (&$called) {
+                        $requestArgs["FooParameter"] = "Test";
+                        $called++;
+                    },
+                ]
+            )
+        )->wait();
+        $this->assertEquals(count($files), $called);
     }
 
     /**
@@ -1278,78 +1265,74 @@ EOF
      */
     public function testUploadDirectoryUsesFailurePolicy(): void
     {
-        $directory = sys_get_temp_dir() . "/upload-directory-test";
+        $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
         $files = [
-            $directory . "/dir-file-1.txt",
-            $directory . "/dir-file-2.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-1.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-2.txt",
         ];
         foreach ($files as $file) {
             file_put_contents($file, "test");
         }
-        try {
-            $client = new S3Client([
-                'region' => 'us-east-2',
-                'handler' => function ($command) {
-                    if (str_contains($command['Key'], "dir-file-2.txt")) {
-                        return Create::rejectionFor(
-                            new Exception("Failed uploading second file")
-                        );
-                    }
-
-                    return Create::promiseFor(new Result([]));
+        $client = new S3Client([
+            'region' => 'us-east-2',
+            'handler' => function ($command) {
+                if (str_contains($command['Key'], "dir-file-2.txt")) {
+                    return Create::rejectionFor(
+                        new Exception("Failed uploading second file")
+                    );
                 }
-            ]);
-            $manager = new S3TransferManager(
-                $client,
+
+                return Create::promiseFor(new Result([]));
+            }
+        ]);
+        $manager = new S3TransferManager(
+            $client,
+            [
+                'concurrency' => 1, // To make uploads to be one after the other
+            ]
+        );
+        $called = false;
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+                [],
                 [
-                    'concurrency' => 1, // To make uploads to be one after the other
+                    'failure_policy' => function (
+                        array $requestArgs,
+                        array $uploadDirectoryRequestArgs,
+                        \Throwable $reason,
+                        UploadDirectoryResult $uploadDirectoryResponse
+                    ) use ($directory, &$called) {
+                        $called = true;
+                        $this->assertEquals(
+                            $directory,
+                            $uploadDirectoryRequestArgs["source_directory"]
+                        );
+                        $this->assertEquals(
+                            "Bucket",
+                            $uploadDirectoryRequestArgs["bucket_to"]
+                        );
+                        $this->assertEquals(
+                            "Failed uploading second file",
+                            $reason->getMessage()
+                        );
+                        $this->assertEquals(
+                            1,
+                            $uploadDirectoryResponse->getObjectsUploaded()
+                        );
+                        $this->assertEquals(
+                            1,
+                            $uploadDirectoryResponse->getObjectsFailed()
+                        );
+                    },
                 ]
-            );
-            $called = false;
-            $manager->uploadDirectory(
-                new UploadDirectoryRequest(
-                    $directory,
-                    "Bucket",
-                    [],
-                    [
-                        'failure_policy' => function (
-                            array $requestArgs,
-                            array $uploadDirectoryRequestArgs,
-                            \Throwable $reason,
-                            UploadDirectoryResult $uploadDirectoryResponse
-                        ) use ($directory, &$called) {
-                            $called = true;
-                            $this->assertEquals(
-                                $directory,
-                                $uploadDirectoryRequestArgs["source_directory"]
-                            );
-                            $this->assertEquals(
-                                "Bucket",
-                                $uploadDirectoryRequestArgs["bucket_to"]
-                            );
-                            $this->assertEquals(
-                                "Failed uploading second file",
-                                $reason->getMessage()
-                            );
-                            $this->assertEquals(
-                                1,
-                                $uploadDirectoryResponse->getObjectsUploaded()
-                            );
-                            $this->assertEquals(
-                                1,
-                                $uploadDirectoryResponse->getObjectsFailed()
-                            );
-                        },
-                    ]
-                )
-            )->wait();
-            $this->assertTrue($called);
-        } finally {
-            TestsUtility::cleanUpDir($directory);
-        }
+            )
+        )->wait();
+        $this->assertTrue($called);
     }
 
     /**
@@ -1359,28 +1342,24 @@ EOF
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The provided config `failure_policy` must be callable.");
-        $directory = sys_get_temp_dir() . "/upload-directory-test";
+        $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
-        try {
-            $client = $this->getS3ClientMock();
-            $manager = new S3TransferManager(
-                $client
-            );
-            $manager->uploadDirectory(
-                new UploadDirectoryRequest(
-                    $directory,
-                    "Bucket",
-                    [],
-                    [
-                        'failure_policy' => false,
-                    ]
-                )
-            )->wait();
-        } finally {
-            TestsUtility::cleanUpDir($directory);
-        }
+        $client = $this->getS3ClientMock();
+        $manager = new S3TransferManager(
+            $client
+        );
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+                [],
+                [
+                    'failure_policy' => false,
+                ]
+            )
+        )->wait();
     }
 
     /**
@@ -1394,36 +1373,33 @@ EOF
         $this->expectExceptionMessage(
             "The filename `$fileNameWithDelimiter` must not contain the provided delimiter `$s3Delimiter`"
         );
-        $directory = sys_get_temp_dir() . "/upload-directory-test";
+        $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
         $files = [
-            $directory . "/dir-file-1.txt",
-            $directory . "/dir-file-2.txt",
-            $directory . "/dir-file-3.txt",
-            $directory . "/dir-file-4.txt",
-            $directory . "/$fileNameWithDelimiter",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-1.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-2.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-3.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-4.txt",
+            $directory . DIRECTORY_SEPARATOR . "$fileNameWithDelimiter",
         ];
         foreach ($files as $file) {
             file_put_contents($file, "test");
         }
-        try {
-            $client = $this->getS3ClientMock();
-            $manager = new S3TransferManager(
-                $client
-            );
-            $manager->uploadDirectory(
-                new UploadDirectoryRequest(
-                    $directory,
-                    "Bucket",
-                    [],
-                    ['s3_delimiter' => $s3Delimiter]
-                )
-            )->wait();
-        } finally {
-            TestsUtility::cleanUpDir($directory);
-        }
+
+        $client = $this->getS3ClientMock();
+        $manager = new S3TransferManager(
+            $client
+        );
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+                [],
+                ['s3_delimiter' => $s3Delimiter]
+            )
+        )->wait();
     }
 
     /**
@@ -1431,62 +1407,62 @@ EOF
      */
     public function testUploadDirectoryTracksMultipleFiles(): void
     {
-        $directory = sys_get_temp_dir() . "/upload-directory-test";
+        $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
         $files = [
-            $directory . "/dir-file-1.txt",
-            $directory . "/dir-file-2.txt",
-            $directory . "/dir-file-3.txt",
-            $directory . "/dir-file-4.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-1.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-2.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-3.txt",
+            $directory . DIRECTORY_SEPARATOR . "dir-file-4.txt",
         ];
         $objectKeys = [];
         foreach ($files as $file) {
             file_put_contents($file, "test");
-            $objectKey = str_replace($directory . "/", "", $file);
+            $objectKey = str_replace(
+                $directory . DIRECTORY_SEPARATOR,
+                "",
+                $file
+            );
             $objectKeys[$objectKey] = false;
         }
 
-        try {
-            $client = $this->getS3ClientMock();
-            $manager = new S3TransferManager(
-                $client
-            );
-            $transferListener = $this->getMockBuilder(AbstractTransferListener::class)
-                ->disableOriginalConstructor()
-                ->getMock();
-            $transferListener->expects($this->exactly(count($files)))
-                ->method('transferInitiated');
-            $transferListener->expects($this->exactly(count($files)))
-                ->method('transferComplete');
-            $transferListener->method('bytesTransferred')
-                ->willReturnCallback(function(array $context) use (&$objectKeys) {
-                    /** @var TransferProgressSnapshot $snapshot */
-                    $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
-                    $objectKeys[$snapshot->getIdentifier()] = true;
+        $client = $this->getS3ClientMock();
+        $manager = new S3TransferManager(
+            $client
+        );
+        $transferListener = $this->getMockBuilder(AbstractTransferListener::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $transferListener->expects($this->exactly(count($files)))
+            ->method('transferInitiated');
+        $transferListener->expects($this->exactly(count($files)))
+            ->method('transferComplete');
+        $transferListener->method('bytesTransferred')
+            ->willReturnCallback(function(array $context) use (&$objectKeys) {
+                /** @var TransferProgressSnapshot $snapshot */
+                $snapshot = $context[AbstractTransferListener::PROGRESS_SNAPSHOT_KEY];
+                $objectKeys[$snapshot->getIdentifier()] = true;
 
-                    return true;
-                });
-            $manager->uploadDirectory(
-                new UploadDirectoryRequest(
-                    $directory,
-                    "Bucket",
-                    [],
-                    [],
-                    [
-                        $transferListener
-                    ]
-                )
-            )->wait();
-            foreach ($objectKeys as $key => $validated) {
-                $this->assertTrue(
-                    $validated,
-                    "The object key `$key` should have been validated."
-                );
-            }
-        } finally {
-            TestsUtility::cleanUpDir($directory);
+                return true;
+            });
+        $manager->uploadDirectory(
+            new UploadDirectoryRequest(
+                $directory,
+                "Bucket",
+                [],
+                [],
+                [
+                    $transferListener
+                ]
+            )
+        )->wait();
+        foreach ($objectKeys as $key => $validated) {
+            $this->assertTrue(
+                $validated,
+                "The object key `$key` should have been validated."
+            );
         }
     }
 
@@ -1922,49 +1898,45 @@ EOF
      */
     public function testDownloadDirectoryCreatesDestinationDirectory(): void
     {
-        $destinationDirectory = sys_get_temp_dir() . DIRECTORY_SEPARATOR . uniqid();
+        $destinationDirectory = $this->tempDir . DIRECTORY_SEPARATOR . uniqid();
         if (is_dir($destinationDirectory)) {
-            rmdir($destinationDirectory);
-        }
-
-        try {
-            $client = $this->getS3ClientMock([
-                'getApi' => function () {
-                    $service = $this->getMockBuilder(Service::class)
-                        ->disableOriginalConstructor()
-                        ->onlyMethods(["getPaginatorConfig"])
-                        ->getMock();
-                    $service->method('getPaginatorConfig')
-                        ->willReturn([
-                            'input_token'  => null,
-                            'output_token' => null,
-                            'limit_key'    => null,
-                            'result_key'   => null,
-                            'more_results' => null,
-                        ]);
-
-                    return $service;
-                },
-                'getHandlerList' => function () {
-                    return new HandlerList();
-                },
-                'executeAsync' => function (CommandInterface $command) {
-                   return Create::promiseFor(new Result([]));
-                }
-            ]);
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $manager->downloadDirectory(
-                new DownloadDirectoryRequest(
-                    "Bucket",
-                    $destinationDirectory
-                )
-            )->wait();
-            $this->assertFileExists($destinationDirectory);
-        } finally {
             TestsUtility::cleanUpDir($destinationDirectory);
         }
+
+        $client = $this->getS3ClientMock([
+            'getApi' => function () {
+                $service = $this->getMockBuilder(Service::class)
+                    ->disableOriginalConstructor()
+                    ->onlyMethods(["getPaginatorConfig"])
+                    ->getMock();
+                $service->method('getPaginatorConfig')
+                    ->willReturn([
+                        'input_token'  => null,
+                        'output_token' => null,
+                        'limit_key'    => null,
+                        'result_key'   => null,
+                        'more_results' => null,
+                    ]);
+
+                return $service;
+            },
+            'getHandlerList' => function () {
+                return new HandlerList();
+            },
+            'executeAsync' => function (CommandInterface $command) {
+                return Create::promiseFor(new Result([]));
+            }
+        ]);
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $manager->downloadDirectory(
+            new DownloadDirectoryRequest(
+                "Bucket",
+                $destinationDirectory
+            )
+        )->wait();
+        $this->assertFileExists($destinationDirectory);
     }
 
     /**
@@ -1980,67 +1952,64 @@ EOF
         string $expectedS3Prefix
     ): void
     {
-        $destinationDirectory = sys_get_temp_dir() . "/download-directory-test";
+        $destinationDirectory = $this->tempDir . DIRECTORY_SEPARATOR . "download-directory-test";
         if (!is_dir($destinationDirectory)) {
             mkdir($destinationDirectory, 0777, true);
         }
-        try {
-            $called = false;
-            $listObjectsCalled = false;
-            $client = $this->getS3ClientMock([
-                'executeAsync' => function (CommandInterface $command) use (
-                    $expectedS3Prefix,
-                    &$called,
-                    &$listObjectsCalled,
-                ) {
-                    $called = true;
-                    if ($command->getName() === "ListObjectsV2") {
-                        $listObjectsCalled = true;
-                        $this->assertEquals(
-                            $expectedS3Prefix,
-                            $command['Prefix']
-                        );
-                    }
 
-                    return Create::promiseFor(new Result([]));
-                },
-                'getApi' => function () {
-                    $service = $this->getMockBuilder(Service::class)
-                        ->disableOriginalConstructor()
-                        ->onlyMethods(["getPaginatorConfig"])
-                        ->getMock();
-                    $service->method('getPaginatorConfig')
-                        ->willReturn([
-                            'input_token'  => null,
-                            'output_token' => null,
-                            'limit_key'    => null,
-                            'result_key'   => null,
-                            'more_results' => null,
-                        ]);
-
-                    return $service;
-                },
-                'getHandlerList' => function () {
-                    return new HandlerList();
+        $called = false;
+        $listObjectsCalled = false;
+        $client = $this->getS3ClientMock([
+            'executeAsync' => function (CommandInterface $command) use (
+                $expectedS3Prefix,
+                &$called,
+                &$listObjectsCalled,
+            ) {
+                $called = true;
+                if ($command->getName() === "ListObjectsV2") {
+                    $listObjectsCalled = true;
+                    $this->assertEquals(
+                        $expectedS3Prefix,
+                        $command['Prefix']
+                    );
                 }
-            ]);
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $manager->downloadDirectory(
-                new DownloadDirectoryRequest(
-                    "Bucket",
-                    $destinationDirectory,
-                    [],
-                    $config
-                )
-            )->wait();
 
-            $this->assertTrue($called);
-            $this->assertTrue($listObjectsCalled);
-        } finally {
-            TestsUtility::cleanUpDir($destinationDirectory);
-        }
+                return Create::promiseFor(new Result([]));
+            },
+            'getApi' => function () {
+                $service = $this->getMockBuilder(Service::class)
+                    ->disableOriginalConstructor()
+                    ->onlyMethods(["getPaginatorConfig"])
+                    ->getMock();
+                $service->method('getPaginatorConfig')
+                    ->willReturn([
+                        'input_token'  => null,
+                        'output_token' => null,
+                        'limit_key'    => null,
+                        'result_key'   => null,
+                        'more_results' => null,
+                    ]);
+
+                return $service;
+            },
+            'getHandlerList' => function () {
+                return new HandlerList();
+            }
+        ]);
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $manager->downloadDirectory(
+            new DownloadDirectoryRequest(
+                "Bucket",
+                $destinationDirectory,
+                [],
+                $config
+            )
+        )->wait();
+
+        $this->assertTrue($called);
+        $this->assertTrue($listObjectsCalled);
     }
 
     /**
@@ -2082,54 +2051,50 @@ EOF
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The provided config `filter` must be callable.");
-        $destinationDirectory = sys_get_temp_dir() . "/download-directory-test";
+        $destinationDirectory = $this->tempDir . DIRECTORY_SEPARATOR . "download-directory-test";
         if (!is_dir($destinationDirectory)) {
             mkdir($destinationDirectory, 0777, true);
         }
-        try {
-            $called = false;
-            $client = $this->getS3ClientMock([
-                'executeAsync' => function (CommandInterface $command) use (
-                    &$called,
-                ) {
-                    $called = true;
-                    return Create::promiseFor(new Result([]));
-                },
-                'getApi' => function () {
-                    $service = $this->getMockBuilder(Service::class)
-                        ->disableOriginalConstructor()
-                        ->onlyMethods(["getPaginatorConfig"])
-                        ->getMock();
-                    $service->method('getPaginatorConfig')
-                        ->willReturn([
-                            'input_token'  => null,
-                            'output_token' => null,
-                            'limit_key'    => null,
-                            'result_key'   => null,
-                            'more_results' => null,
-                        ]);
+        $called = false;
+        $client = $this->getS3ClientMock([
+            'executeAsync' => function (CommandInterface $command) use (
+                &$called,
+            ) {
+                $called = true;
+                return Create::promiseFor(new Result([]));
+            },
+            'getApi' => function () {
+                $service = $this->getMockBuilder(Service::class)
+                    ->disableOriginalConstructor()
+                    ->onlyMethods(["getPaginatorConfig"])
+                    ->getMock();
+                $service->method('getPaginatorConfig')
+                    ->willReturn([
+                        'input_token'  => null,
+                        'output_token' => null,
+                        'limit_key'    => null,
+                        'result_key'   => null,
+                        'more_results' => null,
+                    ]);
 
-                    return $service;
-                },
-                'getHandlerList' => function () {
-                    return new HandlerList();
-                }
-            ]);
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $manager->downloadDirectory(
-                new DownloadDirectoryRequest(
-                    "Bucket",
-                    $destinationDirectory,
-                    [],
-                    ['filter' => false]
-                )
-            )->wait();
-            $this->assertTrue($called);
-        } finally {
-            TestsUtility::cleanUpDir($destinationDirectory);
-        }
+                return $service;
+            },
+            'getHandlerList' => function () {
+                return new HandlerList();
+            }
+        ]);
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $manager->downloadDirectory(
+            new DownloadDirectoryRequest(
+                "Bucket",
+                $destinationDirectory,
+                [],
+                ['filter' => false]
+            )
+        )->wait();
+        $this->assertTrue($called);
     }
 
     /**
@@ -2139,54 +2104,51 @@ EOF
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The provided config `failure_policy` must be callable.");
-        $destinationDirectory = sys_get_temp_dir() . "/download-directory-test";
+        $destinationDirectory = $this->tempDir . DIRECTORY_SEPARATOR . "download-directory-test";
         if (!is_dir($destinationDirectory)) {
             mkdir($destinationDirectory, 0777, true);
         }
-        try {
-            $called = false;
-            $client = $this->getS3ClientMock([
-                'executeAsync' => function (CommandInterface $command) use (
-                    &$called,
-                ) {
-                    $called = true;
-                    return Create::promiseFor(new Result([]));
-                },
-                'getApi' => function () {
-                    $service = $this->getMockBuilder(Service::class)
-                        ->disableOriginalConstructor()
-                        ->onlyMethods(["getPaginatorConfig"])
-                        ->getMock();
-                    $service->method('getPaginatorConfig')
-                        ->willReturn([
-                            'input_token'  => null,
-                            'output_token' => null,
-                            'limit_key'    => null,
-                            'result_key'   => null,
-                            'more_results' => null,
-                        ]);
 
-                    return $service;
-                },
-                'getHandlerList' => function () {
-                    return new HandlerList();
-                }
-            ]);
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $manager->downloadDirectory(
-                new DownloadDirectoryRequest(
-                    "Bucket",
-                    $destinationDirectory,
-                    [],
-                    ['failure_policy' => false]
-                )
-            )->wait();
-            $this->assertTrue($called);
-        } finally {
-            TestsUtility::cleanUpDir($destinationDirectory);
-        }
+        $called = false;
+        $client = $this->getS3ClientMock([
+            'executeAsync' => function (CommandInterface $command) use (
+                &$called,
+            ) {
+                $called = true;
+                return Create::promiseFor(new Result([]));
+            },
+            'getApi' => function () {
+                $service = $this->getMockBuilder(Service::class)
+                    ->disableOriginalConstructor()
+                    ->onlyMethods(["getPaginatorConfig"])
+                    ->getMock();
+                $service->method('getPaginatorConfig')
+                    ->willReturn([
+                        'input_token'  => null,
+                        'output_token' => null,
+                        'limit_key'    => null,
+                        'result_key'   => null,
+                        'more_results' => null,
+                    ]);
+
+                return $service;
+            },
+            'getHandlerList' => function () {
+                return new HandlerList();
+            }
+        ]);
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $manager->downloadDirectory(
+            new DownloadDirectoryRequest(
+                "Bucket",
+                $destinationDirectory,
+                [],
+                ['failure_policy' => false]
+            )
+        )->wait();
+        $this->assertTrue($called);
     }
 
     /**
@@ -2194,79 +2156,75 @@ EOF
      */
     public function testDownloadDirectoryUsesFailurePolicy(): void
     {
-        $destinationDirectory = sys_get_temp_dir() . "/download-directory-test";
+        $destinationDirectory = $this->tempDir . DIRECTORY_SEPARATOR . "download-directory-test";
         if (!is_dir($destinationDirectory)) {
             mkdir($destinationDirectory, 0777, true);
         }
 
-        try {
-            $client = new S3Client([
-                'region' => 'us-west-2',
-                'handler' => function (CommandInterface $command) {
-                    if ($command->getName() === 'ListObjectsV2') {
-                        return Create::promiseFor(new Result([
-                            'Contents' => [
-                                [
-                                    'Key' => 'file1.txt',
-                                ],
-                                [
-                                    'Key' => 'file2.txt',
-                                ]
-                            ]
-                        ]));
-                    } elseif ($command->getName() === 'GetObject') {
-                        if ($command['Key'] === 'file2.txt') {
-                            return Create::rejectionFor(
-                                new Exception("Failed downloading file")
-                            );
-                        }
-                    }
-
+        $client = new S3Client([
+            'region' => 'us-west-2',
+            'handler' => function (CommandInterface $command) {
+                if ($command->getName() === 'ListObjectsV2') {
                     return Create::promiseFor(new Result([
-                        'Body' => Utils::streamFor(),
-                        'PartsCount' => 1,
-                        '@metadata' => []
+                        'Contents' => [
+                            [
+                                'Key' => 'file1.txt',
+                            ],
+                            [
+                                'Key' => 'file2.txt',
+                            ]
+                        ]
                     ]));
+                } elseif ($command->getName() === 'GetObject') {
+                    if ($command['Key'] === 'file2.txt') {
+                        return Create::rejectionFor(
+                            new Exception("Failed downloading file")
+                        );
+                    }
                 }
-            ]);
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $manager->downloadDirectory(
-                new DownloadDirectoryRequest(
-                    "Bucket",
-                    $destinationDirectory,
-                    [],
-                    ['failure_policy' => function (
-                        array $requestArgs,
-                        array $uploadDirectoryRequestArgs,
-                        \Throwable $reason,
-                        DownloadDirectoryResult $downloadDirectoryResponse
-                    ) use ($destinationDirectory, &$called) {
-                        $called = true;
-                        $this->assertEquals(
-                            $destinationDirectory,
-                            $uploadDirectoryRequestArgs['destination_directory']
-                        );
-                        $this->assertEquals(
-                            "Failed downloading file",
-                            $reason->getMessage()
-                        );
-                        $this->assertEquals(
-                            1,
-                            $downloadDirectoryResponse->getObjectsDownloaded()
-                        );
-                        $this->assertEquals(
-                            1,
-                            $downloadDirectoryResponse->getObjectsFailed()
-                        );
-                    }]
-                )
-            )->wait();
-            $this->assertTrue($called);
-        } finally {
-            TestsUtility::cleanUpDir($destinationDirectory);
-        }
+
+                return Create::promiseFor(new Result([
+                    'Body' => Utils::streamFor(),
+                    'PartsCount' => 1,
+                    '@metadata' => []
+                ]));
+            }
+        ]);
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $manager->downloadDirectory(
+            new DownloadDirectoryRequest(
+                "Bucket",
+                $destinationDirectory,
+                [],
+                ['failure_policy' => function (
+                    array $requestArgs,
+                    array $uploadDirectoryRequestArgs,
+                    \Throwable $reason,
+                    DownloadDirectoryResult $downloadDirectoryResponse
+                ) use ($destinationDirectory, &$called) {
+                    $called = true;
+                    $this->assertEquals(
+                        $destinationDirectory,
+                        $uploadDirectoryRequestArgs['destination_directory']
+                    );
+                    $this->assertEquals(
+                        "Failed downloading file",
+                        $reason->getMessage()
+                    );
+                    $this->assertEquals(
+                        1,
+                        $downloadDirectoryResponse->getObjectsDownloaded()
+                    );
+                    $this->assertEquals(
+                        1,
+                        $downloadDirectoryResponse->getObjectsFailed()
+                    );
+                }]
+            )
+        )->wait();
+        $this->assertTrue($called);
     }
 
     /**
@@ -2274,7 +2232,7 @@ EOF
      * @param array $objectList
      * @param array $expectedObjectList
      *
-     * @dataProvider downloadDirectoryAppliesFilter
+     * @dataProvider downloadDirectoryAppliesFilterProvider
      *
      * @return void
      */
@@ -2284,85 +2242,81 @@ EOF
         array $expectedObjectList,
     ): void
     {
-        $destinationDirectory = sys_get_temp_dir() . "/download-directory-test";
+        $destinationDirectory = $this->tempDir . DIRECTORY_SEPARATOR . "download-directory-test";
         if (!is_dir($destinationDirectory)) {
             mkdir($destinationDirectory, 0777, true);
         }
-        try {
-            $called = false;
-            $downloadObjectKeys = [];
-            foreach ($expectedObjectList as $objectKey) {
-                $downloadObjectKeys[$objectKey] = false;
-            }
-            $client = $this->getS3ClientMock([
-                'executeAsync' => function (CommandInterface $command) use (
-                    $objectList,
-                    &$called,
-                    &$downloadObjectKeys
-                ) {
-                    $called = true;
-                    if ($command->getName() === 'ListObjectsV2') {
-                        return Create::promiseFor(new Result([
-                            'Contents' => $objectList,
-                        ]));
-                    } elseif ($command->getName() === 'GetObject') {
-                        $downloadObjectKeys[$command['Key']] = true;
-                    }
-
+        $called = false;
+        $downloadObjectKeys = [];
+        foreach ($expectedObjectList as $objectKey) {
+            $downloadObjectKeys[$objectKey] = false;
+        }
+        $client = $this->getS3ClientMock([
+            'executeAsync' => function (CommandInterface $command) use (
+                $objectList,
+                &$called,
+                &$downloadObjectKeys
+            ) {
+                $called = true;
+                if ($command->getName() === 'ListObjectsV2') {
                     return Create::promiseFor(new Result([
-                        'Body' => Utils::streamFor(),
-                        'PartsCount' => 1,
-                        '@metadata' => []
+                        'Contents' => $objectList,
                     ]));
-                },
-                'getApi' => function () {
-                    $service = $this->getMockBuilder(Service::class)
-                        ->disableOriginalConstructor()
-                        ->onlyMethods(["getPaginatorConfig"])
-                        ->getMock();
-                    $service->method('getPaginatorConfig')
-                        ->willReturn([
-                            'input_token'  => null,
-                            'output_token' => null,
-                            'limit_key'    => null,
-                            'result_key'   => null,
-                            'more_results' => null,
-                        ]);
-
-                    return $service;
-                },
-                'getHandlerList' => function () {
-                    return new HandlerList();
+                } elseif ($command->getName() === 'GetObject') {
+                    $downloadObjectKeys[$command['Key']] = true;
                 }
-            ]);
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $manager->downloadDirectory(
-                new DownloadDirectoryRequest(
-                    "Bucket",
-                    $destinationDirectory,
-                    [],
-                    ['filter' => $filter]
-                )
-            )->wait();
 
-            $this->assertTrue($called);
-            foreach ($downloadObjectKeys as $key => $validated) {
-                $this->assertTrue(
-                    $validated,
-                    "The key `$key` should have been validated"
-                );
+                return Create::promiseFor(new Result([
+                    'Body' => Utils::streamFor(),
+                    'PartsCount' => 1,
+                    '@metadata' => []
+                ]));
+            },
+            'getApi' => function () {
+                $service = $this->getMockBuilder(Service::class)
+                    ->disableOriginalConstructor()
+                    ->onlyMethods(["getPaginatorConfig"])
+                    ->getMock();
+                $service->method('getPaginatorConfig')
+                    ->willReturn([
+                        'input_token'  => null,
+                        'output_token' => null,
+                        'limit_key'    => null,
+                        'result_key'   => null,
+                        'more_results' => null,
+                    ]);
+
+                return $service;
+            },
+            'getHandlerList' => function () {
+                return new HandlerList();
             }
-        } finally {
-            TestsUtility::cleanUpDir($destinationDirectory);
+        ]);
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $manager->downloadDirectory(
+            new DownloadDirectoryRequest(
+                "Bucket",
+                $destinationDirectory,
+                [],
+                ['filter' => $filter]
+            )
+        )->wait();
+
+        $this->assertTrue($called);
+        foreach ($downloadObjectKeys as $key => $validated) {
+            $this->assertTrue(
+                $validated,
+                "The key `$key` should have been validated"
+            );
         }
     }
 
     /**
      * @return array[]
      */
-    public function downloadDirectoryAppliesFilter(): array
+    public function downloadDirectoryAppliesFilterProvider(): array
     {
         return [
             'filter_1' => [
@@ -2384,8 +2338,8 @@ EOF
                     ]
                 ],
                 'expected_object_list' => [
-                    "folder_2/key_1.txt",
-                    "folder_2/key_2.txt",
+                    "folder_2" . DIRECTORY_SEPARATOR . "key_1.txt",
+                    "folder_2" . DIRECTORY_SEPARATOR . "key_2.txt",
                 ]
             ],
             'filter_2' => [
@@ -2407,7 +2361,7 @@ EOF
                     ]
                 ],
                 'expected_object_list' => [
-                    "folder_2/key_1.txt",
+                    "folder_2" . DIRECTORY_SEPARATOR . "key_1.txt",
                 ]
             ],
             'filter_3' => [
@@ -2429,9 +2383,9 @@ EOF
                     ]
                 ],
                 'expected_object_list' => [
-                    "folder_2/key_2.txt",
-                    "folder_1/key_1.txt",
-                    "folder_1/key_1.txt",
+                    "folder_1" . DIRECTORY_SEPARATOR . "key_1.txt",
+                    "folder_1" . DIRECTORY_SEPARATOR . "key_2.txt",
+                    "folder_2" . DIRECTORY_SEPARATOR . "key_2.txt",
                 ]
             ]
         ];
@@ -2446,58 +2400,55 @@ EOF
         $this->expectExceptionMessage(
             "The provided config `download_object_request_modifier` must be callable."
         );
-        $destinationDirectory = sys_get_temp_dir() . "/download-directory-test";
+        $destinationDirectory = $this->tempDir . DIRECTORY_SEPARATOR . "download-directory-test";
         if (!is_dir($destinationDirectory)) {
             mkdir($destinationDirectory, 0777, true);
         }
-        try {
-            $client = $this->getS3ClientMock([
-                'executeAsync' => function (CommandInterface $command) {
-                    if ($command->getName() === 'ListObjectsV2') {
-                        return Create::promiseFor(new Result([
-                            'Contents' => [],
-                        ]));
-                    }
 
+        $client = $this->getS3ClientMock([
+            'executeAsync' => function (CommandInterface $command) {
+                if ($command->getName() === 'ListObjectsV2') {
                     return Create::promiseFor(new Result([
-                        'Body' => Utils::streamFor(),
-                        '@metadata' => []
+                        'Contents' => [],
                     ]));
-                },
-                'getApi' => function () {
-                    $service = $this->getMockBuilder(Service::class)
-                        ->disableOriginalConstructor()
-                        ->onlyMethods(["getPaginatorConfig"])
-                        ->getMock();
-                    $service->method('getPaginatorConfig')
-                        ->willReturn([
-                            'input_token'  => null,
-                            'output_token' => null,
-                            'limit_key'    => null,
-                            'result_key'   => null,
-                            'more_results' => null,
-                        ]);
-
-                    return $service;
-                },
-                'getHandlerList' => function () {
-                    return new HandlerList();
                 }
-            ]);
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $manager->downloadDirectory(
-                new DownloadDirectoryRequest(
-                    "Bucket",
-                    $destinationDirectory,
-                    [],
-                    ['download_object_request_modifier' => false]
-                )
-            )->wait();
-        } finally {
-            TestsUtility::cleanUpDir($destinationDirectory);
-        }
+
+                return Create::promiseFor(new Result([
+                    'Body' => Utils::streamFor(),
+                    '@metadata' => []
+                ]));
+            },
+            'getApi' => function () {
+                $service = $this->getMockBuilder(Service::class)
+                    ->disableOriginalConstructor()
+                    ->onlyMethods(["getPaginatorConfig"])
+                    ->getMock();
+                $service->method('getPaginatorConfig')
+                    ->willReturn([
+                        'input_token'  => null,
+                        'output_token' => null,
+                        'limit_key'    => null,
+                        'result_key'   => null,
+                        'more_results' => null,
+                    ]);
+
+                return $service;
+            },
+            'getHandlerList' => function () {
+                return new HandlerList();
+            }
+        ]);
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $manager->downloadDirectory(
+            new DownloadDirectoryRequest(
+                "Bucket",
+                $destinationDirectory,
+                [],
+                ['download_object_request_modifier' => false]
+            )
+        )->wait();
     }
 
     /**
@@ -2505,76 +2456,73 @@ EOF
      */
     public function testDownloadDirectoryGetObjectRequestCallbackWorks(): void
     {
-        $destinationDirectory = sys_get_temp_dir() . "/download-directory-test";
+        $destinationDirectory = $this->tempDir . DIRECTORY_SEPARATOR . "download-directory-test";
         if (!is_dir($destinationDirectory)) {
             mkdir($destinationDirectory, 0777, true);
         }
-        try {
-            $called = false;
-            $listObjectsContent = [
-                [
-                    'Key' => 'folder_1/key_1.txt',
-                ]
-            ];
-            $client = $this->getS3ClientMock([
-                'executeAsync' => function (CommandInterface $command) use ($listObjectsContent) {
-                    if ($command->getName() === 'ListObjectsV2') {
-                        return Create::promiseFor(new Result([
-                            'Contents' => $listObjectsContent,
-                        ]));
-                    }
 
+        $called = false;
+        $listObjectsContent = [
+            [
+                'Key' => 'folder_1/key_1.txt',
+            ]
+        ];
+        $client = $this->getS3ClientMock([
+            'executeAsync' => function (CommandInterface $command) use ($listObjectsContent) {
+                if ($command->getName() === 'ListObjectsV2') {
                     return Create::promiseFor(new Result([
-                        'Body' => Utils::streamFor(),
-                        'PartsCount' => 1,
-                        '@metadata' => []
+                        'Contents' => $listObjectsContent,
                     ]));
-                },
-                'getApi' => function () {
-                    $service = $this->getMockBuilder(Service::class)
-                        ->disableOriginalConstructor()
-                        ->onlyMethods(["getPaginatorConfig"])
-                        ->getMock();
-                    $service->method('getPaginatorConfig')
-                        ->willReturn([
-                            'input_token'  => null,
-                            'output_token' => null,
-                            'limit_key'    => null,
-                            'result_key'   => null,
-                            'more_results' => null,
-                        ]);
-
-                    return $service;
-                },
-                'getHandlerList' => function () {
-                    return new HandlerList();
                 }
-            ]);
-            $manager = new S3TransferManager(
-                $client,
+
+                return Create::promiseFor(new Result([
+                    'Body' => Utils::streamFor(),
+                    'PartsCount' => 1,
+                    '@metadata' => []
+                ]));
+            },
+            'getApi' => function () {
+                $service = $this->getMockBuilder(Service::class)
+                    ->disableOriginalConstructor()
+                    ->onlyMethods(["getPaginatorConfig"])
+                    ->getMock();
+                $service->method('getPaginatorConfig')
+                    ->willReturn([
+                        'input_token'  => null,
+                        'output_token' => null,
+                        'limit_key'    => null,
+                        'result_key'   => null,
+                        'more_results' => null,
+                    ]);
+
+                return $service;
+            },
+            'getHandlerList' => function () {
+                return new HandlerList();
+            }
+        ]);
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $getObjectRequestCallback = function($requestArgs) use (&$called) {
+            $called = true;
+            $this->assertTrue(isset($requestArgs['CustomParameter']));
+            $this->assertEquals(
+                'CustomParameterValue',
+                $requestArgs['CustomParameter']
             );
-            $getObjectRequestCallback = function($requestArgs) use (&$called) {
-                $called = true;
-                $this->assertTrue(isset($requestArgs['CustomParameter']));
-                $this->assertEquals(
-                    'CustomParameterValue',
-                    $requestArgs['CustomParameter']
-                );
-            };
-            $manager->downloadDirectory(
-                new DownloadDirectoryRequest(
-                    "Bucket",
-                    $destinationDirectory,
-                    [
-                        'CustomParameter' => 'CustomParameterValue'
-                    ],
-                    ['download_object_request_modifier' => $getObjectRequestCallback]
-                )
-            )->wait();
-            $this->assertTrue($called);
-        } finally {
-            TestsUtility::cleanUpDir($destinationDirectory);
-        }
+        };
+        $manager->downloadDirectory(
+            new DownloadDirectoryRequest(
+                "Bucket",
+                $destinationDirectory,
+                [
+                    'CustomParameter' => 'CustomParameterValue'
+                ],
+                ['download_object_request_modifier' => $getObjectRequestCallback]
+            )
+        )->wait();
+        $this->assertTrue($called);
     }
 
     /**
@@ -2590,72 +2538,68 @@ EOF
         array $expectedFileKeys,
     ): void
     {
-        $destinationDirectory = sys_get_temp_dir() . "/download-directory-test";
+        $destinationDirectory = $this->tempDir . DIRECTORY_SEPARATOR . "download-directory-test";
         if (!is_dir($destinationDirectory)) {
             mkdir($destinationDirectory, 0777, true);
         }
-        try {
-            $called = false;
-            $client = $this->getS3ClientMock([
-                'executeAsync' => function (CommandInterface $command) use (
-                    $listObjectsContent,
-                    &$called
-                ) {
-                    $called = true;
-                    if ($command->getName() === 'ListObjectsV2') {
-                        return Create::promiseFor(new Result([
-                            'Contents' => $listObjectsContent,
-                        ]));
-                    }
-
+        $called = false;
+        $client = $this->getS3ClientMock([
+            'executeAsync' => function (CommandInterface $command) use (
+                $listObjectsContent,
+                &$called
+            ) {
+                $called = true;
+                if ($command->getName() === 'ListObjectsV2') {
                     return Create::promiseFor(new Result([
-                        'Body' => Utils::streamFor(
-                            "Test file " . $command['Key']
-                        ),
-                        'PartsCount' => 1,
-                        '@metadata' => []
+                        'Contents' => $listObjectsContent,
                     ]));
-                },
-                'getApi' => function () {
-                    $service = $this->getMockBuilder(Service::class)
-                        ->disableOriginalConstructor()
-                        ->onlyMethods(["getPaginatorConfig"])
-                        ->getMock();
-                    $service->method('getPaginatorConfig')
-                        ->willReturn([
-                            'input_token'  => null,
-                            'output_token' => null,
-                            'limit_key'    => null,
-                            'result_key'   => null,
-                            'more_results' => null,
-                        ]);
-
-                    return $service;
-                },
-                'getHandlerList' => function () {
-                    return new HandlerList();
                 }
-            ]);
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $manager->downloadDirectory(
-                new DownloadDirectoryRequest(
-                    "Bucket",
-                    $destinationDirectory,
-                )
-            )->wait();
-            $this->assertTrue($called);
-            foreach ($expectedFileKeys as $key) {
-                $file = $destinationDirectory . "/" . $key;
-                $this->assertFileExists($file);
-                $this->assertEquals(
-                    "Test file " . $key,
-                    file_get_contents($file)
-                );
+
+                return Create::promiseFor(new Result([
+                    'Body' => Utils::streamFor(
+                        "Test file " . $command['Key']
+                    ),
+                    'PartsCount' => 1,
+                    '@metadata' => []
+                ]));
+            },
+            'getApi' => function () {
+                $service = $this->getMockBuilder(Service::class)
+                    ->disableOriginalConstructor()
+                    ->onlyMethods(["getPaginatorConfig"])
+                    ->getMock();
+                $service->method('getPaginatorConfig')
+                    ->willReturn([
+                        'input_token'  => null,
+                        'output_token' => null,
+                        'limit_key'    => null,
+                        'result_key'   => null,
+                        'more_results' => null,
+                    ]);
+
+                return $service;
+            },
+            'getHandlerList' => function () {
+                return new HandlerList();
             }
-        } finally {
-            TestsUtility::cleanUpDir($destinationDirectory);
+        ]);
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $manager->downloadDirectory(
+            new DownloadDirectoryRequest(
+                "Bucket",
+                $destinationDirectory,
+            )
+        )->wait();
+        $this->assertTrue($called);
+        foreach ($expectedFileKeys as $key) {
+            $file = $destinationDirectory . "/" . $key;
+            $this->assertFileExists($file);
+            $this->assertEquals(
+                "Test file " . $key,
+                file_get_contents($file)
+            );
         }
     }
 
@@ -2718,77 +2662,73 @@ EOF
 
         $bucket = "test-bucket";
         $directory = "test-directory";
-        try {
-            $fullDirectoryPath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $directory;
-            if (is_dir($fullDirectoryPath)) {
-                TestsUtility::cleanUpDir($fullDirectoryPath);
-            }
-            mkdir($fullDirectoryPath, 0777, true);
-            $called = false;
-            $client = $this->getS3ClientMock([
-                'executeAsync' => function (CommandInterface $command) use (
-                    $objects,
-                    &$called
-                ) {
-                    $called = true;
-                    if ($command->getName() === 'ListObjectsV2') {
-                        return Create::promiseFor(new Result([
-                            'Contents' => $objects,
-                        ]));
-                    }
-
+        $fullDirectoryPath = $this->tempDir . DIRECTORY_SEPARATOR . $directory;
+        if (is_dir($fullDirectoryPath)) {
+            TestsUtility::cleanUpDir($fullDirectoryPath);
+        }
+        mkdir($fullDirectoryPath, 0777, true);
+        $called = false;
+        $client = $this->getS3ClientMock([
+            'executeAsync' => function (CommandInterface $command) use (
+                $objects,
+                &$called
+            ) {
+                $called = true;
+                if ($command->getName() === 'ListObjectsV2') {
                     return Create::promiseFor(new Result([
-                        'Body' => Utils::streamFor(
-                            "Test file " . $command['Key']
-                        ),
-                        'PartsCount' => 1,
-                        '@metadata' => []
+                        'Contents' => $objects,
                     ]));
-                },
-                'getApi' => function () {
-                    $service = $this->getMockBuilder(Service::class)
-                        ->disableOriginalConstructor()
-                        ->onlyMethods(["getPaginatorConfig"])
-                        ->getMock();
-                    $service->method('getPaginatorConfig')
-                        ->willReturn([
-                            'input_token'  => null,
-                            'output_token' => null,
-                            'limit_key'    => null,
-                            'result_key'   => null,
-                            'more_results' => null,
-                        ]);
-
-                    return $service;
-                },
-                'getHandlerList' => function () {
-                    return new HandlerList();
                 }
-            ]);
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $manager->downloadDirectory(
-                new DownloadDirectoryRequest(
-                    $bucket,
-                    $fullDirectoryPath,
-                    [],
-                    [
-                        's3_prefix' => $prefix,
-                    ]
-                )
-            )->wait();
-            $this->assertTrue($called);
-            // Validate the expected file output
-            if ($expectedOutput['success']) {
-                $this->assertFileExists(
-                    $fullDirectoryPath
-                    . DIRECTORY_SEPARATOR
-                    . $expectedOutput['filename']
-                );
+
+                return Create::promiseFor(new Result([
+                    'Body' => Utils::streamFor(
+                        "Test file " . $command['Key']
+                    ),
+                    'PartsCount' => 1,
+                    '@metadata' => []
+                ]));
+            },
+            'getApi' => function () {
+                $service = $this->getMockBuilder(Service::class)
+                    ->disableOriginalConstructor()
+                    ->onlyMethods(["getPaginatorConfig"])
+                    ->getMock();
+                $service->method('getPaginatorConfig')
+                    ->willReturn([
+                        'input_token'  => null,
+                        'output_token' => null,
+                        'limit_key'    => null,
+                        'result_key'   => null,
+                        'more_results' => null,
+                    ]);
+
+                return $service;
+            },
+            'getHandlerList' => function () {
+                return new HandlerList();
             }
-        } finally {
-            TestsUtility::cleanUpDir($directory);
+        ]);
+        $manager = new S3TransferManager(
+            $client,
+        );
+        $manager->downloadDirectory(
+            new DownloadDirectoryRequest(
+                $bucket,
+                $fullDirectoryPath,
+                [],
+                [
+                    's3_prefix' => $prefix,
+                ]
+            )
+        )->wait();
+        $this->assertTrue($called);
+        // Validate the expected file output
+        if ($expectedOutput['success']) {
+            $this->assertFileExists(
+                $fullDirectoryPath
+                . DIRECTORY_SEPARATOR
+                . $expectedOutput['filename']
+            );
         }
     }
 
@@ -2808,6 +2748,18 @@ EOF
                 'expected_output' => [
                     'success' => true,
                     'filename' => '2023/Jan/1.png',
+                ]
+            ],
+            'download_directory_1_windows_or_linux' => [
+                'prefix' => null,
+                'objects' => [
+                    [
+                        'Key' => '2023/Jan/1.png'
+                    ],
+                ],
+                'expected_output' => [
+                    'success' => true,
+                    'filename' => '2023'. DIRECTORY_SEPARATOR.'Jan' . DIRECTORY_SEPARATOR . '1.png',
                 ]
             ],
             'download_directory_2' => [
@@ -2997,7 +2949,7 @@ EOF
                             /**
                              * @param array $context
                              *
-                             * @return void
+                             * @return bool
                              */
                             public function bytesTransferred(array $context): bool {
                                 $snapshot = $context[
@@ -3208,7 +3160,7 @@ EOF
     /**
      * @param string $testId
      * @param array $config
-     * @param array $uploadDirectoryRequestArgs
+     * @param array|null $uploadDirectoryRequestArgs
      * @param array|null $sourceStructure
      * @param array $expectations
      * @param array $outcomes
@@ -3219,19 +3171,21 @@ EOF
     public function testModeledCasesForUploadDirectory(
         string $testId,
         array $config,
-        array $uploadDirectoryRequestArgs,
+        ?array $uploadDirectoryRequestArgs,
         ?array $sourceStructure,
         array $expectations,
         array $outcomes
     ) {
         $testsToSkip = [
             "Test upload directory - S3 directory bucket" => true,
+            "Test upload directory - Linux case sensitivity (distinct files)" => php_uname('s') !== 'Linux',
+            "Test upload directory - Windows happy case" => php_uname('s') !== 'Windows'
         ];
+
         if ($testsToSkip[$testId] ?? false) {
-            $this->markTestSkipped(
-                "The test `" . $testId . "` is not supported yet."
-            );
+            $this->markTestSkipped("The test with id `$testId` is not supported by this platform");
         }
+
         // Parse config and request args
         $this->parseConfigFromCamelCaseToSnakeCase($config);
         $this->parseConfigFromCamelCaseToSnakeCase($uploadDirectoryRequestArgs);
@@ -3263,8 +3217,12 @@ EOF
         }
 
         // Prepare source directory
-        $sourceDirectory = sys_get_temp_dir() . DIRECTORY_SEPARATOR . "upload-directory-test";
-        $source = $sourceDirectory . DIRECTORY_SEPARATOR . $source;
+        $sourceDirectory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
+        if (!str_starts_with($source, DIRECTORY_SEPARATOR)) {
+            $source = DIRECTORY_SEPARATOR . $source;
+        }
+
+        $source = $sourceDirectory . $source;
         if ($sourceStructure !== null) {
             // Create source folder first
             if (is_dir($source)) {
@@ -3361,8 +3319,6 @@ EOF
                 );
             }
             $this->assertTrue(true);
-        } finally {
-            TestsUtility::cleanUpDir($sourceDirectory);
         }
     }
 
@@ -3390,12 +3346,15 @@ EOF
     ) {
         $testsToSkip = [
             "Test download directory - S3 directory bucket" => true,
+            "Test download directory - Windows happy case" => php_uname('s') !== "Windows",
+            "Test download directory - Linux case sensitivity (no conflict)" => php_uname('s') !== "Linux",
         ];
         if ($testsToSkip[$testId] ?? false) {
             $this->markTestSkipped(
-                "The test `" . $testId . "` is not supported yet."
+                "The test with id `$testId` is not supported by this platform"
             );
         }
+
         // Parse config and request args
         $this->parseConfigFromCamelCaseToSnakeCase($config);
         $this->parseConfigFromCamelCaseToSnakeCase($downloadDirectoryRequestArgs);
@@ -3417,7 +3376,7 @@ EOF
             };
         }
         // Prepare destination directory
-        $baseDirectory = sys_get_temp_dir() . DIRECTORY_SEPARATOR . "download-directory-test";
+        $baseDirectory = $this->tempDir . DIRECTORY_SEPARATOR . "download-directory-test";
         $targetDirectory = $baseDirectory . DIRECTORY_SEPARATOR . $destination;
         if (is_dir($targetDirectory)) {
             TestsUtility::cleanUpDir($targetDirectory);
@@ -3465,9 +3424,10 @@ EOF
                         $itemBuilder = $itemBuilder . "\n$listObjectsV2ContentsTemplate";
                         $itemBuilder = str_replace(
                             ['{Key}', '{Size}'],
-                            [$item['key'], $item['size']],
+                            [htmlspecialchars($item['key'], ENT_XML1, 'UTF-8'), $item['size']],
                             $itemBuilder
                         );
+
                     }
 
                     $bodyBuilder = str_replace(
@@ -3551,8 +3511,6 @@ EOF
                 );
             }
             $this->assertTrue(true);
-        } finally {
-            TestsUtility::cleanUpDir($targetDirectory);
         }
     }
 
@@ -3682,13 +3640,25 @@ EOF
      */
     public function modeledUploadDirectoryCasesProvider(): Generator
     {
-        $downloadCases = json_decode(
+        $uploadDirectoryCases = json_decode(
             file_get_contents(
                 self::UPLOAD_DIRECTORY_BASE_CASES
             ),
             true
         );
-        foreach ($downloadCases as $case) {
+        $crossPlatformUploadDirectoryCases = json_decode(
+            file_get_contents(
+                self::UPLOAD_DIRECTORY_CROSS_PLATFORM_BASE_CASES
+            ),
+            true
+        );
+
+        $allUploadDirectoryCases = array_merge(
+            $uploadDirectoryCases,
+            $crossPlatformUploadDirectoryCases
+        );
+
+        foreach ($allUploadDirectoryCases as $case) {
             yield $case['summary'] => [
                 'test_id' => $case['summary'],
                 'config' => $case['config'],
@@ -3705,13 +3675,23 @@ EOF
      */
     public function modeledDownloadDirectoryCasesProvider(): Generator
     {
-        $downloadCases = json_decode(
+        $downloadDirectoryCases = json_decode(
             file_get_contents(
                 self::DOWNLOAD_DIRECTORY_BASE_CASES
             ),
             true
         );
-        foreach ($downloadCases as $case) {
+        $crossPlatformDownloadDirectoryCases = json_decode(
+            file_get_contents(
+                self::DOWNLOAD_DIRECTORY_CROSS_PLATFORM_BASE_CASES
+            ),
+            true
+        );
+        $allDownloadDirectoryCases = array_merge(
+            $downloadDirectoryCases,
+            $crossPlatformDownloadDirectoryCases
+        );
+        foreach ($allDownloadDirectoryCases as $case) {
             yield $case['summary'] => [
                 'test_id' => $case['summary'],
                 'config' => $case['config'],
@@ -3833,18 +3813,5 @@ EOF
         }
 
         return $client;
-    }
-
-    /**
-     * @return void
-     */
-    public function testDefaultRegionIsRequiredWhenUsingDefaultS3Client(): void
-    {
-        $this->expectException(S3TransferException::class);
-        $this->expectExceptionMessage(
-            "You could opt for setting a default region as part of the TM config"
-            ." options by using the parameter `default_region`"
-        );
-        new S3TransferManager();
     }
 }

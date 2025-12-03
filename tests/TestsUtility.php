@@ -20,6 +20,7 @@ class TestsUtility
 
         if (is_link($dirPath)) {
             unlink($dirPath);
+            return;
         }
 
         $files = dir_iterator($dirPath);
@@ -28,7 +29,11 @@ class TestsUtility
                 continue;
             }
 
-            $filePath  = $dirPath . '/' . $file;
+            if (!str_ends_with($dirPath, DIRECTORY_SEPARATOR)) {
+                $dirPath .= DIRECTORY_SEPARATOR;
+            }
+
+            $filePath  = $dirPath . $file;
             if (is_file($filePath) || !is_dir($filePath)) {
                 unlink($filePath);
             } elseif (is_dir($filePath)) {
