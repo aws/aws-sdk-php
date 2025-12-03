@@ -86,8 +86,13 @@ EOF
         set_error_handler(function ($errno, $errstr) {
             // Ignore trigger_error logging
         });
-        $this->tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR
+        $tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR
             . "transfer-manager-test";
+        if (!is_dir($tempDir)) {
+            mkdir($tempDir, 0777, true);
+        }
+
+        $this->tempDir = $tempDir;
     }
 
     protected function tearDown(): void

@@ -19,7 +19,8 @@ class TestsUtility
         }
 
         if (is_link($dirPath)) {
-            unlink($dirPath);
+            // Handle how window treats symlinks to directories
+            PHP_OS_FAMILY === 'Windows' ? rmdir($dirPath) : unlink($dirPath);
             return;
         }
 
@@ -33,7 +34,7 @@ class TestsUtility
                 $dirPath .= DIRECTORY_SEPARATOR;
             }
 
-            $filePath  = $dirPath . $file;
+            $filePath = $dirPath . $file;
             if (is_file($filePath) || !is_dir($filePath)) {
                 unlink($filePath);
             } elseif (is_dir($filePath)) {

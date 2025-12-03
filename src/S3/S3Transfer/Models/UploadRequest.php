@@ -87,7 +87,8 @@ final class UploadRequest extends AbstractTransferRequest
     {
         if (is_string($this->getSource()) && !is_readable($this->getSource())) {
             throw new InvalidArgumentException(
-                "Please provide a valid readable file path or a valid stream as source."
+                "Invalid source `". $this->getSource() . "` provided. ".
+                "\nPlease provide a valid readable file path or a valid stream as source."
             );
         }
     }
