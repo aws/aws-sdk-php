@@ -27,6 +27,7 @@ use Aws\S3\S3Transfer\S3TransferManager;
 use Aws\Test\TestsUtility;
 use Closure;
 use Exception;
+use FilesystemIterator;
 use Generator;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\RejectedPromise;
@@ -35,9 +36,10 @@ use GuzzleHttp\Psr7\Utils;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use RecursiveDirectoryIterator;
 use RuntimeException;
+use function Aws\filter;
 
 class S3TransferManagerTest extends TestCase
 {
@@ -1419,7 +1421,7 @@ EOF
      */
     public function testUploadDirectoryFailsWhenFileContainsProvidedDelimiter(): void
     {
-        $s3Delimiter = "*";
+        $s3Delimiter = "!";
         $fileNameWithDelimiter = "dir-file-$s3Delimiter.txt";
         $this->expectException(S3TransferException::class);
         $this->expectExceptionMessage(
@@ -2307,17 +2309,6 @@ EOF
             mkdir($destinationDirectory, 0777, true);
         }
         $called = false;
-        $downloadObjectKeys = [];
-        foreach ($expectedObjectList as $objectKey) {
-            $objectKey = str_replace(
-                "/",
-                DIRECTORY_SEPARATOR,
-                $objectKey
-            );
-
-            $downloadObjectKeys[$objectKey] = false;
-        }
-
         $client = $this->getS3ClientMock([
             'executeAsync' => function (CommandInterface $command) use (
                 $objectList,
@@ -2372,10 +2363,34 @@ EOF
         )->wait();
 
         $this->assertTrue($called);
-        foreach ($downloadObjectKeys as $key => $validated) {
+
+        $dirIterator = new RecursiveDirectoryIterator(
+            $destinationDirectory
+        );
+        $dirIterator->setFlags(FilesystemIterator::SKIP_DOTS);
+        // Filter just files
+        $files = filter($dirIterator, function ($file) {
+            return !is_dir($file);
+        });
+        $expectedObjectList = array_flip($expectedObjectList);
+        foreach ($files as $file) {
+            // Strip the parent directory
+            $file = str_replace(
+                $destinationDirectory,
+                "",
+                $file
+            );
+
+            // Make the separator the one defined in the test values
+            $file = str_replace(
+                DIRECTORY_SEPARATOR,
+                "/",
+                $file
+            );
+
             $this->assertTrue(
-                $validated,
-                "The key `$key` should have been validated"
+                isset($expectedObjectList[$file]),
+                "The file $file should have been downloaded!"
             );
         }
     }
