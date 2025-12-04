@@ -36,7 +36,11 @@ final class TestsUtility
 
             $filePath = $dirPath . $file;
             if (!is_dir($filePath)) {
-                unlink($filePath);
+                $value = @unlink($filePath);
+                if (!$value) {
+                    // Try rmdir
+                    @rmdir($filePath);
+                }
             } else {
                 self::cleanUpDir($filePath);
             }
