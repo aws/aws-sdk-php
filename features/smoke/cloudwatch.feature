@@ -12,7 +12,7 @@ Feature: Amazon CloudWatch
     | AlarmName   | abc |
     | StateValue  | mno |
     | StateReason | xyz |
-    Then I expect the response error code to be "ValidationError"
+    Then I expect the response error code to be "ValidationException"
 
   @queryCompat
   Scenario: AmbiguousErrorResolution
