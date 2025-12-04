@@ -256,8 +256,9 @@ final class S3TransferManager
         $objectsUploaded = 0;
         $objectsFailed = 0;
         $promises = [];
-        $baseDir = rtrim($sourceDirectory, '/') . DIRECTORY_SEPARATOR;
-        $delimiter = $config['s3_delimiter'] ?? '/';
+        // Making sure base dir ends with directory separator
+        $baseDir = rtrim($sourceDirectory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $s3Delimiter = $config['s3_delimiter'] ?? '/';
         $s3Prefix = $config['s3_prefix'] ?? '';
         if ($s3Prefix !== '' && !str_ends_with($s3Prefix, '/')) {
             $s3Prefix .= '/';
@@ -271,15 +272,15 @@ final class S3TransferManager
 
         foreach ($files as $file) {
             $relativePath = substr($file, strlen($baseDir));
-            if (str_contains($relativePath, $delimiter) && $delimiter !== DIRECTORY_SEPARATOR) {
+            if (str_contains($relativePath, $s3Delimiter) && $s3Delimiter !== '/') {
                 throw new S3TransferException(
-                    "The filename `$relativePath` must not contain the provided delimiter `$delimiter`"
+                    "The filename `$relativePath` must not contain the provided delimiter `$s3Delimiter`"
                 );
             }
             $objectKey = $s3Prefix.$relativePath;
             $objectKey = str_replace(
                 DIRECTORY_SEPARATOR,
-                $delimiter,
+                $s3Delimiter,
                 $objectKey
             );
             $uploadRequestArgs = $uploadDirectoryRequest->getUploadRequestArgs();
@@ -484,9 +485,11 @@ final class S3TransferManager
         $filter = $config['filter'] ?? null;
         $objects = filter($objects, function (string $key) use ($filter) {
             if ($filter !== null) {
+                // Avoid returning objects meant for directories in s3
                 return call_user_func($filter, $key) && !str_ends_with($key, "/");
             }
 
+            // Avoid returning objects meant for directories in s3
             return !str_ends_with($key, "/");
         });
         $objects = map($objects, function (string $key) use ($sourceBucket) {
