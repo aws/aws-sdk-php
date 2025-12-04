@@ -2388,7 +2388,7 @@ EOF
         return [
             'filter_1' => [
                 'filter' => function (string $objectKey) {
-                    return str_starts_with($objectKey, "folder_2/");
+                    return str_starts_with($objectKey, "folder_2" . DIRECTORY_SEPARATOR);
                 },
                 'object_list' => [
                     [
@@ -2411,7 +2411,7 @@ EOF
             ],
             'filter_2' => [
                 'filter' => function (string $objectKey) {
-                    return $objectKey === "folder_2/key_1.txt";
+                    return $objectKey === "folder_2" . DIRECTORY_SEPARATOR . "key_1.txt";
                 },
                 'object_list' => [
                     [
@@ -2433,7 +2433,7 @@ EOF
             ],
             'filter_3' => [
                 'filter' => function (string $objectKey) {
-                    return $objectKey !== "folder_2/key_1.txt";
+                    return $objectKey !== "folder_2" . DIRECTORY_SEPARATOR . "key_1.txt";
                 },
                 'object_list' => [
                     [

@@ -271,7 +271,7 @@ final class S3TransferManager
 
         foreach ($files as $file) {
             $relativePath = substr($file, strlen($baseDir));
-            if (str_contains($relativePath, $delimiter) && $delimiter !== '/') {
+            if (str_contains($relativePath, $delimiter) && $delimiter !== DIRECTORY_SEPARATOR) {
                 throw new S3TransferException(
                     "The filename `$relativePath` must not contain the provided delimiter `$delimiter`"
                 );
@@ -878,8 +878,8 @@ final class S3TransferManager
     ): bool
     {
         $resolved = [];
-        $sections = explode('/', $sink);
-        $targetSectionsLength = count(explode('/', $objectKey));
+        $sections = explode(DIRECTORY_SEPARATOR, $sink);
+        $targetSectionsLength = count(explode(DIRECTORY_SEPARATOR, $objectKey));
         $targetSections = array_slice($sections, -($targetSectionsLength + 1));
         $targetDirectory = $targetSections[0];
 
