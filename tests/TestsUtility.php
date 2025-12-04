@@ -1,10 +1,9 @@
 <?php
 namespace Aws\Test;
 
-use Aws\S3\S3Transfer\S3TransferManager;
 use function Aws\dir_iterator;
 
-class TestsUtility
+final class TestsUtility
 {
     /**
      * Helper method to clean up temporary dirs.
@@ -36,7 +35,7 @@ class TestsUtility
             }
 
             $filePath = $dirPath . $file;
-            if (!S3TransferManager::isDir($filePath)) {
+            if (!is_dir($filePath)) {
                 unlink($filePath);
             } else {
                 self::cleanUpDir($filePath);

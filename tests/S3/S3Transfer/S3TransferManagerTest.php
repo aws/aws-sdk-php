@@ -86,13 +86,11 @@ EOF
         set_error_handler(function ($errno, $errstr) {
             // Ignore trigger_error logging
         });
-        $tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR
-            . "transfer-manager-test";
-        if (!is_dir($tempDir)) {
-            mkdir($tempDir, 0777, true);
-        }
-
-        $this->tempDir = $tempDir;
+        $this->tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR
+            . uniqid("transfer-manager-test-");
+         if (!is_dir($this->tempDir)) {
+             mkdir($this->tempDir, 0777, true);
+         }
     }
 
     protected function tearDown(): void
@@ -651,13 +649,14 @@ EOF
         if (!$isDirectoryValid && is_dir($directory)) {
             TestsUtility::cleanUpDir($directory);
         }
-
+        // If the directory is invalid then expect exception
         if (!$isDirectoryValid) {
             $this->expectException(InvalidArgumentException::class);
             $this->expectExceptionMessage(
                 "Please provide a valid directory path. "
             . "Provided = " . $directory);
         } else {
+            // If the directory is valid then not exception is expected
             $this->assertTrue(true);
         }
 
@@ -699,6 +698,7 @@ EOF
             'The provided config `filter` must be callable'
         );
         $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
+        // If directory does not exists, then create it
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
@@ -733,23 +733,29 @@ EOF
             mkdir($directory, 0777, true);
         }
 
-        $validFilesCount = 0;
+        // Filters just .jpg
+        $filesToUpload = [];
         for ($i = 0; $i < 10; $i++) {
-            $fileName = "file-$i";
+
             if ($i % 2 === 0) {
-                $fileName .= "-valid";
-                $validFilesCount++;
+                $fileName = "file-$i.jpg";
+                $filesToUpload[$fileName] = false;
+            } else {
+                $fileName = "file-$i.txt";
             }
 
-            $filePathName = $directory . DIRECTORY_SEPARATOR . $fileName . ".txt";
+            $filePathName = $directory . DIRECTORY_SEPARATOR . $fileName;
             file_put_contents($filePathName, "test");
         }
+
         $client = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
             ->getMock();
         $client->method('getCommand')
-            ->willReturnCallback(function ($commandName, $args) {
+            ->willReturnCallback(function ($commandName, $args) use (&$filesToUpload) {
+                $objectKey = $args['Key'];
+                $filesToUpload[$objectKey] = true;
                 return new Command($commandName, $args);
             });
         $client->method('executeAsync')
@@ -768,19 +774,17 @@ EOF
                 [],
                 [
                     'filter' => function (string $objectKey) {
-                        return str_ends_with($objectKey, "-valid.txt");
+                        return str_ends_with($objectKey, ".jpg");
                     },
-                    'upload_object_request_modifier' => function ($requestArgs) use (&$calledTimes) {
-                        $this->assertStringContainsString(
-                            'valid.txt',
-                            $requestArgs["Key"]
-                        );
-                        $calledTimes++;
-                    }
                 ]
             )
         )->wait();
-        $this->assertEquals($validFilesCount, $calledTimes);
+        foreach ($filesToUpload as $key => $uploaded) {
+            $this->assertTrue(
+                $uploaded,
+                "File $key should have been uploaded"
+            );
+        }
     }
 
     /**
@@ -790,6 +794,8 @@ EOF
     {
         $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
         $subDirectory = $directory . DIRECTORY_SEPARATOR . "sub-directory";
+
+        // If sub-dir does not exist then lets create it
         if (!is_dir($subDirectory)) {
             mkdir($subDirectory, 0777, true);
         }
@@ -802,15 +808,23 @@ EOF
         $objectKeys = [];
         foreach ($files as $file) {
             file_put_contents($file, "test");
-            // Remove the directory from the file path to leave
-            // just what will be the object key
+            // Take off the directory
             $objectKey = str_replace(
                 $directory . DIRECTORY_SEPARATOR,
                 "",
                 $file
             );
+
+            // Replace the dir separator with the s3 delimiter
+            $objectKey = str_replace(
+                DIRECTORY_SEPARATOR,
+                "/",
+                $objectKey
+            );
+
             $objectKeys[$objectKey] = false;
         }
+
         $client = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['getCommand', 'executeAsync', 'getHandlerList'])
@@ -850,6 +864,7 @@ EOF
     {
         $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
         $subDirectory = $directory . DIRECTORY_SEPARATOR . "sub-directory";
+        // Create sub-dir if it does not exist
         if (!is_dir($subDirectory)) {
             mkdir($subDirectory, 0777, true);
         }
@@ -862,13 +877,20 @@ EOF
         $objectKeys = [];
         foreach ($files as $file) {
             file_put_contents($file, "test");
-            // Remove the directory from the file path to leave
-            // just what will be the object key
+            // Take off the directory
             $objectKey = str_replace(
                 $directory . DIRECTORY_SEPARATOR,
                 "",
                 $file
             );
+
+            // Replace the dir separator with the s3 delimiter
+            $objectKey = str_replace(
+                DIRECTORY_SEPARATOR,
+                "/",
+                $objectKey
+            );
+
             $objectKeys[$objectKey] = false;
         }
         $client = $this->getMockBuilder(S3Client::class)
@@ -877,7 +899,8 @@ EOF
             ->getMock();
         $client->method('getCommand')
             ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
-                $objectKeys[$args["Key"]] = true;
+                $objectKey = $args["Key"];
+                $objectKeys[$objectKey] = true;
                 return new Command($commandName, $args);
             });
         $client->method('executeAsync')
@@ -898,17 +921,23 @@ EOF
                 ]
             )
         )->wait();
-        $subDirPrefix = str_replace(
+        $subDirRelative = str_replace(
             $directory . DIRECTORY_SEPARATOR,
             "",
             $subDirectory
         );
         foreach ($objectKeys as $key => $validated) {
-            if (str_starts_with($key, $subDirPrefix)) {
+            if (str_contains($key, $subDirRelative)) {
                 // Files in subdirectory should have been ignored
-                $this->assertFalse($validated, "Key {$key} should have not been considered");
+                $this->assertFalse(
+                    $validated,
+                    "Key {$key} should have not been considered"
+                );
             } else {
-                $this->assertTrue($validated, "Key {$key} should have been considered");
+                $this->assertTrue(
+                    $validated,
+                    "Key {$key} should have been considered"
+                );
             }
         }
     }
@@ -920,16 +949,23 @@ EOF
     {
         $directory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
         $linkDirectory = $this->tempDir . DIRECTORY_SEPARATOR . "link-directory-test";
+        $symLinkDirectory = $directory . DIRECTORY_SEPARATOR . "upload-directory-test-link";
+        // Create directory if it does not exist
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
+
+        // Create symlink directory if it does not exist
         if (!is_dir($linkDirectory)) {
             mkdir($linkDirectory, 0777, true);
         }
-        $symLinkDirectory = $directory . DIRECTORY_SEPARATOR . "upload-directory-test-link";
+
+        // Make sure the symlink does not exist
         if (is_link($symLinkDirectory)) {
             unlink($symLinkDirectory);
         }
+
+        // Now let`s create the symlink, but if its creation fails just skip the test
         if (!symlink($linkDirectory, $symLinkDirectory)) {
             $this->markTestSkipped(
                 "Unable to create symbolic link for directory {$symLinkDirectory}"
@@ -939,32 +975,25 @@ EOF
         $files = [
             $directory . DIRECTORY_SEPARATOR . "dir-file-1.txt",
             $directory . DIRECTORY_SEPARATOR . "dir-file-2.txt",
-            $linkDirectory . DIRECTORY_SEPARATOR . "symlink-file-1.txt",
-            $linkDirectory . DIRECTORY_SEPARATOR . "symlink-file-2.txt",
+            $symLinkDirectory . DIRECTORY_SEPARATOR . "symlink-file-1.txt",
+            $symLinkDirectory . DIRECTORY_SEPARATOR . "symlink-file-2.txt",
         ];
         $objectKeys = [];
         foreach ($files as $file) {
             file_put_contents($file, "test");
-            // Remove the directory from the file path to leave
-            // just what will be the object key
+            // Take off the directory
             $objectKey = str_replace(
                 $directory . DIRECTORY_SEPARATOR,
                 "",
                 $file
             );
+
+            // Replace the dir separator with the s3 delimiter
             $objectKey = str_replace(
-                $linkDirectory . DIRECTORY_SEPARATOR,
-                "",
+                DIRECTORY_SEPARATOR,
+                "/",
                 $objectKey
             );
-            if (str_contains($objectKey, 'symlink-file')) {
-                $objectKey = str_replace(
-                    $directory . DIRECTORY_SEPARATOR,
-                    "",
-                        $symLinkDirectory
-                ) . DIRECTORY_SEPARATOR . $objectKey;
-            }
-
             $objectKeys[$objectKey] = false;
         }
 
@@ -974,7 +1003,9 @@ EOF
             ->getMock();
         $client->method('getCommand')
             ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
-                $objectKeys[$args["Key"]] = true;
+                $objectKey = $args["Key"];
+                $objectKeys[$objectKey] = true;
+
                 return new Command($commandName, $args);
             });
         $client->method('executeAsync')
@@ -985,27 +1016,7 @@ EOF
         $manager = new S3TransferManager(
             $client,
         );
-        // First lets make sure that when follows_symbolic_link is false
-        // the directory in the link will not be traversed.
-        $manager->uploadDirectory(
-            new UploadDirectoryRequest(
-                $directory,
-                "Bucket",
-                [],
-                [
-                    'recursive' => true,
-                    'follow_symbolic_links' => false,
-                ]
-            )
-        )->wait();
-        foreach ($objectKeys as $key => $validated) {
-            if (str_contains($key, "symlink")) {
-                // Files in subdirectory should have been ignored
-                $this->assertFalse($validated, "Key {$key} should have not been considered");
-            } else {
-                $this->assertTrue($validated, "Key {$key} should have been considered");
-            }
-        }
+
         // Now let's enable follow_symbolic_links and all files should have
         // been considered, included the ones in the symlink directory.
         $manager->uploadDirectory(
@@ -1020,7 +1031,10 @@ EOF
             )
         )->wait();
         foreach ($objectKeys as $key => $validated) {
-            $this->assertTrue($validated, "Key {$key} should have been considered");
+            $this->assertTrue(
+                $validated,
+                "Key {$key} should have been considered"
+            );
         }
     }
 
@@ -1030,22 +1044,24 @@ EOF
     public function testUploadDirectoryFailsOnCircularSymbolicLinkTraversal() {
         $parentDirectory = $this->tempDir . DIRECTORY_SEPARATOR . "upload-directory-test";
         $linkToParent = $parentDirectory . DIRECTORY_SEPARATOR . "link_to_parent";
+
+        // Make sure the directory is empty
         if (is_dir($parentDirectory)) {
             TestsUtility::cleanUpDir($parentDirectory);
         }
 
+        // Creates the parent directory
         mkdir($parentDirectory, 0777, true);
+
+        // If is unable to create the symlink then mark the test skipped
         if (!symlink($parentDirectory, $linkToParent)) {
             $this->markTestSkipped(
                 "Unable to create symbolic link for directory {$parentDirectory}"
             );
         }
 
-        $operationCompleted = false;
         try {
-            $s3Client = new S3Client([
-                'region' => 'us-west-2',
-            ]);
+            $s3Client = $this->getS3ClientMock();
             $s3TransferManager = new S3TransferManager(
                 $s3Client,
             );
@@ -1060,17 +1076,14 @@ EOF
                     ]
                 )
             )->wait();
-            $operationCompleted = true;
             $this->fail(
                 "Upload directory should have been failed!"
             );
         } catch (RuntimeException $exception) {
-            if (!$operationCompleted) {
-                $this->assertStringContainsString(
-                    "A circular symbolic link traversal has been detected at",
-                    $exception->getMessage()
-                );
-            }
+            $this->assertStringContainsString(
+                "A circular symbolic link traversal has been detected at",
+                $exception->getMessage()
+            );
         }
     }
 
@@ -1094,10 +1107,18 @@ EOF
         $objectKeys = [];
         foreach ($files as $file) {
             file_put_contents($file, "test");
+            // Take off the directory
             $objectKey = str_replace(
                 $directory . DIRECTORY_SEPARATOR,
                 "",
                 $file
+            );
+
+            // Replace the dir separator with the s3 delimiter
+            $objectKey = str_replace(
+                DIRECTORY_SEPARATOR,
+                "/",
+                $objectKey
             );
             $objectKeys[$s3Prefix . $objectKey] = false;
         }
@@ -1107,7 +1128,8 @@ EOF
             ->getMock();
         $client->method('getCommand')
             ->willReturnCallback(function ($commandName, $args) use (&$objectKeys) {
-                $objectKeys[$args["Key"]] = true;
+                $objectKey = $args["Key"];
+                $objectKeys[$objectKey] = true;
                 return new Command($commandName, $args);
             });
         $client->method('executeAsync')
@@ -1130,7 +1152,10 @@ EOF
         )->wait();
 
         foreach ($objectKeys as $key => $validated) {
-            $this->assertTrue($validated, "Key {$key} should have been validated");
+            $this->assertTrue(
+                $validated,
+                "Key {$key} should have been validated"
+            );
         }
     }
 
@@ -1155,10 +1180,18 @@ EOF
         $objectKeys = [];
         foreach ($files as $file) {
             file_put_contents($file, "test");
+            // Take off the directory
             $objectKey = str_replace(
                 $directory . DIRECTORY_SEPARATOR,
                 "",
                 $file
+            );
+
+            // Replace the dir separator with the s3 delimiter
+            $objectKey = str_replace(
+                DIRECTORY_SEPARATOR,
+                "/",
+                $objectKey
             );
             $objectKey = $s3Prefix . $objectKey;
             $objectKey = str_replace(DIRECTORY_SEPARATOR, $s3Delimiter, $objectKey);
@@ -1439,10 +1472,18 @@ EOF
         $objectKeys = [];
         foreach ($files as $file) {
             file_put_contents($file, "test");
+            // Take off the directory
             $objectKey = str_replace(
                 $directory . DIRECTORY_SEPARATOR,
                 "",
                 $file
+            );
+
+            // Replace the dir separator with the s3 delimiter
+            $objectKey = str_replace(
+                DIRECTORY_SEPARATOR,
+                "/",
+                $objectKey
             );
             $objectKeys[$objectKey] = false;
         }
@@ -2268,8 +2309,15 @@ EOF
         $called = false;
         $downloadObjectKeys = [];
         foreach ($expectedObjectList as $objectKey) {
+            $objectKey = str_replace(
+                "/",
+                DIRECTORY_SEPARATOR,
+                $objectKey
+            );
+
             $downloadObjectKeys[$objectKey] = false;
         }
+
         $client = $this->getS3ClientMock([
             'executeAsync' => function (CommandInterface $command) use (
                 $objectList,
@@ -2357,8 +2405,8 @@ EOF
                     ]
                 ],
                 'expected_object_list' => [
-                    "folder_2" . DIRECTORY_SEPARATOR . "key_1.txt",
-                    "folder_2" . DIRECTORY_SEPARATOR . "key_2.txt",
+                    "folder_2/key_1.txt",
+                    "folder_2/key_2.txt",
                 ]
             ],
             'filter_2' => [
@@ -2380,7 +2428,7 @@ EOF
                     ]
                 ],
                 'expected_object_list' => [
-                    "folder_2" . DIRECTORY_SEPARATOR . "key_1.txt",
+                    "folder_2/key_1.txt",
                 ]
             ],
             'filter_3' => [
@@ -2402,9 +2450,9 @@ EOF
                     ]
                 ],
                 'expected_object_list' => [
-                    "folder_1" . DIRECTORY_SEPARATOR . "key_1.txt",
-                    "folder_1" . DIRECTORY_SEPARATOR . "key_2.txt",
-                    "folder_2" . DIRECTORY_SEPARATOR . "key_2.txt",
+                    "folder_1/key_1.txt",
+                    "folder_1/key_2.txt",
+                    "folder_2/key_2.txt",
                 ]
             ]
         ];
@@ -2481,13 +2529,13 @@ EOF
         }
 
         $called = false;
-        $listObjectsContent = [
-            [
-                'Key' => 'folder_1/key_1.txt',
-            ]
-        ];
         $client = $this->getS3ClientMock([
-            'executeAsync' => function (CommandInterface $command) use ($listObjectsContent) {
+            'executeAsync' => function (CommandInterface $command) {
+                $listObjectsContent = [
+                    [
+                        'Key' => 'folder_1/key_1.txt',
+                    ]
+                ];
                 if ($command->getName() === 'ListObjectsV2') {
                     return Create::promiseFor(new Result([
                         'Contents' => $listObjectsContent,
@@ -2680,12 +2728,11 @@ EOF
         }
 
         $bucket = "test-bucket";
-        $directory = "test-directory";
-        $fullDirectoryPath = $this->tempDir . DIRECTORY_SEPARATOR . $directory;
-        if (is_dir($fullDirectoryPath)) {
-            TestsUtility::cleanUpDir($fullDirectoryPath);
+        $directory = $this->tempDir . DIRECTORY_SEPARATOR . "test-directory";
+        if (is_dir($directory)) {
+            TestsUtility::cleanUpDir($directory);
         }
-        mkdir($fullDirectoryPath, 0777, true);
+        mkdir($directory, 0777, true);
         $called = false;
         $client = $this->getS3ClientMock([
             'executeAsync' => function (CommandInterface $command) use (
@@ -2733,7 +2780,7 @@ EOF
         $manager->downloadDirectory(
             new DownloadDirectoryRequest(
                 $bucket,
-                $fullDirectoryPath,
+                $directory,
                 [],
                 [
                     's3_prefix' => $prefix,
@@ -2750,7 +2797,7 @@ EOF
                 DIRECTORY_SEPARATOR,
                 $fileName
             );
-            $fullFilePath = $fullDirectoryPath . DIRECTORY_SEPARATOR . $fileName;
+            $fullFilePath = $directory . DIRECTORY_SEPARATOR . $fileName;
             $this->assertFileExists(
                 $fullFilePath
             );

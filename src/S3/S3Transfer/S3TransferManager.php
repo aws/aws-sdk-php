@@ -230,7 +230,7 @@ final class S3TransferManager
         $files = filter(
             $dirIterator,
             function ($file) use ($filter, &$dirVisited) {
-                if (self::isDir($file)) {
+                if (is_dir($file)) {
                     // To avoid circular symbolic links traversal
                     $dirRealPath = realpath($file);
                     if ($dirRealPath !== false) {
@@ -246,10 +246,10 @@ final class S3TransferManager
 
                 // If filter is not null
                 if ($filter !== null) {
-                    return !self::isDir($file) && $filter($file);
+                    return !is_dir($file) && $filter($file);
                 }
 
-                return !self::isDir($file);
+                return !is_dir($file);
             }
         );
 
@@ -898,17 +898,5 @@ final class S3TransferManager
         }
 
         return false;
-    }
-
-    /**
-     * @param $path
-     *
-     * @return bool
-     */
-    public static function isDir($path): bool
-    {
-        $realPath = realpath($path);
-
-        return $realPath !== false && is_dir($realPath);
     }
 }
