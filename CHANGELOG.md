@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Lambda` - Add DisallowedByVpcEncryptionControl to the LastUpdateStatusReasonCode and StateReasonCode enums to represent failures caused by VPC Encryption Controls.
+
 ## 3.366.0 - 2025-12-03
 
 * `Aws\` - Adds support for PHP 8.5
