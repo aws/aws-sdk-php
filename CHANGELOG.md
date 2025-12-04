@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.366.1 - 2025-12-04
 
 * `Aws\Lambda` - Add DisallowedByVpcEncryptionControl to the LastUpdateStatusReasonCode and StateReasonCode enums to represent failures caused by VPC Encryption Controls.
 
