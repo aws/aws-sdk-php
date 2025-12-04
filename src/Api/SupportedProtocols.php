@@ -12,6 +12,7 @@ enum SupportedProtocols: string
     case REST_XML = 'rest-xml';
     case QUERY = 'query';
     case EC2 = 'ec2';
+    case CBOR = 'smithy-rpc-v2-cbor';
 
     /**
      * Check if a protocol is valid.
