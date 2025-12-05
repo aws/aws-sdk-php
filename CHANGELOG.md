@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.366.2 - 2025-12-05
 
 * `Aws\` - Enhance exponential delay calculation to reduce the possibilities of having 0 as the delay.
 * `Aws\SESv2` - Updating the desired url for `PutEmailIdentityDkimSigningAttributes` from v1 to v2
