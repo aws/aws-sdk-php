@@ -17,6 +17,7 @@
     "GetPartner": "<p>Retrieves detailed information about a specific partner account.</p>",
     "GetProfileUpdateTask": "<p>Retrieves information about a specific profile update task.</p>",
     "GetProfileVisibility": "<p>Retrieves the visibility settings for a partner profile, determining who can see the profile information.</p>",
+    "GetVerification": "<p>Retrieves the current status and details of a verification process for a partner account. This operation allows partners to check the progress and results of business or registrant verification processes.</p>",
     "ListConnectionInvitations": "<p>Lists connection invitations for the partner account, with optional filtering by status, type, and other criteria.</p>",
     "ListConnections": "<p>Lists active connections for the partner account, with optional filtering by connection type and participant.</p>",
     "ListPartners": "<p>Lists partner accounts in the catalog, providing a summary view of all partners.</p>",
@@ -26,6 +27,7 @@
     "RejectConnectionInvitation": "<p>Rejects a connection invitation from another partner, declining the partnership request.</p>",
     "SendEmailVerificationCode": "<p>Sends an email verification code to the specified email address for account verification purposes.</p>",
     "StartProfileUpdateTask": "<p>Initiates a profile update task to modify partner profile information asynchronously.</p>",
+    "StartVerification": "<p>Initiates a new verification process for a partner account. This operation begins the verification workflow for either business registration or individual registrant identity verification as required by AWS Partner Central.</p>",
     "TagResource": "<p>Adds or updates tags for a specified AWS Partner Central Account resource.</p>",
     "UntagResource": "<p>Removes specified tags from an AWS Partner Central Account resource.</p>",
     "UpdateConnectionPreferences": "<p>Updates the connection preferences for a partner account, modifying access settings and exclusions.</p>"
@@ -101,6 +103,19 @@
       "base": "<p>Contains information about a business rule validation error that occurred during an operation.</p>",
       "refs": {
         "ValidationError$BusinessValidationError": "<p>Details about a business rule validation error, if applicable.</p>"
+      }
+    },
+    "BusinessVerificationDetails": {
+      "base": "<p>Contains the business information required for verifying a company's legal status and registration details within AWS Partner Central.</p>",
+      "refs": {
+        "BusinessVerificationResponse$BusinessVerificationDetails": "<p>The business verification details that were processed and verified, potentially including additional information discovered during the verification process.</p>",
+        "VerificationDetails$BusinessVerificationDetails": "<p>The business verification details to be used when starting a business verification process.</p>"
+      }
+    },
+    "BusinessVerificationResponse": {
+      "base": "<p>Contains the response information and results from a business verification process, including any verification-specific data returned by the verification service.</p>",
+      "refs": {
+        "VerificationResponseDetails$BusinessVerificationResponse": "<p>The response details from a business verification process, including verification results and any additional business information discovered.</p>"
       }
     },
     "CancelConnectionInvitationRequest": {
@@ -201,7 +216,14 @@
         "CreatePartnerRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "DisassociateAwsTrainingCertificationEmailDomainRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "RejectConnectionInvitationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
-        "StartProfileUpdateTaskRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
+        "StartProfileUpdateTaskRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
+        "StartVerificationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This prevents duplicate verification processes from being started accidentally.</p>"
+      }
+    },
+    "CompletionUrl": {
+      "base": null,
+      "refs": {
+        "RegistrantVerificationResponse$CompletionUrl": "<p>A secure URL where the registrant can complete additional verification steps, such as document upload or identity confirmation through a third-party verification service.</p>"
       }
     },
     "ConflictException": {
@@ -354,6 +376,12 @@
         "ConnectionSummary$ConnectionTypes": "<p>A map of connection types and their summary information for this connection.</p>"
       }
     },
+    "CountryCode": {
+      "base": null,
+      "refs": {
+        "BusinessVerificationDetails$CountryCode": "<p>The ISO 3166-1 alpha-2 country code where the business is legally registered and operates.</p>"
+      }
+    },
     "CreateConnectionInvitationRequest": {
       "base": null,
       "refs": {}
@@ -410,13 +438,18 @@
         "GetPartnerResponse$CreatedAt": "<p>The timestamp when the partner account was created.</p>",
         "GetProfileUpdateTaskResponse$StartedAt": "<p>The timestamp when the profile update task was started.</p>",
         "GetProfileUpdateTaskResponse$EndedAt": "<p>The timestamp when the profile update task was completed or failed.</p>",
+        "GetVerificationResponse$StartedAt": "<p>The timestamp when the verification process was initiated.</p>",
+        "GetVerificationResponse$CompletedAt": "<p>The timestamp when the verification process was completed. This field is null if the verification is still in progress.</p>",
         "PartnerDomain$RegisteredAt": "<p>The timestamp when the domain was registered and verified for the partner account.</p>",
         "PartnerSummary$CreatedAt": "<p>The timestamp when the partner account was created.</p>",
+        "RegistrantVerificationResponse$CompletionUrlExpiresAt": "<p>The timestamp when the completion URL expires and is no longer valid for accessing the verification workflow.</p>",
         "RejectConnectionInvitationResponse$CreatedAt": "<p>The timestamp when the connection invitation was originally created.</p>",
         "RejectConnectionInvitationResponse$UpdatedAt": "<p>The timestamp when the connection invitation was last updated (rejected).</p>",
         "RejectConnectionInvitationResponse$ExpiresAt": "<p>The timestamp when the connection invitation would have expired.</p>",
         "StartProfileUpdateTaskResponse$StartedAt": "<p>The timestamp when the profile update task was started.</p>",
         "StartProfileUpdateTaskResponse$EndedAt": "<p>The timestamp when the profile update task ended (null for in-progress tasks).</p>",
+        "StartVerificationResponse$StartedAt": "<p>The timestamp when the verification process was successfully initiated.</p>",
+        "StartVerificationResponse$CompletedAt": "<p>The timestamp when the verification process was completed. This field is typically null for newly started verifications unless they complete immediately.</p>",
         "UpdateConnectionPreferencesResponse$UpdatedAt": "<p>The timestamp when the connection preferences were last updated.</p>"
       }
     },
@@ -545,6 +578,14 @@
       "base": null,
       "refs": {}
     },
+    "GetVerificationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetVerificationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "IndustrySegment": {
       "base": null,
       "refs": {
@@ -571,6 +612,18 @@
         "GetConnectionInvitationResponse$Status": "<p>The current status of the connection invitation.</p>",
         "ListConnectionInvitationsRequest$Status": "<p>Filter results by invitation status (pending, accepted, rejected, canceled, expired).</p>",
         "RejectConnectionInvitationResponse$Status": "<p>The current status of the connection invitation (rejected).</p>"
+      }
+    },
+    "JurisdictionCode": {
+      "base": null,
+      "refs": {
+        "BusinessVerificationDetails$JurisdictionOfIncorporation": "<p>The specific legal jurisdiction or state where the business was incorporated or registered, providing additional location context beyond the country code.</p>"
+      }
+    },
+    "LegalName": {
+      "base": null,
+      "refs": {
+        "BusinessVerificationDetails$LegalName": "<p>The official legal name of the business as registered with the appropriate government authorities.</p>"
       }
     },
     "ListConnectionInvitationsRequest": {
@@ -843,6 +896,24 @@
       "base": null,
       "refs": {}
     },
+    "RegistrantVerificationDetails": {
+      "base": "<p>Contains the personal information required for verifying an individual's identity as part of the partner registration process in AWS Partner Central.</p>",
+      "refs": {
+        "VerificationDetails$RegistrantVerificationDetails": "<p>The registrant verification details to be used when starting an individual identity verification process.</p>"
+      }
+    },
+    "RegistrantVerificationResponse": {
+      "base": "<p>Contains the response information from a registrant verification process, including any verification-specific data and next steps for the individual verification workflow.</p>",
+      "refs": {
+        "VerificationResponseDetails$RegistrantVerificationResponse": "<p>The response details from a registrant verification process, including verification results and any additional steps required for identity confirmation.</p>"
+      }
+    },
+    "RegistrationId": {
+      "base": null,
+      "refs": {
+        "BusinessVerificationDetails$RegistrationId": "<p>The unique business registration identifier assigned by the government or regulatory authority, such as a company registration number or tax identification number.</p>"
+      }
+    },
     "RejectConnectionInvitationRequest": {
       "base": null,
       "refs": {}
@@ -934,6 +1005,14 @@
       "refs": {}
     },
     "StartProfileUpdateTaskResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StartVerificationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartVerificationResponse": {
       "base": null,
       "refs": {}
     },
@@ -1089,6 +1168,41 @@
       "base": null,
       "refs": {
         "ValidationException$Reason": "<p>The reason for the validation failure.</p>"
+      }
+    },
+    "VerificationDetails": {
+      "base": "<p>A union structure containing the specific details required for different types of verification processes supported by AWS Partner Central.</p>",
+      "refs": {
+        "StartVerificationRequest$VerificationDetails": "<p>The specific details required for the verification process, including business information for business verification or personal information for registrant verification.</p>"
+      }
+    },
+    "VerificationResponseDetails": {
+      "base": "<p>A union structure containing the response details specific to different types of verification processes, providing type-specific information and results.</p>",
+      "refs": {
+        "GetVerificationResponse$VerificationResponseDetails": "<p>Detailed response information specific to the type of verification performed, including any verification-specific data or results.</p>",
+        "StartVerificationResponse$VerificationResponseDetails": "<p>Initial response details specific to the type of verification started, which may include next steps or additional requirements.</p>"
+      }
+    },
+    "VerificationStatus": {
+      "base": null,
+      "refs": {
+        "GetVerificationResponse$VerificationStatus": "<p>The current status of the verification process. Possible values include pending, in-progress, completed, failed, or expired.</p>",
+        "StartVerificationResponse$VerificationStatus": "<p>The initial status of the verification process after it has been started. Typically this will be pending or in-progress.</p>"
+      }
+    },
+    "VerificationStatusReason": {
+      "base": null,
+      "refs": {
+        "GetVerificationResponse$VerificationStatusReason": "<p>Additional information explaining the current verification status, particularly useful when the status indicates a failure or requires additional action.</p>",
+        "StartVerificationResponse$VerificationStatusReason": "<p>Additional information about the initial verification status, including any immediate feedback about the submitted verification details.</p>"
+      }
+    },
+    "VerificationType": {
+      "base": null,
+      "refs": {
+        "GetVerificationRequest$VerificationType": "<p>The type of verification to retrieve information for. Valid values include business verification for company registration details and registrant verification for individual identity confirmation.</p>",
+        "GetVerificationResponse$VerificationType": "<p>The type of verification that was requested and processed.</p>",
+        "StartVerificationResponse$VerificationType": "<p>The type of verification that was started based on the provided verification details.</p>"
       }
     }
   }

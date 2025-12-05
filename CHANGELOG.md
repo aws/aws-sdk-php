@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Enhance exponential delay calculation to reduce the possibilities of having 0 as the delay.
+* `Aws\SESv2` - Updating the desired url for `PutEmailIdentityDkimSigningAttributes` from v1 to v2
+* `Aws\PartnerCentralAccount` - Adding Verification API's to Partner Central Account SDK.
+* `Aws\ECS` - Updating stop-task API to encapsulate containers with custom stop signal
+* `Aws\Inspector2` - This release adds a new ScanStatus called "Unsupported Code Artifacts". This ScanStatus will be returned when a Lambda function was not code scanned because it has unsupported code artifacts.
+* `Aws\IAM` - Adding the ExpirationTime attribute to the delegation request resource.
+
 ## 3.366.1 - 2025-12-04
 
 * `Aws\Lambda` - Add DisallowedByVpcEncryptionControl to the LastUpdateStatusReasonCode and StateReasonCode enums to represent failures caused by VPC Encryption Controls.

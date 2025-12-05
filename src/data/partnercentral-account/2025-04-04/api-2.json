@@ -270,6 +270,23 @@
       ],
       "readonly":true
     },
+    "GetVerification":{
+      "name":"GetVerification",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetVerificationRequest"},
+      "output":{"shape":"GetVerificationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
+    },
     "ListConnectionInvitations":{
       "name":"ListConnectionInvitations",
       "http":{
@@ -415,6 +432,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "StartVerification":{
+      "name":"StartVerification",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartVerificationRequest"},
+      "output":{"shape":"StartVerificationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
     },
@@ -595,6 +630,27 @@
         "Code":{"shape":"BusinessValidationCode"}
       }
     },
+    "BusinessVerificationDetails":{
+      "type":"structure",
+      "required":[
+        "LegalName",
+        "RegistrationId",
+        "CountryCode"
+      ],
+      "members":{
+        "LegalName":{"shape":"LegalName"},
+        "RegistrationId":{"shape":"RegistrationId"},
+        "CountryCode":{"shape":"CountryCode"},
+        "JurisdictionOfIncorporation":{"shape":"JurisdictionCode"}
+      }
+    },
+    "BusinessVerificationResponse":{
+      "type":"structure",
+      "required":["BusinessVerificationDetails"],
+      "members":{
+        "BusinessVerificationDetails":{"shape":"BusinessVerificationDetails"}
+      }
+    },
     "CancelConnectionInvitationRequest":{
       "type":"structure",
       "required":[
@@ -746,6 +802,7 @@
       "min":1,
       "pattern":"[A-Za-z0-9-_]+"
     },
+    "CompletionUrl":{"type":"string"},
     "ConflictException":{
       "type":"structure",
       "required":[
@@ -770,7 +827,9 @@
         "INCOMPATIBLE_CONNECTION_INVITATION_RECEIVER",
         "DUPLICATE_CONNECTION",
         "INCOMPATIBLE_CONNECTION_STATE",
-        "INCOMPATIBLE_CONNECTION_PREFERENCES_REVISION"
+        "INCOMPATIBLE_CONNECTION_PREFERENCES_REVISION",
+        "ACCOUNT_ALREADY_VERIFIED",
+        "VERIFICATION_ALREADY_IN_PROGRESS"
       ]
     },
     "Connection":{
@@ -931,6 +990,12 @@
       "type":"map",
       "key":{"shape":"ConnectionType"},
       "value":{"shape":"ConnectionTypeSummary"}
+    },
+    "CountryCode":{
+      "type":"string",
+      "max":2,
+      "min":2,
+      "pattern":"[A-Z]{2}"
     },
     "CreateConnectionInvitationRequest":{
       "type":"structure",
@@ -1357,6 +1422,30 @@
         "ProfileId":{"shape":"PartnerProfileId"}
       }
     },
+    "GetVerificationRequest":{
+      "type":"structure",
+      "required":["VerificationType"],
+      "members":{
+        "VerificationType":{"shape":"VerificationType"}
+      }
+    },
+    "GetVerificationResponse":{
+      "type":"structure",
+      "required":[
+        "VerificationType",
+        "VerificationStatus",
+        "VerificationResponseDetails",
+        "StartedAt"
+      ],
+      "members":{
+        "VerificationType":{"shape":"VerificationType"},
+        "VerificationStatus":{"shape":"VerificationStatus"},
+        "VerificationStatusReason":{"shape":"VerificationStatusReason"},
+        "VerificationResponseDetails":{"shape":"VerificationResponseDetails"},
+        "StartedAt":{"shape":"DateTime"},
+        "CompletedAt":{"shape":"DateTime"}
+      }
+    },
     "IndustrySegment":{
       "type":"string",
       "enum":[
@@ -1424,6 +1513,19 @@
         "CANCELED",
         "EXPIRED"
       ]
+    },
+    "JurisdictionCode":{
+      "type":"string",
+      "max":2,
+      "min":2,
+      "pattern":"[A-Z0-9]{2}"
+    },
+    "LegalName":{
+      "type":"string",
+      "max":80,
+      "min":1,
+      "pattern":"[\\u0020-\\u007E\\u00A0-\\uD7FF\\uE000-\\uFFFD]+",
+      "sensitive":true
     },
     "ListConnectionInvitationsRequest":{
       "type":"structure",
@@ -1775,6 +1877,28 @@
         "ProfileId":{"shape":"PartnerProfileId"}
       }
     },
+    "RegistrantVerificationDetails":{
+      "type":"structure",
+      "members":{}
+    },
+    "RegistrantVerificationResponse":{
+      "type":"structure",
+      "required":[
+        "CompletionUrl",
+        "CompletionUrlExpiresAt"
+      ],
+      "members":{
+        "CompletionUrl":{"shape":"CompletionUrl"},
+        "CompletionUrlExpiresAt":{"shape":"DateTime"}
+      }
+    },
+    "RegistrationId":{
+      "type":"string",
+      "max":80,
+      "min":1,
+      "pattern":"[\\u0020-\\u007E\\u00A0-\\uD7FF\\uE000-\\uFFFD]+",
+      "sensitive":true
+    },
     "RejectConnectionInvitationRequest":{
       "type":"structure",
       "required":[
@@ -1858,7 +1982,8 @@
         "SENDER_PROFILE_NOT_FOUND",
         "RECEIVER_PROFILE_NOT_FOUND",
         "CONNECTION_INVITATION_NOT_FOUND",
-        "CONNECTION_NOT_FOUND"
+        "CONNECTION_NOT_FOUND",
+        "VERIFICATION_NOT_FOUND"
       ]
     },
     "Revision":{
@@ -1961,6 +2086,33 @@
         "Status":{"shape":"ProfileTaskStatus"},
         "EndedAt":{"shape":"DateTime"},
         "ErrorDetailList":{"shape":"ErrorDetailList"}
+      }
+    },
+    "StartVerificationRequest":{
+      "type":"structure",
+      "members":{
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "VerificationDetails":{"shape":"VerificationDetails"}
+      }
+    },
+    "StartVerificationResponse":{
+      "type":"structure",
+      "required":[
+        "VerificationType",
+        "VerificationStatus",
+        "VerificationResponseDetails",
+        "StartedAt"
+      ],
+      "members":{
+        "VerificationType":{"shape":"VerificationType"},
+        "VerificationStatus":{"shape":"VerificationStatus"},
+        "VerificationStatusReason":{"shape":"VerificationStatusReason"},
+        "VerificationResponseDetails":{"shape":"VerificationResponseDetails"},
+        "StartedAt":{"shape":"DateTime"},
+        "CompletedAt":{"shape":"DateTime"}
       }
     },
     "String":{"type":"string"},
@@ -2152,6 +2304,45 @@
       "enum":[
         "REQUEST_VALIDATION_FAILED",
         "BUSINESS_VALIDATION_FAILED"
+      ]
+    },
+    "VerificationDetails":{
+      "type":"structure",
+      "members":{
+        "BusinessVerificationDetails":{"shape":"BusinessVerificationDetails"},
+        "RegistrantVerificationDetails":{"shape":"RegistrantVerificationDetails"}
+      },
+      "union":true
+    },
+    "VerificationResponseDetails":{
+      "type":"structure",
+      "members":{
+        "BusinessVerificationResponse":{"shape":"BusinessVerificationResponse"},
+        "RegistrantVerificationResponse":{"shape":"RegistrantVerificationResponse"}
+      },
+      "union":true
+    },
+    "VerificationStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING_CUSTOMER_ACTION",
+        "IN_PROGRESS",
+        "FAILED",
+        "SUCCEEDED",
+        "REJECTED"
+      ]
+    },
+    "VerificationStatusReason":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"[\\u0020-\\u007E\\u00A0-\\uD7FF\\uE000-\\uFFFD]+"
+    },
+    "VerificationType":{
+      "type":"string",
+      "enum":[
+        "BUSINESS_VERIFICATION",
+        "REGISTRANT_VERIFICATION"
       ]
     }
   }
