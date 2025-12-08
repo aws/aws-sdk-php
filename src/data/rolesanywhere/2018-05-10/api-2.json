@@ -2,16 +2,15 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2018-05-10",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"rolesanywhere",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceFullName":"IAM Roles Anywhere",
     "serviceId":"RolesAnywhere",
     "signatureVersion":"v4",
     "signingName":"rolesanywhere",
-    "uid":"rolesanywhere-2018-05-10",
-    "auth":["aws.auth#sigv4"]
+    "uid":"rolesanywhere-2018-05-10"
   },
   "operations":{
     "CreateProfile":{
@@ -198,7 +197,8 @@
       "output":{"shape":"CrlDetailResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetProfile":{
       "name":"GetProfile",
@@ -212,7 +212,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetSubject":{
       "name":"GetSubject",
@@ -226,7 +227,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTrustAnchor":{
       "name":"GetTrustAnchor",
@@ -241,7 +243,8 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ImportCrl":{
       "name":"ImportCrl",
@@ -269,7 +272,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListProfiles":{
       "name":"ListProfiles",
@@ -283,7 +287,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListSubjects":{
       "name":"ListSubjects",
@@ -297,7 +302,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -312,7 +318,8 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTrustAnchors":{
       "name":"ListTrustAnchors",
@@ -326,7 +333,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "PutAttributeMapping":{
       "name":"PutAttributeMapping",
@@ -501,15 +509,15 @@
         "roleArns"
       ],
       "members":{
-        "acceptRoleSessionName":{"shape":"Boolean"},
-        "durationSeconds":{"shape":"CreateProfileRequestDurationSecondsInteger"},
-        "enabled":{"shape":"Boolean"},
-        "managedPolicyArns":{"shape":"ManagedPolicyList"},
         "name":{"shape":"ResourceName"},
         "requireInstanceProperties":{"shape":"Boolean"},
-        "roleArns":{"shape":"RoleArnList"},
         "sessionPolicy":{"shape":"String"},
-        "tags":{"shape":"TagList"}
+        "roleArns":{"shape":"RoleArnList"},
+        "managedPolicyArns":{"shape":"ManagedPolicyList"},
+        "durationSeconds":{"shape":"CreateProfileRequestDurationSecondsInteger"},
+        "enabled":{"shape":"Boolean"},
+        "tags":{"shape":"TagList"},
+        "acceptRoleSessionName":{"shape":"Boolean"}
       }
     },
     "CreateProfileRequestDurationSecondsInteger":{
@@ -525,11 +533,11 @@
         "source"
       ],
       "members":{
-        "enabled":{"shape":"Boolean"},
         "name":{"shape":"ResourceName"},
-        "notificationSettings":{"shape":"NotificationSettings"},
         "source":{"shape":"Source"},
-        "tags":{"shape":"TagList"}
+        "enabled":{"shape":"Boolean"},
+        "tags":{"shape":"TagList"},
+        "notificationSettings":{"shape":"NotificationSettings"}
       }
     },
     "CredentialSummaries":{
@@ -539,24 +547,24 @@
     "CredentialSummary":{
       "type":"structure",
       "members":{
-        "enabled":{"shape":"Boolean"},
-        "failed":{"shape":"Boolean"},
-        "issuer":{"shape":"String"},
         "seenAt":{"shape":"SyntheticTimestamp_date_time"},
         "serialNumber":{"shape":"String"},
-        "x509CertificateData":{"shape":"String"}
+        "issuer":{"shape":"String"},
+        "enabled":{"shape":"Boolean"},
+        "x509CertificateData":{"shape":"String"},
+        "failed":{"shape":"Boolean"}
       }
     },
     "CrlDetail":{
       "type":"structure",
       "members":{
-        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "crlArn":{"shape":"String"},
-        "crlData":{"shape":"Blob"},
         "crlId":{"shape":"Uuid"},
-        "enabled":{"shape":"Boolean"},
+        "crlArn":{"shape":"String"},
         "name":{"shape":"String"},
+        "enabled":{"shape":"Boolean"},
+        "crlData":{"shape":"Blob"},
         "trustAnchorArn":{"shape":"String"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
@@ -574,19 +582,19 @@
     "DeleteAttributeMappingRequest":{
       "type":"structure",
       "required":[
-        "certificateField",
-        "profileId"
+        "profileId",
+        "certificateField"
       ],
       "members":{
-        "certificateField":{
-          "shape":"CertificateField",
-          "location":"querystring",
-          "locationName":"certificateField"
-        },
         "profileId":{
           "shape":"Uuid",
           "location":"uri",
           "locationName":"profileId"
+        },
+        "certificateField":{
+          "shape":"CertificateField",
+          "location":"querystring",
+          "locationName":"certificateField"
         },
         "specifiers":{
           "shape":"SpecifierList",
@@ -605,14 +613,14 @@
     "ImportCrlRequest":{
       "type":"structure",
       "required":[
-        "crlData",
         "name",
+        "crlData",
         "trustAnchorArn"
       ],
       "members":{
+        "name":{"shape":"ResourceName"},
         "crlData":{"shape":"ImportCrlRequestCrlDataBlob"},
         "enabled":{"shape":"Boolean"},
-        "name":{"shape":"ResourceName"},
         "tags":{"shape":"TagList"},
         "trustAnchorArn":{"shape":"TrustAnchorArn"}
       }
@@ -629,9 +637,9 @@
     "InstanceProperty":{
       "type":"structure",
       "members":{
-        "failed":{"shape":"Boolean"},
+        "seenAt":{"shape":"SyntheticTimestamp_date_time"},
         "properties":{"shape":"InstancePropertyMap"},
-        "seenAt":{"shape":"SyntheticTimestamp_date_time"}
+        "failed":{"shape":"Boolean"}
       }
     },
     "InstancePropertyMap":{
@@ -658,8 +666,8 @@
     "ListCrlsResponse":{
       "type":"structure",
       "members":{
-        "crls":{"shape":"CrlDetails"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"String"},
+        "crls":{"shape":"CrlDetails"}
       }
     },
     "ListProfilesResponse":{
@@ -692,8 +700,8 @@
     "ListSubjectsResponse":{
       "type":"structure",
       "members":{
-        "nextToken":{"shape":"String"},
-        "subjects":{"shape":"SubjectSummaries"}
+        "subjects":{"shape":"SubjectSummaries"},
+        "nextToken":{"shape":"String"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -765,10 +773,10 @@
         "event"
       ],
       "members":{
-        "channel":{"shape":"NotificationChannel"},
         "enabled":{"shape":"Boolean"},
         "event":{"shape":"NotificationEvent"},
-        "threshold":{"shape":"NotificationSettingThresholdInteger"}
+        "threshold":{"shape":"NotificationSettingThresholdInteger"},
+        "channel":{"shape":"NotificationChannel"}
       }
     },
     "NotificationSettingDetail":{
@@ -778,11 +786,11 @@
         "event"
       ],
       "members":{
-        "channel":{"shape":"NotificationChannel"},
-        "configuredBy":{"shape":"NotificationSettingDetailConfiguredByString"},
         "enabled":{"shape":"Boolean"},
         "event":{"shape":"NotificationEvent"},
-        "threshold":{"shape":"NotificationSettingDetailThresholdInteger"}
+        "threshold":{"shape":"NotificationSettingDetailThresholdInteger"},
+        "channel":{"shape":"NotificationChannel"},
+        "configuredBy":{"shape":"NotificationSettingDetailConfiguredByString"}
       }
     },
     "NotificationSettingDetailConfiguredByString":{
@@ -806,8 +814,8 @@
       "type":"structure",
       "required":["event"],
       "members":{
-        "channel":{"shape":"NotificationChannel"},
-        "event":{"shape":"NotificationEvent"}
+        "event":{"shape":"NotificationEvent"},
+        "channel":{"shape":"NotificationChannel"}
       }
     },
     "NotificationSettingKeys":{
@@ -832,25 +840,25 @@
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"^arn:aws(-[^:]+)?:rolesanywhere(:.*){2}(:profile.*)$"
+      "pattern":"arn:aws(-[^:]+)?:rolesanywhere(:.*){2}(:profile.*)"
     },
     "ProfileDetail":{
       "type":"structure",
       "members":{
-        "acceptRoleSessionName":{"shape":"Boolean"},
-        "attributeMappings":{"shape":"AttributeMappings"},
-        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "createdBy":{"shape":"String"},
-        "durationSeconds":{"shape":"Integer"},
-        "enabled":{"shape":"Boolean"},
-        "managedPolicyArns":{"shape":"ManagedPolicyList"},
-        "name":{"shape":"ResourceName"},
-        "profileArn":{"shape":"ProfileArn"},
         "profileId":{"shape":"Uuid"},
+        "profileArn":{"shape":"ProfileArn"},
+        "name":{"shape":"ResourceName"},
         "requireInstanceProperties":{"shape":"Boolean"},
-        "roleArns":{"shape":"RoleArnList"},
+        "enabled":{"shape":"Boolean"},
+        "createdBy":{"shape":"String"},
         "sessionPolicy":{"shape":"String"},
-        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+        "roleArns":{"shape":"RoleArnList"},
+        "managedPolicyArns":{"shape":"ManagedPolicyList"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "durationSeconds":{"shape":"Integer"},
+        "acceptRoleSessionName":{"shape":"Boolean"},
+        "attributeMappings":{"shape":"AttributeMappings"}
       }
     },
     "ProfileDetailResponse":{
@@ -866,18 +874,18 @@
     "PutAttributeMappingRequest":{
       "type":"structure",
       "required":[
+        "profileId",
         "certificateField",
-        "mappingRules",
-        "profileId"
+        "mappingRules"
       ],
       "members":{
-        "certificateField":{"shape":"CertificateField"},
-        "mappingRules":{"shape":"MappingRules"},
         "profileId":{
           "shape":"Uuid",
           "location":"uri",
           "locationName":"profileId"
-        }
+        },
+        "certificateField":{"shape":"CertificateField"},
+        "mappingRules":{"shape":"MappingRules"}
       }
     },
     "PutAttributeMappingResponse":{
@@ -890,12 +898,12 @@
     "PutNotificationSettingsRequest":{
       "type":"structure",
       "required":[
-        "notificationSettings",
-        "trustAnchorId"
+        "trustAnchorId",
+        "notificationSettings"
       ],
       "members":{
-        "notificationSettings":{"shape":"NotificationSettings"},
-        "trustAnchorId":{"shape":"Uuid"}
+        "trustAnchorId":{"shape":"Uuid"},
+        "notificationSettings":{"shape":"NotificationSettings"}
       }
     },
     "PutNotificationSettingsResponse":{
@@ -908,12 +916,12 @@
     "ResetNotificationSettingsRequest":{
       "type":"structure",
       "required":[
-        "notificationSettingKeys",
-        "trustAnchorId"
+        "trustAnchorId",
+        "notificationSettingKeys"
       ],
       "members":{
-        "notificationSettingKeys":{"shape":"NotificationSettingKeys"},
-        "trustAnchorId":{"shape":"Uuid"}
+        "trustAnchorId":{"shape":"Uuid"},
+        "notificationSettingKeys":{"shape":"NotificationSettingKeys"}
       }
     },
     "ResetNotificationSettingsResponse":{
@@ -927,7 +935,7 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^[ a-zA-Z0-9-_]*$"
+      "pattern":"[ a-zA-Z0-9-_]*"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -944,7 +952,7 @@
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"^arn:aws(-[^:]+)?:iam(:.*){2}(:role.*)$"
+      "pattern":"arn:aws(-[^:]+)?:iam(:.*){2}(:role.*)"
     },
     "RoleArnList":{
       "type":"list",
@@ -999,21 +1007,21 @@
     "Source":{
       "type":"structure",
       "members":{
-        "sourceData":{"shape":"SourceData"},
-        "sourceType":{"shape":"TrustAnchorType"}
+        "sourceType":{"shape":"TrustAnchorType"},
+        "sourceData":{"shape":"SourceData"}
       }
     },
     "SourceData":{
       "type":"structure",
       "members":{
-        "acmPcaArn":{"shape":"String"},
-        "x509CertificateData":{"shape":"SourceDataX509CertificateDataString"}
+        "x509CertificateData":{"shape":"SourceDataX509CertificateDataString"},
+        "acmPcaArn":{"shape":"String"}
       },
       "union":true
     },
     "SourceDataX509CertificateDataString":{
       "type":"string",
-      "max":8000,
+      "max":16000,
       "min":1
     },
     "SpecifierList":{
@@ -1024,15 +1032,15 @@
     "SubjectDetail":{
       "type":"structure",
       "members":{
-        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "credentials":{"shape":"CredentialSummaries"},
-        "enabled":{"shape":"Boolean"},
-        "instanceProperties":{"shape":"InstanceProperties"},
-        "lastSeenAt":{"shape":"SyntheticTimestamp_date_time"},
         "subjectArn":{"shape":"String"},
         "subjectId":{"shape":"Uuid"},
+        "enabled":{"shape":"Boolean"},
+        "x509Subject":{"shape":"String"},
+        "lastSeenAt":{"shape":"SyntheticTimestamp_date_time"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "x509Subject":{"shape":"String"}
+        "credentials":{"shape":"CredentialSummaries"},
+        "instanceProperties":{"shape":"InstanceProperties"}
       }
     },
     "SubjectDetailResponse":{
@@ -1048,13 +1056,13 @@
     "SubjectSummary":{
       "type":"structure",
       "members":{
-        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "enabled":{"shape":"Boolean"},
-        "lastSeenAt":{"shape":"SyntheticTimestamp_date_time"},
         "subjectArn":{"shape":"String"},
         "subjectId":{"shape":"Uuid"},
-        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "x509Subject":{"shape":"String"}
+        "enabled":{"shape":"Boolean"},
+        "x509Subject":{"shape":"String"},
+        "lastSeenAt":{"shape":"SyntheticTimestamp_date_time"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "SyntheticTimestamp_date_time":{
@@ -1076,7 +1084,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[ a-zA-Z0-9_.:/=+@-]*$",
+      "pattern":"[ a-zA-Z0-9_.:/=+@-]*",
       "sensitive":true
     },
     "TagKeyList":{
@@ -1104,14 +1112,13 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"^[ a-zA-Z0-9_.:/=+@-]*$",
+      "pattern":"[ a-zA-Z0-9_.:/=+@-]*",
       "sensitive":true
     },
     "TooManyTagsException":{
@@ -1129,19 +1136,19 @@
       "type":"string",
       "max":1011,
       "min":1,
-      "pattern":"^arn:aws(-[^:]+)?:rolesanywhere(:.*){2}(:trust-anchor.*)$"
+      "pattern":"arn:aws(-[^:]+)?:rolesanywhere(:.*){2}(:trust-anchor.*)"
     },
     "TrustAnchorDetail":{
       "type":"structure",
       "members":{
-        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "enabled":{"shape":"Boolean"},
-        "name":{"shape":"ResourceName"},
-        "notificationSettings":{"shape":"NotificationSettingDetails"},
-        "source":{"shape":"Source"},
-        "trustAnchorArn":{"shape":"String"},
         "trustAnchorId":{"shape":"Uuid"},
-        "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+        "trustAnchorArn":{"shape":"String"},
+        "name":{"shape":"ResourceName"},
+        "source":{"shape":"Source"},
+        "enabled":{"shape":"Boolean"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "notificationSettings":{"shape":"NotificationSettingDetails"}
       }
     },
     "TrustAnchorDetailResponse":{
@@ -1176,20 +1183,19 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateCrlRequest":{
       "type":"structure",
       "required":["crlId"],
       "members":{
-        "crlData":{"shape":"UpdateCrlRequestCrlDataBlob"},
         "crlId":{
           "shape":"Uuid",
           "location":"uri",
           "locationName":"crlId"
         },
-        "name":{"shape":"ResourceName"}
+        "name":{"shape":"ResourceName"},
+        "crlData":{"shape":"UpdateCrlRequestCrlDataBlob"}
       }
     },
     "UpdateCrlRequestCrlDataBlob":{
@@ -1201,17 +1207,17 @@
       "type":"structure",
       "required":["profileId"],
       "members":{
-        "acceptRoleSessionName":{"shape":"Boolean"},
-        "durationSeconds":{"shape":"UpdateProfileRequestDurationSecondsInteger"},
-        "managedPolicyArns":{"shape":"ManagedPolicyList"},
-        "name":{"shape":"ResourceName"},
         "profileId":{
           "shape":"Uuid",
           "location":"uri",
           "locationName":"profileId"
         },
+        "name":{"shape":"ResourceName"},
+        "sessionPolicy":{"shape":"UpdateProfileRequestSessionPolicyString"},
         "roleArns":{"shape":"RoleArnList"},
-        "sessionPolicy":{"shape":"UpdateProfileRequestSessionPolicyString"}
+        "managedPolicyArns":{"shape":"ManagedPolicyList"},
+        "durationSeconds":{"shape":"UpdateProfileRequestDurationSecondsInteger"},
+        "acceptRoleSessionName":{"shape":"Boolean"}
       }
     },
     "UpdateProfileRequestDurationSecondsInteger":{
@@ -1229,20 +1235,20 @@
       "type":"structure",
       "required":["trustAnchorId"],
       "members":{
-        "name":{"shape":"ResourceName"},
-        "source":{"shape":"Source"},
         "trustAnchorId":{
           "shape":"Uuid",
           "location":"uri",
           "locationName":"trustAnchorId"
-        }
+        },
+        "name":{"shape":"ResourceName"},
+        "source":{"shape":"Source"}
       }
     },
     "Uuid":{
       "type":"string",
       "max":36,
       "min":36,
-      "pattern":"[a-f0-9]{8}-([a-z0-9]{4}-){3}[a-z0-9]{12}"
+      "pattern":".*[a-f0-9]{8}-([a-z0-9]{4}-){3}[a-z0-9]{12}.*"
     },
     "ValidationException":{
       "type":"structure",

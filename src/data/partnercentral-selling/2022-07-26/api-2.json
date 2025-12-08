@@ -864,8 +864,13 @@
     },
     "Amount":{
       "type":"string",
-      "pattern":"(0|([1-9][0-9]{0,30}))(\\.[0-9]{0,2})?",
+      "pattern":"((0|([1-9][0-9]{0,30}))(\\.[0-9]{0,2})?)?",
       "sensitive":true
+    },
+    "AmountMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"MonetaryAmount"}
     },
     "ApnPrograms":{
       "type":"list",
@@ -1047,7 +1052,8 @@
       "type":"structure",
       "members":{
         "NextBestActions":{"shape":"String"},
-        "EngagementScore":{"shape":"EngagementScore"}
+        "EngagementScore":{"shape":"EngagementScore"},
+        "AwsProductsSpendInsightsBySource":{"shape":"AwsProductsSpendInsightsBySource"}
       }
     },
     "AwsOpportunityLifeCycle":{
@@ -1117,10 +1123,256 @@
       "type":"list",
       "member":{"shape":"AwsTeamMember"}
     },
+    "AwsProductDetails":{
+      "type":"structure",
+      "required":[
+        "ProductCode",
+        "Categories",
+        "Optimizations"
+      ],
+      "members":{
+        "ProductCode":{"shape":"String"},
+        "ServiceCode":{"shape":"String"},
+        "Categories":{"shape":"AwsProductDetailsCategoriesList"},
+        "Amount":{"shape":"MonetaryAmount"},
+        "OptimizedAmount":{"shape":"MonetaryAmount"},
+        "PotentialSavingsAmount":{"shape":"MonetaryAmount"},
+        "Optimizations":{"shape":"AwsProductOptimizationsList"}
+      }
+    },
+    "AwsProductDetailsCategoriesList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":20,
+      "min":0
+    },
     "AwsProductIdentifier":{"type":"string"},
     "AwsProductIdentifiers":{
       "type":"list",
       "member":{"shape":"AwsProductIdentifier"}
+    },
+    "AwsProductInsights":{
+      "type":"structure",
+      "required":[
+        "CurrencyCode",
+        "Frequency",
+        "TotalAmountByCategory",
+        "AwsProducts"
+      ],
+      "members":{
+        "CurrencyCode":{"shape":"AwsProductInsightsCurrencyCodeEnum"},
+        "Frequency":{"shape":"PaymentFrequency"},
+        "TotalAmount":{"shape":"MonetaryAmount"},
+        "TotalOptimizedAmount":{"shape":"MonetaryAmount"},
+        "TotalPotentialSavingsAmount":{"shape":"MonetaryAmount"},
+        "TotalAmountByCategory":{"shape":"AmountMap"},
+        "AwsProducts":{"shape":"AwsProductsList"}
+      }
+    },
+    "AwsProductInsightsCurrencyCodeEnum":{
+      "type":"string",
+      "enum":[
+        "USD",
+        "EUR",
+        "GBP",
+        "AUD",
+        "CAD",
+        "CNY",
+        "NZD",
+        "INR",
+        "JPY",
+        "CHF",
+        "SEK",
+        "AED",
+        "AFN",
+        "ALL",
+        "AMD",
+        "ANG",
+        "AOA",
+        "ARS",
+        "AWG",
+        "AZN",
+        "BAM",
+        "BBD",
+        "BDT",
+        "BGN",
+        "BHD",
+        "BIF",
+        "BMD",
+        "BND",
+        "BOB",
+        "BOV",
+        "BRL",
+        "BSD",
+        "BTN",
+        "BWP",
+        "BYN",
+        "BZD",
+        "CDF",
+        "CHE",
+        "CHW",
+        "CLF",
+        "CLP",
+        "COP",
+        "COU",
+        "CRC",
+        "CUC",
+        "CUP",
+        "CVE",
+        "CZK",
+        "DJF",
+        "DKK",
+        "DOP",
+        "DZD",
+        "EGP",
+        "ERN",
+        "ETB",
+        "FJD",
+        "FKP",
+        "GEL",
+        "GHS",
+        "GIP",
+        "GMD",
+        "GNF",
+        "GTQ",
+        "GYD",
+        "HKD",
+        "HNL",
+        "HRK",
+        "HTG",
+        "HUF",
+        "IDR",
+        "ILS",
+        "IQD",
+        "IRR",
+        "ISK",
+        "JMD",
+        "JOD",
+        "KES",
+        "KGS",
+        "KHR",
+        "KMF",
+        "KPW",
+        "KRW",
+        "KWD",
+        "KYD",
+        "KZT",
+        "LAK",
+        "LBP",
+        "LKR",
+        "LRD",
+        "LSL",
+        "LYD",
+        "MAD",
+        "MDL",
+        "MGA",
+        "MKD",
+        "MMK",
+        "MNT",
+        "MOP",
+        "MRU",
+        "MUR",
+        "MVR",
+        "MWK",
+        "MXN",
+        "MXV",
+        "MYR",
+        "MZN",
+        "NAD",
+        "NGN",
+        "NIO",
+        "NOK",
+        "NPR",
+        "OMR",
+        "PAB",
+        "PEN",
+        "PGK",
+        "PHP",
+        "PKR",
+        "PLN",
+        "PYG",
+        "QAR",
+        "RON",
+        "RSD",
+        "RUB",
+        "RWF",
+        "SAR",
+        "SBD",
+        "SCR",
+        "SDG",
+        "SGD",
+        "SHP",
+        "SLL",
+        "SOS",
+        "SRD",
+        "SSP",
+        "STN",
+        "SVC",
+        "SYP",
+        "SZL",
+        "THB",
+        "TJS",
+        "TMT",
+        "TND",
+        "TOP",
+        "TRY",
+        "TTD",
+        "TWD",
+        "TZS",
+        "UAH",
+        "UGX",
+        "USN",
+        "UYI",
+        "UYU",
+        "UZS",
+        "VEF",
+        "VND",
+        "VUV",
+        "WST",
+        "XAF",
+        "XCD",
+        "XDR",
+        "XOF",
+        "XPF",
+        "XSU",
+        "XUA",
+        "YER",
+        "ZAR",
+        "ZMW",
+        "ZWL"
+      ],
+      "pattern":"USD",
+      "sensitive":true
+    },
+    "AwsProductOptimization":{
+      "type":"structure",
+      "required":[
+        "Description",
+        "SavingsAmount"
+      ],
+      "members":{
+        "Description":{"shape":"String"},
+        "SavingsAmount":{"shape":"MonetaryAmount"}
+      }
+    },
+    "AwsProductOptimizationsList":{
+      "type":"list",
+      "member":{"shape":"AwsProductOptimization"},
+      "max":10,
+      "min":0
+    },
+    "AwsProductsList":{
+      "type":"list",
+      "member":{"shape":"AwsProductDetails"},
+      "max":100,
+      "min":0
+    },
+    "AwsProductsSpendInsightsBySource":{
+      "type":"structure",
+      "members":{
+        "Partner":{"shape":"AwsProductInsights"},
+        "AWS":{"shape":"AwsProductInsights"}
+      }
     },
     "AwsSubmission":{
       "type":"structure",
@@ -2226,10 +2478,13 @@
       "type":"string",
       "pattern":"(?s).{1,255}"
     },
+    "EstimationUrl":{
+      "type":"string",
+      "pattern":"https://calculator\\.aws/#/estimate\\?id=[a-f0-9]{32,64}"
+    },
     "ExpectedCustomerSpend":{
       "type":"structure",
       "required":[
-        "Amount",
         "CurrencyCode",
         "Frequency",
         "TargetCompany"
@@ -2239,7 +2494,7 @@
         "CurrencyCode":{"shape":"ExpectedCustomerSpendCurrencyCodeEnum"},
         "Frequency":{"shape":"PaymentFrequency"},
         "TargetCompany":{"shape":"ExpectedCustomerSpendTargetCompanyString"},
-        "EstimationUrl":{"shape":"WebsiteUrl"}
+        "EstimationUrl":{"shape":"EstimationUrl"}
       }
     },
     "ExpectedCustomerSpendCurrencyCodeEnum":{
@@ -3381,6 +3636,11 @@
       "box":true,
       "max":10,
       "min":1
+    },
+    "MonetaryAmount":{
+      "type":"string",
+      "pattern":"(0|([1-9][0-9]{0,30}))(\\.[0-9]{0,2})?",
+      "sensitive":true
     },
     "MonetaryValue":{
       "type":"structure",

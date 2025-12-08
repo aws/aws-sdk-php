@@ -501,6 +501,19 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "ListCostCategoryResourceAssociations":{
+      "name":"ListCostCategoryResourceAssociations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListCostCategoryResourceAssociationsRequest"},
+      "output":{"shape":"ListCostCategoryResourceAssociationsResponse"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListSavingsPlansPurchaseRecommendationGeneration":{
       "name":"ListSavingsPlansPurchaseRecommendationGeneration",
       "http":{
@@ -1099,12 +1112,25 @@
         "NumberOfRules":{"shape":"NonNegativeInteger"},
         "ProcessingStatus":{"shape":"CostCategoryProcessingStatusList"},
         "Values":{"shape":"CostCategoryValuesList"},
-        "DefaultValue":{"shape":"CostCategoryValue"}
+        "DefaultValue":{"shape":"CostCategoryValue"},
+        "SupportedResourceTypes":{"shape":"ResourceTypes"}
       }
     },
     "CostCategoryReferencesList":{
       "type":"list",
       "member":{"shape":"CostCategoryReference"}
+    },
+    "CostCategoryResourceAssociation":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"GenericArn"},
+        "CostCategoryName":{"shape":"CostCategoryName"},
+        "CostCategoryArn":{"shape":"Arn"}
+      }
+    },
+    "CostCategoryResourceAssociations":{
+      "type":"list",
+      "member":{"shape":"CostCategoryResourceAssociation"}
     },
     "CostCategoryRule":{
       "type":"structure",
@@ -1679,6 +1705,12 @@
     "GenerationSummaryList":{
       "type":"list",
       "member":{"shape":"GenerationSummary"}
+    },
+    "GenericArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws[-a-z0-9]*:[a-z0-9]+:[-a-z0-9]*:[0-9]{12}:[-a-zA-Z0-9/:_]+"
     },
     "GenericBoolean":{"type":"boolean"},
     "GenericDouble":{"type":"double"},
@@ -2394,13 +2426,32 @@
         "MaxResults":{
           "shape":"CostCategoryMaxResults",
           "box":true
-        }
+        },
+        "SupportedResourceTypes":{"shape":"ResourceTypesFilterInput"}
       }
     },
     "ListCostCategoryDefinitionsResponse":{
       "type":"structure",
       "members":{
         "CostCategoryReferences":{"shape":"CostCategoryReferencesList"},
+        "NextToken":{"shape":"NextPageToken"}
+      }
+    },
+    "ListCostCategoryResourceAssociationsRequest":{
+      "type":"structure",
+      "members":{
+        "CostCategoryArn":{"shape":"Arn"},
+        "NextToken":{"shape":"NextPageToken"},
+        "MaxResults":{
+          "shape":"CostCategoryMaxResults",
+          "box":true
+        }
+      }
+    },
+    "ListCostCategoryResourceAssociationsResponse":{
+      "type":"structure",
+      "members":{
+        "CostCategoryResourceAssociations":{"shape":"CostCategoryResourceAssociations"},
         "NextToken":{"shape":"NextPageToken"}
       }
     },
@@ -2908,6 +2959,20 @@
       "max":256,
       "min":0,
       "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+    },
+    "ResourceType":{
+      "type":"string",
+      "pattern":"^[-a-zA-Z0-9/_]+:[-a-zA-Z0-9/_]+"
+    },
+    "ResourceTypes":{
+      "type":"list",
+      "member":{"shape":"ResourceType"}
+    },
+    "ResourceTypesFilterInput":{
+      "type":"list",
+      "member":{"shape":"ResourceType"},
+      "max":5,
+      "min":0
     },
     "ResourceUtilization":{
       "type":"structure",

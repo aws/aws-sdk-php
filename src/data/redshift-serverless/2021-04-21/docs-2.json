@@ -24,6 +24,7 @@
     "GetCredentials": "<p>Returns a database user name and temporary password with temporary authorization to log in to Amazon Redshift Serverless.</p> <p>By default, the temporary credentials expire in 900 seconds. You can optionally specify a duration between 900 seconds (15 minutes) and 3600 seconds (60 minutes).</p> <p>The Identity and Access Management (IAM) user or role that runs GetCredentials must have an IAM policy attached that allows access to all necessary actions and resources.</p> <p>If the <code>DbName</code> parameter is specified, the IAM policy must allow access to the resource dbname for the specified database name.</p>",
     "GetCustomDomainAssociation": "<p>Gets information about a specific custom domain association.</p>",
     "GetEndpointAccess": "<p>Returns information, such as the name, about a VPC endpoint.</p>",
+    "GetIdentityCenterAuthToken": "<p>Returns an Identity Center authentication token for accessing Amazon Redshift Serverless workgroups.</p> <p>The token provides secure access to data within the specified workgroups using Identity Center identity propagation. The token expires after a specified duration and must be refreshed for continued access.</p> <p>The Identity and Access Management (IAM) user or role that runs GetIdentityCenterAuthToken must have appropriate permissions to access the specified workgroups and Identity Center integration must be configured for the workgroups.</p>",
     "GetNamespace": "<p>Returns information about a namespace in Amazon Redshift Serverless.</p>",
     "GetRecoveryPoint": "<p>Returns information about a recovery point.</p>",
     "GetReservation": "<p>Gets an Amazon Redshift Serverless reservation. A reservation gives you the option to commit to a specified number of Redshift Processing Units (RPUs) for a year at a discount from Serverless on-demand (OD) rates.</p>",
@@ -443,6 +444,14 @@
       "refs": {}
     },
     "GetEndpointAccessResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetIdentityCenterAuthTokenRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetIdentityCenterAuthTokenResponse": {
       "base": null,
       "refs": {}
     },
@@ -1307,6 +1316,7 @@
         "EndpointAccess$endpointStatus": "<p>The status of the VPC endpoint.</p>",
         "EndpointAccess$workgroupName": "<p>The name of the workgroup associated with the endpoint.</p>",
         "GetEndpointAccessRequest$endpointName": "<p>The name of the VPC endpoint to return information for.</p>",
+        "GetIdentityCenterAuthTokenResponse$token": "<p>The Identity Center authentication token that can be used to access data in the specified workgroups.</p> <p>This token contains the Identity Center identity information and is encrypted for secure transmission.</p>",
         "GetRecoveryPointRequest$recoveryPointId": "<p>The unique identifier of the recovery point to return information for.</p>",
         "GetResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to return.</p>",
         "GetSnapshotRequest$ownerAccount": "<p>The owner Amazon Web Services account of a snapshot shared with another user.</p>",
@@ -1464,6 +1474,7 @@
         "CreateCustomDomainAssociationResponse$customDomainCertificateExpiryTime": "<p>The expiration time for the certificate.</p>",
         "EndpointAccess$endpointCreateTime": "<p>The time that the endpoint was created.</p>",
         "GetCustomDomainAssociationResponse$customDomainCertificateExpiryTime": "<p>The expiration time for the certificate.</p>",
+        "GetIdentityCenterAuthTokenResponse$expirationTime": "<p>The date and time when the Identity Center authentication token expires.</p> <p>After this time, a new token must be requested for continued access.</p>",
         "ManagedWorkgroupListItem$creationDate": "<p>The creation date of the managed workgroup.</p>",
         "Namespace$creationDate": "<p>The date of when the namespace was created.</p>",
         "RecoveryPoint$recoveryPointCreateTime": "<p>The time the recovery point is created.</p>",
@@ -1805,7 +1816,14 @@
         "UpdateCustomDomainAssociationRequest$workgroupName": "<p>The name of the workgroup associated with the database.</p>",
         "UpdateCustomDomainAssociationResponse$workgroupName": "<p>The name of the workgroup associated with the database.</p>",
         "UpdateWorkgroupRequest$workgroupName": "<p>The name of the workgroup to update. You can't update the name of a workgroup once it is created.</p>",
-        "Workgroup$workgroupName": "<p>The name of the workgroup.</p>"
+        "Workgroup$workgroupName": "<p>The name of the workgroup.</p>",
+        "WorkgroupNameList$member": null
+      }
+    },
+    "WorkgroupNameList": {
+      "base": null,
+      "refs": {
+        "GetIdentityCenterAuthTokenRequest$workgroupNames": "<p>A list of workgroup names for which to generate the Identity Center authentication token.</p> <p>Constraints:</p> <ul> <li> <p>Must contain between 1 and 20 workgroup names.</p> </li> <li> <p>Each workgroup name must be a valid Amazon Redshift Serverless workgroup identifier.</p> </li> <li> <p>All specified workgroups must have Identity Center integration enabled.</p> </li> </ul>"
       }
     },
     "WorkgroupStatus": {

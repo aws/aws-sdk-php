@@ -5518,6 +5518,7 @@
         "SwitchoverReadReplicaMessage$DBInstanceIdentifier": "<p>The DB instance identifier of the current standby database. This value is stored as a lowercase string.</p> <p>Constraints:</p> <ul> <li> <p>Must match the identiﬁer of an existing Oracle read replica DB instance.</p> </li> </ul>",
         "Tag$Key": "<p>A key is the required name of the tag. The string value can be from 1 to 128 Unicode characters in length and can't be prefixed with <code>aws:</code> or <code>rds:</code>. The string can only contain only the set of Unicode letters, digits, white-space, '_', '.', ':', '/', '=', '+', '-', '@' (Java regex: \"^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-@]*)$\").</p>",
         "Tag$Value": "<p>A value is the optional value of the tag. The string value can be from 1 to 256 Unicode characters in length and can't be prefixed with <code>aws:</code> or <code>rds:</code>. The string can only contain only the set of Unicode letters, digits, white-space, '_', '.', ':', '/', '=', '+', '-', '@' (Java regex: \"^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-@]*)$\").</p>",
+        "TagSpecification$ResourceType": "<p>The type of resource to tag on creation.</p> <p>Valid Values: </p> <ul> <li> <p> <code>auto-backup</code> - The DB instance's automated backup.</p> </li> <li> <p> <code>cluster-auto-backup</code> - The DB cluster's automated backup.</p> </li> </ul>",
         "TargetHealth$Description": "<p>A description of the health of the RDS Proxy target. If the <code>State</code> is <code>AVAILABLE</code>, a description is not included.</p>",
         "TenantDatabase$DBInstanceIdentifier": "<p>The ID of the DB instance that contains the tenant database.</p>",
         "TenantDatabase$TenantDBName": "<p>The database name of the tenant database.</p>",
@@ -5805,9 +5806,11 @@
         "CreateOptionGroupMessage$Tags": "<p>Tags to assign to the option group.</p>",
         "CreateTenantDatabaseMessage$Tags": null,
         "DBCluster$TagList": null,
+        "DBClusterAutomatedBackup$TagList": null,
         "DBClusterSnapshot$TagList": null,
         "DBEngineVersion$TagList": null,
         "DBInstance$TagList": null,
+        "DBInstanceAutomatedBackup$TagList": null,
         "DBShardGroup$TagList": null,
         "DBSnapshot$TagList": null,
         "DBSnapshotTenantDatabase$TagList": null,
@@ -5820,13 +5823,37 @@
         "RestoreDBInstanceFromDBSnapshotMessage$Tags": null,
         "RestoreDBInstanceFromS3Message$Tags": "<p>A list of tags to associate with this DB instance. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.html\">Tagging Amazon RDS Resources</a> in the <i>Amazon RDS User Guide.</i> </p>",
         "RestoreDBInstanceToPointInTimeMessage$Tags": null,
+        "StartDBInstanceAutomatedBackupsReplicationMessage$Tags": "<p>A list of tags to associate with the replicated automated backups.</p>",
         "TagListMessage$TagList": "<p>List of tags returned by the <code>ListTagsForResource</code> operation.</p>",
+        "TagSpecification$Tags": null,
         "TenantDatabase$TagList": null
       }
     },
     "TagListMessage": {
       "base": "<p/>",
       "refs": {}
+    },
+    "TagSpecification": {
+      "base": "<p>The tags to apply to resources when creating or modifying a DB instance or DB cluster. When you specify a tag, you must specify the resource type to tag, otherwise the request will fail.</p>",
+      "refs": {
+        "TagSpecificationList$member": null
+      }
+    },
+    "TagSpecificationList": {
+      "base": null,
+      "refs": {
+        "CreateDBClusterMessage$TagSpecifications": "<p>Tags to assign to resources associated with the DB cluster.</p> <p>Valid Values: </p> <ul> <li> <p> <code>cluster-auto-backup</code> - The DB cluster's automated backup.</p> </li> </ul>",
+        "CreateDBInstanceMessage$TagSpecifications": "<p>Tags to assign to resources associated with the DB instance.</p> <p>Valid Values: </p> <ul> <li> <p> <code>auto-backup</code> - The DB instance's automated backup.</p> </li> </ul>",
+        "CreateDBInstanceReadReplicaMessage$TagSpecifications": "<p>Tags to assign to resources associated with the DB instance.</p> <p>Valid Values: </p> <ul> <li> <p> <code>auto-backup</code> - The DB instance's automated backup.</p> </li> </ul>",
+        "ModifyDBInstanceMessage$TagSpecifications": "<p>Tags to assign to resources associated with the DB instance.</p> <p>Valid Values: </p> <ul> <li> <p> <code>auto-backup</code> - The DB instance's automated backup.</p> </li> </ul>",
+        "PromoteReadReplicaMessage$TagSpecifications": "<p>Tags to assign to resources associated with the DB instance.</p> <p>Valid Values: </p> <ul> <li> <p> <code>auto-backup</code> - The DB instance's automated backup.</p> </li> </ul>",
+        "RestoreDBClusterFromS3Message$TagSpecifications": "<p>Tags to assign to resources associated with the DB cluster.</p> <p>Valid Values: </p> <ul> <li> <p> <code>cluster-auto-backup</code> - The DB cluster's automated backup.</p> </li> </ul>",
+        "RestoreDBClusterFromSnapshotMessage$TagSpecifications": "<p>Tags to assign to resources associated with the DB cluster.</p> <p>Valid Values: </p> <ul> <li> <p> <code>cluster-auto-backup</code> - The DB cluster's automated backup.</p> </li> </ul>",
+        "RestoreDBClusterToPointInTimeMessage$TagSpecifications": "<p>Tags to assign to resources associated with the DB cluster.</p> <p>Valid Values: </p> <ul> <li> <p> <code>cluster-auto-backup</code> - The DB cluster's automated backup.</p> </li> </ul>",
+        "RestoreDBInstanceFromDBSnapshotMessage$TagSpecifications": "<p>Tags to assign to resources associated with the DB instance.</p> <p>Valid Values: </p> <ul> <li> <p> <code>auto-backup</code> - The DB instance's automated backup.</p> </li> </ul>",
+        "RestoreDBInstanceFromS3Message$TagSpecifications": "<p>Tags to assign to resources associated with the DB instance.</p> <p>Valid Values: </p> <ul> <li> <p> <code>auto-backup</code> - The DB instance's automated backup.</p> </li> </ul>",
+        "RestoreDBInstanceToPointInTimeMessage$TagSpecifications": "<p>Tags to assign to resources associated with the DB instance.</p> <p>Valid Values: </p> <ul> <li> <p> <code>auto-backup</code> - The DB instance's automated backup.</p> </li> </ul>"
+      }
     },
     "TargetConnectionNetworkType": {
       "base": null,

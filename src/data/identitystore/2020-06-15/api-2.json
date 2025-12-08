@@ -494,7 +494,8 @@
         "Timezone":{"shape":"SensitiveStringType"},
         "Photos":{"shape":"Photos"},
         "Website":{"shape":"SensitiveStringType"},
-        "Birthdate":{"shape":"SensitiveStringType"}
+        "Birthdate":{"shape":"SensitiveStringType"},
+        "Extensions":{"shape":"Extensions"}
       }
     },
     "CreateUserResponse":{
@@ -621,7 +622,8 @@
       ],
       "members":{
         "IdentityStoreId":{"shape":"IdentityStoreId"},
-        "UserId":{"shape":"ResourceId"}
+        "UserId":{"shape":"ResourceId"},
+        "Extensions":{"shape":"ExtensionNames"}
       }
     },
     "DescribeUserResponse":{
@@ -654,7 +656,8 @@
         "CreatedAt":{"shape":"DateType"},
         "CreatedBy":{"shape":"StringType"},
         "UpdatedAt":{"shape":"DateType"},
-        "UpdatedBy":{"shape":"StringType"}
+        "UpdatedBy":{"shape":"StringType"},
+        "Extensions":{"shape":"Extensions"}
       }
     },
     "Email":{
@@ -672,6 +675,25 @@
       "min":1
     },
     "ExceptionMessage":{"type":"string"},
+    "ExtensionName":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"aws:identitystore:[a-z]{1,20}"
+    },
+    "ExtensionNames":{
+      "type":"list",
+      "member":{"shape":"ExtensionName"},
+      "max":10,
+      "min":1
+    },
+    "Extensions":{
+      "type":"map",
+      "key":{"shape":"ExtensionName"},
+      "value":{"shape":"AttributeValue"},
+      "max":10,
+      "min":1
+    },
     "ExternalId":{
       "type":"structure",
       "required":[
@@ -968,6 +990,7 @@
       "required":["IdentityStoreId"],
       "members":{
         "IdentityStoreId":{"shape":"IdentityStoreId"},
+        "Extensions":{"shape":"ExtensionNames"},
         "MaxResults":{
           "shape":"MaxResults",
           "box":true
@@ -1081,7 +1104,8 @@
         "GROUP",
         "USER",
         "IDENTITY_STORE",
-        "GROUP_MEMBERSHIP"
+        "GROUP_MEMBERSHIP",
+        "RESOURCE_POLICY"
       ]
     },
     "RetryAfterSeconds":{"type":"integer"},
@@ -1195,7 +1219,8 @@
         "CreatedAt":{"shape":"DateType"},
         "CreatedBy":{"shape":"StringType"},
         "UpdatedAt":{"shape":"DateType"},
-        "UpdatedBy":{"shape":"StringType"}
+        "UpdatedBy":{"shape":"StringType"},
+        "Extensions":{"shape":"Extensions"}
       }
     },
     "UserName":{

@@ -3745,6 +3745,7 @@
         "MasterUserSecretKmsKeyId":{"shape":"String"},
         "CACertificateIdentifier":{"shape":"String"},
         "EngineLifecycleSupport":{"shape":"String"},
+        "TagSpecifications":{"shape":"TagSpecificationList"},
         "MasterUserAuthenticationType":{"shape":"MasterUserAuthenticationType"}
       }
     },
@@ -3864,6 +3865,7 @@
         "MultiTenant":{"shape":"BooleanOptional"},
         "DedicatedLogVolume":{"shape":"BooleanOptional"},
         "EngineLifecycleSupport":{"shape":"String"},
+        "TagSpecifications":{"shape":"TagSpecificationList"},
         "MasterUserAuthenticationType":{"shape":"MasterUserAuthenticationType"},
         "AdditionalStorageVolumes":{"shape":"AdditionalStorageVolumesList"}
       }
@@ -3919,6 +3921,7 @@
         "DedicatedLogVolume":{"shape":"BooleanOptional"},
         "UpgradeStorageConfig":{"shape":"BooleanOptional"},
         "CACertificateIdentifier":{"shape":"String"},
+        "TagSpecifications":{"shape":"TagSpecificationList"},
         "AdditionalStorageVolumes":{"shape":"AdditionalStorageVolumesList"}
       }
     },
@@ -4389,7 +4392,8 @@
         "StorageType":{"shape":"String"},
         "Iops":{"shape":"IntegerOptional"},
         "StorageThroughput":{"shape":"IntegerOptional"},
-        "AwsBackupRecoveryPointArn":{"shape":"String"}
+        "AwsBackupRecoveryPointArn":{"shape":"String"},
+        "TagList":{"shape":"TagList"}
       },
       "wrapper":true
     },
@@ -4993,6 +4997,7 @@
         "BackupTarget":{"shape":"String"},
         "MultiTenant":{"shape":"BooleanOptional"},
         "AwsBackupRecoveryPointArn":{"shape":"String"},
+        "TagList":{"shape":"TagList"},
         "DedicatedLogVolume":{"shape":"BooleanOptional"},
         "AdditionalStorageVolumes":{"shape":"AdditionalStorageVolumesList"}
       },
@@ -8157,6 +8162,7 @@
         "MultiTenant":{"shape":"BooleanOptional"},
         "DedicatedLogVolume":{"shape":"BooleanOptional"},
         "Engine":{"shape":"String"},
+        "TagSpecifications":{"shape":"TagSpecificationList"},
         "MasterUserAuthenticationType":{"shape":"MasterUserAuthenticationType"},
         "AdditionalStorageVolumes":{"shape":"ModifyAdditionalStorageVolumesList"}
       }
@@ -8855,7 +8861,8 @@
       "members":{
         "DBInstanceIdentifier":{"shape":"String"},
         "BackupRetentionPeriod":{"shape":"IntegerOptional"},
-        "PreferredBackupWindow":{"shape":"String"}
+        "PreferredBackupWindow":{"shape":"String"},
+        "TagSpecifications":{"shape":"TagSpecificationList"}
       }
     },
     "PromoteReadReplicaResult":{
@@ -9320,7 +9327,8 @@
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
         "ManageMasterUserPassword":{"shape":"BooleanOptional"},
         "MasterUserSecretKmsKeyId":{"shape":"String"},
-        "EngineLifecycleSupport":{"shape":"String"}
+        "EngineLifecycleSupport":{"shape":"String"},
+        "TagSpecifications":{"shape":"TagSpecificationList"}
       }
     },
     "RestoreDBClusterFromS3Result":{
@@ -9371,7 +9379,8 @@
         "EnablePerformanceInsights":{"shape":"BooleanOptional"},
         "PerformanceInsightsKMSKeyId":{"shape":"String"},
         "PerformanceInsightsRetentionPeriod":{"shape":"IntegerOptional"},
-        "EngineLifecycleSupport":{"shape":"String"}
+        "EngineLifecycleSupport":{"shape":"String"},
+        "TagSpecifications":{"shape":"TagSpecificationList"}
       }
     },
     "RestoreDBClusterFromSnapshotResult":{
@@ -9418,7 +9427,8 @@
         "EnablePerformanceInsights":{"shape":"BooleanOptional"},
         "PerformanceInsightsKMSKeyId":{"shape":"String"},
         "PerformanceInsightsRetentionPeriod":{"shape":"IntegerOptional"},
-        "EngineLifecycleSupport":{"shape":"String"}
+        "EngineLifecycleSupport":{"shape":"String"},
+        "TagSpecifications":{"shape":"TagSpecificationList"}
       }
     },
     "RestoreDBClusterToPointInTimeResult":{
@@ -9473,6 +9483,7 @@
         "DedicatedLogVolume":{"shape":"BooleanOptional"},
         "CACertificateIdentifier":{"shape":"String"},
         "EngineLifecycleSupport":{"shape":"String"},
+        "TagSpecifications":{"shape":"TagSpecificationList"},
         "ManageMasterUserPassword":{"shape":"BooleanOptional"},
         "MasterUserSecretKmsKeyId":{"shape":"String"},
         "AdditionalStorageVolumes":{"shape":"AdditionalStorageVolumesList"}
@@ -9548,6 +9559,7 @@
         "DedicatedLogVolume":{"shape":"BooleanOptional"},
         "CACertificateIdentifier":{"shape":"String"},
         "EngineLifecycleSupport":{"shape":"String"},
+        "TagSpecifications":{"shape":"TagSpecificationList"},
         "AdditionalStorageVolumes":{"shape":"AdditionalStorageVolumesList"}
       }
     },
@@ -9607,6 +9619,7 @@
         "DedicatedLogVolume":{"shape":"BooleanOptional"},
         "CACertificateIdentifier":{"shape":"String"},
         "EngineLifecycleSupport":{"shape":"String"},
+        "TagSpecifications":{"shape":"TagSpecificationList"},
         "ManageMasterUserPassword":{"shape":"BooleanOptional"},
         "MasterUserSecretKmsKeyId":{"shape":"String"},
         "AdditionalStorageVolumes":{"shape":"AdditionalStorageVolumesList"}
@@ -9875,7 +9888,8 @@
         "SourceDBInstanceArn":{"shape":"String"},
         "BackupRetentionPeriod":{"shape":"IntegerOptional"},
         "KmsKeyId":{"shape":"String"},
-        "PreSignedUrl":{"shape":"SensitiveString"}
+        "PreSignedUrl":{"shape":"SensitiveString"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartDBInstanceAutomatedBackupsReplicationResult":{
@@ -10190,6 +10204,20 @@
       "type":"structure",
       "members":{
         "TagList":{"shape":"TagList"}
+      }
+    },
+    "TagSpecification":{
+      "type":"structure",
+      "members":{
+        "ResourceType":{"shape":"String"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "TagSpecificationList":{
+      "type":"list",
+      "member":{
+        "shape":"TagSpecification",
+        "locationName":"item"
       }
     },
     "TargetConnectionNetworkType":{

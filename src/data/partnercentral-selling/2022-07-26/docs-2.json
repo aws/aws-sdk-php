@@ -164,6 +164,12 @@
         "ExpectedCustomerSpend$Amount": "<p>Represents the estimated monthly revenue that the partner expects to earn from the opportunity. This helps in forecasting financial returns.</p>"
       }
     },
+    "AmountMap": {
+      "base": "<p>Maps spend amounts to AWS programs and strategic initiatives</p>",
+      "refs": {
+        "AwsProductInsights$TotalAmountByCategory": "<p>Spend amounts mapped to AWS programs and modernization pathways</p>"
+      }
+    },
     "ApnPrograms": {
       "base": null,
       "refs": {
@@ -339,6 +345,18 @@
         "GetAwsOpportunitySummaryResponse$OpportunityTeam": "<p>Details the AWS opportunity team, including members involved. This information helps partners know who from AWS is engaged and what their role is.</p>"
       }
     },
+    "AwsProductDetails": {
+      "base": "<p>AWS services with program eligibility indicators (MAP, modernization pathways), cost estimates, and optimization recommendations.</p>",
+      "refs": {
+        "AwsProductsList$member": null
+      }
+    },
+    "AwsProductDetailsCategoriesList": {
+      "base": null,
+      "refs": {
+        "AwsProductDetails$Categories": "<p>List of program and pathway categories this product is eligible for</p>"
+      }
+    },
     "AwsProductIdentifier": {
       "base": null,
       "refs": {
@@ -350,6 +368,43 @@
       "refs": {
         "AwsOpportunityRelatedEntities$AwsProducts": "<p>Specifies the AWS products associated with the opportunity. This field helps track the specific products that are part of the proposed solution.</p>",
         "RelatedEntityIdentifiers$AwsProducts": "<p>Enables the association of specific Amazon Web Services products with the <code>Opportunity</code>. Partners can indicate the relevant Amazon Web Services products for the <code>Opportunity</code>'s solution and align with the customer's needs. Returns multiple values separated by commas. For example, <code>\"AWSProducts\" : [\"AmazonRedshift\", \"AWSAppFabric\", \"AWSCleanRooms\"]</code>.</p> <p>Use the file with the list of Amazon Web Services products hosted on GitHub: <a href=\"https://github.com/aws-samples/partner-crm-integration-samples/blob/main/resources/aws_products.json\"> Amazon Web Services products</a>.</p>"
+      }
+    },
+    "AwsProductInsights": {
+      "base": "<p>Comprehensive spend analysis for a single source (AWS or Partner) including total amounts, optimization savings, program category breakdowns, and detailed product-level insights.</p>",
+      "refs": {
+        "AwsProductsSpendInsightsBySource$Partner": "<p>Partner-sourced insights derived from Pricing Calculator URLs including detailed service costs and optimizations</p>",
+        "AwsProductsSpendInsightsBySource$AWS": "<p>AI-generated insights including recommended products from AWS</p>"
+      }
+    },
+    "AwsProductInsightsCurrencyCodeEnum": {
+      "base": null,
+      "refs": {
+        "AwsProductInsights$CurrencyCode": "<p>ISO 4217 currency code (e.g., &quot;USD&quot;) ensuring consistent representation across calculations</p>"
+      }
+    },
+    "AwsProductOptimization": {
+      "base": "<p>Details for a specific optimization recommendation</p>",
+      "refs": {
+        "AwsProductOptimizationsList$member": null
+      }
+    },
+    "AwsProductOptimizationsList": {
+      "base": "<p>List of optimization recommendations</p>",
+      "refs": {
+        "AwsProductDetails$Optimizations": "<p>List of specific optimization recommendations for this product</p>"
+      }
+    },
+    "AwsProductsList": {
+      "base": "<p>AwsProductDetailsList of AWS services with program eligibility indicators (MAP, modernization pathways), cost estimates, and optimization recommendations.</p>",
+      "refs": {
+        "AwsProductInsights$AwsProducts": "<p>Product-level details including costs and optimization recommendations</p>"
+      }
+    },
+    "AwsProductsSpendInsightsBySource": {
+      "base": "<p>Source-separated spend insights that provide independent analysis for AWS predictions and partner estimates</p>",
+      "refs": {
+        "AwsOpportunityInsights$AwsProductsSpendInsightsBySource": null
       }
     },
     "AwsSubmission": {
@@ -1021,6 +1076,12 @@
         "LeadInvitationInteraction$Usecase": "<p>Describes the specific use case or business scenario associated with the lead interaction. This information helps partners understand the customer's interests and potential solution requirements.</p>"
       }
     },
+    "EstimationUrl": {
+      "base": null,
+      "refs": {
+        "ExpectedCustomerSpend$EstimationUrl": "<p>A URL providing additional information or context about the spend estimation.</p>"
+      }
+    },
     "ExpectedCustomerSpend": {
       "base": "<p>Provides an estimate of the revenue that the partner is expected to generate from the opportunity. This information helps partners assess the financial value of the project.</p>",
       "refs": {
@@ -1585,6 +1646,19 @@
         "ListEngagementMembersRequest$MaxResults": "<p>The maximum number of results to return in a single call.</p>"
       }
     },
+    "MonetaryAmount": {
+      "base": null,
+      "refs": {
+        "AmountMap$value": null,
+        "AwsProductDetails$Amount": "<p>Baseline service cost before optimizations (may be null for AWS-sourced predictions)</p>",
+        "AwsProductDetails$OptimizedAmount": "<p>Service cost after applying optimizations (may be null for AWS-sourced predictions)</p>",
+        "AwsProductDetails$PotentialSavingsAmount": "<p>Service-specific cost reduction through optimizations (may be null for AWS-sourced predictions)</p>",
+        "AwsProductInsights$TotalAmount": "<p>Total estimated spend for this source before optimizations</p>",
+        "AwsProductInsights$TotalOptimizedAmount": "<p>Total estimated spend after applying recommended optimizations</p>",
+        "AwsProductInsights$TotalPotentialSavingsAmount": "<p>Quantified savings achievable through implementing optimizations</p>",
+        "AwsProductOptimization$SavingsAmount": "<p>Quantified cost savings achievable by implementing this optimization</p>"
+      }
+    },
     "MonetaryValue": {
       "base": "<p>Specifies payments details.</p>",
       "refs": {
@@ -1760,6 +1834,7 @@
     "PaymentFrequency": {
       "base": null,
       "refs": {
+        "AwsProductInsights$Frequency": "<p>Time period for spend amounts: &quot;Monthly&quot; or &quot;Annually&quot;</p>",
         "ExpectedCustomerSpend$Frequency": "<p>Indicates how frequently the customer is expected to spend the projected amount. Only the value <code>Monthly</code> is allowed for the <code>Frequency</code> field, representing recurring monthly spend.</p>"
       }
     },
@@ -2255,8 +2330,13 @@
       "base": null,
       "refs": {
         "AccessDeniedException$Message": null,
+        "AmountMap$key": null,
         "ApnPrograms$member": null,
         "AwsOpportunityInsights$NextBestActions": "<p>Provides recommendations from AWS on the next best actions to take in order to move the opportunity forward and increase the likelihood of success.</p>",
+        "AwsProductDetails$ProductCode": "<p>AWS Partner Central product identifier used for opportunity association</p>",
+        "AwsProductDetails$ServiceCode": "<p>Pricing Calculator service code (links to original calculator URL)</p>",
+        "AwsProductDetailsCategoriesList$member": null,
+        "AwsProductOptimization$Description": "<p>Human-readable explanation of the optimization strategy</p>",
         "ConflictException$Message": null,
         "CreateOpportunityResponse$PartnerOpportunityIdentifier": "<p>Specifies the opportunity's unique identifier in the partner's CRM system. This value is essential to track and reconcile because it's included in the outbound payload sent back to the partner.</p>",
         "EngagementInvitationSummary$Arn": "<p>The Amazon Resource Name (ARN) of the Engagement Invitation. The ARN is a unique identifier that allows partners to reference the invitation in their system and manage its lifecycle.</p>",
@@ -2518,8 +2598,7 @@
       "base": null,
       "refs": {
         "Account$WebsiteUrl": "<p>Specifies the end customer's company website URL associated with the <code>Opportunity</code>. This value is crucial to map the customer within the Amazon Web Services CRM system. This field is required in all cases except when the opportunity is related to national security.</p>",
-        "AccountSummary$WebsiteUrl": "<p>Specifies the end customer's company website URL associated with the <code>Opportunity</code>. This value is crucial to map the customer within the Amazon Web Services CRM system.</p>",
-        "ExpectedCustomerSpend$EstimationUrl": "<p>A URL providing additional information or context about the spend estimation.</p>"
+        "AccountSummary$WebsiteUrl": "<p>Specifies the end customer's company website URL associated with the <code>Opportunity</code>. This value is crucial to map the customer within the Amazon Web Services CRM system.</p>"
       }
     }
   }

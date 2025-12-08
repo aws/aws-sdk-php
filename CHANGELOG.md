@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Amazon EC2 P6-B300 instances provide 8x NVIDIA Blackwell Ultra GPUs with 2.1 TB high bandwidth GPU memory, 6.4 Tbps EFA networking, 300 Gbps dedicated ENA throughput, and 4 TB of system memory. Amazon EC2 C8a instances are powered by 5th Gen AMD EPYC processors with a maximum frequency of 4.5 GHz.
+* `Aws\RolesAnywhere` - Increases certificate string length for trust anchor source data to support ML-DSA certificates.
+* `Aws\PartnerCentralSelling` - Deal Sizing Service for AI-based deal size estimation with AWS service-level breakdown, supporting Expansion and Migration deals across Technology, and Reseller partner cohorts, including Pricing Calculator AddOn for MAP deals and funding incentives.
+* `Aws\RDS` - Adding support for tagging RDS Instance/Cluster Automated Backups
+* `Aws\IdentityStore` - Updating AWS Identity Store APIs to support Attribute Extensions capability, with the first release adding Enterprise Attributes. This launch aligns Identity Store APIs with SCIM for enterprise attributes, reducing cases when customers are forced to use SCIM due to lack of SigV4 API support.
+* `Aws\RedshiftServerless` - Added GetIdentityCenterAuthToken API to retrieve encrypted authentication tokens for Identity Center integrated serverless workgroups. This API enables programmatic access to secure Identity Center tokens with proper error handling and parameter validation across supported SDK languages.
+* `Aws\SESv2` - Update Mail Manager Archive ARN validation
+* `Aws\CostExplorer` - Add support for Cost Category resource associations including filtering by resource type on ListCostCategoryDefinitions and new ListCostCategoryResourceAssociations API.
+
 ## 3.366.2 - 2025-12-05
 
 * `Aws\` - Enhance exponential delay calculation to reduce the possibilities of having 0 as the delay.

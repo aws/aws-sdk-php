@@ -49,6 +49,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getCustomDomainAssociationAsync(array $args = [])
  * @method \Aws\Result getEndpointAccess(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getEndpointAccessAsync(array $args = [])
+ * @method \Aws\Result getIdentityCenterAuthToken(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getIdentityCenterAuthTokenAsync(array $args = [])
  * @method \Aws\Result getNamespace(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getNamespaceAsync(array $args = [])
  * @method \Aws\Result getRecoveryPoint(array $args = [])

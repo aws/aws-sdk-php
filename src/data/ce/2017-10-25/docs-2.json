@@ -4,11 +4,11 @@
   "operations": {
     "CreateAnomalyMonitor": "<p>Creates a new cost anomaly detection monitor with the requested type and monitor specification. </p>",
     "CreateAnomalySubscription": "<p>Adds an alert subscription to a cost anomaly detection monitor. You can use each subscription to define subscribers with email or SNS notifications. Email subscribers can set an absolute or percentage threshold and a time frequency for receiving notifications. </p>",
-    "CreateCostCategoryDefinition": "<p>Creates a new Cost Category with the requested name and rules.</p>",
+    "CreateCostCategoryDefinition": "<p>Creates a new cost category with the requested name and rules.</p>",
     "DeleteAnomalyMonitor": "<p>Deletes a cost anomaly monitor. </p>",
     "DeleteAnomalySubscription": "<p>Deletes a cost anomaly subscription. </p>",
-    "DeleteCostCategoryDefinition": "<p>Deletes a Cost Category. Expenses from this month going forward will no longer be categorized with this Cost Category.</p>",
-    "DescribeCostCategoryDefinition": "<p>Returns the name, Amazon Resource Name (ARN), rules, definition, and effective dates of a Cost Category that's defined in the account.</p> <p>You have the option to use <code>EffectiveOn</code> to return a Cost Category that's active on a specific date. If there's no <code>EffectiveOn</code> specified, you see a Cost Category that's effective on the current date. If Cost Category is still effective, <code>EffectiveEnd</code> is omitted in the response. </p>",
+    "DeleteCostCategoryDefinition": "<p>Deletes a cost category. Expenses from this month going forward will no longer be categorized with this cost category.</p>",
+    "DescribeCostCategoryDefinition": "<p>Returns the name, Amazon Resource Name (ARN), rules, definition, and effective dates of a cost category that's defined in the account.</p> <p>You have the option to use <code>EffectiveOn</code> to return a cost category that's active on a specific date. If there's no <code>EffectiveOn</code> specified, you see a Cost Category that's effective on the current date. If cost category is still effective, <code>EffectiveEnd</code> is omitted in the response. </p>",
     "GetAnomalies": "<p>Retrieves all of the cost anomalies detected on your account during the time period that's specified by the <code>DateInterval</code> object. Anomalies are available for up to 90 days.</p>",
     "GetAnomalyMonitors": "<p>Retrieves the cost anomaly monitor definitions for your account. You can filter using a list of cost anomaly monitor Amazon Resource Names (ARNs). </p>",
     "GetAnomalySubscriptions": "<p>Retrieves the cost anomaly subscription objects for your account. You can filter using a list of cost anomaly monitor Amazon Resource Names (ARNs). </p>",
@@ -17,16 +17,16 @@
     "GetCostAndUsage": "<p>Retrieves cost and usage metrics for your account. You can specify which cost and usage-related metric that you want the request to return. For example, you can specify <code>BlendedCosts</code> or <code>UsageQuantity</code>. You can also filter and group your data by various dimensions, such as <code>SERVICE</code> or <code>AZ</code>, in a specific time range. For a complete list of valid dimensions, see the <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html\">GetDimensionValues</a> operation. Management account in an organization in Organizations have access to all member accounts.</p> <p>For information about filter limitations, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-limits.html\">Quotas and restrictions</a> in the <i>Billing and Cost Management User Guide</i>.</p>",
     "GetCostAndUsageComparisons": "<p>Retrieves cost and usage comparisons for your account between two periods within the last 13 months. If you have enabled multi-year data at monthly granularity, you can go back up to 38 months.</p>",
     "GetCostAndUsageWithResources": "<p>Retrieves cost and usage metrics with resources for your account. You can specify which cost and usage-related metric, such as <code>BlendedCosts</code> or <code>UsageQuantity</code>, that you want the request to return. You can also filter and group your data by various dimensions, such as <code>SERVICE</code> or <code>AZ</code>, in a specific time range. For a complete list of valid dimensions, see the <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html\">GetDimensionValues</a> operation. Management account in an organization in Organizations have access to all member accounts.</p> <p>Hourly granularity is only available for EC2-Instances (Elastic Compute Cloud) resource-level data. All other resource-level data is available at daily granularity.</p> <note> <p>This is an opt-in only feature. You can enable this feature from the Cost Explorer Settings page. For information about how to access the Settings page, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ce-access.html\">Controlling Access for Cost Explorer</a> in the <i>Billing and Cost Management User Guide</i>.</p> </note>",
-    "GetCostCategories": "<p>Retrieves an array of Cost Category names and values incurred cost.</p> <note> <p>If some Cost Category names and values are not associated with any cost, they will not be returned by this API.</p> </note>",
+    "GetCostCategories": "<p>Retrieves an array of cost category names and values incurred cost.</p> <note> <p>If some cost category names and values are not associated with any cost, they will not be returned by this API.</p> </note>",
     "GetCostComparisonDrivers": "<p>Retrieves key factors driving cost changes between two time periods within the last 13 months, such as usage changes, discount changes, and commitment-based savings. If you have enabled multi-year data at monthly granularity, you can go back up to 38 months.</p>",
     "GetCostForecast": "<p>Retrieves a forecast for how much Amazon Web Services predicts that you will spend over the forecast time period that you select, based on your past costs. </p>",
     "GetDimensionValues": "<p>Retrieves all available filter values for a specified filter over a period of time. You can search the dimension values for an arbitrary string. </p>",
-    "GetReservationCoverage": "<p>Retrieves the reservation coverage for your account, which you can use to see how much of your Amazon Elastic Compute Cloud, Amazon ElastiCache, Amazon Relational Database Service, or Amazon Redshift usage is covered by a reservation. An organization's management account can see the coverage of the associated member accounts. This supports dimensions, Cost Categories, and nested expressions. For any time period, you can filter data about reservation usage by the following dimensions:</p> <ul> <li> <p>AZ</p> </li> <li> <p>CACHE_ENGINE</p> </li> <li> <p>DATABASE_ENGINE</p> </li> <li> <p>DEPLOYMENT_OPTION</p> </li> <li> <p>INSTANCE_TYPE</p> </li> <li> <p>LINKED_ACCOUNT</p> </li> <li> <p>OPERATING_SYSTEM</p> </li> <li> <p>PLATFORM</p> </li> <li> <p>REGION</p> </li> <li> <p>SERVICE</p> </li> <li> <p>TAG</p> </li> <li> <p>TENANCY</p> </li> </ul> <p>To determine valid values for a dimension, use the <code>GetDimensionValues</code> operation. </p>",
+    "GetReservationCoverage": "<p>Retrieves the reservation coverage for your account, which you can use to see how much of your Amazon Elastic Compute Cloud, Amazon ElastiCache, Amazon Relational Database Service, or Amazon Redshift usage is covered by a reservation. An organization's management account can see the coverage of the associated member accounts. This supports dimensions, cost categories, and nested expressions. For any time period, you can filter data about reservation usage by the following dimensions:</p> <ul> <li> <p>AZ</p> </li> <li> <p>CACHE_ENGINE</p> </li> <li> <p>DATABASE_ENGINE</p> </li> <li> <p>DEPLOYMENT_OPTION</p> </li> <li> <p>INSTANCE_TYPE</p> </li> <li> <p>LINKED_ACCOUNT</p> </li> <li> <p>OPERATING_SYSTEM</p> </li> <li> <p>PLATFORM</p> </li> <li> <p>REGION</p> </li> <li> <p>SERVICE</p> </li> <li> <p>TAG</p> </li> <li> <p>TENANCY</p> </li> </ul> <p>To determine valid values for a dimension, use the <code>GetDimensionValues</code> operation. </p>",
     "GetReservationPurchaseRecommendation": "<p>Gets recommendations for reservation purchases. These recommendations might help you to reduce your costs. Reservations provide a discounted hourly rate (up to 75%) compared to On-Demand pricing.</p> <p>Amazon Web Services generates your recommendations by identifying your On-Demand usage during a specific time period and collecting your usage into categories that are eligible for a reservation. After Amazon Web Services has these categories, it simulates every combination of reservations in each category of usage to identify the best number of each type of Reserved Instance (RI) to purchase to maximize your estimated savings. </p> <p>For example, Amazon Web Services automatically aggregates your Amazon EC2 Linux, shared tenancy, and c4 family usage in the US West (Oregon) Region and recommends that you buy size-flexible regional reservations to apply to the c4 family usage. Amazon Web Services recommends the smallest size instance in an instance family. This makes it easier to purchase a size-flexible Reserved Instance (RI). Amazon Web Services also shows the equal number of normalized units. This way, you can purchase any instance size that you want. For this example, your RI recommendation is for <code>c4.large</code> because that is the smallest size instance in the c4 instance family.</p>",
     "GetReservationUtilization": "<p>Retrieves the reservation utilization for your account. Management account in an organization have access to member accounts. You can filter data by dimensions in a time period. You can use <code>GetDimensionValues</code> to determine the possible dimension values. Currently, you can group only by <code>SUBSCRIPTION_ID</code>. </p>",
     "GetRightsizingRecommendation": "<p>Creates recommendations that help you save cost by identifying idle and underutilized Amazon EC2 instances.</p> <p>Recommendations are generated to either downsize or terminate instances, along with providing savings detail and metrics. For more information about calculation and function, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ce-rightsizing.html\">Optimizing Your Cost with Rightsizing Recommendations</a> in the <i>Billing and Cost Management User Guide</i>.</p>",
     "GetSavingsPlanPurchaseRecommendationDetails": "<p>Retrieves the details for a Savings Plan recommendation. These details include the hourly data-points that construct the cost, coverage, and utilization charts.</p>",
-    "GetSavingsPlansCoverage": "<p>Retrieves the Savings Plans covered for your account. This enables you to see how much of your cost is covered by a Savings Plan. An organization’s management account can see the coverage of the associated member accounts. This supports dimensions, Cost Categories, and nested expressions. For any time period, you can filter data for Savings Plans usage with the following dimensions:</p> <ul> <li> <p> <code>LINKED_ACCOUNT</code> </p> </li> <li> <p> <code>REGION</code> </p> </li> <li> <p> <code>SERVICE</code> </p> </li> <li> <p> <code>INSTANCE_FAMILY</code> </p> </li> </ul> <p>To determine valid values for a dimension, use the <code>GetDimensionValues</code> operation.</p>",
+    "GetSavingsPlansCoverage": "<p>Retrieves the Savings Plans covered for your account. This enables you to see how much of your cost is covered by a Savings Plan. An organization’s management account can see the coverage of the associated member accounts. This supports dimensions, cost categories, and nested expressions. For any time period, you can filter data for Savings Plans usage with the following dimensions:</p> <ul> <li> <p> <code>LINKED_ACCOUNT</code> </p> </li> <li> <p> <code>REGION</code> </p> </li> <li> <p> <code>SERVICE</code> </p> </li> <li> <p> <code>INSTANCE_FAMILY</code> </p> </li> </ul> <p>To determine valid values for a dimension, use the <code>GetDimensionValues</code> operation.</p>",
     "GetSavingsPlansPurchaseRecommendation": "<p>Retrieves the Savings Plans recommendations for your account. First use <code>StartSavingsPlansPurchaseRecommendationGeneration</code> to generate a new set of recommendations, and then use <code>GetSavingsPlansPurchaseRecommendation</code> to retrieve them.</p>",
     "GetSavingsPlansUtilization": "<p>Retrieves the Savings Plans utilization for your account across date ranges with daily or monthly granularity. Management account in an organization have access to member accounts. You can use <code>GetDimensionValues</code> in <code>SAVINGS_PLANS</code> to determine the possible dimension values.</p> <note> <p>You can't group by any dimension values for <code>GetSavingsPlansUtilization</code>.</p> </note>",
     "GetSavingsPlansUtilizationDetails": "<p>Retrieves attribute data along with aggregate utilization and savings data for a given time period. This doesn't support granular or grouped data (daily/monthly) in response. You can't retrieve data by dates in a single response similar to <code>GetSavingsPlanUtilization</code>, but you have the option to make multiple calls to <code>GetSavingsPlanUtilizationDetails</code> by providing individual dates. You can use <code>GetDimensionValues</code> in <code>SAVINGS_PLANS</code> to determine the possible dimension values.</p> <note> <p> <code>GetSavingsPlanUtilizationDetails</code> internally groups data by <code>SavingsPlansArn</code>.</p> </note>",
@@ -35,7 +35,8 @@
     "ListCommitmentPurchaseAnalyses": "<p>Lists the commitment purchase analyses for your account.</p>",
     "ListCostAllocationTagBackfillHistory": "<p> Retrieves a list of your historical cost allocation tag backfill requests. </p>",
     "ListCostAllocationTags": "<p>Get a list of cost allocation tags. All inputs in the API are optional and serve as filters. By default, all cost allocation tags are returned. </p>",
-    "ListCostCategoryDefinitions": "<p>Returns the name, Amazon Resource Name (ARN), <code>NumberOfRules</code> and effective dates of all Cost Categories defined in the account. You have the option to use <code>EffectiveOn</code> to return a list of Cost Categories that were active on a specific date. If there is no <code>EffectiveOn</code> specified, you’ll see Cost Categories that are effective on the current date. If Cost Category is still effective, <code>EffectiveEnd</code> is omitted in the response. <code>ListCostCategoryDefinitions</code> supports pagination. The request can have a <code>MaxResults</code> range up to 100.</p>",
+    "ListCostCategoryDefinitions": "<p>Returns the name, Amazon Resource Name (ARN), <code>NumberOfRules</code> and effective dates of all cost categories defined in the account. You have the option to use <code>EffectiveOn</code> and <code>SupportedResourceTypes</code> to return a list of cost categories that were active on a specific date. If there is no <code>EffectiveOn</code> specified, you’ll see cost categories that are effective on the current date. If cost category is still effective, <code>EffectiveEnd</code> is omitted in the response. <code>ListCostCategoryDefinitions</code> supports pagination. The request can have a <code>MaxResults</code> range up to 100.</p>",
+    "ListCostCategoryResourceAssociations": "<p>Returns resource associations of all cost categories defined in the account. You have the option to use <code>CostCategoryArn</code> to get the association for a specific cost category. <code>ListCostCategoryResourceAssociations</code> supports pagination. The request can have a <code>MaxResults</code> range up to 100. </p>",
     "ListSavingsPlansPurchaseRecommendationGeneration": "<p>Retrieves a list of your historical recommendation generations within the past 30 days.</p>",
     "ListTagsForResource": "<p>Returns a list of resource tags associated with the resource specified by the Amazon Resource Name (ARN). </p>",
     "ProvideAnomalyFeedback": "<p>Modifies the feedback property of a given cost anomaly. </p>",
@@ -47,7 +48,7 @@
     "UpdateAnomalyMonitor": "<p>Updates an existing cost anomaly monitor. The changes made are applied going forward, and doesn't change anomalies detected in the past. </p>",
     "UpdateAnomalySubscription": "<p>Updates an existing cost anomaly subscription. Specify the fields that you want to update. Omitted fields are unchanged.</p> <note> <p>The JSON below describes the generic construct for each type. See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_UpdateAnomalySubscription.html#API_UpdateAnomalySubscription_RequestParameters\">Request Parameters</a> for possible values as they apply to <code>AnomalySubscription</code>.</p> </note>",
     "UpdateCostAllocationTagsStatus": "<p>Updates status for cost allocation tags in bulk, with maximum batch size of 20. If the tag status that's updated is the same as the existing tag status, the request doesn't fail. Instead, it doesn't have any effect on the tag status (for example, activating the active tag). </p>",
-    "UpdateCostCategoryDefinition": "<p>Updates an existing Cost Category. Changes made to the Cost Category rules will be used to categorize the current month’s expenses and future expenses. This won’t change categorization for the previous months.</p>"
+    "UpdateCostCategoryDefinition": "<p>Updates an existing cost category. Changes made to the cost category rules will be used to categorize the current month’s expenses and future expenses. This won’t change categorization for the previous months.</p>"
   },
   "shapes": {
     "AccountId": {
@@ -211,20 +212,22 @@
     "Arn": {
       "base": null,
       "refs": {
-        "CostCategory$CostCategoryArn": "<p>The unique identifier for your Cost Category. </p>",
-        "CostCategoryReference$CostCategoryArn": "<p>The unique identifier for your Cost Category. </p>",
-        "CreateCostCategoryDefinitionResponse$CostCategoryArn": "<p>The unique identifier for your newly created Cost Category. </p>",
-        "DeleteCostCategoryDefinitionRequest$CostCategoryArn": "<p>The unique identifier for your Cost Category. </p>",
-        "DeleteCostCategoryDefinitionResponse$CostCategoryArn": "<p>The unique identifier for your Cost Category. </p>",
-        "DescribeCostCategoryDefinitionRequest$CostCategoryArn": "<p>The unique identifier for your Cost Category. </p>",
+        "CostCategory$CostCategoryArn": "<p>The unique identifier for your cost category. </p>",
+        "CostCategoryReference$CostCategoryArn": "<p>The unique identifier for your cost category. </p>",
+        "CostCategoryResourceAssociation$CostCategoryArn": "<p>The unique identifier for your cost category. </p>",
+        "CreateCostCategoryDefinitionResponse$CostCategoryArn": "<p>The unique identifier for your newly created cost category. </p>",
+        "DeleteCostCategoryDefinitionRequest$CostCategoryArn": "<p>The unique identifier for your cost category. </p>",
+        "DeleteCostCategoryDefinitionResponse$CostCategoryArn": "<p>The unique identifier for your cost category. </p>",
+        "DescribeCostCategoryDefinitionRequest$CostCategoryArn": "<p>The unique identifier for your cost category. </p>",
+        "ListCostCategoryResourceAssociationsRequest$CostCategoryArn": "<p>The unique identifier for your cost category.</p>",
         "ListTagsForResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource. For a list of supported resources, see <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_ResourceTag.html\">ResourceTag</a>.</p>",
         "MonitorArnList$member": null,
         "ResourceNotFoundException$ResourceName": null,
         "TagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource. For a list of supported resources, see <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_ResourceTag.html\">ResourceTag</a>. </p>",
         "TooManyTagsException$ResourceName": null,
         "UntagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource. For a list of supported resources, see <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_ResourceTag.html\">ResourceTag</a>. </p>",
-        "UpdateCostCategoryDefinitionRequest$CostCategoryArn": "<p>The unique identifier for your Cost Category.</p>",
-        "UpdateCostCategoryDefinitionResponse$CostCategoryArn": "<p>The unique identifier for your Cost Category. </p>"
+        "UpdateCostCategoryDefinitionRequest$CostCategoryArn": "<p>The unique identifier for your cost category.</p>",
+        "UpdateCostCategoryDefinitionResponse$CostCategoryArn": "<p>The unique identifier for your cost category. </p>"
       }
     },
     "AttributeType": {
@@ -414,15 +417,17 @@
     "CostCategoryMaxResults": {
       "base": null,
       "refs": {
-        "ListCostCategoryDefinitionsRequest$MaxResults": "<p>The number of entries a paginated response contains. </p>"
+        "ListCostCategoryDefinitionsRequest$MaxResults": "<p>The number of entries a paginated response contains. </p>",
+        "ListCostCategoryResourceAssociationsRequest$MaxResults": "<p> The number of entries a paginated response contains. </p>"
       }
     },
     "CostCategoryName": {
-      "base": "<p>The unique name of the Cost Category.</p>",
+      "base": "<p>The unique name of the cost category.</p>",
       "refs": {
         "CostCategory$Name": null,
         "CostCategoryNamesList$member": null,
         "CostCategoryReference$Name": null,
+        "CostCategoryResourceAssociation$CostCategoryName": null,
         "CostCategoryValues$Key": null,
         "CreateCostCategoryDefinitionRequest$Name": null,
         "GetCostCategoriesRequest$CostCategoryName": null
@@ -431,7 +436,7 @@
     "CostCategoryNamesList": {
       "base": null,
       "refs": {
-        "GetCostCategoriesResponse$CostCategoryNames": "<p>The names of the Cost Categories.</p>"
+        "GetCostCategoriesResponse$CostCategoryNames": "<p>The names of the cost categories.</p>"
       }
     },
     "CostCategoryProcessingStatus": {
@@ -448,7 +453,7 @@
       }
     },
     "CostCategoryReference": {
-      "base": "<p>A reference to a Cost Category containing only enough information to identify the Cost Category.</p> <p>You can use this information to retrieve the full Cost Category information using <code>DescribeCostCategory</code>.</p>",
+      "base": "<p>A reference to a cost category containing only enough information to identify the Cost Category.</p> <p>You can use this information to retrieve the full cost category information using <code>DescribeCostCategory</code>.</p>",
       "refs": {
         "CostCategoryReferencesList$member": null
       }
@@ -456,11 +461,23 @@
     "CostCategoryReferencesList": {
       "base": null,
       "refs": {
-        "ListCostCategoryDefinitionsResponse$CostCategoryReferences": "<p>A reference to a Cost Category that contains enough information to identify the Cost Category. </p>"
+        "ListCostCategoryDefinitionsResponse$CostCategoryReferences": "<p>A reference to a cost category that contains enough information to identify the Cost Category. </p>"
+      }
+    },
+    "CostCategoryResourceAssociation": {
+      "base": "<p>A reference to a cost category association that contains information on an associated resource. </p>",
+      "refs": {
+        "CostCategoryResourceAssociations$member": null
+      }
+    },
+    "CostCategoryResourceAssociations": {
+      "base": null,
+      "refs": {
+        "ListCostCategoryResourceAssociationsResponse$CostCategoryResourceAssociations": "<p> A reference to a cost category association that contains information on an associated resource. </p>"
       }
     },
     "CostCategoryRule": {
-      "base": "<p>Rules are processed in order. If there are multiple rules that match the line item, then the first rule to match is used to determine that Cost Category value.</p>",
+      "base": "<p>Rules are processed in order. If there are multiple rules that match the line item, then the first rule to match is used to determine that cost category value.</p>",
       "refs": {
         "CostCategoryRulesList$member": null
       }
@@ -472,7 +489,7 @@
       }
     },
     "CostCategoryRuleVersion": {
-      "base": "<p>The rule schema version in this particular Cost Category.</p>",
+      "base": "<p>The rule schema version in this particular cost category.</p>",
       "refs": {
         "CostCategory$RuleVersion": null,
         "CreateCostCategoryDefinitionRequest$RuleVersion": null,
@@ -482,8 +499,8 @@
     "CostCategoryRulesList": {
       "base": null,
       "refs": {
-        "CostCategory$Rules": "<p>The rules are processed in order. If there are multiple rules that match the line item, then the first rule to match is used to determine that Cost Category value. </p>",
-        "CreateCostCategoryDefinitionRequest$Rules": "<p>The Cost Category rules used to categorize costs. For more information, see <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_CostCategoryRule.html\">CostCategoryRule</a>.</p>",
+        "CostCategory$Rules": "<p>The rules are processed in order. If there are multiple rules that match the line item, then the first rule to match is used to determine that cost category value. </p>",
+        "CreateCostCategoryDefinitionRequest$Rules": "<p>The cost category rules used to categorize costs. For more information, see <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_CostCategoryRule.html\">CostCategoryRule</a>.</p>",
         "UpdateCostCategoryDefinitionRequest$Rules": "<p>The <code>Expression</code> object used to categorize costs. For more information, see <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_CostCategoryRule.html\">CostCategoryRule </a>. </p>"
       }
     },
@@ -494,7 +511,7 @@
       }
     },
     "CostCategorySplitChargeRule": {
-      "base": "<p>Use the split charge rule to split the cost of one Cost Category value across several other target values. </p>",
+      "base": "<p>Use the split charge rule to split the cost of one cost category value across several other target values. </p>",
       "refs": {
         "CostCategorySplitChargeRulesList$member": null
       }
@@ -526,15 +543,15 @@
     "CostCategorySplitChargeRuleTargetsList": {
       "base": null,
       "refs": {
-        "CostCategorySplitChargeRule$Targets": "<p>The Cost Category values that you want to split costs across. These values can't be used as a source in other split charge rules. </p>"
+        "CostCategorySplitChargeRule$Targets": "<p>The cost category values that you want to split costs across. These values can't be used as a source in other split charge rules. </p>"
       }
     },
     "CostCategorySplitChargeRulesList": {
       "base": null,
       "refs": {
-        "CostCategory$SplitChargeRules": "<p> The split charge rules that are used to allocate your charges between your Cost Category values. </p>",
-        "CreateCostCategoryDefinitionRequest$SplitChargeRules": "<p> The split charge rules used to allocate your charges between your Cost Category values. </p>",
-        "UpdateCostCategoryDefinitionRequest$SplitChargeRules": "<p> The split charge rules used to allocate your charges between your Cost Category values. </p>"
+        "CostCategory$SplitChargeRules": "<p> The split charge rules that are used to allocate your charges between your cost category values. </p>",
+        "CreateCostCategoryDefinitionRequest$SplitChargeRules": "<p> The split charge rules used to allocate your charges between your cost category values. </p>",
+        "UpdateCostCategoryDefinitionRequest$SplitChargeRules": "<p> The split charge rules used to allocate your charges between your cost category values. </p>"
       }
     },
     "CostCategoryStatus": {
@@ -570,7 +587,7 @@
       "base": null,
       "refs": {
         "CostCategoryReference$Values": "<p>A list of unique cost category values in a specific cost category. </p>",
-        "GetCostCategoriesResponse$CostCategoryValues": "<p>The Cost Category values.</p> <p>If the <code>CostCategoryName</code> key isn't specified in the request, the <code>CostCategoryValues</code> fields aren't returned. </p>"
+        "GetCostCategoriesResponse$CostCategoryValues": "<p>The cost category values.</p> <p>If the <code>CostCategoryName</code> key isn't specified in the request, the <code>CostCategoryValues</code> fields aren't returned. </p>"
       }
     },
     "CostComparisonDriver": {
@@ -876,13 +893,13 @@
         "AnomalyMonitor$MonitorSpecification": "<p>An <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a> object used to control what costs the monitor analyzes for anomalies.</p> <p>For Amazon Web Services managed monitors:</p> <ul> <li> <p>If MonitorDimension is <code>SERVICE</code> or <code>LINKED_ACCOUNT</code>, do not specify this field</p> </li> <li> <p>If MonitorDimension is <code>TAG</code>, set this field to <code>{ \"Tags\": { \"Key\": \"your tag key\" } }</code> </p> </li> <li> <p>If MonitorDimension is <code>COST_CATEGORY</code>, set this field to <code>{ \"CostCategories\": { \"Key\": \"your cost category key\" } }</code> </p> </li> </ul> <p>For customer managed monitors:</p> <ul> <li> <p>To track linked accounts, set this field to <code>{ \"Dimensions\": { \"Key\": \"LINKED_ACCOUNT\", \"Values\": [ \"your list of up to 10 account IDs\" ] } } </code> </p> </li> <li> <p>To track cost allocation tags, set this field to <code>{ \"Tags\": { \"Key\": \"your tag key\", \"Values\": [ \"your list of up to 10 tag values\" ] } } </code> </p> </li> <li> <p>To track cost categories, set this field to<code>{ \"CostCategories\": { \"Key\": \"your cost category key\", \"Values\": [ \"your cost category value\" ] } } </code> </p> </li> </ul>",
         "AnomalySubscription$ThresholdExpression": "<p>An <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a> object used to specify the anomalies that you want to generate alerts for. This supports dimensions and nested expressions. The supported dimensions are <code>ANOMALY_TOTAL_IMPACT_ABSOLUTE</code> and <code>ANOMALY_TOTAL_IMPACT_PERCENTAGE</code>, corresponding to an anomaly’s TotalImpact and TotalImpactPercentage, respectively (see <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Impact.html\">Impact</a> for more details). The supported nested expression types are <code>AND</code> and <code>OR</code>. The match option <code>GREATER_THAN_OR_EQUAL</code> is required. Values must be numbers between 0 and 10,000,000,000 in string format.</p> <p>One of Threshold or ThresholdExpression is required for this resource. You cannot specify both.</p> <p>The following are examples of valid ThresholdExpressions:</p> <ul> <li> <p>Absolute threshold: <code>{ \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_ABSOLUTE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } }</code> </p> </li> <li> <p>Percentage threshold: <code>{ \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_PERCENTAGE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } }</code> </p> </li> <li> <p> <code>AND</code> two thresholds together: <code>{ \"And\": [ { \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_ABSOLUTE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } }, { \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_PERCENTAGE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } } ] }</code> </p> </li> <li> <p> <code>OR</code> two thresholds together: <code>{ \"Or\": [ { \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_ABSOLUTE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } }, { \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_PERCENTAGE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } } ] }</code> </p> </li> </ul>",
         "CostAndUsageComparison$CostAndUsageSelector": null,
-        "CostCategoryRule$Rule": "<p>An <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a> object used to categorize costs. This supports dimensions, tags, and nested expressions. Currently the only dimensions supported are <code>LINKED_ACCOUNT</code>, <code>SERVICE_CODE</code>, <code>RECORD_TYPE</code>, <code>LINKED_ACCOUNT_NAME</code>, <code>REGION</code>, and <code>USAGE_TYPE</code>.</p> <p> <code>RECORD_TYPE</code> is a dimension used for Cost Explorer APIs, and is also supported for Cost Category expressions. This dimension uses different terms, depending on whether you're using the console or API/JSON editor. For a detailed comparison, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/manage-cost-categories.html#cost-categories-terms\">Term Comparisons</a> in the <i>Billing and Cost Management User Guide</i>.</p>",
+        "CostCategoryRule$Rule": "<p>An <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a> object used to categorize costs. This supports dimensions, tags, and nested expressions. Currently the only dimensions supported are <code>LINKED_ACCOUNT</code>, <code>SERVICE_CODE</code>, <code>RECORD_TYPE</code>, <code>LINKED_ACCOUNT_NAME</code>, <code>REGION</code>, and <code>USAGE_TYPE</code>.</p> <p> <code>RECORD_TYPE</code> is a dimension used for Cost Explorer APIs, and is also supported for cost category expressions. This dimension uses different terms, depending on whether you're using the console or API/JSON editor. For a detailed comparison, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/manage-cost-categories.html#cost-categories-terms\">Term Comparisons</a> in the <i>Billing and Cost Management User Guide</i>.</p>",
         "CostComparisonDriver$CostSelector": null,
         "Expression$Not": "<p>Return results that don't match a <code>Dimension</code> object.</p>",
         "Expressions$member": null,
         "GetCostAndUsageComparisonsRequest$Filter": null,
         "GetCostAndUsageRequest$Filter": "<p>Filters Amazon Web Services costs by different dimensions. For example, you can specify <code>SERVICE</code> and <code>LINKED_ACCOUNT</code> and get the costs that are associated with that account's usage of that service. You can nest <code>Expression</code> objects to define any combination of dimension filters. For more information, see <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a>. </p> <p>Valid values for <code>MatchOptions</code> for <code>Dimensions</code> are <code>EQUALS</code> and <code>CASE_SENSITIVE</code>.</p> <p>Valid values for <code>MatchOptions</code> for <code>CostCategories</code> and <code>Tags</code> are <code>EQUALS</code>, <code>ABSENT</code>, and <code>CASE_SENSITIVE</code>. Default values are <code>EQUALS</code> and <code>CASE_SENSITIVE</code>.</p>",
-        "GetCostAndUsageWithResourcesRequest$Filter": "<p>Filters Amazon Web Services costs by different dimensions. For example, you can specify <code>SERVICE</code> and <code>LINKED_ACCOUNT</code> and get the costs that are associated with that account's usage of that service. You can nest <code>Expression</code> objects to define any combination of dimension filters. For more information, see <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a>. </p> <p>Valid values for <code>MatchOptions</code> for <code>Dimensions</code> are <code>EQUALS</code> and <code>CASE_SENSITIVE</code>.</p> <p>Valid values for <code>MatchOptions</code> for <code>CostCategories</code> and <code>Tags</code> are <code>EQUALS</code>, <code>ABSENT</code>, and <code>CASE_SENSITIVE</code>. Default values are <code>EQUALS</code> and <code>CASE_SENSITIVE</code>.</p>",
+        "GetCostAndUsageWithResourcesRequest$Filter": "<p>Filters Amazon Web Services costs by different dimensions. For example, you can specify <code>SERVICE</code> and <code>LINKED_ACCOUNT</code> and get the costs that are associated with that account's usage of that service. You can nest <code>Expression</code> objects to define any combination of dimension filters. For more information, see <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a>. </p> <p>The <code>GetCostAndUsageWithResources</code> operation requires that you either group by or filter by a <code>ResourceId</code>. It requires the <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a> <code>\"SERVICE = Amazon Elastic Compute Cloud - Compute\"</code> in the filter.</p> <p>Valid values for <code>MatchOptions</code> for <code>Dimensions</code> are <code>EQUALS</code> and <code>CASE_SENSITIVE</code>.</p> <p>Valid values for <code>MatchOptions</code> for <code>CostCategories</code> and <code>Tags</code> are <code>EQUALS</code>, <code>ABSENT</code>, and <code>CASE_SENSITIVE</code>. Default values are <code>EQUALS</code> and <code>CASE_SENSITIVE</code>.</p>",
         "GetCostCategoriesRequest$Filter": null,
         "GetCostComparisonDriversRequest$Filter": null,
         "GetCostForecastRequest$Filter": "<p>The filters that you want to use to filter your forecast. The <code>GetCostForecast</code> API supports filtering by the following dimensions:</p> <ul> <li> <p> <code>AZ</code> </p> </li> <li> <p> <code>INSTANCE_TYPE</code> </p> </li> <li> <p> <code>LINKED_ACCOUNT</code> </p> </li> <li> <p> <code>OPERATION</code> </p> </li> <li> <p> <code>PURCHASE_TYPE</code> </p> </li> <li> <p> <code>REGION</code> </p> </li> <li> <p> <code>SERVICE</code> </p> </li> <li> <p> <code>USAGE_TYPE</code> </p> </li> <li> <p> <code>USAGE_TYPE_GROUP</code> </p> </li> <li> <p> <code>RECORD_TYPE</code> </p> </li> <li> <p> <code>OPERATING_SYSTEM</code> </p> </li> <li> <p> <code>TENANCY</code> </p> </li> <li> <p> <code>SCOPE</code> </p> </li> <li> <p> <code>PLATFORM</code> </p> </li> <li> <p> <code>SUBSCRIPTION_ID</code> </p> </li> <li> <p> <code>LEGAL_ENTITY_NAME</code> </p> </li> <li> <p> <code>DEPLOYMENT_OPTION</code> </p> </li> <li> <p> <code>DATABASE_ENGINE</code> </p> </li> <li> <p> <code>INSTANCE_TYPE_FAMILY</code> </p> </li> <li> <p> <code>BILLING_ENTITY</code> </p> </li> <li> <p> <code>RESERVATION_ID</code> </p> </li> <li> <p> <code>SAVINGS_PLAN_ARN</code> </p> </li> </ul>",
@@ -955,6 +972,12 @@
         "ListSavingsPlansPurchaseRecommendationGenerationResponse$GenerationSummaryList": "<p>The list of historical recommendation generations.</p>"
       }
     },
+    "GenericArn": {
+      "base": null,
+      "refs": {
+        "CostCategoryResourceAssociation$ResourceArn": "<p> The unique identifier for an associated resource. </p>"
+      }
+    },
     "GenericBoolean": {
       "base": null,
       "refs": {
@@ -1003,7 +1026,7 @@
         "ComparisonMetricValue$Difference": "<p>The calculated difference between <code>ComparisonTimePeriodAmount</code> and <code>BaselineTimePeriodAmount</code>.</p>",
         "ComparisonMetricValue$Unit": "<p>The unit of measurement applicable to all numeric values in this comparison.</p>",
         "CostCategoryInheritedValueDimension$DimensionKey": "<p>The key to extract cost category values.</p>",
-        "CostCategorySplitChargeRule$Source": "<p>The Cost Category value that you want to split. That value can't be used as a source or a target in other split charge rules. To indicate uncategorized costs, you can use an empty string as the source.</p>",
+        "CostCategorySplitChargeRule$Source": "<p>The cost category value that you want to split. That value can't be used as a source or a target in other split charge rules. To indicate uncategorized costs, you can use an empty string as the source.</p>",
         "CostCategorySplitChargeRuleParameterValuesList$member": null,
         "CostCategorySplitChargeRuleTargetsList$member": null,
         "CostDriver$Type": "<p>The category or classification of the cost driver.</p> <p>Values include: BUNDLED_DISCOUNT, CREDIT, OUT_OF_CYCLE_CHARGE, REFUND, RECURRING_RESERVATION_FEE, RESERVATION_USAGE, RI_VOLUME_DISCOUNT, SAVINGS_PLAN_USAGE, SAVINGS_PLAN_RECURRING_FEE, SUPPORT_FEE, TAX, UPFRONT_RESERVATION_FEE, USAGE_CHANGE, COMMITMENT</p>",
@@ -1538,6 +1561,14 @@
       "base": null,
       "refs": {}
     },
+    "ListCostCategoryResourceAssociationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCostCategoryResourceAssociationsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListSavingsPlansPurchaseRecommendationGenerationRequest": {
       "base": null,
       "refs": {}
@@ -1575,8 +1606,8 @@
       "base": null,
       "refs": {
         "CostCategoryValues$MatchOptions": "<p>The match options that you can use to filter your results. MatchOptions is only applicable for actions related to cost category. The default values for <code>MatchOptions</code> is <code>EQUALS</code> and <code>CASE_SENSITIVE</code>. </p>",
-        "DimensionValues$MatchOptions": "<p>The match options that you can use to filter your results.</p> <p> <code>MatchOptions</code> is only applicable for actions related to Cost Category and Anomaly Subscriptions. Refer to the documentation for each specific API to see what is supported.</p> <p>The default values for <code>MatchOptions</code> are <code>EQUALS</code> and <code>CASE_SENSITIVE</code>.</p>",
-        "TagValues$MatchOptions": "<p>The match options that you can use to filter your results. <code>MatchOptions</code> is only applicable for actions related to Cost Category. The default values for <code>MatchOptions</code> are <code>EQUALS</code> and <code>CASE_SENSITIVE</code>.</p>"
+        "DimensionValues$MatchOptions": "<p>The match options that you can use to filter your results.</p> <p> <code>MatchOptions</code> is only applicable for actions related to cost category and Anomaly Subscriptions. Refer to the documentation for each specific API to see what is supported.</p> <p>The default values for <code>MatchOptions</code> are <code>EQUALS</code> and <code>CASE_SENSITIVE</code>.</p>",
+        "TagValues$MatchOptions": "<p>The match options that you can use to filter your results. <code>MatchOptions</code> is only applicable for actions related to cost category. The default values for <code>MatchOptions</code> are <code>EQUALS</code> and <code>CASE_SENSITIVE</code>.</p>"
       }
     },
     "MaxResults": {
@@ -1739,6 +1770,8 @@
         "ListCostAllocationTagsResponse$NextToken": "<p>The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size. </p>",
         "ListCostCategoryDefinitionsRequest$NextToken": "<p>The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size. </p>",
         "ListCostCategoryDefinitionsResponse$NextToken": "<p>The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size. </p>",
+        "ListCostCategoryResourceAssociationsRequest$NextToken": "<p> The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size. </p>",
+        "ListCostCategoryResourceAssociationsResponse$NextToken": "<p> The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size. </p>",
         "ListSavingsPlansPurchaseRecommendationGenerationRequest$NextPageToken": "<p>The token to retrieve the next set of results.</p>",
         "ListSavingsPlansPurchaseRecommendationGenerationResponse$NextPageToken": "<p>The token to retrieve the next set of results.</p>"
       }
@@ -1747,7 +1780,7 @@
       "base": null,
       "refs": {
         "AnomalyMonitor$DimensionalValueCount": "<p>The value for evaluated dimensions. </p>",
-        "CostCategoryReference$NumberOfRules": "<p>The number of rules that are associated with a specific Cost Category. </p>",
+        "CostCategoryReference$NumberOfRules": "<p>The number of rules that are associated with a specific cost category. </p>",
         "GetReservationPurchaseRecommendationRequest$PageSize": "<p>The number of recommendations that you want returned in a single response object.</p>",
         "GetRightsizingRecommendationRequest$PageSize": "<p>The number of recommendations that you want returned in a single response object.</p>",
         "GetSavingsPlansPurchaseRecommendationRequest$PageSize": "<p>The number of recommendations that you want returned in a single response object.</p>",
@@ -2084,6 +2117,25 @@
         "ResourceTag$Value": "<p>The value that's associated with the tag. </p>"
       }
     },
+    "ResourceType": {
+      "base": null,
+      "refs": {
+        "ResourceTypes$member": null,
+        "ResourceTypesFilterInput$member": null
+      }
+    },
+    "ResourceTypes": {
+      "base": null,
+      "refs": {
+        "CostCategoryReference$SupportedResourceTypes": "<p> The resource types supported by a specific cost category. </p>"
+      }
+    },
+    "ResourceTypesFilterInput": {
+      "base": null,
+      "refs": {
+        "ListCostCategoryDefinitionsRequest$SupportedResourceTypes": "<p> Filter cost category definitions that are supported by given resource types based on the latest version. If the filter is present, the result only includes Cost Categories that supports input resource type. If the filter isn't provided, no filtering is applied. The valid values are <code>billing:rispgroupsharing</code>. </p>"
+      }
+    },
     "ResourceUtilization": {
       "base": "<p>Resource utilization of current resource. </p>",
       "refs": {
@@ -2331,7 +2383,7 @@
     "SearchString": {
       "base": null,
       "refs": {
-        "GetCostCategoriesRequest$SearchString": "<p>The value that you want to search the filter values for.</p> <p>If you don't specify a <code>CostCategoryName</code>, <code>SearchString</code> is used to filter Cost Category names that match the <code>SearchString</code> pattern. If you specify a <code>CostCategoryName</code>, <code>SearchString</code> is used to filter Cost Category values that match the <code>SearchString</code> pattern.</p>",
+        "GetCostCategoriesRequest$SearchString": "<p>The value that you want to search the filter values for.</p> <p>If you don't specify a <code>CostCategoryName</code>, <code>SearchString</code> is used to filter cost category names that match the <code>SearchString</code> pattern. If you specify a <code>CostCategoryName</code>, <code>SearchString</code> is used to filter cost category values that match the <code>SearchString</code> pattern.</p>",
         "GetDimensionValuesRequest$SearchString": "<p>The value that you want to search the filter values for.</p>",
         "GetTagsRequest$SearchString": "<p>The value that you want to search for.</p>"
       }
@@ -2677,7 +2729,7 @@
     "Values": {
       "base": null,
       "refs": {
-        "CostCategoryValues$Values": "<p>The specific value of the Cost Category.</p>",
+        "CostCategoryValues$Values": "<p>The specific value of the cost category.</p>",
         "DimensionValues$Values": "<p>The metadata values that you can use to filter and group your results. You can use <code>GetDimensionValues</code> to find specific values.</p>",
         "GetAnomalyMonitorsRequest$MonitorArnList": "<p>A list of cost anomaly monitor ARNs. </p>",
         "GetAnomalySubscriptionsRequest$SubscriptionArnList": "<p>A list of cost anomaly subscription ARNs. </p>",
@@ -2710,21 +2762,21 @@
         "CostAllocationTagBackfillRequest$RequestedAt": "<p> The time when the backfill was requested. </p>",
         "CostAllocationTagBackfillRequest$CompletedAt": "<p> The backfill completion time. </p>",
         "CostAllocationTagBackfillRequest$LastUpdatedAt": "<p> The time when the backfill status was last updated. </p>",
-        "CostCategory$EffectiveStart": "<p>The effective start date of your Cost Category.</p>",
-        "CostCategory$EffectiveEnd": "<p>The effective end date of your Cost Category.</p>",
-        "CostCategoryReference$EffectiveStart": "<p>The Cost Category's effective start date.</p>",
-        "CostCategoryReference$EffectiveEnd": "<p>The Cost Category's effective end date.</p>",
-        "CreateCostCategoryDefinitionRequest$EffectiveStart": "<p>The Cost Category's effective start date. It can only be a billing start date (first day of the month). If the date isn't provided, it's the first day of the current month. Dates can't be before the previous twelve months, or in the future.</p>",
-        "CreateCostCategoryDefinitionResponse$EffectiveStart": "<p>The Cost Category's effective start date. It can only be a billing start date (first day of the month).</p>",
-        "DeleteCostCategoryDefinitionResponse$EffectiveEnd": "<p>The effective end date of the Cost Category as a result of deleting it. No costs after this date is categorized by the deleted Cost Category. </p>",
-        "DescribeCostCategoryDefinitionRequest$EffectiveOn": "<p>The date when the Cost Category was effective. </p>",
+        "CostCategory$EffectiveStart": "<p>The effective start date of your cost category.</p>",
+        "CostCategory$EffectiveEnd": "<p>The effective end date of your cost category.</p>",
+        "CostCategoryReference$EffectiveStart": "<p>The cost category's effective start date.</p>",
+        "CostCategoryReference$EffectiveEnd": "<p>The cost category's effective end date.</p>",
+        "CreateCostCategoryDefinitionRequest$EffectiveStart": "<p>The cost category's effective start date. It can only be a billing start date (first day of the month). If the date isn't provided, it's the first day of the current month. Dates can't be before the previous twelve months, or in the future.</p>",
+        "CreateCostCategoryDefinitionResponse$EffectiveStart": "<p>The cost category's effective start date. It can only be a billing start date (first day of the month).</p>",
+        "DeleteCostCategoryDefinitionResponse$EffectiveEnd": "<p>The effective end date of the cost category as a result of deleting it. No costs after this date is categorized by the deleted cost category. </p>",
+        "DescribeCostCategoryDefinitionRequest$EffectiveOn": "<p>The date when the cost category was effective. </p>",
         "GenerationSummary$GenerationStartedTime": "<p>Indicates the start time of the recommendation generation.</p>",
         "GenerationSummary$GenerationCompletionTime": "<p>Indicates the completion time of the recommendation generation.</p>",
         "GenerationSummary$EstimatedCompletionTime": "<p>Indicates the estimated time for when the recommendation generation will complete.</p>",
         "GetCommitmentPurchaseAnalysisResponse$EstimatedCompletionTime": "<p>The estimated time for when the analysis will complete.</p>",
         "GetCommitmentPurchaseAnalysisResponse$AnalysisCompletionTime": "<p>The completion time of the analysis.</p>",
         "GetCommitmentPurchaseAnalysisResponse$AnalysisStartedTime": "<p>The start time of the analysis.</p>",
-        "ListCostCategoryDefinitionsRequest$EffectiveOn": "<p>The date when the Cost Category was effective. </p>",
+        "ListCostCategoryDefinitionsRequest$EffectiveOn": "<p>The date when the cost category was effective. </p>",
         "RecommendationDetailData$GenerationTimestamp": null,
         "RecommendationDetailData$LatestUsageTimestamp": null,
         "RecommendationDetailHourlyMetrics$StartTime": null,
@@ -2733,8 +2785,8 @@
         "StartCostAllocationTagBackfillRequest$BackfillFrom": "<p> The date you want the backfill to start from. The date can only be a first day of the month (a billing start date). Dates can't precede the previous twelve months, or in the future.</p>",
         "StartSavingsPlansPurchaseRecommendationGenerationResponse$GenerationStartedTime": "<p>The start time of the recommendation generation.</p>",
         "StartSavingsPlansPurchaseRecommendationGenerationResponse$EstimatedCompletionTime": "<p>The estimated time for when the recommendation generation will complete.</p>",
-        "UpdateCostCategoryDefinitionRequest$EffectiveStart": "<p>The Cost Category's effective start date. It can only be a billing start date (first day of the month). If the date isn't provided, it's the first day of the current month. Dates can't be before the previous twelve months, or in the future.</p>",
-        "UpdateCostCategoryDefinitionResponse$EffectiveStart": "<p>The Cost Category's effective start date. It can only be a billing start date (first day of the month).</p>"
+        "UpdateCostCategoryDefinitionRequest$EffectiveStart": "<p>The cost category's effective start date. It can only be a billing start date (first day of the month). If the date isn't provided, it's the first day of the current month. Dates can't be before the previous twelve months, or in the future.</p>",
+        "UpdateCostCategoryDefinitionResponse$EffectiveStart": "<p>The cost category's effective start date. It can only be a billing start date (first day of the month).</p>"
       }
     }
   }
