@@ -42,7 +42,7 @@ jobs:
         run: vendor/bin/phpunit --testsuite=unit --coverage-clover=clover.xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           file: ./clover.xml
           fail_ci_if_error: false
