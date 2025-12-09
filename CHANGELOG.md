@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IVSRealTime` - Token Exchange introduces seamless token exchange capabilities for IVS RTX, enabling customers to upgrade or downgrade token capabilities and update token attributes within the IVS client SDK without forcing clients to disconnect and reconnect.
+* `Aws\Account` - This release adds a new API (GetGovCloudAccountInformation) used to retrieve information about a linked GovCloud account from the standard AWS partition.
+* `Aws\Route53` - Amazon Route 53 now supports the EU (Germany) Region (eusc-de-east-1) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region
+* `Aws\AppSync` - Update Event API to require EventConfig parameter in creation and update requests.
+* `Aws\GuardDuty` - Adding support for Ec2LaunchTemplate Version field
+* `Aws\mgn` - Added parameters encryption, IPv4/IPv6 protocol configuration, and enhanced tagging support for replication operations.
+
 ## 3.366.3 - 2025-12-08
 
 * `Aws\EC2` - Amazon EC2 P6-B300 instances provide 8x NVIDIA Blackwell Ultra GPUs with 2.1 TB high bandwidth GPU memory, 6.4 Tbps EFA networking, 300 Gbps dedicated ENA throughput, and 4 TB of system memory. Amazon EC2 C8a instances are powered by 5th Gen AMD EPYC processors with a maximum frequency of 4.5 GHz.
