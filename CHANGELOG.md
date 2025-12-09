@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.366.4 - 2025-12-09
 
 * `Aws\IVSRealTime` - Token Exchange introduces seamless token exchange capabilities for IVS RTX, enabling customers to upgrade or downgrade token capabilities and update token attributes within the IVS client SDK without forcing clients to disconnect and reconnect.
 * `Aws\Account` - This release adds a new API (GetGovCloudAccountInformation) used to retrieve information about a linked GovCloud account from the standard AWS partition.
