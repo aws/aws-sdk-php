@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.367.0 - 2025-12-10
 
 * `Aws\S3` - A new S3 Transfer Manager implementation with multipart download capabilities. It allows better ways to configure each operation. Includes Progress Tracking, Transfer Event Listeners, and Automatic Multipart Uploads/Downloads.
 * `Aws\signer` - Adds support for Signer GetRevocationStatus with updated endpoints
