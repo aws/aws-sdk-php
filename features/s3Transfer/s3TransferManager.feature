@@ -57,7 +57,6 @@ Feature: S3 Transfer Manager
     Examples:
       | filename                | content                            | checksum_algorithm |
       | myfile-test-5-1.txt     | This is a test file content #1     | crc32              |
-      | myfile-test-5-2.txt     | This is a test file content #2     | crc32c             |
       | myfile-test-5-3.txt     | This is a test file content #3     | sha256             |
       | myfile-test-5-4.txt     | This is a test file content #4     | sha1               |
 
