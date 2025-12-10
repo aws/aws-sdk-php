@@ -57,112 +57,143 @@ class ApplyChecksumMiddlewareTest extends TestCase
     public function getFlexibleChecksumUseCases()
     {
         return [
-            // httpChecksum not modeled
-            [
-                'GetObject',
-                [],
-                [
+            'http_checksum_not_modeled' => [
+                'operation' => 'GetObject',
+                'config' => [],
+                'command_args' => [
                     'Bucket' => 'foo',
                     'Key' => 'bar',
                     'ChecksumMode' => 'ENABLED'
                 ],
-                null,
-                false,
-                ''
+                'body' => null,
+                'headers_added' => false,
+                'header_value' => ''
             ],
-            // default: when_supported. defaults to crc32
-            [
-                'PutObject',
-                [],
-                [
+            'default_when_supported_defaults_to_crc32' => [
+                'operation' => 'PutObject',
+                'config' => [],
+                'command_args' => [
                     'Bucket' => 'foo',
                     'Key' => 'bar',
                     'Body' => 'abc'
                 ],
-                'abc',
-                true,
-                'NSRBwg=='
+                'body' => 'abc',
+                'headers_added' => true,
+                'header_value' => 'NSRBwg=='
             ],
-            // when_required when not required and no requested algorithm
-            [
-                'PutObject',
-                ['request_checksum_calculation' => 'when_required'],
-                [
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                    'Body' => 'abc'
-                ],
-                'abc',
-                false,
-                ''
+            'when_required_when_not_required_and_no_requested_algorithm' => [
+                'operation' => 'PutObject',
+                'config' => ['request_checksum_calculation' => 'when_required'],
+                'command_args' => [],
+                'body' => 'abc',
+                'headers_added' => false,
+                'header_value' => ''
             ],
-            // when_required when required and no requested algorithm
-            [
-                'PutObjectLockConfiguration',
-                ['request_checksum_calculation' => 'when_required'],
-                [
+            'when_required_when_required_and_no_requested_algorithm' => [
+                'operation' => 'PutObjectLockConfiguration',
+                'config' => ['request_checksum_calculation' => 'when_required'],
+                'command_args' => [
                     'Bucket' => 'foo',
                     'Key' => 'bar',
                     'ObjectLockConfiguration' => 'blah'
                 ],
-                'blah',
-                true,
-                'zilhXA=='
+                'body' => 'blah',
+                'headers_added' => true,
+                'header_value' => 'zilhXA=='
             ],
-            // when_required when not required and requested algorithm
-            [
-                'PutObject',
-                ['request_checksum_calculation' => 'when_required'],
-                [
+            'when_required_when_not_required_and_requested_algorithm' => [
+                'operation' => 'PutObject',
+                'config' => ['request_checksum_calculation' => 'when_required'],
+                'command_args' => [
                     'Bucket' => 'foo',
                     'Key' => 'bar',
                     'Body' => 'blah',
                     'ChecksumAlgorithm' => 'crc32',
                 ],
-                'blah',
-                true,
-                'zilhXA=='
+                'body' => 'blah',
+                'headers_added' => true,
+                'header_value' => 'zilhXA=='
             ],
-            // when_supported and requested algorithm
-            [
-                'PutObject',
-                [],
-                [
+            'when_supported_and_requested_algorithm_1' => [
+                'operation' => 'PutObject',
+                'config' => [],
+                'command_args' => [
                     'Bucket' => 'foo',
                     'Key' => 'bar',
                     'ChecksumAlgorithm' => 'crc32c',
                     'Body' => 'abc'
                 ],
-                'abc',
-                true,
-                'Nks/tw=='
+                'body' => 'abc',
+                'headers_added' => true,
+                'header_value' => 'Nks/tw=='
             ],
-            // when_supported and requested algorithm
-            [
-                'PutObject',
-                [],
-                [
+            'when_supported_and_requested_algorithm_2' => [
+                'operation' => 'PutObject',
+                'config' => [],
+                'command_args' => [
                     'Bucket' => 'foo',
                     'Key' => 'bar',
                     'ChecksumAlgorithm' => 'sha256'
                 ],
-                '',
-                true,
-                '47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='
+                'body' => '',
+                'headers_added' => true,
+                'header_value' => '47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='
             ],
-            // when_supported and requested algorithm
-            [
-                'PutObject',
-                [],
-                [
+            'when_supported_and_requested_algorithm_3' => [
+                'operation' => 'PutObject',
+                'config' => [],
+                'command_args' => [
                     'Bucket' => 'foo',
                     'Key' => 'bar',
                     'ChecksumAlgorithm' => 'SHA1'
                 ],
-                '',
-                true,
-                '2jmj7l5rSw0yVb/vlWAYkK/YBwk='
+                'body' => '',
+                'headers_added' => true,
+                'header_value' => '2jmj7l5rSw0yVb/vlWAYkK/YBwk='
             ],
+            'when_required_when_not_required_and_no_requested_algorithm_from_command_args' => [
+                'operation' => 'PutObject',
+                'config' => [],
+                'command_args' => [
+                    '@context' => [
+                        'request_checksum_calculation' => 'when_required'
+                    ]
+                ],
+                'body' => 'abc',
+                'headers_added' => false,
+                'header_value' => ''
+            ],
+            'when_required_when_required_and_no_requested_algorithm_from_command_args' => [
+                'operation' => 'PutObjectLockConfiguration',
+                'config' => [],
+                'command_args' => [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'ObjectLockConfiguration' => 'blah',
+                    '@context' => [
+                        'request_checksum_calculation' => 'when_required'
+                    ]
+                ],
+                'body' => 'blah',
+                'headers_added' => true,
+                'header_value' => 'zilhXA=='
+            ],
+            'when_required_when_not_required_and_requested_algorithm_from_command_args' => [
+                'operation' => 'PutObject',
+                'config' => [],
+                'command_args' => [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'Body' => 'blah',
+                    'ChecksumAlgorithm' => 'crc32',
+                    '@context' => [
+                        'request_checksum_calculation' => 'when_required'
+                    ]
+                ],
+                'body' => 'blah',
+                'headers_added' => true,
+                'header_value' => 'zilhXA=='
+            ]
         ];
     }
 

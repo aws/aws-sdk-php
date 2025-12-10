@@ -1,0 +1,813 @@
+[
+  {
+    "summary": "Test download directory - Windows happy case",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "maxConcurrency": 10
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "C:\\Downloads",
+      "s3Prefix": "documents/"
+    },
+    "s3Objects": [
+      {
+        "key": "documents/report.pdf",
+        "size": 1048576
+      },
+      {
+        "key": "documents/data/spreadsheet.xlsx",
+        "size": 2097152
+      },
+      {
+        "key": "documents/readme.txt",
+        "size": 1024
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "prefix": "documents/",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "documents/report.pdf", "size": 1048576},
+            {"key": "documents/data/spreadsheet.xlsx", "size": 2097152},
+            {"key": "documents/readme.txt", "size": 1024}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "documents/report.pdf",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1048576",
+            "Content-Range": "bytes 0-1048575/1048576",
+            "PartsCount": 1
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "documents/data/spreadsheet.xlsx",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "2097152",
+            "Content-Range": "bytes 0-2097151/2097152",
+            "PartsCount": 1
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "documents/readme.txt",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1024",
+            "Content-Range": "bytes 0-1023/1024",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "C:\\Downloads\\report.pdf",
+        "size": 1048576
+      },
+      {
+        "path": "C:\\Downloads\\data\\spreadsheet.xlsx",
+        "size": 2097152
+      },
+      {
+        "path": "C:\\Downloads\\readme.txt",
+        "size": 1024
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsDownloaded": 3,
+        "objectsFailed": 0,
+        "note": "Windows normal operation with subdirectories"
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - macOS happy case",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "maxConcurrency": 10
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "/Users/user/Downloads",
+      "s3Prefix": "photos/"
+    },
+    "s3Objects": [
+      {
+        "key": "photos/2023/vacation.jpg",
+        "size": 3145728
+      },
+      {
+        "key": "photos/2023/family.jpg",
+        "size": 2621440
+      },
+      {
+        "key": "photos/metadata.json",
+        "size": 512
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "prefix": "photos/",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "photos/2023/vacation.jpg", "size": 3145728},
+            {"key": "photos/2023/family.jpg", "size": 2621440},
+            {"key": "photos/metadata.json", "size": 512}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "photos/2023/vacation.jpg",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "3145728",
+            "Content-Range": "bytes 0-3145727/3145728",
+            "PartsCount": 1
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "photos/2023/family.jpg",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "2621440",
+            "Content-Range": "bytes 0-2621439/2621440",
+            "PartsCount": 1
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "photos/metadata.json",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "512",
+            "Content-Range": "bytes 0-511/512",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "/Users/user/Downloads/2023/vacation.jpg",
+        "size": 3145728
+      },
+      {
+        "path": "/Users/user/Downloads/2023/family.jpg",
+        "size": 2621440
+      },
+      {
+        "path": "/Users/user/Downloads/metadata.json",
+        "size": 512
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsDownloaded": 3,
+        "objectsFailed": 0,
+        "note": "macOS normal operation with subdirectories"
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - Linux happy case",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "maxConcurrency": 10
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "/home/user/downloads",
+      "s3Prefix": "projects/"
+    },
+    "s3Objects": [
+      {
+        "key": "projects/src/main.py",
+        "size": 4096
+      },
+      {
+        "key": "projects/config/settings.json",
+        "size": 1024
+      },
+      {
+        "key": "projects/README.md",
+        "size": 2048
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "prefix": "projects/",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "projects/src/main.py", "size": 4096},
+            {"key": "projects/config/settings.json", "size": 1024},
+            {"key": "projects/README.md", "size": 2048}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "projects/src/main.py",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "4096",
+            "Content-Range": "bytes 0-4095/4096",
+            "PartsCount": 1
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "projects/config/settings.json",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1024",
+            "Content-Range": "bytes 0-1023/1024",
+            "PartsCount": 1
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "projects/README.md",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "2048",
+            "Content-Range": "bytes 0-2047/2048",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "/home/user/downloads/src/main.py",
+        "size": 4096
+      },
+      {
+        "path": "/home/user/downloads/config/settings.json",
+        "size": 1024
+      },
+      {
+        "path": "/home/user/downloads/README.md",
+        "size": 2048
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsDownloaded": 3,
+        "objectsFailed": 0,
+        "note": "Linux normal operation with subdirectories"
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - Windows case insensitivity conflict with continue policy",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "maxConcurrency": 10
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "C:\\Downloads",
+      "failurePolicy": "CONTINUE"
+    },
+    "s3Objects": [
+      {
+        "key": "readme.txt",
+        "size": 1024
+      },
+      {
+        "key": "README.TXT",
+        "size": 2048
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "readme.txt", "size": 1024},
+            {"key": "README.TXT", "size": 2048}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "readme.txt",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1024",
+            "Content-Range": "bytes 0-1023/1024",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "C:\\Downloads\\readme.txt",
+        "size": 2048,
+        "note": "Second file overwrites first due to case insensitivity"
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "partial_success",
+        "objectsDownloaded": 1,
+        "objectsFailed": 1,
+        "note": "Case conflict detected and handled with continue policy"
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - Windows case insensitivity conflict with default policy",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "maxConcurrency": 10
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "C:\\Downloads"
+    },
+    "s3Objects": [
+      {
+        "key": "document.pdf",
+        "size": 1048576
+      },
+      {
+        "key": "DOCUMENT.PDF",
+        "size": 2097152
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "document.pdf", "size": 1048576},
+            {"key": "DOCUMENT.PDF", "size": 2097152}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "document.pdf",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1048576",
+            "Content-Range": "bytes 0-1048575/1048576",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [],
+    "outcomes": [
+      {
+        "result": "failure",
+        "objectsDownloaded": 0,
+        "objectsFailed": 2,
+        "error": "CaseConflictError",
+        "note": "Case conflict detected, operation terminated with default policy"
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - Windows invalid filename characters",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "maxConcurrency": 10
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "C:\\Downloads",
+      "failurePolicy": "CONTINUE"
+    },
+    "s3Objects": [
+      {
+        "key": "valid-file.txt",
+        "size": 1024
+      },
+      {
+        "key": "file<with>invalid:chars?.txt",
+        "size": 2048
+      },
+      {
+        "key": "another|invalid*file.txt",
+        "size": 4096
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "valid-file.txt", "size": 1024},
+            {"key": "file<with>invalid:chars?.txt", "size": 2048},
+            {"key": "another|invalid*file.txt", "size": 4096}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "valid-file.txt",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1024",
+            "Content-Range": "bytes 0-1023/1024",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "C:\\Downloads\\valid-file.txt",
+        "size": 1024
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "partial_success",
+        "objectsDownloaded": 1,
+        "objectsFailed": 2,
+        "errors": [
+          {
+            "key": "file<with>invalid:chars?.txt",
+            "error": "InvalidFilenameError",
+            "message": "Object key contains characters invalid for Windows filesystem: < > : ?"
+          },
+          {
+            "key": "another|invalid*file.txt", 
+            "error": "InvalidFilenameError",
+            "message": "Object key contains characters invalid for Windows filesystem: | *"
+          }
+        ],
+        "note": "Invalid filename characters handled according to continue policy"
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - Linux case sensitivity (no conflict)",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "maxConcurrency": 10
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "/home/user/downloads"
+    },
+    "s3Objects": [
+      {
+        "key": "readme.txt",
+        "size": 1024
+      },
+      {
+        "key": "README.TXT",
+        "size": 2048
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "readme.txt", "size": 1024},
+            {"key": "README.TXT", "size": 2048}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "readme.txt",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1024",
+            "Content-Range": "bytes 0-1023/1024",
+            "PartsCount": 1
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "README.TXT",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "2048",
+            "Content-Range": "bytes 0-2047/2048",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "/home/user/downloads/readme.txt",
+        "size": 1024
+      },
+      {
+        "path": "/home/user/downloads/README.TXT",
+        "size": 2048
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsDownloaded": 2,
+        "objectsFailed": 0,
+        "note": "Linux case-sensitive filesystem allows both files"
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - macOS case insensitivity conflict with continue policy",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "maxConcurrency": 10
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "/Users/user/Downloads",
+      "failurePolicy": "CONTINUE"
+    },
+    "s3Objects": [
+      {
+        "key": "report.pdf",
+        "size": 1048576
+      },
+      {
+        "key": "REPORT.PDF",
+        "size": 2097152
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "report.pdf", "size": 1048576},
+            {"key": "REPORT.PDF", "size": 2097152}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "report.pdf",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1048576",
+            "Content-Range": "bytes 0-1048575/1048576",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "/Users/user/Downloads/report.pdf",
+        "size": 2097152,
+        "note": "Second file overwrites first due to case insensitivity on macOS"
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "partial_success",
+        "objectsDownloaded": 1,
+        "objectsFailed": 1,
+        "note": "macOS case conflict detected and handled with continue policy"
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - Linux special characters allowed",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "maxConcurrency": 10
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "/home/user/downloads"
+    },
+    "s3Objects": [
+      {
+        "key": "file:with*special<chars>.txt",
+        "size": 1024
+      },
+      {
+        "key": "another|file?.txt",
+        "size": 2048
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "file:with*special<chars>.txt", "size": 1024},
+            {"key": "another|file?.txt", "size": 2048}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "file:with*special<chars>.txt",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1024",
+            "Content-Range": "bytes 0-1023/1024",
+            "PartsCount": 1
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "another|file?.txt",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "2048",
+            "Content-Range": "bytes 0-2047/2048",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "/home/user/downloads/file:with*special<chars>.txt",
+        "size": 1024
+      },
+      {
+        "path": "/home/user/downloads/another|file?.txt",
+        "size": 2048
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsDownloaded": 2,
+        "objectsFailed": 0,
+        "note": "Linux filesystem allows special characters that are invalid on Windows"
+      }
+    ]
+  }
+]
