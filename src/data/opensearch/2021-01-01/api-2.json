@@ -2069,7 +2069,8 @@
         "dataSources":{"shape":"DataSources"},
         "iamIdentityCenterOptions":{"shape":"IamIdentityCenterOptionsInput"},
         "appConfigs":{"shape":"AppConfigs"},
-        "tagList":{"shape":"TagList"}
+        "tagList":{"shape":"TagList"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "CreateApplicationResponse":{
@@ -2082,7 +2083,8 @@
         "iamIdentityCenterOptions":{"shape":"IamIdentityCenterOptions"},
         "appConfigs":{"shape":"AppConfigs"},
         "tagList":{"shape":"TagList"},
-        "createdAt":{"shape":"Timestamp"}
+        "createdAt":{"shape":"Timestamp"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "CreateDomainRequest":{
@@ -3291,7 +3293,8 @@
         "dataSources":{"shape":"DataSources"},
         "appConfigs":{"shape":"AppConfigs"},
         "createdAt":{"shape":"Timestamp"},
-        "lastUpdatedAt":{"shape":"Timestamp"}
+        "lastUpdatedAt":{"shape":"Timestamp"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "GetCompatibleVersionsRequest":{
@@ -3779,6 +3782,12 @@
         "KeyAccessRoleArn":{"shape":"RoleArn"},
         "KeyStoreAccessEnabled":{"shape":"Boolean"}
       }
+    },
+    "KmsKeyArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-zA-Z-]*:kms:[a-z0-9-]+:[0-9]{12}:key/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
     },
     "KmsKeyId":{
       "type":"string",

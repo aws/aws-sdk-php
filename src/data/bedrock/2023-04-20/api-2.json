@@ -2356,7 +2356,8 @@
         "BUILD_LOG",
         "QUALITY_REPORT",
         "POLICY_DEFINITION",
-        "GENERATED_TEST_CASES"
+        "GENERATED_TEST_CASES",
+        "POLICY_SCENARIOS"
       ]
     },
     "AutomatedReasoningPolicyBuildResultAssets":{
@@ -2365,7 +2366,8 @@
         "policyDefinition":{"shape":"AutomatedReasoningPolicyDefinition"},
         "qualityReport":{"shape":"AutomatedReasoningPolicyDefinitionQualityReport"},
         "buildLog":{"shape":"AutomatedReasoningPolicyBuildLog"},
-        "generatedTestCases":{"shape":"AutomatedReasoningPolicyGeneratedTestCases"}
+        "generatedTestCases":{"shape":"AutomatedReasoningPolicyGeneratedTestCases"},
+        "policyScenarios":{"shape":"AutomatedReasoningPolicyScenarios"}
       },
       "union":true
     },
@@ -2858,14 +2860,14 @@
       "required":[
         "expression",
         "alternateExpression",
-        "ruleIds",
-        "expectedResult"
+        "expectedResult",
+        "ruleIds"
       ],
       "members":{
         "expression":{"shape":"AutomatedReasoningPolicyScenarioExpression"},
         "alternateExpression":{"shape":"AutomatedReasoningPolicyScenarioAlternateExpression"},
-        "ruleIds":{"shape":"AutomatedReasoningPolicyDefinitionRuleIdList"},
-        "expectedResult":{"shape":"AutomatedReasoningCheckResult"}
+        "expectedResult":{"shape":"AutomatedReasoningCheckResult"},
+        "ruleIds":{"shape":"AutomatedReasoningPolicyDefinitionRuleIdList"}
       }
     },
     "AutomatedReasoningPolicyScenarioAlternateExpression":{
@@ -2879,6 +2881,17 @@
       "max":1024,
       "min":0,
       "sensitive":true
+    },
+    "AutomatedReasoningPolicyScenarioList":{
+      "type":"list",
+      "member":{"shape":"AutomatedReasoningPolicyScenario"}
+    },
+    "AutomatedReasoningPolicyScenarios":{
+      "type":"structure",
+      "required":["policyScenarios"],
+      "members":{
+        "policyScenarios":{"shape":"AutomatedReasoningPolicyScenarioList"}
+      }
     },
     "AutomatedReasoningPolicySummaries":{
       "type":"list",

@@ -737,6 +737,18 @@
         "Value":{"shape":"String"}
       }
     },
+    "AttributeValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]+"
+    },
+    "AttributeValueList":{
+      "type":"list",
+      "member":{"shape":"AttributeValue"},
+      "max":1,
+      "min":0
+    },
     "AttributesList":{
       "type":"list",
       "member":{"shape":"Attribute"}
@@ -924,7 +936,10 @@
     },
     "ComputationRuleEnum":{
       "type":"string",
-      "enum":["CONSOLIDATED"]
+      "enum":[
+        "ITEMIZED",
+        "CONSOLIDATED"
+      ]
     },
     "ConflictException":{
       "type":"structure",
@@ -1408,18 +1423,21 @@
       "type":"structure",
       "required":[
         "Attribute",
-        "MatchOption",
-        "Values"
+        "MatchOption"
       ],
       "members":{
         "Attribute":{"shape":"LineItemFilterAttributeName"},
         "MatchOption":{"shape":"MatchOption"},
-        "Values":{"shape":"LineItemFilterValuesList"}
+        "Values":{"shape":"LineItemFilterValuesList"},
+        "AttributeValues":{"shape":"AttributeValueList"}
       }
     },
     "LineItemFilterAttributeName":{
       "type":"string",
-      "enum":["LINE_ITEM_TYPE"]
+      "enum":[
+        "LINE_ITEM_TYPE",
+        "SERVICE"
+      ]
     },
     "LineItemFilterValue":{
       "type":"string",
@@ -1739,7 +1757,10 @@
     "MarginPercentage":{"type":"string"},
     "MatchOption":{
       "type":"string",
-      "enum":["NOT_EQUAL"]
+      "enum":[
+        "NOT_EQUAL",
+        "EQUAL"
+      ]
     },
     "MaxBillingGroupCostReportResults":{
       "type":"integer",
@@ -2339,6 +2360,7 @@
         "ILLEGAL_MODIFIER_PERCENTAGE",
         "ILLEGAL_TYPE",
         "ILLEGAL_BILLING_GROUP_TYPE",
+        "ILLEGAL_BILLING_GROUP_PRICING_PLAN",
         "ILLEGAL_ENDED_BILLINGGROUP",
         "ILLEGAL_TIERING_INPUT",
         "ILLEGAL_OPERATION",

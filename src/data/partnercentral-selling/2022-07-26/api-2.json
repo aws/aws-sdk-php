@@ -1080,7 +1080,8 @@
     "AwsOpportunityProject":{
       "type":"structure",
       "members":{
-        "ExpectedCustomerSpend":{"shape":"ExpectedCustomerSpendList"}
+        "ExpectedCustomerSpend":{"shape":"ExpectedCustomerSpendList"},
+        "AwsPartition":{"shape":"AwsPartition"}
       }
     },
     "AwsOpportunityRelatedEntities":{
@@ -1122,6 +1123,10 @@
     "AwsOpportunityTeamMembersList":{
       "type":"list",
       "member":{"shape":"AwsTeamMember"}
+    },
+    "AwsPartition":{
+      "type":"string",
+      "enum":["aws-eusc"]
     },
     "AwsProductDetails":{
       "type":"structure",
@@ -3867,7 +3872,8 @@
         "CompetitorName":{"shape":"CompetitorName"},
         "OtherCompetitorNames":{"shape":"ProjectOtherCompetitorNamesString"},
         "OtherSolutionDescription":{"shape":"ProjectOtherSolutionDescriptionString"},
-        "AdditionalComments":{"shape":"ProjectAdditionalCommentsString"}
+        "AdditionalComments":{"shape":"ProjectAdditionalCommentsString"},
+        "AwsPartition":{"shape":"AwsPartition"}
       }
     },
     "ProjectAdditionalCommentsString":{
