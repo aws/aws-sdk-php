@@ -11,6 +11,7 @@ Jump To:
 * [Bug Reports](#Bug-Reports)
 * [Feature Requests](#Feature-Requests)
 * [Code Contributions](#Code-Contributions)
+* [Security issue notifications](#Security-Issue-Notifications)
 
 ## How to contribute
 
@@ -113,6 +114,9 @@ we ask the same of all community contributions as well:
    repository to suggest edits for the User Guide.
 9. If you are working on the SDK, make sure to check out the `Makefile` for some
    of the common tasks that we have to do.
+
+## Security issue notifications
+If you discover a potential security issue in this project we ask that you notify AWS/Amazon Security via our [vulnerability reporting page](http://aws.amazon.com/security/vulnerability-reporting/). Please do **not** create a public github issue.
 
 ### Changelog Documents
 
