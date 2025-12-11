@@ -2624,6 +2624,7 @@
         "SigningEnabled":{"shape":"Enabled"},
         "Status":{"shape":"DkimStatus"},
         "Tokens":{"shape":"DnsTokenList"},
+        "SigningHostedZone":{"shape":"HostedZone"},
         "SigningAttributesOrigin":{"shape":"DkimSigningAttributesOrigin"},
         "NextSigningKeyLength":{"shape":"DkimSigningKeyLength"},
         "CurrentSigningKeyLength":{"shape":"DkimSigningKeyLength"},
@@ -3529,6 +3530,7 @@
         "OptimizedSharedDelivery":{"shape":"FeatureStatus"}
       }
     },
+    "HostedZone":{"type":"string"},
     "HttpsPolicy":{
       "type":"string",
       "enum":[
@@ -4777,7 +4779,8 @@
       "type":"structure",
       "members":{
         "DkimStatus":{"shape":"DkimStatus"},
-        "DkimTokens":{"shape":"DnsTokenList"}
+        "DkimTokens":{"shape":"DnsTokenList"},
+        "SigningHostedZone":{"shape":"HostedZone"}
       }
     },
     "PutEmailIdentityFeedbackAttributesRequest":{

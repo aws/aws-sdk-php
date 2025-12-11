@@ -823,7 +823,8 @@
         },
         "NextToken":{"shape":"NextTokenType"},
         "Filters":{"shape":"FiltersListType"},
-        "SortOrder":{"shape":"SortOrderType"}
+        "SortOrder":{"shape":"SortOrderType"},
+        "SortBy":{"shape":"SortByType"}
       }
     },
     "ListSecretsResponse":{
@@ -1248,6 +1249,15 @@
       "type":"map",
       "key":{"shape":"SecretVersionIdType"},
       "value":{"shape":"SecretVersionStagesType"}
+    },
+    "SortByType":{
+      "type":"string",
+      "enum":[
+        "created-date",
+        "last-accessed-date",
+        "last-changed-date",
+        "name"
+      ]
     },
     "SortOrderType":{
       "type":"string",

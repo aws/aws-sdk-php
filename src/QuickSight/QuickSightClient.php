@@ -247,6 +247,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getFlowMetadataAsync(array $args = [])
  * @method \Aws\Result getFlowPermissions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getFlowPermissionsAsync(array $args = [])
+ * @method \Aws\Result getIdentityContext(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getIdentityContextAsync(array $args = [])
  * @method \Aws\Result getSessionEmbedUrl(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getSessionEmbedUrlAsync(array $args = [])
  * @method \Aws\Result listActionConnectors(array $args = [])

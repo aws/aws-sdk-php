@@ -81,8 +81,8 @@
     "DescribeDashboard": "<p>Provides a summary for a dashboard.</p>",
     "DescribeDashboardDefinition": "<p>Provides a detailed description of the definition of a dashboard.</p> <note> <p>If you do not need to know details about the content of a dashboard, for instance if you are trying to check the status of a recently created or updated dashboard, use the <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeDashboard.html\"> <code>DescribeDashboard</code> </a> instead. </p> </note>",
     "DescribeDashboardPermissions": "<p>Describes read and write permissions for a dashboard.</p>",
-    "DescribeDashboardSnapshotJob": "<p>Describes an existing snapshot job.</p> <p>Poll job descriptions after a job starts to know the status of the job. For information on available status codes, see <code>JobStatus</code>.</p>",
-    "DescribeDashboardSnapshotJobResult": "<p>Describes the result of an existing snapshot job that has finished running.</p> <p>A finished snapshot job will return a <code>COMPLETED</code> or <code>FAILED</code> status when you poll the job with a <code>DescribeDashboardSnapshotJob</code> API call.</p> <p>If the job has not finished running, this operation returns a message that says <code>Dashboard Snapshot Job with id &lt;SnapshotjobId&gt; has not reached a terminal state.</code>.</p>",
+    "DescribeDashboardSnapshotJob": "<p>Describes an existing snapshot job.</p> <p>Poll job descriptions after a job starts to know the status of the job. For information on available status codes, see <code>JobStatus</code>.</p> <p> <b>Registered user support</b> </p> <p>This API can be called as before to get status of a job started by the same Quick Sight user.</p> <p> <b>Possible error scenarios</b> </p> <p>Request will fail with an Access Denied error in the following scenarios:</p> <ul> <li> <p>The credentials have expired.</p> </li> <li> <p>Job has been started by a different user.</p> </li> <li> <p>Impersonated Quick Sight user doesn't have access to the specified dashboard in the job.</p> </li> </ul>",
+    "DescribeDashboardSnapshotJobResult": "<p>Describes the result of an existing snapshot job that has finished running.</p> <p>A finished snapshot job will return a <code>COMPLETED</code> or <code>FAILED</code> status when you poll the job with a <code>DescribeDashboardSnapshotJob</code> API call.</p> <p>If the job has not finished running, this operation returns a message that says <code>Dashboard Snapshot Job with id &lt;SnapshotjobId&gt; has not reached a terminal state.</code>.</p> <p> <b>Registered user support</b> </p> <p>This API can be called as before to get the result of a job started by the same Quick Sight user. The result for the user will be returned in <code>RegisteredUsers</code> response attribute. The attribute will contain a list with at most one object in it.</p> <p> <b>Possible error scenarios</b> </p> <p>The request fails with an Access Denied error in the following scenarios:</p> <ul> <li> <p>The credentials have expired.</p> </li> <li> <p>The job was started by a different user.</p> </li> <li> <p>The registered user doesn't have access to the specified dashboard.</p> </li> </ul> <p>The request succeeds but the job fails in the following scenarios:</p> <ul> <li> <p> <code>DASHBOARD_ACCESS_DENIED</code> - The registered user lost access to the dashboard.</p> </li> <li> <p> <code>CAPABILITY_RESTRICTED</code> - The registered user is restricted from exporting data in <b>all</b> selected formats.</p> </li> </ul> <p>The request succeeds but the response contains an error code in the following scenarios:</p> <ul> <li> <p> <code>CAPABILITY_RESTRICTED</code> - The registered user is restricted from exporting data in <b>some</b> selected formats.</p> </li> <li> <p> <code>RLS_CHANGED</code> - Row-level security settings have changed. Re-run the job with current settings.</p> </li> <li> <p> <code>CLS_CHANGED</code> - Column-level security settings have changed. Re-run the job with current settings.</p> </li> <li> <p> <code>DATASET_DELETED</code> - The dataset has been deleted. Verify the dataset exists before re-running the job.</p> </li> </ul>",
     "DescribeDashboardsQAConfiguration": "<p>Describes an existing dashboard QA configuration.</p>",
     "DescribeDataSet": "<p>Describes a dataset. This operation doesn't support datasets that include uploaded files as a source.</p>",
     "DescribeDataSetPermissions": "<p>Describes the permissions on a dataset.</p> <p>The permissions resource is <code>arn:aws:quicksight:region:aws-account-id:dataset/data-set-id</code>.</p>",
@@ -123,6 +123,7 @@
     "GetDashboardEmbedUrl": "<p>Generates a temporary session URL and authorization code(bearer token) that you can use to embed an Amazon Quick Sight read-only dashboard in your website or application. Before you use this command, make sure that you have configured the dashboards and permissions. </p> <p>Currently, you can use <code>GetDashboardEmbedURL</code> only from the server, not from the user's browser. The following rules apply to the generated URL:</p> <ul> <li> <p>They must be used together.</p> </li> <li> <p>They can be used one time only.</p> </li> <li> <p>They are valid for 5 minutes after you run this command.</p> </li> <li> <p>You are charged only when the URL is used or there is interaction with Quick Suite.</p> </li> <li> <p>The resulting user session is valid for 15 minutes (default) up to 10 hours (maximum). You can use the optional <code>SessionLifetimeInMinutes</code> parameter to customize session duration.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics-deprecated.html\">Embedding Analytics Using GetDashboardEmbedUrl</a> in the <i>Amazon Quick Suite User Guide</i>.</p> <p>For more information about the high-level steps for embedding and for an interactive demo of the ways you can customize embedding, visit the <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/quicksight-dev-portal.html\">Amazon Quick Suite Developer Portal</a>.</p>",
     "GetFlowMetadata": "<p>Retrieves the metadata of a flow, not including its definition specifying the steps.</p>",
     "GetFlowPermissions": "<p>Get permissions for a flow.</p>",
+    "GetIdentityContext": "<p>Retrieves the identity context for a Quick Sight user in a specified namespace, allowing you to obtain identity tokens that can be used with identity-enhanced IAM role sessions to call identity-aware APIs.</p> <p>Currently, you can call the following APIs with identity-enhanced Credentials</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_StartDashboardSnapshotJob.html\">StartDashboardSnapshotJob</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeDashboardSnapshotJob.html\">DescribeDashboardSnapshotJob</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeDashboardSnapshotJobResult.html\">DescribeDashboardSnapshotJobResult</a> </p> </li> </ul> <p> <b>Supported Authentication Methods</b> </p> <p>This API supports Quick Sight native users, IAM federated users, and Active Directory users. For Quick Sight users authenticated by Amazon Web Services Identity Center, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-identity-enhanced-iam-role-sessions.html\">Identity Center documentation on identity-enhanced IAM role sessions</a>.</p> <p> <b>Getting Identity-Enhanced Credentials</b> </p> <p>To obtain identity-enhanced credentials, follow these steps:</p> <ul> <li> <p>Call the GetIdentityContext API to retrieve an identity token for the specified user.</p> </li> <li> <p>Use the identity token with the <a href=\"https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html\">STS AssumeRole API</a> to obtain identity-enhanced IAM role session credentials.</p> </li> </ul> <p> <b>Usage with STS AssumeRole</b> </p> <p>The identity token returned by this API should be used with the STS AssumeRole API to obtain credentials for an identity-enhanced IAM role session. When calling AssumeRole, include the identity token in the <code>ProvidedContexts</code> parameter with <code>ProviderArn</code> set to <code>arn:aws:iam::aws:contextProvider/QuickSight</code> and <code>ContextAssertion</code> set to the identity token received from this API.</p> <p>The assumed role must allow the <code>sts:SetContext</code> action in addition to <code>sts:AssumeRole</code> in its trust relationship policy. The trust policy should include both actions for the principal that will be assuming the role.</p>",
     "GetSessionEmbedUrl": "<p>Generates a session URL and authorization code that you can use to embed the Amazon Amazon Quick Sight console in your web server code. Use <code>GetSessionEmbedUrl</code> where you want to provide an authoring portal that allows users to create data sources, datasets, analyses, and dashboards. The users who access an embedded Amazon Quick Sight console need belong to the author or admin security cohort. If you want to restrict permissions to some of these features, add a custom permissions profile to the user with the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_UpdateUser.html\">UpdateUser</a> </code> API operation. Use <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_RegisterUser.html\">RegisterUser</a> </code> API operation to add a new user with a custom permission profile attached. For more information, see the following sections in the <i>Amazon Quick Suite User Guide</i>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics.html\">Embedding Analytics</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/customizing-permissions-to-the-quicksight-console.html\">Customizing Access to the Amazon Quick Suite Console</a> </p> </li> </ul>",
     "ListActionConnectors": "<p>Lists all action connectors in the specified Amazon Web Services account. Returns summary information for each connector including its name, type, creation time, and status.</p>",
     "ListAnalyses": "<p>Lists Amazon Quick Sight analyses that exist in the specified Amazon Web Services account.</p>",
@@ -175,7 +176,7 @@
     "SearchTopics": "<p>Searches for any Q topic that exists in an Quick Suite account.</p>",
     "StartAssetBundleExportJob": "<p>Starts an Asset Bundle export job.</p> <p>An Asset Bundle export job exports specified Amazon Quick Sight assets. You can also choose to export any asset dependencies in the same job. Export jobs run asynchronously and can be polled with a <code>DescribeAssetBundleExportJob</code> API call. When a job is successfully completed, a download URL that contains the exported assets is returned. The URL is valid for 5 minutes and can be refreshed with a <code>DescribeAssetBundleExportJob</code> API call. Each Amazon Quick Sight account can run up to 5 export jobs concurrently.</p> <p>The API caller must have the necessary permissions in their IAM role to access each resource before the resources can be exported.</p>",
     "StartAssetBundleImportJob": "<p>Starts an Asset Bundle import job.</p> <p>An Asset Bundle import job imports specified Amazon Quick Sight assets into an Amazon Quick Sight account. You can also choose to import a naming prefix and specified configuration overrides. The assets that are contained in the bundle file that you provide are used to create or update a new or existing asset in your Amazon Quick Sight account. Each Amazon Quick Sight account can run up to 5 import jobs concurrently.</p> <p>The API caller must have the necessary <code>\"create\"</code>, <code>\"describe\"</code>, and <code>\"update\"</code> permissions in their IAM role to access each resource type that is contained in the bundle file before the resources can be imported.</p>",
-    "StartDashboardSnapshotJob": "<p>Starts an asynchronous job that generates a snapshot of a dashboard's output. You can request one or several of the following format configurations in each API call.</p> <ul> <li> <p>1 Paginated PDF</p> </li> <li> <p>1 Excel workbook that includes up to 5 table or pivot table visuals</p> </li> <li> <p>5 CSVs from table or pivot table visuals</p> </li> </ul> <p>The status of a submitted job can be polled with the <code>DescribeDashboardSnapshotJob</code> API. When you call the <code>DescribeDashboardSnapshotJob</code> API, check the <code>JobStatus</code> field in the response. Once the job reaches a <code>COMPLETED</code> or <code>FAILED</code> status, use the <code>DescribeDashboardSnapshotJobResult</code> API to obtain the URLs for the generated files. If the job fails, the <code>DescribeDashboardSnapshotJobResult</code> API returns detailed information about the error that occurred.</p> <p> <b>StartDashboardSnapshotJob API throttling</b> </p> <p>Quick Sight utilizes API throttling to create a more consistent user experience within a time span for customers when they call the <code>StartDashboardSnapshotJob</code>. By default, 12 jobs can run simlutaneously in one Amazon Web Services account and users can submit up 10 API requests per second before an account is throttled. If an overwhelming number of API requests are made by the same user in a short period of time, Quick Sight throttles the API calls to maintin an optimal experience and reliability for all Quick Sight users.</p> <p> <b>Common throttling scenarios</b> </p> <p>The following list provides information about the most commin throttling scenarios that can occur.</p> <ul> <li> <p> <b>A large number of <code>SnapshotExport</code> API jobs are running simultaneously on an Amazon Web Services account.</b> When a new <code>StartDashboardSnapshotJob</code> is created and there are already 12 jobs with the <code>RUNNING</code> status, the new job request fails and returns a <code>LimitExceededException</code> error. Wait for a current job to comlpete before you resubmit the new job.</p> </li> <li> <p> <b>A large number of API requests are submitted on an Amazon Web Services account.</b> When a user makes more than 10 API calls to the Quick Sight API in one second, a <code>ThrottlingException</code> is returned.</p> </li> </ul> <p>If your use case requires a higher throttling limit, contact your account admin or <a href=\"http://aws.amazon.com/contact-us/\">Amazon Web ServicesSupport</a> to explore options to tailor a more optimal expereince for your account.</p> <p> <b>Best practices to handle throttling</b> </p> <p>If your use case projects high levels of API traffic, try to reduce the degree of frequency and parallelism of API calls as much as you can to avoid throttling. You can also perform a timing test to calculate an estimate for the total processing time of your projected load that stays within the throttling limits of the Quick Sight APIs. For example, if your projected traffic is 100 snapshot jobs before 12:00 PM per day, start 12 jobs in parallel and measure the amount of time it takes to proccess all 12 jobs. Once you obtain the result, multiply the duration by 9, for example <code>(12 minutes * 9 = 108 minutes)</code>. Use the new result to determine the latest time at which the jobs need to be started to meet your target deadline.</p> <p>The time that it takes to process a job can be impacted by the following factors:</p> <ul> <li> <p>The dataset type (Direct Query or SPICE).</p> </li> <li> <p>The size of the dataset.</p> </li> <li> <p>The complexity of the calculated fields that are used in the dashboard.</p> </li> <li> <p>The number of visuals that are on a sheet.</p> </li> <li> <p>The types of visuals that are on the sheet.</p> </li> <li> <p>The number of formats and snapshots that are requested in the job configuration.</p> </li> <li> <p>The size of the generated snapshots.</p> </li> </ul>",
+    "StartDashboardSnapshotJob": "<p>Starts an asynchronous job that generates a snapshot of a dashboard's output. You can request one or several of the following format configurations in each API call.</p> <ul> <li> <p>1 Paginated PDF</p> </li> <li> <p>1 Excel workbook that includes up to 5 table or pivot table visuals</p> </li> <li> <p>5 CSVs from table or pivot table visuals</p> </li> </ul> <p>The status of a submitted job can be polled with the <code>DescribeDashboardSnapshotJob</code> API. When you call the <code>DescribeDashboardSnapshotJob</code> API, check the <code>JobStatus</code> field in the response. Once the job reaches a <code>COMPLETED</code> or <code>FAILED</code> status, use the <code>DescribeDashboardSnapshotJobResult</code> API to obtain the URLs for the generated files. If the job fails, the <code>DescribeDashboardSnapshotJobResult</code> API returns detailed information about the error that occurred.</p> <p> <b>StartDashboardSnapshotJob API throttling</b> </p> <p>Quick Sight utilizes API throttling to create a more consistent user experience within a time span for customers when they call the <code>StartDashboardSnapshotJob</code>. By default, 12 jobs can run simlutaneously in one Amazon Web Services account and users can submit up 10 API requests per second before an account is throttled. If an overwhelming number of API requests are made by the same user in a short period of time, Quick Sight throttles the API calls to maintin an optimal experience and reliability for all Quick Sight users.</p> <p> <b>Common throttling scenarios</b> </p> <p>The following list provides information about the most commin throttling scenarios that can occur.</p> <ul> <li> <p> <b>A large number of <code>SnapshotExport</code> API jobs are running simultaneously on an Amazon Web Services account.</b> When a new <code>StartDashboardSnapshotJob</code> is created and there are already 12 jobs with the <code>RUNNING</code> status, the new job request fails and returns a <code>LimitExceededException</code> error. Wait for a current job to comlpete before you resubmit the new job.</p> </li> <li> <p> <b>A large number of API requests are submitted on an Amazon Web Services account.</b> When a user makes more than 10 API calls to the Quick Sight API in one second, a <code>ThrottlingException</code> is returned.</p> </li> </ul> <p>If your use case requires a higher throttling limit, contact your account admin or <a href=\"http://aws.amazon.com/contact-us/\">Amazon Web ServicesSupport</a> to explore options to tailor a more optimal expereince for your account.</p> <p> <b>Best practices to handle throttling</b> </p> <p>If your use case projects high levels of API traffic, try to reduce the degree of frequency and parallelism of API calls as much as you can to avoid throttling. You can also perform a timing test to calculate an estimate for the total processing time of your projected load that stays within the throttling limits of the Quick Sight APIs. For example, if your projected traffic is 100 snapshot jobs before 12:00 PM per day, start 12 jobs in parallel and measure the amount of time it takes to proccess all 12 jobs. Once you obtain the result, multiply the duration by 9, for example <code>(12 minutes * 9 = 108 minutes)</code>. Use the new result to determine the latest time at which the jobs need to be started to meet your target deadline.</p> <p>The time that it takes to process a job can be impacted by the following factors:</p> <ul> <li> <p>The dataset type (Direct Query or SPICE).</p> </li> <li> <p>The size of the dataset.</p> </li> <li> <p>The complexity of the calculated fields that are used in the dashboard.</p> </li> <li> <p>The number of visuals that are on a sheet.</p> </li> <li> <p>The types of visuals that are on the sheet.</p> </li> <li> <p>The number of formats and snapshots that are requested in the job configuration.</p> </li> <li> <p>The size of the generated snapshots.</p> </li> </ul> <p> <b>Registered user support</b> </p> <p>You can generate snapshots for registered Quick Sight users by using the Snapshot Job APIs with <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-identity-enhanced-iam-role-sessions.html\">identity-enhanced IAM role session credentials</a>. This approach allows you to create snapshots on behalf of specific Quick Sight users while respecting their row-level security (RLS), column-level security (CLS), dynamic default parameters and dashboard parameter/filter settings.</p> <p>To generate snapshots for registered Quick Sight users, you need to:</p> <ul> <li> <p>Obtain identity-enhanced IAM role session credentials from AWS Security Token Service (STS).</p> </li> <li> <p>Use these credentials to call the Snapshot Job APIs.</p> </li> </ul> <p>Identity-enhanced credentials are credentials that contain information about the end user (e.g., registered Quick Sight user).</p> <p>If your Quick Sight users are backed by <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html\">AWS Identity Center</a>, then you need to set up a <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/setuptrustedtokenissuer.html\">trusted token issuer</a>. Then, getting identity-enhanced IAM credentials for a Quick Sight user will look like the following:</p> <ul> <li> <p>Authenticate user with your OIDC compliant Identity Provider. You should get auth tokens back.</p> </li> <li> <p>Use the OIDC API, <a href=\"https://docs.aws.amazon.com/singlesignon/latest/OIDCAPIReference/API_CreateTokenWithIAM.html\">CreateTokenWithIAM</a>, to exchange auth tokens to IAM tokens. One of the resulted tokens will be identity token.</p> </li> <li> <p>Call STS AssumeRole API as you normally would, but provide an extra <code>ProvidedContexts</code> parameter in the API request. The list of contexts must have a single trusted context assertion. The <code>ProviderArn</code> should be <code>arn:aws:iam::aws:contextProvider/IdentityCenter</code> while <code>ContextAssertion</code> will be the identity token you received in response from CreateTokenWithIAM</p> </li> </ul> <p>For more details, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-identity-enhanced-iam-role-sessions.html\">IdC documentation on Identity-enhanced IAM role sessions</a>.</p> <p>To obtain Identity-enhanced credentials for Quick Sight native users, IAM federated users, or Active Directory users, follow the steps below:</p> <ul> <li> <p>Call Quick Sight <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_GetIdentityContext.html\">GetIdentityContext API</a> to get identity token.</p> </li> <li> <p>Call STS AssumeRole API as you normally would, but provide extra <code>ProvidedContexts</code> parameter in the API request. The list of contexts must have a single trusted context assertion. The <code>ProviderArn</code> should be <code>arn:aws:iam::aws:contextProvider/QuickSight</code> while <code>ContextAssertion</code> will be the identity token you received in response from GetIdentityContext</p> </li> </ul> <p>After obtaining the identity-enhanced IAM role session credentials, you can use them to start a job, describe the job and describe job result. You can use the same credentials as long as they haven't expired. All API requests made with these credentials are considered to be made by the impersonated Quick Sight user.</p> <important> <p>When using identity-enhanced session credentials, set the UserConfiguration request attribute to null. Otherwise, the request will be invalid.</p> </important> <p> <b>Possible error scenarios</b> </p> <p>The request fails with an Access Denied error in the following scenarios:</p> <ul> <li> <p>The credentials have expired.</p> </li> <li> <p>The impersonated Quick Sight user doesn't have access to the specified dashboard.</p> </li> <li> <p>The impersonated Quick Sight user is restricted from exporting data in the selected formats. For more information about export restrictions, see <a href=\"https://docs.aws.amazon.com/quicksuite/latest/userguide/create-custom-permisions-profile.html\">Customizing access to Amazon Quick Sight capabilities</a>.</p> </li> </ul>",
     "StartDashboardSnapshotJobSchedule": "<p>Starts an asynchronous job that runs an existing dashboard schedule and sends the dashboard snapshot through email. </p> <p>Only one job can run simultaneously in a given schedule. Repeated requests are skipped with a <code>202</code> HTTP status code.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/sending-reports.html\">Scheduling and sending Amazon Quick Sight reports by email</a> and <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/email-reports-from-dashboard.html\">Configuring email report settings for a Amazon Quick Sight dashboard</a> in the <i>Amazon Quick Sight User Guide</i>.</p>",
     "TagResource": "<p>Assigns one or more tags (key-value pairs) to the specified Amazon Quick Sight resource. </p> <p>Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only resources with certain tag values. You can use the <code>TagResource</code> operation with a resource that already has tags. If you specify a new tag key for the resource, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value that you specify replaces the previous value for that tag.</p> <p>You can associate as many as 50 tags with a resource. Amazon Quick Sight supports tagging on data set, data source, dashboard, template, topic, and user. </p> <p>Tagging for Amazon Quick Sight works in a similar way to tagging for other Amazon Web Services services, except for the following:</p> <ul> <li> <p>Tags are used to track costs for users in Amazon Quick Sight. You can't tag other resources that Amazon Quick Sight costs are based on, such as storage capacoty (SPICE), session usage, alert consumption, or reporting units.</p> </li> <li> <p>Amazon Quick Sight doesn't currently support the tag editor for Resource Groups.</p> </li> </ul>",
     "UntagResource": "<p>Removes a tag or tags from a resource.</p>",
@@ -1061,6 +1062,7 @@
         "UpdateTopicResponse$RefreshArn": "<p>The Amazon Resource Name (ARN) of the topic refresh.</p>",
         "UpdateVPCConnectionResponse$Arn": "<p>The Amazon Resource Name (ARN) of the VPC connection.</p>",
         "User$Arn": "<p>The Amazon Resource Name (ARN) for the user.</p>",
+        "UserIdentifier$UserArn": "<p>The Amazon Resource Name (ARN) of the user that you want to get identity context for.</p>",
         "VPCConnection$Arn": "<p>The Amazon Resource Name (ARN) of the VPC connection.</p>",
         "VPCConnectionSummary$Arn": "<p>The Amazon Resource Name (ARN) of the VPC connection.</p>",
         "VpcConnectionProperties$VpcConnectionArn": "<p>The Amazon Resource Name (ARN) for the VPC connection.</p>"
@@ -2015,6 +2017,7 @@
         "GenerateEmbedUrlForRegisteredUserRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the dashboard that you're embedding.</p>",
         "GenerateEmbedUrlForRegisteredUserWithIdentityRequest$AwsAccountId": "<p>The ID of the Amazon Web Services registered user.</p>",
         "GetDashboardEmbedUrlRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the dashboard that you're embedding.</p>",
+        "GetIdentityContextRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the user whose identity context you want to retrieve is in. Currently, you use the ID for the Amazon Web Services account that contains your Quick Sight account.</p>",
         "GetSessionEmbedUrlRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account associated with your Amazon Quick Sight subscription.</p>",
         "IAMPolicyAssignment$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "ListActionConnectorsRequest$AwsAccountId": "<p>The Amazon Web Services account ID for which to list action connectors.</p>",
@@ -2241,6 +2244,12 @@
         "BarChartVisual$ChartConfiguration": "<p>The configuration settings of the visual.</p>"
       }
     },
+    "BarChartDefaultSeriesSettings": {
+      "base": "<p>The options that determine the default presentation of all bar series in <code>BarChartVisual</code>.</p>",
+      "refs": {
+        "BarChartConfiguration$DefaultSeriesSettings": "<p>The options that determine the default presentation of all bar series in <code>BarChartVisual</code>.</p>"
+      }
+    },
     "BarChartFieldWells": {
       "base": "<p>The field wells of a <code>BarChartVisual</code>.</p> <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>",
       "refs": {
@@ -2253,6 +2262,13 @@
         "BarChartConfiguration$Orientation": "<p>The orientation of the bars in a bar chart visual. There are two valid values in this structure:</p> <ul> <li> <p> <code>HORIZONTAL</code>: Used for charts that have horizontal bars. Visuals that use this value are horizontal bar charts, horizontal stacked bar charts, and horizontal stacked 100% bar charts.</p> </li> <li> <p> <code>VERTICAL</code>: Used for charts that have vertical bars. Visuals that use this value are vertical bar charts, vertical stacked bar charts, and vertical stacked 100% bar charts.</p> </li> </ul>"
       }
     },
+    "BarChartSeriesSettings": {
+      "base": "<p>Options that determine the presentation of a bar series in the visual.</p>",
+      "refs": {
+        "DataFieldBarSeriesItem$Settings": "<p>Options that determine the presentation of bar series associated to the field.</p>",
+        "FieldBarSeriesItem$Settings": "<p>Options that determine the presentation of bar series associated to the field.</p>"
+      }
+    },
     "BarChartSortConfiguration": {
       "base": "<p>sort-configuration-description</p>",
       "refs": {
@@ -2263,6 +2279,18 @@
       "base": "<p>A bar chart.</p> <p>The <code>BarChartVisual</code> structure describes a visual that is a member of the bar chart family. The following charts can be described using this structure:</p> <ul> <li> <p>Horizontal bar chart</p> </li> <li> <p>Vertical bar chart</p> </li> <li> <p>Horizontal stacked bar chart</p> </li> <li> <p>Vertical stacked bar chart</p> </li> <li> <p>Horizontal stacked 100% bar chart</p> </li> <li> <p>Vertical stacked 100% bar chart</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/bar-charts.html\">Using bar charts</a> in the <i>Amazon Quick Suite User Guide</i>.</p>",
       "refs": {
         "Visual$BarChartVisual": "<p>A bar chart.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/bar-charts.html\">Using bar charts</a> in the <i>Amazon Quick Suite User Guide</i>.</p>"
+      }
+    },
+    "BarSeriesItem": {
+      "base": "<p>The series item configuration of a <code>BarChartVisual</code>.</p> <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>",
+      "refs": {
+        "BarSeriesItemList$member": null
+      }
+    },
+    "BarSeriesItemList": {
+      "base": null,
+      "refs": {
+        "BarChartConfiguration$Series": "<p>The series item configuration of a <code>BarChartVisual</code>.</p>"
       }
     },
     "BarsArrangement": {
@@ -2503,6 +2531,15 @@
         "FreeFormLayoutElement$BorderRadius": "<p>The border radius of a free-form layout element.</p>",
         "GridLayoutElement$BorderRadius": "<p>The border radius of a grid layout element.</p>",
         "TileStyle$BorderRadius": "<p>The border radius of a tile.</p>"
+      }
+    },
+    "BorderSettings": {
+      "base": "<p>Border settings configuration for visual elements, including visibility, width, and color properties.</p>",
+      "refs": {
+        "BarChartDefaultSeriesSettings$BorderSettings": "<p>Border settings for all bar series in the visual.</p>",
+        "BarChartSeriesSettings$BorderSettings": "<p>Border settings for the bar series.</p>",
+        "ComboChartDefaultSeriesSettings$BorderSettings": "<p>Border settings for all bar series in the visual.</p>",
+        "ComboChartSeriesSettings$BorderSettings": "<p>Border settings for the bar series in the visual.</p>"
       }
     },
     "BorderStyle": {
@@ -3216,7 +3253,8 @@
         "TimeRangeDrillDownFilter$Column": "<p>The column that the filter is applied to.</p>",
         "TimeRangeFilter$Column": "<p>The column that the filter is applied to.</p>",
         "TopBottomFilter$Column": "<p>The column that the filter is applied to.</p>",
-        "UnaggregatedField$Column": "<p>The column that is used in the <code>UnaggregatedField</code>.</p>"
+        "UnaggregatedField$Column": "<p>The column that is used in the <code>UnaggregatedField</code>.</p>",
+        "VisualCustomizationAdditionalFieldsList$member": null
       }
     },
     "ColumnLevelPermissionRule": {
@@ -3364,10 +3402,23 @@
         "ComboChartVisual$ChartConfiguration": "<p>The configuration settings of the visual.</p>"
       }
     },
+    "ComboChartDefaultSeriesSettings": {
+      "base": "<p>The options that determine the default presentation of all series in <code>ComboChartVisual</code>.</p>",
+      "refs": {
+        "ComboChartConfiguration$DefaultSeriesSettings": "<p>The options that determine the default presentation of all series in <code>ComboChartVisual</code>.</p>"
+      }
+    },
     "ComboChartFieldWells": {
       "base": "<p>The field wells of the visual.</p> <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>",
       "refs": {
         "ComboChartConfiguration$FieldWells": "<p>The field wells of the visual.</p>"
+      }
+    },
+    "ComboChartSeriesSettings": {
+      "base": "<p>Options that determine the presentation of a series in the visual.</p>",
+      "refs": {
+        "DataFieldComboSeriesItem$Settings": "<p>Options that determine the presentation of series associated to the field.</p>",
+        "FieldComboSeriesItem$Settings": "<p>Options that determine the presentation of series associated to the field.</p>"
       }
     },
     "ComboChartSortConfiguration": {
@@ -3380,6 +3431,18 @@
       "base": "<p>A combo chart.</p> <p>The <code>ComboChartVisual</code> includes stacked bar combo charts and clustered bar combo charts</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/combo-charts.html\">Using combo charts</a> in the <i>Amazon Quick Suite User Guide</i>.</p>",
       "refs": {
         "Visual$ComboChartVisual": "<p>A combo chart.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/combo-charts.html\">Using combo charts</a> in the <i>Amazon Quick Suite User Guide</i>.</p>"
+      }
+    },
+    "ComboSeriesItem": {
+      "base": "<p>The series item configuration of a <code>ComboChartVisual</code>.</p> <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>",
+      "refs": {
+        "ComboSeriesItemList$member": null
+      }
+    },
+    "ComboSeriesItemList": {
+      "base": null,
+      "refs": {
+        "ComboChartConfiguration$Series": "<p>The series item configuration of a <code>ComboChartVisual</code>.</p>"
       }
     },
     "CommitMode": {
@@ -3612,6 +3675,24 @@
       "base": null,
       "refs": {
         "ContributionAnalysisDefault$ContributorDimensions": "<p>The dimensions columns that are used in the contribution analysis, usually a list of <code>ColumnIdentifiers</code>.</p>"
+      }
+    },
+    "Coordinate": {
+      "base": "<p>The preference coordinate for the geocode preference.</p>",
+      "refs": {
+        "GeocodePreferenceValue$Coordinate": "<p>The preference coordinate for the geocode preference.</p>"
+      }
+    },
+    "CoordinateLatitudeDouble": {
+      "base": null,
+      "refs": {
+        "Coordinate$Latitude": "<p>The latitude coordinate value for the geocode preference.</p>"
+      }
+    },
+    "CoordinateLongitudeDouble": {
+      "base": null,
+      "refs": {
+        "Coordinate$Longitude": "<p>The longitude coordinate value for the geocode preference.</p>"
       }
     },
     "CopySourceArn": {
@@ -4063,6 +4144,19 @@
         "VisualMenuOption$AvailabilityStatus": "<p>The availaiblity status of a visual's menu options.</p>"
       }
     },
+    "DashboardCustomizationStatus": {
+      "base": null,
+      "refs": {
+        "VisualCustomizationFieldsConfiguration$Status": "<p>Specifies whether dashboard readers can customize fields for this visual. This option is <code>ENABLED</code> by default.</p>"
+      }
+    },
+    "DashboardCustomizationVisualOptions": {
+      "base": "<p>The options that define customizations available to dashboard readers for a specific visual</p>",
+      "refs": {
+        "PivotTableConfiguration$DashboardCustomizationVisualOptions": "<p>The options that define customizations available to dashboard readers for a specific visual</p>",
+        "TableConfiguration$DashboardCustomizationVisualOptions": "<p>The options that define customizations available to dashboard readers for a specific visual</p>"
+      }
+    },
     "DashboardError": {
       "base": "<p>Dashboard error.</p>",
       "refs": {
@@ -4227,6 +4321,18 @@
       "base": "<p>The theme colors that are used for data colors in charts. The colors description is a hexadecimal color code that consists of six alphanumerical characters, prefixed with <code>#</code>, for example #37BFF5. </p>",
       "refs": {
         "ThemeConfiguration$DataColorPalette": "<p>Color properties that apply to chart data colors.</p>"
+      }
+    },
+    "DataFieldBarSeriesItem": {
+      "base": "<p>The data field series item configuration of a <code>BarChartVisual</code>.</p>",
+      "refs": {
+        "BarSeriesItem$DataFieldBarSeriesItem": "<p>The data field series item configuration of a <code>BarChartVisual</code>.</p>"
+      }
+    },
+    "DataFieldComboSeriesItem": {
+      "base": "<p>The data field series item configuration of a <code>ComboChartVisual</code>.</p>",
+      "refs": {
+        "ComboSeriesItem$DataFieldComboSeriesItem": "<p>The data field series item configuration of a <code>ComboChartVisual</code>.</p>"
       }
     },
     "DataFieldSeriesItem": {
@@ -5036,7 +5142,44 @@
       "refs": {
         "AssetBundleImportJobDataSourceCredentialPair$Username": "<p>The username for the data source connection.</p>",
         "CredentialPair$Username": "<p>User name.</p>",
+        "KeyPairCredentials$KeyPairUsername": "<p>Username</p>",
         "WebProxyCredentials$WebProxyUsername": "<p>The username for authenticating with the web proxy server.</p>"
+      }
+    },
+    "DecalPatternType": {
+      "base": null,
+      "refs": {
+        "DecalSettings$DecalPatternType": "<p>Type of pattern used for the decal, such as solid, diagonal, or circular patterns in various sizes.</p> <ul> <li> <p> <code>SOLID</code>: Solid fill pattern.</p> </li> <li> <p> <code>DIAGONAL_SMALL</code>: Small diagonal stripes pattern.</p> </li> <li> <p> <code>DIAGONAL_MEDIUM</code>: Medium diagonal stripes pattern.</p> </li> <li> <p> <code>DIAGONAL_LARGE</code>: Large diagonal stripes pattern.</p> </li> <li> <p> <code>DIAGONAL_OPPOSITE_SMALL</code>: Small cross-diagonal stripes pattern.</p> </li> <li> <p> <code>DIAGONAL_OPPOSITE_MEDIUM</code>: Medium cross-diagonal stripes pattern.</p> </li> <li> <p> <code>DIAGONAL_OPPOSITE_LARGE</code>: Large cross-diagonal stripes pattern.</p> </li> <li> <p> <code>CIRCLE_SMALL</code>: Small circle pattern.</p> </li> <li> <p> <code>CIRCLE_MEDIUM</code>: Medium circle pattern.</p> </li> <li> <p> <code>CIRCLE_LARGE</code>: Large circle pattern.</p> </li> <li> <p> <code>DIAMOND_SMALL</code>: Small diamonds pattern.</p> </li> <li> <p> <code>DIAMOND_MEDIUM</code>: Medium diamonds pattern.</p> </li> <li> <p> <code>DIAMOND_LARGE</code>: Large diamonds pattern.</p> </li> <li> <p> <code>DIAMOND_GRID_SMALL</code>: Small diamond grid pattern.</p> </li> <li> <p> <code>DIAMOND_GRID_MEDIUM</code>: Medium diamond grid pattern.</p> </li> <li> <p> <code>DIAMOND_GRID_LARGE</code>: Large diamond grid pattern.</p> </li> <li> <p> <code>CHECKERBOARD_SMALL</code>: Small checkerboard pattern.</p> </li> <li> <p> <code>CHECKERBOARD_MEDIUM</code>: Medium checkerboard pattern.</p> </li> <li> <p> <code>CHECKERBOARD_LARGE</code>: Large checkerboard pattern.</p> </li> <li> <p> <code>TRIANGLE_SMALL</code>: Small triangles pattern.</p> </li> <li> <p> <code>TRIANGLE_MEDIUM</code>: Medium triangles pattern.</p> </li> <li> <p> <code>TRIANGLE_LARGE</code>: Large triangles pattern.</p> </li> </ul>"
+      }
+    },
+    "DecalSettings": {
+      "base": "<p>Decal settings for accessibility features that define visual patterns and styling for data elements.</p>",
+      "refs": {
+        "BarChartDefaultSeriesSettings$DecalSettings": "<p>Decal settings for all bar series in the visual.</p>",
+        "BarChartSeriesSettings$DecalSettings": "<p>Decal settings for the bar series.</p>",
+        "ComboChartDefaultSeriesSettings$DecalSettings": "<p>Decal settings for all series in the visual.</p>",
+        "ComboChartSeriesSettings$DecalSettings": "<p>Decal settings for the series in the visual.</p>",
+        "DecalSettingsList$member": null,
+        "LineChartDefaultSeriesSettings$DecalSettings": "<p>Decal settings options for all line series in the visual.</p>",
+        "LineChartSeriesSettings$DecalSettings": "<p>Decal settings for a line series in <code>LineChartVisual</code>.</p>"
+      }
+    },
+    "DecalSettingsConfiguration": {
+      "base": "<p>Decal settings configuration for a column</p>",
+      "refs": {
+        "ColumnConfiguration$DecalSettingsConfiguration": "<p>Decal configuration of the column.</p>"
+      }
+    },
+    "DecalSettingsList": {
+      "base": null,
+      "refs": {
+        "DecalSettingsConfiguration$CustomDecalSettings": "<p>A list of up to 50 decal settings.</p>"
+      }
+    },
+    "DecalStyleType": {
+      "base": null,
+      "refs": {
+        "DecalSettings$DecalStyleType": "<p>Style type for the decal, which can be either manual or automatic. This field is only applicable for line series.</p> <ul> <li> <p> <code>Manual</code>: Apply manual line and marker configuration for line series.</p> </li> <li> <p> <code>Auto</code>: Apply automatic line and marker configuration for line series.</p> </li> </ul>"
       }
     },
     "DecimalDatasetParameter": {
@@ -6147,6 +6290,12 @@
         "CreateAccountSubscriptionRequest$Edition": "<p>The edition of Amazon Quick Sight that you want your account to have. Currently, you can choose from <code>ENTERPRISE</code> or <code>ENTERPRISE_AND_Q</code>.</p> <p>If you choose <code>ENTERPRISE_AND_Q</code>, the following parameters are required:</p> <ul> <li> <p> <code>FirstName</code> </p> </li> <li> <p> <code>LastName</code> </p> </li> <li> <p> <code>EmailAddress</code> </p> </li> <li> <p> <code>ContactNumber</code> </p> </li> </ul>"
       }
     },
+    "ElementValue": {
+      "base": null,
+      "refs": {
+        "DecalSettings$ElementValue": "<p>Field value of the field that you are setting the decal pattern to. Applicable only for field level settings.</p>"
+      }
+    },
     "Email": {
       "base": null,
       "refs": {
@@ -6335,10 +6484,22 @@
         "FailedKeyRegistrationEntries$member": null
       }
     },
+    "FieldBarSeriesItem": {
+      "base": "<p>The field series item configuration of a <code>BarChartVisual</code>.</p>",
+      "refs": {
+        "BarSeriesItem$FieldBarSeriesItem": "<p>The field series item configuration of a <code>BarChartVisual</code>.</p>"
+      }
+    },
     "FieldBasedTooltip": {
       "base": "<p>The setup for the detailed tooltip.</p>",
       "refs": {
         "TooltipOptions$FieldBasedTooltip": "<p>The setup for the detailed tooltip. The tooltip setup is always saved. The display type is decided based on the tooltip type.</p>"
+      }
+    },
+    "FieldComboSeriesItem": {
+      "base": "<p>The field series item configuration of a <code>ComboChartVisual</code>.</p>",
+      "refs": {
+        "ComboSeriesItem$FieldComboSeriesItem": "<p>The field series item configuration of a <code>ComboChartVisual</code>.</p>"
       }
     },
     "FieldFolder": {
@@ -6376,12 +6537,16 @@
         "CategoricalMeasureField$FieldId": "<p>The custom field ID.</p>",
         "ContributionAnalysisDefault$MeasureFieldId": "<p>The measure field that is used in the contribution analysis.</p>",
         "DataBarsOptions$FieldId": "<p>The field ID for the data bars options.</p>",
+        "DataFieldBarSeriesItem$FieldId": "<p>Field ID of the field that you are setting the series configuration for.</p>",
+        "DataFieldComboSeriesItem$FieldId": "<p>Field ID of the field that you are setting the series configuration for.</p>",
         "DataFieldSeriesItem$FieldId": "<p>The field ID of the field that you are setting the axis binding to.</p>",
         "DataPathLabelType$FieldId": "<p>The field ID of the field that the data label needs to be applied to.</p>",
         "DataPathValue$FieldId": "<p>The field ID of the field that needs to be sorted.</p>",
         "DateDimensionField$FieldId": "<p>The custom field ID.</p>",
         "DateMeasureField$FieldId": "<p>The custom field ID.</p>",
         "DestinationParameterValueConfiguration$SourceField": "<p>The source field ID of the destination parameter.</p>",
+        "FieldBarSeriesItem$FieldId": "<p>Field ID of the field for which you are setting the series configuration.</p>",
+        "FieldComboSeriesItem$FieldId": "<p>Field ID of the field for which you are setting the series configuration.</p>",
         "FieldLabelType$FieldId": "<p>Indicates the field that is targeted by the field label.</p>",
         "FieldOrderList$member": null,
         "FieldSeriesItem$FieldId": "<p>The field ID of the field for which you are setting the axis binding.</p>",
@@ -7213,6 +7378,62 @@
         "ColumnTag$ColumnGeographicRole": "<p>A geospatial role for a column.</p>"
       }
     },
+    "GeocodePreference": {
+      "base": "<p>The geocode preference.</p>",
+      "refs": {
+        "GeocodePreferenceList$member": null
+      }
+    },
+    "GeocodePreferenceList": {
+      "base": null,
+      "refs": {
+        "FilledMapVisual$GeocodingPreferences": "<p>The geocoding prefences for filled map visual.</p>",
+        "GeospatialMapVisual$GeocodingPreferences": "<p>The geocoding prefences for geospatial map.</p>"
+      }
+    },
+    "GeocodePreferenceValue": {
+      "base": "<p>The preference value for the geocode preference.</p>",
+      "refs": {
+        "GeocodePreference$Preference": "<p>The preference definition for the geocode preference.</p>"
+      }
+    },
+    "GeocoderHierarchy": {
+      "base": "<p>The preference hierarchy for the geocode preference.</p>",
+      "refs": {
+        "GeocodePreference$RequestKey": "<p>The unique request key for the geocode preference.</p>",
+        "GeocodePreferenceValue$GeocoderHierarchy": "<p>The preference hierarchy for the geocode preference.</p>"
+      }
+    },
+    "GeocoderHierarchyCityString": {
+      "base": null,
+      "refs": {
+        "GeocoderHierarchy$City": "<p>The city value for the preference hierarchy.</p>"
+      }
+    },
+    "GeocoderHierarchyCountryString": {
+      "base": null,
+      "refs": {
+        "GeocoderHierarchy$Country": "<p>The country value for the preference hierarchy.</p>"
+      }
+    },
+    "GeocoderHierarchyCountyString": {
+      "base": null,
+      "refs": {
+        "GeocoderHierarchy$County": "<p>The county/district value for the preference hierarchy.</p>"
+      }
+    },
+    "GeocoderHierarchyPostCodeString": {
+      "base": null,
+      "refs": {
+        "GeocoderHierarchy$PostCode": "<p>The postcode value for the preference hierarchy.</p>"
+      }
+    },
+    "GeocoderHierarchyStateString": {
+      "base": null,
+      "refs": {
+        "GeocoderHierarchy$State": "<p>The state/region value for the preference hierarchy.</p>"
+      }
+    },
     "GeospatialCategoricalColor": {
       "base": "<p>The definition for a categorical color.</p>",
       "refs": {
@@ -7554,6 +7775,14 @@
       "base": null,
       "refs": {}
     },
+    "GetIdentityContextRequest": {
+      "base": "<p>///////////////////////// /////////////////////////</p>",
+      "refs": {}
+    },
+    "GetIdentityContextResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetSessionEmbedUrlRequest": {
       "base": null,
       "refs": {}
@@ -7891,6 +8120,8 @@
     "HexColorWithTransparency": {
       "base": null,
       "refs": {
+        "BorderSettings$BorderColor": "<p>Color of the border.</p>",
+        "DecalSettings$DecalColor": "<p>Color configuration for the decal pattern.</p>",
         "FreeFormLayoutElementBackgroundStyle$Color": "<p>The background color of a free-form layout element.</p>",
         "FreeFormLayoutElementBorderStyle$Color": "<p>The border color of a free-form layout element.</p>",
         "GeospatialCategoricalDataColor$Color": "<p>The color and opacity values for the category data color.</p>",
@@ -8654,6 +8885,12 @@
         "KPIVisualStandardLayout$Type": "<p>The standard layout type.</p>"
       }
     },
+    "KeyPairCredentials": {
+      "base": "<p>The combination of username, private key and passphrase that are used as credentials.</p>",
+      "refs": {
+        "DataSourceCredentials$KeyPairCredentials": "<p>The credentials for connecting using key-pair.</p>"
+      }
+    },
     "KeyRegistration": {
       "base": null,
       "refs": {
@@ -8879,6 +9116,8 @@
     "LineChartLineStyleSettings": {
       "base": "<p>Line styles options for a line series in <code>LineChartVisual</code>.</p>",
       "refs": {
+        "ComboChartDefaultSeriesSettings$LineStyleSettings": "<p>Line styles options for all line series in the visual.</p>",
+        "ComboChartSeriesSettings$LineStyleSettings": "<p>Line styles options for the line series in the visual.</p>",
         "LineChartDefaultSeriesSettings$LineStyleSettings": "<p>Line styles options for all line series in the visual.</p>",
         "LineChartSeriesSettings$LineStyleSettings": "<p>Line styles options for a line series in <code>LineChartVisual</code>.</p>"
       }
@@ -8892,6 +9131,8 @@
     "LineChartMarkerStyleSettings": {
       "base": "<p>Marker styles options for a line series in <code>LineChartVisual</code>.</p>",
       "refs": {
+        "ComboChartDefaultSeriesSettings$MarkerStyleSettings": "<p>Marker styles options for all line series in the visual.</p>",
+        "ComboChartSeriesSettings$MarkerStyleSettings": "<p>Marker styles options for the line series in the visual.</p>",
         "LineChartDefaultSeriesSettings$MarkerStyleSettings": "<p>Marker styles options for all line series in the visual.</p>",
         "LineChartSeriesSettings$MarkerStyleSettings": "<p>Marker styles options for a line series in <code>LineChartVisual</code>.</p>"
       }
@@ -9718,6 +9959,7 @@
         "DescribeUserRequest$Namespace": "<p>The namespace. Currently, you should set this to <code>default</code>.</p>",
         "GenerateEmbedUrlForAnonymousUserRequest$Namespace": "<p>The Amazon Quick Sight namespace that the anonymous user virtually belongs to. If you are not using an Amazon Quick Suite custom namespace, set this to <code>default</code>.</p>",
         "GetDashboardEmbedUrlRequest$Namespace": "<p>The Amazon Quick Sight namespace that contains the dashboard IDs in this request. If you're not using a custom namespace, set <code>Namespace = default</code>.</p>",
+        "GetIdentityContextRequest$Namespace": "<p>The namespace of the user that you want to get identity context for. This parameter is required when the UserIdentifier is specified using Email or UserName.</p>",
         "ListGroupMembershipsRequest$Namespace": "<p>The namespace of the group that you want a list of users from.</p>",
         "ListGroupsRequest$Namespace": "<p>The namespace that you want a list of groups from.</p>",
         "ListIAMPolicyAssignmentsForUserRequest$Namespace": "<p>The namespace of the assignment.</p>",
@@ -10746,6 +10988,7 @@
       "base": "String based length that is composed of value and unit in px",
       "refs": {
         "AxisDisplayOptions$AxisOffset": "<p>The offset value that determines the starting placement of the axis within a visual's bounds.</p>",
+        "BorderSettings$BorderWidth": "<p>Width of the border. Valid range is from 1px to 8px.</p>",
         "FontSize$Absolute": "<p>The font size that you want to use in px.</p>",
         "FreeFormLayoutElement$XAxisLocation": "<p>The x-axis coordinate of the element.</p>",
         "FreeFormLayoutElement$Width": "<p>The width of an element within a free-form layout.</p>",
@@ -10933,6 +11176,18 @@
       "base": null,
       "refs": {
         "ColumnLevelPermissionRule$Principals": "<p>An array of Amazon Resource Names (ARNs) for Quick Sight users or groups.</p>"
+      }
+    },
+    "PrivateKey": {
+      "base": null,
+      "refs": {
+        "KeyPairCredentials$PrivateKey": "<p>PrivateKey</p>"
+      }
+    },
+    "PrivateKeyPassphrase": {
+      "base": null,
+      "refs": {
+        "KeyPairCredentials$PrivateKeyPassphrase": "<p>PrivateKeyPassphrase</p>"
       }
     },
     "ProgressBarOptions": {
@@ -11491,6 +11746,18 @@
       "base": "<p>Information about the Amazon Quick Sight console that you want to embed.</p>",
       "refs": {
         "RegisteredUserEmbeddingExperienceConfiguration$QuickSightConsole": "<p>The configuration details for providing each Amazon Quick Sight console embedding experience. This can be used along with custom permissions to restrict access to certain features. For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/customizing-permissions-to-the-quicksight-console.html\">Customizing Access to the Amazon Quick Sight Console</a> in the <i>Amazon Quick Suite User Guide</i>.</p> <p>Use <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_GenerateEmbedUrlForRegisteredUser.html\">GenerateEmbedUrlForRegisteredUser</a> </code> where you want to provide an authoring portal that allows users to create data sources, datasets, analyses, and dashboards. The users who accesses an embedded Amazon Quick Sight console needs to belong to the author or admin security cohort. If you want to restrict permissions to some of these features, add a custom permissions profile to the user with the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_UpdateUser.html\">UpdateUser</a> </code> API operation. Use the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_RegisterUser.html\">RegisterUser</a> </code> API operation to add a new user with a custom permission profile attached. For more information, see the following sections in the <i>Amazon Quick Suite User Guide</i>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics-full-console-for-authenticated-users.html\">Embedding the Full Functionality of the Amazon Quick Sight Console for Authenticated Users</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/customizing-permissions-to-the-quicksight-console.html\">Customizing Access to the Amazon Quick Suite Console</a> </p> </li> </ul> <p>For more information about the high-level steps for embedding and for an interactive demo of the ways you can customize embedding, visit the <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/quicksight-dev-portal.html\">Amazon Quick Suite Developer Portal</a>.</p>"
+      }
+    },
+    "RegisteredUserSnapshotJobResult": {
+      "base": "<p>A structure that contains information about files that are requested for registered user during a <code>StartDashboardSnapshotJob</code> API call.</p>",
+      "refs": {
+        "RegisteredUserSnapshotJobResultList$member": null
+      }
+    },
+    "RegisteredUserSnapshotJobResultList": {
+      "base": null,
+      "refs": {
+        "SnapshotJobResult$RegisteredUsers": "<p>A list of <code>RegisteredUserSnapshotJobResult</code> objects that contain information about files that are requested for registered user during a <code>StartDashboardSnapshotJob</code> API call.</p>"
       }
     },
     "RelationalTable": {
@@ -12371,11 +12638,15 @@
     "SensitiveString": {
       "base": null,
       "refs": {
+        "DataFieldBarSeriesItem$FieldValue": "<p>Field value of the field that you are setting the series configuration for.</p>",
+        "DataFieldComboSeriesItem$FieldValue": "<p>Field value of the field that you are setting the series configuration for.</p>",
         "DataFieldSeriesItem$FieldValue": "<p>The field value of the field that you are setting the axis binding to.</p>",
         "SemanticType$TruthyCellValue": "<p>The semantic type truthy cell value.</p>",
         "SemanticType$FalseyCellValue": "<p>The semantic type falsey cell value.</p>",
         "SensitiveStringList$member": null,
-        "StringValueWhenUnsetConfiguration$CustomValue": "<p>A custom value that's used when the value of a parameter isn't set.</p>"
+        "StringValueWhenUnsetConfiguration$CustomValue": "<p>A custom value that's used when the value of a parameter isn't set.</p>",
+        "UserIdentifier$UserName": "<p>The name of the user that you want to get identity context for.</p>",
+        "UserIdentifier$Email": "<p>The email address of the user that you want to get identity context for.</p>"
       }
     },
     "SensitiveStringList": {
@@ -13225,7 +13496,7 @@
       }
     },
     "SnapshotJobErrorInfo": {
-      "base": "<p>An object that contains information on the error that caused the snapshot job to fail.</p>",
+      "base": "<p>An object that contains information on the error that caused the snapshot job to fail.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeDashboardSnapshotJobResult.html\">DescribeDashboardSnapshotJobResult API</a>.</p>",
       "refs": {
         "DescribeDashboardSnapshotJobResultResponse$ErrorInfo": "<p>Displays information for the error that caused a job to fail.</p>"
       }
@@ -13257,7 +13528,8 @@
     "SnapshotJobResultFileGroupList": {
       "base": null,
       "refs": {
-        "AnonymousUserSnapshotJobResult$FileGroups": "<p>A list of <code>SnapshotJobResultFileGroup</code> objects that contain information on the files that are requested during a <code>StartDashboardSnapshotJob</code> API call. If the job succeeds, these objects contain the location where the snapshot artifacts are stored. If the job fails, the objects contain information about the error that caused the job to fail.</p>"
+        "AnonymousUserSnapshotJobResult$FileGroups": "<p>A list of <code>SnapshotJobResultFileGroup</code> objects that contain information on the files that are requested during a <code>StartDashboardSnapshotJob</code> API call. If the job succeeds, these objects contain the location where the snapshot artifacts are stored. If the job fails, the objects contain information about the error that caused the job to fail.</p>",
+        "RegisteredUserSnapshotJobResult$FileGroups": "<p>A list of <code>SnapshotJobResultFileGroup</code> objects that contain information on the files that are requested for registered user during a <code>StartDashboardSnapshotJob</code> API call. If the job succeeds, these objects contain the location where the snapshot artifacts are stored. If the job fails, the objects contain information about the error that caused the job to fail.</p>"
       }
     },
     "SnapshotJobS3Result": {
@@ -13293,9 +13565,9 @@
       }
     },
     "SnapshotUserConfiguration": {
-      "base": "<p>A structure that contains information about the users that the dashboard snapshot is generated for.</p>",
+      "base": "<p>A structure that contains information about the users that the dashboard snapshot is generated for.</p> <important> <p>When using identity-enhanced session credentials, set the UserConfiguration request attribute to null. Otherwise, the request will be invalid.</p> </important>",
       "refs": {
-        "StartDashboardSnapshotJobRequest$UserConfiguration": "<p> A structure that contains information about the anonymous users that the generated snapshot is for. This API will not return information about registered Amazon Quick Sight.</p>"
+        "StartDashboardSnapshotJobRequest$UserConfiguration": "<p>A structure that contains information about the users that the dashboard snapshot is generated for. The users can be either anonymous users or registered users. Anonymous users cannot be used together with registered users.</p> <important> <p>When using identity-enhanced session credentials, set the UserConfiguration request attribute to null. Otherwise, the request will be invalid.</p> </important>"
       }
     },
     "SnapshotUserConfigurationRedacted": {
@@ -13903,6 +14175,8 @@
         "GetFlowMetadataOutput$Arn": "<p>The Amazon Resource Name (ARN) of the flow.</p>",
         "GetFlowMetadataOutput$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "GetFlowPermissionsOutput$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "GetIdentityContextResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "GetIdentityContextResponse$Context": "<p>The identity context information for the user. This is an identity token that should be used as the ContextAssertion parameter in the <a href=\"https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html\">STS AssumeRole API</a> call to obtain identity enhanced AWS credentials.</p>",
         "GetSessionEmbedUrlResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "Group$PrincipalId": "<p>The principal ID of the group.</p>",
         "GroupSearchFilter$Value": "<p>The value of the named item, in this case <code>GROUP_NAME</code>, that you want to use as a filter.</p>",
@@ -15132,6 +15406,7 @@
         "FolderSummary$LastUpdatedTime": "<p>The time that the folder was last updated.</p>",
         "GetFlowMetadataOutput$CreatedTime": "<p>The time this flow was created.</p>",
         "GetFlowMetadataOutput$LastUpdatedTime": "<p>The last time this flow was modified.</p>",
+        "GetIdentityContextRequest$SessionExpiresAt": "<p>The timestamp at which the session will expire.</p>",
         "Ingestion$CreatedTime": "<p>The time that this ingestion started.</p>",
         "RefreshSchedule$StartAfterDateTime": "<p>Time after which the refresh schedule can be started, expressed in <code>YYYY-MM-DDTHH:MM:SS</code> format.</p>",
         "Template$LastUpdatedTime": "<p>Time when this was last updated.</p>",
@@ -16392,6 +16667,12 @@
         "UserList$member": null
       }
     },
+    "UserIdentifier": {
+      "base": "<p>A structure that contains information to identify a user.</p>",
+      "refs": {
+        "GetIdentityContextRequest$UserIdentifier": "<p>The identifier for the user whose identity context you want to retrieve.</p>"
+      }
+    },
     "UserList": {
       "base": null,
       "refs": {
@@ -16567,6 +16848,7 @@
       "refs": {
         "AxisDisplayOptions$AxisLineVisibility": "<p>Determines whether or not the axis line is visible.</p>",
         "AxisDisplayOptions$GridLineVisibility": "<p>Determines whether or not the grid line is visible.</p>",
+        "BorderSettings$BorderVisibility": "<p>Visibility setting for the border.</p>",
         "BoxPlotOptions$OutlierVisibility": "<p>Determines the visibility of the outlier in a box plot.</p>",
         "BoxPlotOptions$AllDataPointsVisibility": "<p>Determines the visibility of all data points of the box plot.</p>",
         "ChartAxisLabelOptions$Visibility": "<p>The visibility of an axis label on a chart. Choose one of the following options:</p> <ul> <li> <p> <code>VISIBLE</code>: Shows the axis.</p> </li> <li> <p> <code>HIDDEN</code>: Hides the axis.</p> </li> </ul>",
@@ -16580,6 +16862,7 @@
         "DateAxisOptions$MissingDateVisibility": "<p>Determines whether or not missing dates are displayed.</p>",
         "DateTimePickerControlDisplayOptions$HelperTextVisibility": "<p>The helper text visibility of the <code>DateTimePickerControlDisplayOptions</code>.</p>",
         "DateTimePickerControlDisplayOptions$DateIconVisibility": "<p>The date icon visibility of the <code>DateTimePickerControlDisplayOptions</code>.</p>",
+        "DecalSettings$DecalVisibility": "<p>Visibility setting for the decal pattern.</p>",
         "DonutCenterOptions$LabelVisibility": "<p>Determines the visibility of the label in a donut chart. In the Quick Sight console, this option is called <code>'Show total'</code>.</p>",
         "FieldBasedTooltip$AggregationVisibility": "<p>The visibility of <code>Show aggregations</code>.</p>",
         "FieldLabelType$Visibility": "<p>The visibility of the field label.</p>",
@@ -16737,6 +17020,18 @@
       "base": null,
       "refs": {
         "VisualCustomAction$Trigger": "<p>The trigger of the <code>VisualCustomAction</code>.</p> <p>Valid values are defined as follows:</p> <ul> <li> <p> <code>DATA_POINT_CLICK</code>: Initiates a custom action by a left pointer click on a data point.</p> </li> <li> <p> <code>DATA_POINT_MENU</code>: Initiates a custom action by right pointer click from the menu.</p> </li> </ul>"
+      }
+    },
+    "VisualCustomizationAdditionalFieldsList": {
+      "base": null,
+      "refs": {
+        "VisualCustomizationFieldsConfiguration$AdditionalFields": "<p>The additional dataset fields available for dashboard readers to customize the visual with, beyond the fields already configured on the visual.</p>"
+      }
+    },
+    "VisualCustomizationFieldsConfiguration": {
+      "base": "<p>The configuration that controls field customization options available to dashboard readers for a visual.</p>",
+      "refs": {
+        "DashboardCustomizationVisualOptions$FieldsConfiguration": "<p>The configuration that controls field customization options available to dashboard readers for a visual.</p>"
       }
     },
     "VisualHighlightOperation": {
@@ -17165,6 +17460,12 @@
       "base": null,
       "refs": {
         "DescribeAccountCustomizationRequest$Resolved": "<p>The <code>Resolved</code> flag works with the other parameters to determine which view of Quick Sight customizations is returned. You can add this flag to your command to use the same view that Quick Sight uses to identify which customizations to apply to the console. Omit this flag, or set it to <code>no-resolved</code>, to reveal customizations that are configured at different levels. </p>"
+      }
+    },
+    "statusCode": {
+      "base": null,
+      "refs": {
+        "GetIdentityContextResponse$Status": "<p>The HTTP status of the request.</p>"
       }
     }
   }

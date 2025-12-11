@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SESv2` - Update GetEmailIdentity and CreateEmailIdentity response to include SigningHostedZone in DkimAttributes. Updated PutEmailIdentityDkimSigningAttributes Response to include SigningHostedZone.
+* `Aws\Lambda` - Add Dotnet 10 (dotnet10) support to AWS Lambda.
+* `Aws\QuickSight` - This release adds new GetIdentityContext API, Dashboard customization options for tables and pivot tables, Visual styling options- borders and decals, map GeocodingPreferences, KeyPairCredentials for DataSourceCredentials. Snapshot APIs now support registered users. Parameters limit increased to 400
+* `Aws\Organizations` - Add support for policy operations on the NETWORK SECURITY DIRECTOR POLICY policy type.
+* `Aws\SecretsManager` - Add SortBy parameter to ListSecrets
+
 ## 3.367.0 - 2025-12-10
 
 * `Aws\S3` - A new S3 Transfer Manager implementation with multipart download capabilities. It allows better ways to configure each operation. Includes Progress Tracking, Transfer Event Listeners, and Automatic Multipart Uploads/Downloads.

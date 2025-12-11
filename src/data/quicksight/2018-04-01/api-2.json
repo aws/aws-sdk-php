@@ -2167,6 +2167,24 @@
       ],
       "readonly":true
     },
+    "GetIdentityContext":{
+      "name":"GetIdentityContext",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/identity-context",
+        "responseCode":200
+      },
+      "input":{"shape":"GetIdentityContextRequest"},
+      "output":{"shape":"GetIdentityContextResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "GetSessionEmbedUrl":{
       "name":"GetSessionEmbedUrl",
       "http":{
@@ -5952,12 +5970,21 @@
         "ValueAxis":{"shape":"AxisDisplayOptions"},
         "ValueLabelOptions":{"shape":"ChartAxisLabelOptions"},
         "ColorLabelOptions":{"shape":"ChartAxisLabelOptions"},
+        "DefaultSeriesSettings":{"shape":"BarChartDefaultSeriesSettings"},
+        "Series":{"shape":"BarSeriesItemList"},
         "Legend":{"shape":"LegendOptions"},
         "DataLabels":{"shape":"DataLabelOptions"},
         "Tooltip":{"shape":"TooltipOptions"},
         "ReferenceLines":{"shape":"ReferenceLineList"},
         "ContributionAnalysisDefaults":{"shape":"ContributionAnalysisDefaultList"},
         "Interactions":{"shape":"VisualInteractionOptions"}
+      }
+    },
+    "BarChartDefaultSeriesSettings":{
+      "type":"structure",
+      "members":{
+        "DecalSettings":{"shape":"DecalSettings"},
+        "BorderSettings":{"shape":"BorderSettings"}
       }
     },
     "BarChartFieldWells":{
@@ -5972,6 +5999,13 @@
         "HORIZONTAL",
         "VERTICAL"
       ]
+    },
+    "BarChartSeriesSettings":{
+      "type":"structure",
+      "members":{
+        "DecalSettings":{"shape":"DecalSettings"},
+        "BorderSettings":{"shape":"BorderSettings"}
+      }
     },
     "BarChartSortConfiguration":{
       "type":"structure",
@@ -5996,6 +6030,18 @@
         "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
         "VisualContentAltText":{"shape":"LongPlainText"}
       }
+    },
+    "BarSeriesItem":{
+      "type":"structure",
+      "members":{
+        "FieldBarSeriesItem":{"shape":"FieldBarSeriesItem"},
+        "DataFieldBarSeriesItem":{"shape":"DataFieldBarSeriesItem"}
+      }
+    },
+    "BarSeriesItemList":{
+      "type":"list",
+      "member":{"shape":"BarSeriesItem"},
+      "max":2000
     },
     "BarsArrangement":{
       "type":"string",
@@ -6227,6 +6273,14 @@
     "BorderRadius":{
       "type":"string",
       "max":50
+    },
+    "BorderSettings":{
+      "type":"structure",
+      "members":{
+        "BorderVisibility":{"shape":"Visibility"},
+        "BorderWidth":{"shape":"PixelLength"},
+        "BorderColor":{"shape":"HexColorWithTransparency"}
+      }
     },
     "BorderStyle":{
       "type":"structure",
@@ -6863,7 +6917,8 @@
         "Column":{"shape":"ColumnIdentifier"},
         "FormatConfiguration":{"shape":"FormatConfiguration"},
         "Role":{"shape":"ColumnRole"},
-        "ColorsConfiguration":{"shape":"ColorsConfiguration"}
+        "ColorsConfiguration":{"shape":"ColorsConfiguration"},
+        "DecalSettingsConfiguration":{"shape":"DecalSettingsConfiguration"}
       }
     },
     "ColumnConfigurationList":{
@@ -7114,6 +7169,8 @@
         "SecondaryYAxisLabelOptions":{"shape":"ChartAxisLabelOptions"},
         "SingleAxisOptions":{"shape":"SingleAxisOptions"},
         "ColorLabelOptions":{"shape":"ChartAxisLabelOptions"},
+        "DefaultSeriesSettings":{"shape":"ComboChartDefaultSeriesSettings"},
+        "Series":{"shape":"ComboSeriesItemList"},
         "Legend":{"shape":"LegendOptions"},
         "BarDataLabels":{"shape":"DataLabelOptions"},
         "LineDataLabels":{"shape":"DataLabelOptions"},
@@ -7123,10 +7180,28 @@
         "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
+    "ComboChartDefaultSeriesSettings":{
+      "type":"structure",
+      "members":{
+        "LineStyleSettings":{"shape":"LineChartLineStyleSettings"},
+        "MarkerStyleSettings":{"shape":"LineChartMarkerStyleSettings"},
+        "DecalSettings":{"shape":"DecalSettings"},
+        "BorderSettings":{"shape":"BorderSettings"}
+      }
+    },
     "ComboChartFieldWells":{
       "type":"structure",
       "members":{
         "ComboChartAggregatedFieldWells":{"shape":"ComboChartAggregatedFieldWells"}
+      }
+    },
+    "ComboChartSeriesSettings":{
+      "type":"structure",
+      "members":{
+        "LineStyleSettings":{"shape":"LineChartLineStyleSettings"},
+        "MarkerStyleSettings":{"shape":"LineChartMarkerStyleSettings"},
+        "DecalSettings":{"shape":"DecalSettings"},
+        "BorderSettings":{"shape":"BorderSettings"}
       }
     },
     "ComboChartSortConfiguration":{
@@ -7150,6 +7225,18 @@
         "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
         "VisualContentAltText":{"shape":"LongPlainText"}
       }
+    },
+    "ComboSeriesItem":{
+      "type":"structure",
+      "members":{
+        "FieldComboSeriesItem":{"shape":"FieldComboSeriesItem"},
+        "DataFieldComboSeriesItem":{"shape":"DataFieldComboSeriesItem"}
+      }
+    },
+    "ComboSeriesItemList":{
+      "type":"list",
+      "member":{"shape":"ComboSeriesItem"},
+      "max":2000
     },
     "CommitMode":{
       "type":"string",
@@ -7430,6 +7517,29 @@
       "member":{"shape":"ColumnIdentifier"},
       "max":4,
       "min":1
+    },
+    "Coordinate":{
+      "type":"structure",
+      "required":[
+        "Latitude",
+        "Longitude"
+      ],
+      "members":{
+        "Latitude":{"shape":"CoordinateLatitudeDouble"},
+        "Longitude":{"shape":"CoordinateLongitudeDouble"}
+      }
+    },
+    "CoordinateLatitudeDouble":{
+      "type":"double",
+      "box":true,
+      "max":90.0,
+      "min":-90.0
+    },
+    "CoordinateLongitudeDouble":{
+      "type":"double",
+      "box":true,
+      "max":180.0,
+      "min":-180.0
     },
     "CopySourceArn":{
       "type":"string",
@@ -8706,6 +8816,19 @@
         "DISABLED"
       ]
     },
+    "DashboardCustomizationStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "DashboardCustomizationVisualOptions":{
+      "type":"structure",
+      "members":{
+        "FieldsConfiguration":{"shape":"VisualCustomizationFieldsConfiguration"}
+      }
+    },
     "DashboardError":{
       "type":"structure",
       "members":{
@@ -8948,6 +9071,24 @@
         "Colors":{"shape":"ColorList"},
         "MinMaxGradient":{"shape":"ColorList"},
         "EmptyFillColor":{"shape":"HexColor"}
+      }
+    },
+    "DataFieldBarSeriesItem":{
+      "type":"structure",
+      "required":["FieldId"],
+      "members":{
+        "FieldId":{"shape":"FieldId"},
+        "FieldValue":{"shape":"SensitiveString"},
+        "Settings":{"shape":"BarChartSeriesSettings"}
+      }
+    },
+    "DataFieldComboSeriesItem":{
+      "type":"structure",
+      "required":["FieldId"],
+      "members":{
+        "FieldId":{"shape":"FieldId"},
+        "FieldValue":{"shape":"SensitiveString"},
+        "Settings":{"shape":"ComboChartSeriesSettings"}
       }
     },
     "DataFieldSeriesItem":{
@@ -9543,6 +9684,7 @@
         "CredentialPair":{"shape":"CredentialPair"},
         "CopySourceArn":{"shape":"CopySourceArn"},
         "SecretArn":{"shape":"SecretArn"},
+        "KeyPairCredentials":{"shape":"KeyPairCredentials"},
         "WebProxyCredentials":{"shape":"WebProxyCredentials"}
       },
       "sensitive":true
@@ -9984,6 +10126,61 @@
       "type":"string",
       "max":64,
       "min":1
+    },
+    "DecalPatternType":{
+      "type":"string",
+      "enum":[
+        "SOLID",
+        "DIAGONAL_MEDIUM",
+        "CIRCLE_MEDIUM",
+        "DIAMOND_GRID_MEDIUM",
+        "CHECKERBOARD_MEDIUM",
+        "TRIANGLE_MEDIUM",
+        "DIAGONAL_OPPOSITE_MEDIUM",
+        "DIAMOND_MEDIUM",
+        "DIAGONAL_LARGE",
+        "CIRCLE_LARGE",
+        "DIAMOND_GRID_LARGE",
+        "CHECKERBOARD_LARGE",
+        "TRIANGLE_LARGE",
+        "DIAGONAL_OPPOSITE_LARGE",
+        "DIAMOND_LARGE",
+        "DIAGONAL_SMALL",
+        "CIRCLE_SMALL",
+        "DIAMOND_GRID_SMALL",
+        "CHECKERBOARD_SMALL",
+        "TRIANGLE_SMALL",
+        "DIAGONAL_OPPOSITE_SMALL",
+        "DIAMOND_SMALL"
+      ]
+    },
+    "DecalSettings":{
+      "type":"structure",
+      "members":{
+        "ElementValue":{"shape":"ElementValue"},
+        "DecalVisibility":{"shape":"Visibility"},
+        "DecalColor":{"shape":"HexColorWithTransparency"},
+        "DecalPatternType":{"shape":"DecalPatternType"},
+        "DecalStyleType":{"shape":"DecalStyleType"}
+      }
+    },
+    "DecalSettingsConfiguration":{
+      "type":"structure",
+      "members":{
+        "CustomDecalSettings":{"shape":"DecalSettingsList"}
+      }
+    },
+    "DecalSettingsList":{
+      "type":"list",
+      "member":{"shape":"DecalSettings"},
+      "max":50
+    },
+    "DecalStyleType":{
+      "type":"string",
+      "enum":[
+        "Manual",
+        "Auto"
+      ]
     },
     "DecimalDatasetParameter":{
       "type":"structure",
@@ -13250,6 +13447,10 @@
         "ENTERPRISE_AND_Q"
       ]
     },
+    "ElementValue":{
+      "type":"string",
+      "max":1024
+    },
     "Email":{
       "type":"string",
       "pattern":"[\\w.%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}",
@@ -13431,12 +13632,28 @@
         "SenderFault":{"shape":"Boolean"}
       }
     },
+    "FieldBarSeriesItem":{
+      "type":"structure",
+      "required":["FieldId"],
+      "members":{
+        "FieldId":{"shape":"FieldId"},
+        "Settings":{"shape":"BarChartSeriesSettings"}
+      }
+    },
     "FieldBasedTooltip":{
       "type":"structure",
       "members":{
         "AggregationVisibility":{"shape":"Visibility"},
         "TooltipTitleType":{"shape":"TooltipTitleType"},
         "TooltipFields":{"shape":"TooltipItemList"}
+      }
+    },
+    "FieldComboSeriesItem":{
+      "type":"structure",
+      "required":["FieldId"],
+      "members":{
+        "FieldId":{"shape":"FieldId"},
+        "Settings":{"shape":"ComboChartSeriesSettings"}
       }
     },
     "FieldFolder":{
@@ -13627,7 +13844,8 @@
         "ConditionalFormatting":{"shape":"FilledMapConditionalFormatting"},
         "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "VisualContentAltText":{"shape":"LongPlainText"}
+        "VisualContentAltText":{"shape":"LongPlainText"},
+        "GeocodingPreferences":{"shape":"GeocodePreferenceList"}
       }
     },
     "Filter":{
@@ -14594,6 +14812,66 @@
         "LATITUDE"
       ]
     },
+    "GeocodePreference":{
+      "type":"structure",
+      "required":[
+        "RequestKey",
+        "Preference"
+      ],
+      "members":{
+        "RequestKey":{"shape":"GeocoderHierarchy"},
+        "Preference":{"shape":"GeocodePreferenceValue"}
+      }
+    },
+    "GeocodePreferenceList":{
+      "type":"list",
+      "member":{"shape":"GeocodePreference"},
+      "max":200,
+      "min":0
+    },
+    "GeocodePreferenceValue":{
+      "type":"structure",
+      "members":{
+        "GeocoderHierarchy":{"shape":"GeocoderHierarchy"},
+        "Coordinate":{"shape":"Coordinate"}
+      },
+      "union":true
+    },
+    "GeocoderHierarchy":{
+      "type":"structure",
+      "members":{
+        "Country":{"shape":"GeocoderHierarchyCountryString"},
+        "State":{"shape":"GeocoderHierarchyStateString"},
+        "County":{"shape":"GeocoderHierarchyCountyString"},
+        "City":{"shape":"GeocoderHierarchyCityString"},
+        "PostCode":{"shape":"GeocoderHierarchyPostCodeString"}
+      }
+    },
+    "GeocoderHierarchyCityString":{
+      "type":"string",
+      "max":3000,
+      "min":0
+    },
+    "GeocoderHierarchyCountryString":{
+      "type":"string",
+      "max":3000,
+      "min":0
+    },
+    "GeocoderHierarchyCountyString":{
+      "type":"string",
+      "max":3000,
+      "min":0
+    },
+    "GeocoderHierarchyPostCodeString":{
+      "type":"string",
+      "max":3000,
+      "min":0
+    },
+    "GeocoderHierarchyStateString":{
+      "type":"string",
+      "max":3000,
+      "min":0
+    },
     "GeospatialCategoricalColor":{
       "type":"structure",
       "required":["CategoryDataColors"],
@@ -14883,7 +15161,8 @@
         "ChartConfiguration":{"shape":"GeospatialMapConfiguration"},
         "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "VisualContentAltText":{"shape":"LongPlainText"}
+        "VisualContentAltText":{"shape":"LongPlainText"},
+        "GeocodingPreferences":{"shape":"GeocodePreferenceList"}
       }
     },
     "GeospatialNullDataSettings":{
@@ -15131,6 +15410,38 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "GetIdentityContextRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "UserIdentifier"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "UserIdentifier":{"shape":"UserIdentifier"},
+        "Namespace":{"shape":"Namespace"},
+        "SessionExpiresAt":{"shape":"Timestamp"}
+      }
+    },
+    "GetIdentityContextResponse":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "RequestId"
+      ],
+      "members":{
+        "Status":{
+          "shape":"statusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"},
+        "Context":{"shape":"String"}
       }
     },
     "GetSessionEmbedUrlRequest":{
@@ -16428,6 +16739,18 @@
         "VERTICAL"
       ]
     },
+    "KeyPairCredentials":{
+      "type":"structure",
+      "required":[
+        "KeyPairUsername",
+        "PrivateKey"
+      ],
+      "members":{
+        "KeyPairUsername":{"shape":"DbUsername"},
+        "PrivateKey":{"shape":"PrivateKey"},
+        "PrivateKeyPassphrase":{"shape":"PrivateKeyPassphrase"}
+      }
+    },
     "KeyRegistration":{
       "type":"list",
       "member":{"shape":"RegisteredCustomerManagedKey"}
@@ -16614,7 +16937,8 @@
       "members":{
         "AxisBinding":{"shape":"AxisBinding"},
         "LineStyleSettings":{"shape":"LineChartLineStyleSettings"},
-        "MarkerStyleSettings":{"shape":"LineChartMarkerStyleSettings"}
+        "MarkerStyleSettings":{"shape":"LineChartMarkerStyleSettings"},
+        "DecalSettings":{"shape":"DecalSettings"}
       }
     },
     "LineChartFieldWells":{
@@ -16663,7 +16987,8 @@
       "type":"structure",
       "members":{
         "LineStyleSettings":{"shape":"LineChartLineStyleSettings"},
-        "MarkerStyleSettings":{"shape":"LineChartMarkerStyleSettings"}
+        "MarkerStyleSettings":{"shape":"LineChartMarkerStyleSettings"},
+        "DecalSettings":{"shape":"DecalSettings"}
       }
     },
     "LineChartSortConfiguration":{
@@ -19078,7 +19403,7 @@
     "ParameterDeclarationList":{
       "type":"list",
       "member":{"shape":"ParameterDeclaration"},
-      "max":200
+      "max":400
     },
     "ParameterDropDownControl":{
       "type":"structure",
@@ -19513,6 +19838,7 @@
         "TotalOptions":{"shape":"PivotTableTotalOptions"},
         "FieldOptions":{"shape":"PivotTableFieldOptions"},
         "PaginatedReportOptions":{"shape":"PivotTablePaginatedReportOptions"},
+        "DashboardCustomizationVisualOptions":{"shape":"DashboardCustomizationVisualOptions"},
         "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
@@ -19945,6 +20271,18 @@
       "member":{"shape":"String"},
       "max":100,
       "min":1
+    },
+    "PrivateKey":{
+      "type":"string",
+      "max":8000,
+      "min":1600,
+      "pattern":"^-{5}BEGIN (ENCRYPTED )?PRIVATE KEY-{5}\\u000D?\\u000A([A-Za-z0-9/+]{64}\\u000D?\\u000A)*[A-Za-z0-9/+]{1,64}={0,2}\\u000D?\\u000A-{5}END (ENCRYPTED )?PRIVATE KEY-{5}(\\u000D?\\u000A)?$",
+      "sensitive":true
+    },
+    "PrivateKeyPassphrase":{
+      "type":"string",
+      "max":256,
+      "sensitive":true
     },
     "ProgressBarOptions":{
       "type":"structure",
@@ -20719,6 +21057,16 @@
         "InitialPath":{"shape":"EntryPath"},
         "FeatureConfigurations":{"shape":"RegisteredUserConsoleFeatureConfigurations"}
       }
+    },
+    "RegisteredUserSnapshotJobResult":{
+      "type":"structure",
+      "members":{
+        "FileGroups":{"shape":"SnapshotJobResultFileGroupList"}
+      }
+    },
+    "RegisteredUserSnapshotJobResultList":{
+      "type":"list",
+      "member":{"shape":"RegisteredUserSnapshotJobResult"}
     },
     "RelationalTable":{
       "type":"structure",
@@ -22500,7 +22848,8 @@
     "SnapshotJobResult":{
       "type":"structure",
       "members":{
-        "AnonymousUsers":{"shape":"AnonymousUserSnapshotJobResultList"}
+        "AnonymousUsers":{"shape":"AnonymousUserSnapshotJobResultList"},
+        "RegisteredUsers":{"shape":"RegisteredUserSnapshotJobResultList"}
       }
     },
     "SnapshotJobResultErrorInfo":{
@@ -22776,7 +23125,6 @@
         "AwsAccountId",
         "DashboardId",
         "SnapshotJobId",
-        "UserConfiguration",
         "SnapshotConfiguration"
       ],
       "members":{
@@ -23147,6 +23495,7 @@
         "FieldOptions":{"shape":"TableFieldOptions"},
         "PaginatedReportOptions":{"shape":"TablePaginatedReportOptions"},
         "TableInlineVisualizations":{"shape":"TableInlineVisualizationList"},
+        "DashboardCustomizationVisualOptions":{"shape":"DashboardCustomizationVisualOptions"},
         "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
@@ -26649,6 +26998,15 @@
         "ExternalLoginId":{"shape":"String"}
       }
     },
+    "UserIdentifier":{
+      "type":"structure",
+      "members":{
+        "UserName":{"shape":"SensitiveString"},
+        "Email":{"shape":"SensitiveString"},
+        "UserArn":{"shape":"Arn"}
+      },
+      "union":true
+    },
     "UserList":{
       "type":"list",
       "member":{"shape":"User"}
@@ -26899,6 +27257,18 @@
         "DATA_POINT_CLICK",
         "DATA_POINT_MENU"
       ]
+    },
+    "VisualCustomizationAdditionalFieldsList":{
+      "type":"list",
+      "member":{"shape":"ColumnIdentifier"},
+      "max":2500
+    },
+    "VisualCustomizationFieldsConfiguration":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"DashboardCustomizationStatus"},
+        "AdditionalFields":{"shape":"VisualCustomizationAdditionalFieldsList"}
+      }
     },
     "VisualHighlightOperation":{
       "type":"structure",
@@ -27302,6 +27672,10 @@
         "YAxis":{"shape":"SingleYAxisOption"}
       }
     },
-    "boolean":{"type":"boolean"}
+    "boolean":{"type":"boolean"},
+    "statusCode":{
+      "type":"integer",
+      "box":true
+    }
   }
 }
