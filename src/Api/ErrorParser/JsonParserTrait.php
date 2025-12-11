@@ -3,7 +3,9 @@ namespace Aws\Api\ErrorParser;
 
 use Aws\Api\Parser\PayloadParserTrait;
 use Aws\Api\StructureShape;
+use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
+use SimpleXMLElement;
 
 /**
  * Provides basic JSON error parsing functionality.
@@ -37,10 +39,24 @@ trait JsonParserTrait
             );
         }
 
-        $parsedBody = null;
         $body = $response->getBody();
-        if (!$body->isSeekable() || $body->getSize()) {
-            $parsedBody = $this->parseJson((string) $body, $response);
+        // If the body is not seekable then, read the full message
+        // before de-serializing
+        if (!$body->isSeekable()) {
+            $tempBody = Utils::streamFor();
+            Utils::copyToStream($body, $tempBody);
+            $body = $tempBody;
+        }
+
+        // Cast it to string
+        $body = (string) $body;
+        $parsedBody = [];
+
+        // Avoid parsing an empty body
+        if (!empty($body)) {
+            // Parsing the body to avoid having to read the response body again.
+            // This will avoid issues when the body is not seekable
+            $parsedBody = $this->parseJson($body, $response);
         }
 
         // Parse error code from response body
@@ -129,14 +145,13 @@ trait JsonParserTrait
     }
 
     protected function payload(
-        ResponseInterface $response,
+        ResponseInterface|SimpleXMLElement|array $responseOrParsedBody,
         StructureShape $member
     ) {
-        $body = $response->getBody();
-        if (!$body->isSeekable() || $body->getSize()) {
-            $jsonBody = $this->parseJson($body, $response);
-        } else {
-            $jsonBody = (string) $body;
+        $jsonBody = $responseOrParsedBody;
+        if ($responseOrParsedBody instanceof ResponseInterface) {
+            $body = $responseOrParsedBody->getBody();
+            $jsonBody = $this->parseJson($body, $responseOrParsedBody);
         }
 
         return $this->parser->parse($member, $jsonBody);

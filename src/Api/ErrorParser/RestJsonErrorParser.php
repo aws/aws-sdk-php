@@ -38,9 +38,14 @@ class RestJsonErrorParser extends AbstractErrorParser
             $data['type'] = strtolower($data['type']);
         }
 
+        // Make the casing consistent across services.
+        $parsed = $data['parsed'] ?? null;
+        if ($parsed) {
+            $parsed = array_change_key_case($data['parsed']);
+        }
+
         // Retrieve error message directly
-        $data['message'] = $data['parsed']['message']
-            ?? ($data['parsed']['Message'] ?? null);
+        $data['message'] = $parsed['message'] ?? null;
 
         $this->populateShape($data, $response, $command);
 
