@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.367.1 - 2025-12-11
 
 * `Aws\SESv2` - Update GetEmailIdentity and CreateEmailIdentity response to include SigningHostedZone in DkimAttributes. Updated PutEmailIdentityDkimSigningAttributes Response to include SigningHostedZone.
 * `Aws\Lambda` - Add Dotnet 10 (dotnet10) support to AWS Lambda.
