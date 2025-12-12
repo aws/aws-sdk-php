@@ -720,7 +720,7 @@
     "AgentArnList":{
       "type":"list",
       "member":{"shape":"AgentArn"},
-      "max":4,
+      "max":8,
       "min":1
     },
     "AgentList":{
@@ -1082,6 +1082,8 @@
         "User":{"shape":"SmbUser"},
         "Domain":{"shape":"SmbDomain"},
         "Password":{"shape":"SmbPassword"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"},
         "AgentArns":{"shape":"AgentArnList"},
         "MountOptions":{"shape":"SmbMountOptions"},
         "Tags":{"shape":"InputTagList"},
@@ -1397,7 +1399,10 @@
         "CreationTime":{"shape":"Time"},
         "DnsIpAddresses":{"shape":"DnsIpList"},
         "KerberosPrincipal":{"shape":"KerberosPrincipal"},
-        "AuthenticationType":{"shape":"SmbAuthenticationType"}
+        "AuthenticationType":{"shape":"SmbAuthenticationType"},
+        "ManagedSecretConfig":{"shape":"ManagedSecretConfig"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "DescribeTaskExecutionRequest":{
@@ -1434,6 +1439,15 @@
         "FilesPrepared":{"shape":"long"},
         "FilesListed":{"shape":"TaskExecutionFilesListedDetail"},
         "FilesFailed":{"shape":"TaskExecutionFilesFailedDetail"},
+        "EstimatedFoldersToDelete":{"shape":"ItemCount"},
+        "EstimatedFoldersToTransfer":{"shape":"ItemCount"},
+        "FoldersSkipped":{"shape":"ItemCount"},
+        "FoldersPrepared":{"shape":"ItemCount"},
+        "FoldersTransferred":{"shape":"ItemCount"},
+        "FoldersVerified":{"shape":"ItemCount"},
+        "FoldersDeleted":{"shape":"ItemCount"},
+        "FoldersListed":{"shape":"TaskExecutionFoldersListedDetail"},
+        "FoldersFailed":{"shape":"TaskExecutionFoldersFailedDetail"},
         "LaunchTime":{"shape":"Time"},
         "EndTime":{"shape":"Time"}
       }
@@ -1766,6 +1780,10 @@
         "datasyncErrorCode":{"shape":"string"}
       },
       "exception":true
+    },
+    "ItemCount":{
+      "type":"long",
+      "box":true
     },
     "KerberosKeytabFile":{
       "type":"blob",
@@ -2462,6 +2480,23 @@
         "AtDestinationForDelete":{"shape":"long"}
       }
     },
+    "TaskExecutionFoldersFailedDetail":{
+      "type":"structure",
+      "members":{
+        "List":{"shape":"long"},
+        "Prepare":{"shape":"long"},
+        "Transfer":{"shape":"long"},
+        "Verify":{"shape":"long"},
+        "Delete":{"shape":"long"}
+      }
+    },
+    "TaskExecutionFoldersListedDetail":{
+      "type":"structure",
+      "members":{
+        "AtSource":{"shape":"long"},
+        "AtDestinationForDelete":{"shape":"long"}
+      }
+    },
     "TaskExecutionList":{
       "type":"list",
       "member":{"shape":"TaskExecutionListEntry"}
@@ -2802,6 +2837,8 @@
         "User":{"shape":"SmbUser"},
         "Domain":{"shape":"SmbDomain"},
         "Password":{"shape":"SmbPassword"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"},
         "AgentArns":{"shape":"AgentArnList"},
         "MountOptions":{"shape":"SmbMountOptions"},
         "AuthenticationType":{"shape":"SmbAuthenticationType"},

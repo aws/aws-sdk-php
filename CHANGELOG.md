@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WorkSpacesWeb` - Adds support for portal branding customization, enabling administrators to personalize end-user portals with custom assets.
+* `Aws\Connect` - Amazon Connect now offers automated post-chat surveys triggered when customers end conversations. This captures timely feedback while experience is fresh, using either a no-code form builder or Amazon Lex-powered interactive surveys.
+* `Aws\BCMRecommendedActions` - Added new freetier action types to RecommendedAction.type.
+* `Aws\DataSync` - Adds Enhanced mode support for NFS and SMB locations. SMB credentials are now managed via Secrets Manager, and may be encrypted with service or customer managed keys. Increases AgentArns maximum count to 8 (max 4 per TaskMode). Adds folder counters to DescribeTaskExecution for Enhanced mode tasks.
+
 ## 3.367.1 - 2025-12-11
 
 * `Aws\SESv2` - Update GetEmailIdentity and CreateEmailIdentity response to include SigningHostedZone in DkimAttributes. Updated PutEmailIdentityDkimSigningAttributes Response to include SigningHostedZone.
