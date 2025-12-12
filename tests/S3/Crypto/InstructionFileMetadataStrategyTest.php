@@ -182,4 +182,43 @@ class InstructionFileMetadataStrategyTest extends TestCase
         $this->expectExceptionMessage("One or more reserved keys found in Instruction file when they should not be present.");
         $envelope = $strategy->load($args);
     }
+    
+    /**
+     * @dataProvider getMetadataResult
+     */
+    public function testLoadV2FromInstructionFileAndMetadataCorruptInstructionFile($args, $instructionFile)
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', []);
+        $strategy = new InstructionFileMetadataStrategy($client);
+        unset($instructionFile[MetadataEnvelope::CONTENT_KEY_V2_HEADER]);
+        $instructionFile['some_key'] = 'some_value';
+        $this->addMockResults($client, [
+            new Result(['Body' => json_encode($instructionFile)])
+        ]);
+        // We expect to fail because all keys were found in the instruction file when only a subset
+        // are allowed to be stored in the instruction file.
+        $this->expectException(\Aws\Exception\CryptoException::class);
+        $this->expectExceptionMessage("Malformed metadata envelope.");
+        $envelope = $strategy->load($args);
+    }
+    
+    /**
+     * @dataProvider getMetadataResult
+     */
+    public function testLoadV2FromInstructionFileAndMetadataInvalidJson($args, $instructionFile)
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', []);
+        $strategy = new InstructionFileMetadataStrategy($client);
+        $instructionFile = ["invalid" => "json"];
+        $this->addMockResults($client, [
+            new Result(['Body' => json_encode($instructionFile)])
+        ]);
+        // We expect to fail because all keys were found in the instruction file when only a subset
+        // are allowed to be stored in the instruction file.
+        $this->expectException(\Aws\Exception\CryptoException::class);
+        $this->expectExceptionMessage("Malformed metadata envelope.");
+        $envelope = $strategy->load($args);
+    }
 }

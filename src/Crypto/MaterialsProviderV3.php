@@ -1,6 +1,8 @@
 <?php
 namespace Aws\Crypto;
 
+use Aws\Exception\CryptoException;
+
 abstract class MaterialsProviderV3 implements MaterialsProviderInterfaceV3
 {
     private static array $supportedKeySizes = [
@@ -66,18 +68,23 @@ abstract class MaterialsProviderV3 implements MaterialsProviderInterfaceV3
      */
     public function generateIv(string $openSslName): string
     {
+        $iv = null;
+        $cstrong = null;
+
         if ($openSslName === "aes-96-gcm") {
-            return openssl_random_pseudo_bytes(12);
+            $iv = openssl_random_pseudo_bytes(12, $cstrong);
+        } else if ($openSslName === "aes-224-gcm") {
+            $iv = openssl_random_pseudo_bytes(28, $cstrong);
+        } else {
+            $iv = openssl_random_pseudo_bytes(
+                openssl_cipher_iv_length($openSslName),
+                $cstrong
+            );
+        }
+        if (!$cstrong) {
+            throw new CryptoException("No strong cryptographic source available to generate a random IV.");
         }
 
-        if ($openSslName === "aes-224-gcm") {
-            $messageId = openssl_random_pseudo_bytes(28);
-            
-            return $messageId;
-        }
-
-        return openssl_random_pseudo_bytes(
-            openssl_cipher_iv_length($openSslName)
-        );
+        return $iv;
     }
 }
