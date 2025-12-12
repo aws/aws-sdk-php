@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.367.2 - 2025-12-12
 
 * `Aws\WorkSpacesWeb` - Adds support for portal branding customization, enabling administrators to personalize end-user portals with custom assets.
 * `Aws\Connect` - Amazon Connect now offers automated post-chat surveys triggered when customers end conversations. This captures timely feedback while experience is fresh, using either a no-code form builder or Amazon Lex-powered interactive surveys.
