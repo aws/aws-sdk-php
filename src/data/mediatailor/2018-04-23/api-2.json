@@ -554,6 +554,12 @@
         "StreamingMediaFileConditioning":{"shape":"StreamingMediaFileConditioning"}
       }
     },
+    "AdDecisionServerConfiguration":{
+      "type":"structure",
+      "members":{
+        "HttpRequest":{"shape":"HttpRequest"}
+      }
+    },
     "AdMarkerPassthrough":{
       "type":"structure",
       "members":{
@@ -762,6 +768,13 @@
         },
         "StartOffsetMillis":{"shape":"__long"}
       }
+    },
+    "CompressionMethod":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "GZIP"
+      ]
     },
     "ConfigurationAliasesRequest":{
       "type":"map",
@@ -1508,7 +1521,8 @@
         },
         "TranscodeProfileName":{"shape":"__string"},
         "VideoContentSourceUrl":{"shape":"__string"},
-        "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"}
+        "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"},
+        "AdDecisionServerConfiguration":{"shape":"AdDecisionServerConfiguration"}
       }
     },
     "GetPrefetchScheduleRequest":{
@@ -1579,6 +1593,15 @@
     "HttpPackageConfigurations":{
       "type":"list",
       "member":{"shape":"HttpPackageConfiguration"}
+    },
+    "HttpRequest":{
+      "type":"structure",
+      "members":{
+        "Method":{"shape":"Method"},
+        "Body":{"shape":"__string"},
+        "Headers":{"shape":"StringMap"},
+        "CompressRequest":{"shape":"CompressionMethod"}
+      }
     },
     "InsertionMode":{
       "type":"string",
@@ -1930,6 +1953,13 @@
         "TIME_SIGNAL"
       ]
     },
+    "Method":{
+      "type":"string",
+      "enum":[
+        "GET",
+        "POST"
+      ]
+    },
     "Mode":{
       "type":"string",
       "enum":[
@@ -1975,7 +2005,8 @@
         },
         "TranscodeProfileName":{"shape":"__string"},
         "VideoContentSourceUrl":{"shape":"__string"},
-        "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"}
+        "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"},
+        "AdDecisionServerConfiguration":{"shape":"AdDecisionServerConfiguration"}
       }
     },
     "PlaybackMode":{
@@ -2072,7 +2103,8 @@
         },
         "TranscodeProfileName":{"shape":"__string"},
         "VideoContentSourceUrl":{"shape":"__string"},
-        "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"}
+        "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"},
+        "AdDecisionServerConfiguration":{"shape":"AdDecisionServerConfiguration"}
       }
     },
     "PutPlaybackConfigurationResponse":{
@@ -2101,7 +2133,8 @@
         },
         "TranscodeProfileName":{"shape":"__string"},
         "VideoContentSourceUrl":{"shape":"__string"},
-        "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"}
+        "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"},
+        "AdDecisionServerConfiguration":{"shape":"AdDecisionServerConfiguration"}
       }
     },
     "RecurringConsumption":{
@@ -2333,6 +2366,11 @@
       ]
     },
     "String":{"type":"string"},
+    "StringMap":{
+      "type":"map",
+      "key":{"shape":"__string"},
+      "value":{"shape":"__string"}
+    },
     "TagResourceRequest":{
       "type":"structure",
       "required":[

@@ -58,6 +58,22 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "CancelImportTask":{
+      "name":"CancelImportTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CancelImportTaskRequest"},
+      "output":{"shape":"CancelImportTaskResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidOperationException"}
+      ]
+    },
     "CreateDelivery":{
       "name":"CreateDelivery",
       "http":{
@@ -91,6 +107,24 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceAlreadyExistsException"}
+      ]
+    },
+    "CreateImportTask":{
+      "name":"CreateImportTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateImportTaskRequest"},
+      "output":{"shape":"CreateImportTaskResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"InvalidOperationException"}
       ]
     },
     "CreateLogAnomalyDetector":{
@@ -551,6 +585,38 @@
         {"shape":"LimitExceededException"},
         {"shape":"OperationAbortedException"},
         {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "DescribeImportTaskBatches":{
+      "name":"DescribeImportTaskBatches",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeImportTaskBatchesRequest"},
+      "output":{"shape":"DescribeImportTaskBatchesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidOperationException"}
+      ]
+    },
+    "DescribeImportTasks":{
+      "name":"DescribeImportTasks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeImportTasksRequest"},
+      "output":{"shape":"DescribeImportTasksResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidOperationException"}
       ]
     },
     "DescribeIndexPolicies":{
@@ -1771,6 +1837,11 @@
       }
     },
     "Baseline":{"type":"boolean"},
+    "BatchId":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "Boolean":{"type":"boolean"},
     "CSV":{
       "type":"structure",
@@ -1786,6 +1857,23 @@
       "required":["taskId"],
       "members":{
         "taskId":{"shape":"ExportTaskId"}
+      }
+    },
+    "CancelImportTaskRequest":{
+      "type":"structure",
+      "required":["importId"],
+      "members":{
+        "importId":{"shape":"ImportId"}
+      }
+    },
+    "CancelImportTaskResponse":{
+      "type":"structure",
+      "members":{
+        "importId":{"shape":"ImportId"},
+        "importStatistics":{"shape":"ImportStatistics"},
+        "importStatus":{"shape":"ImportStatus"},
+        "creationTime":{"shape":"Timestamp"},
+        "lastUpdatedTime":{"shape":"Timestamp"}
       }
     },
     "ClientToken":{
@@ -1910,6 +1998,26 @@
       "type":"structure",
       "members":{
         "taskId":{"shape":"ExportTaskId"}
+      }
+    },
+    "CreateImportTaskRequest":{
+      "type":"structure",
+      "required":[
+        "importSourceArn",
+        "importRoleArn"
+      ],
+      "members":{
+        "importSourceArn":{"shape":"Arn"},
+        "importRoleArn":{"shape":"RoleArn"},
+        "importFilter":{"shape":"ImportFilter"}
+      }
+    },
+    "CreateImportTaskResponse":{
+      "type":"structure",
+      "members":{
+        "importId":{"shape":"ImportId"},
+        "importDestinationArn":{"shape":"Arn"},
+        "creationTime":{"shape":"Timestamp"}
       }
     },
     "CreateLogAnomalyDetectorRequest":{
@@ -2468,6 +2576,42 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "DescribeImportTaskBatchesRequest":{
+      "type":"structure",
+      "required":["importId"],
+      "members":{
+        "importId":{"shape":"ImportId"},
+        "batchImportStatus":{"shape":"ImportStatusList"},
+        "limit":{"shape":"DescribeLimit"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeImportTaskBatchesResponse":{
+      "type":"structure",
+      "members":{
+        "importSourceArn":{"shape":"Arn"},
+        "importId":{"shape":"ImportId"},
+        "importBatches":{"shape":"ImportBatchList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeImportTasksRequest":{
+      "type":"structure",
+      "members":{
+        "importId":{"shape":"ImportId"},
+        "importStatus":{"shape":"ImportStatus"},
+        "importSourceArn":{"shape":"Arn"},
+        "limit":{"shape":"DescribeLimit"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeImportTasksResponse":{
+      "type":"structure",
+      "members":{
+        "imports":{"shape":"ImportList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "DescribeIndexPoliciesLogGroupIdentifiers":{
       "type":"list",
       "member":{"shape":"LogGroupIdentifier"},
@@ -2789,6 +2933,7 @@
       "type":"long",
       "min":0
     },
+    "ErrorMessage":{"type":"string"},
     "EvaluationFrequency":{
       "type":"string",
       "enum":[
@@ -3340,6 +3485,72 @@
       "type":"map",
       "key":{"shape":"Time"},
       "value":{"shape":"Count"}
+    },
+    "Import":{
+      "type":"structure",
+      "members":{
+        "importId":{"shape":"ImportId"},
+        "importSourceArn":{"shape":"Arn"},
+        "importStatus":{"shape":"ImportStatus"},
+        "importDestinationArn":{"shape":"Arn"},
+        "importStatistics":{"shape":"ImportStatistics"},
+        "importFilter":{"shape":"ImportFilter"},
+        "creationTime":{"shape":"Timestamp"},
+        "lastUpdatedTime":{"shape":"Timestamp"},
+        "errorMessage":{"shape":"ErrorMessage"}
+      }
+    },
+    "ImportBatch":{
+      "type":"structure",
+      "required":[
+        "batchId",
+        "status"
+      ],
+      "members":{
+        "batchId":{"shape":"BatchId"},
+        "status":{"shape":"ImportStatus"},
+        "errorMessage":{"shape":"ErrorMessage"}
+      }
+    },
+    "ImportBatchList":{
+      "type":"list",
+      "member":{"shape":"ImportBatch"}
+    },
+    "ImportFilter":{
+      "type":"structure",
+      "members":{
+        "startEventTime":{"shape":"Timestamp"},
+        "endEventTime":{"shape":"Timestamp"}
+      }
+    },
+    "ImportId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\-a-zA-Z0-9]+"
+    },
+    "ImportList":{
+      "type":"list",
+      "member":{"shape":"Import"}
+    },
+    "ImportStatistics":{
+      "type":"structure",
+      "members":{
+        "bytesImported":{"shape":"StoredBytes"}
+      }
+    },
+    "ImportStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "CANCELLED",
+        "COMPLETED",
+        "FAILED"
+      ]
+    },
+    "ImportStatusList":{
+      "type":"list",
+      "member":{"shape":"ImportStatus"}
     },
     "IncludeLinkedAccounts":{"type":"boolean"},
     "IndexPolicies":{
