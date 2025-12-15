@@ -175,7 +175,7 @@ class InstructionFileMetadataStrategy implements MetadataStrategyInterface
         }
         // if we are not reading a v3 object then it must be a v2 object
         if (!MetadataEnvelope::isV2Envelope($envelope)
-            || !MetadataEnvelope::isV1Envelope($envelope)) {
+            && !MetadataEnvelope::isV1Envelope($envelope)) {
             throw new CryptoException("Malformed metadata envelope.");
         }
 
