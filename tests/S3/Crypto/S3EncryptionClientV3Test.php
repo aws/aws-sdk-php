@@ -1368,7 +1368,7 @@ EOXML;
             'http_handler' => function (RequestInterface $req) use ($provider) {
                 $this->assertTrue(
                     in_array(
-                        MetricsBuilder::S3_CRYPTO_V2,
+                        MetricsBuilder::S3_CRYPTO_V3,
                         $this->getMetricsAsArray($req)
                     )
                 );

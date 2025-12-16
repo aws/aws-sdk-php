@@ -141,7 +141,7 @@ class S3EncryptionClientV3 extends AbstractCryptoClientV3
         $this->legacyWarningCount = 0;
         MetricsBuilder::appendMetricsCaptureMiddleware(
             $this->client->getHandlerList(),
-            MetricsBuilder::S3_CRYPTO_V2
+            MetricsBuilder::S3_CRYPTO_V3
         );
 
         if (!extension_loaded('openssl')) {
