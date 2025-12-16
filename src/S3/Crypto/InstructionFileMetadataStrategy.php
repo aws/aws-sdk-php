@@ -130,7 +130,7 @@ class InstructionFileMetadataStrategy implements MetadataStrategyInterface
         $constantValues = MetadataEnvelope::getConstantValues();
 
         foreach ($constantValues as $constant) {
-            if (!empty($metadataHeaders[$constant])) {
+            if (isset($metadataHeaders[$constant])) {
                 // check for a duplicate
                 if (empty($envelope[$constant])) {
                     $envelope[$constant] = $metadataHeaders[$constant];
