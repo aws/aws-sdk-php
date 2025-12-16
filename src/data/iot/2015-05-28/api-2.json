@@ -5311,6 +5311,13 @@
       }
     },
     "AwsJobTimeoutInProgressTimeoutInMinutes":{"type":"long"},
+    "AwsJsonSubstitutionCommandPreprocessorConfig":{
+      "type":"structure",
+      "required":["outputFormat"],
+      "members":{
+        "outputFormat":{"shape":"OutputFormat"}
+      }
+    },
     "BatchMode":{"type":"boolean"},
     "BeforeSubstitutionFlag":{"type":"boolean"},
     "Behavior":{
@@ -5956,8 +5963,10 @@
       "required":["name"],
       "members":{
         "name":{"shape":"CommandParameterName"},
+        "type":{"shape":"CommandParameterType"},
         "value":{"shape":"CommandParameterValue"},
         "defaultValue":{"shape":"CommandParameterValue"},
+        "valueConditions":{"shape":"CommandParameterValueConditionList"},
         "description":{"shape":"CommandParameterDescription"}
       }
     },
@@ -5977,6 +5986,18 @@
       "min":1,
       "pattern":"^[.$a-zA-Z0-9_-]+$"
     },
+    "CommandParameterType":{
+      "type":"string",
+      "enum":[
+        "STRING",
+        "INTEGER",
+        "DOUBLE",
+        "LONG",
+        "UNSIGNEDLONG",
+        "BOOLEAN",
+        "BINARY"
+      ]
+    },
     "CommandParameterValue":{
       "type":"structure",
       "members":{
@@ -5989,6 +6010,64 @@
         "UL":{"shape":"UnsignedLongParameterValue"}
       }
     },
+    "CommandParameterValueComparisonOperand":{
+      "type":"structure",
+      "members":{
+        "number":{"shape":"StringParameterValue"},
+        "numbers":{"shape":"CommandParameterValueStringList"},
+        "string":{"shape":"StringParameterValue"},
+        "strings":{"shape":"CommandParameterValueStringList"},
+        "numberRange":{"shape":"CommandParameterValueNumberRange"}
+      }
+    },
+    "CommandParameterValueComparisonOperator":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "NOT_EQUALS",
+        "LESS_THAN",
+        "LESS_THAN_EQUALS",
+        "GREATER_THAN",
+        "GREATER_THAN_EQUALS",
+        "IN_SET",
+        "NOT_IN_SET",
+        "IN_RANGE",
+        "NOT_IN_RANGE"
+      ]
+    },
+    "CommandParameterValueCondition":{
+      "type":"structure",
+      "required":[
+        "comparisonOperator",
+        "operand"
+      ],
+      "members":{
+        "comparisonOperator":{"shape":"CommandParameterValueComparisonOperator"},
+        "operand":{"shape":"CommandParameterValueComparisonOperand"}
+      }
+    },
+    "CommandParameterValueConditionList":{
+      "type":"list",
+      "member":{"shape":"CommandParameterValueCondition"},
+      "min":1
+    },
+    "CommandParameterValueNumberRange":{
+      "type":"structure",
+      "required":[
+        "min",
+        "max"
+      ],
+      "members":{
+        "min":{"shape":"StringParameterValue"},
+        "max":{"shape":"StringParameterValue"}
+      }
+    },
+    "CommandParameterValueStringList":{
+      "type":"list",
+      "member":{"shape":"StringParameterValue"},
+      "max":10,
+      "min":1
+    },
     "CommandPayload":{
       "type":"structure",
       "members":{
@@ -5997,6 +6076,16 @@
       }
     },
     "CommandPayloadBlob":{"type":"blob"},
+    "CommandPayloadTemplateString":{
+      "type":"string",
+      "max":32768
+    },
+    "CommandPreprocessor":{
+      "type":"structure",
+      "members":{
+        "awsJsonSubstitution":{"shape":"AwsJsonSubstitutionCommandPreprocessorConfig"}
+      }
+    },
     "CommandSummary":{
       "type":"structure",
       "members":{
@@ -6280,6 +6369,8 @@
         "displayName":{"shape":"DisplayName"},
         "description":{"shape":"CommandDescription"},
         "payload":{"shape":"CommandPayload"},
+        "payloadTemplate":{"shape":"CommandPayloadTemplateString"},
+        "preprocessor":{"shape":"CommandPreprocessor"},
         "mandatoryParameters":{"shape":"CommandParameterList"},
         "roleArn":{"shape":"RoleArn"},
         "tags":{"shape":"TagList"}
@@ -9333,6 +9424,8 @@
         "description":{"shape":"CommandDescription"},
         "mandatoryParameters":{"shape":"CommandParameterList"},
         "payload":{"shape":"CommandPayload"},
+        "payloadTemplate":{"shape":"CommandPayloadTemplateString"},
+        "preprocessor":{"shape":"CommandPreprocessor"},
         "roleArn":{"shape":"RoleArn"},
         "createdAt":{"shape":"DateType"},
         "lastUpdatedAt":{"shape":"DateType"},
@@ -12822,6 +12915,13 @@
     "OutgoingCertificates":{
       "type":"list",
       "member":{"shape":"OutgoingCertificate"}
+    },
+    "OutputFormat":{
+      "type":"string",
+      "enum":[
+        "JSON",
+        "CBOR"
+      ]
     },
     "OverrideDynamicGroups":{"type":"boolean"},
     "PackageArn":{"type":"string"},

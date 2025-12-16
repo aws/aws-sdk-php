@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - A new `S3EncryptionClient` implementation and a new `KmsMaterialProvider` implementation. `S3EncryptionClientV3` now supports writing and reading objects with Key Commitment. `KmsMaterialProviderV3` now supports verifying supplied encryption context on `decryptCek` calls.
+* `Aws\TimestreamInfluxDB` - This release adds support for rebooting InfluxDB DbInstances and DbClusters
+* `Aws\IoT` - Add support for dynamic payloads in IoT Device Management Commands
+
 ## 3.367.3 - 2025-12-15
 
 * `Aws\MediaTailor` - Added support for Ad Decision Server Configuration enabling HTTP POST requests with custom bodies, headers, GZIP compression, and dynamic variables. No changes required for existing GET request configurations.

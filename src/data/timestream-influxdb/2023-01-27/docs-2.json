@@ -15,6 +15,8 @@
     "ListDbInstancesForCluster": "<p>Returns a list of Timestream for InfluxDB clusters.</p>",
     "ListDbParameterGroups": "<p>Returns a list of Timestream for InfluxDB DB parameter groups.</p>",
     "ListTagsForResource": "<p>A list of tags applied to the resource.</p>",
+    "RebootDbCluster": "<p>Reboots a Timestream for InfluxDB cluster.</p>",
+    "RebootDbInstance": "<p>Reboots a Timestream for InfluxDB instance.</p>",
     "TagResource": "<p>Tags are composed of a Key/Value pairs. You can use tags to categorize and track your Timestream for InfluxDB resources.</p>",
     "UntagResource": "<p>Removes the tag from the specified resource.</p>",
     "UpdateDbCluster": "<p>Updates a Timestream for InfluxDB cluster.</p>",
@@ -38,6 +40,7 @@
         "DeleteDbInstanceOutput$allocatedStorage": "<p>The amount of storage allocated for your DB storage type (in gibibytes).</p>",
         "GetDbClusterOutput$allocatedStorage": "<p>The amount of storage allocated for your DB storage type (in gibibytes).</p>",
         "GetDbInstanceOutput$allocatedStorage": "<p>The amount of storage allocated for your DB storage type (in gibibytes).</p>",
+        "RebootDbInstanceOutput$allocatedStorage": "<p>The amount of storage allocated for your DB storage type (in gibibytes).</p>",
         "UpdateDbInstanceInput$allocatedStorage": "<p>The amount of storage to allocate for your DB storage type (in gibibytes).</p>",
         "UpdateDbInstanceOutput$allocatedStorage": "<p>The amount of storage allocated for your DB storage type (in gibibytes).</p>"
       }
@@ -56,6 +59,7 @@
         "GetDbInstanceOutput$arn": "<p>The Amazon Resource Name (ARN) of the DB instance.</p>",
         "GetDbParameterGroupOutput$arn": "<p>The Amazon Resource Name (ARN) of the DB parameter group.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the tagged resource.</p>",
+        "RebootDbInstanceOutput$arn": "<p>The Amazon Resource Name (ARN) of the DB instance.</p>",
         "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the tagged resource.</p>",
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the tagged resource.</p>",
         "UpdateDbInstanceOutput$arn": "<p>The Amazon Resource Name (ARN) of the DB instance.</p>"
@@ -88,6 +92,7 @@
         "InfluxDBv3EnterpriseParameters$dedicatedCompactor": "<p>Specifies if the compactor instance should be a standalone instance or not.</p>",
         "InfluxDBv3EnterpriseParameters$lastValueCacheDisableFromHistory": "<p>Disables populating the last-N-value cache from historical data. If disabled, the cache is still populated with data from the write-ahead log (WAL).</p>",
         "InfluxDBv3EnterpriseParameters$distinctValueCacheDisableFromHistory": "<p>Disables populating the distinct value cache from historical data. If disabled, the cache is still populated with data from the write-ahead log (WAL).</p>",
+        "RebootDbInstanceOutput$publiclyAccessible": "<p>Indicates if the DB instance has a public IP to facilitate access.</p>",
         "S3Configuration$enabled": "<p>Indicates whether log delivery to the S3 bucket is enabled.</p>",
         "UpdateDbInstanceOutput$publiclyAccessible": "<p>Indicates if the DB instance has a public IP to facilitate access.</p>"
       }
@@ -114,6 +119,7 @@
         "DbClusterSummary$status": "<p>The status of the DB cluster.</p>",
         "DeleteDbClusterOutput$dbClusterStatus": "<p>The status of the DB cluster.</p>",
         "GetDbClusterOutput$status": "<p>The status of the DB cluster.</p>",
+        "RebootDbClusterOutput$dbClusterStatus": "<p>The status of the DB Cluster.</p>",
         "UpdateDbClusterOutput$dbClusterStatus": "<p>The status of the DB cluster.</p>"
       }
     },
@@ -177,6 +183,8 @@
         "GetDbClusterOutput$id": "<p>Service-generated unique identifier of the DB cluster to retrieve.</p>",
         "GetDbInstanceOutput$dbClusterId": "<p>Specifies the DbCluster to which this DbInstance belongs to.</p>",
         "ListDbInstancesForClusterInput$dbClusterId": "<p>Service-generated unique identifier of the DB cluster.</p>",
+        "RebootDbClusterInput$dbClusterId": "<p>Service-generated unique identifier of the DB cluster to reboot.</p>",
+        "RebootDbInstanceOutput$dbClusterId": "<p>Specifies the DbCluster to which this DbInstance belongs to.</p>",
         "UpdateDbClusterInput$dbClusterId": "<p>Service-generated unique identifier of the DB cluster to update.</p>",
         "UpdateDbInstanceOutput$dbClusterId": "<p>Specifies the DbCluster to which this DbInstance belongs to.</p>"
       }
@@ -221,6 +229,8 @@
         "DbInstanceSummary$id": "<p>The service-generated unique identifier of the DB instance.</p>",
         "DeleteDbInstanceOutput$id": "<p>A service-generated unique identifier.</p>",
         "GetDbInstanceOutput$id": "<p>A service-generated unique identifier.</p>",
+        "RebootDbClusterInputInstanceIdsList$member": null,
+        "RebootDbInstanceOutput$id": "<p>A service-generated unique identifier.</p>",
         "UpdateDbInstanceOutput$id": "<p>A service-generated unique identifier.</p>"
       }
     },
@@ -229,6 +239,7 @@
       "refs": {
         "DeleteDbInstanceInput$identifier": "<p>The id of the DB instance.</p>",
         "GetDbInstanceInput$identifier": "<p>The id of the DB instance.</p>",
+        "RebootDbInstanceInput$identifier": "<p>The id of the DB instance to reboot.</p>",
         "UpdateDbInstanceInput$identifier": "<p>The id of the DB instance.</p>"
       }
     },
@@ -241,6 +252,7 @@
         "DbInstanceSummary$name": "<p>This customer-supplied name uniquely identifies the DB instance when interacting with the Amazon Timestream for InfluxDB API and CLI commands.</p>",
         "DeleteDbInstanceOutput$name": "<p>The customer-supplied name that uniquely identifies the DB instance when interacting with the Amazon Timestream for InfluxDB API and CLI commands.</p>",
         "GetDbInstanceOutput$name": "<p>The customer-supplied name that uniquely identifies the DB instance when interacting with the Amazon Timestream for InfluxDB API and CLI commands.</p>",
+        "RebootDbInstanceOutput$name": "<p>The customer-supplied name that uniquely identifies the DB instance when interacting with the Amazon Timestream for InfluxDB API and CLI commands.</p>",
         "UpdateDbInstanceOutput$name": "<p>This customer-supplied name uniquely identifies the DB instance when interacting with the Amazon Timestream for InfluxDB API and CLI commands.</p>"
       }
     },
@@ -268,6 +280,7 @@
         "DeleteDbInstanceOutput$dbInstanceType": "<p>The Timestream for InfluxDB instance type that InfluxDB runs on.</p>",
         "GetDbClusterOutput$dbInstanceType": "<p>The Timestream for InfluxDB instance type that InfluxDB runs on.</p>",
         "GetDbInstanceOutput$dbInstanceType": "<p>The Timestream for InfluxDB instance type that InfluxDB runs on.</p>",
+        "RebootDbInstanceOutput$dbInstanceType": "<p>The Timestream for InfluxDB instance type that InfluxDB runs on.</p>",
         "UpdateDbClusterInput$dbInstanceType": "<p>Update the DB cluster to use the specified DB instance Type.</p>",
         "UpdateDbInstanceInput$dbInstanceType": "<p>The Timestream for InfluxDB DB instance type to run InfluxDB on.</p>",
         "UpdateDbInstanceOutput$dbInstanceType": "<p>The Timestream for InfluxDB instance type that InfluxDB runs on.</p>"
@@ -291,6 +304,7 @@
         "GetDbClusterOutput$dbParameterGroupIdentifier": "<p>The ID of the DB parameter group assigned to your DB cluster.</p>",
         "GetDbInstanceOutput$dbParameterGroupIdentifier": "<p>The id of the DB parameter group assigned to your DB instance.</p>",
         "GetDbParameterGroupInput$identifier": "<p>The id of the DB parameter group.</p>",
+        "RebootDbInstanceOutput$dbParameterGroupIdentifier": "<p>The id of the DB parameter group assigned to your DB instance.</p>",
         "UpdateDbClusterInput$dbParameterGroupIdentifier": "<p>Update the DB cluster to use the specified DB parameter group.</p>",
         "UpdateDbInstanceInput$dbParameterGroupIdentifier": "<p>The id of the DB parameter group to assign to your DB instance. DB parameter groups specify how the database is configured. For example, DB parameter groups can specify the limit for query concurrency.</p>",
         "UpdateDbInstanceOutput$dbParameterGroupIdentifier": "<p>The id of the DB parameter group assigned to your DB instance.</p>"
@@ -329,6 +343,7 @@
         "DeleteDbInstanceOutput$dbStorageType": "<p>The Timestream for InfluxDB DB storage type that InfluxDB stores data on.</p>",
         "GetDbClusterOutput$dbStorageType": "<p>The Timestream for InfluxDB DB storage type that InfluxDB stores data on.</p>",
         "GetDbInstanceOutput$dbStorageType": "<p>The Timestream for InfluxDB DB storage type that InfluxDB stores data on.</p>",
+        "RebootDbInstanceOutput$dbStorageType": "<p>The Timestream for InfluxDB DB storage type that InfluxDB stores data on.</p>",
         "UpdateDbInstanceInput$dbStorageType": "<p>The Timestream for InfluxDB DB storage type that InfluxDB stores data on.</p>",
         "UpdateDbInstanceOutput$dbStorageType": "<p>The Timestream for InfluxDB DB storage type that InfluxDB stores data on.</p>"
       }
@@ -362,6 +377,7 @@
         "DbInstanceSummary$deploymentType": "<p>Single-Instance or with a MultiAZ Standby for High availability.</p>",
         "DeleteDbInstanceOutput$deploymentType": "<p>Specifies whether the Timestream for InfluxDB is deployed as Single-AZ or with a MultiAZ Standby for High availability.</p>",
         "GetDbInstanceOutput$deploymentType": "<p>Specifies whether the Timestream for InfluxDB is deployed as Single-AZ or with a MultiAZ Standby for High availability.</p>",
+        "RebootDbInstanceOutput$deploymentType": "<p>Specifies whether the Timestream for InfluxDB is deployed as Single-AZ or with a MultiAZ Standby for High availability.</p>",
         "UpdateDbInstanceInput$deploymentType": "<p>Specifies whether the DB instance will be deployed as a standalone instance or with a Multi-AZ standby for high availability.</p>",
         "UpdateDbInstanceOutput$deploymentType": "<p>Specifies whether the Timestream for InfluxDB is deployed as Single-AZ or with a MultiAZ Standby for High availability.</p>"
       }
@@ -849,6 +865,7 @@
         "DeleteDbInstanceOutput$instanceMode": "<p>Specifies the DbInstance's role in the cluster.</p>",
         "GetDbInstanceOutput$instanceMode": "<p>Specifies the DbInstance's role in the cluster.</p>",
         "InstanceModeList$member": null,
+        "RebootDbInstanceOutput$instanceMode": "<p>Specifies the DbInstance's role in the cluster.</p>",
         "UpdateDbInstanceOutput$instanceMode": "<p>Specifies the DbInstance's role in the cluster.</p>"
       }
     },
@@ -859,6 +876,7 @@
         "DbInstanceForClusterSummary$instanceModes": "<p>Specifies the DB instance's roles in the cluster.</p>",
         "DeleteDbInstanceOutput$instanceModes": "<p>Specifies the DbInstance's roles in the cluster.</p>",
         "GetDbInstanceOutput$instanceModes": "<p>Specifies the DbInstance's roles in the cluster.</p>",
+        "RebootDbInstanceOutput$instanceModes": "<p>Specifies the DbInstance's roles in the cluster.</p>",
         "UpdateDbInstanceOutput$instanceModes": "<p>Specifies the DbInstance's roles in the cluster.</p>"
       }
     },
@@ -932,6 +950,7 @@
         "DeleteDbInstanceOutput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to send to specified S3 bucket.</p>",
         "GetDbClusterOutput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to send to specified S3 bucket.</p>",
         "GetDbInstanceOutput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to send to specified S3 bucket.</p>",
+        "RebootDbInstanceOutput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to send to specified S3 bucket.</p>",
         "UpdateDbClusterInput$logDeliveryConfiguration": "<p>The log delivery configuration to apply to the DB cluster.</p>",
         "UpdateDbInstanceInput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to send to specified S3 bucket.</p>",
         "UpdateDbInstanceOutput$logDeliveryConfiguration": "<p>Configuration for sending InfluxDB engine logs to send to specified S3 bucket.</p>"
@@ -971,6 +990,7 @@
         "DeleteDbInstanceOutput$networkType": "<p>Specifies whether the networkType of the Timestream for InfluxDB instance is IPV4, which can communicate over IPv4 protocol only, or DUAL, which can communicate over both IPv4 and IPv6 protocols.</p>",
         "GetDbClusterOutput$networkType": "<p>Specifies whether the network type of the Timestream for InfluxDB cluster is IPv4, which can communicate over IPv4 protocol only, or DUAL, which can communicate over both IPv4 and IPv6 protocols.</p>",
         "GetDbInstanceOutput$networkType": "<p>Specifies whether the networkType of the Timestream for InfluxDB instance is IPV4, which can communicate over IPv4 protocol only, or DUAL, which can communicate over both IPv4 and IPv6 protocols.</p>",
+        "RebootDbInstanceOutput$networkType": "<p>Specifies whether the networkType of the Timestream for InfluxDB instance is IPV4, which can communicate over IPv4 protocol only, or DUAL, which can communicate over both IPv4 and IPv6 protocols.</p>",
         "UpdateDbInstanceOutput$networkType": "<p>Specifies whether the networkType of the Timestream for InfluxDB instance is IPV4, which can communicate over IPv4 protocol only, or DUAL, which can communicate over both IPv4 and IPv6 protocols.</p>"
       }
     },
@@ -1044,9 +1064,36 @@
         "DeleteDbInstanceOutput$port": "<p>The port number on which InfluxDB accepts connections.</p>",
         "GetDbClusterOutput$port": "<p>The port number on which InfluxDB accepts connections.</p>",
         "GetDbInstanceOutput$port": "<p>The port number on which InfluxDB accepts connections.</p>",
+        "RebootDbInstanceOutput$port": "<p>The port number on which InfluxDB accepts connections.</p>",
         "UpdateDbClusterInput$port": "<p>Update the DB cluster to use the specified port.</p>",
         "UpdateDbInstanceInput$port": "<p>The port number on which InfluxDB accepts connections.</p> <p>If you change the Port value, your database restarts immediately.</p> <p>Valid Values: 1024-65535</p> <p>Default: 8086</p> <p>Constraints: The value can't be 2375-2376, 7788-7799, 8090, or 51678-51680</p>",
         "UpdateDbInstanceOutput$port": "<p>The port number on which InfluxDB accepts connections.</p>"
+      }
+    },
+    "RebootDbClusterInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RebootDbClusterInputInstanceIdsList": {
+      "base": null,
+      "refs": {
+        "RebootDbClusterInput$instanceIds": "<p>A list of service-generated unique DB Instance Ids belonging to the DB Cluster to reboot.</p>"
+      }
+    },
+    "RebootDbClusterOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RebootDbInstanceInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RebootDbInstanceOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "RequestTagMap": {
@@ -1094,6 +1141,7 @@
         "DbInstanceSummary$status": "<p>The status of the DB instance.</p>",
         "DeleteDbInstanceOutput$status": "<p>The status of the DB instance.</p>",
         "GetDbInstanceOutput$status": "<p>The status of the DB instance.</p>",
+        "RebootDbInstanceOutput$status": "<p>The status of the DB instance.</p>",
         "UpdateDbInstanceOutput$status": "<p>The status of the DB instance.</p>"
       }
     },
@@ -1127,6 +1175,10 @@
         "GetDbInstanceOutput$influxAuthParametersSecretArn": "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret containing the initial InfluxDB authorization parameters. The secret value is a JSON formatted key-value pair holding InfluxDB authorization values: organization, bucket, username, and password.</p>",
         "GetDbParameterGroupOutput$description": "<p>A description of the DB parameter group.</p>",
         "InternalServerException$message": null,
+        "RebootDbInstanceOutput$endpoint": "<p>The endpoint used to connect to InfluxDB. The default InfluxDB port is 8086.</p>",
+        "RebootDbInstanceOutput$availabilityZone": "<p>The Availability Zone in which the DB instance resides.</p>",
+        "RebootDbInstanceOutput$secondaryAvailabilityZone": "<p>The Availability Zone in which the standby instance is located when deploying with a MultiAZ standby instance.</p>",
+        "RebootDbInstanceOutput$influxAuthParametersSecretArn": "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret containing the initial InfluxDB authorization parameters. The secret value is a JSON formatted key-value pair holding InfluxDB authorization values: organization, bucket, username, and password.</p>",
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$resourceId": "<p>The identifier for the Timestream for InfluxDB resource associated with the request.</p>",
         "ResourceNotFoundException$resourceType": "<p>The type of Timestream for InfluxDB resource associated with the request.</p>",
@@ -1234,6 +1286,7 @@
         "DeleteDbInstanceOutput$vpcSecurityGroupIds": "<p>A list of VPC security group IDs associated with the DB instance.</p>",
         "GetDbClusterOutput$vpcSecurityGroupIds": "<p>A list of VPC security group IDs associated with the DB cluster.</p>",
         "GetDbInstanceOutput$vpcSecurityGroupIds": "<p>A list of VPC security group IDs associated with the DB instance.</p>",
+        "RebootDbInstanceOutput$vpcSecurityGroupIds": "<p>A list of VPC security group IDs associated with the DB instance.</p>",
         "UpdateDbInstanceOutput$vpcSecurityGroupIds": "<p>A list of VPC security group IDs associated with the DB instance.</p>"
       }
     },
@@ -1252,6 +1305,7 @@
         "DeleteDbInstanceOutput$vpcSubnetIds": "<p>A list of VPC subnet IDs associated with the DB instance.</p>",
         "GetDbClusterOutput$vpcSubnetIds": "<p>A list of VPC subnet IDs associated with the DB cluster.</p>",
         "GetDbInstanceOutput$vpcSubnetIds": "<p>A list of VPC subnet IDs associated with the DB instance.</p>",
+        "RebootDbInstanceOutput$vpcSubnetIds": "<p>A list of VPC subnet IDs associated with the DB instance.</p>",
         "UpdateDbInstanceOutput$vpcSubnetIds": "<p>A list of VPC subnet IDs associated with the DB instance.</p>"
       }
     }
