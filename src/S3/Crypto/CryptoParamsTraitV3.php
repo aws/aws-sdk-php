@@ -1,19 +1,19 @@
 <?php
 namespace Aws\S3\Crypto;
 
-use Aws\Crypto\MaterialsProviderInterfaceV2;
+use Aws\Crypto\MaterialsProviderInterfaceV3;
 
-trait CryptoParamsTraitV2
+trait CryptoParamsTraitV3
 {
     use CryptoParamsTrait;
 
-    protected function getMaterialsProvider(array $args)
+    protected function getMaterialsProvider(array $args): MaterialsProviderInterfaceV3
     {
-        if ($args['@MaterialsProvider'] instanceof MaterialsProviderInterfaceV2) {
+        if ($args['@MaterialsProvider'] instanceof MaterialsProviderInterfaceV3) {
             return $args['@MaterialsProvider'];
         }
 
-        throw new \InvalidArgumentException('An instance of MaterialsProviderInterfaceV2'
+        throw new \InvalidArgumentException('An instance of MaterialsProviderInterfaceV3'
             . ' must be passed in the "MaterialsProvider" field.');
     }
 
@@ -24,7 +24,7 @@ trait CryptoParamsTraitV2
                 . ' specified in the CommitmentPolicy field.');
         }
 
-        if (!S3EncryptionClientV2::isSupportedKeyCommitmentPolicy($args['@CommitmentPolicy'])) {
+        if (!S3EncryptionClientV3::isSupportedKeyCommitmentPolicy($args['@CommitmentPolicy'])) {
             throw new \InvalidArgumentException('The CommitmentPolicy requested is not'
                 . ' supported by the SDK.');
         }

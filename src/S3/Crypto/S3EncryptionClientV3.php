@@ -1,15 +1,16 @@
 <?php
 namespace Aws\S3\Crypto;
 
-use Aws\Crypto\DecryptionTraitV2;
+use Aws\Crypto\DecryptionTraitV3;
 use Aws\Exception\CryptoException;
 use Aws\HashingStream;
 use Aws\MetricsBuilder;
 use Aws\PhpHash;
-use Aws\Crypto\AbstractCryptoClientV2;
-use Aws\Crypto\EncryptionTraitV2;
+use Aws\Result;
+use Aws\Crypto\AbstractCryptoClientV3;
+use Aws\Crypto\EncryptionTraitV3;
 use Aws\Crypto\MetadataEnvelope;
-use Aws\Crypto\MaterialsProvider;
+use Aws\Crypto\AlgorithmSuite;
 use Aws\Crypto\Cipher\CipherBuilderTrait;
 use Aws\S3\S3Client;
 use GuzzleHttp\Promise;
@@ -21,30 +22,27 @@ use GuzzleHttp\Psr7;
  * data on putObject[Async] calls and decrypt data on getObject[Async] calls.
  *
  * AWS strongly recommends the upgrade to the S3EncryptionClientV3 (over the
- * S3EncryptionClientV2), as it offers updated data security best practices to our
- * customers who upgrade. S3EncryptionClientV3 contains breaking changes, so this
+ * S3EncryptionClientV2 or S3EncryptionClient), as it offers updated 
+ * data security best practices to our customers who upgrade.
+ * S3EncryptionClientV3 contains breaking changes, so this
  * will require planning by engineering teams to migrate. New workflows should
  * just start with S3EncryptionClientV3.
  *
- * Note that for PHP versions of < 7.1, this class uses an AES-GCM polyfill
- * for encryption since there is no native PHP support. The performance for large
- * inputs will be a lot slower than for PHP 7.1+, so upgrading older PHP version
- * environments may be necessary to use this effectively.
  *
  * Example write path:
  *
  * <code>
- * use Aws\Crypto\KmsMaterialsProviderV2;
- * use Aws\S3\Crypto\S3EncryptionClientV2;
+ * use Aws\Crypto\KmsMaterialsProviderV3;
+ * use Aws\S3\Crypto\S3EncryptionClientV3;
  * use Aws\S3\S3Client;
  *
- * $encryptionClient = new S3EncryptionClientV2(
+ * $encryptionClient = new S3EncryptionClientV3(
  *     new S3Client([
  *         'region' => 'us-west-2',
  *         'version' => 'latest'
  *     ])
  * );
- * $materialsProvider = new KmsMaterialsProviderV2(
+ * $materialsProvider = new KmsMaterialsProviderV3(
  *     new KmsClient([
  *         'profile' => 'default',
  *         'region' => 'us-east-1',
@@ -59,6 +57,7 @@ use GuzzleHttp\Psr7;
  *         'Cipher' => 'gcm',
  *         'KeySize' => 256,
  *     ],
+ *     '@CommitmentPolicy' => 'REQUIRE_ENCRYPT_REQUIRE_DECRYPT',
  *     '@KmsEncryptionContext' => ['foo' => 'bar'],
  *     'Bucket' => 'your-bucket',
  *     'Key' => 'your-key',
@@ -75,25 +74,25 @@ use GuzzleHttp\Psr7;
  *         'Cipher' => 'gcm',
  *         'KeySize' => 256,
  *     ],
- *     '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
+ *     '@CommitmentPolicy' => 'REQUIRE_ENCRYPT_REQUIRE_DECRYPT',
  *     'Bucket' => 'your-bucket',
  *     'Key' => 'your-key',
  * ]);
  * </code>
  */
-class S3EncryptionClientV2 extends AbstractCryptoClientV2
+class S3EncryptionClientV3 extends AbstractCryptoClientV3
 {
     use CipherBuilderTrait;
-    use CryptoParamsTraitV2;
-    use DecryptionTraitV2;
-    use EncryptionTraitV2;
+    use CryptoParamsTraitV3;
+    use DecryptionTraitV3;
+    use EncryptionTraitV3;
     use UserAgentTrait;
 
-    const CRYPTO_VERSION = '2.1';
+    const CRYPTO_VERSION = '3.0';
 
-    private $client;
-    private $instructionFileSuffix;
-    private $legacyWarningCount;
+    private S3Client $client;
+    private ?string $instructionFileSuffix;
+    private int $legacyWarningCount;
 
     /**
      * @param S3Client $client The S3Client to be used for true uploading and
@@ -104,19 +103,55 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *                                           files for metadata storage.
      */
     public function __construct(
+        //= ../specification/s3-encryption/client.md#wrapped-s3-client-s
+        //= type=implication
+        //# The S3EC MUST support the option to provide an SDK S3 client instance during its initialization.
         S3Client $client,
-        $instructionFileSuffix = null
+        //= ../specification/s3-encryption/client.md#aws-sdk-compatibility
+        //= type=implication
+        //# The S3EC MUST provide a different set of configuration options than the conventional S3 client.
+
+        //= ../specification/s3-encryption/client.md#instruction-file-configuration
+        //= type=implication
+        //# In this case, the Instruction File Configuration SHOULD be optional,
+        //# such that its default configuration is used when none is provided.
+        ?string $instructionFileSuffix = null
     ) {
+        //= ../specification/s3-encryption/client.md#aws-sdk-compatibility
+        //= type=implication
+        //# The S3EC MUST adhere to the same interface for API operations as the conventional AWS SDK S3 client.
+        $this->appendUserAgent($client, 'feat/s3-encrypt-php/' . self::CRYPTO_VERSION);
+        //= ../specification/s3-encryption/client.md#wrapped-s3-client-s
+        //# The S3EC MUST NOT support use of S3EC as the provided S3 client during its initialization;
+        //# it MUST throw an exception in this case.
+        if ($client instanceof S3EncryptionClientV3) {
+            throw new CryptoException("Client configuration error."
+                . " An S3 Encryption Client is not a valid S3 client for an S3 Encryption Client.");   
+        }
         $this->client = $client;
+        //= ../specification/s3-encryption/client.md#instruction-file-configuration
+        //= type=implication
+        //# The S3EC MAY support the option to provide Instruction File Configuration during its initialization.
+
+        //= ../specification/s3-encryption/client.md#instruction-file-configuration
+        //= type=implication
+        //# If the S3EC in a given language supports Instruction Files,
+        //# then it MUST accept Instruction File Configuration during its initialization.
         $this->instructionFileSuffix = $instructionFileSuffix;
         $this->legacyWarningCount = 0;
         MetricsBuilder::appendMetricsCaptureMiddleware(
             $this->client->getHandlerList(),
-            MetricsBuilder::S3_CRYPTO_V2
+            MetricsBuilder::S3_CRYPTO_V3
         );
+
+        if (!extension_loaded('openssl')) {
+            throw new CryptoException("Unable to load `openssl` extension.");
+        }
     }
 
-    private static function getDefaultStrategy()
+    //= ../specification/s3-encryption/data-format/metadata-strategy.md#instruction-file
+    //# Instruction File writes MUST NOT be enabled by default.
+    private static function getDefaultStrategy(): HeadersMetadataStrategy
     {
         return new HeadersMetadataStrategy();
     }
@@ -125,31 +160,36 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      * Encrypts the data in the 'Body' field of $args and promises to upload it
      * to the specified location on S3.
      *
-     * Note that for PHP versions of < 7.1, this operation uses an AES-GCM
-     * polyfill for encryption since there is no native PHP support. The
-     * performance for large inputs will be a lot slower than for PHP 7.1+, so
-     * upgrading older PHP version environments may be necessary to use this
-     * effectively.
-     *
      * @param array $args Arguments for encrypting an object and uploading it
      *                    to S3 via PutObject.
      *
      * The required configuration arguments are as follows:
      *
-     * - @MaterialsProvider: (MaterialsProviderV2) Provides Cek, Iv, and Cek
+     * - @MaterialsProvider: (MaterialsProviderV3) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for encryption metadata.
+     * - @CommitmentPolicy: (string) Must be set to 'FORBID_ENCRYPT_ALLOW_DECRYPT',
+     *         'REQUIRE_ENCRYPT_ALLOW_DECRYPT', or 'REQUIRE_ENCRYPT_REQUIRE_DECRYPT'.
+     *      - 'FORBID_ENCRYPT_ALLOW_DECRYPT' indicates that the client is configured
+     *         to write messages without key commitment and read messages encrypted 
+     *         with key commitment or without key commitment.
+     *      - 'REQUIRE_ENCRYPT_ALLOW_DECRYPT' indicates that the client is configured
+     *         to write messages with key commitment and read messages encrypted 
+     *         with key commitment or without key commitment.
+     *      - 'REQUIRE_ENCRYPT_REQUIRE_DECRYPT' indicates that the client is configured
+     *         to write messages with key commitment and read messages encrypted 
+     *         with key commitment.
      * - @CipherOptions: (array) Cipher options for encrypting data. Only the
      *   Cipher option is required. Accepts the following:
      *       - Cipher: (string) gcm
-     *            See also: AbstractCryptoClientV2::$supportedCiphers
-     *       - KeySize: (int) 128|256
+     *            See also: AbstractCryptoClientV3::$supportedCiphers
+     *       - KeySize: (int) 256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm. Note if you pass in
      *            Aad, the PHP SDK will be able to decrypt the resulting object,
      *            but other AWS SDKs may not be able to do so.
      * - @KmsEncryptionContext: (array) Only required if using
-     *   KmsMaterialsProviderV2. An associative array of key-value
+     *   KmsMaterialsProviderV3. An associative array of key-value
      *   pairs to be added to the encryption context for KMS key encryption. An
      *   empty array may be passed if no additional context is desired.
      *
@@ -168,54 +208,93 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      * @throws \InvalidArgumentException Thrown when arguments above are not
      *                                   passed or are passed incorrectly.
      */
-    public function putObjectAsync(array $args)
+    public function putObjectAsync(array $args): PromiseInterface
     {
+        //= ../specification/s3-encryption/client.md#cryptographic-materials
+        //= type=implication
+        //# The S3EC MUST accept either one CMM or one Keyring instance upon initialization.
         $provider = $this->getMaterialsProvider($args);
         unset($args['@MaterialsProvider']);
 
+        //= ../specification/s3-encryption/client.md#key-commitment
+        //= type=implication
+        //# The S3EC MUST support configuration of the [Key Commitment policy](./key-commitment.md) during its initialization.
+        $keyCommitmentPolicy = $this->getKeyCommitmentPolicy($args);
+        unset($args['@CommitmentPolicy']);
+
+        //= ../specification/s3-encryption/data-format/metadata-strategy.md#instruction-file
+        //# Instruction File writes MUST be optionally configured during client creation or on each PutObject request.
         $instructionFileSuffix = $this->getInstructionFileSuffix($args);
         unset($args['@InstructionFileSuffix']);
 
         $strategy = $this->getMetadataStrategy($args, $instructionFileSuffix);
         unset($args['@MetadataStrategy']);
 
+        //= ../specification/s3-encryption/client.md#encryption-algorithm
+        //= type=implication
+        //# The S3EC MUST support configuration of the encryption algorithm (or algorithm suite) during its initialization.
+        $options = array_change_key_case($args);
+        $cipherOptions = array_intersect_key(
+            $options['@cipheroptions'],
+            self::$allowedOptions
+        );
+        if (empty($cipherOptions['Cipher'])) {
+            throw new \InvalidArgumentException('An encryption cipher must be'
+                . ' specified in @CipherOptions["Cipher"].');
+        }
+
+        $algorithmSuite = AlgorithmSuite::validateCommitmentPolicyOnEncrypt(
+            $cipherOptions,
+            $keyCommitmentPolicy
+        );
+
         $envelope = new MetadataEnvelope();
 
-        return Promise\Create::promiseFor($this->encrypt(
-            Psr7\Utils::streamFor($args['Body']),
-            $args,
-            $provider,
-            $envelope
-        ))->then(
-            function ($encryptedBodyStream) use ($args) {
-                $hash = new PhpHash('sha256');
-                $hashingEncryptedBodyStream = new HashingStream(
-                    $encryptedBodyStream,
-                    $hash,
-                    self::getContentShaDecorator($args)
-                );
-                return [$hashingEncryptedBodyStream, $args];
-            }
+        return Promise\Create::promiseFor(
+            //= ../specification/s3-encryption/client.md#required-api-operations
+            //= type=implication
+            //# - PutObject MUST encrypt its input data before it is uploaded to S3.
+            $this->encrypt(
+                Psr7\Utils::streamFor($args['Body']),
+                $algorithmSuite,
+                $options,
+                $provider,
+                $envelope
+            )
         )->then(
-            function ($putObjectContents) use ($strategy, $envelope) {
-                list($bodyStream, $args) = $putObjectContents;
-                if ($strategy === null) {
-                    $strategy = self::getDefaultStrategy();
+                function ($encryptedBodyStream) use ($args) {
+                    $hash = new PhpHash('sha256');
+                    $hashingEncryptedBodyStream = new HashingStream(
+                        $encryptedBodyStream,
+                        $hash,
+                        self::getContentShaDecorator($args)
+                    );
+                    
+                    return [$hashingEncryptedBodyStream, $args];
                 }
-
-                $updatedArgs = $strategy->save($envelope, $args);
-                $updatedArgs['Body'] = $bodyStream;
-                return $updatedArgs;
-            }
-        )->then(
-            function ($args) {
-                unset($args['@CipherOptions']);
-                return $this->client->putObjectAsync($args);
-            }
-        );
+            )->then(
+                function ($putObjectContents) use ($strategy, $envelope) {
+                    list($bodyStream, $args) = $putObjectContents;
+                    if ($strategy === null) {
+                        $strategy = self::getDefaultStrategy();
+                    }
+                    //= ../specification/s3-encryption/data-format/metadata-strategy.md#object-metadata
+                    //# By default, the S3EC MUST store content metadata in the S3 Object Metadata.
+                    $updatedArgs = $strategy->save($envelope, $args);
+                    $updatedArgs['Body'] = $bodyStream;
+                    
+                    return $updatedArgs;
+                }
+            )->then(
+                function ($args) {
+                    unset($args['@CipherOptions']);
+                    
+                    return $this->client->putObjectAsync($args);
+                }
+            );
     }
 
-    private static function getContentShaDecorator(&$args)
+    private static function getContentShaDecorator(&$args): \Closure
     {
         return function ($hash) use (&$args) {
             $args['ContentSHA256'] = bin2hex($hash);
@@ -226,12 +305,6 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      * Encrypts the data in the 'Body' field of $args and uploads it to the
      * specified location on S3.
      *
-     * Note that for PHP versions of < 7.1, this operation uses an AES-GCM
-     * polyfill for encryption since there is no native PHP support. The
-     * performance for large inputs will be a lot slower than for PHP 7.1+, so
-     * upgrading older PHP version environments may be necessary to use this
-     * effectively.
-     *
      * @param array $args Arguments for encrypting an object and uploading it
      *                    to S3 via PutObject.
      *
@@ -239,10 +312,21 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *
      * - @MaterialsProvider: (MaterialsProvider) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for encryption metadata.
+     * - @CommitmentPolicy: (string) Must be set to 'FORBID_ENCRYPT_ALLOW_DECRYPT',
+     *         'REQUIRE_ENCRYPT_ALLOW_DECRYPT', or 'REQUIRE_ENCRYPT_REQUIRE_DECRYPT'.
+     *      - 'FORBID_ENCRYPT_ALLOW_DECRYPT' indicates that the client is configured
+     *         to write messages without key commitment and read messages encrypted 
+     *         with key commitment or without key commitment.
+     *      - 'REQUIRE_ENCRYPT_ALLOW_DECRYPT' indicates that the client is configured
+     *         to write messages with key commitment and read messages encrypted 
+     *         with key commitment or without key commitment.
+     *      - 'REQUIRE_ENCRYPT_REQUIRE_DECRYPT' indicates that the client is configured
+     *         to write messages with key commitment and read messages encrypted 
+     *         with key commitment.
      * - @CipherOptions: (array) Cipher options for encrypting data. A Cipher
      *   is required. Accepts the following options:
      *       - Cipher: (string) gcm
-     *            See also: AbstractCryptoClientV2::$supportedCiphers
+     *            See also: AbstractCryptoClientV3::$supportedCiphers
      *       - KeySize: (int) 128|256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
@@ -250,7 +334,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *            Aad, the PHP SDK will be able to decrypt the resulting object,
      *            but other AWS SDKs may not be able to do so.
      * - @KmsEncryptionContext: (array) Only required if using
-     *   KmsMaterialsProviderV2. An associative array of key-value
+     *   KmsMaterialsProviderV3. An associative array of key-value
      *   pairs to be added to the encryption context for KMS key encryption. An
      *   empty array may be passed if no additional context is desired.
      *
@@ -271,8 +355,11 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      * @throws \InvalidArgumentException Thrown when arguments above are not
      *                                   passed or are passed incorrectly.
      */
-    public function putObject(array $args)
+    public function putObject(array $args): Result
     {
+        //= ../specification/s3-encryption/client.md#required-api-operations
+        //= type=implication
+        //# - PutObject MUST be implemented by the S3EC.
         return $this->putObjectAsync($args)->wait();
     }
 
@@ -288,16 +375,24 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      * - @MaterialsProvider: (MaterialsProviderInterface) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for decryption metadata. May have data loaded
      *   from the MetadataEnvelope upon decryption.
-     * - @SecurityProfile: (string) Must be set to 'V2' or 'V2_AND_LEGACY'.
-     *      - 'V2' indicates that only objects encrypted with S3EncryptionClientV2
-     *        content encryption and key wrap schemas are able to be decrypted.
-     *      - 'V2_AND_LEGACY' indicates that objects encrypted with both
-     *        S3EncryptionClientV2 and older legacy encryption clients are able
-     *        to be decrypted.
-     * - @CommitmentPolicy: (string) Must be set to 'FORBID_ENCRYPT_ALLOW_DECRYPT'.
+     * - @CommitmentPolicy: (string) Must be set to 'FORBID_ENCRYPT_ALLOW_DECRYPT',
+     *         'REQUIRE_ENCRYPT_ALLOW_DECRYPT', or 'REQUIRE_ENCRYPT_REQUIRE_DECRYPT'.
      *      - 'FORBID_ENCRYPT_ALLOW_DECRYPT' indicates that the client is configured
-     *         to read messages encrypted with key commitment or without key commitment.
-     * 
+     *         to write messages without key commitment and read messages encrypted 
+     *         with key commitment or without key commitment.
+     *      - 'REQUIRE_ENCRYPT_ALLOW_DECRYPT' indicates that the client is configured
+     *         to write messages with key commitment and read messages encrypted 
+     *         with key commitment or without key commitment.
+     *      - 'REQUIRE_ENCRYPT_REQUIRE_DECRYPT' indicates that the client is configured
+     *         to write messages with key commitment and read messages encrypted 
+     *         with key commitment.
+     * - @SecurityProfile: (string) Must be set to 'V3' or 'V3_AND_LEGACY'.
+     *      - 'V3' indicates that only objects encrypted with S3EncryptionClientV3
+     *        content encryption and key wrap schemas are able to be decrypted.
+     *      - 'V3_AND_LEGACY' indicates that objects encrypted with both
+     *        S3EncryptionClientV3 and older legacy encryption clients are able
+     *        to be decrypted.
+     *
      * The optional configuration arguments are as follows:
      *
      * - SaveAs: (string) The path to a file on disk to save the decrypted
@@ -325,12 +420,19 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      * @throws \InvalidArgumentException Thrown when required arguments are not
      *                                   passed or are passed incorrectly.
      */
-    public function getObjectAsync(array $args)
+    public function getObjectAsync(array $args): PromiseInterface
     {
+        //= ../specification/s3-encryption/client.md#cryptographic-materials
+        //= type=implication
+        //# The S3EC MUST accept either one CMM or one Keyring instance upon initialization.
         $provider = $this->getMaterialsProvider($args);
         unset($args['@MaterialsProvider']);
 
+        //= ../specification/s3-encryption/client.md#key-commitment
+        //= type=implication
+        //# The S3EC MUST support configuration of the [Key Commitment policy](./key-commitment.md) during its initialization.
         $keyCommitmentPolicy = $this->getKeyCommitmentPolicy($args);
+        unset($args['@CommitmentPolicy']);
 
         $instructionFileSuffix = $this->getInstructionFileSuffix($args);
         unset($args['@InstructionFileSuffix']);
@@ -338,15 +440,18 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
         $strategy = $this->getMetadataStrategy($args, $instructionFileSuffix);
         unset($args['@MetadataStrategy']);
 
+        //= ../specification/s3-encryption/client.md#enable-legacy-wrapping-algorithms
+        //= type=implication
+        //# The S3EC MUST support the option to enable or disable legacy wrapping algorithms.
         if (!isset($args['@SecurityProfile'])
-            || !in_array($args['@SecurityProfile'], self::$supportedSecurityProfiles)
+            || !in_array($args['@SecurityProfile'], self::SUPPORTED_SECURITY_PROFILES)
         ) {
             throw new CryptoException("@SecurityProfile is required and must be"
-                . " set to 'V2' or 'V2_AND_LEGACY'");
+                . " set to 'V3' or 'V3_AND_LEGACY'");
         }
 
         // Only throw this legacy warning once per client
-        if (in_array($args['@SecurityProfile'], self::$legacySecurityProfiles)
+        if (in_array($args['@SecurityProfile'], self::LEGACY_SECURITY_PROFILES)
             && $this->legacyWarningCount < 1
         ) {
             $this->legacyWarningCount++;
@@ -370,6 +475,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
                     $provider,
                     $instructionFileSuffix,
                     $strategy,
+                    $keyCommitmentPolicy,
                     $args
                 ) {
                     if ($strategy === null) {
@@ -382,13 +488,17 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
                     $envelope = $strategy->load($args + [
                         'Metadata' => $result['Metadata']
                     ]);
-
+                    //= ../specification/s3-encryption/client.md#required-api-operations
+                    //= type=implication
+                    //# - GetObject MUST decrypt data received from the S3 server and return it as plaintext.
                     $result['Body'] = $this->decrypt(
                         $result['Body'],
                         $provider,
                         $envelope,
+                        $keyCommitmentPolicy,
                         $args
                     );
+                    
                     return $result;
                 }
             )->then(
@@ -400,6 +510,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
                             LOCK_EX
                         );
                     }
+                    
                     return $result;
                 }
             );
@@ -418,16 +529,23 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      * - @MaterialsProvider: (MaterialsProviderInterface) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for decryption metadata. May have data loaded
      *   from the MetadataEnvelope upon decryption.
-     * - @SecurityProfile: (string) Must be set to 'V2' or 'V2_AND_LEGACY'.
-     *      - 'V2' indicates that only objects encrypted with S3EncryptionClientV2
+     * - @CommitmentPolicy: (string) Must be set to 'FORBID_ENCRYPT_ALLOW_DECRYPT',
+     *         'REQUIRE_ENCRYPT_ALLOW_DECRYPT', or 'REQUIRE_ENCRYPT_REQUIRE_DECRYPT'.
+     *      - 'FORBID_ENCRYPT_ALLOW_DECRYPT' indicates that the client is configured
+     *         to write messages without key commitment and read messages encrypted 
+     *         with key commitment or without key commitment.
+     *      - 'REQUIRE_ENCRYPT_ALLOW_DECRYPT' indicates that the client is configured
+     *         to write messages with key commitment and read messages encrypted 
+     *         with key commitment or without key commitment.
+     *      - 'REQUIRE_ENCRYPT_REQUIRE_DECRYPT' indicates that the client is configured
+     *         to write messages with key commitment and read messages encrypted 
+     *         with key commitment.
+     * - @SecurityProfile: (string) Must be set to 'V3' or 'V3_AND_LEGACY'.
+     *      - 'V3' indicates that only objects encrypted with S3EncryptionClientV3
      *        content encryption and key wrap schemas are able to be decrypted.
-     *      - 'V2_AND_LEGACY' indicates that objects encrypted with both
-     *        S3EncryptionClientV2 and older legacy encryption clients are able
+     *      - 'V3_AND_LEGACY' indicates that objects encrypted with both
+     *        S3EncryptionClientV3 and older legacy encryption clients are able
      *        to be decrypted.
-     * - @CommitmentPolicy: (string) Must be set to 'FORBID_ENCRYPT_ALLOW_DECRYPT'.
-     *      - 'FORBID_ENCRYPT_ALLOW_DECRYPT' indicates that the client is 
-     *         configured to read messages encrypted with key commitment 
-     *         or without key commitment.
      *
      * The optional configuration arguments are as follows:
      *
@@ -453,8 +571,11 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      * @throws \InvalidArgumentException Thrown when arguments above are not
      *                                   passed or are passed incorrectly.
      */
-    public function getObject(array $args)
+    public function getObject(array $args): Result
     {
+        //= ../specification/s3-encryption/client.md#required-api-operations
+        //= type=implication
+        //# - GetObject MUST be implemented by the S3EC.
         return $this->getObjectAsync($args)->wait();
     }
 }

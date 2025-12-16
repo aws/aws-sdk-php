@@ -192,6 +192,7 @@ class S3EncryptionContextV2 implements Context, SnippetAcceptingContext
 
             $params['@MaterialsProvider'] = $materialsProvider;
             $params['@SecurityProfile'] = 'V2_AND_LEGACY';
+            $params['@CommitmentPolicy'] = 'FORBID_ENCRYPT_ALLOW_DECRYPT';
             $params['@KmsAllowDecryptWithAnyCmk'] = true;
             //Suppress warning emitted for using legacy encryption modes
             $result = @$s3EncryptionClient->getObject($params);

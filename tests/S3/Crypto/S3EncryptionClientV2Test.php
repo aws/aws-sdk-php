@@ -537,6 +537,7 @@ EOXML;
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2',
         ]);
         $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
@@ -571,6 +572,7 @@ EOXML;
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2',
         ]);
     }
@@ -604,6 +606,7 @@ EOXML;
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2',
         ]);
     }
@@ -637,6 +640,7 @@ EOXML;
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2',
         ]);
     }
@@ -684,6 +688,7 @@ EOXML;
             'Key' => 'bar',
             '@MaterialsProvider' => $providerV2,
             '@SecurityProfile' => 'V2_AND_LEGACY',
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@KmsAllowDecryptWithAnyCmk' => true,
         ]);
         $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
@@ -728,6 +733,7 @@ EOXML;
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
             '@KmsAllowDecryptWithAnyCmk' => true,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2',
         ]);
         $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
@@ -771,6 +777,7 @@ EOXML;
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2',
         ]);
         $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
@@ -819,6 +826,7 @@ EOXML;
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2',
         ]);
         $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
@@ -865,6 +873,7 @@ EOXML;
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
             '@SecurityProfile' => 'V2',
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@InstructionFileSuffix' =>
                 InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
         ]);
@@ -900,6 +909,7 @@ EOXML;
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
             '@SecurityProfile' => 'V2_AND_LEGACY',
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             'SaveAs' => $file
         ]);
         $this->assertStringEqualsFile($file, (string)$result['Body']);
@@ -946,6 +956,7 @@ EOXML;
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $providerV2,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2_AND_LEGACY',
         ]);
     }
@@ -992,6 +1003,7 @@ EOXML;
             'Key' => 'bar',
             '@MaterialsProvider' => $providerV2,
             '@SecurityProfile' => 'V2',
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@KmsAllowDecryptWithAnyCmk' => true,
         ]);
     }
@@ -1009,6 +1021,7 @@ EOXML;
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@MaterialsProvider' => new KmsMaterialsProviderV2(
                 $this->getKmsClient()
             ),
@@ -1028,6 +1041,7 @@ EOXML;
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@MaterialsProvider' => new KmsMaterialsProviderV2(
                 $this->getKmsClient()
             ),
@@ -1068,6 +1082,7 @@ EOXML;
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
+            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT',
             '@SecurityProfile' => 'V2',
         ]);
     }

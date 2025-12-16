@@ -1,18 +1,21 @@
 <?php
+
 namespace Aws\Crypto;
 
+use Aws\Crypto\Cipher\CipherMethod;
 use Aws\Exception\CryptoException;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\LimitStream;
+use PHPUnit\Framework\Constraint\IsEmpty;
 use Psr\Http\Message\StreamInterface;
 
-trait DecryptionTraitV2
+trait DecryptionTraitV3
 {
     /**
      * Dependency to reverse lookup the openssl_* cipher name from the AESName
      * in the MetadataEnvelope.
      *
-     * @param $aesName
+     * @param string $aesName
      *
      * @return string
      *
@@ -33,19 +36,24 @@ trait DecryptionTraitV2
      *
      * @internal
      */
-    abstract protected function buildCipherMethod($cipherName, $iv, $keySize);
+    abstract protected function buildCipherMethod(
+        $cipherName,
+        $iv,
+        $keySize
+    );
 
     /**
      * Builds an AesStreamInterface using cipher options loaded from the
      * MetadataEnvelope and MaterialsProvider. Can decrypt data from both the
-     * legacy and V2 encryption client workflows.
+     * legacy and V3 encryption client workflows.
      *
      * @param string $cipherText Plain-text data to be encrypted using the
      *                           materials, algorithm, and data provided.
-     * @param MaterialsProviderInterfaceV2 $provider A provider to supply and encrypt
+     * @param MaterialsProviderInterfaceV3 $provider A provider to supply and encrypt
      *                                             materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be read from.
+     * @param string $commitmentPolicy Commitment Policy to use for decrypting objects.
      * @param array $options Options used for decryption.
      *
      * @return AesStreamInterface
@@ -56,32 +64,29 @@ trait DecryptionTraitV2
      * @internal
      */
     public function decrypt(
-        $cipherText,
-        MaterialsProviderInterfaceV2 $provider,
+        string $cipherText,
+        MaterialsProviderInterfaceV3 $provider,
         MetadataEnvelope $envelope,
+        string $commitmentPolicy,
         array $options = []
-    ) 
+    ): AesStreamInterface 
     {
-        $commitmentPolicy = $this->getKeyCommitmentPolicy($options);
-        unset($options['@CommitmentPolicy']);
         if (isset($envelope[MetadataEnvelope::ENCRYPTED_DATA_KEY_V3])) {
-            if ($commitmentPolicy !== "FORBID_ENCRYPT_ALLOW_DECRYPT") {
-                throw new CryptoException(
-                    "The requested item is encrypted"
-                    . " with Key Commitment. The current policy {$commitmentPolicy}"
-                    . " conflicts with the object metadata. Select an appropriate"
-                    . " '@CommitmentPolicy' to decrypt this item."
-                );
-            }
+            $this->checkEnvelopeForExclusiveMapKeys(
+                $envelope,
+                MetadataEnvelope::getV2Fields(),
+                "Expected V3 only fields but found V2 fields in header metadata."
+            );
+            // PHP only supports one commiting algorithm suite
             $algorithmSuite = AlgorithmSuite::ALG_AES_256_GCM_HKDF_SHA512_COMMIT_KEY;
             $options['@CipherOptions'] = $options['@CipherOptions'] ?? [];
             $options['@CipherOptions']['Iv'] = str_repeat("\1", 12);
             $options['@CipherOptions']['TagLength'] = $algorithmSuite->getCipherTagLengthInBytes();
-            $materialDescription = json_decode(
-                $envelope[MetadataEnvelope::ENCRYPTION_CONTEXT_V3],
-                true
-            );
 
+            //= ../specification/s3-encryption/data-format/content-metadata.md#v3-only
+            //= type=implication
+            //# - The wrapping algorithm value "12" MUST be translated to kms+context upon retrieval, and vice versa on write.
+            $materialDescription = $this->buildMaterialDescription($envelope);
 
             $cek = $provider->decryptCek(
                 base64_decode($envelope[MetadataEnvelope::ENCRYPTED_DATA_KEY_V3]),
@@ -93,11 +98,11 @@ trait DecryptionTraitV2
             $options['@CipherOptions']['Cipher'] = $this->getCipherFromAesName(
                 $this->numericalContenCipherToAesName($envelope)
             );
-            $this->validateOptionsAndEnvelope($options, $envelope);
+            $this->validateOptionsAndEnvelope($options, $envelope, $commitmentPolicy);
 
             $messageId = base64_decode($envelope[MetadataEnvelope::MESSAGE_ID_V3]);
             $commitmentKey = base64_decode($envelope[MetadataEnvelope::KEY_COMMITMENT_V3]);
-
+            
             if (strlen($messageId) !== ($algorithmSuite->getKeyCommitmentSaltLengthBits()) / 8) {
                 throw new CryptoException("Invalid MessageId length found in object envelope.");
             }
@@ -118,6 +123,23 @@ trait DecryptionTraitV2
 
             return $decryptionStream;
         } else {
+            //= ../specification/s3-encryption/key-commitment.md#commitment-policy
+            //# When the commitment policy is REQUIRE_ENCRYPT_REQUIRE_DECRYPT,
+            //# the S3EC MUST NOT allow decryption using algorithm suites which do not support key commitment.
+            if ($commitmentPolicy == "REQUIRE_ENCRYPT_REQUIRE_DECRYPT") {
+                //= ../specification/s3-encryption/client.md#key-commitment
+                //# If the configured Encryption Algorithm is incompatible with
+                //# the key commitment policy, then it MUST throw an exception.
+                throw new CryptoException("Message is encrypted with a "
+                    . "non commiting algorithm but commitment policy is set "
+                    . "to {$commitmentPolicy}. Select a valid commitment "
+                    . "policy to decrypt this object. ");
+            }
+            $this->checkEnvelopeForExclusiveMapKeys(
+                $envelope,
+                MetadataEnvelope::getV3Fields(),
+                "Expected V2 only fields but found V3 fields in header metadata."
+            );
             $options['@CipherOptions'] = $options['@CipherOptions'] ?? [];
             $options['@CipherOptions']['Iv'] = base64_decode(
                 $envelope[MetadataEnvelope::IV_HEADER]
@@ -141,9 +163,14 @@ trait DecryptionTraitV2
                 $envelope[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]
             );
 
-            $this->validateOptionsAndEnvelope($options, $envelope);
+            //= ../specification/s3-encryption/decryption.md#key-commitment
+            //= type=implication
+            //# The S3EC MUST validate the algorithm suite used for decryption
+            //# against the key commitment policy before attempting to decrypt
+            //# the content ciphertext.
+            $this->validateOptionsAndEnvelope($options, $envelope, $commitmentPolicy);
 
-            $decryptionStream = $this->getDecryptingStream(
+            $decryptionStream = $this->getNonCommitingDecryptingStream(
                 $cipherText,
                 $cek,
                 $options['@CipherOptions']
@@ -154,19 +181,18 @@ trait DecryptionTraitV2
         }
     }
 
-    private function buildMaterialDescription(
-        MetadataEnvelope $envelope
-    ): array 
+    private function checkEnvelopeForExclusiveMapKeys(
+        MetadataEnvelope $envelope,
+        array $exclusiveKeys,
+        string $errorMessage
+    ): void
     {
-        switch ($envelope[MetadataEnvelope::ENCRYPTED_DATA_KEY_ALGORITHM_V3]) {
-            case 12:
-                return ['aws:x-amz-cek-alg' => '115'];
-            default:
-                throw new CryptoException(
-                    "Unknown Encrypted Data Key "
-                    . "wrapping algorithm found: "
-                    . "{$envelope[MetadataEnvelope::ENCRYPTED_DATA_KEY_ALGORITHM_V3]}"
-                );
+        foreach ($exclusiveKeys as $exclusiveKey) {
+            //= ../specification/s3-encryption/data-format/content-metadata.md#determining-s3ec-object-status
+            //# If there are multiple mapkeys which are meant to be exclusive, such as "x-amz-key", "x-amz-key-v2", and "x-amz-3" then the S3EC SHOULD throw an exception.
+            if (isset($envelope[$exclusiveKey])) {
+                throw new CryptoException($errorMessage);
+            }
         }
     }
 
@@ -187,16 +213,35 @@ trait DecryptionTraitV2
 
     }
 
+    private function buildMaterialDescription(
+        MetadataEnvelope $envelope
+    ): array
+    {
+        switch ($envelope[MetadataEnvelope::ENCRYPTED_DATA_KEY_ALGORITHM_V3]) {
+            case 12:
+                return json_decode(
+                    $envelope[MetadataEnvelope::ENCRYPTION_CONTEXT_V3],
+                    true
+                );
+            default:
+                throw new CryptoException(
+                    "Unknown Encrypted Data Key "
+                    . "wrapping algorithm found: "
+                    . "{$envelope[MetadataEnvelope::ENCRYPTED_DATA_KEY_ALGORITHM_V3]}"
+                );
+        }
+    }
+
     private function getTagFromCiphertextStream(
         StreamInterface $cipherText,
         $tagLength
-    ) 
+    ): string
     {
         $cipherTextSize = $cipherText->getSize();
         if ($cipherTextSize == null || $cipherTextSize <= 0) {
-            throw new \RuntimeException('Cannot decrypt a stream of unknown'
-                . ' size.');
+            throw new \RuntimeException('Cannot decrypt a stream of unknown size');
         }
+
         return (string) new LimitStream(
             $cipherText,
             $tagLength,
@@ -207,13 +252,13 @@ trait DecryptionTraitV2
     private function getStrippedCiphertextStream(
         StreamInterface $cipherText,
         $tagLength
-    ) 
+    ): LimitStream 
     {
         $cipherTextSize = $cipherText->getSize();
         if ($cipherTextSize == null || $cipherTextSize <= 0) {
-            throw new \RuntimeException('Cannot decrypt a stream of unknown'
-                . ' size.');
+            throw new \RuntimeException('Cannot decrypt a stream of unknown size');
         }
+
         return new LimitStream(
             $cipherText,
             $cipherTextSize - $tagLength,
@@ -221,11 +266,26 @@ trait DecryptionTraitV2
         );
     }
 
-    private function validateOptionsAndEnvelope($options, $envelope): void
+    private function validateOptionsAndEnvelope(
+        array $options,
+        MetadataEnvelope $envelope,
+        string $commitmentPolicy
+    ): void 
     {
-        $allowedCiphers = AbstractCryptoClientV2::$supportedCiphers;
-        $allowedKeywraps = AbstractCryptoClientV2::$supportedKeyWraps;
-        if ($options['@SecurityProfile'] == 'V2_AND_LEGACY') {
+        //= ../specification/s3-encryption/key-commitment.md#commitment-policy
+        //# When the commitment policy is REQUIRE_ENCRYPT_ALLOW_DECRYPT,
+        //# the S3EC MUST allow decryption using algorithm suites which do not support key commitment.
+
+        //= ../specification/s3-encryption/key-commitment.md#commitment-policy
+        //# When the commitment policy is FORBID_ENCRYPT_ALLOW_DECRYPT,
+        //# the S3EC MUST allow decryption using algorithm suites which do not support key commitment.
+
+        $allowedCiphers = AbstractCryptoClientV3::$supportedCiphers;
+        $allowedKeywraps = AbstractCryptoClientV3::$supportedKeyWraps;
+        //= ../specification/s3-encryption/client.md#enable-legacy-wrapping-algorithms
+        //# When enabled, the S3EC MUST be able to decrypt objects encrypted with all
+        //# supported wrapping algorithms (both legacy and fully supported).
+        if ($options['@SecurityProfile'] == 'V3_AND_LEGACY') {
             $allowedCiphers = array_unique(array_merge(
                 $allowedCiphers,
                 AbstractCryptoClient::$supportedCiphers
@@ -238,13 +298,23 @@ trait DecryptionTraitV2
 
         $v1SchemaException = new CryptoException("The requested object is encrypted"
             . " with V1 encryption schemas that have been disabled by"
-            . " client configuration @SecurityProfile=V2. Retry with"
-            . " V2_AND_LEGACY enabled or reencrypt the object.");
+            . " client configuration @SecurityProfile=V3. Retry with"
+            . " V3_AND_LEGACY enabled or reencrypt the object.");
 
         if (!in_array($options['@CipherOptions']['Cipher'], $allowedCiphers)) {
+            //= ../specification/s3-encryption/client.md#enable-legacy-wrapping-algorithms
+            //= type=implication
+            //# When disabled, the S3EC MUST NOT decrypt objects encrypted using legacy wrapping algorithms;
+            //# it MUST throw an exception when attempting to decrypt an object encrypted with a legacy wrapping algorithm.
+            
+            //= ../specification/s3-encryption/decryption.md#legacy-decryption
+            //# The S3EC MUST NOT decrypt objects encrypted using legacy unauthenticated algorithm suites unless specifically configured to do so.
             if (in_array($options['@CipherOptions']['Cipher'], AbstractCryptoClient::$supportedCiphers)) {
+                //= ../specification/s3-encryption/decryption.md#legacy-decryption
+                //# If the S3EC is not configured to enable legacy unauthenticated content decryption, the client MUST throw an exception when attempting to decrypt an object encrypted with a legacy unauthenticated algorithm suite.
                 throw $v1SchemaException;
             }
+
             throw new CryptoException("The requested object is encrypted with"
                 . " the cipher '{$options['@CipherOptions']['Cipher']}', which is not"
                 . " supported for decryption with the selected security profile."
@@ -284,6 +354,21 @@ trait DecryptionTraitV2
                     . " vs. {$envelope[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]}.");
             }
         }
+        //= ../specification/s3-encryption/data-format/content-metadata.md#determining-s3ec-object-status
+        //= type=implication
+        //# - If the metadata contains "x-amz-3" and "x-amz-d" and "x-amz-i" then the object MUST be considered an S3EC-encrypted object using the V3 format.
+        if (!MetadataEnvelope::isV3Envelope($envelope)
+            && $commitmentPolicy == "REQUIRE_ENCRYPT_REQUIRE_DECRYPT"
+        ) {
+            //= ../specification/s3-encryption/decryption.md#key-commitment
+            //# If the commitment policy requires decryption using a committing algorithm suite
+            //# and the algorithm suite associated with the object does not support key commitment,
+            //# then the S3EC MUST throw an exception.
+            throw new CryptoException("There is a mismatch in specified"
+                . "commitment policy value {$commitmentPolicy} and"
+                . "Metadata Envelope found in object.");
+        }
+
     }
 
     /**
@@ -301,11 +386,11 @@ trait DecryptionTraitV2
      *
      * @internal
      */
-    protected function getDecryptingStream(
-        $cipherText,
-        $cek,
-        $cipherOptions
-    ) 
+    protected function getNonCommitingDecryptingStream(
+        string $cipherText,
+        string $cek,
+        array $cipherOptions
+    ): AesStreamInterface
     {
         $cipherTextStream = Psr7\Utils::streamFor($cipherText);
         switch ($cipherOptions['Cipher']) {
@@ -323,7 +408,9 @@ trait DecryptionTraitV2
                     $cek,
                     $cipherOptions['Iv'],
                     $cipherOptions['Tag'],
-                    $cipherOptions['Aad'] = $cipherOptions['Aad'] ?? '',
+                    $cipherOptions['Aad'] = isset($cipherOptions['Aad'])
+                    ? $cipherOptions['Aad']
+                    : '',
                     $cipherOptions['TagLength'] ?: null,
                     $cipherOptions['KeySize']
                 );
@@ -333,6 +420,7 @@ trait DecryptionTraitV2
                     $cipherOptions['Iv'],
                     $cipherOptions['KeySize']
                 );
+
                 return new AesDecryptingStream(
                     $cipherTextStream,
                     $cek,
@@ -373,13 +461,6 @@ trait DecryptionTraitV2
         $algorithmSuiteIdAsBytes = pack('n', $algorithmSuite->getId());
         $derivedEncryptionKeyInfo = $algorithmSuiteIdAsBytes . "DERIVEKEY";
         $commitmentKeyInfo = $algorithmSuiteIdAsBytes . "COMMITKEY";
-        $derivedEncryptionKey = hash_hkdf(
-            $algorithmSuite->getHashingAlgorithm(),
-            $cek,
-            $algorithmSuite->getDerivationOutputKeyLengthBytes(),
-            $derivedEncryptionKeyInfo,
-            $messageId
-        );
         $calculatedCommitmentKey = hash_hkdf(
             $algorithmSuite->getHashingAlgorithm(),
             $cek,
@@ -387,11 +468,36 @@ trait DecryptionTraitV2
             $commitmentKeyInfo,
             $messageId
         );
-
-        if ($commitmentKey != $calculatedCommitmentKey) {
+        //= ../specification/s3-encryption/decryption.md#decrypting-with-commitment
+        //= type=implication
+        //# When using an algorithm suite which supports key commitment, the client MUST verify that the [derived key commitment](./key-derivation.md#hkdf-operation) contains the same bytes as the stored key commitment retrieved from the stored object's metadata.
+        if (
+            //= ../specification/s3-encryption/decryption.md#decrypting-with-commitment
+            //= type=implication
+            //# When using an algorithm suite which supports key commitment,
+            //# the verification of the derived key commitment value MUST be done in constant time.
+            !hash_equals($commitmentKey, $calculatedCommitmentKey)
+        ) {
+            //= ../specification/s3-encryption/decryption.md#decrypting-with-commitment
+            //= type=implication
+            //# When using an algorithm suite which supports key commitment, the client MUST
+            //# throw an exception when the derived key commitment value
+            //# and stored key commitment value do not match.
             throw new CryptoException("Calculated commitment key does "
                 . "not match expected commitment key value ");
         }
+        //= ../specification/s3-encryption/decryption.md#decrypting-with-commitment
+        //= type=implication
+        //# When using an algorithm suite which supports key commitment,
+        //# the client MUST verify the key commitment values match before
+        //# deriving the [derived encryption key](./key-derivation.md#hkdf-operation).
+        $derivedEncryptionKey = hash_hkdf(
+            $algorithmSuite->getHashingAlgorithm(),
+            $cek,
+            $algorithmSuite->getDerivationOutputKeyLengthBytes(),
+            $derivedEncryptionKeyInfo,
+            $messageId
+        );
 
         $cipherTextStream = Psr7\Utils::streamFor($cipherText);
         switch ($cipherOptions['Cipher']) {
