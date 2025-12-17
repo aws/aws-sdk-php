@@ -539,6 +539,15 @@
       "type":"list",
       "member":{"shape":"Alias"}
     },
+    "As2805KeyVariant":{
+      "type":"string",
+      "enum":[
+        "TERMINAL_MAJOR_KEY_VARIANT_00",
+        "PIN_ENCRYPTION_KEY_VARIANT_28",
+        "MESSAGE_AUTHENTICATION_KEY_VARIANT_24",
+        "DATA_ENCRYPTION_KEY_VARIANT_22"
+      ]
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
@@ -753,6 +762,17 @@
       "min":16,
       "pattern":"(?:[0-9a-fA-F][0-9a-fA-F])+"
     },
+    "ExportAs2805KeyCryptogram":{
+      "type":"structure",
+      "required":[
+        "WrappingKeyIdentifier",
+        "As2805KeyVariant"
+      ],
+      "members":{
+        "WrappingKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
+        "As2805KeyVariant":{"shape":"As2805KeyVariant"}
+      }
+    },
     "ExportAttributes":{
       "type":"structure",
       "members":{
@@ -819,7 +839,8 @@
         "Tr31KeyBlock":{"shape":"ExportTr31KeyBlock"},
         "Tr34KeyBlock":{"shape":"ExportTr34KeyBlock"},
         "KeyCryptogram":{"shape":"ExportKeyCryptogram"},
-        "DiffieHellmanTr31KeyBlock":{"shape":"ExportDiffieHellmanTr31KeyBlock"}
+        "DiffieHellmanTr31KeyBlock":{"shape":"ExportDiffieHellmanTr31KeyBlock"},
+        "As2805KeyCryptogram":{"shape":"ExportAs2805KeyCryptogram"}
       },
       "union":true
     },
@@ -998,6 +1019,25 @@
       "min":20,
       "pattern":"[0-9A-F]{20}$|^[0-9A-F]{24}"
     },
+    "ImportAs2805KeyCryptogram":{
+      "type":"structure",
+      "required":[
+        "As2805KeyVariant",
+        "KeyModesOfUse",
+        "KeyAlgorithm",
+        "Exportable",
+        "WrappingKeyIdentifier",
+        "WrappedKeyCryptogram"
+      ],
+      "members":{
+        "As2805KeyVariant":{"shape":"As2805KeyVariant"},
+        "KeyModesOfUse":{"shape":"KeyModesOfUse"},
+        "KeyAlgorithm":{"shape":"KeyAlgorithm"},
+        "Exportable":{"shape":"Boolean"},
+        "WrappingKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
+        "WrappedKeyCryptogram":{"shape":"WrappedKeyCryptogram"}
+      }
+    },
     "ImportDiffieHellmanTr31KeyBlock":{
       "type":"structure",
       "required":[
@@ -1056,7 +1096,8 @@
         "Tr31KeyBlock":{"shape":"ImportTr31KeyBlock"},
         "Tr34KeyBlock":{"shape":"ImportTr34KeyBlock"},
         "KeyCryptogram":{"shape":"ImportKeyCryptogram"},
-        "DiffieHellmanTr31KeyBlock":{"shape":"ImportDiffieHellmanTr31KeyBlock"}
+        "DiffieHellmanTr31KeyBlock":{"shape":"ImportDiffieHellmanTr31KeyBlock"},
+        "As2805KeyCryptogram":{"shape":"ImportAs2805KeyCryptogram"}
       },
       "union":true
     },
@@ -1342,6 +1383,7 @@
         "TR31_K0_KEY_ENCRYPTION_KEY",
         "TR31_K1_KEY_BLOCK_PROTECTION_KEY",
         "TR31_K3_ASYMMETRIC_KEY_FOR_KEY_AGREEMENT",
+        "TR31_M0_ISO_16609_MAC_KEY",
         "TR31_M3_ISO_9797_3_MAC_KEY",
         "TR31_M1_ISO_9797_1_MAC_KEY",
         "TR31_M6_ISO_9797_5_CMAC_KEY",

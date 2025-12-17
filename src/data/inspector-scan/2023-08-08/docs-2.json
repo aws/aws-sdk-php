@@ -2,13 +2,12 @@
   "version": "2.0",
   "service": "<p>Amazon Inspector Scan is a vulnerability discovery service that scans a provided Software Bill of Materials (SBOM) for security vulnerabilities.</p>",
   "operations": {
-    "ScanSbom": "<p>Scans a provided CycloneDX 1.5 SBOM and reports on any vulnerabilities discovered in that SBOM. You can generate compatible SBOMs for your resources using the <a href=\"\">Amazon Inspector SBOM generator</a>.</p>"
+    "ScanSbom": "<p>Scans a provided CycloneDX 1.5 SBOM and reports on any vulnerabilities discovered in that SBOM. You can generate compatible SBOMs for your resources using the <a href=\"https://docs.aws.amazon.com/inspector/latest/user/sbom-generator.html\">Amazon Inspector SBOM generator</a>.</p> <note> <p> The output of this action reports NVD and CVSS scores when NVD and CVSS scores are available. Because the output reports both scores, you might notice a discrepency between them. However, you can triage the severity of either score depending on the vendor of your choosing. </p> </note>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Integer": {
       "base": null,
@@ -19,8 +18,7 @@
     },
     "InternalServerException": {
       "base": "<p>The request processing has failed because of an unknown error, exception or failure. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InternalServerExceptionReason": {
       "base": null,
@@ -37,19 +35,17 @@
     "Sbom": {
       "base": null,
       "refs": {
-        "ScanSbomRequest$sbom": "<p>The JSON file for the SBOM you want to scan. The SBOM must be in CycloneDX 1.5 format.</p>",
+        "ScanSbomRequest$sbom": "<p>The JSON file for the SBOM you want to scan. The SBOM must be in CycloneDX 1.5 format. This format limits you to passing 2000 components before throwing a <code>ValidException</code> error.</p>",
         "ScanSbomResponse$sbom": "<p>The vulnerability report for the scanned SBOM.</p>"
       }
     },
     "ScanSbomRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ScanSbomResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -64,13 +60,11 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>The request has failed validation due to missing required fields or having invalid inputs.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>The request has failed validation due to missing required fields or having invalid inputs. </p>",

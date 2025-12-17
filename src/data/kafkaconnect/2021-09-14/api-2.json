@@ -24,8 +24,8 @@
       "input":{"shape":"CreateConnectorRequest"},
       "output":{"shape":"CreateConnectorResponse"},
       "errors":[
-        {"shape":"NotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"NotFoundException"},
         {"shape":"BadRequestException"},
         {"shape":"ForbiddenException"},
         {"shape":"ServiceUnavailableException"},
@@ -44,8 +44,8 @@
       "input":{"shape":"CreateCustomPluginRequest"},
       "output":{"shape":"CreateCustomPluginResponse"},
       "errors":[
-        {"shape":"NotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"NotFoundException"},
         {"shape":"BadRequestException"},
         {"shape":"ForbiddenException"},
         {"shape":"ServiceUnavailableException"},
@@ -64,8 +64,8 @@
       "input":{"shape":"CreateWorkerConfigurationRequest"},
       "output":{"shape":"CreateWorkerConfigurationResponse"},
       "errors":[
-        {"shape":"NotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"NotFoundException"},
         {"shape":"BadRequestException"},
         {"shape":"ForbiddenException"},
         {"shape":"ServiceUnavailableException"},
@@ -151,7 +151,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"UnauthorizedException"},
         {"shape":"InternalServerErrorException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeConnectorOperation":{
       "name":"DescribeConnectorOperation",
@@ -170,7 +171,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"UnauthorizedException"},
         {"shape":"InternalServerErrorException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeCustomPlugin":{
       "name":"DescribeCustomPlugin",
@@ -189,7 +191,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"UnauthorizedException"},
         {"shape":"InternalServerErrorException"}
-      ]
+      ],
+      "readonly":true
     },
     "DescribeWorkerConfiguration":{
       "name":"DescribeWorkerConfiguration",
@@ -208,7 +211,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"UnauthorizedException"},
         {"shape":"InternalServerErrorException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListConnectorOperations":{
       "name":"ListConnectorOperations",
@@ -227,7 +231,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"UnauthorizedException"},
         {"shape":"InternalServerErrorException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListConnectors":{
       "name":"ListConnectors",
@@ -246,7 +251,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"UnauthorizedException"},
         {"shape":"InternalServerErrorException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCustomPlugins":{
       "name":"ListCustomPlugins",
@@ -265,7 +271,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"UnauthorizedException"},
         {"shape":"InternalServerErrorException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -284,7 +291,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"UnauthorizedException"},
         {"shape":"InternalServerErrorException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListWorkerConfigurations":{
       "name":"ListWorkerConfigurations",
@@ -303,7 +311,8 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"UnauthorizedException"},
         {"shape":"InternalServerErrorException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -315,8 +324,8 @@
       "input":{"shape":"TagResourceRequest"},
       "output":{"shape":"TagResourceResponse"},
       "errors":[
-        {"shape":"NotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"NotFoundException"},
         {"shape":"BadRequestException"},
         {"shape":"ForbiddenException"},
         {"shape":"ServiceUnavailableException"},
@@ -581,6 +590,7 @@
         "kafkaClusterEncryptionInTransit":{"shape":"KafkaClusterEncryptionInTransitDescription"},
         "kafkaConnectVersion":{"shape":"__string"},
         "logDelivery":{"shape":"LogDeliveryDescription"},
+        "networkType":{"shape":"NetworkType"},
         "plugins":{"shape":"__listOfPluginDescription"},
         "serviceExecutionRoleArn":{"shape":"__string"},
         "workerConfiguration":{"shape":"WorkerConfigurationDescription"}
@@ -609,6 +619,7 @@
         "kafkaClusterEncryptionInTransit":{"shape":"KafkaClusterEncryptionInTransit"},
         "kafkaConnectVersion":{"shape":"__string"},
         "logDelivery":{"shape":"LogDelivery"},
+        "networkType":{"shape":"NetworkType"},
         "plugins":{"shape":"__listOfPlugin"},
         "serviceExecutionRoleArn":{"shape":"__string"},
         "workerConfiguration":{"shape":"WorkerConfiguration"},
@@ -862,6 +873,7 @@
         "kafkaClusterEncryptionInTransit":{"shape":"KafkaClusterEncryptionInTransitDescription"},
         "kafkaConnectVersion":{"shape":"__string"},
         "logDelivery":{"shape":"LogDeliveryDescription"},
+        "networkType":{"shape":"NetworkType"},
         "plugins":{"shape":"__listOfPluginDescription"},
         "serviceExecutionRoleArn":{"shape":"__string"},
         "workerConfiguration":{"shape":"WorkerConfigurationDescription"},
@@ -1146,6 +1158,13 @@
       "max":100,
       "min":1
     },
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "DUAL"
+      ]
+    },
     "NotFoundException":{
       "type":"structure",
       "members":{
@@ -1320,8 +1339,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1378,8 +1396,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateConnectorRequest":{
       "type":"structure",

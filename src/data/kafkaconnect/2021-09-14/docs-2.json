@@ -19,7 +19,7 @@
     "ListWorkerConfigurations": "<p>Returns a list of all of the worker configurations in this account and Region.</p>",
     "TagResource": "<p>Attaches tags to the specified resource.</p>",
     "UntagResource": "<p>Removes tags from the specified resource.</p>",
-    "UpdateConnector": "<p>Updates the specified connector.</p>"
+    "UpdateConnector": "<p>Updates the specified connector. For request body, specify only one parameter: either <code>capacity</code> or <code>connectorConfiguration</code>.</p>"
   },
   "shapes": {
     "ApacheKafkaCluster": {
@@ -54,8 +54,7 @@
     },
     "BadRequestException": {
       "base": "<p>HTTP Status Code 400: Bad request due to incorrect input. Correct your request and then retry it.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Capacity": {
       "base": "<p>Information about the capacity of the connector, whether it is auto scaled or provisioned.</p>",
@@ -91,8 +90,7 @@
     },
     "ConflictException": {
       "base": "<p>HTTP Status Code 409: Conflict. A resource with this name already exists. Retry your request with another name.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConnectorConfiguration": {
       "base": null,
@@ -165,33 +163,27 @@
     },
     "CreateConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConnectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCustomPluginRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCustomPluginResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkerConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkerConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomPlugin": {
       "base": "<p>A plugin is an Amazon Web Services resource that contains the code that defines a connector's logic.</p>",
@@ -254,73 +246,59 @@
     },
     "DeleteConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConnectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCustomPluginRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCustomPluginResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkerConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkerConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConnectorOperationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConnectorOperationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConnectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCustomPluginRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCustomPluginResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkerConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkerConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "FirehoseLogDelivery": {
       "base": "<p>The settings for delivering logs to Amazon Kinesis Data Firehose.</p>",
@@ -336,13 +314,11 @@
     },
     "ForbiddenException": {
       "base": "<p>HTTP Status Code 403: Access forbidden. Correct your credentials and then retry your request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InternalServerErrorException": {
       "base": "<p>HTTP Status Code 500: Unexpected internal server error. Retrying your request might resolve the issue.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KafkaCluster": {
       "base": "<p>The details of the Apache Kafka cluster to which the connector is connected.</p>",
@@ -399,53 +375,43 @@
     },
     "ListConnectorOperationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConnectorOperationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConnectorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConnectorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomPluginsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomPluginsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkerConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkerConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LogDelivery": {
       "base": "<p>Details about log delivery.</p>",
@@ -469,10 +435,17 @@
         "ListWorkerConfigurationsRequest$maxResults": "<p>The maximum number of worker configurations to list in one response.</p>"
       }
     },
+    "NetworkType": {
+      "base": "<p>The network type of a connector.</p>",
+      "refs": {
+        "ConnectorSummary$networkType": "<p>The network type of the connector. It gives connectors connectivity to either IPv4 (IPV4) or IPv4 and IPv6 (DUAL) destinations. Defaults to IPV4.</p>",
+        "CreateConnectorRequest$networkType": "<p>The network type of the connector. It gives connectors connectivity to either IPv4 (IPV4) or IPv4 and IPv6 (DUAL) destinations. Defaults to IPV4.</p>",
+        "DescribeConnectorResponse$networkType": "<p>The network type of the connector. It gives connectors connectivity to either IPv4 (IPV4) or IPv4 and IPv6 (DUAL) destinations. Defaults to IPV4.</p>"
+      }
+    },
     "NotFoundException": {
       "base": "<p>HTTP Status Code 404: Resource not found due to incorrect input. Correct your request and then retry it.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Plugin": {
       "base": "<p>A plugin is an Amazon Web Services resource that contains the code that defines your connector logic. </p>",
@@ -566,8 +539,7 @@
     },
     "ServiceUnavailableException": {
       "base": "<p>HTTP Status Code 503: Service Unavailable. Retrying your request in some time might resolve the issue.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StateDescription": {
       "base": "<p>Details about the state of a resource.</p>",
@@ -592,13 +564,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -618,33 +588,27 @@
     },
     "TooManyRequestsException": {
       "base": "<p>HTTP Status Code 429: Limit exceeded. Resource limit reached.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnauthorizedException": {
       "base": "<p>HTTP Status Code 401: Unauthorized request. The provided credentials couldn't be validated.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConnectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Vpc": {
       "base": "<p>Information about the VPC in which the connector resides.</p>",
@@ -792,7 +756,7 @@
     "__listOfPlugin": {
       "base": null,
       "refs": {
-        "CreateConnectorRequest$plugins": "<important> <p>Amazon MSK Connect does not currently support specifying multiple plugins as a list. To use more than one plugin for your connector, you can create a single custom plugin using a ZIP file that bundles multiple plugins together.</p> </important> <p>Specifies which plugin to use for the connector. You must specify a single-element list containing one <code>customPlugin</code> object.</p>"
+        "CreateConnectorRequest$plugins": "<p><important> <p>Amazon MSK Connect does not currently support specifying multiple plugins as a list. To use more than one plugin for your connector, you can create a single custom plugin using a ZIP file that bundles multiple plugins together.</p> </important> <p>Specifies which plugin to use for the connector. You must specify a single-element list containing one <code>customPlugin</code> object.</p></p>"
       }
     },
     "__listOfPluginDescription": {

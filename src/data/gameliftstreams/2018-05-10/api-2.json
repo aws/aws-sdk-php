@@ -562,6 +562,10 @@
         "ApplicationArns":{"shape":"ArnList"}
       }
     },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
+    },
     "CapacityValue":{
       "type":"integer",
       "box":true,
@@ -940,6 +944,7 @@
         "SessionLengthSeconds":{"shape":"SessionLengthSeconds"},
         "AdditionalLaunchArgs":{"shape":"GameLaunchArgList"},
         "AdditionalEnvironmentVariables":{"shape":"EnvironmentVariables"},
+        "PerformanceStatsConfiguration":{"shape":"PerformanceStatsConfiguration"},
         "LogFileLocationUri":{"shape":"FileLocationUri"},
         "WebSdkProtocolUrl":{"shape":"WebSdkProtocolUrl"},
         "LastUpdatedAt":{"shape":"Timestamp"},
@@ -1114,7 +1119,14 @@
       "members":{
         "LocationName":{"shape":"LocationName"},
         "AlwaysOnCapacity":{"shape":"AlwaysOnCapacity"},
-        "OnDemandCapacity":{"shape":"OnDemandCapacity"}
+        "OnDemandCapacity":{
+          "shape":"OnDemandCapacity",
+          "deprecated":true,
+          "deprecatedMessage":"This input field is deprecated in favor of explicit MaximumCapacity values.",
+          "deprecatedSince":"2025-12-17"
+        },
+        "TargetIdleCapacity":{"shape":"TargetIdleCapacity"},
+        "MaximumCapacity":{"shape":"MaximumCapacity"}
       }
     },
     "LocationConfigurations":{
@@ -1141,6 +1153,8 @@
         "Status":{"shape":"StreamGroupLocationStatus"},
         "AlwaysOnCapacity":{"shape":"AlwaysOnCapacity"},
         "OnDemandCapacity":{"shape":"OnDemandCapacity"},
+        "TargetIdleCapacity":{"shape":"TargetIdleCapacity"},
+        "MaximumCapacity":{"shape":"MaximumCapacity"},
         "RequestedCapacity":{"shape":"CapacityValue"},
         "AllocatedCapacity":{"shape":"CapacityValue"},
         "IdleCapacity":{"shape":"CapacityValue"}
@@ -1162,6 +1176,11 @@
       "max":100,
       "min":1
     },
+    "MaximumCapacity":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
     "NextToken":{"type":"string"},
     "OnDemandCapacity":{
       "type":"integer",
@@ -1173,6 +1192,12 @@
       "max":1024,
       "min":0,
       "pattern":"s3://.*(/|\\.zip|\\.ZIP)"
+    },
+    "PerformanceStatsConfiguration":{
+      "type":"structure",
+      "members":{
+        "SharedWithClient":{"shape":"Boolean"}
+      }
     },
     "Protocol":{
       "type":"string",
@@ -1305,7 +1330,8 @@
         "ConnectionTimeoutSeconds":{"shape":"ConnectionTimeoutSeconds"},
         "SessionLengthSeconds":{"shape":"SessionLengthSeconds"},
         "AdditionalLaunchArgs":{"shape":"GameLaunchArgList"},
-        "AdditionalEnvironmentVariables":{"shape":"EnvironmentVariables"}
+        "AdditionalEnvironmentVariables":{"shape":"EnvironmentVariables"},
+        "PerformanceStatsConfiguration":{"shape":"PerformanceStatsConfiguration"}
       }
     },
     "StartStreamSessionOutput":{
@@ -1325,6 +1351,7 @@
         "SessionLengthSeconds":{"shape":"SessionLengthSeconds"},
         "AdditionalLaunchArgs":{"shape":"GameLaunchArgList"},
         "AdditionalEnvironmentVariables":{"shape":"EnvironmentVariables"},
+        "PerformanceStatsConfiguration":{"shape":"PerformanceStatsConfiguration"},
         "LogFileLocationUri":{"shape":"FileLocationUri"},
         "WebSdkProtocolUrl":{"shape":"WebSdkProtocolUrl"},
         "LastUpdatedAt":{"shape":"Timestamp"},
@@ -1341,7 +1368,14 @@
         "gen4n_win2022",
         "gen5n_high",
         "gen5n_ultra",
-        "gen5n_win2022"
+        "gen5n_win2022",
+        "gen6n_small",
+        "gen6n_medium",
+        "gen6n_high",
+        "gen6n_ultra",
+        "gen6n_ultra_win2022",
+        "gen6n_pro",
+        "gen6n_pro_win2022"
       ]
     },
     "StreamGroupLocationStatus":{
@@ -1425,6 +1459,7 @@
         "Arn":{"shape":"Arn"},
         "UserId":{"shape":"UserId"},
         "Status":{"shape":"StreamSessionStatus"},
+        "StatusReason":{"shape":"StreamSessionStatusReason"},
         "Protocol":{"shape":"Protocol"},
         "LastUpdatedAt":{"shape":"Timestamp"},
         "CreatedAt":{"shape":"Timestamp"},
@@ -1479,6 +1514,11 @@
       "value":{"shape":"TagValue"},
       "max":50,
       "min":1
+    },
+    "TargetIdleCapacity":{
+      "type":"integer",
+      "box":true,
+      "min":0
     },
     "TerminateStreamSessionInput":{
       "type":"structure",

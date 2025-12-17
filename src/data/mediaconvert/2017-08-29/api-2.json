@@ -2837,7 +2837,8 @@
         "TELETEXT",
         "NULL_SOURCE",
         "IMSC",
-        "WEBVTT"
+        "WEBVTT",
+        "TT_3GPP"
       ]
     },
     "CaptionSourceUpconvertSTLToTeletext": {
@@ -6138,6 +6139,20 @@
         "FOLLOW_BOTTOM_FIELD"
       ]
     },
+    "H265MvOverPictureBoundaries": {
+      "type": "string",
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "H265MvTemporalPredictor": {
+      "type": "string",
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "H265ParControl": {
       "type": "string",
       "enum": [
@@ -6300,6 +6315,14 @@
           "shape": "__integerMin0Max30",
           "locationName": "minIInterval"
         },
+        "MvOverPictureBoundaries": {
+          "shape": "H265MvOverPictureBoundaries",
+          "locationName": "mvOverPictureBoundaries"
+        },
+        "MvTemporalPredictor": {
+          "shape": "H265MvTemporalPredictor",
+          "locationName": "mvTemporalPredictor"
+        },
         "NumberBFramesBetweenReferenceFrames": {
           "shape": "__integerMin0Max7",
           "locationName": "numberBFramesBetweenReferenceFrames"
@@ -6372,9 +6395,25 @@
           "shape": "H265TemporalIds",
           "locationName": "temporalIds"
         },
+        "TileHeight": {
+          "shape": "__integerMin64Max2160",
+          "locationName": "tileHeight"
+        },
+        "TilePadding": {
+          "shape": "H265TilePadding",
+          "locationName": "tilePadding"
+        },
+        "TileWidth": {
+          "shape": "__integerMin256Max3840",
+          "locationName": "tileWidth"
+        },
         "Tiles": {
           "shape": "H265Tiles",
           "locationName": "tiles"
+        },
+        "TreeBlockSize": {
+          "shape": "H265TreeBlockSize",
+          "locationName": "treeBlockSize"
         },
         "UnregisteredSeiTimecode": {
           "shape": "H265UnregisteredSeiTimecode",
@@ -6422,11 +6461,25 @@
         "ENABLED"
       ]
     },
+    "H265TilePadding": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "PADDED"
+      ]
+    },
     "H265Tiles": {
       "type": "string",
       "enum": [
         "DISABLED",
         "ENABLED"
+      ]
+    },
+    "H265TreeBlockSize": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "TREE_SIZE_32X32"
       ]
     },
     "H265UnregisteredSeiTimecode": {
@@ -7414,6 +7467,10 @@
         "Height": {
           "shape": "__integerMin32Max8192",
           "locationName": "height"
+        },
+        "ImageInput": {
+          "shape": "__stringMin14PatternS3BmpBMPPngPNGTgaTGAHttpsBmpBMPPngPNGTgaTGA",
+          "locationName": "imageInput"
         },
         "SampleRate": {
           "shape": "__integerMin32000Max48000",
@@ -11896,6 +11953,10 @@
     "VideoOverlayInput": {
       "type": "structure",
       "members": {
+        "AudioSelectors": {
+          "shape": "__mapOfAudioSelector",
+          "locationName": "audioSelectors"
+        },
         "FileInput": {
           "shape": "__stringPatternS3Https",
           "locationName": "fileInput"
@@ -13171,6 +13232,11 @@
       "min": 24,
       "max": 60000
     },
+    "__integerMin256Max3840": {
+      "type": "integer",
+      "min": 256,
+      "max": 3840
+    },
     "__integerMin25Max10000": {
       "type": "integer",
       "min": 25,
@@ -13250,6 +13316,11 @@
       "type": "integer",
       "min": 64000,
       "max": 640000
+    },
+    "__integerMin64Max2160": {
+      "type": "integer",
+      "min": 64,
+      "max": 2160
     },
     "__integerMin6Max16": {
       "type": "integer",

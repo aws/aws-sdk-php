@@ -2650,8 +2650,15 @@
         "ResourceId":{"shape":"SpekeKeyProviderResourceIdString"},
         "DrmSystems":{"shape":"SpekeKeyProviderDrmSystemsList"},
         "RoleArn":{"shape":"SpekeKeyProviderRoleArnString"},
-        "Url":{"shape":"SpekeKeyProviderUrlString"}
+        "Url":{"shape":"SpekeKeyProviderUrlString"},
+        "CertificateArn":{"shape":"SpekeKeyProviderCertificateArnString"}
       }
+    },
+    "SpekeKeyProviderCertificateArnString":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:([^:\\n]+):acm:([^:\\n]+):([0-9]+):certificate/[a-zA-Z0-9-_]+"
     },
     "SpekeKeyProviderDrmSystemsList":{
       "type":"list",
@@ -3026,7 +3033,16 @@
         "MALFORMED_SECRET_ARN",
         "SECRET_FROM_DIFFERENT_ACCOUNT",
         "SECRET_FROM_DIFFERENT_REGION",
-        "INVALID_SECRET"
+        "INVALID_SECRET",
+        "RESOURCE_NOT_IN_SAME_REGION",
+        "CERTIFICATE_RESOURCE_NOT_FOUND",
+        "CERTIFICATE_ACCESS_DENIED",
+        "DESCRIBE_CERTIFICATE_FAILED",
+        "INVALID_CERTIFICATE_STATUS",
+        "INVALID_CERTIFICATE_KEY_ALGORITHM",
+        "INVALID_CERTIFICATE_SIGNATURE_ALGORITHM",
+        "MISSING_CERTIFICATE_DOMAIN_NAME",
+        "INVALID_ARN"
       ]
     }
   }

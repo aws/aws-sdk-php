@@ -67,11 +67,19 @@
         "ListAliasesOutput$Aliases": "<p>The list of aliases. Each alias describes the <code>KeyArn</code> contained within.</p>"
       }
     },
+    "As2805KeyVariant": {
+      "base": null,
+      "refs": {
+        "ExportAs2805KeyCryptogram$As2805KeyVariant": "<p>The cryptographic usage of the key under export.</p>",
+        "ImportAs2805KeyCryptogram$As2805KeyVariant": "<p>The cryptographic usage of the key under import.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
         "CreateKeyInput$Exportable": "<p>Specifies whether the key is exportable from the service.</p>",
         "CreateKeyInput$Enabled": "<p>Specifies whether to enable the key. If the key is enabled, it is activated for use within the service. If the key is not enabled, then it is created but not activated. The default value is enabled.</p>",
+        "ImportAs2805KeyCryptogram$Exportable": "<p>Specified whether the key is exportable. This data is immutable after the key is imported.</p>",
         "ImportKeyCryptogram$Exportable": "<p>Specifies whether the key is exportable from the service.</p>",
         "ImportKeyInput$Enabled": "<p>Specifies whether import key is enabled.</p>",
         "Key$Enabled": "<p>Specifies whether the key is enabled. </p>",
@@ -108,7 +116,7 @@
     "CertificateSubjectTypeCountryString": {
       "base": null,
       "refs": {
-        "CertificateSubjectType$Country": "<p>The city you provide to create the certificate signing request.</p>"
+        "CertificateSubjectType$Country": "<p>The country you provide to create the certificate signing request.</p>"
       }
     },
     "CertificateSubjectTypeEmailAddressString": {
@@ -234,6 +242,12 @@
         "ImportTr34KeyBlock$RandomNonce": "<p>A random number value that is unique to the TR-34 key block generated using 2 pass. The operation will fail, if a random nonce value is not provided for a TR-34 key block generated using 2 pass.</p>"
       }
     },
+    "ExportAs2805KeyCryptogram": {
+      "base": "<p>Parameter information for key material export using AS2805 key cryptogram format.</p>",
+      "refs": {
+        "ExportKeyMaterial$As2805KeyCryptogram": "<p>Parameter information for key material export using AS2805 key cryptogram format.</p>"
+      }
+    },
     "ExportAttributes": {
       "base": "<p>The attributes for IPEK generation during export.</p>",
       "refs": {
@@ -353,6 +367,12 @@
         "ExportDukptInitialKey$KeySerialNumber": "<p>The KSN for IPEK generation using DUKPT. </p> <p>KSN must be padded before sending to Amazon Web Services Payment Cryptography. KSN hex length should be 20 for a TDES_2KEY key or 24 for an AES key.</p>"
       }
     },
+    "ImportAs2805KeyCryptogram": {
+      "base": "<p>Parameter information for key material import using AS2805 key cryptogram format.</p>",
+      "refs": {
+        "ImportKeyMaterial$As2805KeyCryptogram": "<p>Parameter information for key material import using AS2805 key cryptogram format.</p>"
+      }
+    },
     "ImportDiffieHellmanTr31KeyBlock": {
       "base": "<p>Key derivation parameter information for key material import using asymmetric ECDH key exchange method.</p>",
       "refs": {
@@ -424,6 +444,7 @@
         "GetParametersForExportOutput$SigningKeyAlgorithm": "<p>The algorithm of the signing key certificate for use in TR-34 key block generation. <code>RSA_2048</code> is the only signing key algorithm allowed.</p>",
         "GetParametersForImportInput$WrappingKeyAlgorithm": "<p>The wrapping key algorithm to generate a wrapping key certificate. This certificate wraps the key under import.</p> <p>At this time, <code>RSA_2048</code> is the allowed algorithm for TR-34 WrappedKeyBlock import. Additionally, <code>RSA_2048</code>, <code>RSA_3072</code>, <code>RSA_4096</code> are the allowed algorithms for RSA WrappedKeyCryptogram import.</p>",
         "GetParametersForImportOutput$WrappingKeyAlgorithm": "<p>The algorithm of the wrapping key for use within TR-34 WrappedKeyBlock or RSA WrappedKeyCryptogram.</p>",
+        "ImportAs2805KeyCryptogram$KeyAlgorithm": "<p>The key algorithm of the key under import.</p>",
         "KeyAttributes$KeyAlgorithm": "<p>The key algorithm to be use during creation of an Amazon Web Services Payment Cryptography key.</p> <p>For symmetric keys, Amazon Web Services Payment Cryptography supports <code>AES</code> and <code>TDES</code> algorithms. For asymmetric keys, Amazon Web Services Payment Cryptography supports <code>RSA</code> and <code>ECC_NIST</code> algorithms.</p>"
       }
     },
@@ -444,6 +465,7 @@
       "refs": {
         "AddKeyReplicationRegionsInput$KeyIdentifier": "<p>The key identifier (ARN or alias) of the key for which to add replication regions.</p> <p>This key must exist and be in a valid state for replication operations.</p>",
         "DeleteKeyInput$KeyIdentifier": "<p>The <code>KeyARN</code> of the key that is scheduled for deletion.</p>",
+        "ExportAs2805KeyCryptogram$WrappingKeyIdentifier": null,
         "ExportDiffieHellmanTr31KeyBlock$PrivateKeyIdentifier": "<p>The <code>keyARN</code> of the asymmetric ECC key created within Amazon Web Services Payment Cryptography.</p>",
         "ExportDiffieHellmanTr31KeyBlock$CertificateAuthorityPublicKeyIdentifier": "<p>The <code>keyARN</code> of the CA that signed the <code>PublicKeyCertificate</code> for the client's receiving ECC key pair.</p>",
         "ExportKeyCryptogram$CertificateAuthorityPublicKeyIdentifier": "<p>The <code>KeyARN</code> of the certificate chain that signs the wrapping key certificate during RSA wrap and unwrap key export.</p>",
@@ -454,6 +476,7 @@
         "GetCertificateSigningRequestInput$KeyIdentifier": "<p>Asymmetric key used for generating the certificate signing request</p>",
         "GetKeyInput$KeyIdentifier": "<p>The <code>KeyARN</code> of the Amazon Web Services Payment Cryptography key.</p>",
         "GetPublicKeyCertificateInput$KeyIdentifier": "<p>The <code>KeyARN</code> of the asymmetric key pair.</p>",
+        "ImportAs2805KeyCryptogram$WrappingKeyIdentifier": null,
         "ImportDiffieHellmanTr31KeyBlock$PrivateKeyIdentifier": "<p>The <code>keyARN</code> of the asymmetric ECC key created within Amazon Web Services Payment Cryptography.</p>",
         "ImportDiffieHellmanTr31KeyBlock$CertificateAuthorityPublicKeyIdentifier": "<p>The <code>keyARN</code> of the CA that signed the <code>PublicKeyCertificate</code> for the client's receiving ECC key pair.</p>",
         "ImportTr31KeyBlock$WrappingKeyIdentifier": "<p>The <code>KeyARN</code> of the key that will decrypt or unwrap a TR-31 key block during import.</p>",
@@ -545,6 +568,7 @@
     "KeyModesOfUse": {
       "base": "<p>The list of cryptographic operations that you can perform using the key. The modes of use are deﬁned in section A.5.3 of the TR-31 spec.</p>",
       "refs": {
+        "ImportAs2805KeyCryptogram$KeyModesOfUse": null,
         "KeyAttributes$KeyModesOfUse": "<p>The list of cryptographic operations that you can perform using the key.</p>",
         "KeyBlockHeaders$KeyModesOfUse": null
       }
@@ -914,6 +938,7 @@
     "WrappedKeyCryptogram": {
       "base": null,
       "refs": {
+        "ImportAs2805KeyCryptogram$WrappedKeyCryptogram": "<p>The wrapped key cryptogram under import.</p>",
         "ImportKeyCryptogram$WrappedKeyCryptogram": "<p>The RSA wrapped key cryptogram under import.</p>"
       }
     },

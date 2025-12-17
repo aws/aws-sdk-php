@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2023-08-08",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"inspector-scan",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"inspector-scan",
     "serviceFullName":"Inspector Scan",
     "serviceId":"Inspector Scan",
@@ -79,13 +80,13 @@
       "type":"string",
       "enum":[
         "CYCLONE_DX_1_5",
-        "INSPECTOR"
+        "INSPECTOR",
+        "INSPECTOR_ALT"
       ]
     },
     "Sbom":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "ScanSbomRequest":{

@@ -47,6 +47,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GenerateAs2805KekValidation":{
+      "name":"GenerateAs2805KekValidation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/as2805kekvalidation/generate",
+        "responseCode":200
+      },
+      "input":{"shape":"GenerateAs2805KekValidationInput"},
+      "output":{"shape":"GenerateAs2805KekValidationOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GenerateCardValidationData":{
       "name":"GenerateCardValidationData",
       "http":{
@@ -292,6 +309,32 @@
       "max":16,
       "min":16,
       "pattern":"[0-9a-fA-F]+",
+      "sensitive":true
+    },
+    "As2805KekValidationType":{
+      "type":"structure",
+      "members":{
+        "KekValidationRequest":{"shape":"KekValidationRequest"},
+        "KekValidationResponse":{"shape":"KekValidationResponse"}
+      },
+      "union":true
+    },
+    "As2805PekDerivationAttributes":{
+      "type":"structure",
+      "required":[
+        "SystemTraceAuditNumber",
+        "TransactionAmount"
+      ],
+      "members":{
+        "SystemTraceAuditNumber":{"shape":"SystemTraceAuditNumberType"},
+        "TransactionAmount":{"shape":"TransactionAmountType"}
+      }
+    },
+    "As2805RandomKeyMaterial":{
+      "type":"string",
+      "max":48,
+      "min":32,
+      "pattern":"(?:[0-9a-fA-F]{32}|[0-9a-fA-F]{48})",
       "sensitive":true
     },
     "AsymmetricEncryptionAttributes":{
@@ -734,6 +777,34 @@
         "OFB"
       ]
     },
+    "GenerateAs2805KekValidationInput":{
+      "type":"structure",
+      "required":[
+        "KeyIdentifier",
+        "KekValidationType",
+        "RandomKeySendVariantMask"
+      ],
+      "members":{
+        "KeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
+        "KekValidationType":{"shape":"As2805KekValidationType"},
+        "RandomKeySendVariantMask":{"shape":"RandomKeySendVariantMask"}
+      }
+    },
+    "GenerateAs2805KekValidationOutput":{
+      "type":"structure",
+      "required":[
+        "KeyArn",
+        "KeyCheckValue",
+        "RandomKeySend",
+        "RandomKeyReceive"
+      ],
+      "members":{
+        "KeyArn":{"shape":"KeyArn"},
+        "KeyCheckValue":{"shape":"KeyCheckValue"},
+        "RandomKeySend":{"shape":"As2805RandomKeyMaterial"},
+        "RandomKeyReceive":{"shape":"As2805RandomKeyMaterial"}
+      }
+    },
     "GenerateCardValidationDataInput":{
       "type":"structure",
       "required":[
@@ -1054,6 +1125,20 @@
       "exception":true,
       "fault":true
     },
+    "KekValidationRequest":{
+      "type":"structure",
+      "required":["DeriveKeyAlgorithm"],
+      "members":{
+        "DeriveKeyAlgorithm":{"shape":"SymmetricKeyAlgorithm"}
+      }
+    },
+    "KekValidationResponse":{
+      "type":"structure",
+      "required":["RandomKeySend"],
+      "members":{
+        "RandomKeySend":{"shape":"As2805RandomKeyMaterial"}
+      }
+    },
     "KeyArn":{
       "type":"string",
       "max":150,
@@ -1099,7 +1184,7 @@
     "KeyMaterial":{
       "type":"string",
       "max":16384,
-      "min":48,
+      "min":32,
       "sensitive":true
     },
     "MacAlgorithm":{
@@ -1112,7 +1197,8 @@
         "HMAC_SHA224",
         "HMAC_SHA256",
         "HMAC_SHA384",
-        "HMAC_SHA512"
+        "HMAC_SHA512",
+        "AS2805_4_1"
       ]
     },
     "MacAlgorithmDukpt":{
@@ -1342,6 +1428,13 @@
       "pattern":"[0-9a-fA-F]+",
       "sensitive":true
     },
+    "RandomKeySendVariantMask":{
+      "type":"string",
+      "enum":[
+        "VARIANT_MASK_82C0",
+        "VARIANT_MASK_82"
+      ]
+    },
     "ReEncryptDataInput":{
       "type":"structure",
       "required":[
@@ -1533,6 +1626,12 @@
         "HMAC_SHA224"
       ]
     },
+    "SystemTraceAuditNumberType":{
+      "type":"string",
+      "max":6,
+      "min":6,
+      "pattern":"[0-9]+"
+    },
     "ThrottlingException":{
       "type":"structure",
       "members":{
@@ -1557,6 +1656,12 @@
       "min":2,
       "pattern":"[0-9a-fA-F]+",
       "sensitive":true
+    },
+    "TransactionAmountType":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"[0-9]+"
     },
     "TransactionDataType":{
       "type":"string",
@@ -1602,7 +1707,8 @@
         "IncomingDukptAttributes":{"shape":"DukptDerivationAttributes"},
         "OutgoingDukptAttributes":{"shape":"DukptDerivationAttributes"},
         "IncomingWrappedKey":{"shape":"WrappedKey"},
-        "OutgoingWrappedKey":{"shape":"WrappedKey"}
+        "OutgoingWrappedKey":{"shape":"WrappedKey"},
+        "IncomingAs2805Attributes":{"shape":"As2805PekDerivationAttributes"}
       }
     },
     "TranslatePinDataOutput":{
@@ -1624,9 +1730,17 @@
         "IsoFormat0":{"shape":"TranslationPinDataIsoFormat034"},
         "IsoFormat1":{"shape":"TranslationPinDataIsoFormat1"},
         "IsoFormat3":{"shape":"TranslationPinDataIsoFormat034"},
-        "IsoFormat4":{"shape":"TranslationPinDataIsoFormat034"}
+        "IsoFormat4":{"shape":"TranslationPinDataIsoFormat034"},
+        "As2805Format0":{"shape":"TranslationPinDataAs2805Format0"}
       },
       "union":true
+    },
+    "TranslationPinDataAs2805Format0":{
+      "type":"structure",
+      "required":["PrimaryAccountNumber"],
+      "members":{
+        "PrimaryAccountNumber":{"shape":"PrimaryAccountNumberType"}
+      }
     },
     "TranslationPinDataIsoFormat034":{
       "type":"structure",
