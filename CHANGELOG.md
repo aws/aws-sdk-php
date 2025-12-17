@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.368.1 - 2025-12-17
 
 * `Aws\MediaConvert` - Adds support for tile encoding in HEVC and audio for video overlays.
 * `Aws\GameLiftStreams` - Added new stream group operation parameters for scale-on-demand capacity with automatic prewarming. Added new Gen6 stream classes based on the EC2 G6 instance family. Added new StartStreamSession parameter for exposure of real-time performance stats to clients.
