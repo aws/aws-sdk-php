@@ -1,4 +1,4 @@
-@s3EncryptionV2 @integ
+@s3EncryptionV2 @integ @requiresUniqueResources
 Feature: S3 Client Side Encryption V2
 
   Scenario: Upload PHP's GCM encrypted fixtures
