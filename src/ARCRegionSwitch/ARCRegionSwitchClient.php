@@ -31,6 +31,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listPlansInRegionAsync(array $args = [])
  * @method \Aws\Result listRoute53HealthChecks(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listRoute53HealthChecksAsync(array $args = [])
+ * @method \Aws\Result listRoute53HealthChecksInRegion(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listRoute53HealthChecksInRegionAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result startPlanExecution(array $args = [])

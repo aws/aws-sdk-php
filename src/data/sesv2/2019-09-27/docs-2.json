@@ -46,6 +46,7 @@
     "GetDeliverabilityTestReport": "<p>Retrieve the results of a predictive inbox placement test.</p>",
     "GetDomainDeliverabilityCampaign": "<p>Retrieve all the deliverability data for a specific campaign. This data is available for a campaign only if the campaign sent email by using a domain that the Deliverability dashboard is enabled for.</p>",
     "GetDomainStatisticsReport": "<p>Retrieve inbox placement and engagement rates for the domains that you use to send email.</p>",
+    "GetEmailAddressInsights": "<p>Provides validation insights about a specific email address, including syntax validation, DNS record checks, mailbox existence, and other deliverability factors.</p>",
     "GetEmailIdentity": "<p>Provides information about a specific identity, including the identity's verification status, sending authorization policies, its DKIM authentication status, and its custom Mail-From settings.</p>",
     "GetEmailIdentityPolicies": "<p>Returns the requested sending authorization policies for the given identity (an email address or a domain). The policies are returned as a map of policy names to policy contents. You can retrieve a maximum of 20 policies at a time.</p> <note> <p>This API is for the identity owner only. If you have not verified the identity, this API will return an error.</p> </note> <p>Sending authorization is a feature that enables an identity owner to authorize other senders to use its identities. For information about using sending authorization, see the <a href=\"https://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization.html\">Amazon SES Developer Guide</a>.</p> <p>You can execute this operation no more than once per second.</p>",
     "GetEmailTemplate": "<p>Displays the template object (which includes the subject line, HTML part and text part) for the template you specify.</p> <p>You can execute this operation no more than once per second.</p>",
@@ -1051,6 +1052,7 @@
         "GetContactRequest$EmailAddress": "<p>The contact's email address.</p>",
         "GetContactResponse$EmailAddress": "<p>The contact's email address.</p>",
         "GetCustomVerificationEmailTemplateResponse$FromEmailAddress": "<p>The email address that the custom verification email is sent from.</p>",
+        "GetEmailAddressInsightsRequest$EmailAddress": "<p>The email address to analyze for validation insights.</p>",
         "GetSuppressedDestinationRequest$EmailAddress": "<p>The email address that's on the account suppression list.</p>",
         "PutSuppressedDestinationRequest$EmailAddress": "<p>The email address that should be added to the suppression list for your account.</p>",
         "SendBulkEmailRequest$FromEmailAddress": "<p>The email address to use as the \"From\" address for the email. The address that you specify has to be verified.</p>",
@@ -1069,6 +1071,30 @@
       "refs": {
         "MessageInsightsFilters$FromEmailAddress": "<p>The from address used to send the message.</p>",
         "MessageInsightsFilters$Destination": "<p>The recipient's email address.</p>"
+      }
+    },
+    "EmailAddressInsightsConfidenceVerdict": {
+      "base": "<p>The confidence level of SES that the email address meets the validation criteria:</p> <ul> <li> <p> <code>LOW</code> - Weak or no indication of the speciﬁc check (e.g., LOW for IsRoleAddress means the email is less likely to be a role-based address).</p> </li> <li> <p> <code>MEDIUM</code> - Moderate indication of the speciﬁc check (e.g., MEDIUM for IsDisposable means the email might be a disposable address).</p> </li> <li> <p> <code>HIGH</code> - Strong indication of the speciﬁc check (e.g., HIGH for IsRandomInput means the email is very likely randomly generated).</p> </li> </ul>",
+      "refs": {
+        "EmailAddressInsightsVerdict$ConfidenceVerdict": "<p>The confidence level of the validation verdict.</p>"
+      }
+    },
+    "EmailAddressInsightsMailboxEvaluations": {
+      "base": "<p>Contains individual validation checks performed on an email address.</p>",
+      "refs": {
+        "MailboxValidation$Evaluations": "<p>Specific validation checks performed on the email address.</p>"
+      }
+    },
+    "EmailAddressInsightsVerdict": {
+      "base": "<p>Contains the overall validation verdict for an email address.</p>",
+      "refs": {
+        "EmailAddressInsightsMailboxEvaluations$HasValidSyntax": "<p>Checks that the email address follows proper RFC standards and contains valid characters in the correct format.</p>",
+        "EmailAddressInsightsMailboxEvaluations$HasValidDnsRecords": "<p>Checks that the domain exists, has valid DNS records, and is conﬁgured to receive email.</p>",
+        "EmailAddressInsightsMailboxEvaluations$MailboxExists": "<p>Checks that the mailbox exists and can receive messages without actually sending an email.</p>",
+        "EmailAddressInsightsMailboxEvaluations$IsRoleAddress": "<p>Identiﬁes role-based addresses (such as admin@, support@, or info@) that may have lower engagement rates.</p>",
+        "EmailAddressInsightsMailboxEvaluations$IsDisposable": "<p>Checks disposable or temporary email addresses that could negatively impact your sender reputation.</p>",
+        "EmailAddressInsightsMailboxEvaluations$IsRandomInput": "<p>Checks if the input appears to be random text.</p>",
+        "MailboxValidation$IsValid": "<p>Overall validity assessment with a conﬁdence verdict.</p>"
       }
     },
     "EmailAddressList": {
@@ -1422,6 +1448,7 @@
         "DashboardOptions$EngagementMetrics": "<p>Specifies the status of your VDM engagement metrics collection. Can be one of the following:</p> <ul> <li> <p> <code>ENABLED</code> – Amazon SES enables engagement metrics for the configuration set.</p> </li> <li> <p> <code>DISABLED</code> – Amazon SES disables engagement metrics for the configuration set.</p> </li> </ul>",
         "GuardianAttributes$OptimizedSharedDelivery": "<p>Specifies the status of your VDM optimized shared delivery. Can be one of the following:</p> <ul> <li> <p> <code>ENABLED</code> – Amazon SES enables optimized shared delivery for your account.</p> </li> <li> <p> <code>DISABLED</code> – Amazon SES disables optimized shared delivery for your account.</p> </li> </ul>",
         "GuardianOptions$OptimizedSharedDelivery": "<p>Specifies the status of your VDM optimized shared delivery. Can be one of the following:</p> <ul> <li> <p> <code>ENABLED</code> – Amazon SES enables optimized shared delivery for the configuration set.</p> </li> <li> <p> <code>DISABLED</code> – Amazon SES disables optimized shared delivery for the configuration set.</p> </li> </ul>",
+        "SuppressionConditionThreshold$ConditionThresholdEnabled": "<p>Indicates whether Auto Validation is enabled for suppression. Set to <code>ENABLED</code> to enable the Auto Validation feature, or set to <code>DISABLED</code> to disable it.</p>",
         "VdmAttributes$VdmEnabled": "<p>Specifies the status of your VDM configuration. Can be one of the following:</p> <ul> <li> <p> <code>ENABLED</code> – Amazon SES enables VDM for your account.</p> </li> <li> <p> <code>DISABLED</code> – Amazon SES disables VDM for your account.</p> </li> </ul>"
       }
     },
@@ -1547,6 +1574,14 @@
     },
     "GetDomainStatisticsReportResponse": {
       "base": "<p>An object that includes statistics that are related to the domain that you specified.</p>",
+      "refs": {}
+    },
+    "GetEmailAddressInsightsRequest": {
+      "base": "<p>A request to return validation insights about an email address.</p>",
+      "refs": {}
+    },
+    "GetEmailAddressInsightsResponse": {
+      "base": "<p>Validation insights about an email address.</p>",
       "refs": {}
     },
     "GetEmailIdentityPoliciesRequest": {
@@ -2122,6 +2157,12 @@
       "refs": {
         "AccountDetails$MailType": "<p>The type of email your account is sending. The mail type can be one of the following:</p> <ul> <li> <p> <code>MARKETING</code> – Most of your sending traffic is to keep your customers informed of your latest offering.</p> </li> <li> <p> <code>TRANSACTIONAL</code> – Most of your sending traffic is to communicate during a transaction with a customer.</p> </li> </ul>",
         "PutAccountDetailsRequest$MailType": "<p>The type of email your account will send.</p>"
+      }
+    },
+    "MailboxValidation": {
+      "base": "<p>Contains detailed validation information about an email address.</p>",
+      "refs": {
+        "GetEmailAddressInsightsResponse$MailboxValidation": "<p>Detailed validation results for the email address.</p>"
       }
     },
     "Max24HourSend": {
@@ -3105,6 +3146,25 @@
         "GetAccountResponse$SuppressionAttributes": "<p>An object that contains information about the email address suppression preferences for your account in the current Amazon Web Services Region.</p>"
       }
     },
+    "SuppressionConditionThreshold": {
+      "base": "<p>Contains Auto Validation settings, allowing you to suppress sending to specific destination(s) if they do not meet required threshold. For details on Auto Validation, see <a href=\"https://docs.aws.amazon.com/ses/latest/DeveloperGuide/email-validation.html\">Auto Validation</a>.</p>",
+      "refs": {
+        "SuppressionValidationAttributes$ConditionThreshold": "<p>Specifies the condition threshold settings for account-level suppression.</p>",
+        "SuppressionValidationOptions$ConditionThreshold": "<p>Specifies the condition threshold settings for suppression validation.</p>"
+      }
+    },
+    "SuppressionConfidenceThreshold": {
+      "base": "<p>Contains the confidence threshold settings for Auto Validation.</p>",
+      "refs": {
+        "SuppressionConditionThreshold$OverallConfidenceThreshold": "<p>The overall confidence threshold used to determine suppression decisions.</p>"
+      }
+    },
+    "SuppressionConfidenceVerdictThreshold": {
+      "base": "<p>The confidence level threshold for suppression validation:</p> <ul> <li> <p> <code>MEDIUM</code> – Allows emails to be sent to addresses with medium or high delivery likelihood.</p> </li> <li> <p> <code>HIGH</code> – Allows emails to be sent only to addresses with high delivery likelihood.</p> </li> <li> <p> <code>MANAGED</code> – Managed confidence threshold where Amazon SES automatically determines the appropriate level.</p> </li> </ul>",
+      "refs": {
+        "SuppressionConfidenceThreshold$ConfidenceVerdictThreshold": "<p>The confidence level threshold for suppression decisions.</p>"
+      }
+    },
     "SuppressionListDestination": {
       "base": "<p>An object that contains details about the action of suppression list.</p>",
       "refs": {
@@ -3143,6 +3203,20 @@
         "GetConfigurationSetResponse$SuppressionOptions": "<p>An object that contains information about the suppression list preferences for your account.</p>"
       }
     },
+    "SuppressionValidationAttributes": {
+      "base": "<p>Structure containing validation attributes used for suppressing sending to specific destination on account level.</p>",
+      "refs": {
+        "PutAccountSuppressionAttributesRequest$ValidationAttributes": "<p>An object that contains additional suppression attributes for your account.</p>",
+        "SuppressionAttributes$ValidationAttributes": null
+      }
+    },
+    "SuppressionValidationOptions": {
+      "base": "<p>Contains validation options for email address suppression.</p>",
+      "refs": {
+        "PutConfigurationSetSuppressionOptionsRequest$ValidationOptions": "<p>An object that contains information about the email address suppression preferences for the configuration set in the current Amazon Web Services Region.</p>",
+        "SuppressionOptions$ValidationOptions": null
+      }
+    },
     "Tag": {
       "base": "<p>An object that defines the tags that are associated with a resource. A <i>tag</i> is a label that you optionally define and associate with a resource. Tags can help you categorize and manage resources in different ways, such as by purpose, owner, environment, or other criteria. A resource can have as many as 50 tags.</p> <p>Each tag consists of a required <i>tag key</i> and an associated <i>tag value</i>, both of which you define. A tag key is a general label that acts as a category for a more specific tag value. A tag value acts as a descriptor within a tag key. A tag key can contain as many as 128 characters. A tag value can contain as many as 256 characters. The characters can be Unicode letters, digits, white space, or one of the following symbols: _ . : / = + -. The following additional restrictions apply to tags:</p> <ul> <li> <p>Tag keys and values are case sensitive.</p> </li> <li> <p>For each associated resource, each tag key must be unique and it can have only one value.</p> </li> <li> <p>The <code>aws:</code> prefix is reserved for use by Amazon Web Services; you can’t use it in any tag keys or values that you define. In addition, you can't edit or remove tag keys or values that use this prefix. Tags that use this prefix don’t count against the limit of 50 tags per resource.</p> </li> <li> <p>You can associate tags with public or shared resources, but the tags are available only for your Amazon Web Services account, not any other accounts that share the resource. In addition, the tags are available only for resources that are located in the specified Amazon Web Services Region for your Amazon Web Services account.</p> </li> </ul>",
       "refs": {
@@ -3167,16 +3241,20 @@
       "refs": {
         "CreateConfigurationSetRequest$Tags": "<p>An array of objects that define the tags (keys and values) to associate with the configuration set.</p>",
         "CreateContactListRequest$Tags": "<p>The tags associated with a contact list.</p>",
+        "CreateCustomVerificationEmailTemplateRequest$Tags": "<p>An array of objects that define the tags (keys and values) to associate with the custom verification email template.</p>",
         "CreateDedicatedIpPoolRequest$Tags": "<p>An object that defines the tags (keys and values) that you want to associate with the pool.</p>",
         "CreateDeliverabilityTestReportRequest$Tags": "<p>An array of objects that define the tags (keys and values) that you want to associate with the predictive inbox placement test.</p>",
         "CreateEmailIdentityRequest$Tags": "<p>An array of objects that define the tags (keys and values) to associate with the email identity.</p>",
+        "CreateEmailTemplateRequest$Tags": "<p>An array of objects that define the tags (keys and values) to associate with the email template.</p>",
         "CreateMultiRegionEndpointRequest$Tags": "<p>An array of objects that define the tags (keys and values) to associate with the multi-region endpoint (global-endpoint).</p>",
         "CreateTenantRequest$Tags": "<p>An array of objects that define the tags (keys and values) to associate with the tenant</p>",
         "CreateTenantResponse$Tags": "<p>An array of objects that define the tags (keys and values) associated with the tenant.</p>",
         "GetConfigurationSetResponse$Tags": "<p>An array of objects that define the tags (keys and values) that are associated with the configuration set.</p>",
         "GetContactListResponse$Tags": "<p>The tags associated with a contact list.</p>",
+        "GetCustomVerificationEmailTemplateResponse$Tags": "<p>An array of objects that define the tags (keys and values) that are associated with the custom verification email template.</p>",
         "GetDeliverabilityTestReportResponse$Tags": "<p>An array of objects that define the tags (keys and values) that are associated with the predictive inbox placement test.</p>",
         "GetEmailIdentityResponse$Tags": "<p>An array of objects that define the tags (keys and values) that are associated with the email identity.</p>",
+        "GetEmailTemplateResponse$Tags": "<p>An array of objects that define the tags (keys and values) that are associated with the email template.</p>",
         "ListTagsForResourceResponse$Tags": "<p>An array that lists all the tags that are associated with the resource. Each tag consists of a required tag key (<code>Key</code>) and an associated tag value (<code>Value</code>)</p>",
         "TagResourceRequest$Tags": "<p>A list of the tags that you want to add to the resource. A tag consists of a required tag key (<code>Key</code>) and an associated tag value (<code>Value</code>). The maximum length of a tag key is 128 characters. The maximum length of a tag value is 256 characters.</p>",
         "Tenant$Tags": "<p>An array of objects that define the tags (keys and values) associated with the tenant.</p>"

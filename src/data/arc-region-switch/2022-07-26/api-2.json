@@ -84,6 +84,7 @@
       "errors":[
         {"shape":"ResourceNotFoundException"}
       ],
+      "readonly":true,
       "staticContextParams":{
         "UseControlPlaneEndpoint":{"value":true}
       }
@@ -99,7 +100,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetPlanExecution":{
       "name":"GetPlanExecution",
@@ -112,7 +114,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetPlanInRegion":{
       "name":"GetPlanInRegion",
@@ -125,7 +128,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPlanExecutionEvents":{
       "name":"ListPlanExecutionEvents",
@@ -138,7 +142,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPlanExecutions":{
       "name":"ListPlanExecutions",
@@ -151,7 +156,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListPlans":{
       "name":"ListPlans",
@@ -161,6 +167,7 @@
       },
       "input":{"shape":"ListPlansRequest"},
       "output":{"shape":"ListPlansResponse"},
+      "readonly":true,
       "staticContextParams":{
         "UseControlPlaneEndpoint":{"value":true}
       }
@@ -175,7 +182,8 @@
       "output":{"shape":"ListPlansInRegionResponse"},
       "errors":[
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListRoute53HealthChecks":{
       "name":"ListRoute53HealthChecks",
@@ -190,9 +198,26 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
       ],
+      "readonly":true,
       "staticContextParams":{
         "UseControlPlaneEndpoint":{"value":true}
       }
+    },
+    "ListRoute53HealthChecksInRegion":{
+      "name":"ListRoute53HealthChecksInRegion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListRoute53HealthChecksInRegionRequest"},
+      "output":{"shape":"ListRoute53HealthChecksInRegionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"IllegalArgumentException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -206,6 +231,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ],
+      "readonly":true,
       "staticContextParams":{
         "UseControlPlaneEndpoint":{"value":true}
       }
@@ -458,7 +484,7 @@
     },
     "AsgArn":{
       "type":"string",
-      "pattern":"arn:aws:autoscaling:[a-z0-9-]+:\\d{12}:autoScalingGroup:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:autoScalingGroupName/[\\S\\s]{1,255}"
+      "pattern":"arn:aws[a-zA-Z-]*:autoscaling:[a-z0-9-]+:\\d{12}:autoScalingGroup:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:autoScalingGroupName/[\\S\\s]{1,255}"
     },
     "AsgList":{
       "type":"list",
@@ -636,11 +662,11 @@
     },
     "EcsClusterArn":{
       "type":"string",
-      "pattern":"arn:aws:ecs:[a-z0-9-]+:\\d{12}:cluster/[a-zA-Z0-9_-]{1,255}"
+      "pattern":"arn:aws[a-zA-Z-]*:ecs:[a-z0-9-]+:\\d{12}:cluster/[a-zA-Z0-9_-]{1,255}"
     },
     "EcsServiceArn":{
       "type":"string",
-      "pattern":"arn:aws:ecs:[a-z0-9-]+:\\d{12}:service/[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]{1,255}"
+      "pattern":"arn:aws[a-zA-Z-]*:ecs:[a-z0-9-]+:\\d{12}:service/[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]{1,255}"
     },
     "EcsUngraceful":{
       "type":"structure",
@@ -1173,6 +1199,30 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListRoute53HealthChecksInRegionRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"PlanArn"},
+        "hostedZoneId":{"shape":"Route53HostedZoneId"},
+        "recordName":{"shape":"Route53RecordName"},
+        "maxResults":{"shape":"ListRoute53HealthChecksInRegionRequestMaxResultsInteger"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListRoute53HealthChecksInRegionRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListRoute53HealthChecksInRegionResponse":{
+      "type":"structure",
+      "members":{
+        "healthChecks":{"shape":"Route53HealthCheckList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListRoute53HealthChecksRequest":{
       "type":"structure",
       "required":["arn"],
@@ -1384,6 +1434,7 @@
         "hostedZoneId":{"shape":"Route53HostedZoneId"},
         "recordName":{"shape":"Route53RecordName"},
         "healthCheckId":{"shape":"Route53HealthCheckId"},
+        "status":{"shape":"Route53HealthCheckStatus"},
         "region":{"shape":"Region"}
       }
     },
@@ -1415,6 +1466,14 @@
     "Route53HealthCheckList":{
       "type":"list",
       "member":{"shape":"Route53HealthCheck"}
+    },
+    "Route53HealthCheckStatus":{
+      "type":"string",
+      "enum":[
+        "healthy",
+        "unhealthy",
+        "unknown"
+      ]
     },
     "Route53HostedZoneId":{
       "type":"string",

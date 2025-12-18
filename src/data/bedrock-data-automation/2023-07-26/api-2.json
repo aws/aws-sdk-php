@@ -13,6 +13,24 @@
     "uid":"bedrock-data-automation-2023-07-26"
   },
   "operations":{
+    "CopyBlueprintStage":{
+      "name":"CopyBlueprintStage",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/blueprints/{blueprintArn}/copy-stage",
+        "responseCode":200
+      },
+      "input":{"shape":"CopyBlueprintStageRequest"},
+      "output":{"shape":"CopyBlueprintStageResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "CreateBlueprint":{
       "name":"CreateBlueprint",
       "http":{
@@ -124,6 +142,24 @@
       ],
       "readonly":true
     },
+    "GetBlueprintOptimizationStatus":{
+      "name":"GetBlueprintOptimizationStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/getBlueprintOptimizationStatus/{invocationArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetBlueprintOptimizationStatusRequest"},
+      "output":{"shape":"GetBlueprintOptimizationStatusResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "readonly":true
+    },
     "GetDataAutomationProject":{
       "name":"GetDataAutomationProject",
       "http":{
@@ -141,6 +177,25 @@
         {"shape":"ResourceNotFoundException"}
       ],
       "readonly":true
+    },
+    "InvokeBlueprintOptimizationAsync":{
+      "name":"InvokeBlueprintOptimizationAsync",
+      "http":{
+        "method":"POST",
+        "requestUri":"/invokeBlueprintOptimizationAsync",
+        "responseCode":200
+      },
+      "input":{"shape":"InvokeBlueprintOptimizationAsyncRequest"},
+      "output":{"shape":"InvokeBlueprintOptimizationAsyncResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
     },
     "ListBlueprints":{
       "name":"ListBlueprints",
@@ -390,7 +445,9 @@
         "blueprintVersion":{"shape":"BlueprintVersion"},
         "blueprintStage":{"shape":"BlueprintStage"},
         "kmsKeyId":{"shape":"KmsKeyId"},
-        "kmsEncryptionContext":{"shape":"KmsEncryptionContext"}
+        "kmsEncryptionContext":{"shape":"KmsEncryptionContext"},
+        "optimizationSamples":{"shape":"BlueprintOptimizationSamples"},
+        "optimizationTime":{"shape":"DateTimestamp"}
       }
     },
     "BlueprintArn":{
@@ -427,6 +484,52 @@
       "min":1,
       "pattern":"[a-zA-Z0-9-_]+",
       "sensitive":true
+    },
+    "BlueprintOptimizationInvocationArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"arn:aws(|-cn|-iso|-iso-[a-z]|-us-gov):bedrock:[a-zA-Z0-9-]*:[0-9]{12}:blueprint-optimization-invocation/[a-zA-Z0-9-_]+"
+    },
+    "BlueprintOptimizationJobStatus":{
+      "type":"string",
+      "enum":[
+        "Created",
+        "InProgress",
+        "Success",
+        "ServiceError",
+        "ClientError"
+      ]
+    },
+    "BlueprintOptimizationObject":{
+      "type":"structure",
+      "required":["blueprintArn"],
+      "members":{
+        "blueprintArn":{"shape":"BlueprintArn"},
+        "stage":{"shape":"BlueprintStage"}
+      }
+    },
+    "BlueprintOptimizationOutputConfiguration":{
+      "type":"structure",
+      "required":["s3Object"],
+      "members":{
+        "s3Object":{"shape":"S3Object"}
+      }
+    },
+    "BlueprintOptimizationSample":{
+      "type":"structure",
+      "required":[
+        "assetS3Object",
+        "groundTruthS3Object"
+      ],
+      "members":{
+        "assetS3Object":{"shape":"S3Object"},
+        "groundTruthS3Object":{"shape":"S3Object"}
+      }
+    },
+    "BlueprintOptimizationSamples":{
+      "type":"list",
+      "member":{"shape":"BlueprintOptimizationSample"}
     },
     "BlueprintSchema":{
       "type":"string",
@@ -501,6 +604,31 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "CopyBlueprintStageRequest":{
+      "type":"structure",
+      "required":[
+        "blueprintArn",
+        "sourceStage",
+        "targetStage"
+      ],
+      "members":{
+        "blueprintArn":{
+          "shape":"BlueprintArn",
+          "location":"uri",
+          "locationName":"blueprintArn"
+        },
+        "sourceStage":{"shape":"BlueprintStage"},
+        "targetStage":{"shape":"BlueprintStage"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CopyBlueprintStageResponse":{
+      "type":"structure",
+      "members":{}
     },
     "CreateBlueprintRequest":{
       "type":"structure",
@@ -587,6 +715,12 @@
       "members":{
         "blueprints":{"shape":"BlueprintItems"}
       }
+    },
+    "DataAutomationProfileArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"arn:aws(|-cn|-us-gov):bedrock:[a-zA-Z0-9-]*:(aws|[0-9]{12}):data-automation-profile/[a-zA-Z0-9-_.]+"
     },
     "DataAutomationProject":{
       "type":"structure",
@@ -858,6 +992,26 @@
       "min":1,
       "pattern":".*\\S.*"
     },
+    "GetBlueprintOptimizationStatusRequest":{
+      "type":"structure",
+      "required":["invocationArn"],
+      "members":{
+        "invocationArn":{
+          "shape":"BlueprintOptimizationInvocationArn",
+          "location":"uri",
+          "locationName":"invocationArn"
+        }
+      }
+    },
+    "GetBlueprintOptimizationStatusResponse":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"BlueprintOptimizationJobStatus"},
+        "errorType":{"shape":"String"},
+        "errorMessage":{"shape":"String"},
+        "outputConfiguration":{"shape":"BlueprintOptimizationOutputConfiguration"}
+      }
+    },
     "GetBlueprintRequest":{
       "type":"structure",
       "required":["blueprintArn"],
@@ -976,6 +1130,30 @@
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
+    },
+    "InvokeBlueprintOptimizationAsyncRequest":{
+      "type":"structure",
+      "required":[
+        "blueprint",
+        "samples",
+        "outputConfiguration",
+        "dataAutomationProfileArn"
+      ],
+      "members":{
+        "blueprint":{"shape":"BlueprintOptimizationObject"},
+        "samples":{"shape":"BlueprintOptimizationSamples"},
+        "outputConfiguration":{"shape":"BlueprintOptimizationOutputConfiguration"},
+        "dataAutomationProfileArn":{"shape":"DataAutomationProfileArn"},
+        "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "InvokeBlueprintOptimizationAsyncResponse":{
+      "type":"structure",
+      "required":["invocationArn"],
+      "members":{
+        "invocationArn":{"shape":"BlueprintOptimizationInvocationArn"}
+      }
     },
     "KmsEncryptionContext":{
       "type":"map",
@@ -1171,6 +1349,25 @@
         "ACCOUNT"
       ]
     },
+    "S3Object":{
+      "type":"structure",
+      "required":["s3Uri"],
+      "members":{
+        "s3Uri":{"shape":"S3Uri"},
+        "version":{"shape":"S3ObjectVersion"}
+      }
+    },
+    "S3ObjectVersion":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "S3Uri":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"s3://[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9](/.*)?"
+    },
     "SensitiveDataConfiguration":{
       "type":"structure",
       "required":["detectionMode"],
@@ -1240,6 +1437,7 @@
         "DISABLED"
       ]
     },
+    "String":{"type":"string"},
     "Tag":{
       "type":"structure",
       "required":[
@@ -1292,7 +1490,7 @@
       "type":"string",
       "max":1011,
       "min":20,
-      "pattern":"arn:aws(|-cn|-us-gov):bedrock:[a-z0-9-]*:[0-9]{12}:(blueprint|data-automation-project)/[a-zA-Z0-9-]{12,36}"
+      "pattern":"arn:aws(|-cn|-iso|-iso-[a-z]|-us-gov):bedrock:[a-z0-9-]*:[0-9]{12}:(blueprint|data-automation-project|blueprint-optimization-invocation)/[a-zA-Z0-9-]{12,36}"
     },
     "ThrottlingException":{
       "type":"structure",

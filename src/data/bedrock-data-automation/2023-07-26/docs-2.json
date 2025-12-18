@@ -2,13 +2,16 @@
   "version": "2.0",
   "service": "<p>Amazon Bedrock Data Automation BuildTime</p>",
   "operations": {
+    "CopyBlueprintStage": "<p>Copies a Blueprint from one stage to another</p>",
     "CreateBlueprint": "<p>Creates an Amazon Bedrock Data Automation Blueprint</p>",
     "CreateBlueprintVersion": "<p>Creates a new version of an existing Amazon Bedrock Data Automation Blueprint</p>",
     "CreateDataAutomationProject": "<p>Creates an Amazon Bedrock Data Automation Project</p>",
     "DeleteBlueprint": "<p>Deletes an existing Amazon Bedrock Data Automation Blueprint</p>",
     "DeleteDataAutomationProject": "<p>Deletes an existing Amazon Bedrock Data Automation Project</p>",
     "GetBlueprint": "<p>Gets an existing Amazon Bedrock Data Automation Blueprint</p>",
+    "GetBlueprintOptimizationStatus": "<p>API used to get blueprint optimization status.</p>",
     "GetDataAutomationProject": "<p>Gets an existing Amazon Bedrock Data Automation Project</p>",
+    "InvokeBlueprintOptimizationAsync": "<p>Invoke an async job to perform Blueprint Optimization</p>",
     "ListBlueprints": "<p>Lists all existing Amazon Bedrock Data Automation Blueprints</p>",
     "ListDataAutomationProjects": "<p>Lists all existing Amazon Bedrock Data Automation Projects</p>",
     "ListTagsForResource": "<p>List tags for an Amazon Bedrock Data Automation resource</p>",
@@ -115,7 +118,9 @@
         "Blueprint$blueprintArn": null,
         "BlueprintFilter$blueprintArn": null,
         "BlueprintItem$blueprintArn": null,
+        "BlueprintOptimizationObject$blueprintArn": "<p>Arn of blueprint.</p>",
         "BlueprintSummary$blueprintArn": null,
+        "CopyBlueprintStageRequest$blueprintArn": "<p>Blueprint to be copied</p>",
         "CreateBlueprintVersionRequest$blueprintArn": "<p>ARN generated at the server side when a Blueprint is created</p>",
         "DeleteBlueprintRequest$blueprintArn": "<p>ARN generated at the server side when a Blueprint is created</p>",
         "GetBlueprintRequest$blueprintArn": "<p>ARN generated at the server side when a Blueprint is created</p>",
@@ -149,6 +154,45 @@
         "CreateBlueprintRequest$blueprintName": null
       }
     },
+    "BlueprintOptimizationInvocationArn": {
+      "base": "<p>Invocation arn.</p>",
+      "refs": {
+        "GetBlueprintOptimizationStatusRequest$invocationArn": "<p>Invocation arn.</p>",
+        "InvokeBlueprintOptimizationAsyncResponse$invocationArn": "<p>ARN of the blueprint optimization job</p>"
+      }
+    },
+    "BlueprintOptimizationJobStatus": {
+      "base": "<p>List of status supported by optimization jobs</p>",
+      "refs": {
+        "GetBlueprintOptimizationStatusResponse$status": "<p>Job Status.</p>"
+      }
+    },
+    "BlueprintOptimizationObject": {
+      "base": "<p>Structure for single blueprint entity.</p>",
+      "refs": {
+        "InvokeBlueprintOptimizationAsyncRequest$blueprint": "<p>Blueprint to be optimized</p>"
+      }
+    },
+    "BlueprintOptimizationOutputConfiguration": {
+      "base": "<p>Blueprint Optimization Output configuration.</p>",
+      "refs": {
+        "GetBlueprintOptimizationStatusResponse$outputConfiguration": "<p>Output configuration.</p>",
+        "InvokeBlueprintOptimizationAsyncRequest$outputConfiguration": "<p>Output configuration where the results should be placed</p>"
+      }
+    },
+    "BlueprintOptimizationSample": {
+      "base": "<p>Blueprint Recommendation Sample</p>",
+      "refs": {
+        "BlueprintOptimizationSamples$member": null
+      }
+    },
+    "BlueprintOptimizationSamples": {
+      "base": "<p>List of Blueprint Optimization Samples</p>",
+      "refs": {
+        "Blueprint$optimizationSamples": null,
+        "InvokeBlueprintOptimizationAsyncRequest$samples": "<p>List of Blueprint Optimization Samples</p>"
+      }
+    },
     "BlueprintSchema": {
       "base": "<p>Schema of the blueprint</p>",
       "refs": {
@@ -163,7 +207,10 @@
         "Blueprint$blueprintStage": null,
         "BlueprintFilter$blueprintStage": null,
         "BlueprintItem$blueprintStage": null,
+        "BlueprintOptimizationObject$stage": "<p>Stage of blueprint.</p>",
         "BlueprintSummary$blueprintStage": null,
+        "CopyBlueprintStageRequest$sourceStage": "<p>Source stage to copy from</p>",
+        "CopyBlueprintStageRequest$targetStage": "<p>Target stage to copy to</p>",
         "CreateBlueprintRequest$blueprintStage": null,
         "GetBlueprintRequest$blueprintStage": "<p>Optional field to get a specific Blueprint stage</p>",
         "UpdateBlueprintRequest$blueprintStage": null
@@ -213,6 +260,7 @@
     "ClientToken": {
       "base": "<p>Client specified token used for idempotency checks</p>",
       "refs": {
+        "CopyBlueprintStageRequest$clientToken": "<p>Client token for idempotency</p>",
         "CreateBlueprintRequest$clientToken": null,
         "CreateBlueprintVersionRequest$clientToken": null,
         "CreateDataAutomationProjectRequest$clientToken": null
@@ -220,6 +268,14 @@
     },
     "ConflictException": {
       "base": "<p>This exception is thrown when there is a conflict performing an operation</p>",
+      "refs": {}
+    },
+    "CopyBlueprintStageRequest": {
+      "base": "<p>CopyBlueprintStage Request</p>",
+      "refs": {}
+    },
+    "CopyBlueprintStageResponse": {
+      "base": "<p>CopyBlueprintStage Response</p>",
       "refs": {}
     },
     "CreateBlueprintRequest": {
@@ -252,6 +308,12 @@
         "CreateDataAutomationProjectRequest$customOutputConfiguration": null,
         "DataAutomationProject$customOutputConfiguration": null,
         "UpdateDataAutomationProjectRequest$customOutputConfiguration": null
+      }
+    },
+    "DataAutomationProfileArn": {
+      "base": "<p>Data automation profile arn.</p>",
+      "refs": {
+        "InvokeBlueprintOptimizationAsyncRequest$dataAutomationProfileArn": "<p>Data automation profile ARN</p>"
       }
     },
     "DataAutomationProject": {
@@ -349,6 +411,7 @@
       "refs": {
         "Blueprint$creationTime": null,
         "Blueprint$lastModifiedTime": null,
+        "Blueprint$optimizationTime": null,
         "BlueprintSummary$creationTime": null,
         "BlueprintSummary$lastModifiedTime": null,
         "DataAutomationProject$creationTime": null,
@@ -464,6 +527,7 @@
       "refs": {
         "CreateBlueprintRequest$encryptionConfiguration": null,
         "CreateDataAutomationProjectRequest$encryptionConfiguration": null,
+        "InvokeBlueprintOptimizationAsyncRequest$encryptionConfiguration": "<p>Encryption configuration.</p>",
         "UpdateBlueprintRequest$encryptionConfiguration": null,
         "UpdateDataAutomationProjectRequest$encryptionConfiguration": null
       }
@@ -479,6 +543,14 @@
       "refs": {
         "KmsEncryptionContext$value": null
       }
+    },
+    "GetBlueprintOptimizationStatusRequest": {
+      "base": "<p>Structure for request of GetBlueprintOptimizationStatus API.</p>",
+      "refs": {}
+    },
+    "GetBlueprintOptimizationStatusResponse": {
+      "base": "<p>Response of GetBlueprintOptimizationStatus API.</p>",
+      "refs": {}
     },
     "GetBlueprintRequest": {
       "base": "<p>Get Blueprint Request</p>",
@@ -558,6 +630,14 @@
     },
     "InternalServerException": {
       "base": "<p>This exception is thrown if there was an unexpected error during processing of request</p>",
+      "refs": {}
+    },
+    "InvokeBlueprintOptimizationAsyncRequest": {
+      "base": "<p>Invoke Blueprint Optimization Async Request</p>",
+      "refs": {}
+    },
+    "InvokeBlueprintOptimizationAsyncResponse": {
+      "base": "<p>Invoke Blueprint Optimization Async Response</p>",
       "refs": {}
     },
     "KmsEncryptionContext": {
@@ -694,6 +774,26 @@
         "ListDataAutomationProjectsRequest$resourceOwner": null
       }
     },
+    "S3Object": {
+      "base": "<p>S3 object</p>",
+      "refs": {
+        "BlueprintOptimizationOutputConfiguration$s3Object": "<p>S3 object.</p>",
+        "BlueprintOptimizationSample$assetS3Object": "<p>S3 Object of the asset</p>",
+        "BlueprintOptimizationSample$groundTruthS3Object": "<p>Ground truth for the Blueprint and Asset combination</p>"
+      }
+    },
+    "S3ObjectVersion": {
+      "base": "<p>S3 object version.</p>",
+      "refs": {
+        "S3Object$version": "<p>S3 object version.</p>"
+      }
+    },
+    "S3Uri": {
+      "base": "<p>A path in S3</p>",
+      "refs": {
+        "S3Object$s3Uri": "<p>S3 uri.</p>"
+      }
+    },
     "SensitiveDataConfiguration": {
       "base": "<p>Configuration for sensitive data detection and redaction</p>",
       "refs": {
@@ -765,6 +865,13 @@
         "VideoStandardGenerativeField$state": null
       }
     },
+    "String": {
+      "base": null,
+      "refs": {
+        "GetBlueprintOptimizationStatusResponse$errorType": "<p>Error Type.</p>",
+        "GetBlueprintOptimizationStatusResponse$errorMessage": "<p>Error Message.</p>"
+      }
+    },
     "Tag": {
       "base": "<p>Key value pair of a tag</p>",
       "refs": {
@@ -789,6 +896,7 @@
       "refs": {
         "CreateBlueprintRequest$tags": null,
         "CreateDataAutomationProjectRequest$tags": null,
+        "InvokeBlueprintOptimizationAsyncRequest$tags": "<p>List of tags.</p>",
         "ListTagsForResourceResponse$tags": null,
         "TagResourceRequest$tags": null
       }

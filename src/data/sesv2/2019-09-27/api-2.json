@@ -663,6 +663,19 @@
         {"shape":"BadRequestException"}
       ]
     },
+    "GetEmailAddressInsights":{
+      "name":"GetEmailAddressInsights",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/email-address-insights/"
+      },
+      "input":{"shape":"GetEmailAddressInsightsRequest"},
+      "output":{"shape":"GetEmailAddressInsightsResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
     "GetEmailIdentity":{
       "name":"GetEmailIdentity",
       "http":{
@@ -2051,6 +2064,7 @@
         "FromEmailAddress":{"shape":"EmailAddress"},
         "TemplateSubject":{"shape":"EmailTemplateSubject"},
         "TemplateContent":{"shape":"TemplateContent"},
+        "Tags":{"shape":"TagList"},
         "SuccessRedirectionURL":{"shape":"SuccessRedirectionURL"},
         "FailureRedirectionURL":{"shape":"FailureRedirectionURL"}
       }
@@ -2147,7 +2161,8 @@
       ],
       "members":{
         "TemplateName":{"shape":"EmailTemplateName"},
-        "TemplateContent":{"shape":"EmailTemplateContent"}
+        "TemplateContent":{"shape":"EmailTemplateContent"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateEmailTemplateResponse":{
@@ -2752,6 +2767,31 @@
       "member":{"shape":"InsightsEmailAddress"},
       "max":5
     },
+    "EmailAddressInsightsConfidenceVerdict":{
+      "type":"string",
+      "enum":[
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
+    "EmailAddressInsightsMailboxEvaluations":{
+      "type":"structure",
+      "members":{
+        "HasValidSyntax":{"shape":"EmailAddressInsightsVerdict"},
+        "HasValidDnsRecords":{"shape":"EmailAddressInsightsVerdict"},
+        "MailboxExists":{"shape":"EmailAddressInsightsVerdict"},
+        "IsRoleAddress":{"shape":"EmailAddressInsightsVerdict"},
+        "IsDisposable":{"shape":"EmailAddressInsightsVerdict"},
+        "IsRandomInput":{"shape":"EmailAddressInsightsVerdict"}
+      }
+    },
+    "EmailAddressInsightsVerdict":{
+      "type":"structure",
+      "members":{
+        "ConfidenceVerdict":{"shape":"EmailAddressInsightsConfidenceVerdict"}
+      }
+    },
     "EmailAddressList":{
       "type":"list",
       "member":{"shape":"EmailAddress"}
@@ -3144,6 +3184,7 @@
         "FromEmailAddress":{"shape":"EmailAddress"},
         "TemplateSubject":{"shape":"EmailTemplateSubject"},
         "TemplateContent":{"shape":"TemplateContent"},
+        "Tags":{"shape":"TagList"},
         "SuccessRedirectionURL":{"shape":"SuccessRedirectionURL"},
         "FailureRedirectionURL":{"shape":"FailureRedirectionURL"}
       }
@@ -3304,6 +3345,19 @@
         "DailyVolumes":{"shape":"DailyVolumes"}
       }
     },
+    "GetEmailAddressInsightsRequest":{
+      "type":"structure",
+      "required":["EmailAddress"],
+      "members":{
+        "EmailAddress":{"shape":"EmailAddress"}
+      }
+    },
+    "GetEmailAddressInsightsResponse":{
+      "type":"structure",
+      "members":{
+        "MailboxValidation":{"shape":"MailboxValidation"}
+      }
+    },
     "GetEmailIdentityPoliciesRequest":{
       "type":"structure",
       "required":["EmailIdentity"],
@@ -3366,7 +3420,8 @@
       ],
       "members":{
         "TemplateName":{"shape":"EmailTemplateName"},
-        "TemplateContent":{"shape":"EmailTemplateContent"}
+        "TemplateContent":{"shape":"EmailTemplateContent"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "GetExportJobRequest":{
@@ -4214,6 +4269,13 @@
         "TRANSACTIONAL"
       ]
     },
+    "MailboxValidation":{
+      "type":"structure",
+      "members":{
+        "IsValid":{"shape":"EmailAddressInsightsVerdict"},
+        "Evaluations":{"shape":"EmailAddressInsightsMailboxEvaluations"}
+      }
+    },
     "Max24HourSend":{"type":"double"},
     "MaxDeliverySeconds":{
       "type":"long",
@@ -4525,7 +4587,8 @@
     "PutAccountSuppressionAttributesRequest":{
       "type":"structure",
       "members":{
-        "SuppressedReasons":{"shape":"SuppressionListReasons"}
+        "SuppressedReasons":{"shape":"SuppressionListReasons"},
+        "ValidationAttributes":{"shape":"SuppressionValidationAttributes"}
       }
     },
     "PutAccountSuppressionAttributesResponse":{
@@ -4618,7 +4681,8 @@
           "location":"uri",
           "locationName":"ConfigurationSetName"
         },
-        "SuppressedReasons":{"shape":"SuppressionListReasons"}
+        "SuppressedReasons":{"shape":"SuppressionListReasons"},
+        "ValidationOptions":{"shape":"SuppressionValidationOptions"}
       }
     },
     "PutConfigurationSetSuppressionOptionsResponse":{
@@ -5237,8 +5301,32 @@
     "SuppressionAttributes":{
       "type":"structure",
       "members":{
-        "SuppressedReasons":{"shape":"SuppressionListReasons"}
+        "SuppressedReasons":{"shape":"SuppressionListReasons"},
+        "ValidationAttributes":{"shape":"SuppressionValidationAttributes"}
       }
+    },
+    "SuppressionConditionThreshold":{
+      "type":"structure",
+      "required":["ConditionThresholdEnabled"],
+      "members":{
+        "ConditionThresholdEnabled":{"shape":"FeatureStatus"},
+        "OverallConfidenceThreshold":{"shape":"SuppressionConfidenceThreshold"}
+      }
+    },
+    "SuppressionConfidenceThreshold":{
+      "type":"structure",
+      "required":["ConfidenceVerdictThreshold"],
+      "members":{
+        "ConfidenceVerdictThreshold":{"shape":"SuppressionConfidenceVerdictThreshold"}
+      }
+    },
+    "SuppressionConfidenceVerdictThreshold":{
+      "type":"string",
+      "enum":[
+        "MEDIUM",
+        "HIGH",
+        "MANAGED"
+      ]
     },
     "SuppressionListDestination":{
       "type":"structure",
@@ -5268,7 +5356,22 @@
     "SuppressionOptions":{
       "type":"structure",
       "members":{
-        "SuppressedReasons":{"shape":"SuppressionListReasons"}
+        "SuppressedReasons":{"shape":"SuppressionListReasons"},
+        "ValidationOptions":{"shape":"SuppressionValidationOptions"}
+      }
+    },
+    "SuppressionValidationAttributes":{
+      "type":"structure",
+      "required":["ConditionThreshold"],
+      "members":{
+        "ConditionThreshold":{"shape":"SuppressionConditionThreshold"}
+      }
+    },
+    "SuppressionValidationOptions":{
+      "type":"structure",
+      "required":["ConditionThreshold"],
+      "members":{
+        "ConditionThreshold":{"shape":"SuppressionConditionThreshold"}
       }
     },
     "Tag":{

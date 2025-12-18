@@ -78,6 +78,7 @@
     "UntagResource": "<p>Removes a tag or list of tags from a resource.</p>",
     "UpdateAnalysisTemplate": "<p>Updates the analysis template metadata.</p>",
     "UpdateCollaboration": "<p>Updates collaboration metadata and can only be called by the collaboration owner.</p>",
+    "UpdateCollaborationChangeRequest": "<p>Updates an existing collaboration change request. This operation allows approval actions for pending change requests in collaborations (APPROVE, DENY, CANCEL, COMMIT).</p> <p>For change requests without automatic approval, a member in the collaboration can manually APPROVE or DENY a change request. The collaboration owner can manually CANCEL or COMMIT a change request.</p>",
     "UpdateConfiguredAudienceModelAssociation": "<p>Provides the details necessary to update a configured audience model association.</p>",
     "UpdateConfiguredTable": "<p>Updates a configured table.</p>",
     "UpdateConfiguredTableAnalysisRule": "<p>Updates a configured table analysis rule.</p>",
@@ -149,6 +150,7 @@
       "refs": {
         "AllowedResultReceivers$member": null,
         "AnalysisRuleCustomAllowedAnalysisProvidersList$member": null,
+        "ApprovalStatuses$key": null,
         "Collaboration$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "CollaborationAnalysisTemplate$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "CollaborationAnalysisTemplateSummary$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
@@ -595,6 +597,25 @@
         "UpdateCollaborationInput$analyticsEngine": "<p>The analytics engine.</p> <note> <p>After July 16, 2025, the <code>CLEAN_ROOMS_SQL</code> parameter will no longer be available. </p> </note>"
       }
     },
+    "ApprovalStatus": {
+      "base": null,
+      "refs": {
+        "ApprovalStatusDetails$status": "<p>The approval status of a member's vote on the change request. Valid values are PENDING (if they haven't voted), APPROVED, or DENIED.</p>"
+      }
+    },
+    "ApprovalStatusDetails": {
+      "base": "<p>Contains detailed information about the approval state of a given member in the collaboration for a given collaboration change request.</p>",
+      "refs": {
+        "ApprovalStatuses$value": null
+      }
+    },
+    "ApprovalStatuses": {
+      "base": null,
+      "refs": {
+        "CollaborationChangeRequest$approvals": "<p>A list of approval details from collaboration members, including approval status and multi-party approval workflow information.</p>",
+        "CollaborationChangeRequestSummary$approvals": "<p>Summary of approval statuses from all collaboration members for this change request.</p>"
+      }
+    },
     "AthenaDatabaseName": {
       "base": null,
       "refs": {
@@ -635,6 +656,7 @@
       "base": null,
       "refs": {
         "Collaboration$autoApprovedChangeTypes": "<p>The types of change requests that are automatically approved for this collaboration.</p>",
+        "CollaborationChangeSpecification$autoApprovedChangeTypes": "<p>Defines requested updates to properties of the collaboration. Currently, this only supports modifying which change types are auto-approved for the collaboration.</p>",
         "CreateCollaborationInput$autoApprovedChangeRequestTypes": "<p>The types of change requests that are automatically approved for this collaboration.</p>"
       }
     },
@@ -803,6 +825,12 @@
         "CollaborationChangeRequestSummary$changes": "<p>Summary of the changes in this change request.</p>"
       }
     },
+    "ChangeRequestAction": {
+      "base": null,
+      "refs": {
+        "UpdateCollaborationChangeRequestInput$action": "<p>The action to perform on the change request. Valid values include APPROVE (approve the change), DENY (reject the change), CANCEL (cancel the request), and COMMIT (commit after the request is approved).</p> <p>For change requests without automatic approval, a member in the collaboration can manually APPROVE or DENY a change request. The collaboration owner can manually CANCEL or COMMIT a change request.</p>"
+      }
+    },
     "ChangeRequestStatus": {
       "base": null,
       "refs": {
@@ -913,13 +941,15 @@
       "base": "<p>Represents a request to modify a collaboration. Change requests enable structured modifications to collaborations after they have been created.</p>",
       "refs": {
         "CreateCollaborationChangeRequestOutput$collaborationChangeRequest": null,
-        "GetCollaborationChangeRequestOutput$collaborationChangeRequest": "<p>The collaboration change request that was requested.</p>"
+        "GetCollaborationChangeRequestOutput$collaborationChangeRequest": "<p>The collaboration change request that was requested.</p>",
+        "UpdateCollaborationChangeRequestOutput$collaborationChangeRequest": null
       }
     },
     "CollaborationChangeRequestIdentifier": {
       "base": null,
       "refs": {
-        "GetCollaborationChangeRequestInput$changeRequestIdentifier": "<p>A unique identifier for the change request to retrieve.</p>"
+        "GetCollaborationChangeRequestInput$changeRequestIdentifier": "<p>A unique identifier for the change request to retrieve.</p>",
+        "UpdateCollaborationChangeRequestInput$changeRequestIdentifier": "<p>The unique identifier of the specific change request to be updated within the collaboration.</p>"
       }
     },
     "CollaborationChangeRequestSummary": {
@@ -932,6 +962,12 @@
       "base": null,
       "refs": {
         "ListCollaborationChangeRequestsOutput$collaborationChangeRequestSummaries": "<p>The list of collaboration change request summaries.</p>"
+      }
+    },
+    "CollaborationChangeSpecification": {
+      "base": "<p>Defines the specific changes being requested for a collaboration, including configuration modifications and approval requirements.</p>",
+      "refs": {
+        "ChangeSpecification$collaboration": "<p>The collaboration configuration changes being requested. Currently, this only supports modifying which change types are auto-approved for the collaboration.</p>"
       }
     },
     "CollaborationConfiguredAudienceModelAssociation": {
@@ -1006,6 +1042,7 @@
         "ListMembersInput$collaborationIdentifier": "<p>The identifier of the collaboration in which the members are listed.</p>",
         "ListSchemasInput$collaborationIdentifier": "<p>A unique identifier for the collaboration that the schema belongs to. Currently accepts a collaboration ID.</p>",
         "MembershipSummary$collaborationId": "<p>The unique ID for the membership's collaboration.</p>",
+        "UpdateCollaborationChangeRequestInput$collaborationIdentifier": "<p>The unique identifier of the collaboration that contains the change request to be updated.</p>",
         "UpdateCollaborationInput$collaborationIdentifier": "<p>The identifier for the collaboration.</p>"
       }
     },
@@ -4082,6 +4119,14 @@
       "refs": {}
     },
     "UpdateAnalysisTemplateOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCollaborationChangeRequestInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCollaborationChangeRequestOutput": {
       "base": null,
       "refs": {}
     },

@@ -1226,6 +1226,12 @@
         "CommandPreprocessor$awsJsonSubstitution": "<p>Configuration for the JSON substitution preprocessor.</p>"
       }
     },
+    "BatchConfig": {
+      "base": "<p>Configuration settings for batching.</p>",
+      "refs": {
+        "HttpAction$batchConfig": "<p>The configuration settings for batching. For more information, see <a href=\"/iot/latest/developerguide/http_batching.html\">Batching HTTP action messages</a>.</p>"
+      }
+    },
     "BatchMode": {
       "base": null,
       "refs": {
@@ -3667,6 +3673,12 @@
         "OpenSearchAction$type": "<p>The type of document you are storing.</p>"
       }
     },
+    "EnableBatching": {
+      "base": null,
+      "refs": {
+        "HttpAction$enableBatching": "<p>Whether to process the HTTP action messages into a single request. Value can be true or false.</p>"
+      }
+    },
     "EnableCachingForHttp": {
       "base": null,
       "refs": {
@@ -5598,6 +5610,24 @@
         "ListRoleAliasesResponse$nextMarker": "<p>A marker used to get the next set of results.</p>",
         "ListTargetsForPolicyRequest$marker": "<p>A marker used to get the next set of results.</p>",
         "ListTargetsForPolicyResponse$nextMarker": "<p>A marker used to get the next set of results.</p>"
+      }
+    },
+    "MaxBatchOpenMs": {
+      "base": null,
+      "refs": {
+        "BatchConfig$maxBatchOpenMs": "<p>The maximum amount of time (in milliseconds) that an outgoing call waits for other calls with which it batches messages of the same type. The higher the setting, the longer the latency of the batched HTTP Action will be.</p>"
+      }
+    },
+    "MaxBatchSize": {
+      "base": null,
+      "refs": {
+        "BatchConfig$maxBatchSize": "<p>The maximum number of messages that are batched together in a single action execution.</p>"
+      }
+    },
+    "MaxBatchSizeBytes": {
+      "base": null,
+      "refs": {
+        "BatchConfig$maxBatchSizeBytes": "<p>Maximum size of a message batch, in bytes.</p>"
       }
     },
     "MaxBuckets": {

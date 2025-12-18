@@ -1380,6 +1380,24 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "UpdateCollaborationChangeRequest":{
+      "name":"UpdateCollaborationChangeRequest",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/collaborations/{collaborationIdentifier}/changeRequests/{changeRequestIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateCollaborationChangeRequestInput"},
+      "output":{"shape":"UpdateCollaborationChangeRequestOutput"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "UpdateConfiguredAudienceModelAssociation":{
       "name":"UpdateConfiguredAudienceModelAssociation",
       "http":{
@@ -2145,6 +2163,28 @@
         "CLEAN_ROOMS_SQL"
       ]
     },
+    "ApprovalStatus":{
+      "type":"string",
+      "enum":[
+        "APPROVED",
+        "DENIED",
+        "PENDING"
+      ]
+    },
+    "ApprovalStatusDetails":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"ApprovalStatus"}
+      }
+    },
+    "ApprovalStatuses":{
+      "type":"map",
+      "key":{"shape":"AccountId"},
+      "value":{"shape":"ApprovalStatusDetails"},
+      "max":50,
+      "min":1
+    },
     "AthenaDatabaseName":{
       "type":"string",
       "max":128,
@@ -2186,7 +2226,11 @@
     },
     "AutoApprovedChangeType":{
       "type":"string",
-      "enum":["ADD_MEMBER"]
+      "enum":[
+        "ADD_MEMBER",
+        "GRANT_RECEIVE_RESULTS_ABILITY",
+        "REVOKE_RECEIVE_RESULTS_ABILITY"
+      ]
     },
     "AutoApprovedChangeTypeList":{
       "type":"list",
@@ -2420,6 +2464,15 @@
       "max":10,
       "min":1
     },
+    "ChangeRequestAction":{
+      "type":"string",
+      "enum":[
+        "APPROVE",
+        "DENY",
+        "CANCEL",
+        "COMMIT"
+      ]
+    },
     "ChangeRequestStatus":{
       "type":"string",
       "enum":[
@@ -2433,17 +2486,26 @@
     "ChangeSpecification":{
       "type":"structure",
       "members":{
-        "member":{"shape":"MemberChangeSpecification"}
+        "member":{"shape":"MemberChangeSpecification"},
+        "collaboration":{"shape":"CollaborationChangeSpecification"}
       },
       "union":true
     },
     "ChangeSpecificationType":{
       "type":"string",
-      "enum":["MEMBER"]
+      "enum":[
+        "MEMBER",
+        "COLLABORATION"
+      ]
     },
     "ChangeType":{
       "type":"string",
-      "enum":["ADD_MEMBER"]
+      "enum":[
+        "ADD_MEMBER",
+        "GRANT_RECEIVE_RESULTS_ABILITY",
+        "REVOKE_RECEIVE_RESULTS_ABILITY",
+        "EDIT_AUTO_APPROVED_CHANGE_TYPES"
+      ]
     },
     "ChangeTypeList":{
       "type":"list",
@@ -2582,7 +2644,8 @@
         "updateTime":{"shape":"Timestamp"},
         "status":{"shape":"ChangeRequestStatus"},
         "isAutoApproved":{"shape":"Boolean"},
-        "changes":{"shape":"ChangeList"}
+        "changes":{"shape":"ChangeList"},
+        "approvals":{"shape":"ApprovalStatuses"}
       }
     },
     "CollaborationChangeRequestIdentifier":{
@@ -2609,12 +2672,19 @@
         "updateTime":{"shape":"Timestamp"},
         "status":{"shape":"ChangeRequestStatus"},
         "isAutoApproved":{"shape":"Boolean"},
-        "changes":{"shape":"ChangeList"}
+        "changes":{"shape":"ChangeList"},
+        "approvals":{"shape":"ApprovalStatuses"}
       }
     },
     "CollaborationChangeRequestSummaryList":{
       "type":"list",
       "member":{"shape":"CollaborationChangeRequestSummary"}
+    },
+    "CollaborationChangeSpecification":{
+      "type":"structure",
+      "members":{
+        "autoApprovedChangeTypes":{"shape":"AutoApprovedChangeTypeList"}
+      }
     },
     "CollaborationConfiguredAudienceModelAssociation":{
       "type":"structure",
@@ -6117,7 +6187,7 @@
     },
     "ParameterValue":{
       "type":"string",
-      "max":250,
+      "max":1000,
       "min":0
     },
     "PaymentConfiguration":{
@@ -7533,6 +7603,34 @@
       "required":["analysisTemplate"],
       "members":{
         "analysisTemplate":{"shape":"AnalysisTemplate"}
+      }
+    },
+    "UpdateCollaborationChangeRequestInput":{
+      "type":"structure",
+      "required":[
+        "collaborationIdentifier",
+        "changeRequestIdentifier",
+        "action"
+      ],
+      "members":{
+        "collaborationIdentifier":{
+          "shape":"CollaborationIdentifier",
+          "location":"uri",
+          "locationName":"collaborationIdentifier"
+        },
+        "changeRequestIdentifier":{
+          "shape":"CollaborationChangeRequestIdentifier",
+          "location":"uri",
+          "locationName":"changeRequestIdentifier"
+        },
+        "action":{"shape":"ChangeRequestAction"}
+      }
+    },
+    "UpdateCollaborationChangeRequestOutput":{
+      "type":"structure",
+      "required":["collaborationChangeRequest"],
+      "members":{
+        "collaborationChangeRequest":{"shape":"CollaborationChangeRequest"}
       }
     },
     "UpdateCollaborationInput":{

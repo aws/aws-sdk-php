@@ -5318,6 +5318,14 @@
         "outputFormat":{"shape":"OutputFormat"}
       }
     },
+    "BatchConfig":{
+      "type":"structure",
+      "members":{
+        "maxBatchOpenMs":{"shape":"MaxBatchOpenMs"},
+        "maxBatchSize":{"shape":"MaxBatchSize"},
+        "maxBatchSizeBytes":{"shape":"MaxBatchSizeBytes"}
+      }
+    },
     "BatchMode":{"type":"boolean"},
     "BeforeSubstitutionFlag":{"type":"boolean"},
     "Behavior":{
@@ -9027,6 +9035,7 @@
     "ElasticsearchId":{"type":"string"},
     "ElasticsearchIndex":{"type":"string"},
     "ElasticsearchType":{"type":"string"},
+    "EnableBatching":{"type":"boolean"},
     "EnableCachingForHttp":{"type":"boolean"},
     "EnableIoTLoggingParams":{
       "type":"structure",
@@ -9775,7 +9784,9 @@
         "url":{"shape":"Url"},
         "confirmationUrl":{"shape":"Url"},
         "headers":{"shape":"HeaderList"},
-        "auth":{"shape":"HttpAuthorization"}
+        "auth":{"shape":"HttpAuthorization"},
+        "enableBatching":{"shape":"EnableBatching"},
+        "batchConfig":{"shape":"BatchConfig"}
       }
     },
     "HttpActionHeader":{
@@ -12518,6 +12529,21 @@
       "type":"string",
       "max":1024,
       "pattern":"[A-Za-z0-9+/]+={0,2}"
+    },
+    "MaxBatchOpenMs":{
+      "type":"integer",
+      "max":200,
+      "min":5
+    },
+    "MaxBatchSize":{
+      "type":"integer",
+      "max":10,
+      "min":2
+    },
+    "MaxBatchSizeBytes":{
+      "type":"integer",
+      "max":131072,
+      "min":100
     },
     "MaxBuckets":{
       "type":"integer",
