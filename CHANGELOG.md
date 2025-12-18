@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.368.2 - 2025-12-18
 
 * `Aws\SsmSap` - Added "Stopping" for the HANA Database Status.
 * `Aws\OpenSearchService` - Amazon OpenSearch Service adds support for warm nodes, enabling new multi-tier architecture.
