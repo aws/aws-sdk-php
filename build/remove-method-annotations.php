@@ -20,7 +20,7 @@ function removeMethodAnnotations($dir, $fileSuffix) {
 
             // Regular expression to match @method annotations
             // This pattern assumes @method annotations may span multiple lines and are within comment blocks
-            $pattern = '/\*\s+@method\s+[^\n]+\n/';
+            $pattern = '/^\s*\*\s+@method\s+[^\n]+\n/m';
 
             if (preg_match($pattern, $content)) {
                 // Remove @method annotations
