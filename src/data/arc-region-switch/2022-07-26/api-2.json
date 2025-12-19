@@ -547,6 +547,7 @@
         "recoveryTimeObjectiveMinutes":{"shape":"CreatePlanRequestRecoveryTimeObjectiveMinutesInteger"},
         "associatedAlarms":{"shape":"AssociatedAlarmMap"},
         "triggers":{"shape":"TriggerList"},
+        "reportConfiguration":{"shape":"ReportConfiguration"},
         "name":{"shape":"PlanName"},
         "regions":{"shape":"RegionList"},
         "recoveryApproach":{"shape":"RecoveryApproach"},
@@ -596,6 +597,57 @@
     "DeletePlanResponse":{
       "type":"structure",
       "members":{}
+    },
+    "DocumentDbClusterArn":{
+      "type":"string",
+      "pattern":"arn:aws[a-zA-Z-]*:rds:[a-z0-9-]+:\\d{12}:cluster:[a-zA-Z0-9][a-zA-Z0-9-_]{0,99}"
+    },
+    "DocumentDbClusterArns":{
+      "type":"list",
+      "member":{"shape":"DocumentDbClusterArn"}
+    },
+    "DocumentDbConfiguration":{
+      "type":"structure",
+      "required":[
+        "behavior",
+        "globalClusterIdentifier",
+        "databaseClusterArns"
+      ],
+      "members":{
+        "timeoutMinutes":{"shape":"DocumentDbConfigurationTimeoutMinutesInteger"},
+        "crossAccountRole":{"shape":"IamRoleArn"},
+        "externalId":{"shape":"String"},
+        "behavior":{"shape":"DocumentDbDefaultBehavior"},
+        "ungraceful":{"shape":"DocumentDbUngraceful"},
+        "globalClusterIdentifier":{"shape":"DocumentDbGlobalClusterIdentifier"},
+        "databaseClusterArns":{"shape":"DocumentDbClusterArns"}
+      }
+    },
+    "DocumentDbConfigurationTimeoutMinutesInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "DocumentDbDefaultBehavior":{
+      "type":"string",
+      "enum":[
+        "switchoverOnly",
+        "failover"
+      ]
+    },
+    "DocumentDbGlobalClusterIdentifier":{
+      "type":"string",
+      "pattern":"[A-Za-z][0-9A-Za-z-:._]*"
+    },
+    "DocumentDbUngraceful":{
+      "type":"structure",
+      "members":{
+        "ungraceful":{"shape":"DocumentDbUngracefulBehavior"}
+      }
+    },
+    "DocumentDbUngracefulBehavior":{
+      "type":"string",
+      "enum":["failover"]
     },
     "Duration":{
       "type":"string",
@@ -780,7 +832,8 @@
         "regionSwitchPlanConfig":{"shape":"RegionSwitchPlanConfiguration"},
         "ecsCapacityIncreaseConfig":{"shape":"EcsCapacityIncreaseConfiguration"},
         "eksResourceScalingConfig":{"shape":"EksResourceScalingConfiguration"},
-        "route53HealthCheckConfig":{"shape":"Route53HealthCheckConfiguration"}
+        "route53HealthCheckConfig":{"shape":"Route53HealthCheckConfiguration"},
+        "documentDbConfig":{"shape":"DocumentDbConfiguration"}
       },
       "union":true
     },
@@ -796,7 +849,8 @@
         "Parallel",
         "ECSServiceScaling",
         "EKSResourceScaling",
-        "Route53HealthCheck"
+        "Route53HealthCheck",
+        "DocumentDb"
       ]
     },
     "ExecutionComment":{
@@ -850,7 +904,8 @@
         "stepCanceled",
         "stepPendingApproval",
         "stepExecutionBehaviorChangedToUngraceful",
-        "stepPendingApplicationHealthMonitor"
+        "stepPendingApplicationHealthMonitor",
+        "planEvaluationWarning"
       ]
     },
     "ExecutionId":{"type":"string"},
@@ -877,9 +932,37 @@
         "completedMonitoringApplicationHealth"
       ]
     },
+    "FailedReportErrorCode":{
+      "type":"string",
+      "enum":[
+        "insufficientPermissions",
+        "invalidResource",
+        "configurationError"
+      ]
+    },
+    "FailedReportOutput":{
+      "type":"structure",
+      "members":{
+        "errorCode":{"shape":"FailedReportErrorCode"},
+        "errorMessage":{"shape":"String"}
+      }
+    },
     "Float":{
       "type":"float",
       "box":true
+    },
+    "GeneratedReport":{
+      "type":"structure",
+      "members":{
+        "reportGenerationTime":{"shape":"Timestamp"},
+        "reportOutput":{"shape":"ReportOutput"}
+      }
+    },
+    "GeneratedReportDetails":{
+      "type":"list",
+      "member":{"shape":"GeneratedReport"},
+      "max":1,
+      "min":0
     },
     "GetPlanEvaluationStatusRequest":{
       "type":"structure",
@@ -942,6 +1025,7 @@
         "stepStates":{"shape":"StepStates"},
         "plan":{"shape":"Plan"},
         "actualRecoveryTime":{"shape":"Duration"},
+        "generatedReportDetails":{"shape":"GeneratedReportDetails"},
         "nextToken":{"shape":"String"}
       }
     },
@@ -1304,6 +1388,7 @@
         "recoveryTimeObjectiveMinutes":{"shape":"PlanRecoveryTimeObjectiveMinutesInteger"},
         "associatedAlarms":{"shape":"AssociatedAlarmMap"},
         "triggers":{"shape":"TriggerList"},
+        "reportConfiguration":{"shape":"ReportConfiguration"},
         "name":{"shape":"PlanName"},
         "regions":{"shape":"RegionList"},
         "recoveryApproach":{"shape":"RecoveryApproach"},
@@ -1379,6 +1464,33 @@
       "type":"map",
       "key":{"shape":"Region"},
       "value":{"shape":"KubernetesScalingResource"}
+    },
+    "ReportConfiguration":{
+      "type":"structure",
+      "members":{
+        "reportOutput":{"shape":"ReportOutputList"}
+      }
+    },
+    "ReportOutput":{
+      "type":"structure",
+      "members":{
+        "s3ReportOutput":{"shape":"S3ReportOutput"},
+        "failedReportOutput":{"shape":"FailedReportOutput"}
+      },
+      "union":true
+    },
+    "ReportOutputConfiguration":{
+      "type":"structure",
+      "members":{
+        "s3Configuration":{"shape":"S3ReportOutputConfiguration"}
+      },
+      "union":true
+    },
+    "ReportOutputList":{
+      "type":"list",
+      "member":{"shape":"ReportOutputConfiguration"},
+      "max":1,
+      "min":1
     },
     "ResourceArn":{"type":"string"},
     "ResourceNotFoundException":{
@@ -1508,6 +1620,25 @@
         "On",
         "Off"
       ]
+    },
+    "S3ReportOutput":{
+      "type":"structure",
+      "members":{
+        "s3ObjectKey":{"shape":"String"}
+      }
+    },
+    "S3ReportOutputConfiguration":{
+      "type":"structure",
+      "members":{
+        "bucketPath":{"shape":"S3ReportOutputConfigurationBucketPathString"},
+        "bucketOwner":{"shape":"AccountId"}
+      }
+    },
+    "S3ReportOutputConfigurationBucketPathString":{
+      "type":"string",
+      "max":512,
+      "min":3,
+      "pattern":"(?:s3://)?[a-z0-9][a-z0-9-]{1,61}[a-z0-9](?:/[^/ ][^/]*)*/?"
     },
     "Service":{
       "type":"structure",
@@ -1756,7 +1887,8 @@
         "executionRole":{"shape":"IamRoleArn"},
         "recoveryTimeObjectiveMinutes":{"shape":"UpdatePlanRequestRecoveryTimeObjectiveMinutesInteger"},
         "associatedAlarms":{"shape":"AssociatedAlarmMap"},
-        "triggers":{"shape":"TriggerList"}
+        "triggers":{"shape":"TriggerList"},
+        "reportConfiguration":{"shape":"ReportConfiguration"}
       }
     },
     "UpdatePlanRequestRecoveryTimeObjectiveMinutesInteger":{

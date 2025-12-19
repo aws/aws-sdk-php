@@ -1,0 +1,1298 @@
+{
+  "version": "2.0",
+  "service": "<p>Welcome to the <i>Amazon Web Services Wickr API Reference</i>.</p> <p>The Amazon Web Services Wickr application programming interface (API) is designed for administrators to perform key tasks, such as creating and managing Amazon Web Services Wickr, networks, users, security groups, bots and more. This guide provides detailed information about the Amazon Web Services Wickr API, including operations, types, inputs and outputs, and error codes. You can use an Amazon Web Services SDK, the Amazon Web Services Command Line Interface (Amazon Web Services CLI, or the REST API to make API calls for Amazon Web Services Wickr. </p> <p> <i>Using Amazon Web Services SDK</i> </p> <p>The SDK clients authenticate your requests by using access keys that you provide. For more information, see <a href=\"https://docs.aws.amazon.com/sdkref/latest/guide/access.html\">Authentication and access using Amazon Web Services SDKs and tools</a> in the <i>Amazon Web Services SDKs and Tools Reference Guide</i>. </p> <p> <i>Using Amazon Web Services CLI</i> </p> <p>Use your access keys with the Amazon Web Services CLI to make API calls. For more information about setting up the Amazon Web Services CLI, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html\">Getting started with the Amazon Web Services CLI</a> in the <i>Amazon Web Services Command Line Interface User Guide for Version 2</i>. </p> <p> <i>Using REST APIs</i> </p> <p>If you use REST to make API calls, you must authenticate your request by providing a signature. Amazon Web Services Wickr supports Signature Version 4. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_sigv.html\">Amazon Web Services Signature Version 4 for API requests</a> in the <i>Amazon Web Services Identity and Access Management User Guide</i>. </p> <p>Access and permissions to the APIs can be controlled by Amazon Web Services Identity and Access Management. The managed policy <a href=\"https://docs.aws.amazon.com/wickr/latest/adminguide/security-iam-awsmanpol.html#security-iam-awsmanpol-AWSWickrFullAccess\">Amazon Web ServicesWickrFullAccess</a> grants full administrative permission to the Amazon Web Services Wickr service APIs. For more information on restricting access to specific operations, see <a href=\"https://docs.aws.amazon.com/wickr/latest/adminguide/security-iam.html\">Identity and access management for Amazon Web Services Wickr </a> in the <i>Amazon Web Services Wickr Administration Guide</i>. </p> <p> <i>Types of Errors</i>:</p> <p>The Amazon Web Services Wickr APIs provide an HTTP interface. HTTP defines ranges of HTTP Status Codes for different types of error responses.</p> <ol> <li> <p>Client errors are indicated by HTTP Status Code class of 4xx</p> </li> <li> <p>Service errors are indicated by HTTP Status Code class of 5xx</p> </li> </ol> <p>In this reference guide, the documentation for each API has an Errors section that includes a brief discussion about HTTP status codes. We recommend looking there as part of your investigation when you get an error.</p>",
+  "operations": {
+    "BatchCreateUser": "<p>Creates multiple users in a specified Wickr network. This operation allows you to provision multiple user accounts simultaneously, optionally specifying security groups, and validation requirements for each user.</p> <note> <p> <code>codeValidation</code>, <code>inviteCode</code>, and <code>inviteCodeTtl</code> are restricted to networks under preview only.</p> </note>",
+    "BatchDeleteUser": "<p>Deletes multiple users from a specified Wickr network. This operation permanently removes user accounts and their associated data from the network.</p>",
+    "BatchLookupUserUname": "<p>Looks up multiple user usernames from their unique username hashes (unames). This operation allows you to retrieve the email addresses associated with a list of username hashes.</p>",
+    "BatchReinviteUser": "<p>Resends invitation codes to multiple users who have pending invitations in a Wickr network. This operation is useful when users haven't accepted their initial invitations or when invitations have expired.</p>",
+    "BatchResetDevicesForUser": "<p>Resets multiple devices for a specific user in a Wickr network. This operation forces the selected devices to log out and requires users to re-authenticate, which is useful for security purposes or when devices need to be revoked.</p>",
+    "BatchToggleUserSuspendStatus": "<p>Suspends or unsuspends multiple users in a Wickr network. Suspended users cannot access the network until they are unsuspended. This operation is useful for temporarily restricting access without deleting user accounts.</p>",
+    "CreateBot": "<p>Creates a new bot in a specified Wickr network. Bots are automated accounts that can send and receive messages, enabling integration with external systems and automation of tasks.</p>",
+    "CreateDataRetentionBot": "<p>Creates a data retention bot in a Wickr network. Data retention bots are specialized bots that handle message archiving and compliance by capturing and storing messages for regulatory or organizational requirements.</p>",
+    "CreateDataRetentionBotChallenge": "<p>Creates a new challenge password for the data retention bot. This password is used for authentication when the bot connects to the network.</p>",
+    "CreateNetwork": "<p>Creates a new Wickr network with specified access level and configuration. This operation provisions a new communication network for your organization.</p>",
+    "CreateSecurityGroup": "<p>Creates a new security group in a Wickr network. Security groups allow you to organize users and control their permissions, features, and security settings.</p>",
+    "DeleteBot": "<p>Deletes a bot from a specified Wickr network. This operation permanently removes the bot account and its associated data from the network.</p>",
+    "DeleteDataRetentionBot": "<p>Deletes the data retention bot from a Wickr network. This operation permanently removes the bot and all its associated data from the database.</p>",
+    "DeleteNetwork": "<p>Deletes a Wickr network and all its associated resources, including users, bots, security groups, and settings. This operation is permanent and cannot be undone.</p>",
+    "DeleteSecurityGroup": "<p>Deletes a security group from a Wickr network. This operation cannot be performed on the default security group.</p>",
+    "GetBot": "<p>Retrieves detailed information about a specific bot in a Wickr network, including its status, group membership, and authentication details.</p>",
+    "GetBotsCount": "<p>Retrieves the count of bots in a Wickr network, categorized by their status (pending, active, and total).</p>",
+    "GetDataRetentionBot": "<p>Retrieves information about the data retention bot in a Wickr network, including its status and whether the data retention service is enabled.</p>",
+    "GetGuestUserHistoryCount": "<p>Retrieves historical guest user count data for a Wickr network, showing the number of guest users per billing period over the past 90 days.</p>",
+    "GetNetwork": "<p>Retrieves detailed information about a specific Wickr network, including its configuration, access level, and status.</p>",
+    "GetNetworkSettings": "<p>Retrieves all network-level settings for a Wickr network, including client metrics, data retention, and other configuration options.</p>",
+    "GetOidcInfo": "<p>Retrieves the OpenID Connect (OIDC) configuration for a Wickr network, including SSO settings and optional token information if access token parameters are provided.</p>",
+    "GetSecurityGroup": "<p>Retrieves detailed information about a specific security group in a Wickr network, including its settings, member counts, and configuration.</p>",
+    "GetUser": "<p>Retrieves detailed information about a specific user in a Wickr network, including their profile, status, and activity history.</p>",
+    "GetUsersCount": "<p>Retrieves the count of users in a Wickr network, categorized by their status (pending, active, rejected) and showing how many users can still be added.</p>",
+    "ListBlockedGuestUsers": "<p>Retrieves a paginated list of guest users who have been blocked from a Wickr network. You can filter and sort the results.</p>",
+    "ListBots": "<p>Retrieves a paginated list of bots in a specified Wickr network. You can filter and sort the results based on various criteria.</p>",
+    "ListDevicesForUser": "<p>Retrieves a paginated list of devices associated with a specific user in a Wickr network. This operation returns information about all devices where the user has logged into Wickr.</p>",
+    "ListGuestUsers": "<p>Retrieves a paginated list of guest users who have communicated with your Wickr network. Guest users are external users from federated networks who can communicate with network members.</p>",
+    "ListNetworks": "<p>Retrieves a paginated list of all Wickr networks associated with your Amazon Web Services account. You can sort the results by network ID or name.</p>",
+    "ListSecurityGroupUsers": "<p>Retrieves a paginated list of users who belong to a specific security group in a Wickr network.</p>",
+    "ListSecurityGroups": "<p>Retrieves a paginated list of security groups in a specified Wickr network. You can sort the results by various criteria.</p>",
+    "ListUsers": "<p>Retrieves a paginated list of users in a specified Wickr network. You can filter and sort the results based on various criteria such as name, status, or security group membership.</p>",
+    "RegisterOidcConfig": "<p>Registers and saves an OpenID Connect (OIDC) configuration for a Wickr network, enabling Single Sign-On (SSO) authentication through an identity provider.</p>",
+    "RegisterOidcConfigTest": "<p>Tests an OpenID Connect (OIDC) configuration for a Wickr network by validating the connection to the identity provider and retrieving its supported capabilities.</p>",
+    "UpdateBot": "<p>Updates the properties of an existing bot in a Wickr network. This operation allows you to modify the bot's display name, security group, password, or suspension status.</p>",
+    "UpdateDataRetention": "<p>Updates the data retention bot settings, allowing you to enable or disable the data retention service, or acknowledge the public key message.</p>",
+    "UpdateGuestUser": "<p>Updates the block status of a guest user in a Wickr network. This operation allows you to block or unblock a guest user from accessing the network.</p>",
+    "UpdateNetwork": "<p>Updates the properties of an existing Wickr network, such as its name or encryption key configuration.</p>",
+    "UpdateNetworkSettings": "<p>Updates network-level settings for a Wickr network. You can modify settings such as client metrics, data retention, and other network-wide options.</p>",
+    "UpdateSecurityGroup": "<p>Updates the properties of an existing security group in a Wickr network, such as its name or settings.</p>",
+    "UpdateUser": "<p>Updates the properties of an existing user in a Wickr network. This operation allows you to modify the user's name, password, security group membership, and invite code settings.</p> <note> <p> <code>codeValidation</code>, <code>inviteCode</code>, and <code>inviteCodeTtl</code> are restricted to networks under preview only.</p> </note>"
+  },
+  "shapes": {
+    "AccessLevel": {
+      "base": null,
+      "refs": {
+        "CreateNetworkRequest$accessLevel": "<p>The access level for the network. Valid values are STANDARD or PREMIUM, which determine the features and capabilities available to network members.</p>",
+        "GetNetworkResponse$accessLevel": "<p>The access level of the network (STANDARD or PREMIUM), which determines available features and capabilities.</p>",
+        "Network$accessLevel": "<p>The access level of the network (STANDARD or PREMIUM), which determines available features and capabilities.</p>"
+      }
+    },
+    "AppIds": {
+      "base": null,
+      "refs": {
+        "BatchResetDevicesForUserRequest$appIds": "<p>A list of application IDs identifying the specific devices to be reset for the user. Maximum 50 devices per batch request.</p>"
+      }
+    },
+    "BadRequestError": {
+      "base": "<p>The request was invalid or malformed. This error occurs when the request parameters do not meet the API requirements, such as invalid field values, missing required parameters, or improperly formatted data.</p>",
+      "refs": {}
+    },
+    "BasicDeviceObject": {
+      "base": "<p>Represents a device where a user has logged into Wickr, containing information about the device's type, status, and login history.</p>",
+      "refs": {
+        "Devices$member": null
+      }
+    },
+    "BatchCreateUserRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchCreateUserRequestItem": {
+      "base": "<p>Contains the details for a single user to be created in a batch user creation request.</p> <note> <p>A user can only be assigned to a single security group. Attempting to add a user to multiple security groups is not supported and will result in an error.</p> </note> <note> <p> <code>codeValidation</code>, <code>inviteCode</code>, and <code>inviteCodeTtl</code> are restricted to networks under preview only.</p> </note>",
+      "refs": {
+        "BatchCreateUserRequestItems$member": null
+      }
+    },
+    "BatchCreateUserRequestItems": {
+      "base": null,
+      "refs": {
+        "BatchCreateUserRequest$users": "<p>A list of user objects containing the details for each user to be created, including username, name, security groups, and optional invite codes. Maximum 50 users per batch request.</p>"
+      }
+    },
+    "BatchCreateUserResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchDeleteUserRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchDeleteUserResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchDeviceErrorResponseItem": {
+      "base": "<p>Contains error information for a device operation that failed in a batch device request.</p>",
+      "refs": {
+        "BatchDeviceErrorResponseItems$member": null
+      }
+    },
+    "BatchDeviceErrorResponseItems": {
+      "base": null,
+      "refs": {
+        "BatchResetDevicesForUserResponse$failed": "<p>A list of device reset attempts that failed, including error details explaining why each device could not be reset.</p>"
+      }
+    },
+    "BatchDeviceSuccessResponseItem": {
+      "base": "<p>Contains information about a device that was successfully processed in a batch device operation.</p>",
+      "refs": {
+        "BatchDeviceSuccessResponseItems$member": null
+      }
+    },
+    "BatchDeviceSuccessResponseItems": {
+      "base": null,
+      "refs": {
+        "BatchResetDevicesForUserResponse$successful": "<p>A list of application IDs that were successfully reset.</p>"
+      }
+    },
+    "BatchLookupUserUnameRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchLookupUserUnameResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchReinviteUserRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchReinviteUserResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchResetDevicesForUserRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchResetDevicesForUserResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchToggleUserSuspendStatusRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchToggleUserSuspendStatusResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchUnameErrorResponseItem": {
+      "base": "<p>Contains error information for a username hash lookup that failed in a batch uname lookup request.</p>",
+      "refs": {
+        "BatchUnameErrorResponseItems$member": null
+      }
+    },
+    "BatchUnameErrorResponseItems": {
+      "base": null,
+      "refs": {
+        "BatchLookupUserUnameResponse$failed": "<p>A list of username hash lookup attempts that failed, including error details explaining why each lookup failed.</p>"
+      }
+    },
+    "BatchUnameSuccessResponseItem": {
+      "base": "<p>Contains information about a username hash that was successfully resolved in a batch uname lookup operation.</p>",
+      "refs": {
+        "BatchUnameSuccessResponseItems$member": null
+      }
+    },
+    "BatchUnameSuccessResponseItems": {
+      "base": null,
+      "refs": {
+        "BatchLookupUserUnameResponse$successful": "<p>A list of successfully resolved username hashes with their corresponding email addresses.</p>"
+      }
+    },
+    "BatchUserErrorResponseItem": {
+      "base": "<p>Contains error information for a user operation that failed in a batch user request.</p>",
+      "refs": {
+        "BatchUserErrorResponseItems$member": null
+      }
+    },
+    "BatchUserErrorResponseItems": {
+      "base": null,
+      "refs": {
+        "BatchCreateUserResponse$failed": "<p>A list of user creation attempts that failed, including error details explaining why each user could not be created.</p>",
+        "BatchDeleteUserResponse$failed": "<p>A list of user deletion attempts that failed, including error details explaining why each user could not be deleted.</p>",
+        "BatchReinviteUserResponse$failed": "<p>A list of reinvitation attempts that failed, including error details explaining why each user could not be reinvited.</p>",
+        "BatchToggleUserSuspendStatusResponse$failed": "<p>A list of suspend status toggle attempts that failed, including error details explaining why each user's status could not be changed.</p>"
+      }
+    },
+    "BatchUserSuccessResponseItem": {
+      "base": "<p>Contains information about a user that was successfully processed in a batch user operation.</p>",
+      "refs": {
+        "BatchUserSuccessResponseItems$member": null
+      }
+    },
+    "BatchUserSuccessResponseItems": {
+      "base": null,
+      "refs": {
+        "BatchDeleteUserResponse$successful": "<p>A list of user IDs that were successfully deleted from the network.</p>",
+        "BatchReinviteUserResponse$successful": "<p>A list of user IDs that were successfully reinvited.</p>",
+        "BatchToggleUserSuspendStatusResponse$successful": "<p>A list of user IDs whose suspend status was successfully toggled.</p>"
+      }
+    },
+    "BlockedGuestUser": {
+      "base": "<p>Represents a guest user who has been blocked from accessing a Wickr network.</p>",
+      "refs": {
+        "BlockedGuestUserList$member": null
+      }
+    },
+    "BlockedGuestUserList": {
+      "base": null,
+      "refs": {
+        "ListBlockedGuestUsersResponse$blocklist": "<p>A list of blocked guest user objects within the current page.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "BasicDeviceObject$suspend": "<p>Indicates whether the device is suspended.</p>",
+        "BatchCreateUserRequestItem$codeValidation": "<p>Indicates whether the user can be verified through a custom invite code.</p>",
+        "BatchToggleUserSuspendStatusRequest$suspend": "<p>A boolean value indicating whether to suspend (true) or unsuspend (false) the specified users.</p>",
+        "Bot$hasChallenge": "<p>Indicates whether the bot has a password set.</p>",
+        "Bot$suspended": "<p>Indicates whether the bot is currently suspended.</p>",
+        "CallingSettings$canStart11Call": "<p>Specifies whether users can start one-to-one calls.</p>",
+        "CallingSettings$canVideoCall": "<p>Specifies whether users can make video calls (as opposed to audio-only calls). Valid only when audio call(canStart11Call) is enabled.</p>",
+        "CallingSettings$forceTcpCall": "<p>When enabled, forces all calls to use TCP protocol instead of UDP for network traversal.</p>",
+        "CreateNetworkRequest$enablePremiumFreeTrial": "<p>Specifies whether to enable a premium free trial for the network. It is optional and has a default value as false. When set to true, the network starts with premium features for a limited trial period. </p>",
+        "GetBotResponse$hasChallenge": "<p>Indicates whether the bot has a password set.</p>",
+        "GetBotResponse$suspended": "<p>Indicates whether the bot is currently suspended.</p>",
+        "GetDataRetentionBotResponse$botExists": "<p>Indicates whether a data retention bot exists in the network.</p>",
+        "GetDataRetentionBotResponse$isBotActive": "<p>Indicates whether the data retention bot is active and operational.</p>",
+        "GetDataRetentionBotResponse$isDataRetentionBotRegistered": "<p>Indicates whether the data retention bot has been registered with the network.</p>",
+        "GetDataRetentionBotResponse$isDataRetentionServiceEnabled": "<p>Indicates whether the data retention service is enabled for the network.</p>",
+        "GetDataRetentionBotResponse$isPubkeyMsgAcked": "<p>Indicates whether the public key message has been acknowledged by the bot.</p>",
+        "GetUserResponse$isAdmin": "<p>Indicates whether the user has administrator privileges in the network.</p>",
+        "GetUserResponse$suspended": "<p>Indicates whether the user is currently suspended.</p>",
+        "NetworkSettings$enableClientMetrics": "<p>Allows Wickr clients to send anonymized performance and usage metrics to the Wickr backend server for service improvement and troubleshooting.</p>",
+        "NetworkSettings$dataRetention": "<p>Indicates whether the data retention feature is enabled for the network. When true, messages are captured by the data retention bot for compliance and archiving purposes.</p>",
+        "RegisterOidcConfigTestResponse$microsoftMultiRefreshToken": "<p>Indicates whether the provider supports Microsoft multi-refresh tokens.</p>",
+        "SecurityGroup$isDefault": "<p>Indicates whether this is the default security group for the network. Each network has only one default group.</p>",
+        "SecurityGroupSettings$alwaysReauthenticate": "<p>Requires users to reauthenticate every time they return to the application, providing an additional layer of security.</p>",
+        "SecurityGroupSettings$checkForUpdates": "<p>Enables automatic checking for Wickr client updates to ensure users stay current with the latest version.</p>",
+        "SecurityGroupSettings$enableAtak": "<p>Enables ATAK (Android Team Awareness Kit) integration for tactical communication and situational awareness.</p>",
+        "SecurityGroupSettings$enableCrashReports": "<p>Allow users to report crashes.</p>",
+        "SecurityGroupSettings$enableFileDownload": "<p>Specifies whether users can download files from messages to their devices.</p>",
+        "SecurityGroupSettings$enableGuestFederation": "<p>Allows users to communicate with guest users from other Wickr networks and federated external networks.</p>",
+        "SecurityGroupSettings$enableNotificationPreview": "<p>Enables message preview text in push notifications, allowing users to see message content before opening the app.</p>",
+        "SecurityGroupSettings$enableOpenAccessOption": "<p> Allow users to avoid censorship when they are geo-blocked or have network limitations.</p>",
+        "SecurityGroupSettings$enableRestrictedGlobalFederation": "<p>Enables restricted global federation, limiting external communication to only specified permitted networks.</p>",
+        "SecurityGroupSettings$filesEnabled": "<p>Enables file sharing capabilities, allowing users to send and receive files in conversations.</p>",
+        "SecurityGroupSettings$forceOpenAccess": "<p>Automatically enable and enforce Wickr open access on all devices. Valid only if enableOpenAccessOption settings is enabled.</p>",
+        "SecurityGroupSettings$forceReadReceipts": "<p>Allow user approved bots to read messages in rooms without using a slash command.</p>",
+        "SecurityGroupSettings$globalFederation": "<p>Allows users to communicate with users on other Wickr instances (Wickr Enterprise) outside the current network.</p>",
+        "SecurityGroupSettings$isAtoEnabled": "<p>Enforces a two-factor authentication when a user adds a new device to their account.</p>",
+        "SecurityGroupSettings$isLinkPreviewEnabled": "<p>Enables automatic preview of links shared in messages, showing webpage thumbnails and descriptions.</p>",
+        "SecurityGroupSettings$locationAllowMaps": "<p>Allows map integration in location sharing, enabling users to view shared locations on interactive maps. Only allowed when location setting is enabled.</p>",
+        "SecurityGroupSettings$locationEnabled": "<p>Enables location sharing features, allowing users to share their current location with others.</p>",
+        "SecurityGroupSettings$messageForwardingEnabled": "<p>Enables message forwarding, allowing users to forward messages from one conversation to another.</p>",
+        "SecurityGroupSettings$presenceEnabled": "<p>Enables presence indicators that show whether users are online, away, or offline.</p>",
+        "SecurityGroupSettings$showMasterRecoveryKey": "<p>Users will get a master recovery key that can be used to securely sign in to their Wickr account without having access to their primary device for authentication. Available in SSO enabled network.</p>",
+        "SecurityGroupSettingsRequest$enableGuestFederation": "<p>Guest users let you work with people outside your organization that only have limited access to Wickr. Only valid when federationMode is set to Global.</p>",
+        "SecurityGroupSettingsRequest$globalFederation": "<p>Allow users to securely federate with all Amazon Web Services Wickr networks and Amazon Web Services Enterprise networks.</p>",
+        "SecurityGroupSettingsRequest$enableRestrictedGlobalFederation": "<p>Enables restricted global federation to limit communication to specific permitted networks only. Requires globalFederation to be enabled.</p>",
+        "ShredderSettings$canProcessManually": "<p>Specifies whether users can manually trigger the shredder to delete content.</p>",
+        "UpdateBotRequest$suspend": "<p>Set to true to suspend the bot or false to unsuspend it. Omit this field for standard updates that don't affect suspension status.</p>",
+        "UpdateGuestUserRequest$block": "<p>Set to true to block the guest user or false to unblock them.</p>",
+        "UpdateUserDetails$codeValidation": "<p>Indicates whether the user can be verified through a custom invite code.</p>",
+        "UpdateUserResponse$suspended": "<p>Indicates whether the user is suspended after the update.</p>",
+        "UpdateUserResponse$codeValidation": "<p>Indicates whether the user can be verified through a custom invite code.</p>",
+        "User$isAdmin": "<p>Indicates whether the user has administrator privileges in the network.</p>",
+        "User$suspended": "<p>Indicates whether the user is currently suspended and unable to access the network.</p>",
+        "User$otpEnabled": "<p>Indicates whether one-time password (OTP) authentication is enabled for the user.</p>",
+        "User$isInviteExpired": "<p>Indicates whether the user's email invitation code has expired, applicable to cloud deployments.</p>",
+        "User$isUser": "<p>Indicates whether this account is a user (as opposed to a bot or other account type).</p>",
+        "User$codeValidation": "<p>Indicates whether the user can be verified through a custom invite code.</p>"
+      }
+    },
+    "Bot": {
+      "base": "<p>Represents a bot account in a Wickr network with all its informational fields.</p>",
+      "refs": {
+        "Bots$member": null
+      }
+    },
+    "BotId": {
+      "base": null,
+      "refs": {
+        "CreateBotResponse$botId": "<p>The unique identifier assigned to the newly created bot.</p>",
+        "DeleteBotRequest$botId": "<p>The unique identifier of the bot to be deleted.</p>",
+        "GetBotRequest$botId": "<p>The unique identifier of the bot to retrieve.</p>",
+        "UpdateBotRequest$botId": "<p>The unique identifier of the bot to update.</p>"
+      }
+    },
+    "BotStatus": {
+      "base": null,
+      "refs": {
+        "Bot$status": "<p>The current status of the bot (1 for pending, 2 for active).</p>",
+        "GetBotResponse$status": "<p>The current status of the bot (1 for pending, 2 for active).</p>",
+        "ListBotsRequest$status": "<p>Filter results to only include bots with this status (1 for pending, 2 for active).</p>"
+      }
+    },
+    "Bots": {
+      "base": null,
+      "refs": {
+        "ListBotsResponse$bots": "<p>A list of bot objects matching the specified filters and within the current page.</p>"
+      }
+    },
+    "CallingSettings": {
+      "base": "<p>Defines the calling feature permissions and settings for users in a security group, controlling what types of calls users can initiate and participate in.</p>",
+      "refs": {
+        "SecurityGroupSettings$calling": "<p>The calling feature permissions and settings that control what types of calls users can initiate and participate in.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": null,
+      "refs": {
+        "BatchCreateUserRequest$clientToken": "<p>A unique identifier for this request to ensure idempotency. If you retry a request with the same client token, the service will return the same response without creating duplicate users.</p>",
+        "BatchDeleteUserRequest$clientToken": "<p>A unique identifier for this request to ensure idempotency. If you retry a request with the same client token, the service will return the same response without attempting to delete users again.</p>",
+        "BatchLookupUserUnameRequest$clientToken": "<p>A unique identifier for this request to ensure idempotency.</p>",
+        "BatchReinviteUserRequest$clientToken": "<p>A unique identifier for this request to ensure idempotency.</p>",
+        "BatchResetDevicesForUserRequest$clientToken": "<p>A unique identifier for this request to ensure idempotency.</p>",
+        "BatchToggleUserSuspendStatusRequest$clientToken": "<p>A unique identifier for this request to ensure idempotency.</p>",
+        "CreateSecurityGroupRequest$clientToken": "<p>A unique identifier for this request to ensure idempotency.</p>",
+        "DeleteNetworkRequest$clientToken": "<p>A unique identifier for this request to ensure idempotency. If you retry a request with the same client token, the service will return the same response without attempting to delete the network again.</p>",
+        "UpdateNetworkRequest$clientToken": "<p>A unique identifier for this request to ensure idempotency.</p>"
+      }
+    },
+    "CreateBotRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateBotResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDataRetentionBotChallengeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDataRetentionBotChallengeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDataRetentionBotRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDataRetentionBotResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateNetworkRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateNetworkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSecurityGroupRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSecurityGroupResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DataRetentionActionType": {
+      "base": null,
+      "refs": {
+        "UpdateDataRetentionRequest$actionType": "<p>The action to perform. Valid values are 'ENABLE' (to enable the data retention service), 'DISABLE' (to disable the service), or 'PUBKEY_MSG_ACK' (to acknowledge the public key message).</p>"
+      }
+    },
+    "DeleteBotRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteBotResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDataRetentionBotRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDataRetentionBotResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteNetworkRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteNetworkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSecurityGroupRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteSecurityGroupResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Devices": {
+      "base": null,
+      "refs": {
+        "ListDevicesForUserResponse$devices": "<p>A list of device objects associated with the user within the current page.</p>"
+      }
+    },
+    "ErrorDetail": {
+      "base": "<p>Contains detailed error information explaining why an operation failed, including which field caused the error and the reason for the failure.</p>",
+      "refs": {
+        "ErrorDetailList$member": null
+      }
+    },
+    "ErrorDetailList": {
+      "base": null,
+      "refs": {
+        "ValidationError$reasons": "<p>A list of validation error details, where each item identifies a specific field that failed validation and explains the reason for the failure.</p>"
+      }
+    },
+    "ForbiddenError": {
+      "base": "<p>Access to the requested resource is forbidden. This error occurs when the authenticated user does not have the necessary permissions to perform the requested operation, even though they are authenticated.</p>",
+      "refs": {}
+    },
+    "GenericString": {
+      "base": null,
+      "refs": {
+        "AppIds$member": null,
+        "BadRequestError$message": "<p>A detailed message explaining what was wrong with the request and how to correct it.</p>",
+        "BasicDeviceObject$appId": "<p>The unique application ID for the Wickr app on this device.</p>",
+        "BasicDeviceObject$created": "<p>The timestamp when the device first appeared in the Wickr database.</p>",
+        "BasicDeviceObject$lastLogin": "<p>The timestamp when the device last successfully logged into Wickr. This is also used to determine SSO idle time.</p>",
+        "BasicDeviceObject$statusText": "<p>The current status of the device, either 'Active' or 'Reset' depending on whether the device is currently active or has been marked for reset.</p>",
+        "BasicDeviceObject$type": "<p>The operating system of the device (e.g., 'MacOSX', 'Windows', 'iOS', 'Android').</p>",
+        "BatchCreateUserRequestItem$username": "<p>The email address or username for the user. Must be unique within the network.</p>",
+        "BatchCreateUserRequestItem$inviteCode": "<p>A custom invite code for the user. If not provided, one will be generated automatically.</p>",
+        "BatchCreateUserResponse$message": "<p>A message indicating the overall result of the batch operation.</p>",
+        "BatchDeleteUserResponse$message": "<p>A message indicating the overall result of the batch deletion operation.</p>",
+        "BatchDeviceErrorResponseItem$field": "<p>The field that caused the error.</p>",
+        "BatchDeviceErrorResponseItem$reason": "<p>A description of why the device operation failed.</p>",
+        "BatchDeviceErrorResponseItem$appId": "<p>The application ID of the device that failed to be processed.</p>",
+        "BatchDeviceSuccessResponseItem$appId": "<p>The application ID of the device that was successfully processed.</p>",
+        "BatchLookupUserUnameResponse$message": "<p>A message indicating the overall result of the batch lookup operation.</p>",
+        "BatchReinviteUserResponse$message": "<p>A message indicating the overall result of the batch reinvitation operation.</p>",
+        "BatchResetDevicesForUserResponse$message": "<p>A message indicating the overall result of the batch device reset operation.</p>",
+        "BatchToggleUserSuspendStatusResponse$message": "<p>A message indicating the overall result of the batch suspend status toggle operation.</p>",
+        "BatchUnameErrorResponseItem$field": "<p>The field that caused the error.</p>",
+        "BatchUnameErrorResponseItem$reason": "<p>A description of why the username hash lookup failed.</p>",
+        "BatchUnameSuccessResponseItem$username": "<p>The email address or username corresponding to the username hash.</p>",
+        "BatchUserErrorResponseItem$field": "<p>The field that caused the error.</p>",
+        "BatchUserErrorResponseItem$reason": "<p>A description of why the user operation failed.</p>",
+        "BlockedGuestUser$username": "<p>The username of the blocked guest user.</p>",
+        "BlockedGuestUser$admin": "<p>The username of the administrator who blocked this guest user.</p>",
+        "BlockedGuestUser$modified": "<p>The timestamp when the guest user was blocked or last modified.</p>",
+        "BlockedGuestUser$usernameHash": "<p>The unique username hash identifier for the blocked guest user.</p>",
+        "Bot$botId": "<p>The unique identifier of the bot.</p>",
+        "Bot$displayName": "<p>The display name of the bot that is visible to users.</p>",
+        "Bot$username": "<p>The username of the bot.</p>",
+        "Bot$uname": "<p>The unique username hash identifier for the bot.</p>",
+        "Bot$pubkey": "<p>The public key of the bot used for encryption.</p>",
+        "Bot$groupId": "<p>The ID of the security group to which the bot belongs.</p>",
+        "Bot$lastLogin": "<p>The timestamp of the bot's last login.</p>",
+        "CreateBotRequest$username": "<p>The username for the bot. This must be unique within the network and follow the network's naming conventions.</p>",
+        "CreateBotRequest$displayName": "<p>The display name for the bot that will be visible to users in the network.</p>",
+        "CreateBotRequest$groupId": "<p>The ID of the security group to which the bot will be assigned.</p>",
+        "CreateBotResponse$message": "<p>A message indicating the result of the bot creation operation.</p>",
+        "CreateBotResponse$username": "<p>The username of the newly created bot.</p>",
+        "CreateBotResponse$displayName": "<p>The display name of the newly created bot.</p>",
+        "CreateBotResponse$groupId": "<p>The ID of the security group to which the bot was assigned.</p>",
+        "CreateDataRetentionBotResponse$message": "<p>A message indicating that the data retention bot was successfully provisioned.</p>",
+        "CreateNetworkRequest$networkName": "<p>The name for the new network. Must be between 1 and 20 characters.</p>",
+        "CreateNetworkRequest$encryptionKeyArn": "<p>The ARN of the Amazon Web Services KMS customer managed key to use for encrypting sensitive data in the network.</p>",
+        "CreateNetworkResponse$networkName": "<p>The name of the newly created network.</p>",
+        "CreateNetworkResponse$encryptionKeyArn": "<p>The ARN of the KMS key being used to encrypt sensitive data in the network.</p>",
+        "CreateSecurityGroupRequest$name": "<p>The name for the new security group.</p>",
+        "DeleteBotResponse$message": "<p>A message indicating the result of the bot deletion operation.</p>",
+        "DeleteDataRetentionBotResponse$message": "<p>A message indicating that the data retention bot and all associated data were successfully deleted.</p>",
+        "DeleteNetworkResponse$message": "<p>A message indicating that the network deletion has been initiated successfully.</p>",
+        "DeleteSecurityGroupRequest$groupId": "<p>The unique identifier of the security group to delete.</p>",
+        "DeleteSecurityGroupResponse$message": "<p>A message indicating the result of the security group deletion operation.</p>",
+        "DeleteSecurityGroupResponse$groupId": "<p>The ID of the security group that was deleted.</p>",
+        "ErrorDetail$field": "<p>The name of the field that contains an error or warning.</p>",
+        "ErrorDetail$reason": "<p>A detailed description of the error or warning.</p>",
+        "ForbiddenError$message": "<p>A message explaining why access was denied and what permissions are required.</p>",
+        "GetBotResponse$botId": "<p>The unique identifier of the bot.</p>",
+        "GetBotResponse$displayName": "<p>The display name of the bot that is visible to users.</p>",
+        "GetBotResponse$username": "<p>The username of the bot.</p>",
+        "GetBotResponse$uname": "<p>The unique username hash identifier for the bot.</p>",
+        "GetBotResponse$pubkey": "<p>The public key of the bot used for encryption.</p>",
+        "GetBotResponse$groupId": "<p>The ID of the security group to which the bot belongs.</p>",
+        "GetBotResponse$lastLogin": "<p>The timestamp of the bot's last login.</p>",
+        "GetDataRetentionBotResponse$botName": "<p>The name of the data retention bot.</p>",
+        "GetNetworkResponse$networkName": "<p>The name of the network.</p>",
+        "GetNetworkResponse$awsAccountId": "<p>The Amazon Web Services account ID that owns the network.</p>",
+        "GetNetworkResponse$networkArn": "<p>The Amazon Resource Name (ARN) of the network.</p>",
+        "GetNetworkResponse$freeTrialExpiration": "<p>The expiration date and time for the network's free trial period, if applicable.</p>",
+        "GetNetworkResponse$encryptionKeyArn": "<p>The ARN of the Amazon Web Services KMS customer managed key used for encrypting sensitive data in the network.</p>",
+        "GetOidcInfoRequest$clientId": "<p>The OAuth client ID for retrieving access tokens (optional).</p>",
+        "GetOidcInfoRequest$code": "<p>The authorization code for retrieving access tokens (optional).</p>",
+        "GetOidcInfoRequest$grantType": "<p>The OAuth grant type for retrieving access tokens (optional).</p>",
+        "GetOidcInfoRequest$redirectUri": "<p>The redirect URI for the OAuth flow (optional).</p>",
+        "GetOidcInfoRequest$url": "<p>The URL for the OIDC provider (optional).</p>",
+        "GetOidcInfoRequest$codeVerifier": "<p>The PKCE code verifier for enhanced security in the OAuth flow (optional).</p>",
+        "GetOidcInfoRequest$certificate": "<p>The CA certificate for secure communication with the OIDC provider (optional).</p>",
+        "GetSecurityGroupRequest$groupId": "<p>The unique identifier of the security group to retrieve.</p>",
+        "GetUserResponse$username": "<p>The email address or username of the user.</p>",
+        "GuestUser$billingPeriod": "<p>The billing period when this guest user accessed the network (e.g., '2024-01').</p>",
+        "GuestUser$username": "<p>The username of the guest user.</p>",
+        "GuestUser$usernameHash": "<p>The unique username hash identifier for the guest user.</p>",
+        "GuestUserHistoryCount$month": "<p>The month and billing period in YYYY_MM format (e.g., '2024_01').</p>",
+        "GuestUserHistoryCount$count": "<p>The number of guest users who have communicated with your Wickr network during this billing period.</p>",
+        "InternalServerError$message": "<p>A message describing the internal server error that occurred.</p>",
+        "ListBlockedGuestUsersRequest$sortFields": "<p>The field to sort blocked guest users by. Accepted values include 'username', 'admin', and 'modified'.</p>",
+        "ListBlockedGuestUsersRequest$username": "<p>Filter results to only include blocked guest users with usernames matching this value.</p>",
+        "ListBlockedGuestUsersRequest$admin": "<p>Filter results to only include blocked guest users that were blocked by this administrator.</p>",
+        "ListBlockedGuestUsersRequest$nextToken": "<p>The token for retrieving the next page of results. This is returned from a previous request when there are more results available.</p>",
+        "ListBlockedGuestUsersResponse$nextToken": "<p>The token to use for retrieving the next page of results. If this is not present, there are no more results.</p>",
+        "ListBotsRequest$nextToken": "<p>The token for retrieving the next page of results. This is returned from a previous request when there are more results available.</p>",
+        "ListBotsRequest$sortFields": "<p>The fields to sort bots by. Multiple fields can be specified by separating them with '+'. Accepted values include 'username', 'firstName', 'displayName', 'status', and 'groupId'.</p>",
+        "ListBotsRequest$displayName": "<p>Filter results to only include bots with display names matching this value.</p>",
+        "ListBotsRequest$username": "<p>Filter results to only include bots with usernames matching this value.</p>",
+        "ListBotsRequest$groupId": "<p>Filter results to only include bots belonging to this security group.</p>",
+        "ListBotsResponse$nextToken": "<p>The token to use for retrieving the next page of results. If this is not present, there are no more results.</p>",
+        "ListDevicesForUserRequest$nextToken": "<p>The token for retrieving the next page of results. This is returned from a previous request when there are more results available.</p>",
+        "ListDevicesForUserRequest$sortFields": "<p>The fields to sort devices by. Multiple fields can be specified by separating them with '+'. Accepted values include 'lastlogin', 'type', 'suspend', and 'created'.</p>",
+        "ListDevicesForUserResponse$nextToken": "<p>The token to use for retrieving the next page of results. If this is not present, there are no more results.</p>",
+        "ListGuestUsersRequest$sortFields": "<p>The field to sort guest users by. Accepted values include 'username' and 'billingPeriod'.</p>",
+        "ListGuestUsersRequest$username": "<p>Filter results to only include guest users with usernames matching this value.</p>",
+        "ListGuestUsersRequest$billingPeriod": "<p>Filter results to only include guest users from this billing period (e.g., '2024-01').</p>",
+        "ListGuestUsersRequest$nextToken": "<p>The token for retrieving the next page of results. This is returned from a previous request when there are more results available.</p>",
+        "ListGuestUsersResponse$nextToken": "<p>The token to use for retrieving the next page of results. If this is not present, there are no more results.</p>",
+        "ListNetworksRequest$sortFields": "<p>The field to sort networks by. Accepted values are 'networkId' and 'networkName'. Default is 'networkId'.</p>",
+        "ListNetworksRequest$nextToken": "<p>The token for retrieving the next page of results. This is returned from a previous request when there are more results available.</p>",
+        "ListNetworksResponse$nextToken": "<p>The token to use for retrieving the next page of results. If this is not present, there are no more results.</p>",
+        "ListSecurityGroupUsersRequest$groupId": "<p>The unique identifier of the security group whose users will be listed.</p>",
+        "ListSecurityGroupUsersRequest$nextToken": "<p>The token for retrieving the next page of results. This is returned from a previous request when there are more results available.</p>",
+        "ListSecurityGroupUsersRequest$sortFields": "<p>The field to sort users by. Multiple fields can be specified by separating them with '+'. Accepted values include 'username', 'firstName', and 'lastName'.</p>",
+        "ListSecurityGroupUsersResponse$nextToken": "<p>The token to use for retrieving the next page of results. If this is not present, there are no more results.</p>",
+        "ListSecurityGroupsRequest$nextToken": "<p>The token for retrieving the next page of results. This is returned from a previous request when there are more results available.</p>",
+        "ListSecurityGroupsRequest$sortFields": "<p>The field to sort security groups by. Accepted values include 'id' and 'name'.</p>",
+        "ListSecurityGroupsResponse$nextToken": "<p>The token to use for retrieving the next page of results. If this is not present, there are no more results.</p>",
+        "ListUsersRequest$nextToken": "<p>The token for retrieving the next page of results. This is returned from a previous request when there are more results available.</p>",
+        "ListUsersRequest$sortFields": "<p>The fields to sort users by. Multiple fields can be specified by separating them with '+'. Accepted values include 'username', 'firstName', 'lastName', 'status', and 'groupId'.</p>",
+        "ListUsersRequest$username": "<p>Filter results to only include users with usernames matching this value.</p>",
+        "ListUsersRequest$groupId": "<p>Filter results to only include users belonging to this security group.</p>",
+        "ListUsersResponse$nextToken": "<p>The token to use for retrieving the next page of results. If this is not present, there are no more results.</p>",
+        "Network$networkName": "<p>The name of the network.</p>",
+        "Network$awsAccountId": "<p>The Amazon Web Services account ID that owns the network.</p>",
+        "Network$networkArn": "<p>The Amazon Resource Name (ARN) of the network.</p>",
+        "Network$freeTrialExpiration": "<p>The expiration date and time for the network's free trial period, if applicable.</p>",
+        "Network$encryptionKeyArn": "<p>The ARN of the Amazon Web Services KMS customer managed key used for encrypting sensitive data in the network.</p>",
+        "OidcConfigInfo$applicationName": "<p>The name of the OIDC application as registered with the identity provider.</p>",
+        "OidcConfigInfo$clientId": "<p>The OAuth client ID assigned by the identity provider for authentication requests.</p>",
+        "OidcConfigInfo$companyId": "<p>Custom identifier your end users will use to sign in with SSO.</p>",
+        "OidcConfigInfo$scopes": "<p>The OAuth scopes requested from the identity provider, which determine what user information is accessible (e.g., 'openid profile email').</p>",
+        "OidcConfigInfo$issuer": "<p>The issuer URL of the identity provider, which serves as the base URL for OIDC endpoints and configuration discovery.</p>",
+        "OidcConfigInfo$redirectUrl": "<p>The callback URL where the identity provider redirects users after successful authentication. This URL must be registered with the identity provider.</p>",
+        "OidcConfigInfo$userId": "<p>The claim field from the OIDC token to use as the unique user identifier (e.g., 'email', 'sub', or a custom claim).</p>",
+        "OidcConfigInfo$customUsername": "<p>A custom field mapping to extract the username from the OIDC token when the standard username claim is insufficient.</p>",
+        "OidcConfigInfo$caCertificate": "<p>The X.509 CA certificate for validating SSL/TLS connections to the identity provider when using self-signed or enterprise certificates.</p>",
+        "OidcConfigInfo$extraAuthParams": "<p>Additional authentication parameters to include in the OIDC authorization request as a query string. Useful for provider-specific extensions.</p>",
+        "OidcTokenInfo$codeVerifier": "<p>The PKCE (Proof Key for Code Exchange) code verifier, a cryptographically random string used to enhance security in the OAuth flow.</p>",
+        "OidcTokenInfo$codeChallenge": "<p>The PKCE code challenge, a transformed version of the code verifier sent during the authorization request for verification.</p>",
+        "OidcTokenInfo$accessToken": "<p>The OAuth access token that can be used to access protected resources on behalf of the authenticated user.</p>",
+        "OidcTokenInfo$idToken": "<p>The OpenID Connect ID token containing user identity information and authentication context as a signed JWT.</p>",
+        "OidcTokenInfo$refreshToken": "<p>The OAuth refresh token that can be used to obtain new access tokens without requiring the user to re-authenticate.</p>",
+        "OidcTokenInfo$tokenType": "<p>The type of access token issued, typically 'Bearer', which indicates how the token should be used in API requests.</p>",
+        "PermittedWickrEnterpriseNetwork$domain": "<p>The domain identifier for the permitted Wickr enterprise network.</p>",
+        "RateLimitError$message": "<p>A message indicating that the rate limit was exceeded and suggesting when to retry.</p>",
+        "RegisterOidcConfigRequest$companyId": "<p>Custom identifier your end users will use to sign in with SSO.</p>",
+        "RegisterOidcConfigRequest$customUsername": "<p>A custom field mapping to extract the username from the OIDC token (optional). </p> <note> <p>The customUsername is only required if you use something other than email as the username field.</p> </note>",
+        "RegisterOidcConfigRequest$extraAuthParams": "<p>Additional authentication parameters to include in the OIDC flow (optional).</p>",
+        "RegisterOidcConfigRequest$issuer": "<p>The issuer URL of the OIDC provider (e.g., 'https://login.example.com').</p>",
+        "RegisterOidcConfigRequest$scopes": "<p>The OAuth scopes to request from the OIDC provider (e.g., 'openid profile email').</p>",
+        "RegisterOidcConfigRequest$userId": "<p>Unique identifier provided by your identity provider to authenticate the access request. Also referred to as clientID.</p>",
+        "RegisterOidcConfigResponse$applicationName": "<p>The name of the registered OIDC application.</p>",
+        "RegisterOidcConfigResponse$clientId": "<p>The OAuth client ID assigned to the application.</p>",
+        "RegisterOidcConfigResponse$companyId": "<p>Custom identifier your end users will use to sign in with SSO.</p>",
+        "RegisterOidcConfigResponse$scopes": "<p>The OAuth scopes configured for the application.</p>",
+        "RegisterOidcConfigResponse$issuer": "<p>The issuer URL of the OIDC provider.</p>",
+        "RegisterOidcConfigResponse$redirectUrl": "<p>The redirect URL configured for the OAuth flow.</p>",
+        "RegisterOidcConfigResponse$userId": "<p>The claim field being used as the user identifier.</p>",
+        "RegisterOidcConfigResponse$customUsername": "<p>The custom field mapping used for extracting the username.</p>",
+        "RegisterOidcConfigResponse$caCertificate": "<p>The CA certificate used for secure communication with the OIDC provider.</p>",
+        "RegisterOidcConfigResponse$extraAuthParams": "<p>The additional authentication parameters configured for the OIDC flow.</p>",
+        "RegisterOidcConfigTestRequest$extraAuthParams": "<p>Additional authentication parameters to include in the test (optional).</p>",
+        "RegisterOidcConfigTestRequest$issuer": "<p>The issuer URL of the OIDC provider to test.</p>",
+        "RegisterOidcConfigTestRequest$scopes": "<p>The OAuth scopes to test with the OIDC provider.</p>",
+        "RegisterOidcConfigTestRequest$certificate": "<p>The CA certificate for secure communication with the OIDC provider (optional).</p>",
+        "RegisterOidcConfigTestResponse$tokenEndpoint": "<p>The token endpoint URL discovered from the OIDC provider.</p>",
+        "RegisterOidcConfigTestResponse$userinfoEndpoint": "<p>The user info endpoint URL discovered from the OIDC provider.</p>",
+        "RegisterOidcConfigTestResponse$issuer": "<p>The issuer URL confirmed by the OIDC provider.</p>",
+        "RegisterOidcConfigTestResponse$authorizationEndpoint": "<p>The authorization endpoint URL discovered from the OIDC provider.</p>",
+        "RegisterOidcConfigTestResponse$endSessionEndpoint": "<p>The end session endpoint URL for logging out users from the OIDC provider.</p>",
+        "RegisterOidcConfigTestResponse$logoutEndpoint": "<p>The logout endpoint URL for terminating user sessions.</p>",
+        "RegisterOidcConfigTestResponse$revocationEndpoint": "<p>The token revocation endpoint URL for invalidating tokens.</p>",
+        "ResourceNotFoundError$message": "<p>A message identifying which resource was not found.</p>",
+        "SecurityGroup$activeDirectoryGuid": "<p>The GUID of the Active Directory group associated with this security group, if synchronized with LDAP.</p>",
+        "SecurityGroup$id": "<p>The unique identifier of the security group.</p>",
+        "SecurityGroup$name": "<p>The human-readable name of the security group.</p>",
+        "SecurityGroupStringList$member": null,
+        "Setting$optionName": "<p>The name of the network setting (e.g., 'enableClientMetrics', 'dataRetention').</p>",
+        "Setting$value": "<p>The current value of the setting as a string. Boolean values are represented as 'true' or 'false'.</p>",
+        "Setting$type": "<p>The data type of the setting value (e.g., 'boolean', 'string', 'number').</p>",
+        "StringList$member": null,
+        "Unames$member": null,
+        "UnauthorizedError$message": "<p>A message explaining why the authentication failed.</p>",
+        "UpdateBotRequest$displayName": "<p>The new display name for the bot.</p>",
+        "UpdateBotRequest$groupId": "<p>The ID of the new security group to assign the bot to.</p>",
+        "UpdateBotResponse$message": "<p>A message indicating the result of the bot update operation.</p>",
+        "UpdateDataRetentionResponse$message": "<p>A message indicating the result of the update operation.</p>",
+        "UpdateGuestUserRequest$usernameHash": "<p>The username hash (unique identifier) of the guest user to update.</p>",
+        "UpdateGuestUserResponse$message": "<p>A message indicating the result of the update operation.</p>",
+        "UpdateNetworkRequest$networkName": "<p>The new name for the network. Must be between 1 and 20 characters.</p>",
+        "UpdateNetworkRequest$encryptionKeyArn": "<p>The ARN of the Amazon Web Services KMS customer managed key to use for encrypting sensitive data in the network.</p>",
+        "UpdateNetworkResponse$message": "<p>A message indicating that the network was updated successfully.</p>",
+        "UpdateSecurityGroupRequest$groupId": "<p>The unique identifier of the security group to update.</p>",
+        "UpdateSecurityGroupRequest$name": "<p>The new name for the security group.</p>",
+        "UpdateUserDetails$username": "<p>The new username or email address for the user.</p>",
+        "UpdateUserDetails$inviteCode": "<p>A new custom invite code for the user.</p>",
+        "UpdateUserResponse$middleName": "<p>The middle name of the user (currently not used).</p>",
+        "UpdateUserResponse$inviteCode": "<p>The updated invite code for the user, if applicable.</p>",
+        "User$username": "<p>The email address or username of the user. For bots, this must end in 'bot'.</p>",
+        "User$scimId": "<p>The SCIM (System for Cross-domain Identity Management) identifier for the user, used for identity synchronization. Currently not used.</p>",
+        "User$type": "<p>The descriptive type of the user account (e.g., 'user').</p>",
+        "User$cell": "<p>The phone number minus country code, used for cloud deployments.</p>",
+        "User$countryCode": "<p>The country code for the user's phone number, used for cloud deployments.</p>",
+        "User$inviteCode": "<p>The invitation code for this user, used during registration to join the network.</p>",
+        "User$uname": "<p>The unique identifier for the user.</p>",
+        "WickrAwsNetworks$region": "<p>The Amazon Web Services region identifier where the network is hosted (e.g., 'us-east-1').</p>"
+      }
+    },
+    "GetBotRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBotResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBotsCountRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBotsCountResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDataRetentionBotRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDataRetentionBotResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetGuestUserHistoryCountRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetGuestUserHistoryCountResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetNetworkRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetNetworkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetNetworkSettingsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetNetworkSettingsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOidcInfoRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOidcInfoResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSecurityGroupRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetSecurityGroupResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetUserRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetUserResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetUsersCountRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetUsersCountResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GuestUser": {
+      "base": "<p>Represents a guest user who has accessed the network from a federated Wickr network.</p>",
+      "refs": {
+        "GuestUserList$member": null
+      }
+    },
+    "GuestUserHistoryCount": {
+      "base": "<p>Contains the count of guest users for a specific billing period, used for tracking historical guest user activity.</p>",
+      "refs": {
+        "GuestUserHistoryCountList$member": null
+      }
+    },
+    "GuestUserHistoryCountList": {
+      "base": null,
+      "refs": {
+        "GetGuestUserHistoryCountResponse$history": "<p>A list of historical guest user counts, organized by month and billing period.</p>"
+      }
+    },
+    "GuestUserList": {
+      "base": null,
+      "refs": {
+        "ListGuestUsersResponse$guestlist": "<p>A list of guest user objects within the current page.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "BatchCreateUserRequestItem$inviteCodeTtl": "<p>The time-to-live for the invite code in days. After this period, the invite code will expire.</p>",
+        "GetBotsCountResponse$pending": "<p>The number of bots with pending status (invited but not yet activated).</p>",
+        "GetBotsCountResponse$active": "<p>The number of bots with active status.</p>",
+        "GetBotsCountResponse$total": "<p>The total number of bots in the network (active and pending).</p>",
+        "GetNetworkResponse$standing": "<p>The current standing or status of the network.</p>",
+        "GetNetworkResponse$migrationState": "<p>The SSO redirect URI migration state, managed by the SSO redirect migration wizard. Values: 0 (not started), 1 (in progress), or 2 (completed).</p>",
+        "GetUserResponse$status": "<p>The current status of the user (1 for pending, 2 for active).</p>",
+        "GetUserResponse$lastActivity": "<p>The timestamp of the user's last activity in the network, specified in epoch seconds.</p>",
+        "GetUserResponse$lastLogin": "<p>The timestamp of the user's last login to the network, specified in epoch seconds.</p>",
+        "GetUsersCountResponse$pending": "<p>The number of users with pending status (invited but not yet accepted).</p>",
+        "GetUsersCountResponse$active": "<p>The number of users with active status in the network.</p>",
+        "GetUsersCountResponse$rejected": "<p>The number of users who have rejected network invitations.</p>",
+        "GetUsersCountResponse$remaining": "<p>The number of additional users that can be added to the network while maintaining premium free trial eligibility.</p>",
+        "GetUsersCountResponse$total": "<p>The total number of users in the network (active and pending combined).</p>",
+        "ListBlockedGuestUsersRequest$maxResults": "<p>The maximum number of blocked guest users to return in a single page. Valid range is 1-100. Default is 10.</p>",
+        "ListBotsRequest$maxResults": "<p>The maximum number of bots to return in a single page. Valid range is 1-100. Default is 10.</p>",
+        "ListDevicesForUserRequest$maxResults": "<p>The maximum number of devices to return in a single page. Valid range is 1-100. Default is 10.</p>",
+        "ListGuestUsersRequest$maxResults": "<p>The maximum number of guest users to return in a single page. Valid range is 1-100. Default is 10.</p>",
+        "ListNetworksRequest$maxResults": "<p>The maximum number of networks to return in a single page. Valid range is 1-100. Default is 10.</p>",
+        "ListSecurityGroupUsersRequest$maxResults": "<p>The maximum number of users to return in a single page. Valid range is 1-100. Default is 10.</p>",
+        "ListSecurityGroupsRequest$maxResults": "<p>The maximum number of security groups to return in a single page. Valid range is 1-100. Default is 10.</p>",
+        "ListUsersRequest$maxResults": "<p>The maximum number of users to return in a single page. Valid range is 1-100. Default is 10.</p>",
+        "Network$standing": "<p>The current standing or status of the network.</p>",
+        "Network$migrationState": "<p>The SSO redirect URI migration state, managed by the SSO redirect migration wizard. Values: 0 (not started), 1 (in progress), or 2 (completed).</p>",
+        "OidcConfigInfo$ssoTokenBufferMinutes": "<p>The grace period in minutes before the SSO token expires when the system should proactively refresh the token to maintain seamless user access.</p>",
+        "PasswordRequirements$lowercase": "<p>The minimum number of lowercase letters required in passwords.</p>",
+        "PasswordRequirements$minLength": "<p>The minimum password length in characters.</p>",
+        "PasswordRequirements$numbers": "<p>The minimum number of numeric characters required in passwords.</p>",
+        "PasswordRequirements$symbols": "<p>The minimum number of special symbol characters required in passwords.</p>",
+        "PasswordRequirements$uppercase": "<p>The minimum number of uppercase letters required in passwords.</p>",
+        "RegisterOidcConfigRequest$ssoTokenBufferMinutes": "<p>The buffer time in minutes before the SSO token expires to refresh it (optional).</p>",
+        "RegisterOidcConfigResponse$ssoTokenBufferMinutes": "<p>The buffer time in minutes before the SSO token expires.</p>",
+        "SecurityGroup$activeMembers": "<p>The number of active user members currently in the security group.</p>",
+        "SecurityGroup$botMembers": "<p>The number of bot members currently in the security group.</p>",
+        "SecurityGroup$modified": "<p>The timestamp when the security group was last modified, specified in epoch seconds.</p>",
+        "SecurityGroupSettings$forceDeviceLockout": "<p> Defines the number of failed login attempts before data stored on the device is reset. Should be less than lockoutThreshold.</p>",
+        "SecurityGroupSettings$maxBor": "<p>The maximum burn-on-read (BOR) time in seconds, which determines how long messages remain visible before auto-deletion after being read.</p>",
+        "SecurityGroupSettings$ssoMaxIdleMinutes": "<p>The duration for which users SSO session remains inactive before automatically logging them out for security. Available in SSO enabled network.</p>",
+        "SecurityGroupSettings$federationMode": "<p>The local federation mode controlling how users can communicate with other networks. Values: 0 (none), 1 (federated), 2 (restricted).</p>",
+        "SecurityGroupSettings$lockoutThreshold": "<p>The number of failed password attempts before a user account is locked out.</p>",
+        "SecurityGroupSettingsRequest$lockoutThreshold": "<p>The number of failed password attempts before a user account is locked out.</p>",
+        "SecurityGroupSettingsRequest$federationMode": "<p>The local federation mode. Values: 0 (none), 1 (federated - all networks), 2 (restricted - only permitted networks).</p>",
+        "ShredderSettings$intensity": "<p>Prevents Wickr data from being recovered by overwriting deleted Wickr data. Valid Values: Must be one of [0, 20, 60, 100]</p>",
+        "UpdateUserDetails$inviteCodeTtl": "<p>The new time-to-live for the invite code in days.</p>",
+        "UpdateUserResponse$modified": "<p>The timestamp when the user was last modified, specified in epoch seconds.</p>",
+        "UpdateUserResponse$status": "<p>The user's status after the update.</p>",
+        "UpdateUserResponse$inviteExpiration": "<p>The expiration time of the user's invite code, specified in epoch seconds.</p>",
+        "User$status": "<p>The current status of the user (1 for pending invitation, 2 for active).</p>",
+        "User$challengeFailures": "<p>The number of failed password attempts for enterprise deployments, used for account lockout policies.</p>"
+      }
+    },
+    "InternalServerError": {
+      "base": "<p>An unexpected error occurred on the server while processing the request. This indicates a problem with the Wickr service itself rather than with the request. If this error persists, contact Amazon Web Services Support.</p>",
+      "refs": {}
+    },
+    "ListBlockedGuestUsersRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBlockedGuestUsersResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBotsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBotsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDevicesForUserRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDevicesForUserResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGuestUsersRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGuestUsersResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworksRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListNetworksResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSecurityGroupUsersRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSecurityGroupUsersResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSecurityGroupsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSecurityGroupsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListUsersRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListUsersResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Long": {
+      "base": null,
+      "refs": {
+        "OidcTokenInfo$expiresIn": "<p>The lifetime of the access token in seconds, indicating when the token will expire and need to be refreshed.</p>",
+        "SecurityGroupSettings$maxAutoDownloadSize": "<p>The maximum file size in bytes that will be automatically downloaded without user confirmation. Only allowed if fileDownload is enabled. Valid Values [512000 (low_quality), 7340032 (high_quality) ]</p>",
+        "SecurityGroupSettings$maxTtl": "<p>The maximum time-to-live (TTL) in seconds for messages, after which they will be automatically deleted from all devices.</p>"
+      }
+    },
+    "Network": {
+      "base": "<p>Represents a Wickr network with all its configuration and status information.</p>",
+      "refs": {
+        "NetworkList$member": null
+      }
+    },
+    "NetworkId": {
+      "base": null,
+      "refs": {
+        "BatchCreateUserRequest$networkId": "<p>The ID of the Wickr network where users will be created.</p>",
+        "BatchDeleteUserRequest$networkId": "<p>The ID of the Wickr network from which users will be deleted.</p>",
+        "BatchLookupUserUnameRequest$networkId": "<p>The ID of the Wickr network where the users will be looked up.</p>",
+        "BatchReinviteUserRequest$networkId": "<p>The ID of the Wickr network where users will be reinvited.</p>",
+        "BatchResetDevicesForUserRequest$networkId": "<p>The ID of the Wickr network containing the user whose devices will be reset.</p>",
+        "BatchToggleUserSuspendStatusRequest$networkId": "<p>The ID of the Wickr network where users will be suspended or unsuspended.</p>",
+        "CreateBotRequest$networkId": "<p>The ID of the Wickr network where the bot will be created.</p>",
+        "CreateBotResponse$networkId": "<p>The ID of the network where the bot was created.</p>",
+        "CreateDataRetentionBotChallengeRequest$networkId": "<p>The ID of the Wickr network containing the data retention bot.</p>",
+        "CreateDataRetentionBotRequest$networkId": "<p>The ID of the Wickr network where the data retention bot will be created.</p>",
+        "CreateNetworkResponse$networkId": "<p>The unique identifier assigned to the newly created network.</p>",
+        "CreateSecurityGroupRequest$networkId": "<p>The ID of the Wickr network where the security group will be created.</p>",
+        "DeleteBotRequest$networkId": "<p>The ID of the Wickr network from which the bot will be deleted.</p>",
+        "DeleteDataRetentionBotRequest$networkId": "<p>The ID of the Wickr network from which the data retention bot will be deleted.</p>",
+        "DeleteNetworkRequest$networkId": "<p>The ID of the Wickr network to delete.</p>",
+        "DeleteSecurityGroupRequest$networkId": "<p>The ID of the Wickr network from which the security group will be deleted.</p>",
+        "DeleteSecurityGroupResponse$networkId": "<p>The ID of the network from which the security group was deleted.</p>",
+        "GetBotRequest$networkId": "<p>The ID of the Wickr network containing the bot.</p>",
+        "GetBotsCountRequest$networkId": "<p>The ID of the Wickr network for which to retrieve bot counts.</p>",
+        "GetDataRetentionBotRequest$networkId": "<p>The ID of the Wickr network containing the data retention bot.</p>",
+        "GetGuestUserHistoryCountRequest$networkId": "<p>The ID of the Wickr network for which to retrieve guest user history.</p>",
+        "GetNetworkRequest$networkId": "<p>The ID of the Wickr network to retrieve.</p>",
+        "GetNetworkResponse$networkId": "<p>The unique identifier of the network.</p>",
+        "GetNetworkSettingsRequest$networkId": "<p>The ID of the Wickr network whose settings will be retrieved.</p>",
+        "GetOidcInfoRequest$networkId": "<p>The ID of the Wickr network whose OIDC configuration will be retrieved.</p>",
+        "GetSecurityGroupRequest$networkId": "<p>The ID of the Wickr network containing the security group.</p>",
+        "GetUserRequest$networkId": "<p>The ID of the Wickr network containing the user.</p>",
+        "GetUsersCountRequest$networkId": "<p>The ID of the Wickr network for which to retrieve user counts.</p>",
+        "ListBlockedGuestUsersRequest$networkId": "<p>The ID of the Wickr network from which to list blocked guest users.</p>",
+        "ListBotsRequest$networkId": "<p>The ID of the Wickr network from which to list bots.</p>",
+        "ListDevicesForUserRequest$networkId": "<p>The ID of the Wickr network containing the user.</p>",
+        "ListGuestUsersRequest$networkId": "<p>The ID of the Wickr network from which to list guest users.</p>",
+        "ListSecurityGroupUsersRequest$networkId": "<p>The ID of the Wickr network containing the security group.</p>",
+        "ListSecurityGroupsRequest$networkId": "<p>The ID of the Wickr network from which to list security groups.</p>",
+        "ListUsersRequest$networkId": "<p>The ID of the Wickr network from which to list users.</p>",
+        "Network$networkId": "<p>The unique identifier of the network.</p>",
+        "PermittedNetworksList$member": null,
+        "PermittedWickrEnterpriseNetwork$networkId": "<p>The network ID of the permitted Wickr enterprise network.</p>",
+        "RegisterOidcConfigRequest$networkId": "<p>The ID of the Wickr network for which OIDC will be configured.</p>",
+        "RegisterOidcConfigTestRequest$networkId": "<p>The ID of the Wickr network for which the OIDC configuration will be tested.</p>",
+        "UpdateBotRequest$networkId": "<p>The ID of the Wickr network containing the bot to update.</p>",
+        "UpdateDataRetentionRequest$networkId": "<p>The ID of the Wickr network containing the data retention bot.</p>",
+        "UpdateGuestUserRequest$networkId": "<p>The ID of the Wickr network where the guest user's status will be updated.</p>",
+        "UpdateNetworkRequest$networkId": "<p>The ID of the Wickr network to update.</p>",
+        "UpdateNetworkSettingsRequest$networkId": "<p>The ID of the Wickr network whose settings will be updated.</p>",
+        "UpdateSecurityGroupRequest$networkId": "<p>The ID of the Wickr network containing the security group to update.</p>",
+        "UpdateUserRequest$networkId": "<p>The ID of the Wickr network containing the user to update.</p>",
+        "UpdateUserResponse$networkId": "<p>The ID of the network where the user was updated.</p>",
+        "WickrAwsNetworks$networkId": "<p>The network ID of the Wickr Amazon Web Services network.</p>"
+      }
+    },
+    "NetworkList": {
+      "base": null,
+      "refs": {
+        "ListNetworksResponse$networks": "<p>A list of network objects for the Amazon Web Services account.</p>"
+      }
+    },
+    "NetworkSettings": {
+      "base": "<p>Contains network-level configuration settings that apply to all users and security groups within a Wickr network.</p>",
+      "refs": {
+        "UpdateNetworkSettingsRequest$settings": "<p>A map of setting names to their new values. Each setting should be provided with its appropriate type (boolean, string, number, etc.).</p>"
+      }
+    },
+    "OidcConfigInfo": {
+      "base": "<p>Contains the OpenID Connect (OIDC) configuration information for Single Sign-On (SSO) authentication, including identity provider settings and client credentials.</p>",
+      "refs": {
+        "GetOidcInfoResponse$openidConnectInfo": "<p>The OpenID Connect configuration information for the network, including issuer, client ID, scopes, and other SSO settings.</p>"
+      }
+    },
+    "OidcConfigInfoApplicationIdInteger": {
+      "base": null,
+      "refs": {
+        "OidcConfigInfo$applicationId": "<p>The unique identifier for the registered OIDC application. Valid range is 1-10.</p>"
+      }
+    },
+    "OidcTokenInfo": {
+      "base": "<p>Contains OAuth token information returned from the identity provider, including access tokens, ID tokens, and PKCE parameters used for secure authentication.</p>",
+      "refs": {
+        "GetOidcInfoResponse$tokenInfo": "<p>OAuth token information including access token, refresh token, and expiration details (only present if token parameters were provided in the request).</p>"
+      }
+    },
+    "PasswordRequirements": {
+      "base": "<p>Defines password complexity requirements for users in a security group, including minimum length and character type requirements.</p>",
+      "refs": {
+        "SecurityGroupSettings$passwordRequirements": "<p>The password complexity requirements that users must follow when creating or changing passwords.</p>"
+      }
+    },
+    "PermittedNetworksList": {
+      "base": null,
+      "refs": {
+        "SecurityGroupSettings$permittedNetworks": "<p>A list of network IDs that are permitted for local federation when federation mode is set to restricted.</p>",
+        "SecurityGroupSettingsRequest$permittedNetworks": "<p>A list of network IDs that are permitted for local federation when federation mode is set to restricted.</p>"
+      }
+    },
+    "PermittedWickrEnterpriseNetwork": {
+      "base": "<p>Identifies a Wickr enterprise network that is permitted for global federation, allowing users to communicate with members of the specified network.</p>",
+      "refs": {
+        "PermittedWickrEnterpriseNetworksList$member": null
+      }
+    },
+    "PermittedWickrEnterpriseNetworksList": {
+      "base": null,
+      "refs": {
+        "SecurityGroupSettings$permittedWickrEnterpriseNetworks": "<p>A list of permitted Wickr Enterprise networks for global federation, restricting communication to specific approved networks.</p>",
+        "SecurityGroupSettingsRequest$permittedWickrEnterpriseNetworks": "<p>A list of permitted Wickr Enterprise networks for restricted global federation.</p>"
+      }
+    },
+    "RateLimitError": {
+      "base": "<p>The request was throttled because too many requests were sent in a short period of time. Wait a moment and retry the request. Consider implementing exponential backoff in your application.</p>",
+      "refs": {}
+    },
+    "ReadReceiptConfig": {
+      "base": "<p>Configuration for read receipts at the network level, controlling whether senders can see when their messages have been read.</p>",
+      "refs": {
+        "NetworkSettings$readReceiptConfig": "<p>Configuration for read receipts at the network level, controlling the default behavior for whether senders can see when their messages have been read.</p>"
+      }
+    },
+    "RegisterOidcConfigRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RegisterOidcConfigResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "RegisterOidcConfigResponseApplicationIdInteger": {
+      "base": null,
+      "refs": {
+        "RegisterOidcConfigResponse$applicationId": "<p>The unique identifier for the registered OIDC application.</p>"
+      }
+    },
+    "RegisterOidcConfigTestRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "RegisterOidcConfigTestResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ResourceNotFoundError": {
+      "base": "<p>The requested resource could not be found. This error occurs when you try to access or modify a network, user, bot, security group, or other resource that doesn't exist or has been deleted.</p>",
+      "refs": {}
+    },
+    "SecurityGroup": {
+      "base": "<p>Represents a security group in a Wickr network, containing membership statistics, configuration, and all permission settings that apply to its members.</p>",
+      "refs": {
+        "CreateSecurityGroupResponse$securityGroup": "<p>The details of the newly created security group, including its ID, name, and settings.</p>",
+        "GetSecurityGroupResponse$securityGroup": "<p>The detailed information about the security group, including all its settings and member counts.</p>",
+        "SecurityGroupList$member": null,
+        "UpdateSecurityGroupResponse$securityGroup": "<p>The updated security group details, including the new settings.</p>"
+      }
+    },
+    "SecurityGroupId": {
+      "base": null,
+      "refs": {
+        "SecurityGroupIdList$member": null
+      }
+    },
+    "SecurityGroupIdList": {
+      "base": null,
+      "refs": {
+        "BatchCreateUserRequestItem$securityGroupIds": "<p>A list of security group IDs to which the user should be assigned.</p>",
+        "GetUserResponse$securityGroupIds": "<p>A list of security group IDs to which the user belongs.</p>",
+        "UpdateUserDetails$securityGroupIds": "<p>The updated list of security group IDs to which the user should belong.</p>",
+        "UpdateUserResponse$securityGroupIds": "<p>The list of security group IDs to which the user now belongs after the update.</p>",
+        "User$securityGroups": "<p>A list of security group IDs to which the user is assigned, determining their permissions and feature access.</p>"
+      }
+    },
+    "SecurityGroupList": {
+      "base": null,
+      "refs": {
+        "ListSecurityGroupsResponse$securityGroups": "<p>A list of security group objects in the current page.</p>"
+      }
+    },
+    "SecurityGroupSettings": {
+      "base": "<p>Comprehensive configuration settings that define all user capabilities, restrictions, and features for members of a security group. These settings control everything from calling permissions to federation settings to security policies.</p>",
+      "refs": {
+        "SecurityGroup$securityGroupSettings": "<p>The comprehensive configuration settings that define capabilities and restrictions for members of this security group.</p>",
+        "UpdateSecurityGroupRequest$securityGroupSettings": "<p>The updated configuration settings for the security group.</p> <p>Federation mode - 0 (Local federation), 1 (Restricted federation), 2 (Global federation) </p>"
+      }
+    },
+    "SecurityGroupSettingsRequest": {
+      "base": "<p>Contains the security group configuration settings that can be specified when creating or updating a security group. This is a subset of SecurityGroupSettings containing only the modifiable federation and security settings.</p>",
+      "refs": {
+        "CreateSecurityGroupRequest$securityGroupSettings": "<p>The configuration settings for the security group, including permissions, federation settings, and feature controls.</p>"
+      }
+    },
+    "SecurityGroupStringList": {
+      "base": null,
+      "refs": {
+        "SecurityGroupSettings$atakPackageValues": "<p>Configuration values for ATAK (Android Team Awareness Kit) package integration, when ATAK is enabled.</p>",
+        "SecurityGroupSettings$quickResponses": "<p>A list of pre-defined quick response message templates that users can send with a single tap.</p>"
+      }
+    },
+    "SensitiveString": {
+      "base": null,
+      "refs": {
+        "BatchCreateUserRequestItem$firstName": "<p>The first name of the user.</p>",
+        "BatchCreateUserRequestItem$lastName": "<p>The last name of the user.</p>",
+        "CreateBotRequest$challenge": "<p>The password for the bot account.</p>",
+        "CreateDataRetentionBotChallengeResponse$challenge": "<p>The newly generated challenge password for the data retention bot.</p>",
+        "GetOidcInfoRequest$clientSecret": "<p>The OAuth client secret for retrieving access tokens (optional).</p>",
+        "GetUserResponse$firstName": "<p>The first name of the user.</p>",
+        "GetUserResponse$lastName": "<p>The last name of the user.</p>",
+        "ListUsersRequest$firstName": "<p>Filter results to only include users with first names matching this value.</p>",
+        "ListUsersRequest$lastName": "<p>Filter results to only include users with last names matching this value.</p>",
+        "OidcConfigInfo$clientSecret": "<p>The OAuth client secret used to authenticate the application with the identity provider.</p>",
+        "OidcConfigInfo$secret": "<p>An additional secret credential used by the identity provider for authentication.</p>",
+        "RegisterOidcConfigRequest$secret": "<p>The client secret for authenticating with the OIDC provider (optional).</p>",
+        "RegisterOidcConfigResponse$clientSecret": "<p>The OAuth client secret for the application.</p>",
+        "RegisterOidcConfigResponse$secret": "<p>The client secret for authenticating with the OIDC provider.</p>",
+        "UpdateBotRequest$challenge": "<p>The new password for the bot account.</p>",
+        "UpdateUserDetails$firstName": "<p>The new first name for the user.</p>",
+        "UpdateUserDetails$lastName": "<p>The new last name for the user.</p>",
+        "UpdateUserResponse$firstName": "<p>The updated first name of the user.</p>",
+        "UpdateUserResponse$lastName": "<p>The updated last name of the user.</p>",
+        "User$firstName": "<p>The first name of the user.</p>",
+        "User$lastName": "<p>The last name of the user.</p>"
+      }
+    },
+    "Setting": {
+      "base": "<p>Represents a single network-level configuration setting with its name, value, and data type. Settings control network-wide behaviors and features.</p>",
+      "refs": {
+        "SettingsList$member": null
+      }
+    },
+    "SettingsList": {
+      "base": null,
+      "refs": {
+        "GetNetworkSettingsResponse$settings": "<p>A list of network settings, where each setting includes a name, value, and type.</p>",
+        "UpdateNetworkSettingsResponse$settings": "<p>A list of the updated network settings, showing the new values for each modified setting.</p>"
+      }
+    },
+    "ShredderSettings": {
+      "base": "<p>Configuration for the message shredder feature, which securely deletes messages and files from devices to prevent data recovery.</p>",
+      "refs": {
+        "SecurityGroupSettings$shredder": "<p>The message shredder configuration that controls secure deletion of messages and files from devices.</p>"
+      }
+    },
+    "SortDirection": {
+      "base": null,
+      "refs": {
+        "ListBlockedGuestUsersRequest$sortDirection": "<p>The direction to sort results. Valid values are 'ASC' (ascending) or 'DESC' (descending). Default is 'DESC'.</p>",
+        "ListBotsRequest$sortDirection": "<p>The direction to sort results. Valid values are 'ASC' (ascending) or 'DESC' (descending). Default is 'DESC'.</p>",
+        "ListDevicesForUserRequest$sortDirection": "<p>The direction to sort results. Valid values are 'ASC' (ascending) or 'DESC' (descending). Default is 'DESC'.</p>",
+        "ListGuestUsersRequest$sortDirection": "<p>The direction to sort results. Valid values are 'ASC' (ascending) or 'DESC' (descending). Default is 'DESC'.</p>",
+        "ListNetworksRequest$sortDirection": "<p>The direction to sort results. Valid values are 'ASC' (ascending) or 'DESC' (descending). Default is 'DESC'.</p>",
+        "ListSecurityGroupUsersRequest$sortDirection": "<p>The direction to sort results. Valid values are 'ASC' (ascending) or 'DESC' (descending). Default is 'DESC'.</p>",
+        "ListSecurityGroupsRequest$sortDirection": "<p>The direction to sort results. Valid values are 'ASC' (ascending) or 'DESC' (descending). Default is 'DESC'.</p>",
+        "ListUsersRequest$sortDirection": "<p>The direction to sort results. Valid values are 'ASC' (ascending) or 'DESC' (descending). Default is 'DESC'.</p>"
+      }
+    },
+    "Status": {
+      "base": null,
+      "refs": {
+        "ReadReceiptConfig$status": "<p>The read receipt status mode for the network.</p>"
+      }
+    },
+    "StringList": {
+      "base": null,
+      "refs": {
+        "RegisterOidcConfigTestResponse$responseTypesSupported": "<p>The OAuth response types supported by the OIDC provider.</p>",
+        "RegisterOidcConfigTestResponse$scopesSupported": "<p>The OAuth scopes supported by the OIDC provider.</p>",
+        "RegisterOidcConfigTestResponse$grantTypesSupported": "<p>The OAuth grant types supported by the OIDC provider.</p>",
+        "RegisterOidcConfigTestResponse$tokenEndpointAuthMethodsSupported": "<p>The authentication methods supported by the token endpoint.</p>"
+      }
+    },
+    "SyntheticTimestamp_epoch_seconds": {
+      "base": null,
+      "refs": {
+        "GetUserRequest$startTime": "<p>The start time for filtering the user's last activity. Only activity after this timestamp will be considered. Time is specified in epoch seconds.</p>",
+        "GetUserRequest$endTime": "<p>The end time for filtering the user's last activity. Only activity before this timestamp will be considered. Time is specified in epoch seconds.</p>"
+      }
+    },
+    "Uname": {
+      "base": null,
+      "refs": {
+        "BatchUnameErrorResponseItem$uname": "<p>The username hash that failed to be looked up.</p>",
+        "BatchUnameSuccessResponseItem$uname": "<p>The username hash that was successfully resolved.</p>"
+      }
+    },
+    "Unames": {
+      "base": null,
+      "refs": {
+        "BatchLookupUserUnameRequest$unames": "<p>A list of username hashes (unames) to look up. Each uname is a unique identifier for a user's username. Maximum 50 unames per batch request.</p>"
+      }
+    },
+    "UnauthorizedError": {
+      "base": "<p>The request was not authenticated or the authentication credentials were invalid. This error occurs when the request lacks valid authentication credentials or the credentials have expired.</p>",
+      "refs": {}
+    },
+    "UpdateBotRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateBotResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDataRetentionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDataRetentionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateGuestUserRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateGuestUserResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateNetworkRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateNetworkResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateNetworkSettingsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateNetworkSettingsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSecurityGroupRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSecurityGroupResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateUserDetails": {
+      "base": "<p>Contains the modifiable details for updating an existing user, including name, password, security group membership, and invitation settings.</p> <note> <p>A user can only be assigned to a single security group. Attempting to add a user to multiple security groups is not supported and will result in an error.</p> </note>",
+      "refs": {
+        "UpdateUserRequest$userDetails": "<p>An object containing the user details to be updated, such as name, password, security groups, and invite code settings.</p>"
+      }
+    },
+    "UpdateUserRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateUserResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "User": {
+      "base": "<p>Represents a user account in a Wickr network with detailed profile information, status, security settings, and authentication details.</p> <note> <p>codeValidation, inviteCode and inviteCodeTtl are restricted to networks under preview only.</p> </note>",
+      "refs": {
+        "Users$member": null
+      }
+    },
+    "UserId": {
+      "base": null,
+      "refs": {
+        "BatchResetDevicesForUserRequest$userId": "<p>The ID of the user whose devices will be reset.</p>",
+        "BatchUserErrorResponseItem$userId": "<p>The user ID associated with the failed operation.</p>",
+        "BatchUserSuccessResponseItem$userId": "<p>The user ID that was successfully processed.</p>",
+        "GetUserRequest$userId": "<p>The unique identifier of the user to retrieve.</p>",
+        "GetUserResponse$userId": "<p>The unique identifier of the user.</p>",
+        "ListDevicesForUserRequest$userId": "<p>The unique identifier of the user whose devices will be listed.</p>",
+        "UpdateUserRequest$userId": "<p>The unique identifier of the user to update.</p>",
+        "UpdateUserResponse$userId": "<p>The unique identifier of the updated user.</p>",
+        "User$userId": "<p>The unique identifier for the user within the network.</p>",
+        "UserIds$member": null
+      }
+    },
+    "UserIds": {
+      "base": null,
+      "refs": {
+        "BatchDeleteUserRequest$userIds": "<p>A list of user IDs identifying the users to be deleted from the network. Maximum 50 users per batch request.</p>",
+        "BatchReinviteUserRequest$userIds": "<p>A list of user IDs identifying the users to be reinvited to the network. Maximum 50 users per batch request.</p>",
+        "BatchToggleUserSuspendStatusRequest$userIds": "<p>A list of user IDs identifying the users whose suspend status will be toggled. Maximum 50 users per batch request.</p>"
+      }
+    },
+    "UserStatus": {
+      "base": null,
+      "refs": {
+        "ListUsersRequest$status": "<p>Filter results to only include users with this status (1 for pending, 2 for active).</p>"
+      }
+    },
+    "Users": {
+      "base": null,
+      "refs": {
+        "BatchCreateUserResponse$successful": "<p>A list of user objects that were successfully created, including their assigned user IDs and invite codes.</p>",
+        "ListSecurityGroupUsersResponse$users": "<p>A list of user objects belonging to the security group within the current page.</p>",
+        "ListUsersResponse$users": "<p>A list of user objects matching the specified filters and within the current page.</p>"
+      }
+    },
+    "ValidationError": {
+      "base": "<p>One or more fields in the request failed validation. This error provides detailed information about which fields were invalid and why, allowing you to correct the request and retry.</p>",
+      "refs": {}
+    },
+    "WickrAwsNetworks": {
+      "base": "<p>Identifies a Amazon Web Services Wickr network by region and network ID, used for configuring permitted networks for global federation.</p>",
+      "refs": {
+        "WickrAwsNetworksList$member": null
+      }
+    },
+    "WickrAwsNetworksList": {
+      "base": null,
+      "refs": {
+        "SecurityGroupSettings$permittedWickrAwsNetworks": "<p>A list of permitted Wickr networks for global federation, restricting communication to specific approved networks.</p>",
+        "SecurityGroupSettingsRequest$permittedWickrAwsNetworks": "<p>A list of permitted Amazon Web Services Wickr networks for restricted global federation.</p>"
+      }
+    }
+  }
+}

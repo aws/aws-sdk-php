@@ -9321,6 +9321,7 @@
       "type":"structure",
       "members":{
         "Name":{"shape":"CurrentMetricName"},
+        "MetricId":{"shape":"CurrentMetricId"},
         "Unit":{"shape":"Unit"}
       }
     },
@@ -9337,6 +9338,10 @@
     "CurrentMetricDataCollections":{
       "type":"list",
       "member":{"shape":"CurrentMetricData"}
+    },
+    "CurrentMetricId":{
+      "type":"string",
+      "pattern":"^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})|(arn:[a-z0-9-]+:connect:[a-z0-9-]+:(?:([0-9]{12}):instance/[a-z0-9-]+/metric/[a-z0-9-]+(?::[a-z0-9-]+)?|aws:metric/[A-Z_]+))$"
     },
     "CurrentMetricName":{
       "type":"string",
@@ -11449,7 +11454,9 @@
         "Channel":{"shape":"Channel"},
         "RoutingProfile":{"shape":"RoutingProfileReference"},
         "RoutingStepExpression":{"shape":"RoutingExpression"},
-        "AgentStatus":{"shape":"AgentStatusIdentifier"}
+        "AgentStatus":{"shape":"AgentStatusIdentifier"},
+        "Subtype":{"shape":"Subtype"},
+        "ValidationTestType":{"shape":"ValidationTestType"}
       }
     },
     "DimensionsV2Key":{"type":"string"},
@@ -13439,7 +13446,9 @@
         "Channels":{"shape":"Channels"},
         "RoutingProfiles":{"shape":"RoutingProfiles"},
         "RoutingStepExpressions":{"shape":"RoutingExpressions"},
-        "AgentStatuses":{"shape":"AgentStatuses"}
+        "AgentStatuses":{"shape":"AgentStatuses"},
+        "Subtypes":{"shape":"Subtypes"},
+        "ValidationTestTypes":{"shape":"ValidationTestTypes"}
       }
     },
     "FiltersV2List":{
@@ -13954,7 +13963,9 @@
         "CHANNEL",
         "ROUTING_PROFILE",
         "ROUTING_STEP_EXPRESSION",
-        "AGENT_STATUS"
+        "AGENT_STATUS",
+        "SUBTYPE",
+        "VALIDATION_TEST_TYPE"
       ]
     },
     "GroupingV2":{"type":"string"},
@@ -21409,6 +21420,11 @@
       "max":100,
       "min":1
     },
+    "Subtypes":{
+      "type":"list",
+      "member":{"shape":"Subtype"},
+      "max":10
+    },
     "SuccessfulBatchAssociationSummary":{
       "type":"structure",
       "members":{
@@ -23870,6 +23886,12 @@
     "ValidationEnumValues":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "ValidationTestType":{"type":"string"},
+    "ValidationTestTypes":{
+      "type":"list",
+      "member":{"shape":"ValidationTestType"},
+      "max":10
     },
     "Value":{"type":"double"},
     "ValueBoundary":{

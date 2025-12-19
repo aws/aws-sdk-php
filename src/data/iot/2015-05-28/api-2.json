@@ -9745,14 +9745,21 @@
     },
     "GetV2LoggingOptionsRequest":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "verbose":{
+          "shape":"VerboseFlag",
+          "location":"querystring",
+          "locationName":"verbose"
+        }
+      }
     },
     "GetV2LoggingOptionsResponse":{
       "type":"structure",
       "members":{
         "roleArn":{"shape":"AwsArn"},
         "defaultLogLevel":{"shape":"LogLevel"},
-        "disableAllLogs":{"shape":"DisableAllLogs"}
+        "disableAllLogs":{"shape":"DisableAllLogs"},
+        "eventConfigurations":{"shape":"LogEventConfigurations"}
       }
     },
     "GroupNameAndArn":{
@@ -12422,6 +12429,30 @@
         "unit":{"shape":"String"}
       }
     },
+    "LogDestination":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"^[.\\-_/#A-Za-z0-9]+$"
+    },
+    "LogEventConfiguration":{
+      "type":"structure",
+      "required":["eventType"],
+      "members":{
+        "eventType":{"shape":"LogEventType"},
+        "logLevel":{"shape":"LogLevel"},
+        "logDestination":{"shape":"LogDestination"}
+      }
+    },
+    "LogEventConfigurations":{
+      "type":"list",
+      "member":{"shape":"LogEventConfiguration"}
+    },
+    "LogEventType":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
     "LogGroupName":{"type":"string"},
     "LogLevel":{
       "type":"string",
@@ -14130,7 +14161,8 @@
       "members":{
         "roleArn":{"shape":"AwsArn"},
         "defaultLogLevel":{"shape":"LogLevel"},
-        "disableAllLogs":{"shape":"DisableAllLogs"}
+        "disableAllLogs":{"shape":"DisableAllLogs"},
+        "eventConfigurations":{"shape":"LogEventConfigurations"}
       }
     },
     "ShadowName":{
@@ -15987,6 +16019,7 @@
       "pattern":"[\\s\\S]*"
     },
     "Variance":{"type":"double"},
+    "VerboseFlag":{"type":"boolean"},
     "VerificationState":{
       "type":"string",
       "enum":[

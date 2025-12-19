@@ -1229,7 +1229,7 @@
     "BatchConfig": {
       "base": "<p>Configuration settings for batching.</p>",
       "refs": {
-        "HttpAction$batchConfig": "<p>The configuration settings for batching. For more information, see <a href=\"/iot/latest/developerguide/http_batching.html\">Batching HTTP action messages</a>.</p>"
+        "HttpAction$batchConfig": "<p>The configuration settings for batching. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/http_batching.html\"> Batching HTTP action messages</a>.</p>"
       }
     },
     "BatchMode": {
@@ -5464,6 +5464,31 @@
         "LocationAction$timestamp": "<p>The time that the location data was sampled. The default value is the time the MQTT message was processed.</p>"
       }
     },
+    "LogDestination": {
+      "base": null,
+      "refs": {
+        "LogEventConfiguration$logDestination": "<p> CloudWatch Log Group for event-based logging. Specifies where log events should be sent. The log destination for event-based logging overrides default Log Group for the specified event type and applies to all resources associated with that event. </p>"
+      }
+    },
+    "LogEventConfiguration": {
+      "base": "<p> Configuration for event-based logging that specifies which event types to log and their logging settings. Used for account-level logging overrides. </p>",
+      "refs": {
+        "LogEventConfigurations$member": null
+      }
+    },
+    "LogEventConfigurations": {
+      "base": null,
+      "refs": {
+        "GetV2LoggingOptionsResponse$eventConfigurations": "<p> The list of event configurations that override account-level logging. </p>",
+        "SetV2LoggingOptionsRequest$eventConfigurations": "<p> The list of event configurations that override account-level logging. </p>"
+      }
+    },
+    "LogEventType": {
+      "base": null,
+      "refs": {
+        "LogEventConfiguration$eventType": "<p> The type of event to log. These include event types like Connect, Publish, and Disconnect. </p>"
+      }
+    },
     "LogGroupName": {
       "base": null,
       "refs": {
@@ -5476,6 +5501,7 @@
         "EnableIoTLoggingParams$logLevel": "<p>Specifies the type of information to be logged.</p>",
         "GetLoggingOptionsResponse$logLevel": "<p>The logging level.</p>",
         "GetV2LoggingOptionsResponse$defaultLogLevel": "<p>The default log level.</p>",
+        "LogEventConfiguration$logLevel": "<p> The logging level for the specified event type. Determines the verbosity of log messages generated for this event type. </p>",
         "LogTargetConfiguration$logLevel": "<p>The logging level.</p>",
         "LoggingOptionsPayload$logLevel": "<p>The log level.</p>",
         "SetV2LoggingLevelRequest$logLevel": "<p>The log level.</p>",
@@ -9486,6 +9512,12 @@
       "base": null,
       "refs": {
         "Statistics$variance": "<p>The variance of the aggregated field values.</p>"
+      }
+    },
+    "VerboseFlag": {
+      "base": null,
+      "refs": {
+        "GetV2LoggingOptionsRequest$verbose": "<p> The flag is used to get all the event types and their respective configuration that event-based logging supports. </p>"
       }
     },
     "VerificationState": {

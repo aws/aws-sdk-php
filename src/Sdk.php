@@ -802,6 +802,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionWafRegional(array $args = [])
  * @method \Aws\WellArchitected\WellArchitectedClient createWellArchitected(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionWellArchitected(array $args = [])
+ * @method \Aws\Wickr\WickrClient createWickr(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionWickr(array $args = [])
  * @method \Aws\WorkDocs\WorkDocsClient createWorkDocs(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionWorkDocs(array $args = [])
  * @method \Aws\WorkMail\WorkMailClient createWorkMail(array $args = [])

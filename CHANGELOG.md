@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EMRServerless` - Added JobLevelCostAllocationConfiguration field to enable cost allocation reporting at the job level, providing more granular visibility into EMR Serverless charges
+* `Aws\Connect` - Adding support for Custom Metrics and Pre-Defined Attributes to GetCurrentMetricData API.
+* `Aws\QBusiness` - It is a internal bug fix for region expansion
+* `Aws\IoT` - This release adds event-based logging feature that enables granular event logging controls for AWS IoT logs.
+* `Aws\WorkSpacesWeb` - Add support for WebAuthn under user settings.
+* `Aws\ARCRegionSwitch` - Automatic Plan Execution Reports allow customers to maintain a concise record of their Region switch Plan executions. This enables customer SREs and leadership to have a clear view of their recovery posture based on the generated reports for their Plan executions.
+* `Aws\Wickr` - AWS Wickr now provides a suite of admin APIs to allow you to programmatically manage secure communication for Wickr networks at scale. These APIs enable you to automate administrative workflows including user lifecycle management, network configuration, and security group administration.
+
 ## 3.368.2 - 2025-12-18
 
 * `Aws\SsmSap` - Added "Stopping" for the HANA Database Status.

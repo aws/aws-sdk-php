@@ -1,0 +1,1909 @@
+{
+  "version": "1.0",
+  "examples": {
+    "BatchCreateUser": [
+      {
+        "input": {
+          "clientToken": "550e8400-e29b-41d4-a716-446655440000",
+          "networkId": "12345678",
+          "users": [
+            {
+              "codeValidation": true,
+              "firstName": "John",
+              "inviteCode": "INVITE123",
+              "inviteCodeTtl": 7,
+              "lastName": "Doe",
+              "securityGroupIds": [
+                "BCTY8Qhe"
+              ],
+              "username": "john.doe@example.com"
+            },
+            {
+              "firstName": "Jane",
+              "lastName": "Smith",
+              "securityGroupIds": [
+                "BCTY8Qhe"
+              ],
+              "username": "jane.smith@example.com"
+            }
+          ]
+        },
+        "output": {
+          "failed": [],
+          "successful": [
+            {
+              "codeValidation": true,
+              "firstName": "John",
+              "inviteCode": "INVITE123",
+              "isInviteExpired": false,
+              "lastName": "Doe",
+              "status": 1,
+              "userId": "123",
+              "username": "john.doe@example.com"
+            },
+            {
+              "codeValidation": false,
+              "firstName": "Jane",
+              "inviteCode": "AUTOGEN456",
+              "isInviteExpired": false,
+              "lastName": "Smith",
+              "status": 1,
+              "userId": "456",
+              "username": "jane.smith@example.com"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Create multiple users"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "users": [
+            {
+              "firstName": "Alice",
+              "lastName": "Johnson",
+              "securityGroupIds": [
+                "BCTY8Qhe"
+              ],
+              "username": "alice.johnson@example.com"
+            },
+            {
+              "firstName": "Bob",
+              "lastName": "Wilson",
+              "securityGroupIds": [
+                "BCTY8Qhe"
+              ],
+              "username": "existing.user@example.com"
+            }
+          ]
+        },
+        "output": {
+          "failed": [
+            {
+              "field": "username",
+              "reason": "User already exists",
+              "userId": "0"
+            }
+          ],
+          "successful": [
+            {
+              "codeValidation": false,
+              "firstName": "Alice",
+              "inviteCode": "AUTOGEN789",
+              "isInviteExpired": false,
+              "lastName": "Johnson",
+              "status": 1,
+              "userId": "678",
+              "username": "alice.johnson@example.com"
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "Partial failure - duplicate user"
+      }
+    ],
+    "BatchDeleteUser": [
+      {
+        "input": {
+          "clientToken": "6ba7b814-9dad-11d1-80b4-00c04fd430c8",
+          "networkId": "12345678",
+          "userIds": [
+            "123",
+            "456"
+          ]
+        },
+        "output": {
+          "failed": [],
+          "message": "success",
+          "successful": [
+            {
+              "userId": "123"
+            },
+            {
+              "userId": "456"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Delete multiple users"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "userIds": [
+            "123",
+            "456"
+          ]
+        },
+        "output": {
+          "failed": [
+            {
+              "field": "username",
+              "reason": "User not found",
+              "userId": "456"
+            }
+          ],
+          "message": "partial success",
+          "successful": [
+            {
+              "userId": "123"
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "Partial failure - user not found"
+      }
+    ],
+    "BatchLookupUserUname": [
+      {
+        "input": {
+          "clientToken": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+          "networkId": "12345678",
+          "unames": [
+            "a1b2c3d4e5f6",
+            "g7h8i9j0k1l2"
+          ]
+        },
+        "output": {
+          "failed": [],
+          "message": "success",
+          "successful": [
+            {
+              "uname": "a1b2c3d4e5f6",
+              "username": "john.doe@example.com"
+            },
+            {
+              "uname": "g7h8i9j0k1l2",
+              "username": "john.doe2@example.com"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Lookup multiple user unames"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "unames": [
+            "a1b2c3d4e5f6",
+            "invaliduname"
+          ]
+        },
+        "output": {
+          "failed": [
+            {
+              "field": "uname",
+              "reason": "Uname not found",
+              "uname": "invaliduname"
+            }
+          ],
+          "message": "partial success",
+          "successful": [
+            {
+              "uname": "a1b2c3d4e5f6",
+              "username": "john.doe@example.com"
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "Partial failure - uname not found"
+      }
+    ],
+    "BatchReinviteUser": [
+      {
+        "input": {
+          "networkId": "12345678",
+          "userIds": [
+            "12345",
+            "67890"
+          ]
+        },
+        "output": {
+          "failed": [],
+          "successful": [
+            {
+              "userId": "12345"
+            },
+            {
+              "userId": "67890"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Batch reinvite users successfully"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "userIds": [
+            "12345",
+            "99999"
+          ]
+        },
+        "output": {
+          "failed": [
+            {
+              "reason": "user not found in current network",
+              "userId": "99999"
+            }
+          ],
+          "successful": [
+            {
+              "userId": "12345"
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "Batch reinvite users - partial success"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "userIds": [
+            "54321"
+          ]
+        },
+        "output": {
+          "failed": [
+            {
+              "reason": "user cannot be reinvited",
+              "userId": "54321"
+            }
+          ],
+          "successful": []
+        },
+        "id": "example-3",
+        "title": "Batch reinvite users - cannot reinvite"
+      }
+    ],
+    "BatchResetDevicesForUser": [
+      {
+        "input": {
+          "appIds": [
+            "d3135a42dcb6437780b16c3ca9581fe64e6822773cd6b965d25fc9929c89aca6",
+            "e4246b53edc7548891c27d4da0692fe75f7933884de7c076e36gca030d90bdb7"
+          ],
+          "networkId": "12345678",
+          "userId": "12345"
+        },
+        "output": {
+          "failed": [],
+          "message": "success",
+          "successful": [
+            {
+              "appId": "d3135a42dcb6437780b16c3ca9581fe64e6822773cd6b965d25fc9929c89aca6"
+            },
+            {
+              "appId": "e4246b53edc7548891c27d4da0692fe75f7933884de7c076e36gca030d90bdb7"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Successful device reset"
+      },
+      {
+        "input": {
+          "appIds": [
+            "d3135a42dcb6437780b16c3ca9581fe64e6822773cd6b965d25fc9929c89aca6",
+            "invalid-app-id"
+          ],
+          "networkId": "12345678",
+          "userId": "12345"
+        },
+        "output": {
+          "failed": [
+            {
+              "appId": "invalid-app-id",
+              "field": "appId",
+              "reason": "Invalid app ID."
+            }
+          ],
+          "message": "partial success",
+          "successful": [
+            {
+              "appId": "d3135a42dcb6437780b16c3ca9581fe64e6822773cd6b965d25fc9929c89aca6"
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "Partial failure device reset"
+      },
+      {
+        "input": {
+          "appIds": [
+            "d3135a42dcb6437780b16c3ca9581fe64e6822773cd6b965d25fc9929c89aca6"
+          ],
+          "networkId": "00000000",
+          "userId": "12345"
+        },
+        "id": "example-3",
+        "title": "Invalid network ID error"
+      }
+    ],
+    "BatchToggleUserSuspendStatus": [
+      {
+        "input": {
+          "clientToken": "6ba7b815-9dad-11d1-80b4-00c04fd430c8",
+          "networkId": "12345678",
+          "suspend": true,
+          "userIds": [
+            "123",
+            "456"
+          ]
+        },
+        "output": {
+          "failed": [],
+          "message": "success",
+          "successful": [
+            {
+              "userId": "123"
+            },
+            {
+              "userId": "456"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Suspend multiple users"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "suspend": false,
+          "userIds": [
+            "123",
+            "456"
+          ]
+        },
+        "output": {
+          "failed": [
+            {
+              "field": "username",
+              "reason": "User not found",
+              "userId": "456"
+            }
+          ],
+          "message": "partial success",
+          "successful": [
+            {
+              "userId": "123"
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "Unsuspend users with partial failure"
+      }
+    ],
+    "CreateBot": [
+      {
+        "input": {
+          "challenge": "SecureP@ssw0rd123",
+          "displayName": "Analytics Bot",
+          "groupId": "analytics_group",
+          "networkId": "12345678",
+          "username": "analytics_bot"
+        },
+        "output": {
+          "botId": "98766",
+          "displayName": "Analytics Bot",
+          "groupId": "analytics_group",
+          "networkId": "12345678",
+          "username": "analytics_bot"
+        },
+        "id": "example-1",
+        "title": "Create bot successfully"
+      },
+      {
+        "input": {
+          "challenge": "SecureP@ssw0rd123",
+          "displayName": "Support Bot",
+          "groupId": "default_group",
+          "networkId": "12345678",
+          "username": "support_bot"
+        },
+        "id": "example-2",
+        "title": "Create bot - username unavailable"
+      },
+      {
+        "input": {
+          "challenge": "SecureP@ssw0rd123",
+          "displayName": "Test Bot",
+          "groupId": "default_group",
+          "networkId": "12345678",
+          "username": "bot@invalid"
+        },
+        "id": "example-3",
+        "title": "Create bot - invalid username format"
+      }
+    ],
+    "CreateDataRetentionBot": [
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "message": "successfully provisioned data retention bot"
+        },
+        "id": "example-1",
+        "title": "Create data retention bot successfully"
+      },
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "id": "example-2",
+        "title": "Create data retention bot - users already exist"
+      }
+    ],
+    "CreateDataRetentionBotChallenge": [
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "challenge": "a1b2c3d4e5f6"
+        },
+        "id": "example-1",
+        "title": "Create data retention bot challenge successfully"
+      }
+    ],
+    "CreateNetwork": [
+      {
+        "input": {
+          "accessLevel": "PREMIUM",
+          "enablePremiumFreeTrial": false,
+          "networkName": "Production Network"
+        },
+        "output": {
+          "networkId": "12345678",
+          "networkName": "Production Network"
+        },
+        "id": "example-1",
+        "title": "Create network successfully"
+      },
+      {
+        "input": {
+          "accessLevel": "PREMIUM",
+          "enablePremiumFreeTrial": true,
+          "networkName": "Trial Network"
+        },
+        "output": {
+          "networkId": "87654321",
+          "networkName": "Trial Network"
+        },
+        "id": "example-2",
+        "title": "Create network with free trial"
+      },
+      {
+        "input": {
+          "accessLevel": "STANDARD",
+          "networkName": "This network name is way too long"
+        },
+        "id": "example-3",
+        "title": "Create network - invalid name"
+      }
+    ],
+    "CreateSecurityGroup": [
+      {
+        "input": {
+          "name": "engineering",
+          "networkId": "12345678",
+          "securityGroupSettings": {
+            "federationMode": 1,
+            "lockoutThreshold": 10
+          }
+        },
+        "output": {
+          "securityGroup": {
+            "name": "engineering",
+            "activeMembers": 0,
+            "botMembers": 0,
+            "id": "def67890",
+            "isDefault": false,
+            "modified": 1638360000,
+            "securityGroupSettings": {
+              "federationMode": 1,
+              "lockoutThreshold": 10
+            }
+          }
+        },
+        "id": "example-1",
+        "title": "Create security group successfully"
+      },
+      {
+        "input": {
+          "name": "",
+          "networkId": "12345678",
+          "securityGroupSettings": {
+            "federationMode": 1
+          }
+        },
+        "id": "example-2",
+        "title": "Create security group - missing name"
+      }
+    ],
+    "DeleteBot": [
+      {
+        "input": {
+          "botId": "98765",
+          "networkId": "12345678"
+        },
+        "output": {
+          "message": "success"
+        },
+        "id": "example-1",
+        "title": "Delete bot successfully"
+      },
+      {
+        "input": {
+          "botId": "99999",
+          "networkId": "12345678"
+        },
+        "id": "example-2",
+        "title": "Delete bot - bot not found"
+      }
+    ],
+    "DeleteDataRetentionBot": [
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "message": "deleted data retention bot and all associated data from the database"
+        },
+        "id": "example-1",
+        "title": "Delete data retention bot successfully"
+      }
+    ],
+    "DeleteNetwork": [
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "message": "Network deletion initiated successfully"
+        },
+        "id": "example-1",
+        "title": "Delete network successfully"
+      },
+      {
+        "input": {
+          "networkId": "99999999"
+        },
+        "id": "example-2",
+        "title": "Delete network - not found"
+      }
+    ],
+    "DeleteSecurityGroup": [
+      {
+        "input": {
+          "groupId": "def67890",
+          "networkId": "12345678"
+        },
+        "output": {
+          "groupId": "def67890",
+          "message": "success",
+          "networkId": "12345678"
+        },
+        "id": "example-1",
+        "title": "Delete security group successfully"
+      },
+      {
+        "input": {
+          "groupId": "invalid99",
+          "networkId": "12345678"
+        },
+        "id": "example-2",
+        "title": "Delete security group - not found"
+      }
+    ],
+    "GetBot": [
+      {
+        "input": {
+          "botId": "98765",
+          "networkId": "12345678"
+        },
+        "output": {
+          "botId": "98765",
+          "displayName": "Support Bot",
+          "groupId": "default_group",
+          "hasChallenge": true,
+          "lastLogin": "1704067200",
+          "pubkey": "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF4",
+          "status": 2,
+          "suspended": false,
+          "uname": "abc123def456",
+          "username": "support_bot"
+        },
+        "id": "example-1",
+        "title": "Get bot successfully"
+      },
+      {
+        "input": {
+          "botId": "99999",
+          "networkId": "12345678"
+        },
+        "id": "example-2",
+        "title": "Get bot - bot not found"
+      }
+    ],
+    "GetBotsCount": [
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "active": 12,
+          "pending": 2,
+          "total": 15
+        },
+        "id": "example-1",
+        "title": "Get bots count successfully"
+      },
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "active": 12,
+          "pending": 0,
+          "total": 12
+        },
+        "id": "example-2",
+        "title": "Get bots count with filters"
+      }
+    ],
+    "GetDataRetentionBot": [
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "botExists": true,
+          "botName": "compliance_12345678_bot",
+          "isBotActive": true,
+          "isDataRetentionBotRegistered": true,
+          "isDataRetentionServiceEnabled": true,
+          "isPubkeyMsgAcked": false
+        },
+        "id": "example-1",
+        "title": "Get data retention bot successfully"
+      },
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "botExists": false,
+          "botName": "compliance_12345678_bot",
+          "isBotActive": false,
+          "isDataRetentionBotRegistered": false,
+          "isDataRetentionServiceEnabled": false,
+          "isPubkeyMsgAcked": false
+        },
+        "id": "example-2",
+        "title": "Get data retention bot - not provisioned"
+      }
+    ],
+    "GetGuestUserHistoryCount": [
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "history": [
+            {
+              "count": "32",
+              "month": "2024_01"
+            },
+            {
+              "count": "28",
+              "month": "2023_12"
+            },
+            {
+              "count": "35",
+              "month": "2023_11"
+            },
+            {
+              "count": "22",
+              "month": "2023_10"
+            },
+            {
+              "count": "18",
+              "month": "2023_09"
+            },
+            {
+              "count": "15",
+              "month": "2023_08"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Get guest user history count"
+      },
+      {
+        "input": {
+          "networkId": "87654321"
+        },
+        "output": {
+          "history": []
+        },
+        "id": "example-2",
+        "title": "Empty response for network with no guest user history"
+      }
+    ],
+    "GetNetwork": [
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "accessLevel": "PREMIUM",
+          "awsAccountId": "123456789012",
+          "migrationState": 0,
+          "networkArn": "arn:aws:wickr:us-east-1:123456789012:network/12345678",
+          "networkId": "12345678",
+          "networkName": "Production Network",
+          "standing": 1
+        },
+        "id": "example-1",
+        "title": "Get network successfully"
+      },
+      {
+        "input": {
+          "networkId": "99999999"
+        },
+        "id": "example-2",
+        "title": "Get network - not found"
+      }
+    ],
+    "GetNetworkSettings": [
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "settings": [
+            {
+              "type": "boolean",
+              "value": "true",
+              "optionName": "enableClientMetrics"
+            },
+            {
+              "type": "boolean",
+              "value": "true",
+              "optionName": "dataRetention"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Get network settings with mixed value types"
+      },
+      {
+        "input": {
+          "networkId": "87654321"
+        },
+        "output": {
+          "settings": [
+            {
+              "type": "boolean",
+              "value": "false",
+              "optionName": "enableClientMetrics"
+            },
+            {
+              "type": "boolean",
+              "value": "false",
+              "optionName": "dataRetention"
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "Get settings for network with defaults only"
+      },
+      {
+        "input": {
+          "networkId": "99999999"
+        },
+        "id": "example-3",
+        "title": "Network not found error"
+      }
+    ],
+    "GetOidcInfo": [
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "openidConnectInfo": {
+            "clientId": "client123",
+            "companyId": "us-east-1-company123",
+            "issuer": "https://login.example.com",
+            "redirectUrl": "https://app.wickr.com/callback",
+            "scopes": "openid profile email",
+            "ssoTokenBufferMinutes": 5,
+            "userId": "email"
+          }
+        },
+        "id": "example-1",
+        "title": "Get OIDC info successfully"
+      },
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "openidConnectInfo": {
+            "companyId": "",
+            "issuer": "",
+            "scopes": ""
+          }
+        },
+        "id": "example-2",
+        "title": "Get OIDC info - not configured"
+      }
+    ],
+    "GetSecurityGroup": [
+      {
+        "input": {
+          "groupId": "abc12345",
+          "networkId": "12345678"
+        },
+        "output": {
+          "securityGroup": {
+            "name": "default",
+            "activeMembers": 50,
+            "botMembers": 5,
+            "id": "abc12345",
+            "isDefault": true,
+            "modified": 1638360000,
+            "securityGroupSettings": {
+              "federationMode": 1,
+              "lockoutThreshold": 10
+            }
+          }
+        },
+        "id": "example-1",
+        "title": "Get security group successfully"
+      },
+      {
+        "input": {
+          "groupId": "invalid99",
+          "networkId": "12345678"
+        },
+        "id": "example-2",
+        "title": "Get security group - not found"
+      }
+    ],
+    "GetUser": [
+      {
+        "input": {
+          "networkId": "12345678",
+          "userId": "12345"
+        },
+        "output": {
+          "firstName": "John",
+          "isAdmin": false,
+          "lastActivity": 1705500000,
+          "lastLogin": 1705499000,
+          "lastName": "Doe",
+          "securityGroupIds": [
+            "BCTY8Qhe"
+          ],
+          "status": 2,
+          "suspended": false,
+          "userId": "12345",
+          "username": "john.doe@example.com"
+        },
+        "id": "example-1",
+        "title": "Get user information"
+      },
+      {
+        "input": {
+          "endTime": 1705500000,
+          "networkId": "12345678",
+          "startTime": 1704067200,
+          "userId": "12345"
+        },
+        "output": {
+          "firstName": "Jane",
+          "isAdmin": true,
+          "lastActivity": 1705400000,
+          "lastLogin": 1705350000,
+          "lastName": "Admin",
+          "securityGroupIds": [
+            "BCTY8Qhe",
+            "ADMIN001"
+          ],
+          "status": 2,
+          "suspended": false,
+          "userId": "12345",
+          "username": "jane.admin@example.com"
+        },
+        "id": "example-2",
+        "title": "Get user info with activity time range"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "userId": "99999"
+        },
+        "id": "example-3",
+        "title": "User not found error"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "userId": "99999"
+        },
+        "id": "example-4",
+        "title": "Invalid userId error"
+      }
+    ],
+    "GetUsersCount": [
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "active": 25,
+          "pending": 5,
+          "rejected": 2,
+          "remaining": 15,
+          "total": 32
+        },
+        "id": "example-1",
+        "title": "Get user counts for network"
+      },
+      {
+        "input": {
+          "networkId": "87654321"
+        },
+        "output": {
+          "active": 0,
+          "pending": 0,
+          "rejected": 0,
+          "remaining": 50,
+          "total": 0
+        },
+        "id": "example-2",
+        "title": "Network with no users"
+      }
+    ],
+    "ListBlockedGuestUsers": [
+      {
+        "input": {
+          "maxResults": 10,
+          "networkId": "12345678",
+          "sortDirection": "DESC",
+          "sortFields": "modified"
+        },
+        "output": {
+          "blocklist": [
+            {
+              "admin": "admin@company.com",
+              "modified": "2024-01-15 10:30:00",
+              "username": "blocked.user1@example.com",
+              "usernameHash": "032c36d5623781204592a69269ed9480d604484269c8a4c2d39528885a56470d"
+            },
+            {
+              "admin": "admin@company.com",
+              "modified": "2024-01-10 14:20:00",
+              "username": "blocked.user2@example.com",
+              "usernameHash": "032c36d5623781204592a69269ed9480d604484269c8a4c2d39528885a56470d"
+            },
+            {
+              "admin": "security@company.com",
+              "modified": "2024-01-05 09:15:00",
+              "username": "blocked.user3@example.com",
+              "usernameHash": "032c36d5623781204592a69269ed9480d604484269c8a4c2d39528885a56470d"
+            }
+          ],
+          "nextToken": "v1:pagination:f47ac10b-58cc-4372-a567-0e02b2c3d479"
+        },
+        "id": "example-1",
+        "title": "Get paginated list of blocked guest users"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "username": "john.doe@example.com"
+        },
+        "output": {
+          "blocklist": [
+            {
+              "admin": "admin@company.com",
+              "modified": "2023-12-20 16:45:00",
+              "username": "john.doe@example.com",
+              "usernameHash": "032c36d5623781204592a69269ed9480d604484269c8a4c2d39528885a56470d"
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "Filter by username"
+      },
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "blocklist": []
+        },
+        "id": "example-3",
+        "title": "Empty blocklist"
+      }
+    ],
+    "ListBots": [
+      {
+        "input": {
+          "maxResults": 10,
+          "networkId": "12345678",
+          "sortDirection": "ASC",
+          "sortFields": "username"
+        },
+        "output": {
+          "bots": [
+            {
+              "botId": "98765",
+              "displayName": "Analytics Bot",
+              "groupId": "analytics_group",
+              "hasChallenge": true,
+              "lastLogin": "1704067200",
+              "pubkey": "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF4",
+              "status": 2,
+              "suspended": false,
+              "uname": "abc123def456",
+              "username": "analytics_bot"
+            },
+            {
+              "botId": "98766",
+              "displayName": "Support Bot",
+              "groupId": "support_group",
+              "hasChallenge": true,
+              "lastLogin": "1704153600",
+              "pubkey": "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF5",
+              "status": 2,
+              "suspended": false,
+              "uname": "def456ghi789",
+              "username": "support_bot"
+            }
+          ],
+          "nextToken": "eyJzdGFydEluZGV4IjoxMH0="
+        },
+        "id": "example-1",
+        "title": "List bots with pagination"
+      },
+      {
+        "input": {
+          "displayName": "Support",
+          "maxResults": 10,
+          "networkId": "12345678",
+          "status": 2
+        },
+        "output": {
+          "bots": [
+            {
+              "botId": "98766",
+              "displayName": "Support Bot",
+              "groupId": "support_group",
+              "hasChallenge": true,
+              "lastLogin": "1704153600",
+              "pubkey": "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF5",
+              "status": 2,
+              "suspended": false,
+              "uname": "def456ghi789",
+              "username": "support_bot"
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "List bots with filters"
+      }
+    ],
+    "ListDevicesForUser": [
+      {
+        "input": {
+          "maxResults": 10,
+          "networkId": "12345678",
+          "sortDirection": "DESC",
+          "sortFields": "appId",
+          "userId": "12345"
+        },
+        "output": {
+          "devices": [
+            {
+              "type": "mobile",
+              "appId": "d3135a42dcb6437780b16c3ca9581fe64e6822773cd6b965d25fc9929c89aca6",
+              "created": "January 15th 2024, 2:30:45 pm",
+              "lastLogin": "January 20th 2024, 9:15:30 am",
+              "statusText": "Active",
+              "suspend": false
+            },
+            {
+              "type": "desktop",
+              "appId": "e4246b53edc7548891c27d4da0692fe75f7933884de7c076e36gca030d90bdb7",
+              "created": "December 10th 2023, 11:45:20 am",
+              "lastLogin": "January 18th 2024, 4:20:15 pm",
+              "statusText": "Suspended",
+              "suspend": true
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Successful device list retrieval"
+      },
+      {
+        "input": {
+          "maxResults": 10,
+          "networkId": "12345678",
+          "nextToken": "v1:pagination:6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+          "userId": "12345"
+        },
+        "output": {
+          "devices": [
+            {
+              "type": "web",
+              "appId": "f5357c64fde8659002c38e5db1804gf86g8044995ef8d187f47hdb141e01dce8",
+              "created": "January 1st 2024, 12:00:00 pm",
+              "lastLogin": "January 21st 2024, 8:22:00 am",
+              "statusText": "Active",
+              "suspend": false
+            },
+            {
+              "type": "mobile",
+              "appId": "g6468d75gef9760113d49f6ec2915hg97h9155aa6fg9e298g58iec252f12edf9",
+              "created": "December 24th 2023, 4:00:00 pm",
+              "lastLogin": "January 20th 2024, 9:15:30 am",
+              "statusText": "Active",
+              "suspend": false
+            }
+          ],
+          "nextToken": "v1:pagination:7cb8c921-aebe-22e2-91c5-11d05fe541d9"
+        },
+        "id": "example-2",
+        "title": "Retrieving subsequent page of devices"
+      },
+      {
+        "input": {
+          "maxResults": 10,
+          "networkId": "12345678",
+          "userId": "99999"
+        },
+        "id": "example-3",
+        "title": "Invalid userId error"
+      }
+    ],
+    "ListGuestUsers": [
+      {
+        "input": {
+          "maxResults": 20,
+          "networkId": "12345678",
+          "sortDirection": "DESC",
+          "sortFields": "billingPeriod"
+        },
+        "output": {
+          "guestlist": [
+            {
+              "billingPeriod": "2024-01",
+              "username": "guest1@example.com",
+              "usernameHash": "e8e55b924aee6554edb87816c66704564504d25fbb95fc4dbc944feb977cbc26"
+            },
+            {
+              "billingPeriod": "2024-01",
+              "username": "guest2@example.com",
+              "usernameHash": "a9e55b924aee6554edb87816c66704564504d25fbb95fc4dbc944feb977cbc26"
+            },
+            {
+              "billingPeriod": "2023-12",
+              "username": "guest3@example.com",
+              "usernameHash": "c3e55b924aee6554edb87816c66704564504d25fbb95fc4dbc944feb977cbc26"
+            },
+            {
+              "billingPeriod": "2023-12",
+              "username": "guest4@example.com",
+              "usernameHash": "k2e55b924aee6554edb87816c66704564504d25fbb95fc4dbc944feb977cbc26"
+            }
+          ],
+          "nextToken": "v1:pagination:550e8400-e29b-41d4-a716-446655440000"
+        },
+        "id": "example-1",
+        "title": "Get paginated list of guest users"
+      },
+      {
+        "input": {
+          "billingPeriod": "2024-01",
+          "maxResults": 10,
+          "networkId": "12345678"
+        },
+        "output": {
+          "guestlist": [
+            {
+              "billingPeriod": "2024-01",
+              "username": "guest1@example.com",
+              "usernameHash": "e8e55b924aee6554edb87816c66704564504d25fbb95fc4dbc944feb977cbc26"
+            },
+            {
+              "billingPeriod": "2024-01",
+              "username": "guest2@example.com",
+              "usernameHash": "a9e55b924aee6554edb87816c66704564504d25fbb95fc4dbc944feb977cbc26"
+            }
+          ],
+          "nextToken": "v1:pagination:6ba7b810-9dad-11d1-80b4-00c04fd430c8"
+        },
+        "id": "example-2",
+        "title": "Filter by billing period"
+      },
+      {
+        "input": {
+          "networkId": "87654321"
+        },
+        "output": {
+          "guestlist": []
+        },
+        "id": "example-3",
+        "title": "Empty guest list"
+      }
+    ],
+    "ListNetworks": [
+      {
+        "input": {
+          "maxResults": 10,
+          "sortDirection": "ASC",
+          "sortFields": "networkName"
+        },
+        "output": {
+          "networks": [
+            {
+              "accessLevel": "STANDARD",
+              "awsAccountId": "123456789012",
+              "networkArn": "arn:aws:wickr:us-east-1:123456789012:network/12345678",
+              "networkId": "12345678",
+              "networkName": "Dev Network",
+              "standing": 1
+            },
+            {
+              "accessLevel": "PREMIUM",
+              "awsAccountId": "123456789012",
+              "networkArn": "arn:aws:wickr:us-east-1:123456789012:network/87654321",
+              "networkId": "87654321",
+              "networkName": "Prod Network",
+              "standing": 1
+            }
+          ],
+          "nextToken": "eyJvZmZzZXQiOjEwfQ=="
+        },
+        "id": "example-1",
+        "title": "List networks with pagination"
+      },
+      {
+        "input": {
+          "maxResults": 10
+        },
+        "output": {
+          "networks": [
+            {
+              "accessLevel": "PREMIUM",
+              "awsAccountId": "123456789012",
+              "networkArn": "arn:aws:wickr:us-east-1:123456789012:network/12345678",
+              "networkId": "12345678",
+              "networkName": "Production Network",
+              "standing": 1
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "List networks - first page"
+      }
+    ],
+    "ListSecurityGroupUsers": [
+      {
+        "input": {
+          "groupId": "abc12345",
+          "maxResults": 10,
+          "networkId": "12345678",
+          "sortDirection": "ASC",
+          "sortFields": "username"
+        },
+        "output": {
+          "nextToken": "eyJvZmZzZXQiOjEwfQ==",
+          "users": [
+            {
+              "firstName": "Alice",
+              "lastName": "Smith",
+              "username": "alice@example.com"
+            },
+            {
+              "firstName": "Bob",
+              "lastName": "Jones",
+              "username": "bob@example.com"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List security group users with pagination"
+      }
+    ],
+    "ListSecurityGroups": [
+      {
+        "input": {
+          "maxResults": 10,
+          "networkId": "12345678",
+          "sortDirection": "ASC",
+          "sortFields": "name"
+        },
+        "output": {
+          "nextToken": "eyJvZmZzZXQiOjEwfQ==",
+          "securityGroups": [
+            {
+              "name": "default",
+              "activeMembers": 25,
+              "botMembers": 0,
+              "id": "abc12345",
+              "isDefault": true,
+              "modified": 1638360000,
+              "securityGroupSettings": {
+                "lockoutThreshold": 10
+              }
+            },
+            {
+              "name": "engineering",
+              "activeMembers": 10,
+              "botMembers": 2,
+              "id": "def67890",
+              "isDefault": false,
+              "modified": 1638360000,
+              "securityGroupSettings": {
+                "lockoutThreshold": 15
+              }
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List security groups with pagination"
+      },
+      {
+        "input": {
+          "maxResults": 10,
+          "networkId": "12345678"
+        },
+        "output": {
+          "securityGroups": [
+            {
+              "name": "default",
+              "activeMembers": 25,
+              "botMembers": 0,
+              "id": "abc12345",
+              "isDefault": true,
+              "modified": 1638360000,
+              "securityGroupSettings": {
+                "lockoutThreshold": 10
+              }
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "List security groups - first page"
+      }
+    ],
+    "ListUsers": [
+      {
+        "input": {
+          "maxResults": 20,
+          "networkId": "12345678",
+          "sortDirection": "ASC",
+          "sortFields": "username"
+        },
+        "output": {
+          "nextToken": "v1:pagination:6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+          "users": [
+            {
+              "type": "user",
+              "firstName": "Alice",
+              "isAdmin": false,
+              "lastName": "Anderson",
+              "status": 2,
+              "suspended": false,
+              "username": "alice.anderson@example.com"
+            },
+            {
+              "type": "user",
+              "firstName": "Bob",
+              "isAdmin": false,
+              "lastName": "Brown",
+              "status": 2,
+              "suspended": false,
+              "username": "bob.brown@example.com"
+            },
+            {
+              "type": "user",
+              "firstName": "Charlie",
+              "isAdmin": true,
+              "lastName": "Chen",
+              "status": 2,
+              "suspended": false,
+              "username": "charlie.chen@example.com"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Get paginated list of users"
+      },
+      {
+        "input": {
+          "groupId": "BCTY8Qhe",
+          "maxResults": 10,
+          "networkId": "12345678",
+          "status": 1
+        },
+        "output": {
+          "users": [
+            {
+              "type": "user",
+              "firstName": "David",
+              "inviteCode": "INVITE789",
+              "isAdmin": false,
+              "isInviteExpired": false,
+              "lastName": "Davis",
+              "status": 1,
+              "suspended": false,
+              "username": "david.davis@example.com"
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "Filter by status and group"
+      },
+      {
+        "input": {
+          "networkId": "12345678"
+        },
+        "output": {
+          "users": []
+        },
+        "id": "example-3",
+        "title": "Empty user list for network with no users"
+      }
+    ],
+    "RegisterOidcConfig": [
+      {
+        "input": {
+          "companyId": "us-east-1-company123",
+          "issuer": "https://login.example.com",
+          "networkId": "12345678",
+          "scopes": "openid profile email",
+          "ssoTokenBufferMinutes": 5,
+          "userId": "email"
+        },
+        "output": {
+          "clientId": "client123",
+          "companyId": "us-east-1-company123",
+          "issuer": "https://login.example.com",
+          "redirectUrl": "https://app.wickr.com/callback",
+          "scopes": "openid profile email",
+          "ssoTokenBufferMinutes": 5,
+          "userId": "email"
+        },
+        "id": "example-1",
+        "title": "Save OIDC config successfully"
+      },
+      {
+        "input": {
+          "companyId": "",
+          "issuer": "https://login.example.com",
+          "networkId": "12345678",
+          "scopes": "openid profile email"
+        },
+        "id": "example-2",
+        "title": "Save OIDC config - missing company ID"
+      },
+      {
+        "input": {
+          "companyId": "invalid-company123",
+          "issuer": "https://login.example.com",
+          "networkId": "12345678",
+          "scopes": "openid profile email"
+        },
+        "id": "example-3",
+        "title": "Save OIDC config - invalid company ID prefix"
+      }
+    ],
+    "RegisterOidcConfigTest": [
+      {
+        "input": {
+          "issuer": "https://login.example.com",
+          "networkId": "12345678",
+          "scopes": "openid profile email"
+        },
+        "output": {
+          "authorizationEndpoint": "https://login.example.com/authorize",
+          "issuer": "https://login.example.com",
+          "tokenEndpoint": "https://login.example.com/oauth/token",
+          "userinfoEndpoint": "https://login.example.com/userinfo"
+        },
+        "id": "example-1",
+        "title": "Test OIDC config successfully"
+      },
+      {
+        "input": {
+          "issuer": "",
+          "networkId": "12345678",
+          "scopes": "openid profile email"
+        },
+        "id": "example-2",
+        "title": "Test OIDC config - missing issuer"
+      },
+      {
+        "input": {
+          "issuer": "https://blocked-endpoint.com",
+          "networkId": "12345678",
+          "scopes": "openid profile email"
+        },
+        "id": "example-3",
+        "title": "Test OIDC config - invalid endpoint"
+      }
+    ],
+    "UpdateBot": [
+      {
+        "input": {
+          "botId": "98765",
+          "displayName": "Updated Support Bot",
+          "groupId": "support_group",
+          "networkId": "12345678"
+        },
+        "output": {
+          "message": "success"
+        },
+        "id": "example-1",
+        "title": "Update bot successfully"
+      },
+      {
+        "input": {
+          "botId": "99999",
+          "displayName": "Updated Bot",
+          "networkId": "12345678"
+        },
+        "id": "example-2",
+        "title": "Update bot - bot not found"
+      }
+    ],
+    "UpdateDataRetention": [
+      {
+        "input": {
+          "actionType": "ENABLE",
+          "networkId": "12345678"
+        },
+        "output": {
+          "message": "data retention service enabled"
+        },
+        "id": "example-1",
+        "title": "Update data retention - enable service"
+      },
+      {
+        "input": {
+          "actionType": "DISABLE",
+          "networkId": "12345678"
+        },
+        "output": {
+          "message": "data retention service disabled"
+        },
+        "id": "example-2",
+        "title": "Update data retention - disable service"
+      },
+      {
+        "input": {
+          "actionType": "PUBKEY_MSG_ACK",
+          "networkId": "12345678"
+        },
+        "output": {
+          "message": "pubkey message was acknowledged"
+        },
+        "id": "example-3",
+        "title": "Update data retention - acknowledge pubkey message"
+      }
+    ],
+    "UpdateGuestUser": [
+      {
+        "input": {
+          "block": true,
+          "networkId": "12345678",
+          "usernameHash": "032c36d5623781204592a69269ed9480d604484269c8a4c2d39528885a56470d"
+        },
+        "output": {
+          "message": "success"
+        },
+        "id": "example-1",
+        "title": "Block a guest user"
+      },
+      {
+        "input": {
+          "block": false,
+          "networkId": "12345678",
+          "usernameHash": "032c36d5623781204592a69269ed9480d604484269c8a4c2d39528885a56470d"
+        },
+        "output": {
+          "message": "success"
+        },
+        "id": "example-2",
+        "title": "Unblock a guest user"
+      },
+      {
+        "input": {
+          "block": true,
+          "networkId": "12345678",
+          "usernameHash": "032c36d5623781204592a69269ed9480d604484269c8a4c2d39528885a56470d"
+        },
+        "id": "example-3",
+        "title": "User already blocked error"
+      }
+    ],
+    "UpdateNetwork": [
+      {
+        "input": {
+          "networkId": "12345678",
+          "networkName": "Updated Network Name"
+        },
+        "output": {
+          "message": "Network updated successfully"
+        },
+        "id": "example-1",
+        "title": "Update network name successfully"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "networkName": "This name is way too long for a network"
+        },
+        "id": "example-2",
+        "title": "Update network - invalid name"
+      },
+      {
+        "input": {
+          "networkId": "99999999",
+          "networkName": "New Name"
+        },
+        "id": "example-3",
+        "title": "Update network - not found"
+      }
+    ],
+    "UpdateNetworkSettings": [
+      {
+        "input": {
+          "networkId": "12345678",
+          "settings": {
+            "dataRetention": true,
+            "enableClientMetrics": true
+          }
+        },
+        "output": {
+          "settings": [
+            {
+              "type": "boolean",
+              "value": "true",
+              "optionName": "enableClientMetrics"
+            },
+            {
+              "type": "boolean",
+              "value": "true",
+              "optionName": "dataRetention"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Update multiple network settings"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "settings": {
+            "enableClientMetrics": false
+          }
+        },
+        "output": {
+          "settings": [
+            {
+              "type": "boolean",
+              "value": "false",
+              "optionName": "enableClientMetrics"
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "Update single boolean setting"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "settings": {
+            "enableClientMetrics": true
+          }
+        },
+        "output": {
+          "settings": [
+            {
+              "type": "boolean",
+              "value": "true",
+              "optionName": "enableClientMetrics"
+            }
+          ]
+        },
+        "id": "example-3",
+        "title": "Update client metrics settings"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "settings": {
+            "enableClientMetrics": false
+          }
+        },
+        "id": "example-4",
+        "title": "Invalid setting name error"
+      },
+      {
+        "input": {
+          "networkId": "99999999",
+          "settings": {
+            "enableClientMetrics": true
+          }
+        },
+        "id": "example-5",
+        "title": "Network not found error"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "settings": {
+            "dataRetention": true
+          }
+        },
+        "id": "example-6",
+        "title": "Invalid value type error"
+      }
+    ],
+    "UpdateSecurityGroup": [
+      {
+        "input": {
+          "name": "Updated Group Name",
+          "groupId": "abc12345",
+          "networkId": "12345678",
+          "securityGroupSettings": {
+            "lockoutThreshold": 15
+          }
+        },
+        "output": {
+          "securityGroup": {
+            "name": "Updated Group Name",
+            "activeMembers": 10,
+            "botMembers": 2,
+            "id": "abc12345",
+            "isDefault": false,
+            "modified": 1638360000,
+            "securityGroupSettings": {
+              "lockoutThreshold": 15
+            }
+          }
+        },
+        "id": "example-1",
+        "title": "Update security group successfully"
+      },
+      {
+        "input": {
+          "name": "New Name",
+          "groupId": "invalid99",
+          "networkId": "12345678"
+        },
+        "id": "example-2",
+        "title": "Update security group - not found"
+      }
+    ],
+    "UpdateUser": [
+      {
+        "input": {
+          "networkId": "12345678",
+          "userDetails": {
+            "firstName": "Jonathan",
+            "lastName": "Doe",
+            "securityGroupIds": [
+              "BCTY8Qhe",
+              "DEPT001"
+            ],
+            "username": "john.doe@example.com"
+          },
+          "userId": "12345"
+        },
+        "output": {
+          "firstName": "Jonathan",
+          "lastName": "Doe",
+          "modified": 1705500000,
+          "networkId": "12345678",
+          "securityGroupIds": [
+            "BCTY8Qhe",
+            "DEPT001"
+          ],
+          "status": 2,
+          "suspended": false,
+          "userId": "12345"
+        },
+        "id": "example-1",
+        "title": "Update user information"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "userDetails": {
+            "codeValidation": true,
+            "firstName": "Jane",
+            "inviteCode": "NEWINVITE789",
+            "inviteCodeTtl": 14,
+            "lastName": "Smith",
+            "username": "jane.smith@example.com"
+          },
+          "userId": "12345"
+        },
+        "output": {
+          "codeValidation": true,
+          "firstName": "Jane",
+          "inviteCode": "NEWINVITE789",
+          "inviteExpiration": 1706709600,
+          "lastName": "Smith",
+          "modified": 1705500100,
+          "networkId": "12345678",
+          "status": 2,
+          "suspended": false,
+          "userId": "12345"
+        },
+        "id": "example-2",
+        "title": "Update user with invite code"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "userDetails": {
+            "firstName": "Non",
+            "lastName": "Existent",
+            "username": "nonexistent@example.com"
+          },
+          "userId": "99999"
+        },
+        "id": "example-3",
+        "title": "User not found error"
+      },
+      {
+        "input": {
+          "networkId": "12345678",
+          "userDetails": {
+            "firstName": "John",
+            "lastName": "Doe",
+            "securityGroupIds": [
+              "BCTY8Qhe"
+            ],
+            "username": "john.doe@example.com"
+          },
+          "userId": "99999"
+        },
+        "id": "example-4",
+        "title": "Invalid userId error"
+      }
+    ]
+  }
+}

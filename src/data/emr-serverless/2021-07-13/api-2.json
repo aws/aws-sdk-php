@@ -303,7 +303,8 @@
         "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
         "interactiveConfiguration":{"shape":"InteractiveConfiguration"},
         "schedulerConfiguration":{"shape":"SchedulerConfiguration"},
-        "identityCenterConfiguration":{"shape":"IdentityCenterConfiguration"}
+        "identityCenterConfiguration":{"shape":"IdentityCenterConfiguration"},
+        "jobLevelCostAllocationConfiguration":{"shape":"JobLevelCostAllocationConfiguration"}
       }
     },
     "ApplicationArn":{
@@ -543,7 +544,8 @@
         "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
         "interactiveConfiguration":{"shape":"InteractiveConfiguration"},
         "schedulerConfiguration":{"shape":"SchedulerConfiguration"},
-        "identityCenterConfiguration":{"shape":"IdentityCenterConfigurationInput"}
+        "identityCenterConfiguration":{"shape":"IdentityCenterConfigurationInput"},
+        "jobLevelCostAllocationConfiguration":{"shape":"JobLevelCostAllocationConfiguration"}
       }
     },
     "CreateApplicationResponse":{
@@ -834,6 +836,12 @@
         "hive":{"shape":"Hive"}
       },
       "union":true
+    },
+    "JobLevelCostAllocationConfiguration":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"Boolean"}
+      }
     },
     "JobRun":{
       "type":"structure",
@@ -1579,7 +1587,8 @@
         "runtimeConfiguration":{"shape":"ConfigurationList"},
         "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
         "schedulerConfiguration":{"shape":"SchedulerConfiguration"},
-        "identityCenterConfiguration":{"shape":"IdentityCenterConfigurationInput"}
+        "identityCenterConfiguration":{"shape":"IdentityCenterConfigurationInput"},
+        "jobLevelCostAllocationConfiguration":{"shape":"JobLevelCostAllocationConfiguration"}
       }
     },
     "UpdateApplicationResponse":{
