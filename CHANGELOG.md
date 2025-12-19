@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.0 - 2025-12-19
 
 * `Aws\EMRServerless` - Added JobLevelCostAllocationConfiguration field to enable cost allocation reporting at the job level, providing more granular visibility into EMR Serverless charges
 * `Aws\Connect` - Adding support for Custom Metrics and Pre-Defined Attributes to GetCurrentMetricData API.
