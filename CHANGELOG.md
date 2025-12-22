@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.1 - 2025-12-22
 
 * `Aws\` - Allow `stdClass` in `Validator` for document types for empty documents to be encoded as JSON objects rather than arrays.
 * `Aws\GuardDuty` - Make accountIds a required field in GetRemainingFreeTrialDays API to reflect service behavior.
