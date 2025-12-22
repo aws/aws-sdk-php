@@ -300,8 +300,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionElasticLoadBalancing(array $args = [])
  * @method \Aws\ElasticLoadBalancingV2\ElasticLoadBalancingV2Client createElasticLoadBalancingV2(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionElasticLoadBalancingV2(array $args = [])
- * @method \Aws\ElasticTranscoder\ElasticTranscoderClient createElasticTranscoder(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionElasticTranscoder(array $args = [])
  * @method \Aws\ElasticsearchService\ElasticsearchServiceClient createElasticsearchService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionElasticsearchService(array $args = [])
  * @method \Aws\Emr\EmrClient createEmr(array $args = [])
