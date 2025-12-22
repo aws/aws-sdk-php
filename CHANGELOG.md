@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Allow `stdClass` in `Validator` for document types for empty documents to be encoded as JSON objects rather than arrays.
+* `Aws\GuardDuty` - Make accountIds a required field in GetRemainingFreeTrialDays API to reflect service behavior.
+* `Aws\EC2` - Adds support for linkedGroupId on the CreatePlacementGroup and DescribePlacementGroups APIs. The linkedGroupId parameter is reserved for future use.
+* `Aws\PCS` - Change API Reference Documentation for default Mode in Accounting and SlurmRest
+* `Aws\ConfigService` - Added supported resourceTypes for Config from July to November 2025
+
 ## 3.369.0 - 2025-12-19
 
 * `Aws\EMRServerless` - Added JobLevelCostAllocationConfiguration field to enable cost allocation reporting at the job level, providing more granular visibility into EMR Serverless charges
