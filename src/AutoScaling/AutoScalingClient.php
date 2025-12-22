@@ -4,7 +4,7 @@ namespace Aws\AutoScaling;
 use Aws\AwsClient;
 
 /**
- * Auto Scaling client.
+ * This client is used to interact with the **AWS Auto Scaling** service.
  *
  * @method \Aws\Result attachInstances(array $args = [])
  * @method \GuzzleHttp\Promise\Promise attachInstancesAsync(array $args = [])

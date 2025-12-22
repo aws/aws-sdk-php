@@ -9,6 +9,7 @@ use Aws\Api\Operation;
 use Aws\Api\Service as Api;
 use Aws\Api\StructureShape;
 use Aws\Api\DocModel;
+use GuzzleHttp\Client;
 use TokenReflection\Broker;
 use TokenReflection\ReflectionBase;
 use TokenReflection\ReflectionFunction;
@@ -21,6 +22,8 @@ use TokenReflection\ReflectionMethod;
  */
 class DocsBuilder
 {
+    private const EXAMPLES_URL = 'https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/php_code_examples.html';
+
     /** @var string HTML template to replace {{ contents }} */
     private $template;
 
@@ -48,6 +51,9 @@ class DocsBuilder
     /** @var bool Enables writing of build-issues.log file when set. */
     private $issueLoggingEnabled;
 
+    /** @var Client */
+    private $guzzleClient;
+
     /** @var array Printable error names for build-issues.log file */
     private static $ERROR_PRINT_NAMES =[
         E_ERROR              => 'Error',
@@ -72,7 +78,8 @@ class DocsBuilder
         $baseUrl,
         array $quickLinks,
         array $sources,
-        $issueLoggingEnabled = false
+        $issueLoggingEnabled = false,
+        ?Client $guzzleClient = null
     ) {
         $this->apiProvider = $provider;
         $this->outputDir = $outputDir;
@@ -81,6 +88,7 @@ class DocsBuilder
         $this->quickLinks = $quickLinks;
         $this->sources = $sources;
         $this->issueLoggingEnabled = $issueLoggingEnabled;
+        $this->guzzleClient = $guzzleClient ?? new Client();
     }
 
     public function build()
@@ -178,8 +186,8 @@ class DocsBuilder
         // Determine which services in the provided array should have a quick link
         $services = array_filter($services, function (array $versions) {
             return 0 < count(array_filter($versions, function (Service $service) {
-                return in_array($service->name, $this->quickLinks);
-            }));
+                    return in_array($service->name, $this->quickLinks);
+                }));
         });
 
         // Drop all but the latest version of each service from the array
@@ -448,9 +456,61 @@ EOT;
         }
     }
 
+    /**
+     * Fetches service examples from the AWS SDK for PHP Developer Guide.
+     *
+     * @return array Associative array of service ID => documentation URL
+     */
+    private function fetchServiceExamplesFromDocs(): array
+    {
+        try {
+            $response = $this->guzzleClient->get(self::EXAMPLES_URL);
+            $html = (string) $response->getBody();
+        } catch (\Exception $e) {
+            fwrite(STDERR, "Failed to fetch examples from docs: " . $e->getMessage() . "\n");
+            return [];
+        }
+
+        $doc = new \DOMDocument();
+        @$doc->loadHTML($html);
+        $xpath = new \DOMXPath($doc);
+
+        $canonicalNode = $xpath->query('//link[@rel="canonical"]/@href')->item(0);
+        if (!$canonicalNode) {
+            fwrite(STDERR, "Could not find canonical URL in examples page\n");
+            return [];
+        }
+        $baseUrl = dirname($canonicalNode->nodeValue);
+
+        $links = $xpath->query('//div[@class="highlights"]//ul//a');
+
+        $services = [];
+        foreach ($links as $link) {
+            $href = $link->getAttribute('href');
+
+            // Extract service ID: remove "php_", "_code_examples.html", and leading "./"
+            $serviceId = preg_replace('/^\.\//', '', $href);
+            $serviceId = preg_replace('/^php_/', '', $serviceId);
+            $serviceId = preg_replace('/_code_examples\.html$/', '', $serviceId);
+
+            $fullUrl = $baseUrl . '/' . ltrim($href, './');
+
+            $services[$serviceId] = $fullUrl;
+        }
+
+        fwrite(STDOUT, "Fetched " . count($services) . " service examples from AWS docs\n");
+
+        return $services;
+    }
+
     private function updateClients(array $services)
     {
         fwrite(STDOUT, "Updating client pages with service links\n");
+
+        // Fetch new examples once for all services
+        $newExamples = $this->fetchServiceExamplesFromDocs();
+        $legacyExamples = require __DIR__ . '/../config/dev-guide-service-examples.php';
+        $serviceIdMap = $legacyExamples['_service_id_map'] ?? [];
 
         foreach ($services as $versions) {
             krsort($versions);
@@ -483,16 +543,31 @@ EOT;
             }
             $html .= '</ul></article>';
 
-            // Add Examples (from the developer guide) section, where applicable
-            $serviceExamples = require __DIR__ . '/../config/dev-guide-service-examples.php';
-            if (isset($serviceExamples[$service->name])) {
+            // Add Examples section
+            $docsServiceId = $serviceIdMap[$service->name] ?? $service->name;
+            $hasNewExamples = isset($newExamples[$docsServiceId]);
+            $hasLegacyExamples = isset($legacyExamples[$service->name]);
+
+            if ($hasNewExamples || $hasLegacyExamples) {
                 $html .= '<h2>Examples</h2>';
-                $html .= '<p>The following examples demonstrate how to use this service with the AWS SDK for PHP. These code examples are available in the <a href="' . $serviceExamples[$service->name]['landing_page'] . '">AWS SDK for PHP Developer Guide</a>.</p>';
-                $html .= '<ul>';
-                foreach ($serviceExamples[$service->name]['scenarios'] as $title => $link) {
-                    $html .= sprintf('<li><a href="%s">%s</a></li>', $link, $title);
+
+                if ($hasNewExamples) {
+                    $html .= '<h3>Basics, Actions and Scenarios</h3>';
+                    $html .= '<p>The following code examples show you how to perform actions and implement common scenarios by using the AWS SDK for PHP with ' . htmlspecialchars($service->title) . '.</p>';
+                    $html .= '<ul>';
+                    $html .= sprintf('<li><a href="%s">See examples on AWS Docs</a></li>', htmlspecialchars($newExamples[$docsServiceId]));
+                    $html .= '</ul>';
                 }
-                $html .= '</ul>';
+
+                if ($hasLegacyExamples) {
+                    $html .= '<h3>Legacy Code Examples With Guidance</h3>';
+                    $html .= '<p>The following examples demonstrate how to use this service with the AWS SDK for PHP. These code examples are available in the <a href="' . htmlspecialchars($legacyExamples[$service->name]['landing_page']) . '">AWS SDK for PHP Developer Guide</a>.</p>';
+                    $html .= '<ul>';
+                    foreach ($legacyExamples[$service->name]['scenarios'] as $title => $link) {
+                        $html .= sprintf('<li><a href="%s">%s</a></li>', htmlspecialchars($link), htmlspecialchars($title));
+                    }
+                    $html .= '</ul>';
+                }
             }
 
             $this->replaceInner($service->clientLink, $html, '<!-- api -->');
@@ -744,26 +819,26 @@ EOT;
         $html->section(2, 'Waiters');
         $html->elem('p', 'phpdocumentor-summary', $desc);
         $html->open('table', 'table-responsive table-striped');
-            $html->open('thead');
-                $html->open('tr');
-                    $html->elem('th', null, 'Waiter name');
-                    $html->elem('th', null, 'API Operation');
-                    $html->elem('th', null, 'Delay');
-                    $html->elem('th', null, 'Max Attempts');
-                $html->close();
+        $html->open('thead');
+        $html->open('tr');
+        $html->elem('th', null, 'Waiter name');
+        $html->elem('th', null, 'API Operation');
+        $html->elem('th', null, 'Delay');
+        $html->elem('th', null, 'Max Attempts');
+        $html->close();
+        $html->close();
+        $html->open('tbody');
+        foreach ($waiters as $name => $config) {
+            $html->open('tr');
+            $html->elem('td', null, $name);
+            $html->elem('td', null, '<a href="#'
+                . strtolower($config['operation'])
+                . '">' . $config['operation'] . '</a>');
+            $html->elem('td', null, $config['delay']);
+            $html->elem('td', null, $config['maxAttempts']);
             $html->close();
-            $html->open('tbody');
-                foreach ($waiters as $name => $config) {
-                    $html->open('tr');
-                        $html->elem('td', null, $name);
-                        $html->elem('td', null, '<a href="#'
-                            . strtolower($config['operation'])
-                            . '">' . $config['operation'] . '</a>');
-                        $html->elem('td', null, $config['delay']);
-                        $html->elem('td', null, $config['maxAttempts']);
-                    $html->close();
-                }
-            $html->close();
+        }
+        $html->close();
         $html->close();
     }
 
@@ -787,12 +862,12 @@ EOT;
         $html->section(2, 'Paginators');
         $html->elem('p', 'phpdocumentor-summary', $desc);
         $html->open('dl');
-            foreach ($paginators as $name => $config) {
-                $html->open('dt', 'phpdocumentor-table-of-contents__entry');
-                    $attr = ['href' => '#' . strtolower($name), 'aria-label' => strtolower($name)];
-                    $html->elem('a', $attr, '<strong>' . $name . '</strong>');
-                $html->close();
-            }
+        foreach ($paginators as $name => $config) {
+            $html->open('dt', 'phpdocumentor-table-of-contents__entry');
+            $attr = ['href' => '#' . strtolower($name), 'aria-label' => strtolower($name)];
+            $html->elem('a', $attr, '<strong>' . $name . '</strong>');
+            $html->close();
+        }
         $html->close();
     }
 
@@ -890,15 +965,15 @@ EOT;
                     ?: 'This error does not currently have a description.';
                 $html
                     ->open('dt')
-                            ->elem(
-                                'a',
-                                [
-                                    'href' => $service->exceptionLink . '#shape-'
-                                        . strtolower($error->getName()),
-                                    'aria-label' => strtolower($error->getName())
-                                ],
-                                '<strong>' . $error['name'] . ': ' . '</strong>')
-                            ->elem('dd', 'phpdocumentor-summary', $desc)
+                    ->elem(
+                        'a',
+                        [
+                            'href' => $service->exceptionLink . '#shape-'
+                                . strtolower($error->getName()),
+                            'aria-label' => strtolower($error->getName())
+                        ],
+                        '<strong>' . $error['name'] . ': ' . '</strong>')
+                    ->elem('dd', 'phpdocumentor-summary', $desc)
                     ->close();
             }
             $html->close();
@@ -920,15 +995,15 @@ EOT;
                 }
                 $comments = $example['comments'] ?? [];
                 $html->elem('pre', 'phpdocumentor-code', $generator->generateInput(
-                    $name, 
-                    isset($example['input']) ? $example['input'] : [], 
+                    $name,
+                    isset($example['input']) ? $example['input'] : [],
                     isset($comments['input']) ? $comments['input'] : []
                 ));
                 if (isset($example['output'])) {
                     $html->elem('p', 'phpdocumentor-summary', 'Result syntax:');
                     $html->elem('pre', 'phpdocumentor-code', $generator->generateOutput(
-                        $name, 
-                        $example['output'], 
+                        $name,
+                        $example['output'],
                         isset($comments['output'])
                             ? $comments['output']
                             : []
@@ -966,8 +1041,8 @@ EOT;
             foreach ($shapeIssues as $level => $messages) {
                 foreach ($messages as $message => $exampleName) {
                     $this->issues[$level][$serviceName][$serviceVersion][
-                        $exampleName . ' has an issue - '
-                        . $message . ' on ' . $shapeName
+                    $exampleName . ' has an issue - '
+                    . $message . ' on ' . $shapeName
                     ] = true;
                 }
             }
@@ -1094,7 +1169,7 @@ EOT;
     private function getDocumentText(StructureShape $member)
     {
         return 'document (null|bool|string|numeric) or an (array|associative array)'
-        . ' whose members are all valid documents';
+            . ' whose members are all valid documents';
     }
 
     private function getPrimitivePhpType($member)
