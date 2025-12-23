@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.2 - 2025-12-23
 
 * `Aws\` - Removes `ElasticTranscoderClient` and its dependencies. This service has been deprecated.
 * `Aws\PinpointSMSVoiceV2` - This release adds support for the Registration Reviewer feature, which provides generative AI feedback on a phone number or sender ID registration to ensure completeness before sending to downstream (carrier) review.
