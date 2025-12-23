@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Removes `ElasticTranscoderClient` and its dependencies. This service has been deprecated.
+* `Aws\PinpointSMSVoiceV2` - This release adds support for the Registration Reviewer feature, which provides generative AI feedback on a phone number or sender ID registration to ensure completeness before sending to downstream (carrier) review.
+* `Aws\GeoPlaces` - Adds support for InferredSecondaryAddress place type, Designator in SecondaryAddressComponent and Heading in ReverseGeocode.
+* `Aws\S3` - Add additional validation to Outpost bucket names.
+
 ## 3.369.1 - 2025-12-22
 
 * `Aws\` - Allow `stdClass` in `Validator` for document types for empty documents to be encoded as JSON objects rather than arrays.
