@@ -39,16 +39,8 @@ class XmlErrorParser extends AbstractErrorParser
             'parsed' => null
         ];
 
-        $body = $response->getBody();
-        if (!$body->isSeekable()) {
-            $tempBody = Utils::streamFor();
-            Utils::copyToStream($body, $tempBody);
-            $body = $tempBody;
-        }
-
-        // Cast it to string
-        $body = (string) $body;
-
+        // Read the full payload, even in non-seekable streams
+        $body = $response->getBody()->getContents();
         // Parse just if is not empty
         if (!empty($body)) {
             $this->parseBody($this->parseXml($body, $response), $data);

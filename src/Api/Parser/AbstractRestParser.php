@@ -55,9 +55,11 @@ abstract class AbstractRestParser extends AbstractParser
             }
         }
 
-        $body = $response->getBody();
+        // Read the full payload, even in non-seekable streams
+        $body = $response->getBody()->getContents();
+        // Make sure empty payloads are not parsed
         if (!$payload
-            && (!$body->isSeekable() || $body->getSize())
+            && !empty($body)
             && count($output->getMembers()) > 0
         ) {
             // if no payload was found, then parse the contents of the body

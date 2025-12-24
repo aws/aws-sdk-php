@@ -39,19 +39,10 @@ trait JsonParserTrait
             );
         }
 
-        $body = $response->getBody();
-        // If the body is not seekable then, read the full message
-        // before de-serializing
-        if (!$body->isSeekable()) {
-            $tempBody = Utils::streamFor();
-            Utils::copyToStream($body, $tempBody);
-            $body = $tempBody;
-        }
+        // Read the full payload, even in non-seekable streams
+        $body = $response->getBody()->getContents();
 
-        // Cast it to string
-        $body = (string) $body;
         $parsedBody = [];
-
         // Avoid parsing an empty body
         if (!empty($body)) {
             // Parsing the body to avoid having to read the response body again.
