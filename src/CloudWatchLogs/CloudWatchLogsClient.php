@@ -192,9 +192,6 @@ use Generator;
  * @method \GuzzleHttp\Promise\Promise updateLogAnomalyDetectorAsync(array $args = [])
  */
 class CloudWatchLogsClient extends AwsClient {
-    static $streamingCommands = [
-        'StartLiveTail' => true
-    ];
 
     public function __construct(array $args)
     {
