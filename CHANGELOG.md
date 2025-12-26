@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports Pipeline Locking using Video Alignment as well as linked single pipeline channels to enable cross-channel and cross-region Pipeline Locking workflows.
+
 ## 3.369.2 - 2025-12-23
 
 * `Aws\` - Removes `ElasticTranscoderClient` and its dependencies. This service has been deprecated.

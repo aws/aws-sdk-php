@@ -4818,7 +4818,8 @@
         "UpdateClusterResult$ChannelIds": "An array of the IDs of the Channels that are associated with this Cluster. One Channel is associated with the Cluster as follows: A Channel belongs to a ChannelPlacementGroup. A ChannelPlacementGroup is attached to a Node. A Node belongs to a Cluster.",
         "UpdateNetworkResult$AssociatedClusterIds": null,
         "SdiSource$Inputs": "The list of inputs that are currently using this SDI source. This list will be empty if the SdiSource has just been deleted.",
-        "SdiSourceSummary$Inputs": "The list of inputs that are currently using this SDI source. This list will be empty if the SdiSource has just been deleted."
+        "SdiSourceSummary$Inputs": "The list of inputs that are currently using this SDI source. This list will be empty if the SdiSource has just been deleted.",
+        "DescribePrimaryChannelSettings$FollowingChannelArns": "The ARNs of the following channels for this primary channel"
       }
     },
     "__longMin0Max1099511627775": {
@@ -5286,7 +5287,9 @@
         "RouterDestinationSettings$AvailabilityZoneName": "Availability Zone for this MediaConnect Router destination.",
         "RouterInputSettings$SecretArn": "ARN of the secret used to encrypt this input.",
         "RouterSettings$SecretArn": "ARN of the secret used to encrypt this input.",
-        "SpecialRouterSettings$RouterArn": "This is the arn of the MediaConnect Router resource being associated with the MediaLive Input."
+        "SpecialRouterSettings$RouterArn": "This is the arn of the MediaConnect Router resource being associated with the MediaLive Input.",
+        "DescribeFollowerChannelSettings$PrimaryChannelArn": "The ARN of the primary channel this channel follows",
+        "FollowerChannelSettings$PrimaryChannelArn": "The ARN of the primary channel to follow"
       }
     },
     "__stringMax1000": {
@@ -7418,6 +7421,59 @@
       "base": null,
       "refs": {
         "RouterSettings$Destinations": "Destinations for the input from MediaConnect Router. Provide one for a single-pipeline input and two for a standard input."
+      }
+    },
+    "DescribeFollowerChannelSettings": {
+      "base": "Details of a follower channel in a linked pair",
+      "refs": {
+        "DescribeLinkedChannelSettings$FollowerChannelSettings": null
+      }
+    },
+    "DescribeLinkedChannelSettings": {
+      "base": "Linked channel configuration details",
+      "refs": {
+        "Channel$LinkedChannelSettings": "Linked Channel Settings for this channel.",
+        "ChannelSummary$LinkedChannelSettings": "Linked Channel Settings for this channel."
+      }
+    },
+    "DescribePrimaryChannelSettings": {
+      "base": "Details of a primary (leader) channel in a linked pair",
+      "refs": {
+        "DescribeLinkedChannelSettings$PrimaryChannelSettings": null
+      }
+    },
+    "FollowerChannelSettings": {
+      "base": "Settings for a follower channel in a linked pair",
+      "refs": {
+        "LinkedChannelSettings$FollowerChannelSettings": null
+      }
+    },
+    "LinkedChannelSettings": {
+      "base": "Configuration for linked channel relationships",
+      "refs": {
+        "CreateChannel$LinkedChannelSettings": "The linked channel settings for the channel.",
+        "UpdateChannel$LinkedChannelSettings": "The linked channel settings for the channel."
+      }
+    },
+    "LinkedChannelType": {
+      "base": "The values for the role for a linked channel.",
+      "refs": {
+        "DescribeFollowerChannelSettings$LinkedChannelType": "Specifies this as a follower channel",
+        "DescribePrimaryChannelSettings$LinkedChannelType": "Specifies this as a primary channel",
+        "FollowerChannelSettings$LinkedChannelType": "Specifies this as a follower channel",
+        "PrimaryChannelSettings$LinkedChannelType": "Specifies this as a primary channel"
+      }
+    },
+    "PipelineLockingMethod": {
+      "base": "Pipeline Locking Method",
+      "refs": {
+        "PipelineLockingSettings$PipelineLockingMethod": "The method to use to lock the video frames in the pipelines. sourceTimecode (default): Use the timecode in the source. videoAlignment: Lock frames that the encoder identifies as having matching content. If videoAlignment is selected, existing timecodes will not be used for any locking decisions."
+      }
+    },
+    "PrimaryChannelSettings": {
+      "base": "Settings for a primary (leader) channel in a linked pair",
+      "refs": {
+        "LinkedChannelSettings$PrimaryChannelSettings": null
       }
     }
   },
