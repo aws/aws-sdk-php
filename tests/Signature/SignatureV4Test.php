@@ -103,6 +103,21 @@ class SignatureV4Test extends TestCase
         return array($request, $credentials, $signature);
     }
 
+    private function decodeQueryPairs(string $query): array
+    {
+        if ($query === '') {
+            return [];
+        }
+
+        $pairs = [];
+        foreach (explode('&', $query) as $pair) {
+            $parts = explode('=', $pair, 2);
+            $pairs[] = array_map('rawurldecode', $parts + ['', '']);
+        }
+
+        return $pairs;
+    }
+
     public function getExpiresDateTimeInterfaceInputs()
     {
         return [
@@ -306,6 +321,54 @@ class SignatureV4Test extends TestCase
         $this->assertStringNotContainsString('X-Amz-User-Agent', (string)$presigned->getUri());
         $this->assertStringNotContainsString('content-length', (string)$presigned->getUri());
         $this->assertStringNotContainsString('Content-Type', (string)$presigned->getUri());
+    }
+
+    public function testCanonicalQuerySortingOccursAfterEncoding()
+    {
+        $_SERVER['aws_time'] = '20110909T233600Z';
+
+        $signature = new SignatureV4('service', 'region');
+        $credentials = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET);
+        $query = 'param[0]=1111&param[1]=1111&param[10]=1111&param[2]=1111&param[3]=1111&param[4]=1111&param[5]=1111&param[6]=1111&param[7]=1111&param[8]=1111&param[9]=1111';
+        $request = new Request('GET', 'https://example.com/service?' . $query);
+
+        $parseRequest = new \ReflectionMethod($signature, 'parseRequest');
+        $parsedRequest = $parseRequest->invoke($signature, $request);
+
+        $getPayload = new \ReflectionMethod($signature, 'getPayload');
+        $payload = $getPayload->invoke($signature, $request);
+
+        $createContext = new \ReflectionMethod($signature, 'createContext');
+        $context = $createContext->invoke($signature, $parsedRequest, $payload);
+
+        $canonicalQuery = explode("\n", $context['creq'])[2];
+        $expectedPairs = [
+            ['param[0]', '1111'],
+            ['param[1]', '1111'],
+            ['param[10]', '1111'],
+            ['param[2]', '1111'],
+            ['param[3]', '1111'],
+            ['param[4]', '1111'],
+            ['param[5]', '1111'],
+            ['param[6]', '1111'],
+            ['param[7]', '1111'],
+            ['param[8]', '1111'],
+            ['param[9]', '1111'],
+        ];
+
+        $this->assertSame($expectedPairs, $this->decodeQueryPairs($canonicalQuery));
+
+        $expectedCanonical = "GET\n/service\n" . $canonicalQuery . "\nhost:example.com\n\nhost\n" . $payload;
+        $this->assertSame($expectedCanonical, $context['creq']);
+
+        $signed = $signature->signRequest($request, $credentials);
+        $this->assertSame($expectedPairs, $this->decodeQueryPairs($signed->getUri()->getQuery()));
+
+        $expectedSigned = "GET /service?param%5B0%5D=1111&param%5B1%5D=1111&param%5B10%5D=1111&param%5B2%5D=1111&param%5B3%5D=1111&param%5B4%5D=1111&param%5B5%5D=1111&param%5B6%5D=1111&param%5B7%5D=1111&param%5B8%5D=1111&param%5B9%5D=1111 HTTP/1.1\r\n"
+            . "Host: example.com\r\n"
+            . "X-Amz-Date: 20110909T233600Z\r\n"
+            . "Authorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/region/service/aws4_request, SignedHeaders=host;x-amz-date, Signature=db59e82a5b69e8d4a0fb1a6ceff6a0ff7beca86ac5531b8c69fa93ea0028634b\r\n\r\n";
+        $this->assertSame($expectedSigned, Psr7\Message::toString($signed));
     }
 
     public function testEnsuresContentSha256CanBeCalculated()
