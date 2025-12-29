@@ -3859,7 +3859,8 @@
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidActiveRegionException"}
       ]
     },
     "SearchAgentStatuses":{
@@ -4364,7 +4365,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidActiveRegionException"}
       ]
     },
     "StartContactStreaming":{
@@ -4518,7 +4520,8 @@
         {"shape":"ContactNotFoundException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidActiveRegionException"}
       ]
     },
     "StopContactMediaProcessing":{
@@ -4549,7 +4552,8 @@
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidActiveRegionException"}
       ]
     },
     "StopContactStreaming":{
@@ -4594,7 +4598,8 @@
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidActiveRegionException"}
       ]
     },
     "TagContact":{
@@ -4610,7 +4615,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidActiveRegionException"}
       ],
       "idempotent":true
     },
@@ -4660,7 +4666,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidActiveRegionException"}
       ],
       "idempotent":true
     },
@@ -4726,7 +4733,8 @@
         {"shape":"InternalServiceException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"InvalidActiveRegionException"}
       ]
     },
     "UpdateContactAttributes":{
@@ -4741,7 +4749,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidActiveRegionException"}
       ]
     },
     "UpdateContactEvaluation":{
@@ -4879,7 +4888,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceException"},
         {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidActiveRegionException"}
       ]
     },
     "UpdateContactSchedule":{
@@ -5730,6 +5740,11 @@
         "EvaluationFormArn":{"shape":"ARN"},
         "EvaluationFormVersion":{"shape":"VersionNumber"}
       }
+    },
+    "ActiveRegion":{
+      "type":"string",
+      "max":1024,
+      "min":0
     },
     "AdditionalEmailRecipients":{
       "type":"structure",
@@ -7619,7 +7634,8 @@
         "ContactDetails":{"shape":"ContactDetails"},
         "OutboundStrategy":{"shape":"OutboundStrategy"},
         "Attributes":{"shape":"Attributes"},
-        "NextContacts":{"shape":"NextContacts"}
+        "NextContacts":{"shape":"NextContacts"},
+        "GlobalResiliencyMetadata":{"shape":"GlobalResiliencyMetadata"}
       }
     },
     "ContactAnalysis":{
@@ -13945,6 +13961,14 @@
         "AgentConfig":{"shape":"AgentConfig"}
       }
     },
+    "GlobalResiliencyMetadata":{
+      "type":"structure",
+      "members":{
+        "ActiveRegion":{"shape":"ActiveRegion"},
+        "OriginRegion":{"shape":"OriginRegion"},
+        "TrafficDistributionGroupId":{"shape":"TrafficDistributionGroupId"}
+      }
+    },
     "GlobalSignInEndpoint":{
       "type":"string",
       "max":128,
@@ -14698,6 +14722,14 @@
         "WEEK",
         "TOTAL"
       ]
+    },
+    "InvalidActiveRegionException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"Message"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
     },
     "InvalidContactFlowException":{
       "type":"structure",
@@ -17374,6 +17406,11 @@
     "Origin":{
       "type":"string",
       "max":267
+    },
+    "OriginRegion":{
+      "type":"string",
+      "max":1024,
+      "min":0
     },
     "OriginsList":{
       "type":"list",

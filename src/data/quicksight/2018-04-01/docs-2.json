@@ -104,6 +104,7 @@
     "DescribeQuickSightQSearchConfiguration": "<p>Describes the state of a Quick Sight Q Search configuration.</p>",
     "DescribeRefreshSchedule": "<p>Provides a summary of a refresh schedule.</p>",
     "DescribeRoleCustomPermission": "<p>Describes all custom permissions that are mapped to a role.</p>",
+    "DescribeSelfUpgradeConfiguration": "<p>Describes the self-upgrade configuration for a Quick Suite account.</p>",
     "DescribeTemplate": "<p>Describes a template's metadata.</p>",
     "DescribeTemplateAlias": "<p>Describes the template alias for a template.</p>",
     "DescribeTemplateDefinition": "<p>Provides a detailed description of the definition of a template.</p> <note> <p>If you do not need to know details about the content of a template, for instance if you are trying to check the status of a recently created or updated template, use the <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeTemplate.html\"> <code>DescribeTemplate</code> </a> instead. </p> </note>",
@@ -148,6 +149,7 @@
     "ListNamespaces": "<p>Lists the namespaces for the specified Amazon Web Services account. This operation doesn't list deleted namespaces.</p>",
     "ListRefreshSchedules": "<p>Lists the refresh schedules of a dataset. Each dataset can have up to 5 schedules. </p>",
     "ListRoleMemberships": "<p>Lists all groups that are associated with a role.</p>",
+    "ListSelfUpgrades": "<p>Lists all self-upgrade requests for a Quick Suite account.</p>",
     "ListTagsForResource": "<p>Lists the tags assigned to a resource.</p>",
     "ListTemplateAliases": "<p>Lists all the aliases of a template.</p>",
     "ListTemplateVersions": "<p>Lists all the versions of the templates in the current Amazon Quick Sight account.</p>",
@@ -176,7 +178,7 @@
     "SearchTopics": "<p>Searches for any Q topic that exists in an Quick Suite account.</p>",
     "StartAssetBundleExportJob": "<p>Starts an Asset Bundle export job.</p> <p>An Asset Bundle export job exports specified Amazon Quick Sight assets. You can also choose to export any asset dependencies in the same job. Export jobs run asynchronously and can be polled with a <code>DescribeAssetBundleExportJob</code> API call. When a job is successfully completed, a download URL that contains the exported assets is returned. The URL is valid for 5 minutes and can be refreshed with a <code>DescribeAssetBundleExportJob</code> API call. Each Amazon Quick Sight account can run up to 5 export jobs concurrently.</p> <p>The API caller must have the necessary permissions in their IAM role to access each resource before the resources can be exported.</p>",
     "StartAssetBundleImportJob": "<p>Starts an Asset Bundle import job.</p> <p>An Asset Bundle import job imports specified Amazon Quick Sight assets into an Amazon Quick Sight account. You can also choose to import a naming prefix and specified configuration overrides. The assets that are contained in the bundle file that you provide are used to create or update a new or existing asset in your Amazon Quick Sight account. Each Amazon Quick Sight account can run up to 5 import jobs concurrently.</p> <p>The API caller must have the necessary <code>\"create\"</code>, <code>\"describe\"</code>, and <code>\"update\"</code> permissions in their IAM role to access each resource type that is contained in the bundle file before the resources can be imported.</p>",
-    "StartDashboardSnapshotJob": "<p>Starts an asynchronous job that generates a snapshot of a dashboard's output. You can request one or several of the following format configurations in each API call.</p> <ul> <li> <p>1 Paginated PDF</p> </li> <li> <p>1 Excel workbook that includes up to 5 table or pivot table visuals</p> </li> <li> <p>5 CSVs from table or pivot table visuals</p> </li> </ul> <p>The status of a submitted job can be polled with the <code>DescribeDashboardSnapshotJob</code> API. When you call the <code>DescribeDashboardSnapshotJob</code> API, check the <code>JobStatus</code> field in the response. Once the job reaches a <code>COMPLETED</code> or <code>FAILED</code> status, use the <code>DescribeDashboardSnapshotJobResult</code> API to obtain the URLs for the generated files. If the job fails, the <code>DescribeDashboardSnapshotJobResult</code> API returns detailed information about the error that occurred.</p> <p> <b>StartDashboardSnapshotJob API throttling</b> </p> <p>Quick Sight utilizes API throttling to create a more consistent user experience within a time span for customers when they call the <code>StartDashboardSnapshotJob</code>. By default, 12 jobs can run simlutaneously in one Amazon Web Services account and users can submit up 10 API requests per second before an account is throttled. If an overwhelming number of API requests are made by the same user in a short period of time, Quick Sight throttles the API calls to maintin an optimal experience and reliability for all Quick Sight users.</p> <p> <b>Common throttling scenarios</b> </p> <p>The following list provides information about the most commin throttling scenarios that can occur.</p> <ul> <li> <p> <b>A large number of <code>SnapshotExport</code> API jobs are running simultaneously on an Amazon Web Services account.</b> When a new <code>StartDashboardSnapshotJob</code> is created and there are already 12 jobs with the <code>RUNNING</code> status, the new job request fails and returns a <code>LimitExceededException</code> error. Wait for a current job to comlpete before you resubmit the new job.</p> </li> <li> <p> <b>A large number of API requests are submitted on an Amazon Web Services account.</b> When a user makes more than 10 API calls to the Quick Sight API in one second, a <code>ThrottlingException</code> is returned.</p> </li> </ul> <p>If your use case requires a higher throttling limit, contact your account admin or <a href=\"http://aws.amazon.com/contact-us/\">Amazon Web ServicesSupport</a> to explore options to tailor a more optimal expereince for your account.</p> <p> <b>Best practices to handle throttling</b> </p> <p>If your use case projects high levels of API traffic, try to reduce the degree of frequency and parallelism of API calls as much as you can to avoid throttling. You can also perform a timing test to calculate an estimate for the total processing time of your projected load that stays within the throttling limits of the Quick Sight APIs. For example, if your projected traffic is 100 snapshot jobs before 12:00 PM per day, start 12 jobs in parallel and measure the amount of time it takes to proccess all 12 jobs. Once you obtain the result, multiply the duration by 9, for example <code>(12 minutes * 9 = 108 minutes)</code>. Use the new result to determine the latest time at which the jobs need to be started to meet your target deadline.</p> <p>The time that it takes to process a job can be impacted by the following factors:</p> <ul> <li> <p>The dataset type (Direct Query or SPICE).</p> </li> <li> <p>The size of the dataset.</p> </li> <li> <p>The complexity of the calculated fields that are used in the dashboard.</p> </li> <li> <p>The number of visuals that are on a sheet.</p> </li> <li> <p>The types of visuals that are on the sheet.</p> </li> <li> <p>The number of formats and snapshots that are requested in the job configuration.</p> </li> <li> <p>The size of the generated snapshots.</p> </li> </ul> <p> <b>Registered user support</b> </p> <p>You can generate snapshots for registered Quick Sight users by using the Snapshot Job APIs with <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-identity-enhanced-iam-role-sessions.html\">identity-enhanced IAM role session credentials</a>. This approach allows you to create snapshots on behalf of specific Quick Sight users while respecting their row-level security (RLS), column-level security (CLS), dynamic default parameters and dashboard parameter/filter settings.</p> <p>To generate snapshots for registered Quick Sight users, you need to:</p> <ul> <li> <p>Obtain identity-enhanced IAM role session credentials from AWS Security Token Service (STS).</p> </li> <li> <p>Use these credentials to call the Snapshot Job APIs.</p> </li> </ul> <p>Identity-enhanced credentials are credentials that contain information about the end user (e.g., registered Quick Sight user).</p> <p>If your Quick Sight users are backed by <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html\">AWS Identity Center</a>, then you need to set up a <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/setuptrustedtokenissuer.html\">trusted token issuer</a>. Then, getting identity-enhanced IAM credentials for a Quick Sight user will look like the following:</p> <ul> <li> <p>Authenticate user with your OIDC compliant Identity Provider. You should get auth tokens back.</p> </li> <li> <p>Use the OIDC API, <a href=\"https://docs.aws.amazon.com/singlesignon/latest/OIDCAPIReference/API_CreateTokenWithIAM.html\">CreateTokenWithIAM</a>, to exchange auth tokens to IAM tokens. One of the resulted tokens will be identity token.</p> </li> <li> <p>Call STS AssumeRole API as you normally would, but provide an extra <code>ProvidedContexts</code> parameter in the API request. The list of contexts must have a single trusted context assertion. The <code>ProviderArn</code> should be <code>arn:aws:iam::aws:contextProvider/IdentityCenter</code> while <code>ContextAssertion</code> will be the identity token you received in response from CreateTokenWithIAM</p> </li> </ul> <p>For more details, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-identity-enhanced-iam-role-sessions.html\">IdC documentation on Identity-enhanced IAM role sessions</a>.</p> <p>To obtain Identity-enhanced credentials for Quick Sight native users, IAM federated users, or Active Directory users, follow the steps below:</p> <ul> <li> <p>Call Quick Sight <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_GetIdentityContext.html\">GetIdentityContext API</a> to get identity token.</p> </li> <li> <p>Call STS AssumeRole API as you normally would, but provide extra <code>ProvidedContexts</code> parameter in the API request. The list of contexts must have a single trusted context assertion. The <code>ProviderArn</code> should be <code>arn:aws:iam::aws:contextProvider/QuickSight</code> while <code>ContextAssertion</code> will be the identity token you received in response from GetIdentityContext</p> </li> </ul> <p>After obtaining the identity-enhanced IAM role session credentials, you can use them to start a job, describe the job and describe job result. You can use the same credentials as long as they haven't expired. All API requests made with these credentials are considered to be made by the impersonated Quick Sight user.</p> <important> <p>When using identity-enhanced session credentials, set the UserConfiguration request attribute to null. Otherwise, the request will be invalid.</p> </important> <p> <b>Possible error scenarios</b> </p> <p>The request fails with an Access Denied error in the following scenarios:</p> <ul> <li> <p>The credentials have expired.</p> </li> <li> <p>The impersonated Quick Sight user doesn't have access to the specified dashboard.</p> </li> <li> <p>The impersonated Quick Sight user is restricted from exporting data in the selected formats. For more information about export restrictions, see <a href=\"https://docs.aws.amazon.com/quicksuite/latest/userguide/create-custom-permisions-profile.html\">Customizing access to Amazon Quick Sight capabilities</a>.</p> </li> </ul>",
+    "StartDashboardSnapshotJob": "<p>Starts an asynchronous job that generates a snapshot of a dashboard's output. You can request one or several of the following format configurations in each API call.</p> <ul> <li> <p>1 Paginated PDF</p> </li> <li> <p>1 Excel workbook that includes up to 5 table or pivot table visuals</p> </li> <li> <p>5 CSVs from table or pivot table visuals</p> </li> </ul> <p>The status of a submitted job can be polled with the <code>DescribeDashboardSnapshotJob</code> API. When you call the <code>DescribeDashboardSnapshotJob</code> API, check the <code>JobStatus</code> field in the response. Once the job reaches a <code>COMPLETED</code> or <code>FAILED</code> status, use the <code>DescribeDashboardSnapshotJobResult</code> API to obtain the URLs for the generated files. If the job fails, the <code>DescribeDashboardSnapshotJobResult</code> API returns detailed information about the error that occurred.</p> <p> <b>StartDashboardSnapshotJob API throttling</b> </p> <p>Quick Sight utilizes API throttling to create a more consistent user experience within a time span for customers when they call the <code>StartDashboardSnapshotJob</code>. By default, 12 jobs can run simlutaneously in one Amazon Web Services account and users can submit up 10 API requests per second before an account is throttled. If an overwhelming number of API requests are made by the same user in a short period of time, Quick Sight throttles the API calls to maintin an optimal experience and reliability for all Quick Sight users.</p> <p> <b>Common throttling scenarios</b> </p> <p>The following list provides information about the most commin throttling scenarios that can occur.</p> <ul> <li> <p> <b>A large number of <code>SnapshotExport</code> API jobs are running simultaneously on an Amazon Web Services account.</b> When a new <code>StartDashboardSnapshotJob</code> is created and there are already 12 jobs with the <code>RUNNING</code> status, the new job request fails and returns a <code>LimitExceededException</code> error. Wait for a current job to comlpete before you resubmit the new job.</p> </li> <li> <p> <b>A large number of API requests are submitted on an Amazon Web Services account.</b> When a user makes more than 10 API calls to the Quick Sight API in one second, a <code>ThrottlingException</code> is returned.</p> </li> </ul> <p>If your use case requires a higher throttling limit, contact your account admin or <a href=\"http://aws.amazon.com/contact-us/\">Amazon Web ServicesSupport</a> to explore options to tailor a more optimal expereince for your account.</p> <p> <b>Best practices to handle throttling</b> </p> <p>If your use case projects high levels of API traffic, try to reduce the degree of frequency and parallelism of API calls as much as you can to avoid throttling. You can also perform a timing test to calculate an estimate for the total processing time of your projected load that stays within the throttling limits of the Quick Sight APIs. For example, if your projected traffic is 100 snapshot jobs before 12:00 PM per day, start 12 jobs in parallel and measure the amount of time it takes to proccess all 12 jobs. Once you obtain the result, multiply the duration by 9, for example <code>(12 minutes * 9 = 108 minutes)</code>. Use the new result to determine the latest time at which the jobs need to be started to meet your target deadline.</p> <p>The time that it takes to process a job can be impacted by the following factors:</p> <ul> <li> <p>The dataset type (Direct Query or SPICE).</p> </li> <li> <p>The size of the dataset.</p> </li> <li> <p>The complexity of the calculated fields that are used in the dashboard.</p> </li> <li> <p>The number of visuals that are on a sheet.</p> </li> <li> <p>The types of visuals that are on the sheet.</p> </li> <li> <p>The number of formats and snapshots that are requested in the job configuration.</p> </li> <li> <p>The size of the generated snapshots.</p> </li> </ul> <p> <b>Registered user support</b> </p> <p>You can generate snapshots for registered Quick Sight users by using the Snapshot Job APIs with <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-identity-enhanced-iam-role-sessions.html\">identity-enhanced IAM role session credentials</a>. This approach allows you to create snapshots on behalf of specific Quick Sight users while respecting their row-level security (RLS), column-level security (CLS), dynamic default parameters and dashboard parameter/filter settings.</p> <p>To generate snapshots for registered Quick Sight users, you need to:</p> <ul> <li> <p>Obtain identity-enhanced IAM role session credentials from Amazon Web Services Security Token Service (STS).</p> </li> <li> <p>Use these credentials to call the Snapshot Job APIs.</p> </li> </ul> <p>Identity-enhanced credentials are credentials that contain information about the end user (e.g., registered Quick Sight user).</p> <p>If your Quick Sight users are backed by <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html\">Amazon Web Services Identity Center</a>, then you need to set up a <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/setuptrustedtokenissuer.html\">trusted token issuer</a>. Then, getting identity-enhanced IAM credentials for a Quick Sight user will look like the following:</p> <ul> <li> <p>Authenticate user with your OIDC compliant Identity Provider. You should get auth tokens back.</p> </li> <li> <p>Use the OIDC API, <a href=\"https://docs.aws.amazon.com/singlesignon/latest/OIDCAPIReference/API_CreateTokenWithIAM.html\">CreateTokenWithIAM</a>, to exchange auth tokens to IAM tokens. One of the resulted tokens will be identity token.</p> </li> <li> <p>Call STS AssumeRole API as you normally would, but provide an extra <code>ProvidedContexts</code> parameter in the API request. The list of contexts must have a single trusted context assertion. The <code>ProviderArn</code> should be <code>arn:aws:iam::aws:contextProvider/IdentityCenter</code> while <code>ContextAssertion</code> will be the identity token you received in response from CreateTokenWithIAM</p> </li> </ul> <p>For more details, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-identity-enhanced-iam-role-sessions.html\">IdC documentation on Identity-enhanced IAM role sessions</a>.</p> <p>To obtain Identity-enhanced credentials for Quick Sight native users, IAM federated users, or Active Directory users, follow the steps below:</p> <ul> <li> <p>Call Quick Sight <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_GetIdentityContext.html\">GetIdentityContext API</a> to get identity token.</p> </li> <li> <p>Call STS AssumeRole API as you normally would, but provide extra <code>ProvidedContexts</code> parameter in the API request. The list of contexts must have a single trusted context assertion. The <code>ProviderArn</code> should be <code>arn:aws:iam::aws:contextProvider/QuickSight</code> while <code>ContextAssertion</code> will be the identity token you received in response from GetIdentityContext</p> </li> </ul> <p>After obtaining the identity-enhanced IAM role session credentials, you can use them to start a job, describe the job and describe job result. You can use the same credentials as long as they haven't expired. All API requests made with these credentials are considered to be made by the impersonated Quick Sight user.</p> <important> <p>When using identity-enhanced session credentials, set the UserConfiguration request attribute to null. Otherwise, the request will be invalid.</p> </important> <p> <b>Possible error scenarios</b> </p> <p>The request fails with an Access Denied error in the following scenarios:</p> <ul> <li> <p>The credentials have expired.</p> </li> <li> <p>The impersonated Quick Sight user doesn't have access to the specified dashboard.</p> </li> <li> <p>The impersonated Quick Sight user is restricted from exporting data in the selected formats. For more information about export restrictions, see <a href=\"https://docs.aws.amazon.com/quicksuite/latest/userguide/create-custom-permisions-profile.html\">Customizing access to Amazon Quick Sight capabilities</a>.</p> </li> </ul>",
     "StartDashboardSnapshotJobSchedule": "<p>Starts an asynchronous job that runs an existing dashboard schedule and sends the dashboard snapshot through email. </p> <p>Only one job can run simultaneously in a given schedule. Repeated requests are skipped with a <code>202</code> HTTP status code.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/sending-reports.html\">Scheduling and sending Amazon Quick Sight reports by email</a> and <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/email-reports-from-dashboard.html\">Configuring email report settings for a Amazon Quick Sight dashboard</a> in the <i>Amazon Quick Sight User Guide</i>.</p>",
     "TagResource": "<p>Assigns one or more tags (key-value pairs) to the specified Amazon Quick Sight resource. </p> <p>Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only resources with certain tag values. You can use the <code>TagResource</code> operation with a resource that already has tags. If you specify a new tag key for the resource, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value that you specify replaces the previous value for that tag.</p> <p>You can associate as many as 50 tags with a resource. Amazon Quick Sight supports tagging on data set, data source, dashboard, template, topic, and user. </p> <p>Tagging for Amazon Quick Sight works in a similar way to tagging for other Amazon Web Services services, except for the following:</p> <ul> <li> <p>Tags are used to track costs for users in Amazon Quick Sight. You can't tag other resources that Amazon Quick Sight costs are based on, such as storage capacoty (SPICE), session usage, alert consumption, or reporting units.</p> </li> <li> <p>Amazon Quick Sight doesn't currently support the tag editor for Resource Groups.</p> </li> </ul>",
     "UntagResource": "<p>Removes a tag or tags from a resource.</p>",
@@ -216,6 +218,8 @@
     "UpdateRefreshSchedule": "<p>Updates a refresh schedule for a dataset.</p>",
     "UpdateRoleCustomPermission": "<p>Updates the custom permissions that are associated with a role.</p>",
     "UpdateSPICECapacityConfiguration": "<p>Updates the SPICE capacity configuration for a Quick Sight account.</p>",
+    "UpdateSelfUpgrade": "<p>Updates a self-upgrade request for a Quick Suite user by approving, denying, or verifying the request.</p>",
+    "UpdateSelfUpgradeConfiguration": "<p>Updates the self-upgrade configuration for a Quick Suite account.</p>",
     "UpdateTemplate": "<p>Updates a template from an existing Amazon Quick Sight analysis or another template.</p>",
     "UpdateTemplateAlias": "<p>Updates the template alias of a template.</p>",
     "UpdateTemplatePermissions": "<p>Updates the resource permissions for a template.</p>",
@@ -2001,6 +2005,7 @@
         "DescribeQuickSightQSearchConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the Quick Sight Q Search configuration that the user wants described.</p>",
         "DescribeRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DescribeRoleCustomPermissionRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create a group in. The Amazon Web Services account ID that you provide must be the same Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
+        "DescribeSelfUpgradeConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the Quick Suite self-upgrade configuration.</p>",
         "DescribeTemplateAliasRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template alias that you're describing.</p>",
         "DescribeTemplateDefinitionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template. You must be using the Amazon Web Services account that the template is in.</p>",
         "DescribeTemplatePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template that you're describing.</p>",
@@ -2042,6 +2047,7 @@
         "ListNamespacesRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the Quick Sight namespaces that you want to list.</p>",
         "ListRefreshSchedulesRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "ListRoleMembershipsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create a group in. The Amazon Web Services account ID that you provide must be the same Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
+        "ListSelfUpgradesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the self-upgrade requests.</p>",
         "ListTemplateAliasesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template aliases that you're listing.</p>",
         "ListTemplateVersionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the templates that you're listing.</p>",
         "ListTemplatesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the templates that you're listing.</p>",
@@ -2107,6 +2113,8 @@
         "UpdateRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "UpdateRoleCustomPermissionRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create a group in. The Amazon Web Services account ID that you provide must be the same Amazon Web Services account that contains your Amazon Quick Sight account.</p>",
         "UpdateSPICECapacityConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the SPICE configuration that you want to update.</p>",
+        "UpdateSelfUpgradeConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the Quick Suite self-upgrade configuration that you want to update.</p>",
+        "UpdateSelfUpgradeRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the self-upgrade request.</p>",
         "UpdateTemplateAliasRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template alias that you're updating.</p>",
         "UpdateTemplatePermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template.</p>",
         "UpdateTemplateRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template that you're updating.</p>",
@@ -2770,7 +2778,8 @@
         "Capabilities$Space": "<p>The ability to perform space-related actions.</p>",
         "Capabilities$ChatAgent": "<p>The ability to perform chat-related actions.</p>",
         "Capabilities$CreateChatAgents": "<p>The ability to create chat agents.</p>",
-        "Capabilities$Research": "<p>The ability to perform research-related actions.</p>"
+        "Capabilities$Research": "<p>The ability to perform research-related actions.</p>",
+        "Capabilities$SelfUpgradeUserRole": "<p>The ability to enable users to upgrade their user role.</p>"
       }
     },
     "CascadingControlConfiguration": {
@@ -5967,6 +5976,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeSelfUpgradeConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeSelfUpgradeConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeTemplateAliasRequest": {
       "base": null,
       "refs": {}
@@ -8673,6 +8690,10 @@
       "base": "<p>The <code>NextToken</code> value isn't valid.</p>",
       "refs": {}
     },
+    "InvalidParameterException": {
+      "base": "<p>One or more parameter has a value that isn't valid.</p>",
+      "refs": {}
+    },
     "InvalidParameterValueException": {
       "base": "<p>One or more parameters has a value that isn't valid.</p>",
       "refs": {}
@@ -9409,6 +9430,14 @@
       "base": null,
       "refs": {}
     },
+    "ListSelfUpgradesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSelfUpgradesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListTagsForResourceRequest": {
       "base": null,
       "refs": {}
@@ -9595,7 +9624,9 @@
         "PluginVisualItemsLimitConfiguration$ItemsLimit": "<p>Determines how many values are be fetched at once.</p>",
         "RowInfo$RowsIngested": "<p>The number of rows that were ingested.</p>",
         "RowInfo$RowsDropped": "<p>The number of rows that were not ingested.</p>",
-        "RowInfo$TotalRowsInDataset": "<p>The total number of rows in the dataset.</p>"
+        "RowInfo$TotalRowsInDataset": "<p>The total number of rows in the dataset.</p>",
+        "SelfUpgradeRequestDetail$CreationTime": "<p>The time when the self-upgrade request was created.</p>",
+        "SelfUpgradeRequestDetail$lastUpdateAttemptTime": "<p>The time of the last update attempt for the self-upgrade request.</p>"
       }
     },
     "LongFormatText": {
@@ -9724,6 +9755,7 @@
         "ListIAMPolicyAssignmentsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListNamespacesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListRoleMembershipsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
+        "ListSelfUpgradesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListTemplateAliasesRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListTemplateVersionsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListTemplatesRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
@@ -9956,6 +9988,7 @@
         "DescribeIAMPolicyAssignmentRequest$Namespace": "<p>The namespace that contains the assignment.</p>",
         "DescribeNamespaceRequest$Namespace": "<p>The namespace that you want to describe.</p>",
         "DescribeRoleCustomPermissionRequest$Namespace": "<p>The namespace that contains the role.</p>",
+        "DescribeSelfUpgradeConfigurationRequest$Namespace": "<p>The Quick Suite namespace that you want to describe the Quick Suite self-upgrade configuration for.</p>",
         "DescribeUserRequest$Namespace": "<p>The namespace. Currently, you should set this to <code>default</code>.</p>",
         "GenerateEmbedUrlForAnonymousUserRequest$Namespace": "<p>The Amazon Quick Sight namespace that the anonymous user virtually belongs to. If you are not using an Amazon Quick Suite custom namespace, set this to <code>default</code>.</p>",
         "GetDashboardEmbedUrlRequest$Namespace": "<p>The Amazon Quick Sight namespace that contains the dashboard IDs in this request. If you're not using a custom namespace, set <code>Namespace = default</code>.</p>",
@@ -9965,6 +9998,7 @@
         "ListIAMPolicyAssignmentsForUserRequest$Namespace": "<p>The namespace of the assignment.</p>",
         "ListIAMPolicyAssignmentsRequest$Namespace": "<p>The namespace for the assignments.</p>",
         "ListRoleMembershipsRequest$Namespace": "<p>The namespace that includes the role.</p>",
+        "ListSelfUpgradesRequest$Namespace": "<p>The Quick Suite namespace for the self-upgrade requests.</p>",
         "ListUserGroupsRequest$Namespace": "<p>The namespace. Currently, you should set this to <code>default</code>.</p>",
         "ListUsersRequest$Namespace": "<p>The namespace. Currently, you should set this to <code>default</code>.</p>",
         "NamespaceInfoV2$Name": "<p>The name of the error.</p>",
@@ -9979,6 +10013,8 @@
         "UpdateGroupRequest$Namespace": "<p>The namespace of the group that you want to update.</p>",
         "UpdateIAMPolicyAssignmentRequest$Namespace": "<p>The namespace of the assignment.</p>",
         "UpdateRoleCustomPermissionRequest$Namespace": "<p>The namespace that contains the role that you want to update.</p>",
+        "UpdateSelfUpgradeConfigurationRequest$Namespace": "<p>The Quick Suite namespace that you want to update the Quick Suite self-upgrade configuration for.</p>",
+        "UpdateSelfUpgradeRequest$Namespace": "<p>The Quick Suite namespace for the self-upgrade request.</p>",
         "UpdateUserCustomPermissionRequest$Namespace": "<p>The namespace that the user belongs to.</p>",
         "UpdateUserRequest$Namespace": "<p>The namespace. Currently, you should set this to <code>default</code>.</p>"
       }
@@ -12548,6 +12584,44 @@
         "TooltipOptions$SelectedTooltipType": "<p>The selected type for the tooltip. Choose one of the following options:</p> <ul> <li> <p> <code>BASIC</code>: A basic tooltip.</p> </li> <li> <p> <code>DETAILED</code>: A detailed tooltip.</p> </li> </ul>"
       }
     },
+    "SelfUpgradeAdminAction": {
+      "base": null,
+      "refs": {
+        "UpdateSelfUpgradeRequest$Action": "<p>The action to perform on the self-upgrade request. Valid values are <code>APPROVE</code>, <code>DENY</code>, or <code>VERIFY</code>.</p>"
+      }
+    },
+    "SelfUpgradeConfiguration": {
+      "base": "<p>The self-upgrade configuration for the Quick Suite account.</p>",
+      "refs": {
+        "DescribeSelfUpgradeConfigurationResponse$SelfUpgradeConfiguration": "<p>The self-upgrade configuration for the Quick Suite account.</p>"
+      }
+    },
+    "SelfUpgradeRequestDetail": {
+      "base": "<p>Details of a self-upgrade request.</p>",
+      "refs": {
+        "SelfUpgradeRequestDetailList$member": null,
+        "UpdateSelfUpgradeResponse$SelfUpgradeRequestDetail": "<p>Details of the updated self-upgrade request.</p>"
+      }
+    },
+    "SelfUpgradeRequestDetailList": {
+      "base": null,
+      "refs": {
+        "ListSelfUpgradesResponse$SelfUpgradeRequestDetails": "<p>A list of self-upgrade request details.</p>"
+      }
+    },
+    "SelfUpgradeRequestStatus": {
+      "base": null,
+      "refs": {
+        "SelfUpgradeRequestDetail$RequestStatus": "<p>The status of the self-upgrade request.</p>"
+      }
+    },
+    "SelfUpgradeStatus": {
+      "base": null,
+      "refs": {
+        "SelfUpgradeConfiguration$SelfUpgradeStatus": "<p>Status set for the self-upgrade configuration for the Quick Suite account. It can contain the following values:</p> <ul> <li> <p> <code>AUTO_APPROVAL</code>: All the self-upgrade requests will be auto approved.</p> </li> <li> <p> <code>ADMIN_APPROVAL</code>: All the self-upgrade requests will require admin approval.</p> </li> </ul>",
+        "UpdateSelfUpgradeConfigurationRequest$SelfUpgradeStatus": "<p>The self-upgrade status that you want to set for the Quick Suite account.</p>"
+      }
+    },
     "SemanticEntityType": {
       "base": "<p>A structure that represents a semantic entity type.</p>",
       "refs": {
@@ -13846,6 +13920,7 @@
         "DescribeQuickSightQSearchConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeRoleCustomPermissionResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DescribeSelfUpgradeConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeTemplateAliasResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeTemplateDefinitionResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeTemplatePermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -13889,6 +13964,7 @@
         "ListNamespacesResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListRefreshSchedulesResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListRoleMembershipsResponse$Status": "<p>The HTTP status of the request.</p>",
+        "ListSelfUpgradesResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListTagsForResourceResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListTemplateAliasesResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListTemplateVersionsResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -13954,6 +14030,8 @@
         "UpdateRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateRoleCustomPermissionResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateSPICECapacityConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
+        "UpdateSelfUpgradeConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
+        "UpdateSelfUpgradeResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateTemplateAliasResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateTemplatePermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateTemplateResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -14135,6 +14213,7 @@
         "DescribeRefreshScheduleRequest$ScheduleId": "<p>The ID of the refresh schedule.</p>",
         "DescribeRefreshScheduleResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeRoleCustomPermissionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeSelfUpgradeConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeTemplateAliasResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeTemplateDefinitionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeTemplatePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -14176,7 +14255,7 @@
         "GetFlowMetadataOutput$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "GetFlowPermissionsOutput$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "GetIdentityContextResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
-        "GetIdentityContextResponse$Context": "<p>The identity context information for the user. This is an identity token that should be used as the ContextAssertion parameter in the <a href=\"https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html\">STS AssumeRole API</a> call to obtain identity enhanced AWS credentials.</p>",
+        "GetIdentityContextResponse$Context": "<p>The identity context information for the user. This is an identity token that should be used as the ContextAssertion parameter in the <a href=\"https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html\">STS AssumeRole API</a> call to obtain identity enhanced Amazon Web Services credentials.</p>",
         "GetSessionEmbedUrlResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "Group$PrincipalId": "<p>The principal ID of the group.</p>",
         "GroupSearchFilter$Value": "<p>The value of the named item, in this case <code>GROUP_NAME</code>, that you want to use as a filter.</p>",
@@ -14196,6 +14275,8 @@
         "InvalidDataSetParameterValueException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
         "InvalidNextTokenException$Message": null,
         "InvalidNextTokenException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
+        "InvalidParameterException$Message": null,
+        "InvalidParameterException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
         "InvalidParameterValueException$Message": null,
         "InvalidParameterValueException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
         "InvalidRequestException$Message": null,
@@ -14268,6 +14349,9 @@
         "ListRoleMembershipsRequest$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "ListRoleMembershipsResponse$NextToken": "<p>A pagination token that can be used in a subsequent request.</p>",
         "ListRoleMembershipsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "ListSelfUpgradesRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListSelfUpgradesResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListSelfUpgradesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ListTagsForResourceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ListTemplateAliasesRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListTemplateAliasesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -14376,6 +14460,9 @@
         "SearchTopicsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "SearchTopicsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "SearchTopicsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "SelfUpgradeRequestDetail$UpgradeRequestId": "<p>The ID of the self-upgrade request.</p>",
+        "SelfUpgradeRequestDetail$RequestNote": "<p>An optional note explaining the reason for the self-upgrade request.</p>",
+        "SelfUpgradeRequestDetail$lastUpdateFailureReason": "<p>The reason for the last update failure, if applicable.</p>",
         "SessionLifetimeInMinutesInvalidException$Message": null,
         "SessionLifetimeInMinutesInvalidException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
         "SheetBackgroundStyle$Gradient": "<p>The gradient background option for sheets.</p>",
@@ -14448,6 +14535,9 @@
         "UpdateRefreshScheduleResponse$ScheduleId": "<p>The ID of the refresh schedule.</p>",
         "UpdateRoleCustomPermissionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateSPICECapacityConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateSelfUpgradeConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateSelfUpgradeRequest$UpgradeRequestId": "<p>The ID of the self-upgrade request to update.</p>",
+        "UpdateSelfUpgradeResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateTemplateAliasResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateTemplatePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateTemplateResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -16556,6 +16646,22 @@
       "base": null,
       "refs": {}
     },
+    "UpdateSelfUpgradeConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSelfUpgradeConfigurationResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSelfUpgradeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateSelfUpgradeResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateTemplateAliasRequest": {
       "base": null,
       "refs": {}
@@ -16688,6 +16794,7 @@
         "ListIAMPolicyAssignmentsForUserRequest$UserName": "<p>The name of the user.</p>",
         "ListUserGroupsRequest$UserName": "<p>The Amazon Quick Sight user name that you want to list group memberships for.</p>",
         "RegisterUserRequest$UserName": "<p>The Amazon Quick Sight user name that you want to create for the user you are registering.</p>",
+        "SelfUpgradeRequestDetail$UserName": "<p>The username of the user who initiated the self-upgrade request.</p>",
         "UpdateUserCustomPermissionRequest$UserName": "<p>The username of the user that you want to update custom permissions for.</p>",
         "UpdateUserRequest$UserName": "<p>The Amazon Quick Sight user name that you want to update.</p>",
         "User$UserName": "<p>The user's user name. This value is required if you are registering a user that will be managed in Quick Sight. In the output, the value for <code>UserName</code> is <code>N/A</code> when the value for <code>IdentityType</code> is <code>IAM</code> and the corresponding IAM user is deleted.</p>"
@@ -16697,6 +16804,8 @@
       "base": null,
       "refs": {
         "RegisterUserRequest$UserRole": "<p>The Amazon Quick Sight role for the user. The user role can be one of the following:</p> <ul> <li> <p> <code>READER</code>: A user who has read-only access to dashboards.</p> </li> <li> <p> <code>AUTHOR</code>: A user who can create data sources, datasets, analyses, and dashboards.</p> </li> <li> <p> <code>ADMIN</code>: A user who is an author, who can also manage Amazon Quick Sight settings.</p> </li> <li> <p> <code>READER_PRO</code>: Reader Pro adds Generative BI capabilities to the Reader role. Reader Pros have access to Amazon Q in Quick Sight, can build stories with Amazon Q, and can generate executive summaries from dashboards.</p> </li> <li> <p> <code>AUTHOR_PRO</code>: Author Pro adds Generative BI capabilities to the Author role. Author Pros can author dashboards with natural language with Amazon Q, build stories with Amazon Q, create Topics for Q&amp;A, and generate executive summaries from dashboards.</p> </li> <li> <p> <code>ADMIN_PRO</code>: Admin Pros are Author Pros who can also manage Amazon Quick Sight administrative settings. Admin Pro users are billed at Author Pro pricing.</p> </li> <li> <p> <code>RESTRICTED_READER</code>: This role isn't currently available for use.</p> </li> <li> <p> <code>RESTRICTED_AUTHOR</code>: This role isn't currently available for use.</p> </li> </ul>",
+        "SelfUpgradeRequestDetail$OriginalRole": "<p>The original role of the user before the upgrade.</p>",
+        "SelfUpgradeRequestDetail$RequestedRole": "<p>The role that the user is requesting to upgrade to.</p>",
         "UpdateUserRequest$Role": "<p>The Amazon Quick Sight role of the user. The role can be one of the following default security cohorts:</p> <ul> <li> <p> <code>READER</code>: A user who has read-only access to dashboards.</p> </li> <li> <p> <code>AUTHOR</code>: A user who can create data sources, datasets, analyses, and dashboards.</p> </li> <li> <p> <code>ADMIN</code>: A user who is an author, who can also manage Amazon Quick Sight settings.</p> </li> <li> <p> <code>READER_PRO</code>: Reader Pro adds Generative BI capabilities to the Reader role. Reader Pros have access to Amazon Q in Quick Sight, can build stories with Amazon Q, and can generate executive summaries from dashboards.</p> </li> <li> <p> <code>AUTHOR_PRO</code>: Author Pro adds Generative BI capabilities to the Author role. Author Pros can author dashboards with natural language with Amazon Q, build stories with Amazon Q, create Topics for Q&amp;A, and generate executive summaries from dashboards.</p> </li> <li> <p> <code>ADMIN_PRO</code>: Admin Pros are Author Pros who can also manage Amazon Quick Sight administrative settings. Admin Pro users are billed at Author Pro pricing.</p> </li> </ul> <p>The name of the Quick Sight role is invisible to the user except for the console screens dealing with permissions.</p>",
         "User$Role": "<p>The Quick Sight role for the user. The user role can be one of the following:.</p> <ul> <li> <p> <code>READER</code>: A user who has read-only access to dashboards.</p> </li> <li> <p> <code>AUTHOR</code>: A user who can create data sources, datasets, analyses, and dashboards.</p> </li> <li> <p> <code>ADMIN</code>: A user who is an author, who can also manage Amazon Quick Sight settings.</p> </li> <li> <p> <code>READER_PRO</code>: Reader Pro adds Generative BI capabilities to the Reader role. Reader Pros have access to Amazon Q in Quick Sight, can build stories with Amazon Q, and can generate executive summaries from dashboards.</p> </li> <li> <p> <code>AUTHOR_PRO</code>: Author Pro adds Generative BI capabilities to the Author role. Author Pros can author dashboards with natural language with Amazon Q, build stories with Amazon Q, create Topics for Q&amp;A, and generate executive summaries from dashboards.</p> </li> <li> <p> <code>ADMIN_PRO</code>: Admin Pros are Author Pros who can also manage Quick Sight administrative settings. Admin Pro users are billed at Author Pro pricing.</p> </li> <li> <p> <code>RESTRICTED_READER</code>: This role isn't currently available for use.</p> </li> <li> <p> <code>RESTRICTED_AUTHOR</code>: This role isn't currently available for use.</p> </li> </ul>"
       }

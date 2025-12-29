@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\QuickSight` - This release adds support for quick users to be able to perform role upgrades on their own. Additionally it allows admins to make this feature admin or auto approval along with new self upgrade capability that can be restricted by Admins.
+* `Aws\Connect` - Changes for Contact for Global Search
+
 ## 3.369.3 - 2025-12-26
 
 * `Aws\MediaLive` - AWS Elemental MediaLive now supports Pipeline Locking using Video Alignment as well as linked single pipeline channels to enable cross-channel and cross-region Pipeline Locking workflows.

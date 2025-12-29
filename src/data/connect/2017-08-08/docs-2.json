@@ -597,6 +597,12 @@
       "base": null,
       "refs": {}
     },
+    "ActiveRegion": {
+      "base": null,
+      "refs": {
+        "GlobalResiliencyMetadata$ActiveRegion": "<p>The current AWS region in which the contact is active. This indicates where the contact is being processed in real-time.</p>"
+      }
+    },
     "AdditionalEmailRecipients": {
       "base": "<p>List of additional email addresses for an email contact.</p>",
       "refs": {
@@ -5778,6 +5784,12 @@
       "base": null,
       "refs": {}
     },
+    "GlobalResiliencyMetadata": {
+      "base": "<p>Information about the global resiliency configuration for the contact, including traffic distribution details.</p>",
+      "refs": {
+        "Contact$GlobalResiliencyMetadata": "<p>Information about the global resiliency configuration for the contact, including traffic distribution details.</p>"
+      }
+    },
     "GlobalSignInEndpoint": {
       "base": null,
       "refs": {
@@ -6832,6 +6844,10 @@
         "MetricInterval$Interval": "<p>The interval period provided in the API request. </p>"
       }
     },
+    "InvalidActiveRegionException": {
+      "base": "<p>This exception occurs when an API request is made to a non-active region in an Amazon Connect instance configured with Amazon Connect Global Resiliency. For example, if the active region is US West (Oregon) and a request is made to US East (N. Virginia), the exception will be returned.</p>",
+      "refs": {}
+    },
     "InvalidContactFlowException": {
       "base": "<p>The flow is not valid.</p>",
       "refs": {}
@@ -7759,6 +7775,7 @@
         "DuplicateResourceException$Message": null,
         "IdempotencyException$Message": null,
         "InternalServiceException$Message": "<p>The message.</p>",
+        "InvalidActiveRegionException$Message": null,
         "InvalidParameterException$Message": "<p>The message about the parameters.</p>",
         "InvalidRequestException$Message": "<p>The message about the request.</p>",
         "LimitExceededException$Message": "<p>The message about the limit.</p>",
@@ -8250,6 +8267,12 @@
         "AssociateApprovedOriginRequest$Origin": "<p>The domain to add to your allow list.</p>",
         "DisassociateApprovedOriginRequest$Origin": "<p>The domain URL of the integrated application.</p>",
         "OriginsList$member": null
+      }
+    },
+    "OriginRegion": {
+      "base": null,
+      "refs": {
+        "GlobalResiliencyMetadata$OriginRegion": "<p>The AWS region where the contact was originally created and initiated. This may differ from the ActiveRegion if the contact has been transferred across regions.</p>"
       }
     },
     "OriginsList": {
@@ -12089,6 +12112,7 @@
       "refs": {
         "CreateTrafficDistributionGroupResponse$Id": "<p>The identifier of the traffic distribution group. This can be the ID or the ARN of the traffic distribution group.</p>",
         "GetTrafficDistributionResponse$Id": "<p>The identifier of the traffic distribution group. This can be the ID or the ARN if the API is being called in the Region where the traffic distribution group was created. The ARN must be provided if the call is from the replicated Region.</p>",
+        "GlobalResiliencyMetadata$TrafficDistributionGroupId": "<p>The identifier of the traffic distribution group.</p>",
         "TrafficDistributionGroup$Id": "<p>The identifier of the traffic distribution group. This can be the ID or the ARN if the API is being called in the Region where the traffic distribution group was created. The ARN must be provided if the call is from the replicated Region.</p>",
         "TrafficDistributionGroupSummary$Id": "<p>The identifier of the traffic distribution group. This can be the ID or the ARN if the API is being called in the Region where the traffic distribution group was created. The ARN must be provided if the call is from the replicated Region.</p>"
       }
