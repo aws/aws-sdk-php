@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.4 - 2025-12-29
 
 * `Aws\QuickSight` - This release adds support for quick users to be able to perform role upgrades on their own. Additionally it allows admins to make this feature admin or auto approval along with new self upgrade capability that can be restricted by Admins.
 * `Aws\Connect` - Changes for Contact for Global Search
