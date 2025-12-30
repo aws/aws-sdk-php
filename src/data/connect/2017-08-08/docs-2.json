@@ -603,6 +603,12 @@
         "GlobalResiliencyMetadata$ActiveRegion": "<p>The current AWS region in which the contact is active. This indicates where the contact is being processed in real-time.</p>"
       }
     },
+    "ActiveRegionList": {
+      "base": null,
+      "refs": {
+        "SearchCriteria$ActiveRegions": "<p>The list of active regions for contacts in ACGR instances.</p>"
+      }
+    },
     "AdditionalEmailRecipients": {
       "base": "<p>List of additional email addresses for an email contact.</p>",
       "refs": {
@@ -5787,7 +5793,8 @@
     "GlobalResiliencyMetadata": {
       "base": "<p>Information about the global resiliency configuration for the contact, including traffic distribution details.</p>",
       "refs": {
-        "Contact$GlobalResiliencyMetadata": "<p>Information about the global resiliency configuration for the contact, including traffic distribution details.</p>"
+        "Contact$GlobalResiliencyMetadata": "<p>Information about the global resiliency configuration for the contact, including traffic distribution details.</p>",
+        "ContactSearchSummary$GlobalResiliencyMetadata": "<p>Additional routing information for contacts created in ACGR instances.</p>"
       }
     },
     "GlobalSignInEndpoint": {
@@ -9866,6 +9873,7 @@
     "RegionName": {
       "base": null,
       "refs": {
+        "ActiveRegionList$member": null,
         "AgentStatus$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "AgentStatusSummary$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "AuthenticationProfile$LastModifiedRegion": "<p>The Amazon Web Services Region where the authentication profile was last modified.</p>",

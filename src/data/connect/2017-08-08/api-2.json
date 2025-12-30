@@ -5746,6 +5746,10 @@
       "max":1024,
       "min":0
     },
+    "ActiveRegionList":{
+      "type":"list",
+      "member":{"shape":"RegionName"}
+    },
     "AdditionalEmailRecipients":{
       "type":"structure",
       "members":{
@@ -8117,7 +8121,8 @@
         "ScheduledTimestamp":{"shape":"timestamp"},
         "SegmentAttributes":{"shape":"ContactSearchSummarySegmentAttributes"},
         "Name":{"shape":"Name"},
-        "RoutingCriteria":{"shape":"RoutingCriteria"}
+        "RoutingCriteria":{"shape":"RoutingCriteria"},
+        "GlobalResiliencyMetadata":{"shape":"GlobalResiliencyMetadata"}
       }
     },
     "ContactSearchSummaryAgentInfo":{
@@ -19989,7 +19994,8 @@
         "RoutingCriteria":{"shape":"SearchableRoutingCriteria"},
         "AdditionalTimeRange":{"shape":"SearchContactsAdditionalTimeRange"},
         "SearchableContactAttributes":{"shape":"SearchableContactAttributes"},
-        "SearchableSegmentAttributes":{"shape":"SearchableSegmentAttributes"}
+        "SearchableSegmentAttributes":{"shape":"SearchableSegmentAttributes"},
+        "ActiveRegions":{"shape":"ActiveRegionList"}
       }
     },
     "SearchDataTablesRequest":{
