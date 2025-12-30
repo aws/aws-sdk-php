@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.5 - 2025-12-30
 
 * `Aws\Signature` - Ensure SignatureV4 sorts query parameters by their URL-encoded names before canonicalization, so array-style keys like param[10] no longer disrupt the canonical order and break signature validation.
 * `Aws\KafkaConnect` - This change sets the KafkaConnect GovCloud FIPS and FIPS DualStack endpoints to use kafkaconnect instead of kafkaconnect-fips as the service name. This is done to match the Kafka endpoints.
