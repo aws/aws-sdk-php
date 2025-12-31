@@ -82,7 +82,7 @@ class S3EncryptionClientTest extends TestCase
             new Result(['CiphertextBlob' => 'encrypted'])
         ]);
 
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -108,7 +108,7 @@ class S3EncryptionClientTest extends TestCase
 
         $s3 = $this->getS3Client();
 
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -147,7 +147,7 @@ class S3EncryptionClientTest extends TestCase
             new Result(['CiphertextBlob' => 'encrypted'])
         ]);
 
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -176,7 +176,7 @@ class S3EncryptionClientTest extends TestCase
         $keyId = '11111111-2222-3333-4444-555555555555';
         $provider = new KmsMaterialsProvider($kms, $keyId);
 
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -204,7 +204,7 @@ class S3EncryptionClientTest extends TestCase
             new Result(['CiphertextBlob' => 'encrypted'])
         ]);
 
-        $client = new S3EncryptionClient(
+        $client = @new S3EncryptionClient(
             $s3,
             InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
         );
@@ -235,7 +235,7 @@ class S3EncryptionClientTest extends TestCase
             new Result(['CiphertextBlob' => 'encrypted'])
         ]);
 
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -274,7 +274,7 @@ class S3EncryptionClientTest extends TestCase
             new Result(['CiphertextBlob' => 'encrypted'])
         ]);
 
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -318,7 +318,7 @@ class S3EncryptionClientTest extends TestCase
             new Result(['CiphertextBlob' => 'encrypted'])
         ]);
 
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -363,7 +363,7 @@ EOXML;
             new Result(['CiphertextBlob' => 'encrypted'])
         ]);
 
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -401,7 +401,7 @@ EOXML;
             new Result(['CiphertextBlob' => 'encrypted'])
         ]);
 
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -438,7 +438,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -494,7 +494,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -538,7 +538,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClient(
+        $client = @new S3EncryptionClient(
             $s3,
             InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
         );
@@ -585,7 +585,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -630,7 +630,7 @@ EOXML;
         ]);
 
         $provider = new KmsMaterialsProvider($kms);
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -661,7 +661,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -693,7 +693,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -734,7 +734,7 @@ EOXML;
             ])
         ]);
 
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -777,7 +777,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClient($s3);
+        $client = @new S3EncryptionClient($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
