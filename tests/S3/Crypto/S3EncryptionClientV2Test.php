@@ -84,7 +84,7 @@ class S3EncryptionClientV2Test extends TestCase
             ])
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -111,7 +111,7 @@ class S3EncryptionClientV2Test extends TestCase
 
         $s3 = $this->getS3Client();
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -154,7 +154,7 @@ class S3EncryptionClientV2Test extends TestCase
             ])
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -184,7 +184,7 @@ class S3EncryptionClientV2Test extends TestCase
         $keyId = '11111111-2222-3333-4444-555555555555';
         $provider = new KmsMaterialsProviderV2($kms, $keyId);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -216,7 +216,7 @@ class S3EncryptionClientV2Test extends TestCase
             ])
         ]);
 
-        $client = new S3EncryptionClientV2(
+        $client = @new S3EncryptionClientV2(
             $s3,
             InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
         );
@@ -251,7 +251,7 @@ class S3EncryptionClientV2Test extends TestCase
             ])
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -294,7 +294,7 @@ class S3EncryptionClientV2Test extends TestCase
             ])
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -348,7 +348,7 @@ class S3EncryptionClientV2Test extends TestCase
             ])
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -397,7 +397,7 @@ EOXML;
             ])
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -442,7 +442,7 @@ EOXML;
             ])
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -492,7 +492,7 @@ EOXML;
             ])
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->putObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -532,7 +532,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -567,7 +567,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -601,7 +601,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -635,7 +635,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -679,7 +679,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
 
         // Suppressing known warning for 'V2_AND_LEGACY' security profile warning
         // Necessary to test decrypting with legacy metadata
@@ -727,7 +727,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -772,7 +772,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -818,7 +818,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2(
+        $client = @new S3EncryptionClientV2(
             $s3,
             InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
         );
@@ -867,7 +867,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -903,7 +903,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $result = @$client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -951,7 +951,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -997,7 +997,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -1017,7 +1017,7 @@ EOXML;
             'version' => 'latest',
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -1037,7 +1037,7 @@ EOXML;
             'version' => 'latest',
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
@@ -1077,7 +1077,7 @@ EOXML;
             },
         ]);
 
-        $client = new S3EncryptionClientV2($s3);
+        $client = @new S3EncryptionClientV2($s3);
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',

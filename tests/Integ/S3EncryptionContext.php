@@ -130,7 +130,7 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
             'region' => $this->region,
             'version' => 'latest'
         ]);
-        $s3EncryptionClient = new S3EncryptionClient($s3Client);
+        $s3EncryptionClient = @new S3EncryptionClient($s3Client);
 
         foreach ($this->plaintexts as $fileKeyPart => $plaintext) {
             $params = $this->operationParams[$fileKeyPart];
@@ -160,7 +160,7 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
             'region' => $this->region,
             'version' => 'latest'
         ]);
-        $s3EncryptionClient = new S3EncryptionClient($s3Client);
+        $s3EncryptionClient = @new S3EncryptionClient($s3Client);
 
         $fileKeyParts = array_keys($this->plaintexts);
         foreach ($fileKeyParts as $fileKeyPart) {
@@ -227,4 +227,3 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
         return '';
     }
 }
-

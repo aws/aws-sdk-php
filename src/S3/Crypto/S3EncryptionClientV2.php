@@ -107,6 +107,14 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
         S3Client $client,
         $instructionFileSuffix = null
     ) {
+        trigger_error(
+            'S3EncryptionClientV2 will be deprecated soon and will be removed in a future ' .
+            'release due to security vulnerabilities (CVE-2024-56473). Please ' .
+            'migrate to S3EncryptionClientV3 as soon as possible.' . "\n" .
+            'See https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/' .
+            'security.html for upgrade guidance.',
+            E_USER_DEPRECATED
+        );
         $this->client = $client;
         $this->instructionFileSuffix = $instructionFileSuffix;
         $this->legacyWarningCount = 0;

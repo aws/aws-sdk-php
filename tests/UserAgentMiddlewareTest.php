@@ -459,7 +459,7 @@ class UserAgentMiddlewareTest extends TestCase
                 ));
             },
         ]);
-        $encryptionClient = new S3EncryptionClient(
+        $encryptionClient = @new S3EncryptionClient(
             $s3Client,
             InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
         );
@@ -532,7 +532,7 @@ class UserAgentMiddlewareTest extends TestCase
                 ));
             },
         ]);
-        $encryptionClient = new S3EncryptionClientV2(
+        $encryptionClient = @new S3EncryptionClientV2(
             $s3Client,
             InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
         );
