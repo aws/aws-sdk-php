@@ -3,10 +3,7 @@ namespace Aws\Api\ErrorParser;
 
 use Aws\Api\Parser\PayloadParserTrait;
 use Aws\Api\StructureShape;
-use Aws\Api\ResponseWrapper;
-use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
-use SimpleXMLElement;
 
 /**
  * Provides basic JSON error parsing functionality.

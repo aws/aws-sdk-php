@@ -1,14 +1,12 @@
 <?php
 namespace Aws\Api\ErrorParser;
 
-use Aws\Api\Parser\Exception\ParserException;
 use Aws\Api\Parser\PayloadParserTrait;
 use Aws\Api\Parser\XmlParser;
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
 use Aws\Api\ResponseWrapper;
 use Aws\CommandInterface;
-use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
 
 /**

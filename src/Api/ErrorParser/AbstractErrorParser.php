@@ -5,10 +5,8 @@ use Aws\Api\Parser\MetadataParserTrait;
 use Aws\Api\Parser\PayloadParserTrait;
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
-use Aws\Api\ResponseWrapper;
 use Aws\CommandInterface;
 use Psr\Http\Message\ResponseInterface;
-use SimpleXMLElement;
 
 abstract class AbstractErrorParser
 {
