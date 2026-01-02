@@ -2,6 +2,7 @@
 namespace Aws\Api\Parser;
 
 use Aws\Api\DateTimeResult;
+use Aws\Api\ResponseWrapper;
 use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 use Aws\Result;
@@ -55,7 +56,12 @@ abstract class AbstractRestParser extends AbstractParser
             }
         }
 
-        // Read the full payload, even in non-seekable streams
+        // Wrap response to allow the body
+        // to be read multiple times
+        // even in non-seekable streams.
+        $response = new ResponseWrapper($response);
+
+        // Get the body content to know whether is empty
         $body = $response->getBody()->getContents();
         // Make sure empty payloads are not parsed
         if (!$payload
@@ -77,17 +83,25 @@ abstract class AbstractRestParser extends AbstractParser
     ) {
         $member = $output->getMember($payload);
         $body = $response->getBody();
-
         if (!empty($member['eventstream'])) {
             $result[$payload] = new EventParsingIterator(
                 $body,
                 $member,
                 $this
             );
-        } elseif ($member instanceof StructureShape) {
+
+            return;
+        }
+
+        // We don't create the wrapper above
+        // because on event-stream we want to keep
+        // the original non-seekable stream.
+        $response = new ResponseWrapper($response);
+        if ($member instanceof StructureShape) {
             //Unions must have at least one member set to a non-null value
             // If the body is empty, we can assume it is unset
-            if (!empty($member['union']) && ($body->isSeekable() && !$body->getSize())) {
+            if (!empty($member['union'])
+                && empty($response->getBody()->getContents())) {
                 return;
             }
 
