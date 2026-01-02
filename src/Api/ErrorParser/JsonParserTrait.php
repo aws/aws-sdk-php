@@ -3,6 +3,7 @@ namespace Aws\Api\ErrorParser;
 
 use Aws\Api\Parser\PayloadParserTrait;
 use Aws\Api\StructureShape;
+use Aws\Api\ResponseWrapper;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
 use SimpleXMLElement;
@@ -39,14 +40,12 @@ trait JsonParserTrait
             );
         }
 
-        // Read the full payload, even in non-seekable streams
+        // We get the full body content
         $body = $response->getBody()->getContents();
 
         $parsedBody = [];
         // Avoid parsing an empty body
         if (!empty($body)) {
-            // Parsing the body to avoid having to read the response body again.
-            // This will avoid issues when the body is not seekable
             $parsedBody = $this->parseJson($body, $response);
         }
 
@@ -64,7 +63,7 @@ trait JsonParserTrait
             'code'        => $error_code ?? null,
             'message'     => null,
             'type'        => $error_type,
-            'parsed'      => $parsedBody
+            'parsed'      => $parsedBody,
         ];
     }
 
@@ -136,14 +135,17 @@ trait JsonParserTrait
     }
 
     protected function payload(
-        ResponseInterface|SimpleXMLElement|array $responseOrParsedBody,
+        ResponseInterface $response,
         StructureShape $member
     ) {
-        $jsonBody = $responseOrParsedBody;
-        if ($responseOrParsedBody instanceof ResponseInterface) {
-            $body = $responseOrParsedBody->getBody();
-            $jsonBody = $this->parseJson($body, $responseOrParsedBody);
+        $body = $response->getBody()->getContents();
+
+        // Avoid parsing empty bodies
+        if (empty($body)) {
+            return [];
         }
+
+        $jsonBody = $this->parseJson($body, $response);
 
         return $this->parser->parse($member, $jsonBody);
     }

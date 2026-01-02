@@ -4,6 +4,7 @@ namespace Aws\Api\ErrorParser;
 use Aws\Api\Parser\JsonParser;
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
+use Aws\Api\ResponseWrapper;
 use Aws\CommandInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -26,6 +27,7 @@ class RestJsonErrorParser extends AbstractErrorParser
         ResponseInterface $response,
         ?CommandInterface $command = null
     ) {
+        $response = new ResponseWrapper($response);
         $data = $this->genericHandler($response);
 
         // Merge in error data from the JSON body

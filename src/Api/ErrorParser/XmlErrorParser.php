@@ -6,6 +6,7 @@ use Aws\Api\Parser\PayloadParserTrait;
 use Aws\Api\Parser\XmlParser;
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
+use Aws\Api\ResponseWrapper;
 use Aws\CommandInterface;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
@@ -29,6 +30,7 @@ class XmlErrorParser extends AbstractErrorParser
         ResponseInterface $response,
         ?CommandInterface $command = null
     ) {
+        $response = new ResponseWrapper($response);
         $code = (string) $response->getStatusCode();
 
         $data = [
@@ -36,11 +38,12 @@ class XmlErrorParser extends AbstractErrorParser
             'request_id' => null,
             'code' => null,
             'message' => null,
-            'parsed' => null
+            'parsed' => null,
         ];
 
-        // Read the full payload, even in non-seekable streams
+        // Get the full body content
         $body = $response->getBody()->getContents();
+
         // Parse just if is not empty
         if (!empty($body)) {
             $this->parseBody($this->parseXml($body, $response), $data);
@@ -101,17 +104,20 @@ class XmlErrorParser extends AbstractErrorParser
     }
 
     protected function payload(
-        ResponseInterface|\SimpleXMLElement|array $responseOrParsedBody,
+        ResponseInterface $response,
         StructureShape $member
     ) {
-        $xmlBody = $responseOrParsedBody;
-        if ($responseOrParsedBody instanceof ResponseInterface) {
-            $xmlBody = $this->parseXml(
-                $responseOrParsedBody->getBody(),
-                $responseOrParsedBody
-            );
+        $body = $response->getBody()->getContents();
+
+        // Avoid parsing empty bodies
+        if (empty($body)) {
+            return [];
         }
 
+        $xmlBody = $this->parseXml(
+            $body,
+            $response
+        );
 
         $prefix = $this->registerNamespacePrefix($xmlBody);
         $errorBody = $xmlBody->xpath("//{$prefix}Error");
@@ -120,8 +126,8 @@ class XmlErrorParser extends AbstractErrorParser
             return $this->parser->parse($member, $errorBody[0]);
         }
 
-        throw new ParserException(
-            "Error element not found in parsed body"
-        );
+        // Fallback since we should either throw an exception or return a value
+        // when the condition above is not met.
+        return [];
     }
 }
