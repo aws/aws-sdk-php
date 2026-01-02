@@ -1053,7 +1053,7 @@ EOT
         $client->getHandlerList()->setHandler(new MockHandler([new Result()]));
         $client->getHandlerList()->appendInit(function(callable $handler)
         use ($isFlagPresent, &$called) {
-            return function (CommandInterface $command, RequestInterface $request = null)
+            return function (CommandInterface $command, ?RequestInterface $request = null)
             use ($handler, $isFlagPresent, &$called) {
                 $called = true;
                 $this->assertTrue(
