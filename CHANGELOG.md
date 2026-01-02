@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.6 - 2026-01-02
 
 * `Aws\S3` - Adds deprecation notices to `S3EncryptionClient` and `S3EncryptionClientV2`
 * `Aws\CleanRooms` - Added support for publishing detailed metrics to CloudWatch for operational monitoring of collaborations, including query performance and resource utilization.
