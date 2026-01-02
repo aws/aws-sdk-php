@@ -372,7 +372,7 @@
         "Country":{"shape":"SensitiveStringType"},
         "Formatted":{"shape":"SensitiveStringType"},
         "Type":{"shape":"SensitiveStringType"},
-        "Primary":{"shape":"SensitiveBooleanType"}
+        "Primary":{"shape":"BooleanType"}
       }
     },
     "Addresses":{
@@ -414,6 +414,7 @@
       "members":{},
       "document":true
     },
+    "BooleanType":{"type":"boolean"},
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -495,6 +496,7 @@
         "Photos":{"shape":"Photos"},
         "Website":{"shape":"SensitiveStringType"},
         "Birthdate":{"shape":"SensitiveStringType"},
+        "Roles":{"shape":"Roles"},
         "Extensions":{"shape":"Extensions"}
       }
     },
@@ -653,6 +655,7 @@
         "Photos":{"shape":"Photos"},
         "Website":{"shape":"SensitiveStringType"},
         "Birthdate":{"shape":"SensitiveStringType"},
+        "Roles":{"shape":"Roles"},
         "CreatedAt":{"shape":"DateType"},
         "CreatedBy":{"shape":"StringType"},
         "UpdatedAt":{"shape":"DateType"},
@@ -665,7 +668,7 @@
       "members":{
         "Value":{"shape":"SensitiveStringType"},
         "Type":{"shape":"SensitiveStringType"},
-        "Primary":{"shape":"SensitiveBooleanType"}
+        "Primary":{"shape":"BooleanType"}
       }
     },
     "Emails":{
@@ -860,7 +863,7 @@
       "members":{
         "GroupId":{"shape":"ResourceId"},
         "MemberId":{"shape":"MemberId"},
-        "MembershipExists":{"shape":"SensitiveBooleanType"}
+        "MembershipExists":{"shape":"BooleanType"}
       }
     },
     "GroupMembershipExistenceResults":{
@@ -1046,7 +1049,7 @@
       "members":{
         "Value":{"shape":"SensitiveStringType"},
         "Type":{"shape":"SensitiveStringType"},
-        "Primary":{"shape":"SensitiveBooleanType"}
+        "Primary":{"shape":"BooleanType"}
       }
     },
     "PhoneNumbers":{
@@ -1062,7 +1065,7 @@
         "Value":{"shape":"SensitiveStringType"},
         "Type":{"shape":"SensitiveStringType"},
         "Display":{"shape":"SensitiveStringType"},
-        "Primary":{"shape":"SensitiveBooleanType"}
+        "Primary":{"shape":"BooleanType"}
       }
     },
     "Photos":{
@@ -1109,9 +1112,19 @@
       ]
     },
     "RetryAfterSeconds":{"type":"integer"},
-    "SensitiveBooleanType":{
-      "type":"boolean",
-      "sensitive":true
+    "Role":{
+      "type":"structure",
+      "members":{
+        "Value":{"shape":"SensitiveStringType"},
+        "Type":{"shape":"SensitiveStringType"},
+        "Primary":{"shape":"BooleanType"}
+      }
+    },
+    "Roles":{
+      "type":"list",
+      "member":{"shape":"Role"},
+      "max":1,
+      "min":1
     },
     "SensitiveStringType":{
       "type":"string",
@@ -1216,6 +1229,7 @@
         "Photos":{"shape":"Photos"},
         "Website":{"shape":"SensitiveStringType"},
         "Birthdate":{"shape":"SensitiveStringType"},
+        "Roles":{"shape":"Roles"},
         "CreatedAt":{"shape":"DateType"},
         "CreatedBy":{"shape":"StringType"},
         "UpdatedAt":{"shape":"DateType"},

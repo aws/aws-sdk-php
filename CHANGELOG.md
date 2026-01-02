@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Adds deprecation notices to `S3EncryptionClient` and `S3EncryptionClientV2`
+* `Aws\CleanRooms` - Added support for publishing detailed metrics to CloudWatch for operational monitoring of collaborations, including query performance and resource utilization.
+* `Aws\IdentityStore` - This change introduces "Roles" attribute for User entities supported by AWS Identity Store SDK.
+
 ## 3.369.5 - 2025-12-30
 
 * `Aws\Signature` - Ensure SignatureV4 sorts query parameters by their URL-encoded names before canonicalization, so array-style keys like param[10] no longer disrupt the canonical order and break signature validation.

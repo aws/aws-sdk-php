@@ -83,6 +83,17 @@
         "UniqueAttribute$AttributeValue": "<p>The value of the attribute. This is a <code>Document</code> type. This type is not supported by Java V1, Go V1, and older versions of the CLI.</p>"
       }
     },
+    "BooleanType": {
+      "base": null,
+      "refs": {
+        "Address$Primary": "<p>A Boolean value representing whether this is the primary address for the associated resource.</p>",
+        "Email$Primary": "<p>A Boolean value representing whether this is the primary email address for the associated resource.</p>",
+        "GroupMembershipExistenceResult$MembershipExists": "<p>Indicates whether a membership relation exists or not.</p>",
+        "PhoneNumber$Primary": "<p>A Boolean value representing whether this is the primary phone number for the associated resource.</p>",
+        "Photo$Primary": "<p>Specifies whether this is the user's primary photo. Default value is <code>false</code>. Only one photo can be designated as primary per user.</p>",
+        "Role$Primary": "<p>A Boolean value representing whether this is the primary role for the associated resource.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>This request cannot be completed for one of the following reasons:</p> <ul> <li> <p>Performing the requested operation would violate an existing uniqueness claim in the identity store. Resolve the conflict before retrying this request.</p> </li> <li> <p>The requested resource was being concurrently modified by another request.</p> </li> </ul>",
       "refs": {}
@@ -565,14 +576,18 @@
         "ThrottlingException$RetryAfterSeconds": "<p>The number of seconds to wait before retrying the next request.</p>"
       }
     },
-    "SensitiveBooleanType": {
+    "Role": {
+      "base": "<p>The role associated with the user.</p>",
+      "refs": {
+        "Roles$member": null
+      }
+    },
+    "Roles": {
       "base": null,
       "refs": {
-        "Address$Primary": "<p>A Boolean value representing whether this is the primary address for the associated resource.</p>",
-        "Email$Primary": "<p>A Boolean value representing whether this is the primary email address for the associated resource.</p>",
-        "GroupMembershipExistenceResult$MembershipExists": "<p>Indicates whether a membership relation exists or not.</p>",
-        "PhoneNumber$Primary": "<p>A Boolean value representing whether this is the primary phone number for the associated resource.</p>",
-        "Photo$Primary": "<p>Specifies whether this is the user's primary photo. Default value is <code>false</code>. Only one photo can be designated as primary per user.</p>"
+        "CreateUserRequest$Roles": "<p>A list of <code>Role</code> objects containing roles associated with the user.</p>",
+        "DescribeUserResponse$Roles": "<p>The roles of the user.</p>",
+        "User$Roles": "<p>A list of <code>Role</code> objects containing roles associated with the user.</p>"
       }
     },
     "SensitiveStringType": {
@@ -622,6 +637,8 @@
         "Photo$Value": "<p>The photo data or URL. Supported formats include jpg, jpeg, png, and gif. This field is required for all photo entries.</p>",
         "Photo$Type": "<p>The type of photo. This field is optional and can be used to categorize different types of photos.</p>",
         "Photo$Display": "<p>A human-readable description of the photo for display purposes. This optional field provides context about the photo.</p>",
+        "Role$Value": "<p>A string containing a role name. For example, \"Researcher.\"</p>",
+        "Role$Type": "<p>A string representing the type of role. For example, \"Work.\"</p>",
         "User$DisplayName": "<p>A string containing the name of the user that is formatted for display when the user is referenced. For example, \"John Doe.\"</p> <p>Prefix search supports a maximum of 1,000 characters for the string.</p>",
         "User$NickName": "<p>A string containing an alternate name for the user.</p>",
         "User$ProfileUrl": "<p>A string containing a URL that might be associated with the user.</p>",
