@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CleanRoomsML` - AWS Clean Rooms ML now supports advanced Spark configurations to optimize SQL performance when creating an MLInputChannel or an audience generation job.
+
 ## 3.369.6 - 2026-01-02
 
 * `Aws\S3` - Adds deprecation notices to `S3EncryptionClient` and `S3EncryptionClientV2`

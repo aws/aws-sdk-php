@@ -1612,16 +1612,16 @@
         "MetricsConfigurationPolicy$noiseLevel": "<p>The noise level for the generated metrics.</p>"
       }
     },
-    "ParameterKey": {
-      "base": null,
-      "refs": {
-        "ParameterMap$key": null
-      }
-    },
     "ParameterMap": {
       "base": null,
       "refs": {
         "ProtectedQuerySQLParameters$parameters": "<p>The protected query SQL parameters.</p>"
+      }
+    },
+    "ParameterName": {
+      "base": null,
+      "refs": {
+        "ParameterMap$key": null
       }
     },
     "ParameterValue": {
@@ -1723,7 +1723,7 @@
     "ResourceConfigVolumeSizeInGBInteger": {
       "base": null,
       "refs": {
-        "ResourceConfig$volumeSizeInGB": "<p>The maximum size of the instance that is used to train the model.</p>"
+        "ResourceConfig$volumeSizeInGB": "<p>The volume size of the instance that is used to train the model. Please see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-store-volumes.html\">EC2 volume limit</a> for volume size limitations on different instance types.</p>"
       }
     },
     "ResourceDescription": {
@@ -1823,6 +1823,24 @@
       "base": null,
       "refs": {
         "MetricsList$member": null
+      }
+    },
+    "SparkProperties": {
+      "base": null,
+      "refs": {
+        "WorkerComputeConfigurationProperties$spark": "<p>The Spark configuration properties for SQL workloads. This map contains key-value pairs that configure Apache Spark settings to optimize performance for your data processing jobs. You can specify up to 50 Spark properties, with each key being 1-200 characters and each value being 0-500 characters. These properties allow you to adjust compute capacity for large datasets and complex workloads.</p>"
+      }
+    },
+    "SparkPropertyKey": {
+      "base": null,
+      "refs": {
+        "SparkProperties$key": null
+      }
+    },
+    "SparkPropertyValue": {
+      "base": null,
+      "refs": {
+        "SparkProperties$value": null
       }
     },
     "StartAudienceExportJobRequest": {
@@ -2427,6 +2445,12 @@
       "base": null,
       "refs": {
         "WorkerComputeConfiguration$number": "<p>The number of compute workers that are used.</p>"
+      }
+    },
+    "WorkerComputeConfigurationProperties": {
+      "base": "<p>The configuration properties for the worker compute environment. These properties allow you to customize the compute settings for your Clean Rooms workloads.</p>",
+      "refs": {
+        "WorkerComputeConfiguration$properties": null
       }
     },
     "WorkerComputeType": {

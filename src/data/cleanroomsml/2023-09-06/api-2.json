@@ -3872,8 +3872,7 @@
       "type":"structure",
       "required":[
         "epsilon",
-        "maxMembershipInferenceAttackScore",
-        "columnClassification"
+        "maxMembershipInferenceAttackScore"
       ],
       "members":{
         "epsilon":{"shape":"MLSyntheticDataParametersEpsilonDouble"},
@@ -4032,16 +4031,16 @@
         "NONE"
       ]
     },
-    "ParameterKey":{
+    "ParameterMap":{
+      "type":"map",
+      "key":{"shape":"ParameterName"},
+      "value":{"shape":"ParameterValue"}
+    },
+    "ParameterName":{
       "type":"string",
       "max":100,
       "min":1,
       "pattern":"[0-9a-zA-Z_]+"
-    },
-    "ParameterMap":{
-      "type":"map",
-      "key":{"shape":"ParameterKey"},
-      "value":{"shape":"ParameterValue"}
     },
     "ParameterValue":{
       "type":"string",
@@ -4261,6 +4260,23 @@
         "ALL",
         "NONE"
       ]
+    },
+    "SparkProperties":{
+      "type":"map",
+      "key":{"shape":"SparkPropertyKey"},
+      "value":{"shape":"SparkPropertyValue"},
+      "max":50,
+      "min":0
+    },
+    "SparkPropertyKey":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
+    "SparkPropertyValue":{
+      "type":"string",
+      "max":500,
+      "min":0
     },
     "StartAudienceExportJobRequest":{
       "type":"structure",
@@ -4841,7 +4857,8 @@
       "type":"structure",
       "members":{
         "type":{"shape":"WorkerComputeType"},
-        "number":{"shape":"WorkerComputeConfigurationNumberInteger"}
+        "number":{"shape":"WorkerComputeConfigurationNumberInteger"},
+        "properties":{"shape":"WorkerComputeConfigurationProperties"}
       }
     },
     "WorkerComputeConfigurationNumberInteger":{
@@ -4849,6 +4866,13 @@
       "box":true,
       "max":400,
       "min":2
+    },
+    "WorkerComputeConfigurationProperties":{
+      "type":"structure",
+      "members":{
+        "spark":{"shape":"SparkProperties"}
+      },
+      "union":true
     },
     "WorkerComputeType":{
       "type":"string",
