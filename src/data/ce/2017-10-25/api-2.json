@@ -693,6 +693,11 @@
     },
     "AmortizedRecurringFee":{"type":"string"},
     "AmortizedUpfrontFee":{"type":"string"},
+    "AnalysesPageSize":{
+      "type":"integer",
+      "max":600,
+      "min":0
+    },
     "AnalysisDetails":{
       "type":"structure",
       "members":{
@@ -2059,7 +2064,7 @@
         "TermInYears":{"shape":"TermInYears"},
         "PaymentOption":{"shape":"PaymentOption"},
         "ServiceSpecification":{"shape":"ServiceSpecification"},
-        "PageSize":{"shape":"NonNegativeInteger"},
+        "PageSize":{"shape":"RecommendationsPageSize"},
         "NextPageToken":{"shape":"NextPageToken"}
       }
     },
@@ -2103,7 +2108,7 @@
         "Filter":{"shape":"Expression"},
         "Configuration":{"shape":"RightsizingRecommendationConfiguration"},
         "Service":{"shape":"GenericString"},
-        "PageSize":{"shape":"NonNegativeInteger"},
+        "PageSize":{"shape":"RecommendationsPageSize"},
         "NextPageToken":{"shape":"NextPageToken"}
       }
     },
@@ -2170,7 +2175,7 @@
         "PaymentOption":{"shape":"PaymentOption"},
         "AccountScope":{"shape":"AccountScope"},
         "NextPageToken":{"shape":"NextPageToken"},
-        "PageSize":{"shape":"NonNegativeInteger"},
+        "PageSize":{"shape":"RecommendationsPageSize"},
         "LookbackPeriodInDays":{"shape":"LookbackPeriodInDays"},
         "Filter":{"shape":"Expression"}
       }
@@ -2370,7 +2375,7 @@
       "members":{
         "AnalysisStatus":{"shape":"AnalysisStatus"},
         "NextPageToken":{"shape":"NextPageToken"},
-        "PageSize":{"shape":"NonNegativeInteger"},
+        "PageSize":{"shape":"AnalysesPageSize"},
         "AnalysisIds":{"shape":"AnalysisIds"}
       }
     },
@@ -2460,7 +2465,7 @@
       "members":{
         "GenerationStatus":{"shape":"GenerationStatus"},
         "RecommendationIds":{"shape":"RecommendationIdList"},
-        "PageSize":{"shape":"NonNegativeInteger"},
+        "PageSize":{"shape":"RecommendationsPageSize"},
         "NextPageToken":{"shape":"NextPageToken"}
       }
     },
@@ -2701,7 +2706,8 @@
         "DeploymentOption":{"shape":"GenericString"},
         "LicenseModel":{"shape":"GenericString"},
         "CurrentGeneration":{"shape":"GenericBoolean"},
-        "SizeFlexEligible":{"shape":"GenericBoolean"}
+        "SizeFlexEligible":{"shape":"GenericBoolean"},
+        "DeploymentModel":{"shape":"GenericString"}
       }
     },
     "RICostForUnusedHours":{"type":"string"},
@@ -2772,6 +2778,11 @@
         "SAME_INSTANCE_FAMILY",
         "CROSS_INSTANCE_FAMILY"
       ]
+    },
+    "RecommendationsPageSize":{
+      "type":"integer",
+      "max":6000,
+      "min":0
     },
     "RedshiftInstanceDetails":{
       "type":"structure",

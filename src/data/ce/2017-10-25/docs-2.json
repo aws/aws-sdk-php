@@ -80,6 +80,12 @@
         "ReservationAggregates$AmortizedUpfrontFee": "<p>The upfront cost of your reservation. It's amortized over the reservation period.</p>"
       }
     },
+    "AnalysesPageSize": {
+      "base": null,
+      "refs": {
+        "ListCommitmentPurchaseAnalysesRequest$PageSize": "<p>The number of analyses that you want returned in a single response object.</p>"
+      }
+    },
     "AnalysisDetails": {
       "base": "<p>Details about the analysis.</p>",
       "refs": {
@@ -1102,6 +1108,7 @@
         "RDSInstanceDetails$DatabaseEdition": "<p>The database edition that the recommended reservation supports.</p>",
         "RDSInstanceDetails$DeploymentOption": "<p>Determines whether the recommendation is for a reservation in a single Availability Zone or a reservation with a backup in a second Availability Zone.</p>",
         "RDSInstanceDetails$LicenseModel": "<p>The license model that the recommended reservation supports.</p>",
+        "RDSInstanceDetails$DeploymentModel": "<p>Determines whether the recommendation is for a reservation for RDS Custom.</p>",
         "RecommendationDetailData$AccountId": "<p>The AccountID that the recommendation is generated for.</p>",
         "RecommendationDetailData$CurrencyCode": "<p>The currency code that Amazon Web Services used to generate the recommendation and present potential savings.</p>",
         "RecommendationDetailData$InstanceFamily": "<p>The instance family of the recommended Savings Plan.</p>",
@@ -1780,12 +1787,7 @@
       "base": null,
       "refs": {
         "AnomalyMonitor$DimensionalValueCount": "<p>The value for evaluated dimensions. </p>",
-        "CostCategoryReference$NumberOfRules": "<p>The number of rules that are associated with a specific cost category. </p>",
-        "GetReservationPurchaseRecommendationRequest$PageSize": "<p>The number of recommendations that you want returned in a single response object.</p>",
-        "GetRightsizingRecommendationRequest$PageSize": "<p>The number of recommendations that you want returned in a single response object.</p>",
-        "GetSavingsPlansPurchaseRecommendationRequest$PageSize": "<p>The number of recommendations that you want returned in a single response object.</p>",
-        "ListCommitmentPurchaseAnalysesRequest$PageSize": "<p>The number of analyses that you want returned in a single response object.</p>",
-        "ListSavingsPlansPurchaseRecommendationGenerationRequest$PageSize": "<p>The number of recommendations that you want returned in a single response object.</p>"
+        "CostCategoryReference$NumberOfRules": "<p>The number of rules that are associated with a specific cost category. </p>"
       }
     },
     "NonNegativeLong": {
@@ -1961,6 +1963,15 @@
       "base": null,
       "refs": {
         "RightsizingRecommendationConfiguration$RecommendationTarget": "<p>The option to see recommendations within the same instance family or recommendations for instances across other families. The default value is <code>SAME_INSTANCE_FAMILY</code>. </p>"
+      }
+    },
+    "RecommendationsPageSize": {
+      "base": null,
+      "refs": {
+        "GetReservationPurchaseRecommendationRequest$PageSize": "<p>The number of recommendations that you want returned in a single response object.</p>",
+        "GetRightsizingRecommendationRequest$PageSize": "<p>The number of recommendations that you want returned in a single response object.</p>",
+        "GetSavingsPlansPurchaseRecommendationRequest$PageSize": "<p>The number of recommendations that you want returned in a single response object.</p>",
+        "ListSavingsPlansPurchaseRecommendationGenerationRequest$PageSize": "<p>The number of recommendations that you want returned in a single response object.</p>"
       }
     },
     "RedshiftInstanceDetails": {

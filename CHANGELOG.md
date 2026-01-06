@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EMRServerless` - Added support for enabling disk encryption using customer managed AWS KMS keys to CreateApplication, UpdateApplication and StartJobRun APIs.
+* `Aws\CostExplorer` - This release updates existing reservation recommendations API to support deployment model.
+
 ## 3.369.7 - 2026-01-05
 
 * `Aws\CleanRoomsML` - AWS Clean Rooms ML now supports advanced Spark configurations to optimize SQL performance when creating an MLInputChannel or an audience generation job.
