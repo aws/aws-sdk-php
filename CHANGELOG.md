@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.8 - 2026-01-06
 
 * `Aws\EMRServerless` - Added support for enabling disk encryption using customer managed AWS KMS keys to CreateApplication, UpdateApplication and StartJobRun APIs.
 * `Aws\CostExplorer` - This release updates existing reservation recommendations API to support deployment model.
