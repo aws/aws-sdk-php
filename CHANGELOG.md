@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WorkSpaces` - Add StateMessage and ProgressPercentage fields to DescribeCustomWorkspaceImageImport API response.
+
 ## 3.369.8 - 2026-01-06
 
 * `Aws\EMRServerless` - Added support for enabling disk encryption using customer managed AWS KMS keys to CreateApplication, UpdateApplication and StartJobRun APIs.

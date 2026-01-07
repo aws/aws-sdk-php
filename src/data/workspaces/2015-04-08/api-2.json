@@ -1671,7 +1671,8 @@
         "ValidationError.InsufficientMemory",
         "ValidationError.UnsupportedOperatingSystem",
         "DeploymentError.InternalServerError",
-        "DeploymentError.WorkspaceUnreachable"
+        "DeploymentError.WorkspaceUnreachable",
+        "ValidationError.ApplicationOldVersionExists"
       ]
     },
     "AssociationState":{
@@ -2278,6 +2279,16 @@
       "enum":[
         "PENDING",
         "IN_PROGRESS",
+        "PROCESSING_SOURCE_IMAGE",
+        "IMAGE_TESTING_START",
+        "UPDATING_OPERATING_SYSTEM",
+        "IMAGE_COMPATIBILITY_CHECKING",
+        "IMAGE_TESTING_GENERALIZATION",
+        "CREATING_TEST_INSTANCE",
+        "INSTALLING_COMPONENTS",
+        "GENERALIZING",
+        "VALIDATING",
+        "PUBLISHING",
         "COMPLETED",
         "ERROR"
       ]
@@ -2688,6 +2699,8 @@
         "ImageId":{"shape":"WorkspaceImageId"},
         "InfrastructureConfigurationArn":{"shape":"InfrastructureConfigurationArn"},
         "State":{"shape":"CustomWorkspaceImageImportState"},
+        "StateMessage":{"shape":"WorkflowStateMessage"},
+        "ProgressPercentage":{"shape":"Percentage"},
         "Created":{"shape":"Timestamp"},
         "LastUpdatedTime":{"shape":"Timestamp"},
         "ImageSource":{"shape":"ImageSourceIdentifier"},
@@ -3836,6 +3849,11 @@
       "type":"list",
       "member":{"shape":"PendingCreateStandbyWorkspacesRequest"}
     },
+    "Percentage":{
+      "type":"integer",
+      "max":100,
+      "min":0
+    },
     "Platform":{
       "type":"string",
       "enum":["WINDOWS"]
@@ -4663,6 +4681,11 @@
     "WorkSpaceAssociatedResourceTypeList":{
       "type":"list",
       "member":{"shape":"WorkSpaceAssociatedResourceType"}
+    },
+    "WorkflowStateMessage":{
+      "type":"string",
+      "max":1000,
+      "min":1
     },
     "Workspace":{
       "type":"structure",
