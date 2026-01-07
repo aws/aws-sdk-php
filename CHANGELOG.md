@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.9 - 2026-01-07
 
 * `Aws\WorkSpaces` - Add StateMessage and ProgressPercentage fields to DescribeCustomWorkspaceImageImport API response.
 
