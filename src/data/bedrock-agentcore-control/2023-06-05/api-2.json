@@ -4223,6 +4223,11 @@
           "shape":"MemoryId",
           "location":"uri",
           "locationName":"memoryId"
+        },
+        "view":{
+          "shape":"MemoryView",
+          "location":"querystring",
+          "locationName":"view"
         }
       }
     },
@@ -5418,6 +5423,13 @@
     "MemorySummaryList":{
       "type":"list",
       "member":{"shape":"MemorySummary"}
+    },
+    "MemoryView":{
+      "type":"string",
+      "enum":[
+        "full",
+        "without_decryption"
+      ]
     },
     "MessageBasedTrigger":{
       "type":"structure",

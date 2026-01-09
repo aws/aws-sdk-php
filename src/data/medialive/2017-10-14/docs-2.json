@@ -2867,7 +2867,8 @@
         "UdpOutputSettings$Destination": "Destination address and port number for RTP or UDP packets. Can be unicast or multicast RTP or UDP (eg. rtp://239.10.10.10:5001 or udp://10.100.100.100:5002).",
         "CmafIngestGroupSettings$Destination": "A HTTP destination for the tracks",
         "SrtOutputSettings$Destination": null,
-        "AdditionalDestinations$Destination": "The destination location"
+        "AdditionalDestinations$Destination": "The destination location",
+        "MediaPackageAdditionalDestinations$Destination": "The destination location"
       }
     },
     "OutputLockingSettings": {
@@ -3899,7 +3900,7 @@
     "__doubleMinNegative59Max0": {
       "base": null,
       "refs": {
-        "AudioNormalizationSettings$TargetLkfs": "Target LKFS(loudness) to adjust volume to. If no value is entered, a default value will be used according to the chosen algorithm.  The CALM Act (1770-1) recommends a target of -24 LKFS. The EBU R-128 specification (1770-2) recommends a target of -23 LKFS."
+        "AudioNormalizationSettings$TargetLkfs": "Target LKFS(loudness) to adjust volume to. If no value is entered, a default value will be used according to the chosen algorithm.  The CALM Act recommends a target of -24 LKFS. The EBU R-128 specification recommends a target of -23 LKFS."
       }
     },
     "__integer": {
@@ -5341,7 +5342,9 @@
         "MultiplexProgramChannelDestinationSettings$MultiplexId": "The ID of the Multiplex that the encoder is providing output to. You do not need to specify the individual inputs to the Multiplex; MediaLive will handle the connection of the two MediaLive pipelines to the two Multiplex instances.\nThe Multiplex must be in the same region as the Channel.",
         "MultiplexProgramChannelDestinationSettings$ProgramName": "The program name of the Multiplex program that the encoder is providing output to.",
         "MediaPackageOutputDestinationSettings$ChannelGroup": "Name of the channel group in MediaPackageV2. Only use if you are sending CMAF Ingest output to a CMAF ingest endpoint on a MediaPackage channel that uses MediaPackage v2.",
-        "MediaPackageOutputDestinationSettings$ChannelName": "Name of the channel in MediaPackageV2. Only use if you are sending CMAF Ingest output to a CMAF ingest endpoint on a MediaPackage channel that uses MediaPackage v2."
+        "MediaPackageOutputDestinationSettings$ChannelName": "Name of the channel in MediaPackageV2. Only use if you are sending CMAF Ingest output to a CMAF ingest endpoint on a MediaPackage channel that uses MediaPackage v2.",
+        "MediaPackageOutputDestinationSettings$ChannelEndpointId": "Endpoint 1 or 2 of the channel in MediaPackageV2. Only use if you are sending CMAF Ingest output to a CMAF ingest endpoint on a MediaPackage channel that uses MediaPackage v2.",
+        "MediaPackageOutputDestinationSettings$MediaPackageRegionName": "Region the channel group and channel are located in for MediaPackageV2. Only use if you are sending CMAF Ingest output to a CMAF ingest endpoint on a MediaPackage channel that uses MediaPackage v2."
       }
     },
     "__stringMin1Max255": {
@@ -7474,6 +7477,18 @@
       "base": "Settings for a primary (leader) channel in a linked pair",
       "refs": {
         "LinkedChannelSettings$PrimaryChannelSettings": null
+      }
+    },
+    "MediaPackageAdditionalDestinations": {
+      "base": "Additional output destinations for a CMAF Ingest output group",
+      "refs": {
+        "__listOfMediaPackageAdditionalDestinations$member": null
+      }
+    },
+    "__listOfMediaPackageAdditionalDestinations": {
+      "base": null,
+      "refs": {
+        "MediaPackageV2GroupSettings$AdditionalDestinations": "Optional an array of additional destinational HTTP destinations for the OutputGroup outputs"
       }
     }
   },

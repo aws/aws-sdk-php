@@ -12601,6 +12601,14 @@
         "ChannelName": {
           "shape": "__stringMin1",
           "locationName": "channelName"
+        },
+        "ChannelEndpointId": {
+          "shape": "__stringMin1",
+          "locationName": "channelEndpointId"
+        },
+        "MediaPackageRegionName": {
+          "shape": "__stringMin1",
+          "locationName": "mediaPackageRegionName"
         }
       }
     },
@@ -24769,6 +24777,10 @@
         "TimedMetadataPassthrough": {
           "shape": "CmafTimedMetadataPassthrough",
           "locationName": "timedMetadataPassthrough"
+        },
+        "AdditionalDestinations": {
+          "shape": "__listOfMediaPackageAdditionalDestinations",
+          "locationName": "additionalDestinations"
         }
       }
     },
@@ -25290,6 +25302,24 @@
           "shape": "LinkedChannelType",
           "locationName": "linkedChannelType"
         }
+      }
+    },
+    "MediaPackageAdditionalDestinations": {
+      "type": "structure",
+      "members": {
+        "Destination": {
+          "shape": "OutputLocationRef",
+          "locationName": "destination"
+        }
+      },
+      "required": [
+        "Destination"
+      ]
+    },
+    "__listOfMediaPackageAdditionalDestinations": {
+      "type": "list",
+      "member": {
+        "shape": "MediaPackageAdditionalDestinations"
       }
     }
   }

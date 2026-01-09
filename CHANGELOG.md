@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Added EntityLimitExceeded exception handling to the following API operations AssociateDistributionWebACL, AssociateDistributionTenantWebACL, UpdateDistributionWithStagingConfig
+* `Aws\Glue` - Adding MaterializedViews task run APIs
+* `Aws\TranscribeService` - Adds waiters to Amazon Transcribe.
+* `Aws\BedrockAgentCoreControl` - Adds optional field "view" to GetMemory API input to give customers control over whether CMK encrypted data such as strategy decryption or override prompts is returned or not.
+* `Aws\MediaLive` - MediaPackage v2 output groups in MediaLive can now accept one additional destination for single pipeline channels and up to two additional destinations for standard channels. MediaPackage v2 destinations now support sending to cross region MediaPackage channels.
+
 ## 3.369.9 - 2026-01-07
 
 * `Aws\WorkSpaces` - Add StateMessage and ProgressPercentage fields to DescribeCustomWorkspaceImageImport API response.

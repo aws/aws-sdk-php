@@ -136,6 +136,7 @@
     "GetMLTransform": "<p>Gets an Glue machine learning transform artifact and all its corresponding metadata. Machine learning transforms are a special type of transform that use machine learning to learn the details of the transformation to be performed by learning from examples provided by humans. These transformations are then saved by Glue. You can retrieve their metadata by calling <code>GetMLTransform</code>.</p>",
     "GetMLTransforms": "<p>Gets a sortable, filterable list of existing Glue machine learning transforms. Machine learning transforms are a special type of transform that use machine learning to learn the details of the transformation to be performed by learning from examples provided by humans. These transformations are then saved by Glue, and you can retrieve their metadata by calling <code>GetMLTransforms</code>.</p>",
     "GetMapping": "<p>Creates mappings.</p>",
+    "GetMaterializedViewRefreshTaskRun": "<p>Get the associated metadata/information for a task run, given a task run ID.</p>",
     "GetPartition": "<p>Retrieves information about a specified partition.</p>",
     "GetPartitionIndexes": "<p>Retrieves the partition indexes associated with a table.</p>",
     "GetPartitions": "<p>Retrieves information about the partitions in a table.</p>",
@@ -187,6 +188,7 @@
     "ListIntegrationResourceProperties": "<p>List integration resource properties for a single customer. It supports the filters, maxRecords and markers.</p>",
     "ListJobs": "<p>Retrieves the names of all job resources in this Amazon Web Services account, or the resources with the specified tag. This operation allows you to see which resources are available in your account, and their names.</p> <p>This operation takes the optional <code>Tags</code> field, which you can use as a filter on the response so that tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag are retrieved.</p>",
     "ListMLTransforms": "<p> Retrieves a sortable, filterable list of existing Glue machine learning transforms in this Amazon Web Services account, or the resources with the specified tag. This operation takes the optional <code>Tags</code> field, which you can use as a filter of the responses so that tagged resources can be retrieved as a group. If you choose to use tag filtering, only resources with the tags are retrieved. </p>",
+    "ListMaterializedViewRefreshTaskRuns": "<p>List all task runs for a particular account.</p>",
     "ListRegistries": "<p>Returns a list of registries that you have created, with minimal registry information. Registries in the <code>Deleting</code> status will not be included in the results. Empty results will be returned if there are no registries available.</p>",
     "ListSchemaVersions": "<p>Returns a list of schema versions that you have created, with minimal information. Schema versions in Deleted status will not be included in the results. Empty results will be returned if there are no schema versions available.</p>",
     "ListSchemas": "<p>Returns a list of schemas with minimal details. Schemas in Deleting status will not be included in the results. Empty results will be returned if there are no schemas available.</p> <p>When the <code>RegistryId</code> is not provided, all the schemas across registries will be part of the API response.</p>",
@@ -221,12 +223,14 @@
     "StartJobRun": "<p>Starts a job run using a job definition.</p>",
     "StartMLEvaluationTaskRun": "<p>Starts a task to estimate the quality of the transform. </p> <p>When you provide label sets as examples of truth, Glue machine learning uses some of those examples to learn from them. The rest of the labels are used as a test to estimate quality.</p> <p>Returns a unique identifier for the run. You can call <code>GetMLTaskRun</code> to get more information about the stats of the <code>EvaluationTaskRun</code>.</p>",
     "StartMLLabelingSetGenerationTaskRun": "<p>Starts the active learning workflow for your machine learning transform to improve the transform's quality by generating label sets and adding labels.</p> <p>When the <code>StartMLLabelingSetGenerationTaskRun</code> finishes, Glue will have generated a \"labeling set\" or a set of questions for humans to answer.</p> <p>In the case of the <code>FindMatches</code> transform, these questions are of the form, “What is the correct way to group these rows together into groups composed entirely of matching records?” </p> <p>After the labeling process is finished, you can upload your labels with a call to <code>StartImportLabelsTaskRun</code>. After <code>StartImportLabelsTaskRun</code> finishes, all future runs of the machine learning transform will use the new and improved labels and perform a higher-quality transformation.</p> <p>Note: The role used to write the generated labeling set to the <code>OutputS3Path</code> is the role associated with the Machine Learning Transform, specified in the <code>CreateMLTransform</code> API.</p>",
+    "StartMaterializedViewRefreshTaskRun": "<p>Starts a materialized view refresh task run, for a specified table and columns.</p>",
     "StartTrigger": "<p>Starts an existing trigger. See <a href=\"https://docs.aws.amazon.com/glue/latest/dg/trigger-job.html\">Triggering Jobs</a> for information about how different types of trigger are started.</p>",
     "StartWorkflowRun": "<p>Starts a new run of the specified workflow.</p>",
     "StopColumnStatisticsTaskRun": "<p>Stops a task run for the specified table.</p>",
     "StopColumnStatisticsTaskRunSchedule": "<p>Stops a column statistics task run schedule.</p>",
     "StopCrawler": "<p>If the specified crawler is running, stops the crawl.</p>",
     "StopCrawlerSchedule": "<p>Sets the schedule state of the specified crawler to <code>NOT_SCHEDULED</code>, but does not stop the crawler if it is already running.</p>",
+    "StopMaterializedViewRefreshTaskRun": "<p>Stops a materialized view refresh task run, for a specified table and columns.</p>",
     "StopSession": "<p>Stops the session.</p>",
     "StopTrigger": "<p>Stops a specified trigger.</p>",
     "StopWorkflowRun": "<p>Stops the execution of the specified workflow run.</p>",
@@ -283,7 +287,8 @@
       "base": null,
       "refs": {
         "ColumnStatisticsTaskRun$CustomerId": "<p>The Amazon Web Services account ID.</p>",
-        "LakeFormationConfiguration$AccountId": "<p>Required for cross account crawls. For same account crawls as the target data, this can be left as null.</p>"
+        "LakeFormationConfiguration$AccountId": "<p>Required for cross account crawls. For same account crawls as the target data, this can be left as null.</p>",
+        "MaterializedViewRefreshTaskRun$CustomerId": "<p>The Amazon Web Services account ID.</p>"
       }
     },
     "Action": {
@@ -1157,6 +1162,12 @@
         "PIIDetection$NumRightCharsToExclude": "<p>The number of characters to exclude from redaction on the right side of detected PII content. This allows preserving context around the sensitive data.</p>"
       }
     },
+    "ByteCount": {
+      "base": null,
+      "refs": {
+        "MaterializedViewRefreshTaskRun$ProcessedBytes": "<p>The number of bytes the refresh task run has scanned to refresh the materialized view.</p>"
+      }
+    },
     "CancelDataQualityRuleRecommendationRunRequest": {
       "base": null,
       "refs": {}
@@ -1317,6 +1328,7 @@
         "ListEntitiesRequest$CatalogId": "<p>The catalog ID of the catalog that contains the connection. This can be null, By default, the Amazon Web Services Account ID is the catalog ID.</p>",
         "ListTableOptimizerRunsRequest$CatalogId": "<p>The Catalog ID of the table.</p>",
         "ListTableOptimizerRunsResponse$CatalogId": "<p>The Catalog ID of the table.</p>",
+        "MaterializedViewRefreshTaskRun$CatalogId": "<p>The ID of the Data Catalog where the table resides. If none is supplied, the account ID is used by default.</p>",
         "Partition$CatalogId": "<p>The ID of the Data Catalog in which the partition resides.</p>",
         "PutDataCatalogEncryptionSettingsRequest$CatalogId": "<p>The ID of the Data Catalog to set the security configuration for. If none is provided, the Amazon Web Services account ID is used by default.</p>",
         "SearchTablesRequest$CatalogId": "<p>A unique identifier, consisting of <code> <i>account_id</i> </code>.</p>",
@@ -3050,6 +3062,7 @@
         "Crawler$DatabaseName": "<p>The name of the database in which the crawler's output is stored.</p>",
         "CreateCrawlerRequest$DatabaseName": "<p>The Glue database where results are written, such as: <code>arn:aws:daylight:us-east-1::database/sometable/*</code>.</p>",
         "GetColumnStatisticsTaskRunsRequest$DatabaseName": "<p>The name of the database where the table resides.</p>",
+        "MaterializedViewRefreshTaskRun$DatabaseName": "<p>The database where the table resides.</p>",
         "StopColumnStatisticsTaskRunRequest$DatabaseName": "<p>The name of the database where the table resides.</p>",
         "UpdateCrawlerRequest$DatabaseName": "<p>The Glue database where results are stored, such as: <code>arn:aws:daylight:us-east-1::database/sometable/*</code>.</p>"
       }
@@ -3476,6 +3489,7 @@
         "JobUpdate$Description": "<p>Description of the job being defined.</p>",
         "LastCrawlInfo$ErrorMessage": "<p>If an error occurred, the error information about the last crawl.</p>",
         "MLTransform$Description": "<p>A user-defined, long-form description text for the machine learning transform. Descriptions are not guaranteed to be unique and can be changed at any time.</p>",
+        "MaterializedViewRefreshTaskRun$ErrorMessage": "<p>The error message for the job.</p>",
         "RegistryListItem$Description": "<p>A description of the registry.</p>",
         "SchemaListItem$Description": "<p>A description for the schema.</p>",
         "Session$ErrorMessage": "<p>The error message displayed during the session.</p>",
@@ -4863,6 +4877,14 @@
       "refs": {}
     },
     "GetMappingResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetMaterializedViewRefreshTaskRunRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetMaterializedViewRefreshTaskRunResponse": {
       "base": null,
       "refs": {}
     },
@@ -6564,6 +6586,14 @@
       "base": null,
       "refs": {}
     },
+    "ListMaterializedViewRefreshTaskRunsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListMaterializedViewRefreshTaskRunsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListOfString": {
       "base": null,
       "refs": {
@@ -6821,6 +6851,43 @@
         "GetConnectionsFilter$MatchCriteria": "<p>A criteria string that must match the criteria recorded in the connection definition for that connection definition to be returned.</p>"
       }
     },
+    "MaterializedViewRefreshState": {
+      "base": null,
+      "refs": {
+        "MaterializedViewRefreshTaskRun$Status": "<p>The status of the task run.</p>"
+      }
+    },
+    "MaterializedViewRefreshTaskNotRunningException": {
+      "base": "<p>Exception thrown when stopping a task that is not in running state.</p>",
+      "refs": {}
+    },
+    "MaterializedViewRefreshTaskRun": {
+      "base": "<p>The object that shows the details of the materialized view refresh task run.</p>",
+      "refs": {
+        "GetMaterializedViewRefreshTaskRunResponse$MaterializedViewRefreshTaskRun": "<p>A MaterializedViewRefreshTaskRun object representing the details of the task run.</p>",
+        "MaterializedViewRefreshTaskRunsList$member": null
+      }
+    },
+    "MaterializedViewRefreshTaskRunningException": {
+      "base": "<p>Exception thrown when a task is already in running state.</p>",
+      "refs": {}
+    },
+    "MaterializedViewRefreshTaskRunsList": {
+      "base": null,
+      "refs": {
+        "ListMaterializedViewRefreshTaskRunsResponse$MaterializedViewRefreshTaskRuns": "<p>The results of the ListMaterializedViewRefreshTaskRuns action. </p>"
+      }
+    },
+    "MaterializedViewRefreshTaskStoppingException": {
+      "base": "<p>Exception thrown when a task is already in stopping state.</p>",
+      "refs": {}
+    },
+    "MaterializedViewRefreshType": {
+      "base": null,
+      "refs": {
+        "MaterializedViewRefreshTaskRun$RefreshType": "<p>The type of the refresh task run. Either FULL or INCREMENTAL.</p>"
+      }
+    },
     "MaxConcurrentRuns": {
       "base": null,
       "refs": {
@@ -6899,6 +6966,9 @@
         "InvalidInputException$Message": "<p>A message describing the problem.</p>",
         "InvalidStateException$Message": "<p>A message describing the problem.</p>",
         "MLTransformNotReadyException$Message": "<p>A message describing the problem.</p>",
+        "MaterializedViewRefreshTaskNotRunningException$Message": null,
+        "MaterializedViewRefreshTaskRunningException$Message": null,
+        "MaterializedViewRefreshTaskStoppingException$Message": null,
         "NoScheduleException$Message": "<p>A message describing the problem.</p>",
         "OperationNotSupportedException$Message": "<p>A message describing the problem.</p>",
         "OperationTimeoutException$Message": "<p>A message describing the problem.</p>",
@@ -7236,6 +7306,7 @@
         "GetJobRunRequest$JobName": "<p>Name of the job definition being run.</p>",
         "GetJobRunsRequest$JobName": "<p>The name of the job definition for which to retrieve all job runs.</p>",
         "GetMLTransformResponse$Name": "<p>The unique name given to the transform when it was created.</p>",
+        "GetMaterializedViewRefreshTaskRunRequest$CatalogId": "<p>The ID of the Data Catalog where the table resides. If none is supplied, the account ID is used by default.</p>",
         "GetPartitionIndexesRequest$DatabaseName": "<p>Specifies the name of a database from which you want to retrieve partition indexes.</p>",
         "GetPartitionIndexesRequest$TableName": "<p>Specifies the name of a table for which you want to retrieve the partition indexes.</p>",
         "GetPartitionRequest$DatabaseName": "<p>The name of the catalog database where the partition resides.</p>",
@@ -7296,6 +7367,9 @@
         "Labels$value": null,
         "ListCrawlsRequest$CrawlerName": "<p>The name of the crawler whose runs you want to retrieve.</p>",
         "ListEntitiesRequest$ConnectionName": "<p>A name for the connection that has required credentials to query any connection type.</p>",
+        "ListMaterializedViewRefreshTaskRunsRequest$CatalogId": "<p>The ID of the Data Catalog where the table resides. If none is supplied, the account ID is used by default.</p>",
+        "ListMaterializedViewRefreshTaskRunsRequest$DatabaseName": "<p>The database where the table resides.</p>",
+        "ListMaterializedViewRefreshTaskRunsRequest$TableName": "<p>The name of the table for which statistics is generated.</p>",
         "ListStatementsRequest$SessionId": "<p>The Session ID of the statements.</p>",
         "ListTableOptimizerRunsRequest$DatabaseName": "<p>The name of the database in the catalog in which the table resides.</p>",
         "ListTableOptimizerRunsRequest$TableName": "<p>The name of the table.</p>",
@@ -7347,6 +7421,9 @@
         "StartDataQualityRuleRecommendationRunRequest$DataQualitySecurityConfiguration": "<p>The name of the security configuration created with the data quality encryption option.</p>",
         "StartJobRunRequest$JobName": "<p>The name of the job definition to use.</p>",
         "StartJobRunRequest$SecurityConfiguration": "<p>The name of the <code>SecurityConfiguration</code> structure to be used with this job run.</p>",
+        "StartMaterializedViewRefreshTaskRunRequest$CatalogId": "<p>The ID of the Data Catalog where the table reside. If none is supplied, the account ID is used by default.</p>",
+        "StartMaterializedViewRefreshTaskRunRequest$DatabaseName": "<p>The name of the database where the table resides.</p>",
+        "StartMaterializedViewRefreshTaskRunRequest$TableName": "<p>The name of the table to generate run the materialized view refresh task.</p>",
         "StartTriggerRequest$Name": "<p>The name of the trigger to start.</p>",
         "StartTriggerResponse$Name": "<p>The name of the trigger that was started.</p>",
         "StartWorkflowRunRequest$Name": "<p>The name of the workflow to start.</p>",
@@ -7356,6 +7433,9 @@
         "StopColumnStatisticsTaskRunScheduleRequest$TableName": "<p>The name of the table for which to stop a column statistic task run schedule.</p>",
         "StopCrawlerRequest$Name": "<p>Name of the crawler to stop.</p>",
         "StopCrawlerScheduleRequest$CrawlerName": "<p>Name of the crawler whose schedule state to set.</p>",
+        "StopMaterializedViewRefreshTaskRunRequest$CatalogId": "<p>The ID of the Data Catalog where the table reside. If none is supplied, the account ID is used by default.</p>",
+        "StopMaterializedViewRefreshTaskRunRequest$DatabaseName": "<p>The name of the database where the table resides.</p>",
+        "StopMaterializedViewRefreshTaskRunRequest$TableName": "<p>The name of the table to generate statistics.</p>",
         "StopSessionRequest$Id": "<p>The ID of the session to be stopped.</p>",
         "StopSessionResponse$Id": "<p>Returns the Id of the stopped session.</p>",
         "StopTriggerRequest$Name": "<p>The name of the trigger to stop.</p>",
@@ -7608,6 +7688,7 @@
         "CrawlerMetrics$TimeLeftSeconds": "<p>The estimated time left to complete a running crawl.</p>",
         "CrawlerMetrics$LastRuntimeSeconds": "<p>The duration of the crawler's most recent run, in seconds.</p>",
         "CrawlerMetrics$MedianRuntimeSeconds": "<p>The median duration of this crawler's runs, in seconds.</p>",
+        "MaterializedViewRefreshTaskRun$DPUSeconds": "<p>The calculated DPU usage in seconds for all autoscaled workers.</p>",
         "StringColumnStatisticsData$AverageLength": "<p>The average string length in the column.</p>"
       }
     },
@@ -7720,6 +7801,7 @@
         "LakeFormationConfiguration$UseLakeFormationCredentials": "<p>Specifies whether to use Lake Formation credentials for the crawler instead of the IAM role credentials.</p>",
         "MongoDBTarget$ScanAll": "<p>Indicates whether to scan all the records, or to sample rows from the table. Scanning all the records can take a long time when the table is not a high throughput table.</p> <p>A value of <code>true</code> means to scan all records, while a value of <code>false</code> means to sample the records. If no value is specified, the value defaults to <code>true</code>.</p>",
         "StartJobRunRequest$JobRunQueuingEnabled": "<p>Specifies whether job run queuing is enabled for the job run.</p> <p>A value of true means job run queuing is enabled for the job run. If false or not populated, the job run will not be considered for queueing.</p>",
+        "StartMaterializedViewRefreshTaskRunRequest$FullRefresh": "<p>Specifies whether this is a full refresh of the task run.</p>",
         "Table$IsMultiDialectView": "<p>Specifies whether the view supports the SQL dialects of one or more different query engines and can therefore be read by those engines.</p>",
         "Table$IsMaterializedView": "<p>Indicates a table is a <code>MaterializedView</code>.</p>",
         "TableOptimizerConfiguration$enabled": "<p>Whether table optimization is enabled.</p>",
@@ -8157,6 +8239,7 @@
         "ListDevEndpointsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "ListJobsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "ListMLTransformsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
+        "ListMaterializedViewRefreshTaskRunsRequest$MaxResults": "<p>The maximum size of the response.</p>",
         "ListSessionsRequest$MaxResults": "<p>The maximum number of results. </p>",
         "SearchTablesRequest$MaxResults": "<p>The maximum number of tables to return in a single response.</p>"
       }
@@ -8968,6 +9051,7 @@
         "ColumnStatisticsTaskSettings$Role": "<p>The role used for running the column statistics.</p>",
         "Crawler$Role": "<p>The Amazon Resource Name (ARN) of an IAM role that's used to access customer resources, such as Amazon Simple Storage Service (Amazon S3) data.</p>",
         "CreateCrawlerRequest$Role": "<p>The IAM role or Amazon Resource Name (ARN) of an IAM role used by the new crawler to access customer resources.</p>",
+        "MaterializedViewRefreshTaskRun$Role": "<p>The IAM role that the service assumes to generate statistics.</p>",
         "UpdateCrawlerRequest$Role": "<p>The IAM role or Amazon Resource Name (ARN) of an IAM role that is used by the new crawler to access customer resources.</p>"
       }
     },
@@ -9845,6 +9929,14 @@
       "base": null,
       "refs": {}
     },
+    "StartMaterializedViewRefreshTaskRunRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartMaterializedViewRefreshTaskRunResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StartTriggerRequest": {
       "base": null,
       "refs": {}
@@ -9988,6 +10080,14 @@
       "refs": {}
     },
     "StopCrawlerScheduleResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "StopMaterializedViewRefreshTaskRunRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopMaterializedViewRefreshTaskRunResponse": {
       "base": null,
       "refs": {}
     },
@@ -10242,7 +10342,8 @@
         "ColumnStatisticsTaskRun$TableName": "<p>The name of the table for which column statistics is generated.</p>",
         "ColumnStatisticsTaskSettings$TableName": "<p>The name of the table for which to generate column statistics.</p>",
         "MappingEntry$SourceTable": "<p>The name of the source table.</p>",
-        "MappingEntry$TargetTable": "<p>The target table.</p>"
+        "MappingEntry$TargetTable": "<p>The target table.</p>",
+        "MaterializedViewRefreshTaskRun$TableName": "<p>The name of the table for which statistics is generated.</p>"
       }
     },
     "TableOptimizer": {
@@ -10639,6 +10740,10 @@
         "LastCrawlInfo$StartTime": "<p>The time at which the crawl started.</p>",
         "MLTransform$CreatedOn": "<p>A timestamp. The time and date that this machine learning transform was created.</p>",
         "MLTransform$LastModifiedOn": "<p>A timestamp. The last point in time when this machine learning transform was modified.</p>",
+        "MaterializedViewRefreshTaskRun$CreationTime": "<p>The time that this task was created.</p>",
+        "MaterializedViewRefreshTaskRun$LastUpdated": "<p>The last point in time when this task was modified.</p>",
+        "MaterializedViewRefreshTaskRun$StartTime": "<p>The start time of the task.</p>",
+        "MaterializedViewRefreshTaskRun$EndTime": "<p>The end time of the task.</p>",
         "Partition$CreationTime": "<p>The time at which the partition was created.</p>",
         "Partition$LastAccessTime": "<p>The last time at which the partition was accessed.</p>",
         "Partition$LastAnalyzedTime": "<p>The last time at which column statistics were computed for this partition.</p>",
@@ -10757,6 +10862,8 @@
         "ListCrawlersResponse$NextToken": "<p>A continuation token, if the returned list does not contain the last metric available.</p>",
         "ListCrawlsRequest$NextToken": "<p>A continuation token, if this is a continuation call.</p>",
         "ListCrawlsResponse$NextToken": "<p>A continuation token for paginating the returned list of tokens, returned if the current segment of the list is not the last.</p>",
+        "ListMaterializedViewRefreshTaskRunsRequest$NextToken": "<p>A continuation token, if this is a continuation call.</p>",
+        "ListMaterializedViewRefreshTaskRunsResponse$NextToken": "<p>A continuation token, if not all task run IDs have yet been returned.</p>",
         "SearchTablesRequest$NextToken": "<p>A continuation token, included if this is a continuation call.</p>",
         "SearchTablesResponse$NextToken": "<p>A continuation token, present if the current list segment is not the last.</p>"
       }
@@ -10965,6 +11072,14 @@
         "Database$LocationUri": "<p>The location of the database (for example, an HDFS path).</p>",
         "DatabaseInput$LocationUri": "<p>The location of the database (for example, an HDFS path). </p>",
         "ResourceUri$Uri": "<p>The URI for accessing the resource.</p>"
+      }
+    },
+    "UUIDv4": {
+      "base": null,
+      "refs": {
+        "GetMaterializedViewRefreshTaskRunRequest$MaterializedViewRefreshTaskRunId": "<p>The identifier for the particular materialized view refresh task run.</p>",
+        "MaterializedViewRefreshTaskRun$MaterializedViewRefreshTaskRunId": "<p>The identifier of the materialized view refresh task run.</p>",
+        "StartMaterializedViewRefreshTaskRunResponse$MaterializedViewRefreshTaskRunId": "<p>The identifier for the materialized view refresh task run.</p>"
       }
     },
     "UnfilteredPartition": {
