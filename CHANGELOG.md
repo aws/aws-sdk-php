@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.10 - 2026-01-09
 
 * `Aws\CloudFront` - Added EntityLimitExceeded exception handling to the following API operations AssociateDistributionWebACL, AssociateDistributionTenantWebACL, UpdateDistributionWithStagingConfig
 * `Aws\Glue` - Adding MaterializedViews task run APIs
