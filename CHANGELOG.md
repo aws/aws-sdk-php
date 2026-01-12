@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.11 - 2026-01-12
 
 * `Aws\IoTManagedIntegrations` - This release introduces WiFi Simple Setup (WSS) enabling device provisioning via barcode scanning with automated network discovery, authentication, and credential provisioning. Additionally, it introduces 2P Device Capability Rediscovery for updating hub-managed device capabilities post-onboarding.
 * `Aws\SageMaker` - Added ultraServerType to the UltraServerInfo structure to support server type identification for SageMaker HyperPod
