@@ -54,6 +54,11 @@ abstract class AbstractRestParser extends AbstractParser
                 );
             }
 
+            $body = $response->getBody();
+            if ($body->isSeekable()) {
+                $body->rewind();
+            }
+
             $rawBody = $body->getContents();
             if (!empty($rawBody)
                 && count($output->getMembers()) > 0
