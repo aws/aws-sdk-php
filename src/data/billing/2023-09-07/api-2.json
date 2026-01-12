@@ -417,6 +417,23 @@
       },
       "exception":true
     },
+    "CostCategoryName":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"(?! )[\\p{L}\\p{N}\\p{Z}-_]*(?<! )"
+    },
+    "CostCategoryValues":{
+      "type":"structure",
+      "required":[
+        "key",
+        "values"
+      ],
+      "members":{
+        "key":{"shape":"CostCategoryName"},
+        "values":{"shape":"Values"}
+      }
+    },
     "CreateBillingViewRequest":{
       "type":"structure",
       "required":[
@@ -501,6 +518,7 @@
       "members":{
         "dimensions":{"shape":"DimensionValues"},
         "tags":{"shape":"TagValues"},
+        "costCategories":{"shape":"CostCategoryValues"},
         "timeRange":{"shape":"TimeRange"}
       }
     },

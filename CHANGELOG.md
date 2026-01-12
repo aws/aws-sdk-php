@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoTManagedIntegrations` - This release introduces WiFi Simple Setup (WSS) enabling device provisioning via barcode scanning with automated network discovery, authentication, and credential provisioning. Additionally, it introduces 2P Device Capability Rediscovery for updating hub-managed device capabilities post-onboarding.
+* `Aws\SageMaker` - Added ultraServerType to the UltraServerInfo structure to support server type identification for SageMaker HyperPod
+* `Aws\Billing` - Cost Categories filtering support to BillingView data filter expressions through the new costCategories parameter, enabling users to filter billing views by AWS Cost Categories for more granular cost management and allocation.
+
 ## 3.369.10 - 2026-01-09
 
 * `Aws\CloudFront` - Added EntityLimitExceeded exception handling to the following API operations AssociateDistributionWebACL, AssociateDistributionTenantWebACL, UpdateDistributionWithStagingConfig

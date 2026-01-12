@@ -182,6 +182,18 @@
       "base": "<p> The requested operation would cause a conflict with the current state of a service resource associated with the request. Resolve the conflict before retrying this request. </p>",
       "refs": {}
     },
+    "CostCategoryName": {
+      "base": null,
+      "refs": {
+        "CostCategoryValues$key": "<p> The unique name of the Cost Category. </p>"
+      }
+    },
+    "CostCategoryValues": {
+      "base": "<p> The Cost Categories values used for filtering the costs. </p>",
+      "refs": {
+        "Expression$costCategories": "<p> The filter that's based on <code>CostCategory</code> values. </p>"
+      }
+    },
     "CreateBillingViewRequest": {
       "base": null,
       "refs": {}
@@ -233,11 +245,11 @@
       }
     },
     "Expression": {
-      "base": "<p> See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_billing_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code> and <code>Tags</code>. </p>",
+      "base": "<p> See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_billing_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code>, <code>Tags</code>, and <code>CostCategories</code>. </p>",
       "refs": {
-        "BillingViewElement$dataFilterExpression": "<p> See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_billing_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code> and <code>Tags</code>. </p>",
-        "CreateBillingViewRequest$dataFilterExpression": "<p> See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_billing_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code> and <code>Tags</code>. </p>",
-        "UpdateBillingViewRequest$dataFilterExpression": "<p>See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_billing_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code> and <code>Tags</code>. </p>"
+        "BillingViewElement$dataFilterExpression": "<p> See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_billing_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code>, <code>Tags</code>, and <code>CostCategories</code>. </p>",
+        "CreateBillingViewRequest$dataFilterExpression": "<p> See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_billing_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code>, <code>Tags</code>, and <code>CostCategories</code>. </p>",
+        "UpdateBillingViewRequest$dataFilterExpression": "<p>See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_billing_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code>, <code>Tags</code>, and <code>CostCategories</code>. </p>"
       }
     },
     "FieldName": {
@@ -506,6 +518,7 @@
     "Values": {
       "base": null,
       "refs": {
+        "CostCategoryValues$values": "<p> The specific value of the Cost Category. </p>",
         "DimensionValues$values": "<p> The metadata values that you can use to filter and group your results. </p>",
         "TagValues$values": "<p> The specific value of the tag. </p>"
       }
