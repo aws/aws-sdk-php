@@ -7,6 +7,7 @@ use Aws\Api\Service;
 use Aws\Api\StructureShape;
 use Aws\CommandInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 abstract class AbstractErrorParser
 {
@@ -27,7 +28,7 @@ abstract class AbstractErrorParser
     }
 
     abstract protected function payload(
-        ResponseInterface $response,
+        ResponseInterface|array $response,
         StructureShape $member
     );
 
@@ -49,7 +50,8 @@ abstract class AbstractErrorParser
                     // If error code matches a known error shape, populate the body
                     if ($this->errorCodeMatches($data, $error)) {
                         $data['body'] = $this->payload(
-                            $response,
+                            $data['unwrapped_response']
+                                ?? $response,
                             $error,
                         );
                         $data['error_shape'] = $error;

@@ -26,7 +26,7 @@ abstract class AbstractRestParser extends AbstractParser
      * @return mixed
      */
     abstract protected function payload(
-        ResponseInterface $response,
+        ResponseInterface|array $response,
         StructureShape $member,
         array &$result
     );
@@ -59,17 +59,20 @@ abstract class AbstractRestParser extends AbstractParser
         // Wrap response to allow the body
         // to be read multiple times
         // even in non-seekable streams.
-        $response = new ResponseWrapper($response);
+        $unwrappedResponse = [
+            'response' => $response,
+            'raw_body' => $response->getBody()->getContents()
+        ];
 
         // Get the body content to know whether is empty
-        $body = $response->getBody()->getContents();
+        $rawBodyContent = $unwrappedResponse['raw_body'];
         // Make sure empty payloads are not parsed
         if (!$payload
-            && !empty($body)
+            && !empty($rawBodyContent)
             && count($output->getMembers()) > 0
         ) {
             // if no payload was found, then parse the contents of the body
-            $this->payload($response, $output, $result);
+            $this->payload($unwrappedResponse, $output, $result);
         }
 
         return new Result($result);

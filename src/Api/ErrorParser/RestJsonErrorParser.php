@@ -26,7 +26,6 @@ class RestJsonErrorParser extends AbstractErrorParser
         ResponseInterface $response,
         ?CommandInterface $command = null
     ) {
-        $response = new ResponseWrapper($response);
         $data = $this->genericHandler($response);
 
         // Merge in error data from the JSON body

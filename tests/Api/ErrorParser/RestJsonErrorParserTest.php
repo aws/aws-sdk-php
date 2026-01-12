@@ -30,6 +30,9 @@ class RestJsonErrorParserTest extends TestCase
     ) {
         $response = Psr7\Message::parseResponse($response);
         $parsed = $parser($response, $command);
+        if (isset($parsed['unwrapped_response'])) {
+            unset($parsed['unwrapped_response']);
+        }
         $this->assertCount(
             count($expected),
             $parsed

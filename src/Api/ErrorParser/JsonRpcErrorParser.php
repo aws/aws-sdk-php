@@ -26,7 +26,6 @@ class JsonRpcErrorParser extends AbstractErrorParser
         ResponseInterface $response,
         ?CommandInterface $command = null
     ) {
-        $response = new ResponseWrapper($response);
         $data = $this->genericHandler($response);
 
         // Make the casing consistent across services.

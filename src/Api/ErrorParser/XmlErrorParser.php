@@ -8,6 +8,7 @@ use Aws\Api\StructureShape;
 use Aws\Api\ResponseWrapper;
 use Aws\CommandInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * Parses XML errors.
@@ -28,23 +29,28 @@ class XmlErrorParser extends AbstractErrorParser
         ResponseInterface $response,
         ?CommandInterface $command = null
     ) {
-        $response = new ResponseWrapper($response);
         $code = (string) $response->getStatusCode();
-
+        // To facilitate reading the body again
+        // on non-seekable streams.
+        $unwrappedResponse = [
+            'response' => $response,
+            'raw_body' => $response->getBody()->getContents()
+        ];
         $data = [
             'type' => $code[0] == '4' ? 'client' : 'server',
             'request_id' => null,
             'code' => null,
             'message' => null,
             'parsed' => null,
+            'unwrapped_response' => $unwrappedResponse
         ];
 
         // Get the full body content
-        $body = $response->getBody()->getContents();
+        $rawBodyContent = $unwrappedResponse['raw_body'];
 
         // Parse just if is not empty
-        if (!empty($body)) {
-            $this->parseBody($this->parseXml($body, $response), $data);
+        if (!empty($rawBodyContent)) {
+            $this->parseBody($this->parseXml($rawBodyContent, $response), $data);
         } else {
             $this->parseHeaders($response, $data);
         }
@@ -102,18 +108,24 @@ class XmlErrorParser extends AbstractErrorParser
     }
 
     protected function payload(
-        ResponseInterface $response,
-        StructureShape $member
+        ResponseInterface|array $response,
+        StructureShape                    $member
     ) {
-        $body = $response->getBody()->getContents();
+
+        if ($response instanceof ResponseInterface) {
+            $rawBodyContent = $response->getBody()->getContents();
+        } else {
+            $rawBodyContent = $response['raw_body'];
+            $response = $response['response'];
+        }
 
         // Avoid parsing empty bodies
-        if (empty($body)) {
+        if (empty($rawBodyContent)) {
             return [];
         }
 
         $xmlBody = $this->parseXml(
-            $body,
+            $rawBodyContent,
             $response
         );
 

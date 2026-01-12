@@ -3,7 +3,9 @@ namespace Aws\Api\ErrorParser;
 
 use Aws\Api\Parser\PayloadParserTrait;
 use Aws\Api\StructureShape;
+use GuzzleHttp\Psr7\CachingStream;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * Provides basic JSON error parsing functionality.
@@ -37,13 +39,18 @@ trait JsonParserTrait
             );
         }
 
+        // To facilitate reading the body again
+        // on non-seekable streams.
+        $unwrappedResponse = [
+            'response' => $response,
+            'raw_body' => $response->getBody()->getContents()
+        ];
         // We get the full body content
-        $body = $response->getBody()->getContents();
-
+        $rawBodyContent = $unwrappedResponse['raw_body'];
         $parsedBody = [];
         // Avoid parsing an empty body
-        if (!empty($body)) {
-            $parsedBody = $this->parseJson($body, $response);
+        if (!empty($rawBodyContent)) {
+            $parsedBody = $this->parseJson($rawBodyContent, $response);
         }
 
         // Parse error code from response body
@@ -61,6 +68,7 @@ trait JsonParserTrait
             'message'     => null,
             'type'        => $error_type,
             'parsed'      => $parsedBody,
+            'unwrapped_response' => $unwrappedResponse
         ];
     }
 
@@ -132,17 +140,23 @@ trait JsonParserTrait
     }
 
     protected function payload(
-        ResponseInterface $response,
+        ResponseInterface|array $response,
         StructureShape $member
     ) {
-        $body = $response->getBody()->getContents();
+
+        if ($response instanceof ResponseInterface) {
+            $rawBodyContent = $response->getBody()->getContents();
+        } else {
+            $rawBodyContent = $response['raw_body'];
+            $response = $response['response'];
+        }
 
         // Avoid parsing empty bodies
-        if (empty($body)) {
+        if (empty($rawBodyContent)) {
             return [];
         }
 
-        $jsonBody = $this->parseJson($body, $response);
+        $jsonBody = $this->parseJson($rawBodyContent, $response);
 
         return $this->parser->parse($member, $jsonBody);
     }

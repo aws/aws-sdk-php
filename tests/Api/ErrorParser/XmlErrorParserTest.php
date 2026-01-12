@@ -32,6 +32,9 @@ class XmlErrorParserTest extends TestCase
     ) {
         $response = Psr7\Message::parseResponse($response);
         $result = $parser($response, $command);
+        if (isset($result['unwrapped_response'])) {
+            unset($result['unwrapped_response']);
+        }
         $this->assertArraySubset($expected, $result);
 
         if (is_null($expectedParsedType)) {

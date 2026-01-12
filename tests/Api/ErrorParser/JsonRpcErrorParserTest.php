@@ -33,10 +33,16 @@ class JsonRpcErrorParserTest extends TestCase
     ) {
         $response = Psr7\Message::parseResponse($response);
         $parsed = $parser($response, $command);
+
+        if (isset($parsed['unwrapped_response'])) {
+            unset($parsed['unwrapped_response']);
+        }
+
         $this->assertCount(
             count($expected),
             $parsed
         );
+
         foreach($parsed as $key => $value) {
             if ($key === 'error_shape') {
                 $this->assertEquals(
@@ -76,7 +82,7 @@ class JsonRpcErrorParserTest extends TestCase
                     'request_id' => 'xyz',
                     'parsed'     => [
                         'message' => 'lorem ipsum',
-                        '__type'    => 'foo'
+                        '__type'    => 'foo',
                     ],
                     'body' => [],
                 ]
