@@ -5,10 +5,8 @@ use Aws\Api\Parser\PayloadParserTrait;
 use Aws\Api\Parser\XmlParser;
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
-use Aws\Api\ResponseWrapper;
 use Aws\CommandInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 
 /**
  * Parses XML errors.
@@ -30,27 +28,18 @@ class XmlErrorParser extends AbstractErrorParser
         ?CommandInterface $command = null
     ) {
         $code = (string) $response->getStatusCode();
-        // To facilitate reading the body again
-        // on non-seekable streams.
-        $unwrappedResponse = [
-            'response' => $response,
-            'raw_body' => $response->getBody()->getContents()
-        ];
+
         $data = [
             'type' => $code[0] == '4' ? 'client' : 'server',
             'request_id' => null,
             'code' => null,
             'message' => null,
-            'parsed' => null,
-            'unwrapped_response' => $unwrappedResponse
+            'parsed' => null
         ];
 
-        // Get the full body content
-        $rawBodyContent = $unwrappedResponse['raw_body'];
-
-        // Parse just if is not empty
-        if (!empty($rawBodyContent)) {
-            $this->parseBody($this->parseXml($rawBodyContent, $response), $data);
+        $body = $response->getBody();
+        if ($body->getSize() > 0) {
+            $this->parseBody($this->parseXml($body, $response), $data);
         } else {
             $this->parseHeaders($response, $data);
         }
@@ -108,27 +97,20 @@ class XmlErrorParser extends AbstractErrorParser
     }
 
     protected function payload(
-        ResponseInterface|array $response,
-        StructureShape                    $member
+        ResponseInterface $response,
+        StructureShape $member
     ) {
-
-        if ($response instanceof ResponseInterface) {
-            $rawBodyContent = $response->getBody()->getContents();
-        } else {
-            $rawBodyContent = $response['raw_body'];
-            $response = $response['response'];
+        $body = $response->getBody();
+        if ($body->isSeekable()) {
+            $body->rewind();
         }
 
-        // Avoid parsing empty bodies
-        if (empty($rawBodyContent)) {
-            return [];
+        $rawBody = $body->getContents();
+        if (empty($rawBody)) {
+            return $rawBody;
         }
 
-        $xmlBody = $this->parseXml(
-            $rawBodyContent,
-            $response
-        );
-
+        $xmlBody = $this->parseXml($rawBody, $response);
         $prefix = $this->registerNamespacePrefix($xmlBody);
         $errorBody = $xmlBody->xpath("//{$prefix}Error");
 
@@ -136,8 +118,6 @@ class XmlErrorParser extends AbstractErrorParser
             return $this->parser->parse($member, $errorBody[0]);
         }
 
-        // Fallback since we should either throw an exception or return a value
-        // when the condition above is not met.
-        return [];
+        return $rawBody;
     }
 }

@@ -7,6 +7,8 @@ use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 use Aws\Result;
 use Aws\CommandInterface;
+use GuzzleHttp\Psr7\CachingStream;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -26,7 +28,7 @@ abstract class AbstractRestParser extends AbstractParser
      * @return mixed
      */
     abstract protected function payload(
-        ResponseInterface|array $response,
+        ResponseInterface $response,
         StructureShape $member,
         array &$result
     );
@@ -40,6 +42,25 @@ abstract class AbstractRestParser extends AbstractParser
 
         if ($payload = $output['payload']) {
             $this->extractPayload($payload, $output, $response, $result);
+        } else {
+            $body = $response->getBody();
+            if (!$body->isSeekable()) {
+                $response = new Response(
+                    $response->getStatusCode(),
+                    $response->getHeaders(),
+                    new CachingStream($body),
+                    $response->getProtocolVersion(),
+                    $response->getReasonPhrase()
+                );
+            }
+
+            $rawBody = $body->getContents();
+            if (!empty($rawBody)
+                && count($output->getMembers()) > 0
+            ) {
+                // if no payload was found, then parse the contents of the body
+                $this->payload($response, $output, $result);
+            }
         }
 
         foreach ($output->getMembers() as $name => $member) {
@@ -54,25 +75,6 @@ abstract class AbstractRestParser extends AbstractParser
                     $this->extractStatus($name, $response, $result);
                     break;
             }
-        }
-
-        // Wrap response to allow the body
-        // to be read multiple times
-        // even in non-seekable streams.
-        $unwrappedResponse = [
-            'response' => $response,
-            'raw_body' => $response->getBody()->getContents()
-        ];
-
-        // Get the body content to know whether is empty
-        $rawBodyContent = $unwrappedResponse['raw_body'];
-        // Make sure empty payloads are not parsed
-        if (!$payload
-            && !empty($rawBodyContent)
-            && count($output->getMembers()) > 0
-        ) {
-            // if no payload was found, then parse the contents of the body
-            $this->payload($unwrappedResponse, $output, $result);
         }
 
         return new Result($result);
@@ -96,15 +98,27 @@ abstract class AbstractRestParser extends AbstractParser
             return;
         }
 
-        // We don't create the wrapper above
-        // because on event-stream we want to keep
-        // the original non-seekable stream.
-        $response = new ResponseWrapper($response);
+        if (!$body->isSeekable()) {
+            $response = new Response(
+                $response->getStatusCode(),
+                $response->getHeaders(),
+                new CachingStream($response->getBody()),
+                $response->getProtocolVersion(),
+                $response->getReasonPhrase()
+            );
+        }
+
         if ($member instanceof StructureShape) {
             //Unions must have at least one member set to a non-null value
             // If the body is empty, we can assume it is unset
+            $body = $response->getBody();
+            if ($body->isSeekable()) {
+                $body->rewind();
+            }
+
+            $rawBody = $body->getContents();
             if (!empty($member['union'])
-                && empty($response->getBody()->getContents())) {
+                && empty($rawBody)) {
                 return;
             }
 

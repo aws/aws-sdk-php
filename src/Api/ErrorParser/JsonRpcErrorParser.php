@@ -3,8 +3,9 @@ namespace Aws\Api\ErrorParser;
 
 use Aws\Api\Parser\JsonParser;
 use Aws\Api\Service;
-use Aws\Api\ResponseWrapper;
 use Aws\CommandInterface;
+use GuzzleHttp\Psr7\CachingStream;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -26,27 +27,31 @@ class JsonRpcErrorParser extends AbstractErrorParser
         ResponseInterface $response,
         ?CommandInterface $command = null
     ) {
+        if (!$response->getBody()->isSeekable()) {
+            $response = new Response(
+                $response->getStatusCode(),
+                $response->getHeaders(),
+                new CachingStream($response->getBody()),
+                $response->getProtocolVersion(),
+                $response->getReasonPhrase()
+            );
+        }
         $data = $this->genericHandler($response);
 
         // Make the casing consistent across services.
-        $parsed = $data['parsed'] ?? null;
-        if ($parsed) {
-            $parsed = array_change_key_case($data['parsed']);
+        if ($data['parsed']) {
+            $data['parsed'] = array_change_key_case($data['parsed']);
         }
 
-        if (isset($parsed['__type'])) {
+        if (isset($data['parsed']['__type'])) {
             if (!isset($data['code'])) {
-                $parts = explode('#', $parsed['__type']);
-                $data['code'] = $parts[1] ?? $parts[0];
+                $parts = explode('#', $data['parsed']['__type']);
+                $data['code'] = isset($parts[1]) ? $parts[1] : $parts[0];
             }
-
-            $data['message'] = $parsed['message'] ?? null;
+            $data['message'] = $data['parsed']['message'] ?? null;
         }
 
         $this->populateShape($data, $response, $command);
-
-        // Now lets make parsed to be all lowercase
-        $data['parsed'] = $parsed;
 
         return $data;
     }

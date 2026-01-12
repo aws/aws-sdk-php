@@ -3,9 +3,7 @@ namespace Aws\Api\ErrorParser;
 
 use Aws\Api\Parser\PayloadParserTrait;
 use Aws\Api\StructureShape;
-use GuzzleHttp\Psr7\CachingStream;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 
 /**
  * Provides basic JSON error parsing functionality.
@@ -39,18 +37,15 @@ trait JsonParserTrait
             );
         }
 
-        // To facilitate reading the body again
-        // on non-seekable streams.
-        $unwrappedResponse = [
-            'response' => $response,
-            'raw_body' => $response->getBody()->getContents()
-        ];
-        // We get the full body content
-        $rawBodyContent = $unwrappedResponse['raw_body'];
-        $parsedBody = [];
-        // Avoid parsing an empty body
-        if (!empty($rawBodyContent)) {
-            $parsedBody = $this->parseJson($rawBodyContent, $response);
+        $parsedBody = null;
+        $body = $response->getBody();
+        if ($body->isSeekable()) {
+            $body->rewind();
+        }
+
+        $rawBody = $body->getContents();
+        if (!empty($rawBody)) {
+            $parsedBody = $this->parseJson($rawBody, $response);
         }
 
         // Parse error code from response body
@@ -67,8 +62,7 @@ trait JsonParserTrait
             'code'        => $error_code ?? null,
             'message'     => null,
             'type'        => $error_type,
-            'parsed'      => $parsedBody,
-            'unwrapped_response' => $unwrappedResponse
+            'parsed'      => $parsedBody
         ];
     }
 
@@ -140,23 +134,20 @@ trait JsonParserTrait
     }
 
     protected function payload(
-        ResponseInterface|array $response,
+        ResponseInterface $response,
         StructureShape $member
     ) {
+        $body = $response->getBody();
+        if ($body->isSeekable()) {
+            $body->rewind();
+        }
 
-        if ($response instanceof ResponseInterface) {
-            $rawBodyContent = $response->getBody()->getContents();
+        $rawBody = $body->getContents();
+        if (!empty($rawBody)) {
+            $jsonBody = $this->parseJson($rawBody, $response);
         } else {
-            $rawBodyContent = $response['raw_body'];
-            $response = $response['response'];
+            $jsonBody = $rawBody;
         }
-
-        // Avoid parsing empty bodies
-        if (empty($rawBodyContent)) {
-            return [];
-        }
-
-        $jsonBody = $this->parseJson($rawBodyContent, $response);
 
         return $this->parser->parse($member, $jsonBody);
     }

@@ -3,7 +3,7 @@ namespace Aws\Api\ErrorParser;
 
 use Aws\Api\Parser\JsonParser;
 use Aws\Api\Service;
-use Aws\Api\ResponseWrapper;
+use Aws\Api\StructureShape;
 use Aws\CommandInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -38,14 +38,9 @@ class RestJsonErrorParser extends AbstractErrorParser
             $data['type'] = strtolower($data['type']);
         }
 
-        // Make the casing consistent across services.
-        $parsed = $data['parsed'] ?? null;
-        if ($parsed) {
-            $parsed = array_change_key_case($data['parsed']);
-        }
-
         // Retrieve error message directly
-        $data['message'] = $parsed['message'] ?? null;
+        $data['message'] = $data['parsed']['message']
+            ?? ($data['parsed']['Message'] ?? null);
 
         $this->populateShape($data, $response, $command);
 
