@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.12 - 2026-01-13
 
 * `Aws\DataZone` - Adds support for IAM role subscriptions to Glue table listings via CreateSubscriptionRequest API. Also adds owningIamPrincipalArn filter to List APIs and subscriptionGrantCreationMode parameter to subscription target APIs for controlling grant creation behavior.
 * `Aws\Bedrock` - This change will increase TestCase guardContent input size from 1024 to 2028 characters and PolicyBuildDocumentDescription from 2000 to 4000 characters
