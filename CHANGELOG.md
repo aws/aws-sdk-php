@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.13 - 2026-01-14
 
 * `Aws\RDS` - no feature changes. model migrated to Smithy
 * `Aws\Redshift` - Adds support for enabling extra compute resources for automatic optimization during create and modify operations in Amazon Redshift clusters.
