@@ -449,6 +449,7 @@
         "CreateClusterMessage$AvailabilityZoneRelocation": "<p>The option to enable relocation for an Amazon Redshift cluster between Availability Zones after the cluster is created.</p>",
         "CreateClusterMessage$ManageMasterPassword": "<p>If <code>true</code>, Amazon Redshift uses Secrets Manager to manage this cluster's admin credentials. You can't use <code>MasterUserPassword</code> if <code>ManageMasterPassword</code> is true. If <code>ManageMasterPassword</code> is false or not set, Amazon Redshift uses <code>MasterUserPassword</code> for the admin user account's password. </p>",
         "CreateClusterMessage$MultiAZ": "<p>If true, Amazon Redshift will deploy the cluster in two Availability Zones (AZ).</p>",
+        "CreateClusterMessage$ExtraComputeForAutomaticOptimization": "<p>If <code>true</code>, allocates additional compute resources for running automatic optimization operations.</p> <p>Default: false</p>",
         "CreateEventSubscriptionMessage$Enabled": "<p>A boolean value; set to <code>true</code> to activate the subscription, and set to <code>false</code> to create the subscription but not activate it. </p>",
         "CreateScheduledActionMessage$Enable": "<p>If true, the schedule is enabled. If false, the scheduled action does not trigger. For more information about <code>state</code> of the scheduled action, see <a>ScheduledAction</a>. </p>",
         "CreateSnapshotScheduleMessage$DryRun": "<p/>",
@@ -467,6 +468,7 @@
         "ModifyClusterMessage$AvailabilityZoneRelocation": "<p>The option to enable relocation for an Amazon Redshift cluster between Availability Zones after the cluster modification is complete.</p>",
         "ModifyClusterMessage$ManageMasterPassword": "<p>If <code>true</code>, Amazon Redshift uses Secrets Manager to manage this cluster's admin credentials. You can't use <code>MasterUserPassword</code> if <code>ManageMasterPassword</code> is true. If <code>ManageMasterPassword</code> is false or not set, Amazon Redshift uses <code>MasterUserPassword</code> for the admin user account's password. </p>",
         "ModifyClusterMessage$MultiAZ": "<p>If true and the cluster is currently only deployed in a single Availability Zone, the cluster will be modified to be deployed in two Availability Zones.</p>",
+        "ModifyClusterMessage$ExtraComputeForAutomaticOptimization": "<p>If <code>true</code>, allocates additional compute resources for running automatic optimization operations.</p> <p>Default: false</p>",
         "ModifyClusterSnapshotScheduleMessage$DisassociateSchedule": "<p>A boolean to indicate whether to remove the assoiciation between the cluster and the schedule.</p>",
         "ModifyEventSubscriptionMessage$Enabled": "<p>A Boolean value indicating if the subscription is enabled. <code>true</code> indicates the subscription is enabled </p>",
         "ModifyLakehouseConfigurationMessage$DryRun": "<p>A boolean value that, if <code>true</code>, validates the request without actually modifying the lakehouse configuration. Use this to check for errors before making changes.</p>",
@@ -3369,6 +3371,7 @@
         "Cluster$MultiAZ": "<p>A boolean value that, if true, indicates that the cluster is deployed in two Availability Zones.</p>",
         "Cluster$LakehouseRegistrationStatus": "<p>The status of the lakehouse registration for the cluster. Indicates whether the cluster is successfully registered with Amazon Redshift federated permissions.</p>",
         "Cluster$CatalogArn": "<p>The Amazon Resource Name (ARN) of the Glue data catalog associated with the cluster enabled with Amazon Redshift federated permissions.</p>",
+        "Cluster$ExtraComputeForAutomaticOptimization": "<p>A boolean value that, if <code>true</code>, indicates that the cluster allocates additional compute resources to run automatic optimization operations.</p> <p>Default: false</p>",
         "ClusterAssociatedToSchedule$ClusterIdentifier": "<p/>",
         "ClusterCredentials$DbUser": "<p>A database user name that is authorized to log on to the database <code>DbName</code> using the password <code>DbPassword</code>. If the specified DbUser exists in the database, the new user name has the same database permissions as the the user named in DbUser. By default, the user is added to PUBLIC. If the <code>DbGroups</code> parameter is specifed, <code>DbUser</code> is added to the listed groups for any sessions created using these credentials.</p>",
         "ClusterDbRevision$ClusterIdentifier": "<p>The unique identifier of the cluster.</p>",
@@ -4287,7 +4290,7 @@
     "UsageLimitLimitType": {
       "base": null,
       "refs": {
-        "CreateUsageLimitMessage$LimitType": "<p>The type of limit. Depending on the feature type, this can be based on a time duration or data size. If <code>FeatureType</code> is <code>spectrum</code>, then <code>LimitType</code> must be <code>data-scanned</code>. If <code>FeatureType</code> is <code>concurrency-scaling</code>, then <code>LimitType</code> must be <code>time</code>. If <code>FeatureType</code> is <code>cross-region-datasharing</code>, then <code>LimitType</code> must be <code>data-scanned</code>. </p>",
+        "CreateUsageLimitMessage$LimitType": "<p>The type of limit. Depending on the feature type, this can be based on a time duration or data size. If <code>FeatureType</code> is <code>spectrum</code>, then <code>LimitType</code> must be <code>data-scanned</code>. If <code>FeatureType</code> is <code>concurrency-scaling</code>, then <code>LimitType</code> must be <code>time</code>. If <code>FeatureType</code> is <code>cross-region-datasharing</code>, then <code>LimitType</code> must be <code>data-scanned</code>. If <code>FeatureType</code> is <code>extra-compute-for-automatic-optimization</code>, then <code>LimitType</code> must be <code>time</code>. </p>",
         "UsageLimit$LimitType": "<p>The type of limit. Depending on the feature type, this can be based on a time duration or data size.</p>"
       }
     },

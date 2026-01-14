@@ -10,6 +10,7 @@
     "AssociateDefaultVocabulary": "<p>Associates an existing vocabulary as the default. Contact Lens for Amazon Connect uses the vocabulary in post-call and real-time analysis sessions for the given language.</p>",
     "AssociateEmailAddressAlias": "<p>Associates an email address alias with an existing email address in an Amazon Connect instance. This creates a forwarding relationship where emails sent to the alias email address are automatically forwarded to the primary email address. </p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p> <b>Unified customer support</b>: Create multiple entry points (for example, support@example.com, help@example.com, customercare@example.com) that all forward to a single agent queue for streamlined management.</p> </li> <li> <p> <b>Department consolidation</b>: Forward emails from legacy department addresses (for example, sales@example.com, info@example.com) to a centralized customer service email during organizational restructuring.</p> </li> <li> <p> <b>Brand management</b>: Enable you to use familiar brand-specific email addresses that forward to the appropriate Amazon Connect instance email address.</p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p>Each email address can have a maximum of one alias. You cannot create multiple aliases for the same email address. </p> </li> <li> <p>If the alias email address already receives direct emails, it continues to receive direct emails plus forwarded emails.</p> </li> <li> <p>You cannot chain email aliases together (that is, create an alias of an alias).</p> </li> </ul> <p> <code>AssociateEmailAddressAlias</code> does not return the following information:</p> <ul> <li> <p>A confirmation of the alias relationship details (you must call <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribeEmailAddress.html\">DescribeEmailAddress</a> to verify).</p> </li> <li> <p>The timestamp of when the association occurred.</p> </li> <li> <p>The status of the forwarding configuration.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p> <p> <b>Related operations</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DisassociateEmailAddressAlias.html\">DisassociateEmailAddressAlias</a>: Removes the alias association between two email addresses in an Amazon Connect instance.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribeEmailAddress.html\">DescribeEmailAddress</a>: View current alias configurations for an email address.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_SearchEmailAddresses.html\">SearchEmailAddresses</a>: Find email addresses and their alias relationships across an instance.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_CreateEmailAddress.html\">CreateEmailAddress</a>: Create new email addresses that can participate in alias relationships.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DeleteEmailAddress.html\">DeleteEmailAddress</a>: Remove email addresses (automatically removes any alias relationships).</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdateEmailAddressMetadata.html\">UpdateEmailAddressMetadata</a>: Modify email address properties (does not affect alias relationships).</p> </li> </ul>",
     "AssociateFlow": "<p>Associates a connect resource to a flow.</p>",
+    "AssociateHoursOfOperations": "<p>Associates a set of hours of operations with another hours of operation. Refer to Administrator Guide <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/hours-of-operation-overrides.html\"> here </a> for more information on inheriting overrides from parent hours of operation(s).</p>",
     "AssociateInstanceStorageConfig": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Associates a storage resource type for the first time. You can only associate one type of storage configuration in a single call. This means, for example, that you can't define an instance with multiple S3 buckets for storing chat transcripts.</p> <p>This API does not create a resource that doesn't exist. It only associates it to the instance. Ensure that the resource being specified in the storage configuration, like an S3 bucket, exists when being used for association.</p>",
     "AssociateLambdaFunction": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Allows the specified Amazon Connect instance to access the specified Lambda function.</p>",
     "AssociateLexBot": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Allows the specified Amazon Connect instance to access the specified Amazon Lex V1 bot. This API only supports the association of Amazon Lex V1 bots.</p>",
@@ -138,6 +139,7 @@
     "DisassociateBot": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Revokes authorization from the specified instance to access the specified Amazon Lex or Amazon Lex V2 bot. </p>",
     "DisassociateEmailAddressAlias": "<p>Removes the alias association between two email addresses in an Amazon Connect instance. After disassociation, emails sent to the former alias email address are no longer forwarded to the primary email address. Both email addresses continue to exist independently and can receive emails directly.</p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p> <b>Department separation</b>: Remove alias relationships when splitting a consolidated support queue back into separate department-specific queues.</p> </li> <li> <p> <b>Email address retirement</b>: Cleanly remove forwarding relationships before decommissioning old email addresses.</p> </li> <li> <p> <b>Organizational restructuring</b>: Reconfigure email routing when business processes change and aliases are no longer needed.</p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p>Concurrent operations: This API uses distributed locking, so concurrent operations on the same email addresses may be temporarily blocked.</p> </li> <li> <p>Emails sent to the former alias address are still delivered directly to that address if it exists.</p> </li> <li> <p>You do not need to delete the email addresses after disassociation. Both addresses remain active independently.</p> </li> <li> <p>After a successful disassociation, you can immediately create a new alias relationship with the same addresses.</p> </li> <li> <p>200 status means alias was successfully disassociated.</p> </li> </ul> <p> <code>DisassociateEmailAddressAlias</code> does not return the following information:</p> <ul> <li> <p>Details in the response about the email that was disassociated. The response returns an empty body.</p> </li> <li> <p>The timestamp of when the disassociation occurred.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p> <p> <b>Related operations</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_AssociateEmailAddressAlias.html\">AssociateEmailAddressAlias</a>: Associates an email address alias with an existing email address in an Amazon Connect instance.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribeEmailAddress.html\">DescribeEmailAddress</a>: View current alias configurations for an email address.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_SearchEmailAddresses.html\">SearchEmailAddresses</a>: Find email addresses and their alias relationships across an instance.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_CreateEmailAddress.html\">CreateEmailAddress</a>: Create new email addresses that can participate in alias relationships.</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DeleteEmailAddress.html\">DeleteEmailAddress</a>: Remove email addresses (automatically removes any alias relationships).</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdateEmailAddressMetadata.html\">UpdateEmailAddressMetadata</a>: Modify email address properties (does not affect alias relationships).</p> </li> </ul>",
     "DisassociateFlow": "<p>Disassociates a connect resource from a flow.</p>",
+    "DisassociateHoursOfOperations": "<p>Disassociates a set of hours of operations with another hours of operation. Refer to Administrator Guide <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/hours-of-operation-overrides.html\"> here </a> for more information on inheriting overrides from parent hours of operation(s).</p>",
     "DisassociateInstanceStorageConfig": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Removes the storage type configurations for the specified resource type and association ID.</p>",
     "DisassociateLambdaFunction": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Remove the Lambda function from the dropdown options available in the relevant flow blocks.</p>",
     "DisassociateLexBot": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Revokes authorization from the specified instance to access the specified Amazon Lex bot.</p>",
@@ -173,6 +175,7 @@
     "ListAssociatedContacts": "<p>Provides information about contact tree, a list of associated contacts with a unique identifier.</p>",
     "ListAuthenticationProfiles": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>Provides summary information about the authentication profiles in a specified Amazon Connect instance.</p>",
     "ListBots": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>For the specified version of Amazon Lex, returns a paginated list of all the Amazon Lex bots currently associated with the instance. Use this API to return both Amazon Lex V1 and V2 bots.</p>",
+    "ListChildHoursOfOperations": "<p>Provides information about the child hours of operations for the specified parent hours of operation.</p> <p>For more information about child hours of operations, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/\">Link overrides from different hours of operation</a> in the <i> Administrator Guide</i>.</p>",
     "ListContactEvaluations": "<p>Lists contact evaluations in the specified Amazon Connect instance.</p>",
     "ListContactFlowModuleAliases": "<p>Lists all aliases associated with a contact flow module, showing their current version mappings and metadata.</p>",
     "ListContactFlowModuleVersions": "<p>Retrieves a paginated list of all versions for a specific contact flow module.</p>",
@@ -463,6 +466,7 @@
         "HoursOfOperation$HoursOfOperationArn": "<p>The Amazon Resource Name (ARN) for the hours of operation.</p>",
         "HoursOfOperationOverride$HoursOfOperationArn": "<p>The Amazon Resource Name (ARN) for the hours of operation.</p>",
         "HoursOfOperationSummary$Arn": "<p>The Amazon Resource Name (ARN) of the hours of operation.</p>",
+        "HoursOfOperationsIdentifier$Arn": "<p>Amazon Resource Name (ARN) of the hours of operations.</p>",
         "ImportPhoneNumberRequest$SourcePhoneNumberArn": "<p>The claimed phone number ARN being imported from the external service, such as Amazon Web Services End User Messaging. If it is from Amazon Web Services End User Messaging, it looks like the ARN of the phone number to import from Amazon Web Services End User Messaging.</p>",
         "ImportPhoneNumberResponse$PhoneNumberArn": "<p>The Amazon Resource Name (ARN) of the phone number.</p>",
         "Instance$Arn": "<p>The Amazon Resource Name (ARN) of the instance.</p>",
@@ -1123,6 +1127,10 @@
       "refs": {}
     },
     "AssociateFlowResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateHoursOfOperationsRequest": {
       "base": null,
       "refs": {}
     },
@@ -1881,6 +1889,12 @@
         "ChatStreamingConfiguration$StreamingEndpointArn": "<p>The Amazon Resource Name (ARN) of the standard Amazon SNS topic. The Amazon Resource Name (ARN) of the streaming endpoint that is used to publish real-time message streaming for chat conversations.</p>"
       }
     },
+    "ChildHoursOfOperationsList": {
+      "base": null,
+      "refs": {
+        "ListChildHoursOfOperationsResponse$ChildHoursOfOperationsSummaryList": "<p>Information about the hours of operation.</p>"
+      }
+    },
     "ClaimPhoneNumberRequest": {
       "base": null,
       "refs": {}
@@ -1978,6 +1992,7 @@
       "refs": {
         "CreateHoursOfOperationOverrideRequest$Name": "<p>The name of the hours of operation override.</p>",
         "HoursOfOperationOverride$Name": "<p>The name of the hours of operation override.</p>",
+        "OverrideHour$OverrideName": "<p>Unique identifier name for the override.</p>",
         "UpdateHoursOfOperationOverrideRequest$Name": "<p>The name of the hours of operation override.</p>"
       }
     },
@@ -1988,6 +2003,7 @@
         "CreatePromptRequest$Name": "<p>The name of the prompt.</p>",
         "CreateQueueRequest$Name": "<p>The name of the queue.</p>",
         "HoursOfOperation$Name": "<p>The name for the hours of operation.</p>",
+        "HoursOfOperationsIdentifier$Name": "<p>Name of the hours of operation</p>",
         "Prompt$Name": "<p>The name of the prompt.</p>",
         "Queue$Name": "<p>The name of the queue.</p>",
         "UpdateHoursOfOperationRequest$Name": "<p>The name of the hours of operation.</p>",
@@ -4130,6 +4146,10 @@
       "base": null,
       "refs": {}
     },
+    "DisassociateHoursOfOperationsRequest": {
+      "base": null,
+      "refs": {}
+    },
     "DisassociateInstanceStorageConfigRequest": {
       "base": null,
       "refs": {}
@@ -4294,6 +4314,18 @@
       "base": "<p>Information about the hours of operations with the effective override applied.</p>",
       "refs": {
         "EffectiveHoursOfOperationList$member": null
+      }
+    },
+    "EffectiveOverrideHours": {
+      "base": "<p>Information about the hours of operation overrides which contribute to effective hours of operations.</p>",
+      "refs": {
+        "EffectiveOverrideHoursList$member": null
+      }
+    },
+    "EffectiveOverrideHoursList": {
+      "base": null,
+      "refs": {
+        "GetEffectiveHoursOfOperationsResponse$EffectiveOverrideHoursList": "<p>Information about override configurations applied to the base hours of operation to calculate the effective hours.</p> <p>For more information about how override types are applied, see <a href=\"https://docs.aws.amazon.com/https:/docs.aws.amazon.com/connect/latest/adminguide/hours-of-operation-overrides.html\">Build your list of overrides</a> in the <i> Administrator Guide</i>.</p>"
       }
     },
     "Email": {
@@ -6096,6 +6128,7 @@
     "HoursOfOperationId": {
       "base": null,
       "refs": {
+        "AssociateHoursOfOperationsRequest$HoursOfOperationId": "<p>The identifier of the child hours of operation.</p>",
         "CreateHoursOfOperationOverrideRequest$HoursOfOperationId": "<p>The identifier for the hours of operation</p>",
         "CreateHoursOfOperationResponse$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
         "CreateQueueRequest$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
@@ -6103,11 +6136,16 @@
         "DeleteHoursOfOperationRequest$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
         "DescribeHoursOfOperationOverrideRequest$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
         "DescribeHoursOfOperationRequest$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
+        "DisassociateHoursOfOperationsRequest$HoursOfOperationId": "<p>The identifier of the child hours of operation.</p>",
         "GetEffectiveHoursOfOperationsRequest$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
         "HoursOfOperation$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
         "HoursOfOperationOverride$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
         "HoursOfOperationSummary$Id": "<p>The identifier of the hours of operation.</p>",
+        "HoursOfOperationsIdentifier$Id": "<p>Unique identifier of the hours of operation.</p>",
+        "ListChildHoursOfOperationsRequest$HoursOfOperationId": "<p>The identifier of the parent hours of operation.</p>",
         "ListHoursOfOperationOverridesRequest$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
+        "ParentHoursOfOperationConfig$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
+        "ParentHoursOfOperationIdList$member": null,
         "Queue$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
         "UpdateHoursOfOperationOverrideRequest$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
         "UpdateHoursOfOperationRequest$HoursOfOperationId": "<p>The identifier of the hours of operation.</p>",
@@ -6184,6 +6222,7 @@
         "CreateHoursOfOperationOverrideRequest$EffectiveFrom": "<p>The date from when the hours of operation override is effective.</p>",
         "CreateHoursOfOperationOverrideRequest$EffectiveTill": "<p>The date until when the hours of operation override is effective.</p>",
         "EffectiveHoursOfOperations$Date": "<p>The date that the hours of operation or overrides applies to.</p>",
+        "EffectiveOverrideHours$Date": "<p>The date that the hours of operation override applies to.</p>",
         "GetEffectiveHoursOfOperationsRequest$FromDate": "<p>The date from when the hours of operation are listed.</p>",
         "GetEffectiveHoursOfOperationsRequest$ToDate": "<p>The date until when the hours of operation are listed.</p>",
         "HoursOfOperationOverride$EffectiveFrom": "<p>The date from which the hours of operation override would be effective.</p>",
@@ -6230,6 +6269,13 @@
       "refs": {
         "HoursOfOperationConfig$StartTime": "<p>The start time that your contact center opens.</p>",
         "HoursOfOperationConfig$EndTime": "<p>The end time that your contact center closes.</p>"
+      }
+    },
+    "HoursOfOperationsIdentifier": {
+      "base": "<p>Identifier for a hours of operations resource: ARN, ID, Name</p>",
+      "refs": {
+        "ChildHoursOfOperationsList$member": null,
+        "ParentHoursOfOperationsList$member": null
       }
     },
     "IAMRestrictedPrimaryValue": {
@@ -6401,6 +6447,7 @@
         "AssociateDefaultVocabularyRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateEmailAddressAliasRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateFlowRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "AssociateHoursOfOperationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateInstanceStorageConfigRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateLambdaFunctionRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateLexBotRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -6519,6 +6566,7 @@
         "DisassociateBotRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DisassociateEmailAddressAliasRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DisassociateFlowRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "DisassociateHoursOfOperationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DisassociateInstanceStorageConfigRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DisassociateLambdaFunctionRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance..</p>",
         "DisassociateLexBotRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -6555,6 +6603,7 @@
         "ListAssociatedContactsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListAuthenticationProfilesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListBotsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "ListChildHoursOfOperationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListContactEvaluationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListContactFlowModuleVersionsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListContactFlowModulesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -6851,6 +6900,12 @@
         "MetricInterval$Interval": "<p>The interval period provided in the API request. </p>"
       }
     },
+    "IntervalPositiveInteger": {
+      "base": null,
+      "refs": {
+        "RecurrencePattern$Interval": "<p>Specifies the number of frequency units between each occurrence. Must be a positive integer. </p> <p> Examples: To repeat every week, set Interval=1 with WEEKLY frequency. To repeat every two months, set Interval=2 with MONTHLY frequency.</p>"
+      }
+    },
     "InvalidActiveRegionException": {
       "base": "<p>This exception occurs when an API request is made to a non-active region in an Amazon Connect instance configured with Amazon Connect Global Resiliency. For example, if the active region is US West (Oregon) and a request is made to US East (N. Virginia), the exception will be returned.</p>",
       "refs": {}
@@ -7078,6 +7133,14 @@
       "refs": {}
     },
     "ListBotsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListChildHoursOfOperationsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListChildHoursOfOperationsResponse": {
       "base": null,
       "refs": {}
     },
@@ -7571,6 +7634,7 @@
         "GetCurrentUserDataRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "GetMetricDataRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "GetMetricDataV2Request$MaxResults": "<p>The maximum number of results to return per page.</p>",
+        "ListChildHoursOfOperationsRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
         "ListDefaultVocabulariesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListEntitySecurityProfilesRequest$MaxResults": "<p> The maximum number of results to return per page. The default MaxResult size is 100. </p>",
         "ListEvaluationFormVersionsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
@@ -7914,6 +7978,30 @@
       "base": null,
       "refs": {}
     },
+    "Month": {
+      "base": null,
+      "refs": {
+        "MonthList$member": null
+      }
+    },
+    "MonthDay": {
+      "base": null,
+      "refs": {
+        "MonthDayList$member": null
+      }
+    },
+    "MonthDayList": {
+      "base": null,
+      "refs": {
+        "RecurrencePattern$ByMonthDay": "<p>Specifies which day of the month the event should occur on (1-31). Used with MONTHLY or YEARLY frequency to schedule events on specific date within a month.</p> <p> Examples: [15] for events on the 15th of each month, [-1] for events on the last day of month. </p> <p>Note: It does not accept multiple values in the same list. If a specified day doesn't exist in a particular month (e.g., day 31 in February), the event will be skipped for that month. This field cannot be used simultaneously with ByWeekdayOccurrence as they represent different scheduling approaches (specific dates vs. relative weekday positions).</p>"
+      }
+    },
+    "MonthList": {
+      "base": null,
+      "refs": {
+        "RecurrencePattern$ByMonth": "<p>Specifies which month the event should occur in (1-12, where 1=January, 12=December). Used with YEARLY frequency to schedule events in specific month. </p> <p>Note: It does not accept multiple values in the same list</p>"
+      }
+    },
     "MultiSelectQuestionRuleCategoryAutomation": {
       "base": "<p>Automation rule for multi-select questions based on rule categories.</p>",
       "refs": {
@@ -8025,6 +8113,8 @@
         "ListAuthenticationProfilesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListBotsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListBotsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "ListChildHoursOfOperationsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListChildHoursOfOperationsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListContactEvaluationsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p> <important> <p>This is not expected to be set because the value returned in the previous response is always null.</p> </important>",
         "ListContactEvaluationsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p> <important> <p>This is always returned as null in the response.</p> </important>",
         "ListContactFlowModuleAliasesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -8268,6 +8358,12 @@
         "EffectiveHoursOfOperations$OperationalHours": "<p>Information about the hours of operations with the effective override applied.</p>"
       }
     },
+    "OperationalStatus": {
+      "base": null,
+      "refs": {
+        "OverrideHour$OperationalStatus": "<p>Indicates whether the status is open or closed during the override period. This status determines how the override modifies the base hours of operation schedule.</p>"
+      }
+    },
     "Origin": {
       "base": null,
       "refs": {
@@ -8390,13 +8486,35 @@
         "HoursOfOperationOverrideConfig$Day": "<p>The day that the hours of operation override applies to.</p>"
       }
     },
+    "OverrideHour": {
+      "base": "<p>Information about hours of operation override</p>",
+      "refs": {
+        "OverrideHours$member": null
+      }
+    },
+    "OverrideHours": {
+      "base": null,
+      "refs": {
+        "EffectiveOverrideHours$OverrideHours": "<p>Information about the hours of operation overrides that apply to a specific date.</p>"
+      }
+    },
     "OverrideTimeSlice": {
       "base": "<p>The start time or end time for an hours of operation override.</p>",
       "refs": {
         "HoursOfOperationOverrideConfig$StartTime": "<p>The start time when your contact center opens if overrides are applied.</p>",
         "HoursOfOperationOverrideConfig$EndTime": "<p>The end time that your contact center closes if overrides are applied.</p>",
         "OperationalHour$Start": "<p>The start time that your contact center opens.</p>",
-        "OperationalHour$End": "<p>The end time that your contact center closes.</p>"
+        "OperationalHour$End": "<p>The end time that your contact center closes.</p>",
+        "OverrideHour$Start": null,
+        "OverrideHour$End": null
+      }
+    },
+    "OverrideType": {
+      "base": null,
+      "refs": {
+        "CreateHoursOfOperationOverrideRequest$OverrideType": "<p>Whether the override will be defined as a <i>standard</i> or as a <i>recurring event</i>.</p> <p>For more information about how override types are applied, see <a href=\"https://docs.aws.amazon.com/https:/docs.aws.amazon.com/connect/latest/adminguide/hours-of-operation-overrides.html\">Build your list of overrides</a> in the <i> Administrator Guide</i>.</p>",
+        "HoursOfOperationOverride$OverrideType": "<p>Whether the override will be defined as a <i>standard</i> or as a <i>recurring event</i>.</p>",
+        "UpdateHoursOfOperationOverrideRequest$OverrideType": "<p>Whether the override will be defined as a <i>standard</i> or as a <i>recurring event</i>.</p> <p>For more information about how override types are applied, see <a href=\"https://docs.aws.amazon.com/https:/docs.aws.amazon.com/connect/latest/adminguide/hours-of-operation-overrides.html\">Build your list of overrides</a> in the <i> Administrator Guide</i>.</p>"
       }
     },
     "PEM": {
@@ -8438,6 +8556,31 @@
       "base": "<p>Contains primary color configuration for a workspace theme.</p>",
       "refs": {
         "WorkspaceThemePalette$Primary": "<p>The primary color configuration used throughout the workspace.</p>"
+      }
+    },
+    "ParentHoursOfOperationConfig": {
+      "base": "<p>Contains configuration for the parent hours of operation.</p>",
+      "refs": {
+        "ParentHoursOfOperationConfigList$member": null
+      }
+    },
+    "ParentHoursOfOperationConfigList": {
+      "base": null,
+      "refs": {
+        "AssociateHoursOfOperationsRequest$ParentHoursOfOperationConfigs": "<p>The Amazon Resource Names (ARNs) of the parent hours of operation resources to associate with the child hours of operation resource.</p>",
+        "CreateHoursOfOperationRequest$ParentHoursOfOperationConfigs": "<p>Configuration for parent hours of operations. Eg: ResourceArn. </p> <p>For more information about parent hours of operations, see <a href=\"https://docs.aws.amazon.com/https:/docs.aws.amazon.com/connect/latest/adminguide/hours-of-operation-overrides.html\">Link overrides from different hours of operation</a> in the <i> Administrator Guide</i>.</p>"
+      }
+    },
+    "ParentHoursOfOperationIdList": {
+      "base": null,
+      "refs": {
+        "DisassociateHoursOfOperationsRequest$ParentHoursOfOperationIds": "<p>The Amazon Resource Names (ARNs) of the parent hours of operation resources to disassociate with the child hours of operation resource.</p>"
+      }
+    },
+    "ParentHoursOfOperationsList": {
+      "base": null,
+      "refs": {
+        "HoursOfOperation$ParentHoursOfOperations": "<p>Information about parent hours of operations.</p>"
       }
     },
     "ParticipantCapabilities": {
@@ -9765,6 +9908,26 @@
         "Contact$Recordings": "<p>If recording was enabled, this is information about the recordings.</p>"
       }
     },
+    "RecurrenceConfig": {
+      "base": "<p>Defines the recurrence configuration for overrides. This configuration uses a recurrence pattern to specify when and how frequently an event should repeat.</p>",
+      "refs": {
+        "CreateHoursOfOperationOverrideRequest$RecurrenceConfig": "<p>Configuration for a recurring event.</p>",
+        "HoursOfOperationOverride$RecurrenceConfig": "<p>Configuration for a recurring event.</p>",
+        "UpdateHoursOfOperationOverrideRequest$RecurrenceConfig": "<p>Configuration for a recurring event.</p>"
+      }
+    },
+    "RecurrenceFrequency": {
+      "base": null,
+      "refs": {
+        "RecurrencePattern$Frequency": "<p>Defines how often the pattern repeats. This is the base unit for the recurrence schedule and works in conjunction with the Interval field to determine the exact repetition sequence.</p>"
+      }
+    },
+    "RecurrencePattern": {
+      "base": "<p>Specifies the detailed pattern for event recurrence. Use this to define complex scheduling rules such as \"every 2nd Tuesday of the month\" or \"every 3 months on the 15th\".</p>",
+      "refs": {
+        "RecurrenceConfig$RecurrencePattern": "<p>The recurrence pattern that defines how the event repeats. Example: Frequency, Interval, ByMonth, ByMonthDay, ByWeekdayOccurrence</p>"
+      }
+    },
     "Reference": {
       "base": "<p>Well-formed data on a contact, used by agents to complete a contact request. You can have up to 4,096 UTF-8 bytes across all references for a contact.</p>",
       "refs": {
@@ -9893,6 +10056,7 @@
         "HierarchyLevel$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "HoursOfOperation$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "HoursOfOperationSummary$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
+        "ListChildHoursOfOperationsResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListHoursOfOperationOverridesResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListQueueQuickConnectsResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListRoutingProfileManualAssignmentQueuesResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
@@ -10237,8 +10401,8 @@
     "RoutingProfileManualAssignmentQueueConfigList": {
       "base": null,
       "refs": {
-        "AssociateRoutingProfileQueuesRequest$ManualAssignmentQueueConfigs": "<p>The manual assignment queues to associate with this routing profile.</p>",
-        "CreateRoutingProfileRequest$ManualAssignmentQueueConfigs": "<p>The manual assignment queues associated with the routing profile. If no queue is added, agents and supervisors can't pick or assign any contacts from this routing profile. The limit of 10 array members applies to the maximum number of RoutingProfileManualAssignmentQueueConfig objects that can be passed during a CreateRoutingProfile API request. It is different from the quota of 50 queues per routing profile per instance that is listed in Amazon Connect service quotas.</p>"
+        "AssociateRoutingProfileQueuesRequest$ManualAssignmentQueueConfigs": "<p>The manual assignment queues to associate with this routing profile.</p> <p>Note: Use this config for chat, email, and task contacts. It does not support voice contacts.</p>",
+        "CreateRoutingProfileRequest$ManualAssignmentQueueConfigs": "<p>The manual assignment queues associated with the routing profile. If no queue is added, agents and supervisors can't pick or assign any contacts from this routing profile. The limit of 10 array members applies to the maximum number of RoutingProfileManualAssignmentQueueConfig objects that can be passed during a CreateRoutingProfile API request. It is different from the quota of 50 queues per routing profile per instance that is listed in Amazon Connect service quotas.</p> <p>Note: Use this config for chat, email, and task contacts. It does not support voice contacts.</p>"
       }
     },
     "RoutingProfileManualAssignmentQueueConfigSummary": {
@@ -12038,6 +12202,7 @@
         "HoursOfOperationSummary$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "Instance$CreatedTime": "<p>When the instance was created.</p>",
         "InstanceSummary$CreatedTime": "<p>When the instance was created.</p>",
+        "ListChildHoursOfOperationsResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListHoursOfOperationOverridesResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListQueueQuickConnectsResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListRoutingProfileManualAssignmentQueuesResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
@@ -13294,6 +13459,18 @@
       "base": null,
       "refs": {
         "VoiceRecordingConfiguration$VoiceRecordingTrack": "<p>Identifies which track is being recorded.</p>"
+      }
+    },
+    "WeekdayOccurrenceInteger": {
+      "base": null,
+      "refs": {
+        "WeekdayOccurrenceList$member": null
+      }
+    },
+    "WeekdayOccurrenceList": {
+      "base": null,
+      "refs": {
+        "RecurrencePattern$ByWeekdayOccurrence": "<p>Specifies which occurrence of a weekday within the month the event should occur on. Must be used with MONTHLY or YEARLY frequency. </p> <p>Example: 2 corresponds to second occurrence of the weekday in the month. -1 corresponds to last occurrence of the weekday in the month </p> <p>The weekday itself is specified separately in the HoursOfOperationConfig. Example: To schedule the recurring event for the 2nd Thursday of April every year, set ByWeekdayOccurrence=[2], Day=THURSDAY, ByMonth=[4], Frequency: YEARLY and INTERVAL=1.</p>"
       }
     },
     "WisdomInfo": {

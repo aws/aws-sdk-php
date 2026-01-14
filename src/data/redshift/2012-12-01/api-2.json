@@ -2978,7 +2978,8 @@
         "MultiAZ":{"shape":"String"},
         "MultiAZSecondary":{"shape":"SecondaryClusterInfo"},
         "LakehouseRegistrationStatus":{"shape":"String"},
-        "CatalogArn":{"shape":"String"}
+        "CatalogArn":{"shape":"String"},
+        "ExtraComputeForAutomaticOptimization":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -3525,7 +3526,8 @@
         "IpAddressType":{"shape":"String"},
         "MultiAZ":{"shape":"BooleanOptional"},
         "RedshiftIdcApplicationArn":{"shape":"String"},
-        "CatalogName":{"shape":"CatalogNameString"}
+        "CatalogName":{"shape":"CatalogNameString"},
+        "ExtraComputeForAutomaticOptimization":{"shape":"BooleanOptional"}
       }
     },
     "CreateClusterParameterGroupMessage":{
@@ -6049,7 +6051,8 @@
         "ManageMasterPassword":{"shape":"BooleanOptional"},
         "MasterPasswordSecretKmsKeyId":{"shape":"String"},
         "IpAddressType":{"shape":"String"},
-        "MultiAZ":{"shape":"BooleanOptional"}
+        "MultiAZ":{"shape":"BooleanOptional"},
+        "ExtraComputeForAutomaticOptimization":{"shape":"BooleanOptional"}
       }
     },
     "ModifyClusterParameterGroupMessage":{
@@ -8117,7 +8120,8 @@
       "enum":[
         "spectrum",
         "concurrency-scaling",
-        "cross-region-datasharing"
+        "cross-region-datasharing",
+        "extra-compute-for-automatic-optimization"
       ]
     },
     "UsageLimitLimitType":{
