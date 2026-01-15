@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.14 - 2026-01-15
 
 * `Aws\QConnect` - Fix inference configuration shapes for the CreateAIPrompt and UpdateAIPrompt APIs, Modify Text Length Limit for SendMessage API
 * `Aws\EC2` - This release includes documentation updates to support up to four Elastic Volume modifications per Amazon EBS volume within a rolling 24-hour period.
