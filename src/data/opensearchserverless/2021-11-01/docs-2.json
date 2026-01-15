@@ -3,11 +3,13 @@
   "service": "<p>Use the Amazon OpenSearch Serverless API to create, configure, and manage OpenSearch Serverless collections and security policies.</p> <p>OpenSearch Serverless is an on-demand, pre-provisioned serverless configuration for Amazon OpenSearch Service. OpenSearch Serverless removes the operational complexities of provisioning, configuring, and tuning your OpenSearch clusters. It enables you to easily search and analyze petabytes of data without having to worry about the underlying infrastructure and data management.</p> <p>To learn more about OpenSearch Serverless, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-overview.html\">What is Amazon OpenSearch Serverless?</a> </p>",
   "operations": {
     "BatchGetCollection": "<p>Returns attributes for one or more collections, including the collection endpoint, the OpenSearch Dashboards endpoint, and FIPS-compliant endpoints. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
+    "BatchGetCollectionGroup": "<p>Returns attributes for one or more collection groups, including capacity limits and the number of collections in each group. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
     "BatchGetEffectiveLifecyclePolicy": "<p>Returns a list of successful and failed retrievals for the OpenSearch Serverless indexes. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-list\">Viewing data lifecycle policies</a>.</p>",
     "BatchGetLifecyclePolicy": "<p>Returns one or more configured OpenSearch Serverless lifecycle policies. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-list\">Viewing data lifecycle policies</a>.</p>",
     "BatchGetVpcEndpoint": "<p>Returns attributes for one or more VPC endpoints associated with the current account. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-vpc.html\">Access Amazon OpenSearch Serverless using an interface endpoint</a>.</p>",
     "CreateAccessPolicy": "<p>Creates a data access policy for OpenSearch Serverless. Access policies limit access to collections and the resources within them, and allow a user to access that data irrespective of the access mechanism or network source. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-data-access.html\">Data access control for Amazon OpenSearch Serverless</a>.</p>",
     "CreateCollection": "<p>Creates a new OpenSearch Serverless collection. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
+    "CreateCollectionGroup": "<p>Creates a collection group within OpenSearch Serverless. Collection groups let you manage OpenSearch Compute Units (OCUs) at a group level, with multiple collections sharing the group's capacity limits.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-collection-groups.html\">Managing collection groups</a>.</p>",
     "CreateIndex": "<p>Creates an index within an OpenSearch Serverless collection. Unlike other OpenSearch indexes, indexes created by this API are automatically configured to conduct automatic semantic enrichment ingestion and search. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment\">About automatic semantic enrichment</a> in the <i>OpenSearch User Guide</i>.</p>",
     "CreateLifecyclePolicy": "<p>Creates a lifecyle policy to be applied to OpenSearch Serverless indexes. Lifecycle policies define the number of days or hours to retain the data on an OpenSearch Serverless index. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-create\">Creating data lifecycle policies</a>.</p>",
     "CreateSecurityConfig": "<p>Specifies a security configuration for OpenSearch Serverless. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html\">SAML authentication for Amazon OpenSearch Serverless</a>.</p>",
@@ -15,6 +17,7 @@
     "CreateVpcEndpoint": "<p>Creates an OpenSearch Serverless-managed interface VPC endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-vpc.html\">Access Amazon OpenSearch Serverless using an interface endpoint</a>.</p>",
     "DeleteAccessPolicy": "<p>Deletes an OpenSearch Serverless access policy. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-data-access.html\">Data access control for Amazon OpenSearch Serverless</a>.</p>",
     "DeleteCollection": "<p>Deletes an OpenSearch Serverless collection. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
+    "DeleteCollectionGroup": "<p>Deletes a collection group. You can only delete empty collection groups that contain no collections. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
     "DeleteIndex": "<p>Deletes an index from an OpenSearch Serverless collection. Be aware that the index might be configured to conduct automatic semantic enrichment ingestion and search. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment\">About automatic semantic enrichment</a>.</p>",
     "DeleteLifecyclePolicy": "<p>Deletes an OpenSearch Serverless lifecycle policy. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-delete\">Deleting data lifecycle policies</a>.</p>",
     "DeleteSecurityConfig": "<p>Deletes a security configuration for OpenSearch Serverless. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html\">SAML authentication for Amazon OpenSearch Serverless</a>.</p>",
@@ -27,6 +30,7 @@
     "GetSecurityConfig": "<p>Returns information about an OpenSearch Serverless security configuration. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html\">SAML authentication for Amazon OpenSearch Serverless</a>.</p>",
     "GetSecurityPolicy": "<p>Returns information about a configured OpenSearch Serverless security policy. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-network.html\">Network access for Amazon OpenSearch Serverless</a> and <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-encryption.html\">Encryption at rest for Amazon OpenSearch Serverless</a>.</p>",
     "ListAccessPolicies": "<p>Returns information about a list of OpenSearch Serverless access policies.</p>",
+    "ListCollectionGroups": "<p>Returns a list of collection groups. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
     "ListCollections": "<p>Lists all OpenSearch Serverless collections. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p> <note> <p>Make sure to include an empty request body {} if you don't include any collection filters in the request.</p> </note>",
     "ListLifecyclePolicies": "<p>Returns a list of OpenSearch Serverless lifecycle policies. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-list\">Viewing data lifecycle policies</a>.</p>",
     "ListSecurityConfigs": "<p>Returns information about configured OpenSearch Serverless security configurations. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html\">SAML authentication for Amazon OpenSearch Serverless</a>.</p>",
@@ -38,6 +42,7 @@
     "UpdateAccessPolicy": "<p>Updates an OpenSearch Serverless access policy. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-data-access.html\">Data access control for Amazon OpenSearch Serverless</a>.</p>",
     "UpdateAccountSettings": "<p>Update the OpenSearch Serverless settings for the current Amazon Web Services account. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-scaling.html\">Managing capacity limits for Amazon OpenSearch Serverless</a>.</p>",
     "UpdateCollection": "<p>Updates an OpenSearch Serverless collection.</p>",
+    "UpdateCollectionGroup": "<p>Updates the description and capacity limits of a collection group.</p>",
     "UpdateIndex": "<p>Updates an existing index in an OpenSearch Serverless collection. This operation allows you to modify the index schema, including adding new fields or changing field mappings. You can also enable automatic semantic enrichment ingestion and search. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment\">About automatic semantic enrichment</a>.</p>",
     "UpdateLifecyclePolicy": "<p>Updates an OpenSearch Serverless access policy. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-update\">Updating data lifecycle policies</a>.</p>",
     "UpdateSecurityConfig": "<p>Updates a security configuration for OpenSearch Serverless. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html\">SAML authentication for Amazon OpenSearch Serverless</a>.</p>",
@@ -98,6 +103,14 @@
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to remove tags from. The resource must be active (not in the <code>DELETING</code> state), and must be owned by the account ID included in the request.</p>"
       }
     },
+    "BatchGetCollectionGroupRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "BatchGetCollectionGroupResponse": {
+      "base": null,
+      "refs": {}
+    },
     "BatchGetCollectionRequest": {
       "base": null,
       "refs": {}
@@ -133,7 +146,8 @@
     "Boolean": {
       "base": null,
       "refs": {
-        "EffectiveLifecyclePolicyDetail$noMinRetentionPeriod": "<p>The minimum number of index retention days set. That is an optional param that will return as <code>true</code> if the minimum number of days or hours is not set to a index resource.</p>"
+        "EffectiveLifecyclePolicyDetail$noMinRetentionPeriod": "<p>The minimum number of index retention days set. That is an optional param that will return as <code>true</code> if the minimum number of days or hours is not set to a index resource.</p>",
+        "EncryptionConfig$aWSOwnedKey": "<p>Indicates whether to use an Amazon Web Services-owned key for encryption.</p>"
       }
     },
     "CapacityLimits": {
@@ -147,18 +161,21 @@
       "base": null,
       "refs": {
         "CreateAccessPolicyRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "CreateCollectionGroupRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateCollectionRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateLifecyclePolicyRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateSecurityConfigRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateSecurityPolicyRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateVpcEndpointRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteAccessPolicyRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "DeleteCollectionGroupRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteCollectionRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteLifecyclePolicyRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteSecurityConfigRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteSecurityPolicyRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteVpcEndpointRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateAccessPolicyRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "UpdateCollectionGroupRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateCollectionRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateLifecyclePolicyRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "UpdateSecurityConfigRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
@@ -194,6 +211,109 @@
       "base": "<p>A list of filter keys that you can use for LIST, UPDATE, and DELETE requests to OpenSearch Serverless collections.</p>",
       "refs": {
         "ListCollectionsRequest$collectionFilters": "<p> A list of filter names and values that you can use for requests.</p>"
+      }
+    },
+    "CollectionGroupCapacityLimits": {
+      "base": "<p>Capacity limits for a collection group. These limits define the minimum and maximum OpenSearch Compute Units (OCUs) for indexing and search operations that can be used by collections in the group.</p>",
+      "refs": {
+        "CollectionGroupDetail$capacityLimits": "<p>The capacity limits for the collection group, in OpenSearch Compute Units (OCUs).</p>",
+        "CollectionGroupSummary$capacityLimits": null,
+        "CreateCollectionGroupDetail$capacityLimits": "<p>The capacity limits for the collection group, in OpenSearch Compute Units (OCUs).</p>",
+        "CreateCollectionGroupRequest$capacityLimits": "<p>The capacity limits for the collection group, in OpenSearch Compute Units (OCUs). These limits control the maximum and minimum capacity for collections within the group.</p>",
+        "UpdateCollectionGroupDetail$capacityLimits": "<p>The capacity limits for the collection group, in OpenSearch Compute Units (OCUs).</p>",
+        "UpdateCollectionGroupRequest$capacityLimits": "<p>Updated capacity limits for the collection group, in OpenSearch Compute Units (OCUs).</p>"
+      }
+    },
+    "CollectionGroupDetail": {
+      "base": "<p>Details about a collection group.</p>",
+      "refs": {
+        "CollectionGroupDetails$member": null
+      }
+    },
+    "CollectionGroupDetails": {
+      "base": null,
+      "refs": {
+        "BatchGetCollectionGroupResponse$collectionGroupDetails": "<p>Details about each collection group.</p>"
+      }
+    },
+    "CollectionGroupErrorDetail": {
+      "base": "<p>Error details for a collection group operation.</p>",
+      "refs": {
+        "CollectionGroupErrorDetails$member": null
+      }
+    },
+    "CollectionGroupErrorDetails": {
+      "base": null,
+      "refs": {
+        "BatchGetCollectionGroupResponse$collectionGroupErrorDetails": "<p>Error information for the request.</p>"
+      }
+    },
+    "CollectionGroupId": {
+      "base": null,
+      "refs": {
+        "CollectionGroupDetail$id": "<p>The unique identifier of the collection group.</p>",
+        "CollectionGroupErrorDetail$id": "<p>If the request contains collection group IDs, the response includes the IDs provided in the request.</p>",
+        "CollectionGroupIds$member": null,
+        "CollectionGroupSummary$id": "<p>The unique identifier of the collection group.</p>",
+        "CreateCollectionGroupDetail$id": "<p>The unique identifier of the collection group.</p>",
+        "DeleteCollectionGroupRequest$id": "<p>The unique identifier of the collection group to delete.</p>",
+        "UpdateCollectionGroupDetail$id": "<p>The unique identifier of the collection group.</p>",
+        "UpdateCollectionGroupRequest$id": "<p>The unique identifier of the collection group to update.</p>"
+      }
+    },
+    "CollectionGroupIds": {
+      "base": null,
+      "refs": {
+        "BatchGetCollectionGroupRequest$ids": "<p>A list of collection group IDs. You can't provide names and IDs in the same request.</p>"
+      }
+    },
+    "CollectionGroupIndexingCapacityValue": {
+      "base": null,
+      "refs": {
+        "CollectionGroupCapacityLimits$maxIndexingCapacityInOCU": "<p>The maximum indexing capacity for collections in the group.</p>",
+        "CollectionGroupCapacityLimits$minIndexingCapacityInOCU": "<p>The minimum indexing capacity for collections in the group.</p>"
+      }
+    },
+    "CollectionGroupName": {
+      "base": null,
+      "refs": {
+        "CollectionDetail$collectionGroupName": "<p>The name of the collection group that contains this collection.</p>",
+        "CollectionFilters$collectionGroupName": "<p>The name of the collection group to filter by.</p>",
+        "CollectionGroupDetail$name": "<p>The name of the collection group.</p>",
+        "CollectionGroupErrorDetail$name": "<p>If the request contains collection group names, the response includes the names provided in the request.</p>",
+        "CollectionGroupNames$member": null,
+        "CollectionGroupSummary$name": "<p>The name of the collection group.</p>",
+        "CollectionSummary$collectionGroupName": "<p>The name of the collection group that contains this collection.</p>",
+        "CreateCollectionDetail$collectionGroupName": "<p>The name of the collection group that contains this collection.</p>",
+        "CreateCollectionGroupDetail$name": "<p>The name of the collection group.</p>",
+        "CreateCollectionGroupRequest$name": "<p>The name of the collection group.</p>",
+        "CreateCollectionRequest$collectionGroupName": "<p>The name of the collection group to associate with the collection.</p>",
+        "UpdateCollectionGroupDetail$name": "<p>The name of the collection group.</p>"
+      }
+    },
+    "CollectionGroupNames": {
+      "base": null,
+      "refs": {
+        "BatchGetCollectionGroupRequest$names": "<p>A list of collection group names. You can't provide names and IDs in the same request.</p>"
+      }
+    },
+    "CollectionGroupSearchCapacityValue": {
+      "base": null,
+      "refs": {
+        "CollectionGroupCapacityLimits$maxSearchCapacityInOCU": "<p>The maximum search capacity for collections in the group.</p>",
+        "CollectionGroupCapacityLimits$minSearchCapacityInOCU": "<p>The minimum search capacity for collections in the group.</p>"
+      }
+    },
+    "CollectionGroupSummaries": {
+      "base": null,
+      "refs": {
+        "ListCollectionGroupsResponse$collectionGroupSummaries": "<p>Details about each collection group.</p>"
+      }
+    },
+    "CollectionGroupSummary": {
+      "base": "<p>Summary information about a collection group.</p>",
+      "refs": {
+        "CollectionGroupSummaries$member": null
       }
     },
     "CollectionId": {
@@ -288,7 +408,7 @@
       }
     },
     "ConflictException": {
-      "base": "<p>When creating a resource, thrown when a resource with the same name already exists or is being created. When deleting a resource, thrown when the resource is not in the ACTIVE or FAILED state.</p>",
+      "base": "<p>When creating a resource, thrown when a resource with the same name already exists or is being created.</p>",
       "refs": {}
     },
     "CreateAccessPolicyRequest": {
@@ -304,6 +424,26 @@
       "refs": {
         "CreateCollectionResponse$createCollectionDetail": "<p>Details about the collection.</p>"
       }
+    },
+    "CreateCollectionGroupDetail": {
+      "base": "<p>Details about the created collection group.</p>",
+      "refs": {
+        "CreateCollectionGroupResponse$createCollectionGroupDetail": "<p>Details about the created collection group.</p>"
+      }
+    },
+    "CreateCollectionGroupRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCollectionGroupRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "CreateCollectionGroupRequest$description": "<p>A description of the collection group.</p>"
+      }
+    },
+    "CreateCollectionGroupResponse": {
+      "base": null,
+      "refs": {}
     },
     "CreateCollectionRequest": {
       "base": null,
@@ -322,7 +462,7 @@
     "CreateIamIdentityCenterConfigOptions": {
       "base": "<p>Describes IAM Identity Center options for creating an OpenSearch Serverless security configuration in the form of a key-value map.</p>",
       "refs": {
-        "CreateSecurityConfigRequest$iamIdentityCenterOptions": "<p>Describes IAM Identity Center options in the form of a key-value map. This field is required if you specify iamidentitycenter for the type parameter.</p>"
+        "CreateSecurityConfigRequest$iamIdentityCenterOptions": "<p>Describes IAM Identity Center options in the form of a key-value map. This field is required if you specify <code>iamidentitycenter</code> for the <code>type</code> parameter.</p>"
       }
     },
     "CreateIndexRequest": {
@@ -384,6 +524,14 @@
       "refs": {
         "DeleteCollectionResponse$deleteCollectionDetail": "<p>Details of the deleted collection.</p>"
       }
+    },
+    "DeleteCollectionGroupRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCollectionGroupResponse": {
+      "base": null,
+      "refs": {}
     },
     "DeleteCollectionRequest": {
       "base": null,
@@ -469,6 +617,18 @@
       "base": null,
       "refs": {
         "BatchGetEffectiveLifecyclePolicyResponse$effectiveLifecyclePolicyErrorDetails": "<p>A list of resources for which retrieval failed.</p>"
+      }
+    },
+    "EncryptionConfig": {
+      "base": "<p>Encryption settings for a collection.</p>",
+      "refs": {
+        "CreateCollectionRequest$encryptionConfig": "<p>Encryption settings for the collection.</p>"
+      }
+    },
+    "EncryptionConfigKmsKeyArnString": {
+      "base": null,
+      "refs": {
+        "EncryptionConfig$kmsKeyArn": "<p>The ARN of the Amazon Web Services Key Management Service key used to encrypt the collection.</p>"
       }
     },
     "FipsEndpoints": {
@@ -591,6 +751,13 @@
         "CapacityLimits$maxIndexingCapacityInOCU": "<p>The maximum indexing capacity for collections.</p>"
       }
     },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "CollectionGroupDetail$numberOfCollections": "<p>The number of collections associated with the collection group.</p>",
+        "CollectionGroupSummary$numberOfCollections": "<p>The number of collections within the collection group.</p>"
+      }
+    },
     "InternalServerException": {
       "base": "<p>Thrown when an error internal to the service occurs while processing a request.</p>",
       "refs": {}
@@ -705,6 +872,20 @@
       "base": null,
       "refs": {}
     },
+    "ListCollectionGroupsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCollectionGroupsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListCollectionGroupsRequest$maxResults": "<p>The maximum number of results to return. Default is 20. You can use <code>nextToken</code> to get the next page of results.</p>"
+      }
+    },
+    "ListCollectionGroupsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListCollectionsRequest": {
       "base": null,
       "refs": {}
@@ -805,8 +986,11 @@
         "AccessPolicySummary$lastModifiedDate": "<p>The date and time when the collection was last modified.</p>",
         "CollectionDetail$createdDate": "<p>The Epoch time when the collection was created.</p>",
         "CollectionDetail$lastModifiedDate": "<p>The date and time when the collection was last modified.</p>",
+        "CollectionGroupDetail$createdDate": "<p>The Epoch time when the collection group was created.</p>",
+        "CollectionGroupSummary$createdDate": "<p>The Epoch time when the collection group was created.</p>",
         "CreateCollectionDetail$createdDate": "<p>The Epoch time when the collection was created.</p>",
         "CreateCollectionDetail$lastModifiedDate": "<p>The date and time when the collection was last modified.</p>",
+        "CreateCollectionGroupDetail$createdDate": "<p>The Epoch time when the collection group was created.</p>",
         "GetPoliciesStatsResponse$TotalPolicyCount": "<p>The total number of OpenSearch Serverless security policies and configurations in your account.</p>",
         "LifecyclePolicyDetail$createdDate": "<p>The date the lifecycle policy was created.</p>",
         "LifecyclePolicyDetail$lastModifiedDate": "<p>The timestamp of when the lifecycle policy was last modified.</p>",
@@ -826,6 +1010,8 @@
         "SecurityPolicySummary$lastModifiedDate": "<p>The timestamp of when the policy was last modified.</p>",
         "UpdateCollectionDetail$createdDate": "<p>The date and time when the collection was created.</p>",
         "UpdateCollectionDetail$lastModifiedDate": "<p>The date and time when the collection was last modified.</p>",
+        "UpdateCollectionGroupDetail$createdDate": "<p>The Epoch time when the collection group was created.</p>",
+        "UpdateCollectionGroupDetail$lastModifiedDate": "<p>The date and time when the collection group was last modified.</p>",
         "UpdateVpcEndpointDetail$lastModifiedDate": "<p>The timestamp of when the endpoint was last modified.</p>",
         "VpcEndpointDetail$createdDate": "<p>The date the endpoint was created.</p>"
       }
@@ -932,7 +1118,7 @@
     "SamlConfigOptions": {
       "base": "<p>Describes SAML options for an OpenSearch Serverless security configuration in the form of a key-value map.</p>",
       "refs": {
-        "CreateSecurityConfigRequest$samlOptions": "<p>Describes SAML options in in the form of a key-value map. This field is required if you specify <code>SAML</code> for the <code>type</code> parameter.</p>",
+        "CreateSecurityConfigRequest$samlOptions": "<p>Describes SAML options in the form of a key-value map. This field is required if you specify <code>SAML</code> for the <code>type</code> parameter.</p>",
         "SecurityConfigDetail$samlOptions": "<p>SAML options for the security configuration in the form of a key-value map.</p>",
         "UpdateSecurityConfigRequest$samlOptions": "<p>SAML options in in the form of a key-value map.</p>"
       }
@@ -1062,7 +1248,10 @@
       "base": null,
       "refs": {
         "CollectionDetail$standbyReplicas": "<p>Details about an OpenSearch Serverless collection.</p>",
+        "CollectionGroupDetail$standbyReplicas": "<p>Indicates whether standby replicas are used for the collection group.</p>",
         "CreateCollectionDetail$standbyReplicas": "<p>Creates details about an OpenSearch Serverless collection.</p>",
+        "CreateCollectionGroupDetail$standbyReplicas": "<p>Indicates whether standby replicas are used for the collection group.</p>",
+        "CreateCollectionGroupRequest$standbyReplicas": "<p>Indicates whether standby replicas should be used for a collection group.</p>",
         "CreateCollectionRequest$standbyReplicas": "<p>Indicates whether standby replicas should be used for a collection.</p>"
       }
     },
@@ -1078,11 +1267,19 @@
         "CollectionDetail$failureMessage": "<p>A message associated with the failure code.</p>",
         "CollectionErrorDetail$errorMessage": "<p>A description of the error. For example, <code>The specified Collection is not found.</code> </p>",
         "CollectionErrorDetail$errorCode": "<p>The error code for the request. For example, <code>NOT_FOUND</code>.</p>",
+        "CollectionGroupDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection group.</p>",
+        "CollectionGroupDetail$description": "<p>The description of the collection group.</p>",
+        "CollectionGroupErrorDetail$errorMessage": "<p>A description of the error. For example, <code>The specified Collection Group is not found.</code> </p>",
+        "CollectionGroupErrorDetail$errorCode": "<p>The error code for the request. For example, <code>NOT_FOUND</code>.</p>",
+        "CollectionGroupSummary$arn": "<p>The Amazon Resource Name (ARN) of the collection group.</p>",
         "CollectionSummary$arn": "<p>The Amazon Resource Name (ARN) of the collection.</p>",
+        "CollectionSummary$kmsKeyArn": "<p>The ARN of the Amazon Web Services Key Management Service key used to encrypt the collection.</p>",
         "ConflictException$message": null,
         "CreateCollectionDetail$description": "<p>A description of the collection.</p>",
         "CreateCollectionDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection.</p>",
         "CreateCollectionDetail$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key with which to encrypt the collection.</p>",
+        "CreateCollectionGroupDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection group.</p>",
+        "CreateCollectionGroupDetail$description": "<p>The description of the collection group.</p>",
         "EffectiveLifecyclePolicyDetail$retentionPeriod": "<p>The minimum number of index retention in days or hours. This is an optional parameter that will return only if it’s set.</p>",
         "EffectiveLifecyclePolicyErrorDetail$errorMessage": "<p>A description of the error. For example, <code>The specified Index resource is not found</code>.</p>",
         "EffectiveLifecyclePolicyErrorDetail$errorCode": "<p>The error code for the request.</p>",
@@ -1095,6 +1292,8 @@
         "LifecyclePolicyErrorDetail$errorCode": "<p>The error code for the request. For example, <code>NOT_FOUND</code>.</p>",
         "ListAccessPoliciesRequest$nextToken": "<p>If your initial <code>ListAccessPolicies</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListAccessPolicies</code> operations, which returns results in the next page.</p>",
         "ListAccessPoliciesResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
+        "ListCollectionGroupsRequest$nextToken": "<p>If your initial <code>ListCollectionGroups</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListCollectionGroups</code> operations, which returns results in the next page.</p>",
+        "ListCollectionGroupsResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListCollectionsRequest$nextToken": "<p>If your initial <code>ListCollections</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListCollections</code> operations, which returns results in the next page.</p>",
         "ListCollectionsResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListLifecyclePoliciesRequest$nextToken": "<p>If your initial <code>ListLifecyclePolicies</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListLifecyclePolicies</code> operations, which returns results in the next page.</p>",
@@ -1114,6 +1313,8 @@
         "ServiceQuotaExceededException$quotaCode": "<p>Service Quotas requirement to identify originating quota.</p>",
         "UpdateCollectionDetail$description": "<p>The description of the collection.</p>",
         "UpdateCollectionDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection.</p>",
+        "UpdateCollectionGroupDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection group.</p>",
+        "UpdateCollectionGroupDetail$description": "<p>The description of the collection group.</p>",
         "ValidationException$message": null,
         "VpcEndpointDetail$failureCode": "<p>A failure code associated with the request.</p>",
         "VpcEndpointDetail$failureMessage": "<p>A message associated with the failure code.</p>",
@@ -1173,6 +1374,9 @@
     "Tags": {
       "base": null,
       "refs": {
+        "CollectionGroupDetail$tags": "<p>A map of key-value pairs associated with the collection group.</p>",
+        "CreateCollectionGroupDetail$tags": "<p>A map of key-value pairs associated with the collection group.</p>",
+        "CreateCollectionGroupRequest$tags": "<p>An arbitrary set of tags (key–value pairs) to associate with the OpenSearch Serverless collection group.</p>",
         "CreateCollectionRequest$tags": "<p>An arbitrary set of tags (key–value pairs) to associate with the OpenSearch Serverless collection.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags associated with the resource.</p>",
         "TagResourceRequest$tags": "<p>A list of tags (key-value pairs) to add to the resource. All tag keys in the request must be unique.</p>"
@@ -1207,6 +1411,26 @@
       "refs": {
         "UpdateCollectionResponse$updateCollectionDetail": "<p>Details about the updated collection.</p>"
       }
+    },
+    "UpdateCollectionGroupDetail": {
+      "base": "<p>Details about the updated collection group.</p>",
+      "refs": {
+        "UpdateCollectionGroupResponse$updateCollectionGroupDetail": "<p>Details about the updated collection group.</p>"
+      }
+    },
+    "UpdateCollectionGroupRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCollectionGroupRequestDescriptionString": {
+      "base": null,
+      "refs": {
+        "UpdateCollectionGroupRequest$description": "<p>A new description for the collection group.</p>"
+      }
+    },
+    "UpdateCollectionGroupResponse": {
+      "base": null,
+      "refs": {}
     },
     "UpdateCollectionRequest": {
       "base": null,

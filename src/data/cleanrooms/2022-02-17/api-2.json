@@ -5129,6 +5129,23 @@
         "isResponsible":{"shape":"Boolean"}
       }
     },
+    "JobParameterMap":{
+      "type":"map",
+      "key":{"shape":"JobParameterName"},
+      "value":{"shape":"JobParameterValue"},
+      "sensitive":true
+    },
+    "JobParameterName":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[0-9a-zA-Z_]+"
+    },
+    "JobParameterValue":{
+      "type":"string",
+      "max":1000,
+      "min":0
+    },
     "JobType":{
       "type":"string",
       "enum":[
@@ -6524,7 +6541,8 @@
       "type":"structure",
       "required":["analysisTemplateArn"],
       "members":{
-        "analysisTemplateArn":{"shape":"AnalysisTemplateArn"}
+        "analysisTemplateArn":{"shape":"AnalysisTemplateArn"},
+        "parameters":{"shape":"JobParameterMap"}
       }
     },
     "ProtectedJobReceiverAccountIds":{

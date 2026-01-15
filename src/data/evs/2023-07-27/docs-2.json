@@ -3,12 +3,13 @@
   "service": "<p>Amazon Elastic VMware Service (Amazon EVS) is a service that you can use to deploy a VMware Cloud Foundation (VCF) software environment directly on EC2 bare metal instances within an Amazon Virtual Private Cloud (VPC).</p> <p>Workloads running on Amazon EVS are fully compatible with workloads running on any standard VMware vSphere environment. This means that you can migrate any VMware-based workload to Amazon EVS without workload modification.</p>",
   "operations": {
     "AssociateEipToVlan": "<p>Associates an Elastic IP address with a public HCX VLAN. This operation is only allowed for public HCX VLANs at this time.</p>",
-    "CreateEnvironment": "<p>Creates an Amazon EVS environment that runs VCF software, such as SDDC Manager, NSX Manager, and vCenter Server.</p> <p>During environment creation, Amazon EVS performs validations on DNS settings, provisions VLAN subnets and hosts, and deploys the supplied version of VCF.</p> <p>It can take several hours to create an environment. After the deployment completes, you can configure VCF in the vSphere user interface according to your needs.</p> <note> <p>You cannot use the <code>dedicatedHostId</code> and <code>placementGroupId</code> parameters together in the same <code>CreateEnvironment</code> action. This results in a <code>ValidationException</code> response.</p> </note>",
-    "CreateEnvironmentHost": "<p>Creates an ESXi host and adds it to an Amazon EVS environment. Amazon EVS supports 4-16 hosts per environment.</p> <p>This action can only be used after the Amazon EVS environment is deployed.</p> <p>You can use the <code>dedicatedHostId</code> parameter to specify an Amazon EC2 Dedicated Host for ESXi host creation.</p> <p> You can use the <code>placementGroupId</code> parameter to specify a cluster or partition placement group to launch EC2 instances into.</p> <note> <p>You cannot use the <code>dedicatedHostId</code> and <code>placementGroupId</code> parameters together in the same <code>CreateEnvironmentHost</code> action. This results in a <code>ValidationException</code> response.</p> </note>",
+    "CreateEnvironment": "<p>Creates an Amazon EVS environment that runs VCF software, such as SDDC Manager, NSX Manager, and vCenter Server.</p> <p>During environment creation, Amazon EVS performs validations on DNS settings, provisions VLAN subnets and hosts, and deploys the supplied version of VCF.</p> <p>It can take several hours to create an environment. After the deployment completes, you can configure VCF in the vSphere user interface according to your needs.</p> <important> <p>When creating a new environment, the default ESX version for the selected VCF version will be used, you cannot choose a specific ESX version in <code>CreateEnvironment</code> action. When a host has been added with a specific ESX version, it can only be upgraded using vCenter Lifecycle Manager.</p> </important> <note> <p>You cannot use the <code>dedicatedHostId</code> and <code>placementGroupId</code> parameters together in the same <code>CreateEnvironment</code> action. This results in a <code>ValidationException</code> response.</p> </note>",
+    "CreateEnvironmentHost": "<p>Creates an ESX host and adds it to an Amazon EVS environment. Amazon EVS supports 4-16 hosts per environment.</p> <p>This action can only be used after the Amazon EVS environment is deployed.</p> <p>You can use the <code>dedicatedHostId</code> parameter to specify an Amazon EC2 Dedicated Host for ESX host creation.</p> <p> You can use the <code>placementGroupId</code> parameter to specify a cluster or partition placement group to launch EC2 instances into.</p> <note> <p>If you don't specify an ESX version when adding hosts using <code>CreateEnvironmentHost</code> action, Amazon EVS automatically uses the default ESX version associated with your environment's VCF version. To find the default ESX version for a particular VCF version, use the <code>GetVersions</code> action.</p> </note> <note> <p>You cannot use the <code>dedicatedHostId</code> and <code>placementGroupId</code> parameters together in the same <code>CreateEnvironmentHost</code> action. This results in a <code>ValidationException</code> response.</p> </note>",
     "DeleteEnvironment": "<p>Deletes an Amazon EVS environment.</p> <p>Amazon EVS environments will only be enabled for deletion once the hosts are deleted. You can delete hosts using the <code>DeleteEnvironmentHost</code> action.</p> <p>Environment deletion also deletes the associated Amazon EVS VLAN subnets and Amazon Web Services Secrets Manager secrets that Amazon EVS created. Amazon Web Services resources that you create are not deleted. These resources may continue to incur costs.</p>",
     "DeleteEnvironmentHost": "<p>Deletes a host from an Amazon EVS environment.</p> <note> <p>Before deleting a host, you must unassign and decommission the host from within the SDDC Manager user interface. Not doing so could impact the availability of your virtual machines or result in data loss.</p> </note>",
     "DisassociateEipFromVlan": "<p>Disassociates an Elastic IP address from a public HCX VLAN. This operation is only allowed for public HCX VLANs at this time.</p>",
     "GetEnvironment": "<p>Returns a description of the specified environment.</p>",
+    "GetVersions": "<p>Returns information about VCF versions, ESX versions and EC2 instance types provided by Amazon EVS. For each VCF version, the response also includes the default ESX version and provided EC2 instance types.</p>",
     "ListEnvironmentHosts": "<p>List the hosts within an environment.</p>",
     "ListEnvironmentVlans": "<p>Lists environment VLANs that are associated with the specified environment.</p>",
     "ListEnvironments": "<p>Lists the Amazon EVS environments in your Amazon Web Services account in the specified Amazon Web Services Region.</p>",
@@ -81,7 +82,7 @@
     "CheckType": {
       "base": null,
       "refs": {
-        "Check$type": "<p>The check type. Amazon EVS performs the following checks.</p> <ul> <li> <p> <code>KEY_REUSE</code>: checks that the VCF license key is not used by another Amazon EVS environment. This check fails if a used license is added to the environment.</p> </li> <li> <p> <code>KEY_COVERAGE</code>: checks that your VCF license key allocates sufficient vCPU cores for all deployed hosts. The check fails when any assigned hosts in the EVS environment are not covered by license keys, or when any unassigned hosts cannot be covered by available vCPU cores in keys.</p> </li> <li> <p> <code>REACHABILITY</code>: checks that the Amazon EVS control plane has a persistent connection to SDDC Manager. If Amazon EVS cannot reach the environment, this check fails.</p> </li> <li> <p> <code>HOST_COUNT</code>: Checks that your environment has a minimum of 4 hosts, which is a requirement for VCF 5.2.1.</p> <p>If this check fails, you will need to add hosts so that your environment meets this minimum requirement. Amazon EVS only supports environments with 4-16 hosts.</p> </li> </ul>"
+        "Check$type": "<p>The check type. Amazon EVS performs the following checks.</p> <ul> <li> <p> <code>KEY_REUSE</code>: checks that the VCF license key is not used by another Amazon EVS environment. This check fails if a used license is added to the environment.</p> </li> <li> <p> <code>KEY_COVERAGE</code>: checks that your VCF license key allocates sufficient vCPU cores for all deployed hosts. The check fails when any assigned hosts in the EVS environment are not covered by license keys, or when any unassigned hosts cannot be covered by available vCPU cores in keys.</p> </li> <li> <p> <code>REACHABILITY</code>: checks that the Amazon EVS control plane has a persistent connection to SDDC Manager. If Amazon EVS cannot reach the environment, this check fails.</p> </li> <li> <p> <code>HOST_COUNT</code>: Checks that your environment has a minimum of 4 hosts.</p> <p>If this check fails, you will need to add hosts so that your environment meets this minimum requirement. Amazon EVS only supports environments with 4-16 hosts.</p> </li> </ul>"
       }
     },
     "ChecksList": {
@@ -239,6 +240,18 @@
         "ListEnvironmentsResponse$environmentSummaries": "<p>A list of environments with summarized environment details.</p>"
       }
     },
+    "EsxVersion": {
+      "base": null,
+      "refs": {
+        "CreateEnvironmentHostRequest$esxVersion": "<p>The ESX version to use for the host.</p>"
+      }
+    },
+    "EsxVersionList": {
+      "base": null,
+      "refs": {
+        "InstanceTypeEsxVersionsInfo$esxVersions": "<p>The list of ESX versions offered for this instance type.</p>"
+      }
+    },
     "GetEnvironmentRequest": {
       "base": null,
       "refs": {}
@@ -247,8 +260,16 @@
       "base": null,
       "refs": {}
     },
+    "GetVersionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetVersionsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "Host": {
-      "base": "<p>An ESXi host that runs on an Amazon EC2 bare metal instance. Four hosts are created in an Amazon EVS environment during environment creation. You can add hosts to an environment using the <code>CreateEnvironmentHost</code> operation. Amazon EVS supports 4-16 hosts per environment.</p>",
+      "base": "<p>An ESX host that runs on an Amazon EC2 bare metal instance. Four hosts are created in an Amazon EVS environment during environment creation. You can add hosts to an environment using the <code>CreateEnvironmentHost</code> operation. Amazon EVS supports 4-16 hosts per environment.</p>",
       "refs": {
         "CreateEnvironmentHostResponse$host": "<p>A description of the created host.</p>",
         "DeleteEnvironmentHostResponse$host": "<p>A description of the deleted host.</p>",
@@ -265,7 +286,7 @@
     "HostInfoForCreateList": {
       "base": null,
       "refs": {
-        "CreateEnvironmentRequest$hosts": "<p>The ESXi hosts to add to the environment. Amazon EVS requires that you provide details for a minimum of 4 hosts during environment creation.</p> <p>For each host, you must provide the desired hostname, EC2 SSH keypair name, and EC2 instance type. Optionally, you can also provide a partition or cluster placement group to use, or use Amazon EC2 Dedicated Hosts.</p>"
+        "CreateEnvironmentRequest$hosts": "<p>The ESX hosts to add to the environment. Amazon EVS requires that you provide details for a minimum of 4 hosts during environment creation.</p> <p>For each host, you must provide the desired hostname, EC2 SSH keypair name, and EC2 instance type. Optionally, you can also provide a partition or cluster placement group to use, or use Amazon EC2 Dedicated Hosts.</p>"
       }
     },
     "HostList": {
@@ -300,14 +321,14 @@
     "InitialVlanInfo": {
       "base": "<p>An object that represents an initial VLAN subnet for the Amazon EVS environment. Amazon EVS creates initial VLAN subnets when you first create the environment. Amazon EVS creates the following 10 VLAN subnets: host management VLAN, vMotion VLAN, vSAN VLAN, VTEP VLAN, Edge VTEP VLAN, Management VM VLAN, HCX uplink VLAN, NSX uplink VLAN, expansion VLAN 1, expansion VLAN 2.</p> <note> <p>For each Amazon EVS VLAN subnet, you must specify a non-overlapping CIDR block. Amazon EVS VLAN subnets have a minimum CIDR block size of /28 and a maximum size of /24.</p> </note>",
       "refs": {
-        "InitialVlans$vmkManagement": "<p> The host VMkernel management VLAN subnet. This VLAN subnet carries traffic for managing ESXi hosts and communicating with VMware vCenter Server.</p>",
+        "InitialVlans$vmkManagement": "<p> The host VMkernel management VLAN subnet. This VLAN subnet carries traffic for managing ESX hosts and communicating with VMware vCenter Server.</p>",
         "InitialVlans$vmManagement": "<p>The VM management VLAN subnet. This VLAN subnet carries traffic for vSphere virtual machines.</p>",
         "InitialVlans$vMotion": "<p> The vMotion VLAN subnet. This VLAN subnet carries traffic for vSphere vMotion.</p>",
-        "InitialVlans$vSan": "<p> The vSAN VLAN subnet. This VLAN subnet carries the communication between ESXi hosts to implement a vSAN shared storage pool.</p>",
+        "InitialVlans$vSan": "<p> The vSAN VLAN subnet. This VLAN subnet carries the communication between ESX hosts to implement a vSAN shared storage pool.</p>",
         "InitialVlans$vTep": "<p> The VTEP VLAN subnet. This VLAN subnet handles internal network traffic between virtual machines within a VCF instance.</p>",
         "InitialVlans$edgeVTep": "<p>The edge VTEP VLAN subnet. This VLAN subnet manages traffic flowing between the internal network and external networks, including internet access and other site connections.</p>",
         "InitialVlans$nsxUplink": "<p> The NSX uplink VLAN subnet. This VLAN subnet allows connectivity to the NSX overlay network.</p>",
-        "InitialVlans$hcx": "<p>The HCX VLAN subnet. This VLAN subnet allows the HCX Interconnnect (IX) and HCX Network Extension (NE) to reach their peers and enable HCX Service Mesh creation.</p> <p>If you plan to use a public HCX VLAN subnet, the following requirements must be met:</p> <ul> <li> <p>Must have a /28 netmask and be allocated from the IPAM public pool. Required for HCX internet access configuration.</p> </li> <li> <p>The HCX public VLAN CIDR block must be added to the VPC as a secondary CIDR block.</p> </li> <li> <p>Must have at least three Elastic IP addresses to be allocated from the public IPAM pool for HCX components.</p> </li> </ul>",
+        "InitialVlans$hcx": "<p>The HCX VLAN subnet. This VLAN subnet allows the HCX Interconnnect (IX) and HCX Network Extension (NE) to reach their peers and enable HCX Service Mesh creation.</p> <p>If you plan to use a public HCX VLAN subnet, the following requirements must be met:</p> <ul> <li> <p>Must have a /28 netmask and be allocated from the IPAM public pool. Required for HCX internet access configuration.</p> </li> <li> <p>The HCX public VLAN CIDR block must be added to the VPC as a secondary CIDR block.</p> </li> <li> <p>Must have at least two Elastic IP addresses to be allocated from the public IPAM pool for HCX components.</p> </li> </ul>",
         "InitialVlans$expansionVlan1": "<p>An additional VLAN subnet that can be used to extend VCF capabilities once configured. For example, you can configure an expansion VLAN subnet to use NSX Federation for centralized management and synchronization of multiple NSX deployments across different locations.</p>",
         "InitialVlans$expansionVlan2": "<p>An additional VLAN subnet that can be used to extend VCF capabilities once configured. For example, you can configure an expansion VLAN subnet to use NSX Federation for centralized management and synchronization of multiple NSX deployments across different locations.</p>"
       }
@@ -321,8 +342,28 @@
     "InstanceType": {
       "base": null,
       "refs": {
-        "Host$instanceType": "<p>The EC2 instance type of the host.</p> <note> <p>EC2 instances created through Amazon EVS do not support associating an IAM instance profile.</p> </note>",
-        "HostInfoForCreate$instanceType": "<p>The EC2 instance type that represents the host.</p>"
+        "Host$instanceType": "<p>The EC2 instance type of the host.</p> <note> <p>Currently, Amazon EVS supports only the <code>i4i.metal</code> instance type.</p> </note> <note> <p>EC2 instances created through Amazon EVS do not support associating an IAM instance profile.</p> </note>",
+        "HostInfoForCreate$instanceType": "<p>The EC2 instance type that represents the host.</p> <note> <p>Currently, Amazon EVS supports only the <code>i4i.metal</code> instance type.</p> </note>",
+        "InstanceTypeEsxVersionsInfo$instanceType": "<p>The EC2 instance type.</p>",
+        "InstanceTypeList$member": null
+      }
+    },
+    "InstanceTypeEsxVersionsInfo": {
+      "base": "<p>Information about ESX versions offered for each EC2 instance type.</p>",
+      "refs": {
+        "InstanceTypeEsxVersionsList$member": null
+      }
+    },
+    "InstanceTypeEsxVersionsList": {
+      "base": null,
+      "refs": {
+        "GetVersionsResponse$instanceTypeEsxVersions": "<p>A list of EC2 instance types and their available ESX versions.</p>"
+      }
+    },
+    "InstanceTypeList": {
+      "base": null,
+      "refs": {
+        "VcfVersionInfo$instanceTypes": "<p>EC2 instance types provided by Amazon EVS for this VCF version for creating environments.</p>"
       }
     },
     "Integer": {
@@ -330,6 +371,10 @@
       "refs": {
         "ThrottlingException$retryAfterSeconds": "<p>The seconds to wait to retry.</p>"
       }
+    },
+    "InternalServerException": {
+      "base": "<p>An internal server error occurred. Retry your request.</p>",
+      "refs": {}
     },
     "IpAddress": {
       "base": null,
@@ -526,7 +571,9 @@
         "CreateEnvironmentRequest$siteId": "<p>The Broadcom Site ID that is allocated to you as part of your electronic software delivery. This ID allows customer access to the Broadcom portal, and is provided to you by Broadcom at the close of your software contract or contract renewal. Amazon EVS uses the Broadcom Site ID that you provide to meet Broadcom VCF license usage reporting requirements for Amazon EVS.</p>",
         "Environment$siteId": "<p>The Broadcom Site ID that is associated with your Amazon EVS environment. Amazon EVS uses the Broadcom Site ID that you provide to meet Broadcom VCF license usage reporting requirements for Amazon EVS.</p>",
         "Environment$kmsKeyId": "<p>The Amazon Web Services KMS key ID that Amazon Web Services Secrets Manager uses to encrypt secrets that are associated with the environment. These secrets contain the VCF credentials that are needed to install vCenter Server, NSX, and SDDC Manager.</p> <p>By default, Amazon EVS use the Amazon Web Services Secrets Manager managed key <code>aws/secretsmanager</code>. You can also specify a customer managed key.</p>",
+        "EsxVersionList$member": null,
         "Host$ec2InstanceId": "<p>The unique ID of the EC2 instance that represents the host.</p>",
+        "InternalServerException$message": "<p>Describes the error encountered.</p>",
         "ResourceNotFoundException$message": "<p>Describes the error encountered.</p>",
         "ResourceNotFoundException$resourceId": "<p>The ID of the resource that could not be found.</p>",
         "ResourceNotFoundException$resourceType": "<p>The type of the resource that is associated with the error.</p>",
@@ -538,6 +585,8 @@
         "ValidationException$message": "<p>Describes the error encountered.</p>",
         "ValidationExceptionField$name": "<p> The field name.</p>",
         "ValidationExceptionField$message": "<p> A message describing why the field failed validation.</p>",
+        "VcfVersionInfo$status": "<p>The status for this VCF version. Valid values are:</p> <ul> <li> <p> <code>AVAILABLE</code> - This VCF version is available to you.</p> </li> <li> <p> <code>RESTRICTED</code> - This VCF version has limited availability.</p> </li> </ul> <note> <p> If the version you need shows RESTRICTED, and you require, check out <a href=\"https://docs.aws.amazon.com/evs/latest/userguide/versions-provided.html\">VCF versions and EC2 instance types provided by Amazon EVS</a> for more information. </p> </note>",
+        "VcfVersionInfo$defaultEsxVersion": "<p>The default ESX version for this VCF version. It is based on Broadcom's Bill Of Materials (BOM).</p>",
         "Vlan$availabilityZone": "<p>The availability zone of the VLAN.</p>",
         "Vlan$functionName": "<p>The VMware VCF traffic type that is carried over the VLAN. For example, a VLAN with a <code>functionName</code> of <code>hcx</code> is being used to carry VMware HCX traffic.</p>"
       }
@@ -584,7 +633,7 @@
       }
     },
     "ThrottlingException": {
-      "base": "<p>The operation couldn't be performed because the service is throttling requests. This exception is thrown when there are too many requests accepted concurrently from the service endpoint.</p>",
+      "base": "<p>The operation could not be performed because the service is throttling requests. This exception is thrown when the service endpoint receives too many concurrent requests.</p>",
       "refs": {}
     },
     "Timestamp": {
@@ -651,9 +700,22 @@
     "VcfVersion": {
       "base": null,
       "refs": {
-        "CreateEnvironmentRequest$vcfVersion": "<p> The VCF version to use for the environment. Amazon EVS only supports VCF version 5.2.1 at this time.</p>",
+        "CreateEnvironmentRequest$vcfVersion": "<p> The VCF version to use for the environment.</p>",
         "Environment$vcfVersion": "<p>The VCF version of the environment.</p>",
-        "EnvironmentSummary$vcfVersion": "<p>The VCF version of the environment.</p>"
+        "EnvironmentSummary$vcfVersion": "<p>The VCF version of the environment.</p>",
+        "VcfVersionInfo$vcfVersion": "<p>The VCF version number.</p>"
+      }
+    },
+    "VcfVersionInfo": {
+      "base": "<p>Information about a VCF versions provided by Amazon EVS, including its status, default ESX version, and EC2 instance types.</p>",
+      "refs": {
+        "VcfVersionList$member": null
+      }
+    },
+    "VcfVersionList": {
+      "base": null,
+      "refs": {
+        "GetVersionsResponse$vcfVersions": "<p>A list of VCF versions with their availability status, default ESX version, and instance types.</p>"
       }
     },
     "Vlan": {
@@ -685,7 +747,7 @@
     "VpcId": {
       "base": null,
       "refs": {
-        "CreateEnvironmentRequest$vpcId": "<p>A unique ID for the VPC that the environment is deployed inside.</p> <p>Amazon EVS requires that all VPC subnets exist in a single Availability Zone in a Region where the service is available.</p> <p>The VPC that you specify must have a valid DHCP option set with domain name, at least two DNS servers, and an NTP server. These settings are used to configure your VCF appliances and hosts. The VPC cannot be used with any other deployed Amazon EVS environment. Amazon EVS does not provide multi-VPC support for environments at this time.</p> <p>Amazon EVS does not support the following Amazon Web Services networking options for NSX overlay connectivity: cross-Region VPC peering, Amazon S3 gateway endpoints, or Amazon Web Services Direct Connect virtual private gateway associations.</p> <note> <p>Ensure that you specify a VPC that is adequately sized to accommodate the {evws} subnets.</p> </note>",
+        "CreateEnvironmentRequest$vpcId": "<p>A unique ID for the VPC that the environment is deployed inside.</p> <p>Amazon EVS requires that all VPC subnets exist in a single Availability Zone in a Region where the service is available.</p> <p>The VPC that you specify must have a valid DHCP option set with domain name, at least two DNS servers, and an NTP server. These settings are used to configure your VCF appliances and hosts. The VPC cannot be used with any other deployed Amazon EVS environment. Amazon EVS does not provide multi-VPC support for environments at this time.</p> <p>Amazon EVS does not support the following Amazon Web Services networking options for NSX overlay connectivity: cross-Region VPC peering, Amazon S3 gateway endpoints, or Amazon Web Services Direct Connect virtual private gateway associations.</p> <note> <p>Ensure that you specify a VPC that is adequately sized to accommodate the Amazon EVS subnets.</p> </note>",
         "Environment$vpcId": "<p>The VPC associated with the environment.</p>"
       }
     }

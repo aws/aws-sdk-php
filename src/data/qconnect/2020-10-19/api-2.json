@@ -1895,9 +1895,11 @@
     "AIPromptInferenceConfiguration":{
       "type":"structure",
       "members":{
-        "textAIPromptInferenceConfiguration":{"shape":"TextAIPromptInferenceConfiguration"}
-      },
-      "union":true
+        "temperature":{"shape":"Probability"},
+        "topP":{"shape":"Probability"},
+        "topK":{"shape":"TopK"},
+        "maxTokensToSample":{"shape":"MaxTokensToSample"}
+      }
     },
     "AIPromptModelIdentifier":{
       "type":"string",
@@ -5497,8 +5499,9 @@
     },
     "MaxTokensToSample":{
       "type":"integer",
+      "box":true,
       "max":4096,
-      "min":0,
+      "min":1,
       "sensitive":true
     },
     "MessageConfiguration":{
@@ -6079,6 +6082,7 @@
     },
     "Probability":{
       "type":"float",
+      "box":true,
       "max":1,
       "min":0,
       "sensitive":true
@@ -7659,15 +7663,6 @@
       "min":1,
       "sensitive":true
     },
-    "TextAIPromptInferenceConfiguration":{
-      "type":"structure",
-      "members":{
-        "temperature":{"shape":"Probability"},
-        "topP":{"shape":"Probability"},
-        "topK":{"shape":"TopK"},
-        "maxTokensToSample":{"shape":"MaxTokensToSample"}
-      }
-    },
     "TextData":{
       "type":"structure",
       "members":{
@@ -7692,8 +7687,8 @@
     },
     "TextMessageValueString":{
       "type":"string",
-      "max":1024,
-      "min":1,
+      "max":25000,
+      "min":0,
       "sensitive":true
     },
     "ThrottlingException":{
@@ -7847,6 +7842,7 @@
     },
     "TopK":{
       "type":"integer",
+      "box":true,
       "max":200,
       "min":0,
       "sensitive":true

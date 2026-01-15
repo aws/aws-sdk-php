@@ -34,6 +34,7 @@
     "GetQueryStatistics": "<p>Retrieves statistics on the planning and execution of a query.</p>",
     "GetResourceLFTags": "<p>Returns the LF-tags applied to a resource.</p>",
     "GetTableObjects": "<p>Returns the set of Amazon S3 objects that make up the specified governed table. A transaction ID or timestamp can be specified for time-travel queries.</p>",
+    "GetTemporaryDataLocationCredentials": "<p>Allows a user or application in a secure environment to access data in a specific Amazon S3 location registered with Lake Formation by providing temporary scoped credentials that are limited to the requested data location and the caller's authorized access level.</p> <p> The API operation returns an error in the following scenarios:</p> <ul> <li> <p>The data location is not registered with Lake Formation. </p> </li> <li> <p>No Glue table is associated with the data location.</p> </li> <li> <p>The caller doesn't have required permissions on the associated table. The caller must have <code>SELECT</code> or <code>SUPER</code> permissions on the associated table, and credential vending for full table access must be enabled in the data lake settings. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/full-table-credential-vending.html\">Application integration for full table access</a>.</p> </li> <li> <p>The data location is in a different Amazon Web Services Region. Lake Formation doesn't support cross-Region access when vending credentials for a data location. Lake Formation only supports Amazon S3 paths registered within the same Region as the API call. </p> </li> </ul>",
     "GetTemporaryGluePartitionCredentials": "<p>This API is identical to <code>GetTemporaryTableCredentials</code> except that this is used when the target Data Catalog resource is of type Partition. Lake Formation restricts the permission of the vended credentials with the same scope down policy which restricts access to a single Amazon S3 prefix.</p>",
     "GetTemporaryGlueTableCredentials": "<p>Allows a caller in a secure environment to assume a role with permission to access Amazon S3. In order to vend such credentials, Lake Formation assumes the role associated with a registered location, for example an Amazon S3 bucket, with a scope down policy which restricts the access to a single prefix.</p> <p>To call this API, the role that the service assumes must have <code>lakeformation:GetDataAccess</code> permission on the resource.</p>",
     "GetWorkUnitResults": "<p>Returns the work units resulting from the query. Work units can be executed in any order and in parallel. </p>",
@@ -73,7 +74,16 @@
       "refs": {
         "AssumeDecoratedRoleWithSAMLResponse$AccessKeyId": "<p>The access key ID for the temporary credentials. (The access key consists of an access key ID and a secret key).</p>",
         "GetTemporaryGluePartitionCredentialsResponse$AccessKeyId": "<p>The access key ID for the temporary credentials.</p>",
-        "GetTemporaryGlueTableCredentialsResponse$AccessKeyId": "<p>The access key ID for the temporary credentials.</p>"
+        "GetTemporaryGlueTableCredentialsResponse$AccessKeyId": "<p>The access key ID for the temporary credentials.</p>",
+        "TemporaryCredentials$AccessKeyId": "<p>The access key ID for the temporary credentials.</p>"
+      }
+    },
+    "AccountIdString": {
+      "base": null,
+      "refs": {
+        "RegisterResourceRequest$ExpectedResourceOwnerAccount": "<p>The Amazon Web Services account that owns the Glue tables associated with specific Amazon S3 locations. </p>",
+        "ResourceInfo$ExpectedResourceOwnerAccount": "<p>The Amazon Web Services account that owns the Glue tables associated with specific Amazon S3 locations. </p>",
+        "UpdateResourceRequest$ExpectedResourceOwnerAccount": "<p>The Amazon Web Services account that owns the Glue tables associated with specific Amazon S3 locations. </p>"
       }
     },
     "AddLFTagsToResourceRequest": {
@@ -130,6 +140,7 @@
     "AuditContext": {
       "base": "<p>A structure used to include auditing information on the privileged API. </p>",
       "refs": {
+        "GetTemporaryDataLocationCredentialsRequest$AuditContext": null,
         "GetTemporaryGluePartitionCredentialsRequest$AuditContext": "<p>A structure representing context to access a resource (column names, query ID, etc).</p>",
         "GetTemporaryGlueTableCredentialsRequest$AuditContext": "<p>A structure representing context to access a resource (column names, query ID, etc).</p>"
       }
@@ -330,6 +341,10 @@
         "RevokePermissionsRequest$Condition": null
       }
     },
+    "ConflictException": {
+      "base": "<p>Multiple resources exist with the same Amazon S3 location</p>",
+      "refs": {}
+    },
     "ContextKey": {
       "base": null,
       "refs": {
@@ -386,8 +401,16 @@
       "base": null,
       "refs": {
         "AssumeDecoratedRoleWithSAMLRequest$DurationSeconds": "<p>The time period, between 900 and 43,200 seconds, for the timeout of the temporary credentials.</p>",
+        "GetTemporaryDataLocationCredentialsRequest$DurationSeconds": "<p>The time period, between 900 and 43,200 seconds, for the timeout of the temporary credentials.</p>",
         "GetTemporaryGluePartitionCredentialsRequest$DurationSeconds": "<p>The time period, between 900 and 21,600 seconds, for the timeout of the temporary credentials.</p>",
         "GetTemporaryGlueTableCredentialsRequest$DurationSeconds": "<p>The time period, between 900 and 21,600 seconds, for the timeout of the temporary credentials.</p>"
+      }
+    },
+    "CredentialsScope": {
+      "base": null,
+      "refs": {
+        "GetTemporaryDataLocationCredentialsRequest$CredentialsScope": "<p>The credential scope is determined by the caller's Lake Formation permission on the associated table. Credential scope can be either:</p> <ul> <li> <p>READ - Provides read-only access to the data location.</p> </li> <li> <p>READ_WRITE - Provides both read and write access to the data location.</p> </li> </ul>",
+        "GetTemporaryDataLocationCredentialsResponse$CredentialsScope": "<p>The credential scope is determined by the caller's Lake Formation permission on the associated table. Credential scope can be either:</p> <ul> <li> <p>READ - Provides read-only access to the data location.</p> </li> <li> <p>READ_WRITE - Provides both read and write access to the data location.</p> </li> </ul>"
       }
     },
     "DataCellsFilter": {
@@ -627,7 +650,8 @@
       "refs": {
         "AssumeDecoratedRoleWithSAMLResponse$Expiration": "<p>The date and time when the temporary credentials expire.</p>",
         "GetTemporaryGluePartitionCredentialsResponse$Expiration": "<p>The date and time when the temporary credentials expire.</p>",
-        "GetTemporaryGlueTableCredentialsResponse$Expiration": "<p>The date and time when the temporary credentials expire.</p>"
+        "GetTemporaryGlueTableCredentialsResponse$Expiration": "<p>The date and time when the temporary credentials expire.</p>",
+        "TemporaryCredentials$Expiration": "<p>The date and time when the temporary credentials expire.</p>"
       }
     },
     "ExpiredException": {
@@ -775,6 +799,14 @@
       "refs": {}
     },
     "GetTableObjectsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTemporaryDataLocationCredentialsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTemporaryDataLocationCredentialsResponse": {
       "base": null,
       "refs": {}
     },
@@ -1079,6 +1111,7 @@
         "AccessDeniedException$Message": "<p>A message describing the problem.</p>",
         "AlreadyExistsException$Message": "<p>A message describing the problem.</p>",
         "ConcurrentModificationException$Message": "<p>A message describing the problem.</p>",
+        "ConflictException$Message": "<p>A message describing the problem.</p>",
         "EntityNotFoundException$Message": "<p>A message describing the problem.</p>",
         "ExpiredException$Message": "<p>A message describing the error.</p>",
         "GlueEncryptionException$Message": "<p>A message describing the problem.</p>",
@@ -1277,6 +1310,8 @@
     "PathStringList": {
       "base": null,
       "refs": {
+        "GetTemporaryDataLocationCredentialsRequest$DataLocations": "<p>The Amazon S3 data location that you want to access.</p>",
+        "GetTemporaryDataLocationCredentialsResponse$AccessibleDataLocations": "<p>Refers to the Amazon S3 locations that can be accessed through the <code>GetTemporaryCredentialsForLocation</code> API operation.</p>",
         "GetTemporaryGlueTableCredentialsResponse$VendedS3Path": "<p>The Amazon S3 path for the temporary credentials.</p>"
       }
     },
@@ -1586,7 +1621,8 @@
       "refs": {
         "AssumeDecoratedRoleWithSAMLResponse$SecretAccessKey": "<p>The secret key for the temporary credentials. (The access key consists of an access key ID and a secret key).</p>",
         "GetTemporaryGluePartitionCredentialsResponse$SecretAccessKey": "<p>The secret key for the temporary credentials.</p>",
-        "GetTemporaryGlueTableCredentialsResponse$SecretAccessKey": "<p>The secret key for the temporary credentials.</p>"
+        "GetTemporaryGlueTableCredentialsResponse$SecretAccessKey": "<p>The secret key for the temporary credentials.</p>",
+        "TemporaryCredentials$SecretAccessKey": "<p>The secret key for the temporary credentials.</p>"
       }
     },
     "ServiceAuthorization": {
@@ -1614,7 +1650,8 @@
       "refs": {
         "AssumeDecoratedRoleWithSAMLResponse$SessionToken": "<p>The session token for the temporary credentials.</p>",
         "GetTemporaryGluePartitionCredentialsResponse$SessionToken": "<p>The session token for the temporary credentials.</p>",
-        "GetTemporaryGlueTableCredentialsResponse$SessionToken": "<p>The session token for the temporary credentials.</p>"
+        "GetTemporaryGlueTableCredentialsResponse$SessionToken": "<p>The session token for the temporary credentials.</p>",
+        "TemporaryCredentials$SessionToken": "<p>The session token for the temporary credentials.</p>"
       }
     },
     "StartQueryPlanningRequest": {
@@ -1765,6 +1802,12 @@
       "base": "<p>A structure describing a table resource with LF-tags.</p>",
       "refs": {
         "TableLFTagsList$member": null
+      }
+    },
+    "TemporaryCredentials": {
+      "base": "<p>A temporary set of credentials for an Lake Formation user. These credentials are scoped down to only access the raw data sources that the user has access to. </p> <p>The temporary security credentials consist of an access key and a session token. The access key consists of an access key ID and a secret key. When the credentials are created, they are associated with an IAM access control policy that limits what the user can do when using the credentials.</p>",
+      "refs": {
+        "GetTemporaryDataLocationCredentialsResponse$Credentials": null
       }
     },
     "ThrottledException": {
@@ -1963,6 +2006,12 @@
       "base": null,
       "refs": {
         "PartitionValueList$Values": "<p>The list of partition values.</p>"
+      }
+    },
+    "VerificationStatus": {
+      "base": null,
+      "refs": {
+        "ResourceInfo$VerificationStatus": "<p>Indicates whether the registered role has sufficient permissions to access registered Amazon S3 location. Verification Status can be one of the following: </p> <ul> <li> <p>VERIFIED - Registered role has sufficient permissions to access registered Amazon S3 location.</p> </li> <li> <p>NOT_VERIFIED - Registered role does not have sufficient permissions to access registered Amazon S3 location.</p> </li> <li> <p>VERIFICATION_FAILED - Unable to verify if the registered role can access the registered Amazon S3 location.</p> </li> </ul>"
       }
     },
     "VersionString": {

@@ -2278,6 +2278,24 @@
         "PaymentConfiguration$jobCompute": "<p> The compute configuration for the job.</p>"
       }
     },
+    "JobParameterMap": {
+      "base": null,
+      "refs": {
+        "ProtectedJobParameters$parameters": "<p>Runtime configuration values passed to the PySpark analysis script. Parameter names and types must match those defined in the analysis template.</p>"
+      }
+    },
+    "JobParameterName": {
+      "base": null,
+      "refs": {
+        "JobParameterMap$key": null
+      }
+    },
+    "JobParameterValue": {
+      "base": null,
+      "refs": {
+        "JobParameterMap$value": null
+      }
+    },
     "JobType": {
       "base": null,
       "refs": {
@@ -2881,7 +2899,7 @@
     "ParameterName": {
       "base": null,
       "refs": {
-        "AnalysisParameter$name": "<p>The name of the parameter. The name must use only alphanumeric, underscore (_), or hyphen (-) characters but cannot start or end with a hyphen.</p>",
+        "AnalysisParameter$name": "<p>The name of the parameter. The name must use only alphanumeric or underscore (_) characters.</p>",
         "ParameterMap$key": null
       }
     },

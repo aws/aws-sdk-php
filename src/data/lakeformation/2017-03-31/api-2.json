@@ -536,6 +536,24 @@
         {"shape":"ResourceNotReadyException"}
       ]
     },
+    "GetTemporaryDataLocationCredentials":{
+      "name":"GetTemporaryDataLocationCredentials",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetTemporaryDataLocationCredentials"
+      },
+      "input":{"shape":"GetTemporaryDataLocationCredentialsRequest"},
+      "output":{"shape":"GetTemporaryDataLocationCredentialsResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"GlueEncryptionException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "GetTemporaryGluePartitionCredentials":{
       "name":"GetTemporaryGluePartitionCredentials",
       "http":{
@@ -998,6 +1016,10 @@
       "exception":true
     },
     "AccessKeyIdString":{"type":"string"},
+    "AccountIdString":{
+      "type":"string",
+      "pattern":"^\\d{12}$"
+    },
     "AddLFTagsToResourceRequest":{
       "type":"structure",
       "required":[
@@ -1236,6 +1258,13 @@
         "Expression":{"shape":"ExpressionString"}
       }
     },
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"MessageString"}
+      },
+      "exception":true
+    },
     "ContextKey":{
       "type":"string",
       "max":128,
@@ -1327,6 +1356,13 @@
       "box":true,
       "max":43200,
       "min":900
+    },
+    "CredentialsScope":{
+      "type":"string",
+      "enum":[
+        "READ",
+        "READWRITE"
+      ]
     },
     "DataCellsFilter":{
       "type":"structure",
@@ -1860,6 +1896,23 @@
       "members":{
         "Objects":{"shape":"PartitionedTableObjectsList"},
         "NextToken":{"shape":"TokenString"}
+      }
+    },
+    "GetTemporaryDataLocationCredentialsRequest":{
+      "type":"structure",
+      "members":{
+        "DurationSeconds":{"shape":"CredentialTimeoutDurationSecondInteger"},
+        "AuditContext":{"shape":"AuditContext"},
+        "DataLocations":{"shape":"PathStringList"},
+        "CredentialsScope":{"shape":"CredentialsScope"}
+      }
+    },
+    "GetTemporaryDataLocationCredentialsResponse":{
+      "type":"structure",
+      "members":{
+        "Credentials":{"shape":"TemporaryCredentials"},
+        "AccessibleDataLocations":{"shape":"PathStringList"},
+        "CredentialsScope":{"shape":"CredentialsScope"}
       }
     },
     "GetTemporaryGluePartitionCredentialsRequest":{
@@ -2540,7 +2593,8 @@
         "RoleArn":{"shape":"IAMRoleArn"},
         "WithFederation":{"shape":"NullableBoolean"},
         "HybridAccessEnabled":{"shape":"NullableBoolean"},
-        "WithPrivilegedAccess":{"shape":"Boolean"}
+        "WithPrivilegedAccess":{"shape":"Boolean"},
+        "ExpectedResourceOwnerAccount":{"shape":"AccountIdString"}
       }
     },
     "RegisterResourceResponse":{
@@ -2588,7 +2642,9 @@
         "LastModified":{"shape":"LastModifiedTimestamp"},
         "WithFederation":{"shape":"NullableBoolean"},
         "HybridAccessEnabled":{"shape":"NullableBoolean"},
-        "WithPrivilegedAccess":{"shape":"NullableBoolean"}
+        "WithPrivilegedAccess":{"shape":"NullableBoolean"},
+        "VerificationStatus":{"shape":"VerificationStatus"},
+        "ExpectedResourceOwnerAccount":{"shape":"AccountIdString"}
       }
     },
     "ResourceInfoList":{
@@ -2879,6 +2935,15 @@
         "LFTagsOnColumns":{"shape":"ColumnLFTagsList"}
       }
     },
+    "TemporaryCredentials":{
+      "type":"structure",
+      "members":{
+        "AccessKeyId":{"shape":"AccessKeyIdString"},
+        "SecretAccessKey":{"shape":"SecretAccessKeyString"},
+        "SessionToken":{"shape":"SessionTokenString"},
+        "Expiration":{"shape":"ExpirationTimestamp"}
+      }
+    },
     "ThrottledException":{
       "type":"structure",
       "members":{
@@ -3048,7 +3113,8 @@
         "RoleArn":{"shape":"IAMRoleArn"},
         "ResourceArn":{"shape":"ResourceArnString"},
         "WithFederation":{"shape":"NullableBoolean"},
-        "HybridAccessEnabled":{"shape":"NullableBoolean"}
+        "HybridAccessEnabled":{"shape":"NullableBoolean"},
+        "ExpectedResourceOwnerAccount":{"shape":"AccountIdString"}
       }
     },
     "UpdateResourceResponse":{
@@ -3099,6 +3165,14 @@
       "type":"list",
       "member":{"shape":"ValueString"},
       "min":1
+    },
+    "VerificationStatus":{
+      "type":"string",
+      "enum":[
+        "VERIFIED",
+        "VERIFICATION_FAILED",
+        "NOT_VERIFIED"
+      ]
     },
     "VersionString":{
       "type":"string",
