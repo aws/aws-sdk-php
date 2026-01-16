@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.15 - 2026-01-16
 
 * `Aws\Glacier` - Documentation updates for Amazon Glacier's maintenance mode
 * `Aws\ResourceExplorer2` - Added ViewName to View-related responses and ServiceViewName to GetServiceView response.
