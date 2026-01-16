@@ -8023,13 +8023,12 @@
     },
     "Filter":{
       "type":"structure",
-      "required":[
-        "attribute",
-        "value"
-      ],
+      "required":["attribute"],
       "members":{
         "attribute":{"shape":"Attribute"},
-        "value":{"shape":"FilterValueString"}
+        "value":{"shape":"FilterValueString"},
+        "intValue":{"shape":"Long"},
+        "operator":{"shape":"FilterOperator"}
       }
     },
     "FilterClause":{
@@ -8089,6 +8088,17 @@
       "pattern":"[\\w -]+",
       "sensitive":true
     },
+    "FilterOperator":{
+      "type":"string",
+      "enum":[
+        "EQ",
+        "LE",
+        "LT",
+        "GE",
+        "GT",
+        "TEXT_SEARCH"
+      ]
+    },
     "FilterStatus":{
       "type":"string",
       "enum":[
@@ -8099,7 +8109,7 @@
     "FilterValueString":{
       "type":"string",
       "max":128,
-      "min":1
+      "min":0
     },
     "FirstName":{
       "type":"string",
@@ -12379,6 +12389,10 @@
     "ListingSummaryItems":{
       "type":"list",
       "member":{"shape":"ListingSummaryItem"}
+    },
+    "Long":{
+      "type":"long",
+      "box":true
     },
     "LongDescription":{
       "type":"string",

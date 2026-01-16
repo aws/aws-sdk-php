@@ -8660,6 +8660,7 @@
         },
         "AsDraft":{"shape":"BoxedBoolean"},
         "Tags":{"shape":"TagMap"},
+        "ReviewConfiguration":{"shape":"EvaluationReviewConfiguration"},
         "TargetConfiguration":{"shape":"EvaluationFormTargetConfiguration"},
         "LanguageConfiguration":{"shape":"EvaluationFormLanguageConfiguration"}
       }
@@ -12533,6 +12534,7 @@
         "LastModifiedTime":{"shape":"Timestamp"},
         "LastModifiedBy":{"shape":"ARN"},
         "AutoEvaluationConfiguration":{"shape":"EvaluationFormAutoEvaluationConfiguration"},
+        "ReviewConfiguration":{"shape":"EvaluationReviewConfiguration"},
         "Tags":{"shape":"TagMap"},
         "TargetConfiguration":{"shape":"EvaluationFormTargetConfiguration"},
         "LanguageConfiguration":{"shape":"EvaluationFormLanguageConfiguration"}
@@ -12564,7 +12566,8 @@
         "ScoringStrategy":{"shape":"EvaluationFormScoringStrategy"},
         "AutoEvaluationConfiguration":{"shape":"EvaluationFormAutoEvaluationConfiguration"},
         "TargetConfiguration":{"shape":"EvaluationFormTargetConfiguration"},
-        "LanguageConfiguration":{"shape":"EvaluationFormLanguageConfiguration"}
+        "LanguageConfiguration":{"shape":"EvaluationFormLanguageConfiguration"},
+        "ReviewConfiguration":{"shape":"EvaluationReviewConfiguration"}
       }
     },
     "EvaluationFormDescription":{"type":"string"},
@@ -13119,6 +13122,7 @@
         "Score":{"shape":"EvaluationScore"},
         "AutoEvaluation":{"shape":"AutoEvaluationDetails"},
         "Acknowledgement":{"shape":"EvaluationAcknowledgement"},
+        "Review":{"shape":"EvaluationReviewMetadata"},
         "ContactParticipant":{"shape":"EvaluationContactParticipant"},
         "SamplingJobId":{"shape":"ResourceId"}
       }
@@ -13160,6 +13164,71 @@
       "members":{
         "TranscriptType":{"shape":"EvaluationTranscriptType"}
       }
+    },
+    "EvaluationReviewConfiguration":{
+      "type":"structure",
+      "required":["ReviewNotificationRecipients"],
+      "members":{
+        "ReviewNotificationRecipients":{"shape":"EvaluationReviewNotificationRecipientList"},
+        "EligibilityDays":{"shape":"Integer"}
+      }
+    },
+    "EvaluationReviewMetadata":{
+      "type":"structure",
+      "required":[
+        "CreatedTime",
+        "CreatedBy",
+        "ReviewRequestComments"
+      ],
+      "members":{
+        "ReviewId":{"shape":"ResourceId"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "CreatedBy":{"shape":"ARN"},
+        "ReviewRequestComments":{"shape":"EvaluationReviewRequestCommentList"}
+      }
+    },
+    "EvaluationReviewNotificationRecipient":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "Value"
+      ],
+      "members":{
+        "Type":{"shape":"EvaluationReviewNotificationRecipientType"},
+        "Value":{"shape":"EvaluationReviewNotificationRecipientValue"}
+      }
+    },
+    "EvaluationReviewNotificationRecipientList":{
+      "type":"list",
+      "member":{"shape":"EvaluationReviewNotificationRecipient"},
+      "min":1
+    },
+    "EvaluationReviewNotificationRecipientType":{
+      "type":"string",
+      "enum":["USER_ID"]
+    },
+    "EvaluationReviewNotificationRecipientValue":{
+      "type":"structure",
+      "members":{
+        "UserId":{"shape":"ResourceId"}
+      }
+    },
+    "EvaluationReviewRequestComment":{
+      "type":"structure",
+      "members":{
+        "Comment":{"shape":"EvaluationReviewRequestCommentContent"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "CreatedBy":{"shape":"ARN"}
+      }
+    },
+    "EvaluationReviewRequestCommentContent":{
+      "type":"string",
+      "max":500
+    },
+    "EvaluationReviewRequestCommentList":{
+      "type":"list",
+      "member":{"shape":"EvaluationReviewRequestComment"},
+      "max":1
     },
     "EvaluationScore":{
       "type":"structure",
@@ -13264,7 +13333,9 @@
       "type":"string",
       "enum":[
         "DRAFT",
-        "SUBMITTED"
+        "SUBMITTED",
+        "REVIEW_REQUESTED",
+        "UNDER_REVIEW"
       ]
     },
     "EvaluationSuggestedAnswer":{
@@ -22897,6 +22968,7 @@
         "Items":{"shape":"EvaluationFormItemsList"},
         "ScoringStrategy":{"shape":"EvaluationFormScoringStrategy"},
         "AutoEvaluationConfiguration":{"shape":"EvaluationFormAutoEvaluationConfiguration"},
+        "ReviewConfiguration":{"shape":"EvaluationReviewConfiguration"},
         "AsDraft":{"shape":"BoxedBoolean"},
         "ClientToken":{
           "shape":"ClientToken",

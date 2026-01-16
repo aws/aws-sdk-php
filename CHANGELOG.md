@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glacier` - Documentation updates for Amazon Glacier's maintenance mode
+* `Aws\ResourceExplorer2` - Added ViewName to View-related responses and ServiceViewName to GetServiceView response.
+* `Aws\LaunchWizard` - Added UpdateDeployment, ListDeploymentPatternVersions and GetDeploymentPatternVersion APIs for Launch Wizard
+* `Aws\Connect` - Adds support to allow customers to create form with Dispute configuration
+* `Aws\SageMaker` - Adding security consideration comments for lcc accessing execution role under root access
+* `Aws\DataZone` - This release adds support for numeric filtering and complex free-text searches cases for the Search and SearchListings APIs.
+
 ## 3.369.14 - 2026-01-15
 
 * `Aws\QConnect` - Fix inference configuration shapes for the CreateAIPrompt and UpdateAIPrompt APIs, Modify Text Length Limit for SendMessage API

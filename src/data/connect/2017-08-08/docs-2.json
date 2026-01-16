@@ -441,6 +441,8 @@
         "EvaluationFormVersionSummary$CreatedBy": "<p>The Amazon Resource Name (ARN) of the user who created the evaluation form.</p>",
         "EvaluationFormVersionSummary$LastModifiedBy": "<p>The Amazon Resource Name (ARN) of the user who last updated the evaluation form.</p>",
         "EvaluationMetadata$EvaluatorArn": "<p>The Amazon Resource Name (ARN) of the user who last updated the evaluation.</p>",
+        "EvaluationReviewMetadata$CreatedBy": "<p>The user who created the evaluation review.</p>",
+        "EvaluationReviewRequestComment$CreatedBy": "<p>The user who created the review request comment.</p>",
         "EvaluationSearchMetadata$EvaluatorArn": "<p>The Amazon Resource Name (ARN) of the person who evaluated the contact.</p>",
         "EvaluationSearchMetadata$AcknowledgedBy": "<p>The agent who acknowledged the evaluation.</p>",
         "EvaluationSearchSummary$EvaluationArn": "<p>The Amazon Resource Name (ARN) for the contact evaluation resource.</p>",
@@ -5248,6 +5250,63 @@
         "EvaluationSuggestedAnswer$Input": "<p>Details about the input used to question automation.</p>"
       }
     },
+    "EvaluationReviewConfiguration": {
+      "base": "<p>Configuration settings for evaluation reviews.</p>",
+      "refs": {
+        "CreateEvaluationFormRequest$ReviewConfiguration": "<p>Configuration information about evaluation reviews.</p>",
+        "EvaluationForm$ReviewConfiguration": "<p>Configuration for evaluation review settings of this evaluation form.</p>",
+        "EvaluationFormContent$ReviewConfiguration": "<p>Configuration for evaluation review settings of this evaluation form content.</p>",
+        "UpdateEvaluationFormRequest$ReviewConfiguration": "<p>Configuration for evaluation review settings of the evaluation form.</p>"
+      }
+    },
+    "EvaluationReviewMetadata": {
+      "base": "<p>Metadata information about an evaluation review.</p>",
+      "refs": {
+        "EvaluationMetadata$Review": "<p>Information about reviews of this evaluation.</p>"
+      }
+    },
+    "EvaluationReviewNotificationRecipient": {
+      "base": "<p>Information about a recipient who should be notified when an evaluation review is requested.</p>",
+      "refs": {
+        "EvaluationReviewNotificationRecipientList$member": null
+      }
+    },
+    "EvaluationReviewNotificationRecipientList": {
+      "base": null,
+      "refs": {
+        "EvaluationReviewConfiguration$ReviewNotificationRecipients": "<p>List of recipients who should be notified when a review is requested.</p>"
+      }
+    },
+    "EvaluationReviewNotificationRecipientType": {
+      "base": null,
+      "refs": {
+        "EvaluationReviewNotificationRecipient$Type": "<p>The type of notification recipient.</p>"
+      }
+    },
+    "EvaluationReviewNotificationRecipientValue": {
+      "base": "<p>The value information for an evaluation review notification recipient.</p>",
+      "refs": {
+        "EvaluationReviewNotificationRecipient$Value": "<p>The value associated with the notification recipient type.</p>"
+      }
+    },
+    "EvaluationReviewRequestComment": {
+      "base": "<p>A comment provided when requesting an evaluation review.</p>",
+      "refs": {
+        "EvaluationReviewRequestCommentList$member": null
+      }
+    },
+    "EvaluationReviewRequestCommentContent": {
+      "base": null,
+      "refs": {
+        "EvaluationReviewRequestComment$Comment": "<p>The text content of the review request comment.</p>"
+      }
+    },
+    "EvaluationReviewRequestCommentList": {
+      "base": null,
+      "refs": {
+        "EvaluationReviewMetadata$ReviewRequestComments": "<p>Comments provided when requesting the evaluation review.</p>"
+      }
+    },
     "EvaluationScore": {
       "base": "<p>Information about scores of a contact evaluation item (section or question).</p>",
       "refs": {
@@ -6842,7 +6901,8 @@
         "EvaluationFormNumericQuestionOption$MinValue": "<p>The minimum answer value of the range option.</p>",
         "EvaluationFormNumericQuestionOption$MaxValue": "<p>The maximum answer value of the range option.</p>",
         "EvaluationFormNumericQuestionProperties$MinValue": "<p>The minimum answer value.</p>",
-        "EvaluationFormNumericQuestionProperties$MaxValue": "<p>The maximum answer value.</p>"
+        "EvaluationFormNumericQuestionProperties$MaxValue": "<p>The maximum answer value.</p>",
+        "EvaluationReviewConfiguration$EligibilityDays": "<p>Number of days during which a request for review can be submitted for evaluations created from this form.</p>"
       }
     },
     "IntegerCount": {
@@ -10197,6 +10257,8 @@
         "EvaluationMetadata$CalibrationSessionId": "<p>The calibration session ID that this evaluation belongs to.</p>",
         "EvaluationMetadata$SamplingJobId": "<p>Identifier of the sampling job.</p>",
         "EvaluationNotesMap$key": null,
+        "EvaluationReviewMetadata$ReviewId": "<p>The unique identifier for the evaluation review.</p>",
+        "EvaluationReviewNotificationRecipientValue$UserId": "<p>The user identifier for the notification recipient.</p>",
         "EvaluationScoresMap$key": null,
         "EvaluationSearchMetadata$ContactAgentId": "<p>The unique ID of the agent who handled the contact.</p>",
         "EvaluationSearchMetadata$CalibrationSessionId": "<p>The calibration session ID that this evaluation belongs to.</p>",
@@ -12187,6 +12249,8 @@
         "EvaluationFormSummary$LastActivatedTime": "<p>The timestamp for when the evaluation form was last activated.</p>",
         "EvaluationFormVersionSummary$CreatedTime": "<p>The timestamp for when the evaluation form was created.</p>",
         "EvaluationFormVersionSummary$LastModifiedTime": "<p>The timestamp for when the evaluation form was last updated.</p>",
+        "EvaluationReviewMetadata$CreatedTime": "<p>The timestamp when the evaluation review was created.</p>",
+        "EvaluationReviewRequestComment$CreatedTime": "<p>The timestamp when the review request comment was created.</p>",
         "EvaluationSearchMetadata$AcknowledgedTime": "<p>When the evaluation was acknowledged by the agent.</p>",
         "EvaluationSearchSummary$CreatedTime": "<p>The date and time when the evaluation was created, in UTC time.</p>",
         "EvaluationSearchSummary$LastModifiedTime": "<p>The date and time when the evaluation was modified last time, in UTC time.</p>",
