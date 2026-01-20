@@ -55,7 +55,7 @@ class MultipartUploaderTest extends TestCase
         $this->assertSame('buzz', $result['fizz']);
     }
 
-    public function getTestCases()
+    public static function getTestCases()
     {
         $defaults = [
             'account_id'          => 'foo',

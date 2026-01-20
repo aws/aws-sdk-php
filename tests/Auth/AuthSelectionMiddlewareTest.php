@@ -127,7 +127,7 @@ class AuthSelectionMiddlewareTest extends TestCase
         $middleware($command);
     }
 
-    public function ResolvesAuthSchemeWithCRTprovider()
+    public static function ResolvesAuthSchemeWithCRTprovider()
     {
         return [
             [
@@ -198,7 +198,7 @@ class AuthSelectionMiddlewareTest extends TestCase
         $middleware($command);
     }
 
-    public function resolvesBearerAuthSchemeProvider()
+    public static function resolvesBearerAuthSchemeProvider()
     {
         return [
             [
@@ -380,7 +380,7 @@ class AuthSelectionMiddlewareTest extends TestCase
     /**
      * @return \Generator
      */
-    public function authSelectionBasedOnUserPreferenceProvider(): \Generator
+    public static function authSelectionBasedOnUserPreferenceProvider(): \Generator
     {
         $cases = [
             'user_auth_scheme_preferred_none' => [

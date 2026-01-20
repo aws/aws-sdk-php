@@ -53,7 +53,7 @@ class S3ClientTest extends TestCase
         );
     }
 
-    public function bucketNameProvider()
+    public static function bucketNameProvider()
     {
         return [
             ['.bucket', false],
@@ -261,7 +261,7 @@ class S3ClientTest extends TestCase
         stream_wrapper_unregister('s3');
     }
 
-    public function doesExistProvider()
+    public static function doesExistProvider()
     {
         $redirectException = new PermanentRedirectException(
             '',
@@ -541,7 +541,7 @@ class S3ClientTest extends TestCase
         }
     }
 
-    public function getTestCasesForLocationConstraints()
+    public static function getTestCasesForLocationConstraints()
     {
         return [
             ['us-west-2', 'us-west-2', 'CreateBucket', true],
@@ -568,7 +568,7 @@ class S3ClientTest extends TestCase
         $this->assertStringNotContainsString('LocationConstraint', $body);
     }
 
-    public function directoryBucketLocationConstraintProvider(): array
+    public static function directoryBucketLocationConstraintProvider(): array
     {
         return [
             ['bucket-base-name--usw2-az1--x-s3'],
@@ -653,7 +653,7 @@ class S3ClientTest extends TestCase
         $this->assertSame(0, $retries);
     }
 
-    public function clientRetrySettingsProvider()
+    public static function clientRetrySettingsProvider()
     {
         return [
             [
@@ -718,7 +718,7 @@ class S3ClientTest extends TestCase
      *
      * @return \Generator
      */
-    public function s3OperationsProvider(): \Generator
+    public static function s3OperationsProvider(): \Generator
     {
         $operations = $this->loadOperations();
         $retryModes = [
@@ -1573,7 +1573,7 @@ EOXML;
         $client->listBuckets();
     }
 
-    public function optionsToEndpointsCases()
+    public static function optionsToEndpointsCases()
     {
         $handler = function ($cmd, $req) {
             return Promise\Create::promiseFor(new Result([]));
@@ -1691,7 +1691,7 @@ EOXML;
         $this->assertSame(3, $counter);
     }
 
-    public function multiRegionSuccessProvider()
+    public static function multiRegionSuccessProvider()
     {
 
         return [
@@ -1753,7 +1753,7 @@ EOXML;
         $client->execute($command);
     }
 
-    public function mrapExceptionTestProvider() {
+    public static function mrapExceptionTestProvider() {
         return [
             [
                 "arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", null, null, true,
@@ -1859,7 +1859,7 @@ EOXML;
             self::assertStringContainsString($expectedException, $e->getMessage());
         }
     }
-    public function AccessPointFailureProvider()
+    public static function AccessPointFailureProvider()
     {
         return [
             [
@@ -1948,7 +1948,7 @@ EOXML;
         }
     }
 
-    public function jsonCaseProvider()
+    public static function jsonCaseProvider()
     {
         return json_decode(
             file_get_contents(__DIR__ . '/test_cases/uri_addressing.json'),
@@ -2045,7 +2045,7 @@ EOXML;
         $client->execute($command);
     }
 
-    public function objectLambdasSuccessProvider()
+    public static function objectLambdasSuccessProvider()
     {
         return [
             ["arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "us-east-1", "none", false, null, "mybanner-123456789012.s3-object-lambda.us-east-1.amazonaws.com"],
@@ -2124,7 +2124,7 @@ EOXML;
         }
     }
 
-    public function objectLambdasFailureProvider()
+    public static function objectLambdasFailureProvider()
     {
         return [
             [
@@ -2236,7 +2236,7 @@ EOXML;
         $client->execute($command);
     }
 
-    public function writeGetObjectResponseProvider()
+    public static function writeGetObjectResponseProvider()
     {
         return [
             ["us-west-2", "route", null, 'route.s3-object-lambda.us-west-2.amazonaws.com'],
@@ -2286,7 +2286,7 @@ EOXML;
         $s3->execute($command);
     }
 
-    public function addMD5Provider() {
+    public static function addMD5Provider() {
         return [
            [
                ['Bucket' => 'foo', 'Key' => 'foo', 'Body' => 'test'],
@@ -2338,7 +2338,7 @@ EOXML;
         $s3->execute($command);
     }
 
-    public function dotSegmentProvider()
+    public static function dotSegmentProvider()
     {
         return [
             ['../foo' , 'https://foo.s3.amazonaws.com/../foo'],
@@ -2365,7 +2365,7 @@ EOXML;
         $s3->execute($command);
     }
 
-    public function dotSegmentPathStyleProvider()
+    public static function dotSegmentPathStyleProvider()
     {
         return [
             ['../foo' , 'https://s3.amazonaws.com/bucket/../foo'],
@@ -2480,7 +2480,7 @@ EOXML;
         );
     }
 
-    public function builtinRegionProvider()
+    public static function builtinRegionProvider()
     {
         return [
             ['us-east-1' , true],
@@ -2530,7 +2530,7 @@ EOXML;
         $this->assertEquals($expected, $client::isDirectoryBucket($bucketName));
     }
 
-    public function directoryBucketProvider(): array
+    public static function directoryBucketProvider(): array
     {
         return [
             ['bucket-base-name--usw2-az1--x-s3', true],
@@ -2582,7 +2582,7 @@ EOXML;
         $s3->execute($command);
     }
 
-    public function getContentSha256UseCases()
+    public static function getContentSha256UseCases()
     {
         $hash = 'SHA256HASH';
 
@@ -2637,7 +2637,7 @@ EOXML;
         $s3->execute($command);
     }
 
-    public function getFlexibleChecksumUseCases()
+    public static function getFlexibleChecksumUseCases()
     {
         return [
             // httpChecksum not modeled
@@ -2777,7 +2777,7 @@ EOXML;
         $this->assertEquals($checksumAlgorithm, $result['ChecksumValidated']);
     }
 
-    public function responseChecksumValidationProvider(): array
+    public static function responseChecksumValidationProvider(): array
     {
         return [
             [
@@ -2835,7 +2835,7 @@ EOXML;
         );
     }
 
-    public function checksumConfigProvider()
+    public static function checksumConfigProvider()
     {
         return [
             ['request_checksum_calculation', 'foo'],
@@ -2976,7 +2976,7 @@ EOXML;
         );
     }
 
-    public function retriesWithoutRecalculatingChecksumProvider(): array
+    public static function retriesWithoutRecalculatingChecksumProvider(): array
     {
         return [
             'PutObject legacy' => [

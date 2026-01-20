@@ -36,7 +36,7 @@ class OutpostsBucketArnTest extends TestCase
         $this->assertEquals($expectedString, (string) $arn);
     }
 
-    public function parsedArnProvider()
+    public static function parsedArnProvider()
     {
         return [
             // Colon delimiters
@@ -134,7 +134,7 @@ class OutpostsBucketArnTest extends TestCase
         }
     }
 
-    public function badArnProvider()
+    public static function badArnProvider()
     {
         return [
             [

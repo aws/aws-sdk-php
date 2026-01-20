@@ -113,7 +113,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $client->execute($command);
     }
 
-    public function getRequestTestCases()
+    public static function getRequestTestCases()
     {
         $baseUri = new Uri('https://awsendpointdiscoverytestservice.us-east-1.amazonaws.com/');
         $baseUserAgent = 'aws-sdk-php/' . Sdk::VERSION;
@@ -328,7 +328,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $handler($mainCmd, new Request('POST', new Uri('https://foo.com')));
     }
 
-    public function getDiscoveryRequestTestCases()
+    public static function getDiscoveryRequestTestCases()
     {
         $baseUri = new Uri('https://awsendpointdiscoverytestservice.us-east-1.amazonaws.com');
         $baseRequest = new Request(
@@ -734,7 +734,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
      *
      * @return array
      */
-    public function getInvalidEndpointExceptions()
+    public static function getInvalidEndpointExceptions()
     {
         return [
             [$this->generateInvalidEndpointException()],

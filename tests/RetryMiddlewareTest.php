@@ -149,7 +149,7 @@ class RetryMiddlewareTest extends TestCase
         $this->assertFalse($decider(0, $command, $request, null, $err));
     }
 
-    public function awsErrorCodeProvider()
+    public static function awsErrorCodeProvider()
     {
         $command = new Command('foo');
         return [

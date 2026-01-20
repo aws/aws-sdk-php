@@ -48,7 +48,7 @@ class MultipartCopyTest extends TestCase
         $this->assertSame($url, $result['ObjectURL']);
     }
 
-    public function getTestCases()
+    public static function getTestCases()
     {
         $defaults = [
             'bucket' => 'foo',

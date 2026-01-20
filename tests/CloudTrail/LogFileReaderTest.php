@@ -30,7 +30,7 @@ class LogFileReaderTest extends TestCase
         $this->assertCount($recordCount, $records);
     }
 
-    public function dataForLogReadingTest()
+    public static function dataForLogReadingTest()
     {
         return [
             ['{"Records":[{"foo":"1"},{"bar":"2"},{"baz":"3"}]}', 3],

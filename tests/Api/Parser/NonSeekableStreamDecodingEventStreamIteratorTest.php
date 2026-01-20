@@ -126,7 +126,7 @@ EOF;
     /**
      * @return \Generator
      */
-    public function readAndHashBytesHandlesPartialReadsProvider(): \Generator
+    public static function readAndHashBytesHandlesPartialReadsProvider(): \Generator
     {
         $cases = json_decode(
             file_get_contents(self::CASES_FILE),

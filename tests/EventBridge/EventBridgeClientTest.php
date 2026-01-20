@@ -13,7 +13,7 @@ class EventBridgeClientTest extends TestCase
 {
     use UsesServiceTrait;
 
-    public function putEventsEndpointSuccessProvider()
+    public static function putEventsEndpointSuccessProvider()
     {
 
         return [
@@ -138,7 +138,7 @@ class EventBridgeClientTest extends TestCase
         $client->execute($command);
     }
 
-    public function putEventsEndpointFailureProvider()
+    public static function putEventsEndpointFailureProvider()
     {
 
         return [

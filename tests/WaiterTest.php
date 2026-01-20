@@ -178,7 +178,7 @@ class WaiterTest extends TestCase
         $this->assertEquals($expectedException, $actualException);
     }
 
-    public function getWaiterWorkflowTestCases()
+    public static function getWaiterWorkflowTestCases()
     {
         return [
             [
@@ -275,7 +275,7 @@ class WaiterTest extends TestCase
     /**
      * @return array
      */
-    public function getMatchersTestCases(): array
+    public static function getMatchersTestCases(): array
     {
         return [
             'matches_path_1' => [

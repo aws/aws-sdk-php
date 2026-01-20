@@ -56,7 +56,7 @@ class RequestCompressionMiddlewareTest extends TestCase
         ]);
     }
 
-    public function specificSizeProvider()
+    public static function specificSizeProvider()
     {
         return [
             [60, 0, 65],
@@ -172,7 +172,7 @@ class RequestCompressionMiddlewareTest extends TestCase
         ]);
     }
 
-    public function invalidDisableCompressionType()
+    public static function invalidDisableCompressionType()
     {
         return [
             ['foo'],
@@ -193,7 +193,7 @@ class RequestCompressionMiddlewareTest extends TestCase
         $client = $this->generateTestClient($service, ['disable_request_compression' => $invalidType]);
     }
 
-    public function invalidMinRequestSizeProvider()
+    public static function invalidMinRequestSizeProvider()
     {
         return [
             [-1],

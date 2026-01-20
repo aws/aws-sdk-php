@@ -33,7 +33,7 @@ class CodeSnippetGeneratorTest extends TestCase
         $this->assertSame($expected, $builder($operation, $input, [], $isInput));
     }
 
-    public function exampleProvider()
+    public static function exampleProvider()
     {
         $provider = ApiProvider::defaultProvider();
         return [

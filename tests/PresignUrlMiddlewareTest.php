@@ -151,7 +151,7 @@ class PresignUrlMiddlewareTest extends TestCase
     /**
      * @return array[]
      */
-    public function extraQueryParamsProvider(): array
+    public static function extraQueryParamsProvider(): array
     {
         return [
             'simple_parameter' => [

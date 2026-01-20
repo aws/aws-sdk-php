@@ -53,7 +53,7 @@ class RdsClientTest extends TestCase
         ]);
     }
 
-    public function rdsPresignMethodProvider()
+    public static function rdsPresignMethodProvider()
     {
         return [
             ['copyDBSnapshot', ['SourceDBSnapshotIdentifier' => 'arn:aws:rds:us-east-1:123456789012:snapshot:source-db-snapshot', 'TargetDBSnapshotIdentifier' => 'target-db-snapshot'], null, null, null, null],

@@ -21,7 +21,7 @@ class PartitionEndpointProviderTest extends TestCase
         $this->assertEquals($output, $p($input));
     }
 
-    public function endpointProvider()
+    public static function endpointProvider()
     {
         return [
             [
@@ -167,7 +167,7 @@ class PartitionEndpointProviderTest extends TestCase
         $this->assertSame($partition, $p->getPartition($region, $service)->getName());
     }
 
-    public function partitionRegionProvider()
+    public static function partitionRegionProvider()
     {
         return [
             ['us-east-1', 's3', 'aws'],
@@ -293,7 +293,7 @@ class PartitionEndpointProviderTest extends TestCase
         }
     }
 
-    public function knownEndpointProvider()
+    public static function knownEndpointProvider()
     {
         $partitions = PartitionEndpointProvider::defaultProvider();
 

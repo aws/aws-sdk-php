@@ -84,7 +84,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
         $s3->execute($command);
     }
 
-    public function accessPointArnCases()
+    public static function accessPointArnCases()
     {
         return [
             // Standard case
@@ -356,7 +356,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
         }
     }
 
-    public function incorrectUsageProvider()
+    public static function incorrectUsageProvider()
     {
         return [
             [

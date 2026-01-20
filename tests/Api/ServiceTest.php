@@ -144,7 +144,7 @@ class ServiceTest extends TestCase
         $api->getWaiterConfig('Fizz');
     }
 
-    public function errorParserProvider()
+    public static function errorParserProvider()
     {
         return [
             ['json', ErrorParser\JsonRpcErrorParser::class],
@@ -168,7 +168,7 @@ class ServiceTest extends TestCase
         Service::createErrorParser('undefined_protocol');
     }
 
-    public function serializerDataProvider()
+    public static function serializerDataProvider()
     {
         return [
             ['json', Serializer\JsonRpcSerializer::class],
@@ -196,7 +196,7 @@ class ServiceTest extends TestCase
         $this->assertInstanceOf($cl, $serializer);
     }
 
-    public function parserDataProvider()
+    public static function parserDataProvider()
     {
         return [
             ['json', Parser\JsonRpcParser::class],
@@ -352,7 +352,7 @@ class ServiceTest extends TestCase
         $this->assertEquals($expected, $protocol);
     }
 
-    public function selectsProtocolProvider()
+    public static function selectsProtocolProvider()
     {
         return [
             [['smithy-rpc-v2-cbor', 'json'], 'json'],

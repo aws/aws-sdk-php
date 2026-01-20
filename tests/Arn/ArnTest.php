@@ -32,7 +32,7 @@ class ArnTest extends TestCase
         $this->assertEquals($expectedString, (string) $arn);
     }
 
-    public function parsedArnProvider()
+    public static function parsedArnProvider()
     {
         return [
             // All components
@@ -132,7 +132,7 @@ class ArnTest extends TestCase
         }
     }
 
-    public function invalidArnCases()
+    public static function invalidArnCases()
     {
         return [
             [

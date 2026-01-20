@@ -71,7 +71,7 @@ class EndpointArnMiddlewareTest extends TestCase
         $s3control->execute($command);
     }
 
-    public function providedSuccessCases()
+    public static function providedSuccessCases()
     {
         return [
             // Outposts accesspoint ARN
@@ -455,7 +455,7 @@ class EndpointArnMiddlewareTest extends TestCase
         }
     }
 
-    public function providedFailureCases()
+    public static function providedFailureCases()
     {
         return [
             // Outposts accesspoint ARN, different region

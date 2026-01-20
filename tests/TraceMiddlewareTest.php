@@ -239,7 +239,7 @@ class TraceMiddlewareTest extends TestCase
         $this->assertEquals('success', $result[0]);
     }
 
-    public function authStringProvider()
+    public static function authStringProvider()
     {
         return [
             // v4 signature example from http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-auth-using-authorization-header.html

@@ -32,7 +32,7 @@ class WriteRequestBatchTest extends TestCase
         new WriteRequestBatch($this->getTestClient('DynamoDb'), $config);
     }
 
-    public function getInvalidArgUseCases()
+    public static function getInvalidArgUseCases()
     {
         return [
             [['batch_size' => 1]],

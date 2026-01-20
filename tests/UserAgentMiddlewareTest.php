@@ -165,7 +165,7 @@ class UserAgentMiddlewareTest extends TestCase
      *
      * @return \Generator
      */
-    public function userAgentCasesDataProvider(): \Generator
+    public static function userAgentCasesDataProvider(): \Generator
     {
         yield 'sdkVersion' => [[], 'aws-sdk-php/' . Sdk::VERSION];
 
@@ -355,7 +355,7 @@ class UserAgentMiddlewareTest extends TestCase
      *
      * @return array[]
      */
-    public function retryConfigMetricProvider(): array
+    public static function retryConfigMetricProvider(): array
     {
         return [
             'retryAdaptive' => [
@@ -874,7 +874,7 @@ class UserAgentMiddlewareTest extends TestCase
      *
      * @return array[]
      */
-    public function flexibleChecksumTestProvider(): array
+    public static function flexibleChecksumTestProvider(): array
     {
         return [
             'metric_checksum_crc32' => [

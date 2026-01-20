@@ -315,7 +315,7 @@ class BedrockTokenProviderTest extends TestCase
         }
     }
 
-    public function integrationWithClientProvider(): \Generator
+    public static function integrationWithClientProvider(): \Generator
     {
         static $services = [
             'bedrock',
@@ -440,7 +440,7 @@ class BedrockTokenProviderTest extends TestCase
         $client->{$operation}($args);
     }
 
-    public function tokenSourceUserAgentProvider(): \Generator
+    public static function tokenSourceUserAgentProvider(): \Generator
     {
         yield 'bedrock' => [
             'service' => 'bedrock',

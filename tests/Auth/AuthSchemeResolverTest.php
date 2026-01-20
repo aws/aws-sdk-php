@@ -62,7 +62,7 @@ class AuthSchemeResolverTest extends TestCase
         $this->assertEquals($expectedSignatureVersion, $resolver->selectAuthScheme($authScheme, $args));
     }
 
-    public function schemeForIdentityProvider()
+    public static function schemeForIdentityProvider()
     {
         return [
           [
@@ -206,7 +206,7 @@ class AuthSchemeResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->selectAuthScheme($authSchemes));
     }
 
-    public function fallsBackWhenIdentityNotAvailableProvider()
+    public static function fallsBackWhenIdentityNotAvailableProvider()
     {
         $credentialProvider = function () {
             return Promise\Create::promiseFor(

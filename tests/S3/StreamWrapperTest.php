@@ -462,7 +462,7 @@ class StreamWrapperTest extends TestCase
         $this->assertSame('bucket.s3.amazonaws.com', $entries[0]['request']->getUri()->getHost());
     }
 
-    public function rmdirProvider()
+    public static function rmdirProvider()
     {
         return [
             ['s3://bucket/object/'],
@@ -717,7 +717,7 @@ class StreamWrapperTest extends TestCase
         stat('s3://bucket/prefix');
     }
 
-    public function fileTypeProvider()
+    public static function fileTypeProvider()
     {
         $err = function ($cmd, $r) { return new S3Exception('404', $cmd); };
 
@@ -1025,7 +1025,7 @@ class StreamWrapperTest extends TestCase
         stream_wrapper_unregister('foo');
     }
 
-    public function contentProvider()
+    public static function contentProvider()
     {
         return [
             ['foo'],

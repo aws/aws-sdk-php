@@ -16,7 +16,7 @@ class PatternEndpointProviderTest extends TestCase
         $this->assertNull($e(['service' => 'foo', 'region' => 'bar']));
     }
 
-    public function endpointProvider()
+    public static function endpointProvider()
     {
         return [
             [

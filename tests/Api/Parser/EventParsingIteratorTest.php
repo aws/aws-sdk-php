@@ -67,7 +67,7 @@ class EventParsingIteratorTest extends TestCase
      *
      * @return \Generator
      */
-    public function iteratorDataProvider()
+    public static function iteratorDataProvider()
     {
        foreach (self::$eventCases as $eventCase) {
             $shape = $this->loadEventStreamShapeFromJson($eventCase['shape']);
@@ -412,7 +412,7 @@ EOF;
     /**
      * @return array[]
      */
-    public function handleEventWithExceptionsProvider(): array {
+    public static function handleEventWithExceptionsProvider(): array {
         return [
             'handle_event_with_exceptions_1' => [
                 'event_streams' =>

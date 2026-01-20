@@ -38,7 +38,7 @@ class AuthTokenGeneratorTest extends TestCase
         $this->assertStringNotContainsString('https://', $token);
     }
 
-    public function generateAuthTokenProvider()
+    public static function generateAuthTokenProvider()
     {   $accessKeyId = 'AKID';
         $secretKeyId = 'SECRET';
         $credentials = new Credentials($accessKeyId, $secretKeyId);
@@ -75,7 +75,7 @@ class AuthTokenGeneratorTest extends TestCase
         );
     }
 
-    public function missingInputProvider()
+    public static function missingInputProvider()
     {
         return [
             ['generateDbConnectAuthToken', 'foo.bar.baz', null],
@@ -106,7 +106,7 @@ class AuthTokenGeneratorTest extends TestCase
         );
     }
 
-    public function emptyInputProvider()
+    public static function emptyInputProvider()
     {
         return [
             ['generateDbConnectAuthToken', 'foo.bar.baz', ''],
@@ -116,7 +116,7 @@ class AuthTokenGeneratorTest extends TestCase
         ];
     }
 
-    public function lifetimeFailureProvider()
+    public static function lifetimeFailureProvider()
     {
         return [
             [0, 'generateDbConnectAuthToken'],

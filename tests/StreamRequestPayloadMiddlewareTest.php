@@ -54,7 +54,7 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
         $handler($command, new Request('POST', 'https://foo.com'));
     }
 
-    public function generateTestCases()
+    public static function generateTestCases()
     {
         $service = $this->generateTestService();
         $client = $this->generateTestClient($service);

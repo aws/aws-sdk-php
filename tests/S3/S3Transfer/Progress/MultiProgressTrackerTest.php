@@ -107,7 +107,7 @@ class MultiProgressTrackerTest extends TestCase
     /**
      * @return array
      */
-    public function customInitializationProvider(): array
+    public static function customInitializationProvider(): array
     {
         return [
             'custom_initialization_1' => [
@@ -147,7 +147,7 @@ class MultiProgressTrackerTest extends TestCase
     /**
      * @return array
      */
-    public function multiProgressTrackerProvider(): array
+    public static function multiProgressTrackerProvider(): array
     {
         return [
             'multi_progress_tracker_1_single_tracking_object' => [

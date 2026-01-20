@@ -88,7 +88,7 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
-    public function getEnvVariableNames()
+    public static function getEnvVariableNames()
     {
         return [
             [ConfigurationProvider::ENV_ENABLED],
@@ -432,7 +432,7 @@ EOT;
         unlink($dir . '/config');
     }
 
-    public function getSuccessfulUnwrapData()
+    public static function getSuccessfulUnwrapData()
     {
         $expected = new Configuration(true, 4000);
         return [

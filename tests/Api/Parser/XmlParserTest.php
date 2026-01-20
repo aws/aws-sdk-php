@@ -14,7 +14,7 @@ class XmlParserTest extends TestCase
 {
     use ParserTestServiceTrait;
 
-    public function timeStampModelProvider()
+    public static function timeStampModelProvider()
     {
         return [
             [932169600, "ParseIso8601", "1999-07-17T00:00:00+00:00"],
@@ -62,7 +62,7 @@ class XmlParserTest extends TestCase
         ];
     }
 
-    public function timeStampExceptionModelProvider()
+    public static function timeStampExceptionModelProvider()
     {
         return [
             ["this text is not a date", "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],

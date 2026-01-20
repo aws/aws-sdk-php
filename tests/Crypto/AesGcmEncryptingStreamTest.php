@@ -82,7 +82,7 @@ class AesGcmEncryptingStreamTest extends TestCase
         );
     }
 
-    public function encryptDataProvider()
+    public static function encryptDataProvider()
     {
         // [[ $plaintext, $key, $iv, $aad, $keySize, $expectedCipher, $expectedTag ]]
         return [

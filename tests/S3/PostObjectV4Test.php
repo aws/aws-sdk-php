@@ -268,7 +268,7 @@ class PostObjectV4Test extends TestCase
         $this->assertSame($expected, $formAttrs['action']);
     }
 
-    public function virtualStyleProvider()
+    public static function virtualStyleProvider()
     {
         return [
             ['http://foo.s3.amazonaws.com', 'foo', 'http://foo.s3.amazonaws.com'],
@@ -303,7 +303,7 @@ class PostObjectV4Test extends TestCase
         $this->assertSame($expected, $formAttrs['action']);
     }
 
-    public function pathStyleProvider()
+    public static function pathStyleProvider()
     {
         return [
             ['http://s3.amazonaws.com', 'foo', 'http://s3.amazonaws.com/foo'],

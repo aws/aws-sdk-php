@@ -414,7 +414,7 @@ class MiddlewareTest extends TestCase
         putenv('_X_AMZN_TRACE_ID');
     }
 
-    public function recursionDetectionProvider()
+    public static function recursionDetectionProvider()
     {
         $addHeaderMock = function ($command, $request) {
             $this->assertTrue($request->hasHeader('X-Amzn-Trace-Id'));

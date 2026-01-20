@@ -10,7 +10,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class BearerTokenAuthorizationTest extends TestCase {
 
-    public function bearerTestProvider() {
+    public static function bearerTestProvider() {
         return [
             "Minimal bearer auth case" =>
                 [

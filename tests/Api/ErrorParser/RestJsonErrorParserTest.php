@@ -46,7 +46,7 @@ class RestJsonErrorParserTest extends TestCase
         }
     }
 
-    public function errorResponsesProvider()
+    public static function errorResponsesProvider()
     {
         $service = $this->generateTestService('rest-json');
         $shapes = $service->getErrorShapes();

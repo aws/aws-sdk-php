@@ -152,7 +152,7 @@ class UrlSignerTest extends TestCase
         $this->assertSame($resource, $result);
     }
 
-    public function urlAndResourceProvider()
+    public static function urlAndResourceProvider()
     {
         return [
             ['rtmp://foo.cloudfront.net/videos/test.mp4', 'videos/test.mp4'],

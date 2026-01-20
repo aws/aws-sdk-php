@@ -124,7 +124,7 @@ class MultiRegionClientTest extends TestCase
         call_user_func_array([$this->instance, $method], $args);
     }
 
-    public function clientInterfaceMethodProvider()
+    public static function clientInterfaceMethodProvider()
     {
         return [
             ['getConfig', ['someOption']],

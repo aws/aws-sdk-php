@@ -610,7 +610,7 @@ EOT;
         );
     }
 
-    public function dualStackEndpointCases()
+    public static function dualStackEndpointCases()
     {
         return [
             ["ec2", false, false, "us-west-2", "ec2.us-west-2.amazonaws.com",],
@@ -688,7 +688,7 @@ EOT;
         $this->assertEquals($endpoint, $conf['endpoint']);
     }
 
-    public function s3EndpointCases()
+    public static function s3EndpointCases()
     {
         return [
             ['regional', 'https://s3.us-east-1.amazonaws.com'],
@@ -863,7 +863,7 @@ EOT;
         }
     }
 
-    public function statValueProvider()
+    public static function statValueProvider()
     {
         return [
             [
@@ -917,7 +917,7 @@ EOT;
         $this->assertSame($override, $resolved[$argName]);
     }
 
-    public function endpointProviderReturnProvider()
+    public static function endpointProviderReturnProvider()
     {
         $partition = new Partition([
             'partition' => 'aws-test',
@@ -977,7 +977,7 @@ EOT;
         $this->assertSame($expected, $resolved[$argName]);
     }
 
-    public function partitionReturnProvider()
+    public static function partitionReturnProvider()
     {
         $invocationArgs = ['endpoint' => 'https://foo.bar.amazonaws.com'];
 
@@ -1026,7 +1026,7 @@ EOT;
         $this->assertCount($shouldAddIdempotencyMiddleware ? 1 : 0, $list);
     }
 
-    public function idempotencyAutoFillProvider()
+    public static function idempotencyAutoFillProvider()
     {
         return [
             [true, true],
@@ -1068,7 +1068,7 @@ EOT;
         }
     }
 
-    public function validateRegionProvider()
+    public static function validateRegionProvider()
     {
         return [
             [
@@ -1086,7 +1086,7 @@ EOT;
         ];
     }
 
-    public function invalidDisableRequestCompressionValues()
+    public static function invalidDisableRequestCompressionValues()
     {
         return [
             ['foo'],
@@ -1129,7 +1129,7 @@ EOT;
         $this->assertFalse($conf['disable_request_compression']);
     }
 
-    public function invalidMinCompressionSizeValues()
+    public static function invalidMinCompressionSizeValues()
     {
         return [
             [ true ],
@@ -1217,7 +1217,7 @@ EOT;
         }
     }
 
-    public function configResolutionProvider()
+    public static function configResolutionProvider()
     {
         return [
             [
@@ -1591,7 +1591,7 @@ EOF;
     /**
      * @return Generator
      */
-    public function resolvesAuthSchemePreferenceProvider(): Generator
+    public static function resolvesAuthSchemePreferenceProvider(): Generator
     {
         $cases = [
             'provided_at_client_construction' => [

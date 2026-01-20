@@ -122,7 +122,7 @@ class MetricsBuilderTest extends TestCase
      *
      * @return array[]
      */
-    public function resolveAndAppendFromArgsProvider(): array
+    public static function resolveAndAppendFromArgsProvider(): array
     {
         return [
             'endpoint_override' => [

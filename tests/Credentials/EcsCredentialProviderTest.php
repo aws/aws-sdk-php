@@ -193,7 +193,7 @@ class EcsCredentialProviderTest extends TestCase
         }
     }
 
-    public function uriAndTokenResolutionProvider(): \Generator
+    public static function uriAndTokenResolutionProvider(): \Generator
     {
         $cases = json_decode(file_get_contents(
             __DIR__ . '/fixtures/ecs/uri-token-resolution.json')
@@ -398,7 +398,7 @@ EOF;
         );
     }
 
-    public function successTestCases()
+    public static function successTestCases()
     {
         $expiry = time() + 1000;
         $creds = ['foo_key', 'baz_secret', 'qux_token', "@{$expiry}"];
@@ -473,7 +473,7 @@ EOF;
         }
     }
 
-    public function failureTestCases()
+    public static function failureTestCases()
     {
         $getRequest = new Psr7\Request('GET', '/latest');
 

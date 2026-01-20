@@ -124,7 +124,7 @@ class ConsoleProgressBarTest extends TestCase
      *
      * @return array
      */
-    public function progressBarRenderingProvider(): array
+    public static function progressBarRenderingProvider(): array
     {
         return [
             'plain_progress_bar_format_1' => [

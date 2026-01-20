@@ -30,7 +30,7 @@ class GetBucketLocationResultMutatorTest extends TestCase
         $this->assertEquals($expectedValue, $result['LocationConstraint']);
     }
 
-    public function getTestCases()
+    public static function getTestCases()
     {
         return [
             ['GetBucketLocation', '<LocationConstraint>us-west-2</LocationConstraint>', 'us-west-2'],

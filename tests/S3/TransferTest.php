@@ -409,7 +409,7 @@ class TransferTest extends TestCase
         $this->deleteDirectory($dir);
     }
 
-    public function providedPathsOutsideTarget() {
+    public static function providedPathsOutsideTarget() {
         return [
             ['bar/../a/b'],
             //ensures if path resolves to target directory
@@ -614,7 +614,7 @@ class TransferTest extends TestCase
         $this->deleteDirectory($dir);
     }
 
-    public function flexibleChecksumsProvider() {
+    public static function flexibleChecksumsProvider() {
         return [
             ['sha256'],
             ['sha1'],

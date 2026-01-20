@@ -101,7 +101,7 @@ class RestXmlSerializerTest extends TestCase
         );
     }
 
-    public function boolProvider() {
+    public static function boolProvider() {
         return [
             [true, 'true'],
             [false, 'false']
@@ -267,7 +267,7 @@ class RestXmlSerializerTest extends TestCase
         );
     }
 
-    public function s3EndpointResolutionProvider(): \Generator
+    public static function s3EndpointResolutionProvider(): \Generator
     {
         // Virtual-hosted-style (default)
         yield 's3_virtual_hosted_standard' => [
@@ -379,7 +379,7 @@ class RestXmlSerializerTest extends TestCase
         ];
     }
 
-    public function s3DotSegmentProvider(): \Generator
+    public static function s3DotSegmentProvider(): \Generator
     {
         // Virtual-hosted-style (default)
         yield 's3_virtual_dot_segment_start' => [
@@ -440,7 +440,7 @@ class RestXmlSerializerTest extends TestCase
         ];
     }
 
-    public function restXmlEndpointResolutionProvider(): \Generator
+    public static function restXmlEndpointResolutionProvider(): \Generator
     {
         // Basic REST XML service endpoints
         yield 'restxml_no_path' => [
@@ -562,7 +562,7 @@ class RestXmlSerializerTest extends TestCase
         $client->getObject(['Bucket' => $bucket, 'Key' => $key]);
     }
 
-    public function s3E2EProvider(): \Generator
+    public static function s3E2EProvider(): \Generator
     {
         // Virtual-hosted style (default)
         yield 's3_virtual_simple' => [

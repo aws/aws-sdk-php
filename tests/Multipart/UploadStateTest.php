@@ -93,7 +93,7 @@ class UploadStateTest extends TestCase
         $this->expectOutputString($progressBar);
     }
 
-    public function getDisplayProgressCases()
+    public static function getDisplayProgressCases()
     {
         $progressBar = ["Transfer initiated...\n|                    | 0.0%\n",
                         "|==                  | 12.5%\n",
@@ -185,7 +185,7 @@ class UploadStateTest extends TestCase
         $this->assertCount(9, $threshold);
     }
 
-    public function getThresholdCases()
+    public static function getThresholdCases()
     {
         return [
             [0],
@@ -217,7 +217,7 @@ class UploadStateTest extends TestCase
         $state->getDisplayProgress($totalUploaded);
     }
 
-    public function getInvalidIntCases()
+    public static function getInvalidIntCases()
     {
         return [
             [''],

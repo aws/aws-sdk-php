@@ -235,7 +235,7 @@ class AwsExceptionTest extends TestCase
         $this->assertInstanceOf(\Throwable::class, $e->getPrevious());
     }
 
-    public function previousThrowableProvider(): array
+    public static function previousThrowableProvider(): array
     {
         return [
             'standard exception' => [new \Exception('Standard exception')],

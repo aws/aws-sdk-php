@@ -65,7 +65,7 @@ class PartitionTest extends TestCase
         self::assertStringContainsString('service-fips.amazonaws.com', $resolved['endpoint']);
     }
 
-    public function partitionDefinitionProvider()
+    public static function partitionDefinitionProvider()
     {
         return [
             [[
@@ -89,7 +89,7 @@ class PartitionTest extends TestCase
         ];
     }
 
-    public function invalidPartitionDefinitionProvider()
+    public static function invalidPartitionDefinitionProvider()
     {
         $validDefinition = $this->partitionDefinitionProvider()[0][0];
         $return = [];
@@ -152,7 +152,7 @@ class PartitionTest extends TestCase
         ));
     }
 
-    public function serviceRegionsProvider()
+    public static function serviceRegionsProvider()
     {
         $partition = new Partition([
             'partition' => 'foo',
@@ -214,7 +214,7 @@ class PartitionTest extends TestCase
         $this->assertSame($signingRegion, $resolved['signingRegion']);
     }
 
-    public function signingRegionProvider()
+    public static function signingRegionProvider()
     {
         $partition = new Partition([
             'partition' => 'foo',
@@ -269,7 +269,7 @@ class PartitionTest extends TestCase
         $this->assertSame($endpoint, $resolved['endpoint']);
     }
 
-    public function endpointProvider()
+    public static function endpointProvider()
     {
         $partition = new Partition([
             'partition' => 'foo',
@@ -354,7 +354,7 @@ class PartitionTest extends TestCase
         $this->assertSame($signatureVersion, $resolved['signatureVersion']);
     }
 
-    public function signatureVersionProvider()
+    public static function signatureVersionProvider()
     {
         $partition = new Partition([
             'partition' => 'foo',
@@ -434,7 +434,7 @@ class PartitionTest extends TestCase
         $this->assertSame($signingName, $resolved['signingName']);
     }
 
-    public function signingNameProvider()
+    public static function signingNameProvider()
     {
         $partition = new Partition([
             'partition' => 'foo',
@@ -515,7 +515,7 @@ class PartitionTest extends TestCase
 
     }
 
-    public function stsEndpointTestCases()
+    public static function stsEndpointTestCases()
     {
         return [
             [
@@ -614,7 +614,7 @@ class PartitionTest extends TestCase
 
     }
 
-    public function s3EndpointTestCases()
+    public static function s3EndpointTestCases()
     {
         return [
             [
@@ -691,7 +691,7 @@ class PartitionTest extends TestCase
         $this->assertStringContainsString('testsuffix.com', $resolved['endpoint']);
     }
 
-    public function variantTagProvider()
+    public static function variantTagProvider()
     {
         $useFipsEndpointConfig = $this->getMockBuilder(UseFipsEndpoint\Configuration::class)
             ->disableOriginalConstructor()
@@ -841,7 +841,7 @@ class PartitionTest extends TestCase
         $this->assertStringNotContainsString('testsuffix.com', $resolved['endpoint']);
     }
 
-    public function variantTagEmptyProvider()
+    public static function variantTagEmptyProvider()
     {
         $useFipsEndpointConfig = $this->getMockBuilder(UseFipsEndpoint\Configuration::class)
             ->disableOriginalConstructor()
@@ -1013,7 +1013,7 @@ class PartitionTest extends TestCase
         $this->assertStringContainsString('testsuffix.com', $resolved['endpoint']);
     }
 
-    public function booleanConfigProvider()
+    public static function booleanConfigProvider()
     {
         return [
             [

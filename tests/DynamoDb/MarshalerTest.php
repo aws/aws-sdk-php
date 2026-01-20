@@ -29,7 +29,7 @@ class MarshalerTest extends TestCase
         $this->assertSame($expectedResult, $actualResult);
     }
 
-    public function getMarshalValueUseCases()
+    public static function getMarshalValueUseCases()
     {
         $m = new Marshaler;
 

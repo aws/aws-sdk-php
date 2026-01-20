@@ -96,7 +96,7 @@ class RangeGetMultipartDownloaderTest extends TestCase
      *
      * @return array[]
      */
-    public function rangeGetMultipartDownloaderProvider(): array {
+    public static function rangeGetMultipartDownloaderProvider(): array {
         return [
             [
                 'objectKey' => 'ObjectKey_1',
@@ -336,7 +336,7 @@ class RangeGetMultipartDownloaderTest extends TestCase
     /**
      * @return Generator
      */
-    public function ifMatchIsPresentInEachRangeRequestAfterFirstProvider(): Generator
+    public static function ifMatchIsPresentInEachRangeRequestAfterFirstProvider(): Generator
     {
         yield 'multipart_download_with_3_parts_1' => [
             'object_size_in_bytes' => 1024 * 1024 * 20,

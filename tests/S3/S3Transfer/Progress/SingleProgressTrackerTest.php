@@ -57,7 +57,7 @@ class SingleProgressTrackerTest extends TestCase
     /**
      * @return array[]
      */
-    public function customInitializationProvider(): array
+    public static function customInitializationProvider(): array
     {
         return [
             'initialization_1' => [
@@ -131,7 +131,7 @@ class SingleProgressTrackerTest extends TestCase
     /**
      * @return array[]
      */
-    public function singleProgressTrackingProvider(): array
+    public static function singleProgressTrackingProvider(): array
     {
         return [
             'progress_rendering_1_transfer_initiated' => [

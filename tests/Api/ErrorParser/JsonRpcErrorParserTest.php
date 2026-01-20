@@ -49,7 +49,7 @@ class JsonRpcErrorParserTest extends TestCase
         }
     }
 
-    public function errorResponsesProvider()
+    public static function errorResponsesProvider()
     {
         $service = $this->generateTestService('json');
         $awsQueryCompatibleService = $this->generateTestService(

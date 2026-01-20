@@ -602,7 +602,7 @@ EOXML;
         $this->assertSame('object!object!', (string) $result['Body']);
     }
 
-    public function booleanProvider()
+    public static function booleanProvider()
     {
         return [[true], [false]];
     }

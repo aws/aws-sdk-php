@@ -10,7 +10,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class TimestampShapeTest extends TestCase
 {
-    public function formatProvider()
+    public static function formatProvider()
     {
         $t = strtotime('january 5, 1999');
 

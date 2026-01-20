@@ -9,7 +9,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ComposerTest extends TestCase
 {
-    public function invalidServiceNameProvider()
+    public static function invalidServiceNameProvider()
     {
         return [
             [['foo'], 'foo'],
@@ -45,7 +45,7 @@ class ComposerTest extends TestCase
         Composer::removeUnusedServices($this->getMockEvent([]));
     }
 
-    public function servicesToKeepProvider()
+    public static function servicesToKeepProvider()
     {
         return [
             [['S3']],
@@ -166,7 +166,7 @@ class ComposerTest extends TestCase
         );
     }
 
-    public function retryProvider()
+    public static function retryProvider()
     {
         return [
             'success' => [true , 3],

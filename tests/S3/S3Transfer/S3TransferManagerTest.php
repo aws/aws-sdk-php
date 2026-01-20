@@ -226,7 +226,7 @@ EOF
     /**
      * @return array[]
      */
-    public function uploadBucketAndKeyProvider(): array
+    public static function uploadBucketAndKeyProvider(): array
     {
         return [
             'bucket_missing' => [
@@ -430,7 +430,7 @@ EOF
     /**
      * @return array
      */
-    public function uploadUsesCustomMupThresholdProvider(): array
+    public static function uploadUsesCustomMupThresholdProvider(): array
     {
         return [
             'mup_threshold_multipart_upload' => [
@@ -564,7 +564,7 @@ EOF
     /**
      * @return array[]
      */
-    public function uploadUsesCustomChecksumAlgorithmProvider(): array
+    public static function uploadUsesCustomChecksumAlgorithmProvider(): array
     {
         return [
             'checksum_crc32c' => [
@@ -676,7 +676,7 @@ EOF
     /**
      * @return array[]
      */
-    public function uploadDirectoryValidatesProvidedDirectoryProvider(): array
+    public static function uploadDirectoryValidatesProvidedDirectoryProvider(): array
     {
         return [
             'valid_directory' => [
@@ -1575,7 +1575,7 @@ EOF
     /**
      * @return array
      */
-    public function downloadFailsWhenSourceAsArrayMissesBucketOrKeyPropertyProvider(): array
+    public static function downloadFailsWhenSourceAsArrayMissesBucketOrKeyPropertyProvider(): array
     {
         return [
             'missing_key' => [
@@ -1727,7 +1727,7 @@ EOF
     /**
      * @return array
      */
-    public function downloadAppliesChecksumProvider(): array
+    public static function downloadAppliesChecksumProvider(): array
     {
         return [
             'checksum_mode_from_default_transfer_manager_config' => [
@@ -1840,7 +1840,7 @@ EOF
     /**
      * @return array
      */
-    public function downloadChoosesMultipartDownloadTypeProvider(): array
+    public static function downloadChoosesMultipartDownloadTypeProvider(): array
     {
         return [
             'part_get_multipart_download' => [
@@ -1913,7 +1913,7 @@ EOF
     /**
      * @return array
      */
-    public function rangeGetMultipartDownloadMinimumPartSizeProvider(): array
+    public static function rangeGetMultipartDownloadMinimumPartSizeProvider(): array
     {
         return [
             'minimum_part_size_1' => [
@@ -2077,7 +2077,7 @@ EOF
     /**
      * @return array
      */
-    public function downloadDirectoryAppliesS3PrefixProvider(): array
+    public static function downloadDirectoryAppliesS3PrefixProvider(): array
     {
         return [
             's3_prefix_from_config' => [
@@ -2398,7 +2398,7 @@ EOF
     /**
      * @return array[]
      */
-    public function downloadDirectoryAppliesFilterProvider(): array
+    public static function downloadDirectoryAppliesFilterProvider(): array
     {
         return [
             'filter_1' => [
@@ -2688,7 +2688,7 @@ EOF
     /**
      * @return array
      */
-    public function downloadDirectoryCreateFilesProvider(): array
+    public static function downloadDirectoryCreateFilesProvider(): array
     {
         return [
             'files_1' => [
@@ -2822,7 +2822,7 @@ EOF
     /**
      * @return array
      */
-    public function resolvesOutsideTargetDirectoryProvider(): array
+    public static function resolvesOutsideTargetDirectoryProvider(): array
     {
         return [
             'download_directory_1_linux' => [
@@ -3682,7 +3682,7 @@ EOF
     /**
      * @return Generator
      */
-    public function modeledDownloadCasesProvider(): Generator
+    public static function modeledDownloadCasesProvider(): Generator
     {
         $downloadCases = json_decode(
             file_get_contents(
@@ -3704,7 +3704,7 @@ EOF
     /**
      * @return Generator
      */
-    public function modeledUploadCasesProvider(): Generator
+    public static function modeledUploadCasesProvider(): Generator
     {
         $downloadCases = json_decode(
             file_get_contents(
@@ -3726,7 +3726,7 @@ EOF
     /**
      * @return Generator
      */
-    public function modeledUploadDirectoryCasesProvider(): Generator
+    public static function modeledUploadDirectoryCasesProvider(): Generator
     {
         $uploadDirectoryCases = json_decode(
             file_get_contents(
@@ -3761,7 +3761,7 @@ EOF
     /**
      * @return Generator
      */
-    public function modeledDownloadDirectoryCasesProvider(): Generator
+    public static function modeledDownloadDirectoryCasesProvider(): Generator
     {
         $downloadDirectoryCases = json_decode(
             file_get_contents(

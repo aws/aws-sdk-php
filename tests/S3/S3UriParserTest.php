@@ -10,7 +10,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class S3UriParserTest extends TestCase
 {
-    public function uriProvider()
+    public static function uriProvider()
     {
         return [
             ['http://s3.amazonaws.com', ['region' => null, 'bucket' => null, 'key' => null, 'path_style' => true]],

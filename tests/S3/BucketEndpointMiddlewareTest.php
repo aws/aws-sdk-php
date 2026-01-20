@@ -137,7 +137,7 @@ class BucketEndpointMiddlewareTest extends TestCase
         $s3->execute($command);
     }
 
-    public function keyContainsBucketNameProvider(): iterable
+    public static function keyContainsBucketNameProvider(): iterable
     {
         return [
             ['bucketname'],

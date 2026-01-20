@@ -26,7 +26,7 @@ class AccessPointArnTest extends TestCase
         }
     }
 
-    public function invalidArnCases()
+    public static function invalidArnCases()
     {
         return [
             [

@@ -46,7 +46,7 @@ class ValidateResponseChecksumParserTest extends TestCase
         $this->assertEquals($expectedChecksum, $chosenChecksum);
     }
 
-    public function getChosenChecksumCases()
+    public static function getChosenChecksumCases()
     {
         return [
             [['crc32', 'crc32c'], [], null],

@@ -25,7 +25,7 @@ class CredentialsUtilsTest extends TestCase
     /**
      * @return string[]
      */
-    public function loopBackAddressCasesProvider(): array
+    public static function loopBackAddressCasesProvider(): array
     {
         return [
             'IPv6_invalid_loopBack' =>

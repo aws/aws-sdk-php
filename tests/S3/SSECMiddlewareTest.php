@@ -31,7 +31,7 @@ class SSECMiddlewareTest extends TestCase
         $s3->execute($cmd);
     }
 
-    public function getListenerTestCases()
+    public static function getListenerTestCases()
     {
         return [
             [

@@ -47,7 +47,7 @@ class EndpointV2MiddlewareTest extends TestCase
         $mw($command);
     }
 
-    public function providedSuccessCases()
+    public static function providedSuccessCases()
     {
         return [
             [
@@ -153,7 +153,7 @@ class EndpointV2MiddlewareTest extends TestCase
         $this->assertSame($expected, $result['version']);
     }
 
-    public function v4aAuthProvider()
+    public static function v4aAuthProvider()
     {
         return [
             [
@@ -210,7 +210,7 @@ class EndpointV2MiddlewareTest extends TestCase
         new EndpointV2Middleware($nextHandler, $endpointProvider, $api, $args);
     }
 
-    public function invalidInitializationProvider()
+    public static function invalidInitializationProvider()
     {
         return [
             'Invalid nextHandler' => [

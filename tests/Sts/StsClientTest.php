@@ -206,7 +206,7 @@ class StsClientTest extends TestCase
         self::assertSame($expected->toArray(), $response->toArray());
     }
 
-    public function stsAssumeRoleOperationsDataProvider(): array
+    public static function stsAssumeRoleOperationsDataProvider(): array
     {
         return [
             'Sts::AssumeRole' => [
@@ -266,7 +266,7 @@ class StsClientTest extends TestCase
         self::assertSame($expected->toArray(), $response->toArray());
     }
 
-    public function stsAssumeRoleWithSAMLOperationsDataProvider(): array
+    public static function stsAssumeRoleWithSAMLOperationsDataProvider(): array
     {
         return [
             'Sts::AssumeRoleWithSaml' => [
@@ -321,7 +321,7 @@ class StsClientTest extends TestCase
         self::assertSame($expected->toArray(), $response->toArray());
     }
 
-    public function stsAssumeRoleWithWebIdentityOperationsDataProvider(): array
+    public static function stsAssumeRoleWithWebIdentityOperationsDataProvider(): array
     {
         return [
             'Sts::AssumeRoleWithWebIdentity' => [
@@ -379,7 +379,7 @@ class StsClientTest extends TestCase
         self::assertSame($expected->toArray(), $response->toArray());
     }
 
-    public function stsGetFederationTokenOperationsDataProvider(): array
+    public static function stsGetFederationTokenOperationsDataProvider(): array
     {
         return [
             'Sts::GetFederationToken' => [

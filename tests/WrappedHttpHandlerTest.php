@@ -133,7 +133,7 @@ class WrappedHttpHandlerTest extends TestCase
         }
     }
 
-    public function responseAndParserProvider()
+    public static function responseAndParserProvider()
     {
         $services = [
             'ec2' => $this->generateTestService('ec2'),

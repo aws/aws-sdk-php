@@ -75,7 +75,7 @@ class SignerTest extends TestCase
         $this->assertArrayHasKey('Key-Pair-Id', $signature);
     }
 
-    public function getExpiresCases()
+    public static function getExpiresCases()
     {
         return [
             [
@@ -155,7 +155,7 @@ class SignerTest extends TestCase
         );
     }
 
-    public function cannedPolicyParameterProvider()
+    public static function cannedPolicyParameterProvider()
     {
         return [
             [

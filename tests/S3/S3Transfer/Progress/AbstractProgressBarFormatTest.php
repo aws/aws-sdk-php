@@ -39,7 +39,7 @@ class AbstractProgressBarFormatTest extends TestCase
     /**
      * @return array[]
      */
-    public function progressBarFormatProvider(): array
+    public static function progressBarFormatProvider(): array
     {
         return [
             'plain_progress_bar_format_1' => [

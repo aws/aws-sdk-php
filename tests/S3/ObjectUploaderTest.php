@@ -128,7 +128,7 @@ class ObjectUploaderTest extends TestCase
         $this->assertSame('https://s3.amazonaws.com/bucket/key', $result['ObjectURL']);
     }
 
-    public function getUploadTestCases()
+    public static function getUploadTestCases()
     {
         $putObject = new Result();
         $initiate = new Result(['UploadId' => 'foo']);
@@ -175,7 +175,7 @@ class ObjectUploaderTest extends TestCase
         ];
     }
 
-    public function getUploadTestCasesWithPathStyle()
+    public static function getUploadTestCasesWithPathStyle()
     {
         $putObject = new Result();
         $initiate = new Result(['UploadId' => 'foo']);
@@ -353,7 +353,7 @@ class ObjectUploaderTest extends TestCase
         ))->upload();
     }
 
-    public function flexibleChecksumsProvider() {
+    public static function flexibleChecksumsProvider() {
         return [
             ['sha1', 'VfWih+7phcE4uG3HQZCHKfpUwFs='],
             ['sha256', 'FT+vHyoAcJfTMSC77mlEpBy4vnZDwSIva8a8aewxaI8='],

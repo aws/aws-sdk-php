@@ -137,7 +137,7 @@ class MultipartUploaderTest extends TestCase
     /**
      * @return array[]
      */
-    public function multipartUploadProvider(): array {
+    public static function multipartUploadProvider(): array {
         return [
             '5_parts_upload' => [
                 'source_config' => [
@@ -310,7 +310,7 @@ EOF;
     /**
      * @return array
      */
-    public function validatePartSizeProvider(): array {
+    public static function validatePartSizeProvider(): array {
         return [
             'part_size_over_max' => [
                 'part_size' => AbstractMultipartUploader::PART_MAX_SIZE + 1,
@@ -385,7 +385,7 @@ EOF;
     /**
      * @return array[]
      */
-    public function invalidSourceStringProvider(): array {
+    public static function invalidSourceStringProvider(): array {
         return [
             'invalid_source_file_path_1' => [
                 'source' => 'invalid',
@@ -629,7 +629,7 @@ EOF;
     /**
      * @return array
      */
-    public function multipartUploadWithCustomChecksumProvider(): array {
+    public static function multipartUploadWithCustomChecksumProvider(): array {
         return [
             'custom_checksum_crc32_1' => [
                 'source_config' => [
@@ -893,7 +893,7 @@ EOF;
     /**
      * @return Generator
      */
-    public function fullObjectChecksumWorksJustWithCRCProvider(): Generator {
+    public static function fullObjectChecksumWorksJustWithCRCProvider(): Generator {
         yield 'sha_256_should_fail' => [
             'checksum_config' => [
                 'ChecksumSHA256' => '47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='
@@ -1020,7 +1020,7 @@ EOF;
     /**
      * @return Generator
      */
-    public function inputArgumentsPerOperationProvider(): Generator
+    public static function inputArgumentsPerOperationProvider(): Generator
     {
         yield 'test_input_fields_are_copied_without_custom_checksums' => [
             // Source config to generate a stub body

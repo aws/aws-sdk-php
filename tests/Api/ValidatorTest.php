@@ -12,7 +12,7 @@ use GuzzleHttp\Psr7;
  */
 class ValidatorTest extends TestCase
 {
-    public function validationProvider()
+    public static function validationProvider()
     {
         return [
             [

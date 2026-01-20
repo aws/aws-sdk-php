@@ -210,7 +210,7 @@ class ObjectCopierTest extends TestCase
         );
     }
 
-    public function getCopyTestCases()
+    public static function getCopyTestCases()
     {
         return [
             [
@@ -239,7 +239,7 @@ class ObjectCopierTest extends TestCase
         );
     }
 
-    public function getCopyTestCasesWithPathStyle()
+    public static function getCopyTestCasesWithPathStyle()
     {
         return [
             [
@@ -398,7 +398,7 @@ class ObjectCopierTest extends TestCase
         $this->assertSame($url, $result['ObjectURL']);
     }
 
-    public function MultipartCopierProvider(){
+    public static function MultipartCopierProvider(){
         return [
             ["中文", "文件夹/文件"],
             ["文件夹/文件", "中文"],

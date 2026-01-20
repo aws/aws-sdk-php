@@ -30,7 +30,7 @@ class MultipartUploadExceptionTest extends TestCase
         $this->assertSame($prev, $exception->getPrevious());
     }
 
-    public function getTestCases()
+    public static function getTestCases()
     {
         return [
             ['CreateMultipartUpload', 'initiating'],

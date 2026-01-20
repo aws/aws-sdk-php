@@ -41,7 +41,7 @@ class XmlErrorParserTest extends TestCase
         }
     }
 
-    public function errorResponsesProvider()
+    public static function errorResponsesProvider()
     {
         $ec2Service = $this->generateTestService('ec2');
         $ec2Client = $this->generateTestClient($ec2Service);

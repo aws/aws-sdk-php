@@ -56,7 +56,7 @@ class AuthTokenGeneratorTest extends TestCase
         $this->assertStringContainsString('Action=connect', $token);
     }
 
-    public function lifetimeProvider()
+    public static function lifetimeProvider()
     {
         return [
             [1],
@@ -91,7 +91,7 @@ class AuthTokenGeneratorTest extends TestCase
         $this->assertStringContainsString('Action=connect', $token);
     }
 
-    public function lifetimeFailureProvider()
+    public static function lifetimeFailureProvider()
     {
         return [
             [0],

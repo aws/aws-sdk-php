@@ -60,7 +60,7 @@ class MultipartUploaderTest extends TestCase
         $this->assertSame($url, $result['ObjectURL']);
     }
 
-    public function getTestCases()
+    public static function getTestCases()
     {
         $defaults = [
             'bucket' => 'foo',
@@ -135,7 +135,7 @@ class MultipartUploaderTest extends TestCase
     }
 
     /** @doesNotPerformAssertions */
-    public function testMultipartSuccessStreams()
+    public static function testMultipartSuccessStreams()
     {
         $size = 12 * self::MB;
         $data = str_repeat('.', $size);
@@ -196,7 +196,7 @@ class MultipartUploaderTest extends TestCase
         $this->assertSame($url, $result['ObjectURL']);
     }
 
-    public function getContentTypeSettingTests()
+    public static function getContentTypeSettingTests()
     {
         $size = 12 * self::MB;
         $data = str_repeat('.', $size);

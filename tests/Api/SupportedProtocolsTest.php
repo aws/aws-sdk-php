@@ -28,7 +28,7 @@ class SupportedProtocolsTest extends TestCase
      *
      * @return array
      */
-    public function validProtocolsProvider(): array
+    public static function validProtocolsProvider(): array
     {
         return [
             ['rest-json'],
@@ -44,7 +44,7 @@ class SupportedProtocolsTest extends TestCase
      *
      * @return array
      */
-    public function invalidProtocolsProvider(): array
+    public static function invalidProtocolsProvider(): array
     {
         return [
             ['graphql'],

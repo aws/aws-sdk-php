@@ -295,7 +295,7 @@ EOT;
         $this->assertEquals($expectedCreds->toArray(), $creds->toArray());
     }
 
-    public function iniFileProvider(): array
+    public static function iniFileProvider(): array
     {
         $credentials = new Credentials(
             'foo',
@@ -1956,7 +1956,7 @@ EOT;
         $this->assertEquals($expected, $result);
     }
 
-    public function shouldUseEcsProvider(): array
+    public static function shouldUseEcsProvider(): array
     {
         return [
             ['=foo', '', '', '', true],
@@ -2754,7 +2754,7 @@ EOT;
         $provider()->wait();
     }
 
-    public function loginInvalidCacheProvider(): array
+    public static function loginInvalidCacheProvider(): array
     {
         $validDpopKey = '-----BEGIN EC PRIVATE KEY-----
 MHcCAQEEIFDZHUzOG1Pzq+6F0mjMlOSp1syN9LRPBuHMoCFXTcXhoAoGCCqGSM49

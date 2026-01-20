@@ -37,7 +37,7 @@ class AssumeRoleCredentialProviderTest extends TestCase
     /**
      * @dataProvider insufficientArguments
      */
-    public function insufficientArguments()
+    public static function insufficientArguments()
     {
         $client = [
             'client' => new StsClient([

@@ -90,7 +90,7 @@ class PsrCacheAdapterTest extends TestCase
         $this->instance->remove($key);
     }
 
-    public function cacheDataProvider()
+    public static function cacheDataProvider()
     {
         return [
             ['foo', 'bar', 300],

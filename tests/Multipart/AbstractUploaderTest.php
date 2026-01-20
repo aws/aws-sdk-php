@@ -222,7 +222,7 @@ class AbstractUploaderTest extends TestCase
         $this->assertEquals($expectedBodies, $actualBodies);
     }
 
-    public function getPartGeneratorTestCases()
+    public static function getPartGeneratorTestCases()
     {
         $expected = [
             1 => 'AA',

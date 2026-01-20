@@ -68,7 +68,7 @@ class QueryCompatibleInputMiddlewareTest extends TestCase
      *
      * @return array
      */
-    public function getInputs()
+    public static function getInputs()
     {
         return [
             ['IntParam', '10', 10, 'integer'],

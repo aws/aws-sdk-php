@@ -91,7 +91,7 @@ class AmbiguousSuccessParserTest extends TestCase
         $instance($command, $response);
     }
 
-    public function opsWithAmbiguousSuccessesProvider()
+    public static function opsWithAmbiguousSuccessesProvider()
     {
         return [
             ['CopyObject'],
@@ -101,7 +101,7 @@ class AmbiguousSuccessParserTest extends TestCase
         ];
     }
 
-    public function opsWithoutAmbiguousSuccessesProvider()
+    public static function opsWithoutAmbiguousSuccessesProvider()
     {
         $provider = ApiProvider::defaultProvider();
         return array_map(

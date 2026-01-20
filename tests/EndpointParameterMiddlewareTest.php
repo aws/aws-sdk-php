@@ -95,7 +95,7 @@ class EndpointParameterMiddlewareTest extends TestCase
         $handler($command, new Request('POST', $endpoint));
     }
 
-    public function getTestCases()
+    public static function getTestCases()
     {
         $service = $this->generateTestService();
 

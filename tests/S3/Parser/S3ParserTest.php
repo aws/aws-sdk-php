@@ -58,7 +58,7 @@ EOXML;
      *
      * @return \Generator
      */
-    public function s3200ErrorHandlingCasesProvider(): \Generator
+    public static function s3200ErrorHandlingCasesProvider(): \Generator
     {
         $operations = [
             'AbortMultipartUpload',
@@ -284,7 +284,7 @@ EOXML;
     /**
      * @return array[]
      */
-    public function validate200ErrorValidationJustInSeekableStreamsProvider(): array
+    public static function validate200ErrorValidationJustInSeekableStreamsProvider(): array
     {
         return [
             'seekable_stream_1' => [

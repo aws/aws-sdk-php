@@ -118,7 +118,7 @@ class SignatureV4Test extends TestCase
         return $pairs;
     }
 
-    public function getExpiresDateTimeInterfaceInputs()
+    public static function getExpiresDateTimeInterfaceInputs()
     {
         return [
             [
@@ -181,7 +181,7 @@ class SignatureV4Test extends TestCase
         $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
-    public function getStartDateTimeInterfaceInputs()
+    public static function getStartDateTimeInterfaceInputs()
     {
         return [
             [
@@ -393,7 +393,7 @@ class SignatureV4Test extends TestCase
     }
 
     /** @doesNotPerformAssertions */
-    public function testUnsignedPayloadProvider()
+    public static function testUnsignedPayloadProvider()
     {
         return [
             // POST headers should be signed.
@@ -468,7 +468,7 @@ class SignatureV4Test extends TestCase
     }
 
     /** @doesNotPerformAssertions */
-    public function testProvider()
+    public static function testProvider()
     {
         return [
             // POST headers should be signed.

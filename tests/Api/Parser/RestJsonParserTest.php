@@ -40,7 +40,7 @@ class RestJsonParserTest extends TestCase
         self::assertEquals($expected, $result['documentValue']);
     }
 
-    public function parsesDocumentTypePayloadProvider(): iterable
+    public static function parsesDocumentTypePayloadProvider(): iterable
     {
         return [
             'string payload' => ["\"hello\"", 'hello'],

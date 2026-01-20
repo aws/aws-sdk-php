@@ -21,7 +21,7 @@ class ConfigurationTest extends TestCase
         $this->assertEquals($expected, $config->isuseDualstackEndpoint());
     }
 
-    public function correctValueCases()
+    public static function correctValueCases()
     {
         return [
             [true, true],

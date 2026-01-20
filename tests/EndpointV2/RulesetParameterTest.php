@@ -10,7 +10,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class RulesetParameterTest extends TestCase
 {
-    public function wrongParameterTypeProvider()
+    public static function wrongParameterTypeProvider()
     {
         return [
             [true],
@@ -88,7 +88,7 @@ class RulesetParameterTest extends TestCase
         new RulesetParameter('FooParam', $spec);
     }
 
-    public function validTypesProvider()
+    public static function validTypesProvider()
     {
         return [
             [

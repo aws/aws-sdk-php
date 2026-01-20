@@ -80,7 +80,7 @@ EOT;
             self::$originalEnv['config_file']);
     }
 
-    public function getEnvValues()
+    public static function getEnvValues()
     {
         return [
             ['true', 'bool', true],
@@ -378,7 +378,7 @@ EOT;
         );
     }
 
-    public function duplicateIniFileProvider()
+    public static function duplicateIniFileProvider()
     {
         return [
             [

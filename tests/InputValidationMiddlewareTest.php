@@ -21,7 +21,7 @@ class InputValidationMiddlewareTest extends TestCase
      *
      * @return array
      */
-    public function getInvalidEndpointExceptions()
+    public static function getInvalidEndpointExceptions()
     {
         return [
             [''],
@@ -36,7 +36,7 @@ class InputValidationMiddlewareTest extends TestCase
      *
      * @return array
      */
-    public function getValidInputs()
+    public static function getValidInputs()
     {
         return [
             ['existing data'],

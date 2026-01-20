@@ -15,7 +15,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class SignatureProviderTest extends TestCase
 {
-    public function versionProvider()
+    public static function versionProvider()
     {
         return [
             ['v4', SignatureV4::class, 'foo'],

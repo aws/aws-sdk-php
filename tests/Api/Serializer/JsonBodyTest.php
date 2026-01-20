@@ -24,7 +24,7 @@ class JsonBodyTest extends TestCase
         );
     }
 
-    public function formatProvider()
+    public static function formatProvider()
     {
         yield [['type' => 'string'], ['foo' => 'bar'], '{"foo":"bar"}'];
         yield [['type' => 'integer'], ['foo' => 1], '{"foo":1}'];
@@ -154,7 +154,7 @@ class JsonBodyTest extends TestCase
         $this->assertEquals($result, $j->build($shape, $args));
     }
 
-    public function formatNoReferencesProvider(): iterable
+    public static function formatNoReferencesProvider(): iterable
     {
         return [
             // Formats nested maps and structures
@@ -233,7 +233,7 @@ class JsonBodyTest extends TestCase
         $this->assertEquals($expected, $builtShape);
     }
 
-    public function buildsDocTypesProvider(): iterable
+    public static function buildsDocTypesProvider(): iterable
     {
         return [
             ['hello', '"hello"'],

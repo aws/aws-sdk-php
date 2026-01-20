@@ -349,7 +349,7 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertSame('s3.amazonaws.com', $entries[0]['request']->getUri()->getHost());
     }
 
-    public function rmdirProvider()
+    public static function rmdirProvider()
     {
         return [
             ['s3://bucket/object/'],
@@ -579,7 +579,7 @@ class StreamWrapperPathStyleTest extends TestCase
         stat('s3://bucket/prefix');
     }
 
-    public function fileTypeProvider()
+    public static function fileTypeProvider()
     {
         $err = function ($cmd, $r) { return new S3Exception('404', $cmd); };
 

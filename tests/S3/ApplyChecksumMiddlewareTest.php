@@ -54,7 +54,7 @@ class ApplyChecksumMiddlewareTest extends TestCase
         $mw($command, $request);
     }
 
-    public function getFlexibleChecksumUseCases()
+    public static function getFlexibleChecksumUseCases()
     {
         return [
             'http_checksum_not_modeled' => [
@@ -215,7 +215,7 @@ class ApplyChecksumMiddlewareTest extends TestCase
         $mw($command, $request);
     }
 
-    public function getContentSha256UseCases()
+    public static function getContentSha256UseCases()
     {
         $hash = 'SHA256HASH';
 

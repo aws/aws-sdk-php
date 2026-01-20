@@ -326,7 +326,7 @@ class FunctionsTest extends TestCase
         $this->assertEquals($expected, Aws\is_valid_hostname($hostname));
     }
 
-    public function getHostnameTestCases()
+    public static function getHostnameTestCases()
     {
         return [
             ['a', true],
@@ -378,7 +378,7 @@ class FunctionsTest extends TestCase
         $this->assertEquals($expected, Aws\is_valid_hostlabel($label));
     }
 
-    public function getHostlabelTestCases()
+    public static function getHostlabelTestCases()
     {
         return [
             ['us-west-2', true],
@@ -419,7 +419,7 @@ class FunctionsTest extends TestCase
         unlink($tmpFile);
     }
 
-    public function getIniFileTestCases()
+    public static function getIniFileTestCases()
     {
         return [
             [
@@ -479,7 +479,7 @@ EOT
         unlink($tmpFile);
     }
 
-    public function getIniFileServiceTestCases()
+    public static function getIniFileServiceTestCases()
     {
         return [
             [
@@ -521,7 +521,7 @@ EOT
         $this->assertEquals($expected, $result);
     }
 
-    public function isAssociativeProvider()
+    public static function isAssociativeProvider()
     {
         return [
            [[], false],

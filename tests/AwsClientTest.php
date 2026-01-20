@@ -365,7 +365,7 @@ class AwsClientTest extends TestCase
         $client->bar();
     }
 
-    public function signOperationsWithAnAuthTypeProvider()
+    public static function signOperationsWithAnAuthTypeProvider()
     {
         return [
             [
@@ -669,7 +669,7 @@ class AwsClientTest extends TestCase
         putenv('AWS_IGNORE_CONFIGURED_ENDPOINT_URLS=');
     }
 
-    public function configuredEndpointUrlProvider()
+    public static function configuredEndpointUrlProvider()
     {
         return [
             [
@@ -859,7 +859,7 @@ EOT
         putenv('AWS_SIGV4A_SIGNING_REGION_SET=');
     }
 
-    public function signingRegionSetProvider()
+    public static function signingRegionSetProvider()
     {
         return [
             [null, null, null, null, 'us-west-2'],

@@ -354,14 +354,14 @@ class S3EndpointMiddlewareTest extends TestCase
         $middleware($command, $request);
     }
 
-    public function excludedCommandProvider()
+    public static function excludedCommandProvider()
     {
         return array_map(function ($commandName) {
             return [new Command($commandName, ['Bucket' => 'bucket'])];
         }, ['ListBuckets', 'CreateBucket', 'DeleteBucket']);
     }
 
-    public function includedCommandProvider()
+    public static function includedCommandProvider()
     {
         $excludedOperations = array_map(function (array $args) {
             return $args[0]->getName();
@@ -488,7 +488,7 @@ class S3EndpointMiddlewareTest extends TestCase
         };
     }
 
-    public function jsonCaseProvider()
+    public static function jsonCaseProvider()
     {
         return json_decode(
             file_get_contents(__DIR__ . '/test_cases/uri_addressing.json'),
@@ -585,7 +585,7 @@ class S3EndpointMiddlewareTest extends TestCase
         $client->execute($command);
     }
 
-    public function objectLambdasSuccessProvider()
+    public static function objectLambdasSuccessProvider()
     {
         return [
             ["arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "us-east-1", "none", false, null, "mybanner-123456789012.s3-object-lambda.us-east-1.amazonaws.com"],
@@ -664,7 +664,7 @@ class S3EndpointMiddlewareTest extends TestCase
         }
     }
 
-    public function objectLambdasFailureProvider()
+    public static function objectLambdasFailureProvider()
     {
         return [
             ["arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "us-west-2", "none", false, null,
@@ -775,7 +775,7 @@ class S3EndpointMiddlewareTest extends TestCase
         $client->execute($command);
     }
 
-    public function writeGetObjectResponseProvider()
+    public static function writeGetObjectResponseProvider()
     {
 
         return [

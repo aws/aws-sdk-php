@@ -46,7 +46,7 @@ class EndpointDefinitionProviderTest extends TestCase
         EndpointDefinitionProvider::getEndpointRuleset('s3', '10-22-2022');
     }
 
-    public function getEndpointFileProvider()
+    public static function getEndpointFileProvider()
     {
         return [
             ['Ruleset'],

@@ -83,7 +83,7 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
      *
      * @return array[]
      */
-    public function checksumCasesDataProvider(): array
+    public static function checksumCasesDataProvider(): array
     {
         return [
             //Default, when_supported, no checksum headers, skips validation

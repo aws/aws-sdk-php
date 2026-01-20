@@ -48,7 +48,7 @@ class ComplianceTest extends TestCase
     ];
 
     /** @doesNotPerformAssertions */
-    public function testCaseProvider(): \Generator
+    public static function testCaseProvider(): \Generator
     {
         $iterator = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator(

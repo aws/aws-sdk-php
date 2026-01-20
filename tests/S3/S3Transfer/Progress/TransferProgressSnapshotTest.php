@@ -51,7 +51,7 @@ class TransferProgressSnapshotTest extends TestCase
     /**
      * @return array
      */
-    public function ratioTransferredProvider(): array
+    public static function ratioTransferredProvider(): array
     {
         return [
             'ratio_1' => [

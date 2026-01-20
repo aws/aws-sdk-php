@@ -137,7 +137,7 @@ class DynamoDbClientTest extends TestCase
         $this->assertSame(3, $attemptCount);
     }
 
-    public function dataProviderRetrySettings()
+    public static function dataProviderRetrySettings()
     {
         return [
             [

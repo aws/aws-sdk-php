@@ -13,7 +13,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class DecodingEventStreamIteratorTest extends TestCase
 {
-    public function complianceTests(): \Generator
+    public static function complianceTests(): \Generator
     {
         $dataFilesIterator = \Aws\recursive_dir_iterator(
             realpath(__DIR__ . '/../test_cases/eventstream/encoded/')

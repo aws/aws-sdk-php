@@ -27,7 +27,7 @@ class ArnParserTest extends TestCase
         $this->assertEquals($expected, ArnParser::isArn($string));
     }
 
-    public function isArnCases()
+    public static function isArnCases()
     {
         return [
             [
@@ -68,7 +68,7 @@ class ArnParserTest extends TestCase
         $this->assertTrue(ArnParser::parse($string) instanceof $expected);
     }
 
-    public function parsedArnCases()
+    public static function parsedArnCases()
     {
         return [
             [

@@ -322,7 +322,7 @@ class RestJsonSerializerTest extends TestCase
     }
 
 
-    public function doctypeTestProvider(): iterable
+    public static function doctypeTestProvider(): iterable
     {
         return [
             [
@@ -378,7 +378,7 @@ class RestJsonSerializerTest extends TestCase
     }
 
 
-    public function restJsonContentTypeProvider(): iterable
+    public static function restJsonContentTypeProvider(): iterable
     {
         return [
             [
@@ -404,7 +404,7 @@ class RestJsonSerializerTest extends TestCase
         $this->assertSame($expected, $request->getHeaderLine('Is-Bool'));
     }
 
-    public function boolProvider(): iterable
+    public static function boolProvider(): iterable
     {
         return [
             [true, 'true'],
@@ -443,7 +443,7 @@ class RestJsonSerializerTest extends TestCase
         );
     }
 
-    public function handlesDocTypeAsPayloadProvider(): \Generator
+    public static function handlesDocTypeAsPayloadProvider(): \Generator
     {
         yield 'string payload' => ['hello', '"hello"'];
         yield 'simple string field' => [
@@ -497,7 +497,7 @@ class RestJsonSerializerTest extends TestCase
         $this->getRequest('DocumentTypeAsPayload', ['documentValue' => $input]);
     }
 
-    public function rejectsInvalidJsonAsPayloadProvider(): iterable
+    public static function rejectsInvalidJsonAsPayloadProvider(): iterable
     {
         return [
             'malformed byte sequence' => ["\xB1\x31"],
@@ -620,7 +620,7 @@ class RestJsonSerializerTest extends TestCase
         );
     }
 
-    public function endpointResolutionProvider(): \Generator
+    public static function endpointResolutionProvider(): \Generator
     {
         // Basic endpoints without path
         yield 'no_base_path_simple_request' => [
@@ -813,7 +813,7 @@ class RestJsonSerializerTest extends TestCase
         ];
     }
 
-    public function geoServiceEndpointResolutionProvider(): \Generator
+    public static function geoServiceEndpointResolutionProvider(): \Generator
     {
         yield 'geo_places_v2' => [
             'endpoint' => 'https://places.geo.region.amazonaws.com/v2',
@@ -891,7 +891,7 @@ class RestJsonSerializerTest extends TestCase
         $client->{$operation}($params);
     }
 
-    public function geoServiceE2EProvider(): \Generator
+    public static function geoServiceE2EProvider(): \Generator
     {
         yield 'geo_places_simple' => [
             'service' => 'geo-places',

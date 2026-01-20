@@ -103,7 +103,7 @@ class PostObjectTest extends TestCase
         $this->assertSame($expected, $formAttrs['action']);
     }
 
-    public function pathStyleProvider()
+    public static function pathStyleProvider()
     {
         return [
             ['http://s3.amazonaws.com', 'foo', 'http://s3.amazonaws.com/foo'],

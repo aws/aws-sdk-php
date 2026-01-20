@@ -349,7 +349,7 @@ class InstanceProfileProviderTest extends TestCase
         }
     }
 
-    public function successTestCases()
+    public static function successTestCases()
     {
         $expiry = time() + 1000;
         $creds = ['foo_key', 'baz_secret', 'qux_token', "@{$expiry}"];
@@ -561,7 +561,7 @@ class InstanceProfileProviderTest extends TestCase
         }
     }
 
-    public function failureTestCases()
+    public static function failureTestCases()
     {
         $requestClass = $this->getRequestClass();
         $responseClass = $this->getResponseClass();
@@ -1036,7 +1036,7 @@ class InstanceProfileProviderTest extends TestCase
         $this->assertLessThanOrEqual(3,$this->getPropertyValue($provider,'attempts'));
     }
 
-    public function returnsExpiredCredsProvider()
+    public static function returnsExpiredCredsProvider()
     {
         $expiredTime = time() - 1000;
         $expiredCreds = ['foo', 'baz', null, "@{$expiredTime}"];
@@ -1121,7 +1121,7 @@ class InstanceProfileProviderTest extends TestCase
         $this->assertLessThanOrEqual(3,$this->getPropertyValue($provider,'attempts'));
     }
 
-    public function imdsUnavailableProvider()
+    public static function imdsUnavailableProvider()
     {
         $requestClass = $this->getRequestClass();
         $responseClass = $this->getResponseClass();
@@ -1445,7 +1445,7 @@ class InstanceProfileProviderTest extends TestCase
      *
      * @return array[]
      */
-    public function endpointModeCasesProvider() : array
+    public static function endpointModeCasesProvider() : array
     {
         return [
             'endpoint_mode_not_specified' => [
@@ -1550,7 +1550,7 @@ class InstanceProfileProviderTest extends TestCase
      *
      * @return array[]
      */
-    public function endpointCasesProvider() : array
+    public static function endpointCasesProvider() : array
     {
         return [
             'with_endpoint_mode_ipv4' => [

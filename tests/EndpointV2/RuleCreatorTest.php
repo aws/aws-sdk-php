@@ -52,7 +52,7 @@ class RuleCreatorTest extends TestCase
         $this->assertInstanceOf($expected, $result);
     }
 
-    public function invalidRuleTypeProvider()
+    public static function invalidRuleTypeProvider()
     {
         return [
             ['foo'],

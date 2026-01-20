@@ -460,7 +460,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         }
     }
 
-    public function regionPrecedenceProvider(): array
+    public static function regionPrecedenceProvider(): array
     {
         return [
             'config overrides env' => ['us-west-2', 'eu-west-1', 'us-west-2', false],
@@ -537,7 +537,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         }
     }
 
-    public function endpointProvider(): array
+    public static function endpointProvider(): array
     {
         return [
             'us-east-1' => [

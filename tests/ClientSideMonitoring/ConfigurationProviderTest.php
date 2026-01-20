@@ -439,7 +439,7 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
-    public function getSuccessfulUnwrapData()
+    public static function getSuccessfulUnwrapData()
     {
         $expected = new Configuration(true, '123.4.5.6', 555, 'FooApp');
         return [

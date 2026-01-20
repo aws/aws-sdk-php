@@ -20,7 +20,7 @@ class RulesetStandardLibraryTest extends TestCase
         $this->standardLibrary = new RulesetStandardLibrary($partitions);
     }
 
-    public function isSetProvider()
+    public static function isSetProvider()
     {
         return [
             [null, false],
@@ -44,7 +44,7 @@ class RulesetStandardLibraryTest extends TestCase
         $this->assertSame($expected, $this->standardLibrary->is_set($input));
     }
 
-    public function notProvider()
+    public static function notProvider()
     {
         return [
             [true, false],
@@ -66,7 +66,7 @@ class RulesetStandardLibraryTest extends TestCase
         $this->assertSame($expected, $this->standardLibrary->not($input));
     }
 
-    public function getAttrProvider()
+    public static function getAttrProvider()
     {
         return [
             ['{"Thing1": "foo", "Thing2": ["index0", "index1"], "Thing3": {"SubThing": 42}}', "Thing1", "foo"],
@@ -94,7 +94,7 @@ class RulesetStandardLibraryTest extends TestCase
         $this->assertSame("foo", $this->standardLibrary->getAttr($from, 0));
     }
 
-    public function stringEqualsProvider()
+    public static function stringEqualsProvider()
     {
         return [
             ["abc", "abc", true],
@@ -115,7 +115,7 @@ class RulesetStandardLibraryTest extends TestCase
         $this->assertSame($expected, $this->standardLibrary->stringEquals($string1, $string2));
     }
 
-    public function booleanEqualsProvider()
+    public static function booleanEqualsProvider()
     {
         return [
             [true, true, true],
@@ -151,7 +151,7 @@ class RulesetStandardLibraryTest extends TestCase
         $this->assertEquals(null, $result);
     }
 
-    public function isValidHostLabelProvider()
+    public static function isValidHostLabelProvider()
     {
         return [
             "valid" => ["exampleHostLabel", false, true],
@@ -174,7 +174,7 @@ class RulesetStandardLibraryTest extends TestCase
         $this->assertSame($expected, $this->standardLibrary->isValidHostLabel($hostLabel, $allowSubDomains));
     }
 
-    public function resolveTemplateStringProvider()
+    public static function resolveTemplateStringProvider()
     {
         $params = [
             'ShorthandSyntax' => [
@@ -233,7 +233,7 @@ class RulesetStandardLibraryTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function NullParamProvider()
+    public static function NullParamProvider()
     {
         $params = [
             'Region' => 'us-east-1',

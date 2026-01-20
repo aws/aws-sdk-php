@@ -61,7 +61,7 @@ class DateTimeResultTest extends TestCase
         $this->assertEquals($expected, (string) $parsed);
     }
 
-    public function nanosecondPrecisionProvider()
+    public static function nanosecondPrecisionProvider()
     {
         return [
             ['2024-07-31T19:05:47.1234567Z', '2024-07-31T19:05:47+00:00'],

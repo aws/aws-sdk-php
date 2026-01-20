@@ -50,7 +50,7 @@ class RateLimiterTest extends TestCase
         $this->assertSame(2.048, $rateLimiter->updateSendingRate(false));
     }
 
-    public function cubicSuccessProvider()
+    public static function cubicSuccessProvider()
     {
         return [
             [5, 7],
