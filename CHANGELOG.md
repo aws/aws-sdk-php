@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\VerifiedPermissions` - Amazon Verified Permissions now supports encryption of resources by a customer managed KMS key. Customers can now create new encrypted policy stores by passing in their customer managed key during policy store creation.
+* `Aws\AutoScaling` - This release adds support for three new filters when describing scaling activities, StartTimeLowerBound, StartTimeUpperBound, and Status.
+* `Aws\Keyspaces` - Adds support for managing table pre-warming in Amazon Keyspaces (for Apache Cassandra)
+* `Aws\BedrockRuntime` - Added support for extended prompt caching with one hour TTL.
+* `Aws\Odb` - Adds support for associating and disassociating IAM roles with Autonomous VM cluster resources through the AssociateIamRoleToResource and DisassociateIamRoleFromResource APIs. The GetCloudAutonomousVmCluster and ListCloudAutonomousVmClusters API responses now include the iamRoles field.
+* `Aws\WorkspacesInstances` - Added billing configuration support for WorkSpaces Instances with monthly and hourly billing modes, including new filtering capabilities for instance type searches.
+
 ## 3.369.15 - 2026-01-16
 
 * `Aws\Glacier` - Documentation updates for Amazon Glacier's maintenance mode

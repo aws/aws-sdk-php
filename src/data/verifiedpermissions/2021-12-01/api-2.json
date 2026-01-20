@@ -551,7 +551,7 @@
     },
     "ActionId":{
       "type":"string",
-      "max":200,
+      "max":512,
       "min":1,
       "pattern":".*",
       "sensitive":true
@@ -1047,6 +1047,7 @@
         "validationSettings":{"shape":"ValidationSettings"},
         "description":{"shape":"PolicyStoreDescription"},
         "deletionProtection":{"shape":"DeletionProtection"},
+        "encryptionSettings":{"shape":"EncryptionSettings"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -1204,6 +1205,37 @@
       "pattern":"-?(\\d+d)?(\\d+h)?(\\d+m)?(\\d+s)?(\\d+ms)?",
       "sensitive":true
     },
+    "EncryptionContext":{
+      "type":"map",
+      "key":{"shape":"EncryptionContextKey"},
+      "value":{"shape":"EncryptionContextValue"},
+      "max":8192,
+      "min":0
+    },
+    "EncryptionContextKey":{
+      "type":"string",
+      "min":1
+    },
+    "EncryptionContextValue":{
+      "type":"string",
+      "min":1
+    },
+    "EncryptionSettings":{
+      "type":"structure",
+      "members":{
+        "kmsEncryptionSettings":{"shape":"KmsEncryptionSettings"},
+        "default":{"shape":"Unit"}
+      },
+      "union":true
+    },
+    "EncryptionState":{
+      "type":"structure",
+      "members":{
+        "kmsEncryptionState":{"shape":"KmsEncryptionState"},
+        "default":{"shape":"Unit"}
+      },
+      "union":true
+    },
     "EntitiesDefinition":{
       "type":"structure",
       "members":{
@@ -1224,7 +1256,7 @@
     },
     "EntityId":{
       "type":"string",
-      "max":200,
+      "max":612,
       "min":1,
       "pattern":".*",
       "sensitive":true
@@ -1380,6 +1412,7 @@
         "lastUpdatedDate":{"shape":"TimestampFormat"},
         "description":{"shape":"PolicyStoreDescription"},
         "deletionProtection":{"shape":"DeletionProtection"},
+        "encryptionState":{"shape":"EncryptionState"},
         "cedarVersion":{"shape":"CedarVersion"},
         "tags":{"shape":"TagMap"}
       }
@@ -1630,6 +1663,29 @@
       "max":2048,
       "min":1,
       "pattern":"https://.*"
+    },
+    "KmsEncryptionSettings":{
+      "type":"structure",
+      "required":["key"],
+      "members":{
+        "key":{"shape":"KmsKey"},
+        "encryptionContext":{"shape":"EncryptionContext"}
+      }
+    },
+    "KmsEncryptionState":{
+      "type":"structure",
+      "required":[
+        "key",
+        "encryptionContext"
+      ],
+      "members":{
+        "key":{"shape":"KmsKey"},
+        "encryptionContext":{"shape":"EncryptionContext"}
+      }
+    },
+    "KmsKey":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9:/_-]+"
     },
     "ListIdentitySourcesInput":{
       "type":"structure",
@@ -1934,7 +1990,7 @@
       "type":"string",
       "max":200,
       "min":1,
-      "pattern":"[a-zA-Z0-9-]*"
+      "pattern":"[a-zA-Z0-9-/_]*"
     },
     "PolicyItem":{
       "type":"structure",
@@ -2281,6 +2337,10 @@
       },
       "exception":true
     },
+    "Unit":{
+      "type":"structure",
+      "members":{}
+    },
     "UntagResourceInput":{
       "type":"structure",
       "required":[
@@ -2406,8 +2466,7 @@
       "type":"structure",
       "required":[
         "policyStoreId",
-        "policyId",
-        "definition"
+        "policyId"
       ],
       "members":{
         "policyStoreId":{"shape":"PolicyStoreId"},

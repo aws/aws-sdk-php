@@ -779,7 +779,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso-[a-z]?|aws-iso):odb:[a-z0-9-]+:\\d{12}:cloud-vm-cluster/[a-z0-9-_]+"
+      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso-[a-z]?|aws-iso):odb:[a-z0-9-]+:\\d{12}:(?:cloud-vm-cluster|cloud-autonomous-vm-cluster)/[a-z0-9-_]+"
     },
     "AssociateIamRoleToResourceOutput":{
       "type":"structure",
@@ -865,7 +865,8 @@
         "timeDatabaseSslCertificateExpires":{"shape":"SyntheticTimestamp_date_time"},
         "timeOrdsCertificateExpires":{"shape":"SyntheticTimestamp_date_time"},
         "timeZone":{"shape":"String"},
-        "totalContainerDatabases":{"shape":"Integer"}
+        "totalContainerDatabases":{"shape":"Integer"},
+        "iamRoles":{"shape":"IamRoleList"}
       }
     },
     "CloudAutonomousVmClusterList":{
@@ -937,7 +938,8 @@
         "timeDatabaseSslCertificateExpires":{"shape":"SyntheticTimestamp_date_time"},
         "timeOrdsCertificateExpires":{"shape":"SyntheticTimestamp_date_time"},
         "timeZone":{"shape":"String"},
-        "totalContainerDatabases":{"shape":"Integer"}
+        "totalContainerDatabases":{"shape":"Integer"},
+        "iamRoles":{"shape":"IamRoleList"}
       }
     },
     "CloudExadataInfrastructure":{
@@ -1869,7 +1871,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso-[a-z]?|aws-iso):odb:[a-z0-9-]+:\\d{12}:cloud-vm-cluster/[a-z0-9-_]+"
+      "pattern":"arn:(?:aws|aws-cn|aws-us-gov|aws-iso-[a-z]?|aws-iso):odb:[a-z0-9-]+:\\d{12}:(?:cloud-vm-cluster|cloud-autonomous-vm-cluster)/[a-z0-9-_]+"
     },
     "DisassociateIamRoleFromResourceOutput":{
       "type":"structure",
