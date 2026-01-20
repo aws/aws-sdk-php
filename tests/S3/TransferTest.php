@@ -517,9 +517,11 @@ class TransferTest extends TestCase
     {
         $s3 = $this->getTestClient('s3');
         $this->addMockResults($s3, []);
-
-        $this->expectDeprecation();
-        $this->expectDeprecationMessage('S3 no longer supports MD5 checksums.');
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        });
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('S3 no longer supports MD5 checksums.');
         $s3->getHandlerList()->appendSign(Middleware::tap(
             function (CommandInterface $cmd, RequestInterface $req) {
                 $this->assertTrue(isset($command['x-amz-checksum-crc32']));

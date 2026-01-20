@@ -775,10 +775,16 @@ EOT
     }
 
 
+    /**
+     * @return void
+     */
     public function testCallingEmitDeprecationWarningEmitsDeprecationWarning()
     {
-        $this->expectDeprecation();
-        $this->expectDeprecationMessage(
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        });
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage(
             "This method is deprecated. It will be removed in an upcoming release."
         );
         $client = $this->createClient();

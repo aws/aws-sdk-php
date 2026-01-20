@@ -2310,7 +2310,10 @@ EOXML;
      */
     public function testAddContentMd5EmitsDeprecationNotice($options, $operation)
     {
-        $this->expectDeprecation();
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        });
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('S3 no longer supports MD5 checksums.');
         $s3 = $this->getTestClient('s3');
         $this->addMockResults($s3, [[]]);

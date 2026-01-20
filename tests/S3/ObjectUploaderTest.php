@@ -364,11 +364,14 @@ class ObjectUploaderTest extends TestCase
 
     public function testAddContentMd5EmitsDeprecationNotice()
     {
-        $this->expectDeprecation();
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        });
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('S3 no longer supports MD5 checksums.');
         $client = $this->getTestClient('S3');
         $this->addMockResults($client, [new Result()]);
-        $result = (new ObjectUploader(
+        (new ObjectUploader(
             $client,
             'bucket',
             'key',

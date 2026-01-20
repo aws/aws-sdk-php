@@ -246,8 +246,11 @@ class ApplyChecksumMiddlewareTest extends TestCase
 
     public function testAddContentMd5EmitsDeprecationWarning()
     {
-        $this->expectDeprecation();
-        $this->expectDeprecationMessage('S3 no longer supports MD5 checksums.');
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        });
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('S3 no longer supports MD5 checksums.');
         $client = $this->getTestClient('s3');
         $nextHandler = function ($cmd, $request) {
             $this->assertTrue($request->hasHeader('x-amz-checksum-crc32'));

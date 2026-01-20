@@ -352,8 +352,11 @@ class MultipartUploaderTest extends TestCase
 
     public function testAddContentMd5EmitsDeprecationNotice()
     {
-        $this->expectDeprecation();
-        $this->expectDeprecationMessage('S3 no longer supports MD5 checksums.');
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        });
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('S3 no longer supports MD5 checksums.');
         $data = str_repeat('.', 12 * self::MB);
         $filename = sys_get_temp_dir() . '/' . self::FILENAME;
         file_put_contents($filename, $data);
