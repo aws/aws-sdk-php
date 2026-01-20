@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.16 - 2026-01-20
 
 * `Aws\VerifiedPermissions` - Amazon Verified Permissions now supports encryption of resources by a customer managed KMS key. Customers can now create new encrypted policy stores by passing in their customer managed key during policy store creation.
 * `Aws\AutoScaling` - This release adds support for three new filters when describing scaling activities, StartTimeLowerBound, StartTimeUpperBound, and Status.
