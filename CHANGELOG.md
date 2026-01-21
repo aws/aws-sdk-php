@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.17 - 2026-01-21
 
 * `Aws\BedrockAgentCore` - Supports custom browser extensions for AgentCore Browser and increased message payloads up to 100KB per message in an Event for AgentCore Memory
 * `Aws\EC2` - Added support of multiple EBS cards. New EbsCardIndex parameter enables attaching volumes to specific EBS cards on supported instance types for improved storage performance.
