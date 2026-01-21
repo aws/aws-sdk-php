@@ -8973,6 +8973,7 @@
         "Device":{"shape":"String"},
         "InstanceId":{"shape":"InstanceId"},
         "VolumeId":{"shape":"VolumeId"},
+        "EbsCardIndex":{"shape":"BoxedInteger"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -25464,7 +25465,8 @@
           "locationName":"encrypted"
         },
         "VolumeInitializationRate":{"shape":"Integer"},
-        "AvailabilityZoneId":{"shape":"String"}
+        "AvailabilityZoneId":{"shape":"String"},
+        "EbsCardIndex":{"shape":"Integer"}
       }
     },
     "EbsBlockDeviceResponse":{
@@ -25504,6 +25506,47 @@
         }
       }
     },
+    "EbsCardIndex":{"type":"integer"},
+    "EbsCardInfo":{
+      "type":"structure",
+      "members":{
+        "EbsCardIndex":{
+          "shape":"EbsCardIndex",
+          "locationName":"ebsCardIndex"
+        },
+        "BaselineBandwidthInMbps":{
+          "shape":"BaselineBandwidthInMbps",
+          "locationName":"baselineBandwidthInMbps"
+        },
+        "BaselineThroughputInMBps":{
+          "shape":"BaselineThroughputInMBps",
+          "locationName":"baselineThroughputInMBps"
+        },
+        "BaselineIops":{
+          "shape":"BaselineIops",
+          "locationName":"baselineIops"
+        },
+        "MaximumBandwidthInMbps":{
+          "shape":"MaximumBandwidthInMbps",
+          "locationName":"maximumBandwidthInMbps"
+        },
+        "MaximumThroughputInMBps":{
+          "shape":"MaximumThroughputInMBps",
+          "locationName":"maximumThroughputInMBps"
+        },
+        "MaximumIops":{
+          "shape":"MaximumIops",
+          "locationName":"maximumIops"
+        }
+      }
+    },
+    "EbsCardInfoList":{
+      "type":"list",
+      "member":{
+        "shape":"EbsCardInfo",
+        "locationName":"item"
+      }
+    },
     "EbsEncryptionSupport":{
       "type":"string",
       "enum":[
@@ -25537,6 +25580,14 @@
         "AttachmentLimitType":{
           "shape":"AttachmentLimitType",
           "locationName":"attachmentLimitType"
+        },
+        "MaximumEbsCards":{
+          "shape":"MaximumEbsCards",
+          "locationName":"maximumEbsCards"
+        },
+        "EbsCards":{
+          "shape":"EbsCardInfoList",
+          "locationName":"ebsCardSet"
         }
       }
     },
@@ -25570,6 +25621,10 @@
         "Operator":{
           "shape":"OperatorResponse",
           "locationName":"operator"
+        },
+        "EbsCardIndex":{
+          "shape":"Integer",
+          "locationName":"ebsCardIndex"
         }
       }
     },
@@ -38139,6 +38194,10 @@
         "VolumeInitializationRate":{
           "shape":"Integer",
           "locationName":"volumeInitializationRate"
+        },
+        "EbsCardIndex":{
+          "shape":"Integer",
+          "locationName":"ebsCardIndex"
         }
       }
     },
@@ -38153,7 +38212,8 @@
         "VolumeSize":{"shape":"Integer"},
         "VolumeType":{"shape":"VolumeType"},
         "Throughput":{"shape":"Integer"},
-        "VolumeInitializationRate":{"shape":"Integer"}
+        "VolumeInitializationRate":{"shape":"Integer"},
+        "EbsCardIndex":{"shape":"Integer"}
       }
     },
     "LaunchTemplateElasticInferenceAccelerator":{
@@ -39935,6 +39995,7 @@
       "min":0
     },
     "MaximumEbsAttachments":{"type":"integer"},
+    "MaximumEbsCards":{"type":"integer"},
     "MaximumEfaInterfaces":{"type":"integer"},
     "MaximumEnaQueueCount":{"type":"integer"},
     "MaximumEnaQueueCountPerInterface":{"type":"integer"},
@@ -56196,6 +56257,10 @@
         "InstanceOwningService":{
           "shape":"String",
           "locationName":"instanceOwningService"
+        },
+        "EbsCardIndex":{
+          "shape":"Integer",
+          "locationName":"ebsCardIndex"
         },
         "VolumeId":{
           "shape":"String",

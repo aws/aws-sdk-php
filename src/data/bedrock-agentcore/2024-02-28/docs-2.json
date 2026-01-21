@@ -181,6 +181,19 @@
         "BranchFilter$name": "<p>The name of the branch to filter by.</p>"
       }
     },
+    "BrowserExtension": {
+      "base": "<p>Browser extension configuration.</p>",
+      "refs": {
+        "BrowserExtensions$member": null
+      }
+    },
+    "BrowserExtensions": {
+      "base": null,
+      "refs": {
+        "GetBrowserSessionResponse$extensions": "<p>The list of browser extensions that are configured in the browser session.</p>",
+        "StartBrowserSessionRequest$extensions": "<p>A list of browser extensions to load into the browser session.</p>"
+      }
+    },
     "BrowserSessionId": {
       "base": null,
       "refs": {
@@ -1197,6 +1210,12 @@
         "ResourceContent$type": "<p>The type of resource content.</p>"
       }
     },
+    "ResourceLocation": {
+      "base": "<p>The location of the browser extension.</p>",
+      "refs": {
+        "BrowserExtension$location": "<p>The location where the browser extension files are stored. This specifies the source from which the extension will be loaded and installed.</p>"
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>The exception that occurs when the specified resource does not exist. This can happen when using an invalid identifier or when trying to access a resource that has been deleted.</p>",
       "refs": {
@@ -1223,6 +1242,10 @@
       "base": null,
       "refs": {}
     },
+    "RetryableConflictException": {
+      "base": "<p>The exception that occurs when there is a retryable conflict performing an operation. This is a temporary condition that may resolve itself with retries. We recommend implementing exponential backoff retry logic in your application.</p>",
+      "refs": {}
+    },
     "RightExpression": {
       "base": "<p>Right expression of the <code>eventMetadata</code>filter.</p>",
       "refs": {
@@ -1239,6 +1262,30 @@
     "RuntimeClientError": {
       "base": "<p>The exception that occurs when there is an error in the runtime client. This can happen due to network issues, invalid configuration, or other client-side problems. Check the error message for specific details about the error.</p>",
       "refs": {}
+    },
+    "S3Location": {
+      "base": "<p>The Amazon S3 location configuration of a resource.</p>",
+      "refs": {
+        "ResourceLocation$s3": "<p>The Amazon S3 location of the resource. Use this when the resource is stored in an Amazon S3 bucket.</p>"
+      }
+    },
+    "S3LocationBucketString": {
+      "base": null,
+      "refs": {
+        "S3Location$bucket": "<p>The name of the Amazon S3 bucket where the resource is stored.</p>"
+      }
+    },
+    "S3LocationPrefixString": {
+      "base": null,
+      "refs": {
+        "S3Location$prefix": "<p>The name of the Amazon S3 prefix/key where the resource is stored.</p>"
+      }
+    },
+    "S3LocationVersionIdString": {
+      "base": null,
+      "refs": {
+        "S3Location$versionId": "<p>The name of the Amazon S3 version ID where the resource is stored (Optional).</p>"
+      }
     },
     "ScopeType": {
       "base": null,
@@ -1505,6 +1552,7 @@
         "ResourceContent$uri": "<p>The URI of the resource content.</p>",
         "ResourceContent$mimeType": "<p>The MIME type of the resource content.</p>",
         "ResourceContent$text": "<p>The text resource content.</p>",
+        "RetryableConflictException$message": null,
         "ServiceException$message": null,
         "SpanContext$sessionId": "<p> The unique identifier of the session containing this span. Sessions represent complete conversation flows and are detected using configurable <code>SessionTimeoutMinutes</code> (default 15 minutes). </p>",
         "SpanContext$traceId": "<p> The unique identifier of the trace containing this span. Traces represent individual request-response interactions within a session and group related spans together. </p>",

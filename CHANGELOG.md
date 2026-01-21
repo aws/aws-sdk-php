@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockAgentCore` - Supports custom browser extensions for AgentCore Browser and increased message payloads up to 100KB per message in an Event for AgentCore Memory
+* `Aws\EC2` - Added support of multiple EBS cards. New EbsCardIndex parameter enables attaching volumes to specific EBS cards on supported instance types for improved storage performance.
+* `Aws\QuickSight` - Added documentation and model for sheet layout groups - allows sheet elements to be grouped, Added documentation and the feature enables admins to have granular control over connectors under actions, Updated API documentation for PDF Export in Snapshot Export APIs
+* `Aws\ConfigService` - AWS Config Conformance Packs now support tag-on-create through PutConformancePack API.
+
 ## 3.369.16 - 2026-01-20
 
 * `Aws\VerifiedPermissions` - Amazon Verified Permissions now supports encryption of resources by a customer managed KMS key. Customers can now create new encrypted policy stores by passing in their customer managed key during policy store creation.

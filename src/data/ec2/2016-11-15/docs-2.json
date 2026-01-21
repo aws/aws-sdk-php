@@ -2193,6 +2193,7 @@
     "BaselineBandwidthInMbps": {
       "base": null,
       "refs": {
+        "EbsCardInfo$BaselineBandwidthInMbps": "<p>The baseline bandwidth performance for the EBS card, in Mbps.</p>",
         "EbsOptimizedInfo$BaselineBandwidthInMbps": "<p>The baseline bandwidth performance for an EBS-optimized instance type, in Mbps.</p>"
       }
     },
@@ -2211,6 +2212,7 @@
     "BaselineIops": {
       "base": null,
       "refs": {
+        "EbsCardInfo$BaselineIops": "<p>The baseline IOPS performance for the EBS card.</p>",
         "EbsOptimizedInfo$BaselineIops": "<p>The baseline input/output storage operations per seconds for an EBS-optimized instance type.</p>"
       }
     },
@@ -2229,6 +2231,7 @@
     "BaselineThroughputInMBps": {
       "base": null,
       "refs": {
+        "EbsCardInfo$BaselineThroughputInMBps": "<p>The baseline throughput performance for the EBS card, in MBps.</p>",
         "EbsOptimizedInfo$BaselineThroughputInMBps": "<p>The baseline throughput performance for an EBS-optimized instance type, in MB/s.</p>"
       }
     },
@@ -3502,6 +3505,7 @@
     "BoxedInteger": {
       "base": null,
       "refs": {
+        "AttachVolumeRequest$EbsCardIndex": "<p>The index of the EBS card. Some instance types support multiple EBS cards. The default EBS card index is 0.</p>",
         "CapacityBlockOffering$UltraserverCount": "<p>The number of EC2 UltraServers in the offering.</p>",
         "InstanceMetadataDefaultsResponse$HttpPutResponseHopLimit": "<p>The maximum number of hops that the metadata token can travel.</p>",
         "ModifyInstanceMetadataDefaultsRequest$HttpPutResponseHopLimit": "<p>The maximum number of hops that the metadata token can travel. To indicate no preference, specify <code>-1</code>.</p> <p>Possible values: Integers from <code>1</code> to <code>64</code>, and <code>-1</code> to indicate no preference</p>"
@@ -10518,6 +10522,24 @@
         "BlockDeviceMappingResponse$Ebs": "<p>Parameters used to automatically set up EBS volumes when the instance is launched.</p>"
       }
     },
+    "EbsCardIndex": {
+      "base": null,
+      "refs": {
+        "EbsCardInfo$EbsCardIndex": "<p>The index of the EBS card.</p>"
+      }
+    },
+    "EbsCardInfo": {
+      "base": "<p>Describes the performance characteristics of an EBS card on the instance type.</p>",
+      "refs": {
+        "EbsCardInfoList$member": null
+      }
+    },
+    "EbsCardInfoList": {
+      "base": null,
+      "refs": {
+        "EbsInfo$EbsCards": "<p>Describes the EBS cards available for the instance type.</p>"
+      }
+    },
     "EbsEncryptionSupport": {
       "base": null,
       "refs": {
@@ -14914,9 +14936,11 @@
         "EbsBlockDevice$VolumeSize": "<p>The size of the volume, in GiBs. You must specify either a snapshot ID or a volume size. If you specify a snapshot, the default is the snapshot size. You can specify a volume size that is equal to or larger than the snapshot size.</p> <p>The following are the supported sizes for each volume type:</p> <ul> <li> <p> <code>gp2</code>: 1 - 16,384 GiB</p> </li> <li> <p> <code>gp3</code>: 1 - 65,536 GiB</p> </li> <li> <p> <code>io1</code>: 4 - 16,384 GiB</p> </li> <li> <p> <code>io2</code>: 4 - 65,536 GiB</p> </li> <li> <p> <code>st1</code> and <code>sc1</code>: 125 - 16,384 GiB</p> </li> <li> <p> <code>standard</code>: 1 - 1024 GiB</p> </li> </ul>",
         "EbsBlockDevice$Throughput": "<p>The throughput that the volume supports, in MiB/s.</p> <p>This parameter is valid only for <code>gp3</code> volumes.</p> <p>Valid Range: Minimum value of 125. Maximum value of 2,000.</p>",
         "EbsBlockDevice$VolumeInitializationRate": "<p>Specifies the Amazon EBS Provisioned Rate for Volume Initialization (volume initialization rate), in MiB/s, at which to download the snapshot blocks from Amazon S3 to the volume. This is also known as <i>volume initialization</i>. Specifying a volume initialization rate ensures that the volume is initialized at a predictable and consistent rate after creation. For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/initalize-volume.html\">Initialize Amazon EBS volumes</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>This parameter is supported only for volumes created from snapshots. Omit this parameter if:</p> <ul> <li> <p>You want to create the volume using fast snapshot restore. You must specify a snapshot that is enabled for fast snapshot restore. In this case, the volume is fully initialized at creation.</p> <note> <p>If you specify a snapshot that is enabled for fast snapshot restore and a volume initialization rate, the volume will be initialized at the specified rate instead of fast snapshot restore.</p> </note> </li> <li> <p>You want to create a volume that is initialized at the default rate.</p> </li> </ul> <p>This parameter is not supported when using <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html\">CreateImage</a> and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeImages.html\">DescribeImages</a>.</p> <p>Valid range: 100 - 300 MiB/s</p>",
+        "EbsBlockDevice$EbsCardIndex": "<p>The index of the EBS card. Some instance types support multiple EBS cards. The default EBS card index is 0.</p>",
         "EbsBlockDeviceResponse$Iops": "<p>The number of I/O operations per second (IOPS). For <code>gp3</code>, <code>io1</code>, and <code>io2</code> volumes, this represents the number of IOPS that are provisioned for the volume. For <code>gp2</code> volumes, this represents the baseline performance of the volume and the rate at which the volume accumulates I/O credits for bursting.</p>",
         "EbsBlockDeviceResponse$Throughput": "<p>The throughput that the volume supports, in MiB/s.</p>",
         "EbsBlockDeviceResponse$VolumeSize": "<p>The size of the volume, in GiBs.</p>",
+        "EbsInstanceBlockDevice$EbsCardIndex": "<p>The index of the EBS card. Some instance types support multiple EBS cards. The default EBS card index is 0.</p>",
         "EnableFastLaunchRequest$MaxParallelLaunches": "<p>The maximum number of instances that Amazon EC2 can launch at the same time to create pre-provisioned snapshots for Windows fast launch. Value must be <code>6</code> or greater.</p>",
         "EnableFastLaunchResult$MaxParallelLaunches": "<p>The maximum number of instances that Amazon EC2 can launch at the same time to create pre-provisioned snapshots for Windows fast launch.</p>",
         "FastLaunchSnapshotConfigurationRequest$TargetResourceCount": "<p>The number of pre-provisioned snapshots to keep on hand for a Windows fast launch enabled AMI.</p>",
@@ -14984,10 +15008,12 @@
         "LaunchTemplateEbsBlockDevice$VolumeSize": "<p>The size of the volume, in GiB.</p>",
         "LaunchTemplateEbsBlockDevice$Throughput": "<p>The throughput that the volume supports, in MiB/s.</p>",
         "LaunchTemplateEbsBlockDevice$VolumeInitializationRate": "<p>The Amazon EBS Provisioned Rate for Volume Initialization (volume initialization rate) specified for the volume, in MiB/s. If no volume initialization rate was specified, the value is <code>null</code>.</p>",
+        "LaunchTemplateEbsBlockDevice$EbsCardIndex": "<p>The index of the EBS card. Some instance types support multiple EBS cards. The default EBS card index is 0.</p>",
         "LaunchTemplateEbsBlockDeviceRequest$Iops": "<p>The number of I/O operations per second (IOPS). For <code>gp3</code>, <code>io1</code>, and <code>io2</code> volumes, this represents the number of IOPS that are provisioned for the volume. For <code>gp2</code> volumes, this represents the baseline performance of the volume and the rate at which the volume accumulates I/O credits for bursting.</p> <p>The following are the supported values for each volume type:</p> <ul> <li> <p> <code>gp3</code>: 3,000 - 80,000 IOPS</p> </li> <li> <p> <code>io1</code>: 100 - 64,000 IOPS</p> </li> <li> <p> <code>io2</code>: 100 - 256,000 IOPS</p> </li> </ul> <p>For <code>io2</code> volumes, you can achieve up to 256,000 IOPS on <a href=\"https://docs.aws.amazon.com/ec2/latest/instancetypes/ec2-nitro-instances.html\">instances built on the Nitro System</a>. On other instances, you can achieve performance up to 32,000 IOPS.</p> <p>This parameter is supported for <code>io1</code>, <code>io2</code>, and <code>gp3</code> volumes only.</p>",
         "LaunchTemplateEbsBlockDeviceRequest$VolumeSize": "<p>The size of the volume, in GiBs. You must specify either a snapshot ID or a volume size. The following are the supported volumes sizes for each volume type:</p> <ul> <li> <p> <code>gp2</code>: 1 - 16,384 GiB</p> </li> <li> <p> <code>gp3</code>: 1 - 65,536 GiB</p> </li> <li> <p> <code>io1</code>: 4 - 16,384 GiB</p> </li> <li> <p> <code>io2</code>: 4 - 65,536 GiB</p> </li> <li> <p> <code>st1</code> and <code>sc1</code>: 125 - 16,384 GiB</p> </li> <li> <p> <code>standard</code>: 1 - 1024 GiB</p> </li> </ul>",
         "LaunchTemplateEbsBlockDeviceRequest$Throughput": "<p>The throughput to provision for a <code>gp3</code> volume, with a maximum of 2,000 MiB/s.</p> <p>Valid Range: Minimum value of 125. Maximum value of 2,000.</p>",
         "LaunchTemplateEbsBlockDeviceRequest$VolumeInitializationRate": "<p>Specifies the Amazon EBS Provisioned Rate for Volume Initialization (volume initialization rate), in MiB/s, at which to download the snapshot blocks from Amazon S3 to the volume. This is also known as <i>volume initialization</i>. Specifying a volume initialization rate ensures that the volume is initialized at a predictable and consistent rate after creation.</p> <p>This parameter is supported only for volumes created from snapshots. Omit this parameter if:</p> <ul> <li> <p>You want to create the volume using fast snapshot restore. You must specify a snapshot that is enabled for fast snapshot restore. In this case, the volume is fully initialized at creation.</p> <note> <p>If you specify a snapshot that is enabled for fast snapshot restore and a volume initialization rate, the volume will be initialized at the specified rate instead of fast snapshot restore.</p> </note> </li> <li> <p>You want to create a volume that is initialized at the default rate.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/initalize-volume.html\"> Initialize Amazon EBS volumes</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>Valid range: 100 - 300 MiB/s</p>",
+        "LaunchTemplateEbsBlockDeviceRequest$EbsCardIndex": "<p>The index of the EBS card. Some instance types support multiple EBS cards. The default EBS card index is 0.</p>",
         "LaunchTemplateElasticInferenceAcceleratorResponse$Count": "<p>The number of elastic inference accelerators to attach to the instance. </p>",
         "LaunchTemplateInstanceMetadataOptions$HttpPutResponseHopLimit": "<p>The desired HTTP PUT response hop limit for instance metadata requests. The larger the number, the further instance metadata requests can travel.</p> <p>Possible values: Integers from 1 to 64</p>",
         "LaunchTemplateInstanceMetadataOptionsRequest$HttpPutResponseHopLimit": "<p>The desired HTTP PUT response hop limit for instance metadata requests. The larger the number, the further instance metadata requests can travel.</p> <p>Default: <code>1</code> </p> <p>Possible values: Integers from 1 to 64</p>",
@@ -15179,6 +15205,7 @@
         "Volume$Throughput": "<p>The throughput that the volume supports, in MiB/s.</p>",
         "Volume$VolumeInitializationRate": "<p>The Amazon EBS Provisioned Rate for Volume Initialization (volume initialization rate) specified for the volume during creation, in MiB/s. If no volume initialization rate was specified, the value is <code>null</code>.</p>",
         "Volume$Size": "<p>The size of the volume, in GiBs.</p>",
+        "VolumeAttachment$EbsCardIndex": "<p>The index of the EBS card. Some instance types support multiple EBS cards. The default EBS card index is 0.</p>",
         "VolumeModification$TargetSize": "<p>The target size of the volume, in GiB.</p>",
         "VolumeModification$TargetIops": "<p>The target IOPS rate of the volume.</p>",
         "VolumeModification$TargetThroughput": "<p>The target throughput of the volume, in MiB/s.</p>",
@@ -17804,6 +17831,7 @@
     "MaximumBandwidthInMbps": {
       "base": null,
       "refs": {
+        "EbsCardInfo$MaximumBandwidthInMbps": "<p>The maximum bandwidth performance for the EBS card, in Mbps.</p>",
         "EbsOptimizedInfo$MaximumBandwidthInMbps": "<p>The maximum bandwidth performance for an EBS-optimized instance type, in Mbps.</p>"
       }
     },
@@ -17827,6 +17855,12 @@
         "EbsInfo$MaximumEbsAttachments": "<p>Indicates the maximum number of Amazon EBS volumes that can be attached to the instance type. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/volume_limits.html\">Amazon EBS volume limits for Amazon EC2 instances</a> in the <i>Amazon EC2 User Guide</i>.</p>"
       }
     },
+    "MaximumEbsCards": {
+      "base": null,
+      "refs": {
+        "EbsInfo$MaximumEbsCards": "<p>Indicates the number of EBS cards supported by the instance type.</p>"
+      }
+    },
     "MaximumEfaInterfaces": {
       "base": null,
       "refs": {
@@ -17848,6 +17882,7 @@
     "MaximumIops": {
       "base": null,
       "refs": {
+        "EbsCardInfo$MaximumIops": "<p>The maximum IOPS performance for the EBS card.</p>",
         "EbsOptimizedInfo$MaximumIops": "<p>The maximum input/output storage operations per second for an EBS-optimized instance type.</p>"
       }
     },
@@ -17860,6 +17895,7 @@
     "MaximumThroughputInMBps": {
       "base": null,
       "refs": {
+        "EbsCardInfo$MaximumThroughputInMBps": "<p>The maximum throughput performance for the EBS card, in MBps.</p>",
         "EbsOptimizedInfo$MaximumThroughputInMBps": "<p>The maximum throughput performance for an EBS-optimized instance type, in MB/s.</p>"
       }
     },
