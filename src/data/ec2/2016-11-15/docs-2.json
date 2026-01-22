@@ -12897,6 +12897,12 @@
         "InstanceTypeInfo$GpuInfo": "<p>Describes the GPU accelerator settings for the instance type.</p>"
       }
     },
+    "GpuPartitionSize": {
+      "base": null,
+      "refs": {
+        "GpuDeviceInfo$GpuPartitionSize": "<p>The size of each GPU as a fraction of a full GPU, between 0 (excluded) and 1 (included).</p>"
+      }
+    },
     "GroupBy": {
       "base": null,
       "refs": {
@@ -17583,6 +17589,12 @@
       "refs": {
         "CreateFlowLogsRequest$LogDestinationType": "<p>The type of destination for the flow log data.</p> <p>Default: <code>cloud-watch-logs</code> </p>",
         "FlowLog$LogDestinationType": "<p>The type of destination for the flow log data.</p>"
+      }
+    },
+    "LogicalGpuCount": {
+      "base": null,
+      "refs": {
+        "GpuDeviceInfo$LogicalGpuCount": "<p>Total number of GPU devices of this type.</p>"
       }
     },
     "Long": {
@@ -30002,6 +30014,18 @@
     "WithdrawByoipCidrResult": {
       "base": null,
       "refs": {
+      }
+    },
+    "Workload": {
+      "base": null,
+      "refs": {
+        "WorkloadsList$member": null
+      }
+    },
+    "WorkloadsList": {
+      "base": null,
+      "refs": {
+        "GpuDeviceInfo$Workloads": "<p>A list of workload types this GPU supports.</p>"
       }
     },
     "ZoneIdStringList": {

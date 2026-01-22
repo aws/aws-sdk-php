@@ -30334,6 +30334,18 @@
           "shape":"GpuDeviceCount",
           "locationName":"count"
         },
+        "LogicalGpuCount":{
+          "shape":"LogicalGpuCount",
+          "locationName":"logicalGpuCount"
+        },
+        "GpuPartitionSize":{
+          "shape":"GpuPartitionSize",
+          "locationName":"gpuPartitionSize"
+        },
+        "Workloads":{
+          "shape":"WorkloadsList",
+          "locationName":"workloadSet"
+        },
         "MemoryInfo":{
           "shape":"GpuDeviceMemoryInfo",
           "locationName":"memoryInfo"
@@ -30372,6 +30384,7 @@
         }
       }
     },
+    "GpuPartitionSize":{"type":"double"},
     "GroupBy":{
       "type":"string",
       "enum":[
@@ -39718,6 +39731,7 @@
         "kinesis-data-firehose"
       ]
     },
+    "LogicalGpuCount":{"type":"integer"},
     "Long":{"type":"long"},
     "MacHost":{
       "type":"structure",
@@ -58066,6 +58080,14 @@
           "shape":"ByoipCidr",
           "locationName":"byoipCidr"
         }
+      }
+    },
+    "Workload":{"type":"string"},
+    "WorkloadsList":{
+      "type":"list",
+      "member":{
+        "shape":"Workload",
+        "locationName":"item"
       }
     },
     "ZoneIdStringList":{

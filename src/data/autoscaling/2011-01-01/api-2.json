@@ -1266,6 +1266,7 @@
         "DefaultInstanceWarmup":{"shape":"DefaultInstanceWarmup"},
         "TrafficSources":{"shape":"TrafficSources"},
         "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"},
+        "DeletionProtection":{"shape":"DeletionProtection"},
         "AvailabilityZoneDistribution":{"shape":"AvailabilityZoneDistribution"},
         "AvailabilityZoneImpairmentPolicy":{"shape":"AvailabilityZoneImpairmentPolicy"},
         "CapacityReservationSpecification":{"shape":"CapacityReservationSpecification"},
@@ -1632,6 +1633,7 @@
         "NewInstancesProtectedFromScaleIn":{"shape":"InstanceProtected"},
         "CapacityRebalance":{"shape":"CapacityRebalanceEnabled"},
         "LifecycleHookSpecificationList":{"shape":"LifecycleHookSpecifications"},
+        "DeletionProtection":{"shape":"DeletionProtection"},
         "Tags":{"shape":"Tags"},
         "ServiceLinkedRoleARN":{"shape":"ResourceName"},
         "MaxInstanceLifetime":{"shape":"MaxInstanceLifetime"},
@@ -1763,6 +1765,14 @@
         "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"},
         "ForceDelete":{"shape":"ForceDelete"}
       }
+    },
+    "DeletionProtection":{
+      "type":"string",
+      "enum":[
+        "none",
+        "prevent-force-deletion",
+        "prevent-all-deletion"
+      ]
     },
     "DescribeAccountLimitsAnswer":{
       "type":"structure",
@@ -3819,7 +3829,8 @@
         "AvailabilityZoneImpairmentPolicy":{"shape":"AvailabilityZoneImpairmentPolicy"},
         "SkipZonalShiftValidation":{"shape":"SkipZonalShiftValidation"},
         "CapacityReservationSpecification":{"shape":"CapacityReservationSpecification"},
-        "InstanceLifecyclePolicy":{"shape":"InstanceLifecyclePolicy"}
+        "InstanceLifecyclePolicy":{"shape":"InstanceLifecyclePolicy"},
+        "DeletionProtection":{"shape":"DeletionProtection"}
       }
     },
     "UpdatePlacementGroupParam":{

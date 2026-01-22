@@ -2807,7 +2807,8 @@
         "Version":{"shape":"NonZeroAndMaxString"},
         "StorageLocation":{"shape":"S3Location"},
         "ZipFile":{"shape":"ZipBlob"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "NodeJsVersion":{"shape":"NodeJsVersion"}
       }
     },
     "CreateScriptOutput":{
@@ -5759,6 +5760,11 @@
       "max":75,
       "min":30
     },
+    "NodeJsVersion":{
+      "type":"string",
+      "max":16,
+      "pattern":"^\\d+\\.[x0-9]+$"
+    },
     "NonBlankAndLengthConstraintString":{
       "type":"string",
       "max":1024,
@@ -6263,7 +6269,8 @@
         "Version":{"shape":"NonZeroAndMaxString"},
         "SizeOnDisk":{"shape":"PositiveLong"},
         "CreationTime":{"shape":"Timestamp"},
-        "StorageLocation":{"shape":"S3Location"}
+        "StorageLocation":{"shape":"S3Location"},
+        "NodeJsVersion":{"shape":"NodeJsVersion"}
       }
     },
     "ScriptArn":{
