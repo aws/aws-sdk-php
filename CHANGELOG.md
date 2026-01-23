@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.19 - 2026-01-23
 
 * `Aws\DataZone` - Added api for deleting data export configuration for a domain
 * `Aws\QConnect` - Fixes incorrect types in the UpdateAssistantAIAgent API request, adds MESSAGE to TargetType enum, and other minor changes.
