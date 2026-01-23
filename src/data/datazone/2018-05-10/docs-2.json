@@ -45,6 +45,7 @@
     "DeleteAssetFilter": "<p>Deletes an asset filter.</p> <p>Prerequisites:</p> <ul> <li> <p>The asset filter must exist. </p> </li> <li> <p>The domain and asset must not have been deleted.</p> </li> <li> <p>Ensure the --identifier refers to a valid filter ID.</p> </li> </ul>",
     "DeleteAssetType": "<p>Deletes an asset type in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The asset type must exist in the domain. </p> </li> <li> <p>You must have DeleteAssetType permission.</p> </li> <li> <p>The asset type must not be in use (e.g., assigned to any asset). If used, deletion will fail.</p> </li> <li> <p>You should retrieve the asset type using get-asset-type to confirm its presence before deletion.</p> </li> </ul>",
     "DeleteConnection": "<p>Deletes and connection. In Amazon DataZone, a connection enables you to connect your resources (domains, projects, and environments) to external resources and services.</p>",
+    "DeleteDataExportConfiguration": "<p>Deletes data export configuration for a domain.</p> <p>This operation does not delete the S3 table created by the PutDataExportConfiguration operation.</p> <p>To temporarily disable export without deleting the configuration, use the PutDataExportConfiguration operation with the <code>--no-enable-export</code> flag instead. This allows you to re-enable export for the same domain using the <code>--enable-export</code> flag without deleting S3 table.</p>",
     "DeleteDataProduct": "<p>Deletes a data product in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The data product must exist and not be deleted or archived. </p> </li> <li> <p>The user must have delete permissions for the data product.</p> </li> <li> <p>Domain and project must be active.</p> </li> </ul>",
     "DeleteDataSource": "<p>Deletes a data source in Amazon DataZone.</p>",
     "DeleteDomain": "<p>Deletes a Amazon DataZone domain.</p>",
@@ -139,7 +140,7 @@
     "ListTimeSeriesDataPoints": "<p>Lists time series data points.</p>",
     "PostLineageEvent": "<p>Posts a data lineage event.</p>",
     "PostTimeSeriesDataPoints": "<p>Posts time series data points to Amazon DataZone for the specified asset.</p>",
-    "PutDataExportConfiguration": "<p>Creates data export configuration details.</p> <p>In the current release, you can enable exporting asset metadata only for one domain per Amazon Web Services account per region. If you disable exporting asset metadata feature for a domain where it's already enabled, you cannot enable this feature for another domain in the same Amazon Web Services account and region.</p>",
+    "PutDataExportConfiguration": "<p>Creates data export configuration details.</p> <p>If you want to temporarily disable export and later re-enable it for the same domain, use the <code>--no-enable-export</code> flag to disable and the <code>--enable-export</code> flag to re-enable. This preserves the configuration and allows you to re-enable export without deleting S3 table.</p> <note> <p>You can enable asset metadata export for only one domain per account per Region. To enable export for a different domain, complete the following steps:</p> <ol> <li> <p>Delete the export configuration for the currently enabled domain using the DeleteDataExportConfiguration operation.</p> </li> <li> <p>Delete the asset S3 table under the aws-sagemaker-catalog S3 table bucket. We recommend backing up the S3 table before deletion.</p> </li> <li> <p>Call the PutDataExportConfiguration API to enable export for the new domain.</p> </li> </ol> </note>",
     "PutEnvironmentBlueprintConfiguration": "<p>Writes the configuration for the specified environment blueprint in Amazon DataZone.</p>",
     "RejectPredictions": "<p>Rejects automatically generated business-friendly metadata for your Amazon DataZone assets.</p>",
     "RejectSubscriptionRequest": "<p>Rejects the specified subscription request.</p>",
@@ -2265,6 +2266,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteDataExportConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDataExportConfigurationOutput": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteDataProductInput": {
       "base": null,
       "refs": {}
@@ -2692,6 +2701,7 @@
         "DeleteAssetInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the asset is deleted.</p>",
         "DeleteAssetTypeInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the asset type is deleted.</p>",
         "DeleteConnectionInput$domainIdentifier": "<p>The ID of the domain where the connection is deleted.</p>",
+        "DeleteDataExportConfigurationInput$domainIdentifier": "<p>The domain ID for which you want to delete the data export configuration.</p>",
         "DeleteDataProductInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the data product is deleted.</p>",
         "DeleteDataSourceInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the data source is deleted.</p>",
         "DeleteDataSourceOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the data source is deleted.</p>",
@@ -2839,7 +2849,7 @@
         "PostTimeSeriesDataPointsOutput$domainId": "<p>The ID of the Amazon DataZone domain in which you want to post time series data points.</p>",
         "ProjectProfileSummary$domainId": "<p>The domain ID of the project profile.</p>",
         "ProjectSummary$domainId": "<p>The identifier of a Amazon DataZone domain where the project exists.</p>",
-        "PutDataExportConfigurationInput$domainIdentifier": "<p>The domain ID where you want to create data export configuration details.</p>",
+        "PutDataExportConfigurationInput$domainIdentifier": "<p>The domain ID for which you want to create data export configuration details.</p>",
         "PutEnvironmentBlueprintConfigurationInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain.</p>",
         "PutEnvironmentBlueprintConfigurationOutput$domainId": "<p>The identifier of the Amazon DataZone domain.</p>",
         "RejectPredictionsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain.</p>",

@@ -91,6 +91,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteAssetTypeAsync(array $args = [])
  * @method \Aws\Result deleteConnection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteConnectionAsync(array $args = [])
+ * @method \Aws\Result deleteDataExportConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteDataExportConfigurationAsync(array $args = [])
  * @method \Aws\Result deleteDataProduct(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteDataProductAsync(array $args = [])
  * @method \Aws\Result deleteDataSource(array $args = [])

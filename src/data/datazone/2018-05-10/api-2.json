@@ -865,6 +865,26 @@
       ],
       "idempotent":true
     },
+    "DeleteDataExportConfiguration":{
+      "name":"DeleteDataExportConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v2/domains/{domainIdentifier}/data-export-configuration",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteDataExportConfigurationInput"},
+      "output":{"shape":"DeleteDataExportConfigurationOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "DeleteDataProduct":{
       "name":"DeleteDataProduct",
       "http":{
@@ -6752,6 +6772,21 @@
       "members":{
         "status":{"shape":"String"}
       }
+    },
+    "DeleteDataExportConfigurationInput":{
+      "type":"structure",
+      "required":["domainIdentifier"],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        }
+      }
+    },
+    "DeleteDataExportConfigurationOutput":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteDataProductInput":{
       "type":"structure",

@@ -2054,7 +2054,8 @@
       "members":{
         "title":{"shape":"String"},
         "destructiveHint":{"shape":"Boolean"}
-      }
+      },
+      "sensitive":true
     },
     "AnswerRecommendationAIAgentConfiguration":{
       "type":"structure",
@@ -2308,7 +2309,7 @@
     "CaseSummarizationChunkDataDetails":{
       "type":"structure",
       "members":{
-        "completion":{"shape":"NonEmptyString"},
+        "completion":{"shape":"NonEmptySensitiveString"},
         "nextChunkToken":{"shape":"NextToken"}
       }
     },
@@ -4781,7 +4782,8 @@
     "JSONDocument":{
       "type":"structure",
       "members":{},
-      "document":true
+      "document":true,
+      "sensitive":true
     },
     "KnowledgeBaseAssociationConfigurationData":{
       "type":"structure",
@@ -7654,7 +7656,8 @@
       "type":"string",
       "enum":[
         "RECOMMENDATION",
-        "RESULT"
+        "RESULT",
+        "MESSAGE"
       ]
     },
     "TextAIPrompt":{
@@ -7731,9 +7734,9 @@
       "members":{
         "toolName":{"shape":"NonEmptyString"},
         "toolType":{"shape":"ToolType"},
-        "title":{"shape":"NonEmptyString"},
+        "title":{"shape":"NonEmptySensitiveString"},
         "toolId":{"shape":"NonEmptyString"},
-        "description":{"shape":"String"},
+        "description":{"shape":"NonEmptySensitiveString"},
         "instruction":{"shape":"ToolInstruction"},
         "overrideInputValues":{"shape":"ToolOverrideInputValueList"},
         "outputFilters":{"shape":"ToolOutputFilterList"},
@@ -7756,7 +7759,8 @@
       "members":{
         "instruction":{"shape":"String"},
         "examples":{"shape":"ToolExampleList"}
-      }
+      },
+      "sensitive":true
     },
     "ToolOutputConfiguration":{
       "type":"structure",
@@ -7775,7 +7779,8 @@
     },
     "ToolOutputFilterList":{
       "type":"list",
-      "member":{"shape":"ToolOutputFilter"}
+      "member":{"shape":"ToolOutputFilter"},
+      "sensitive":true
     },
     "ToolOverrideConstantInputValue":{
       "type":"structure",
@@ -7808,7 +7813,8 @@
     },
     "ToolOverrideInputValueList":{
       "type":"list",
-      "member":{"shape":"ToolOverrideInputValue"}
+      "member":{"shape":"ToolOverrideInputValue"},
+      "sensitive":true
     },
     "ToolOverrideInputValueType":{
       "type":"string",
@@ -8016,7 +8022,7 @@
         },
         "aiAgentType":{"shape":"AIAgentType"},
         "configuration":{"shape":"AIAgentConfigurationData"},
-        "orchestratorConfigurationList":{"shape":"OrchestratorConfigurationList"}
+        "orchestratorUseCase":{"shape":"NonEmptyString"}
       }
     },
     "UpdateAssistantAIAgentResponse":{
