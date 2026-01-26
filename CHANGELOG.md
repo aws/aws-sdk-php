@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.20 - 2026-01-26
 
 * `Aws\CloudWatchEvidently` - Deprecate all Evidently API for AWS CloudWatch Evidently deprecation
 * `Aws\GroundStation` - Adds support for AWS Ground Station Telemetry.
