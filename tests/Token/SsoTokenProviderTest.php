@@ -8,12 +8,14 @@ use Aws\Test\UsesServiceTrait;
 use Aws\Token\SsoTokenProvider;
 use Aws\Token\TokenProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 require_once __DIR__ . '/../Token/token_hack.php';
 
 /**
- * @covers \Aws\Token\SsoTokenProvider
+
  */
+#[CoversClass(\Aws\Token\SsoTokenProvider::class)]
 class SsoTokenProviderTest extends TestCase
 {
     use UsesServiceTrait;

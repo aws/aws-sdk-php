@@ -12,6 +12,7 @@ use Generator;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Tests PartGetMultipartDownloader implementation.
@@ -25,10 +26,11 @@ class PartGetMultipartDownloaderTest extends TestCase
      * @param int $objectSizeInBytes
      * @param int $targetPartSize
      *
-     * @dataProvider partGetMultipartDownloaderProvider
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('partGetMultipartDownloaderProvider')]
     public function testPartGetMultipartDownloader(
         string $objectKey,
         int $objectSizeInBytes,
@@ -209,10 +211,11 @@ class PartGetMultipartDownloaderTest extends TestCase
      * @param int $targetPartSize
      * @param string $eTag
      *
-     * @dataProvider ifMatchIsPresentInEachPartRequestAfterFirstProvider
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('ifMatchIsPresentInEachPartRequestAfterFirstProvider')]
     public function testIfMatchIsPresentInEachRangeRequestAfterFirst(
         int $objectSizeInBytes,
         int $targetPartSize,

@@ -7,10 +7,13 @@ use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Api\Serializer\JsonBody
+
  */
+#[CoversClass(JsonBody::class)]
 class JsonBodyTest extends TestCase
 {
     use UsesServiceTrait;
@@ -145,8 +148,9 @@ class JsonBodyTest extends TestCase
     }
 
     /**
-     * @dataProvider formatProvider
-     */
+
+ */
+    #[DataProvider('formatProvider')]
     public function testFormatsJson(array $def, array $args, string $result): void
     {
         $j = new JsonBody(new Service([], function() { return []; }));
@@ -193,8 +197,9 @@ class JsonBodyTest extends TestCase
     }
 
     /**
-     * @dataProvider formatNoReferencesProvider
-     */
+
+ */
+    #[DataProvider('formatNoReferencesProvider')]
     public function testFormatsJsonDoesNotCreateReferences(
         array $def,
         array $args,
@@ -216,8 +221,9 @@ class JsonBodyTest extends TestCase
      * @param string $expected
      *
      * @return void
-     * @dataProvider buildsDocTypesProvider
-     */
+
+ */
+    #[DataProvider('buildsDocTypesProvider')]
     public function testBuildsDocTypes(string|array $args, string $expected): void
     {
         $j = new JsonBody(new Service([], function() { return []; }));

@@ -10,10 +10,12 @@ use Aws\Endpoint\UseDualstackEndpoint\ConfigurationInterface;
 use Aws\Endpoint\UseDualstackEndpoint\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider
+
  */
+#[CoversClass(ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
     private static $originalEnv;

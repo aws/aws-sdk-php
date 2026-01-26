@@ -11,10 +11,13 @@ use Aws\EndpointDiscovery\Exception\ConfigurationException;
 use Aws\LruArrayCache;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\EndpointDiscovery\ConfigurationProvider
+
  */
+#[CoversClass(ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
     private static $originalEnv;
@@ -76,9 +79,10 @@ EOT;
     }
 
     /**
-     * @dataProvider getEnvVariableNames
      * @param $envName
-     */
+
+ */
+    #[DataProvider('getEnvVariableNames')]
     public function testCreatesFromEnvironmentVariables($envName)
     {
         $this->clearEnv();
@@ -470,10 +474,11 @@ EOT;
     }
 
     /**
-     * @dataProvider getSuccessfulUnwrapData
      * @param $toUnwrap
      * @param ConfigurationInterface $expected
-     */
+
+ */
+    #[DataProvider('getSuccessfulUnwrapData')]
     public function testSuccessfulUnwraps($toUnwrap, ConfigurationInterface $expected)
     {
         $this->assertSame(

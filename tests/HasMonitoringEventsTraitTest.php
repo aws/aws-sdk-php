@@ -3,11 +3,13 @@ namespace Aws\Test;
 
 use Aws\HasMonitoringEventsTrait;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 
 /**
- * @covers \Aws\HasMonitoringEventsTrait
+
  */
+#[CoversClass(\Aws\HasMonitoringEventsTrait::class)]
 class HasMonitoringEventsTraitTest extends TestCase
 {
 

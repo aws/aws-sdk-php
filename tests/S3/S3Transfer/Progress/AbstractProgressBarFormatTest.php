@@ -7,6 +7,7 @@ use Aws\S3\S3Transfer\Progress\PlainProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\AbstractProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\TransferProgressBarFormat;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class AbstractProgressBarFormatTest extends TestCase
 {
@@ -20,9 +21,10 @@ class AbstractProgressBarFormatTest extends TestCase
      * @param string $expectedFormat
      *
      * @return void
-     * @dataProvider progressBarFormatProvider
      *
-     */
+
+ */
+    #[DataProvider('progressBarFormatProvider')]
     public function testProgressBarFormat(
         string $implementationClass,
         array $args,

@@ -7,10 +7,12 @@ use Aws\Result;
 use Aws\ResultInterface;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\AbstractConfigurationProvider
+
  */
+#[CoversClass(\Aws\AbstractConfigurationProvider::class)]
 class AbstractConfigurationProviderTest extends TestCase
 {
     /** @var \PHPUnit_Framework_MockObject_MockObject */

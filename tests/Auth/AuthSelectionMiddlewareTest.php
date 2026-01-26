@@ -14,6 +14,7 @@ use Aws\MockHandler;
 use Aws\Result;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class AuthSelectionMiddlewareTest extends TestCase
 {
@@ -22,8 +23,9 @@ class AuthSelectionMiddlewareTest extends TestCase
      * @param $operationAuth
      * @param $expected
      *
-     * @dataProvider resolvesAuthSchemeWithoutCRTProvider
-     */
+
+ */
+    #[DataProvider('resolvesAuthSchemeWithoutCRTProvider')]
     public function testResolvesAuthSchemeWithoutCRT(
         $serviceAuth,
         $operationAuth,
@@ -96,8 +98,9 @@ class AuthSelectionMiddlewareTest extends TestCase
      * @param $operationAuth
      * @param $expected
      *
-     * @dataProvider ResolvesAuthSchemeWithCRTprovider
-     */
+
+ */
+    #[DataProvider('ResolvesAuthSchemeWithCRTprovider')]
     public function testResolvesAuthSchemeWithCRT(
         $serviceAuth,
         $operationAuth,
@@ -165,8 +168,9 @@ class AuthSelectionMiddlewareTest extends TestCase
      * @param $identity
      * @param $expected
      *
-     * @dataProvider resolvesBearerAuthSchemeProvider
-     */
+
+ */
+    #[DataProvider('resolvesBearerAuthSchemeProvider')]
     public function testResolvesBearerAuthScheme(
         $serviceAuth,
         $operationAuth,
@@ -313,7 +317,6 @@ class AuthSelectionMiddlewareTest extends TestCase
     /**
      * Test auth select is done based on user's provided auth schemes.
      *
-     * @dataProvider authSelectionBasedOnUserPreferenceProvider
      *
      * @param array $supportedAuthSchemes
      * @param array|null $serviceAuthSchemes
@@ -322,7 +325,9 @@ class AuthSelectionMiddlewareTest extends TestCase
      * @param string $expected
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('authSelectionBasedOnUserPreferenceProvider')]
     public function testAuthSelectionBasedOnUserPreference(
         array $supportedAuthSchemes,
         ?array $serviceAuthSchemes,

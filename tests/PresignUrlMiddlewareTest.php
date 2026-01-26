@@ -8,10 +8,13 @@ use Aws\Rds\RdsClient;
 use Aws\Result;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\PresignUrlMiddleware
+
  */
+#[CoversClass(PresignUrlMiddleware::class)]
 class PresignUrlMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
@@ -107,10 +110,11 @@ class PresignUrlMiddlewareTest extends TestCase
      * @param string $value
      * @param string $expected
      *
-     * @dataProvider extraQueryParamsProvider
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('extraQueryParamsProvider')]
     public function testExtraQueryParametersAreURLEncoded(
         string $parameter,
         string $value,

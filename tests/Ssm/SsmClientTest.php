@@ -5,10 +5,12 @@ use Aws\Ssm\SsmClient;
 use Aws\MockHandler;
 use Aws\Result;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Ssm\SsmClient
+
  */
+#[CoversClass(SsmClient::class)]
 class SsmClientTest extends TestCase
 {
     public function testCanDisableAutoFillPerClient()

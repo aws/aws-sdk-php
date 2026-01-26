@@ -7,10 +7,13 @@ use Aws\DSQL\AuthTokenGenerator;
 use GuzzleHttp\Promise;
 use TypeError;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\DSQL\AuthTokenGenerator
+
  */
+#[CoversClass(AuthTokenGenerator::class)]
 class AuthTokenGeneratorTest extends TestCase
 {
     /**
@@ -19,8 +22,9 @@ class AuthTokenGeneratorTest extends TestCase
      * @param $action
      * @return void
      *
-     * @dataProvider generateAuthTokenProvider
-     */
+
+ */
+    #[DataProvider('generateAuthTokenProvider')]
     public function testGeneratesAuthToken($credentials, $action)
     {
         $tokenGenerator = new AuthTokenGenerator($credentials);
@@ -62,8 +66,9 @@ class AuthTokenGeneratorTest extends TestCase
      * @param $region
      * @return void
      *
-     * @dataProvider missingInputProvider
-     */
+
+ */
+    #[DataProvider('missingInputProvider')]
     public function testThrowsOnMissingInput($action, $endpoint, $region)
     {
         $this->expectException(TypeError::class);
@@ -92,8 +97,9 @@ class AuthTokenGeneratorTest extends TestCase
      *
      * @return void
      *
-     * @dataProvider emptyInputProvider
-     */
+
+ */
+    #[DataProvider('emptyInputProvider')]
     public function testThrowsOnEmptyInput($action, $endpoint, $region)
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -127,10 +133,11 @@ class AuthTokenGeneratorTest extends TestCase
     }
 
     /**
-     * @dataProvider lifetimeFailureProvider
      *
      * @param $lifetime
-     */
+
+ */
+    #[DataProvider('lifetimeFailureProvider')]
     public function testThrowsExceptionWithInvalidLifetime($expiration, $action)
     {
         $this->expectExceptionMessage("Lifetime must be a positive number, was");

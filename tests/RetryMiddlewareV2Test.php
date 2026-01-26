@@ -19,16 +19,18 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\RetryMiddlewareV2
+
  */
+#[CoversClass(\Aws\RetryMiddlewareV2::class)]
 class RetryMiddlewareV2Test extends TestCase
 {
     use UsesServiceTrait;
 
     /**
-     * @dataProvider standardModeTestCases
      *
      * @param CommandInterface $command
      * @param QuotaManager $quotaManager
@@ -36,7 +38,9 @@ class RetryMiddlewareV2Test extends TestCase
      * @param array $options
      * @param $expected
      * @throws \Exception
-     */
+
+ */
+    #[DataProvider('standardModeTestCases')]
     public function testRetriesForStandardMode(
         CommandInterface $command,
         QuotaManager $quotaManager,
@@ -602,8 +606,9 @@ class RetryMiddlewareV2Test extends TestCase
     /**
     * @param $err
     *
-    * @dataProvider awsErrorCodeProvider
-    */
+
+ */
+    #[DataProvider('awsErrorCodeProvider')]
     public function testDeciderRetriesWhenAwsErrorCodeMatches($err)
     {
         $decider = RetryMiddlewareV2::createDefaultDecider(new QuotaManager());

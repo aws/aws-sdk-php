@@ -10,16 +10,18 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\S3Control\EndpointArnMiddleware
+
  */
+#[CoversClass(\Aws\S3Control\EndpointArnMiddleware::class)]
 class EndpointArnMiddlewareTest extends TestCase
 {
     use S3ControlTestingTrait;
 
     /**
-     * @dataProvider providedSuccessCases
      *
      * @param $cmdName
      * @param $cmdParams
@@ -30,7 +32,9 @@ class EndpointArnMiddlewareTest extends TestCase
      * @param $signingRegion
      * @param $signingService
      * @throws \Exception
-     */
+
+ */
+    #[DataProvider('providedSuccessCases')]
     public function testCorrectlyModifiesRequestAndCommand(
         $cmdName,
         $cmdParams,
@@ -423,14 +427,15 @@ class EndpointArnMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider providedFailureCases
      *
      * @param $cmdName
      * @param $cmdParams
      * @param $options
      * @param $expectedException
      * @throws \Exception
-     */
+
+ */
+    #[DataProvider('providedFailureCases')]
     public function testCorrectlyThrowsForBadInputsOrConfig(
         $cmdName,
         $cmdParams,

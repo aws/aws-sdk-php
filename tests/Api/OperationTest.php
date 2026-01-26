@@ -5,10 +5,12 @@ use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Api\Operation;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Api\Operation
+
  */
+#[CoversClass(\Aws\Api\Operation::class)]
 class OperationTest extends TestCase
 {
     public function testCreatesDefaultMethodAndUri()

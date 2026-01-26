@@ -10,10 +10,13 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Multipart\AbstractUploader
+
  */
+#[CoversClass(AbstractUploader::class)]
 class AbstractUploaderTest extends TestCase
 {
     use UsesServiceTrait;
@@ -192,8 +195,9 @@ class AbstractUploaderTest extends TestCase
      * @param UploadState $state
      * @param array       $expectedBodies
      *
-     * @dataProvider getPartGeneratorTestCases
-     */
+
+ */
+    #[DataProvider('getPartGeneratorTestCases')]
     public function testCommandGeneratorYieldsExpectedUploadCommands(
         $seekable,
         UploadState $state,

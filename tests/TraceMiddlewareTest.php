@@ -15,10 +15,13 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\TraceMiddleware
+
  */
+#[CoversClass(TraceMiddleware::class)]
 class TraceMiddlewareTest extends TestCase
 {
     public function testEmitsDebugInfo()
@@ -129,12 +132,13 @@ class TraceMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider authStringProvider
      *
      * @param string $key
      * @param string $signature
      * @param array $headers
-     */
+
+ */
+    #[DataProvider('authStringProvider')]
     public function testScrubsAuthStrings($key, $signature, array $headers)
     {
         $str = '';

@@ -7,11 +7,14 @@ use Aws\Neptune\NeptuneClient;
 use Aws\Result;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 require_once __DIR__ . '/../Signature/sig_hack.php';
 
 /**
- * @covers Aws\Neptune\NeptuneClient
+
  */
+#[CoversClass(NeptuneClient::class)]
 class NeptuneClientTest extends TestCase
 {
     public static function set_up_before_class()
@@ -39,14 +42,15 @@ class NeptuneClientTest extends TestCase
     }
 
     /**
-     * @dataProvider neptunePresignMethodProvider
      *
      * @param string $functionName
      * @param string $presignedUrl
      * @param string $sourceRegion
      * @param string $expectedUrl
      * @param string $expectedSignature
-     */
+
+ */
+    #[DataProvider('neptunePresignMethodProvider')]
     public function testCorrectPresignNeptuneUrls(
         $functionName,
         $functionArgs,

@@ -20,10 +20,13 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Waiter
+
  */
+#[CoversClass(Waiter::class)]
 class WaiterTest extends TestCase
 {
     use UsesServiceTrait;
@@ -147,8 +150,9 @@ class WaiterTest extends TestCase
     }
 
     /**
-     * @dataProvider waiterWorkflowDataProvider
-     */
+
+ */
+    #[DataProvider('waiterWorkflowDataProvider')]
     public function testWaiterWorkflow($results, $expectedException)
     {
         // Normalize results
@@ -280,8 +284,9 @@ class WaiterTest extends TestCase
     }
 
     /**
-     * @dataProvider matcherDataProvider
-     */
+
+ */
+    #[DataProvider('matcherDataProvider')]
     public function testMatchers($matcher, $result, $acceptor, $expected)
     {
 

@@ -4,10 +4,12 @@ namespace Aws\Test\Api;
 use Aws\Api\ApiProvider;
 use Aws\Exception\UnresolvedApiException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Api\ApiProvider
+
  */
+#[CoversClass(ApiProvider::class)]
 class ApiProviderTest extends TestCase
 {
     /**

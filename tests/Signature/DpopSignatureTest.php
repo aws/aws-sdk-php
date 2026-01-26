@@ -4,10 +4,12 @@ namespace Aws\Test\Signature;
 use Aws\Signature\DpopSignature;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\Request;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Signature\DpopSignature
+
  */
+#[CoversClass(DpopSignature::class)]
 class DpopSignatureTest extends TestCase
 {
     private function getValidEcKey(): \OpenSSLAsymmetricKey

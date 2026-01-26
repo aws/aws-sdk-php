@@ -3,10 +3,13 @@ namespace Aws\Test\Credentials;
 
 use Aws\Credentials\CredentialsUtils;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Credentials\CredentialsUtils
+
  */
+#[CoversClass(\Aws\Credentials\CredentialsUtils::class)]
 class CredentialsUtilsTest extends TestCase
 {
 
@@ -14,8 +17,9 @@ class CredentialsUtilsTest extends TestCase
      * @param string $host
      * @param bool $expectedResult
      *
-     * @dataProvider loopBackAddressCasesProvider
-     */
+
+ */
+    #[DataProvider('loopBackAddressCasesProvider')]
     public function testLoopBackAddressCases(string $host, bool $expectedResult)
     {
         $isLoopBack = CredentialsUtils::isLoopBackAddress($host);

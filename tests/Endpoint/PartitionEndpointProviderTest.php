@@ -5,15 +5,19 @@ use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\Partition;
 use Aws\Endpoint\PartitionEndpointProvider;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Endpoint\PartitionEndpointProvider
+
  */
+#[CoversClass(\Aws\Endpoint\PartitionEndpointProvider::class)]
 class PartitionEndpointProviderTest extends TestCase
 {
     /**
-     * @dataProvider endpointProvider
-     */
+
+ */
+    #[DataProvider('endpointProvider')]
     public function testResolvesEndpoints($input, $output)
     {
         // Use the default endpoints file
@@ -154,12 +158,13 @@ class PartitionEndpointProviderTest extends TestCase
     }
 
     /**
-     * @dataProvider partitionRegionProvider
      *
      * @param string $region
      * @param string $service
      * @param string $partition
-     */
+
+ */
+    #[DataProvider('partitionRegionProvider')]
     public function testResolvesPartitionsByRegion($region, $service, $partition)
     {
         // Use the default endpoints file
@@ -216,13 +221,14 @@ class PartitionEndpointProviderTest extends TestCase
     }
 
     /**
-     * @dataProvider knownEndpointProvider
      *
      * @param PartitionEndpointProvider $provider
      * @param $region
      * @param $service
      * @param $endpoint
-     */
+
+ */
+    #[DataProvider('knownEndpointProvider')]
     public function testCanGenerateKnownEndpointsKnownToPatternProvider(
         PartitionEndpointProvider $provider,
         $region,

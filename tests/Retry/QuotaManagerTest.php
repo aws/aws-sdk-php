@@ -7,10 +7,12 @@ use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\Retry\QuotaManager;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Retry\QuotaManager
+
  */
+#[CoversClass(\Aws\Retry\QuotaManager::class)]
 class QuotaManagerTest extends TestCase
 {
     public function testReturnsFalseWithNoCapacity()

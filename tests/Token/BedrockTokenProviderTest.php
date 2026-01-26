@@ -13,6 +13,7 @@ use Aws\Token\TokenProvider;
 use Aws\Token\TokenSource;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class BedrockTokenProviderTest extends TestCase
 {
@@ -244,8 +245,9 @@ class BedrockTokenProviderTest extends TestCase
      * @param $expectations
      * @param $iniConfig
      *
-     * @dataProvider integrationWithClientProvider
-     */
+
+ */
+    #[DataProvider('integrationWithClientProvider')]
     public function testIntegrationWithClient(
         $serviceName,
         $envVars,
@@ -395,8 +397,9 @@ class BedrockTokenProviderTest extends TestCase
     /**
      * Test that token source is added to user agent header
      *
-     * @dataProvider tokenSourceUserAgentProvider
-     */
+
+ */
+    #[DataProvider('tokenSourceUserAgentProvider')]
     public function testTokenSourceInUserAgent(
         string $service,
         string $operation,

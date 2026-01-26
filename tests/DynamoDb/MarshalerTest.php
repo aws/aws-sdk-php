@@ -7,17 +7,21 @@ use Aws\DynamoDb\NumberValue;
 use Aws\DynamoDb\SetValue;
 use GuzzleHttp\Psr7;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\DynamoDb\Marshaler
+
  */
+#[CoversClass(Marshaler::class)]
 class MarshalerTest extends TestCase
 {
     const ERROR = 'ERROR';
 
     /**
-     * @dataProvider getMarshalValueUseCases
-     */
+
+ */
+    #[DataProvider('getMarshalValueUseCases')]
     public function testMarshalValueUseCases($value, $expectedResult, $options = [])
     {
         $m = new Marshaler($options);
@@ -345,8 +349,9 @@ JSON;
     }
 
     /**
-     * @covers Aws\DynamoDb\NumberValue
-     */
+
+ */
+    #[CoversClass(Marshaler::class)]
     public function testNumberValueCanBeFormattedAndSerialized()
     {
         $number = new NumberValue('99999999999999999999');
@@ -355,8 +360,9 @@ JSON;
     }
 
     /**
-     * @covers Aws\DynamoDb\BinaryValue
-     */
+
+ */
+    #[CoversClass(Marshaler::class)]
     public function testBinaryValueCanBeFormattedAndSerialized()
     {
         $resource = fopen('php://temp', 'w+');
@@ -369,8 +375,9 @@ JSON;
     }
 
     /**
-     * @covers Aws\DynamoDb\SetValue
-     */
+
+ */
+    #[CoversClass(Marshaler::class)]
     public function testSetValueCanBeFormattedAndSerialized()
     {
         $set = new SetValue(['foo', 'bar', 'baz']);

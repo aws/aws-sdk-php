@@ -8,6 +8,7 @@ use Aws\RequestCompressionMiddleware;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class RequestCompressionMiddlewareTest extends TestCase
 {
@@ -46,14 +47,21 @@ class RequestCompressionMiddlewareTest extends TestCase
         $list->appendSign(Middleware::tap(function($cmd, $req) {
             $body = $req->getBody()->getContents();
             $this->assertEmpty($req->getHeader('content-encoding'));
-            $this->expectWarning();
+            $this->expectException(\RuntimeException::class);
+            set_error_handler(function ($errno, $errstr) {
+                throw new \RuntimeException($errstr, $errno);
+            });
             gzdecode($body);
         }));
 
-        $client->putMetricData([
-            'MetricData' => $metricData,
-            'Namespace' => 'foo'
-        ]);
+        try {
+            $client->putMetricData([
+                'MetricData' => $metricData,
+                'Namespace' => 'foo'
+            ]);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public static function specificSizeProvider()
@@ -67,12 +75,13 @@ class RequestCompressionMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider specificSizeProvider
      *
      * @param $minSize
      * @param $numMetricData
      * @param $expectedBodySize
-     */
+
+ */
+    #[DataProvider('specificSizeProvider')]
     public function testCompressesRequestAtSpecificSize($minSize, $numMetricData, $expectedBodySize)
     {
         $service = $this->generateTestService();
@@ -140,15 +149,22 @@ class RequestCompressionMiddlewareTest extends TestCase
         $list->appendSign(Middleware::tap(function($cmd, $req) {
             $body = $req->getBody()->getContents();
             $this->assertEmpty($req->getHeader('content-encoding'));
-            $this->expectWarning();
+            $this->expectException(\RuntimeException::class);
+            set_error_handler(function ($errno, $errstr) {
+                throw new \RuntimeException($errstr, $errno);
+            });
             gzdecode($body);
         }));
 
-        $client->putMetricData([
-            'MetricData' => $metricData,
-            'Namespace' => 'foo',
-            '@disable_request_compression' => true
-        ]);
+        try {
+            $client->putMetricData([
+                'MetricData' => $metricData,
+                'Namespace' => 'foo',
+                '@disable_request_compression' => true
+            ]);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testCommandLevelMinRequestSizeOverrides()
@@ -161,15 +177,22 @@ class RequestCompressionMiddlewareTest extends TestCase
         $list->appendSign(Middleware::tap(function($cmd, $req) {
             $body = $req->getBody()->getContents();
             $this->assertEmpty($req->getHeader('content-encoding'));
-            $this->expectWarning();
+            $this->expectException(\RuntimeException::class);
+            set_error_handler(function ($errno, $errstr) {
+                throw new \RuntimeException($errstr, $errno);
+            });
             gzdecode($body);
         }));
 
-        $client->putMetricData([
-            'MetricData' => $metricData,
-            'Namespace' => 'foo',
-            '@request_min_compression_size_bytes' => 10485760
-        ]);
+        try {
+            $client->putMetricData([
+                'MetricData' => $metricData,
+                'Namespace' => 'foo',
+                '@request_min_compression_size_bytes' => 10485760
+            ]);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public static function invalidDisableCompressionType()
@@ -181,10 +204,11 @@ class RequestCompressionMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidDisableCompressionType
      *
      * @param $invalidType
-     */
+
+ */
+    #[DataProvider('invalidDisableCompressionType')]
     public function testThrowsExceptionWhenDisableMinCompressionNotBool($invalidType)
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -203,10 +227,11 @@ class RequestCompressionMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidMinRequestSizeProvider
      *
      * @param $minRequestSize
-     */
+
+ */
+    #[DataProvider('invalidMinRequestSizeProvider')]
     public function testThrowsExceptionWhenInvalidMinCompressionSizeOnClient($minRequestSize)
     {
         if (is_int($minRequestSize)) {
@@ -227,10 +252,11 @@ class RequestCompressionMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidMinRequestSizeProvider
      *
      * @param $minRequestSize
-     */
+
+ */
+    #[DataProvider('invalidMinRequestSizeProvider')]
     public function testThrowsExceptionWhenInvalidMinCompressionSize($minRequestSize)
     {
         $this->expectException(\InvalidArgumentException::class);

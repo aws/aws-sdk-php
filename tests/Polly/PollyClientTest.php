@@ -4,10 +4,12 @@ namespace Aws\Test\Polly;
 use Aws\Credentials\Credentials;
 use Aws\Polly\PollyClient;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Polly\PollyClient
+
  */
+#[CoversClass(PollyClient::class)]
 class PollyClientTest extends TestCase
 {
     public function testCanGeneratePreSignedUrlForSynthesizeSpeech()

@@ -27,10 +27,13 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\AwsClient
+
  */
+#[CoversClass(AwsClient::class)]
 class AwsClientTest extends TestCase
 {
     use UsesServiceTrait;
@@ -359,8 +362,9 @@ class AwsClientTest extends TestCase
      * @param array $expectedHeaders
      * @param array $expectedHeaderValues
      *
-     * @dataProvider signOperationsWithAnAuthTypeProvider
-     */
+
+ */
+    #[DataProvider('signOperationsWithAnAuthTypeProvider')]
     public function testSignOperationsWithAnAuthType(
         array $serviceDefinition,
         array $clientArguments,
@@ -788,9 +792,10 @@ EOT
     }
 
     /**
-     * @dataProvider signingRegionSetProvider
      * @runInSeparateProcess
-     */
+
+ */
+    #[DataProvider('signingRegionSetProvider')]
     public function testSigningRegionSetResolution(
         $command,
         $env,

@@ -8,10 +8,12 @@ use Aws\S3\BatchDelete;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\S3\BatchDelete
+
  */
+#[CoversClass(\Aws\S3\BatchDelete::class)]
 class BatchDeleteTest extends TestCase
 {
     use UsesServiceTrait;

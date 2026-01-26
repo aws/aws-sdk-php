@@ -11,12 +11,15 @@ use Aws\Token\TokenInterface;
 use Aws\Token\TokenProvider;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 require_once __DIR__ . '/../Token/token_hack.php';
 
 /**
- * @covers Aws\Token\TokenProvider
+
  */
+#[CoversClass(TokenProvider::class)]
 class TokenProviderTest extends TestCase
 {
     use UsesServiceTrait;
@@ -159,8 +162,9 @@ EOT;
     }
 
     /**
-     * @dataProvider tokenProviderSuccessCases
-     */
+
+ */
+    #[DataProvider('tokenProviderSuccessCases')]
     public function testTokenProviderCachedSuccess($cachedToken, $expectedToken)
     {
         $_SERVER['aws_time'] = 1640466950;
@@ -261,8 +265,9 @@ EOT;
     }
 
     /**
-     * @dataProvider tokenProviderSuccessCasesWithRefresh
-     */
+
+ */
+    #[DataProvider('tokenProviderSuccessCasesWithRefresh')]
     public function testTokenProviderCachedSuccessWithRefresh(
         $currentTime,
         $cachedToken,
@@ -395,8 +400,9 @@ EOT;
     }
 
     /**
-     * @dataProvider tokenProviderFailureCases
-     */
+
+ */
+    #[DataProvider('tokenProviderFailureCases')]
     public function testTokenProviderFailureCases($cachedToken, $expectedException)
     {
         $cache = new LruArrayCache;

@@ -4,10 +4,12 @@ namespace Aws\Test\Retry;
 
 use Aws\Retry\Configuration;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Retry\Configuration
+
  */
+#[CoversClass(\Aws\Retry\Configuration::class)]
 class ConfigurationTest extends TestCase
 {
     public function testGetsCorrectValues()

@@ -8,44 +8,56 @@ use Aws\Middleware;
 use Aws\MockHandler;
 use Aws\Result;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\QueryCompatibleInputMiddleware
+
  */
+#[CoversClass(\Aws\QueryCompatibleInputMiddleware::class)]
 class QueryCompatibleInputMiddlewareTest extends TestCase
 {
     /**
-     * @dataProvider getInputs()
      *
      * @param $inputParam
      * @param $inputValue
      * @param $expected
      * @param $type
-     */
+
+ */
+    #[DataProvider('getInputsDataProvider')]
     public function testEmitsWarning($inputParam, $inputValue, $expected, $type)
     {
-        $this->expectWarning();
-        $this->expectWarningMessage(
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage(
             "The provided type for `{$inputParam}` value was `"
             . (gettype($inputValue) === 'double' ? 'float' : gettype($inputValue))
             . "`. The modeled type is `{$type}`."
         );
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service);
-        $command = $client->getCommand(
-            'FooOperation',
-            [$inputParam => $inputValue]
-        );
-        $client->execute($command);
+        set_error_handler(function ($errno, $errstr) {
+            throw new \RuntimeException($errstr, $errno);
+        });
+        try {
+            $service = $this->generateTestService();
+            $client = $this->generateTestClient($service);
+            $command = $client->getCommand(
+                'FooOperation',
+                [$inputParam => $inputValue]
+            );
+            $client->execute($command);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     /**
-     * @dataProvider getInputs()
      *
      * @param $inputParam
      * @param $inputValue
      * @param $expected
-     */
+
+ */
+    #[DataProvider('getInputsDataProvider')]
     public function testAppliesMiddlewareAndCastsValues($inputParam, $inputValue, $expected)
     {
         $service = $this->generateTestService();
@@ -68,7 +80,7 @@ class QueryCompatibleInputMiddlewareTest extends TestCase
      *
      * @return array
      */
-    public static function getInputs()
+    public static function getInputsDataProvider(): array
     {
         return [
             ['IntParam', '10', 10, 'integer'],

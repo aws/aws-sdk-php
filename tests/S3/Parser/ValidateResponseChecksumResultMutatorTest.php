@@ -12,6 +12,7 @@ use Aws\S3\Parser\ValidateResponseChecksumResultMutator;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Response;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * The tests defined here are similar to the tests
@@ -22,7 +23,6 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
     use UsesServiceTrait;
 
     /**
-     * @dataProvider checksumCasesDataProvider
      * @param array $responseAlgorithms
      * @param array $checksumHeadersReturned
      * @param string|null $expectedChecksumAlgorithm
@@ -30,7 +30,9 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
      * @param string $operation
      * @param string|null $checksumMode
      * @return void
-     */
+
+ */
+    #[DataProvider('checksumCasesDataProvider')]
     public function testChecksumValidation(
         array $responseAlgorithms,
         array $checksumHeadersReturned,

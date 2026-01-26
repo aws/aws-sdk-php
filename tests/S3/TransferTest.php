@@ -13,10 +13,13 @@ use PHPUnit\Framework\Constraint\Callback;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use SplFileInfo;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\S3\Transfer
+
  */
+#[CoversClass(Transfer::class)]
 class TransferTest extends TestCase
 {
     use UsesServiceTrait;
@@ -379,8 +382,9 @@ class TransferTest extends TestCase
     }
 
     /**
-     * @dataProvider providedPathsOutsideTarget
-     */
+
+ */
+    #[DataProvider('providedPathsOutsideTarget')]
     public function testCannotDownloadObjectsOutsideTarget($key)
     {
         $this->expectException(\Aws\Exception\AwsException::class);
@@ -555,8 +559,9 @@ class TransferTest extends TestCase
      * @param $value
      * @return void
      *
-     * @dataProvider flexibleChecksumsProvider
-     */
+
+ */
+    #[DataProvider('flexibleChecksumsProvider')]
     public function testAddsFlexibleChecksums($checksumAlgorithm)
     {
         if ($checksumAlgorithm === 'crc32c'

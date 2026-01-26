@@ -7,10 +7,13 @@ use Aws\HandlerList;
 use Aws\Api\Service;
 use GuzzleHttp\Psr7\Request;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\EndpointParameterMiddleware
+
  */
+#[CoversClass(\Aws\EndpointParameterMiddleware::class)]
 class EndpointParameterMiddlewareTest extends TestCase
 {
     public function testThrowsExceptionForMissingParameter()
@@ -67,8 +70,9 @@ class EndpointParameterMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider correctlyOutputsHostDataProvider
-     */
+
+ */
+    #[DataProvider('correctlyOutputsHostDataProvider')]
     public function testCorrectlyOutputsHost(
         $clientArgs,
         $cmdName,

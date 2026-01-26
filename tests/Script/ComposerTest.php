@@ -6,6 +6,7 @@ use Aws\Script\Composer\Composer;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ComposerTest extends TestCase
 {
@@ -20,11 +21,12 @@ class ComposerTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidServiceNameProvider
      *
      * @param $serviceList
      * @param $invalidService
-     */
+
+ */
+    #[DataProvider('invalidServiceNameProvider')]
     public function testListInvalidServiceName($serviceList, $invalidService)
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -58,10 +60,11 @@ class ComposerTest extends TestCase
     }
 
     /**
-     * @dataProvider servicesToKeepProvider
      *
      * @param $servicesToKeep
-     */
+
+ */
+    #[DataProvider('servicesToKeepProvider')]
     public function testRemoveServices($servicesToKeep)
     {
         $filesystem = new Filesystem();
@@ -114,8 +117,9 @@ class ComposerTest extends TestCase
     }
 
     /**
-     * @dataProvider retryProvider
-     */
+
+ */
+    #[DataProvider('retryProvider')]
     public function testRetriesOnException($success, $writeCalls)
     {
         if (!$success) {

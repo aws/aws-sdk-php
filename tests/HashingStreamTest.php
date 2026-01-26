@@ -5,10 +5,12 @@ use GuzzleHttp\Psr7;
 use Aws\PhpHash;
 use Aws\HashingStream;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\HashingStream
+
  */
+#[CoversClass(HashingStream::class)]
 class HashingStreamTest extends TestCase
 {
     public function testCanCreateRollingMd5()

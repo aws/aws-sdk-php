@@ -4,10 +4,12 @@ namespace Aws\Test\DynamoDb;
 use Aws\DynamoDb\SessionConnectionConfigTrait;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\DynamoDb\SessionConnectionConfigTrait
+
  */
+#[CoversClass(SessionConnectionConfigTrait::class)]
 class SessionConnectionConfigTraitTest extends TestCase
 {
     use UsesServiceTrait;

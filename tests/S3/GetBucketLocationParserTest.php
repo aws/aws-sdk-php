@@ -7,17 +7,21 @@ use Aws\Command;
 use Aws\Result;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\S3\GetBucketLocationParser
+
  */
+#[CoversClass(GetBucketLocationParser::class)]
 class GetBucketLocationParserTest extends TestCase
 {
     use UsesServiceTrait;
 
     /**
-     * @dataProvider getTestCases
-     */
+
+ */
+    #[DataProvider('getTestCases')]
     public function testParsesLocationFromGetBucketLocationOperations(
         $commandName, $responseBody, $expectedValue
     ) {

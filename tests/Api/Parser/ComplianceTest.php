@@ -11,17 +11,20 @@ use Aws\Api\Shape;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Api\Parser\AbstractParser
- * @covers \Aws\Api\Parser\AbstractRestParser
- * @covers \Aws\Api\Parser\JsonRpcParser
- * @covers \Aws\Api\Parser\JsonParser
- * @covers \Aws\Api\Parser\RestJsonParser
- * @covers \Aws\Api\Parser\RestXmlParser
- * @covers \Aws\Api\Parser\QueryParser
- * @covers \Aws\Api\Parser\XmlParser
+
  */
+#[CoversClass(\Aws\Api\Parser\AbstractParser::class)]
+#[CoversClass(\Aws\Api\Parser\AbstractRestParser::class)]
+#[CoversClass(\Aws\Api\Parser\JsonRpcParser::class)]
+#[CoversClass(\Aws\Api\Parser\JsonParser::class)]
+#[CoversClass(\Aws\Api\Parser\RestJsonParser::class)]
+#[CoversClass(\Aws\Api\Parser\RestXmlParser::class)]
+#[CoversClass(\Aws\Api\Parser\QueryParser::class)]
+#[CoversClass(\Aws\Api\Parser\XmlParser::class)]
 class ComplianceTest extends TestCase
 {
     use UsesServiceTrait;
@@ -106,7 +109,6 @@ class ComplianceTest extends TestCase
     }
 
     /**
-     * @dataProvider testCaseProvider
      *
      * @param $about
      * @param Service $service
@@ -115,7 +117,9 @@ class ComplianceTest extends TestCase
      * @param $res
      * @param string|null $errorCode
      * @param string|null $errorMessage
-     */
+
+ */
+    #[DataProvider('testCaseProvider')]
     public function testPassesComplianceTest(
         string $about,
         Service $service,

@@ -3,10 +3,13 @@ namespace Aws\Test\Api;
 
 use Aws\Api\DateTimeResult;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Api\DateTimeResult
+
  */
+#[CoversClass(\Aws\Api\DateTimeResult::class)]
 class DateTimeResultTest extends TestCase
 {
     public function testCreatesFromEpoch()
@@ -53,8 +56,9 @@ class DateTimeResultTest extends TestCase
     /**
      * @return void
      *
-     * @dataProvider nanosecondPrecisionProvider
-     */
+
+ */
+    #[DataProvider('nanosecondPrecisionProvider')]
     public function testIso8601NanosecondPrecision($timestamp, $expected)
     {
         $parsed = DateTimeResult::fromISO8601($timestamp);

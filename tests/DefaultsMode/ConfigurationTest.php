@@ -4,10 +4,12 @@ namespace Aws\Test\DefaultsMode;
 
 use Aws\DefaultsMode\Configuration;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\DefaultsMode\Configuration
+
  */
+#[CoversClass(\Aws\DefaultsMode\Configuration::class)]
 class ConfigurationTest extends TestCase
 {
     public function testGetsCorrectValues()

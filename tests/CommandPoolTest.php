@@ -6,10 +6,12 @@ use Aws\CommandPool;
 use Aws\Exception\AwsException;
 use Aws\Result;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\CommandPool
+
  */
+#[CoversClass(CommandPool::class)]
 class CommandPoolTest extends TestCase
 {
     use UsesServiceTrait;

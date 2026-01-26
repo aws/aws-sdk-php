@@ -6,10 +6,13 @@ use Aws\S3\PostObject;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\S3\PostObject
+
  */
+#[CoversClass(PostObject::class)]
 class PostObjectTest extends TestCase
 {
     use UsesServiceTrait;
@@ -74,12 +77,13 @@ class PostObjectTest extends TestCase
     }
 
     /**
-     * @dataProvider pathStyleProvider
      *
      * @param string $endpoint
      * @param string $bucket
      * @param string $expected
-     */
+
+ */
+    #[DataProvider('pathStyleProvider')]
     public function testCanHandleForcedPathStyleEndpoint($endpoint, $bucket, $expected)
     {
         $s3 = new S3Client([

@@ -13,6 +13,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class S3EndpointMiddlewareTest extends TestCase
 {
@@ -49,10 +50,11 @@ class S3EndpointMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider excludedCommandProvider
      *
      * @param CommandInterface $command
-     */
+
+ */
+    #[DataProvider('excludedCommandProvider')]
     public function testAppliesDualStackToCommandForInvalidOperationsWhenEnableBoth(CommandInterface $command)
     {
         $middleware = new S3EndpointMiddleware(
@@ -68,10 +70,11 @@ class S3EndpointMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider excludedCommandProvider
      *
      * @param CommandInterface $command
-     */
+
+ */
+    #[DataProvider('excludedCommandProvider')]
     public function testAppliesDualStackWithPathStyleToCommandForInvalidOperationsWhenEnableBoth(CommandInterface $command)
     {
         $middleware = new S3EndpointMiddleware(
@@ -145,10 +148,11 @@ class S3EndpointMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider excludedCommandProvider
      *
      * @param CommandInterface $command
-     */
+
+ */
+    #[DataProvider('excludedCommandProvider')]
     public function testAppliesDualStackForInvalidOperationsWhenEnableBothAtOperationalLevel(CommandInterface $command)
     {
         $middleware = new S3EndpointMiddleware(
@@ -163,10 +167,11 @@ class S3EndpointMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider excludedCommandProvider
      *
      * @param CommandInterface $command
-     */
+
+ */
+    #[DataProvider('excludedCommandProvider')]
     public function testAppliesDualStackForInvalidOperationsWhenEnableBothWithPathStyleAtOperationalLevel(CommandInterface $command)
     {
         $middleware = new S3EndpointMiddleware(
@@ -220,10 +225,11 @@ class S3EndpointMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider excludedCommandProvider
      *
      * @param CommandInterface $command
-     */
+
+ */
+    #[DataProvider('excludedCommandProvider')]
     public function testIgnoresExcludedCommands(CommandInterface $command)
     {
         $middleware = new S3EndpointMiddleware(
@@ -534,10 +540,11 @@ class S3EndpointMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider jsonCaseProvider
      *
      * @param array $testCase
-     */
+
+ */
+    #[DataProvider('jsonCaseProvider')]
     public function testPassesCompliance(
         $bucket,
         $configuredAddressingStyle,
@@ -570,7 +577,6 @@ class S3EndpointMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider objectLambdasSuccessProvider
      *
      * @param $bucketFieldInput
      * @param $clientRegion
@@ -578,7 +584,9 @@ class S3EndpointMiddlewareTest extends TestCase
      * @param $useArnRegion
      * @param $endpointUrl
      * @param $expectedEndpoint
-     */
+
+ */
+    #[DataProvider('objectLambdasSuccessProvider')]
     public function testObjectLambdaArnSuccess(
         $bucketFieldInput,
         $clientRegion,
@@ -644,7 +652,6 @@ class S3EndpointMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider objectLambdasFailureProvider
      *
      * @param $bucketFieldInput
      * @param $clientRegion
@@ -652,7 +659,9 @@ class S3EndpointMiddlewareTest extends TestCase
      * @param $useArnRegion
      * @param $endpointUrl
      * @param $expectedException
-     */
+
+ */
+    #[DataProvider('objectLambdasFailureProvider')]
     public function testObjectLambdaArnFailures(
         $bucketFieldInput,
         $clientRegion,
@@ -772,13 +781,14 @@ class S3EndpointMiddlewareTest extends TestCase
 
 
     /**
-     * @dataProvider writeGetObjectResponseProvider
      *
      * @param $clientRegion
      * @param $route
      * @param $endpointUrl
      * @param $expectedEndpoint
-     */
+
+ */
+    #[DataProvider('writeGetObjectResponseProvider')]
     public function testWriteGetObjectResponse(
         $clientRegion,
         $route,

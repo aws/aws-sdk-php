@@ -4,10 +4,13 @@ namespace Aws\Test\EndpointV2;
 use Aws\EndpointV2\Ruleset\RulesetParameter;
 use Aws\Exception\UnresolvedEndpointException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\EndpointV2\Ruleset\RulesetParameter
+
  */
+#[CoversClass(RulesetParameter::class)]
 class RulesetParameterTest extends TestCase
 {
     public static function wrongParameterTypeProvider()
@@ -20,10 +23,11 @@ class RulesetParameterTest extends TestCase
     }
 
     /**
-     * @dataProvider wrongParameterTypeProvider
      *
      * @param $inputParameter
-     */
+
+ */
+    #[DataProvider('wrongParameterTypeProvider')]
     public function testWrongParameterTypeThrowsException($inputParameter)
     {
         $this->expectException(UnresolvedEndpointException::class);
@@ -40,19 +44,27 @@ class RulesetParameterTest extends TestCase
 
     public function testDeprecatedParameterLogsError()
     {
-        $this->expectWarning();
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage(
             'Region has been deprecated since then. There is a new parameter.'
         );
-        $parameter = new RulesetParameter('Region', [
-            "type" => "string",
-            "builtIn" => "AWS::Region",
-            "deprecated" => [
-                "since" => 'then',
-                "message" => 'There is a new parameter.'
-            ]
-        ]);
-        $parameter->validateInputParam('us-east-1');
+
+        set_error_handler(function ($errno, $errstr) {
+            throw new \RuntimeException($errstr, $errno);
+        });
+        try {
+            $parameter = new RulesetParameter('Region', [
+                "type" => "string",
+                "builtIn" => "AWS::Region",
+                "deprecated" => [
+                    "since" => 'then',
+                    "message" => 'There is a new parameter.'
+                ]
+            ]);
+            $parameter->validateInputParam('us-east-1');
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testUnknownTypeThrowsException()
@@ -80,15 +92,16 @@ class RulesetParameterTest extends TestCase
     }
 
     /**
-     * @dataProvider validTypesProvider
      * @doesNotPerformAssertions
-     */
+     * */
+    #[DataProvider('validTypesProvider')]
     public function testRulesetCreationWithValidTypes($spec)
     {
         new RulesetParameter('FooParam', $spec);
+        $this->assertTrue(true);
     }
 
-    public static function validTypesProvider()
+    public static function validTypesProvider(): array
     {
         return [
             [

@@ -6,10 +6,12 @@ use Aws\Identity\S3\S3ExpressIdentityProvider;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Identity\S3\S3ExpressIdentityProvider
+
  */
+#[CoversClass(S3ExpressIdentityProvider::class)]
 class S3ExpressIdentityProviderTest extends TestCase
 {
     use UsesServiceTrait;

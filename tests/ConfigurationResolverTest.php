@@ -3,6 +3,7 @@ namespace Aws\Test;
 
 use Aws\Configuration\ConfigurationResolver;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ConfigurationResolverTest extends TestCase
 {
@@ -91,8 +92,9 @@ EOT;
     }
 
     /**
-     * @dataProvider getEnvValues
-     */
+
+ */
+    #[DataProvider('getEnvValues')]
     public function testRetrievesAndConvertsEnvironmentVariables($envValue, $type, $expected)
     {
         $this->clearEnv();
@@ -135,8 +137,9 @@ EOT;
     }
 
     /**
-     * @dataProvider IniFileProvider
-     */
+
+ */
+    #[DataProvider('IniFileProvider')]
     public function testResolvesFromIniFileWithDefaultProfile($iniFile, $type, $expected)
     {
         $dir = $this->clearEnv();
@@ -148,8 +151,9 @@ EOT;
     }
 
     /**
-     * @dataProvider IniFileProvider
-     */
+
+ */
+    #[DataProvider('IniFileProvider')]
     public function testCreatesFromIniFileWithDifferentDefaultFilename($iniFile, $type, $expected)
     {
         $dir = $this->clearEnv();
@@ -174,8 +178,9 @@ EOT;
     }
 
     /**
-     * @dataProvider IniFileWIthAltProfileProvider
-     */
+
+ */
+    #[DataProvider('IniFileWIthAltProfileProvider')]
     public function testCreatesFromIniFileWithSpecifiedProfile($iniFile, $type, $expected)
     {
         $dir = $this->clearEnv();
@@ -345,8 +350,9 @@ EOT;
     }
 
     /**
-     * @dataProvider duplicateIniFileProvider
-     */
+
+ */
+    #[DataProvider('duplicateIniFileProvider')]
     public function testResolvesServiceIniWithDuplicateSections($ini)
     {
         $dir = $this->clearEnv();

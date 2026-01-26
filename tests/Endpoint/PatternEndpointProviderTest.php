@@ -4,10 +4,13 @@ namespace Aws\Test\Endpoint;
 use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\PatternEndpointProvider;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Endpoint\PatternEndpointProvider
+
  */
+#[CoversClass(PatternEndpointProvider::class)]
 class PatternEndpointProviderTest extends TestCase
 {
     public function testReturnsNullWhenUnresolved()
@@ -73,8 +76,9 @@ class PatternEndpointProviderTest extends TestCase
     }
 
     /**
-     * @dataProvider endpointProvider
-     */
+
+ */
+    #[DataProvider('endpointProvider')]
     public function testResolvesEndpoints($input, $output)
     {
         $p = EndpointProvider::patterns([

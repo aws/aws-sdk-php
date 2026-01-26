@@ -9,10 +9,12 @@ use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Response;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\CloudTrail\LogFileIterator
+
  */
+#[CoversClass(LogFileIterator::class)]
 class LogFileIteratorTest extends TestCase
 {
     use UsesServiceTrait;

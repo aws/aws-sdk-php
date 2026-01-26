@@ -4,18 +4,22 @@ namespace Aws\Test\Arn\S3;
 use Aws\Arn\S3\AccessPointArn;
 use Aws\Arn\Exception\InvalidArnException;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Arn\S3\AccessPointArn
+
  */
+#[CoversClass(\Aws\Arn\S3\AccessPointArn::class)]
 class AccessPointArnTest extends TestCase
 {
     /**
-     * @dataProvider invalidArnCases
      *
      * @param $string
      * @param $message
-     */
+
+ */
+    #[DataProvider('invalidArnCases')]
     public function testThrowsOnInvalidArn($string, $message)
     {
         try {

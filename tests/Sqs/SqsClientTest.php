@@ -6,10 +6,12 @@ use Aws\Result;
 use Aws\Sqs\SqsClient;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Sqs\SqsClient
+
  */
+#[CoversClass(SqsClient::class)]
 class SqsClientTest extends TestCase
 {
     use UsesServiceTrait;

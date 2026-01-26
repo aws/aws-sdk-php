@@ -4,6 +4,7 @@ namespace Aws\Test\EndpointV2;
 
 use Aws\EndpointV2\EndpointDefinitionProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class EndpointDefinitionProviderTest extends TestCase
 {
@@ -55,10 +56,11 @@ class EndpointDefinitionProviderTest extends TestCase
     }
 
     /**
-     * @dataProvider getEndpointFileProvider
      *
      * @param $type
-     */
+
+ */
+    #[DataProvider('getEndpointFileProvider')]
     public function testThrowsExceptionOnMissingFiles($type)
     {
         $method = 'getEndpoint' . $type;

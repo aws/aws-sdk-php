@@ -11,10 +11,13 @@ use Aws\Signin\SigninClient;
 use Aws\Signin\Exception\SigninException;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Credentials\LoginCredentialProvider
+
  */
+#[CoversClass(LoginCredentialProvider::class)]
 class LoginCredentialProviderTest extends TestCase
 {
     use UsesServiceTrait;
@@ -302,8 +305,9 @@ EOT;
     }
 
     /**
-     * @dataProvider missingCacheKeysProvider
-     */
+
+ */
+    #[DataProvider('missingCacheKeysProvider')]
     public function testLoadTokenFailsWithMissingOrEmptyCacheKeys(
         array $tokenData,
         string $expectedMessage
@@ -1250,8 +1254,9 @@ EOT;
     }
 
     /**
-     * @dataProvider loginTestCasesProvider
-     */
+
+ */
+    #[DataProvider('loginTestCasesProvider')]
     public function testLoginCredentialProviderFromTestCases(
         string $documentation,
         string $configContents,
@@ -1408,8 +1413,9 @@ EOT;
     }
 
     /**
-     * @dataProvider externalRefreshProvider
-     */
+
+ */
+    #[DataProvider('externalRefreshProvider')]
     public function testExternalRefreshBehavior(
         string $scenario,
         int $currentExpiryMinutes,

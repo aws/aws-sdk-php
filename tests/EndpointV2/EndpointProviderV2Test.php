@@ -14,10 +14,13 @@ use Aws\Middleware;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Uri;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\EndpointV2\EndpointProviderV2
+
  */
+#[CoversClass(EndpointProviderV2::class)]
 class EndpointProviderV2Test extends TestCase
 {
     use UsesServiceTrait;
@@ -68,8 +71,9 @@ class EndpointProviderV2Test extends TestCase
     }
 
     /**
-     * @dataProvider basicTestCaseProvider
-     */
+
+ */
+    #[DataProvider('basicTestCaseProvider')]
     public function testBasicEndpointAndErrorCases(
         $ruleset,
         $isSuccessCase,
@@ -130,8 +134,9 @@ class EndpointProviderV2Test extends TestCase
     }
 
     /**
-     * @dataProvider serviceTestCaseProvider
-     */
+
+ */
+    #[DataProvider('serviceTestCaseProvider')]
     public function testServiceEndpointAndErrorCases(
         $service,
         $isSuccessCase,
@@ -225,8 +230,9 @@ class EndpointProviderV2Test extends TestCase
      * before being passed into the endpoint provider and after other
      * middleware has acted upon the request.
      *
-     * @dataProvider rulesetProtocolEndpointAndErrorCaseProvider
-     */
+
+ */
+    #[DataProvider('rulesetProtocolEndpointAndErrorCaseProvider')]
     public function testRulesetProtocolEndpointAndErrorCases($service, $clientArgs, $operationInput, $expected, $errorCase)
     {
         if ($errorCase) {
@@ -378,9 +384,10 @@ class EndpointProviderV2Test extends TestCase
     }
 
     /**
-     * @dataProvider stringArrayOperationInputsProvider
      * @return void
-     */
+
+ */
+    #[DataProvider('stringArrayOperationInputsProvider')]
     public function testStringArrayOperationInputs(
         $params,
         $expected,

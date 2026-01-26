@@ -13,11 +13,13 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware
- * @covers Aws\ClientSideMonitoring\AbstractMonitoringMiddleware
+
  */
+#[CoversClass(ApiCallAttemptMonitoringMiddleware::class)]
+#[CoversClass(ApiCallAttemptMonitoringMiddleware::class)]
 class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
 {
     use MonitoringMiddlewareTestingTrait;

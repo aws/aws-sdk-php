@@ -13,16 +13,18 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\S3\BucketEndpointMiddleware
+
  */
+#[CoversClass(\Aws\S3\BucketEndpointMiddleware::class)]
 class BucketEndpointArnMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 
     /**
-     * @dataProvider accessPointArnCases
      *
      * @param $arn
      * @param $options
@@ -31,7 +33,9 @@ class BucketEndpointArnMiddlewareTest extends TestCase
      * @param $signingRegion
      * @param $signingService
      * @throws \Exception
-     */
+
+ */
+    #[DataProvider('accessPointArnCases')]
     public function testCorrectlyModifiesUri(
         $arn,
         $options,
@@ -330,12 +334,13 @@ class BucketEndpointArnMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider incorrectUsageProvider
      *
      * @param CommandInterface $command
      * @param array $config
      * @param \Exception $expected
-     */
+
+ */
+    #[DataProvider('incorrectUsageProvider')]
     public function testThrowsForIncorrectArnUsage($command, $config, \Exception $expected)
     {
         try {

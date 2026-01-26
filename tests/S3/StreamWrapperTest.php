@@ -13,10 +13,13 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\S3\StreamWrapper
+
  */
+#[CoversClass(StreamWrapper::class)]
 class StreamWrapperTest extends TestCase
 {
     use UsesServiceTrait;
@@ -40,6 +43,7 @@ class StreamWrapperTest extends TestCase
     {
         stream_wrapper_unregister('s3');
         $this->client = null;
+        restore_exception_handler(); // In case it was not restored
     }
 
     public function testRegistersStreamWrapperOnlyOnce()
@@ -51,34 +55,66 @@ class StreamWrapperTest extends TestCase
 
     public function testCannotOpenBuckets()
     {
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("Cannot open a bucket");
-        $this->expectWarning();
-        fopen('s3://bucket', 'r');
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            fopen('s3://bucket', 'r');
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testSupportsOnlyReadWriteXA()
     {
         $this->expectExceptionMessage("Mode not supported");
-        $this->expectWarning();
-        fopen('s3://bucket/key', 'c');
+        $this->expectException(\RuntimeException::class);
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            fopen('s3://bucket/key', 'c');
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testValidatesXMode()
     {
         $this->expectExceptionMessage("s3://bucket/key already exists on Amazon S3");
-        $this->expectWarning();
-        $this->addMockResults($this->client, [new Result()]);
-        fopen('s3://bucket/key', 'x');
+        $this->expectException(\RuntimeException::class);
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            $this->addMockResults($this->client, [new Result()]);
+            fopen('s3://bucket/key', 'x');
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testValidatesArn()
     {
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage(
             "Invalid ARN: Unrecognized format:" .
             " arn:aws:s3:us-east-1:123456789012:foo:myaccess (type: foo)"
         );
-        $this->expectWarning();
-        fopen('s3://arn:aws:s3:us-east-1:123456789012:foo:myaccess/test_key', 'r');
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            fopen('s3://arn:aws:s3:us-east-1:123456789012:foo:myaccess/test_key', 'r');
+        } finally {
+            restore_error_handler();
+        }
     }
 
     /** @doesNotPerformAssertions */
@@ -284,13 +320,21 @@ class StreamWrapperTest extends TestCase
     public function testTriggersErrorInsteadOfExceptionWhenWriteFlushFails()
     {
         $this->expectExceptionMessage("403 Forbidden");
-        $this->expectWarning();
-        $this->addMockResults($this->client, [
-            function ($cmd, $req) { return new S3Exception('403 Forbidden', $cmd); }
-        ]);
-        $s = fopen('s3://bucket/key', 'w');
-        fwrite($s, 'test');
-        fclose($s);
+        $this->expectException(\RuntimeException::class);
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            $this->addMockResults($this->client, [
+                function ($cmd, $req) { return new S3Exception('403 Forbidden', $cmd); }
+            ]);
+            $s = fopen('s3://bucket/key', 'w');
+            fwrite($s, 'test');
+            fclose($s);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testCanOpenAppendStreamsWithOriginalFile()
@@ -353,11 +397,19 @@ class StreamWrapperTest extends TestCase
     public function testThrowsErrorsWhenUnlinkFails()
     {
         $this->expectExceptionMessage("403 Forbidden");
-        $this->expectWarning();
-        $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
-        ]);
-        $this->assertFalse(unlink('s3://bucket/key'));
+        $this->expectException(\RuntimeException::class);
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            $this->addMockResults($this->client, [
+                function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
+            ]);
+            $this->assertFalse(unlink('s3://bucket/key'));
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testCreatingBucketWithNoBucketReturnsFalse()
@@ -367,18 +419,34 @@ class StreamWrapperTest extends TestCase
 
     public function testCreatingAlreadyExistingBucketRaisesError()
     {
-        $this->expectWarning();
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("Bucket already exists: s3://already-existing-bucket");
-        $this->addMockResults($this->client, [new Result()]);
-        mkdir('s3://already-existing-bucket');
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            $this->addMockResults($this->client, [new Result()]);
+            mkdir('s3://already-existing-bucket');
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testCreatingAlreadyExistingBucketForKeyRaisesError()
     {
-        $this->expectWarning();
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("Subfolder already exists: s3://already-existing-bucket/key");
-        $this->addMockResults($this->client, [new Result()]);
-        mkdir('s3://already-existing-bucket/key');
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            $this->addMockResults($this->client, [new Result()]);
+            mkdir('s3://already-existing-bucket/key');
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testCreatingBucketsDoesNotSetAcl()
@@ -434,19 +502,34 @@ class StreamWrapperTest extends TestCase
 
     public function testCannotDeleteS3()
     {
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("specify a bucket");
-        $this->expectWarning();
-        rmdir('s3://');
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            rmdir('s3://');
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testRmDirWithExceptionTriggersError()
     {
         $this->expectExceptionMessage("403 Forbidden");
-        $this->expectWarning();
-        $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
-        ]);
-        rmdir('s3://bucket');
+        $this->expectException(\RuntimeException::class);
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            $this->addMockResults($this->client, [
+                function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
+            ]);
+            rmdir('s3://bucket');
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testCanDeleteBucketWithRmDir()
@@ -471,8 +554,9 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @dataProvider rmdirProvider
-     */
+
+ */
+    #[DataProvider('rmdirProvider')]
     public function testCanDeleteObjectWithRmDir($path)
     {
         $history = new History();
@@ -511,26 +595,50 @@ class StreamWrapperTest extends TestCase
     public function testRenameEnsuresProtocolsMatch()
     {
         $this->expectExceptionMessage("rename(): Cannot rename a file across wrapper types");
-        $this->expectWarning();
-        StreamWrapper::register($this->client, 'baz');
-        rename('s3://foo/bar', 'baz://qux/quux');
+        $this->expectException(\RuntimeException::class);
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_WARNING);
+        try {
+            StreamWrapper::register($this->client, 'baz');
+            rename('s3://foo/bar', 'baz://qux/quux');
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testRenameEnsuresKeyIsSet()
     {
         $this->expectExceptionMessage("The Amazon S3 stream wrapper only supports copying objects");
-        $this->expectWarning();
-        rename('s3://foo/bar', 's3://baz');
+        $this->expectException(\RuntimeException::class);
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            rename('s3://foo/bar', 's3://baz');
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testRenameWithExceptionThrowsError()
     {
         $this->expectExceptionMessage("Forbidden");
-        $this->expectWarning();
-        $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
-        ]);
-        rename('s3://foo/bar', 's3://baz/bar');
+        $this->expectException(\RuntimeException::class);
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            $this->addMockResults($this->client, [
+                function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
+            ]);
+            rename('s3://foo/bar', 's3://baz/bar');
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testCanRenameObjects()
@@ -627,25 +735,41 @@ class StreamWrapperTest extends TestCase
     public function testFailingStatTriggersError()
     {
         $this->expectExceptionMessage("Forbidden");
-        $this->expectWarning();
-        // Sends one request for HeadObject, then another for ListObjects
-        $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
-            function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); }
-        ]);
-        clearstatcache('s3://bucket/key');
-        stat('s3://bucket/key');
+        $this->expectException(\RuntimeException::class);
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            // Sends one request for HeadObject, then another for ListObjects
+            $this->addMockResults($this->client, [
+                function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
+                function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); }
+            ]);
+            clearstatcache('s3://bucket/key');
+            stat('s3://bucket/key');
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testBucketNotFoundTriggersError()
     {
         $this->expectExceptionMessage("File or directory not found: s3://bucket");
-        $this->expectWarning();
-        $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('404', $cmd); },
-        ]);
-        clearstatcache('s3://bucket');
-        stat('s3://bucket');
+        $this->expectException(\RuntimeException::class);
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            $this->addMockResults($this->client, [
+                function ($cmd, $r) { return new S3Exception('404', $cmd); },
+            ]);
+            clearstatcache('s3://bucket');
+            stat('s3://bucket');
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testStatsRegularObjects()
@@ -708,13 +832,21 @@ class StreamWrapperTest extends TestCase
     public function testCannotStatPrefixWithNoResults()
     {
         $this->expectExceptionMessage("File or directory not found: s3://bucket/prefix");
-        $this->expectWarning();
-        $this->addMockResults($this->client, [
-            function ($cmd, $r) { return new S3Exception('404', $cmd); },
-            new Result()
-        ]);
-        clearstatcache('s3://bucket/prefix');
-        stat('s3://bucket/prefix');
+        $this->expectException(\RuntimeException::class);
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            $this->addMockResults($this->client, [
+                function ($cmd, $r) { return new S3Exception('404', $cmd); },
+                new Result()
+            ]);
+            clearstatcache('s3://bucket/prefix');
+            stat('s3://bucket/prefix');
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public static function fileTypeProvider()
@@ -751,8 +883,9 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @dataProvider fileTypeProvider
-     */
+
+ */
+    #[DataProvider('fileTypeProvider')]
     public function testDeterminesIfFileOrDir($uri, $queue, $result)
     {
         $history = new History();
@@ -780,13 +913,8 @@ class StreamWrapperTest extends TestCase
 
     public function testStreamCastIsNotPossible()
     {
-        if (PHP_VERSION_ID < 80000) {
-            $this->expectExceptionMessage("cannot represent a stream of type user-space");
-            $this->expectWarning();
-        } else {
-            $this->expectExceptionMessage('No stream arrays were passed');
-            $this->expectException(\ValueError::class);
-        }
+        $this->expectExceptionMessage('No stream arrays were passed');
+        $this->expectException(\ValueError::class);
 
         $this->addMockResults($this->client, [
             new Result(['Body' => Psr7\Utils::streamFor('')])
@@ -800,10 +928,18 @@ class StreamWrapperTest extends TestCase
     public function testEnsuresClientIsSet()
     {
         $this->expectExceptionMessage("No client in stream context");
-        $this->expectWarning();
-        fopen('s3://bucket/key', 'r', false, stream_context_create([
-            's3' => ['client' => null]
-        ]));
+        $this->expectException(\RuntimeException::class);
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            fopen('s3://bucket/key', 'r', false, stream_context_create([
+                's3' => ['client' => null]
+            ]));
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testDoesNotErrorOnIsLink()
@@ -1025,7 +1161,7 @@ class StreamWrapperTest extends TestCase
         stream_wrapper_unregister('foo');
     }
 
-    public static function contentProvider()
+    public static function contentProvider(): array
     {
         return [
             ['foo'],
@@ -1034,13 +1170,17 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @dataProvider contentProvider
-     */
-    public function testTriggersErrorOnNoFlushOrClose($content)
-    {
-        $this->expectWarning();
-        $this->expectWarning("Unable to determine stream size. Did you forget to close or flush the stream?");
 
+ */
+    #[DataProvider('contentProvider')]
+    public function testTriggersErrorOnNoFlushOrClose(string $content)
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage("Unable to determine stream size. Did you forget to close or flush the stream?");
+
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
         $stream = $this->getMockBuilder(Psr7\Stream::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -1087,22 +1227,30 @@ class StreamWrapperTest extends TestCase
 
     public function testStreamLockReturnsFalse()
     {
-        $this->expectWarning();
-        $this->expectWarningMessage(
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage(
             'stream_lock() is not supported by the Amazon S3 stream wrapper'
         );
-        $stream = $this->getMockBuilder(Psr7\Stream::class)
-            ->disableOriginalConstructor()
-            ->getMock();
 
-        $this->addMockResults(
-            $this->client,
-            [
-                new Result(['Body' => $stream]),
-            ]
-        );
-        $handle = fopen('s3://bucket/key', 'r');
-        $this->assertFalse(flock($handle, LOCK_EX));
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        }, E_USER_WARNING);
+        try {
+            $stream = $this->getMockBuilder(Psr7\Stream::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+
+            $this->addMockResults(
+                $this->client,
+                [
+                    new Result(['Body' => $stream]),
+                ]
+            );
+            $handle = fopen('s3://bucket/key', 'r');
+            $this->assertFalse(flock($handle, LOCK_EX));
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testStreamTruncateReturnsFalse()

@@ -5,23 +5,27 @@ use Aws\Api\ErrorParser\JsonRpcErrorParser;
 use Aws\Test\TestServiceTrait;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Api\ErrorParser\JsonRpcErrorParser
- * @covers \Aws\Api\ErrorParser\JsonParserTrait
+
  */
+#[CoversClass(\Aws\Api\ErrorParser\JsonRpcErrorParser::class)]
+#[CoversClass(\Aws\Api\ErrorParser\JsonParserTrait::class)]
 class JsonRpcErrorParserTest extends TestCase
 {
     use TestServiceTrait;
 
     /**
-     * @dataProvider errorResponsesProvider
      *
      * @param string $response
      * @param string|null $commandName
      * @param bool $parserWithService
      * @param array $expected
-     */
+
+ */
+    #[DataProvider('errorResponsesProvider')]
     public function testParsesClientErrorResponses(
         string $response,
         ?string $commandName,

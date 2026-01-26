@@ -5,11 +5,13 @@ use Aws\Command;
 use Aws\HandlerList;
 use Aws\MetricsBuilder;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Command
- * @covers Aws\HasDataTrait
+
  */
+#[CoversClass(Command::class)]
+#[CoversClass(Command::class)]
 class CommandTest extends TestCase
 {
     public function testHasName()
@@ -97,26 +99,39 @@ class CommandTest extends TestCase
 
     public function testGetAuthSchemesEmitsWarning()
     {
-        $this->expectWarning();
-        $this->expectWarningMessage(
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage(
             'Aws\Command::getAuthSchemes is deprecated.  Auth schemes resolved using the service'
         .' `auth` trait or via endpoint resolution can now be found in the command `@context` property.'
         );
-
-        $c = new Command('foo', ['bar' => 'baz', 'qux' => 'boo']);
-        $c->getAuthSchemes();
+        set_error_handler(function ($errno, $errstr) {
+            throw new \RuntimeException($errstr, $errno);
+        });
+        try {
+            $c = new Command('foo', ['bar' => 'baz', 'qux' => 'boo']);
+            $c->getAuthSchemes();
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testSetAuthSchemesEmitsWarning()
     {
-        $this->expectWarning();
-        $this->expectWarningMessage(
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage(
             'Aws\Command::setAuthSchemes is deprecated.  Auth schemes resolved using the service'
             .' `auth` trait or via endpoint resolution are now set in the command `@context` property.'
         );
 
-        $c = new Command('foo', ['bar' => 'baz', 'qux' => 'boo']);
-        $c->setAuthSchemes([]);
+        set_error_handler(function ($errno, $errstr) {
+            throw new \RuntimeException($errstr, $errno);
+        });
+        try {
+            $c = new Command('foo', ['bar' => 'baz', 'qux' => 'boo']);
+            $c->setAuthSchemes([]);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testInitializeMetricsBuilderObject()

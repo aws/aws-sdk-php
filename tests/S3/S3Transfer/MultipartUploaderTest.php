@@ -21,6 +21,7 @@ use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class MultipartUploaderTest extends TestCase
 {
@@ -44,8 +45,9 @@ class MultipartUploaderTest extends TestCase
      * @param array $expected
      * @return void
      *
-     * @dataProvider multipartUploadProvider
-     */
+
+ */
+    #[DataProvider('multipartUploadProvider')]
     public function testMultipartUpload(
         array $sourceConfig,
         array $commandArgs,
@@ -276,10 +278,11 @@ EOF;
      * @param int $partSize
      * @param bool $expectError
      *
-     * @dataProvider validatePartSizeProvider
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('validatePartSizeProvider')]
     public function testValidatePartSize(
         int $partSize,
         bool $expectError
@@ -335,10 +338,11 @@ EOF;
      * @param string|int $source
      * @param bool $expectError
      *
-     * @dataProvider invalidSourceStringProvider
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('invalidSourceStringProvider')]
     public function testInvalidSourceStringThrowsException(
         string|int $source,
         bool $expectError
@@ -534,10 +538,11 @@ EOF;
      * @param array $checksumConfig
      * @param array $expectedOperationHeaders
      *
-     * @dataProvider multipartUploadWithCustomChecksumProvider
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('multipartUploadWithCustomChecksumProvider')]
     public function testMultipartUploadWithCustomChecksum(
         array $sourceConfig,
         array $checksumConfig,
@@ -845,10 +850,11 @@ EOF;
      * @param array $checksumConfig
      * @param bool $expectsError
      *
-     * @dataProvider fullObjectChecksumWorksJustWithCRCProvider
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('fullObjectChecksumWorksJustWithCRCProvider')]
     public function testFullObjectChecksumWorksJustWithCRC(
         array $checksumConfig,
         bool $expectsError
@@ -923,8 +929,9 @@ EOF;
      * @param bool $expectsError
      * @param int|null $errorOnPartNumber
      * @return void
-     * @dataProvider inputArgumentsPerOperationProvider
-     */
+
+ */
+    #[DataProvider('inputArgumentsPerOperationProvider')]
     public function testInputArgumentsPerOperation(
         array $sourceConfig,
         array $requestArgs,

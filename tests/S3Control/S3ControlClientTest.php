@@ -6,10 +6,12 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\S3Control\S3ControlClient
+
  */
+#[CoversClass(S3ControlClient::class)]
 class S3ControlClientTest extends TestCase
 {
     use S3ControlTestingTrait;

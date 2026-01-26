@@ -6,12 +6,15 @@ use Aws\S3\PostObjectV4;
 use Aws\S3\S3Client;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 require_once __DIR__ . '/sig_hack.php';
 
 /**
- * @covers Aws\S3\PostObjectV4
+
  */
+#[CoversClass(PostObjectV4::class)]
 class PostObjectV4Test extends TestCase
 {
     use UsesServiceTrait;
@@ -245,12 +248,13 @@ class PostObjectV4Test extends TestCase
     }
 
     /**
-     * @dataProvider virtualStyleProvider
      *
      * @param string $endpoint
      * @param string $bucket
      * @param string $expected
-     */
+
+ */
+    #[DataProvider('virtualStyleProvider')]
     public function testCanHandleVirtualStyleEndpoint($endpoint, $bucket, $expected)
     {
         $s3 = new S3Client([
@@ -280,12 +284,13 @@ class PostObjectV4Test extends TestCase
     }
 
     /**
-     * @dataProvider pathStyleProvider
      *
      * @param string $endpoint
      * @param string $bucket
      * @param string $expected
-     */
+
+ */
+    #[DataProvider('pathStyleProvider')]
     public function testCanHandleForcedPathStyleEndpoint($endpoint, $bucket, $expected)
     {
         $s3 = new S3Client([

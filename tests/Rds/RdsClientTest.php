@@ -8,11 +8,14 @@ use Aws\MockHandler;
 use Aws\Result;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 require_once __DIR__ . '/../Signature/sig_hack.php';
 
 /**
- * @covers Aws\Rds\RdsClient
+
  */
+#[CoversClass(RdsClient::class)]
 class RdsClientTest extends TestCase
 {
     public static function set_up_before_class()
@@ -72,14 +75,15 @@ class RdsClientTest extends TestCase
     }
 
     /**
-     * @dataProvider rdsPresignMethodProvider
      *
      * @param string $functionName
      * @param string $presignedUrl
      * @param string $sourceRegion
      * @param string $expectedUrl
      * @param string $expectedSignature
-     */
+
+ */
+    #[DataProvider('rdsPresignMethodProvider')]
     public function testCorrectPresignRdsUrls(
         $functionName,
         $functionArgs,

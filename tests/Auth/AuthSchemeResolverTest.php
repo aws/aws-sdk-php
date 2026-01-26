@@ -8,6 +8,7 @@ use Aws\Identity\AwsCredentialIdentity;
 use Aws\Identity\BearerTokenIdentity;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class AuthSchemeResolverTest extends TestCase
 {
@@ -35,8 +36,9 @@ class AuthSchemeResolverTest extends TestCase
     }
 
     /**
-     * @dataProvider schemeForIdentityProvider
-     */
+
+ */
+    #[DataProvider('schemeForIdentityProvider')]
     public function testSelectAuthSchemeReturnsCorrectSchemeForIdentity(
         $authScheme,
         $expectedSignatureVersion,
@@ -190,8 +192,9 @@ class AuthSchemeResolverTest extends TestCase
     }
 
     /**
-     * @dataProvider fallsBackWhenIdentityNotAvailableProvider
-     */
+
+ */
+    #[DataProvider('fallsBackWhenIdentityNotAvailableProvider')]
     public function testFallsBackWhenIdentityNotAvailable(
         string $credentialIdentityClass,
         string $tokenIdentityClass,

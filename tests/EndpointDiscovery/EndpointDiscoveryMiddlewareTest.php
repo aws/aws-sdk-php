@@ -21,10 +21,13 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\EndpointDiscovery\EndpointDiscoveryMiddleware
+
  */
+#[CoversClass(EndpointDiscoveryMiddleware::class)]
 class EndpointDiscoveryMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
@@ -71,12 +74,13 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider getRequestTestCases
      * @param array $commandArgs
      * @param array $clientArgs
      * @param ResultInterface $describeResult
      * @param RequestInterface $expected
-     */
+
+ */
+    #[DataProvider('getRequestTestCases')]
     public function testCorrectlyModifiesRequest(
         array $commandArgs,
         array $clientArgs,
@@ -297,11 +301,12 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider getDiscoveryRequestTestCases
      * @param CommandInterface $mainCmd
      * @param CommandInterface $expectedCmd
      * @param RequestInterface $expectedReq
-     */
+
+ */
+    #[DataProvider('getDiscoveryRequestTestCases')]
     public function testCorrectlyConstructsDiscoveryRequest(
         CommandInterface $mainCmd,
         CommandInterface $expectedCmd,
@@ -551,9 +556,10 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidEndpointExceptionsDataProvider
      * @param $exception
-     */
+
+ */
+    #[DataProvider('invalidEndpointExceptionsDataProvider')]
     public function testUsesCachedEndpointForInvalidEndpointException($exception)
     {
         $callOrder = [];
@@ -586,9 +592,10 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidEndpointExceptionsDataProvider
      * @param $exception
-     */
+
+ */
+    #[DataProvider('invalidEndpointExceptionsDataProvider')]
     public function testUseRegionalEndpointForInvalidEndpointException($exception)
     {
         $callOrder = [];
@@ -629,9 +636,10 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidEndpointExceptionsDataProvider
      * @param $exception
-     */
+
+ */
+    #[DataProvider('invalidEndpointExceptionsDataProvider')]
     public function testThrowsExceptionOnInvalidEndpointException($exception)
     {
         $callOrder = [];
@@ -670,9 +678,10 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidEndpointExceptionsDataProvider
      * @param $exception
-     */
+
+ */
+    #[DataProvider('invalidEndpointExceptionsDataProvider')]
     public function testCallsDiscoveryApiOnInvalidEndpointException($exception)
     {
         // Use Reflection to set private static discoveryCooldown variable to 0

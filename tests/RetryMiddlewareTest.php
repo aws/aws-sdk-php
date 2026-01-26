@@ -15,10 +15,13 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\RetryMiddleware
+
  */
+#[CoversClass(RetryMiddleware::class)]
 class RetryMiddlewareTest extends TestCase
 {
     public function testAddRetryHeader()
@@ -168,8 +171,9 @@ class RetryMiddlewareTest extends TestCase
     /**
     * @param $err
     *
-    * @dataProvider awsErrorCodeProvider
-    */
+
+ */
+    #[DataProvider('awsErrorCodeProvider')]
     public function testDeciderRetriesWhenAwsErrorCodeMatches($err)
     {
         $decider = RetryMiddleware::createDefaultDecider();

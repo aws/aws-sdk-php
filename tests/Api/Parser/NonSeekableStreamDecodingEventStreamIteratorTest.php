@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\StreamDecoratorTrait;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class NonSeekableStreamDecodingEventStreamIteratorTest extends TestCase
 {
@@ -77,10 +78,11 @@ EOF;
      * @param string $eventName
      * @param array $expected
      *
-     * @dataProvider readAndHashBytesHandlesPartialReadsProvider
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('readAndHashBytesHandlesPartialReadsProvider')]
     public function testReadAndHashBytesHandlesPartialReads(
         string $eventName,
         array $expected

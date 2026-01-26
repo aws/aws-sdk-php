@@ -7,6 +7,7 @@ use Aws\MetricsBuilder;
 use Aws\Middleware;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class MetricsBuilderTest extends TestCase
 {
@@ -42,13 +43,8 @@ class MetricsBuilderTest extends TestCase
 
     public function testConstraintsAppendToMetricsSize()
     {
+        set_error_handler(static function ( $errno, $errstr ) {});
         try {
-            set_error_handler(
-                static function ( $errno, $errstr ) {
-                   // Mute warning
-                },
-                E_ALL
-            );
             $metricsBuilder = new MetricsBuilder();
             $firstMetric = str_repeat("*", 1024);
             $metricsBuilder->append($firstMetric);
@@ -103,10 +99,11 @@ class MetricsBuilderTest extends TestCase
      * @param array $args
      * @param string $expectedMetrics
      *
-     * @dataProvider resolveAndAppendFromArgsProvider
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('resolveAndAppendFromArgsProvider')]
     public function testResolveAndAppendFromArgs(
         array $args,
         string $expectedMetrics,

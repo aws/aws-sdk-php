@@ -21,10 +21,13 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Middleware
+
  */
+#[CoversClass(Middleware::class)]
 class MiddlewareTest extends TestCase
 {
     public function set_up()
@@ -395,13 +398,13 @@ class MiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider recursionDetectionProvider
      *
      * @param string|null $functionName
      * @param string|null $traceId
      * @param bool $traceHeaderExpected
      * @param string $traceHeaderExpectedValue
-     */
+ */
+    #[DataProvider('recursionDetectionProvider')]
     public function testRecursionDetection(
         ?string $functionName,
         ?string $traceId,

@@ -6,12 +6,14 @@ use Aws\Signature\S3ExpressSignature;
 use Aws\Signature\S3SignatureV4;
 use GuzzleHttp\Psr7\Request;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 require_once __DIR__ . '/sig_hack.php';
 
 /**
- * @covers Aws\Signature\S3ExpressSignature
+
  */
+#[CoversClass(S3ExpressSignature::class)]
 class S3ExpressSignatureTest extends TestCase
 {
     private function getFixtures()

@@ -3,10 +3,12 @@ namespace Aws\Test\ElasticLoadBalancingV2;
 
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\ElasticLoadBalancingV2\ElasticLoadBalancingV2Client
+
  */
+#[CoversClass(ElasticLoadBalancingV2Client::class)]
 class ElasticLoadBalancingV2ClientTest extends TestCase
 {
     use UsesServiceTrait;

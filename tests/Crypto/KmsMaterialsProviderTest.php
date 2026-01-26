@@ -6,10 +6,12 @@ use Aws\Kms\KmsClient;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Crypto\KmsMaterialsProvider
+
  */
+#[CoversClass(KmsMaterialsProvider::class)]
 class KmsMaterialsProviderTest extends TestCase
 {
     use UsesServiceTrait;

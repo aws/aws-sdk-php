@@ -9,10 +9,12 @@ use Aws\CloudTrail\LogRecordIterator;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\CloudTrail\LogRecordIterator
+
  */
+#[CoversClass(LogRecordIterator::class)]
 class LogRecordIteratorTest extends TestCase
 {
     use UsesServiceTrait;

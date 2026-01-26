@@ -6,10 +6,12 @@ use Aws\MultiRegionClient;
 use Aws\S3\S3MultiRegionClient;
 use Aws\Sdk;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Sdk
+
  */
+#[CoversClass(Sdk::class)]
 class SdkTest extends TestCase
 {
 

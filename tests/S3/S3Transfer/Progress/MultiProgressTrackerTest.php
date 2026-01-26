@@ -11,6 +11,7 @@ use Aws\S3\S3Transfer\Progress\AbstractTransferListener;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Closure;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class MultiProgressTrackerTest extends TestCase
 {
@@ -28,7 +29,6 @@ class MultiProgressTrackerTest extends TestCase
     }
 
     /**
-     * @dataProvider customInitializationProvider
      *
      * @param array $progressTrackers
      * @param mixed $output
@@ -37,7 +37,9 @@ class MultiProgressTrackerTest extends TestCase
      * @param int $failed
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('customInitializationProvider')]
     public function testCustomInitialization(
         array $progressTrackers,
         mixed $output,
@@ -65,9 +67,10 @@ class MultiProgressTrackerTest extends TestCase
      * @param array $expectedOutputs
      *
      * @return void
-     * @dataProvider multiProgressTrackerProvider
      *
-     */
+
+ */
+    #[DataProvider('multiProgressTrackerProvider')]
     public function testMultiProgressTracker(
         Closure $progressBarFactory,
         callable $eventInvoker,

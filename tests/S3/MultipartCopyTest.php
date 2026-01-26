@@ -9,6 +9,7 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class MultipartCopyTest extends TestCase
 {
@@ -17,8 +18,9 @@ class MultipartCopyTest extends TestCase
     const MB = 1048576;
 
     /**
-     * @dataProvider getTestCases
-     */
+
+ */
+    #[DataProvider('getTestCases')]
     public function testS3MultipartCopyWorkflow(
         array $uploadOptions = [],
         $error = false

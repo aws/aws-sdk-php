@@ -17,10 +17,13 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Credentials\InstanceProfileProvider
+
  */
+#[CoversClass(InstanceProfileProvider::class)]
 class InstanceProfileProviderTest extends TestCase
 {
     private $originalEnv = [];
@@ -310,12 +313,13 @@ class InstanceProfileProviderTest extends TestCase
     }
 
     /**
-     * @dataProvider successDataProvider
      *
      * @param array $clientDefinition
      * @param CredentialsInterface $expected
      * @param int|null $expectedAttempts
-     */
+
+ */
+    #[DataProvider('successDataProvider')]
     public function testHandlesSuccessScenarios(
         array $clientDefinition,
         CredentialsInterface $expected,
@@ -554,11 +558,12 @@ class InstanceProfileProviderTest extends TestCase
     }
 
     /**
-     * @dataProvider failureDataProvider
      *
      * @param array $clientDefinition
      * @param \Exception $expected
-     */
+
+ */
+    #[DataProvider('failureDataProvider')]
     public function testHandlesFailureScenarios(
         array $clientDefinition,
         \Exception $expected
@@ -1003,48 +1008,56 @@ class InstanceProfileProviderTest extends TestCase
     }
 
     /**
-     * @dataProvider returnsExpiredCredsProvider
      *
      * @param $client
-     */
+
+ */
+    #[DataProvider('returnsExpiredCredsProvider')]
     public function testExtendsExpirationAndSendsRequestIfImdsYieldsExpiredCreds($client)
     {
         //expect warning emitted from extension
-        $this->expectWarning();
-        $this->expectWarningMessageMatches(
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessageMatches(
             '/Attempting credential expiration extension/'
         );
+        set_error_handler(function ($errno, $errstr) {
+            throw new \RuntimeException($errstr, $errno);
+        }, E_USER_WARNING);
 
-        $provider = new InstanceProfileProvider([
-            'client' => $client
-        ]);
-        $creds = $provider()->wait();
+        try {
+            $provider = new InstanceProfileProvider([
+                'client' => $client
+            ]);
+            $creds = $provider()->wait();
 
-        $this->assertSame('foo', $creds->getAccessKeyId());
-        $this->assertSame('baz', $creds->getSecretKey());
-        $this->assertFalse($creds->isExpired());
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('baz', $creds->getSecretKey());
+            $this->assertFalse($creds->isExpired());
 
-        $requestHandler = new MockHandler([
-            new Result(['message' => 'Request sent']),
-            new Result(['message' => 'Request sent']),
-            new Result(['message' => 'Request sent'])
-        ]);
+            $requestHandler = new MockHandler([
+                new Result(['message' => 'Request sent']),
+                new Result(['message' => 'Request sent']),
+                new Result(['message' => 'Request sent'])
+            ]);
 
-        $s3Client = new S3Client([
-            'region' => 'us-west-2',
-            'version' => 'latest',
-            'credentials' => $creds,
-            'handler' => $requestHandler
-        ]);
-        $s3Client->listBuckets();
-        $s3Client->listBuckets();
-        $result = $s3Client->listBuckets();
+            $s3Client = new S3Client([
+                'region' => 'us-west-2',
+                'version' => 'latest',
+                'credentials' => $creds,
+                'handler' => $requestHandler
+            ]);
+            $s3Client->listBuckets();
+            $s3Client->listBuckets();
+            $result = $s3Client->listBuckets();
 
-        $this->assertEquals('Request sent', $result['message']);
-        $this->assertLessThanOrEqual(3,$this->getPropertyValue($provider,'attempts'));
+            $this->assertEquals('Request sent', $result['message']);
+            $this->assertLessThanOrEqual(3,$this->getPropertyValue($provider,'attempts'));
+        } finally {
+            restore_error_handler();
+        }
     }
 
-    public static function returnsExpiredCredsProvider()
+    public static function returnsExpiredCredsProvider(): array
     {
         $expiredTime = time() - 1000;
         $expiredCreds = ['foo', 'baz', null, "@{$expiredTime}"];
@@ -1085,48 +1098,55 @@ class InstanceProfileProviderTest extends TestCase
     }
 
     /**
-     * @dataProvider imdsUnavailableProvider
      *
      * @param $client
-     */
+
+ */
+    #[DataProvider('imdsUnavailableProvider')]
     public function testExtendsExpirationAndSendsRequestIfImdsUnavailable($client)
     {
         //expect warning emitted from extension
-        $this->expectWarning();
-        $this->expectWarningMessageMatches(
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessageMatches(
             '/Attempting credential expiration extension/'
         );
-
+        set_error_handler(function ($errno, $errstr) {
+            throw new \RuntimeException($errstr, $errno);
+        });
         $expiredTime = time() - 1000;
         $expiredCreds = new Credentials('foo', 'baz', null, $expiredTime);
-        $this->assertTrue($expiredCreds->isExpired());
+        try {
+            $this->assertTrue($expiredCreds->isExpired());
 
-        $provider = new InstanceProfileProvider([
-            'client' => $client
-        ]);
-        $creds = $provider($expiredCreds)->wait();
-        $this->assertSame('foo', $creds->getAccessKeyId());
-        $this->assertSame('baz', $creds->getSecretKey());
-        $this->assertFalse($expiredCreds->isExpired());
+            $provider = new InstanceProfileProvider([
+                'client' => $client
+            ]);
+            $creds = $provider($expiredCreds)->wait();
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('baz', $creds->getSecretKey());
+            $this->assertFalse($expiredCreds->isExpired());
 
-        $requestHandler = new MockHandler([
-            new Result(['message' => 'Request sent']),
-            new Result(['message' => 'Request sent']),
-            new Result(['message' => 'Request sent'])
-        ]);
+            $requestHandler = new MockHandler([
+                new Result(['message' => 'Request sent']),
+                new Result(['message' => 'Request sent']),
+                new Result(['message' => 'Request sent'])
+            ]);
 
-        $s3Client = new S3Client([
-            'region' => 'us-west-2',
-            'version' => 'latest',
-            'credentials' => $creds,
-            'handler' => $requestHandler
-        ]);
-        $s3Client -> listBuckets();
-        $s3Client -> listBuckets();
-        $result = $s3Client->listBuckets();
+            $s3Client = new S3Client([
+                'region' => 'us-west-2',
+                'version' => 'latest',
+                'credentials' => $creds,
+                'handler' => $requestHandler
+            ]);
+            $s3Client -> listBuckets();
+            $s3Client -> listBuckets();
+            $result = $s3Client->listBuckets();
 
-        $this->assertEquals('Request sent', $result['message']);
-        $this->assertLessThanOrEqual(3,$this->getPropertyValue($provider,'attempts'));
+            $this->assertEquals('Request sent', $result['message']);
+            $this->assertLessThanOrEqual(3,$this->getPropertyValue($provider,'attempts'));
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public static function imdsUnavailableProvider()
@@ -1390,8 +1410,9 @@ class InstanceProfileProviderTest extends TestCase
      * @param string $expectedEndpointMode this parameter is the endpoint mode that is expected to be resolved by
      * the credential provider.
      *
-     * @dataProvider endpointModeCasesProvider
-     */
+
+ */
+    #[DataProvider('endpointModeCasesProvider')]
     public function testEndpointModeResolution(
       ?string $endpointModeClientConfig,
       ?string $endpointModeEnv,
@@ -1515,8 +1536,9 @@ class InstanceProfileProviderTest extends TestCase
      * @param string $expectedEndpoint this parameter is the endpoint that is expected to be resolved
      * by the credential provider.
      *
-     * @dataProvider endpointCasesProvider
-     */
+
+ */
+    #[DataProvider('endpointCasesProvider')]
     public function testEndpointResolution(
         string  $endpointMode,
         ?string $endpointEnv,

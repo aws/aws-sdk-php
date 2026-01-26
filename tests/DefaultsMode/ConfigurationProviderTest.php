@@ -9,10 +9,13 @@ use Aws\DefaultsMode\ConfigurationProvider;
 use Aws\DefaultsMode\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\DefaultsMode\ConfigurationProvider
+
  */
+#[CoversClass(\Aws\DefaultsMode\ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
     private static $originalEnv;
@@ -376,10 +379,11 @@ EOT;
     }
 
     /**
-     * @dataProvider getSuccessfulUnwrapData
      * @param $toUnwrap
      * @param ConfigurationInterface $expected
-     */
+
+ */
+    #[DataProvider('getSuccessfulUnwrapData')]
     public function testSuccessfulUnwraps($toUnwrap, ConfigurationInterface $expected)
     {
         $this->assertSame(

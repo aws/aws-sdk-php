@@ -5,11 +5,13 @@ namespace Aws\Test\ClientSideMonitoring;
 use Aws\ClientSideMonitoring\Configuration;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Log\InvalidArgumentException;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 
 /**
- * @covers \Aws\ClientSideMonitoring\Configuration
+
  */
+#[CoversClass(\Aws\ClientSideMonitoring\Configuration::class)]
 class ConfigurationTest extends TestCase
 {
     public function testGetsCorrectValues()

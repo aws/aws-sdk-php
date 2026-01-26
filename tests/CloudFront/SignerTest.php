@@ -3,6 +3,7 @@ namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\Signer;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class SignerTest extends TestCase
 {
@@ -88,8 +89,9 @@ class SignerTest extends TestCase
     }
 
     /**
-     * @dataProvider getExpiresCases
-     */
+
+ */
+    #[DataProvider('getExpiresCases')]
     public function testReturnsExpiresForCannedPolicies($expires)
     {
         $signature = $this->instance->getSignature('test.mp4', $expires);
@@ -138,11 +140,12 @@ class SignerTest extends TestCase
     }
 
     /**
-     * @dataProvider cannedPolicyParameterProvider
      *
      * @param string $resource
      * @param int $ts
-     */
+
+ */
+    #[DataProvider('cannedPolicyParameterProvider')]
     public function testCreatesCannedPolicies($resource, $ts)
     {
         $m = new \ReflectionMethod(Signer::class, 'createCannedPolicy');

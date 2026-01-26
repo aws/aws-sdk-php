@@ -9,10 +9,12 @@ use Aws\S3\UseArnRegion\ConfigurationProvider;
 use Aws\S3\UseArnRegion\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\S3\UseArnRegion\ConfigurationProvider
+
  */
+#[CoversClass(ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
     private static $originalEnv;

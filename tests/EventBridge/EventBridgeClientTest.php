@@ -8,6 +8,7 @@ use Aws\EventBridge\EventBridgeClient;
 use Aws\Test\UsesServiceTrait;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class EventBridgeClientTest extends TestCase
 {
@@ -76,14 +77,15 @@ class EventBridgeClientTest extends TestCase
     }
 
     /**
-     * @dataProvider putEventsEndpointSuccessProvider
      *
      * @param $clientRegion
      * @param $additionalConfig
      * @param $endpointId
      * @param $expectedEndpoint
      * @param $additionalHeaders
-     */
+
+ */
+    #[DataProvider('putEventsEndpointSuccessProvider')]
     public function testPutEventsEndpointSuccessCases(
         $clientRegion,
         $additionalConfig,
@@ -149,13 +151,14 @@ class EventBridgeClientTest extends TestCase
     }
 
     /**
-     * @dataProvider putEventsEndpointFailureProvider
      *
      * @param $clientRegion
      * @param $additionalConfig
      * @param $endpointId
      * @param $expectedException
-     */
+
+ */
+    #[DataProvider('putEventsEndpointFailureProvider')]
     public function testPutEventsEndpointFailureCases(
         $clientRegion,
         $additionalConfig,

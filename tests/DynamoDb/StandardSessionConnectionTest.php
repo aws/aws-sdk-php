@@ -8,10 +8,12 @@ use Aws\Middleware;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\DynamoDb\StandardSessionConnection
+
  */
+#[CoversClass(StandardSessionConnection::class)]
 class StandardSessionConnectionTest extends TestCase
 {
     use UsesServiceTrait;
@@ -157,19 +159,26 @@ class StandardSessionConnectionTest extends TestCase
 
     public function testWriteTriggersWarningOnFailure()
     {
-        $this->expectWarning();
-        $client = $this->getTestSdk()->createDynamoDb();
-        $this->addMockResults($client, [
-            $this->createMockAwsException('ERROR', DynamoDbException::class)
-        ]);
-        $client->getHandlerList()->appendBuild(Middleware::tap(function ($command) {
-            $this->assertEquals(
-                ['Action' => 'DELETE'],
-                $command['AttributeUpdates']['data']
-            );
-        }));
-        $connection = new StandardSessionConnection($client);
-        $connection->write('s1', '', true);
+        $this->expectException(\RuntimeException::class);
+        set_error_handler(function ($errno, $errstr) {
+            throw new \RuntimeException($errstr, $errno);
+        });
+        try {
+            $client = $this->getTestSdk()->createDynamoDb();
+            $this->addMockResults($client, [
+                $this->createMockAwsException('ERROR', DynamoDbException::class)
+            ]);
+            $client->getHandlerList()->appendBuild(Middleware::tap(function ($command) {
+                $this->assertEquals(
+                    ['Action' => 'DELETE'],
+                    $command['AttributeUpdates']['data']
+                );
+            }));
+            $connection = new StandardSessionConnection($client);
+            $connection->write('s1', '', true);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testDeleteReturnsBoolBasedOnSuccess()
@@ -191,19 +200,26 @@ class StandardSessionConnectionTest extends TestCase
 
     public function testDeleteTriggersWarningOnFailure()
     {
-        $this->expectWarning();
-        $client = $this->getTestSdk()->createDynamoDb();
-        $this->addMockResults($client, [
-            new Result([]),
-            $this->createMockAwsException('ERROR', DynamoDbException::class)
-        ]);
+        $this->expectException(\RuntimeException::class);
+        set_error_handler(function ($errno, $errstr) {
+            throw new \RuntimeException($errstr, $errno);
+        });
+        try {
+            $client = $this->getTestSdk()->createDynamoDb();
+            $this->addMockResults($client, [
+                new Result([]),
+                $this->createMockAwsException('ERROR', DynamoDbException::class)
+            ]);
 
-        $connection = new StandardSessionConnection($client);
+            $connection = new StandardSessionConnection($client);
 
-        $return = $connection->delete('s1');
-        $this->assertTrue($return);
+            $return = $connection->delete('s1');
+            $this->assertTrue($return);
 
-        $connection->delete('s1');
+            $connection->delete('s1');
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testDeleteExpiredReturnsBoolBasedOnSuccess()

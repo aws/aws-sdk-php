@@ -9,20 +9,22 @@ use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 use Aws\Test\UsesServiceTrait;
 use ReflectionClass;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class EndpointV2MiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 
     /**
-     * @dataProvider providedSuccessCases
      *
      * @param $service
      * @param $clientArgs
      * @param $commandName
      * @param $commandArgs
      * @param $expectedUri
-     */
+
+ */
+    #[DataProvider('providedSuccessCases')]
     public function testSuccessfullyResolvesEndpointAndAuthScheme(
         $service,
         $clientArgs,
@@ -124,8 +126,9 @@ class EndpointV2MiddlewareTest extends TestCase
      * @param $authSchemes
      * @param $expected
      *
-     * @dataProvider v4aAuthProvider
-     */
+
+ */
+    #[DataProvider('v4aAuthProvider')]
     public function testV4aAuthSchemeSelection($authSchemes, $expected)
     {
         if ($expected === 'v4a' && (!extension_loaded('awscrt'))) {
@@ -197,8 +200,9 @@ class EndpointV2MiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidInitializationProvider
-     */
+
+ */
+    #[DataProvider('invalidInitializationProvider')]
     public function testInitializationWithInvalidParameters(
         $nextHandler,
         bool $validEndpointProvider,

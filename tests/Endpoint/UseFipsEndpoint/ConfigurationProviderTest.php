@@ -9,10 +9,12 @@ use Aws\Endpoint\UseFipsEndpoint\ConfigurationInterface;
 use Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider
+
  */
+#[CoversClass(ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
     private static $originalEnv;

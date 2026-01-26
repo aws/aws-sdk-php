@@ -41,11 +41,14 @@ use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\UserAgentMiddleware
  * @runInSeparateProcess
+
  */
+#[CoversClass(\Aws\UserAgentMiddleware::class)]
 class UserAgentMiddlewareTest extends TestCase
 {
     use MetricsBuilderTestTrait;
@@ -133,12 +136,13 @@ class UserAgentMiddlewareTest extends TestCase
      * Tests the user agent header value contains the expected
      * component.
      *
-     * @dataProvider userAgentCasesDataProvider
      * @param array $args
      * @param string $expected
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('userAgentCasesDataProvider')]
     public function testUserAgentContainsValue(array $args, string $expected)
     {
         $handler = UserAgentMiddleware::wrap($args);
@@ -321,10 +325,11 @@ class UserAgentMiddlewareTest extends TestCase
     /**
      * Tests user agent captures retry config metric.
      *
-     * @dataProvider retryConfigMetricProvider
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('retryConfigMetricProvider')]
     public function testUserAgentCaptureRetryConfigMetric(
         $retryMode,
         $expectedMetric
@@ -827,10 +832,11 @@ class UserAgentMiddlewareTest extends TestCase
      * @param string $checksumMetric
      * @param bool $supported
      *
-     * @dataProvider flexibleChecksumTestProvider
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('flexibleChecksumTestProvider')]
     public function testUserAgentCaptureFlexibleChecksumMetric(
         string $algorithm,
         string $checksumMetric,

@@ -5,17 +5,21 @@ use Aws\CloudTrail\LogFileReader;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\CloudTrail\LogFileReader
+
  */
+#[CoversClass(LogFileReader::class)]
 class LogFileReaderTest extends TestCase
 {
     use UsesServiceTrait;
 
     /**
-     * @dataProvider dataForLogReadingTest
-     */
+
+ */
+    #[DataProvider('dataForLogReadingTest')]
     public function testCorrectlyReadsLogFiles($responseBody, $recordCount)
     {
         $s3Client = $this->getTestClient('s3', [

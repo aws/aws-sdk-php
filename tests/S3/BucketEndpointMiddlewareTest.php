@@ -4,10 +4,13 @@ namespace Aws\Test\S3;
 use Aws\Middleware;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\S3\BucketEndpointMiddleware
+
  */
+#[CoversClass(BucketEndpointMiddleware::class)]
 class BucketEndpointMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
@@ -151,10 +154,11 @@ class BucketEndpointMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider keyContainsBucketNameProvider
      *
      * @param $key
-     */
+
+ */
+    #[DataProvider('keyContainsBucketNameProvider')]
     public function testsHandlesDuplicatePathWithKeyContainsBucketName($key): void
     {
         $s3 = $this->getTestClient('s3', [

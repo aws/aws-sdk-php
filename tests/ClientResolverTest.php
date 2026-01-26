@@ -22,10 +22,13 @@ use Generator;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\ClientResolver
+
  */
+#[CoversClass(ClientResolver::class)]
 class ClientResolverTest extends TestCase
 {
     use UsesServiceTrait;
@@ -579,14 +582,15 @@ EOT;
     }
 
     /**
-     * @dataProvider dualStackEndpointCases
      *
      * @param $service
      * @param $useDualstackEndpoint
      * @param $useFipsEndpoint
      * @param $region
      * @param $expectedEndpoint
-     */
+
+ */
+    #[DataProvider('dualStackEndpointCases')]
     public function testDualstackEndpoints(
         $service,
         $useDualstackEndpoint,
@@ -665,11 +669,12 @@ EOT;
     }
 
     /**
-     * @dataProvider s3EndpointCases
      *
      * @param $config
      * @param $endpoint
-     */
+
+ */
+    #[DataProvider('s3EndpointCases')]
     public function testCanPassS3RegionalEndpointToEndpointProvider($config, $endpoint)
     {
         $data = json_decode(
@@ -848,10 +853,11 @@ EOT;
     }
 
     /**
-     * @dataProvider statValueProvider
      * @param bool|array $userValue
      * @param array $resolvedValue
-     */
+
+ */
+    #[DataProvider('statValueProvider')]
     public function testAcceptsBooleansAndArraysForSelectiveStatCollection($userValue, array $resolvedValue)
     {
         $list = new HandlerList;
@@ -890,13 +896,14 @@ EOT;
     }
 
     /**
-     * @dataProvider endpointProviderReturnProvider
      *
      * @param array $args
      * @param string $argName
      * @param string $expected
      * @param string $override
-     */
+
+ */
+    #[DataProvider('endpointProviderReturnProvider')]
     public function testResolvesValuesReturnedByEndpointProvider(
         array $args,
               $argName,
@@ -955,12 +962,13 @@ EOT;
 
 
     /**
-     * @dataProvider partitionReturnProvider
      *
      * @param array $args
      * @param string $argName
      * @param string $expected
-     */
+
+ */
+    #[DataProvider('partitionReturnProvider')]
     public function testSigningValuesAreFetchedFromPartition(
         array $args,
               $argName,
@@ -1004,11 +1012,12 @@ EOT;
     }
 
     /**
-     * @dataProvider idempotencyAutoFillProvider
      *
      * @param mixed $value
      * @param bool $shouldAddIdempotencyMiddleware
-     */
+
+ */
+    #[DataProvider('idempotencyAutoFillProvider')]
     public function testIdempotencyTokenMiddlewareAddedAsAppropriate(
         $value,
         $shouldAddIdempotencyMiddleware
@@ -1040,11 +1049,12 @@ EOT;
     }
 
     /**
-     * @dataProvider validateRegionProvider
      *
      * @param $region
      * @param $expected
-     */
+
+ */
+    #[DataProvider('validateRegionProvider')]
     public function testValidatesRegion($region, $expected)
     {
         $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -1096,8 +1106,9 @@ EOT;
     }
 
     /**
-     * @dataProvider invalidDisableRequestCompressionValues
-     */
+
+ */
+    #[DataProvider('invalidDisableRequestCompressionValues')]
     public function testInvalidDisableRequestCompressionTypeThrowsException($invalidType)
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -1141,8 +1152,9 @@ EOT;
     }
 
     /**
-     * @dataProvider invalidMinCompressionSizeValues
-     */
+
+ */
+    #[DataProvider('invalidMinCompressionSizeValues')]
     public function testInvalidMinCompressionSizeValues($invalidType)
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -1173,14 +1185,15 @@ EOT;
     }
 
     /**
-     * @dataProvider configResolutionProvider
      *
      * @param $ini
      * @param $env
      * @param $expected
      * @param $configKey
      * @param $configType
-     */
+
+ */
+    #[DataProvider('configResolutionProvider')]
     public function testConfigResolutionOrder($ini, $env, $expected, $configKey, $configType)
     {
         $dir = sys_get_temp_dir() . '/.aws';
@@ -1526,8 +1539,9 @@ EOF;
      * @param string|null $env
      * @return void
      *
-     * @dataProvider resolvesAuthSchemePreferenceProvider
-     */
+
+ */
+    #[DataProvider('resolvesAuthSchemePreferenceProvider')]
     public function testResolvesAuthSchemePreference(
         bool $isExpected,
         array $expectedValue,

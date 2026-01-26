@@ -9,10 +9,13 @@ use Aws\Signature\SignatureInterface;
 use Aws\Signature\SignatureProvider;
 use Aws\Signature\SignatureV4;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Signature\SignatureProvider
+
  */
+#[CoversClass(SignatureProvider::class)]
 class SignatureProviderTest extends TestCase
 {
     public static function versionProvider()
@@ -37,8 +40,9 @@ class SignatureProviderTest extends TestCase
     }
 
     /**
-     * @dataProvider versionProvider
-     */
+
+ */
+    #[DataProvider('versionProvider')]
     public function testCreatesSignatureFromVersionString($v, $type, $service)
     {
         $fn = SignatureProvider::version();

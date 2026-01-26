@@ -15,10 +15,13 @@ use Aws\Exception\EventStreamDataException;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Api\Parser\EventParsingIterator
+
  */
+#[CoversClass(EventParsingIterator::class)]
 class EventParsingIteratorTest extends TestCase
 {
     const PROTOCOL_XML = 'XML';
@@ -96,8 +99,9 @@ class EventParsingIteratorTest extends TestCase
      * against the expected output. The reason for this is to test parsing either single or multiple
      * events.
      *
-     * @dataProvider iteratorDataProvider
-     */
+
+ */
+    #[DataProvider('iteratorDataProvider')]
     public function testParsedEventsMatchExpectedOutput($iterator, $expectedOutput)
     {
         $parsedMessage = [];
@@ -116,8 +120,9 @@ class EventParsingIteratorTest extends TestCase
      * This method tests for whether the deserialized event members match the equivalent
      * shape member types.
      *
-     * @dataProvider iteratorDataProvider
-     */
+
+ */
+    #[DataProvider('iteratorDataProvider')]
     public function testParsedEventsMatchExpectedType($iterator)
     {
         $reflectedIteratorClass = new \ReflectionClass(get_class($iterator));
@@ -376,9 +381,10 @@ EOF;
      *
      * @return void
      *
-     * @dataProvider handleEventWithExceptionsProvider
      *
-     */
+
+ */
+    #[DataProvider('handleEventWithExceptionsProvider')]
     public function testHandleEventWithExceptions(
         array $eventStreams,
         string $expectedExceptionMessage,

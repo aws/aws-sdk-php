@@ -16,6 +16,7 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class S3MultiRegionClientTest extends TestCase
 {
@@ -568,10 +569,11 @@ EOXML;
     }
 
     /**
-     * @dataProvider booleanProvider
      *
      * @param bool $regionalized
-     */
+
+ */
+    #[DataProvider('booleanProvider')]
     public function testCallbacksAttachedToCommandHandlerListsAreInvoked($regionalized)
     {
         /** @var S3ClientInterface $client */

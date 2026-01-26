@@ -17,6 +17,7 @@ use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class S3ParserTest extends TestCase
 {
@@ -32,11 +33,12 @@ class S3ParserTest extends TestCase
 EOXML;
 
     /**
-     * @dataProvider s3200ErrorHandlingCasesProvider
      * @param string $operation The operation to test.
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('s3200ErrorHandlingCasesProvider')]
     public function testHandle200Errors(string $operation)
     {
         $this->expectException(AwsException::class);
@@ -253,10 +255,11 @@ EOXML;
      * @param StreamInterface $stream
      * @param bool $expectValidation
      *
-     * @dataProvider validate200ErrorValidationJustInSeekableStreamsProvider
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('validate200ErrorValidationJustInSeekableStreamsProvider')]
     public function testValidate200ErrorValidationJustInSeekableStreams(
         StreamInterface $stream,
         bool $expectValidation

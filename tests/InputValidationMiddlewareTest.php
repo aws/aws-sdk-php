@@ -10,10 +10,13 @@ use Aws\InputValidationMiddleware;
 use Cassandra\Time;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\InputValidationMiddleware
+
  */
+#[CoversClass(\Aws\InputValidationMiddleware::class)]
 class InputValidationMiddlewareTest extends TestCase
 {
     /**
@@ -49,10 +52,11 @@ class InputValidationMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider getInvalidEndpointExceptions
      *
      * @param $input
-     */
+
+ */
+    #[DataProvider('getInvalidEndpointExceptions')]
     public function testThrowsExceptions($input)
     {
         $service = $this->generateTestService();
@@ -81,10 +85,11 @@ class InputValidationMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider getInvalidEndpointExceptions
      *
      * @param $input
-     */
+
+ */
+    #[DataProvider('getInvalidEndpointExceptions')]
     public function testNoValidationWithoutInputList($input)
     {
         $service = $this->generateTestService();
@@ -104,10 +109,11 @@ class InputValidationMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider getValidInputs
      *
      * @param $input
-     */
+
+ */
+    #[DataProvider('getValidInputs')]
     public function testPassingValidations($input)
     {
         $service = $this->generateTestService();

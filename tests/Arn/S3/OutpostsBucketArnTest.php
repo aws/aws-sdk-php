@@ -6,19 +6,23 @@ use Aws\Arn\Exception\InvalidArnException;
 use Aws\Arn\S3\OutpostsAccessPointArn;
 use Aws\Arn\S3\OutpostsBucketArn;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Arn\S3\OutpostsBucketArn
+
  */
+#[CoversClass(\Aws\Arn\S3\OutpostsBucketArn::class)]
 class OutpostsBucketArnTest extends TestCase
 {
     /**
-     * @dataProvider parsedArnProvider
      *
      * @param $string
      * @param $expected
      * @param $expectedString
-     */
+
+ */
+    #[DataProvider('parsedArnProvider')]
     public function testParsesArnString($string, $expected, $expectedString)
     {
         $arn = new OutpostsBucketArn($string);
@@ -115,11 +119,12 @@ class OutpostsBucketArnTest extends TestCase
     }
 
     /**
-     * @dataProvider badArnProvider
      *
      * @param $string
      * @param \Exception $expected
-     */
+
+ */
+    #[DataProvider('badArnProvider')]
     public function testThrowsForBadArn($string, \Exception $expected)
     {
         try {

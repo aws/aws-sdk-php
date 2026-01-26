@@ -4,10 +4,12 @@ namespace Aws\Test\Sts\RegionalEndpoints;
 
 use Aws\Sts\RegionalEndpoints\Configuration;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Sts\RegionalEndpoints\Configuration
+
  */
+#[CoversClass(\Aws\Sts\RegionalEndpoints\Configuration::class)]
 class ConfigurationTest extends TestCase
 {
     public function testGetsCorrectValues()

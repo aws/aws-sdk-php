@@ -6,15 +6,19 @@ use Aws\Exception\AwsException;
 use Aws\Exception\MultipartUploadException;
 use Aws\Multipart\UploadState;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Exception\MultipartUploadException
+
  */
+#[CoversClass(MultipartUploadException::class)]
 class MultipartUploadExceptionTest extends TestCase
 {
     /**
-     * @dataProvider getTestCases
-     */
+
+ */
+    #[DataProvider('getTestCases')]
     public function testCanCreateMultipartException($commandName, $status)
     {
         $msg = 'Error encountered while reticulating splines.';

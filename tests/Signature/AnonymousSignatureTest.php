@@ -5,10 +5,12 @@ use Aws\Credentials\Credentials;
 use Aws\Signature\AnonymousSignature;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Signature\AnonymousSignature
+
  */
+#[CoversClass(AnonymousSignature::class)]
 class AnonymousSignatureTest extends TestCase
 {
     public function testDoesNotSignsRequests()

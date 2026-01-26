@@ -10,11 +10,14 @@ use Aws\ClientSideMonitoring\Exception\ConfigurationException;
 use Aws\LruArrayCache;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 
 /**
- * @covers Aws\ClientSideMonitoring\ConfigurationProvider
+
  */
+#[CoversClass(ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
 
@@ -470,10 +473,11 @@ EOT;
     }
 
     /**
-     * @dataProvider getSuccessfulUnwrapData
      * @param $toUnwrap
      * @param ConfigurationInterface $expected
-     */
+
+ */
+    #[DataProvider('getSuccessfulUnwrapData')]
     public function testSuccessfulUnwraps($toUnwrap, ConfigurationInterface $expected)
     {
         $this->assertSame(

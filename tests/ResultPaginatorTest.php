@@ -12,10 +12,13 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\ResultPaginator
+
  */
+#[CoversClass(ResultPaginator::class)]
 class ResultPaginatorTest extends TestCase
 {
     use UsesServiceTrait;
@@ -42,8 +45,9 @@ class ResultPaginatorTest extends TestCase
     }
 
     /**
-     * @dataProvider getPaginatorIterationData
-     */
+
+ */
+    #[DataProvider('getPaginatorIterationData')]
     public function testStandardIterationWorkflow(
         array $config,
         array $results,
@@ -78,8 +82,9 @@ class ResultPaginatorTest extends TestCase
     }
 
     /**
-     * @dataProvider getPaginatorIterationData
-     */
+
+ */
+    #[DataProvider('getPaginatorIterationData')]
     public function testAsyncWorkflow(
         array $config,
         array $results,

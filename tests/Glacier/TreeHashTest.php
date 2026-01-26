@@ -3,15 +3,17 @@ namespace Aws\Test\Glacier;
 
 use Aws\Glacier\TreeHash;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 class TreeHashTest extends TestCase
 {
     /**
-     * @covers Aws\Glacier\TreeHash::__construct
-     * @covers Aws\Glacier\TreeHash::update
-     * @covers Aws\Glacier\TreeHash::addChecksum
-     * @covers Aws\Glacier\TreeHash::complete
-     */
+
+ */
+#[CoversClass(Aws\Glacier\TreeHash::__construct::class)]
+#[CoversClass(Aws\Glacier\TreeHash::update::class)]
+#[CoversClass(Aws\Glacier\TreeHash::addChecksum::class)]
+    #[CoversClass(Aws\Glacier\TreeHash::complete::class)]
     public function testHashingIsHappeningCorrectly()
     {
         $chunks = [
@@ -38,8 +40,9 @@ class TreeHashTest extends TestCase
     }
 
     /**
-     * @covers Aws\Glacier\TreeHash::update
-     */
+
+ */
+    #[CoversClass(Aws\Glacier\TreeHash::update::class)]
     public function testCannotUpdateAfterHashCalculation()
     {
         $this->expectException(\LogicException::class);
@@ -51,8 +54,9 @@ class TreeHashTest extends TestCase
     }
 
     /**
-     * @covers Aws\Glacier\TreeHash::addChecksum
-     */
+
+ */
+    #[CoversClass(Aws\Glacier\TreeHash::addChecksum::class)]
     public function testCannotAddChecksumsAfterHashCalculation()
     {
         $this->expectException(\LogicException::class);
@@ -64,8 +68,9 @@ class TreeHashTest extends TestCase
     }
 
     /**
-     * @covers Aws\Glacier\TreeHash::reset
-     */
+
+ */
+    #[CoversClass(Aws\Glacier\TreeHash::reset::class)]
     public function testCanResetHash()
     {
         $hash = new TreeHash('sha256');
@@ -77,8 +82,9 @@ class TreeHashTest extends TestCase
     }
 
     /**
-     * @covers Aws\Glacier\TreeHash::complete
-     */
+
+ */
+    #[CoversClass(Aws\Glacier\TreeHash::complete::class)]
     public function testCanCalculateEmptyHash()
     {
         $hash = new TreeHash('sha256');
@@ -87,8 +93,9 @@ class TreeHashTest extends TestCase
     }
 
     /**
-     * @covers Aws\Glacier\TreeHash::complete
-     */
+
+ */
+    #[CoversClass(Aws\Glacier\TreeHash::complete::class)]
     public function testCanCalculateHashForSingleZero()
     {
         $data = "0";

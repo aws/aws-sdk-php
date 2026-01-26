@@ -9,10 +9,12 @@ use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Api\Serializer\QuerySerializer
+
  */
+#[CoversClass(QuerySerializer::class)]
 class QuerySerializerTest extends TestCase
 {
     use UsesServiceTrait;

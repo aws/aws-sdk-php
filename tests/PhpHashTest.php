@@ -3,10 +3,12 @@ namespace Aws\Test;
 
 use Aws\PhpHash;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\PhpHash
+
  */
+#[CoversClass(PhpHash::class)]
 class PhpHashTest extends TestCase
 {
     public function testHashesData()

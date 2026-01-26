@@ -7,6 +7,7 @@ use Aws\Crypto\Cipher\CipherMethod;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class AesDecryptingStreamTest extends TestCase
 {
@@ -16,11 +17,12 @@ class AesDecryptingStreamTest extends TestCase
     use AesEncryptionStreamTestTrait;
 
     /**
-     * @dataProvider cartesianJoinInputCipherMethodProvider
      *
      * @param StreamInterface $plainText
      * @param CipherMethod $iv
-     */
+
+ */
+    #[DataProvider('cartesianJoinInputCipherMethodProvider')]
     public function testStreamOutputSameAsOpenSSL(
         StreamInterface $plainText,
         CipherMethod $iv
@@ -58,11 +60,12 @@ class AesDecryptingStreamTest extends TestCase
     }
 
     /**
-     * @dataProvider cartesianJoinInputCipherMethodProvider
      *
      * @param StreamInterface $plainText
      * @param CipherMethod $iv
-     */
+
+ */
+    #[DataProvider('cartesianJoinInputCipherMethodProvider')]
     public function testReportsSizeOfPlaintextWherePossible(
         StreamInterface $plainText,
         CipherMethod $iv
@@ -89,11 +92,12 @@ class AesDecryptingStreamTest extends TestCase
     }
 
     /**
-     * @dataProvider cartesianJoinInputCipherMethodProvider
      *
      * @param StreamInterface $plainText
      * @param CipherMethod $iv
-     */
+
+ */
+    #[DataProvider('cartesianJoinInputCipherMethodProvider')]
     public function testSupportsRewinding(
         StreamInterface $plainText,
         CipherMethod $iv
@@ -113,10 +117,11 @@ class AesDecryptingStreamTest extends TestCase
     }
 
     /**
-     * @dataProvider cipherMethodProvider
      *
      * @param CipherMethod $iv
-     */
+
+ */
+    #[DataProvider('cipherMethodProvider')]
     public function testMemoryUsageRemainsConstant(CipherMethod $iv)
     {
         $memory = memory_get_usage();
@@ -155,10 +160,11 @@ class AesDecryptingStreamTest extends TestCase
     }
 
     /**
-     * @dataProvider cipherMethodProvider
      *
      * @param CipherMethod $cipherMethod
-     */
+
+ */
+    #[DataProvider('cipherMethodProvider')]
     public function testReturnsEmptyStringWhenSourceStreamEmpty(
         CipherMethod $cipherMethod
     ) {

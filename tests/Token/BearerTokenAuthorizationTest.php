@@ -4,10 +4,13 @@ namespace Aws\Test\Token;
 use Aws\Token\Token;
 use GuzzleHttp\Psr7\Request;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Token\BearerTokenAuthorization
+
  */
+#[CoversClass(BearerTokenAuthorization::class)]
 class BearerTokenAuthorizationTest extends TestCase {
 
     public static function bearerTestProvider() {
@@ -34,8 +37,9 @@ class BearerTokenAuthorizationTest extends TestCase {
     }
 
     /**
-     * @dataProvider bearerTestProvider
-     */
+
+ */
+    #[DataProvider('bearerTestProvider')]
     public function testBearerSuccessCases($headers, $tokenString, $expectedHeaders) {
         $authorizer = new \Aws\Token\BearerTokenAuthorization();
         $request = new Request('GET', 'http://foo.com');

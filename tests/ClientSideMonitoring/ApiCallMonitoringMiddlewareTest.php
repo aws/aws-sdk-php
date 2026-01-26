@@ -10,11 +10,13 @@ use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware
- * @covers Aws\ClientSideMonitoring\AbstractMonitoringMiddleware
+
  */
+#[CoversClass(ApiCallMonitoringMiddleware::class)]
+#[CoversClass(ApiCallMonitoringMiddleware::class)]
 class ApiCallMonitoringMiddlewareTest extends TestCase
 {
     use MonitoringMiddlewareTestingTrait;

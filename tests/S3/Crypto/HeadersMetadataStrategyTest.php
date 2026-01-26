@@ -4,17 +4,21 @@ namespace Aws\Test\S3\Crypto;
 use Aws\S3\Crypto\HeadersMetadataStrategy;
 use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\S3\Crypto\HeadersMetadataStrategy
+
  */
+#[CoversClass(HeadersMetadataStrategy::class)]
 class HeadersMetadataStrategyTest extends TestCase
 {
     use UsesMetadataEnvelopeTrait;
 
     /**
-     * @dataProvider getMetadataFields
-     */
+
+ */
+    #[DataProvider('getMetadataFields')]
     public function testSave($fields)
     {
         $strategy = new HeadersMetadataStrategy();
@@ -30,8 +34,9 @@ class HeadersMetadataStrategyTest extends TestCase
     }
 
     /**
-     * @dataProvider getMetadataResult
-     */
+
+ */
+    #[DataProvider('getMetadataResult')]
     public function testLoad($args, $metadata)
     {
         $strategy = new HeadersMetadataStrategy();

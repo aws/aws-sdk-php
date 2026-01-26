@@ -3,17 +3,21 @@ namespace Aws\Test\Crypto;
 
 use Aws\Crypto\MetadataEnvelope;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Crypto\MetadataEnvelope
+
  */
+#[CoversClass(MetadataEnvelope::class)]
 class MetadataEnvelopeTest extends TestCase
 {
     use UsesMetadataEnvelopeTrait;
 
     /**
-     * @dataProvider getIndividualMetadataFields
-     */
+
+ */
+    #[DataProvider('getIndividualMetadataFields')]
     public function testSetsValidFields($field, $value)
     {
         $envelope = new MetadataEnvelope();
@@ -23,8 +27,9 @@ class MetadataEnvelopeTest extends TestCase
     }
 
     /**
-     * @dataProvider getMetadataFields
-     */
+
+ */
+    #[DataProvider('getMetadataFields')]
     public function testSetsAllFields($allValidFields)
     {
         $envelope = new MetadataEnvelope();
@@ -39,8 +44,9 @@ class MetadataEnvelopeTest extends TestCase
     }
 
     /**
-     * @dataProvider getIndividualInvalidMetadataFields
-     */
+
+ */
+    #[DataProvider('getIndividualInvalidMetadataFields')]
     public function testThrowsOnInvalidMetadataField($field, $value)
     {
         //= ../specification/s3-encryption/data-format/content-metadata.md#determining-s3ec-object-status

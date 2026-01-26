@@ -5,10 +5,12 @@ use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Api\StructureShape;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Api\StructureShape
+
  */
+#[CoversClass(\Aws\Api\StructureShape::class)]
 class StructureShapeTest extends TestCase
 {
     public function testReturnsWhenMembersAreEmpty()

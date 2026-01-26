@@ -4,10 +4,13 @@ namespace Aws\Test\Retry;
 
 use Aws\Retry\RateLimiter;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Retry\RateLimiter
+
  */
+#[CoversClass(\Aws\Retry\RateLimiter::class)]
 class RateLimiterTest extends TestCase
 {
     /**
@@ -64,12 +67,13 @@ class RateLimiterTest extends TestCase
     }
 
     /**
-     * @dataProvider cubicSuccessProvider
      *
      * @param $timestamp
      * @param $expectedRate
      * @throws \ReflectionException
-     */
+
+ */
+    #[DataProvider('cubicSuccessProvider')]
     public function testCalculatesCubicSuccessValues($timestamp, $expectedRate)
     {
         $rateLimiter = new RateLimiter();

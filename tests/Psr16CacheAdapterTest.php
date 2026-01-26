@@ -4,6 +4,7 @@ namespace Aws\Test;
 use Aws\Psr16CacheAdapter;
 use Psr\SimpleCache\CacheInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class Psr16CacheAdapterTest extends TestCase
 {
@@ -19,11 +20,12 @@ class Psr16CacheAdapterTest extends TestCase
     }
 
     /**
-     * @dataProvider cacheDataProvider
      *
      * @param string $key
      * @param mixed $value
-     */
+
+ */
+    #[DataProvider('cacheDataProvider')]
     public function testProxiesGetCallsToPsrCache($key, $value)
     {
         $this->wrapped->expects($this->once())
@@ -35,12 +37,13 @@ class Psr16CacheAdapterTest extends TestCase
     }
 
     /**
-     * @dataProvider cacheDataProvider
      *
      * @param string $key
      * @param mixed $value
      * @param int|\DateInterval $ttl
-     */
+
+ */
+    #[DataProvider('cacheDataProvider')]
     public function testProxiesSetCallsToPsrCache($key, $value, $ttl)
     {
         $this->wrapped->expects($this->once())
@@ -52,10 +55,11 @@ class Psr16CacheAdapterTest extends TestCase
     }
 
     /**
-     * @dataProvider cacheDataProvider
      *
      * @param string $key
-     */
+
+ */
+    #[DataProvider('cacheDataProvider')]
     public function testProxiesRemoveCallsToPsrCache($key)
     {
         $this->wrapped->expects($this->once())

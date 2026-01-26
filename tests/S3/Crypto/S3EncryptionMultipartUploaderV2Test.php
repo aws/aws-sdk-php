@@ -13,6 +13,7 @@ use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use GuzzleHttp\Psr7;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class S3EncryptionMultipartUploaderV2Test extends TestCase
 {
@@ -52,8 +53,9 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
     }
 
     /**
-     * @dataProvider getValidMaterialsProviders
-     */
+
+ */
+    #[DataProvider('getValidMaterialsProviders')]
     public function testPutObjectTakesValidMaterialsProviders(
         $provider,
         $exception
@@ -100,8 +102,9 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
     }
 
     /**
-     * @dataProvider getInvalidMaterialsProviders
-     */
+
+ */
+    #[DataProvider('getInvalidMaterialsProviders')]
     public function testPutObjectRejectsInvalidMaterialsProviders(
         $provider,
         $exception
@@ -129,8 +132,9 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
     }
 
     /**
-     * @dataProvider getValidMetadataStrategies
-     */
+
+ */
+    #[DataProvider('getValidMetadataStrategies')]
     public function testPutObjectTakesValidMetadataStrategy(
         $strategy,
         $exception,
@@ -185,8 +189,9 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
     }
 
     /**
-     * @dataProvider getInvalidMetadataStrategies
-     */
+
+ */
+    #[DataProvider('getInvalidMetadataStrategies')]
     public function testPutObjectRejectsInvalidMetadataStrategy(
         $strategy,
         $exception
@@ -262,8 +267,9 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
     }
 
     /**
-     * @dataProvider getCiphers
-     */
+
+ */
+    #[DataProvider('getCiphers')]
     public function testPutObjectValidatesCipher(
         $cipher,
         $exception = null
@@ -312,8 +318,9 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
     }
 
     /**
-     * @dataProvider getKeySizes
-     */
+
+ */
+    #[DataProvider('getKeySizes')]
     public function testPutObjectValidatesKeySize(
         $keySize,
         $exception

@@ -3,13 +3,16 @@ namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Parser\Exception\ParserException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
  * This class tests the custom functionality of the JsonParser;
  * generic testing is done in ComplianceTest.php
- * @covers \Aws\Api\Parser\JsonRpcParser
- * @covers \Aws\Api\Parser\JsonParser
+
  */
+#[CoversClass(\Aws\Api\Parser\JsonRpcParser::class)]
+#[CoversClass(\Aws\Api\Parser\JsonParser::class)]
 class JsonParserTest extends TestCase
 {
     use ParserTestServiceTrait;
@@ -93,8 +96,9 @@ class JsonParserTest extends TestCase
     }
 
     /**
-     * @dataProvider timeStampModelProvider
-     */
+
+ */
+    #[DataProvider('timeStampModelProvider')]
     public function testHandlesTimeStamps(
         $timestamp,
         $commandName,
@@ -114,8 +118,9 @@ class JsonParserTest extends TestCase
     }
 
     /**
-     * @dataProvider timeStampExceptionModelProvider
-     */
+
+ */
+    #[DataProvider('timeStampExceptionModelProvider')]
     public function testTimeStampExceptions(
         $timestamp,
         $commandName,

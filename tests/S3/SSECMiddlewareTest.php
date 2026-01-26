@@ -5,17 +5,21 @@ use Aws\Middleware;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\S3\SSECMiddleware
+
  */
+#[CoversClass(SSECMiddleware::class)]
 class SSECMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 
     /**
-     * @dataProvider getListenerTestCases
-     */
+
+ */
+    #[DataProvider('getListenerTestCases')]
     public function testSseCpkListener($operation, array $params, array $expectedResults)
     {
         $s3 = $this->getTestClient('s3');

@@ -7,11 +7,14 @@ use Aws\DocDB\DocDBClient;
 use Aws\Result;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 require_once __DIR__ . '/../Signature/sig_hack.php';
 
 /**
- * @covers Aws\DocDB\DocDBClient
+
  */
+#[CoversClass(DocDBClient::class)]
 class DocDbClientTest extends TestCase
 {
     public static function set_up_before_class()
@@ -36,14 +39,15 @@ class DocDbClientTest extends TestCase
     }
 
     /**
-     * @dataProvider DocDbPresignMethodProvider
      *
      * @param string $functionName
      * @param string $presignedUrl
      * @param string $sourceRegion
      * @param string $expectedUrl
      * @param string $expectedSignature
-     */
+
+ */
+    #[DataProvider('DocDbPresignMethodProvider')]
     public function testCorrectPresignDocDbUrls(
         $functionName,
         $functionArgs,

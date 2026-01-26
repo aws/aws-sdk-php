@@ -10,10 +10,12 @@ use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\MockHandler
+
  */
+#[CoversClass(MockHandler::class)]
 class MockHandlerTest extends TestCase
 {
     public function testValidatesEachResult()

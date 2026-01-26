@@ -7,10 +7,12 @@ use Aws\Identity\AwsCredentialIdentity;
 use Aws\Identity\AwsCredentialIdentityInterface;
 use Aws\Identity\IdentityInterface;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Credentials\Credentials
+
  */
+#[CoversClass(\Aws\Credentials\Credentials::class)]
 class CredentialsTest extends TestCase
 {
     public function testHasGetters()

@@ -14,21 +14,25 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\StreamRequestPayloadMiddleware
+
  */
+#[CoversClass(\Aws\StreamRequestPayloadMiddleware::class)]
 class StreamRequestPayloadMiddlewareTest extends TestCase
 {
     use ArraySubsetAsserts;
 
     /**
-     * @dataProvider addsProperHeadersDataProvider
      *
      * @param array $commandDef
      * @param array $expectedHeaders
      * @param array $expectedNonHeaders
-     */
+
+ */
+    #[DataProvider('addsProperHeadersDataProvider')]
     public function testAddsProperHeaders(
         array $commandDef,
         array $expectedHeaders,

@@ -7,10 +7,13 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Glacier\MultipartUploader
+
  */
+#[CoversClass(MultipartUploader::class)]
 class MultipartUploaderTest extends TestCase
 {
     use UsesServiceTrait;
@@ -24,8 +27,9 @@ class MultipartUploaderTest extends TestCase
     }
 
     /**
-     * @dataProvider getTestCases
-     */
+
+ */
+    #[DataProvider('getTestCases')]
     public function testGlacierMultipartUploadWorkflow(
         array $uploadOptions = [],
         ?StreamInterface $source = null,

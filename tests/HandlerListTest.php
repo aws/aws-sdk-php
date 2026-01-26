@@ -7,10 +7,12 @@ use Aws\HandlerList;
 use Aws\Middleware;
 use GuzzleHttp\Psr7\Request;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\HandlerList
+
  */
+#[CoversClass(HandlerList::class)]
 class HandlerListTest extends TestCase
 {
     public function testEnsuresHandlerIsSet()

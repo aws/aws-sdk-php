@@ -12,10 +12,13 @@ use Aws\Api\StructureShape;
 use Aws\Test\TestServiceTrait;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Api\Service
+
  */
+#[CoversClass(\Aws\Api\Service::class)]
 class ServiceTest extends TestCase
 {
     use UsesServiceTrait;
@@ -155,8 +158,9 @@ class ServiceTest extends TestCase
     }
 
     /**
-     * @dataProvider errorParserProvider
-     */
+
+ */
+    #[DataProvider('errorParserProvider')]
     public function testCreatesRelevantErrorParsers($p, $cl)
     {
         $this->assertInstanceOf($cl, Service::createErrorParser($p));
@@ -180,8 +184,9 @@ class ServiceTest extends TestCase
     }
 
     /**
-     * @dataProvider serializerDataProvider
-     */
+
+ */
+    #[DataProvider('serializerDataProvider')]
     public function testCreatesSerializer($type, $cl)
     {
         $data = ['metadata' => ['protocol' => $type]];
@@ -208,8 +213,9 @@ class ServiceTest extends TestCase
     }
 
     /**
-     * @dataProvider parserDataProvider
-     */
+
+ */
+    #[DataProvider('parserDataProvider')]
     public function testCreatesParsers($type, $cl)
     {
         $service = new Service(
@@ -307,8 +313,9 @@ class ServiceTest extends TestCase
     }
 
     /**
-     * @dataProvider selectsProtocolProvider
-     */
+
+ */
+    #[DataProvider('selectsProtocolProvider')]
     public function testSelectsProtocol($protocols, $expected)
     {
         $s = new Service(

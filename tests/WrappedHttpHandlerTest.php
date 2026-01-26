@@ -16,10 +16,13 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\WrappedHttpHandler
+
  */
+#[CoversClass(WrappedHttpHandler::class)]
 class WrappedHttpHandlerTest extends TestCase
 {
     use TestServiceTrait;
@@ -92,7 +95,6 @@ class WrappedHttpHandlerTest extends TestCase
     }
 
     /**
-     * @dataProvider responseAndParserProvider
      *
      * @param Response $res
      * @param string $serviceName
@@ -100,7 +102,9 @@ class WrappedHttpHandlerTest extends TestCase
      * @param string|null $expectedCode
      * @param string|null $expectedId
      * @param array $expectedArray
-     */
+
+ */
+    #[DataProvider('responseAndParserProvider')]
     public function testCanRejectWithAndParseResponse(
         Response $res,
         string $serviceName,

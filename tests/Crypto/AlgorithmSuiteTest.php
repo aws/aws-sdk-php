@@ -6,10 +6,13 @@ use Aws\Crypto\AlgorithmConstants;
 use Aws\Crypto\MaterialsProviderV3;
 use Aws\S3\Crypto\S3EncryptionClientV3;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Crypto\AlgorithmSuite
+
  */
+#[CoversClass(\Aws\Crypto\AlgorithmSuite::class)]
 class AlgorithmSuiteTest extends TestCase
 {
     /**
@@ -95,8 +98,9 @@ class AlgorithmSuiteTest extends TestCase
 
     /**
      * Test getCipherName() method
-     * @dataProvider cipherNameProvider
-     */
+
+ */
+    #[DataProvider('cipherNameProvider')]
     public function testGetCipherName(AlgorithmSuite $suite, string $expectedCipher): void
     {
         $this->assertSame($expectedCipher, $suite->getCipherName());
@@ -148,8 +152,9 @@ class AlgorithmSuiteTest extends TestCase
 
     /**
      * Test getIvLengthBits() and getIvLengthBytes() methods
-     * @dataProvider ivLengthProvider
-     */
+
+ */
+    #[DataProvider('ivLengthProvider')]
     public function testGetIvLength(AlgorithmSuite $suite, int $expectedBits, int $expectedBytes): void
     {
         $this->assertSame($expectedBits, $suite->getIvLengthBits());
@@ -182,8 +187,9 @@ class AlgorithmSuiteTest extends TestCase
 
     /**
      * Test getCipherTagLengthBits() and getCipherTagLengthInBytes() methods
-     * @dataProvider cipherTagLengthProvider
-     */
+
+ */
+    #[DataProvider('cipherTagLengthProvider')]
     public function testGetCipherTagLength(AlgorithmSuite $suite, int $expectedBits, int $expectedBytes): void
     {
         $this->assertSame($expectedBits, $suite->getCipherTagLengthBits());
@@ -232,8 +238,9 @@ class AlgorithmSuiteTest extends TestCase
 
     /**
      * Test key derivation length methods
-     * @dataProvider keyDerivationProvider
-     */
+
+ */
+    #[DataProvider('keyDerivationProvider')]
     public function testGetDerivationKeyLengths(
         AlgorithmSuite $suite,
         int $expectedInputBits,
@@ -279,8 +286,9 @@ class AlgorithmSuiteTest extends TestCase
 
     /**
      * Test commitment key length methods
-     * @dataProvider commitmentKeyLengthProvider
-     */
+
+ */
+    #[DataProvider('commitmentKeyLengthProvider')]
     public function testGetCommitmentKeyLengths(
         AlgorithmSuite $suite,
         int $expectedInputBits,

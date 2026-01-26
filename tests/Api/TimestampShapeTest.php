@@ -4,10 +4,13 @@ namespace Aws\Test\Api;
 use Aws\Api\TimestampShape;
 use Aws\Api\ShapeMap;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Api\TimestampShape
+
  */
+#[CoversClass(\Aws\Api\TimestampShape::class)]
 class TimestampShapeTest extends TestCase
 {
     public static function formatProvider()
@@ -30,8 +33,9 @@ class TimestampShapeTest extends TestCase
     }
 
     /**
-     * @dataProvider formatProvider
-     */
+
+ */
+    #[DataProvider('formatProvider')]
     public function testFormatsData($value, $format, $result)
     {
         $s = new TimestampShape([], new ShapeMap([]));

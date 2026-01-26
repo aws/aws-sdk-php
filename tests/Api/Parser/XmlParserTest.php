@@ -3,13 +3,16 @@ namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Parser\Exception\ParserException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
  * This class tests the custom functionality of the XmlParser;
  * generic testing is done in ComplianceTest.php
- * @covers \Aws\Api\Parser\RestXmlParser
- * @covers \Aws\Api\Parser\XmlParser
+
  */
+#[CoversClass(\Aws\Api\Parser\RestXmlParser::class)]
+#[CoversClass(\Aws\Api\Parser\XmlParser::class)]
 class XmlParserTest extends TestCase
 {
     use ParserTestServiceTrait;
@@ -90,8 +93,9 @@ class XmlParserTest extends TestCase
     }
 
     /**
-     * @dataProvider timeStampModelProvider
-     */
+
+ */
+    #[DataProvider('timeStampModelProvider')]
     public function testTimeStamps($timestamp, $commandName, $expectedValue)
     {
         $service = $this->generateTestService('rest-xml');
@@ -109,8 +113,9 @@ class XmlParserTest extends TestCase
 
 
     /**
-     * @dataProvider timeStampExceptionModelProvider
-     */
+
+ */
+    #[DataProvider('timeStampExceptionModelProvider')]
     public function testExceptionTimeStamps(
         $timestamp,
         $commandName,

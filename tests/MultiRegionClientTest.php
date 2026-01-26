@@ -14,6 +14,7 @@ use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class MultiRegionClientTest extends TestCase
 {
@@ -110,11 +111,12 @@ class MultiRegionClientTest extends TestCase
     }
 
     /**
-     * @dataProvider clientInterfaceMethodProvider
      *
      * @param string $method
      * @param array $args
-     */
+
+ */
+    #[DataProvider('clientInterfaceMethodProvider')]
     public function testProxiesCallsToRegionalizedClient($method, array $args)
     {
         $expectation = $this->mockRegionalClient->expects($this->once())

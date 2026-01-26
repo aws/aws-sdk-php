@@ -15,10 +15,13 @@ use Aws\Sts\StsClient;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Uri;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Sts\StsClient
+
  */
+#[CoversClass(StsClient::class)]
 class StsClientTest extends TestCase
 {
     private $originalEnv = [];
@@ -184,10 +187,11 @@ class StsClientTest extends TestCase
     }
 
     /**
-     * @dataProvider stsAssumeRoleOperationsDataProvider
      *
      * @return void
-     */
+
+ */
+    #[DataProvider('stsAssumeRoleOperationsDataProvider')]
     public function testStsAssumeRoleOperationsWithAccountId($response, $expected)
     {
         $operation = 'assumeRole';
@@ -233,8 +237,9 @@ class StsClientTest extends TestCase
     }
 
     /**
-     * @dataProvider stsAssumeRoleWithSAMLOperationsDataProvider
-     */
+
+ */
+    #[DataProvider('stsAssumeRoleWithSAMLOperationsDataProvider')]
     public function testStsAssumeRoleWithSAMLOperationsWithAccountId(
         $response,
         $expected
@@ -292,8 +297,9 @@ class StsClientTest extends TestCase
     }
 
     /**
-     * @dataProvider stsAssumeRoleWithWebIdentityOperationsDataProvider
-     */
+
+ */
+    #[DataProvider('stsAssumeRoleWithWebIdentityOperationsDataProvider')]
     public function testStsAssumeRoleWithWebIdentityOperationsWithAccountId(
         $response,
         $expected
@@ -348,8 +354,9 @@ class StsClientTest extends TestCase
     }
 
     /**
-     * @dataProvider stsGetFederationTokenOperationsDataProvider
-     */
+
+ */
+    #[DataProvider('stsGetFederationTokenOperationsDataProvider')]
     public function testStsGetFederationTokenOperationsWithAccountId(
         $response,
         $expected

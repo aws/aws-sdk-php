@@ -6,10 +6,13 @@ use Aws\Api\ShapeMap;
 use Aws\Api\Validator;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use GuzzleHttp\Psr7;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Api\Validator
+
  */
+#[CoversClass(Validator::class)]
 class ValidatorTest extends TestCase
 {
     public static function validationProvider()
@@ -639,8 +642,9 @@ class ValidatorTest extends TestCase
     }
 
     /**
-     * @dataProvider validationProvider
-     */
+
+ */
+    #[DataProvider('validationProvider')]
     public function testValidatesInput($shape, $input, $result)
     {
         $shape = Shape::create($shape, new ShapeMap([]));

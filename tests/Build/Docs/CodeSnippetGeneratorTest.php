@@ -6,18 +6,20 @@ use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\Build\Docs\CodeSnippetGenerator;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class CodeSnippetGeneratorTest extends TestCase
 {
     /**
-     * @dataProvider exampleProvider
      *
      * @param Service $service
      * @param string $operation
      * @param array $input
      * @param string $expected
      * @param bool $isInput
-     */
+
+ */
+    #[DataProvider('exampleProvider')]
     public function testCanBuildCodeExamples(
         Service $service,
         $operation,

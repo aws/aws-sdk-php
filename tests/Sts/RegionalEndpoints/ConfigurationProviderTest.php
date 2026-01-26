@@ -10,6 +10,7 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
 use Aws\Sts\RegionalEndpoints\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * git\Sts\RegionalEndpoints\ConfigurationProvider
@@ -384,10 +385,11 @@ EOT;
     }
 
     /**
-     * @dataProvider getSuccessfulUnwrapData
      * @param $toUnwrap
      * @param ConfigurationInterface $expected
-     */
+
+ */
+    #[DataProvider('getSuccessfulUnwrapData')]
     public function testSuccessfulUnwraps($toUnwrap, ConfigurationInterface $expected)
     {
         $this->assertSame(

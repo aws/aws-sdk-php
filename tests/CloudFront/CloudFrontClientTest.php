@@ -4,10 +4,12 @@ namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\CloudFrontClient;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\CloudFront\CloudFrontClient
+
  */
+#[CoversClass(CloudFrontClient::class)]
 class CloudFrontClientTest extends TestCase
 {
     protected $key;

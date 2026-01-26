@@ -12,14 +12,16 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ObjectCopierTest extends TestCase
 {
     use UsesServiceTrait;
 
     /**
-     * @dataProvider copyDataProvider
-     */
+
+ */
+    #[DataProvider('copyDataProvider')]
     public function testDoesCorrectOperation(
         array $mockedResults,
         array $options
@@ -39,8 +41,9 @@ class ObjectCopierTest extends TestCase
     }
 
     /**
-     * @dataProvider copyWithPathStyleDataProvider
-     */
+
+ */
+    #[DataProvider('copyWithPathStyleDataProvider')]
     public function testDoesCorrectOperationWithPathStyle(
         array $mockedResults,
         array $options
@@ -62,10 +65,11 @@ class ObjectCopierTest extends TestCase
     }
 
     /**
-     * @dataProvider copyDataProvider
      * @param array $mockedResults
      * @param array $options
-     */
+
+ */
+    #[DataProvider('copyDataProvider')]
     public function testDoesCorrectOperationWithAccessPointArn(
         array $mockedResults,
         array $options
@@ -140,8 +144,9 @@ class ObjectCopierTest extends TestCase
     }
 
     /**
-     * @dataProvider copyDataProvider
-     */
+
+ */
+    #[DataProvider('copyDataProvider')]
     public function testDoesCorrectOperationAsynchronously(
         array $mockedResults,
         array $options
@@ -163,8 +168,9 @@ class ObjectCopierTest extends TestCase
     }
 
     /**
-     * @dataProvider copyWithPathStyleDataProvider
-     */
+
+ */
+    #[DataProvider('copyWithPathStyleDataProvider')]
     public function testDoesCorrectOperationAsynchronouslyWithPathStyle(
         array $mockedResults,
         array $options
@@ -407,8 +413,9 @@ class ObjectCopierTest extends TestCase
     }
 
     /**
-     * @dataProvider MultipartCopierProvider
-     */
+
+ */
+    #[DataProvider('MultipartCopierProvider')]
     public function testS3ObjectMultipartCopier($input, $expectedOutput)
     {
         /** @var \Aws\S3\S3Client $client */

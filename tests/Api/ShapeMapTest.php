@@ -4,10 +4,12 @@ namespace Aws\Test\Api;
 use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Api\ShapeMap
+
  */
+#[CoversClass(\Aws\Api\ShapeMap::class)]
 class ShapeMapTest extends TestCase
 {
     private $shapeDefinitions;

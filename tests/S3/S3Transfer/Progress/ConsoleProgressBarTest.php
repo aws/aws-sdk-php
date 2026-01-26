@@ -8,6 +8,7 @@ use Aws\S3\S3Transfer\Progress\PlainProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\AbstractProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\TransferProgressBarFormat;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Tests console progress bar.
@@ -96,9 +97,10 @@ class ConsoleProgressBarTest extends TestCase
      * @param string $expectedOutput
      *
      * @return void
-     * @dataProvider progressBarRenderingProvider
      *
-     */
+
+ */
+    #[DataProvider('progressBarRenderingProvider')]
     public function testProgressBarRendering(
         string                    $progressBarChar,
         int                       $progressBarWidth,

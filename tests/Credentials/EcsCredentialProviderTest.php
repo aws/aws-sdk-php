@@ -17,10 +17,13 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Ring\Future\CompletedFutureArray;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \Aws\Credentials\EcsCredentialProvider
+
  */
+#[CoversClass(\Aws\Credentials\EcsCredentialProvider::class)]
 class EcsCredentialProviderTest extends TestCase
 {
     private $uripath;
@@ -145,8 +148,9 @@ class EcsCredentialProviderTest extends TestCase
     }
 
     /**
-     * @dataProvider uriAndTokenResolutionProvider
-     */
+
+ */
+    #[DataProvider('uriAndTokenResolutionProvider')]
     public function testUriAndTokenResolution($case)
     {
         $dir = $this->clearEnv();
@@ -364,12 +368,13 @@ EOF;
     }
 
     /**
-     * @dataProvider successDataProvider
      *
      * @param array $clientDef
      * @param CredentialsInterface $expected
      * @throws GuzzleException
-     */
+
+ */
+    #[DataProvider('successDataProvider')]
     public function testHandlesSuccessScenarios(
         array $clientDef,
         CredentialsInterface $expected
@@ -459,13 +464,14 @@ EOF;
     }
 
     /**
-     * @dataProvider failureDataProvider
      *
      * @param $client
      * @param \Exception $expected
      * 
      * @throws GuzzleException
-     */
+
+ */
+    #[DataProvider('failureDataProvider')]
     public function testHandlesFailureScenarios(
         array $responses, 
         \Exception $expected

@@ -6,17 +6,19 @@ use Aws\Test\TestServiceTrait;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use GuzzleHttp\Psr7;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Api\ErrorParser\XmlErrorParser
+
  */
+#[CoversClass(XmlErrorParser::class)]
 class XmlErrorParserTest extends TestCase
 {
     use ArraySubsetAsserts;
     use TestServiceTrait;
 
     /**
-     * @dataProvider errorResponsesProvider
      *
      * @param string $response
      * @param string $protocol
@@ -25,7 +27,9 @@ class XmlErrorParserTest extends TestCase
      * @param string|null $expectedParsedType
      *
      * @throws \Exception
-     */
+
+ */
+    #[DataProvider('errorResponsesProvider')]
     public function testParsesClientErrorResponses(
         string $response,
         string $protocol,

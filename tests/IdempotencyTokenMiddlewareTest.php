@@ -10,10 +10,12 @@ use Aws\Api\Service;
 use Aws\Command;
 use GuzzleHttp\Psr7\Request;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\IdempotencyTokenMiddleware
+
  */
+#[CoversClass(IdempotencyTokenMiddleware::class)]
 class IdempotencyTokenMiddlewareTest extends TestCase
 {
     public function testAutoFillsMemberWithIdempotencyTrait()

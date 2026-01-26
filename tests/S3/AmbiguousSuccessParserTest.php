@@ -10,6 +10,7 @@ use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class AmbiguousSuccessParserTest extends TestCase
 {
@@ -30,10 +31,11 @@ class AmbiguousSuccessParserTest extends TestCase
     }
 
     /**
-     * @dataProvider opsWithAmbiguousSuccessesProvider
      *
      * @param string $operation
-     */
+
+ */
+    #[DataProvider('opsWithAmbiguousSuccessesProvider')]
     public function testConvertsAmbiguousSuccessesToExceptions($operation)
     {
         $this->expectExceptionMessage("Sorry!");
@@ -52,10 +54,11 @@ class AmbiguousSuccessParserTest extends TestCase
     }
 
     /**
-     * @dataProvider opsWithoutAmbiguousSuccessesProvider
      * @param string $operation
      * @doesNotPerformAssertions
-     */
+
+ */
+    #[DataProvider('opsWithoutAmbiguousSuccessesProvider')]
     public function testIgnoresAmbiguousSuccessesOnUnaffectedOperations($operation)
     {
         $command = $this->getMockBuilder(CommandInterface::class)->getMock();
@@ -72,8 +75,9 @@ class AmbiguousSuccessParserTest extends TestCase
     }
 
     /**
-     * @dataProvider opsWithAmbiguousSuccessesProvider
-     */
+
+ */
+    #[DataProvider('opsWithAmbiguousSuccessesProvider')]
     public function testThrowsConnectionErrorForEmptyBody($operation)
     {
         $this->expectExceptionMessage("An error connecting to the service occurred while performing the");

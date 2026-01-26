@@ -7,10 +7,12 @@ use Aws\Api\Service;
 use Aws\CommandInterface;
 use GuzzleHttp\Psr7\Response;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers Aws\Api\Parser\RestXmlParser
+
  */
+#[CoversClass(RestXmlParser::class)]
 class RestXmlParserTest extends TestCase
 {
     public function testParsesFalsyHeaderValues(): void
