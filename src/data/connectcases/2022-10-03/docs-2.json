@@ -5,7 +5,7 @@
     "BatchGetCaseRule": "<p>Gets a batch of case rules. In the Amazon Connect admin website, case rules are known as <i>case field conditions</i>. For more information about case field conditions, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/case-field-conditions.html\">Add case field conditions to a case template</a>.</p>",
     "BatchGetField": "<p>Returns the description for the list of fields in the request parameters. </p>",
     "BatchPutFieldOptions": "<p>Creates and updates a set of field options for a single select field in a Cases domain.</p>",
-    "CreateCase": "<p><note> <p>If you provide a value for <code>PerformedBy.UserArn</code> you must also have <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribeUser.html\">connect:DescribeUser</a> permission on the User ARN resource that you provide</p> </note> <p>Creates a case in the specified Cases domain. Case system and custom fields are taken as an array id/value pairs with a declared data types.</p> <p>The following fields are required when creating a case:</p> <ul> <li> <p> <code>customer_id</code> - You must provide the full customer profile ARN in this format: <code>arn:aws:profile:your_AWS_Region:your_AWS_account ID:domains/your_profiles_domain_name/profiles/profile_ID</code> </p> </li> <li> <p> <code>title</code> </p> </li> </ul></p>",
+    "CreateCase": "<p><note> <p>If you provide a value for <code>PerformedBy.UserArn</code> you must also have <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribeUser.html\">connect:DescribeUser</a> permission on the User ARN resource that you provide</p> </note> <p>Creates a case in the specified Cases domain. Case system and custom fields are taken as an array id/value pairs with a declared data types.</p> <p>When creating a case from a template that has tag propagation configurations, the specified tags are automatically applied to the case.</p> <p>The following fields are required when creating a case:</p> <ul> <li> <p> <code>customer_id</code> - You must provide the full customer profile ARN in this format: <code>arn:aws:profile:your_AWS_Region:your_AWS_account ID:domains/your_profiles_domain_name/profiles/profile_ID</code> </p> </li> <li> <p> <code>title</code> </p> </li> </ul></p>",
     "CreateCaseRule": "<p>Creates a new case rule. In the Amazon Connect admin website, case rules are known as <i>case field conditions</i>. For more information about case field conditions, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/case-field-conditions.html\">Add case field conditions to a case template</a>.</p>",
     "CreateDomain": "<p>Creates a domain, which is a container for all case data, such as cases, fields, templates and layouts. Each Amazon Connect instance can be associated with only one Cases domain.</p> <important> <p>This will not associate your connect instance to Cases domain. Instead, use the Amazon Connect <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_CreateIntegrationAssociation.html\">CreateIntegrationAssociation</a> API. You need specific IAM permissions to successfully associate the Cases domain. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/required-permissions-iam-cases.html#onboard-cases-iam\">Onboard to Cases</a>.</p> </important>",
     "CreateField": "<p>Creates a field in the Cases domain. This field is used to define the case object model (that is, defines what data can be captured on cases) in a Cases domain. </p>",
@@ -1274,6 +1274,19 @@
         "ListTemplatesRequest$maxResults": "<p>The maximum number of results to return per page.</p>"
       }
     },
+    "MutableTagKey": {
+      "base": null,
+      "refs": {
+        "MutableTags$key": null,
+        "TagPropagationConfigurationTagMapMap$key": null
+      }
+    },
+    "MutableTags": {
+      "base": null,
+      "refs": {
+        "CreateCaseRequest$tags": "<p>A map of of key-value pairs that represent tags on a resource. Tags are used to organize, track, or control access for this resource.</p>"
+      }
+    },
     "NextToken": {
       "base": null,
       "refs": {
@@ -1573,6 +1586,12 @@
         "SearchRelatedItemsResponse$relatedItems": "<p>A list of items related to a case. </p>"
       }
     },
+    "SearchTagKey": {
+      "base": null,
+      "refs": {
+        "TagValue$key": "<p>The tag key in the tag filter value.</p>"
+      }
+    },
     "Section": {
       "base": "<p>This represents a sections within a panel or tab of the page layout.</p>",
       "refs": {
@@ -1690,6 +1709,12 @@
         "ValidationException$message": null
       }
     },
+    "TagFilter": {
+      "base": "<p>A filter for tags. Only one value can be provided.</p>",
+      "refs": {
+        "CaseFilter$tag": "<p>A list of tags to filter on.</p>"
+      }
+    },
     "TagKey": {
       "base": null,
       "refs": {
@@ -1702,9 +1727,50 @@
         "UntagResourceRequest$tagKeys": "<p>List of tag keys.</p>"
       }
     },
+    "TagPropagationConfiguration": {
+      "base": "<p>Defines tag propagation configuration for resources created within a domain. Tags specified here will be automatically applied to resources being created for the specified resource type.</p>",
+      "refs": {
+        "TagPropagationConfigurationList$member": null
+      }
+    },
+    "TagPropagationConfigurationList": {
+      "base": null,
+      "refs": {
+        "CreateTemplateRequest$tagPropagationConfigurations": "<p>Defines tag propagation configuration for resources created within a domain. Tags specified here will be automatically applied to resources being created for the specified resource type.</p>",
+        "GetTemplateResponse$tagPropagationConfigurations": "<p>Defines tag propagation configuration for resources created within a domain. Tags specified here will be automatically applied to resources being created for the specified resource type.</p>",
+        "TemplateSummary$tagPropagationConfigurations": "<p>Defines tag propagation configuration for resources created within a domain. Tags specified here will be automatically applied to resources being created for the specified resource type.</p>",
+        "UpdateTemplateRequest$tagPropagationConfigurations": "<p>Defines tag propagation configuration for resources created within a domain. Tags specified here will be automatically applied to resources being created for the specified resource type.</p>"
+      }
+    },
+    "TagPropagationConfigurationTagMapMap": {
+      "base": null,
+      "refs": {
+        "TagPropagationConfiguration$tagMap": "<p>The tags that will be applied to the created resource.</p>"
+      }
+    },
+    "TagPropagationResourceType": {
+      "base": null,
+      "refs": {
+        "TagPropagationConfiguration$resourceType": "<p>Supported resource types for tag propagation. Determines which resources will receive automatically propagated tags.</p>"
+      }
+    },
     "TagResourceRequest": {
       "base": null,
       "refs": {}
+    },
+    "TagValue": {
+      "base": "<p>Object for case tag filter values.</p>",
+      "refs": {
+        "TagFilter$equalTo": "<p>Object containing tag key and value information.</p>"
+      }
+    },
+    "TagValueString": {
+      "base": null,
+      "refs": {
+        "MutableTags$value": null,
+        "TagPropagationConfigurationTagMapMap$value": null,
+        "TagValue$value": "<p>The tag value in the tag filter value.</p>"
+      }
     },
     "Tags": {
       "base": null,

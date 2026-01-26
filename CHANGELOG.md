@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchEvidently` - Deprecate all Evidently API for AWS CloudWatch Evidently deprecation
+* `Aws\GroundStation` - Adds support for AWS Ground Station Telemetry.
+* `Aws\EC2` - DescribeInstanceTypes API response now includes an additionalFlexibleNetworkInterfaces field, the number of interfaces attachable to an instance when using flexible Elastic Network Adapter (ENA) queues in addition to the base number specified by maximumNetworkInterfaces.
+* `Aws\ConnectCases` - Amazon Connect now enables you to use tag-based access controls to define who can access specific cases. You can associate tags with case templates and configure security profiles to determine which users can access cases with those tags.
+
 ## 3.369.19 - 2026-01-23
 
 * `Aws\DataZone` - Added api for deleting data export configuration for a domain
