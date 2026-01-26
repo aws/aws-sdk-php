@@ -397,14 +397,43 @@ class MiddlewareTest extends TestCase
     /**
      * @dataProvider recursionDetectionProvider
      *
-     * @param $mockHandler
-     * @param $name
-     * @param $trace
+     * @param string|null $functionName
+     * @param string|null $traceId
+     * @param bool $traceHeaderExpected
+     * @param string $traceHeaderExpectedValue
      */
-    public function testRecursionDetection($mockHandler, $name, $trace)
+    public function testRecursionDetection(
+        ?string $functionName,
+        ?string $traceId,
+        bool $traceHeaderExpected,
+        string $traceHeaderExpectedValue,
+    )
     {
-        $name !== null && putenv("AWS_LAMBDA_FUNCTION_NAME={$name}");
-        $trace !== null && putenv("_X_AMZN_TRACE_ID={$trace}");
+        $mockHandler = function (CommandInterface $command, RequestInterface $request)
+            use ($traceHeaderExpected, $traceHeaderExpectedValue) {
+            static $traceHeaderName = 'X-Amzn-Trace-Id';
+            if ($traceHeaderExpected) {
+                $this->assertTrue($request->hasHeader($traceHeaderName));
+                $this->assertEquals(
+                    $traceHeaderExpectedValue,
+                    $request->getHeaderLine($traceHeaderName)
+                );
+            } else {
+                $this->assertNotTrue($request->hasHeader($traceHeaderName));
+            }
+
+            return Promise\Create::promiseFor(
+                new Result(['@metadata' => ['statusCode' => 200]])
+            );
+        };
+
+        if ($functionName !== null) {
+            putenv("AWS_LAMBDA_FUNCTION_NAME={$functionName}");
+        }
+        if ($traceId !== null) {
+            putenv("_X_AMZN_TRACE_ID={$traceId}");
+        }
+
         $list = new HandlerList();
         $list->setHandler($mockHandler);
         $list->appendBuild(Middleware::recursionDetection());
@@ -414,63 +443,102 @@ class MiddlewareTest extends TestCase
         putenv('_X_AMZN_TRACE_ID');
     }
 
-    public static function recursionDetectionProvider()
+    public static function recursionDetectionProvider(): \Generator
     {
-        $addHeaderMock = function ($command, $request) {
-            $this->assertTrue($request->hasHeader('X-Amzn-Trace-Id'));
-            $headerValue = $request->getHeaders()['X-Amzn-Trace-Id'][0];
-            $this->assertEquals('bar', $headerValue);
-            return Promise\Create::promiseFor(
-                new Result(['@metadata' => ['statusCode' => 200]])
-            );
-        };
-
-        $addHeaderWithEncodingMock = function ($command, $request) {
-            $this->assertTrue($request->hasHeader('X-Amzn-Trace-Id'));
-            $headerValue = $request->getHeaders()['X-Amzn-Trace-Id'][0];
-            $this->assertEquals('bar%1Bbaz', $headerValue);
-            return Promise\Create::promiseFor(
-                new Result(['@metadata' => ['statusCode' => 200]])
-            );
-        };
-
-        $addHeaderWithNoEncodingMock = function ($command, $request) {
-            $this->assertTrue($request->hasHeader('X-Amzn-Trace-Id'));
-            $headerValue = $request->getHeaders()['X-Amzn-Trace-Id'][0];
-            $this->assertEquals('bar=;:+&[]{}"\',baz', $headerValue);
-            return Promise\Create::promiseFor(
-                new Result(['@metadata' => ['statusCode' => 200]])
-            );
-        };
-
-        $dontAddHeaderMock = function ($command, $request) {
-            $this->assertFalse($request->hasHeader('X-Amzn-Trace-Id'));
-            return Promise\Create::promiseFor(
-                new Result(['@metadata' => ['statusCode' => 200]])
-            );
-        };
-
-        $headerAlreadyExistsMock = function ($command, $request) {
-            $request = $request->withHeader('X-Amzn-Trace-Id', 'baz');
-            $headerValue = $request->getHeaders()['X-Amzn-Trace-Id'][0];
-            $this->assertNotEquals('bar', $headerValue);
-            return Promise\Create::promiseFor(
-                new Result(['@metadata' => ['statusCode' => 200]])
-            );
-        };
-
-        return [
-            [$addHeaderMock, 'foo', 'bar'],
-            [$addHeaderWithEncodingMock, 'foo', 'bar\ebaz'],
-            [$addHeaderWithNoEncodingMock, 'foo', 'bar=;:+&[]{}"\',baz'],
-            [$dontAddHeaderMock, '', 'bar'],
-            [$dontAddHeaderMock, 'foo', ''],
-            [$dontAddHeaderMock, '', ''],
-            [$dontAddHeaderMock, null, 'bar'],
-            [$dontAddHeaderMock, 'foo', null],
-            [$dontAddHeaderMock,  null, null],
-            [$headerAlreadyExistsMock, 'foo', 'bar']
+        $cases = [
+            'add_header' => [
+                'function_name' => 'foo',
+                'trace_id' => 'bar',
+                'trace_header_expected' => true,
+                'trace_header_expected_value' => 'bar',
+            ],
+            'add_header_with_encoding' => [
+                'function_name' => 'foo',
+                'trace_id' => 'bar\ebaz',
+                'trace_header_expected' => true,
+                'trace_header_expected_value' => 'bar%1Bbaz',
+            ],
+            'add_header_with_no_encoding' => [
+                'function_name' => 'foo',
+                'trace_id' => 'bar=;:+&[]{}"\',baz',
+                'trace_header_expected' => true,
+                'trace_header_expected_value' => 'bar=;:+&[]{}"\',baz',
+            ],
+            'dont_add_header' => [
+                'function_name' => '',
+                'trace_id' => 'bar',
+                'trace_header_expected' => false,
+                'trace_header_expected_value' => '',
+            ],
+            'dont_add_header_2' => [
+                'function_name' => 'foo',
+                'trace_id' => '',
+                'trace_header_expected' => false,
+                'trace_header_expected_value' => '',
+            ],
+            'dont_add_header_3' => [
+                'function_name' => '',
+                'trace_id' => '',
+                'trace_header_expected' => false,
+                'trace_header_expected_value' => '',
+            ],
+            'dont_add_header_4' => [
+                'function_name' => null,
+                'trace_id' => 'bar',
+                'trace_header_expected' => false,
+                'trace_header_expected_value' => '',
+            ],
+            'dont_add_header_5' => [
+                'function_name' => 'foo',
+                'trace_id' => null,
+                'trace_header_expected' => false,
+                'trace_header_expected_value' => '',
+            ],
+            'dont_add_header_6' => [
+                'function_name' => null,
+                'trace_id' => null,
+                'trace_header_expected' => false,
+                'trace_header_expected_value' => '',
+            ],
         ];
+
+        foreach ($cases as $key => $case) {
+            yield $key => $case;
+        }
+    }
+
+    public function testRecursionDetectionNotOverrideTraceHeaderIfExists()
+    {
+        $mockHandler = function (CommandInterface $command, RequestInterface $request) {
+            static $traceHeaderName = 'X-Amzn-Trace-Id';
+            $this->assertTrue($request->hasHeader($traceHeaderName));
+            $this->assertEquals(
+                'already_exists',
+                $request->getHeaderLine($traceHeaderName)
+            );
+
+            return Promise\Create::promiseFor(
+                new Result(['@metadata' => ['statusCode' => 200]])
+            );
+        };
+
+        putenv("AWS_LAMBDA_FUNCTION_NAME=foo");
+        putenv("_X_AMZN_TRACE_ID=bazz");
+
+        $list = new HandlerList();
+        $list->setHandler($mockHandler);
+        $list->appendBuild(function (callable $handler) {
+            return function (CommandInterface $command, RequestInterface $request)
+            use ($handler) {
+                $request = $request->withHeader('X-Amzn-Trace-Id', 'already_exists');
+                return $handler($command, $request);
+            };
+        });
+        $list->appendBuild(Middleware::recursionDetection());
+        $handler = $list->resolve();
+        $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
+        putenv('AWS_LAMBDA_FUNCTION_NAME');
+        putenv('_X_AMZN_TRACE_ID');
     }
 
     /**

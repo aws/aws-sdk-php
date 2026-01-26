@@ -74,7 +74,7 @@ class InstanceProfileProviderTest extends TestCase
         $this->tempFiles = [];
     }
 
-    private function getCredentialArray(
+    private static function getCredentialArray(
         $key,
         $secret,
         $token = null,
@@ -90,17 +90,17 @@ class InstanceProfileProviderTest extends TestCase
         ];
     }
 
-    private function getRequestClass()
+    private static function getRequestClass(): string
     {
         return "\GuzzleHttp\Psr7\Request";
     }
 
-    private function getResponseClass()
+    private static function getResponseClass(): string
     {
         return "\GuzzleHttp\Psr7\Response";
     }
 
-    private function getRequestException()
+    private static function getRequestException(): RequestException
     {
         return new RequestException('test', new Psr7\Request('GET', 'http://www.example.com'));
     }
@@ -114,7 +114,7 @@ class InstanceProfileProviderTest extends TestCase
      * @param bool $throwConnectException
      * @return \Closure
      */
-    private function getSecureTestClient(
+    private static function getSecureTestClient(
         $responses = [],
         $profile = 'MockProfile',
         $creds = ['foo_key', 'baz_secret', 'qux_token', null],
@@ -195,7 +195,7 @@ class InstanceProfileProviderTest extends TestCase
                                 [],
                                 Psr7\Utils::streamFor(
                                     json_encode(call_user_func_array(
-                                        [$this, 'getCredentialArray'],
+                                        [__CLASS__, 'getCredentialArray'],
                                         array_values($creds)
                                     ))
                                 )
@@ -222,14 +222,14 @@ class InstanceProfileProviderTest extends TestCase
      * @param bool $throwConnectException
      * @return \Closure
      */
-    private function getInsecureTestClient(
+    private static function getInsecureTestClient(
         $responses = [],
         $profile = 'MockProfile',
         $creds = ['foo_key', 'baz_secret', 'qux_token', null],
         $throwConnectException = false
     ) {
-        $requestClass = $this->getRequestClass();
-        $responseClass = $this->getResponseClass();
+        $requestClass = self::getRequestClass();
+        $responseClass = self::getResponseClass();
         $getProfileRequests = 0;
         $getCredsRequests = 0;
 
@@ -292,13 +292,12 @@ class InstanceProfileProviderTest extends TestCase
                                 [],
                                 Psr7\Utils::streamFor(
                                     json_encode(call_user_func_array(
-                                        [$this, 'getCredentialArray'],
+                                        [__CLASS__, 'getCredentialArray'],
                                         $creds
                                     ))
                                 )
                             )
                         );
-                        break;
                 }
             }
 
@@ -311,16 +310,32 @@ class InstanceProfileProviderTest extends TestCase
     }
 
     /**
-     * @dataProvider successTestCases
+     * @dataProvider successDataProvider
      *
-     * @param $client
-     * @param $expected
+     * @param array $clientDefinition
+     * @param CredentialsInterface $expected
+     * @param int|null $expectedAttempts
      */
     public function testHandlesSuccessScenarios(
-        callable $client,
+        array $clientDefinition,
         CredentialsInterface $expected,
-        $expectedAttempts = null
+        ?int $expectedAttempts
     ) {
+        $clientParameters = [
+            $clientDefinition['responses'],
+            'MockProfile',
+            $clientDefinition['credentials']
+                ?? ['foo_key', 'baz_secret', 'qux_token', null],
+            $clientDefinition['throw_on_connect_exception'] ?? false,
+
+        ];
+
+        if ($clientDefinition['secure']) {
+            $client = self::getSecureTestClient(...$clientParameters);
+        } else {
+            $client = self::getInsecureTestClient(...$clientParameters);
+        }
+
         $provider = new InstanceProfileProvider([
             'client' => $client,
             'retries' => 5
@@ -349,14 +364,14 @@ class InstanceProfileProviderTest extends TestCase
         }
     }
 
-    public static function successTestCases()
+    public static function successDataProvider(): \Generator
     {
         $expiry = time() + 1000;
         $creds = ['foo_key', 'baz_secret', 'qux_token', "@{$expiry}"];
         $credsObject = new Credentials($creds[0], $creds[1], $creds[2], $expiry);
 
-        $requestClass = $this->getRequestClass();
-        $responseClass = $this->getResponseClass();
+        $requestClass = self::getRequestClass();
+        $responseClass = self::getResponseClass();
         $getRequest = new $requestClass('GET', '/latest/meta-data/foo');
         $putRequest = new $requestClass('PUT', '/latest/meta-data/foo');
         $throttledResponse = new $responseClass(503);
@@ -378,7 +393,7 @@ class InstanceProfileProviderTest extends TestCase
         $promiseCreds = Promise\Create::promiseFor(
             new Response(200, [], Psr7\Utils::streamFor(
                 json_encode(call_user_func_array(
-                    [$this, 'getCredentialArray'],
+                    [__CLASS__, 'getCredentialArray'],
                     $creds
                 )))
             )
@@ -394,23 +409,28 @@ class InstanceProfileProviderTest extends TestCase
             'exception' => $getThrottleException
         ]);
 
-        return [
-            // Secure data flow, happy path
-            [
-                $this->getSecureTestClient([], 'MockProfile', $creds),
-                $credsObject
+        $cases = [
+            'secure_data_flow_happy_path' => [
+                'client_definition' => [
+                    'responses' => [],
+                    'credentials' => $creds,
+                    'secure' => true,
+                ],
+                'expected_credentials' => $credsObject,
+                'expected_retries' => null
             ],
-
-            // Insecure data flow, happy path
-            [
-                $this->getInsecureTestClient([], 'MockProfile', $creds),
-                $credsObject
+            'insecure_data_flow_happy_path' => [
+                'client_definition' => [
+                    'responses' => [],
+                    'credentials' => $creds,
+                    'secure' => false,
+                ],
+                'expected_credentials' => $credsObject,
+                'expected_retries' => null
             ],
-
-            // Secure data flow, with retries for request exception
-            [
-                $this->getSecureTestClient(
-                    [
+            'secure_data_flow_with_retries_for_request_exception' => [
+                'client_definition' => [
+                    'responses' => [
                         'put' => [
                             Promise\Create::rejectionFor([
                                 'exception' => $putThrottleException
@@ -428,17 +448,15 @@ class InstanceProfileProviderTest extends TestCase
                             $promiseCreds
                         ],
                     ],
-                    'MockProfile',
-                    $creds
-                ),
-                $credsObject,
-                6
+                    'secure' => true,
+                    'credentials' => $creds
+                ],
+                'expected_credentials' => $credsObject,
+                'expected_retries' => 6
             ],
-
-            // Insecure data flow, with retries for request exception
-            [
-                $this->getInsecureTestClient(
-                    [
+            'insecure_data_flow_with_retries_for_request_exception' => [
+                'client_definition' => [
+                    'responses' => [
                         'get_profile' => [
                             $rejectionThrottleProfile,
                             $promiseProfile
@@ -448,49 +466,43 @@ class InstanceProfileProviderTest extends TestCase
                             $promiseCreds
                         ],
                     ],
-                    'MockProfile',
-                    $creds
-                ),
-                $credsObject,
-                5
+                    'secure' => false,
+                    'credentials' => $creds
+                ],
+                'expected_credentials' => $credsObject,
+                'expected_retries' => 5
             ],
-
-            // Secure data flow, with retries for json exception
-            [
-                $this->getSecureTestClient(
-                    [
+            'secure_data_flow_with_retries_for_json_exception' => [
+                'client_definition' => [
+                    'responses' => [
                         'get_creds' => [
                             $promiseBadJsonCreds,
                             $promiseCreds
                         ],
                     ],
-                    'MockProfile',
-                    $creds
-                ),
-                $credsObject,
-                4
+                    'secure' => true,
+                    'credentials' => $creds
+                ],
+                'expected_credentials' => $credsObject,
+                'expected_retries' => 4
             ],
-
-            // Insecure data flow, with retries for json exception
-            [
-                $this->getInsecureTestClient(
-                    [
+            'insecure_data_flow_with_retries_for_json_exception' => [
+                'client_definition' => [
+                    'responses' => [
                         'get_creds' => [
                             $promiseBadJsonCreds,
                             $promiseCreds
                         ],
                     ],
-                    'MockProfile',
-                    $creds
-                ),
-                $credsObject,
-                4
+                    'secure' => false,
+                    'credentials' => $creds
+                ],
+                'expected_credentials' => $credsObject,
+                'expected_retries' => 4
             ],
-
-            // Secure data flow, with retries for ConnectException (Guzzle 7)
-            [
-                $this->getSecureTestClient(
-                    [
+            'secure_data_flow_with_retries_for_connect_exception' => [
+                'client_definition' => [
+                    'responses' =>  [
                         'put' => [
                             Promise\Create::rejectionFor([
                                 'exception' => $putThrottleException
@@ -508,18 +520,16 @@ class InstanceProfileProviderTest extends TestCase
                             $promiseCreds
                         ],
                     ],
-                    'MockProfile',
-                    $creds,
-                    true
-                ),
-                $credsObject,
-                6
+                    'secure' => true,
+                    'credentials' => $creds,
+                    'throw_on_connect_exception' => true
+                ],
+                'expected_credentials' => $credsObject,
+                'expected_retries' => 6
             ],
-
-            // Insecure data flow, with retries for ConnectException (Guzzle 7)
-            [
-                $this->getInsecureTestClient(
-                    [
+            'insecure_data_flow_with_retries_for_connect_exception' => [
+                'client_definition' => [
+                    'responses' =>  [
                         'get_profile' => [
                             $rejectionThrottleProfile,
                             $promiseProfile
@@ -529,24 +539,46 @@ class InstanceProfileProviderTest extends TestCase
                             $promiseCreds
                         ],
                     ],
-                    'MockProfile',
-                    $creds,
-                    true
-                ),
-                $credsObject,
-                5
-            ],
+                    'secure' => false,
+                    'credentials' => $creds,
+                    'throw_on_connect_exception' => true
+                ],
+                'expected_credentials' => $credsObject,
+                'expected_retries' => 5
+            ]
         ];
+
+        foreach ($cases as $key => $case) {
+            yield $key => $case;
+        }
     }
 
     /**
-     * @dataProvider failureTestCases
+     * @dataProvider failureDataProvider
      *
-     * @param $client
+     * @param array $clientDefinition
      * @param \Exception $expected
      */
-    public function testHandlesFailureScenarios($client, \Exception $expected)
+    public function testHandlesFailureScenarios(
+        array $clientDefinition,
+        \Exception $expected
+    )
     {
+        $clientParameters = [
+            $clientDefinition['responses'],
+            'MockProfile',
+            $clientDefinition['credentials']
+            ?? ['foo_key', 'baz_secret', 'qux_token', null],
+            $clientDefinition['throw_on_connect_exception'] ?? false,
+
+        ];
+
+        if ($clientDefinition['secure']) {
+            $client = self::getSecureTestClient(...$clientParameters);
+        } else {
+            $client = self::getInsecureTestClient(...$clientParameters);
+        }
+
         $provider = new InstanceProfileProvider([
             'client' => $client,
             'retries' => 1,
@@ -561,10 +593,10 @@ class InstanceProfileProviderTest extends TestCase
         }
     }
 
-    public static function failureTestCases()
+    public static function failureDataProvider(): \Generator
     {
-        $requestClass = $this->getRequestClass();
-        $responseClass = $this->getResponseClass();
+        $requestClass = self::getRequestClass();
+        $responseClass = self::getResponseClass();
         $getRequest = new $requestClass('GET', '/latest/meta-data/foo');
         $putRequest = new $requestClass('PUT', '/latest/meta-data/foo');
 
@@ -607,230 +639,206 @@ class InstanceProfileProviderTest extends TestCase
             )
         ]);
 
-        return [
-
-            // Secure data flow, profile call, non-retryable error
-            [
-                $this->getSecureTestClient(
-                    [
+        $cases = [
+            'secure_data_flow_profile_call_non_retryable_error' => [
+                'client_definition' => [
+                    'responses' => [
                         'get_profile' => [$rejectionProfile]
                     ],
-                    'MockProfile'
-                ),
-                new CredentialsException(
+                    'secure' => true,
+                ],
+                'expected' => new CredentialsException(
                     'Error retrieving credentials from the instance profile '
                     . 'metadata service. (401 Unathorized)'
-                )
+                ),
             ],
-
-            // Insecure data flow, profile call, non-retryable error
-            [
-                $this->getInsecureTestClient(
-                    [
+            'insecure_data_flow_profile_call_non_retryable_error' => [
+                'client_definition' => [
+                    'responses' => [
                         'get_profile' => [$rejectionProfile]
                     ],
-                    'MockProfile'
-                ),
-                new CredentialsException(
+                    'secure' => false,
+                ],
+                'expected' => new CredentialsException(
                     'Error retrieving credentials from the instance profile '
                     . 'metadata service. (401 Unathorized)'
-                )
+                ),
             ],
-
-            // Secure data flow, profile call, non-retryable error, ConnectException (Guzzle 7)
-            [
-                $this->getSecureTestClient(
-                    [
+            'secure_data_flow_profile_call_non_retryable_error_connect_exception' => [
+                'client_definition' => [
+                    'responses' => [
                         'get_profile' => [$rejectionProfile]
                     ],
-                    'MockProfile',
-                    ['foo_key', 'baz_secret', 'qux_token', null],
-                    true
-                ),
-                new CredentialsException(
+                    'throw_on_connect_exception' => true,
+                    'secure' => true,
+                ],
+                'expected' => new CredentialsException(
                     'Error retrieving credentials from the instance profile '
                     . 'metadata service. (401 Unathorized)'
-                )
+                ),
             ],
-
-            // Insecure data flow, profile call, non-retryable error, ConnectException (Guzzle 7)
-            [
-                $this->getInsecureTestClient(
-                    [
+            'insecure_data_flow_profile_call_non_retryable_error_connect_exception' => [
+                'client_definition' => [
+                    'responses' => [
                         'get_profile' => [$rejectionProfile]
                     ],
-                    'MockProfile',
-                    ['foo_key', 'baz_secret', 'qux_token', null],
-                    true
-                ),
-                new CredentialsException(
+                    'throw_on_connect_exception' => true,
+                    'secure' => false,
+                ],
+                'expected' => new CredentialsException(
                     'Error retrieving credentials from the instance profile '
                     . 'metadata service. (401 Unathorized)'
-                )
+                ),
             ],
-
-            // Secure data flow, credentials call, non-retryable error
-            [
-                $this->getSecureTestClient(
-                    [
+            'secure_data_flow_credentials_call_non_retryable_error' => [
+                'client_definition' => [
+                    'responses' => [
                         'get_creds' => [$rejectionCreds]
                     ],
-                    'MockProfile'
-                ),
-                new CredentialsException(
+                    'secure' => true,
+                ],
+                'expected' => new CredentialsException(
                     'Error retrieving credentials from the instance profile '
                     . 'metadata service. (401 Unathorized)'
-                )
+                ),
             ],
-
-            // Insecure data flow, credentials call, non-retryable error
-            [
-                $this->getInsecureTestClient(
-                    [
+            'insecure_data_flow_credentials_call_non_retryable_error' => [
+                'client_definition' => [
+                    'responses' => [
                         'get_creds' => [$rejectionCreds]
                     ],
-                    'MockProfile'
-                ),
-                new CredentialsException(
+                    'secure' => false,
+                ],
+                'expected' => new CredentialsException(
                     'Error retrieving credentials from the instance profile '
                     . 'metadata service. (401 Unathorized)'
-                )
+                ),
             ],
-
-            // Secure data flow, token call, retryable error
-            [
-                $this->getSecureTestClient(
-                    [
+            'secure_data_flow_token_call_retryable_error' => [
+                'client_definition' => [
+                    'responses' =>  [
                         'put' => [
                             $rejectionThrottleToken,
                             $rejectionThrottleToken,
                             $rejectionThrottleToken,
                         ]
                     ],
-                    'MockProfile'
-                ),
-                new CredentialsException(
+                    'secure' => true,
+                ],
+                'expected' => new CredentialsException(
                     'Error retrieving credentials from the instance profile '
                     . 'metadata service. (Error retrieving metadata token)'
-                )
+                ),
             ],
-
-            // Secure data flow, profile call, retryable error
-            [
-                $this->getSecureTestClient(
-                    [
+            'secure_data_flow_profile_call_retryable_error' => [
+                'client_definition' => [
+                    'responses' =>  [
                         'get_profile' => [
                             $rejectionThrottleProfile,
                             $rejectionThrottleProfile,
                             $rejectionThrottleProfile,
                         ]
                     ],
-                    'MockProfile'
-                ),
-                new CredentialsException(
+                    'secure' => true,
+                ],
+                'expected' => new CredentialsException(
                     'Error retrieving credentials from the instance profile '
                     . 'metadata service. (503 ThrottlingException)'
-                )
+                ),
             ],
-
-            // Insecure data flow, profile call, retryable error
-            [
-                $this->getInsecureTestClient(
-                    [
+            'insecure_data_flow_profile_call_retryable_error' => [
+                'client_definition' => [
+                    'responses' =>  [
                         'get_profile' => [
                             $rejectionThrottleProfile,
                             $rejectionThrottleProfile,
                             $rejectionThrottleProfile,
-                        ],
-                    ],
-                    'MockProfile'
-                ),
-                new CredentialsException(
-                    'Error retrieving credentials from the instance profile '
-                    . 'metadata service. (503 ThrottlingException)'
-                )
-            ],
-
-            // Secure data flow, credentials call, retryable error
-            [
-                $this->getSecureTestClient(
-                    [
-                        'get_creds' => [
-                            $rejectionThrottleCreds,
-                            $rejectionThrottleCreds,
-                            $rejectionThrottleCreds,
-                        ],
-                    ],
-                    'MockProfile'
-                ),
-                new CredentialsException(
-                    'Error retrieving credentials from the instance profile '
-                    . 'metadata service. (503 ThrottlingException)'
-                )
-            ],
-
-            // Insecure data flow, credentials call, retryable error
-            [
-                $this->getInsecureTestClient(
-                    [
-                        'get_creds' => [
-                            $rejectionThrottleCreds,
-                            $rejectionThrottleCreds,
-                            $rejectionThrottleCreds,
-                        ],
-                    ],
-                    'MockProfile'
-                ),
-                new CredentialsException(
-                    'Error retrieving credentials from the instance profile '
-                    . 'metadata service. (503 ThrottlingException)'
-                )
-            ],
-
-            // Secure data flow, credentials call, retryable invalid json error
-            [
-                $this->getSecureTestClient(
-                    [
-                        'get_creds' => [
-                            $promiseBadJsonCreds,
-                            $promiseBadJsonCreds,
-                            $promiseBadJsonCreds
                         ]
                     ],
-                    'MockProfile'
-                ),
-                new CredentialsException(
+                    'secure' => false,
+                ],
+                'expected' => new CredentialsException(
                     'Error retrieving credentials from the instance profile '
-                    . 'metadata service. (Invalid JSON response, retries exhausted)'
-                )
+                    . 'metadata service. (503 ThrottlingException)'
+                ),
             ],
-
-            // Insecure data flow, credentials call, retryable invalid json error
-            [
-                $this->getInsecureTestClient(
-                    [
+            'secure_data_flow_credentials_call_retryable_error' => [
+                'client_definition' => [
+                    'responses' =>  [
+                        'get_profile' => [
+                            $rejectionThrottleCreds,
+                            $rejectionThrottleCreds,
+                            $rejectionThrottleCreds,
+                        ]
+                    ],
+                    'secure' => true,
+                ],
+                'expected' => new CredentialsException(
+                    'Error retrieving credentials from the instance profile '
+                    . 'metadata service. (503 ThrottlingException)'
+                ),
+            ],
+            'insecure_data_flow_credentials_call_retryable_error' => [
+                'client_definition' => [
+                    'responses' =>  [
+                        'get_profile' => [
+                            $rejectionThrottleCreds,
+                            $rejectionThrottleCreds,
+                            $rejectionThrottleCreds,
+                        ]
+                    ],
+                    'secure' => false,
+                ],
+                'expected' => new CredentialsException(
+                    'Error retrieving credentials from the instance profile '
+                    . 'metadata service. (503 ThrottlingException)'
+                ),
+            ],
+            'secure_data_flow_credentials_call_retryable_invalid_json_error' => [
+                'client_definition' => [
+                    'responses' =>  [
                         'get_creds' => [
                             $promiseBadJsonCreds,
                             $promiseBadJsonCreds,
-                            $promiseBadJsonCreds
+                            $promiseBadJsonCreds,
                         ]
                     ],
-                    'MockProfile'
-                ),
-                new CredentialsException(
+                    'secure' => true,
+                ],
+                'expected' => new CredentialsException(
                     'Error retrieving credentials from the instance profile '
                     . 'metadata service. (Invalid JSON response, retries exhausted)'
-                )
+                ),
             ],
+            'insecure_data_flow_credentials_call_retryable_invalid_json_error' => [
+                'client_definition' => [
+                    'responses' =>  [
+                        'get_creds' => [
+                            $promiseBadJsonCreds,
+                            $promiseBadJsonCreds,
+                            $promiseBadJsonCreds,
+                        ]
+                    ],
+                    'secure' => false,
+                ],
+                'expected' => new CredentialsException(
+                    'Error retrieving credentials from the instance profile '
+                    . 'metadata service. (Invalid JSON response, retries exhausted)'
+                ),
+            ]
         ];
+
+        foreach ($cases as $key => $case) {
+            yield $key => $case;
+        }
     }
 
     public function testSwitchesBackToSecureModeOn401()
     {
         $this->expectExceptionMessage("Error retrieving credentials from the instance profile metadata service. (999 Expected Exception)");
         $this->expectException(\Aws\Exception\CredentialsException::class);
-        $requestClass = $this->getRequestClass();
-        $responseClass = $this->getResponseClass();
+        $requestClass = self::getRequestClass();
+        $responseClass = self::getResponseClass();
         $getRequest = new $requestClass('GET', '/latest/meta-data/foo');
         $putRequest = new $requestClass('PUT', '/latest/meta-data/foo');
         $reqNumber = 0;
@@ -891,7 +899,7 @@ class InstanceProfileProviderTest extends TestCase
         array $args = []
     ) {
         $args['profile'] = $profile;
-        $args['client'] = $this->getSecureTestClient([], $profile, $result);
+        $args['client'] = self::getSecureTestClient([], $profile, $result);
         $provider = new InstanceProfileProvider($args);
 
         return $provider();
@@ -930,7 +938,7 @@ class InstanceProfileProviderTest extends TestCase
         $this->expectExceptionMessage("Unexpected instance profile response");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $this->getTestCreds(
-            $this->getCredentialArray(null, null, null, null, false),
+            self::getCredentialArray(null, null, null, null, false),
             'foo'
         )->wait();
     }
@@ -950,7 +958,7 @@ class InstanceProfileProviderTest extends TestCase
             putenv(InstanceProfileProvider::ENV_DISABLE . '=true');
             $t = time() + 1000;
             $this->getTestCreds(
-                json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"))
+                json_encode(self::getCredentialArray('foo', 'baz', null, "@{$t}"))
             )->wait();
             $this->fail('Did not throw expected CredentialException.');
         } catch (CredentialsException $e) {
@@ -969,7 +977,7 @@ class InstanceProfileProviderTest extends TestCase
         $retries = (int) getenv(InstanceProfileProvider::ENV_RETRIES);
 
         $t = time() + 1000;
-        $result = json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"));
+        $result = json_encode(self::getCredentialArray('foo', 'baz', null, "@{$t}"));
         $responses = [new Response(200, [], Psr7\Utils::streamFor($result))];
 
         $client = function () use (&$retries, $responses) {
@@ -1044,7 +1052,7 @@ class InstanceProfileProviderTest extends TestCase
         $promiseCreds = Promise\Create::promiseFor(
             new Response(200, [], Psr7\Utils::streamFor(
                 json_encode(call_user_func_array(
-                    [$this, 'getCredentialArray'],
+                    [__CLASS__, 'getCredentialArray'],
                     $expiredCreds
                 )))
             )
@@ -1052,7 +1060,7 @@ class InstanceProfileProviderTest extends TestCase
 
         return [
             [
-                $client = $this->getSecureTestClient(
+                $client = self::getSecureTestClient(
                     [
                         'get_creds' => [
                             $promiseCreds
@@ -1063,7 +1071,7 @@ class InstanceProfileProviderTest extends TestCase
                 )
             ],
             [
-                $client = $this->getInsecureTestClient(
+                $client = self::getInsecureTestClient(
                     [
                         'get_creds' => [
                             $promiseCreds
@@ -1123,8 +1131,8 @@ class InstanceProfileProviderTest extends TestCase
 
     public static function imdsUnavailableProvider()
     {
-        $requestClass = $this->getRequestClass();
-        $responseClass = $this->getResponseClass();
+        $requestClass = self::getRequestClass();
+        $responseClass = self::getResponseClass();
         $getRequest = new $requestClass('GET', '/latest/meta-data/foo');
         $putRequest = new $requestClass('PUT', '/latest/meta-data/foo');
 
@@ -1151,7 +1159,7 @@ class InstanceProfileProviderTest extends TestCase
 
         return [
             [
-                $client = $this->getSecureTestClient(
+                $client = self::getSecureTestClient(
                     [
                         'put' => [
                             $profileRejection500
@@ -1161,7 +1169,7 @@ class InstanceProfileProviderTest extends TestCase
                 )
             ],
             [
-                $client = $this->getSecureTestClient(
+                $client = self::getSecureTestClient(
                     [
                         'get_creds' => [
                             $credsRejection500
@@ -1171,7 +1179,7 @@ class InstanceProfileProviderTest extends TestCase
                 )
             ],
             [
-                $client = $this->getSecureTestClient(
+                $client = self::getSecureTestClient(
                     [
                         'get_creds' => [
                             $credsRejectionReadTimeout
@@ -1181,7 +1189,7 @@ class InstanceProfileProviderTest extends TestCase
                 )
             ],
             [
-                $client = $this->getInsecureTestClient(
+                $client = self::getInsecureTestClient(
                     [
                         'get_creds' => [
                             $credsRejection500
@@ -1191,7 +1199,7 @@ class InstanceProfileProviderTest extends TestCase
                 )
             ],
             [
-                $client = $this->getInsecureTestClient(
+                $client = self::getInsecureTestClient(
                     [
                         'get_creds' => [
                             $credsRejectionReadTimeout
@@ -1208,7 +1216,7 @@ class InstanceProfileProviderTest extends TestCase
         $now = time() + 10000;
         $creds = ['foo', 'baz', null, "@{$now}"];
 
-        $client = $this->getSecureTestClient(
+        $client = self::getSecureTestClient(
             [],
             'MockProfile',
             $creds
@@ -1348,7 +1356,7 @@ class InstanceProfileProviderTest extends TestCase
                                 200,
                                 [],
                                 Psr7\Utils::streamFor(
-                                    json_encode($this->getCredentialArray('foo', 'baz', null, "@$expiration"))
+                                    json_encode(self::getCredentialArray('foo', 'baz', null, "@$expiration"))
                                 )
                             )
                         );
@@ -1667,7 +1675,7 @@ EOF;
                                 200,
                                 [],
                                 Psr7\Utils::streamFor(
-                                    json_encode($this->getCredentialArray('foo', 'baz', null, "@$expiration"))
+                                    json_encode(self::getCredentialArray('foo', 'baz', null, "@$expiration"))
                                 )
                             )
                         );

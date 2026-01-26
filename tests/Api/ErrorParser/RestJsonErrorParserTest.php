@@ -17,17 +17,33 @@ class RestJsonErrorParserTest extends TestCase
     /**
      * @dataProvider errorResponsesProvider
      *
-     * @param $response
-     * @param $command
-     * @param $parser
-     * @param $expected
+     * @param string $response
+     * @param string|null $commandName
+     * @param bool $parserWithService
+     * @param array $expected
      */
     public function testParsesClientErrorResponses(
-        $response,
-        $command,
-        $parser,
-        $expected
+        string $response,
+        ?string $commandName,
+        bool $parserWithService,
+        array $expected
     ) {
+        $service = $this->generateTestService('rest-json');
+        $shapes = $service->getErrorShapes();
+        $errorShape = $shapes[0];
+        $client = $this->generateTestClient($service);
+        $command = $commandName === null
+            ? null
+            : $client->getCommand($commandName);
+        $parser = $parserWithService
+            ? new RestJsonErrorParser($service)
+            : new RestJsonErrorParser();
+
+        // If error shape required in the expected
+        if ($expected['error_shape'] ?? false) {
+            $expected['error_shape'] = $errorShape;
+        }
+
         $response = Psr7\Message::parseResponse($response);
         $parsed = $parser($response, $command);
         $this->assertCount(
@@ -46,14 +62,8 @@ class RestJsonErrorParserTest extends TestCase
         }
     }
 
-    public static function errorResponsesProvider()
+    public static function errorResponsesProvider(): array
     {
-        $service = $this->generateTestService('rest-json');
-        $shapes = $service->getErrorShapes();
-        $errorShape = $shapes[0];
-        $client = $this->generateTestClient($service);
-        $command = $client->getCommand('TestOperation', []);
-
         return [
             // Error code in body
             [
@@ -61,7 +71,7 @@ class RestJsonErrorParserTest extends TestCase
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "type": "client", "message": "lorem ipsum", "code": "foo" }',
                 null,
-                new RestJsonErrorParser(),
+                false,
                 [
                     'code'       => 'foo',
                     'message'    => 'lorem ipsum',
@@ -82,7 +92,7 @@ class RestJsonErrorParserTest extends TestCase
                 "x-amzn-ErrorType: foo:bar\r\n\r\n" .
                 '{"message": "lorem ipsum"}',
                 null,
-                new RestJsonErrorParser(),
+                false,
                 [
                     'code'       => 'foo',
                     'message'    => 'lorem ipsum',
@@ -102,8 +112,8 @@ class RestJsonErrorParserTest extends TestCase
                 "x-meta-bar: bar-meta\r\n" .
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "TestString": "foo", "TestInt": 123, "NotModeled": "bar", "code": "TestException" }',
-                $command,
-                new RestJsonErrorParser($service),
+                'TestOperation',
+                true,
                 [
                     'code'       => 'TestException',
                     'type'       => 'client',
@@ -128,7 +138,7 @@ class RestJsonErrorParserTest extends TestCase
                         'TestStatus'        => 400,
                     ],
                     'message' => null,
-                    'error_shape' => $errorShape
+                    'error_shape' => true
                 ]
             ],
             // Error code in header, with service, modeled exception
@@ -140,8 +150,8 @@ class RestJsonErrorParserTest extends TestCase
                 "x-amzn-ErrorType: TestException\r\n" .
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "TestString": "foo", "TestInt": 123, "NotModeled": "bar"}',
-                $command,
-                new RestJsonErrorParser($service),
+                'TestOperation',
+                true,
                 [
                     'code'       => 'TestException',
                     'type'       => 'client',
@@ -165,7 +175,7 @@ class RestJsonErrorParserTest extends TestCase
                         'TestStatus'        => 400,
                     ],
                     'message' => null,
-                    'error_shape' => $errorShape
+                    'error_shape' => true
                 ]
             ],
             // Error code in header, with service, unmodeled code
@@ -175,7 +185,7 @@ class RestJsonErrorParserTest extends TestCase
                 "x-amzn-ErrorType: NonExistentException\r\n\r\n" .
                 '{"message": "lorem ipsum"}',
                 null,
-                new RestJsonErrorParser($service),
+                true,
                 [
                     'code'       => 'NonExistentException',
                     'message'    => 'lorem ipsum',
@@ -193,7 +203,7 @@ class RestJsonErrorParserTest extends TestCase
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "type": "client", "message": "lorem ipsum", "code": "NonExistentException" }',
                 null,
-                new RestJsonErrorParser($service),
+                true,
                 [
                     'code'       => 'NonExistentException',
                     'message'    => 'lorem ipsum',
@@ -213,7 +223,7 @@ class RestJsonErrorParserTest extends TestCase
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "type": "client", "Message": "lorem ipsum", "code": "NonExistentException" }',
                 null,
-                new RestJsonErrorParser($service),
+                true,
                 [
                     'code'       => 'NonExistentException',
                     'message'    => 'lorem ipsum',
@@ -234,8 +244,8 @@ class RestJsonErrorParserTest extends TestCase
                 "TestHeader: 0\r\n" .
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "code": "TestException" }',
-                $command,
-                new RestJsonErrorParser($service),
+                'TestOperation',
+                true,
                 [
                     'code'       => 'TestException',
                     'type'       => 'client',
@@ -247,7 +257,7 @@ class RestJsonErrorParserTest extends TestCase
                         'TestStatus'        => 400,
                     ],
                     'message' => null,
-                    'error_shape' => $errorShape
+                    'error_shape' => true
                 ]
             ],
             // Test false value in header
@@ -256,8 +266,8 @@ class RestJsonErrorParserTest extends TestCase
                 "TestHeader: false\r\n" .
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "code": "TestException" }',
-                $command,
-                new RestJsonErrorParser($service),
+                'TestOperation',
+                true,
                 [
                     'code'       => 'TestException',
                     'type'       => 'client',
@@ -269,7 +279,7 @@ class RestJsonErrorParserTest extends TestCase
                         'TestStatus'        => 400,
                     ],
                     'message' => null,
-                    'error_shape' => $errorShape
+                    'error_shape' => true
                 ]
             ],
             // Test empty string in header (should be skipped)
@@ -278,8 +288,8 @@ class RestJsonErrorParserTest extends TestCase
                 "TestHeader: \r\n" .
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "code": "TestException" }',
-                $command,
-                new RestJsonErrorParser($service),
+                'TestOperation',
+                true,
                 [
                     'code'       => 'TestException',
                     'type'       => 'client',
@@ -291,7 +301,7 @@ class RestJsonErrorParserTest extends TestCase
                         'TestStatus'        => 400,
                     ],
                     'message' => null,
-                    'error_shape' => $errorShape
+                    'error_shape' => true
                 ]
             ]
         ];

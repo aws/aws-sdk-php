@@ -19,7 +19,7 @@ class ObjectUploaderTest extends TestCase
     const MB = 1048576;
 
     /**
-     * @dataProvider getUploadTestCases
+     * @dataProvider uploadDataProvider
      */
     public function testDoesCorrectOperation(
         StreamInterface $body,
@@ -55,7 +55,7 @@ class ObjectUploaderTest extends TestCase
     }
 
     /**
-     * @dataProvider getUploadTestCases
+     * @dataProvider uploadDataProvider
      */
     public function testDoesCorrectOperationWithAccessPointArn(
         StreamInterface $body,
@@ -91,7 +91,7 @@ class ObjectUploaderTest extends TestCase
     }
 
     /**
-     * @dataProvider getUploadTestCases
+     * @dataProvider uploadDataProvider
      */
     public function testDoesCorrectOperationAsynchronously(
         StreamInterface $body,
@@ -128,7 +128,7 @@ class ObjectUploaderTest extends TestCase
         $this->assertSame('https://s3.amazonaws.com/bucket/key', $result['ObjectURL']);
     }
 
-    public static function getUploadTestCases()
+    public static function uploadDataProvider(): array
     {
         $putObject = new Result();
         $initiate = new Result(['UploadId' => 'foo']);
@@ -138,44 +138,44 @@ class ObjectUploaderTest extends TestCase
         return [
             [
                 // 3 MB, known-size stream (put)
-                $this->generateStream(1024 * 1024 * 3),
+                self::generateStream(1024 * 1024 * 3),
                 [$putObject],
                 ['before_upload' => function () {}]
             ],
             [
                 // 3 MB, unknown-size stream (put)
-                $this->generateStream(1024 * 1024 * 3, false),
+                self::generateStream(1024 * 1024 * 3, false),
                 [$putObject],
                 []
             ],
             [
                 // 6 MB, known-size stream (put)
-                $this->generateStream(1024 * 1024 * 6),
+                self::generateStream(1024 * 1024 * 6),
                 [$putObject],
                 []
             ],
             [
                 // 6 MB, known-size stream, above threshold (mup)
-                $this->generateStream(1024 * 1024 * 6),
+                self::generateStream(1024 * 1024 * 6),
                 [$initiate, $putPart, $putPart, $complete],
                 ['mup_threshold' => 1024 * 1024 * 4]
             ],
             [
                 // 6 MB, unknown-size stream (mup)
-                $this->generateStream(1024 * 1024 * 6, false),
+                self::generateStream(1024 * 1024 * 6, false),
                 [$initiate, $putPart, $putPart, $complete],
                 []
             ],
             [
                 // 6 MB, unknown-size, non-seekable stream (mup)
-                $this->generateStream(1024 * 1024 * 6, false, false),
+                self::generateStream(1024 * 1024 * 6, false, false),
                 [$initiate, $putPart, $putPart, $complete],
                 []
             ]
         ];
     }
 
-    public static function getUploadTestCasesWithPathStyle()
+    public static function getUploadTestCasesWithPathStyle(): array
     {
         $putObject = new Result();
         $initiate = new Result(['UploadId' => 'foo']);
@@ -185,44 +185,48 @@ class ObjectUploaderTest extends TestCase
         return [
             [
                 // 3 MB, known-size stream (put)
-                $this->generateStream(1024 * 1024 * 3),
+                self::generateStream(1024 * 1024 * 3),
                 [$putObject],
                 ['before_upload' => function () {}]
             ],
             [
                 // 3 MB, unknown-size stream (put)
-                $this->generateStream(1024 * 1024 * 3, false),
+                self::generateStream(1024 * 1024 * 3, false),
                 [$putObject],
                 []
             ],
             [
                 // 6 MB, known-size stream (put)
-                $this->generateStream(1024 * 1024 * 6),
+                self::generateStream(1024 * 1024 * 6),
                 [$putObject],
                 []
             ],
             [
                 // 6 MB, known-size stream, above threshold (mup)
-                $this->generateStream(1024 * 1024 * 6),
+                self::generateStream(1024 * 1024 * 6),
                 [$initiate, $putPart, $putPart, $complete],
                 ['mup_threshold' => 1024 * 1024 * 4]
             ],
             [
                 // 6 MB, unknown-size stream (mup)
-                $this->generateStream(1024 * 1024 * 6, false),
+                self::generateStream(1024 * 1024 * 6, false),
                 [$initiate, $putPart, $putPart, $complete],
                 []
             ],
             [
                 // 6 MB, unknown-size, non-seekable stream (mup)
-                $this->generateStream(1024 * 1024 * 6, false, false),
+                self::generateStream(1024 * 1024 * 6, false, false),
                 [$initiate, $putPart, $putPart, $complete],
                 []
             ]
         ];
     }
 
-    private function generateStream($size, $sizeKnown = true, $seekable = true)
+    private static function generateStream(
+        $size, 
+        $sizeKnown = true, 
+        $seekable = true
+    ): FnStream
     {
         return FnStream::decorate(Psr7\Utils::streamFor(str_repeat('.', $size)), [
             'getSize' => function () use ($sizeKnown, $size) {
@@ -347,7 +351,7 @@ class ObjectUploaderTest extends TestCase
             $client,
             'bucket',
             'key',
-            $this->generateStream(1024 * 1024 * 1),
+            self::generateStream(1024 * 1024 * 1),
             'private',
             ['params' => ['ChecksumAlgorithm' => $checksumAlgorithm]]
         ))->upload();
@@ -375,7 +379,7 @@ class ObjectUploaderTest extends TestCase
             $client,
             'bucket',
             'key',
-            $this->generateStream(1024 * 1024 * 1),
+            self::generateStream(1024 * 1024 * 1),
             'private',
             ['add_content_md5' => true]
         ))->upload();

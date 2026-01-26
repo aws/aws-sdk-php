@@ -551,7 +551,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider getInvalidEndpointExceptions
+     * @dataProvider invalidEndpointExceptionsDataProvider
      * @param $exception
      */
     public function testUsesCachedEndpointForInvalidEndpointException($exception)
@@ -586,7 +586,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider getInvalidEndpointExceptions
+     * @dataProvider invalidEndpointExceptionsDataProvider
      * @param $exception
      */
     public function testUseRegionalEndpointForInvalidEndpointException($exception)
@@ -629,7 +629,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider getInvalidEndpointExceptions
+     * @dataProvider invalidEndpointExceptionsDataProvider
      * @param $exception
      */
     public function testThrowsExceptionOnInvalidEndpointException($exception)
@@ -670,7 +670,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider getInvalidEndpointExceptions
+     * @dataProvider invalidEndpointExceptionsDataProvider
      * @param $exception
      */
     public function testCallsDiscoveryApiOnInvalidEndpointException($exception)
@@ -734,11 +734,11 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
      *
      * @return array
      */
-    public static function getInvalidEndpointExceptions()
+    public static function invalidEndpointExceptionsDataProvider(): array
     {
         return [
-            [$this->generateInvalidEndpointException()],
-            [$this->generate421Exception()],
+            [self::generateInvalidEndpointException()],
+            [self::generate421Exception()],
         ];
     }
 
@@ -862,7 +862,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         return Promise\Create::promiseFor(new Result([]));
     }
 
-    private function generateInvalidEndpointException()
+    private static function generateInvalidEndpointException(): Promise\PromiseInterface
     {
         $message = 'Test invalid endpoint exception';
         return Promise\Create::rejectionFor(new AwsException(
@@ -875,7 +875,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         ));
     }
 
-    private function generate421Exception()
+    private static function generate421Exception(): Promise\PromiseInterface
     {
         $message = 'Test invalid endpoint exception';
         return Promise\Create::rejectionFor(new AwsException(

@@ -65,7 +65,7 @@ class PartitionTest extends TestCase
         self::assertStringContainsString('service-fips.amazonaws.com', $resolved['endpoint']);
     }
 
-    public static function partitionDefinitionProvider()
+    public static function partitionDefinitionProvider(): array
     {
         return [
             [[
@@ -89,9 +89,9 @@ class PartitionTest extends TestCase
         ];
     }
 
-    public static function invalidPartitionDefinitionProvider()
+    public static function invalidPartitionDefinitionProvider(): array
     {
-        $validDefinition = $this->partitionDefinitionProvider()[0][0];
+        $validDefinition = self::partitionDefinitionProvider()[0][0];
         $return = [];
 
         foreach ($validDefinition as $requiredKey => $v) {
@@ -669,15 +669,35 @@ class PartitionTest extends TestCase
      * @dataProvider variantTagProvider
      *
      * @param array $definition
-     * @param @fipsConfig
-     * @param @dualstackConfig
+     * @param bool $useFipsConfig
+     * @param bool $useDualstackConfig
      */
     public function testGetVariantIgnoresVariantTagOrder(
         array $definition,
-        $fipsConfig,
-        $dualstackConfig
+        bool $useFipsConfig,
+        bool $useDualstackConfig
     )
     {
+        $fipsConfig = null;
+        if ($useFipsConfig) {
+            $fipsConfig = $this->getMockBuilder(UseFipsEndpoint\Configuration::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+            $fipsConfig->expects($this->any())
+                ->method('isUseFipsEndpoint')
+                ->willReturn(true);
+        }
+
+        $dualstackConfig = null;
+        if ($useDualstackConfig) {
+            $dualstackConfig = $this->getMockBuilder(UseDualstackEndpoint\Configuration::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+            $dualstackConfig->expects($this->any())
+                ->method('isUseDualstackEndpoint')
+                ->willReturn(true);
+        }
+
         $partition = new Partition($definition);
         $resolved = $partition([
             'region' => 'us-east-1',
@@ -691,22 +711,8 @@ class PartitionTest extends TestCase
         $this->assertStringContainsString('testsuffix.com', $resolved['endpoint']);
     }
 
-    public static function variantTagProvider()
+    public static function variantTagProvider(): array
     {
-        $useFipsEndpointConfig = $this->getMockBuilder(UseFipsEndpoint\Configuration::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $useFipsEndpointConfig->expects($this->any())
-            ->method('isUseFipsEndpoint')
-            ->willReturn(true);
-
-        $useDualstackEndpointConfig = $this->getMockBuilder(UseDualstackEndpoint\Configuration::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $useDualstackEndpointConfig->expects($this->any())
-            ->method('isUseDualstackEndpoint')
-            ->willReturn(true);
-
         return [
             [
                 [
@@ -731,8 +737,8 @@ class PartitionTest extends TestCase
                         ],
                     ],
                 ],
-                $useFipsEndpointConfig,
-                $useDualstackEndpointConfig
+                true,
+                true
             ],
             [
                 [
@@ -757,8 +763,8 @@ class PartitionTest extends TestCase
                         ],
                     ],
                 ],
-                $useFipsEndpointConfig,
-                $useDualstackEndpointConfig
+                true,
+                true
             ],
             [
                 [
@@ -783,8 +789,8 @@ class PartitionTest extends TestCase
                         ],
                     ],
                 ],
-                $useFipsEndpointConfig,
-                null
+                true,
+                false
             ],
             [
                 [
@@ -809,8 +815,8 @@ class PartitionTest extends TestCase
                         ],
                     ],
                 ],
-                null,
-                $useDualstackEndpointConfig
+                false,
+                true
             ]
         ];
     }
@@ -824,10 +830,30 @@ class PartitionTest extends TestCase
      */
     public function testGetVariantNoVariantSelectedIfTagsAreEmpty(
         array $definition,
-        $fipsConfig,
-        $dualstackConfig
+        bool $useFipsConfig,
+        bool $useDualstackConfig
     )
     {
+        $fipsConfig = null;
+        if ($useFipsConfig) {
+            $fipsConfig = $this->getMockBuilder(UseFipsEndpoint\Configuration::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+            $fipsConfig->expects($this->any())
+                ->method('isUseFipsEndpoint')
+                ->willReturn(true);
+        }
+
+        $dualstackConfig = null;
+        if ($useDualstackConfig) {
+            $dualstackConfig = $this->getMockBuilder(UseDualstackEndpoint\Configuration::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+            $dualstackConfig->expects($this->any())
+                ->method('isUseDualstackEndpoint')
+                ->willReturn(true);
+        }
+
         $partition = new Partition($definition);
         $resolved = $partition([
             'region' => 'us-east-1',
@@ -841,22 +867,8 @@ class PartitionTest extends TestCase
         $this->assertStringNotContainsString('testsuffix.com', $resolved['endpoint']);
     }
 
-    public static function variantTagEmptyProvider()
+    public static function variantTagEmptyProvider(): array
     {
-        $useFipsEndpointConfig = $this->getMockBuilder(UseFipsEndpoint\Configuration::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $useFipsEndpointConfig->expects($this->any())
-            ->method('isUseFipsEndpoint')
-            ->willReturn(true);
-
-        $useDualstackEndpointConfig = $this->getMockBuilder(UseDualstackEndpoint\Configuration::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $useDualstackEndpointConfig->expects($this->any())
-            ->method('isUseDualstackEndpoint')
-            ->willReturn(true);
-
         return [
             [
                 [
@@ -881,8 +893,8 @@ class PartitionTest extends TestCase
                         ],
                     ],
                 ],
-                $useFipsEndpointConfig,
-                $useDualstackEndpointConfig
+                true,
+                true
             ],
             [
                 [
@@ -907,8 +919,8 @@ class PartitionTest extends TestCase
                         ],
                     ],
                 ],
-                $useFipsEndpointConfig,
-                null
+                true,
+                false
             ],
             [
                 [
@@ -933,8 +945,8 @@ class PartitionTest extends TestCase
                         ],
                     ],
                 ],
-                null,
-                $useDualstackEndpointConfig
+                false,
+                true
             ],
             [
                 [
@@ -959,8 +971,8 @@ class PartitionTest extends TestCase
                         ],
                     ],
                 ],
-                null,
-                null
+                false,
+                false
             ]
         ];
     }

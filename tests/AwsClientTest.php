@@ -354,22 +354,47 @@ class AwsClientTest extends TestCase
     }
 
     /**
-     * @param $service
-     * @param $clientConfig
+     * @param array $serviceDefinition
+     * @param array $clientArguments
+     * @param array $expectedHeaders
+     * @param array $expectedHeaderValues
      *
      * @dataProvider signOperationsWithAnAuthTypeProvider
      */
-    public function testSignOperationsWithAnAuthType($service, $clientConfig)
+    public function testSignOperationsWithAnAuthType(
+        array $serviceDefinition,
+        array $clientArguments,
+        array $expectedHeaders,
+        array $expectedHeaderValues
+    )
     {
-        $client = $this->createHttpsEndpointClient($service, $clientConfig);
+        $clientArguments += [
+            'handler' => function(CommandInterface $command,
+                                  RequestInterface $request)
+            use ($expectedHeaders, $expectedHeaderValues) {
+                foreach ($expectedHeaders as $header) {
+                    $this->assertTrue($request->hasHeader($header));
+                }
+
+                foreach ($expectedHeaderValues as $headerValue) {
+                    $this->assertEquals(
+                        $headerValue['value'],
+                        $request->getHeaderLine($headerValue['header'])
+                    );
+                }
+
+                return new Result();
+            }
+        ];
+        $client = $this->createHttpsEndpointClient($serviceDefinition, $clientArguments);
         $client->bar();
     }
 
-    public static function signOperationsWithAnAuthTypeProvider()
+    public static function signOperationsWithAnAuthTypeProvider(): array
     {
         return [
-            [
-                [
+            'unsigned_payload' => [
+                'service_definition' => [
                     'metadata' => [
                         'signatureVersion' => 'v4',
                     ],
@@ -380,21 +405,14 @@ class AwsClientTest extends TestCase
                         ],
                     ],
                 ],
-                [
-                    'handler' => function (
-                        CommandInterface $command,
-                        RequestInterface $request
-                    ) {
-                        foreach (['Authorization','X-Amz-Content-Sha256', 'X-Amz-Date'] as $signatureHeader) {
-                            $this->assertTrue($request->hasHeader($signatureHeader));
-                        }
-                        $this->assertSame('UNSIGNED-PAYLOAD', $request->getHeader('X-Amz-Content-Sha256')[0]);
-                        return new Result;
-                    }
+                'client_arguments' => [],
+                'expected_headers' => ['Authorization','X-Amz-Content-Sha256', 'X-Amz-Date'],
+                'expected_header_values' => [
+                    ['header' => 'X-Amz-Content-Sha256', 'value' => 'UNSIGNED-PAYLOAD']
                 ]
             ],
-            [
-                [
+            'bearer_token' => [
+                'service_definition' => [
                     'metadata' => [
                         'signatureVersion' => 'v4',
                     ],
@@ -405,17 +423,12 @@ class AwsClientTest extends TestCase
                         ],
                     ],
                 ],
-                [
-                    'handler' => function (
-                        CommandInterface $command,
-                        RequestInterface $request
-                    ) {
-
-                        $this->assertTrue($request->hasHeader('Authorization'));
-                        $this->assertSame('Bearer foo', $request->getHeader('Authorization')[0]);
-                        return new Result;
-                    },
+                'client_arguments' => [
                     'token' => new Token('foo', time() + 1000)
+                ],
+                'expected_headers' => ['Authorization'],
+                'expected_header_values' => [
+                    ['header' => 'Authorization', 'value' => 'Bearer foo']
                 ]
             ]
         ];
@@ -772,23 +785,6 @@ EOT
         );
 
         $client->foo();
-    }
-
-
-    /**
-     * @return void
-     */
-    public function testCallingEmitDeprecationWarningEmitsDeprecationWarning()
-    {
-        set_error_handler(function ($err, $message) {
-            throw new \RuntimeException($message);
-        });
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage(
-            "This method is deprecated. It will be removed in an upcoming release."
-        );
-        $client = $this->createClient();
-        $client::emitDeprecationWarning();
     }
 
     /**

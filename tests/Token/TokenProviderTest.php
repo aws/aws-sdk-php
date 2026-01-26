@@ -124,7 +124,8 @@ EOT;
         $this->assertEquals($token->getExpiration(), $found->getExpiration());
     }
 
-    public static function tokenProviderSuccessCases() {
+    public static function tokenProviderSuccessCases(): array
+    {
         return [
             "Valid token with all fields" =>
                 [
@@ -187,7 +188,8 @@ EOT;
         $this->assertEquals(strtotime($expectedToken['expiration']), $found->getExpiration());
     }
 
-    public static function tokenProviderSuccessCasesWithRefresh() {
+    public static function tokenProviderSuccessCasesWithRefresh(): array
+    {
         return [
             "Expired token refresh with refresh token" =>
                 [
@@ -350,7 +352,8 @@ EOT;
         }
     }
 
-    public static function tokenProviderFailureCases() {
+    public static function tokenProviderFailureCases(): array
+    {
         return [
             "Minimal expired cached token" =>
                 [

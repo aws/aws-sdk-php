@@ -23,17 +23,23 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
     use ArraySubsetAsserts;
 
     /**
-     * @dataProvider generateTestCases
+     * @dataProvider addsProperHeadersDataProvider
      *
-     * @param CommandInterface $command
+     * @param array $commandDef
      * @param array $expectedHeaders
      * @param array $expectedNonHeaders
      */
     public function testAddsProperHeaders(
-        CommandInterface $command,
+        array $commandDef,
         array $expectedHeaders,
         array $expectedNonHeaders
     ) {
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service);
+        $command = $client->getCommand(
+            $commandDef['command_name'],
+            $commandDef['command_args']
+        );
         $list = $this->generateTestHandlerList();
 
         $list->setHandler(function (
@@ -54,50 +60,48 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
         $handler($command, new Request('POST', 'https://foo.com'));
     }
 
-    public static function generateTestCases()
+    public static function addsProperHeadersDataProvider(): array
     {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service);
         $inputStream = Psr7\Utils::streamFor('test');
 
         return [
             [
-                $client->getCommand(
-                    'NonStreamingOp',
-                    [
+                [
+                    'command_name' => 'NonStreamingOp',
+                    'command_args' => [
                         'InputString' => 'teststring',
                     ]
-                ),
+                ],
                 [],
                 [ 'transfer-encoding'],
             ],
             [
-                $client->getCommand(
-                    'StreamingOp',
-                    [
+                [
+                    'command_name' => 'StreamingOp',
+                    'command_args' => [
                         'InputStream' => $inputStream,
                     ]
-                ),
+                ],
                 [ 'Content-Length' => [26] ],
                 [ 'transfer-encoding' ],
             ],
             [
-                $client->getCommand(
-                    'StreamingLengthOp',
-                    [
+                [
+                    'command_name' => 'StreamingLengthOp',
+                    'command_args' => [
                         'InputStream' => $inputStream,
                     ]
-                ),
+                ],
                 [ 'Content-Length' => [26] ],
                 [ 'transfer-encoding' ],
             ],
             [
-                $client->getCommand(
-                    'StreamingLengthUnsignedOp',
-                    [
+                [
+                    'command_name' => 'StreamingLengthUnsignedOp',
+                    'command_args' => [
                         'InputStream' => $inputStream,
                     ]
-                ),
+                ],
                 [ 'Content-Length' => [26] ],
                 [ 'transfer-encoding' ],
             ],

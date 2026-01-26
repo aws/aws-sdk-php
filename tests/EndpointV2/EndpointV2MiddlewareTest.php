@@ -201,52 +201,54 @@ class EndpointV2MiddlewareTest extends TestCase
      */
     public function testInitializationWithInvalidParameters(
         $nextHandler,
-        $endpointProvider,
-        $api,
+        bool $validEndpointProvider,
+        bool $validApi,
         $args
     )
     {
+        $endpointProvider = 'invalid';
+        if ($validEndpointProvider) {
+            $endpointProvider = $this->getMockBuilder(EndpointProviderV2::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+        }
+
+        $api = 'invalid';
+        if ($validApi) {
+            $api = $this->getMockBuilder(Service::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+        }
+
         $this->expectException(\TypeError::class);
         new EndpointV2Middleware($nextHandler, $endpointProvider, $api, $args);
     }
 
-    public static function invalidInitializationProvider()
+    public static function invalidInitializationProvider(): array
     {
         return [
             'Invalid nextHandler' => [
                 'not_a_callable',
-                $this->getMockBuilder(EndpointProviderV2::class)
-                    ->disableOriginalConstructor()
-                    ->getMock(),
-                $this->getMockBuilder(Service::class)
-                    ->disableOriginalConstructor()
-                    ->getMock(),
+                true,
+                true,
                 []
             ],
             'Invalid endpointProvider' => [
                 function ($command, $endpoint) {},
-                'not_an_endpoint_provider',
-                $this->getMockBuilder(Service::class)
-                    ->disableOriginalConstructor()
-                    ->getMock(),
+                false,
+                true,
                 []
             ],
             'Invalid api' => [
                 function ($command, $endpoint) {},
-                $this->getMockBuilder(EndpointProviderV2::class)
-                    ->disableOriginalConstructor()
-                    ->getMock(),
-                'not_a_service',
+                true,
+                false,
                 []
             ],
             'Invalid array' => [
                 function ($command, $endpoint) {},
-                $this->getMockBuilder(EndpointProviderV2::class)
-                    ->disableOriginalConstructor()
-                    ->getMock(),
-                $this->getMockBuilder(Service::class)
-                    ->disableOriginalConstructor()
-                    ->getMock(),
+                true,
+                true,
                 'not_an_array'
             ],
         ];

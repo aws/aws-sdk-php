@@ -261,42 +261,42 @@ class S3ClientTest extends TestCase
         stream_wrapper_unregister('s3');
     }
 
-    public static function doesExistProvider()
+    public static function doesExistProvider(): array
     {
         $redirectException = new PermanentRedirectException(
             '',
             new Command('mockCommand'),
             ['response' => new Response(301)]
         );
-        $deleteMarkerMock = $this->getS3ErrorMock('Foo', 404, true);
+        $deleteMarkerMock = self::getS3ErrorMock('Foo', 404, true);
 
         return [
             ['foo', null, true, []],
             ['foo', 'bar', true, []],
-            ['foo', null, true, $this->getS3ErrorMock('AccessDenied', 403)],
-            ['foo', 'bar', true, $this->getS3ErrorMock('AccessDenied', 403)],
-            ['foo', null, false, $this->getS3ErrorMock('Foo', 401)],
-            ['foo', 'bar', false, $this->getS3ErrorMock('Foo', 401)],
-            ['foo', null, -1, $this->getS3ErrorMock('Foo', 500)],
-            ['foo', 'bar', -1, $this->getS3ErrorMock('Foo', 500)],
+            ['foo', null, true, self::getS3ErrorMock('AccessDenied', 403)],
+            ['foo', 'bar', true, self::getS3ErrorMock('AccessDenied', 403)],
+            ['foo', null, false, self::getS3ErrorMock('Foo', 401)],
+            ['foo', 'bar', false, self::getS3ErrorMock('Foo', 401)],
+            ['foo', null, -1, self::getS3ErrorMock('Foo', 500)],
+            ['foo', 'bar', -1, self::getS3ErrorMock('Foo', 500)],
             ['foo', null, true, [], true],
             ['foo', 'bar', true, [] , true],
-            ['foo', null, false, $this->getS3ErrorMock('Foo', 404), true],
-            ['foo', 'bar', false, $this->getS3ErrorMock('Foo', 404), true],
-            ['foo', null, -1, $this->getS3ErrorMock('Forbidden', 403), true],
-            ['foo', 'bar', -1, $this->getS3ErrorMock('Forbidden', 403), true],
-            ['foo', null, true, $this->getS3ErrorMock('Forbidden', 403), true, true],
+            ['foo', null, false, self::getS3ErrorMock('Foo', 404), true],
+            ['foo', 'bar', false, self::getS3ErrorMock('Foo', 404), true],
+            ['foo', null, -1, self::getS3ErrorMock('Forbidden', 403), true],
+            ['foo', 'bar', -1, self::getS3ErrorMock('Forbidden', 403), true],
+            ['foo', null, true, self::getS3ErrorMock('Forbidden', 403), true, true],
             ['foo', 'bar', true, $deleteMarkerMock, true, false, true],
             ['foo', 'bar', false, $deleteMarkerMock, true, false, false],
             ['foo', null, true, $redirectException, true],
         ];
     }
 
-    private function getS3ErrorMock(
+    private static function getS3ErrorMock(
         $errCode,
         $statusCode,
         $deleteMarker = false
-    )
+    ): S3Exception
     {
         $response = new Response($statusCode);
         $deleteMarker && $response = $response->withHeader(
@@ -308,6 +308,7 @@ class S3ClientTest extends TestCase
             'code' => $errCode,
             'response' => $response,
         ];
+        
         return new S3Exception('', new Command('mockCommand'), $context);
     }
 
@@ -720,7 +721,10 @@ class S3ClientTest extends TestCase
      */
     public static function s3OperationsProvider(): \Generator
     {
-        $operations = $this->loadOperations();
+        $jsonContent = file_get_contents(
+            self::OPERATIONS_WITH_PARAMS_LOCATION
+        );
+        $operations = json_decode($jsonContent, true);
         $retryModes = [
             'legacy',
             'standard',
@@ -739,18 +743,6 @@ class S3ClientTest extends TestCase
                 ];
             }
         }
-    }
-
-    /**
-     * Load a list of s3 operations along with the required params populated.
-     *
-     * @return array
-     */
-    private function loadOperations(): array
-    {
-        $jsonContent = file_get_contents(self::OPERATIONS_WITH_PARAMS_LOCATION);
-
-        return json_decode($jsonContent, true);
     }
 
     private function getErrorXml()
@@ -2418,24 +2410,31 @@ EOXML;
 
     public function testEmitsWarningWhenExpiresUnparseable()
     {
-        $this->expectWarning();
-        $this->expectWarningMessage(
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        });
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage(
             "Failed to parse the `expires` header as a timestamp due to "
             . " an invalid timestamp format.\nPlease refer to `ExpiresString` "
             . "for the unparsed string format of this header.\n"
         );
 
-        $client = new S3Client([
-            'region' => 'us-east-1',
-            'http_handler' => function (RequestInterface $request) {
-                return Promise\Create::promiseFor(new Response(
-                    200,
-                    ['expires' => 'this-is-not-a-timestamp']
-                ));
-            },
-        ]);
+        try {
+            $client = new S3Client([
+                'region' => 'us-east-1',
+                'http_handler' => function (RequestInterface $request) {
+                    return Promise\Create::promiseFor(new Response(
+                        200,
+                        ['expires' => 'this-is-not-a-timestamp']
+                    ));
+                },
+            ]);
 
-        $client->headObject(['Bucket' => 'foo', 'Key' => 'bar']);
+            $client->headObject(['Bucket' => 'foo', 'Key' => 'bar']);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testExpiresRemainsTimestamp() {

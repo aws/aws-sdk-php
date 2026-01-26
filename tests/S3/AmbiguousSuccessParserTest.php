@@ -110,7 +110,7 @@ class AmbiguousSuccessParserTest extends TestCase
                 array_keys($provider('api', 's3', 'latest')['operations']),
                 array_map(
                     function (array $args) { return $args[0]; },
-                    $this->opsWithAmbiguousSuccessesProvider()
+                    self::opsWithAmbiguousSuccessesProvider()
                 )
             )
         );

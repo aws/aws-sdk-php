@@ -173,11 +173,11 @@ class UserAgentMiddlewareTest extends TestCase
 
         yield 'hhvmVersion' => [[], defined('HHVM_VERSION') ? 'HHVM/' . HHVM_VERSION : ""];
 
-        yield 'osName' => [[], $this->getOsNameForUserAgent()];
+        yield 'osName' => [[], self::getOsNameForUserAgent()];
 
         yield 'langVersion' => [[], 'lang/php#' . phpversion()];
 
-        yield 'execEnv' => [[], $this->getExecEnvForUserAgent()];
+        yield 'execEnv' => [[], self::getExecEnvForUserAgent()];
 
         yield 'appId' => [['app_id' => 'FooAppId'], 'app/FooAppId'];
 
@@ -227,7 +227,7 @@ class UserAgentMiddlewareTest extends TestCase
         ];
     }
 
-    private function getOsNameForUserAgent(): string
+    private static function getOsNameForUserAgent(): string
     {
         $disabledFunctions = explode(',', ini_get('disable_functions'));
         if (function_exists('php_uname')
@@ -243,7 +243,7 @@ class UserAgentMiddlewareTest extends TestCase
         return "";
     }
 
-    private function getExecEnvForUserAgent(): string
+    private static function getExecEnvForUserAgent(): string
     {
         $expectedEnv = "LambdaFooEnvironment";
         putenv("AWS_EXECUTION_ENV={$expectedEnv}");

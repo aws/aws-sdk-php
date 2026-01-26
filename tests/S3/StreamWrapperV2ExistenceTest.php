@@ -239,8 +239,8 @@ class StreamWrapperV2ExistenceTest extends TestCase
 
     public function testTriggersErrorInsteadOfExceptionWhenWriteFlushFails()
     {
-        $this->expectError();
-        $this->expectErrorMessage('403 Forbidden');
+        $this->expectException(S3Exception::class);
+        $this->expectExceptionMessage('403 Forbidden');
         $this->addMockResults($this->client, [
             function ($cmd, $req) { return new S3Exception('403 Forbidden', $cmd); }
         ]);

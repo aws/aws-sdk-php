@@ -18,7 +18,7 @@ class ObjectCopierTest extends TestCase
     use UsesServiceTrait;
 
     /**
-     * @dataProvider getCopyTestCases
+     * @dataProvider copyDataProvider
      */
     public function testDoesCorrectOperation(
         array $mockedResults,
@@ -39,7 +39,7 @@ class ObjectCopierTest extends TestCase
     }
 
     /**
-     * @dataProvider getCopyTestCasesWithPathStyle
+     * @dataProvider copyWithPathStyleDataProvider
      */
     public function testDoesCorrectOperationWithPathStyle(
         array $mockedResults,
@@ -62,7 +62,7 @@ class ObjectCopierTest extends TestCase
     }
 
     /**
-     * @dataProvider getCopyTestCases
+     * @dataProvider copyDataProvider
      * @param array $mockedResults
      * @param array $options
      */
@@ -140,7 +140,7 @@ class ObjectCopierTest extends TestCase
     }
 
     /**
-     * @dataProvider getCopyTestCases
+     * @dataProvider copyDataProvider
      */
     public function testDoesCorrectOperationAsynchronously(
         array $mockedResults,
@@ -163,7 +163,7 @@ class ObjectCopierTest extends TestCase
     }
 
     /**
-     * @dataProvider getCopyTestCasesWithPathStyle
+     * @dataProvider copyWithPathStyleDataProvider
      */
     public function testDoesCorrectOperationAsynchronouslyWithPathStyle(
         array $mockedResults,
@@ -187,7 +187,7 @@ class ObjectCopierTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    private function getSmallPutObjectMockResult()
+    private static function getSmallPutObjectMockResult(): array
     {
         $smallHeadObject = new Result(['ContentLength' => 1024 * 1024 * 6]);
         $putObject = new Result();
@@ -195,7 +195,7 @@ class ObjectCopierTest extends TestCase
         return [$smallHeadObject, $putObject];
     }
 
-    private function getMultipartMockResults($key = 'key')
+    private static function getMultipartMockResults($key = 'key'): array
     {
         $smallHeadObject = new Result(['ContentLength' => 1024 * 1024 * 6]);
         $partCount = ceil($smallHeadObject['ContentLength'] / MultipartUploader::PART_MIN_SIZE);
@@ -210,21 +210,21 @@ class ObjectCopierTest extends TestCase
         );
     }
 
-    public static function getCopyTestCases()
+    public static function copyDataProvider(): array
     {
         return [
             [
-                $this->getSmallPutObjectMockResult(),
+                self::getSmallPutObjectMockResult(),
                 []
             ],
             [
-                $this->getMultipartMockResults(),
+                self::getMultipartMockResults(),
                 ['mup_threshold' => MultipartUploader::PART_MIN_SIZE]
             ],
         ];
     }
 
-    private function getPathStyleMultipartMockResults()
+    private static function getPathStyleMultipartMockResults(): array
     {
         $smallHeadObject = new Result(['ContentLength' => 1024 * 1024 * 6]);
         $partCount = ceil($smallHeadObject['ContentLength'] / MultipartUploader::PART_MIN_SIZE);
@@ -239,15 +239,15 @@ class ObjectCopierTest extends TestCase
         );
     }
 
-    public static function getCopyTestCasesWithPathStyle()
+    public static function copyWithPathStyleDataProvider(): array
     {
         return [
             [
-                $this->getSmallPutObjectMockResult(),
+                self::getSmallPutObjectMockResult(),
                 []
             ],
             [
-                $this->getPathStyleMultipartMockResults(),
+                self::getPathStyleMultipartMockResults(),
                 ['mup_threshold' => MultipartUploader::PART_MIN_SIZE]
             ],
         ];
@@ -317,7 +317,7 @@ class ObjectCopierTest extends TestCase
 
         $this->addMockResults(
             $client,
-            $this->getSmallPutObjectMockResult()
+            self::getSmallPutObjectMockResult()
         );
 
         $uploader = new ObjectCopier(
@@ -357,7 +357,7 @@ class ObjectCopierTest extends TestCase
 
         $this->addMockResults(
             $client,
-            $this->getMultipartMockResults()
+            self::getMultipartMockResults()
         );
 
         $uploader = new ObjectCopier(
@@ -382,7 +382,7 @@ class ObjectCopierTest extends TestCase
 
         $this->addMockResults(
             $client,
-            $this->getSmallPutObjectMockResult()
+            self::getSmallPutObjectMockResult()
         );
 
         $uploader = new ObjectCopier(

@@ -18,18 +18,26 @@ class XmlErrorParserTest extends TestCase
     /**
      * @dataProvider errorResponsesProvider
      *
-     * @param $response
-     * @param $command
-     * @param $parser
-     * @param $expected
+     * @param string $response
+     * @param string $protocol
+     * @param string $parser
+     * @param array $expected
+     * @param string|null $expectedParsedType
+     *
+     * @throws \Exception
      */
     public function testParsesClientErrorResponses(
-        $response,
-        $command,
-        $parser,
-        $expected,
-        $expectedParsedType
+        string $response,
+        string $protocol,
+        string $parser,
+        array $expected,
+        ?string $expectedParsedType
     ) {
+        $service = $this->generateTestService($protocol);
+        $client = $this->generateTestClient($service);
+        $command = $client->getCommand('TestOperation');
+        $parser = new $parser($service);
+
         $response = Psr7\Message::parseResponse($response);
         $result = $parser($response, $command);
         $this->assertArraySubset($expected, $result);
@@ -41,20 +49,8 @@ class XmlErrorParserTest extends TestCase
         }
     }
 
-    public static function errorResponsesProvider()
+    public static function errorResponsesProvider(): array
     {
-        $ec2Service = $this->generateTestService('ec2');
-        $ec2Client = $this->generateTestClient($ec2Service);
-        $ec2Command = $ec2Client->getCommand('TestOperation', []);
-
-        $queryService = $this->generateTestService('query');
-        $queryClient = $this->generateTestClient($queryService);
-        $queryCommand = $queryClient->getCommand('TestOperation', []);
-
-        $restXmlService = $this->generateTestService('query');
-        $restXmlClient = $this->generateTestClient($restXmlService);
-        $restXmlCommand = $restXmlClient->getCommand('TestOperation', []);
-
         return [
             // ec2, modeled exception
             [
@@ -75,8 +71,8 @@ class XmlErrorParserTest extends TestCase
                 '  </Errors>' .
                 '  <RequestId>xyz</RequestId>' .
                 '</Response>',
-                $ec2Command,
-                new XmlErrorParser($ec2Service),
+                'ec2',
+                XmlErrorParser::class,
                 [
                     'type' => 'client',
                     'request_id' => 'xyz',
@@ -114,8 +110,8 @@ class XmlErrorParserTest extends TestCase
                 '  </Errors>' .
                 '  <RequestId>xyz</RequestId>' .
                 '</Response>',
-                $ec2Command,
-                new XmlErrorParser($ec2Service),
+                'ec2',
+                XmlErrorParser::class,
                 [
                     'type' => 'client',
                     'request_id' => 'xyz',
@@ -141,8 +137,8 @@ class XmlErrorParserTest extends TestCase
                 '  </Error>' .
                 '  <RequestId>xyz</RequestId>' .
                 '</ErrorResponse>',
-                $queryCommand,
-                new XmlErrorParser($queryService),
+                'query',
+                XmlErrorParser::class,
                 [
                     'type' => 'client',
                     'request_id' => 'xyz',
@@ -178,8 +174,8 @@ class XmlErrorParserTest extends TestCase
                 '  </Error>' .
                 '  <RequestId>xyz</RequestId>' .
                 '</ErrorResponse>',
-                $queryCommand,
-                new XmlErrorParser($queryService),
+                'query',
+                XmlErrorParser::class,
                 [
                     'type' => 'client',
                     'request_id' => 'xyz',
@@ -205,8 +201,8 @@ class XmlErrorParserTest extends TestCase
                 '  </Error>' .
                 '  <RequestId>xyz</RequestId>' .
                 '</ErrorResponse>',
-                $restXmlCommand,
-                new XmlErrorParser($restXmlService),
+                'query',
+                XmlErrorParser::class,
                 [
                     'type' => 'client',
                     'request_id' => 'xyz',
@@ -242,8 +238,8 @@ class XmlErrorParserTest extends TestCase
                 '  </Error>' .
                 '  <RequestId>xyz</RequestId>' .
                 '</ErrorResponse>',
-                $restXmlCommand,
-                new XmlErrorParser($restXmlService),
+                'query',
+                XmlErrorParser::class,
                 [
                     'type' => 'client',
                     'request_id' => 'xyz',
@@ -268,8 +264,8 @@ class XmlErrorParserTest extends TestCase
                 '  <TestInt>456</TestInt>' .
                 '  <HostId>baz</HostId>' .
                 '</Error>',
-                $restXmlCommand,
-                new XmlErrorParser($restXmlService),
+                'query',
+                XmlErrorParser::class,
                 [
                     'type' => 'client',
                     'request_id' => 'xyz',
@@ -304,8 +300,8 @@ class XmlErrorParserTest extends TestCase
                 '  <TestInt>456</TestInt>' .
                 '  <HostId>baz</HostId>' .
                 '</Error>',
-                $restXmlCommand,
-                new XmlErrorParser($restXmlService),
+                'query',
+                XmlErrorParser::class,
                 [
                     'type' => 'client',
                     'request_id' => 'xyz',
@@ -321,8 +317,8 @@ class XmlErrorParserTest extends TestCase
                 "x-meta-foo: foo-meta\r\n" .
                 "x-meta-bar: bar-meta\r\n" .
                 "x-amz-request-id: xyz\r\n\r\n",
-                $restXmlCommand,
-                new XmlErrorParser($restXmlService),
+                'query',
+                XmlErrorParser::class,
                 [
                     'type' => 'client',
                     'request_id' => 'xyz',

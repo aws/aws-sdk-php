@@ -170,9 +170,17 @@ class AuthSelectionMiddlewareTest extends TestCase
     public function testResolvesBearerAuthScheme(
         $serviceAuth,
         $operationAuth,
-        $tokenProvider,
+        $identity,
         $expected
     ){
+        // Normalize token provider
+        $tokenProvider = $identity === null
+            ? null
+            : function () use ($identity) {
+                return Promise\Create::promiseFor(
+                    $this->createMock($identity)
+                );
+        };
         $nextHandler = function (CommandInterface $command) use ($expected) {
             $this->assertEquals($expected, $command['@context']['signature_version']);
         };
@@ -198,37 +206,25 @@ class AuthSelectionMiddlewareTest extends TestCase
         $middleware($command);
     }
 
-    public static function resolvesBearerAuthSchemeProvider()
+    public static function resolvesBearerAuthSchemeProvider(): array
     {
         return [
             [
                 ['smithy.api#httpBearerAuth', 'aws.auth#sigv4'],
                 [],
-                function () {
-                    return Promise\Create::promiseFor(
-                        $this->createMock(BearerTokenIdentity::class)
-                    );
-                },
+                BearerTokenIdentity::class,
                 'bearer'
             ],
             [
                 ['smithy.api#httpBearerAuth', 'aws.auth#sigv4'],
                 [],
-                function () {
-                    return Promise\Create::promiseFor(
-                        null
-                    );
-                },
+                null,
                 'v4'
             ],
             [
                 ['aws.auth#sigv4', 'aws.auth#sigv4a'],
                 ['smithy.api#httpBearerAuth'],
-                function () {
-                    return Promise\Create::promiseFor(
-                        $this->createMock(BearerTokenIdentity::class)
-                    );
-                },
+                BearerTokenIdentity::class,
                 'bearer'
             ]
         ];

@@ -67,16 +67,16 @@ class EndpointParameterMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider getTestCases
+     * @dataProvider correctlyOutputsHostDataProvider
      */
     public function testCorrectlyOutputsHost(
-        Service $service,
         $clientArgs,
         $cmdName,
         $params,
         $endpoint,
         $expectedHost
     ) {
+        $service = $this->generateTestService();
         if ($cmdName === 'NoEndpointOp') {
             $this->addToAssertionCount(1); // To be replaced with $this->expectNotToPerformAssertions();
         }
@@ -95,14 +95,11 @@ class EndpointParameterMiddlewareTest extends TestCase
         $handler($command, new Request('POST', $endpoint));
     }
 
-    public static function getTestCases()
+    public static function correctlyOutputsHostDataProvider(): array
     {
-        $service = $this->generateTestService();
-
         return [
             // Operation without any prefix injection
             [
-                $service,
                 [],
                 'NoEndpointOp',
                 [
@@ -113,7 +110,6 @@ class EndpointParameterMiddlewareTest extends TestCase
             ],
             // Operation with static prefix injection
             [
-                $service,
                 [],
                 'StaticOp',
                 [
@@ -124,7 +120,6 @@ class EndpointParameterMiddlewareTest extends TestCase
             ],
             // Operation with host parameter injection
             [
-                $service,
                 [],
                 'MemberRefOp',
                 [
@@ -135,7 +130,6 @@ class EndpointParameterMiddlewareTest extends TestCase
             ],
             // Operation with multiple host parameter injections
             [
-                $service,
                 [],
                 'MultiRefOp',
                 [
@@ -147,7 +141,6 @@ class EndpointParameterMiddlewareTest extends TestCase
             ],
             // Operation with host parameter injection, disabled via client argument
             [
-                $service,
                 [
                     'disable_host_prefix_injection' => true
                 ],
