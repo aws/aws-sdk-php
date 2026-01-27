@@ -24,7 +24,12 @@ clear-cache:
 	php build/aws-clear-cache.php
 
 test:
-	@AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar AWS_SESSION_TOKEN= AWS_CSM_ENABLED=false AWS_REGION= AWS_ENDPOINT_URL= AWS_SUPPRESS_PHP_DEPRECATION_WARNING=true \
+	AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar AWS_SESSION_TOKEN= \
+	AWS_CSM_ENABLED=false \
+	AWS_REGION= \
+	AWS_ENDPOINT_URL= \
+	AWS_SUPPRESS_PHP_DEPRECATION_WARNING=true \
+	XDEBUG_MODE=coverage
 	vendor/bin/phpunit --testsuite=unit $(TEST)
 
 test-phar: package
