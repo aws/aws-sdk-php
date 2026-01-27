@@ -5682,7 +5682,8 @@
         "AttachedFile$FileName": "<p>A case-sensitive name of the attached file being uploaded.</p>",
         "EmailAttachment$FileName": "<p>A case-sensitive name of the attached file being uploaded.</p>",
         "GetAttachedFileResponse$FileName": "<p>A case-sensitive name of the attached file being uploaded.</p>",
-        "StartAttachedFileUploadRequest$FileName": "<p>A case-sensitive name of the attached file being uploaded.</p>"
+        "StartAttachedFileUploadRequest$FileName": "<p>A case-sensitive name of the attached file being uploaded.</p>",
+        "TaskAttachment$FileName": "<p>A case-sensitive name of the attached file being uploaded.</p>"
       }
     },
     "FileSizeInBytes": {
@@ -9140,7 +9141,8 @@
     "PreSignedAttachmentUrl": {
       "base": null,
       "refs": {
-        "EmailAttachment$S3Url": "<p>The pre-signed URLs for the S3 bucket where the email attachment is stored.</p>"
+        "EmailAttachment$S3Url": "<p>The pre-signed URLs for the S3 bucket where the email attachment is stored.</p>",
+        "TaskAttachment$S3Url": "<p>The pre-signed URLs for the S3 bucket where the task attachment is stored.</p>"
       }
     },
     "PredefinedAttribute": {
@@ -12109,6 +12111,18 @@
       "base": "<p>Information about the task action.</p>",
       "refs": {
         "RuleAction$TaskAction": "<p>Information about the task action. This field is required if <code>TriggerEventSource</code> is one of the following values: <code>OnZendeskTicketCreate</code> | <code>OnZendeskTicketStatusUpdate</code> | <code>OnSalesforceCaseCreate</code> </p>"
+      }
+    },
+    "TaskAttachment": {
+      "base": "<p>Information about the task attachment files.</p>",
+      "refs": {
+        "TaskAttachments$member": null
+      }
+    },
+    "TaskAttachments": {
+      "base": null,
+      "refs": {
+        "StartTaskContactRequest$Attachments": "<p>List of S3 presigned URLs of task attachments and their file name. You can have a maximum of 5 attachments per task.</p>"
       }
     },
     "TaskDescriptionExpression": {

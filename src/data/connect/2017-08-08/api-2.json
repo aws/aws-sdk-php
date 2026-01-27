@@ -22101,7 +22101,8 @@
         "TaskTemplateId":{"shape":"TaskTemplateId"},
         "QuickConnectId":{"shape":"QuickConnectId"},
         "RelatedContactId":{"shape":"ContactId"},
-        "SegmentAttributes":{"shape":"SegmentAttributes"}
+        "SegmentAttributes":{"shape":"SegmentAttributes"},
+        "Attachments":{"shape":"TaskAttachments"}
       }
     },
     "StartTaskContactResponse":{
@@ -22571,6 +22572,24 @@
         "ContactFlowId":{"shape":"ContactFlowId"},
         "References":{"shape":"ContactReferences"}
       }
+    },
+    "TaskAttachment":{
+      "type":"structure",
+      "required":[
+        "FileName",
+        "S3Url"
+      ],
+      "members":{
+        "FileName":{"shape":"FileName"},
+        "S3Url":{"shape":"PreSignedAttachmentUrl"}
+      }
+    },
+    "TaskAttachments":{
+      "type":"list",
+      "member":{"shape":"TaskAttachment"},
+      "max":5,
+      "min":1,
+      "sensitive":true
     },
     "TaskDescriptionExpression":{
       "type":"string",

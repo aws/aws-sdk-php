@@ -383,6 +383,12 @@
     "UpdateWorkteam": "<p>Updates an existing work team with new member definitions or description.</p>"
   },
   "shapes": {
+    "AbsoluteBorrowLimitResourceList": {
+      "base": null,
+      "refs": {
+        "ResourceSharingConfig$AbsoluteBorrowLimits": "<p>The absolute limits on compute resources that can be borrowed from idle compute. When specified, these limits define the maximum amount of specific resource types (such as accelerators, vCPU, or memory) that an entity can borrow, regardless of the percentage-based <code>BorrowLimit</code>.</p>"
+      }
+    },
     "AcceleratorPartitionConfig": {
       "base": "<p>Configuration for allocating accelerator partitions.</p>",
       "refs": {
@@ -3488,6 +3494,7 @@
     "ComputeQuotaResourceConfig": {
       "base": "<p>Configuration of the resources used for the compute allocation definition.</p>",
       "refs": {
+        "AbsoluteBorrowLimitResourceList$member": null,
         "ComputeQuotaResourceConfigList$member": null
       }
     },
@@ -8503,6 +8510,12 @@
       "base": null,
       "refs": {
         "CanvasAppSettings$IdentityProviderOAuthSettings": "<p>The settings for connecting to an external data source with OAuth.</p>"
+      }
+    },
+    "IdleResourceSharing": {
+      "base": null,
+      "refs": {
+        "SchedulerConfig$IdleResourceSharing": "<p>Configuration for sharing idle compute resources across entities in the cluster. When enabled, unallocated resources are automatically calculated and made available for entities to borrow. </p>"
       }
     },
     "IdleSettings": {
@@ -15859,6 +15872,12 @@
         "UpdateClusterSchedulerConfigRequest$SchedulerConfig": "<p>Cluster policy configuration.</p>"
       }
     },
+    "SchedulerConfigComponent": {
+      "base": null,
+      "refs": {
+        "StatusDetailsMap$key": null
+      }
+    },
     "SchedulerResourceStatus": {
       "base": null,
       "refs": {
@@ -15867,7 +15886,8 @@
         "DescribeClusterSchedulerConfigResponse$Status": "<p>Status of the cluster policy.</p>",
         "DescribeComputeQuotaResponse$Status": "<p>Status of the compute allocation definition.</p>",
         "ListClusterSchedulerConfigsRequest$Status": "<p>Filter for status.</p>",
-        "ListComputeQuotasRequest$Status": "<p>Filter for status.</p>"
+        "ListComputeQuotasRequest$Status": "<p>Filter for status.</p>",
+        "StatusDetailsMap$value": null
       }
     },
     "Scope": {
@@ -16605,6 +16625,12 @@
       "refs": {
         "DebugRuleEvaluationStatus$StatusDetails": "<p>Details from the rule evaluation.</p>",
         "ProfilerRuleEvaluationStatus$StatusDetails": "<p>Details from the rule evaluation.</p>"
+      }
+    },
+    "StatusDetailsMap": {
+      "base": null,
+      "refs": {
+        "DescribeClusterSchedulerConfigResponse$StatusDetails": "<p>Additional details about the status of the cluster policy. This field provides context when the policy is in a non-active state, such as during creation, updates, or if failures occur.</p>"
       }
     },
     "StatusMessage": {

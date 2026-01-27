@@ -549,7 +549,7 @@
         "DateTimeFilterExpression$operator": "<p>The type of comparison to use to filter the results.</p>",
         "ParameterFilterExpression$operator": "<p>The type of comparison to use to filter results.</p>",
         "StringFilterExpression$operator": "<p>The type of comparison to use for this search.</p>",
-        "StringListFilterExpression$operator": "<p>The type of comparison to use for this search. ANY_EQUALS and ALL_NOT_EQUALS are supported.</p>"
+        "StringListFilterExpression$operator": "<p>The type of comparison to use for this search.</p>"
       }
     },
     "CompletedStatus": {
@@ -1896,6 +1896,13 @@
         "GetJobResponse$description": "<p>The description of the job.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>"
       }
     },
+    "JobDescriptionOverride": {
+      "base": "<p>The input description for the job. Passing in an empty string removes any existing description.</p>",
+      "refs": {
+        "CreateJobRequest$descriptionOverride": "<p>A custom description to override the job description derived from the job template.</p>",
+        "UpdateJobRequest$description": "<p>The updated job description.</p>"
+      }
+    },
     "JobDetailsEntity": {
       "base": "<p>The job details for a specific job.</p>",
       "refs": {
@@ -2017,10 +2024,12 @@
     "JobName": {
       "base": null,
       "refs": {
+        "CreateJobRequest$nameOverride": "<p>A custom name to override the job name derived from the job template.</p>",
         "GetJobResponse$name": "<p>The name of the job.</p>",
         "JobSearchSummary$name": "<p>The job name.</p>",
         "JobSummary$name": "<p>The job name.</p>",
-        "Statistics$jobName": "<p>The job name.</p>"
+        "Statistics$jobName": "<p>The job name.</p>",
+        "UpdateJobRequest$name": "<p>The updated job name.</p>"
       }
     },
     "JobParameter": {
@@ -2063,7 +2072,7 @@
         "GetJobResponse$priority": "<p>The job priority.</p>",
         "JobSearchSummary$priority": "<p>The job priority.</p>",
         "JobSummary$priority": "<p>The job priority.</p>",
-        "UpdateJobRequest$priority": "<p>The job priority to update.</p>"
+        "UpdateJobRequest$priority": "<p>The updated job priority.</p>"
       }
     },
     "JobRunAsUser": {
@@ -3905,9 +3914,9 @@
       }
     },
     "StringListFilterExpression": {
-      "base": "<p>Searches for a match within a list of strings.</p>",
+      "base": "<p>Searches for a particular list of strings.</p>",
       "refs": {
-        "SearchFilterExpression$stringListFilter": "<p>Filters by a list of string values.</p>"
+        "SearchFilterExpression$stringListFilter": "<p>Filters by a list of strings.</p>"
       }
     },
     "Subdomain": {

@@ -5290,7 +5290,9 @@
         "RouterSettings$SecretArn": "ARN of the secret used to encrypt this input.",
         "SpecialRouterSettings$RouterArn": "This is the arn of the MediaConnect Router resource being associated with the MediaLive Input.",
         "DescribeFollowerChannelSettings$PrimaryChannelArn": "The ARN of the primary channel this channel follows",
-        "FollowerChannelSettings$PrimaryChannelArn": "The ARN of the primary channel to follow"
+        "FollowerChannelSettings$PrimaryChannelArn": "The ARN of the primary channel to follow",
+        "DisabledLockingSettings$CustomEpoch": "Optional. Only applies to CMAF Ingest Output Group and MediaPackage V2 Output Group. Enter a value here to use a custom epoch, instead of the standard epoch (which started at 1970-01-01T00:00:00 UTC). Specify the start time of the custom epoch, in YYYY-MM-DDTHH:MM:SS in UTC. The time must be 2000-01-01T00:00:00 or later. Always set the MM:SS portion to 00:00.",
+        "PipelineLockingSettings$CustomEpoch": "Optional. Only applies to CMAF Ingest Output Group and MediaPackage V2 Output Group Only. Enter a value here to use a custom epoch, instead of the standard epoch (which started at 1970-01-01T00:00:00 UTC). Specify the start time of the custom epoch, in YYYY-MM-DDTHH:MM:SS in UTC. The time must be 2000-01-01T00:00:00 or later. Always set the MM:SS portion to 00:00."
       }
     },
     "__stringMax1000": {
@@ -7489,6 +7491,18 @@
       "base": null,
       "refs": {
         "MediaPackageV2GroupSettings$AdditionalDestinations": "Optional an array of additional destinational HTTP destinations for the OutputGroup outputs"
+      }
+    },
+    "Av1TimecodeInsertionBehavior": {
+      "base": "Av1 Timecode Insertion Behavior",
+      "refs": {
+        "Av1Settings$TimecodeInsertion": "Controls how MediaLive inserts timecodes into the video output encode.\nDISABLED: Do not insert timecodes.\nMETADATA_OBU: Include timecodes. MediaLive inserts timecode metadata based on the timecode from the source specified in the Timecode Config property. The timecode metadata is a metadata OBU (Open Bitstream Unit) of type METADATA_TYPE_TIMECODE, in accordance with https://aomediacodec.github.io/av1-spec/#metadata-timecode-syntax."
+      }
+    },
+    "DisabledLockingSettings": {
+      "base": "Disabled Locking Settings",
+      "refs": {
+        "OutputLockingSettings$DisabledLockingSettings": null
       }
     }
   },

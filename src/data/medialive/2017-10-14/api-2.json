@@ -13714,6 +13714,10 @@
         "PipelineLockingSettings": {
           "shape": "PipelineLockingSettings",
           "locationName": "pipelineLockingSettings"
+        },
+        "DisabledLockingSettings": {
+          "shape": "DisabledLockingSettings",
+          "locationName": "disabledLockingSettings"
         }
       }
     },
@@ -13817,6 +13821,10 @@
         "PipelineLockingMethod": {
           "shape": "PipelineLockingMethod",
           "locationName": "pipelineLockingMethod"
+        },
+        "CustomEpoch": {
+          "shape": "__string",
+          "locationName": "customEpoch"
         }
       }
     },
@@ -21823,6 +21831,10 @@
         "TemporalAq": {
           "shape": "Av1TemporalAq",
           "locationName": "temporalAq"
+        },
+        "TimecodeInsertion": {
+          "shape": "Av1TimecodeInsertionBehavior",
+          "locationName": "timecodeInsertion"
         }
       },
       "required": [
@@ -25320,6 +25332,22 @@
       "type": "list",
       "member": {
         "shape": "MediaPackageAdditionalDestinations"
+      }
+    },
+    "Av1TimecodeInsertionBehavior": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "METADATA_OBU"
+      ]
+    },
+    "DisabledLockingSettings": {
+      "type": "structure",
+      "members": {
+        "CustomEpoch": {
+          "shape": "__string",
+          "locationName": "customEpoch"
+        }
       }
     }
   }

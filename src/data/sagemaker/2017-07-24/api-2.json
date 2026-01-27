@@ -4310,6 +4310,12 @@
     }
   },
   "shapes":{
+    "AbsoluteBorrowLimitResourceList":{
+      "type":"list",
+      "member":{"shape":"ComputeQuotaResourceConfig"},
+      "max":15,
+      "min":0
+    },
     "AcceleratorPartitionConfig":{
       "type":"structure",
       "required":[
@@ -6416,7 +6422,7 @@
     "BorrowLimit":{
       "type":"integer",
       "box":true,
-      "max":500,
+      "max":10000,
       "min":0
     },
     "Branch":{
@@ -11577,6 +11583,7 @@
         },
         "Status":{"shape":"SchedulerResourceStatus"},
         "FailureReason":{"shape":"FailureReason"},
+        "StatusDetails":{"shape":"StatusDetailsMap"},
         "ClusterArn":{"shape":"ClusterArn"},
         "SchedulerConfig":{"shape":"SchedulerConfig"},
         "Description":{"shape":"EntityDescription"},
@@ -16363,6 +16370,13 @@
       "member":{"shape":"IdentityProviderOAuthSetting"},
       "max":20,
       "min":0
+    },
+    "IdleResourceSharing":{
+      "type":"string",
+      "enum":[
+        "Enabled",
+        "Disabled"
+      ]
     },
     "IdleSettings":{
       "type":"structure",
@@ -25158,7 +25172,8 @@
       "required":["Strategy"],
       "members":{
         "Strategy":{"shape":"ResourceSharingStrategy"},
-        "BorrowLimit":{"shape":"BorrowLimit"}
+        "BorrowLimit":{"shape":"BorrowLimit"},
+        "AbsoluteBorrowLimits":{"shape":"AbsoluteBorrowLimitResourceList"}
       }
     },
     "ResourceSharingStrategy":{
@@ -25573,8 +25588,17 @@
       "type":"structure",
       "members":{
         "PriorityClasses":{"shape":"PriorityClassList"},
-        "FairShare":{"shape":"FairShare"}
+        "FairShare":{"shape":"FairShare"},
+        "IdleResourceSharing":{"shape":"IdleResourceSharing"}
       }
+    },
+    "SchedulerConfigComponent":{
+      "type":"string",
+      "enum":[
+        "PriorityClasses",
+        "FairShare",
+        "IdleResourceSharing"
+      ]
     },
     "SchedulerResourceStatus":{
       "type":"string",
@@ -26442,6 +26466,11 @@
       "max":1024,
       "min":0,
       "pattern":".*"
+    },
+    "StatusDetailsMap":{
+      "type":"map",
+      "key":{"shape":"SchedulerConfigComponent"},
+      "value":{"shape":"SchedulerResourceStatus"}
     },
     "StatusMessage":{"type":"string"},
     "StepDescription":{

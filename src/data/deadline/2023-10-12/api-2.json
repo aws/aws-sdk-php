@@ -3116,7 +3116,9 @@
         "maxFailedTasksCount":{"shape":"MaxFailedTasksCount"},
         "maxRetriesPerTask":{"shape":"MaxRetriesPerTask"},
         "maxWorkerCount":{"shape":"MaxWorkerCount"},
-        "sourceJobId":{"shape":"JobId"}
+        "sourceJobId":{"shape":"JobId"},
+        "nameOverride":{"shape":"JobName"},
+        "descriptionOverride":{"shape":"JobDescriptionOverride"}
       }
     },
     "CreateJobResponse":{
@@ -5426,6 +5428,12 @@
       "type":"string",
       "max":2048,
       "min":1,
+      "sensitive":true
+    },
+    "JobDescriptionOverride":{
+      "type":"string",
+      "max":2048,
+      "min":0,
       "sensitive":true
     },
     "JobDetailsEntity":{
@@ -8785,6 +8793,8 @@
         "maxRetriesPerTask":{"shape":"MaxRetriesPerTask"},
         "lifecycleStatus":{"shape":"UpdateJobLifecycleStatus"},
         "maxWorkerCount":{"shape":"MaxWorkerCount"},
+        "name":{"shape":"JobName"},
+        "description":{"shape":"JobDescriptionOverride"},
         "farmId":{
           "shape":"FarmId",
           "location":"uri",
