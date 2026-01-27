@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.21 - 2026-01-27
 
 * `Aws\SageMaker` - Idle resource sharing enables teams to borrow unused compute resources in your SageMaker HyperPod cluster. This capability maximizes resource utilization by allowing teams to borrow idle compute capacity beyond their allocated compute quotas.
 * `Aws\Deadline` - AWS Deadline Cloud now supports editing job names and descriptions after submission.
