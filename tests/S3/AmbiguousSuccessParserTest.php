@@ -8,6 +8,7 @@ use Aws\CommandInterface;
 use Aws\S3\AmbiguousSuccessParser;
 use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Psr\Http\Message\ResponseInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -56,10 +57,10 @@ class AmbiguousSuccessParserTest extends TestCase
     /**
      * @param string $operation
      * @doesNotPerformAssertions
-
- */
+    */
     #[DataProvider('opsWithoutAmbiguousSuccessesProvider')]
-    public function testIgnoresAmbiguousSuccessesOnUnaffectedOperations($operation)
+    #[CoversNothing]
+    public function testIgnoresAmbiguousSuccessesOnUnaffectedOperations(string $operation)
     {
         $command = $this->getMockBuilder(CommandInterface::class)->getMock();
         $command->expects($this->any())
@@ -72,6 +73,7 @@ class AmbiguousSuccessParserTest extends TestCase
 
         $instance = $this->instance;
         $instance($command, $response);
+        $this->assertTrue(true);
     }
 
     /**
@@ -95,7 +97,7 @@ class AmbiguousSuccessParserTest extends TestCase
         $instance($command, $response);
     }
 
-    public static function opsWithAmbiguousSuccessesProvider()
+    public static function opsWithAmbiguousSuccessesProvider(): array
     {
         return [
             ['CopyObject'],
@@ -105,7 +107,7 @@ class AmbiguousSuccessParserTest extends TestCase
         ];
     }
 
-    public static function opsWithoutAmbiguousSuccessesProvider()
+    public static function opsWithoutAmbiguousSuccessesProvider(): array
     {
         $provider = ApiProvider::defaultProvider();
         return array_map(
