@@ -4,6 +4,8 @@ namespace Aws\Api\ErrorParser;
 use Aws\Api\Parser\JsonParser;
 use Aws\Api\Service;
 use Aws\CommandInterface;
+use GuzzleHttp\Psr7\CachingStream;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -25,6 +27,15 @@ class JsonRpcErrorParser extends AbstractErrorParser
         ResponseInterface $response,
         ?CommandInterface $command = null
     ) {
+        if (!$response->getBody()->isSeekable()) {
+            $response = new Response(
+                $response->getStatusCode(),
+                $response->getHeaders(),
+                new CachingStream($response->getBody()),
+                $response->getProtocolVersion(),
+                $response->getReasonPhrase()
+            );
+        }
         $data = $this->genericHandler($response);
 
         // Make the casing consistent across services.
