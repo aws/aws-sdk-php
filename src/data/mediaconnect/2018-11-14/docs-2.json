@@ -75,11 +75,11 @@
     "UpdateBridgeOutput": "<p> Updates an existing bridge output.</p>",
     "UpdateBridgeSource": "<p> Updates an existing bridge source.</p>",
     "UpdateBridgeState": "<p> Updates the bridge state. </p>",
-    "UpdateFlow": "<p> Updates an existing flow.</p>",
+    "UpdateFlow": "<p> Updates an existing flow.</p> <note> <p> Because <code>UpdateFlowSources</code> and <code>UpdateFlow</code> are separate operations, you can't change both the source type AND the flow size in a single request. </p> <ul> <li> <p>If you have a <code>MEDIUM</code> flow and you want to change the flow source to NDI®:</p> <ul> <li> <p>First, use the <code>UpdateFlow</code> operation to upgrade the flow size to <code>LARGE</code>. </p> </li> <li> <p>After that, you can then use the <code>UpdateFlowSource</code> operation to configure the NDI source. </p> </li> </ul> </li> <li> <p>If you're switching from an NDI source to a transport stream (TS) source and want to downgrade the flow size: </p> <ul> <li> <p>First, use the <code>UpdateFlowSource</code> operation to change the flow source type. </p> </li> <li> <p>After that, you can then use the <code>UpdateFlow</code> operation to downgrade the flow size to <code>MEDIUM</code>.</p> </li> </ul> </li> </ul> </note>",
     "UpdateFlowEntitlement": "<p> Updates an entitlement. You can change an entitlement's description, subscribers, and encryption. If you change the subscribers, the service will remove the outputs that are are used by the subscribers that are removed.</p>",
     "UpdateFlowMediaStream": "<p> Updates an existing media stream.</p>",
     "UpdateFlowOutput": "<p> Updates an existing flow output.</p>",
-    "UpdateFlowSource": "<p> Updates the source of a flow.</p>",
+    "UpdateFlowSource": "<p> Updates the source of a flow.</p> <note> <p> Because <code>UpdateFlowSources</code> and <code>UpdateFlow</code> are separate operations, you can't change both the source type AND the flow size in a single request. </p> <ul> <li> <p>If you have a <code>MEDIUM</code> flow and you want to change the flow source to NDI®:</p> <ul> <li> <p>First, use the <code>UpdateFlow</code> operation to upgrade the flow size to <code>LARGE</code>. </p> </li> <li> <p>After that, you can then use the <code>UpdateFlowSource</code> operation to configure the NDI source. </p> </li> </ul> </li> <li> <p>If you're switching from an NDI source to a transport stream (TS) source and want to downgrade the flow size: </p> <ul> <li> <p>First, use the <code>UpdateFlowSource</code> operation to change the flow source type. </p> </li> <li> <p>After that, you can then use the <code>UpdateFlow</code> operation to downgrade the flow size to <code>MEDIUM</code>.</p> </li> </ul> </li> </ul> </note>",
     "UpdateGatewayInstance": "<p>Updates an existing gateway instance. </p>",
     "UpdateRouterInput": "<p>Updates the configuration of an existing router input in AWS Elemental MediaConnect.</p>",
     "UpdateRouterNetworkInterface": "<p>Updates the configuration of an existing router network interface in AWS Elemental MediaConnect.</p>",
@@ -749,6 +749,14 @@
         "EncodingParametersRequest$EncoderProfile": "<p> A setting on the encoder that drives compression settings. This property only applies to video media streams associated with outputs that use the ST 2110 JPEG XS protocol, if at least one source on the flow uses the CDI protocol.</p>"
       }
     },
+    "EncodingConfig": {
+      "base": "<p> The encoding configuration to apply to the NDI® source when transcoding it to a transport stream for downstream distribution. You can choose between several predefined encoding profiles based on common use cases. </p>",
+      "refs": {
+        "CreateFlowRequest$EncodingConfig": null,
+        "Flow$EncodingConfig": "<p> The encoding configuration to apply to the NDI® source when transcoding it to a transport stream for downstream distribution. </p>",
+        "UpdateFlowRequest$EncodingConfig": null
+      }
+    },
     "EncodingName": {
       "base": null,
       "refs": {
@@ -770,8 +778,14 @@
         "MediaStreamOutputConfigurationRequest$EncodingParameters": "<p> A collection of parameters that determine how MediaConnect will convert the content. These fields only apply to outputs on flows that have a CDI source. </p>"
       }
     },
+    "EncodingProfile": {
+      "base": null,
+      "refs": {
+        "EncodingConfig$EncodingProfile": "<p> The encoding profile to use when transcoding the NDI source content to a transport stream. You can change this value while the flow is running. </p>"
+      }
+    },
     "Encryption": {
-      "base": "<p> Information about the encryption of the flow.</p>",
+      "base": "<p> Encryption information.</p>",
       "refs": {
         "AddOutputRequest$Encryption": "<p> The type of key used for the encryption. If no keyType is provided, the service will use the default setting (static-key). Allowable encryption types: static-key.</p>",
         "Entitlement$Encryption": "<p> The type of encryption that will be used on the output that is associated with this entitlement.</p>",
@@ -881,8 +895,8 @@
     "FlowSize": {
       "base": null,
       "refs": {
-        "CreateFlowRequest$FlowSize": "<p> Determines the processing capacity and feature set of the flow. Set this optional parameter to <code>LARGE</code> if you want to enable NDI outputs on the flow. </p>",
-        "Flow$FlowSize": "<p> Determines the processing capacity and feature set of the flow. Set this optional parameter to LARGE if you want to enable NDI outputs on the flow. </p>",
+        "CreateFlowRequest$FlowSize": "<p> Determines the processing capacity and feature set of the flow. Set this optional parameter to <code>LARGE</code> if you want to enable NDI sources or outputs on the flow. </p>",
+        "Flow$FlowSize": "<p> Determines the processing capacity and feature set of the flow. </p>",
         "UpdateFlowRequest$FlowSize": "<p> Determines the processing capacity and feature set of the flow. </p>"
       }
     },
@@ -943,6 +957,7 @@
     "FrameResolution": {
       "base": "<p> The frame resolution used by the video stream.</p>",
       "refs": {
+        "NdiMediaStreamInfo$FrameResolution": "<p> The width and height dimensions of the video frame in pixels. Used when the <code>streamType</code> is <code>Video</code>. </p>",
         "TransportStream$FrameResolution": "<p>The frame resolution used by the video stream. </p>"
       }
     },
@@ -1098,6 +1113,7 @@
         "DestinationConfiguration$DestinationPort": "<p> The port that you want MediaConnect to use when it distributes the media stream to the output.</p>",
         "DestinationConfigurationRequest$DestinationPort": "<p> The port that you want MediaConnect to use when it distributes the media stream to the output.</p>",
         "EgressGatewayBridge$MaxBitrate": "<p> The maximum expected bitrate (in bps) of the egress bridge.</p>",
+        "EncodingConfig$VideoMaxBitrate": "<p> The maximum video bitrate to use when transcoding the NDI source to a transport stream. This parameter enables you to override the default video bitrate within the encoding profile's supported range. </p> <p> The supported range is 10,000,000 - 50,000,000 bits per second (bps). If you don't specify a value, MediaConnect uses the default value of 20,000,000 bps. </p>",
         "Entitlement$DataTransferSubscriberFeePercent": "<p> Percentage from 0-100 of the data transfer cost to be billed to the subscriber.</p>",
         "FailoverConfig$RecoveryWindow": "<p> Search window time to look for dash-7 packets.</p>",
         "FailoverRouterInputIndexedStreamDetails$SourceIndex": "<p>The index number (0 or 1) assigned to this source in the failover configuration.</p>",
@@ -1121,6 +1137,9 @@
         "MediaStream$MediaStreamId": "<p> A unique identifier for the media stream. </p>",
         "MergeRouterInputIndexedStreamDetails$SourceIndex": "<p>The index number (0 or 1) assigned to this source in the merge configuration.</p>",
         "NdiDiscoveryServerConfig$DiscoveryServerPort": "<p>The port for the NDI discovery server. Defaults to 5959 if a custom port isn't specified. </p>",
+        "NdiMediaStreamInfo$StreamId": "<p> A unique identifier for the media stream. </p>",
+        "NdiMediaStreamInfo$Channels": "<p> The number of audio channels in the stream. Used when the <code>streamType</code> is <code>Audio</code>.</p>",
+        "NdiMediaStreamInfo$SampleRate": "<p> The number of audio samples captured per second, measured in kilohertz (kHz). Used when the <code>streamType</code> is <code>Audio</code>.</p>",
         "Offering$Duration": "<p> The length of time that your reservation would be active.</p>",
         "Output$DataTransferSubscriberFeePercent": "<p> Percentage from 0-100 of the data transfer cost to be billed to the subscriber.</p>",
         "Output$Port": "<p> The port to use when content is distributed to this output.</p>",
@@ -1515,7 +1534,7 @@
       }
     },
     "MediaLiveTransitEncryption": {
-      "base": "<p>The encryption configuration that defines how content is encrypted during transit between MediaConnect Router and MediaLive. This configuration determines whether encryption keys are automatically managed by the service or manually managed through AWS Secrets Manager.</p>",
+      "base": "<p>The encryption configuration that defines how content is encrypted during transit between MediaConnect Router and MediaLive. This configuration determines whether encryption keys are automatically managed by the service or manually managed through Secrets Manager.</p>",
       "refs": {
         "MediaLiveInputRouterOutputConfiguration$DestinationTransitEncryption": "<p>The encryption configuration for the MediaLive input when connected to this router output.</p>"
       }
@@ -1644,23 +1663,56 @@
       }
     },
     "NdiConfig": {
-      "base": "<p>Specifies the configuration settings for NDI outputs. Required when the flow includes NDI outputs. </p>",
+      "base": "<p>Specifies the configuration settings for NDI sources and outputs. </p>",
       "refs": {
-        "CreateFlowRequest$NdiConfig": "<p> Specifies the configuration settings for NDI outputs. Required when the flow includes NDI outputs. </p>",
-        "Flow$NdiConfig": "<p>Specifies the configuration settings for NDI outputs. Required when the flow includes NDI outputs. </p>",
-        "UpdateFlowRequest$NdiConfig": "<p> Specifies the configuration settings for NDI outputs. Required when the flow includes NDI outputs. </p>"
+        "CreateFlowRequest$NdiConfig": "<p> Specifies the configuration settings for a flow's NDI source or output. Required when the flow includes an NDI source or output. </p>",
+        "Flow$NdiConfig": "<p>Specifies the configuration settings for a flow's NDI source or output. Required when the flow includes an NDI source or output.</p>",
+        "UpdateFlowRequest$NdiConfig": "<p> Specifies the configuration settings for a flow's NDI source or output. Required when the flow includes an NDI source or output. </p>"
       }
     },
     "NdiDiscoveryServerConfig": {
-      "base": "<p>Specifies the configuration settings for individual NDI discovery servers. A maximum of 3 servers is allowed. </p>",
+      "base": "<p>Specifies the configuration settings for individual NDI® discovery servers. A maximum of 3 servers is allowed. </p>",
       "refs": {
         "__listOfNdiDiscoveryServerConfig$member": null
+      }
+    },
+    "NdiMediaInfo": {
+      "base": "<p> Metadata about the audio and video media that is part of the NDI® source content. This includes details about the individual media streams. </p>",
+      "refs": {
+        "NdiSourceMetadataInfo$MediaInfo": "<p> Detailed information about the media streams (video, audio, and so on) that are part of the active NDI source. </p>"
+      }
+    },
+    "NdiMediaStreamInfo": {
+      "base": "<p> Detailed information about a single media stream that is part of an NDI® source. This includes details about the stream type, codec, resolution, frame rate, audio channels, and sample rate. </p>",
+      "refs": {
+        "__listOfNdiMediaStreamInfo$member": null
+      }
+    },
+    "NdiSourceInfo": {
+      "base": "<p> Information about a single NDI® sender, including its name. </p>",
+      "refs": {
+        "NdiSourceMetadataInfo$ActiveSource": "<p> The connected NDI sender that's currently sending source content to the flow's NDI source. </p>",
+        "__listOfNdiSourceInfo$member": null
+      }
+    },
+    "NdiSourceMetadataInfo": {
+      "base": "<p> Comprehensive information about the NDI® source that's associated with a flow. This includes the currently active NDI source, a list of all discovered NDI senders, metadata about the media streams, and any relevant status messages. </p>",
+      "refs": {
+        "DescribeFlowSourceMetadataResponse$NdiInfo": "<p> The NDI® specific information about the flow's source. This includes the current active NDI sender, a list of all discovered NDI senders, the associated media streams for the active NDI sender, and any relevant status messages. </p>"
+      }
+    },
+    "NdiSourceSettings": {
+      "base": "<p> The settings for the NDI® source. This includes the exact name of the upstream NDI sender that you want to connect to your source. </p>",
+      "refs": {
+        "SetSourceRequest$NdiSourceSettings": "<p> The settings for the NDI® source. This includes the exact name of the upstream NDI sender that you want to connect to your source. </p>",
+        "Transport$NdiSourceSettings": "<p> The settings for the NDI source. This includes the exact name of the upstream NDI sender that you want to connect to your source. </p>",
+        "UpdateFlowSourceRequest$NdiSourceSettings": "<p> The settings for the NDI source. This includes the exact name of the upstream NDI sender that you want to connect to your source. </p>"
       }
     },
     "NdiState": {
       "base": null,
       "refs": {
-        "NdiConfig$NdiState": "<p>A setting that controls whether NDI outputs can be used in the flow. Must be ENABLED to add NDI outputs. Default is DISABLED. </p>"
+        "NdiConfig$NdiState": "<p>A setting that controls whether NDI® sources or outputs can be used in the flow. </p> <p> The default value is <code>DISABLED</code>. This value must be set as <code>ENABLED</code> for your flow to support NDI sources or outputs. </p>"
       }
     },
     "NetworkInterfaceType": {
@@ -1964,7 +2016,7 @@
     "RoleArn": {
       "base": null,
       "refs": {
-        "SecretsManagerEncryptionKeyConfiguration$RoleArn": "<p>The ARN of the IAM role assumed by MediaConnect to access the AWS Secrets Manager secret.</p>"
+        "SecretsManagerEncryptionKeyConfiguration$RoleArn": "<p>The ARN of the IAM role assumed by MediaConnect to access the Secrets Manager secret.</p>"
       }
     },
     "RouterInput": {
@@ -2413,17 +2465,18 @@
       "base": null,
       "refs": {
         "Fmtp$ScanMode": "<p>The type of compression that was used to smooth the video’s appearance. </p>",
-        "FmtpRequest$ScanMode": "<p> The type of compression that was used to smooth the video’s appearance.</p>"
+        "FmtpRequest$ScanMode": "<p> The type of compression that was used to smooth the video’s appearance.</p>",
+        "NdiMediaStreamInfo$ScanMode": "<p> The method used to display video frames. Used when the <code>streamType</code> is <code>Video</code>.</p>"
       }
     },
     "SecretArn": {
       "base": null,
       "refs": {
-        "SecretsManagerEncryptionKeyConfiguration$SecretArn": "<p>The ARN of the AWS Secrets Manager secret used for transit encryption.</p>"
+        "SecretsManagerEncryptionKeyConfiguration$SecretArn": "<p>The ARN of the Secrets Manager secret used for transit encryption.</p>"
       }
     },
     "SecretsManagerEncryptionKeyConfiguration": {
-      "base": "<p>The configuration settings for transit encryption using AWS Secrets Manager, including the secret ARN and role ARN.</p>",
+      "base": "<p>The configuration settings for transit encryption using Secrets Manager, including the secret ARN and role ARN.</p>",
       "refs": {
         "FlowTransitEncryptionKeyConfiguration$SecretsManager": null,
         "MediaLiveTransitEncryptionKeyConfiguration$SecretsManager": null,
@@ -2712,7 +2765,7 @@
         "AddOutputRequest$Name": "<p> The name of the output. This value must be unique within the current flow.</p>",
         "AddOutputRequest$RemoteId": "<p> The remote ID for the Zixi-pull output stream.</p>",
         "AddOutputRequest$StreamId": "<p> The stream ID that you want to use for this transport. This parameter applies only to Zixi and SRT caller-based streams.</p>",
-        "AddOutputRequest$NdiProgramName": "<p> A suffix for the names of the NDI sources that the flow creates. If a custom name isn't specified, MediaConnect uses the output name. </p>",
+        "AddOutputRequest$NdiProgramName": "<p> A suffix for the name of the NDI® sender that the flow creates. If a custom name isn't specified, MediaConnect uses the output name. </p>",
         "BadRequestException$Message": null,
         "BatchGetRouterInputError$Code": "<p>The error code associated with the error.</p>",
         "BatchGetRouterInputError$Message": "<p>A message describing the error.</p>",
@@ -2744,12 +2797,12 @@
         "CreateFlowRequest$Name": "<p> The name of the flow.</p>",
         "CreateGateway420Exception$Message": null,
         "CreateGatewayRequest$Name": "<p> The name of the gateway. This name can not be modified after the gateway is created.</p>",
-        "CreateRouterInputRequest$RegionName": "<p>The AWS Region for the router input. Defaults to the current region if not specified.</p>",
+        "CreateRouterInputRequest$RegionName": "<p>The Amazon Web Services Region for the router input. Defaults to the current region if not specified.</p>",
         "CreateRouterInputRequest$AvailabilityZone": "<p>The Availability Zone where you want to create the router input. This must be a valid Availability Zone for the region specified by <code>regionName</code>, or the current region if no <code>regionName</code> is provided. </p>",
         "CreateRouterInputRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>",
-        "CreateRouterNetworkInterfaceRequest$RegionName": "<p>The AWS Region for the router network interface. Defaults to the current region if not specified.</p>",
+        "CreateRouterNetworkInterfaceRequest$RegionName": "<p>The Amazon Web Services Region for the router network interface. Defaults to the current region if not specified.</p>",
         "CreateRouterNetworkInterfaceRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>",
-        "CreateRouterOutputRequest$RegionName": "<p>The AWS Region for the router output. Defaults to the current region if not specified.</p>",
+        "CreateRouterOutputRequest$RegionName": "<p>The Amazon Web Services Region for the router output. Defaults to the current region if not specified.</p>",
         "CreateRouterOutputRequest$AvailabilityZone": "<p>The Availability Zone where you want to create the router output. This must be a valid Availability Zone for the region specified by <code>regionName</code>, or the current region if no <code>regionName</code> is provided. </p>",
         "CreateRouterOutputRequest$ClientToken": "<p>A unique identifier for the request to ensure idempotency.</p>",
         "DeleteBridgeResponse$BridgeArn": "<p> The ARN of the deleted bridge.</p>",
@@ -2847,14 +2900,14 @@
         "ListedGatewayInstance$InstanceId": "<p> The managed instance ID generated by the SSM install. This will begin with \"mi-\".</p>",
         "ListedRouterInput$Name": "<p>The name of the router input.</p>",
         "ListedRouterInput$Id": "<p>The unique identifier of the router input.</p>",
-        "ListedRouterInput$RegionName": "<p>The AWS Region where the router input is located.</p>",
+        "ListedRouterInput$RegionName": "<p>The Amazon Web Services Region where the router input is located.</p>",
         "ListedRouterInput$AvailabilityZone": "<p>The Availability Zone of the router input.</p>",
         "ListedRouterNetworkInterface$Name": "<p>The name of the router network interface.</p>",
         "ListedRouterNetworkInterface$Id": "<p>The unique identifier of the router network interface.</p>",
-        "ListedRouterNetworkInterface$RegionName": "<p>The AWS Region where the router network interface is located.</p>",
+        "ListedRouterNetworkInterface$RegionName": "<p>The Amazon Web Services Region where the router network interface is located.</p>",
         "ListedRouterOutput$Name": "<p>The name of the router output.</p>",
         "ListedRouterOutput$Id": "<p>The unique identifier of the router output.</p>",
-        "ListedRouterOutput$RegionName": "<p>The AWS Region where the router output is located.</p>",
+        "ListedRouterOutput$RegionName": "<p>The AAmazon Web Services Region where the router output is located.</p>",
         "ListedRouterOutput$AvailabilityZone": "<p>The Availability Zone of the router output.</p>",
         "Maintenance$MaintenanceDeadline": "<p> The Maintenance has to be performed before this deadline in ISO UTC format. Example: 2021-01-30T08:30:00Z.</p>",
         "Maintenance$MaintenanceScheduledDate": "<p> A scheduled date in ISO UTC format when the maintenance will happen. Use YYYY-MM-DD format. Example: 2021-01-30.</p>",
@@ -2876,6 +2929,11 @@
         "NdiConfig$MachineName": "<p>A prefix for the names of the NDI sources that the flow creates. If a custom name isn't specified, MediaConnect generates a unique 12-character ID as the prefix. </p>",
         "NdiDiscoveryServerConfig$DiscoveryServerAddress": "<p>The unique network address of the NDI discovery server. </p>",
         "NdiDiscoveryServerConfig$VpcInterfaceAdapter": "<p>The identifier for the Virtual Private Cloud (VPC) network interface used by the flow. </p>",
+        "NdiMediaStreamInfo$StreamType": "<p> The type of media stream (for example, <code>Video</code> or <code>Audio</code>). </p>",
+        "NdiMediaStreamInfo$Codec": "<p> The codec used for the media stream. For NDI sources, use <code>speed-hq</code>. </p>",
+        "NdiMediaStreamInfo$FrameRate": "<p> The number of video frames displayed per second. Used when the <code>streamType</code> is <code>Video</code>. </p>",
+        "NdiSourceInfo$SourceName": "<p> The name of the upstream NDI sender. </p>",
+        "NdiSourceSettings$SourceName": "<p> The exact name of an existing NDI sender that's registered with your discovery server. If included, the format of this name must be <code>MACHINENAME (ProgramName)</code>. </p>",
         "NotFoundException$Message": null,
         "Offering$CurrencyCode": "<p> The type of currency that is used for billing. The currencyCode used for all reservations is US dollars.</p>",
         "Offering$OfferingArn": "<p> The Amazon Resource Name (ARN) that MediaConnect assigns to the offering.</p>",
@@ -2889,7 +2947,7 @@
         "Output$Name": "<p> The name of the output. This value must be unique within the current flow.</p>",
         "Output$OutputArn": "<p> The ARN of the output.</p>",
         "Output$BridgeArn": "<p> The ARN of the bridge added to this output.</p>",
-        "Output$PeerIpAddress": "<p>The IP address of the device that is currently receiving content from this output.</p> <note> <ul> <li> <p>For outputs that use protocols where you specify the destination (such as SRT Caller or Zixi Push), this value matches the configured destination address.</p> </li> <li> <p>For outputs that use listener protocols (such as SRT Listener), this value shows the address of the connected receiver. </p> </li> <li> <p>Peer IP addresses aren't available for entitlements, managed MediaLive outputs, NDI outputs, and CDI/ST2110 outputs. </p> </li> <li> <p>The peer IP address might not be visible for flows that haven't been started yet, or flows that were started before May 2025. In these cases, restart your flow to see the peer IP address.</p> </li> </ul> </note>",
+        "Output$PeerIpAddress": "<p>The IP address of the device that is currently receiving content from this output.</p> <note> <ul> <li> <p>For outputs that use protocols where you specify the destination (such as SRT Caller or Zixi Push), this value matches the configured destination address.</p> </li> <li> <p>For outputs that use listener protocols (such as SRT Listener), this value shows the address of the connected receiver. </p> </li> <li> <p>Peer IP addresses aren't available for entitlements, managed MediaLive outputs, NDI® sources and outputs, and CDI/ST2110 outputs. </p> </li> <li> <p>The peer IP address might not be visible for flows that haven't been started yet, or flows that were started before May 2025. In these cases, restart your flow to see the peer IP address.</p> </li> </ul> </note>",
         "Output$ConnectedRouterInputArn": "<p>The ARN of the router input that's connected to this flow output.</p>",
         "PreferredDayTimeMaintenanceConfiguration$Time": "<p>The preferred time for maintenance operations.</p>",
         "PublicRouterNetworkInterfaceRule$Cidr": "<p>The CIDR block that is allowed to access the public router network interface.</p>",
@@ -2927,7 +2985,7 @@
         "RistRouterOutputConfiguration$DestinationAddress": "<p>The destination IP address for the RIST protocol in the router output configuration.</p>",
         "RouterInput$Name": "<p>The name of the router input.</p>",
         "RouterInput$Id": "<p>The unique identifier of the router input.</p>",
-        "RouterInput$RegionName": "<p>The AWS Region where the router input is located.</p>",
+        "RouterInput$RegionName": "<p>The Amazon Web Services Region where the router input is located.</p>",
         "RouterInput$AvailabilityZone": "<p>The Availability Zone of the router input.</p>",
         "RouterInput$IpAddress": "<p>The IP address of the router input.</p>",
         "RouterInputMessage$Code": "<p>The code associated with the router input message.</p>",
@@ -2936,11 +2994,11 @@
         "RouterInputThumbnailDetails$Timecode": "<p>The timecode associated with the thumbnail.</p>",
         "RouterNetworkInterface$Name": "<p>The name of the router network interface.</p>",
         "RouterNetworkInterface$Id": "<p>The unique identifier of the router network interface.</p>",
-        "RouterNetworkInterface$RegionName": "<p>The AWS Region where the router network interface is located.</p>",
+        "RouterNetworkInterface$RegionName": "<p>The Amazon Web Services Region where the router network interface is located.</p>",
         "RouterNetworkInterfaceServiceQuotaExceededException$Message": null,
         "RouterOutput$Name": "<p>The name of the router output.</p>",
         "RouterOutput$Id": "<p>The unique identifier of the router output.</p>",
-        "RouterOutput$RegionName": "<p>The AWS Region where the router output is located.</p>",
+        "RouterOutput$RegionName": "<p>The Amazon Web Services Region where the router output is located.</p>",
         "RouterOutput$AvailabilityZone": "<p>The Availability Zone of the router output.</p>",
         "RouterOutput$IpAddress": "<p>The IP address of the router output.</p>",
         "RouterOutputMessage$Code": "<p>The code associated with the router output message.</p>",
@@ -2991,7 +3049,7 @@
         "Transport$SenderIpAddress": "<p> The IP address that the flow communicates with to initiate connection with the sender.</p>",
         "Transport$SourceListenerAddress": "<p> Source IP or domain name for SRT-caller protocol.</p>",
         "Transport$StreamId": "<p> The stream ID that you want to use for this transport. This parameter applies only to Zixi and SRT caller-based streams.</p>",
-        "Transport$NdiProgramName": "<p>A suffix for the names of the NDI sources that the flow creates. If a custom name isn't specified, MediaConnect uses the output name. </p>",
+        "Transport$NdiProgramName": "<p>A suffix for the name of the NDI® sender that the flow creates. If a custom name isn't specified, MediaConnect uses the output name. </p>",
         "TransportStream$Codec": "<p> The codec used by the stream.</p>",
         "TransportStream$FrameRate": "<p> The frame rate used by the video stream.</p>",
         "TransportStream$StreamType": "<p> The Stream Type as it is reported in the Program Map Table.</p>",
@@ -3025,7 +3083,7 @@
         "UpdateFlowOutputRequest$RemoteId": "<p> The remote ID for the Zixi-pull stream.</p>",
         "UpdateFlowOutputRequest$SenderIpAddress": "<p> The IP address that the flow communicates with to initiate connection with the sender.</p>",
         "UpdateFlowOutputRequest$StreamId": "<p> The stream ID that you want to use for this transport. This parameter applies only to Zixi and SRT caller-based streams.</p>",
-        "UpdateFlowOutputRequest$NdiProgramName": "<p> A suffix for the names of the NDI sources that the flow creates. If a custom name isn't specified, MediaConnect uses the output name. </p>",
+        "UpdateFlowOutputRequest$NdiProgramName": "<p> A suffix for the name of the NDI® sender that the flow creates. If a custom name isn't specified, MediaConnect uses the output name. </p>",
         "UpdateFlowOutputResponse$FlowArn": "<p> The ARN of the flow that is associated with the updated output.</p>",
         "UpdateFlowSourceRequest$Description": "<p>A description of the source. This description is not visible outside of the current Amazon Web Services account. </p>",
         "UpdateFlowSourceRequest$SenderIpAddress": "<p>The IP address that the flow communicates with to initiate connection with the sender. </p>",
@@ -3033,7 +3091,7 @@
         "UpdateFlowSourceRequest$StreamId": "<p>The stream ID that you want to use for this transport. This parameter applies only to Zixi and SRT caller-based streams. </p>",
         "UpdateFlowSourceRequest$VpcInterfaceName": "<p>The name of the VPC interface that you want to send your output to.</p>",
         "UpdateFlowSourceRequest$WhitelistCidr": "<p>The range of IP addresses that are allowed to contribute content to your source. Format the IP addresses as a Classless Inter-Domain Routing (CIDR) block; for example, 10.0.0.0/16. </p>",
-        "UpdateFlowSourceResponse$FlowArn": "<p>The ARN of the flow that you was updated. </p>",
+        "UpdateFlowSourceResponse$FlowArn": "<p>The ARN of the flow that you updated.</p>",
         "UpdateGatewayInstanceResponse$GatewayInstanceArn": "<p>The ARN of the instance that was updated. </p>",
         "UpdateMaintenance$MaintenanceScheduledDate": "<p> A scheduled date in ISO UTC format when the maintenance will happen. Use YYYY-MM-DD format. Example: 2021-01-30.</p>",
         "UpdateMaintenance$MaintenanceStartHour": "<p> UTC time when the maintenance will happen. Use 24-hour HH:MM format. Minutes must be 00. Example: 13:00. The default value is 02:00.</p>",
@@ -3653,6 +3711,7 @@
         "DescribeFlowSourceMetadataResponse$Messages": "<p> Provides a status code and message regarding issues found with the flow source metadata.</p>",
         "Gateway$GatewayMessages": "<p>Messages with information about the gateway. </p>",
         "GatewayInstance$InstanceMessages": "<p> Messages with information about the gateway. </p>",
+        "NdiSourceMetadataInfo$Messages": "<p> Any status messages or error codes related to the NDI source and its metadata. </p>",
         "ThumbnailDetails$ThumbnailMessages": "<p> Status code and messages about the flow source thumbnail.</p>"
       }
     },
@@ -3660,6 +3719,18 @@
       "base": null,
       "refs": {
         "NdiConfig$NdiDiscoveryServers": "<p>A list of up to three NDI discovery server configurations. While not required by the API, this configuration is necessary for NDI functionality to work properly. </p>"
+      }
+    },
+    "__listOfNdiMediaStreamInfo": {
+      "base": null,
+      "refs": {
+        "NdiMediaInfo$Streams": "<p> A list of the individual media streams that make up the NDI source. This includes details about each stream's codec, resolution, frame rate, audio channels, and other parameters. </p>"
+      }
+    },
+    "__listOfNdiSourceInfo": {
+      "base": null,
+      "refs": {
+        "NdiSourceMetadataInfo$DiscoveredSources": "<p> A list of the available upstream NDI senders aggregated from all of your configured discovery servers. </p>"
       }
     },
     "__listOfOffering": {
