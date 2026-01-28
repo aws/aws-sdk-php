@@ -27,6 +27,7 @@ use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
+#[CoversClass(S3EncryptionClientV3::class)]
 class S3EncryptionClientV3Test extends TestCase
 {
     use S3EncryptionClientTestingTrait;
@@ -348,9 +349,7 @@ class S3EncryptionClientV3Test extends TestCase
      * Test that by default, S3EC stores content metadata in S3 Object Metadata (headers)
      * This verifies the specification requirement that metadata is stored in object headers by default.
      *
-
- */
-    #[CoversClass(\Aws\S3\Crypto\S3EncryptionClientV3::putObject::class)]
+     */
     public function testV3MetadataStorageInObjectHeaders(): void
     {
         $s3 = new S3Client([
@@ -407,9 +406,7 @@ class S3EncryptionClientV3Test extends TestCase
      * Test that the default metadata strategy does not write instruction files
      * This verifies the specification requirement that instruction files are not enabled by default.
      *
-
- */
-    #[CoversClass(\Aws\S3\Crypto\S3EncryptionClientV3::putObject::class)]
+     */
     public function testDefaultMetadataStrategyDoesNotWriteInstructionFile(): void
     {
         $requestCount = 0;

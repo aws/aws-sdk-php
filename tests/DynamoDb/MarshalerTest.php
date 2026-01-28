@@ -10,17 +10,11 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(Marshaler::class)]
 class MarshalerTest extends TestCase
 {
     const ERROR = 'ERROR';
 
-    /**
-
- */
     #[DataProvider('getMarshalValueUseCases')]
     public function testMarshalValueUseCases($value, $expectedResult, $options = [])
     {
@@ -347,11 +341,7 @@ JSON;
         $this->assertSame('99999999999999999999', (string) iterator_to_array($result['foo'])[0]);
         $this->assertSame('99999999999999999999.99999999999999999999', (string) $result['bar']);
     }
-
-    /**
-
- */
-    #[CoversClass(Marshaler::class)]
+    
     public function testNumberValueCanBeFormattedAndSerialized()
     {
         $number = new NumberValue('99999999999999999999');
@@ -359,10 +349,6 @@ JSON;
         $this->assertSame('"99999999999999999999"', json_encode($number));
     }
 
-    /**
-
- */
-    #[CoversClass(Marshaler::class)]
     public function testBinaryValueCanBeFormattedAndSerialized()
     {
         $resource = fopen('php://temp', 'w+');
@@ -374,10 +360,6 @@ JSON;
         $this->assertSame('"foo"', json_encode($binary));
     }
 
-    /**
-
- */
-    #[CoversClass(Marshaler::class)]
     public function testSetValueCanBeFormattedAndSerialized()
     {
         $set = new SetValue(['foo', 'bar', 'baz']);

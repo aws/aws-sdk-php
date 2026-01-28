@@ -5,15 +5,9 @@ use Aws\Glacier\TreeHash;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
+#[CoversClass(TreeHash::class)]
 class TreeHashTest extends TestCase
 {
-    /**
-
- */
-#[CoversClass(Aws\Glacier\TreeHash::__construct::class)]
-#[CoversClass(Aws\Glacier\TreeHash::update::class)]
-#[CoversClass(Aws\Glacier\TreeHash::addChecksum::class)]
-    #[CoversClass(Aws\Glacier\TreeHash::complete::class)]
     public function testHashingIsHappeningCorrectly()
     {
         $chunks = [
@@ -39,10 +33,6 @@ class TreeHashTest extends TestCase
         $this->assertSame($expectedTreeHash, $hash->complete());
     }
 
-    /**
-
- */
-    #[CoversClass(Aws\Glacier\TreeHash::update::class)]
     public function testCannotUpdateAfterHashCalculation()
     {
         $this->expectException(\LogicException::class);
@@ -53,10 +43,6 @@ class TreeHashTest extends TestCase
         $hash->update('bar');
     }
 
-    /**
-
- */
-    #[CoversClass(Aws\Glacier\TreeHash::addChecksum::class)]
     public function testCannotAddChecksumsAfterHashCalculation()
     {
         $this->expectException(\LogicException::class);
@@ -67,10 +53,6 @@ class TreeHashTest extends TestCase
         $hash->addChecksum('bar');
     }
 
-    /**
-
- */
-    #[CoversClass(Aws\Glacier\TreeHash::reset::class)]
     public function testCanResetHash()
     {
         $hash = new TreeHash('sha256');
@@ -81,10 +63,6 @@ class TreeHashTest extends TestCase
         $this->assertSame(hash('sha256', 'foo', true), $hash->complete());
     }
 
-    /**
-
- */
-    #[CoversClass(Aws\Glacier\TreeHash::complete::class)]
     public function testCanCalculateEmptyHash()
     {
         $hash = new TreeHash('sha256');
@@ -92,10 +70,6 @@ class TreeHashTest extends TestCase
         $this->assertSame(TreeHash::EMPTY_HASH, bin2hex($hash->complete()));
     }
 
-    /**
-
- */
-    #[CoversClass(Aws\Glacier\TreeHash::complete::class)]
     public function testCanCalculateHashForSingleZero()
     {
         $data = "0";

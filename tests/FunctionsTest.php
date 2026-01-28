@@ -5,16 +5,26 @@ use Aws;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
+use PHPUnit\Framework\Attributes\CoversFunction;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
+#[CoversFunction('\Aws\recursive_dir_iterator')]
+#[CoversClass('\Aws\or_chain')]
+#[CoversClass('\Aws\load_compiled_json')]
+#[CoversClass('\Aws\constantly')]
+#[CoversClass('\Aws\filter')]
+#[CoversClass('\Aws\map')]
+#[CoversClass('\Aws\flatmap')]
+#[CoversClass('\Aws\partition')]
+#[CoversClass('\Aws\describe_type')]
+#[CoversClass('\Aws\describe_type')]
 class FunctionsTest extends TestCase
 {
     /**
 
  */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testCreatesRecursiveDirIterator()
     {
         $iter = Aws\recursive_dir_iterator(__DIR__);
@@ -23,10 +33,6 @@ class FunctionsTest extends TestCase
         $this->assertContains(realpath(__FILE__), $files);
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testCreatesNonRecursiveDirIterator()
     {
         $iter = Aws\dir_iterator(__DIR__);
@@ -35,10 +41,6 @@ class FunctionsTest extends TestCase
         $this->assertContains('FunctionsTest.php', $files);
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testComposesOrFunctions()
     {
         $a = function ($a, $b) { return null; };
@@ -48,10 +50,6 @@ class FunctionsTest extends TestCase
         $this->assertSame('+-', $comp('+', '-'));
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testReturnsNullWhenNonResolve()
     {
         $called = [];
@@ -63,30 +61,18 @@ class FunctionsTest extends TestCase
         $this->assertEquals(['a', 'b', 'c'], $called);
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testCreatesConstantlyFunctions()
     {
         $fn = Aws\constantly('foo');
         $this->assertSame('foo', $fn());
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testUsesJsonCompiler()
     {
         $this->expectException(\InvalidArgumentException::class);
         Aws\load_compiled_json('/path/to/not/here.json');
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testUsesPhpCompilationOfJsonIfPossible()
     {
         $soughtData = ['foo' => 'bar'];
@@ -107,10 +93,6 @@ class FunctionsTest extends TestCase
         $this->assertSame($soughtData, Aws\load_compiled_json($jsonPath));
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testOnlyLoadsCompiledJsonOnce()
     {
         $soughtData = ['foo' => 'bar'];
@@ -140,10 +122,6 @@ class FunctionsTest extends TestCase
         $this->assertEquals($compiledAtime, fileatime($compiledPath));
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testFilter()
     {
         $data = [0, 1, 2, 3, 4];
@@ -152,10 +130,6 @@ class FunctionsTest extends TestCase
         $this->assertEquals([1, 3], iterator_to_array($result));
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testMap()
     {
         $data = [0, 1, 2, 3, 4];
@@ -163,10 +137,6 @@ class FunctionsTest extends TestCase
         $this->assertEquals([1, 2, 3, 4, 5], iterator_to_array($result));
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testFlatMap()
     {
         $data = ['Hello', 'World'];
@@ -178,10 +148,6 @@ class FunctionsTest extends TestCase
         );
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testPartition()
     {
         $data = [1, 2, 3, 4, 5];
@@ -189,30 +155,18 @@ class FunctionsTest extends TestCase
         $this->assertEquals([[1, 2], [3, 4], [5]], iterator_to_array($result));
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testDescribeObject()
     {
         $obj = new \stdClass();
         $this->assertSame('object(stdClass)', Aws\describe_type($obj));
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testDescribeArray()
     {
         $arr = [0, 1, 2];
         $this->assertSame('array(3)', Aws\describe_type($arr));
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testDescribeDoubleToFloat()
     {
         if (PHP_VERSION_ID >= 80500) {
@@ -225,20 +179,12 @@ class FunctionsTest extends TestCase
         $this->assertSame('float(1.3)', Aws\describe_type($double));
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testDescribeType()
     {
         $this->assertSame('int(1)', Aws\describe_type(1));
         $this->assertSame('string(4) "test"', Aws\describe_type("test"));
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testGuzzleHttpHandler()
     {
         if (!class_exists('GuzzleHttp\Handler\StreamHandler')) {
@@ -250,10 +196,6 @@ class FunctionsTest extends TestCase
         );
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testSerializesHttpRequests()
     {
         $mock = new MockHandler([new Result([])]);
@@ -284,19 +226,11 @@ class FunctionsTest extends TestCase
         $this->assertSame('123', (string) $request->getBody());
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testLoadsManifest()
     {
         $this->assertNotNull(Aws\manifest());
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testServiceManifest()
     {
         $manifest = Aws\manifest('s3');
@@ -312,10 +246,6 @@ class FunctionsTest extends TestCase
         $this->assertEquals($data, $manifest);
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testAliasManifest()
     {
         $manifest = Aws\manifest('iotdataplane');
@@ -331,20 +261,12 @@ class FunctionsTest extends TestCase
         $this->assertEquals($data, $manifest);
     }
 
-    /**
-
- */
-    #[CoversClass(recursive_dir_iterator()::class)]
     public function testInvalidManifest()
     {
         $this->expectException(\InvalidArgumentException::class);
         Aws\manifest('notarealservicename');
     }
 
-    /**
-
- */
-#[CoversClass(recursive_dir_iterator()::class)]
     #[DataProvider('getHostnameTestCases')]
     public function testValidatesHostnames($hostname, $expected)
     {
@@ -395,9 +317,7 @@ class FunctionsTest extends TestCase
     /**
      * @param string $label
      * @param bool $expected
-
- */
-#[CoversClass(recursive_dir_iterator()::class)]
+     * */
     #[DataProvider('getHostlabelTestCases')]
     public function testValidatesHostlabels($label, $expected)
     {
@@ -430,10 +350,6 @@ class FunctionsTest extends TestCase
         ];
     }
 
-    /**
-
- */
-#[CoversClass(recursive_dir_iterator()::class)]
     #[DataProvider('getIniFileTestCases')]
     public function testParsesIniFile($ini, $expected)
     {
@@ -491,10 +407,6 @@ EOT
         ];
     }
 
-    /**
-
- */
-#[CoversClass(recursive_dir_iterator()::class)]
     #[DataProvider('getIniFileServiceTestCases')]
     public function testParsesIniSectionsWithSubsections($ini, $expected)
     {
