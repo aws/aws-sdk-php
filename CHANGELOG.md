@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.22 - 2026-01-28
 
 * `Aws\Lambda` - We are launching ESM Metrics and logging for Kafka ESM to allow customers to monitor Kafka event processing using CloudWatch Metrics and Logs.
 * `Aws\S3` - Adds support for the UpdateObjectEncryption API to change the server-side encryption type of objects in general purpose buckets.
