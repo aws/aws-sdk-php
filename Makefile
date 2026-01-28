@@ -29,7 +29,7 @@ test:
 	AWS_REGION= \
 	AWS_ENDPOINT_URL= \
 	AWS_SUPPRESS_PHP_DEPRECATION_WARNING=true \
-	XDEBUG_MODE=coverage
+	XDEBUG_MODE=coverage \
 	vendor/bin/phpunit --testsuite=unit $(TEST)
 
 test-phar: package
