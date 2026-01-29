@@ -8,9 +8,6 @@ use Psr\Log\InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 
-/**
-
- */
 #[CoversClass(\Aws\ClientSideMonitoring\Configuration::class)]
 class ConfigurationTest extends TestCase
 {

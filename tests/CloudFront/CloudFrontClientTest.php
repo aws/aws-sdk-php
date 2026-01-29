@@ -6,9 +6,6 @@ use Aws\CloudFront\CloudFrontClient;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(CloudFrontClient::class)]
 class CloudFrontClientTest extends TestCase
 {
@@ -31,7 +28,7 @@ class CloudFrontClientTest extends TestCase
         $c->getSignedUrl([]);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testCreatesSignedUrl()
     {
         $c = new CloudFrontClient([
@@ -45,9 +42,10 @@ class CloudFrontClientTest extends TestCase
             'url'         => 'https://foo.bar.com',
             'expires'     => strtotime('+10 minutes'),
         ]);
+        $this->assertTrue(true);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testCreatesSignedCookie()
     {
         $c = new CloudFrontClient([
@@ -61,5 +59,6 @@ class CloudFrontClientTest extends TestCase
             'url'         => 'https://foo.bar.com',
             'expires'     => strtotime('+10 minutes'),
         ]);
+        $this->assertTrue(true);
     }
 }

@@ -11,9 +11,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(PresignUrlMiddleware::class)]
 class PresignUrlMiddlewareTest extends TestCase
 {
@@ -109,7 +106,6 @@ class PresignUrlMiddlewareTest extends TestCase
      * @param string $parameter
      * @param string $value
      * @param string $expected
-     *
      *
      * @return void
 

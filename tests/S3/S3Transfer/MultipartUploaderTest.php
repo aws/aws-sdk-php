@@ -278,7 +278,6 @@ EOF;
      * @param int $partSize
      * @param bool $expectError
      *
-     *
      * @return void
 
  */
@@ -337,7 +336,6 @@ EOF;
     /**
      * @param string|int $source
      * @param bool $expectError
-     *
      *
      * @return void
 
@@ -537,7 +535,6 @@ EOF;
      * @param array $sourceConfig
      * @param array $checksumConfig
      * @param array $expectedOperationHeaders
-     *
      *
      * @return void
 
@@ -849,7 +846,6 @@ EOF;
      *
      * @param array $checksumConfig
      * @param bool $expectsError
-     *
      *
      * @return void
 

@@ -15,9 +15,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Credentials\AssumeRoleCredentialProvider::class)]
 class AssumeRoleCredentialProviderTest extends TestCase
 {

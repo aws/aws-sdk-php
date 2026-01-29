@@ -12,9 +12,6 @@ use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
@@ -342,7 +339,7 @@ EOT;
     {
         $expected = new Configuration(true, "us-east-1");
         $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
-        $cacheBuilder->setMethods(['get', 'set', 'remove']);
+        $cacheBuilder->onlyMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())
             ->method('get')

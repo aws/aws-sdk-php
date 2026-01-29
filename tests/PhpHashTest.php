@@ -5,9 +5,6 @@ use Aws\PhpHash;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(PhpHash::class)]
 class PhpHashTest extends TestCase
 {

@@ -13,9 +13,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(RestXmlSerializer::class)]
 class RestXmlSerializerTest extends TestCase
 {

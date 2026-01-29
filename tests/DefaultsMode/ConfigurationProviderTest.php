@@ -12,9 +12,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\DefaultsMode\ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
@@ -338,7 +335,7 @@ EOT;
     {
         $expected = new Configuration('standard');
         $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
-        $cacheBuilder->setMethods(['get', 'set', 'remove']);
+        $cacheBuilder->onlyMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())
             ->method('get')

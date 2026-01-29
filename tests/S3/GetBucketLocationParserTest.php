@@ -10,9 +10,6 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(GetBucketLocationParser::class)]
 class GetBucketLocationParserTest extends TestCase
 {

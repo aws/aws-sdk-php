@@ -6,9 +6,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Endpoint\UseDualstackEndpoint\Configuration::class)]
 class ConfigurationTest extends TestCase
 {

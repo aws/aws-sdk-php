@@ -20,9 +20,6 @@ use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(InstanceProfileProvider::class)]
 class InstanceProfileProviderTest extends TestCase
 {
@@ -948,13 +945,14 @@ class InstanceProfileProviderTest extends TestCase
         )->wait();
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testDoesNotRequireConfig()
     {
         new InstanceProfileProvider();
+        $this->assertTrue(true);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testEnvDisableFlag()
     {
         $flag = getenv(InstanceProfileProvider::ENV_DISABLE);
@@ -974,6 +972,7 @@ class InstanceProfileProviderTest extends TestCase
         } finally {
             putenv(InstanceProfileProvider::ENV_DISABLE . '=' . $flag);
         }
+        $this->assertTrue(true);
     }
 
     public function testRetriesEnvVarIsUsed()

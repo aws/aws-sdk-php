@@ -7,9 +7,6 @@ use Aws\HashingStream;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(HashingStream::class)]
 class HashingStreamTest extends TestCase
 {

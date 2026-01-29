@@ -27,7 +27,6 @@ class RangeGetMultipartDownloaderTest extends TestCase
      * @param int $objectSizeInBytes
      * @param int $targetPartSize
      *
-     *
      * @return void
 
  */
@@ -260,7 +259,6 @@ class RangeGetMultipartDownloaderTest extends TestCase
      * @param int $objectSizeInBytes
      * @param int $targetPartSize
      * @param string $eTag
-     *
      *
      * @return void
 

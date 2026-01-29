@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Token;
 
 use Aws\LruArrayCache;
@@ -16,9 +17,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 require_once __DIR__ . '/../Token/token_hack.php';
 
-/**
-
- */
 #[CoversClass(TokenProvider::class)]
 class TokenProviderTest extends TestCase
 {
@@ -31,7 +29,8 @@ class TokenProviderTest extends TestCase
         unset($_SERVER['aws_str_to_time']);
     }
 
-    private function clearEnv() {
+    private function clearEnv()
+    {
         putenv('AWS_SHARED_CREDENTIALS_FILE');
         putenv('HOME');
         putenv('AWS_PROFILE');
@@ -52,7 +51,8 @@ class TokenProviderTest extends TestCase
         return $dir;
     }
 
-    private function getHomeDir() {
+    private function getHomeDir()
+    {
         if ($homeDir = getenv('HOME')) {
             return $homeDir;
         }
@@ -74,7 +74,7 @@ sso_session = admin
 sso_region = us-east-1
 sso_start_url = https://d-abc123.awsapps.com/start
 EOT;
-        $time =  gmdate(
+        $time = gmdate(
             'Y-m-d\TH:i:s\Z',
             time() + 5000
         );
@@ -162,8 +162,7 @@ EOT;
     }
 
     /**
-
- */
+     */
     #[DataProvider('tokenProviderSuccessCases')]
     public function testTokenProviderCachedSuccess($cachedToken, $expectedToken)
     {
@@ -265,8 +264,7 @@ EOT;
     }
 
     /**
-
- */
+     */
     #[DataProvider('tokenProviderSuccessCasesWithRefresh')]
     public function testTokenProviderCachedSuccessWithRefresh(
         $currentTime,
@@ -334,7 +332,7 @@ EOT;
                 isset($cachedToken['registrationExpiresAt']) ? strToTime($cachedToken['registrationExpiresAt']) : null,
                 isset($cachedToken['region']) ? $cachedToken['region'] : null,
                 isset($cachedToken['startUrl']) ? $cachedToken['startUrl'] : null
-                );
+            );
             $saved = [
                 'token' => $token,
                 'refreshMethod' => function () use ($ssoTokenProvider) {
@@ -400,8 +398,7 @@ EOT;
     }
 
     /**
-
- */
+     */
     #[DataProvider('tokenProviderFailureCases')]
     public function testTokenProviderFailureCases($cachedToken, $expectedException)
     {
@@ -439,7 +436,7 @@ EOT;
         $token = new Token('test-token', strtotime('+1 hour'));
         $providerCallCount = 0;
 
-        $provider = function() use ($token, &$providerCallCount) {
+        $provider = function () use ($token, &$providerCallCount) {
             $providerCallCount++;
             return Promise\Create::promiseFor($token);
         };

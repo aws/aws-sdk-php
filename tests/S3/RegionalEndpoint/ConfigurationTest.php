@@ -6,9 +6,6 @@ use Aws\Sts\RegionalEndpoints\Configuration;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\S3\RegionalEndpoint\Configuration::class)]
 class ConfigurationTest extends TestCase
 {

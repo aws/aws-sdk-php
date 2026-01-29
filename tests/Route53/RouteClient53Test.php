@@ -5,9 +5,6 @@ use Aws\Route53\Route53Client;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(Route53Client::class)]
 class RouteClient53Test extends TestCase
 {

@@ -8,9 +8,6 @@ use Aws\Result;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(CommandPool::class)]
 class CommandPoolTest extends TestCase
 {

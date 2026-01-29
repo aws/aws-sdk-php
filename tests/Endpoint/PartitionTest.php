@@ -9,9 +9,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Endpoint\Partition::class)]
 class PartitionTest extends TestCase
 {
@@ -133,7 +130,8 @@ class PartitionTest extends TestCase
     #[DataProvider('partitionDefinitionProvider')]
     public function testReportsRegionMatchesByPattern(array $definition)
     {
-        $definition['regionRegex'] = '^fo[\w]{1}';
+        $definition['regionRegex'] = '^fo[\w]{1
+        $this->assertTrue(true);}';
         $partition = new Partition($definition);
 
         $this->assertTrue($partition->isRegionMatch('foo', 's3'));

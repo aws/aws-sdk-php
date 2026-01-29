@@ -12,9 +12,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 require_once __DIR__ . '/sig_hack.php';
 
-/**
-
- */
 #[CoversClass(SignatureV4::class)]
 class SignatureV4Test extends TestCase
 {
@@ -397,8 +394,7 @@ class SignatureV4Test extends TestCase
         $signature->signRequest($request, $credentials);
     }
 
-    /** @doesNotPerformAssertions */
-    public static function testUnsignedPayloadProvider()
+    public static function unsignedPayloadProvider()
     {
         return [
             // POST headers should be signed.
@@ -455,7 +451,7 @@ class SignatureV4Test extends TestCase
     /**
 
  */
-    #[DataProvider('testUnsignedPayloadProvider')]
+    #[DataProvider('unsignedPayloadProvider')]
     public function testSignRequestUnsignedPayload($req, $sreq, $creq)
     {
         $_SERVER['aws_time'] = '20110909T233600Z';
@@ -471,10 +467,10 @@ class SignatureV4Test extends TestCase
         $ctx = $contextFn->invoke($signature, $parsed, $payload);
         $this->assertEquals($creq, $ctx['creq']);
         $this->assertSame($sreq, Psr7\Message::toString($signature->signRequest($request, $credentials)));
+        $this->assertTrue(true);
     }
 
-    /** @doesNotPerformAssertions */
-    public static function testProvider()
+    public static function provider()
     {
         return [
             // POST headers should be signed.
@@ -579,7 +575,7 @@ class SignatureV4Test extends TestCase
     /**
 
  */
-    #[DataProvider('testProvider')]
+    #[DataProvider('provider')]
     public function testSignsRequests($req, $sreq, $creq)
     {
         $_SERVER['aws_time'] = '20110909T233600Z';
@@ -594,6 +590,7 @@ class SignatureV4Test extends TestCase
         $ctx = $contextFn->invoke($signature, $parsed, $payload);
         $this->assertEquals($creq, $ctx['creq']);
         $this->assertSame($sreq, Psr7\Message::toString($signature->signRequest($request, $credentials)));
+        $this->assertTrue(true);
     }
 
     public function testRemovesIllegalV4aHeadersBeforeSigning()

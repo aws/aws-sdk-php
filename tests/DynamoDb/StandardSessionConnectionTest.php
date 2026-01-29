@@ -10,9 +10,6 @@ use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(StandardSessionConnection::class)]
 class StandardSessionConnectionTest extends TestCase
 {

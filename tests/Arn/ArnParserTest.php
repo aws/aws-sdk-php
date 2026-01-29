@@ -12,9 +12,6 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Arn\ArnParser::class)]
 class ArnParserTest extends TestCase
 {

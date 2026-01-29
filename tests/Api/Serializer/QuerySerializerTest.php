@@ -11,9 +11,6 @@ use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(QuerySerializer::class)]
 class QuerySerializerTest extends TestCase
 {

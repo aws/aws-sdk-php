@@ -10,9 +10,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(AuthTokenGenerator::class)]
 class AuthTokenGeneratorTest extends TestCase
 {

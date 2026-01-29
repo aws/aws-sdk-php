@@ -11,9 +11,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(WriteRequestBatch::class)]
 class WriteRequestBatchTest extends TestCase
 {

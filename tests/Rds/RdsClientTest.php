@@ -12,9 +12,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 require_once __DIR__ . '/../Signature/sig_hack.php';
 
-/**
-
- */
 #[CoversClass(RdsClient::class)]
 class RdsClientTest extends TestCase
 {

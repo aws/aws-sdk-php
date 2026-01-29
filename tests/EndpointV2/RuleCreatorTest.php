@@ -7,9 +7,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\EndpointV2\Rule\RuleCreator::class)]
 class RuleCreatorTest extends TestCase
 {

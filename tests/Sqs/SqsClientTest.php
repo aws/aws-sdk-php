@@ -8,9 +8,6 @@ use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(SqsClient::class)]
 class SqsClientTest extends TestCase
 {
@@ -157,7 +154,7 @@ class SqsClientTest extends TestCase
         ]);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testSkipsCommandsThatAreNotReceiveMessage()
     {
         $client = new SqsClient([
@@ -166,6 +163,7 @@ class SqsClientTest extends TestCase
         ]);
         $this->addMockResults($client, [new Result()]);
         $client->listQueues();
+        $this->assertTrue(true);
     }
 
     public function testDoesNotValidateEmptyMessageAttributes()

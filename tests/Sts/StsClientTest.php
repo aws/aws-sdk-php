@@ -18,9 +18,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(StsClient::class)]
 class StsClientTest extends TestCase
 {
@@ -437,7 +434,7 @@ class StsClientTest extends TestCase
     {
         $stsClient = $this->getMockBuilder(StsClient::class)
             -> disableOriginalConstructor()
-            -> setMethods(['__call'])
+            -> onlyMethods(['__call'])
             -> getMock();
         $stsClient->method('__call')
             -> willReturnCallback(function ($callOperation) use ($operation, $response) {

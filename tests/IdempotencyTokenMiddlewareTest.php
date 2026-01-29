@@ -12,9 +12,6 @@ use GuzzleHttp\Psr7\Request;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(IdempotencyTokenMiddleware::class)]
 class IdempotencyTokenMiddlewareTest extends TestCase
 {

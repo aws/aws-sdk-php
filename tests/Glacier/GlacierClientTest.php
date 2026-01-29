@@ -11,9 +11,6 @@ use GuzzleHttp\Psr7;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(GlacierClient::class)]
 class GlacierClientTest extends TestCase
 {

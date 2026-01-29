@@ -14,9 +14,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(LoginCredentialProvider::class)]
 class LoginCredentialProviderTest extends TestCase
 {

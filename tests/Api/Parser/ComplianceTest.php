@@ -14,9 +14,6 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Api\Parser\AbstractParser::class)]
 #[CoversClass(\Aws\Api\Parser\AbstractRestParser::class)]
 #[CoversClass(\Aws\Api\Parser\JsonRpcParser::class)]
@@ -50,8 +47,7 @@ class ComplianceTest extends TestCase
         'legacy query Flattened list with location name' => true
     ];
 
-    /** @doesNotPerformAssertions */
-    public static function testCaseProvider(): \Generator
+    public static function caseProvider(): \Generator
     {
         $iterator = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator(
@@ -119,7 +115,7 @@ class ComplianceTest extends TestCase
      * @param string|null $errorMessage
 
  */
-    #[DataProvider('testCaseProvider')]
+    #[DataProvider('caseProvider')]
     public function testPassesComplianceTest(
         string $about,
         Service $service,
@@ -155,6 +151,7 @@ class ComplianceTest extends TestCase
 
         $this->fixTimestamps($result, $service->getOperation($name)->getOutput());
         $this->assertEquals($expectedResult, $result);
+        $this->assertTrue(true);
     }
 
     private function fixTimestamps(mixed &$data, Shape $shape): void

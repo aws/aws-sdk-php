@@ -19,9 +19,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Crypto\EncryptionTraitV3::class)]
 #[CoversClass(\Aws\Crypto\DecryptionTraitV3::class)]
 class EncryptionDecryptionTraitV3Test extends TestCase

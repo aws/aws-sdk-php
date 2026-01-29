@@ -9,9 +9,6 @@ use GuzzleHttp\Psr7\Response;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(RestXmlParser::class)]
 class RestXmlParserTest extends TestCase
 {

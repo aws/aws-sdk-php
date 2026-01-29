@@ -18,9 +18,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(RetryMiddleware::class)]
 class RetryMiddlewareTest extends TestCase
 {

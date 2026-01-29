@@ -380,7 +380,6 @@ EOF
      * @param int $expectedPartSize
      * @param bool $isMultipartUpload
      *
-     *
      * @return void
 
  */
@@ -550,7 +549,6 @@ EOF
     /**
      * @param string $checksumAlgorithm
      *
-     *
      * @return void
 
  */
@@ -634,7 +632,6 @@ EOF
     /**
      * @param string $directory
      * @param bool $isDirectoryValid
-     *
      *
      * @return void
 
@@ -1804,7 +1801,6 @@ EOF
      * @param string $multipartDownloadType
      * @param string $expectedParameter
      *
-     *
      * @return void
 
  */
@@ -1868,7 +1864,6 @@ EOF
      * @param array $expectedRangeSizes
      *
      * @return void
-     *
      *
 
  */
@@ -2013,7 +2008,6 @@ EOF
     /**
      * @param array $config
      * @param string $expectedS3Prefix
-     *
      *
      * @return void
 
@@ -2303,7 +2297,6 @@ EOF
      * @param Closure $filter
      * @param array $objectList
      * @param array $expectedObjectList
-     *
      *
      * @return void
 
@@ -2621,7 +2614,6 @@ EOF
     /**
      * @param array $listObjectsContent
      * @param array $expectedFileKeys
-     *
      *
      * @return void
 

@@ -339,7 +339,7 @@ EOT;
     {
         $expected = new Configuration('regional');
         $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
-        $cacheBuilder->setMethods(['get', 'set', 'remove']);
+        $cacheBuilder->onlyMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())
             ->method('get')

@@ -5,9 +5,6 @@ use Aws\JsonCompiler;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(JsonCompiler::class)]
 class JsonCompilerTest extends TestCase
 {

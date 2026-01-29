@@ -8,9 +8,6 @@ use Aws\Sdk;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(Sdk::class)]
 class SdkTest extends TestCase
 {
@@ -24,7 +21,7 @@ class SdkTest extends TestCase
     public function testHasMagicMethods()
     {
         $sdk = $this->getMockBuilder(Sdk::class)
-            ->setMethods(['createClient'])
+            ->onlyMethods(['createClient'])
             ->getMock();
         $sdk->expects($this->once())
             ->method('createClient')

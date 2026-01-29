@@ -10,9 +10,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 require_once __DIR__ . '/sig_hack.php';
 
-/**
-
- */
 #[CoversClass(S3ExpressSignature::class)]
 class S3ExpressSignatureTest extends TestCase
 {

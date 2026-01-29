@@ -11,9 +11,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\QueryCompatibleInputMiddleware::class)]
 class QueryCompatibleInputMiddlewareTest extends TestCase
 {

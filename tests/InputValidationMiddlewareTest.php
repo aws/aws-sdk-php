@@ -13,9 +13,6 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\InputValidationMiddleware::class)]
 class InputValidationMiddlewareTest extends TestCase
 {

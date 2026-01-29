@@ -22,9 +22,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\RetryMiddlewareV2::class)]
 class RetryMiddlewareV2Test extends TestCase
 {
@@ -134,8 +131,7 @@ class RetryMiddlewareV2Test extends TestCase
         $this->assertCount($attempt, $queue);
     }
 
-    function standardModeTestCases()
-    {
+    public static function standardModeTestCases(): array {
         $command = new Command('foo');
         $result200 = new Result([
             '@metadata' => [

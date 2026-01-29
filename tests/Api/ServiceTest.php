@@ -15,9 +15,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Api\Service::class)]
 class ServiceTest extends TestCase
 {
@@ -26,7 +23,9 @@ class ServiceTest extends TestCase
 
     public function testSetsDefaultValues()
     {
-        $s = new Service([], function () { return []; });
+        $s = new Service([], function () { return []; 
+
+        $this->assertTrue(true);});
         $this->assertSame([], $s['operations']);
         $this->assertSame([], $s['shapes']);
     }
@@ -70,7 +69,9 @@ class ServiceTest extends TestCase
 
     public function testReturnsMetadata()
     {
-        $s = new Service([], function () { return []; });
+        $s = new Service([], function () { return []; 
+
+        $this->assertTrue(true);});
         $this->assertIsArray($s->getMetadata());
         $s['metadata'] = [
             'serviceFullName' => 'foo',

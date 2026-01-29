@@ -8,9 +8,6 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Endpoint\PartitionEndpointProvider::class)]
 class PartitionEndpointProviderTest extends TestCase
 {

@@ -17,9 +17,6 @@ use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\StreamRequestPayloadMiddleware::class)]
 class StreamRequestPayloadMiddlewareTest extends TestCase
 {
@@ -137,7 +134,7 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
             ->willReturn(null);
         $requestMock = $this->getMockBuilder(Request::class)
             ->setConstructorArgs(['POST', 'https://foo.com'])
-            ->setMethods(['getBody'])
+            ->onlyMethods(['getBody'])
             ->getMock();
         $requestMock->expects($this->any())
             ->method('getBody')

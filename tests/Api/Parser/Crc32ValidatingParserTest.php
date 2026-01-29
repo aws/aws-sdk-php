@@ -12,9 +12,6 @@ use GuzzleHttp\Psr7\Response;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(Crc32ValidatingParser::class)]
 class Crc32ValidatingParserTest extends TestCase
 {

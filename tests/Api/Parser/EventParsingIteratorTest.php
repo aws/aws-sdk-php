@@ -18,9 +18,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(EventParsingIterator::class)]
 class EventParsingIteratorTest extends TestCase
 {
@@ -380,7 +377,6 @@ EOF;
      * @param string $expectedExceptionMessage
      *
      * @return void
-     *
      *
 
  */

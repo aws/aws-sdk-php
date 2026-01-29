@@ -4,9 +4,6 @@ use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(RulesetEndpoint::class)]
 class RulesetEndpointTest extends TestCase
 {

@@ -10,9 +10,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(ExpiresParsingMiddleware::class)]
 class ExpiresParsingMiddlewareTest extends TestCase
 {

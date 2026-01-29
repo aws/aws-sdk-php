@@ -6,9 +6,6 @@ use Aws\EndpointDiscovery\EndpointList;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\EndpointDiscovery\EndpointList::class)]
 class EndpointListTest extends TestCase
 {

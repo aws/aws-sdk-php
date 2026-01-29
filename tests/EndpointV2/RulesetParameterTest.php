@@ -7,9 +7,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(RulesetParameter::class)]
 class RulesetParameterTest extends TestCase
 {
@@ -92,12 +89,13 @@ class RulesetParameterTest extends TestCase
     }
 
     /**
-     * @doesNotPerformAssertions
+    #[CoversNothing]
      * */
     #[DataProvider('validTypesProvider')]
     public function testRulesetCreationWithValidTypes($spec)
     {
         new RulesetParameter('FooParam', $spec);
+        $this->assertTrue(true);
         $this->assertTrue(true);
     }
 

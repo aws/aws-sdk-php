@@ -32,7 +32,6 @@ class SingleProgressTrackerTest extends TestCase
      * @param bool $clear
      * @param TransferProgressSnapshot $snapshot
      *
-     *
      * @return void
 
  */
@@ -89,7 +88,6 @@ class SingleProgressTrackerTest extends TestCase
      * @param ProgressBarInterface $progressBar
      * @param callable $eventInvoker
      * @param array $expectedOutputs
-     *
      *
      * @return void
 

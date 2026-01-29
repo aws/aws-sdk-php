@@ -263,7 +263,7 @@ class ObjectCopierTest extends TestCase
     {
         $client = $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getCommand', 'executeAsync'])
+            ->onlyMethods(['getCommand', 'executeAsync'])
             ->getMock();
 
         $headObjectCommand = new Command('HeadObject');

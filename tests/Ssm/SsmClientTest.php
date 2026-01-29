@@ -7,9 +7,6 @@ use Aws\Result;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(SsmClient::class)]
 class SsmClientTest extends TestCase
 {

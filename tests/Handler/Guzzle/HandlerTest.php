@@ -13,9 +13,6 @@ use GuzzleHttp\TransferStats;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(GuzzleHandler::class)]
 class HandlerTest extends TestCase
 {

@@ -7,9 +7,6 @@ use Aws\Api\Operation;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Api\Operation::class)]
 class OperationTest extends TestCase
 {

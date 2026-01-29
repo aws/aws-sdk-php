@@ -16,9 +16,6 @@ use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(StreamWrapper::class)]
 class StreamWrapperTest extends TestCase
 {
@@ -117,7 +114,7 @@ class StreamWrapperTest extends TestCase
         }
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testSuccessfulXMode()
     {
         $this->addMockResults(
@@ -131,6 +128,7 @@ class StreamWrapperTest extends TestCase
         );
         $r = fopen('s3://bucket/key', 'x');
         fclose($r);
+        $this->assertTrue(true);
     }
 
     public function testOpensNonSeekableReadStream()
@@ -1040,7 +1038,7 @@ class StreamWrapperTest extends TestCase
         closedir($r);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testCanSetDelimiterStreamContext()
     {
         $this->addMockResults($this->client, [
@@ -1066,6 +1064,7 @@ class StreamWrapperTest extends TestCase
         $context = stream_context_create(['s3' => ['delimiter' => '']]);
         $r = opendir('s3://bucket', $context);
         closedir($r);
+        $this->assertTrue(true);
     }
 
     public function testCachesReaddirs()

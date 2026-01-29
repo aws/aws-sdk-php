@@ -56,7 +56,7 @@ class AmbiguousSuccessParserTest extends TestCase
 
     /**
      * @param string $operation
-     * @doesNotPerformAssertions
+    #[CoversNothing]
     */
     #[DataProvider('opsWithoutAmbiguousSuccessesProvider')]
     #[CoversNothing]
@@ -73,6 +73,7 @@ class AmbiguousSuccessParserTest extends TestCase
 
         $instance = $this->instance;
         $instance($command, $response);
+        $this->assertTrue(true);
         $this->assertTrue(true);
     }
 

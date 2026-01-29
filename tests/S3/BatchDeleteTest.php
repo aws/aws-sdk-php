@@ -10,9 +10,6 @@ use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\S3\BatchDelete::class)]
 class BatchDeleteTest extends TestCase
 {

@@ -15,9 +15,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(StreamWrapper::class)]
 class StreamWrapperPathStyleTest extends TestCase
 {
@@ -80,7 +77,7 @@ class StreamWrapperPathStyleTest extends TestCase
         fopen('s3://bucket/key', 'x');
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testSuccessfulXMode()
     {
         $this->addMockResults(
@@ -94,6 +91,7 @@ class StreamWrapperPathStyleTest extends TestCase
         );
         $r = fopen('s3://bucket/key', 'x');
         fclose($r);
+        $this->assertTrue(true);
     }
 
     public function testOpensNonSeekableReadStream()
@@ -776,7 +774,7 @@ class StreamWrapperPathStyleTest extends TestCase
         closedir($r);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testCanSetDelimiterStreamContext()
     {
         $this->addMockResults($this->client, [
@@ -802,6 +800,7 @@ class StreamWrapperPathStyleTest extends TestCase
         $context = stream_context_create(['s3' => ['delimiter' => '']]);
         $r = opendir('s3://bucket', $context);
         closedir($r);
+        $this->assertTrue(true);
     }
 
     public function testCachesReaddirs()

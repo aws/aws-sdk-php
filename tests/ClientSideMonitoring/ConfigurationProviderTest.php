@@ -14,9 +14,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 
-/**
-
- */
 #[CoversClass(ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
@@ -428,7 +425,7 @@ EOT;
     {
         $expected = new Configuration(true, '123.4.5.6', 555, 'FooApp');
         $cacheBuilder = $this->getMockBuilder(CacheInterface::class);
-        $cacheBuilder->setMethods(['get', 'set', 'remove']);
+        $cacheBuilder->onlyMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())
             ->method('get')

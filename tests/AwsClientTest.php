@@ -30,9 +30,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(AwsClient::class)]
 class AwsClientTest extends TestCase
 {
@@ -283,22 +280,24 @@ class AwsClientTest extends TestCase
         $this->assertStringContainsString('AWS4-HMAC-SHA256', $str);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testAllowsFactoryMethodForBc()
     {
         Ec2Client::factory([
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
+        $this->assertTrue(true);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testCanInstantiateAliasedClients()
     {
         new SesClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
+        $this->assertTrue(true);
     }
 
     public function testCanGetSignatureProvider()
@@ -620,7 +619,8 @@ class AwsClientTest extends TestCase
         );
     }
 
-    /** @dataProvider configuredEndpointUrlProvider */
+    #[DataProvider('configuredEndpointUrlProvider')]
+
     public function testAppliesConfiguredEndpointUrl($ini, $env, $expected)
     {
         $dir = sys_get_temp_dir() . '/.aws';
@@ -651,7 +651,8 @@ class AwsClientTest extends TestCase
         }
     }
 
-    /** @dataProvider configuredEndpointUrlProvider */
+    #[DataProvider('configuredEndpointUrlProvider')]
+
     public function testDoesNotApplyConfiguredEndpointWhenConfiguredUrlsIgnored($ini, $env)
     {
         putenv('AWS_IGNORE_CONFIGURED_ENDPOINT_URLS=true');

@@ -13,9 +13,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(MultipartUploader::class)]
 class MultipartUploaderTest extends TestCase
 {
@@ -138,8 +135,7 @@ class MultipartUploaderTest extends TestCase
         $this->assertSame($configProp->getValue($classicMup), $configProp->getValue($putObjectMup));
     }
 
-    /** @doesNotPerformAssertions */
-    public static function testMultipartSuccessStreams()
+    public static function multipartSuccessStreams(): array
     {
         $size = 12 * self::MB;
         $data = str_repeat('.', $size);
@@ -161,7 +157,7 @@ class MultipartUploaderTest extends TestCase
     /**
 
  */
-    #[DataProvider('testMultipartSuccessStreams')]
+    #[DataProvider('multipartSuccessStreams')]
     public function testS3MultipartUploadParams($stream, $size)
     {
         /** @var \Aws\S3\S3Client $client */
@@ -199,6 +195,7 @@ class MultipartUploaderTest extends TestCase
 
         $this->assertTrue($uploader->getState()->isCompleted());
         $this->assertSame($url, $result['ObjectURL']);
+        $this->assertTrue(true);
     }
 
     public static function getContentTypeSettingTests()
@@ -313,7 +310,7 @@ class MultipartUploaderTest extends TestCase
     /**
 
  */
-    #[DataProvider('testMultipartSuccessStreams')]
+    #[DataProvider('multipartSuccessStreams')]
     public function testUploaderAddsFlexibleChecksums($stream, $size)
     {
         /** @var \Aws\S3\S3Client $client */

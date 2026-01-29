@@ -5,9 +5,6 @@ use Aws\Exception\CouldNotCreateChecksumException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(CouldNotCreateChecksumException::class)]
 class CouldNotCreateChecksumExceptionTest extends TestCase
 {

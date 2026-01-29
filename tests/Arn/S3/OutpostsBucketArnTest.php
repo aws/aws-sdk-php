@@ -9,9 +9,6 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Arn\S3\OutpostsBucketArn::class)]
 class OutpostsBucketArnTest extends TestCase
 {

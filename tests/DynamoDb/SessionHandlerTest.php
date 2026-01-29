@@ -9,9 +9,6 @@ use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(SessionHandler::class)]
 class SessionHandlerTest extends TestCase
 {

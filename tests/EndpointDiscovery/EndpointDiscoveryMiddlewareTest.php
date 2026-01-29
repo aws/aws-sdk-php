@@ -24,9 +24,6 @@ use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(EndpointDiscoveryMiddleware::class)]
 class EndpointDiscoveryMiddlewareTest extends TestCase
 {

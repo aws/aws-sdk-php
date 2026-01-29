@@ -6,9 +6,6 @@ use Aws\Retry\Configuration;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Retry\Configuration::class)]
 class ConfigurationTest extends TestCase
 {

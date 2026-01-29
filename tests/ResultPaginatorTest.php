@@ -15,9 +15,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(ResultPaginator::class)]
 class ResultPaginatorTest extends TestCase
 {
@@ -127,8 +124,7 @@ class ResultPaginatorTest extends TestCase
     /**
      * @return array Test data
      */
-    public function getPaginatorIterationData()
-    {
+    public static function getPaginatorIterationData(): array {
         return [
             // Single field token case
             [

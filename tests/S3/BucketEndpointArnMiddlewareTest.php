@@ -16,9 +16,6 @@ use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\S3\BucketEndpointMiddleware::class)]
 class BucketEndpointArnMiddlewareTest extends TestCase
 {

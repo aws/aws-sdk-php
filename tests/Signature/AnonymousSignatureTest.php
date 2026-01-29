@@ -7,9 +7,6 @@ use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(AnonymousSignature::class)]
 class AnonymousSignatureTest extends TestCase
 {

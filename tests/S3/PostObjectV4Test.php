@@ -11,9 +11,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 require_once __DIR__ . '/sig_hack.php';
 
-/**
-
- */
 #[CoversClass(PostObjectV4::class)]
 class PostObjectV4Test extends TestCase
 {

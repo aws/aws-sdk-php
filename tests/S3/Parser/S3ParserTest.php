@@ -255,7 +255,6 @@ EOXML;
      * @param StreamInterface $stream
      * @param bool $expectValidation
      *
-     *
      * @return void
 
  */

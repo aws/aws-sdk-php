@@ -20,9 +20,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Credentials\EcsCredentialProvider::class)]
 class EcsCredentialProviderTest extends TestCase
 {
@@ -104,10 +101,11 @@ class EcsCredentialProviderTest extends TestCase
         $this->assertSame($t, $c->getExpiration());
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testDoesNotRequireConfig()
     {
         new EcsCredentialProvider();
+        $this->assertTrue(true);
     }
 
     public function testRequestHeaderWithAuthorisationKey()

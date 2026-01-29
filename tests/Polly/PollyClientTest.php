@@ -6,9 +6,6 @@ use Aws\Polly\PollyClient;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(PollyClient::class)]
 class PollyClientTest extends TestCase
 {

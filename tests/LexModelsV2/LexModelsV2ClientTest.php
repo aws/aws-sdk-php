@@ -10,9 +10,6 @@ use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(LexModelsV2Client::class)]
 class LexModelsV2ClientTest extends TestCase
 {

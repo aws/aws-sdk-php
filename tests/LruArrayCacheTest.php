@@ -5,9 +5,6 @@ use Aws\LruArrayCache;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(LruArrayCache::class)]
 class LruArrayCacheTest extends TestCase
 {

@@ -5,9 +5,6 @@ use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(ElasticLoadBalancingV2Client::class)]
 class ElasticLoadBalancingV2ClientTest extends TestCase
 {

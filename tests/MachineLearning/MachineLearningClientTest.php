@@ -8,9 +8,6 @@ use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(MachineLearningClient::class)]
 class MachineLearningClientTest extends TestCase
 {

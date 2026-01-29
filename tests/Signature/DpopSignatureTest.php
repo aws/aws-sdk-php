@@ -6,9 +6,6 @@ use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(DpopSignature::class)]
 class DpopSignatureTest extends TestCase
 {

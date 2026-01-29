@@ -11,9 +11,6 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(Ec2Client::class)]
 class Ec2ClientTest extends TestCase
 {

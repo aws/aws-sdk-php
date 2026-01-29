@@ -7,9 +7,6 @@ use Aws\MetricsBuilder;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(Command::class)]
 #[CoversClass(Command::class)]
 class CommandTest extends TestCase

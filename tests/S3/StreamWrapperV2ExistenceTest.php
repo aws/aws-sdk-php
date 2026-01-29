@@ -44,7 +44,7 @@ class StreamWrapperV2ExistenceTest extends TestCase
     }
 
     /**
-     * @doesNotPerformAssertions
+    #[CoversNothing]
      */
     public function testSuccessfulXMode()
     {
@@ -63,6 +63,7 @@ class StreamWrapperV2ExistenceTest extends TestCase
         );
         $r = fopen('s3://bucket/key', 'x');
         fclose($r);
+        $this->assertTrue(true);
     }
 
     public function testOpensNonSeekableReadStream()

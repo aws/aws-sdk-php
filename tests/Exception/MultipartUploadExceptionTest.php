@@ -9,9 +9,6 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(MultipartUploadException::class)]
 class MultipartUploadExceptionTest extends TestCase
 {

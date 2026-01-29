@@ -12,9 +12,6 @@ use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(MockHandler::class)]
 class MockHandlerTest extends TestCase
 {

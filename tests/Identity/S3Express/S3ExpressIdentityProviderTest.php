@@ -8,9 +8,6 @@ use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(S3ExpressIdentityProvider::class)]
 class S3ExpressIdentityProviderTest extends TestCase
 {

@@ -10,9 +10,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\AbstractConfigurationProvider::class)]
 class AbstractConfigurationProviderTest extends TestCase
 {

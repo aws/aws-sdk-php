@@ -5,9 +5,6 @@ use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\S3\PermanentRedirectMiddleware::class)]
 class PermanentRedirectMiddlewareTest extends TestCase
 {
@@ -22,11 +19,12 @@ class PermanentRedirectMiddlewareTest extends TestCase
         $s3->getObject(['Bucket' => 'test', 'Key' => 'key']);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testPassesThroughUntouched()
     {
         $s3 = $this->getTestClient('s3');
         $this->addMockResults($s3, [['@metadata' => ['statusCode' => 200]]]);
         $s3->getObject(['Bucket' => 'test', 'Key' => 'key']);
+        $this->assertTrue(true);
     }
 }

@@ -317,7 +317,6 @@ class AuthSelectionMiddlewareTest extends TestCase
     /**
      * Test auth select is done based on user's provided auth schemes.
      *
-     *
      * @param array $supportedAuthSchemes
      * @param array|null $serviceAuthSchemes
      * @param array|null $operationAuthSchemes

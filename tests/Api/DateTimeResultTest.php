@@ -6,9 +6,6 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Api\DateTimeResult::class)]
 class DateTimeResultTest extends TestCase
 {

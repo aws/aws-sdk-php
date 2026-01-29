@@ -11,9 +11,6 @@ use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(LogRecordIterator::class)]
 class LogRecordIteratorTest extends TestCase
 {

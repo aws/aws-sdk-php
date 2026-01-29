@@ -193,8 +193,7 @@ class AesEncryptingStreamTest extends TestCase
     /**
      *
      * @param CipherMethod $cipherMethod
-
- */
+     */
     #[DataProvider('seekableCipherMethodProvider')]
     public function testSupportsSeekingFromCurrentPosition(
         CipherMethod $cipherMethod

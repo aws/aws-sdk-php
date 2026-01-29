@@ -7,9 +7,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Log\InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\EndpointDiscovery\Configuration::class)]
 class ConfigurationTest extends TestCase
 {

@@ -7,9 +7,6 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Retry\RateLimiter::class)]
 class RateLimiterTest extends TestCase
 {

@@ -325,7 +325,6 @@ class UserAgentMiddlewareTest extends TestCase
     /**
      * Tests user agent captures retry config metric.
      *
-     *
      * @return void
 
  */
@@ -831,7 +830,6 @@ class UserAgentMiddlewareTest extends TestCase
      * @param string $algorithm
      * @param string $checksumMetric
      * @param bool $supported
-     *
      *
      * @return void
 

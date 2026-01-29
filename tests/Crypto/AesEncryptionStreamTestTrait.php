@@ -53,7 +53,7 @@ trait AesEncryptionStreamTestTrait
         return $toReturn;
     }
 
-    public function seekableCipherMethodProvider()
+    public function seekableCipherMethodProvider(): array
     {
         return array_filter($this->cipherMethodProvider(), function (array $args) {
             return !($args[0] instanceof Cbc);

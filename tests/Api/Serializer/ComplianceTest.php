@@ -9,9 +9,6 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Api\Serializer\QuerySerializer::class)]
 #[CoversClass(\Aws\Api\Serializer\JsonRpcSerializer::class)]
 #[CoversClass(\Aws\Api\Serializer\RestSerializer::class)]
@@ -42,8 +39,7 @@ class ComplianceTest extends TestCase
         'HttpPayloadWithMemberXmlName' => true
     ];
 
-    /** @doesNotPerformAssertions */
-    public static function testCaseProvider(): \Generator
+    public static function caseProvider(): \Generator
     {
         $iterator = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator(
@@ -87,7 +83,7 @@ class ComplianceTest extends TestCase
     /**
 
  */
-    #[DataProvider('testCaseProvider')]
+    #[DataProvider('caseProvider')]
     public function testPassesComplianceTest(
         Service $service,
         $name,
@@ -186,6 +182,7 @@ class ComplianceTest extends TestCase
                 $this->assertNotTrue($request->hasHeader($header));
             }
         }
+        $this->assertTrue(true);
     }
 
     private function assertXmlEquals(

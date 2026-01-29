@@ -8,9 +8,6 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Api\ErrorParser\JsonRpcErrorParser::class)]
 #[CoversClass(\Aws\Api\ErrorParser\JsonParserTrait::class)]
 class JsonRpcErrorParserTest extends TestCase

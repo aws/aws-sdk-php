@@ -9,9 +9,6 @@ use GuzzleHttp\Psr7\Request;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(History::class)]
 class HistoryTest extends TestCase
 {

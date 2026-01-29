@@ -8,9 +8,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\EndpointV2\Ruleset\RulesetStandardLibrary::class)]
 class RulesetStandardLibraryTest extends TestCase
 {

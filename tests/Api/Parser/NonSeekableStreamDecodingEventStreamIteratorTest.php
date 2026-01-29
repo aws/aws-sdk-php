@@ -78,7 +78,6 @@ EOF;
      * @param string $eventName
      * @param array $expected
      *
-     *
      * @return void
 
  */

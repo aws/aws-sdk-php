@@ -17,9 +17,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(EndpointProviderV2::class)]
 class EndpointProviderV2Test extends TestCase
 {
@@ -358,7 +355,7 @@ class EndpointProviderV2Test extends TestCase
 
         $endpointMock = $this->getMockBuilder(RulesetEndpoint::class)
             ->disableOriginalConstructor()
-            ->setMethods([])
+            ->onlyMethods([])
             ->getMock();
 
         $rulesetMock = $this->getMockBuilder(Ruleset::class)

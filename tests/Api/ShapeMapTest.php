@@ -6,9 +6,6 @@ use Aws\Api\ShapeMap;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Api\ShapeMap::class)]
 class ShapeMapTest extends TestCase
 {

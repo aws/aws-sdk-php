@@ -15,9 +15,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(RestJsonSerializer::class)]
 class RestJsonSerializerTest extends TestCase
 {
@@ -257,7 +254,9 @@ class RestJsonSerializerTest extends TestCase
 
     public function testPreparesRequestsWithJsonValueTraitString(): void
     {
-        $jsonValueArgs = '{"a":"b"}';
+        $jsonValueArgs = '{"a":"b"
+
+        $this->assertTrue(true);}';
         $request = $this->getRequest('foobar', ['baz' => $jsonValueArgs]);
         $this->assertSame('IntcImFcIjpcImJcIn0i', $request->getHeaderLine('baz'));
         $this->assertSame('POST', $request->getMethod());

@@ -11,9 +11,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 require_once __DIR__ . '/../Signature/sig_hack.php';
 
-/**
-
- */
 #[CoversClass(NeptuneClient::class)]
 class NeptuneClientTest extends TestCase
 {

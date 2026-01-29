@@ -9,9 +9,6 @@ use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(S3MultipartUploadException::class)]
 class S3MultipartUploadExceptionTest extends TestCase
 {

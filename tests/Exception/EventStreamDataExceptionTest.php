@@ -6,9 +6,6 @@ use Aws\Exception\EventStreamDataException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(EventStreamDataException::class)]
 class EventStreamDataExceptionTest extends TestCase
 {

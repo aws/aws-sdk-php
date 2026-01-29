@@ -19,9 +19,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(WrappedHttpHandler::class)]
 class WrappedHttpHandlerTest extends TestCase
 {

@@ -8,9 +8,6 @@ use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(LockingSessionConnection::class)]
 class LockingSessionConnectionTest extends TestCase
 {

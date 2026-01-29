@@ -7,9 +7,6 @@ use Aws\Api\StructureShape;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Api\StructureShape::class)]
 class StructureShapeTest extends TestCase
 {

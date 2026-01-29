@@ -11,9 +11,6 @@ use GuzzleHttp\Psr7\Response;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(LogFileIterator::class)]
 class LogFileIteratorTest extends TestCase
 {

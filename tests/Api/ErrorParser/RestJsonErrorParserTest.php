@@ -8,9 +8,6 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(\Aws\Api\ErrorParser\RestJsonErrorParser::class)]
 #[CoversClass(\Aws\Api\ErrorParser\JsonParserTrait::class)]
 class RestJsonErrorParserTest extends TestCase

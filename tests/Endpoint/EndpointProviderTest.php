@@ -7,9 +7,6 @@ use Aws\Endpoint\PatternEndpointProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(EndpointProvider::class)]
 class EndpointProviderTest extends TestCase
 {

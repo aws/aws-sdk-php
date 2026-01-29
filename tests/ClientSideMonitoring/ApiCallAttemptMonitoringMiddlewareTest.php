@@ -15,9 +15,6 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
-
- */
 #[CoversClass(ApiCallAttemptMonitoringMiddleware::class)]
 #[CoversClass(ApiCallAttemptMonitoringMiddleware::class)]
 class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
