@@ -4321,7 +4321,8 @@
         "InstanceType":{"shape":"EC2InstanceType"},
         "InstanceCounts":{"shape":"EC2InstanceCounts"},
         "Location":{"shape":"LocationStringModel"},
-        "GameServerContainerGroupCounts":{"shape":"GameServerContainerGroupCounts"}
+        "GameServerContainerGroupCounts":{"shape":"GameServerContainerGroupCounts"},
+        "ManagedCapacityConfiguration":{"shape":"ManagedCapacityConfiguration"}
       }
     },
     "FleetCapacityExceededException":{
@@ -5580,6 +5581,13 @@
       "min":1,
       "pattern":"[a-zA-Z0-9:/\\-\\*]+"
     },
+    "ManagedCapacityConfiguration":{
+      "type":"structure",
+      "members":{
+        "ZeroCapacityStrategy":{"shape":"ZeroCapacityStrategy"},
+        "ScaleInAfterInactivityMinutes":{"shape":"ScaleInAfterInactivityMinutes"}
+      }
+    },
     "MatchedPlayerSession":{
       "type":"structure",
       "members":{
@@ -6217,6 +6225,11 @@
         "ObjectVersion":{"shape":"NonEmptyString"}
       }
     },
+    "ScaleInAfterInactivityMinutes":{
+      "type":"integer",
+      "max":1440,
+      "min":5
+    },
     "ScalingAdjustmentType":{
       "type":"string",
       "enum":[
@@ -6788,7 +6801,8 @@
         "DesiredInstances":{"shape":"WholeNumber"},
         "MinSize":{"shape":"WholeNumber"},
         "MaxSize":{"shape":"WholeNumber"},
-        "Location":{"shape":"LocationStringModel"}
+        "Location":{"shape":"LocationStringModel"},
+        "ManagedCapacityConfiguration":{"shape":"ManagedCapacityConfiguration"}
       }
     },
     "UpdateFleetCapacityOutput":{
@@ -6796,7 +6810,8 @@
       "members":{
         "FleetId":{"shape":"FleetId"},
         "FleetArn":{"shape":"FleetArn"},
-        "Location":{"shape":"LocationStringModel"}
+        "Location":{"shape":"LocationStringModel"},
+        "ManagedCapacityConfiguration":{"shape":"ManagedCapacityConfiguration"}
       }
     },
     "UpdateFleetPortSettingsInput":{
@@ -7021,6 +7036,13 @@
     "WholeNumber":{
       "type":"integer",
       "min":0
+    },
+    "ZeroCapacityStrategy":{
+      "type":"string",
+      "enum":[
+        "MANUAL",
+        "SCALE_TO_AND_FROM_ZERO"
+      ]
     },
     "ZipBlob":{
       "type":"blob",
