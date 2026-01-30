@@ -37,9 +37,6 @@ class DecodingEventStreamIteratorTest extends TestCase
         }
     }
 
-    /**
-
- */
     #[DataProvider('complianceTests')]
     public function testPassesComplianceTest(
         Stream $encodedData,

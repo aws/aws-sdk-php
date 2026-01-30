@@ -12,9 +12,6 @@ class HeadersMetadataStrategyTest extends TestCase
 {
     use UsesMetadataEnvelopeTrait;
 
-    /**
-
- */
     #[DataProvider('getMetadataFields')]
     public function testSave($fields)
     {
@@ -30,9 +27,6 @@ class HeadersMetadataStrategyTest extends TestCase
         }
     }
 
-    /**
-
- */
     #[DataProvider('getMetadataResult')]
     public function testLoad($args, $metadata)
     {

@@ -9,10 +9,10 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\FnStream;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
-use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(ObjectUploader::class)]
 class ObjectUploaderTest extends TestCase
@@ -21,9 +21,6 @@ class ObjectUploaderTest extends TestCase
 
     const MB = 1048576;
 
-    /**
-
- */
     #[DataProvider('uploadDataProvider')]
     public function testDoesCorrectOperation(
         StreamInterface $body,
@@ -39,9 +36,6 @@ class ObjectUploaderTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-
- */
     #[DataProvider('getUploadTestCasesWithPathStyle')]
     public function testDoesCorrectOperationWithPathStyle(
         StreamInterface $body,
@@ -59,9 +53,6 @@ class ObjectUploaderTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-
- */
     #[DataProvider('uploadDataProvider')]
     public function testDoesCorrectOperationWithAccessPointArn(
         StreamInterface $body,
@@ -96,9 +87,6 @@ class ObjectUploaderTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-
- */
     #[DataProvider('uploadDataProvider')]
     public function testDoesCorrectOperationAsynchronously(
         StreamInterface $body,
@@ -115,9 +103,6 @@ class ObjectUploaderTest extends TestCase
         $this->assertSame('https://bucket.s3.amazonaws.com/key', $result['ObjectURL']);
     }
 
-    /**
-
- */
     #[DataProvider('getUploadTestCasesWithPathStyle')]
     public function testDoesCorrectOperationAsynchronouslyWithPathStyle(
         StreamInterface $body,
@@ -334,9 +319,7 @@ class ObjectUploaderTest extends TestCase
     /**
      * @param $checksumAlgorithm
      * @return void
-     *
-
- */
+     */
     #[DataProvider('flexibleChecksumsProvider')]
     public function testAddsFlexibleChecksums($checksumAlgorithm, $value)
     {
@@ -366,7 +349,8 @@ class ObjectUploaderTest extends TestCase
         ))->upload();
     }
 
-    public static function flexibleChecksumsProvider() {
+    public static function flexibleChecksumsProvider(): array
+    {
         return [
             ['sha1', 'VfWih+7phcE4uG3HQZCHKfpUwFs='],
             ['sha256', 'FT+vHyoAcJfTMSC77mlEpBy4vnZDwSIva8a8aewxaI8='],

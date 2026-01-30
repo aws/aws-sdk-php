@@ -6,10 +6,12 @@ use Aws\Api\Parser\NonSeekableStreamDecodingEventStreamIterator;
 use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\StreamDecoratorTrait;
 use GuzzleHttp\Psr7\Utils;
-use Psr\Http\Message\StreamInterface;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\StreamInterface;
 
+#[CoversClass(NonSeekableStreamDecodingEventStreamIterator::class)]
 class NonSeekableStreamDecodingEventStreamIteratorTest extends TestCase
 {
     const EVENT_STREAMS_DIR = __DIR__ . '/event-streams/';
@@ -74,13 +76,6 @@ EOF;
         $this->assertFalse($iterator->valid());
     }
 
-    /**
-     * @param string $eventName
-     * @param array $expected
-     *
-     * @return void
-
- */
     #[DataProvider('readAndHashBytesHandlesPartialReadsProvider')]
     public function testReadAndHashBytesHandlesPartialReads(
         string $eventName,
@@ -124,9 +119,6 @@ EOF;
         );
     }
 
-    /**
-     * @return \Generator
-     */
     public static function readAndHashBytesHandlesPartialReadsProvider(): \Generator
     {
         $cases = json_decode(

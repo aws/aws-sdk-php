@@ -5,13 +5,15 @@ use Aws\Lambda\LambdaClient;
 use Aws\Result;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use GuzzleHttp\Promise;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
+#[CoversClass(LambdaClient::class)]
 class LambdaClientTest extends TestCase
 {
     use ArraySubsetAsserts;
 
-    function testsAddsDefaultCurlOptions()
+    public function testsAddsDefaultCurlOptions()
     {
         if (!extension_loaded('curl')) {
             $this->markTestSkipped('Test skipped on no cURL extension');

@@ -15,7 +15,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\Api\Service::class)]
+#[CoversClass(Service::class)]
 class ServiceTest extends TestCase
 {
     use UsesServiceTrait;
@@ -23,9 +23,7 @@ class ServiceTest extends TestCase
 
     public function testSetsDefaultValues()
     {
-        $s = new Service([], function () { return []; 
-
-        $this->assertTrue(true);});
+        $s = new Service([], function () { return []; });
         $this->assertSame([], $s['operations']);
         $this->assertSame([], $s['shapes']);
     }
@@ -69,9 +67,7 @@ class ServiceTest extends TestCase
 
     public function testReturnsMetadata()
     {
-        $s = new Service([], function () { return []; 
-
-        $this->assertTrue(true);});
+        $s = new Service([], function () { return []; });
         $this->assertIsArray($s->getMetadata());
         $s['metadata'] = [
             'serviceFullName' => 'foo',
@@ -148,7 +144,7 @@ class ServiceTest extends TestCase
         $api->getWaiterConfig('Fizz');
     }
 
-    public static function errorParserProvider()
+    public static function errorParserProvider(): array
     {
         return [
             ['json', ErrorParser\JsonRpcErrorParser::class],
@@ -158,9 +154,6 @@ class ServiceTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('errorParserProvider')]
     public function testCreatesRelevantErrorParsers($p, $cl)
     {
@@ -173,7 +166,7 @@ class ServiceTest extends TestCase
         Service::createErrorParser('undefined_protocol');
     }
 
-    public static function serializerDataProvider()
+    public static function serializerDataProvider(): array
     {
         return [
             ['json', Serializer\JsonRpcSerializer::class],
@@ -184,9 +177,6 @@ class ServiceTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('serializerDataProvider')]
     public function testCreatesSerializer($type, $cl)
     {
@@ -202,7 +192,7 @@ class ServiceTest extends TestCase
         $this->assertInstanceOf($cl, $serializer);
     }
 
-    public static function parserDataProvider()
+    public static function parserDataProvider(): array
     {
         return [
             ['json', Parser\JsonRpcParser::class],
@@ -213,9 +203,6 @@ class ServiceTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('parserDataProvider')]
     public function testCreatesParsers($type, $cl)
     {
@@ -313,9 +300,6 @@ class ServiceTest extends TestCase
         );
     }
 
-    /**
-
- */
     #[DataProvider('selectsProtocolProvider')]
     public function testSelectsProtocol($protocols, $expected)
     {
@@ -360,7 +344,7 @@ class ServiceTest extends TestCase
         $this->assertEquals($expected, $protocol);
     }
 
-    public static function selectsProtocolProvider()
+    public static function selectsProtocolProvider(): array
     {
         return [
             [['smithy-rpc-v2-cbor', 'json'], 'json'],

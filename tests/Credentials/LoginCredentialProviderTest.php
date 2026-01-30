@@ -301,9 +301,6 @@ EOT;
         $provider()->wait();
     }
 
-    /**
-
- */
     #[DataProvider('missingCacheKeysProvider')]
     public function testLoadTokenFailsWithMissingOrEmptyCacheKeys(
         array $tokenData,
@@ -1250,9 +1247,6 @@ EOT;
         $this->assertEquals('123456789012', $credentials->getAccountId());
     }
 
-    /**
-
- */
     #[DataProvider('loginTestCasesProvider')]
     public function testLoginCredentialProviderFromTestCases(
         string $documentation,
@@ -1409,9 +1403,6 @@ EOT;
         }
     }
 
-    /**
-
- */
     #[DataProvider('externalRefreshProvider')]
     public function testExternalRefreshBehavior(
         string $scenario,

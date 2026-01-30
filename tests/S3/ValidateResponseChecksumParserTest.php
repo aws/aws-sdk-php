@@ -18,9 +18,6 @@ class ValidateResponseChecksumParserTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-
- */
     #[DataProvider('getChosenChecksumCases')]
     public function testValidatesChoosesRightChecksum(
         $responseAlgorithms, $checksumHeadersReturned, $expectedChecksum
@@ -47,7 +44,7 @@ class ValidateResponseChecksumParserTest extends TestCase
         $this->assertEquals($expectedChecksum, $chosenChecksum);
     }
 
-    public static function getChosenChecksumCases()
+    public static function getChosenChecksumCases(): array
     {
         return [
             [['crc32', 'crc32c'], [], null],

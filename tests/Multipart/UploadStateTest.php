@@ -78,9 +78,6 @@ class UploadStateTest extends TestCase
         $this->expectOutputString('');
     }
 
-    /**
-
- */
     #[DataProvider('getDisplayProgressCases')]
     public function testGetDisplayProgressPrintsProgress(
         $totalSize,
@@ -94,7 +91,7 @@ class UploadStateTest extends TestCase
         $this->expectOutputString($progressBar);
     }
 
-    public static function getDisplayProgressCases()
+    public static function getDisplayProgressCases(): array
     {
         $progressBar = ["Transfer initiated...\n|                    | 0.0%\n",
                         "|==                  | 12.5%\n",
@@ -174,9 +171,6 @@ class UploadStateTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('getThresholdCases')]
     public function testUploadThresholds($totalSize)
     {
@@ -187,7 +181,7 @@ class UploadStateTest extends TestCase
         $this->assertCount(9, $threshold);
     }
 
-    public static function getThresholdCases()
+    public static function getThresholdCases(): array
     {
         return [
             [0],
@@ -196,9 +190,6 @@ class UploadStateTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('getInvalidIntCases')]
     public function testSetProgressThresholdsThrowsException($totalSize)
     {
@@ -209,9 +200,6 @@ class UploadStateTest extends TestCase
         $state->setProgressThresholds($totalSize);
     }
 
-    /**
-
- */
     #[DataProvider('getInvalidIntCases')]
     public function testDisplayProgressThrowsException($totalUploaded)
     {
@@ -221,7 +209,7 @@ class UploadStateTest extends TestCase
         $state->getDisplayProgress($totalUploaded);
     }
 
-    public static function getInvalidIntCases()
+    public static function getInvalidIntCases(): array
     {
         return [
             [''],

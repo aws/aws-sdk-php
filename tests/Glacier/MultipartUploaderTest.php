@@ -23,9 +23,6 @@ class MultipartUploaderTest extends TestCase
         @unlink(sys_get_temp_dir() . '/' . self::FILENAME);
     }
 
-    /**
-
- */
     #[DataProvider('getTestCases')]
     public function testGlacierMultipartUploadWorkflow(
         array $uploadOptions = [],
@@ -56,7 +53,7 @@ class MultipartUploaderTest extends TestCase
         $this->assertSame('buzz', $result['fizz']);
     }
 
-    public static function getTestCases()
+    public static function getTestCases(): array
     {
         $defaults = [
             'account_id'          => 'foo',

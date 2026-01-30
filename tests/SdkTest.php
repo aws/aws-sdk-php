@@ -11,7 +11,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(Sdk::class)]
 class SdkTest extends TestCase
 {
-
     public function testEnsuresMissingMethodThrowsException()
     {
         $this->expectException(\BadMethodCallException::class);

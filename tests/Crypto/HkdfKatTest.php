@@ -15,7 +15,9 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\LimitStream;
 use PHPUnit\Framework\Constraint\IsEmpty;
 use Psr\Http\Message\StreamInterface;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
+#[CoversNothing]
 class HkdfKatTest extends TestCase
 {
     public static function getKats(): array
@@ -48,7 +50,7 @@ class HkdfKatTest extends TestCase
         ];
     }
 
-    public function testHkdf(): void 
+    public function testHkdf(): void
     {
         $kats = HkdfKatTest::getKats();
         foreach ($kats as $kat) {

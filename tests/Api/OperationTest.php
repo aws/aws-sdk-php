@@ -4,10 +4,10 @@ namespace Aws\Test\Api;
 use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Api\Operation;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\Api\Operation::class)]
+#[CoversClass(Operation::class)]
 class OperationTest extends TestCase
 {
     public function testCreatesDefaultMethodAndUri()

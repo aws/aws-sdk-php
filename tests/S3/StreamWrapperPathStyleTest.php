@@ -14,6 +14,7 @@ use GuzzleHttp\Psr7;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
 #[CoversClass(StreamWrapper::class)]
 class StreamWrapperPathStyleTest extends TestCase
@@ -362,9 +363,6 @@ class StreamWrapperPathStyleTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('rmdirProvider')]
     public function testCanDeleteObjectWithRmDir($path)
     {
@@ -585,7 +583,7 @@ class StreamWrapperPathStyleTest extends TestCase
         stat('s3://bucket/prefix');
     }
 
-    public static function fileTypeProvider()
+    public static function fileTypeProvider(): array
     {
         $err = function ($cmd, $r) { return new S3Exception('404', $cmd); };
 
@@ -618,9 +616,6 @@ class StreamWrapperPathStyleTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('fileTypeProvider')]
     public function testDeterminesIfFileOrDir($uri, $queue, $result)
     {

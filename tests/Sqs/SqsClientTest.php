@@ -7,6 +7,7 @@ use Aws\Sqs\SqsClient;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
 #[CoversClass(SqsClient::class)]
 class SqsClientTest extends TestCase

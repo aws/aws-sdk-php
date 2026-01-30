@@ -2,15 +2,16 @@
 namespace Aws\Test\EndpointV2;
 
 use Aws\EndpointV2\Rule;
+use Aws\EndpointV2\Rule\RuleCreator;
 use Aws\Exception\UnresolvedEndpointException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\EndpointV2\Rule\RuleCreator::class)]
+#[CoversClass(RuleCreator::class)]
 class RuleCreatorTest extends TestCase
 {
-    public function ruleCreationProvider()
+    public static function ruleCreationProvider(): array
     {
         return [
             [
@@ -44,16 +45,13 @@ class RuleCreatorTest extends TestCase
         ];
     }
 
-    /**
-
- */
-    #[DataProvider('RuleCreationProvider')]
+    #[DataProvider('ruleCreationProvider')]
     public function testRuleCreation($spec, $expected) {
         $result = Rule\RuleCreator::create($spec['type'], $spec);
         $this->assertInstanceOf($expected, $result);
     }
 
-    public static function invalidRuleTypeProvider()
+    public static function invalidRuleTypeProvider(): array
     {
         return [
             ['foo'],
@@ -62,9 +60,6 @@ class RuleCreatorTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('invalidRuleTypeProvider')]
     public function testThrowsExceptionForInvalidRuleType($input)
     {

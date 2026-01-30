@@ -8,17 +8,9 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\Arn\Arn::class)]
+#[CoversClass(Arn::class)]
 class ArnTest extends TestCase
 {
-
-    /**
-     *
-     * @param $string
-     * @param $expected
-     * @param $expectedString
-
- */
     #[DataProvider('parsedArnProvider')]
     public function testParsesArnString($string, $expected, $expectedString)
     {
@@ -33,7 +25,7 @@ class ArnTest extends TestCase
         $this->assertEquals($expectedString, (string) $arn);
     }
 
-    public static function parsedArnProvider()
+    public static function parsedArnProvider(): array
     {
         return [
             // All components
@@ -117,12 +109,6 @@ class ArnTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param $string
-     * @param $message
-
- */
     #[DataProvider('invalidArnCases')]
     public function testThrowsOnInvalidArn($string, $message)
     {
@@ -134,7 +120,7 @@ class ArnTest extends TestCase
         }
     }
 
-    public static function invalidArnCases()
+    public static function invalidArnCases(): array
     {
         return [
             [

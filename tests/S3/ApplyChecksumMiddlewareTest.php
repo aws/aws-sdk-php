@@ -13,9 +13,6 @@ class ApplyChecksumMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-
- */
     #[DataProvider('getFlexibleChecksumUseCases')]
     public function testFlexibleChecksums(
         $operation,
@@ -55,7 +52,7 @@ class ApplyChecksumMiddlewareTest extends TestCase
         $mw($command, $request);
     }
 
-    public static function getFlexibleChecksumUseCases()
+    public static function getFlexibleChecksumUseCases(): array
     {
         return [
             'http_checksum_not_modeled' => [
@@ -198,9 +195,6 @@ class ApplyChecksumMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('getContentSha256UseCases')]
     public function testAddsContentSHA256($operation, $args, $hashAdded, $hashValue)
     {
@@ -217,7 +211,7 @@ class ApplyChecksumMiddlewareTest extends TestCase
         $mw($command, $request);
     }
 
-    public static function getContentSha256UseCases()
+    public static function getContentSha256UseCases(): array
     {
         $hash = 'SHA256HASH';
 

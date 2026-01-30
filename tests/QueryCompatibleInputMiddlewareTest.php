@@ -14,14 +14,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(\Aws\QueryCompatibleInputMiddleware::class)]
 class QueryCompatibleInputMiddlewareTest extends TestCase
 {
-    /**
-     *
-     * @param $inputParam
-     * @param $inputValue
-     * @param $expected
-     * @param $type
-
- */
     #[DataProvider('getInputsDataProvider')]
     public function testEmitsWarning($inputParam, $inputValue, $expected, $type)
     {
@@ -47,13 +39,6 @@ class QueryCompatibleInputMiddlewareTest extends TestCase
         }
     }
 
-    /**
-     *
-     * @param $inputParam
-     * @param $inputValue
-     * @param $expected
-
- */
     #[DataProvider('getInputsDataProvider')]
     public function testAppliesMiddlewareAndCastsValues($inputParam, $inputValue, $expected)
     {

@@ -4,8 +4,10 @@ namespace Aws\Test;
 use Aws\CacheInterface;
 use Aws\DoctrineCacheAdapter;
 use Doctrine\Common\Cache\Cache;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(DoctrineCacheAdapter::class)]
 class DoctrineCacheAdapterTest extends TestCase
 {
     public function testProxiesCallsToDoctrine()

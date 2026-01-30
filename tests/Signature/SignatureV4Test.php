@@ -118,7 +118,7 @@ class SignatureV4Test extends TestCase
         return $pairs;
     }
 
-    public static function getExpiresDateTimeInterfaceInputs()
+    public static function getExpiresDateTimeInterfaceInputs(): array
     {
         return [
             [
@@ -130,9 +130,6 @@ class SignatureV4Test extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('getExpiresDateTimeInterfaceInputs')]
     public function testCreatesPresignedDatesFromDateTime($dateTime)
     {
@@ -182,7 +179,7 @@ class SignatureV4Test extends TestCase
         $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
-    public static function getStartDateTimeInterfaceInputs()
+    public static function getStartDateTimeInterfaceInputs(): array
     {
         return [
             [
@@ -194,9 +191,6 @@ class SignatureV4Test extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('getStartDateTimeInterfaceInputs')]
     public function testUsesStartDateFromDateTimeIfPresent($dateTime)
     {
@@ -394,7 +388,7 @@ class SignatureV4Test extends TestCase
         $signature->signRequest($request, $credentials);
     }
 
-    public static function unsignedPayloadProvider()
+    public static function unsignedPayloadProvider(): array
     {
         return [
             // POST headers should be signed.
@@ -448,9 +442,6 @@ class SignatureV4Test extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('unsignedPayloadProvider')]
     public function testSignRequestUnsignedPayload($req, $sreq, $creq)
     {
@@ -467,10 +458,9 @@ class SignatureV4Test extends TestCase
         $ctx = $contextFn->invoke($signature, $parsed, $payload);
         $this->assertEquals($creq, $ctx['creq']);
         $this->assertSame($sreq, Psr7\Message::toString($signature->signRequest($request, $credentials)));
-        $this->assertTrue(true);
     }
 
-    public static function provider()
+    public static function provider(): array
     {
         return [
             // POST headers should be signed.
@@ -572,9 +562,6 @@ class SignatureV4Test extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('provider')]
     public function testSignsRequests($req, $sreq, $creq)
     {
@@ -590,7 +577,6 @@ class SignatureV4Test extends TestCase
         $ctx = $contextFn->invoke($signature, $parsed, $payload);
         $this->assertEquals($creq, $ctx['creq']);
         $this->assertSame($sreq, Psr7\Message::toString($signature->signRequest($request, $credentials)));
-        $this->assertTrue(true);
     }
 
     public function testRemovesIllegalV4aHeadersBeforeSigning()

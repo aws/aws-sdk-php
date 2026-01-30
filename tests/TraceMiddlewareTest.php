@@ -128,13 +128,6 @@ class TraceMiddlewareTest extends TestCase
         $this->assertStringContainsString('string(5) "error"', $str);
     }
 
-    /**
-     *
-     * @param string $key
-     * @param string $signature
-     * @param array $headers
-
- */
     #[DataProvider('authStringProvider')]
     public function testScrubsAuthStrings($key, $signature, array $headers)
     {
@@ -240,7 +233,7 @@ class TraceMiddlewareTest extends TestCase
         $this->assertEquals('success', $result[0]);
     }
 
-    public static function authStringProvider()
+    public static function authStringProvider(): array
     {
         return [
             // v4 signature example from http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-auth-using-authorization-header.html

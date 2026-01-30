@@ -27,7 +27,7 @@ class MarshalerTest extends TestCase
         $this->assertSame($expectedResult, $actualResult);
     }
 
-    public static function getMarshalValueUseCases()
+    public static function getMarshalValueUseCases(): array
     {
         $m = new Marshaler;
 
@@ -237,7 +237,6 @@ JSON;
         (new Marshaler)->marshalJson('foo');
     }
 
-
     public function testUnmarshalingHandlesAllDynamoDbTypes()
     {
         $item = [
@@ -341,7 +340,7 @@ JSON;
         $this->assertSame('99999999999999999999', (string) iterator_to_array($result['foo'])[0]);
         $this->assertSame('99999999999999999999.99999999999999999999', (string) $result['bar']);
     }
-    
+
     public function testNumberValueCanBeFormattedAndSerialized()
     {
         $number = new NumberValue('99999999999999999999');

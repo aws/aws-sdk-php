@@ -23,9 +23,6 @@ class WriteRequestBatchTest extends TestCase
         $this->assertSame(50, $this->getPropertyValue($batch, 'config')['threshold']);
     }
 
-    /**
-
- */
     #[DataProvider('getInvalidArgUseCases')]
     public function testInstantiationFailsOnInvalidArgs($config)
     {
@@ -33,7 +30,7 @@ class WriteRequestBatchTest extends TestCase
         new WriteRequestBatch($this->getTestClient('DynamoDb'), $config);
     }
 
-    public static function getInvalidArgUseCases()
+    public static function getInvalidArgUseCases(): array
     {
         return [
             [['batch_size' => 1]],

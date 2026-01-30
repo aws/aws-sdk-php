@@ -169,7 +169,7 @@ class ClientResolverTest extends TestCase
             . "\n\n" . 'Accelerate: (boolean)' . "\n\n"
             . '  Enables this client to use S3 Transfer Acceleration endpoints.'
         );
-        $conf = $r->resolve([
+        $r->resolve([
             'service' => 's3',
             'version' => 'latest',
             'region' => 'x',

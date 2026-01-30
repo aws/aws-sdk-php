@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(ApiCallMonitoringMiddleware::class)]
-#[CoversClass(ApiCallMonitoringMiddleware::class)]
 class ApiCallMonitoringMiddlewareTest extends TestCase
 {
     use MonitoringMiddlewareTestingTrait;
@@ -55,8 +54,12 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
         $prepareSocket->invokeArgs($middleware, array(true));
     }
 
-    public function getMonitoringDataTests()
+    public static function getMonitoringDataTests(): array
     {
+        $credentials = new Credentials('testkey', 'testsecret', 'testtoken');
+        $credentialProvider = CredentialProvider::fromCredentials($credentials);
+        $configuration = new Configuration(true, '127.0.0.1', 31000, 'AwsPhpSdkTestApp');
+
         $command = new Command('RunScheduledInstances', [
             'LaunchSpecification' => [
                 'ImageId' => 'test-image',
@@ -67,8 +70,8 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
 
         $testBase = [
             ApiCallMonitoringMiddleware::wrap(
-                $this->getCredentialProvider(),
-                $this->getConfiguration(),
+                $credentialProvider,
+                $configuration,
                 'us-east-1',
                 'ec2'
             ),

@@ -91,16 +91,6 @@ class WrappedHttpHandlerTest extends TestCase
         }
     }
 
-    /**
-     *
-     * @param Response $res
-     * @param string $serviceName
-     * @param string $errorParserClass
-     * @param string|null $expectedCode
-     * @param string|null $expectedId
-     * @param array $expectedArray
-
- */
     #[DataProvider('responseAndParserProvider')]
     public function testCanRejectWithAndParseResponse(
         Response $res,

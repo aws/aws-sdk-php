@@ -3,8 +3,10 @@ namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\Signer;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(Signer::class)]
 class SignerTest extends TestCase
 {
     /** @var Signer */
@@ -76,7 +78,10 @@ class SignerTest extends TestCase
         $this->assertArrayHasKey('Key-Pair-Id', $signature);
     }
 
-    public static function getExpiresCases()
+    /**
+     * @return array<array<int|string>>
+     */
+    public static function getExpiresCases(): array
     {
         return [
             [
@@ -88,9 +93,6 @@ class SignerTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('getExpiresCases')]
     public function testReturnsExpiresForCannedPolicies($expires)
     {
@@ -139,12 +141,6 @@ class SignerTest extends TestCase
         $this->assertDoesNotMatchRegularExpression('/[\+\=\/]/', $signature['Policy']);
     }
 
-    /**
-     *
-     * @param string $resource
-     * @param int $ts
-
- */
     #[DataProvider('cannedPolicyParameterProvider')]
     public function testCreatesCannedPolicies($resource, $ts)
     {
@@ -158,7 +154,10 @@ class SignerTest extends TestCase
         );
     }
 
-    public static function cannedPolicyParameterProvider()
+    /**
+     * @return array<array<string|int>>
+     */
+    public static function cannedPolicyParameterProvider(): array
     {
         return [
             [

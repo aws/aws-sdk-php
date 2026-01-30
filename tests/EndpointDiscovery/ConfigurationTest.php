@@ -4,10 +4,9 @@ namespace Aws\Test\EndpointDiscovery;
 
 use Aws\EndpointDiscovery\Configuration;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
-use Psr\Log\InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\EndpointDiscovery\Configuration::class)]
+#[CoversClass(Configuration::class)]
 class ConfigurationTest extends TestCase
 {
     public function testGetsCorrectValues()

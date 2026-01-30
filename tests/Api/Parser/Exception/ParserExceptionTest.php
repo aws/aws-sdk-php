@@ -5,7 +5,7 @@ use Aws\Api\Parser\Exception\ParserException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\Api\Parser\Exception\ParserException::class)]
+#[CoversClass(ParserException::class)]
 class ParserExceptionTest extends TestCase
 {
     public function testExtractsContext()

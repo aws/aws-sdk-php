@@ -2,6 +2,7 @@
 namespace Aws\Test\S3;
 
 use Aws\Middleware;
+use Aws\S3\BucketEndpointMiddleware;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -150,11 +151,6 @@ class BucketEndpointMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param $key
-
- */
     #[DataProvider('keyContainsBucketNameProvider')]
     public function testsHandlesDuplicatePathWithKeyContainsBucketName($key): void
     {

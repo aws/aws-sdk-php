@@ -21,8 +21,10 @@ use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(S3EncryptionClientV2::class)]
 class S3EncryptionClientV2Test extends TestCase
 {
     use S3EncryptionClientTestingTrait;
@@ -61,9 +63,6 @@ class S3EncryptionClientV2Test extends TestCase
         }
     }
 
-    /**
-
- */
     #[DataProvider('getValidMaterialsProviders')]
     public function testPutObjectTakesValidMaterialsProviders(
         $provider,
@@ -100,9 +99,6 @@ class S3EncryptionClientV2Test extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-
- */
     #[DataProvider('getInvalidMaterialsProviders')]
     public function testPutObjectRejectsInvalidMaterialsProviders(
         $provider,
@@ -127,9 +123,6 @@ class S3EncryptionClientV2Test extends TestCase
         ]);
     }
 
-    /**
-
- */
     #[DataProvider('getValidMetadataStrategies')]
     public function testPutObjectTakesValidMetadataStrategy(
         $strategy,
@@ -173,9 +166,6 @@ class S3EncryptionClientV2Test extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-
- */
     #[DataProvider('getInvalidMetadataStrategies')]
     public function testPutObjectRejectsInvalidMetadataStrategy($strategy, $exception)
     {
@@ -271,9 +261,6 @@ class S3EncryptionClientV2Test extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-
- */
     #[DataProvider('getCiphers')]
     public function testPutObjectValidatesCipher(
         $cipher,
@@ -313,9 +300,6 @@ class S3EncryptionClientV2Test extends TestCase
         ]);
     }
 
-    /**
-
- */
     #[DataProvider('getKeySizes')]
     public function testPutObjectValidatesKeySize(
         $keySize,

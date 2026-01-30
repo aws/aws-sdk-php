@@ -6,16 +6,9 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\Credentials\CredentialsUtils::class)]
+#[CoversClass(CredentialsUtils::class)]
 class CredentialsUtilsTest extends TestCase
 {
-
-    /**
-     * @param string $host
-     * @param bool $expectedResult
-     *
-
- */
     #[DataProvider('loopBackAddressCasesProvider')]
     public function testLoopBackAddressCases(string $host, bool $expectedResult)
     {
@@ -24,7 +17,7 @@ class CredentialsUtilsTest extends TestCase
     }
 
     /**
-     * @return string[]
+     * @return array<string, array{host: string, expected: bool}>
      */
     public static function loopBackAddressCasesProvider(): array
     {

@@ -67,7 +67,7 @@ class EventParsingIteratorTest extends TestCase
      *
      * @return \Generator
      */
-    public static function iteratorDataProvider()
+    public static function iteratorDataProvider(): \Generator
     {
        foreach (self::$eventCases as $eventCase) {
             $shape = self::loadEventStreamShapeFromJson($eventCase['shape']);
@@ -95,9 +95,7 @@ class EventParsingIteratorTest extends TestCase
      * this unique element against the expected output, otherwise we evaluate the whole array
      * against the expected output. The reason for this is to test parsing either single or multiple
      * events.
-     *
-
- */
+     */
     #[DataProvider('iteratorDataProvider')]
     public function testParsedEventsMatchExpectedOutput($iterator, $expectedOutput)
     {
@@ -116,9 +114,7 @@ class EventParsingIteratorTest extends TestCase
     /**
      * This method tests for whether the deserialized event members match the equivalent
      * shape member types.
-     *
-
- */
+     */
     #[DataProvider('iteratorDataProvider')]
     public function testParsedEventsMatchExpectedType($iterator)
     {
@@ -296,7 +292,7 @@ class EventParsingIteratorTest extends TestCase
      * This method creates an instance of a RestParser class based on the protocol provided.
      *
      * @param $protocol
-     * 
+     *
      * @return AbstractRestParser
      */
     private static function createRestParser($protocol): AbstractRestParser
@@ -372,14 +368,6 @@ EOF;
         $this->assertEquals(['initial-response' => []], $iterator->current());
     }
 
-    /**
-     * @param array $eventStreams
-     * @param string $expectedExceptionMessage
-     *
-     * @return void
-     *
-
- */
     #[DataProvider('handleEventWithExceptionsProvider')]
     public function testHandleEventWithExceptions(
         array $eventStreams,
@@ -413,7 +401,8 @@ EOF;
     /**
      * @return array[]
      */
-    public static function handleEventWithExceptionsProvider(): array {
+    public static function handleEventWithExceptionsProvider(): array
+    {
         return [
             'handle_event_with_exceptions_1' => [
                 'event_streams' =>

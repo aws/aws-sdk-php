@@ -8,8 +8,10 @@ use Aws\Crypto\Cipher\CipherMethod;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(AesEncryptingStream::class)]
 class AesEncryptingStreamTest extends TestCase
 {
     const KB = 1024;
@@ -17,12 +19,6 @@ class AesEncryptingStreamTest extends TestCase
 
     use AesEncryptionStreamTestTrait;
 
-    /**
-     *
-     * @param StreamInterface $plainText
-     * @param CipherMethod $iv
-
- */
     #[DataProvider('cartesianJoinInputCipherMethodProvider')]
     public function testStreamOutputSameAsOpenSSL(
         StreamInterface $plainText,
@@ -44,12 +40,6 @@ class AesEncryptingStreamTest extends TestCase
         );
     }
 
-    /**
-     *
-     * @param StreamInterface $plainText
-     * @param CipherMethod $iv
-
- */
     #[DataProvider('cartesianJoinInputCipherMethodProvider')]
     public function testGetOpenSslName(
         StreamInterface $plainText,
@@ -65,12 +55,6 @@ class AesEncryptingStreamTest extends TestCase
         );
     }
 
-    /**
-     *
-     * @param StreamInterface $plainText
-     * @param CipherMethod $iv
-
- */
     #[DataProvider('cartesianJoinInputCipherMethodProvider')]
     public function testGetCurrentIv(
         StreamInterface $plainText,
@@ -86,12 +70,6 @@ class AesEncryptingStreamTest extends TestCase
         );
     }
 
-    /**
-     *
-     * @param StreamInterface $plainText
-     * @param CipherMethod $iv
-
- */
     #[DataProvider('cartesianJoinInputCipherMethodProvider')]
     public function testSupportsRewinding(
         StreamInterface $plainText,
@@ -104,12 +82,6 @@ class AesEncryptingStreamTest extends TestCase
         $this->assertSame($firstBytes, $cipherText->read(256 * 2 + 3));
     }
 
-    /**
-     *
-     * @param StreamInterface $plainText
-     * @param CipherMethod $iv
-
- */
     #[DataProvider('cartesianJoinInputCipherMethodProvider')]
     public function testAccuratelyReportsSizeOfCipherText(
         StreamInterface $plainText,
@@ -120,11 +92,6 @@ class AesEncryptingStreamTest extends TestCase
         $this->assertSame($cipherText->getSize(), strlen((string) $cipherText));
     }
 
-    /**
-     *
-     * @param CipherMethod $cipherMethod
-
- */
     #[DataProvider('cipherMethodProvider')]
     public function testMemoryUsageRemainsConstant(CipherMethod $cipherMethod)
     {
@@ -155,11 +122,6 @@ class AesEncryptingStreamTest extends TestCase
         $this->assertFalse($stream->isWritable());
     }
 
-    /**
-     *
-     * @param CipherMethod $cipherMethod
-
- */
     #[DataProvider('cipherMethodProvider')]
     public function testReturnsPaddedOrEmptyStringWhenSourceStreamEmpty(
         CipherMethod $cipherMethod
@@ -176,11 +138,6 @@ class AesEncryptingStreamTest extends TestCase
         $this->assertSame($stream->read(self::MB), '');
     }
 
-    /**
-     *
-     * @param CipherMethod $cipherMethod
-
- */
     #[DataProvider('cipherMethodProvider')]
     public function testDoesNotSupportSeekingFromEnd(CipherMethod $cipherMethod)
     {
@@ -190,10 +147,6 @@ class AesEncryptingStreamTest extends TestCase
         $stream->seek(1, SEEK_END);
     }
 
-    /**
-     *
-     * @param CipherMethod $cipherMethod
-     */
     #[DataProvider('seekableCipherMethodProvider')]
     public function testSupportsSeekingFromCurrentPosition(
         CipherMethod $cipherMethod

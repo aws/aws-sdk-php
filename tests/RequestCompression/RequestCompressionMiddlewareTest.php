@@ -8,8 +8,10 @@ use Aws\RequestCompressionMiddleware;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(RequestCompressionMiddleware::class)]
 class RequestCompressionMiddlewareTest extends TestCase
 {
     public function testCompressesRequestByDefault()
@@ -64,7 +66,7 @@ class RequestCompressionMiddlewareTest extends TestCase
         }
     }
 
-    public static function specificSizeProvider()
+    public static function specificSizeProvider(): array
     {
         return [
             [60, 0, 65],
@@ -74,13 +76,6 @@ class RequestCompressionMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param $minSize
-     * @param $numMetricData
-     * @param $expectedBodySize
-
- */
     #[DataProvider('specificSizeProvider')]
     public function testCompressesRequestAtSpecificSize($minSize, $numMetricData, $expectedBodySize)
     {
@@ -195,7 +190,7 @@ class RequestCompressionMiddlewareTest extends TestCase
         }
     }
 
-    public static function invalidDisableCompressionType()
+    public static function invalidDisableCompressionType(): array
     {
         return [
             ['foo'],
@@ -203,11 +198,6 @@ class RequestCompressionMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param $invalidType
-
- */
     #[DataProvider('invalidDisableCompressionType')]
     public function testThrowsExceptionWhenDisableMinCompressionNotBool($invalidType)
     {
@@ -217,7 +207,7 @@ class RequestCompressionMiddlewareTest extends TestCase
         $client = $this->generateTestClient($service, ['disable_request_compression' => $invalidType]);
     }
 
-    public static function invalidMinRequestSizeProvider()
+    public static function invalidMinRequestSizeProvider(): array
     {
         return [
             [-1],
@@ -226,11 +216,6 @@ class RequestCompressionMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param $minRequestSize
-
- */
     #[DataProvider('invalidMinRequestSizeProvider')]
     public function testThrowsExceptionWhenInvalidMinCompressionSizeOnClient($minRequestSize)
     {
@@ -251,11 +236,6 @@ class RequestCompressionMiddlewareTest extends TestCase
         );
     }
 
-    /**
-     *
-     * @param $minRequestSize
-
- */
     #[DataProvider('invalidMinRequestSizeProvider')]
     public function testThrowsExceptionWhenInvalidMinCompressionSize($minRequestSize)
     {
@@ -325,24 +305,22 @@ XML;
     {
         //40 brings the request body size above the default minimum
         // compression threshold of 10240. 10919 to be exact.
-            return array_fill(
-                0,
-                $numElements,
-                [
-                    'MetricName' => 'MyMetric',
-                    'Timestamp' => time(),
-                    'Dimensions' => [
-                        [
-                            'Name' => 'MyDimension1',
-                            'Value' => 'MyValue1'
+        return array_fill(
+            0,
+            $numElements,
+            [
+                'MetricName' => 'MyMetric',
+                'Timestamp' => time(),
+                'Dimensions' => [
+                    [
+                        'Name' => 'MyDimension1',
+                        'Value' => 'MyValue1'
 
-                        ],
                     ],
-                    'Unit' => 'Count',
-                    'Value' => 1
-                ]
-            );
-        }
+                ],
+                'Unit' => 'Count',
+                'Value' => 1
+            ]
+        );
+    }
 }
-
-

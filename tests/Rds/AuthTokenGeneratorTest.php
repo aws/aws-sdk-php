@@ -56,7 +56,7 @@ class AuthTokenGeneratorTest extends TestCase
         $this->assertStringContainsString('Action=connect', $token);
     }
 
-    public static function lifetimeProvider()
+    public static function lifetimeProvider(): array
     {
         return [
             [1],
@@ -66,11 +66,6 @@ class AuthTokenGeneratorTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param $lifetime
-
- */
     #[DataProvider('lifetimeProvider')]
     public function testCanCreateAuthTokenWthNonDefaultLifetime($lifetime)
     {
@@ -92,7 +87,7 @@ class AuthTokenGeneratorTest extends TestCase
         $this->assertStringContainsString('Action=connect', $token);
     }
 
-    public static function lifetimeFailureProvider()
+    public static function lifetimeFailureProvider(): array
     {
         return [
             [0],
@@ -105,11 +100,6 @@ class AuthTokenGeneratorTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param $lifetime
-
- */
     #[DataProvider('lifetimeFailureProvider')]
     public function testThrowsExceptionWithInvalidLifetime($lifetime)
     {

@@ -9,21 +9,14 @@ use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 use Aws\Test\UsesServiceTrait;
 use ReflectionClass;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(EndpointV2Middleware::class)]
 class EndpointV2MiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     *
-     * @param $service
-     * @param $clientArgs
-     * @param $commandName
-     * @param $commandArgs
-     * @param $expectedUri
-
- */
     #[DataProvider('providedSuccessCases')]
     public function testSuccessfullyResolvesEndpointAndAuthScheme(
         $service,
@@ -49,7 +42,7 @@ class EndpointV2MiddlewareTest extends TestCase
         $mw($command);
     }
 
-    public static function providedSuccessCases()
+    public static function providedSuccessCases(): array
     {
         return [
             [
@@ -122,12 +115,6 @@ class EndpointV2MiddlewareTest extends TestCase
         $method->invoke($middleware, [['name' => 'invalidAuthScheme']]);
     }
 
-    /**
-     * @param $authSchemes
-     * @param $expected
-     *
-
- */
     #[DataProvider('v4aAuthProvider')]
     public function testV4aAuthSchemeSelection($authSchemes, $expected)
     {
@@ -156,7 +143,7 @@ class EndpointV2MiddlewareTest extends TestCase
         $this->assertSame($expected, $result['version']);
     }
 
-    public static function v4aAuthProvider()
+    public static function v4aAuthProvider(): array
     {
         return [
             [
@@ -196,12 +183,9 @@ class EndpointV2MiddlewareTest extends TestCase
 
         $reflection = new ReflectionClass(EndpointV2Middleware::class);
         $method = $reflection->getMethod('resolveAuthScheme');
-       $method->invoke($middleware, [['name' => 'sigv4a']]);
+        $method->invoke($middleware, [['name' => 'sigv4a']]);
     }
 
-    /**
-
- */
     #[DataProvider('invalidInitializationProvider')]
     public function testInitializationWithInvalidParameters(
         $nextHandler,
@@ -258,7 +242,8 @@ class EndpointV2MiddlewareTest extends TestCase
         ];
     }
 
-    public function testBadParametersOnInvocation() {
+    public function testBadParametersOnInvocation()
+    {
         $this->expectException(\TypeError::class);
 
         $nextHandler = function ($command, $endpoint) {};

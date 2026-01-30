@@ -149,7 +149,7 @@ class RetryMiddlewareTest extends TestCase
         $this->assertFalse($decider(0, $command, $request, null, $err));
     }
 
-    public static function awsErrorCodeProvider()
+    public static function awsErrorCodeProvider(): array
     {
         $command = new Command('foo');
         return [
@@ -165,11 +165,7 @@ class RetryMiddlewareTest extends TestCase
             [new AwsException('e', $command, ['code' => 'EC2ThrottledException'])],
         ];
     }
-    /**
-    * @param $err
-    *
 
- */
     #[DataProvider('awsErrorCodeProvider')]
     public function testDeciderRetriesWhenAwsErrorCodeMatches($err)
     {

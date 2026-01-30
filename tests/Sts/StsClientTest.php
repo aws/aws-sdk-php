@@ -183,11 +183,6 @@ class StsClientTest extends TestCase
         $this->assertFalse($credentials->isExpired());
     }
 
-    /**
-     *
-     * @return void
-
- */
     #[DataProvider('stsAssumeRoleOperationsDataProvider')]
     public function testStsAssumeRoleOperationsWithAccountId($response, $expected)
     {
@@ -233,9 +228,6 @@ class StsClientTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('stsAssumeRoleWithSAMLOperationsDataProvider')]
     public function testStsAssumeRoleWithSAMLOperationsWithAccountId(
         $response,
@@ -293,9 +285,6 @@ class StsClientTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('stsAssumeRoleWithWebIdentityOperationsDataProvider')]
     public function testStsAssumeRoleWithWebIdentityOperationsWithAccountId(
         $response,
@@ -350,9 +339,6 @@ class StsClientTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('stsGetFederationTokenOperationsDataProvider')]
     public function testStsGetFederationTokenOperationsWithAccountId(
         $response,

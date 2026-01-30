@@ -378,9 +378,6 @@ class TransferTest extends TestCase
         $this->deleteDirectory($dir);
     }
 
-    /**
-
- */
     #[DataProvider('providedPathsOutsideTarget')]
     public function testCannotDownloadObjectsOutsideTarget($key)
     {
@@ -410,7 +407,8 @@ class TransferTest extends TestCase
         $this->deleteDirectory($dir);
     }
 
-    public static function providedPathsOutsideTarget() {
+    public static function providedPathsOutsideTarget(): array
+    {
         return [
             ['bar/../a/b'],
             //ensures if path resolves to target directory
@@ -551,13 +549,6 @@ class TransferTest extends TestCase
         $this->deleteDirectory($dir);
     }
 
-    /**
-     * @param $checksumAlgorithm
-     * @param $value
-     * @return void
-     *
-
- */
     #[DataProvider('flexibleChecksumsProvider')]
     public function testAddsFlexibleChecksums($checksumAlgorithm)
     {
@@ -616,7 +607,8 @@ class TransferTest extends TestCase
         $this->deleteDirectory($dir);
     }
 
-    public static function flexibleChecksumsProvider() {
+    public static function flexibleChecksumsProvider(): array
+    {
         return [
             ['sha256'],
             ['sha1'],

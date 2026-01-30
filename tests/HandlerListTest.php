@@ -6,8 +6,9 @@ use Aws\CommandInterface;
 use Aws\HandlerList;
 use Aws\Middleware;
 use GuzzleHttp\Psr7\Request;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\TestCase;
 
 #[CoversClass(HandlerList::class)]
 class HandlerListTest extends TestCase
@@ -23,8 +24,8 @@ class HandlerListTest extends TestCase
     public function testHandlerCanBeSetInCtor()
     {
         $handler = function () {
-
-        $this->assertTrue(true);};
+            $this->assertTrue(true);
+        };
         $list = new HandlerList($handler);
         $this->assertTrue($list->hasHandler());
         $this->assertSame($handler, $list->resolve());
@@ -33,8 +34,8 @@ class HandlerListTest extends TestCase
     public function testHandlerCanBeSetInSetter()
     {
         $handler = function () {
-
-        $this->assertTrue(true);};
+            $this->assertTrue(true);
+        };
         $list = new HandlerList();
         $list->setHandler($handler);
         $this->assertTrue($list->hasHandler());
@@ -51,8 +52,8 @@ class HandlerListTest extends TestCase
     public function testCanRemoveByInstance()
     {
         $handler = function () {
-
-        $this->assertTrue(true);};
+            $this->assertTrue(true);
+        };
         $list = new HandlerList($handler);
         $middleware = function () { return function () {}; };
         $list->appendInit($middleware);
@@ -74,8 +75,8 @@ class HandlerListTest extends TestCase
     public function testCanRemoveByName()
     {
         $handler = function () {
-
-        $this->assertTrue(true);};
+            $this->assertTrue(true);
+        };
         $list = new HandlerList($handler);
         $middleware = function () { return function () {}; };
         $list->appendInit($middleware, 'foo');
@@ -186,8 +187,8 @@ class HandlerListTest extends TestCase
     public function testCanInterposeMiddleware()
     {
         $list = new HandlerList(function () {
-
-        $this->assertTrue(true);});
+            $this->assertTrue(true);
+        });
         $list->appendInit(Middleware::tap(function () {}), 'a');
         $list->appendValidate(Middleware::tap(function () {}), 'b');
         $list->appendBuild(Middleware::tap(function () {}), 'c');

@@ -16,7 +16,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\DynamoDb\DynamoDbClient::class)]
+#[CoversClass(DynamoDbClient::class)]
 class DynamoDbClientTest extends TestCase
 {
     use UsesServiceTrait;
@@ -31,7 +31,7 @@ class DynamoDbClientTest extends TestCase
         );
     }
 
-    public function dataForFormatValueTest()
+    public static function dataForFormatValueTest(): array
     {
         $handle = fopen('php://memory', 'w+');
         fwrite($handle, 'foo');
@@ -84,9 +84,6 @@ class DynamoDbClientTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('dataProviderRetrySettings')]
     public function testRetriesOnDynamoSpecificRetryableException($settings)
     {
@@ -138,7 +135,7 @@ class DynamoDbClientTest extends TestCase
         $this->assertSame(3, $attemptCount);
     }
 
-    public static function dataProviderRetrySettings()
+    public static function dataProviderRetrySettings(): array
     {
         return [
             [
@@ -189,11 +186,6 @@ class DynamoDbClientTest extends TestCase
         $this->assertEmpty($queue);
     }
 
-    /**
-     *
-     * @param $settings
-
- */
     #[DataProvider('dataProviderRetrySettings')]
     public function testAppliesRetryStatsConfig($settings)
     {

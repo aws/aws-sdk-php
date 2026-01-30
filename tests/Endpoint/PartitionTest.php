@@ -9,14 +9,9 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\Endpoint\Partition::class)]
+#[CoversClass(Partition::class)]
 class PartitionTest extends TestCase
 {
-    /**
-     *
-     * @param array $definition
-
- */
     #[DataProvider('partitionDefinitionProvider')]
     public function testAcceptsValidDefinitions(array $definition)
     {
@@ -26,11 +21,6 @@ class PartitionTest extends TestCase
         );
     }
 
-    /**
-     *
-     * @param array $invalidDefinition
-
- */
     #[DataProvider('invalidPartitionDefinitionProvider')]
     public function testRejectsInvalidDefinitions(array $invalidDefinition)
     {
@@ -39,11 +29,6 @@ class PartitionTest extends TestCase
         new Partition($invalidDefinition);
     }
 
-    /**
-     *
-     * @param array $definition
-
- */
     #[DataProvider('partitionDefinitionProvider')]
     public function testReportsData(array $definition)
     {
@@ -56,11 +41,7 @@ class PartitionTest extends TestCase
             (new Partition($definition))->getDnsSuffix()
         );
     }
-    /**
-     *
-     * @param array $definition
 
- */
     #[DataProvider('partitionDefinitionProvider')]
     public function testFipsEndpoint(array $definition)
     {
@@ -108,11 +89,6 @@ class PartitionTest extends TestCase
         return $return;
     }
 
-    /**
-     *
-     * @param array $definition
-
- */
     #[DataProvider('partitionDefinitionProvider')]
     public function testReportsRegionMatches(array $definition)
     {
@@ -122,16 +98,10 @@ class PartitionTest extends TestCase
         $this->assertFalse($partition->isRegionMatch('foo', 'bar'));
     }
 
-    /**
-     *
-     * @param array $definition
-
- */
     #[DataProvider('partitionDefinitionProvider')]
     public function testReportsRegionMatchesByPattern(array $definition)
     {
-        $definition['regionRegex'] = '^fo[\w]{1
-        $this->assertTrue(true);}';
+        $definition['regionRegex'] = '^fo[\w]{1}';
         $partition = new Partition($definition);
 
         $this->assertTrue($partition->isRegionMatch('foo', 's3'));
@@ -139,14 +109,6 @@ class PartitionTest extends TestCase
         $this->assertFalse($partition->isRegionMatch('bar', 's3'));
     }
 
-    /**
-     *
-     * @param Partition $partition
-     * @param string $service
-     * @param array $regions
-     * @param bool $allowNonRegionalEndpoints
-
- */
     #[DataProvider('serviceRegionsProvider')]
     public function testEnumeratesRegionsForGivenService(
         Partition $partition,
@@ -160,7 +122,7 @@ class PartitionTest extends TestCase
         ));
     }
 
-    public static function serviceRegionsProvider()
+    public static function serviceRegionsProvider(): array
     {
         $partition = new Partition([
             'partition' => 'foo',
@@ -198,14 +160,6 @@ class PartitionTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param Partition $partition
-     * @param $region
-     * @param $service
-     * @param $signingRegion
-
- */
     #[DataProvider('signingRegionProvider')]
     public function testDeterminesSigningRegion(
         Partition $partition,
@@ -223,7 +177,7 @@ class PartitionTest extends TestCase
         $this->assertSame($signingRegion, $resolved['signingRegion']);
     }
 
-    public static function signingRegionProvider()
+    public static function signingRegionProvider(): array
     {
         $partition = new Partition([
             'partition' => 'foo',
@@ -254,14 +208,6 @@ class PartitionTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param Partition $partition
-     * @param $region
-     * @param $service
-     * @param $endpoint
-
- */
     #[DataProvider('endpointProvider')]
     public function testDeterminesEndpoint(
         Partition $partition,
@@ -279,7 +225,7 @@ class PartitionTest extends TestCase
         $this->assertSame($endpoint, $resolved['endpoint']);
     }
 
-    public static function endpointProvider()
+    public static function endpointProvider(): array
     {
         $partition = new Partition([
             'partition' => 'foo',
@@ -340,14 +286,6 @@ class PartitionTest extends TestCase
         $this->assertSame('https://baz.us-east-1.bar', $resolved['endpoint']);
     }
 
-    /**
-     *
-     * @param Partition $partition
-     * @param $region
-     * @param $service
-     * @param $signatureVersion
-
- */
     #[DataProvider('signatureVersionProvider')]
     public function testDeterminesSignatureVersion(
         Partition $partition,
@@ -365,7 +303,7 @@ class PartitionTest extends TestCase
         $this->assertSame($signatureVersion, $resolved['signatureVersion']);
     }
 
-    public static function signatureVersionProvider()
+    public static function signatureVersionProvider(): array
     {
         $partition = new Partition([
             'partition' => 'foo',
@@ -421,14 +359,6 @@ class PartitionTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param Partition $partition
-     * @param string $region
-     * @param string $service
-     * @param string $signingName
-
- */
     #[DataProvider('signingNameProvider')]
     public function testDeterminesSigningName(
         Partition $partition,
@@ -446,7 +376,7 @@ class PartitionTest extends TestCase
         $this->assertSame($signingName, $resolved['signingName']);
     }
 
-    public static function signingNameProvider()
+    public static function signingNameProvider(): array
     {
         $partition = new Partition([
             'partition' => 'foo',
@@ -494,13 +424,6 @@ class PartitionTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param $region
-     * @param $configOption
-     * @param $expectedEndpoint
-
- */
     #[DataProvider('stsEndpointTestCases')]
     public function testResolvesStsRegionalEndpoints(
         $region,
@@ -528,7 +451,7 @@ class PartitionTest extends TestCase
 
     }
 
-    public static function stsEndpointTestCases()
+    public static function stsEndpointTestCases(): array
     {
         return [
             [
@@ -594,13 +517,6 @@ class PartitionTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param $region
-     * @param $configOption
-     * @param $expectedEndpoint
-
- */
     #[DataProvider('s3EndpointTestCases')]
     public function testResolvesS3RegionalEndpoint(
         $region,
@@ -628,7 +544,7 @@ class PartitionTest extends TestCase
 
     }
 
-    public static function s3EndpointTestCases()
+    public static function s3EndpointTestCases(): array
     {
         return [
             [
@@ -679,13 +595,6 @@ class PartitionTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param array $definition
-     * @param bool $useFipsConfig
-     * @param bool $useDualstackConfig
-
- */
     #[DataProvider('variantTagProvider')]
     public function testGetVariantIgnoresVariantTagOrder(
         array $definition,
@@ -836,13 +745,6 @@ class PartitionTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param array $definition
-     * @param @fipsConfig
-     * @param @dualstackConfig
-
- */
     #[DataProvider('variantTagEmptyProvider')]
     public function testGetVariantNoVariantSelectedIfTagsAreEmpty(
         array $definition,
@@ -993,13 +895,6 @@ class PartitionTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param array $tags
-     * @param @fipsConfig
-     * @param @dualstackConfig
-
- */
     #[DataProvider('booleanConfigProvider')]
     public function testGetVariantWithBooleanConfigValues(
         array $tags,
@@ -1042,7 +937,7 @@ class PartitionTest extends TestCase
         $this->assertStringContainsString('testsuffix.com', $resolved['endpoint']);
     }
 
-    public static function booleanConfigProvider()
+    public static function booleanConfigProvider(): array
     {
         return [
             [

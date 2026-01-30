@@ -15,7 +15,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(SignatureProvider::class)]
 class SignatureProviderTest extends TestCase
 {
-    public static function versionProvider()
+    public static function versionProvider(): array
     {
         return [
             ['v4', SignatureV4::class, 'foo'],
@@ -36,9 +36,6 @@ class SignatureProviderTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('versionProvider')]
     public function testCreatesSignatureFromVersionString($v, $type, $service)
     {

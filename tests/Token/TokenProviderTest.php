@@ -161,8 +161,6 @@ EOT;
         ];
     }
 
-    /**
-     */
     #[DataProvider('tokenProviderSuccessCases')]
     public function testTokenProviderCachedSuccess($cachedToken, $expectedToken)
     {
@@ -263,8 +261,6 @@ EOT;
         ];
     }
 
-    /**
-     */
     #[DataProvider('tokenProviderSuccessCasesWithRefresh')]
     public function testTokenProviderCachedSuccessWithRefresh(
         $currentTime,
@@ -397,8 +393,6 @@ EOT;
         ];
     }
 
-    /**
-     */
     #[DataProvider('tokenProviderFailureCases')]
     public function testTokenProviderFailureCases($cachedToken, $expectedException)
     {

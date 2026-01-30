@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(S3UriParser::class)]
 class S3UriParserTest extends TestCase
 {
-    public static function uriProvider()
+    public static function uriProvider(): array
     {
         return [
             ['http://s3.amazonaws.com', ['region' => null, 'bucket' => null, 'key' => null, 'path_style' => true]],
@@ -89,9 +89,6 @@ class S3UriParserTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('uriProvider')]
     public function testParsesUrls($uri, $result, $isError = false)
     {

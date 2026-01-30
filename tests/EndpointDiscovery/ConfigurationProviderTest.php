@@ -75,10 +75,6 @@ EOT;
         putenv('HOME=' . self::$originalEnv['home']);
     }
 
-    /**
-     * @param $envName
-
- */
     #[DataProvider('getEnvVariableNames')]
     public function testCreatesFromEnvironmentVariables($envName)
     {
@@ -89,7 +85,7 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
-    public static function getEnvVariableNames()
+    public static function getEnvVariableNames(): array
     {
         return [
             [ConfigurationProvider::ENV_ENABLED],
@@ -404,7 +400,6 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
-
     public function testUsesIniWithUseAwsConfigFileTrue()
     {
         $dir = $this->clearEnv();
@@ -433,7 +428,7 @@ EOT;
         unlink($dir . '/config');
     }
 
-    public static function getSuccessfulUnwrapData()
+    public static function getSuccessfulUnwrapData(): array
     {
         $expected = new Configuration(true, 4000);
         return [
@@ -470,11 +465,6 @@ EOT;
         ];
     }
 
-    /**
-     * @param $toUnwrap
-     * @param ConfigurationInterface $expected
-
- */
     #[DataProvider('getSuccessfulUnwrapData')]
     public function testSuccessfulUnwraps($toUnwrap, ConfigurationInterface $expected)
     {

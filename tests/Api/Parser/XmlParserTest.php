@@ -2,6 +2,8 @@
 namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Parser\Exception\ParserException;
+use Aws\Api\Parser\RestXmlParser;
+use Aws\Api\Parser\XmlParser;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -9,15 +11,14 @@ use PHPUnit\Framework\Attributes\CoversClass;
 /**
  * This class tests the custom functionality of the XmlParser;
  * generic testing is done in ComplianceTest.php
-
  */
-#[CoversClass(\Aws\Api\Parser\RestXmlParser::class)]
-#[CoversClass(\Aws\Api\Parser\XmlParser::class)]
+#[CoversClass(RestXmlParser::class)]
+#[CoversClass(XmlParser::class)]
 class XmlParserTest extends TestCase
 {
     use ParserTestServiceTrait;
 
-    public static function timeStampModelProvider()
+    public static function timeStampModelProvider(): array
     {
         return [
             [932169600, "ParseIso8601", "1999-07-17T00:00:00+00:00"],
@@ -65,7 +66,7 @@ class XmlParserTest extends TestCase
         ];
     }
 
-    public static function timeStampExceptionModelProvider()
+    public static function timeStampExceptionModelProvider(): array
     {
         return [
             ["this text is not a date", "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
@@ -92,9 +93,6 @@ class XmlParserTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('timeStampModelProvider')]
     public function testTimeStamps($timestamp, $commandName, $expectedValue)
     {
@@ -111,10 +109,6 @@ class XmlParserTest extends TestCase
         self::assertEquals($expectedValue, $result);
     }
 
-
-    /**
-
- */
     #[DataProvider('timeStampExceptionModelProvider')]
     public function testExceptionTimeStamps(
         $timestamp,

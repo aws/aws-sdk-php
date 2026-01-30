@@ -6,15 +6,9 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\S3\UseArnRegion\Configuration::class)]
+#[CoversClass(Configuration::class)]
 class ConfigurationTest extends TestCase
 {
-    /**
-     *
-     * @param $param
-     * @param $expected
-
- */
     #[DataProvider('correctValueCases')]
     public function testGetsCorrectValues($param, $expected)
     {
@@ -22,7 +16,7 @@ class ConfigurationTest extends TestCase
         $this->assertEquals($expected, $config->isUseArnRegion());
     }
 
-    public static function correctValueCases()
+    public static function correctValueCases(): array
     {
         return [
             [true, true],

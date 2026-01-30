@@ -16,7 +16,7 @@ class PatternEndpointProviderTest extends TestCase
         $this->assertNull($e(['service' => 'foo', 'region' => 'bar']));
     }
 
-    public static function endpointProvider()
+    public static function endpointProvider(): array
     {
         return [
             [
@@ -72,9 +72,6 @@ class PatternEndpointProviderTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('endpointProvider')]
     public function testResolvesEndpoints($input, $output)
     {

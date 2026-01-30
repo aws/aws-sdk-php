@@ -9,7 +9,7 @@ use Aws\Retry\QuotaManager;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\Retry\QuotaManager::class)]
+#[CoversClass(QuotaManager::class)]
 class QuotaManagerTest extends TestCase
 {
     public function testReturnsFalseWithNoCapacity()

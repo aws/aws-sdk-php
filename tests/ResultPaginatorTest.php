@@ -7,6 +7,7 @@ use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\MetricsBuilder;
 use Aws\Result;
+use Aws\ResultPaginator;
 use Aws\S3\S3Client;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
@@ -41,9 +42,6 @@ class ResultPaginatorTest extends TestCase
         ]);
     }
 
-    /**
-
- */
     #[DataProvider('getPaginatorIterationData')]
     public function testStandardIterationWorkflow(
         array $config,
@@ -78,9 +76,6 @@ class ResultPaginatorTest extends TestCase
         $this->assertEquals($expectedTableNames, $tableNames);
     }
 
-    /**
-
- */
     #[DataProvider('getPaginatorIterationData')]
     public function testAsyncWorkflow(
         array $config,
@@ -105,8 +100,9 @@ class ResultPaginatorTest extends TestCase
     public function testNonIterator()
     {
         // Get test data
-        $config = $this->getPaginatorIterationData()[0][0];
-        $results = $this->getPaginatorIterationData()[0][1];
+        $data = self::getPaginatorIterationData();
+        $config = $data[0][0];
+        $results = $data[0][1];
         // Create the client and paginator
         $client = $this->getCustomClientProvider($config);
         $this->addMockResults($client, $results);
@@ -124,7 +120,8 @@ class ResultPaginatorTest extends TestCase
     /**
      * @return array Test data
      */
-    public static function getPaginatorIterationData(): array {
+    public static function getPaginatorIterationData(): array
+    {
         return [
             // Single field token case
             [

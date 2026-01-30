@@ -394,13 +394,6 @@ class MiddlewareTest extends TestCase
         $promise->wait();
     }
 
-    /**
-     *
-     * @param string|null $functionName
-     * @param string|null $traceId
-     * @param bool $traceHeaderExpected
-     * @param string $traceHeaderExpectedValue
- */
     #[DataProvider('recursionDetectionProvider')]
     public function testRecursionDetection(
         ?string $functionName,

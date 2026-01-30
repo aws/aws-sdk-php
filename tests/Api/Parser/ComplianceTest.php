@@ -13,15 +13,23 @@ use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Aws\Api\Parser\AbstractParser;
+use Aws\Api\Parser\AbstractRestParser;
+use Aws\Api\Parser\JsonRpcParser;
+use Aws\Api\Parser\JsonParser;
+use Aws\Api\Parser\RestJsonParser;
+use Aws\Api\Parser\RestXmlParser;
+use Aws\Api\Parser\QueryParser;
+use Aws\Api\Parser\XmlParser;
 
-#[CoversClass(\Aws\Api\Parser\AbstractParser::class)]
-#[CoversClass(\Aws\Api\Parser\AbstractRestParser::class)]
-#[CoversClass(\Aws\Api\Parser\JsonRpcParser::class)]
-#[CoversClass(\Aws\Api\Parser\JsonParser::class)]
-#[CoversClass(\Aws\Api\Parser\RestJsonParser::class)]
-#[CoversClass(\Aws\Api\Parser\RestXmlParser::class)]
-#[CoversClass(\Aws\Api\Parser\QueryParser::class)]
-#[CoversClass(\Aws\Api\Parser\XmlParser::class)]
+#[CoversClass(AbstractParser::class)]
+#[CoversClass(AbstractRestParser::class)]
+#[CoversClass(JsonRpcParser::class)]
+#[CoversClass(JsonParser::class)]
+#[CoversClass(RestJsonParser::class)]
+#[CoversClass(RestXmlParser::class)]
+#[CoversClass(QueryParser::class)]
+#[CoversClass(XmlParser::class)]
 class ComplianceTest extends TestCase
 {
     use UsesServiceTrait;
@@ -104,17 +112,6 @@ class ComplianceTest extends TestCase
         }
     }
 
-    /**
-     *
-     * @param $about
-     * @param Service $service
-     * @param $name
-     * @param array $expectedResult
-     * @param $res
-     * @param string|null $errorCode
-     * @param string|null $errorMessage
-
- */
     #[DataProvider('caseProvider')]
     public function testPassesComplianceTest(
         string $about,
@@ -151,7 +148,6 @@ class ComplianceTest extends TestCase
 
         $this->fixTimestamps($result, $service->getOperation($name)->getOutput());
         $this->assertEquals($expectedResult, $result);
-        $this->assertTrue(true);
     }
 
     private function fixTimestamps(mixed &$data, Shape $shape): void

@@ -16,9 +16,6 @@ class InstructionFileMetadataStrategyTest extends TestCase
 {
     use UsesMetadataEnvelopeTrait, UsesServiceTrait;
 
-    /**
-
- */
     #[DataProvider('getMetadataFields')]
     public function testSave($fields)
     {
@@ -47,8 +44,7 @@ class InstructionFileMetadataStrategyTest extends TestCase
     /**
      * Tests that only required data gets saved to the instruction file
      * and other data is left to the object metadata headers
-
- */
+     */
     #[DataProvider('getV3MetadataFields')]
     public function testSaveV3MetadataEnvelope($fields): void
     {
@@ -111,9 +107,6 @@ class InstructionFileMetadataStrategyTest extends TestCase
 
     }
 
-    /**
-
- */
     #[DataProvider('getMetadataResult')]
     public function testLoad($args, $metadata)
     {
@@ -138,9 +131,6 @@ class InstructionFileMetadataStrategyTest extends TestCase
         }
     }
 
-    /**
-
- */
     #[DataProvider('getV3FieldsForInstructionFile')]
     public function testLoadV3FromInstructionFileAndMetadata($args, $instructionFile): void
     {
@@ -169,9 +159,6 @@ class InstructionFileMetadataStrategyTest extends TestCase
         }
     }
 
-    /**
-
- */
     #[DataProvider('getV3MetadataResult')]
     public function testLoadV3FromInstructionFileAndMetadataCorruptInstructionFile($args, $instructionFile)
     {
@@ -187,10 +174,7 @@ class InstructionFileMetadataStrategyTest extends TestCase
         $this->expectExceptionMessage("One or more reserved keys found in Instruction file when they should not be present.");
         $envelope = $strategy->load($args);
     }
-    
-    /**
 
- */
     #[DataProvider('getMetadataResult')]
     public function testLoadV2FromInstructionFileAndMetadataCorruptInstructionFile($args, $instructionFile)
     {
@@ -208,10 +192,7 @@ class InstructionFileMetadataStrategyTest extends TestCase
         $this->expectExceptionMessage("Malformed metadata envelope.");
         $envelope = $strategy->load($args);
     }
-    
-    /**
 
- */
     #[DataProvider('getMetadataResult')]
     public function testLoadV2FromInstructionFileAndMetadataInvalidJson($args, $instructionFile)
     {

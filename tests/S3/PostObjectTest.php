@@ -73,13 +73,6 @@ class PostObjectTest extends TestCase
         );
     }
 
-    /**
-     *
-     * @param string $endpoint
-     * @param string $bucket
-     * @param string $expected
-
- */
     #[DataProvider('pathStyleProvider')]
     public function testCanHandleForcedPathStyleEndpoint($endpoint, $bucket, $expected)
     {
@@ -104,7 +97,7 @@ class PostObjectTest extends TestCase
         $this->assertSame($expected, $formAttrs['action']);
     }
 
-    public static function pathStyleProvider()
+    public static function pathStyleProvider(): array
     {
         return [
             ['http://s3.amazonaws.com', 'foo', 'http://s3.amazonaws.com/foo'],

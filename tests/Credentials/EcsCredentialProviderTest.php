@@ -19,8 +19,9 @@ use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
-#[CoversClass(\Aws\Credentials\EcsCredentialProvider::class)]
+#[CoversClass(EcsCredentialProvider::class)]
 class EcsCredentialProviderTest extends TestCase
 {
     private $uripath;
@@ -145,9 +146,6 @@ class EcsCredentialProviderTest extends TestCase
         putenv("NO_PROXY=$no");
     }
 
-    /**
-
- */
     #[DataProvider('uriAndTokenResolutionProvider')]
     public function testUriAndTokenResolution($case)
     {
@@ -366,12 +364,10 @@ EOF;
     }
 
     /**
-     *
      * @param array $clientDef
      * @param CredentialsInterface $expected
      * @throws GuzzleException
-
- */
+     */
     #[DataProvider('successDataProvider')]
     public function testHandlesSuccessScenarios(
         array $clientDef,
@@ -422,7 +418,7 @@ EOF;
         $promiseCreds = Promise\Create::promiseFor(
             new Response(200, [], Psr7\Utils::streamFor(
                 json_encode(call_user_func_array(
-                    [__CLASS__, 'getCredentialArray'],
+                    [self::class, 'getCredentialArray'],
                     $creds
                 )))
             )
@@ -462,16 +458,14 @@ EOF;
     }
 
     /**
-     *
      * @param $client
      * @param \Exception $expected
-     * 
+     *
      * @throws GuzzleException
-
- */
+     */
     #[DataProvider('failureDataProvider')]
     public function testHandlesFailureScenarios(
-        array $responses, 
+        array $responses,
         \Exception $expected
     )
     {

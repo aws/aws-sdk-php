@@ -11,8 +11,10 @@ use Aws\Test\UsesServiceTrait;
 use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use GuzzleHttp\Psr7;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(S3EncryptionMultipartUploader::class)]
 class S3EncryptionMultipartUploaderTest extends TestCase
 {
     use UsesServiceTrait, UsesMetadataEnvelopeTrait, UsesCryptoParamsTrait;
@@ -50,9 +52,6 @@ class S3EncryptionMultipartUploaderTest extends TestCase
         }
     }
 
-    /**
-
- */
     #[DataProvider('getValidMaterialsProviders')]
     public function testPutObjectTakesValidMaterialsProviders(
         $provider,
@@ -95,9 +94,6 @@ class S3EncryptionMultipartUploaderTest extends TestCase
         $this->assertSame(self::TEST_URL, $result['ObjectURL']);
     }
 
-    /**
-
- */
     #[DataProvider('getInvalidMaterialsProviders')]
     public function testPutObjectRejectsInvalidMaterialsProviders(
         $provider,
@@ -124,9 +120,6 @@ class S3EncryptionMultipartUploaderTest extends TestCase
         $uploader->upload();
     }
 
-    /**
-
- */
     #[DataProvider('getValidMetadataStrategies')]
     public function testPutObjectTakesValidMetadataStrategy(
         $strategy,
@@ -177,9 +170,6 @@ class S3EncryptionMultipartUploaderTest extends TestCase
         $this->assertSame(self::TEST_URL, $result['ObjectURL']);
     }
 
-    /**
-
- */
     #[DataProvider('getInvalidMetadataStrategies')]
     public function testPutObjectRejectsInvalidMetadataStrategy(
         $strategy,
@@ -250,9 +240,6 @@ class S3EncryptionMultipartUploaderTest extends TestCase
         $this->assertSame(self::TEST_URL, $result['ObjectURL']);
     }
 
-    /**
-
- */
     #[DataProvider('getCiphers')]
     public function testPutObjectValidatesCipher(
         $cipher,
@@ -297,9 +284,6 @@ class S3EncryptionMultipartUploaderTest extends TestCase
         $this->assertSame(self::TEST_URL, $result['ObjectURL']);
     }
 
-    /**
-
- */
     #[DataProvider('getKeySizes')]
     public function testPutObjectValidatesKeySize(
         $keySize,

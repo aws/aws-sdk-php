@@ -67,9 +67,6 @@ class EndpointProviderV2Test extends TestCase
         }
     }
 
-    /**
-
- */
     #[DataProvider('basicTestCaseProvider')]
     public function testBasicEndpointAndErrorCases(
         $ruleset,
@@ -130,9 +127,6 @@ class EndpointProviderV2Test extends TestCase
         }
     }
 
-    /**
-
- */
     #[DataProvider('serviceTestCaseProvider')]
     public function testServiceEndpointAndErrorCases(
         $service,
@@ -226,9 +220,7 @@ class EndpointProviderV2Test extends TestCase
      * End-to-end tests which ensure the correct values are resolved
      * before being passed into the endpoint provider and after other
      * middleware has acted upon the request.
-     *
-
- */
+     */
     #[DataProvider('rulesetProtocolEndpointAndErrorCaseProvider')]
     public function testRulesetProtocolEndpointAndErrorCases($service, $clientArgs, $operationInput, $expected, $errorCase)
     {
@@ -380,10 +372,6 @@ class EndpointProviderV2Test extends TestCase
         $endpointProvider->resolveEndpoint(['Region' => 'us-west-2']);
     }
 
-    /**
-     * @return void
-
- */
     #[DataProvider('stringArrayOperationInputsProvider')]
     public function testStringArrayOperationInputs(
         $params,

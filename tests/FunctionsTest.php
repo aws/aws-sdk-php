@@ -8,23 +8,27 @@ use Aws\S3\S3Client;
 use PHPUnit\Framework\Attributes\CoversFunction;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversFunction('\Aws\recursive_dir_iterator')]
-#[CoversClass('\Aws\or_chain')]
-#[CoversClass('\Aws\load_compiled_json')]
-#[CoversClass('\Aws\constantly')]
-#[CoversClass('\Aws\filter')]
-#[CoversClass('\Aws\map')]
-#[CoversClass('\Aws\flatmap')]
-#[CoversClass('\Aws\partition')]
-#[CoversClass('\Aws\describe_type')]
-#[CoversClass('\Aws\describe_type')]
+#[CoversFunction('Aws\recursive_dir_iterator')]
+#[CoversFunction('Aws\or_chain')]
+#[CoversFunction('Aws\load_compiled_json')]
+#[CoversFunction('Aws\constantly')]
+#[CoversFunction('Aws\filter')]
+#[CoversFunction('Aws\map')]
+#[CoversFunction('Aws\flatmap')]
+#[CoversFunction('Aws\partition')]
+#[CoversFunction('Aws\describe_type')]
+#[CoversFunction('Aws\dir_iterator')]
+#[CoversFunction('Aws\default_http_handler')]
+#[CoversFunction('Aws\serialize')]
+#[CoversFunction('Aws\manifest')]
+#[CoversFunction('Aws\is_valid_hostname')]
+#[CoversFunction('Aws\is_valid_hostlabel')]
+#[CoversFunction('Aws\parse_ini_file')]
+#[CoversFunction('Aws\parse_ini_section_with_subsections')]
+#[CoversFunction('Aws\is_associative')]
 class FunctionsTest extends TestCase
 {
-    /**
-
- */
     public function testCreatesRecursiveDirIterator()
     {
         $iter = Aws\recursive_dir_iterator(__DIR__);
@@ -275,7 +279,7 @@ class FunctionsTest extends TestCase
         $this->assertEquals($expected, Aws\is_valid_hostname($hostname));
     }
 
-    public static function getHostnameTestCases()
+    public static function getHostnameTestCases(): array
     {
         return [
             ['a', true],
@@ -319,14 +323,14 @@ class FunctionsTest extends TestCase
     /**
      * @param string $label
      * @param bool $expected
-     * */
+     */
     #[DataProvider('getHostlabelTestCases')]
     public function testValidatesHostlabels($label, $expected)
     {
         $this->assertEquals($expected, Aws\is_valid_hostlabel($label));
     }
 
-    public static function getHostlabelTestCases()
+    public static function getHostlabelTestCases(): array
     {
         return [
             ['us-west-2', true],
@@ -364,7 +368,7 @@ class FunctionsTest extends TestCase
         unlink($tmpFile);
     }
 
-    public static function getIniFileTestCases()
+    public static function getIniFileTestCases(): array
     {
         return [
             [
@@ -421,7 +425,7 @@ EOT
         unlink($tmpFile);
     }
 
-    public static function getIniFileServiceTestCases()
+    public static function getIniFileServiceTestCases(): array
     {
         return [
             [
@@ -454,9 +458,7 @@ EOT
     /**
      * @param $array
      * @param $expected
-     *
-
- */
+     */
     #[DataProvider('isAssociativeProvider')]
     public function testIsAssociative($array, $expected)
     {
@@ -464,7 +466,7 @@ EOT
         $this->assertEquals($expected, $result);
     }
 
-    public static function isAssociativeProvider()
+    public static function isAssociativeProvider(): array
     {
         return [
            [[], false],

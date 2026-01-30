@@ -94,7 +94,6 @@ class Ec2ClientTest extends TestCase
 
     public function testSkipEmptyListSerialization()
     {
-
         $ec2Client = new Ec2Client([
             'region' => 'us-east-1',
             'http_handler' => function (RequestInterface $request) {

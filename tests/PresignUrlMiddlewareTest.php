@@ -102,14 +102,6 @@ class PresignUrlMiddlewareTest extends TestCase
         ]);
     }
 
-    /**
-     * @param string $parameter
-     * @param string $value
-     * @param string $expected
-     *
-     * @return void
-
- */
     #[DataProvider('extraQueryParamsProvider')]
     public function testExtraQueryParametersAreURLEncoded(
         string $parameter,
@@ -132,7 +124,7 @@ class PresignUrlMiddlewareTest extends TestCase
                 return new Result;
             },
         ]);
-        
+
         $ec2->getHandlerList()->prependInit(
             PresignUrlMiddleware::wrap($ec2, $ec2->getEndpointProvider(), [
                 'operations' => ['CopySnapshot'],
@@ -140,7 +132,7 @@ class PresignUrlMiddlewareTest extends TestCase
                 'extra_query_params' => ['CopySnapshot' => [$parameter]]
             ])
         );
-        
+
         $ec2->copySnapshot([
             'SourceRegion' => 'eu-west-1',
             'SourceSnapshotId' => 'foo',
@@ -148,9 +140,6 @@ class PresignUrlMiddlewareTest extends TestCase
         ]);
     }
 
-    /**
-     * @return array[]
-     */
     public static function extraQueryParamsProvider(): array
     {
         return [
@@ -187,4 +176,3 @@ class PresignUrlMiddlewareTest extends TestCase
         ];
     }
 }
-

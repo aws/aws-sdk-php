@@ -10,7 +10,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\EndpointParameterMiddleware::class)]
+#[CoversClass(EndpointParameterMiddleware::class)]
 class EndpointParameterMiddlewareTest extends TestCase
 {
     public function testThrowsExceptionForMissingParameter()
@@ -66,9 +66,6 @@ class EndpointParameterMiddlewareTest extends TestCase
         }
     }
 
-    /**
-
- */
     #[DataProvider('correctlyOutputsHostDataProvider')]
     public function testCorrectlyOutputsHost(
         $clientArgs,

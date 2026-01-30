@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Test\Token;
 
-
 use Aws\Exception\TokenException;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
@@ -12,7 +11,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 require_once __DIR__ . '/../Token/token_hack.php';
 
-#[CoversClass(\Aws\Token\SsoTokenProvider::class)]
+#[CoversClass(SsoTokenProvider::class)]
 class SsoTokenProviderTest extends TestCase
 {
     use UsesServiceTrait;
@@ -51,7 +50,6 @@ class SsoTokenProviderTest extends TestCase
         putenv('HOMEDRIVE=' . $this->homedrive);
         putenv('HOMEPATH=' . $this->homepath);
     }
-
 
     public function testSsoTokenProviderSuccess()
     {

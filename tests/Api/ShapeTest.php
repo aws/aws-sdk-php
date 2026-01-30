@@ -7,7 +7,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(Shape::class)]
-#[CoversClass(Shape::class)]
 class ShapeTest extends TestCase
 {
     public function testImplementsArray()

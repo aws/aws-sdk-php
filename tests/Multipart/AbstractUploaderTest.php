@@ -4,6 +4,7 @@ namespace Aws\Test\Multipart;
 use Aws\Command;
 use Aws\Exception\AwsException;
 use Aws\Exception\MultipartUploadException;
+use Aws\Multipart\AbstractUploader;
 use Aws\Multipart\UploadState;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
@@ -187,13 +188,6 @@ class AbstractUploaderTest extends TestCase
         $this->assertInstanceOf('InvalidArgumentException', $exception);
     }
 
-    /**
-     * @param bool        $seekable
-     * @param UploadState $state
-     * @param array       $expectedBodies
-     *
-
- */
     #[DataProvider('getPartGeneratorTestCases')]
     public function testCommandGeneratorYieldsExpectedUploadCommands(
         $seekable,
@@ -223,7 +217,7 @@ class AbstractUploaderTest extends TestCase
         $this->assertEquals($expectedBodies, $actualBodies);
     }
 
-    public static function getPartGeneratorTestCases()
+    public static function getPartGeneratorTestCases(): array
     {
         $expected = [
             1 => 'AA',

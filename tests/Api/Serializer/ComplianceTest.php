@@ -8,16 +8,25 @@ use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Aws\Api\Serializer\QuerySerializer;
+use Aws\Api\Serializer\JsonRpcSerializer;
+use Aws\Api\Serializer\RestSerializer;
+use Aws\Api\Serializer\RestJsonSerializer;
+use Aws\Api\Serializer\RestXmlSerializer;
+use Aws\Api\Serializer\JsonBody;
+use Aws\Api\Serializer\XmlBody;
+use Aws\Api\Serializer\Ec2ParamBuilder;
+use Aws\Api\Serializer\QueryParamBuilder;
 
-#[CoversClass(\Aws\Api\Serializer\QuerySerializer::class)]
-#[CoversClass(\Aws\Api\Serializer\JsonRpcSerializer::class)]
-#[CoversClass(\Aws\Api\Serializer\RestSerializer::class)]
-#[CoversClass(\Aws\Api\Serializer\RestJsonSerializer::class)]
-#[CoversClass(\Aws\Api\Serializer\RestXmlSerializer::class)]
-#[CoversClass(\Aws\Api\Serializer\JsonBody::class)]
-#[CoversClass(\Aws\Api\Serializer\XmlBody::class)]
-#[CoversClass(\Aws\Api\Serializer\Ec2ParamBuilder::class)]
-#[CoversClass(\Aws\Api\Serializer\QueryParamBuilder::class)]
+#[CoversClass(QuerySerializer::class)]
+#[CoversClass(JsonRpcSerializer::class)]
+#[CoversClass(RestSerializer::class)]
+#[CoversClass(RestJsonSerializer::class)]
+#[CoversClass(RestXmlSerializer::class)]
+#[CoversClass(JsonBody::class)]
+#[CoversClass(XmlBody::class)]
+#[CoversClass(Ec2ParamBuilder::class)]
+#[CoversClass(QueryParamBuilder::class)]
 class ComplianceTest extends TestCase
 {
     use UsesServiceTrait;
@@ -80,9 +89,6 @@ class ComplianceTest extends TestCase
         }
     }
 
-    /**
-
- */
     #[DataProvider('caseProvider')]
     public function testPassesComplianceTest(
         Service $service,

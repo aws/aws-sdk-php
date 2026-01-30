@@ -26,7 +26,7 @@ class RdsClientTest extends TestCase
         $_SERVER['aws_time'] = null;
         $_SERVER['formatAwsTime'] = null;
     }
-    
+
     public function testAddsCopySnapshotMiddleware()
     {
         $rds = new RdsClient([
@@ -53,7 +53,7 @@ class RdsClientTest extends TestCase
         ]);
     }
 
-    public static function rdsPresignMethodProvider()
+    public static function rdsPresignMethodProvider(): array
     {
         return [
             ['copyDBSnapshot', ['SourceDBSnapshotIdentifier' => 'arn:aws:rds:us-east-1:123456789012:snapshot:source-db-snapshot', 'TargetDBSnapshotIdentifier' => 'target-db-snapshot'], null, null, null, null],
@@ -71,15 +71,6 @@ class RdsClientTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param string $functionName
-     * @param string $presignedUrl
-     * @param string $sourceRegion
-     * @param string $expectedUrl
-     * @param string $expectedSignature
-
- */
     #[DataProvider('rdsPresignMethodProvider')]
     public function testCorrectPresignRdsUrls(
         $functionName,
@@ -120,4 +111,3 @@ class RdsClientTest extends TestCase
         call_user_func([$rds, $functionName], $functionArgs);
     }
 }
-

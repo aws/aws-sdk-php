@@ -399,10 +399,6 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         }
     }
 
-    /**
-     * Tests region precedence: config > env var > fallback
-
- */
     #[DataProvider('regionPrecedenceProvider')]
     public function testRegionPrecedence(
         ?string $configRegion,
@@ -477,10 +473,6 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         ];
     }
 
-    /**
-     * Tests that correct endpoints are called
-
- */
     #[DataProvider('endpointProvider')]
     public function testEndpointSelection(
         string $region,

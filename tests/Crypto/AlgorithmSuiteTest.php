@@ -5,11 +5,11 @@ use Aws\Crypto\AlgorithmSuite;
 use Aws\Crypto\AlgorithmConstants;
 use Aws\Crypto\MaterialsProviderV3;
 use Aws\S3\Crypto\S3EncryptionClientV3;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\Crypto\AlgorithmSuite::class)]
+#[CoversClass(AlgorithmSuite::class)]
 class AlgorithmSuiteTest extends TestCase
 {
     /**
@@ -95,8 +95,7 @@ class AlgorithmSuiteTest extends TestCase
 
     /**
      * Test getCipherName() method
-
- */
+     */
     #[DataProvider('cipherNameProvider')]
     public function testGetCipherName(AlgorithmSuite $suite, string $expectedCipher): void
     {
@@ -149,8 +148,7 @@ class AlgorithmSuiteTest extends TestCase
 
     /**
      * Test getIvLengthBits() and getIvLengthBytes() methods
-
- */
+     */
     #[DataProvider('ivLengthProvider')]
     public function testGetIvLength(AlgorithmSuite $suite, int $expectedBits, int $expectedBytes): void
     {
@@ -184,8 +182,7 @@ class AlgorithmSuiteTest extends TestCase
 
     /**
      * Test getCipherTagLengthBits() and getCipherTagLengthInBytes() methods
-
- */
+     */
     #[DataProvider('cipherTagLengthProvider')]
     public function testGetCipherTagLength(AlgorithmSuite $suite, int $expectedBits, int $expectedBytes): void
     {
@@ -235,8 +232,7 @@ class AlgorithmSuiteTest extends TestCase
 
     /**
      * Test key derivation length methods
-
- */
+     */
     #[DataProvider('keyDerivationProvider')]
     public function testGetDerivationKeyLengths(
         AlgorithmSuite $suite,
@@ -283,8 +279,7 @@ class AlgorithmSuiteTest extends TestCase
 
     /**
      * Test commitment key length methods
-
- */
+     */
     #[DataProvider('commitmentKeyLengthProvider')]
     public function testGetCommitmentKeyLengths(
         AlgorithmSuite $suite,

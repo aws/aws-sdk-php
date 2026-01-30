@@ -7,7 +7,7 @@ use Aws\Api\Service;
 use Aws\CommandInterface;
 use Aws\Test\Api\Parser\ParserTestServiceTrait;
 use GuzzleHttp\Psr7\Response;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
@@ -16,13 +16,6 @@ class RestJsonParserTest extends TestCase
 {
     use ParserTestServiceTrait;
 
-    /**
-     * @param string|array $value
-     * @param array $expected
-     *
-     * @return void
-
- */
     #[DataProvider('parsesDocumentTypePayloadProvider')]
     public function testParsesDocumentTypePayload(
         string $value,

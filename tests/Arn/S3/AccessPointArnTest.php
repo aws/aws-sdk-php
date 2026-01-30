@@ -7,15 +7,9 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\Arn\S3\AccessPointArn::class)]
+#[CoversClass(AccessPointArn::class)]
 class AccessPointArnTest extends TestCase
 {
-    /**
-     *
-     * @param $string
-     * @param $message
-
- */
     #[DataProvider('invalidArnCases')]
     public function testThrowsOnInvalidArn($string, $message)
     {
@@ -27,7 +21,7 @@ class AccessPointArnTest extends TestCase
         }
     }
 
-    public static function invalidArnCases()
+    public static function invalidArnCases(): array
     {
         return [
             [

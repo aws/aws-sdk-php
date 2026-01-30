@@ -8,7 +8,7 @@ use Aws\S3\UseArnRegion\ConfigurationInterface;
 use Aws\S3\UseArnRegion\ConfigurationProvider;
 use Aws\S3\UseArnRegion\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(ConfigurationProvider::class)]
@@ -30,7 +30,7 @@ s3_use_arn_region = false
 s3_use_arn_region = true
 EOT;
 
-    public static function set_up_before_class()
+    public static function setUpBeforeClass(): void
     {
         self::$originalEnv = [
             'use_arn_region' => getenv(ConfigurationProvider::ENV_USE_ARN_REGION) ?: '',
@@ -55,7 +55,7 @@ EOT;
         return $dir;
     }
 
-    public static function tear_down_after_class()
+    public static function tearDownAfterClass(): void
     {
         putenv(ConfigurationProvider::ENV_USE_ARN_REGION . '=' .
             self::$originalEnv['use_arn_region']);
@@ -351,4 +351,3 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 }
-

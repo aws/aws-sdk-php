@@ -28,15 +28,13 @@ class RetryMiddlewareV2Test extends TestCase
     use UsesServiceTrait;
 
     /**
-     *
      * @param CommandInterface $command
      * @param QuotaManager $quotaManager
      * @param array $queue
      * @param array $options
      * @param $expected
      * @throws \Exception
-
- */
+     */
     #[DataProvider('standardModeTestCases')]
     public function testRetriesForStandardMode(
         CommandInterface $command,
@@ -131,7 +129,8 @@ class RetryMiddlewareV2Test extends TestCase
         $this->assertCount($attempt, $queue);
     }
 
-    public static function standardModeTestCases(): array {
+    public static function standardModeTestCases(): array
+    {
         $command = new Command('foo');
         $result200 = new Result([
             '@metadata' => [
@@ -583,7 +582,7 @@ class RetryMiddlewareV2Test extends TestCase
         $this->assertFalse($decider(0, $command, $err));
     }
 
-    public static function awsErrorCodeProvider()
+    public static function awsErrorCodeProvider(): array
     {
         $command = new Command('foo');
         return [
@@ -600,10 +599,8 @@ class RetryMiddlewareV2Test extends TestCase
     }
 
     /**
-    * @param $err
-    *
-
- */
+     * @param $err
+     */
     #[DataProvider('awsErrorCodeProvider')]
     public function testDeciderRetriesWhenAwsErrorCodeMatches($err)
     {

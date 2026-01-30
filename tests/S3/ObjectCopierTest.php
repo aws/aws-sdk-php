@@ -12,15 +12,14 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(ObjectCopier::class)]
 class ObjectCopierTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-
- */
     #[DataProvider('copyDataProvider')]
     public function testDoesCorrectOperation(
         array $mockedResults,
@@ -40,9 +39,6 @@ class ObjectCopierTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-
- */
     #[DataProvider('copyWithPathStyleDataProvider')]
     public function testDoesCorrectOperationWithPathStyle(
         array $mockedResults,
@@ -64,11 +60,6 @@ class ObjectCopierTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-     * @param array $mockedResults
-     * @param array $options
-
- */
     #[DataProvider('copyDataProvider')]
     public function testDoesCorrectOperationWithAccessPointArn(
         array $mockedResults,
@@ -143,9 +134,6 @@ class ObjectCopierTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-
- */
     #[DataProvider('copyDataProvider')]
     public function testDoesCorrectOperationAsynchronously(
         array $mockedResults,
@@ -167,9 +155,6 @@ class ObjectCopierTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    /**
-
- */
     #[DataProvider('copyWithPathStyleDataProvider')]
     public function testDoesCorrectOperationAsynchronouslyWithPathStyle(
         array $mockedResults,
@@ -404,7 +389,8 @@ class ObjectCopierTest extends TestCase
         $this->assertSame($url, $result['ObjectURL']);
     }
 
-    public static function MultipartCopierProvider(){
+    public static function MultipartCopierProvider(): array
+    {
         return [
             ["中文", "文件夹/文件"],
             ["文件夹/文件", "中文"],
@@ -412,9 +398,6 @@ class ObjectCopierTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('MultipartCopierProvider')]
     public function testS3ObjectMultipartCopier($input, $expectedOutput)
     {

@@ -27,8 +27,9 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(AwsClient::class)]
 class AwsClientTest extends TestCase
@@ -355,14 +356,6 @@ class AwsClientTest extends TestCase
         $client->bar();
     }
 
-    /**
-     * @param array $serviceDefinition
-     * @param array $clientArguments
-     * @param array $expectedHeaders
-     * @param array $expectedHeaderValues
-     *
-
- */
     #[DataProvider('signOperationsWithAnAuthTypeProvider')]
     public function testSignOperationsWithAnAuthType(
         array $serviceDefinition,
@@ -620,7 +613,6 @@ class AwsClientTest extends TestCase
     }
 
     #[DataProvider('configuredEndpointUrlProvider')]
-
     public function testAppliesConfiguredEndpointUrl($ini, $env, $expected)
     {
         $dir = sys_get_temp_dir() . '/.aws';
@@ -652,7 +644,6 @@ class AwsClientTest extends TestCase
     }
 
     #[DataProvider('configuredEndpointUrlProvider')]
-
     public function testDoesNotApplyConfiguredEndpointWhenConfiguredUrlsIgnored($ini, $env)
     {
         putenv('AWS_IGNORE_CONFIGURED_ENDPOINT_URLS=true');
@@ -687,7 +678,7 @@ class AwsClientTest extends TestCase
         putenv('AWS_IGNORE_CONFIGURED_ENDPOINT_URLS=');
     }
 
-    public static function configuredEndpointUrlProvider()
+    public static function configuredEndpointUrlProvider(): array
     {
         return [
             [
@@ -792,10 +783,6 @@ EOT
         $client->foo();
     }
 
-    /**
-     * @runInSeparateProcess
-
- */
     #[DataProvider('signingRegionSetProvider')]
     public function testSigningRegionSetResolution(
         $command,
@@ -861,7 +848,7 @@ EOT
         putenv('AWS_SIGV4A_SIGNING_REGION_SET=');
     }
 
-    public static function signingRegionSetProvider()
+    public static function signingRegionSetProvider(): array
     {
         return [
             [null, null, null, null, 'us-west-2'],

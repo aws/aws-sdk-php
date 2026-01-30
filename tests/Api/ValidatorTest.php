@@ -8,11 +8,12 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
 #[CoversClass(Validator::class)]
 class ValidatorTest extends TestCase
 {
-    public static function validationProvider()
+    public static function validationProvider(): array
     {
         return [
             [
@@ -638,9 +639,6 @@ class ValidatorTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('validationProvider')]
     public function testValidatesInput($shape, $input, $result)
     {

@@ -13,6 +13,7 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -43,9 +44,7 @@ class StreamWrapperV2ExistenceTest extends TestCase
         $this->client = null;
     }
 
-    /**
     #[CoversNothing]
-     */
     public function testSuccessfulXMode()
     {
         $this->addMockResults(
@@ -483,7 +482,10 @@ class StreamWrapperV2ExistenceTest extends TestCase
         $this->assertSame('bucket.s3.amazonaws.com', $entries[0]['request']->getUri()->getHost());
     }
 
-    public static function rmdirProvider()
+    /**
+     * @return array<string, array<int, string>>
+     */
+    public static function rmdirProvider(): array
     {
         return [
             ['s3://bucket/object/'],
@@ -777,7 +779,10 @@ class StreamWrapperV2ExistenceTest extends TestCase
         }
     }
 
-    public static function fileTypeProvider()
+    /**
+     * @return array<string, array<int, mixed>>
+     */
+    public static function fileTypeProvider(): array
     {
         $err = function ($cmd, $r) { return new S3Exception(
             '404',

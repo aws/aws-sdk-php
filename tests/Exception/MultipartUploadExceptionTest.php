@@ -12,9 +12,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(MultipartUploadException::class)]
 class MultipartUploadExceptionTest extends TestCase
 {
-    /**
-
- */
     #[DataProvider('getTestCases')]
     public function testCanCreateMultipartException($commandName, $status)
     {
@@ -31,7 +28,7 @@ class MultipartUploadExceptionTest extends TestCase
         $this->assertSame($prev, $exception->getPrevious());
     }
 
-    public static function getTestCases()
+    public static function getTestCases(): array
     {
         return [
             ['CreateMultipartUpload', 'initiating'],

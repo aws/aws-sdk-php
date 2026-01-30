@@ -131,12 +131,6 @@ class UrlSignerTest extends TestCase
         $s->getSignedUrl('bar.com');
     }
 
-    /**
-     *
-     * @param  string  $url
-     * @param  string  $resource
-
- */
     #[DataProvider('urlAndResourceProvider')]
     public function testIsolatesResourceIUrls($url, $resource)
     {
@@ -153,7 +147,7 @@ class UrlSignerTest extends TestCase
         $this->assertSame($resource, $result);
     }
 
-    public static function urlAndResourceProvider()
+    public static function urlAndResourceProvider(): array
     {
         return [
             ['rtmp://foo.cloudfront.net/videos/test.mp4', 'videos/test.mp4'],

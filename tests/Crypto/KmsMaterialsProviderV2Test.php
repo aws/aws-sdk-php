@@ -9,7 +9,7 @@ use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\Crypto\KmsMaterialsProviderV2::class)]
+#[CoversClass(KmsMaterialsProviderV2::class)]
 class KmsMaterialsProviderV2Test extends TestCase
 {
     use UsesServiceTrait;

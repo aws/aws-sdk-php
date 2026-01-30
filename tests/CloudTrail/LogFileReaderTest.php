@@ -13,9 +13,6 @@ class LogFileReaderTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-
- */
     #[DataProvider('dataForLogReadingTest')]
     public function testCorrectlyReadsLogFiles($responseBody, $recordCount)
     {
@@ -31,7 +28,7 @@ class LogFileReaderTest extends TestCase
         $this->assertCount($recordCount, $records);
     }
 
-    public static function dataForLogReadingTest()
+    public static function dataForLogReadingTest(): array
     {
         return [
             ['{"Records":[{"foo":"1"},{"bar":"2"},{"baz":"3"}]}', 3],

@@ -22,6 +22,7 @@ use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
 #[CoversClass(Waiter::class)]
 class WaiterTest extends TestCase
@@ -148,9 +149,6 @@ class WaiterTest extends TestCase
         $this->assertSame(6000, $waitTime, 'Did not delay long enough.');
     }
 
-    /**
-
- */
     #[DataProvider('waiterWorkflowDataProvider')]
     public function testWaiterWorkflow($results, $expectedException)
     {
@@ -282,9 +280,6 @@ class WaiterTest extends TestCase
         };
     }
 
-    /**
-
- */
     #[DataProvider('matcherDataProvider')]
     public function testMatchers($matcher, $result, $acceptor, $expected)
     {
@@ -300,9 +295,6 @@ class WaiterTest extends TestCase
         ));
     }
 
-    /**
-     * @return array
-     */
     public static function matcherDataProvider(): array
     {
         return [
@@ -477,7 +469,6 @@ class WaiterTest extends TestCase
 
         return new Result($data + ['@metadata' => ['statusCode' => 200]]);
     }
-
 
     /**
      * Tests the waiter expects not error.

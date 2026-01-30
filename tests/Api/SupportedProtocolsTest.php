@@ -4,22 +4,18 @@ namespace Tests\Api;
 
 use Aws\Api\SupportedProtocols;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(SupportedProtocols::class)]
 class SupportedProtocolsTest extends TestCase
 {
-    /**
-
- */
     #[DataProvider('validProtocolsProvider')]
     public function testIsSupportedReturnsTrueForValidProtocols(string $protocol)
     {
         $this->assertTrue(SupportedProtocols::isSupported($protocol));
     }
 
-    /**
-
- */
     #[DataProvider('invalidProtocolsProvider')]
     public function testIsSupportedReturnsFalseForInvalidProtocols(string $protocol)
     {

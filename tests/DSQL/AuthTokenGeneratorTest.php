@@ -13,14 +13,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(AuthTokenGenerator::class)]
 class AuthTokenGeneratorTest extends TestCase
 {
-    /**
-     * @param $endpoint
-     * @param $credentials
-     * @param $action
-     * @return void
-     *
-
- */
     #[DataProvider('generateAuthTokenProvider')]
     public function testGeneratesAuthToken($credentials, $action)
     {
@@ -39,8 +31,9 @@ class AuthTokenGeneratorTest extends TestCase
         $this->assertStringNotContainsString('https://', $token);
     }
 
-    public static function generateAuthTokenProvider()
-    {   $accessKeyId = 'AKID';
+    public static function generateAuthTokenProvider(): array
+    {
+        $accessKeyId = 'AKID';
         $secretKeyId = 'SECRET';
         $credentials = new Credentials($accessKeyId, $secretKeyId);
         $credentialProvider = static function () use ($accessKeyId, $secretKeyId) {
@@ -57,14 +50,6 @@ class AuthTokenGeneratorTest extends TestCase
         ];
     }
 
-    /**
-     * @param $action
-     * @param $endpoint
-     * @param $region
-     * @return void
-     *
-
- */
     #[DataProvider('missingInputProvider')]
     public function testThrowsOnMissingInput($action, $endpoint, $region)
     {
@@ -77,7 +62,7 @@ class AuthTokenGeneratorTest extends TestCase
         );
     }
 
-    public static function missingInputProvider()
+    public static function missingInputProvider(): array
     {
         return [
             ['generateDbConnectAuthToken', 'foo.bar.baz', null],
@@ -87,15 +72,6 @@ class AuthTokenGeneratorTest extends TestCase
         ];
     }
 
-    /**
-     * @param $action
-     * @param $endpoint
-     * @param $region
-     *
-     * @return void
-     *
-
- */
     #[DataProvider('emptyInputProvider')]
     public function testThrowsOnEmptyInput($action, $endpoint, $region)
     {
@@ -109,7 +85,7 @@ class AuthTokenGeneratorTest extends TestCase
         );
     }
 
-    public static function emptyInputProvider()
+    public static function emptyInputProvider(): array
     {
         return [
             ['generateDbConnectAuthToken', 'foo.bar.baz', ''],
@@ -119,7 +95,7 @@ class AuthTokenGeneratorTest extends TestCase
         ];
     }
 
-    public static function lifetimeFailureProvider()
+    public static function lifetimeFailureProvider(): array
     {
         return [
             [0, 'generateDbConnectAuthToken'],
@@ -129,11 +105,6 @@ class AuthTokenGeneratorTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param $lifetime
-
- */
     #[DataProvider('lifetimeFailureProvider')]
     public function testThrowsExceptionWithInvalidLifetime($expiration, $action)
     {

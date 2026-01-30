@@ -8,8 +8,10 @@ use Aws\Identity\AwsCredentialIdentity;
 use Aws\Identity\BearerTokenIdentity;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(AuthSchemeResolver::class)]
 class AuthSchemeResolverTest extends TestCase
 {
     public function testUsesDefaultSchemeMapWhenNoneProvided()
@@ -35,9 +37,6 @@ class AuthSchemeResolverTest extends TestCase
         $this->assertEquals('v4', $resolver->selectAuthScheme(['custom.auth#example']));
     }
 
-    /**
-
- */
     #[DataProvider('schemeForIdentityProvider')]
     public function testSelectAuthSchemeReturnsCorrectSchemeForIdentity(
         $authScheme,
@@ -64,7 +63,7 @@ class AuthSchemeResolverTest extends TestCase
         $this->assertEquals($expectedSignatureVersion, $resolver->selectAuthScheme($authScheme, $args));
     }
 
-    public static function schemeForIdentityProvider()
+    public static function schemeForIdentityProvider(): array
     {
         return [
           [
@@ -191,9 +190,6 @@ class AuthSchemeResolverTest extends TestCase
         $resolver->selectAuthScheme(['aws.auth#sigv4a']);
     }
 
-    /**
-
- */
     #[DataProvider('fallsBackWhenIdentityNotAvailableProvider')]
     public function testFallsBackWhenIdentityNotAvailable(
         string $credentialIdentityClass,

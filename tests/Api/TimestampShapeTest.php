@@ -7,10 +7,10 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\Api\TimestampShape::class)]
+#[CoversClass(TimestampShape::class)]
 class TimestampShapeTest extends TestCase
 {
-    public static function formatProvider()
+    public static function formatProvider(): array
     {
         $t = strtotime('january 5, 1999');
 
@@ -29,9 +29,6 @@ class TimestampShapeTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('formatProvider')]
     public function testFormatsData($value, $format, $result)
     {

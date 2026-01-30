@@ -8,12 +8,9 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\Endpoint\PartitionEndpointProvider::class)]
+#[CoversClass(PartitionEndpointProvider::class)]
 class PartitionEndpointProviderTest extends TestCase
 {
-    /**
-
- */
     #[DataProvider('endpointProvider')]
     public function testResolvesEndpoints($input, $output)
     {
@@ -22,7 +19,7 @@ class PartitionEndpointProviderTest extends TestCase
         $this->assertEquals($output, $p($input));
     }
 
-    public static function endpointProvider()
+    public static function endpointProvider(): array
     {
         return [
             [
@@ -155,12 +152,10 @@ class PartitionEndpointProviderTest extends TestCase
     }
 
     /**
-     *
      * @param string $region
      * @param string $service
      * @param string $partition
-
- */
+     */
     #[DataProvider('partitionRegionProvider')]
     public function testResolvesPartitionsByRegion($region, $service, $partition)
     {
@@ -169,7 +164,7 @@ class PartitionEndpointProviderTest extends TestCase
         $this->assertSame($partition, $p->getPartition($region, $service)->getName());
     }
 
-    public static function partitionRegionProvider()
+    public static function partitionRegionProvider(): array
     {
         return [
             ['us-east-1', 's3', 'aws'],
@@ -218,13 +213,11 @@ class PartitionEndpointProviderTest extends TestCase
     }
 
     /**
-     *
      * @param PartitionEndpointProvider $provider
      * @param $region
      * @param $service
      * @param $endpoint
-
- */
+     */
     #[DataProvider('knownEndpointProvider')]
     public function testCanGenerateKnownEndpointsKnownToPatternProvider(
         PartitionEndpointProvider $provider,
@@ -296,7 +289,7 @@ class PartitionEndpointProviderTest extends TestCase
         }
     }
 
-    public static function knownEndpointProvider()
+    public static function knownEndpointProvider(): array
     {
         $partitions = PartitionEndpointProvider::defaultProvider();
 

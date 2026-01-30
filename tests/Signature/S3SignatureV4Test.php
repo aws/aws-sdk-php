@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 require_once __DIR__ . '/sig_hack.php';
+
 #[CoversClass(S3SignatureV4::class)]
 class S3SignatureV4Test extends TestCase
 {

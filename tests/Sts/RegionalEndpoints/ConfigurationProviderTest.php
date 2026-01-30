@@ -10,11 +10,10 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
 use Aws\Sts\RegionalEndpoints\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * git\Sts\RegionalEndpoints\ConfigurationProvider
- */
+#[CoversClass(ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
     private static $originalEnv;
@@ -353,7 +352,7 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
-    public static function getSuccessfulUnwrapData()
+    public static function getSuccessfulUnwrapData(): array
     {
         $expected = new Configuration('regional');
         return [
@@ -384,11 +383,6 @@ EOT;
         ];
     }
 
-    /**
-     * @param $toUnwrap
-     * @param ConfigurationInterface $expected
-
- */
     #[DataProvider('getSuccessfulUnwrapData')]
     public function testSuccessfulUnwraps($toUnwrap, ConfigurationInterface $expected)
     {

@@ -24,7 +24,7 @@ class JsonBodyTest extends TestCase
         );
     }
 
-    public static function formatProvider()
+    public static function formatProvider(): iterable
     {
         yield [['type' => 'string'], ['foo' => 'bar'], '{"foo":"bar"}'];
         yield [['type' => 'integer'], ['foo' => 1], '{"foo":1}'];
@@ -144,9 +144,6 @@ class JsonBodyTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('formatProvider')]
     public function testFormatsJson(array $def, array $args, string $result): void
     {
@@ -193,9 +190,6 @@ class JsonBodyTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('formatNoReferencesProvider')]
     public function testFormatsJsonDoesNotCreateReferences(
         array $def,
@@ -213,13 +207,6 @@ class JsonBodyTest extends TestCase
         $this->assertEquals($result, $builtShape);
     }
 
-    /**
-     * @param string|array $args
-     * @param string $expected
-     *
-     * @return void
-
- */
     #[DataProvider('buildsDocTypesProvider')]
     public function testBuildsDocTypes(string|array $args, string $expected): void
     {

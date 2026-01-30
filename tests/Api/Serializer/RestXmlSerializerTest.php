@@ -85,8 +85,7 @@ class RestXmlSerializerTest extends TestCase
     /**
      * @param bool $arg
      * @param string $expected
-
- */
+     */
     #[DataProvider('boolProvider')]
     public function testSerializesHeaderValueToBoolString($arg, $expected)
     {
@@ -102,7 +101,8 @@ class RestXmlSerializerTest extends TestCase
         );
     }
 
-    public static function boolProvider() {
+    public static function boolProvider(): array
+    {
         return [
             [true, 'true'],
             [false, 'false']
@@ -119,9 +119,6 @@ class RestXmlSerializerTest extends TestCase
         $this->assertSame('http://foo.com/', (string) $request->getUri());
     }
 
-    /**
-
- */
     #[DataProvider('s3EndpointResolutionProvider')]
     public function testS3EndpointResolution(
         string $endpoint,
@@ -144,9 +141,6 @@ class RestXmlSerializerTest extends TestCase
         );
     }
 
-    /**
-
- */
     #[DataProvider('s3EndpointResolutionProvider')]
     public function testS3EndpointV2Resolution(
         string $endpoint,
@@ -170,9 +164,6 @@ class RestXmlSerializerTest extends TestCase
         );
     }
 
-    /**
-
- */
     #[DataProvider('s3DotSegmentProvider')]
     public function testS3DotSegmentPreservation(
         string $endpoint,
@@ -195,9 +186,6 @@ class RestXmlSerializerTest extends TestCase
         );
     }
 
-    /**
-
- */
     #[DataProvider('s3DotSegmentProvider')]
     public function testS3DotSegmentV2Preservation(
         string $endpoint,
@@ -221,9 +209,6 @@ class RestXmlSerializerTest extends TestCase
         );
     }
 
-    /**
-
- */
     #[DataProvider('restXmlEndpointResolutionProvider')]
     public function testRestXmlEndpointResolution(
         string $endpoint,
@@ -247,9 +232,6 @@ class RestXmlSerializerTest extends TestCase
         );
     }
 
-    /**
-
- */
     #[DataProvider('restXmlEndpointResolutionProvider')]
     public function testRestXmlEndpointV2Resolution(
         string $endpoint,
@@ -496,9 +478,6 @@ class RestXmlSerializerTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('s3E2EProvider')]
     public function testS3EndpointResolutionE2E(
         string $region,
@@ -533,9 +512,6 @@ class RestXmlSerializerTest extends TestCase
         $client->getObject(['Bucket' => $bucket, 'Key' => $key]);
     }
 
-    /**
-
- */
     #[DataProvider('s3E2EProvider')]
     public function testS3EndpointResolutionE2ELegacyProvider(
         string $region,

@@ -3,14 +3,14 @@ namespace Aws\Test\EndpointV2;
 
 use Aws\EndpointV2\Ruleset\RulesetParameter;
 use Aws\Exception\UnresolvedEndpointException;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
 #[CoversClass(RulesetParameter::class)]
 class RulesetParameterTest extends TestCase
 {
-    public static function wrongParameterTypeProvider()
+    public static function wrongParameterTypeProvider(): array
     {
         return [
             [true],
@@ -19,11 +19,6 @@ class RulesetParameterTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param $inputParameter
-
- */
     #[DataProvider('wrongParameterTypeProvider')]
     public function testWrongParameterTypeThrowsException($inputParameter)
     {
@@ -88,14 +83,10 @@ class RulesetParameterTest extends TestCase
         $this->assertSame($spec['default'], $ruleset->getDefault());
     }
 
-    /**
-    #[CoversNothing]
-     * */
     #[DataProvider('validTypesProvider')]
     public function testRulesetCreationWithValidTypes($spec)
     {
         new RulesetParameter('FooParam', $spec);
-        $this->assertTrue(true);
         $this->assertTrue(true);
     }
 

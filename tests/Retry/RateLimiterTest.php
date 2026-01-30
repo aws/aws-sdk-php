@@ -50,7 +50,7 @@ class RateLimiterTest extends TestCase
         $this->assertSame(2.048, $rateLimiter->updateSendingRate(false));
     }
 
-    public static function cubicSuccessProvider()
+    public static function cubicSuccessProvider(): array
     {
         return [
             [5, 7],
@@ -63,13 +63,6 @@ class RateLimiterTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param $timestamp
-     * @param $expectedRate
-     * @throws \ReflectionException
-
- */
     #[DataProvider('cubicSuccessProvider')]
     public function testCalculatesCubicSuccessValues($timestamp, $expectedRate)
     {
@@ -237,5 +230,4 @@ class RateLimiterTest extends TestCase
             );
         }
     }
-
 }

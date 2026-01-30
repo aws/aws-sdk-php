@@ -8,11 +8,13 @@ use Aws\CommandInterface;
 use Aws\S3\AmbiguousSuccessParser;
 use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Psr\Http\Message\ResponseInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
-use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(AmbiguousSuccessParser::class)]
 class AmbiguousSuccessParserTest extends TestCase
 {
     private $instance;
@@ -31,11 +33,6 @@ class AmbiguousSuccessParserTest extends TestCase
         );
     }
 
-    /**
-     *
-     * @param string $operation
-
- */
     #[DataProvider('opsWithAmbiguousSuccessesProvider')]
     public function testConvertsAmbiguousSuccessesToExceptions($operation)
     {
@@ -54,10 +51,6 @@ class AmbiguousSuccessParserTest extends TestCase
         $instance($command, $response);
     }
 
-    /**
-     * @param string $operation
-    #[CoversNothing]
-    */
     #[DataProvider('opsWithoutAmbiguousSuccessesProvider')]
     #[CoversNothing]
     public function testIgnoresAmbiguousSuccessesOnUnaffectedOperations(string $operation)
@@ -74,12 +67,8 @@ class AmbiguousSuccessParserTest extends TestCase
         $instance = $this->instance;
         $instance($command, $response);
         $this->assertTrue(true);
-        $this->assertTrue(true);
     }
 
-    /**
-
- */
     #[DataProvider('opsWithAmbiguousSuccessesProvider')]
     public function testThrowsConnectionErrorForEmptyBody($operation)
     {

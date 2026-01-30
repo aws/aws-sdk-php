@@ -2,26 +2,19 @@
 namespace Aws\Test\Api\ErrorParser;
 
 use Aws\Api\ErrorParser\RestJsonErrorParser;
+use Aws\Api\ErrorParser\JsonParserTrait;
 use Aws\Test\TestServiceTrait;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\Api\ErrorParser\RestJsonErrorParser::class)]
-#[CoversClass(\Aws\Api\ErrorParser\JsonParserTrait::class)]
+#[CoversClass(RestJsonErrorParser::class)]
+#[CoversClass(JsonParserTrait::class)]
 class RestJsonErrorParserTest extends TestCase
 {
     use TestServiceTrait;
 
-    /**
-     *
-     * @param string $response
-     * @param string|null $commandName
-     * @param bool $parserWithService
-     * @param array $expected
-
- */
     #[DataProvider('errorResponsesProvider')]
     public function testParsesClientErrorResponses(
         string $response,

@@ -309,8 +309,7 @@ class RestJsonSerializerTest extends TestCase
     /**
      * @param $input
      * @param $expectedOutput
-
- */
+     */
     #[DataProvider('doctypeTestProvider')]
     public function testHandlesDoctype($input, $expectedOutput): void
     {
@@ -323,7 +322,6 @@ class RestJsonSerializerTest extends TestCase
             $request->getHeaderLine('Content-Type')
         );
     }
-
 
     public static function doctypeTestProvider(): iterable
     {
@@ -359,12 +357,10 @@ class RestJsonSerializerTest extends TestCase
         ];
     }
 
-
     /**
      * @param string $operation
      * @param array $input
-
- */
+     */
     #[DataProvider('restJsonContentTypeProvider')]
     public function testRestJsonContentTypeNoPayload(
         string $operation,
@@ -381,7 +377,6 @@ class RestJsonSerializerTest extends TestCase
         self::assertEmpty($request->getHeader("Content-length"));
     }
 
-
     public static function restJsonContentTypeProvider(): iterable
     {
         return [
@@ -397,8 +392,7 @@ class RestJsonSerializerTest extends TestCase
     /**
      * @param bool $arg
      * @param string $expected
-
- */
+     */
     #[DataProvider('boolProvider')]
     public function testSerializesHeaderValueToBoolString(
         bool $arg,
@@ -429,10 +423,7 @@ class RestJsonSerializerTest extends TestCase
     /**
      * @param string|array $input
      * @param string $expectedOutput
-     *
-     * @return void
-
- */
+     */
     #[DataProvider('handlesDocTypeAsPayloadProvider')]
     public function testHandlesDocTypeAsPayload(
         string|array $input,
@@ -492,10 +483,7 @@ class RestJsonSerializerTest extends TestCase
 
     /**
      * @param array|string $input
-     *
-     * @return void
-
- */
+     */
     #[DataProvider('rejectsInvalidJsonAsPayloadProvider')]
     public function testRejectsInvalidJsonAsPayload(array|string $input): void
     {
@@ -526,10 +514,7 @@ class RestJsonSerializerTest extends TestCase
      * @param array $queryParams
      * @param string $expected
      * @param string $description
-     *
-     * @return void
-
- */
+     */
     #[DataProvider('endpointResolutionProvider')]
     public function testEndpointResolution(
         string $endpoint,
@@ -553,9 +538,6 @@ class RestJsonSerializerTest extends TestCase
         );
     }
 
-    /**
-
- */
     #[DataProvider('endpointResolutionProvider')]
     public function testEndpointV2Resolution(
         string $endpoint,
@@ -580,9 +562,6 @@ class RestJsonSerializerTest extends TestCase
         );
     }
 
-    /**
-
- */
     #[DataProvider('geoServiceEndpointResolutionProvider')]
     public function testGeoServiceEndpointResolution(
         string $endpoint,
@@ -605,9 +584,6 @@ class RestJsonSerializerTest extends TestCase
         );
     }
 
-    /**
-
- */
     #[DataProvider('geoServiceEndpointResolutionProvider')]
     public function testGeoServiceEndpointV2Resolution(
         string $endpoint,
@@ -867,9 +843,6 @@ class RestJsonSerializerTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('geoServiceE2EProvider')]
     public function testGeoServiceEndpointResolutionE2E(
         string $service,

@@ -6,11 +6,13 @@ use Aws\Script\Composer\Composer;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(Composer::class)]
 class ComposerTest extends TestCase
 {
-    public static function invalidServiceNameProvider()
+    public static function invalidServiceNameProvider(): array
     {
         return [
             [['foo'], 'foo'],
@@ -20,12 +22,6 @@ class ComposerTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param $serviceList
-     * @param $invalidService
-
- */
     #[DataProvider('invalidServiceNameProvider')]
     public function testListInvalidServiceName($serviceList, $invalidService)
     {
@@ -47,7 +43,7 @@ class ComposerTest extends TestCase
         Composer::removeUnusedServices($this->getMockEvent([]));
     }
 
-    public static function servicesToKeepProvider()
+    public static function servicesToKeepProvider(): array
     {
         return [
             [['S3']],
@@ -59,11 +55,6 @@ class ComposerTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param $servicesToKeep
-
- */
     #[DataProvider('servicesToKeepProvider')]
     public function testRemoveServices($servicesToKeep)
     {
@@ -116,9 +107,6 @@ class ComposerTest extends TestCase
         }
     }
 
-    /**
-
- */
     #[DataProvider('retryProvider')]
     public function testRetriesOnException($success, $writeCalls)
     {
@@ -170,7 +158,7 @@ class ComposerTest extends TestCase
         );
     }
 
-    public static function retryProvider()
+    public static function retryProvider(): array
     {
         return [
             'success' => [true , 3],

@@ -2,11 +2,13 @@
 namespace Aws\Test;
 
 use Aws\PsrCacheAdapter;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
-use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(PsrCacheAdapter::class)]
 class PsrCacheAdapterTest extends TestCase
 {
 
@@ -22,11 +24,9 @@ class PsrCacheAdapterTest extends TestCase
     }
 
     /**
-     *
      * @param string $key
      * @param mixed $value
-
- */
+     */
     #[DataProvider('cacheDataProvider')]
     public function testProxiesGetCallsToPsrCache($key, $value)
     {
@@ -47,12 +47,10 @@ class PsrCacheAdapterTest extends TestCase
     }
 
     /**
-     *
      * @param string $key
      * @param mixed $value
      * @param int|\DateInterval $ttl
-
- */
+     */
     #[DataProvider('cacheDataProvider')]
     public function testProxiesSetCallsToPsrCache($key, $value, $ttl)
     {
@@ -79,10 +77,8 @@ class PsrCacheAdapterTest extends TestCase
     }
 
     /**
-     *
      * @param string $key
-
- */
+     */
     #[DataProvider('cacheDataProvider')]
     public function testProxiesRemoveCallsToPsrCache($key)
     {
@@ -94,7 +90,10 @@ class PsrCacheAdapterTest extends TestCase
         $this->instance->remove($key);
     }
 
-    public static function cacheDataProvider()
+    /**
+     * @return array<array<mixed>>
+     */
+    public static function cacheDataProvider(): array
     {
         return [
             ['foo', 'bar', 300],

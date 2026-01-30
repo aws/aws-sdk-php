@@ -4,8 +4,10 @@ namespace Aws\Test\S3;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use Aws\S3\PermanentRedirectMiddleware;
 
-#[CoversClass(\Aws\S3\PermanentRedirectMiddleware::class)]
+#[CoversClass(PermanentRedirectMiddleware::class)]
 class PermanentRedirectMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;

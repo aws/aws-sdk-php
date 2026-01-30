@@ -223,9 +223,6 @@ class AwsExceptionTest extends TestCase
         $this->assertNull($e->getPrevious());
     }
 
-    /**
-
- */
     #[DataProvider('previousThrowableProvider')]
     public function testAcceptsVariousThrowableTypes(\Throwable $previous): void
     {

@@ -360,4 +360,3 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 }
-

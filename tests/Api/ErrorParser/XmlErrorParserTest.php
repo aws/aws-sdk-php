@@ -16,7 +16,6 @@ class XmlErrorParserTest extends TestCase
     use TestServiceTrait;
 
     /**
-     *
      * @param string $response
      * @param string $protocol
      * @param string $parser
@@ -24,8 +23,7 @@ class XmlErrorParserTest extends TestCase
      * @param string|null $expectedParsedType
      *
      * @throws \Exception
-
- */
+     */
     #[DataProvider('errorResponsesProvider')]
     public function testParsesClientErrorResponses(
         string $response,

@@ -12,7 +12,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\DefaultsMode\ConfigurationProvider::class)]
+#[CoversClass(ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
     private static $originalEnv;
@@ -349,7 +349,7 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
-    public static function getSuccessfulUnwrapData()
+    public static function getSuccessfulUnwrapData(): array
     {
         $expected = new Configuration('standard');
         return [
@@ -375,11 +375,6 @@ EOT;
         ];
     }
 
-    /**
-     * @param $toUnwrap
-     * @param ConfigurationInterface $expected
-
- */
     #[DataProvider('getSuccessfulUnwrapData')]
     public function testSuccessfulUnwraps($toUnwrap, ConfigurationInterface $expected)
     {
@@ -388,7 +383,6 @@ EOT;
             ConfigurationProvider::unwrap($toUnwrap)->toArray()
         );
     }
-
 
     public function testCreatesLegacy()
     {

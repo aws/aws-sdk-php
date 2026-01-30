@@ -3,8 +3,10 @@ namespace Aws\Test;
 
 use Aws\Configuration\ConfigurationResolver;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(ConfigurationResolver::class)]
 class ConfigurationResolverTest extends TestCase
 {
     private static $configurationKey = 'foo_configuration_option';
@@ -81,7 +83,7 @@ EOT;
             self::$originalEnv['config_file']);
     }
 
-    public static function getEnvValues()
+    public static function getEnvValues(): array
     {
         return [
             ['true', 'bool', true],
@@ -91,9 +93,6 @@ EOT;
         ];
     }
 
-    /**
-
- */
     #[DataProvider('getEnvValues')]
     public function testRetrievesAndConvertsEnvironmentVariables($envValue, $type, $expected)
     {
@@ -127,19 +126,37 @@ EOT;
         $this->assertFalse($result);
     }
 
-    public function iniFileProvider()
+    public static function iniFileProvider(): array
     {
+        $boolIniFile = <<<EOT
+[custom]
+foo_configuration_option = false
+[default]
+foo_configuration_option = true
+EOT;
+
+        $intIniFile = <<<EOT
+[custom]
+foo_configuration_option = 25
+[default]
+foo_configuration_option = 15
+EOT;
+
+        $stringIniFile = <<<EOT
+[custom]
+foo_configuration_option = experimental
+[default]
+foo_configuration_option = standard
+EOT;
+
         return [
-            [$this->boolIniFile, 'bool', true],
-            [$this->intIniFile, 'int', 15],
-            [$this->stringIniFile, 'string', 'standard'],
+            [$boolIniFile, 'bool', true],
+            [$intIniFile, 'int', 15],
+            [$stringIniFile, 'string', 'standard'],
         ];
     }
 
-    /**
-
- */
-    #[DataProvider('IniFileProvider')]
+    #[DataProvider('iniFileProvider')]
     public function testResolvesFromIniFileWithDefaultProfile($iniFile, $type, $expected)
     {
         $dir = $this->clearEnv();
@@ -150,10 +167,7 @@ EOT;
         unlink($dir . '/config');
     }
 
-    /**
-
- */
-    #[DataProvider('IniFileProvider')]
+    #[DataProvider('iniFileProvider')]
     public function testCreatesFromIniFileWithDifferentDefaultFilename($iniFile, $type, $expected)
     {
         $dir = $this->clearEnv();
@@ -168,19 +182,37 @@ EOT;
         unlink($dir . '/alt_config');
     }
 
-    public function iniFileWithAltProfileProvider()
+    public static function iniFileWithAltProfileProvider(): array
     {
+        $boolIniFile = <<<EOT
+[custom]
+foo_configuration_option = false
+[default]
+foo_configuration_option = true
+EOT;
+
+        $intIniFile = <<<EOT
+[custom]
+foo_configuration_option = 25
+[default]
+foo_configuration_option = 15
+EOT;
+
+        $stringIniFile = <<<EOT
+[custom]
+foo_configuration_option = experimental
+[default]
+foo_configuration_option = standard
+EOT;
+
         return [
-            [$this->boolIniFile, 'bool', false],
-            [$this->intIniFile, 'int', 25],
-            [$this->stringIniFile, 'string', 'experimental'],
+            [$boolIniFile, 'bool', false],
+            [$intIniFile, 'int', 25],
+            [$stringIniFile, 'string', 'experimental'],
         ];
     }
 
-    /**
-
- */
-    #[DataProvider('IniFileWIthAltProfileProvider')]
+    #[DataProvider('iniFileWithAltProfileProvider')]
     public function testCreatesFromIniFileWithSpecifiedProfile($iniFile, $type, $expected)
     {
         $dir = $this->clearEnv();
@@ -349,9 +381,6 @@ EOT;
         );
     }
 
-    /**
-
- */
     #[DataProvider('duplicateIniFileProvider')]
     public function testResolvesServiceIniWithDuplicateSections($ini)
     {
@@ -384,7 +413,7 @@ EOT;
         );
     }
 
-    public static function duplicateIniFileProvider()
+    public static function duplicateIniFileProvider(): array
     {
         return [
             [
@@ -431,4 +460,3 @@ EOT
         ];
     }
 }
-

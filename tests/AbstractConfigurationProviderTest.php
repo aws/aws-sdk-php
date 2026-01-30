@@ -2,6 +2,7 @@
 
 namespace Aws\Test;
 
+use Aws\AbstractConfigurationProvider;
 use Aws\LruArrayCache;
 use Aws\Result;
 use Aws\ResultInterface;
@@ -10,7 +11,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\AbstractConfigurationProvider::class)]
+#[CoversClass(AbstractConfigurationProvider::class)]
 class AbstractConfigurationProviderTest extends TestCase
 {
     /** @var MockObject */

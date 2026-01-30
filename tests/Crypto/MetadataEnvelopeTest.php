@@ -11,9 +11,6 @@ class MetadataEnvelopeTest extends TestCase
 {
     use UsesMetadataEnvelopeTrait;
 
-    /**
-
- */
     #[DataProvider('getIndividualMetadataFields')]
     public function testSetsValidFields($field, $value)
     {
@@ -23,9 +20,6 @@ class MetadataEnvelopeTest extends TestCase
         $this->assertEquals($value, $envelope[$field]);
     }
 
-    /**
-
- */
     #[DataProvider('getMetadataFields')]
     public function testSetsAllFields($allValidFields)
     {
@@ -40,9 +34,6 @@ class MetadataEnvelopeTest extends TestCase
         );
     }
 
-    /**
-
- */
     #[DataProvider('getIndividualInvalidMetadataFields')]
     public function testThrowsOnInvalidMetadataField($field, $value)
     {
@@ -69,7 +60,7 @@ class MetadataEnvelopeTest extends TestCase
             $this->assertStringStartsNotWith('x-amz-meta', $envelopeKey);
         }
     }
-    
+
     /**
      * Tests that all the metadata mapkeys are prefixed with
      * `x-amz-`
@@ -86,5 +77,4 @@ class MetadataEnvelopeTest extends TestCase
             $this->assertStringStartsWith('x-amz-', $envelopeKey);
         }
     }
-
 }

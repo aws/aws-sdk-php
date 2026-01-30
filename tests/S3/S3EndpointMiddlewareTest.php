@@ -12,9 +12,11 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(S3EndpointMiddleware::class)]
 class S3EndpointMiddlewareTest extends TestCase
 {
     private static array $excludedOperations = [
@@ -49,11 +51,6 @@ class S3EndpointMiddlewareTest extends TestCase
         }
     }
 
-    /**
-     *
-     * @param CommandInterface $command
-
- */
     #[DataProvider('excludedCommandProvider')]
     public function testAppliesDualStackToCommandForInvalidOperationsWhenEnableBoth(CommandInterface $command)
     {
@@ -69,11 +66,6 @@ class S3EndpointMiddlewareTest extends TestCase
         $middleware($command, $this->getRequest($command));
     }
 
-    /**
-     *
-     * @param CommandInterface $command
-
- */
     #[DataProvider('excludedCommandProvider')]
     public function testAppliesDualStackWithPathStyleToCommandForInvalidOperationsWhenEnableBoth(CommandInterface $command)
     {
@@ -147,11 +139,6 @@ class S3EndpointMiddlewareTest extends TestCase
         }
     }
 
-    /**
-     *
-     * @param CommandInterface $command
-
- */
     #[DataProvider('excludedCommandProvider')]
     public function testAppliesDualStackForInvalidOperationsWhenEnableBothAtOperationalLevel(CommandInterface $command)
     {
@@ -166,11 +153,6 @@ class S3EndpointMiddlewareTest extends TestCase
         $middleware($command, $this->getRequest($command));
     }
 
-    /**
-     *
-     * @param CommandInterface $command
-
- */
     #[DataProvider('excludedCommandProvider')]
     public function testAppliesDualStackForInvalidOperationsWhenEnableBothWithPathStyleAtOperationalLevel(CommandInterface $command)
     {
@@ -224,11 +206,6 @@ class S3EndpointMiddlewareTest extends TestCase
         }
     }
 
-    /**
-     *
-     * @param CommandInterface $command
-
- */
     #[DataProvider('excludedCommandProvider')]
     public function testIgnoresExcludedCommands(CommandInterface $command)
     {
@@ -531,7 +508,7 @@ class S3EndpointMiddlewareTest extends TestCase
         };
     }
 
-    public static function jsonCaseProvider()
+    public static function jsonCaseProvider(): array
     {
         return json_decode(
             file_get_contents(__DIR__ . '/test_cases/uri_addressing.json'),
@@ -539,11 +516,6 @@ class S3EndpointMiddlewareTest extends TestCase
         );
     }
 
-    /**
-     *
-     * @param array $testCase
-
- */
     #[DataProvider('jsonCaseProvider')]
     public function testPassesCompliance(
         $bucket,
@@ -576,16 +548,6 @@ class S3EndpointMiddlewareTest extends TestCase
         ]);
     }
 
-    /**
-     *
-     * @param $bucketFieldInput
-     * @param $clientRegion
-     * @param $additionalFlags
-     * @param $useArnRegion
-     * @param $endpointUrl
-     * @param $expectedEndpoint
-
- */
     #[DataProvider('objectLambdasSuccessProvider')]
     public function testObjectLambdaArnSuccess(
         $bucketFieldInput,
@@ -630,7 +592,7 @@ class S3EndpointMiddlewareTest extends TestCase
         $client->execute($command);
     }
 
-    public static function objectLambdasSuccessProvider()
+    public static function objectLambdasSuccessProvider(): array
     {
         return [
             ["arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "us-east-1", "none", false, null, "mybanner-123456789012.s3-object-lambda.us-east-1.amazonaws.com"],
@@ -651,16 +613,6 @@ class S3EndpointMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param $bucketFieldInput
-     * @param $clientRegion
-     * @param $additionalFlags
-     * @param $useArnRegion
-     * @param $endpointUrl
-     * @param $expectedException
-
- */
     #[DataProvider('objectLambdasFailureProvider')]
     public function testObjectLambdaArnFailures(
         $bucketFieldInput,
@@ -710,7 +662,7 @@ class S3EndpointMiddlewareTest extends TestCase
         }
     }
 
-    public static function objectLambdasFailureProvider()
+    public static function objectLambdasFailureProvider(): array
     {
         return [
             ["arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "us-west-2", "none", false, null,
@@ -779,15 +731,6 @@ class S3EndpointMiddlewareTest extends TestCase
         ];
     }
 
-
-    /**
-     *
-     * @param $clientRegion
-     * @param $route
-     * @param $endpointUrl
-     * @param $expectedEndpoint
-
- */
     #[DataProvider('writeGetObjectResponseProvider')]
     public function testWriteGetObjectResponse(
         $clientRegion,
@@ -822,7 +765,7 @@ class S3EndpointMiddlewareTest extends TestCase
         $client->execute($command);
     }
 
-    public static function writeGetObjectResponseProvider()
+    public static function writeGetObjectResponseProvider(): array
     {
 
         return [

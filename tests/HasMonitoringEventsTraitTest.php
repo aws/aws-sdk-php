@@ -5,11 +5,9 @@ use Aws\HasMonitoringEventsTrait;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-
-#[CoversClass(\Aws\HasMonitoringEventsTrait::class)]
+#[CoversClass(HasMonitoringEventsTrait::class)]
 class HasMonitoringEventsTraitTest extends TestCase
 {
-
     public function testAddsAndRetrievesMonitoringEvents()
     {
         $events = [
@@ -26,7 +24,7 @@ class HasMonitoringEventsTraitTest extends TestCase
         ];
 
         $mock = $this->getMockForTrait(HasMonitoringEventsTrait::class);
-        foreach($events as $event) {
+        foreach ($events as $event) {
             $mock->appendMonitoringEvent($event);
         }
 
@@ -34,5 +32,4 @@ class HasMonitoringEventsTraitTest extends TestCase
             $events, $mock->getMonitoringEvents()
         );
     }
-
 }

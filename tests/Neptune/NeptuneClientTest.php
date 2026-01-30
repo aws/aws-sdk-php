@@ -26,7 +26,7 @@ class NeptuneClientTest extends TestCase
         $_SERVER['formatAwsTime'] = null;
     }
 
-    public static function neptunePresignMethodProvider()
+    public static function neptunePresignMethodProvider(): array
     {
         return [
             ['CopyDBClusterSnapshot', ['SourceDBClusterSnapshotIdentifier' => 'arn:aws:rds:us-east-1:123456789012:cluster-snapshot:source-db-cluster-snapshot', 'TargetDBClusterSnapshotIdentifier' => 'target-db-cluster-snapshot'], null, null, null, null],
@@ -38,15 +38,6 @@ class NeptuneClientTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param string $functionName
-     * @param string $presignedUrl
-     * @param string $sourceRegion
-     * @param string $expectedUrl
-     * @param string $expectedSignature
-
- */
     #[DataProvider('neptunePresignMethodProvider')]
     public function testCorrectPresignNeptuneUrls(
         $functionName,
@@ -90,4 +81,3 @@ class NeptuneClientTest extends TestCase
         call_user_func([$neptune, $functionName], $functionArgs);
     }
 }
-

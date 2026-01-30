@@ -14,11 +14,13 @@ use Aws\S3\Parser\S3ResultMutator;
 use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
-use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(S3Parser::class)]
 class S3ParserTest extends TestCase
 {
     const INTERNAL_S3200_ERROR = <<<EOXML
@@ -32,12 +34,6 @@ class S3ParserTest extends TestCase
 </Error>
 EOXML;
 
-    /**
-     * @param string $operation The operation to test.
-     *
-     * @return void
-
- */
     #[DataProvider('s3200ErrorHandlingCasesProvider')]
     public function testHandle200Errors(string $operation)
     {
@@ -251,13 +247,6 @@ EOXML;
         $this->assertFalse(isset($mutators[$s3MutatorName]));
     }
 
-    /**
-     * @param StreamInterface $stream
-     * @param bool $expectValidation
-     *
-     * @return void
-
- */
     #[DataProvider('validate200ErrorValidationJustInSeekableStreamsProvider')]
     public function testValidate200ErrorValidationJustInSeekableStreams(
         StreamInterface $stream,

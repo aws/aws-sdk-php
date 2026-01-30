@@ -70,13 +70,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $cacheReflection->setValue(null, self::$originalCache);
     }
 
-    /**
-     * @param array $commandArgs
-     * @param array $clientArgs
-     * @param ResultInterface $describeResult
-     * @param RequestInterface $expected
-
- */
     #[DataProvider('getRequestTestCases')]
     public function testCorrectlyModifiesRequest(
         array $commandArgs,
@@ -114,7 +107,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $client->execute($command);
     }
 
-    public static function getRequestTestCases()
+    public static function getRequestTestCases(): array
     {
         $baseUri = new Uri('https://awsendpointdiscoverytestservice.us-east-1.amazonaws.com/');
         $baseUserAgent = 'aws-sdk-php/' . Sdk::VERSION;
@@ -297,12 +290,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     * @param CommandInterface $mainCmd
-     * @param CommandInterface $expectedCmd
-     * @param RequestInterface $expectedReq
-
- */
     #[DataProvider('getDiscoveryRequestTestCases')]
     public function testCorrectlyConstructsDiscoveryRequest(
         CommandInterface $mainCmd,
@@ -330,7 +317,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $handler($mainCmd, new Request('POST', new Uri('https://foo.com')));
     }
 
-    public static function getDiscoveryRequestTestCases()
+    public static function getDiscoveryRequestTestCases(): array
     {
         $baseUri = new Uri('https://awsendpointdiscoverytestservice.us-east-1.amazonaws.com');
         $baseRequest = new Request(
@@ -552,10 +539,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         }
     }
 
-    /**
-     * @param $exception
-
- */
     #[DataProvider('invalidEndpointExceptionsDataProvider')]
     public function testUsesCachedEndpointForInvalidEndpointException($exception)
     {
@@ -588,10 +571,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $this->assertEquals(['describe', 'failure', 'success'], $callOrder);
     }
 
-    /**
-     * @param $exception
-
- */
     #[DataProvider('invalidEndpointExceptionsDataProvider')]
     public function testUseRegionalEndpointForInvalidEndpointException($exception)
     {
@@ -632,10 +611,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         );
     }
 
-    /**
-     * @param $exception
-
- */
     #[DataProvider('invalidEndpointExceptionsDataProvider')]
     public function testThrowsExceptionOnInvalidEndpointException($exception)
     {
@@ -674,10 +649,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $this->assertEquals(['describe', 'failure'], $callOrder);
     }
 
-    /**
-     * @param $exception
-
- */
     #[DataProvider('invalidEndpointExceptionsDataProvider')]
     public function testCallsDiscoveryApiOnInvalidEndpointException($exception)
     {
@@ -737,8 +708,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
     /**
      * Data provider for exceptions treated as invalid endpoint exceptions
-     *
-     * @return array
      */
     public static function invalidEndpointExceptionsDataProvider(): array
     {

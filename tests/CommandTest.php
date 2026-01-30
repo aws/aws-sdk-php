@@ -4,10 +4,9 @@ namespace Aws\Test;
 use Aws\Command;
 use Aws\HandlerList;
 use Aws\MetricsBuilder;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(Command::class)]
 #[CoversClass(Command::class)]
 class CommandTest extends TestCase
 {

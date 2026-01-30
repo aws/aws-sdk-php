@@ -2,6 +2,7 @@
 
 namespace Aws\Test\Build\Changelog;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 
 class CurrentChangesTest extends TestCase

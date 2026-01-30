@@ -15,18 +15,13 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\Credentials\AssumeRoleCredentialProvider::class)]
+#[CoversClass(AssumeRoleCredentialProvider::class)]
 class AssumeRoleCredentialProviderTest extends TestCase
 {
     const SAMPLE_ROLE_ARN = 'arn:aws:iam::012345678910:role/role_name';
 
     use UsesServiceTrait;
 
-    /**
-     *
-     * @param array $config
-
- */
     #[DataProvider('insufficientArguments')]
     public function testEnsureSourceProfileProvidedForAssumeRole($config)
     {
@@ -35,11 +30,7 @@ class AssumeRoleCredentialProviderTest extends TestCase
         new AssumeRoleCredentialProvider($config);
     }
 
-    /**
-
- */
-    #[DataProvider('insufficientArguments')]
-    public static function insufficientArguments()
+    public static function insufficientArguments(): array
     {
         $client = [
             'client' => new StsClient([

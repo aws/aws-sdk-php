@@ -13,11 +13,9 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-
 #[CoversClass(ConfigurationProvider::class)]
 class ConfigurationProviderTest extends TestCase
 {
-
     private static $originalEnv;
 
     private $iniFile = <<<EOT
@@ -48,7 +46,7 @@ csm_port = 999
 csm_client_id = CustomAltIniApp
 EOT;
 
- private $portIniFile = <<<EOT
+    private $portIniFile = <<<EOT
 [port-incorrect]
 csm_enabled = true
 csm_port = foo-bar
@@ -301,7 +299,7 @@ EOT;
             throw $e;
         }
     }
-    
+
     public function testUsesClassDefaultOptions()
     {
         $this->clearEnv();
@@ -439,7 +437,7 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
-    public static function getSuccessfulUnwrapData()
+    public static function getSuccessfulUnwrapData(): array
     {
         $expected = new Configuration(true, '123.4.5.6', 555, 'FooApp');
         return [
@@ -469,11 +467,6 @@ EOT;
         ];
     }
 
-    /**
-     * @param $toUnwrap
-     * @param ConfigurationInterface $expected
-
- */
     #[DataProvider('getSuccessfulUnwrapData')]
     public function testSuccessfulUnwraps($toUnwrap, ConfigurationInterface $expected)
     {

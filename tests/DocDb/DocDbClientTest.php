@@ -26,7 +26,7 @@ class DocDbClientTest extends TestCase
         $_SERVER['formatAwsTime'] = null;
     }
 
-    public static function DocDbPresignMethodProvider()
+    public static function DocDbPresignMethodProvider(): array
     {
         return [
             ['CopyDBClusterSnapshot', ['SourceDBClusterSnapshotIdentifier' => 'arn:aws:rds:us-east-1:123456789012:cluster-snapshot:source-db-cluster-snapshot', 'TargetDBClusterSnapshotIdentifier' => 'target-db-cluster-snapshot'], null, null, null, null],
@@ -35,15 +35,6 @@ class DocDbClientTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param string $functionName
-     * @param string $presignedUrl
-     * @param string $sourceRegion
-     * @param string $expectedUrl
-     * @param string $expectedSignature
-
- */
     #[DataProvider('DocDbPresignMethodProvider')]
     public function testCorrectPresignDocDbUrls(
         $functionName,
@@ -86,4 +77,3 @@ class DocDbClientTest extends TestCase
         call_user_func([$docDb, $functionName], $functionArgs);
     }
 }
-

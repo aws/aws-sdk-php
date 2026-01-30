@@ -12,23 +12,17 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\Arn\ArnParser::class)]
+#[CoversClass(ArnParser::class)]
 class ArnParserTest extends TestCase
 {
 
-    /**
-     *
-     * @param $string
-     * @param $expected
-
- */
     #[DataProvider('isArnCases')]
     public function testDeterminesShouldAttemptToParseAsArn($string, $expected)
     {
         $this->assertEquals($expected, ArnParser::isArn($string));
     }
 
-    public static function isArnCases()
+    public static function isArnCases(): array
     {
         return [
             [
@@ -58,19 +52,13 @@ class ArnParserTest extends TestCase
         ];
     }
 
-    /**
-     *
-     * @param $string
-     * @param $expected
-
- */
     #[DataProvider('parsedArnCases')]
     public function testCorrectlyChoosesArnClass($string, $expected)
     {
         $this->assertTrue(ArnParser::parse($string) instanceof $expected);
     }
 
-    public static function parsedArnCases()
+    public static function parsedArnCases(): array
     {
         return [
             [

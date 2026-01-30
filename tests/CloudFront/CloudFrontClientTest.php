@@ -5,6 +5,7 @@ namespace Aws\Test\CloudFront;
 use Aws\CloudFront\CloudFrontClient;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
 #[CoversClass(CloudFrontClient::class)]
 class CloudFrontClientTest extends TestCase

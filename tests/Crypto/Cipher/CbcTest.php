@@ -2,8 +2,10 @@
 namespace Aws\Test\Crypto\Cipher;
 
 use Aws\Crypto\Cipher\Cbc;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
 
+#[CoversClass(Cbc::class)]
 class CbcTest extends TestCase
 {
     public function testShouldReportCipherMethodOfCBC()

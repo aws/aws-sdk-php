@@ -24,9 +24,9 @@ class ApiProviderTest extends TestCase
 
     public function testCanResolveProvider()
     {
-        $p = function ($a, $b, $c) {return [];
-
-        $this->assertTrue(true);};
+        $p = function ($a, $b, $c) {
+            return [];
+        };
         $result = ['metadata'=> ['serviceIdentifier' => 's']];
         $this->assertEquals($result, ApiProvider::resolve($p, 't', 's', 'v'));
 

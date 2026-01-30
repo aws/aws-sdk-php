@@ -13,11 +13,13 @@ use Generator;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Tests RangeGetMultipartDownloader implementation.
  */
+#[CoversClass(RangeGetMultipartDownloader::class)]
 class RangeGetMultipartDownloaderTest extends TestCase
 {
     /**
@@ -28,8 +30,7 @@ class RangeGetMultipartDownloaderTest extends TestCase
      * @param int $targetPartSize
      *
      * @return void
-
- */
+     */
     #[DataProvider('rangeGetMultipartDownloaderProvider')]
     public function testRangeGetMultipartDownloader(
         string $objectKey,
@@ -97,7 +98,8 @@ class RangeGetMultipartDownloaderTest extends TestCase
      *
      * @return array[]
      */
-    public static function rangeGetMultipartDownloaderProvider(): array {
+    public static function rangeGetMultipartDownloaderProvider(): array
+    {
         return [
             [
                 'objectKey' => 'ObjectKey_1',
@@ -261,8 +263,7 @@ class RangeGetMultipartDownloaderTest extends TestCase
      * @param string $eTag
      *
      * @return void
-
- */
+     */
     #[DataProvider('ifMatchIsPresentInEachRangeRequestAfterFirstProvider')]
     public function testIfMatchIsPresentInEachRangeRequestAfterFirst(
         int $objectSizeInBytes,

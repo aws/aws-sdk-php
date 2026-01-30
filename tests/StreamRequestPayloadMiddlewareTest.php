@@ -17,18 +17,11 @@ use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(\Aws\StreamRequestPayloadMiddleware::class)]
+#[CoversClass(StreamRequestPayloadMiddleware::class)]
 class StreamRequestPayloadMiddlewareTest extends TestCase
 {
     use ArraySubsetAsserts;
 
-    /**
-     *
-     * @param array $commandDef
-     * @param array $expectedHeaders
-     * @param array $expectedNonHeaders
-
- */
     #[DataProvider('addsProperHeadersDataProvider')]
     public function testAddsProperHeaders(
         array $commandDef,
@@ -287,5 +280,4 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
             function () { return []; }
         );
     }
-
 }

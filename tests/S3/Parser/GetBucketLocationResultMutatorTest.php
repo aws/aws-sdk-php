@@ -6,9 +6,11 @@ use Aws\Command;
 use Aws\Result;
 use Aws\S3\Parser\GetBucketLocationResultMutator;
 use GuzzleHttp\Psr7\Response;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
+#[CoversClass(GetBucketLocationResultMutator::class)]
 class GetBucketLocationResultMutatorTest extends TestCase
 {
     /**
@@ -16,8 +18,7 @@ class GetBucketLocationResultMutatorTest extends TestCase
      * and added to the result as the LocationConstraint field.
      *
      * @return void
-
- */
+     */
     #[DataProvider('getTestCases')]
     public function testInjectsLocationConstraint($operationName, $responseBody, $expectedValue)
     {
@@ -32,7 +33,7 @@ class GetBucketLocationResultMutatorTest extends TestCase
         $this->assertEquals($expectedValue, $result['LocationConstraint']);
     }
 
-    public static function getTestCases()
+    public static function getTestCases(): array
     {
         return [
             ['GetBucketLocation', '<LocationConstraint>us-west-2</LocationConstraint>', 'us-west-2'],

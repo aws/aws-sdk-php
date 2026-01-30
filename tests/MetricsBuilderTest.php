@@ -7,8 +7,10 @@ use Aws\MetricsBuilder;
 use Aws\Middleware;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(MetricsBuilder::class)]
 class MetricsBuilderTest extends TestCase
 {
     public function testAppendMetrics()
@@ -67,8 +69,8 @@ class MetricsBuilderTest extends TestCase
     public function testAppendMetricsCaptureMiddleware()
     {
         $handlerList = new HandlerList(function (){
-
-        $this->assertTrue(true);});
+            $this->assertTrue(true);
+        });
         $metric = "Foo";
         // It should be appended into the build step
         MetricsBuilder::appendMetricsCaptureMiddleware(
@@ -102,8 +104,7 @@ class MetricsBuilderTest extends TestCase
      * @param string $expectedMetrics
      *
      * @return void
-
- */
+     */
     #[DataProvider('resolveAndAppendFromArgsProvider')]
     public function testResolveAndAppendFromArgs(
         array $args,
@@ -173,9 +174,11 @@ class MetricsBuilderTest extends TestCase
      *
      * @return void
      */
-    public function testAppendMetricsCaptureMiddlewareJustOnce(): void {
+    public function testAppendMetricsCaptureMiddlewareJustOnce(): void
+    {
         $handlerList = new HandlerList(function (){
-        $this->assertTrue(true);});
+            $this->assertTrue(true);
+        });
         MetricsBuilder::appendMetricsCaptureMiddleware(
             $handlerList,
             'test'

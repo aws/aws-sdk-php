@@ -26,9 +26,6 @@ class MultipartUploaderTest extends TestCase
         @unlink(sys_get_temp_dir() . '/' . self::FILENAME);
     }
 
-    /**
-
- */
     #[DataProvider('getTestCases')]
     public function testS3MultipartUploadWorkflow(
         array $clientOptions = [],
@@ -61,7 +58,7 @@ class MultipartUploaderTest extends TestCase
         $this->assertSame($url, $result['ObjectURL']);
     }
 
-    public static function getTestCases()
+    public static function getTestCases(): array
     {
         $defaults = [
             'bucket' => 'foo',
@@ -154,9 +151,6 @@ class MultipartUploaderTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('multipartSuccessStreams')]
     public function testS3MultipartUploadParams($stream, $size)
     {
@@ -198,7 +192,7 @@ class MultipartUploaderTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public static function getContentTypeSettingTests()
+    public static function getContentTypeSettingTests(): array
     {
         $size = 12 * self::MB;
         $data = str_repeat('.', $size);
@@ -229,9 +223,6 @@ class MultipartUploaderTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('getContentTypeSettingTests')]
     public function testS3MultipartContentTypeSetting(
         $stream,
@@ -307,9 +298,6 @@ class MultipartUploaderTest extends TestCase
         $uploader->upload();
     }
 
-    /**
-
- */
     #[DataProvider('multipartSuccessStreams')]
     public function testUploaderAddsFlexibleChecksums($stream, $size)
     {
@@ -381,7 +369,7 @@ class MultipartUploaderTest extends TestCase
             restore_error_handler();
         }
     }
-  
+
     public function testUploadPrintsProgress()
     {
         $progressBar = [

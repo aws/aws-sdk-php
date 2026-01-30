@@ -15,6 +15,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
 #[CoversClass(StreamWrapper::class)]
 class StreamWrapperTest extends TestCase
@@ -543,7 +544,7 @@ class StreamWrapperTest extends TestCase
         $this->assertSame('bucket.s3.amazonaws.com', $entries[0]['request']->getUri()->getHost());
     }
 
-    public static function rmdirProvider()
+    public static function rmdirProvider(): array
     {
         return [
             ['s3://bucket/object/'],
@@ -551,9 +552,6 @@ class StreamWrapperTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('rmdirProvider')]
     public function testCanDeleteObjectWithRmDir($path)
     {
@@ -847,7 +845,7 @@ class StreamWrapperTest extends TestCase
         }
     }
 
-    public static function fileTypeProvider()
+    public static function fileTypeProvider(): array
     {
         $err = function ($cmd, $r) { return new S3Exception('404', $cmd); };
 
@@ -880,9 +878,6 @@ class StreamWrapperTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('fileTypeProvider')]
     public function testDeterminesIfFileOrDir($uri, $queue, $result)
     {
@@ -1168,9 +1163,6 @@ class StreamWrapperTest extends TestCase
         ];
     }
 
-    /**
-
- */
     #[DataProvider('contentProvider')]
     public function testTriggersErrorOnNoFlushOrClose(string $content)
     {
