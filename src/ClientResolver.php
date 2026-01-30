@@ -1247,12 +1247,6 @@ class ClientResolver
             $args['suppress_php_deprecation_warning'] =
                 \Aws\boolean_value($_ENV["AWS_SUPPRESS_PHP_DEPRECATION_WARNING"]);
         }
-
-        if ($args['suppress_php_deprecation_warning'] === false
-            && PHP_VERSION_ID < 80100
-        ) {
-            self::emitDeprecationWarning();
-        }
     }
 
     public static function _default_endpoint(array &$args)
