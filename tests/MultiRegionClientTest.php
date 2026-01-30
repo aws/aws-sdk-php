@@ -14,7 +14,10 @@ use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(MultiRegionClient::class)]
 class MultiRegionClientTest extends TestCase
 {
     /** @var MultiRegionClient */
@@ -109,12 +112,7 @@ class MultiRegionClientTest extends TestCase
         $this->instance->baz(['foo' => 'bar']);
     }
 
-    /**
-     * @dataProvider clientInterfaceMethodProvider
-     *
-     * @param string $method
-     * @param array $args
-     */
+    #[DataProvider('clientInterfaceMethodProvider')]
     public function testProxiesCallsToRegionalizedClient($method, array $args)
     {
         $expectation = $this->mockRegionalClient->expects($this->once())
@@ -124,7 +122,7 @@ class MultiRegionClientTest extends TestCase
         call_user_func_array([$this->instance, $method], $args);
     }
 
-    public function clientInterfaceMethodProvider()
+    public static function clientInterfaceMethodProvider(): array
     {
         return [
             ['getConfig', ['someOption']],
@@ -169,12 +167,8 @@ class MultiRegionClientTest extends TestCase
         $response = $s3->listBuckets();
         $this->assertEquals('bar', $response['foo']);
 
-        if (method_exists($this, 'expectException')) {
-            $this->expectException(AwsException::class);
-            $this->expectExceptionMessage('Mock exception');
-        } else {
-            $this->setExpectedException(AwsException::class);
-        }
+        $this->expectException(AwsException::class);
+        $this->expectExceptionMessage('Mock exception');
         $s3->listBuckets();
     }
 }

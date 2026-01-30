@@ -3,25 +3,20 @@ namespace Aws\Test\Endpoint\UseDualstackEndpoint;
 
 use Aws\Endpoint\UseDualstackEndpoint\Configuration;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\Endpoint\UseDualstackEndpoint\Configuration
- */
+#[CoversClass(Configuration::class)]
 class ConfigurationTest extends TestCase
 {
-    /**
-     * @dataProvider correctValueCases
-     *
-     * @param $param
-     * @param $expected
-     */
+    #[DataProvider('correctValueCases')]
     public function testGetsCorrectValues($param, $expected)
     {
         $config = new Configuration($param, 'us-east-1');
         $this->assertEquals($expected, $config->isuseDualstackEndpoint());
     }
 
-    public function correctValueCases()
+    public static function correctValueCases(): array
     {
         return [
             [true, true],

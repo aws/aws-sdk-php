@@ -6,13 +6,14 @@ use Aws\Api\ShapeMap;
 use Aws\Api\Validator;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use GuzzleHttp\Psr7;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
-/**
- * @covers Aws\Api\Validator
- */
+#[CoversClass(Validator::class)]
 class ValidatorTest extends TestCase
 {
-    public function validationProvider()
+    public static function validationProvider(): array
     {
         return [
             [
@@ -638,9 +639,7 @@ class ValidatorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider validationProvider
-     */
+    #[DataProvider('validationProvider')]
     public function testValidatesInput($shape, $input, $result)
     {
         $shape = Shape::create($shape, new ShapeMap([]));
@@ -681,7 +680,7 @@ class ValidatorTest extends TestCase
         $validator->validate('Foo', $shape, ['foo' => '']);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testDoesNotValidateMaxByDefault()
     {
         $shape = Shape::create(
@@ -693,9 +692,10 @@ class ValidatorTest extends TestCase
         );
         $validator = new Validator();
         $validator->validate('Foo', $shape, ['foo' => '1234567890']);
+        $this->assertTrue(true);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testDoesNotValidatePatternsByDefault()
     {
         $validator = new Validator();
@@ -712,9 +712,10 @@ class ValidatorTest extends TestCase
             new ShapeMap([])
         );
         $validator->validate('Foo', $shape, ['caps' => 'abc']);
+        $this->assertTrue(true);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testCanDisableRequiredTrait()
     {
         $validator = new Validator(['required' => false]);
@@ -727,5 +728,6 @@ class ValidatorTest extends TestCase
             new ShapeMap([])
         );
         $validator->validate('Foo', $shape, []);
+        $this->assertTrue(true);
     }
 }

@@ -18,10 +18,13 @@ use Generator;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 
+#[CoversClass(MultipartUploader::class)]
 class MultipartUploaderTest extends TestCase
 {
 
@@ -37,15 +40,7 @@ class MultipartUploaderTest extends TestCase
         restore_error_handler();
     }
 
-    /**
-     * @param array $sourceConfig
-     * @param array $commandArgs
-     * @param array $config
-     * @param array $expected
-     * @return void
-     *
-     * @dataProvider multipartUploadProvider
-     */
+    #[DataProvider('multipartUploadProvider')]
     public function testMultipartUpload(
         array $sourceConfig,
         array $commandArgs,
@@ -134,10 +129,7 @@ class MultipartUploaderTest extends TestCase
         }
     }
 
-    /**
-     * @return array[]
-     */
-    public function multipartUploadProvider(): array {
+    public static function multipartUploadProvider(): array {
         return [
             '5_parts_upload' => [
                 'source_config' => [
@@ -238,9 +230,6 @@ class MultipartUploaderTest extends TestCase
         ];
     }
 
-    /**
-     * @return S3ClientInterface
-     */
     private function getMultipartUploadS3Client(): S3ClientInterface
     {
         return new S3Client([
@@ -271,15 +260,7 @@ EOF;
         ]);
     }
 
-
-    /**
-     * @param int $partSize
-     * @param bool $expectError
-     *
-     * @dataProvider validatePartSizeProvider
-     *
-     * @return void
-     */
+    #[DataProvider('validatePartSizeProvider')]
     public function testValidatePartSize(
         int $partSize,
         bool $expectError
@@ -307,10 +288,7 @@ EOF;
         );
     }
 
-    /**
-     * @return array
-     */
-    public function validatePartSizeProvider(): array {
+    public static function validatePartSizeProvider(): array {
         return [
             'part_size_over_max' => [
                 'part_size' => AbstractMultipartUploader::PART_MAX_SIZE + 1,
@@ -331,14 +309,7 @@ EOF;
         ];
     }
 
-    /**
-     * @param string|int $source
-     * @param bool $expectError
-     *
-     * @dataProvider invalidSourceStringProvider
-     *
-     * @return void
-     */
+    #[DataProvider('invalidSourceStringProvider')]
     public function testInvalidSourceStringThrowsException(
         string|int $source,
         bool $expectError
@@ -382,10 +353,7 @@ EOF;
         }
     }
 
-    /**
-     * @return array[]
-     */
-    public function invalidSourceStringProvider(): array {
+    public static function invalidSourceStringProvider(): array {
         return [
             'invalid_source_file_path_1' => [
                 'source' => 'invalid',
@@ -406,9 +374,6 @@ EOF;
         ];
     }
 
-    /**
-     * @return void
-     */
     public function testTransferListenerNotifierNotifiesListenersOnSuccess(): void
     {
         $noOfListeners = 3;
@@ -475,8 +440,6 @@ EOF;
     /**
      * Test to make sure createMultipart, uploadPart, and completeMultipart
      * operations are called.
-     *
-     * @return void
      */
     public function testMultipartOperationsAreCalled(): void {
         $operationsCalled = [
@@ -529,15 +492,7 @@ EOF;
         }
     }
 
-    /**
-     * @param array $sourceConfig
-     * @param array $checksumConfig
-     * @param array $expectedOperationHeaders
-     *
-     * @dataProvider multipartUploadWithCustomChecksumProvider
-     *
-     * @return void
-     */
+    #[DataProvider('multipartUploadWithCustomChecksumProvider')]
     public function testMultipartUploadWithCustomChecksum(
         array $sourceConfig,
         array $checksumConfig,
@@ -626,10 +581,7 @@ EOF;
         }
     }
 
-    /**
-     * @return array
-     */
-    public function multipartUploadWithCustomChecksumProvider(): array {
+    public static function multipartUploadWithCustomChecksumProvider(): array {
         return [
             'custom_checksum_crc32_1' => [
                 'source_config' => [
@@ -665,9 +617,6 @@ EOF;
         ];
     }
 
-    /**
-     * @return void
-     */
     public function testMultipartUploadAbort() {
         $this->expectException(S3TransferException::class);
         $this->expectExceptionMessage('Upload failed');
@@ -724,9 +673,6 @@ EOF;
         }
     }
 
-    /**
-     * @return void
-     */
     public function testTransferListenerNotifierNotifiesListenersOnFailure(): void
     {
         $this->expectException(\Exception::class);
@@ -786,9 +732,6 @@ EOF;
         $multipartUploader->promise()->wait();
     }
 
-    /**
-     * @return void
-     */
     public function testTransferListenerNotifierWithEmptyListeners(): void
     {
         $listenerNotifier = new TransferListenerNotifier([]);
@@ -841,14 +784,8 @@ EOF;
     /**
      * This test makes sure that when full object checksum type is resolved
      * then, if a custom algorithm provide is not CRC family then it should fail.
-     *
-     * @param array $checksumConfig
-     * @param bool $expectsError
-     *
-     * @dataProvider fullObjectChecksumWorksJustWithCRCProvider
-     *
-     * @return void
      */
+    #[DataProvider('fullObjectChecksumWorksJustWithCRCProvider')]
     public function testFullObjectChecksumWorksJustWithCRC(
         array $checksumConfig,
         bool $expectsError
@@ -890,10 +827,7 @@ EOF;
         }
     }
 
-    /**
-     * @return Generator
-     */
-    public function fullObjectChecksumWorksJustWithCRCProvider(): Generator {
+    public static function fullObjectChecksumWorksJustWithCRCProvider(): Generator {
         yield 'sha_256_should_fail' => [
             'checksum_config' => [
                 'ChecksumSHA256' => '47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='
@@ -916,15 +850,7 @@ EOF;
         ];
     }
 
-    /**
-     * @param array $sourceConfig
-     * @param array $requestArgs
-     * @param array $expectedInputArgs
-     * @param bool $expectsError
-     * @param int|null $errorOnPartNumber
-     * @return void
-     * @dataProvider inputArgumentsPerOperationProvider
-     */
+    #[DataProvider('inputArgumentsPerOperationProvider')]
     public function testInputArgumentsPerOperation(
         array $sourceConfig,
         array $requestArgs,
@@ -1017,10 +943,7 @@ EOF;
         }
     }
 
-    /**
-     * @return Generator
-     */
-    public function inputArgumentsPerOperationProvider(): Generator
+    public static function inputArgumentsPerOperationProvider(): Generator
     {
         yield 'test_input_fields_are_copied_without_custom_checksums' => [
             // Source config to generate a stub body
@@ -1326,9 +1249,6 @@ EOF;
         ];
     }
 
-    /**
-     * @return void
-     */
     public function testAbortMultipartUploadShowsWarning(): void
     {
         // Convert the warning to an exception

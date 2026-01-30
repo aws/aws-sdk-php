@@ -5,19 +5,13 @@ use Aws\Arn\S3\AccessPointArn;
 use Aws\Arn\Exception\InvalidArnException;
 use Aws\Arn\S3\OutpostsAccessPointArn;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\Arn\S3\OutpostsAccessPointArn
- */
+#[CoversClass(OutpostsAccessPointArn::class)]
 class OutpostsAccessPointArnTest extends TestCase
 {
-    /**
-     * @dataProvider parsedArnProvider
-     *
-     * @param $string
-     * @param $expected
-     * @param $expectedString
-     */
+    #[DataProvider('parsedArnProvider')]
     public function testParsesArnString($string, $expected, $expectedString)
     {
         $arn = new OutpostsAccessPointArn($string);
@@ -35,7 +29,7 @@ class OutpostsAccessPointArnTest extends TestCase
         $this->assertEquals($expectedString, (string) $arn);
     }
 
-    public function parsedArnProvider()
+    public static function parsedArnProvider(): array
     {
         return [
             // Colon delimiters
@@ -113,12 +107,7 @@ class OutpostsAccessPointArnTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider badArnProvider
-     *
-     * @param $string
-     * @param \Exception $expected
-     */
+    #[DataProvider('badArnProvider')]
     public function testThrowsForBadArn($string, \Exception $expected)
     {
         try {
@@ -133,7 +122,7 @@ class OutpostsAccessPointArnTest extends TestCase
         }
     }
 
-    public function badArnProvider()
+    public static function badArnProvider(): array
     {
         return [
             [

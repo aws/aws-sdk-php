@@ -4,11 +4,10 @@ namespace Aws\Test\Api;
 use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Api\ListShape;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\Api\ListShape
- */
+#[CoversClass(ListShape::class)]
 class ListShapeTest extends TestCase
 {
     public function testReturnsMember()

@@ -11,26 +11,20 @@ use Aws\S3\Exception\S3Exception;
 use Aws\S3\Parser\ValidateResponseChecksumResultMutator;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Response;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
 /**
  * The tests defined here are similar to the tests
  * from ValidateResponseChecksumParserTest.
  */
+#[CoversClass(ValidateResponseChecksumResultMutator::class)]
 class ValidateResponseChecksumResultMutatorTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     * @dataProvider checksumCasesDataProvider
-     * @param array $responseAlgorithms
-     * @param array $checksumHeadersReturned
-     * @param string|null $expectedChecksumAlgorithm
-     * @param array $config
-     * @param string $operation
-     * @param string|null $checksumMode
-     * @return void
-     */
+    #[DataProvider('checksumCasesDataProvider')]
     public function testChecksumValidation(
         array $responseAlgorithms,
         array $checksumHeadersReturned,
@@ -83,7 +77,7 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
      *
      * @return array[]
      */
-    public function checksumCasesDataProvider(): array
+    public static function checksumCasesDataProvider(): array
     {
         return [
             //Default, when_supported, no checksum headers, skips validation
@@ -241,7 +235,6 @@ class ValidateResponseChecksumResultMutatorTest extends TestCase
         $result = $mutator($result, $command, $response);
 
         $this->assertEquals($expectedAlgorithm, $result['ChecksumValidated']);
-
     }
 
     public function testValidatesChecksumSkipsValidation()

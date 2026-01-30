@@ -13,7 +13,10 @@ use Aws\Token\TokenProvider;
 use Aws\Token\TokenSource;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(BedrockTokenProvider::class)]
 class BedrockTokenProviderTest extends TestCase
 {
     use UsesServiceTrait;
@@ -237,15 +240,8 @@ class BedrockTokenProviderTest extends TestCase
 
     /**
      * Test integration with Bedrock Clients
-     *
-     * @param $serviceName
-     * @param $envVars
-     * @param $clientArgs
-     * @param $expectations
-     * @param $iniConfig
-     *
-     * @dataProvider integrationWithClientProvider
      */
+    #[DataProvider('integrationWithClientProvider')]
     public function testIntegrationWithClient(
         $serviceName,
         $envVars,
@@ -315,9 +311,9 @@ class BedrockTokenProviderTest extends TestCase
         }
     }
 
-    public function integrationWithClientProvider(): \Generator
+    public static function integrationWithClientProvider(): \Generator
     {
-        static $services = [
+        $services = [
             'bedrock',
             'bedrock-agent',
             'bedrock-agent-runtime',
@@ -394,9 +390,8 @@ class BedrockTokenProviderTest extends TestCase
 
     /**
      * Test that token source is added to user agent header
-     *
-     * @dataProvider tokenSourceUserAgentProvider
      */
+    #[DataProvider('tokenSourceUserAgentProvider')]
     public function testTokenSourceInUserAgent(
         string $service,
         string $operation,
@@ -440,7 +435,7 @@ class BedrockTokenProviderTest extends TestCase
         $client->{$operation}($args);
     }
 
-    public function tokenSourceUserAgentProvider(): \Generator
+    public static function tokenSourceUserAgentProvider(): \Generator
     {
         yield 'bedrock' => [
             'service' => 'bedrock',

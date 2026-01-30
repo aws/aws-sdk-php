@@ -12,10 +12,11 @@ use Aws\S3\StreamWrapper;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
-/**
- * @covers Aws\S3\StreamWrapper
- */
+#[CoversClass(StreamWrapper::class)]
 class StreamWrapperPathStyleTest extends TestCase
 {
     use UsesServiceTrait;
@@ -36,6 +37,9 @@ class StreamWrapperPathStyleTest extends TestCase
             'use_path_style_endpoint' => true
         ]);
         $this->client->registerStreamWrapper();
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        });
     }
 
     public function tear_down()
@@ -49,31 +53,32 @@ class StreamWrapperPathStyleTest extends TestCase
         StreamWrapper::register($this->client);
         $this->assertContains('s3', stream_get_wrappers());
         StreamWrapper::register($this->client);
+        restore_error_handler();
     }
 
     public function testCannotOpenBuckets()
     {
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("Cannot open a bucket");
-        $this->expectWarning();
         fopen('s3://bucket', 'r');
     }
 
     public function testSupportsOnlyReadWriteXA()
     {
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("Mode not supported");
-        $this->expectWarning();
         fopen('s3://bucket/key', 'c');
     }
 
     public function testValidatesXMode()
     {
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("s3://bucket/key already exists on Amazon S3");
-        $this->expectWarning();
         $this->addMockResults($this->client, [new Result()]);
         fopen('s3://bucket/key', 'x');
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testSuccessfulXMode()
     {
         $this->addMockResults(
@@ -87,6 +92,7 @@ class StreamWrapperPathStyleTest extends TestCase
         );
         $r = fopen('s3://bucket/key', 'x');
         fclose($r);
+        $this->assertTrue(true);
     }
 
     public function testOpensNonSeekableReadStream()
@@ -171,7 +177,7 @@ class StreamWrapperPathStyleTest extends TestCase
     public function testTriggersErrorInsteadOfExceptionWhenWriteFlushFails()
     {
         $this->expectExceptionMessage("403 Forbidden");
-        $this->expectWarning();
+        $this->expectException(\RuntimeException::class);
         $this->addMockResults($this->client, [
             function ($cmd, $req) { return new S3Exception('403 Forbidden', $cmd); }
         ]);
@@ -239,8 +245,8 @@ class StreamWrapperPathStyleTest extends TestCase
 
     public function testThrowsErrorsWhenUnlinkFails()
     {
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("403 Forbidden");
-        $this->expectWarning();
         $this->addMockResults($this->client, [
             function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
         ]);
@@ -254,7 +260,7 @@ class StreamWrapperPathStyleTest extends TestCase
 
     public function testCreatingAlreadyExistingBucketRaisesError()
     {
-        $this->expectWarning();
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("Bucket already exists: s3://already-existing-bucket");
         $this->addMockResults($this->client, [new Result()]);
         mkdir('s3://already-existing-bucket');
@@ -262,7 +268,7 @@ class StreamWrapperPathStyleTest extends TestCase
 
     public function testCreatingAlreadyExistingBucketForKeyRaisesError()
     {
-        $this->expectWarning();
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("Subfolder already exists: s3://already-existing-bucket/key");
         $this->addMockResults($this->client, [new Result()]);
         mkdir('s3://already-existing-bucket/key');
@@ -321,15 +327,15 @@ class StreamWrapperPathStyleTest extends TestCase
 
     public function testCannotDeleteS3()
     {
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("specify a bucket");
-        $this->expectWarning();
         rmdir('s3://');
     }
 
     public function testRmDirWithExceptionTriggersError()
     {
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("403 Forbidden");
-        $this->expectWarning();
         $this->addMockResults($this->client, [
             function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
         ]);
@@ -349,7 +355,7 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertSame('s3.amazonaws.com', $entries[0]['request']->getUri()->getHost());
     }
 
-    public function rmdirProvider()
+    public static function rmdirProvider(): array
     {
         return [
             ['s3://bucket/object/'],
@@ -357,9 +363,7 @@ class StreamWrapperPathStyleTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider rmdirProvider
-     */
+    #[DataProvider('rmdirProvider')]
     public function testCanDeleteObjectWithRmDir($path)
     {
         $history = new History();
@@ -396,8 +400,8 @@ class StreamWrapperPathStyleTest extends TestCase
 
     public function testRenameEnsuresProtocolsMatch()
     {
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("rename(): Cannot rename a file across wrapper types");
-        $this->expectWarning();
         StreamWrapper::register($this->client, 'baz');
         rename('s3://foo/bar', 'baz://qux/quux');
     }
@@ -405,14 +409,14 @@ class StreamWrapperPathStyleTest extends TestCase
     public function testRenameEnsuresKeyIsSet()
     {
         $this->expectExceptionMessage("The Amazon S3 stream wrapper only supports copying objects");
-        $this->expectWarning();
+        $this->expectException(\RuntimeException::class);
         rename('s3://foo/bar', 's3://baz');
     }
 
     public function testRenameWithExceptionThrowsError()
     {
         $this->expectExceptionMessage("Forbidden");
-        $this->expectWarning();
+        $this->expectException(\RuntimeException::class);
         $this->addMockResults($this->client, [
             function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
         ]);
@@ -512,7 +516,7 @@ class StreamWrapperPathStyleTest extends TestCase
     public function testFailingStatTriggersError()
     {
         $this->expectExceptionMessage("Forbidden");
-        $this->expectWarning();
+        $this->expectException(\RuntimeException::class);
         // Sends one request for HeadObject, then another for ListObjects
         $this->addMockResults($this->client, [
             function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
@@ -525,7 +529,7 @@ class StreamWrapperPathStyleTest extends TestCase
     public function testBucketNotFoundTriggersError()
     {
         $this->expectExceptionMessage("File or directory not found: s3://bucket");
-        $this->expectWarning();
+        $this->expectException(\RuntimeException::class);
         $this->addMockResults($this->client, [
             function ($cmd, $r) { return new S3Exception('404', $cmd); },
         ]);
@@ -569,8 +573,8 @@ class StreamWrapperPathStyleTest extends TestCase
 
     public function testCannotStatPrefixWithNoResults()
     {
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("File or directory not found: s3://bucket/prefix");
-        $this->expectWarning();
         $this->addMockResults($this->client, [
             function ($cmd, $r) { return new S3Exception('404', $cmd); },
             new Result()
@@ -579,7 +583,7 @@ class StreamWrapperPathStyleTest extends TestCase
         stat('s3://bucket/prefix');
     }
 
-    public function fileTypeProvider()
+    public static function fileTypeProvider(): array
     {
         $err = function ($cmd, $r) { return new S3Exception('404', $cmd); };
 
@@ -612,9 +616,7 @@ class StreamWrapperPathStyleTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider fileTypeProvider
-     */
+    #[DataProvider('fileTypeProvider')]
     public function testDeterminesIfFileOrDir($uri, $queue, $result)
     {
         $history = new History();
@@ -642,13 +644,8 @@ class StreamWrapperPathStyleTest extends TestCase
 
     public function testStreamCastIsNotPossible()
     {
-        if (PHP_VERSION_ID < 80000) {
-            $this->expectExceptionMessage("cannot represent a stream of type user-space");
-            $this->expectWarning();
-        } else {
-            $this->expectExceptionMessage('No stream arrays were passed');
-            $this->expectException(\ValueError::class);
-        }
+        $this->expectException(\ValueError::class);
+        $this->expectExceptionMessage('No stream arrays were passed');
 
         $this->addMockResults($this->client, [
             new Result(['Body' => Psr7\Utils::streamFor('')])
@@ -661,11 +658,17 @@ class StreamWrapperPathStyleTest extends TestCase
 
     public function testEnsuresClientIsSet()
     {
+        set_error_handler(function ($err, $message) {
+            throw new \RuntimeException($message);
+        });
         $this->expectExceptionMessage("No client in stream context");
-        $this->expectWarning();
-        fopen('s3://bucket/key', 'r', false, stream_context_create([
-            's3' => ['client' => null]
-        ]));
+        try {
+            fopen('s3://bucket/key', 'r', false, stream_context_create([
+                's3' => ['client' => null]
+            ]));
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testDoesNotErrorOnIsLink()
@@ -766,7 +769,7 @@ class StreamWrapperPathStyleTest extends TestCase
         closedir($r);
     }
 
-    /** @doesNotPerformAssertions */
+    #[CoversNothing]
     public function testCanSetDelimiterStreamContext()
     {
         $this->addMockResults($this->client, [
@@ -792,6 +795,7 @@ class StreamWrapperPathStyleTest extends TestCase
         $context = stream_context_create(['s3' => ['delimiter' => '']]);
         $r = opendir('s3://bucket', $context);
         closedir($r);
+        $this->assertTrue(true);
     }
 
     public function testCachesReaddirs()

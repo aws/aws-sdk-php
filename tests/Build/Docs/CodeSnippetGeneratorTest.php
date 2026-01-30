@@ -1,23 +1,17 @@
 <?php
 namespace Aws\Test\Build\Docs;
 
-
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\Build\Docs\CodeSnippetGenerator;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(CodeSnippetGenerator::class)]
 class CodeSnippetGeneratorTest extends TestCase
 {
-    /**
-     * @dataProvider exampleProvider
-     *
-     * @param Service $service
-     * @param string $operation
-     * @param array $input
-     * @param string $expected
-     * @param bool $isInput
-     */
+    #[DataProvider('exampleProvider')]
     public function testCanBuildCodeExamples(
         Service $service,
         $operation,
@@ -33,7 +27,7 @@ class CodeSnippetGeneratorTest extends TestCase
         $this->assertSame($expected, $builder($operation, $input, [], $isInput));
     }
 
-    public function exampleProvider()
+    public static function exampleProvider(): array
     {
         $provider = ApiProvider::defaultProvider();
         return [

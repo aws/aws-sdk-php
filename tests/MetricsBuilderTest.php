@@ -7,7 +7,10 @@ use Aws\MetricsBuilder;
 use Aws\Middleware;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(MetricsBuilder::class)]
 class MetricsBuilderTest extends TestCase
 {
     public function testAppendMetrics()
@@ -42,13 +45,8 @@ class MetricsBuilderTest extends TestCase
 
     public function testConstraintsAppendToMetricsSize()
     {
+        set_error_handler(static function ( $errno, $errstr ) {});
         try {
-            set_error_handler(
-                static function ( $errno, $errstr ) {
-                   // Mute warning
-                },
-                E_ALL
-            );
             $metricsBuilder = new MetricsBuilder();
             $firstMetric = str_repeat("*", 1024);
             $metricsBuilder->append($firstMetric);
@@ -70,7 +68,9 @@ class MetricsBuilderTest extends TestCase
 
     public function testAppendMetricsCaptureMiddleware()
     {
-        $handlerList = new HandlerList(function (){});
+        $handlerList = new HandlerList(function (){
+            $this->assertTrue(true);
+        });
         $metric = "Foo";
         // It should be appended into the build step
         MetricsBuilder::appendMetricsCaptureMiddleware(
@@ -103,10 +103,9 @@ class MetricsBuilderTest extends TestCase
      * @param array $args
      * @param string $expectedMetrics
      *
-     * @dataProvider resolveAndAppendFromArgsProvider
-     *
      * @return void
      */
+    #[DataProvider('resolveAndAppendFromArgsProvider')]
     public function testResolveAndAppendFromArgs(
         array $args,
         string $expectedMetrics,
@@ -122,7 +121,7 @@ class MetricsBuilderTest extends TestCase
      *
      * @return array[]
      */
-    public function resolveAndAppendFromArgsProvider(): array
+    public static function resolveAndAppendFromArgsProvider(): array
     {
         return [
             'endpoint_override' => [
@@ -175,8 +174,11 @@ class MetricsBuilderTest extends TestCase
      *
      * @return void
      */
-    public function testAppendMetricsCaptureMiddlewareJustOnce(): void {
-        $handlerList = new HandlerList(function (){});
+    public function testAppendMetricsCaptureMiddlewareJustOnce(): void
+    {
+        $handlerList = new HandlerList(function (){
+            $this->assertTrue(true);
+        });
         MetricsBuilder::appendMetricsCaptureMiddleware(
             $handlerList,
             'test'

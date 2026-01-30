@@ -4,10 +4,9 @@ namespace Aws\Test\Signature;
 use Aws\Signature\DpopSignature;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\Request;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers Aws\Signature\DpopSignature
- */
+#[CoversClass(DpopSignature::class)]
 class DpopSignatureTest extends TestCase
 {
     private function getValidEcKey(): \OpenSSLAsymmetricKey
@@ -142,9 +141,6 @@ class DpopSignatureTest extends TestCase
         $this->assertEquals(64, strlen($raw));
     }
 
-    /**
-     * Test that derToRaw properly handles DER signatures with various R and S lengths
-     */
     public function testDerToRawHandlesVariableLengthComponents(): void
     {
         $dpop = new DpopSignature('signin');
@@ -190,9 +186,6 @@ class DpopSignatureTest extends TestCase
         $this->assertEquals(64, strlen($raw4));
     }
 
-    /**
-     * Test that derToRaw throws for invalid DER signatures
-     */
     public function testDerToRawThrowsForInvalidSignatures(): void
     {
         $dpop = new DpopSignature('signin');
@@ -262,9 +255,6 @@ class DpopSignatureTest extends TestCase
         );
     }
 
-    /**
-     * Test that the signature can be verified with openssl
-     */
     public function testSignatureCanBeVerified(): void
     {
         $dpop = new DpopSignature('signin');
@@ -314,9 +304,6 @@ class DpopSignatureTest extends TestCase
         $this->assertEquals(1, $verified);
     }
 
-    /**
-     * Test that multiple signatures from the same key produce different JWTs (due to jti)
-     */
     public function testMultipleSignaturesProduceDifferentJwts(): void
     {
         $dpop = new DpopSignature('signin');
@@ -339,9 +326,6 @@ class DpopSignatureTest extends TestCase
         $this->assertEquals($parts1[0], $parts2[0]);
     }
 
-    /**
-     * Test that a key with specifiedCurve parameters works correctly
-     */
     public function testSignRequestWithSpecifiedCurveKey(): void
     {
         $dpop = new DpopSignature('signin');

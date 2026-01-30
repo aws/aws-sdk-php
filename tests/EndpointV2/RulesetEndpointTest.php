@@ -1,11 +1,10 @@
 <?php
 
 use Aws\EndpointV2\Ruleset\RulesetEndpoint;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
 
-/**
- * @covers Aws\EndpointV2\Ruleset\RulesetEndpoint
- */
+#[CoversClass(RulesetEndpoint::class)]
 class RulesetEndpointTest extends TestCase
 {
     private static $url = 'https://exmaple.com';

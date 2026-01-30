@@ -6,17 +6,13 @@ use Aws\Endpoint\PartitionInterface;
 use Aws\Endpoint\UseDualstackEndpoint;
 use Aws\Endpoint\UseFipsEndpoint;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Aws\Endpoint\Partition
- */
+#[CoversClass(Partition::class)]
 class PartitionTest extends TestCase
 {
-    /**
-     * @dataProvider partitionDefinitionProvider
-     *
-     * @param array $definition
-     */
+    #[DataProvider('partitionDefinitionProvider')]
     public function testAcceptsValidDefinitions(array $definition)
     {
         $this->assertInstanceOf(
@@ -25,11 +21,7 @@ class PartitionTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider invalidPartitionDefinitionProvider
-     *
-     * @param array $invalidDefinition
-     */
+    #[DataProvider('invalidPartitionDefinitionProvider')]
     public function testRejectsInvalidDefinitions(array $invalidDefinition)
     {
         $this->expectExceptionMessageMatches("/missing required \w+ field/");
@@ -37,11 +29,7 @@ class PartitionTest extends TestCase
         new Partition($invalidDefinition);
     }
 
-    /**
-     * @dataProvider partitionDefinitionProvider
-     *
-     * @param array $definition
-     */
+    #[DataProvider('partitionDefinitionProvider')]
     public function testReportsData(array $definition)
     {
         $this->assertSame(
@@ -53,11 +41,8 @@ class PartitionTest extends TestCase
             (new Partition($definition))->getDnsSuffix()
         );
     }
-    /**
-     * @dataProvider partitionDefinitionProvider
-     *
-     * @param array $definition
-     */
+
+    #[DataProvider('partitionDefinitionProvider')]
     public function testFipsEndpoint(array $definition)
     {
         $partition = new Partition($definition);
@@ -65,7 +50,7 @@ class PartitionTest extends TestCase
         self::assertStringContainsString('service-fips.amazonaws.com', $resolved['endpoint']);
     }
 
-    public function partitionDefinitionProvider()
+    public static function partitionDefinitionProvider(): array
     {
         return [
             [[
@@ -89,9 +74,9 @@ class PartitionTest extends TestCase
         ];
     }
 
-    public function invalidPartitionDefinitionProvider()
+    public static function invalidPartitionDefinitionProvider(): array
     {
-        $validDefinition = $this->partitionDefinitionProvider()[0][0];
+        $validDefinition = self::partitionDefinitionProvider()[0][0];
         $return = [];
 
         foreach ($validDefinition as $requiredKey => $v) {
@@ -104,11 +89,7 @@ class PartitionTest extends TestCase
         return $return;
     }
 
-    /**
-     * @dataProvider partitionDefinitionProvider
-     *
-     * @param array $definition
-     */
+    #[DataProvider('partitionDefinitionProvider')]
     public function testReportsRegionMatches(array $definition)
     {
         $partition = new Partition($definition);
@@ -117,11 +98,7 @@ class PartitionTest extends TestCase
         $this->assertFalse($partition->isRegionMatch('foo', 'bar'));
     }
 
-    /**
-     * @dataProvider partitionDefinitionProvider
-     *
-     * @param array $definition
-     */
+    #[DataProvider('partitionDefinitionProvider')]
     public function testReportsRegionMatchesByPattern(array $definition)
     {
         $definition['regionRegex'] = '^fo[\w]{1}';
@@ -132,14 +109,7 @@ class PartitionTest extends TestCase
         $this->assertFalse($partition->isRegionMatch('bar', 's3'));
     }
 
-    /**
-     * @dataProvider serviceRegionsProvider
-     *
-     * @param Partition $partition
-     * @param string $service
-     * @param array $regions
-     * @param bool $allowNonRegionalEndpoints
-     */
+    #[DataProvider('serviceRegionsProvider')]
     public function testEnumeratesRegionsForGivenService(
         Partition $partition,
         $service,
@@ -152,7 +122,7 @@ class PartitionTest extends TestCase
         ));
     }
 
-    public function serviceRegionsProvider()
+    public static function serviceRegionsProvider(): array
     {
         $partition = new Partition([
             'partition' => 'foo',
@@ -190,14 +160,7 @@ class PartitionTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider signingRegionProvider
-     *
-     * @param Partition $partition
-     * @param $region
-     * @param $service
-     * @param $signingRegion
-     */
+    #[DataProvider('signingRegionProvider')]
     public function testDeterminesSigningRegion(
         Partition $partition,
         $region,
@@ -214,7 +177,7 @@ class PartitionTest extends TestCase
         $this->assertSame($signingRegion, $resolved['signingRegion']);
     }
 
-    public function signingRegionProvider()
+    public static function signingRegionProvider(): array
     {
         $partition = new Partition([
             'partition' => 'foo',
@@ -245,14 +208,7 @@ class PartitionTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider endpointProvider
-     *
-     * @param Partition $partition
-     * @param $region
-     * @param $service
-     * @param $endpoint
-     */
+    #[DataProvider('endpointProvider')]
     public function testDeterminesEndpoint(
         Partition $partition,
         $region,
@@ -269,7 +225,7 @@ class PartitionTest extends TestCase
         $this->assertSame($endpoint, $resolved['endpoint']);
     }
 
-    public function endpointProvider()
+    public static function endpointProvider(): array
     {
         $partition = new Partition([
             'partition' => 'foo',
@@ -330,14 +286,7 @@ class PartitionTest extends TestCase
         $this->assertSame('https://baz.us-east-1.bar', $resolved['endpoint']);
     }
 
-    /**
-     * @dataProvider signatureVersionProvider
-     *
-     * @param Partition $partition
-     * @param $region
-     * @param $service
-     * @param $signatureVersion
-     */
+    #[DataProvider('signatureVersionProvider')]
     public function testDeterminesSignatureVersion(
         Partition $partition,
         $region,
@@ -354,7 +303,7 @@ class PartitionTest extends TestCase
         $this->assertSame($signatureVersion, $resolved['signatureVersion']);
     }
 
-    public function signatureVersionProvider()
+    public static function signatureVersionProvider(): array
     {
         $partition = new Partition([
             'partition' => 'foo',
@@ -410,14 +359,7 @@ class PartitionTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider signingNameProvider
-     *
-     * @param Partition $partition
-     * @param string $region
-     * @param string $service
-     * @param string $signingName
-     */
+    #[DataProvider('signingNameProvider')]
     public function testDeterminesSigningName(
         Partition $partition,
         $region,
@@ -434,7 +376,7 @@ class PartitionTest extends TestCase
         $this->assertSame($signingName, $resolved['signingName']);
     }
 
-    public function signingNameProvider()
+    public static function signingNameProvider(): array
     {
         $partition = new Partition([
             'partition' => 'foo',
@@ -482,13 +424,7 @@ class PartitionTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider stsEndpointTestCases
-     *
-     * @param $region
-     * @param $configOption
-     * @param $expectedEndpoint
-     */
+    #[DataProvider('stsEndpointTestCases')]
     public function testResolvesStsRegionalEndpoints(
         $region,
         $configOption,
@@ -515,7 +451,7 @@ class PartitionTest extends TestCase
 
     }
 
-    public function stsEndpointTestCases()
+    public static function stsEndpointTestCases(): array
     {
         return [
             [
@@ -581,13 +517,7 @@ class PartitionTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider s3EndpointTestCases
-     *
-     * @param $region
-     * @param $configOption
-     * @param $expectedEndpoint
-     */
+    #[DataProvider('s3EndpointTestCases')]
     public function testResolvesS3RegionalEndpoint(
         $region,
         $configOption,
@@ -614,7 +544,7 @@ class PartitionTest extends TestCase
 
     }
 
-    public function s3EndpointTestCases()
+    public static function s3EndpointTestCases(): array
     {
         return [
             [
@@ -665,19 +595,33 @@ class PartitionTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider variantTagProvider
-     *
-     * @param array $definition
-     * @param @fipsConfig
-     * @param @dualstackConfig
-     */
+    #[DataProvider('variantTagProvider')]
     public function testGetVariantIgnoresVariantTagOrder(
         array $definition,
-        $fipsConfig,
-        $dualstackConfig
+        bool $useFipsConfig,
+        bool $useDualstackConfig
     )
     {
+        $fipsConfig = null;
+        if ($useFipsConfig) {
+            $fipsConfig = $this->getMockBuilder(UseFipsEndpoint\Configuration::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+            $fipsConfig->expects($this->any())
+                ->method('isUseFipsEndpoint')
+                ->willReturn(true);
+        }
+
+        $dualstackConfig = null;
+        if ($useDualstackConfig) {
+            $dualstackConfig = $this->getMockBuilder(UseDualstackEndpoint\Configuration::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+            $dualstackConfig->expects($this->any())
+                ->method('isUseDualstackEndpoint')
+                ->willReturn(true);
+        }
+
         $partition = new Partition($definition);
         $resolved = $partition([
             'region' => 'us-east-1',
@@ -691,22 +635,8 @@ class PartitionTest extends TestCase
         $this->assertStringContainsString('testsuffix.com', $resolved['endpoint']);
     }
 
-    public function variantTagProvider()
+    public static function variantTagProvider(): array
     {
-        $useFipsEndpointConfig = $this->getMockBuilder(UseFipsEndpoint\Configuration::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $useFipsEndpointConfig->expects($this->any())
-            ->method('isUseFipsEndpoint')
-            ->willReturn(true);
-
-        $useDualstackEndpointConfig = $this->getMockBuilder(UseDualstackEndpoint\Configuration::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $useDualstackEndpointConfig->expects($this->any())
-            ->method('isUseDualstackEndpoint')
-            ->willReturn(true);
-
         return [
             [
                 [
@@ -731,8 +661,8 @@ class PartitionTest extends TestCase
                         ],
                     ],
                 ],
-                $useFipsEndpointConfig,
-                $useDualstackEndpointConfig
+                true,
+                true
             ],
             [
                 [
@@ -757,8 +687,8 @@ class PartitionTest extends TestCase
                         ],
                     ],
                 ],
-                $useFipsEndpointConfig,
-                $useDualstackEndpointConfig
+                true,
+                true
             ],
             [
                 [
@@ -783,8 +713,8 @@ class PartitionTest extends TestCase
                         ],
                     ],
                 ],
-                $useFipsEndpointConfig,
-                null
+                true,
+                false
             ],
             [
                 [
@@ -809,25 +739,39 @@ class PartitionTest extends TestCase
                         ],
                     ],
                 ],
-                null,
-                $useDualstackEndpointConfig
+                false,
+                true
             ]
         ];
     }
 
-    /**
-     * @dataProvider variantTagEmptyProvider
-     *
-     * @param array $definition
-     * @param @fipsConfig
-     * @param @dualstackConfig
-     */
+    #[DataProvider('variantTagEmptyProvider')]
     public function testGetVariantNoVariantSelectedIfTagsAreEmpty(
         array $definition,
-        $fipsConfig,
-        $dualstackConfig
+        bool $useFipsConfig,
+        bool $useDualstackConfig
     )
     {
+        $fipsConfig = null;
+        if ($useFipsConfig) {
+            $fipsConfig = $this->getMockBuilder(UseFipsEndpoint\Configuration::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+            $fipsConfig->expects($this->any())
+                ->method('isUseFipsEndpoint')
+                ->willReturn(true);
+        }
+
+        $dualstackConfig = null;
+        if ($useDualstackConfig) {
+            $dualstackConfig = $this->getMockBuilder(UseDualstackEndpoint\Configuration::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+            $dualstackConfig->expects($this->any())
+                ->method('isUseDualstackEndpoint')
+                ->willReturn(true);
+        }
+
         $partition = new Partition($definition);
         $resolved = $partition([
             'region' => 'us-east-1',
@@ -841,22 +785,8 @@ class PartitionTest extends TestCase
         $this->assertStringNotContainsString('testsuffix.com', $resolved['endpoint']);
     }
 
-    public function variantTagEmptyProvider()
+    public static function variantTagEmptyProvider(): array
     {
-        $useFipsEndpointConfig = $this->getMockBuilder(UseFipsEndpoint\Configuration::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $useFipsEndpointConfig->expects($this->any())
-            ->method('isUseFipsEndpoint')
-            ->willReturn(true);
-
-        $useDualstackEndpointConfig = $this->getMockBuilder(UseDualstackEndpoint\Configuration::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $useDualstackEndpointConfig->expects($this->any())
-            ->method('isUseDualstackEndpoint')
-            ->willReturn(true);
-
         return [
             [
                 [
@@ -881,8 +811,8 @@ class PartitionTest extends TestCase
                         ],
                     ],
                 ],
-                $useFipsEndpointConfig,
-                $useDualstackEndpointConfig
+                true,
+                true
             ],
             [
                 [
@@ -907,8 +837,8 @@ class PartitionTest extends TestCase
                         ],
                     ],
                 ],
-                $useFipsEndpointConfig,
-                null
+                true,
+                false
             ],
             [
                 [
@@ -933,8 +863,8 @@ class PartitionTest extends TestCase
                         ],
                     ],
                 ],
-                null,
-                $useDualstackEndpointConfig
+                false,
+                true
             ],
             [
                 [
@@ -959,19 +889,13 @@ class PartitionTest extends TestCase
                         ],
                     ],
                 ],
-                null,
-                null
+                false,
+                false
             ]
         ];
     }
 
-    /**
-     * @dataProvider booleanConfigProvider
-     *
-     * @param array $tags
-     * @param @fipsConfig
-     * @param @dualstackConfig
-     */
+    #[DataProvider('booleanConfigProvider')]
     public function testGetVariantWithBooleanConfigValues(
         array $tags,
               $fipsConfig,
@@ -1013,7 +937,7 @@ class PartitionTest extends TestCase
         $this->assertStringContainsString('testsuffix.com', $resolved['endpoint']);
     }
 
-    public function booleanConfigProvider()
+    public static function booleanConfigProvider(): array
     {
         return [
             [
