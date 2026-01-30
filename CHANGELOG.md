@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.24 - 2026-01-30
 
 * `Aws\Connect` - This release adds Estimated Wait Time support to the GetContactMetrics API for Amazon Connect.
 * `Aws\QuickSight` - Improve SessionTag usage guidelines in the GenerateEmbedURLForAnonymousUser API documentation. Update the GetIdentityContext document with the region support context.
