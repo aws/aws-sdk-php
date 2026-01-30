@@ -38,17 +38,15 @@ use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
+use PHPUnit\Framework\Attributes\RunClassInSeparateProcess;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @runInSeparateProcess
-
- */
 #[CoversClass(\Aws\UserAgentMiddleware::class)]
+#[RunClassInSeparateProcess]
 class UserAgentMiddlewareTest extends TestCase
 {
     use MetricsBuilderTestTrait;
@@ -409,70 +407,75 @@ class UserAgentMiddlewareTest extends TestCase
      */
     public function testUserAgentCaptureS3CryptoV1Metric()
     {
-        $kms = $this->getTestKmsClient();
-        $list = $kms->getHandlerList();
-        $list->setHandler(function ($cmd, $req) {
-            // Verify decryption command has correct parameters
-            $this->assertSame('cek', $cmd['CiphertextBlob']);
-            $this->assertEquals(
-                [
-                    'kms_cmk_id' => '11111111-2222-3333-4444-555555555555'
-                ],
-                $cmd['EncryptionContext']
-            );
-            return Create::promiseFor(
-                new Result(['Plaintext' => random_bytes(32)])
-            );
-        });
-        $provider = new KmsMaterialsProvider($kms, 'foo');
-
-        $responded = false;
-        $s3Client = new S3Client([
-            'region' => 'us-east-2',
-            'handler' => function (
-                CommandInterface $_,
-                RequestInterface $request
-            ) {
-
-                $metrics = $this->getMetricsAsArray($request);
-
-                $this->assertTrue(
-                    in_array(MetricsBuilder::S3_CRYPTO_V2, $metrics)
+        set_error_handler(function ($errno, $errstr) {}, E_USER_WARNING);
+        try {
+            $kms = $this->getTestKmsClient();
+            $list = $kms->getHandlerList();
+            $list->setHandler(function ($cmd, $req) {
+                // Verify decryption command has correct parameters
+                $this->assertSame('cek', $cmd['CiphertextBlob']);
+                $this->assertEquals(
+                    [
+                        'kms_cmk_id' => '11111111-2222-3333-4444-555555555555'
+                    ],
+                    $cmd['EncryptionContext']
                 );
+                return Create::promiseFor(
+                    new Result(['Plaintext' => random_bytes(32)])
+                );
+            });
+            $provider = new KmsMaterialsProvider($kms, 'foo');
 
-                return new Result([
-                    'Body' => 'This is a test body'
-                ]);
-            },
-            'http_handler' => function () use ($provider, &$responded) {
-                if ($responded) {
+            $responded = false;
+            $s3Client = new S3Client([
+                'region' => 'us-east-2',
+                'handler' => function (
+                    CommandInterface $_,
+                    RequestInterface $request
+                ) {
+
+                    $metrics = $this->getMetricsAsArray($request);
+
+                    $this->assertTrue(
+                        in_array(MetricsBuilder::S3_CRYPTO_V2, $metrics)
+                    );
+
+                    return new Result([
+                        'Body' => 'This is a test body'
+                    ]);
+                },
+                'http_handler' => function () use ($provider, &$responded) {
+                    if ($responded) {
+                        return new FulfilledPromise(new Response(
+                            200,
+                            [],
+                            json_encode(
+                                $this->getValidV1GcmMetadataFields($provider)
+                            )
+                        ));
+                    }
+
+                    $responded = true;
                     return new FulfilledPromise(new Response(
                         200,
                         [],
-                        json_encode(
-                            $this->getValidV1GcmMetadataFields($provider)
-                        )
+                        'test'
                     ));
-                }
-
-                $responded = true;
-                return new FulfilledPromise(new Response(
-                    200,
-                    [],
-                    'test'
-                ));
-            },
-        ]);
-        $encryptionClient = @new S3EncryptionClient(
-            $s3Client,
-            InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
-        );
-        $result = $encryptionClient->getObject([
-            'Bucket' => 'foo',
-            'Key' => 'foo',
-            '@MaterialsProvider' => $provider,
-        ]);
-        $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
+                },
+            ]);
+            $encryptionClient = @new S3EncryptionClient(
+                $s3Client,
+                InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
+            );
+            $result = $encryptionClient->getObject([
+                'Bucket' => 'foo',
+                'Key' => 'foo',
+                '@MaterialsProvider' => $provider,
+            ]);
+            $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     /**
@@ -482,72 +485,77 @@ class UserAgentMiddlewareTest extends TestCase
      */
     public function testUserAgentCaptureS3CryptoV2Metric()
     {
-        $kms = $this->getTestKmsClient();
-        $list = $kms->getHandlerList();
-        $list->setHandler(function ($cmd, $req) {
-            // Verify decryption command has correct parameters
-            $this->assertSame('cek', $cmd['CiphertextBlob']);
-            $this->assertEquals(
-                [
-                    'aws:x-amz-cek-alg' => 'AES/GCM/NoPadding'
-                ],
-                $cmd['EncryptionContext']
-            );
-            return Create::promiseFor(
-                new Result(['Plaintext' => random_bytes(32)])
-            );
-        });
-        $provider = new KmsMaterialsProviderV2($kms, 'foo');
-
-        $responded = false;
-        $s3Client = new S3Client([
-            'region' => 'us-east-2',
-            'handler' => function (
-                CommandInterface $_,
-                RequestInterface $request
-            ) {
-
-                $metrics = $this->getMetricsAsArray($request);
-
-                $this->assertTrue(
-                    in_array(MetricsBuilder::S3_CRYPTO_V2, $metrics)
+        set_error_handler(function ($errno, $errstr) {}, E_USER_WARNING);
+        try {
+            $kms = $this->getTestKmsClient();
+            $list = $kms->getHandlerList();
+            $list->setHandler(function ($cmd, $req) {
+                // Verify decryption command has correct parameters
+                $this->assertSame('cek', $cmd['CiphertextBlob']);
+                $this->assertEquals(
+                    [
+                        'aws:x-amz-cek-alg' => 'AES/GCM/NoPadding'
+                    ],
+                    $cmd['EncryptionContext']
                 );
+                return Create::promiseFor(
+                    new Result(['Plaintext' => random_bytes(32)])
+                );
+            });
+            $provider = new KmsMaterialsProviderV2($kms, 'foo');
 
-                return new Result([
-                    'Body' => 'This is a test body'
-                ]);
-            },
-            'http_handler' => function () use ($provider, &$responded) {
-                if ($responded) {
+            $responded = false;
+            $s3Client = new S3Client([
+                'region' => 'us-east-2',
+                'handler' => function (
+                    CommandInterface $_,
+                    RequestInterface $request
+                ) {
+
+                    $metrics = $this->getMetricsAsArray($request);
+
+                    $this->assertTrue(
+                        in_array(MetricsBuilder::S3_CRYPTO_V2, $metrics)
+                    );
+
+                    return new Result([
+                        'Body' => 'This is a test body'
+                    ]);
+                },
+                'http_handler' => function () use ($provider, &$responded) {
+                    if ($responded) {
+                        return new FulfilledPromise(new Response(
+                            200,
+                            [],
+                            json_encode(
+                                $this->getValidV2GcmMetadataFields($provider)
+                            )
+                        ));
+                    }
+
+                    $responded = true;
                     return new FulfilledPromise(new Response(
                         200,
                         [],
-                        json_encode(
-                            $this->getValidV2GcmMetadataFields($provider)
-                        )
+                        'test'
                     ));
-                }
-
-                $responded = true;
-                return new FulfilledPromise(new Response(
-                    200,
-                    [],
-                    'test'
-                ));
-            },
-        ]);
-        $encryptionClient = @new S3EncryptionClientV2(
-            $s3Client,
-            InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
-        );
-        $result = $encryptionClient->getObject([
-            'Bucket' => 'foo',
-            'Key' => 'foo',
-            '@MaterialsProvider' => $provider,
-            '@SecurityProfile' => 'V2',
-            '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT'
-        ]);
-        $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
+                },
+            ]);
+            $encryptionClient = @new S3EncryptionClientV2(
+                $s3Client,
+                InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
+            );
+            $result = $encryptionClient->getObject([
+                'Bucket' => 'foo',
+                'Key' => 'foo',
+                '@MaterialsProvider' => $provider,
+                '@SecurityProfile' => 'V2',
+                '@CommitmentPolicy' => 'FORBID_ENCRYPT_ALLOW_DECRYPT'
+            ]);
+            $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     /**
