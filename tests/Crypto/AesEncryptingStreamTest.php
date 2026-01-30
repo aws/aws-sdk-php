@@ -149,8 +149,13 @@ class AesEncryptingStreamTest extends TestCase
 
     #[DataProvider('seekableCipherMethodProvider')]
     public function testSupportsSeekingFromCurrentPosition(
-        CipherMethod $cipherMethod
+        ?CipherMethod $cipherMethod,
+        bool $skipTest
     ) {
+        if ($skipTest) {
+            $this->markTestSkipped();
+        }
+
         $stream = new AesEncryptingStream(
             Psr7\Utils::streamFor(openssl_random_pseudo_bytes(2 * self::MB)),
             'foo',
