@@ -254,14 +254,13 @@ class RestJsonSerializerTest extends TestCase
 
     public function testPreparesRequestsWithJsonValueTraitString(): void
     {
-        $jsonValueArgs = '{"a":"b"
-
-        $this->assertTrue(true);}';
+        $jsonValueArgs = '{"a":"b"}';
         $request = $this->getRequest('foobar', ['baz' => $jsonValueArgs]);
         $this->assertSame('IntcImFcIjpcImJcIn0i', $request->getHeaderLine('baz'));
         $this->assertSame('POST', $request->getMethod());
         $this->assertSame('http://foo.com/', (string) $request->getUri());
         $this->assertSame('', $request->getHeaderLine('Content-Type'));
+        $this->assertTrue(true);
     }
 
     public function testPreparesRequestsWithJsonValueTraitArray(): void

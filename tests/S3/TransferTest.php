@@ -518,7 +518,7 @@ class TransferTest extends TestCase
         $this->addMockResults($s3, []);
         set_error_handler(function ($err, $message) {
             throw new \RuntimeException($message);
-        });
+        }, E_USER_DEPRECATED);
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('S3 no longer supports MD5 checksums.');
         $s3->getHandlerList()->appendSign(Middleware::tap(

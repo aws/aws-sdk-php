@@ -215,16 +215,15 @@ EOT;
     public function testEnsuresIniFileIsValid()
     {
         $this->expectExceptionMessage("Invalid config file:");
-        $this->expectException(\Aws\S3\UseArnRegion\Exception\ConfigurationException::class);
+        $this->expectException(ConfigurationException::class);
         $dir = $this->clearEnv();
         file_put_contents($dir . '/config', "wef \n=\nwef");
         putenv('HOME=' . dirname($dir));
 
         try {
-            @call_user_func(ConfigurationProvider::ini())->wait();
-        } catch (\Exception $e) {
+            call_user_func(ConfigurationProvider::ini())->wait();
+        } finally {
             unlink($dir . '/config');
-            throw $e;
         }
     }
 
