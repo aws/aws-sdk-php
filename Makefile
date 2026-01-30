@@ -29,7 +29,7 @@ test:
 	AWS_REGION= \
 	AWS_ENDPOINT_URL= \
 	AWS_SUPPRESS_PHP_DEPRECATION_WARNING=true \
-	vendor/bin/phpunit --testsuite=unit $(TEST)
+	vendor/bin/phpunit --no-coverage --testsuite=unit $(TEST)
 
 test-phar: package
 	[ -f build/artifacts/behat.phar ] || (cd build/artifacts && \
