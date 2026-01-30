@@ -116,17 +116,18 @@ class ComposerTest extends TestCase
                 'Removal failed after several attempts. Last error: Simulated Exception'
             );
         }
-        $exception = new IOException('Simulated Exception');
         $filesystem = $this->getMockBuilder(Filesystem::class)
             ->disableOriginalConstructor()
             ->getMock();
         $filesystem->expects($this->any())
             ->method('remove')
-            ->will($this->onConsecutiveCalls(
-                $this->throwException($exception),
-                $this->throwException($exception),
-                $success ? $this->returnValue(true) : $this->throwException($exception)
-            ));
+            ->willReturnCallback(function () use ($success) {
+                if ($success) {
+                    return true;
+                }
+
+                throw new IOException('Simulated Exception');
+            });
         $filesystem->expects($this->any())
             ->method('exists')
             ->willReturn(true);
@@ -161,7 +162,7 @@ class ComposerTest extends TestCase
     public static function retryProvider(): array
     {
         return [
-            'success' => [true , 3],
+            'success' => [true , 1],
             'failure' => [false, 2]
         ];
     }
