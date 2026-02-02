@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.25 - 2026-02-02
 
 * `Aws\MPA` - Updates to multi-party approval (MPA) service to add support for multi-factor authentication (MFA) for voting operations.
 * `Aws\CloudFront` - Add OriginMTLS support to CloudFront Distribution APIs
