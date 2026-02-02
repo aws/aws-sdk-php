@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MPA` - Updates to multi-party approval (MPA) service to add support for multi-factor authentication (MFA) for voting operations.
+* `Aws\CloudFront` - Add OriginMTLS support to CloudFront Distribution APIs
+* `Aws\BedrockAgentCoreControl` - Adds tagging support for AgentCore Evaluations (evaluator and online evaluation config)
+
 ## 3.369.24 - 2026-01-30
 
 * `Aws\Connect` - This release adds Estimated Wait Time support to the GetContactMetrics API for Amazon Connect.
