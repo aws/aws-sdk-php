@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.26 - 2026-02-03
 
 * `Aws\GeoMaps` - Added support for optional style parameters in maps, including 3D terrain and 3D Buildings
 * `Aws\Kinesis` - Adds StreamId parameter to AWS Kinesis Data Streams APIs that is reserved for future use.
