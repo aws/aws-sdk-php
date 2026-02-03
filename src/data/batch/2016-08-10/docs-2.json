@@ -52,7 +52,8 @@
     "ArrayJobStatusSummary": {
       "base": null,
       "refs": {
-        "ArrayPropertiesDetail$statusSummary": "<p>A summary of the number of array job children in each available job status. This parameter is returned for parent array jobs.</p>"
+        "ArrayPropertiesDetail$statusSummary": "<p>A summary of the number of array job children in each available job status. This parameter is returned for parent array jobs.</p>",
+        "ArrayPropertiesSummary$statusSummary": "<p>A summary of the number of array job children in each available job status. This parameter is returned for parent array jobs.</p>"
       }
     },
     "ArrayProperties": {
@@ -1115,7 +1116,7 @@
       "refs": {
         "JobDetail$status": "<p>The current status for the job.</p> <note> <p>If your jobs don't progress to <code>STARTING</code>, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/troubleshooting.html#job_stuck_in_runnable\">Jobs stuck in RUNNABLE status</a> in the troubleshooting section of the <i>Batch User Guide</i>.</p> </note>",
         "JobSummary$status": "<p>The current status for the job.</p>",
-        "ListJobsRequest$jobStatus": "<p>The job status used to filter jobs in the specified queue. If the <code>filters</code> parameter is specified, the <code>jobStatus</code> parameter is ignored and jobs with any status are returned. If you don't specify a status, only <code>RUNNING</code> jobs are returned.</p>"
+        "ListJobsRequest$jobStatus": "<p>The job status used to filter jobs in the specified queue. If the <code>filters</code> parameter is specified, the <code>jobStatus</code> parameter is ignored and jobs with any status are returned. If you don't specify a status, only <code>RUNNING</code> jobs are returned.</p> <note> <p>Array job parents are updated to <code>PENDING</code> when any child job is updated to <code>RUNNABLE</code> and remain in <code>PENDING</code> status while child jobs are running. To view these jobs, filter by <code>PENDING</code> status until all child jobs reach a terminal state.</p> </note>"
       }
     },
     "JobSummary": {
@@ -1345,6 +1346,8 @@
     "Long": {
       "base": null,
       "refs": {
+        "ArrayPropertiesDetail$statusSummaryLastUpdatedAt": "<p>The Unix timestamp (in milliseconds) for when the <code>statusSummary</code> was last updated.</p>",
+        "ArrayPropertiesSummary$statusSummaryLastUpdatedAt": "<p>The Unix timestamp (in milliseconds) for when the <code>statusSummary</code> was last updated.</p>",
         "AttemptDetail$startedAt": "<p>The Unix timestamp (in milliseconds) for when the attempt was started (when the attempt transitioned from the <code>STARTING</code> state to the <code>RUNNING</code> state).</p>",
         "AttemptDetail$stoppedAt": "<p>The Unix timestamp (in milliseconds) for when the attempt was stopped (when the attempt transitioned from the <code>RUNNING</code> state to a terminal state, such as <code>SUCCEEDED</code> or <code>FAILED</code>).</p>",
         "ConsumableResourceRequirement$quantity": "<p>The quantity of the consumable resource that is needed.</p>",
