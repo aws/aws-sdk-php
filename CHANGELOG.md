@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.369.27 - 2026-02-04
 
 * `Aws\Redshift` - We have increased the maximum duration for a deferred maintenance window from 45 days to 60 days for Amazon Redshift provisioned clusters. This enhancement provides customers with greater flexibility in scheduling patching and maintenance activities while also maintaining security compliance.
 * `Aws\EKS` - Update delete cluster description
