@@ -215,7 +215,8 @@
         "HiddenCaseRule$defaultValue": "<p>Whether the field is hidden when no conditions match.</p>",
         "OperandTwo$booleanValue": "<p>Boolean value type.</p>",
         "RelatedItemEventIncludedData$includeContent": "<p>Details of what related item data is published through the case event stream.</p>",
-        "RequiredCaseRule$defaultValue": "<p>The value of the rule (that is, whether the field is required) should none of the conditions evaluate to true.</p>"
+        "RequiredCaseRule$defaultValue": "<p>The value of the rule (that is, whether the field is required) should none of the conditions evaluate to true.</p>",
+        "TextAttributes$isMultiline": "<p>Attribute that defines rendering component and validation.</p>"
       }
     },
     "BooleanCondition": {
@@ -781,6 +782,15 @@
         "CreateFieldResponse$fieldArn": "<p>The Amazon Resource Name (ARN) of the field.</p>",
         "FieldSummary$fieldArn": "<p>The Amazon Resource Name (ARN) of the field.</p>",
         "GetFieldResponse$fieldArn": "<p>The Amazon Resource Name (ARN) of the field.</p>"
+      }
+    },
+    "FieldAttributes": {
+      "base": "<p>Union of field attributes.</p>",
+      "refs": {
+        "CreateFieldRequest$attributes": "<p>Union of field attributes.</p>",
+        "FieldSummary$attributes": "<p>Union of field attributes.</p>",
+        "GetFieldResponse$attributes": "<p>Union of field attributes.</p>",
+        "UpdateFieldRequest$attributes": "<p>Union of field attributes.</p>"
       }
     },
     "FieldDescription": {
@@ -1870,9 +1880,21 @@
         "ListTemplatesResponseTemplatesList$member": null
       }
     },
+    "TextAttributes": {
+      "base": "<p>Field attributes for Text field type.</p>",
+      "refs": {
+        "FieldAttributes$text": "<p>Field attributes for Text field type.</p>"
+      }
+    },
     "ThrottlingException": {
       "base": "<p>The rate has been exceeded for this API. Please try again after a few minutes.</p>",
       "refs": {}
+    },
+    "TotalCount": {
+      "base": null,
+      "refs": {
+        "SearchCasesResponse$totalCount": "<p>The total number of cases that matched the search criteria.</p>"
+      }
     },
     "UntagResourceRequest": {
       "base": null,

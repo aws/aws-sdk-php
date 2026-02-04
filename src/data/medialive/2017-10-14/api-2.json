@@ -6084,6 +6084,10 @@
         "LinkedChannelSettings": {
           "shape": "DescribeLinkedChannelSettings",
           "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -6214,6 +6218,10 @@
         "LinkedChannelSettings": {
           "shape": "DescribeLinkedChannelSettings",
           "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -6366,6 +6374,10 @@
         "LinkedChannelSettings": {
           "shape": "LinkedChannelSettings",
           "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -6445,6 +6457,10 @@
         "LinkedChannelSettings": {
           "shape": "LinkedChannelSettings",
           "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -6985,6 +7001,10 @@
         "LinkedChannelSettings": {
           "shape": "DescribeLinkedChannelSettings",
           "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -7375,6 +7395,10 @@
         "LinkedChannelSettings": {
           "shape": "DescribeLinkedChannelSettings",
           "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -7654,6 +7678,10 @@
         "WhitelistRules": {
           "shape": "__listOfInputWhitelistRule",
           "locationName": "whitelistRules"
+        },
+        "Channels": {
+          "shape": "__listOf__string",
+          "locationName": "channels"
         }
       }
     },
@@ -11244,6 +11272,10 @@
         "WhitelistRules": {
           "shape": "__listOfInputWhitelistRule",
           "locationName": "whitelistRules"
+        },
+        "Channels": {
+          "shape": "__listOf__string",
+          "locationName": "channels"
         }
       }
     },
@@ -11437,7 +11469,8 @@
         "MULTICAST",
         "SMPTE_2110_RECEIVER_GROUP",
         "SDI",
-        "MEDIACONNECT_ROUTER"
+        "MEDIACONNECT_ROUTER",
+        "SRT_LISTENER"
       ]
     },
     "InputVpcRequest": {
@@ -14987,6 +15020,10 @@
         "LinkedChannelSettings": {
           "shape": "DescribeLinkedChannelSettings",
           "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -15340,6 +15377,10 @@
         "LinkedChannelSettings": {
           "shape": "DescribeLinkedChannelSettings",
           "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -15912,6 +15953,10 @@
         "LinkedChannelSettings": {
           "shape": "LinkedChannelSettings",
           "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -16021,6 +16066,10 @@
         "LinkedChannelSettings": {
           "shape": "LinkedChannelSettings",
           "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       },
       "required": [
@@ -17545,6 +17594,10 @@
         "LinkedChannelSettings": {
           "shape": "DescribeLinkedChannelSettings",
           "locationName": "linkedChannelSettings"
+        },
+        "ChannelSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelSecurityGroups"
         }
       }
     },
@@ -21629,6 +21682,10 @@
         "SrtCallerSources": {
           "shape": "__listOfSrtCallerSource",
           "locationName": "srtCallerSources"
+        },
+        "SrtListenerSettings": {
+          "shape": "SrtListenerSettings",
+          "locationName": "srtListenerSettings"
         }
       }
     },
@@ -21638,6 +21695,10 @@
         "SrtCallerSources": {
           "shape": "__listOfSrtCallerSourceRequest",
           "locationName": "srtCallerSources"
+        },
+        "SrtListenerSettings": {
+          "shape": "SrtListenerSettingsRequest",
+          "locationName": "srtListenerSettings"
         }
       }
     },
@@ -23405,6 +23466,10 @@
         "PhysicalInterfaceName": {
           "shape": "__string",
           "locationName": "physicalInterfaceName"
+        },
+        "PhysicalInterfaceIpAddresses": {
+          "shape": "__listOf__string",
+          "locationName": "physicalInterfaceIpAddresses"
         }
       }
     },
@@ -23519,6 +23584,14 @@
         "Url": {
           "shape": "__string",
           "locationName": "url"
+        },
+        "ConnectionMode": {
+          "shape": "ConnectionMode",
+          "locationName": "connectionMode"
+        },
+        "ListenerPort": {
+          "shape": "__integerMin1Max65535",
+          "locationName": "listenerPort"
         }
       }
     },
@@ -25349,6 +25422,88 @@
           "locationName": "customEpoch"
         }
       }
+    },
+    "ConnectionMode": {
+      "type": "string",
+      "enum": [
+        "CALLER",
+        "LISTENER"
+      ]
+    },
+    "SrtListenerDecryption": {
+      "type": "structure",
+      "members": {
+        "Algorithm": {
+          "shape": "Algorithm",
+          "locationName": "algorithm"
+        },
+        "PassphraseSecretArn": {
+          "shape": "__string",
+          "locationName": "passphraseSecretArn"
+        }
+      },
+      "required": [
+        "PassphraseSecretArn",
+        "Algorithm"
+      ]
+    },
+    "SrtListenerDecryptionRequest": {
+      "type": "structure",
+      "members": {
+        "Algorithm": {
+          "shape": "Algorithm",
+          "locationName": "algorithm"
+        },
+        "PassphraseSecretArn": {
+          "shape": "__string",
+          "locationName": "passphraseSecretArn"
+        }
+      },
+      "required": [
+        "PassphraseSecretArn",
+        "Algorithm"
+      ]
+    },
+    "SrtListenerSettings": {
+      "type": "structure",
+      "members": {
+        "Decryption": {
+          "shape": "SrtListenerDecryption",
+          "locationName": "decryption"
+        },
+        "MinimumLatency": {
+          "shape": "__integer",
+          "locationName": "minimumLatency"
+        },
+        "StreamId": {
+          "shape": "__string",
+          "locationName": "streamId"
+        }
+      }
+    },
+    "SrtListenerSettingsRequest": {
+      "type": "structure",
+      "members": {
+        "Decryption": {
+          "shape": "SrtListenerDecryptionRequest",
+          "locationName": "decryption"
+        },
+        "MinimumLatency": {
+          "shape": "__integer",
+          "locationName": "minimumLatency"
+        },
+        "StreamId": {
+          "shape": "__string",
+          "locationName": "streamId"
+        }
+      },
+      "required": [
+        "MinimumLatency",
+        "Decryption"
+      ]
+    },
+    "__integerMin1Max65535": {
+      "type": "integer"
     }
   }
 }

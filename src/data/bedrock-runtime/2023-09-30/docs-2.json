@@ -181,7 +181,8 @@
         "GuardrailManagedWord$detected": "<p>Indicates whether managed word content that breaches the guardrail configuration is detected.</p>",
         "GuardrailPiiEntityFilter$detected": "<p>Indicates whether personally identifiable information (PII) that breaches the guardrail configuration is detected.</p>",
         "GuardrailRegexFilter$detected": "<p>Indicates whether custom regex entities that breach the guardrail configuration are detected.</p>",
-        "GuardrailTopic$detected": "<p>Indicates whether topic content that breaches the guardrail configuration is detected.</p>"
+        "GuardrailTopic$detected": "<p>Indicates whether topic content that breaches the guardrail configuration is detected.</p>",
+        "ToolSpecification$strict": "<p>Flag to enable structured output enforcement on a tool usage response.</p>"
       }
     },
     "CacheDetail": {
@@ -1498,6 +1499,12 @@
         "PromptRouterTrace$invokedModelId": "<p>The ID of the invoked model.</p>"
       }
     },
+    "JsonSchemaDefinition": {
+      "base": "<p> JSON schema structured output format options. </p>",
+      "refs": {
+        "OutputFormatStructure$jsonSchema": "<p> A JSON schema structure that the model's output must adhere to. </p>"
+      }
+    },
     "KmsKeyId": {
       "base": null,
       "refs": {
@@ -1631,6 +1638,31 @@
         "ContentBlockDeltaEvent$contentBlockIndex": "<p>The block index for a content block delta event. </p>",
         "ContentBlockStartEvent$contentBlockIndex": "<p>The index for a content block start event.</p>",
         "ContentBlockStopEvent$contentBlockIndex": "<p>The index for a content block.</p>"
+      }
+    },
+    "OutputConfig": {
+      "base": "<p>Output configuration for a model response in a call to <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> or <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a>.</p>",
+      "refs": {
+        "ConverseRequest$outputConfig": "<p>Output configuration for a model response.</p>",
+        "ConverseStreamRequest$outputConfig": "<p>Output configuration for a model response.</p>"
+      }
+    },
+    "OutputFormat": {
+      "base": "<p> Structured output parameters to control the model's response. </p>",
+      "refs": {
+        "OutputConfig$textFormat": "<p>Structured output parameters to control the model's text response. </p>"
+      }
+    },
+    "OutputFormatStructure": {
+      "base": "<p> The structure that the model's output must adhere to. </p>",
+      "refs": {
+        "OutputFormat$structure": "<p> The structure that the model's output must adhere to. </p>"
+      }
+    },
+    "OutputFormatType": {
+      "base": "<p> The type of structured output format. Available options are: json_schema. </p>",
+      "refs": {
+        "OutputFormat$type": "<p> The type of structured output format. </p>"
       }
     },
     "PaginationToken": {
@@ -1899,6 +1931,9 @@
         "GuardrailTextBlock$text": "<p>The input text details to be evaluated by the guardrail.</p>",
         "GuardrailTopic$name": "<p>The name for the guardrail.</p>",
         "GuardrailTraceAssessment$actionReason": "<p>Provides the reason for the action taken when harmful content is detected.</p>",
+        "JsonSchemaDefinition$schema": "<p> The JSON schema to constrain the model's output. For more information, see <a href=\"https://json-schema.org/understanding-json-schema/reference\">JSON Schema Reference</a>. </p>",
+        "JsonSchemaDefinition$name": "<p> The name of the JSON schema. </p>",
+        "JsonSchemaDefinition$description": "<p> A description of the JSON schema. </p>",
         "PromptVariableMap$key": null,
         "PromptVariableValues$text": "<p>The text value that the variable maps to.</p>",
         "ReasoningContentBlockDelta$text": "<p>The reasoning that the model used to return the output.</p>",

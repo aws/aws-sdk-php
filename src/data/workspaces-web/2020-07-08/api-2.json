@@ -2023,7 +2023,8 @@
         },
         "authenticationType":{"shape":"AuthenticationType"},
         "instanceType":{"shape":"InstanceType"},
-        "maxConcurrentSessions":{"shape":"MaxConcurrentSessions"}
+        "maxConcurrentSessions":{"shape":"MaxConcurrentSessions"},
+        "portalCustomDomain":{"shape":"PortalCustomDomain"}
       }
     },
     "CreatePortalResponse":{
@@ -3535,8 +3536,15 @@
         "customerManagedKey":{"shape":"keyArn"},
         "additionalEncryptionContext":{"shape":"EncryptionContextMap"},
         "instanceType":{"shape":"InstanceType"},
-        "maxConcurrentSessions":{"shape":"MaxConcurrentSessions"}
+        "maxConcurrentSessions":{"shape":"MaxConcurrentSessions"},
+        "portalCustomDomain":{"shape":"PortalCustomDomain"}
       }
+    },
+    "PortalCustomDomain":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"(|[a-zA-Z0-9]?((?!-)([A-Za-z0-9-]*[A-Za-z0-9])\\.)+[a-zA-Z0-9]+)"
     },
     "PortalEndpoint":{
       "type":"string",
@@ -3583,7 +3591,8 @@
         "authenticationType":{"shape":"AuthenticationType"},
         "ipAccessSettingsArn":{"shape":"ARN"},
         "instanceType":{"shape":"InstanceType"},
-        "maxConcurrentSessions":{"shape":"MaxConcurrentSessions"}
+        "maxConcurrentSessions":{"shape":"MaxConcurrentSessions"},
+        "portalCustomDomain":{"shape":"PortalCustomDomain"}
       }
     },
     "QuotaCode":{"type":"string"},
@@ -4109,7 +4118,8 @@
         "displayName":{"shape":"DisplayName"},
         "authenticationType":{"shape":"AuthenticationType"},
         "instanceType":{"shape":"InstanceType"},
-        "maxConcurrentSessions":{"shape":"MaxConcurrentSessions"}
+        "maxConcurrentSessions":{"shape":"MaxConcurrentSessions"},
+        "portalCustomDomain":{"shape":"PortalCustomDomain"}
       }
     },
     "UpdatePortalResponse":{

@@ -3954,7 +3954,9 @@
         "SdiSourceMapping$CardNumber": "A number that uniquely identifies the SDI card on the node hardware.",
         "SdiSourceMapping$ChannelNumber": "A number that uniquely identifies a port on the SDI card.",
         "SdiSourceMappingUpdateRequest$CardNumber": "A number that uniquely identifies the SDI card on the node hardware. For information about how physical cards are identified on your node hardware, see the documentation for your node hardware. The numbering always starts at 1.",
-        "SdiSourceMappingUpdateRequest$ChannelNumber": "A number that uniquely identifies a port on the card. This must be an SDI port (not a timecode port, for example). For information about how ports are identified on physical cards, see the documentation for your node hardware."
+        "SdiSourceMappingUpdateRequest$ChannelNumber": "A number that uniquely identifies a port on the card. This must be an SDI port (not a timecode port, for example). For information about how ports are identified on physical cards, see the documentation for your node hardware.",
+        "SrtListenerSettings$MinimumLatency": "The preferred latency (in milliseconds) for implementing packet loss and recovery. Range 120-15000.",
+        "SrtListenerSettingsRequest$MinimumLatency": "Required. The preferred latency in milliseconds for packet loss and recovery. Range 120-15000."
       }
     },
     "__integerMin0": {
@@ -4820,7 +4822,13 @@
         "UpdateNetworkResult$AssociatedClusterIds": null,
         "SdiSource$Inputs": "The list of inputs that are currently using this SDI source. This list will be empty if the SdiSource has just been deleted.",
         "SdiSourceSummary$Inputs": "The list of inputs that are currently using this SDI source. This list will be empty if the SdiSource has just been deleted.",
-        "DescribePrimaryChannelSettings$FollowingChannelArns": "The ARNs of the following channels for this primary channel"
+        "DescribePrimaryChannelSettings$FollowingChannelArns": "The ARNs of the following channels for this primary channel",
+        "Channel$ChannelSecurityGroups": "A list of IDs for all the Input Security Groups attached to the channel.",
+        "ChannelSummary$ChannelSecurityGroups": "A list of IDs for all the Input Security Groups attached to the channel.",
+        "CreateChannel$ChannelSecurityGroups": "A list of IDs for all the Input Security Groups attached to the channel.",
+        "InputSecurityGroup$Channels": "The list of channels currently using this Input Security Group as their channel security group.",
+        "NodeInterfaceMapping$PhysicalInterfaceIpAddresses": "The IP addresses associated with the physical interface on the node hardware.",
+        "UpdateChannel$ChannelSecurityGroups": "A list of IDs for all the Input Security Groups attached to the channel."
       }
     },
     "__longMin0Max1099511627775": {
@@ -5292,7 +5300,11 @@
         "DescribeFollowerChannelSettings$PrimaryChannelArn": "The ARN of the primary channel this channel follows",
         "FollowerChannelSettings$PrimaryChannelArn": "The ARN of the primary channel to follow",
         "DisabledLockingSettings$CustomEpoch": "Optional. Only applies to CMAF Ingest Output Group and MediaPackage V2 Output Group. Enter a value here to use a custom epoch, instead of the standard epoch (which started at 1970-01-01T00:00:00 UTC). Specify the start time of the custom epoch, in YYYY-MM-DDTHH:MM:SS in UTC. The time must be 2000-01-01T00:00:00 or later. Always set the MM:SS portion to 00:00.",
-        "PipelineLockingSettings$CustomEpoch": "Optional. Only applies to CMAF Ingest Output Group and MediaPackage V2 Output Group Only. Enter a value here to use a custom epoch, instead of the standard epoch (which started at 1970-01-01T00:00:00 UTC). Specify the start time of the custom epoch, in YYYY-MM-DDTHH:MM:SS in UTC. The time must be 2000-01-01T00:00:00 or later. Always set the MM:SS portion to 00:00."
+        "PipelineLockingSettings$CustomEpoch": "Optional. Only applies to CMAF Ingest Output Group and MediaPackage V2 Output Group Only. Enter a value here to use a custom epoch, instead of the standard epoch (which started at 1970-01-01T00:00:00 UTC). Specify the start time of the custom epoch, in YYYY-MM-DDTHH:MM:SS in UTC. The time must be 2000-01-01T00:00:00 or later. Always set the MM:SS portion to 00:00.",
+        "SrtListenerDecryption$PassphraseSecretArn": "The ARN for the secret in Secrets Manager that holds the passphrase for decryption.",
+        "SrtListenerDecryptionRequest$PassphraseSecretArn": "Required. The ARN for the secret in Secrets Manager that holds the passphrase.",
+        "SrtListenerSettings$StreamId": "The stream ID, if the upstream system uses this identifier.",
+        "SrtListenerSettingsRequest$StreamId": "Optional. The stream ID if the upstream system uses this identifier."
       }
     },
     "__stringMax1000": {
@@ -6266,7 +6278,9 @@
       "base": null,
       "refs": {
         "SrtCallerDecryption$Algorithm": "The algorithm used to encrypt content.",
-        "SrtCallerDecryptionRequest$Algorithm": "The algorithm used to encrypt content."
+        "SrtCallerDecryptionRequest$Algorithm": "The algorithm used to encrypt content.",
+        "SrtListenerDecryption$Algorithm": "The algorithm used to decrypt content.",
+        "SrtListenerDecryptionRequest$Algorithm": "Required. The decryption algorithm."
       }
     },
     "SrtCallerDecryption": {
@@ -6294,13 +6308,13 @@
       }
     },
     "SrtSettings": {
-      "base": "The configured sources for this SRT input.",
+      "base": "The configured settings for SRT inputs (caller and listener).",
       "refs": {
         "Input$SrtSettings": "The settings associated with an SRT input."
       }
     },
     "SrtSettingsRequest": {
-      "base": "Configures the sources for this SRT input. For a single-pipeline input, include one srtCallerSource in the array. For a standard-pipeline input, include two srtCallerSource.",
+      "base": "Configures the settings for SRT inputs. Provide either srtCallerSources (for SRT_CALLER type) OR srtListenerSettings (for SRT_LISTENER type), not both.",
       "refs": {
         "CreateInput$SrtSettings": "The settings associated with an SRT input.",
         "UpdateInput$SrtSettings": "The settings associated with an SRT input."
@@ -7503,6 +7517,42 @@
       "base": "Disabled Locking Settings",
       "refs": {
         "OutputLockingSettings$DisabledLockingSettings": null
+      }
+    },
+    "ConnectionMode": {
+      "base": null,
+      "refs": {
+        "SrtOutputDestinationSettings$ConnectionMode": "Specifies the mode the output should use for connection establishment. CALLER mode requires URL, LISTENER mode requires port."
+      }
+    },
+    "SrtListenerDecryption": {
+      "base": "Decryption settings for SRT listener. If present, both algorithm and passphraseSecretArn are required.",
+      "refs": {
+        "SrtListenerSettings$Decryption": null
+      }
+    },
+    "SrtListenerDecryptionRequest": {
+      "base": "Decryption settings. If specified, both algorithm and passphraseSecretArn are required.",
+      "refs": {
+        "SrtListenerSettingsRequest$Decryption": null
+      }
+    },
+    "SrtListenerSettings": {
+      "base": "Settings for SRT Listener input.",
+      "refs": {
+        "SrtSettings$SrtListenerSettings": null
+      }
+    },
+    "SrtListenerSettingsRequest": {
+      "base": "Configuration for SRT Listener input. Encryption is REQUIRED for all SRT Listener inputs for security reasons. You must provide decryption settings including algorithm and passphrase secret ARN.",
+      "refs": {
+        "SrtSettingsRequest$SrtListenerSettings": null
+      }
+    },
+    "__integerMin1Max65535": {
+      "base": null,
+      "refs": {
+        "SrtOutputDestinationSettings$ListenerPort": "Port number for listener mode connections (required when connectionMode is LISTENER, must not be provided when connectionMode is CALLER)."
       }
     }
   },

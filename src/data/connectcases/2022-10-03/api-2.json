@@ -867,7 +867,7 @@
     },
     "AuditEventFieldValueUnionStringValueString":{
       "type":"string",
-      "max":500,
+      "max":4100,
       "min":0
     },
     "AuditEventId":{
@@ -1072,7 +1072,7 @@
     "CaseEventIncludedDataFieldsList":{
       "type":"list",
       "member":{"shape":"FieldIdentifier"},
-      "max":200,
+      "max":400,
       "min":0
     },
     "CaseFilter":{
@@ -1319,7 +1319,7 @@
     "CreateCaseRequestFieldsList":{
       "type":"list",
       "member":{"shape":"FieldValue"},
-      "max":100,
+      "max":220,
       "min":0
     },
     "CreateCaseResponse":{
@@ -1397,7 +1397,8 @@
         },
         "name":{"shape":"FieldName"},
         "type":{"shape":"FieldType"},
-        "description":{"shape":"FieldDescription"}
+        "description":{"shape":"FieldDescription"},
+        "attributes":{"shape":"FieldAttributes"}
       }
     },
     "CreateFieldResponse":{
@@ -1798,6 +1799,13 @@
       "max":500,
       "min":1
     },
+    "FieldAttributes":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"TextAttributes"}
+      },
+      "union":true
+    },
     "FieldDescription":{
       "type":"string",
       "max":255,
@@ -1838,7 +1846,7 @@
     "FieldGroupFieldsList":{
       "type":"list",
       "member":{"shape":"FieldItem"},
-      "max":100,
+      "max":220,
       "min":0
     },
     "FieldGroupNameString":{
@@ -1943,7 +1951,8 @@
         "fieldArn":{"shape":"FieldArn"},
         "name":{"shape":"FieldName"},
         "type":{"shape":"FieldType"},
-        "namespace":{"shape":"FieldNamespace"}
+        "namespace":{"shape":"FieldNamespace"},
+        "attributes":{"shape":"FieldAttributes"}
       }
     },
     "FieldType":{
@@ -1986,7 +1995,7 @@
     },
     "FieldValueUnionStringValueString":{
       "type":"string",
-      "max":3000,
+      "max":4100,
       "min":0
     },
     "FileArn":{
@@ -2091,7 +2100,7 @@
     "GetCaseRequestFieldsList":{
       "type":"list",
       "member":{"shape":"FieldIdentifier"},
-      "max":100,
+      "max":220,
       "min":1
     },
     "GetCaseResponse":{
@@ -2110,7 +2119,7 @@
     "GetCaseResponseFieldsList":{
       "type":"list",
       "member":{"shape":"FieldValue"},
-      "max":100,
+      "max":220,
       "min":0
     },
     "GetCaseRuleResponse":{
@@ -2181,7 +2190,8 @@
         "tags":{"shape":"Tags"},
         "deleted":{"shape":"Deleted"},
         "createdTime":{"shape":"CreatedTime"},
-        "lastModifiedTime":{"shape":"LastModifiedTime"}
+        "lastModifiedTime":{"shape":"LastModifiedTime"},
+        "attributes":{"shape":"FieldAttributes"}
       }
     },
     "GetLayoutRequest":{
@@ -2965,7 +2975,8 @@
       "required":["cases"],
       "members":{
         "nextToken":{"shape":"NextToken"},
-        "cases":{"shape":"SearchCasesResponseCasesList"}
+        "cases":{"shape":"SearchCasesResponseCasesList"},
+        "totalCount":{"shape":"TotalCount"}
       }
     },
     "SearchCasesResponseCasesList":{
@@ -3340,6 +3351,13 @@
         "tagPropagationConfigurations":{"shape":"TagPropagationConfigurationList"}
       }
     },
+    "TextAttributes":{
+      "type":"structure",
+      "required":["isMultiline"],
+      "members":{
+        "isMultiline":{"shape":"Boolean"}
+      }
+    },
     "ThrottlingException":{
       "type":"structure",
       "required":["message"],
@@ -3352,6 +3370,10 @@
       },
       "exception":true,
       "retryable":{"throttling":false}
+    },
+    "TotalCount":{
+      "type":"long",
+      "min":0
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -3397,7 +3419,7 @@
     "UpdateCaseRequestFieldsList":{
       "type":"list",
       "member":{"shape":"FieldValue"},
-      "max":100,
+      "max":220,
       "min":0
     },
     "UpdateCaseResponse":{
@@ -3448,7 +3470,8 @@
           "locationName":"fieldId"
         },
         "name":{"shape":"FieldName"},
-        "description":{"shape":"FieldDescription"}
+        "description":{"shape":"FieldDescription"},
+        "attributes":{"shape":"FieldAttributes"}
       }
     },
     "UpdateFieldResponse":{
